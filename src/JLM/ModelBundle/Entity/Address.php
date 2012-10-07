@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * JLM\ModelBundle\Entity\Address
  *
- * @ORM\Table()
+ * @ORM\Table(name="addresses")
  * @ORM\Entity
  */
 class Address
@@ -42,7 +42,14 @@ class Address
      */
     private $city;
 
-
+	/**
+	 * @var Country $country
+	 * 
+	 * @ORM\ManyToOne(targetEntity="Country")
+	 */
+    private $country;
+    
+    
     /**
      * Get id
      *
@@ -112,4 +119,25 @@ class Address
     {
         return $this->city;
     }
+      
+    /**
+     * Set Country
+     *
+     * @param Country $country
+     */
+    public function setCountry(Country $country)
+    {
+    	$this->country = $country;
+    }
+    
+    /**
+     * Get Country
+     * 
+     * @return Country
+     */
+    public function getCountry()
+    {
+    	return $this->country;
+    }
+
 }

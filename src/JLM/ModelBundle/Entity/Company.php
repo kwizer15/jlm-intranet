@@ -7,20 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * JLM\ModelBundle\Entity\Company
  *
- * @ORM\Table()
+ * @ORM\Table(name="companies")
  * @ORM\Entity
  */
-class Company
+class Company extends Contact
 {
-    /**
-     * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
     /**
      * @var string $naml
      *

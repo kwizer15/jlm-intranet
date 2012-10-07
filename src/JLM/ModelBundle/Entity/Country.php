@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * JLM\ModelBundle\Entity\Country
  *
- * @ORM\Table()
+ * @ORM\Table(name="countries")
  * @ORM\Entity
  */
 class Country
@@ -15,11 +15,10 @@ class Country
     /**
      * @var integer $id
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="code", type="string", length=2)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $code;
 
     /**
      * @var string $name
@@ -29,31 +28,21 @@ class Country
     private $name;
 
     /**
-     * @var integer $code
-     *
-     * @ORM\Column(name="code", type="integer")
+     * @var integer $phonePrefix
+     * 
+     * @ORM\Column(name="phone_prefix", type="integer")
      */
-    private $code;
-
-
+    private $phonePrefix;
+    
+    
     /**
-     * Get id
+     * Get code
      *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
+    public function getCode()
     {
-        return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
+    	return $this->code;
     }
 
     /**
@@ -65,24 +54,14 @@ class Country
     {
         return $this->name;
     }
-
+    
     /**
-     * Set code
-     *
-     * @param integer $code
+     * Get phonePrefix
+     * 
+     * @return integer
      */
-    public function setCode($code)
+    public function getPhonePrefix()
     {
-        $this->code = $code;
-    }
-
-    /**
-     * Get code
-     *
-     * @return integer 
-     */
-    public function getCode()
-    {
-        return $this->code;
+    	return $this->phonePrefix;
     }
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * JLM\ModelBundle\Entity\Phone
  *
- * @ORM\Table()
+ * @ORM\Table(name="phones")
  * @ORM\Entity
  */
 class Phone
@@ -24,9 +24,9 @@ class Phone
     /**
      * @var integer $prefix
      *
-     * @ORM\Column(name="prefix", type="integer")
+     * @ORM\ManyToOne(targetEntity="Country")
      */
-    private $prefix;
+    private $country;
 
     /**
      * @var integer $number
@@ -47,23 +47,23 @@ class Phone
     }
 
     /**
-     * Set prefix
+     * Set country
      *
-     * @param integer $prefix
+     * @param integer $country
      */
-    public function setPrefix($prefix)
+    public function setCountry(Country $country)
     {
-        $this->prefix = $prefix;
+        $this->country = $country;
     }
 
     /**
-     * Get prefix
+     * Get Country
      *
-     * @return integer 
+     * @return Country 
      */
-    public function getPrefix()
+    public function getCountry()
     {
-        return $this->prefix;
+        return $this->country;
     }
 
     /**
@@ -84,5 +84,13 @@ class Phone
     public function getNumber()
     {
         return $this->number;
+    }
+    
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+    	return $this->country->getPhonePrefix().$this->number;
     }
 }

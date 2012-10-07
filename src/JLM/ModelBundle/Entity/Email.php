@@ -5,12 +5,12 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * JLM\ModelBundle\Entity\Mail
+ * JLM\ModelBundle\Entity\Email
  *
- * @ORM\Table()
+ * @ORM\Table(name="emails")
  * @ORM\Entity
  */
-class Mail
+class Email
 {
     /**
      * @var integer $id
@@ -34,13 +34,6 @@ class Mail
      * @ORM\Column(name="domain", type="string", length=255)
      */
     private $domain;
-
-    /**
-     * @var string $extension
-     *
-     * @ORM\Column(name="extension", type="string", length=10)
-     */
-    private $extension;
 
 
     /**
@@ -94,22 +87,10 @@ class Mail
     }
 
     /**
-     * Set extension
-     *
-     * @param string $extension
+     * To String
      */
-    public function setExtension($extension)
+    public function __toString()
     {
-        $this->extension = $extension;
-    }
-
-    /**
-     * Get extension
-     *
-     * @return string 
-     */
-    public function getExtension()
-    {
-        return $this->extension;
+    	return $this->user.'@'.$this->domain;
     }
 }

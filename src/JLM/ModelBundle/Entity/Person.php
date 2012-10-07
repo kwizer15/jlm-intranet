@@ -7,20 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * JLM\ModelBundle\Entity\Person
  *
- * @ORM\Table()
+ * @ORM\Table(name="persons")
  * @ORM\Entity
  */
-class Person
+class Person extends Contact
 {
-    /**
-     * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
     /**
      * @var string $firstName
      *
@@ -84,5 +75,15 @@ class Person
     public function getLastName()
     {
         return $this->lastName;
+    }
+    
+    /**
+     * Get name
+     * 
+     * @return string
+     */
+    public function getName()
+    {
+    	return $this->firstName.' '.$this->lastName;
     }
 }
