@@ -9,9 +9,24 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="persons")
  * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({
+ * 		"person" = "Person",
+ * 		"interlocutor" = "Interlocutor"
+ * })
  */
-class Person extends Contact
+class Person
 {
+	/**
+	 * @var integer $id
+	 *
+	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $id;
+	
     /**
      * @var string $firstName
      *
@@ -25,8 +40,39 @@ class Person extends Contact
      * @ORM\Column(name="lastName", type="string", length=255)
      */
     private $lastName;
+    
+    /**
+     * @var Phone[] $phones
+     * 
+     * @ORM\OneToMany(targetEntity="Phone")
+     * @ORM\JoinTable(name="contact_phones",
+	 * 		joinColumns={@ORM/JoinColumn(name="contact_id", referencedColumnName="id")},
+	 * 		inverseJoinColumns={@ORM/JoinColumn(name="phone_id", referencedColumnName="id", unique=true)}
+	 * )
+     */
+    private $phones;
+    
+    /**
+     * @var Email[] $emails
+     * 
+     * @ORM\OneToMany(targetEntity="Email")
+     * @ORM\JoinTable(name="contact_emails",
+     * 		joinColumns={@ORM/JoinColumn(name="contact_id", referencedColumnName="id")},
+     * 		inverseJoinColumns={@ORM/JoinColumn(name="email_id", referencedColumnName="id", unique=true)}
+     * )
+     */
+    private $emails;
 
-
+    
+    /**
+     * Construct
+     */
+    public function __construct()
+    {
+    	$this->phones = new ArrayCollection;
+    	$this->emails = new ArrayCollection;
+    }
+    
     /**
      * Get id
      *

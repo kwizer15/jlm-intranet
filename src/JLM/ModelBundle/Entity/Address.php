@@ -41,14 +41,21 @@ class Address
      * @ORM\Column(name="city", type="string", length=255)
      */
     private $city;
-
+   
+    /**
+     * @var string $supplement
+     *
+     * @ORM\Column(name="supplement", type="string", length=255)
+     */
+    private $supplement;
+    
 	/**
 	 * @var Country $country
 	 * 
 	 * @ORM\ManyToOne(targetEntity="Country")
 	 */
     private $country;
-    
+
     
     /**
      * Get id
@@ -119,7 +126,27 @@ class Address
     {
         return $this->city;
     }
-      
+
+    /**
+     * Set supplement
+     *
+     * @param string $supplement
+     */
+    public function setSupplement($supplement)
+    {
+    	$this->supplement = $supplement;
+    }
+    
+    /**
+     * Get supplement
+     *
+     * @return string
+     */
+    public function getSupplement()
+    {
+    	return $this->supplement;
+    }
+    
     /**
      * Set Country
      *
