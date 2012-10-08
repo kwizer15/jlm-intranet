@@ -5,17 +5,26 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * JLM\ModelBundle\Entity\Company
+ * JLM\ModelBundle\Entity\Supplier
  *
- * @ORM\Table(name="companies")
+ * @ORM\Table()
  * @ORM\Entity
  */
-class Company extends Contact
+class Supplier
 {
     /**
-     * @var string $naml
+     * @var integer $id
      *
-     * @ORM\Column(name="naml", type="string", length=255)
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string $name
+     *
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 

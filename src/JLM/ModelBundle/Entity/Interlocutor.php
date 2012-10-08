@@ -45,4 +45,24 @@ class Interlocutor extends Person
     {
         return $this->role;
     }
+
+    /**
+     * Set trustee
+     *
+     * @param JLM\ModelBundle\Entity\Trustee $trustee
+     */
+    public function setTrustee(\JLM\ModelBundle\Entity\Trustee $trustee)
+    {
+        $this->trustee = $trustee;
+    }
+
+    /**
+     * Get trustee
+     *
+     * @return JLM\ModelBundle\Entity\Trustee 
+     */
+    public function getTrustee()
+    {
+        return $this->trustee;
+    }
 }

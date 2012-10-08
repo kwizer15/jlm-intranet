@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * JLM\ModelBundle\Entity\Door
  *
- * @ORM\Table()
+ * @ORM\Table(name="doors")
  * @ORM\Entity
  */
 class Door
@@ -39,14 +39,14 @@ class Door
     /**
      * @var Contract[] $contracts
      * 
-     * @ORM\OneToMany(targetEntity="Contract", mappedBy="door")
+     * @ORM\ManyToMany(targetEntity="Contract", mappedBy="doors")
      */
     private $contracts;
     
     /**
      * @var DoorType $type
      * 
-     * @ORM\ManyToOne(tragetEntity="DoorType")
+     * @ORM\ManyToOne(targetEntity="DoorType")
      */
     private $type;
     
@@ -57,6 +57,17 @@ class Door
      */
     private $location;
 
+    /**
+     * @var Product[] $parts
+     * 
+     * @ORM\ManyToMany(targetEntity="Product")
+     * @ORM\JoinTable(name="doors_parts",
+     *      joinColumns={@JoinColumn(name="door_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="part_id", referencedColumnName="id")}
+     *      )
+     */
+    private $parts;
+    
     /**
      * @var string transmitters
      * @todo Voir quel type d'objet pour ca
@@ -71,6 +82,7 @@ class Door
     {
     	$this->trustees = new ArrayCollection;
     	$this->contracts = new ArrayCollection;
+    	$this->parts = new ArrayCollection;
     }
 
     /**
@@ -101,5 +113,105 @@ class Door
     public function getLocation()
     {
         return $this->location;
+    }
+
+    /**
+     * Set transmitters
+     *
+     * @param string $transmitters
+     */
+    public function setTransmitters($transmitters)
+    {
+        $this->transmitters = $transmitters;
+    }
+
+    /**
+     * Get transmitters
+     *
+     * @return string 
+     */
+    public function getTransmitters()
+    {
+        return $this->transmitters;
+    }
+
+    /**
+     * Add trustees
+     *
+     * @param JLM\ModelBundle\Entity\Trustee $trustees
+     */
+    public function addTrustee(\JLM\ModelBundle\Entity\Trustee $trustees)
+    {
+        $this->trustees[] = $trustees;
+    }
+
+    /**
+     * Get trustees
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTrustees()
+    {
+        return $this->trustees;
+    }
+
+    /**
+     * Set address
+     *
+     * @param JLM\ModelBundle\Entity\Address $address
+     */
+    public function setAddress(\JLM\ModelBundle\Entity\Address $address)
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * Get address
+     *
+     * @return JLM\ModelBundle\Entity\Address 
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Add contracts
+     *
+     * @param JLM\ModelBundle\Entity\Contract $contracts
+     */
+    public function addContract(\JLM\ModelBundle\Entity\Contract $contracts)
+    {
+        $this->contracts[] = $contracts;
+    }
+
+    /**
+     * Get contracts
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getContracts()
+    {
+        return $this->contracts;
+    }
+
+    /**
+     * Set type
+     *
+     * @param JLM\ModelBundle\Entity\DoorType $type
+     */
+    public function setType(\JLM\ModelBundle\Entity\DoorType $type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get type
+     *
+     * @return JLM\ModelBundle\Entity\DoorType 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

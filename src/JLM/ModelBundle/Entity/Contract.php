@@ -3,11 +3,12 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * JLM\ModelBundle\Entity\Contract
  *
- * @ORM\Table()
+ * @ORM\Table(name="contracts")
  * @ORM\Entity
  */
 class Contract
@@ -34,6 +35,14 @@ class Contract
      * @ORM\ManyToOne(targetEntity="ContractType")
      */
     private $type;
+    
+    /**
+     * @var Door[] $doors
+     * 
+     * @ORM\ManyToMany(targetEntity="Door", inversedBy="contracts")
+     * @ORM\JoinTable(name="contracts_doors")
+     */
+    private $doors;
     
     /**
      * @var datetime $begin
@@ -63,6 +72,13 @@ class Contract
      */
     private $turnover;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+    	$this->doors = new ArrayCollection;
+    }
 
     /**
      * Get id
@@ -172,5 +188,45 @@ class Contract
     public function getTurnover()
     {
         return $this->turnover;
+    }
+
+    /**
+     * Set type
+     *
+     * @param JLM\ModelBundle\Entity\ContractType $type
+     */
+    public function setType(\JLM\ModelBundle\Entity\ContractType $type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get type
+     *
+     * @return JLM\ModelBundle\Entity\ContractType 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Add doors
+     *
+     * @param JLM\ModelBundle\Entity\Door $doors
+     */
+    public function addDoor(\JLM\ModelBundle\Entity\Door $doors)
+    {
+        $this->doors[] = $doors;
+    }
+
+    /**
+     * Get doors
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getDoors()
+    {
+        return $this->doors;
     }
 }

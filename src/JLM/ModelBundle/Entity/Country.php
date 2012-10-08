@@ -64,4 +64,34 @@ class Country
     {
     	return $this->phonePrefix;
     }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Set phonePrefix
+     *
+     * @param integer $phonePrefix
+     */
+    public function setPhonePrefix($phonePrefix)
+    {
+        $this->phonePrefix = $phonePrefix;
+    }
 }

@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * JLM\ModelBundle\Entity\Trustee
  *
- * @ORM\Table()
+ * @ORM\Table(name="trustees")
  * @ORM\Entity
  */
 class Trustee
@@ -151,5 +151,85 @@ class Trustee
     public function getAccountNumber()
     {
         return $this->accountNumber;
+    }
+
+    /**
+     * Add interlocutors
+     *
+     * @param JLM\ModelBundle\Entity\Interlocutor $interlocutors
+     */
+    public function addInterlocutor(\JLM\ModelBundle\Entity\Interlocutor $interlocutors)
+    {
+        $this->interlocutors[] = $interlocutors;
+    }
+
+    /**
+     * Get interlocutors
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getInterlocutors()
+    {
+        return $this->interlocutors;
+    }
+
+    /**
+     * Set mainAddress
+     *
+     * @param JLM\ModelBundle\Entity\Address $mainAddress
+     */
+    public function setMainAddress(\JLM\ModelBundle\Entity\Address $mainAddress)
+    {
+        $this->mainAddress = $mainAddress;
+    }
+
+    /**
+     * Get mainAddress
+     *
+     * @return JLM\ModelBundle\Entity\Address 
+     */
+    public function getMainAddress()
+    {
+        return $this->mainAddress;
+    }
+
+    /**
+     * Set billingAddress
+     *
+     * @param JLM\ModelBundle\Entity\Address $billingAddress
+     */
+    public function setBillingAddress(\JLM\ModelBundle\Entity\Address $billingAddress)
+    {
+        $this->billingAddress = $billingAddress;
+    }
+
+    /**
+     * Get billingAddress
+     *
+     * @return JLM\ModelBundle\Entity\Address 
+     */
+    public function getBillingAddress()
+    {
+        return $this->billingAddress;
+    }
+
+    /**
+     * Add doors
+     *
+     * @param JLM\ModelBundle\Entity\Door $doors
+     */
+    public function addDoor(\JLM\ModelBundle\Entity\Door $doors)
+    {
+        $this->doors[] = $doors;
+    }
+
+    /**
+     * Get doors
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getDoors()
+    {
+        return $this->doors;
     }
 }
