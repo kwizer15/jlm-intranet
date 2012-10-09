@@ -48,13 +48,6 @@ class Address
      * @ORM\Column(name="supplement", type="string", length=255)
      */
     private $supplement;
-    
-	/**
-	 * @var Country $country
-	 * 
-	 * @ORM\ManyToOne(targetEntity="Country")
-	 */
-    private $country;
 
     
     /**

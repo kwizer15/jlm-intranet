@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * JLM\ModelBundle\Entity\Supplier
  *
- * @ORM\Table()
+ * @ORM\Table(name="suppliers")
  * @ORM\Entity
  */
 class Supplier

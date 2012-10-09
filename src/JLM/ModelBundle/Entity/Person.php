@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * JLM\ModelBundle\Entity\Person
@@ -172,5 +173,13 @@ class Person
     public function getEmails()
     {
         return $this->emails;
+    }
+    
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+    	return $this->firstName.' '.$this->lastName;
     }
 }

@@ -22,13 +22,6 @@ class Phone
     private $id;
 
     /**
-     * @var integer $prefix
-     *
-     * @ORM\ManyToOne(targetEntity="Country")
-     */
-    private $country;
-
-    /**
      * @var integer $number
      *
      * @ORM\Column(name="number", type="integer")
@@ -44,26 +37,6 @@ class Phone
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set country
-     *
-     * @param integer $country
-     */
-    public function setCountry(Country $country)
-    {
-        $this->country = $country;
-    }
-
-    /**
-     * Get Country
-     *
-     * @return Country 
-     */
-    public function getCountry()
-    {
-        return $this->country;
     }
 
     /**

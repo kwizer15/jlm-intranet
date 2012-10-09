@@ -1,0 +1,65 @@
+<h1>Quote</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Creation</th>
+            <td>{{ entity.creation|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Trusteename</th>
+            <td>{{ entity.trusteeName }}</td>
+        </tr>
+        <tr>
+            <th>Trusteestreet</th>
+            <td>{{ entity.trusteeStreet }}</td>
+        </tr>
+        <tr>
+            <th>Trusteezip</th>
+            <td>{{ entity.trusteeZip }}</td>
+        </tr>
+        <tr>
+            <th>Trusteecity</th>
+            <td>{{ entity.trusteeCity }}</td>
+        </tr>
+        <tr>
+            <th>Trusteeinterlocutor</th>
+            <td>{{ entity.trusteeInterlocutor }}</td>
+        </tr>
+        <tr>
+            <th>Paymentrules</th>
+            <td>{{ entity.paymentRules }}</td>
+        </tr>
+        <tr>
+            <th>Deliveryrules</th>
+            <td>{{ entity.deliveryRules }}</td>
+        </tr>
+        <tr>
+            <th>Customercomments</th>
+            <td>{{ entity.customerComments }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('quote') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('quote_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('quote_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

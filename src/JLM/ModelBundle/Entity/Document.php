@@ -10,6 +10,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table(name="documents")
  * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({
+ * 		"quote" = "Quote"
+ * })
  */
 abstract class Document
 {

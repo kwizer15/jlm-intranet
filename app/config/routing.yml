@@ -1,7 +1,12 @@
+JLMOfficeBundle:
+    resource: "@JLMOfficeBundle/Controller/"
+    type:     annotation
+    prefix:   /office
+
 JLMModelBundle:
     resource: "@JLMModelBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /model
 
 # Internal routing configuration to handle ESI
 #_internal:

@@ -1,0 +1,49 @@
+<h1>DocumentContentLine</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Reference</th>
+            <td>{{ entity.reference }}</td>
+        </tr>
+        <tr>
+            <th>Designation</th>
+            <td>{{ entity.designation }}</td>
+        </tr>
+        <tr>
+            <th>Quantity</th>
+            <td>{{ entity.quantity }}</td>
+        </tr>
+        <tr>
+            <th>Vat</th>
+            <td>{{ entity.vat }}</td>
+        </tr>
+        <tr>
+            <th>Unitprice</th>
+            <td>{{ entity.unitPrice }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('documentcontentline') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('documentcontentline_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('documentcontentline_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

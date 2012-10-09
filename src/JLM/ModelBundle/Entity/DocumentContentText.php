@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * JLM\ModelBundle\Entity\DocumentContentText
  *
- * @ORM\Table()
+ * @ORM\Table(name="document_contents_text")
  * @ORM\Entity
  */
 class DocumentContentText extends DocumentContent

@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  *      "text" = "DocumentContentText"
  * })
  */
-class DocumentContent
+abstract class DocumentContent
 {
     /**
      * @var integer $id
@@ -30,7 +30,7 @@ class DocumentContent
     /**
      * @var Document $document
      * 
-     * @ORM\ManyToOne(targetEntity="Docuement",inversedBy="contents")
+     * @ORM\ManyToOne(targetEntity="Document",inversedBy="contents")
      */
     private $document;
 

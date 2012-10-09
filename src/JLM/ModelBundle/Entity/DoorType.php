@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * JLM\ModelBundle\Entity\DoorType
  *
- * @ORM\Table()
+ * @ORM\Table(name="door_types")
  * @ORM\Entity
  */
 class DoorType

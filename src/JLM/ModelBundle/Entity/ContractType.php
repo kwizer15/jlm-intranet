@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * JLM\ModelBundle\Entity\ContractType
  *
- * @ORM\Table()
+ * @ORM\Table(name="contract_types")
  * @ORM\Entity
  */
 class ContractType
