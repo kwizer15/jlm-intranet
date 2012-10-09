@@ -16,6 +16,7 @@ class TrusteeType extends AbstractType
             ->add('mainAddress', new AddressType,array('label'=>'Adresse'))
             ->add('billingAddress', new AddressType,array('label'=>'Adresse de facturation (si différente)','required'=>false))
             ->add('doors','collection',array('label'=>'Portes'))
+            ->add('interlocutors','collection',array('label'=>'Interlocuteurs'))
         ;
     }
 
