@@ -99,4 +99,24 @@ class ProductCategory
     {
         return $this->parent;
     }
+
+    /**
+     * Add children
+     *
+     * @param JLM\ModelBundle\Entity\ProductCategory $children
+     */
+    public function addProductCategory(\JLM\ModelBundle\Entity\ProductCategory $children)
+    {
+        $this->children[] = $children;
+    }
+
+    /**
+     * Get children
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
 }

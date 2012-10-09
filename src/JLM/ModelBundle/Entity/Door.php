@@ -62,8 +62,8 @@ class Door
      * 
      * @ORM\ManyToMany(targetEntity="Product")
      * @ORM\JoinTable(name="doors_parts",
-     *      joinColumns={@JoinColumn(name="door_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="part_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="door_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="part_id", referencedColumnName="id")}
      *      )
      */
     private $parts;
@@ -71,9 +71,17 @@ class Door
     /**
      * @var string transmitters
      * @todo Voir quel type d'objet pour ca
+     * 
      * @ORM\Column(name="transmitter",type="string",length=255)
      */
     private $transmitters;
+    
+    /**
+     * @var Document[] $documents
+     * 
+     * @ORM\ManyToMany(targetEntity="Document",mappedBy="doors")
+     */
+    private $documents;
     
     /**
      * Constructor
@@ -83,6 +91,7 @@ class Door
     	$this->trustees = new ArrayCollection;
     	$this->contracts = new ArrayCollection;
     	$this->parts = new ArrayCollection;
+    	$this->documents = new ArrayCollection;
     }
 
     /**
@@ -213,5 +222,45 @@ class Door
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Add parts
+     *
+     * @param JLM\ModelBundle\Entity\Product $parts
+     */
+    public function addProduct(\JLM\ModelBundle\Entity\Product $parts)
+    {
+        $this->parts[] = $parts;
+    }
+
+    /**
+     * Get parts
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getParts()
+    {
+        return $this->parts;
+    }
+
+    /**
+     * Add documents
+     *
+     * @param JLM\ModelBundle\Entity\Document $documents
+     */
+    public function addDocument(\JLM\ModelBundle\Entity\Document $documents)
+    {
+        $this->documents[] = $documents;
+    }
+
+    /**
+     * Get documents
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
     }
 }

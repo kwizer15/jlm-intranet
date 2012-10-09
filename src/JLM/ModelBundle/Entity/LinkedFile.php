@@ -91,4 +91,24 @@ class LinkedFile
     {
         return $this->url;
     }
+
+    /**
+     * Set product
+     *
+     * @param JLM\ModelBundle\Entity\Product $product
+     */
+    public function setProduct(\JLM\ModelBundle\Entity\Product $product)
+    {
+        $this->product = $product;
+    }
+
+    /**
+     * Get product
+     *
+     * @return JLM\ModelBundle\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
 }

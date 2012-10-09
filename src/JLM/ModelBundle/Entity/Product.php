@@ -46,7 +46,7 @@ class Product
     /**
      * @var string $reference
      *
-     * @ORM\Column(name="reference", type="string", length=8)
+     * @ORM\Column(name="reference", type="string", length=16)
      */
     private $reference;
 
@@ -79,11 +79,28 @@ class Product
     private $files;
 
     /**
+     * Pour les kits
+     * @var Product[] $children
+     * 
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="parent")
+     */
+    private $children;
+    
+    /**
+     * Pour les kits
+     * @var Product $parent
+     * 
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="children")
+     */
+    private $parent;
+    
+    /**
      * Constructor
      */
     public function __construct()
     {
     	$this->files = new ArrayCollection;
+    	$this->children = new ArrayCollection;
     }
     
     /**
@@ -194,5 +211,105 @@ class Product
     public function getVat()
     {
         return $this->vat;
+    }
+
+    /**
+     * Set description
+     *
+     * @param text $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Get description
+     *
+     * @return text 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set supplier
+     *
+     * @param JLM\ModelBundle\Entity\Supplier $supplier
+     */
+    public function setSupplier(\JLM\ModelBundle\Entity\Supplier $supplier)
+    {
+        $this->supplier = $supplier;
+    }
+
+    /**
+     * Get supplier
+     *
+     * @return JLM\ModelBundle\Entity\Supplier 
+     */
+    public function getSupplier()
+    {
+        return $this->supplier;
+    }
+
+    /**
+     * Add files
+     *
+     * @param JLM\ModelBundle\Entity\LinkedFile $files
+     */
+    public function addLinkedFile(\JLM\ModelBundle\Entity\LinkedFile $files)
+    {
+        $this->files[] = $files;
+    }
+
+    /**
+     * Get files
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getFiles()
+    {
+        return $this->files;
+    }
+
+    /**
+     * Add children
+     *
+     * @param JLM\ModelBundle\Entity\Product $children
+     */
+    public function addProduct(\JLM\ModelBundle\Entity\Product $children)
+    {
+        $this->children[] = $children;
+    }
+
+    /**
+     * Get children
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param JLM\ModelBundle\Entity\Product $parent
+     */
+    public function setParent(\JLM\ModelBundle\Entity\Product $parent)
+    {
+        $this->parent = $parent;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return JLM\ModelBundle\Entity\Product 
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }
