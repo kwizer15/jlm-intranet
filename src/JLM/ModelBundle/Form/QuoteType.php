@@ -10,18 +10,19 @@ class QuoteType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('creation','date')
-            ->add('trusteeName')
-            ->add('trusteeStreet')
-            ->add('trusteeZip')
-            ->add('trusteeCity')
-            ->add('trusteeInterlocutor')
-            ->add('paymentRules')
-            ->add('deliveryRules')
-            ->add('customerComments')
-            ->add('follower')
-            ->add('trustee')
-            ->add('doors')
+            ->add('creation','date',array('format'=>'dd/MM/yyyy','label'=>'Date'))
+            ->add('follower',null,array('label'=>'Suivi par'))
+            ->add('trustee',null,array('label'=>'Client'))
+            ->add('trusteeName',null,array('label'=>'Nom'))
+            ->add('trusteeStreet',null,array('label'=>'Rue'))
+            ->add('trusteeZip',null,array('label'=>'Code postal'))
+            ->add('trusteeCity',null,array('label'=>'Ville'))
+            ->add('trusteeInterlocutor',null,array('label'=>'Interlocuteur'))
+            ->add('doors','collection',array('label'=>'Affaires'))
+            ->add('customerComments',null,array('label'=>'Observations'))
+            ->add('paymentRules',null,array('label'=>'Réglement'))
+            ->add('deliveryRules',null,array('label'=>'Livraison'))
+            
         ;
     }
 

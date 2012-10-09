@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * JLM\ModelBundle\Entity\City
+ * JLM\ModelBundle\Entity\Zip
  *
- * @ORM\Table(name="cities")
+ * @ORM\Table()
  * @ORM\Entity
  */
-class City
+class Zip
 {
     /**
      * @var integer $id
@@ -23,26 +23,25 @@ class City
     private $id;
 
     /**
-     * @var string $name
+     * @var string $number
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="number", type="string", length=7)
      */
-    private $name;
+    private $number;
 
     /**
-     * @var string $zips
+     * @var City[] $cities
      * 
-     * @ORM\ManyToMany(targetEntity="Zip", inversedBy="cities")
-     * @ORM\JoinTable(name="cities_zips")
+     * @ORM\ManyToMany(targetEntity="City", mappedBy="zips")
      */
-    private $zips;
+    private $cities;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-    	$this->zips = new ArrayCollection;
+    	$this->cities = new ArrayCollection;
     }
     
     /**
@@ -56,23 +55,23 @@ class City
     }
 
     /**
-     * Set name
+     * Set number
      *
-     * @param string $name
+     * @param string $number
      */
-    public function setName($name)
+    public function setNumber($number)
     {
-        $this->name = $name;
+        $this->number = $number;
     }
 
     /**
-     * Get name
+     * Get number
      *
      * @return string 
      */
-    public function getName()
+    public function getNumber()
     {
-        return $this->name;
+        return $this->number;
     }
     
     /**
@@ -80,6 +79,6 @@ class City
      */
     public function __toString()
     {
-    	return $this->name;
+    	return $this->number;
     }
 }

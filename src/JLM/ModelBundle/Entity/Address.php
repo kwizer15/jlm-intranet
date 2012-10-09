@@ -29,23 +29,30 @@ class Address
     private $street;
 
     /**
+     * @var string $box
+     *
+     * @ORM\Column(name="box", type="smallint", nullable=true)
+     */
+    private $box;
+    
+    /**
      * @var string $zip
      *
-     * @ORM\Column(name="zip", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Zip")
      */
     private $zip;
 
     /**
      * @var string $city
      *
-     * @ORM\Column(name="city", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="City")
      */
     private $city;
    
     /**
      * @var string $supplement
      *
-     * @ORM\Column(name="supplement", type="string", length=255)
+     * @ORM\Column(name="supplement", type="string", length=255, nullable=true)
      */
     private $supplement;
 
@@ -80,6 +87,26 @@ class Address
         return $this->street;
     }
 
+    /**
+     * Set box
+     *
+     * @param string $box
+     */
+    public function setBox($box)
+    {
+    	$this->box = $box;
+    }
+    
+    /**
+     * Get box
+     *
+     * @return string
+     */
+    public function getBox()
+    {
+    	return $this->box;
+    }
+    
     /**
      * Set zip
      *

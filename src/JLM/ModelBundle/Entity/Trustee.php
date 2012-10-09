@@ -232,4 +232,12 @@ class Trustee
     {
         return $this->doors;
     }
+    
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+    	return $this->name;
+    }
 }

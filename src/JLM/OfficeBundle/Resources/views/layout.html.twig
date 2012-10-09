@@ -1,0 +1,65 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}JLM{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('bundles/jlmoffice/css/bootstrap.min.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ asset('bundles/jlmoffice/css/jquery-ui-1.8.23.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ asset('bundles/jlmoffice/css/style.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+    <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+	        <div class="container">
+	      {% block header %}
+	        <a href="#" class="brand">JLM</a>
+	        <ul class="nav">
+		      {% block navigation %}
+		      	<li><a href="{{ path('trustee') }}">Client</a></li>	      	
+		      {% endblock %}
+		      </ul>
+	        
+		<!--	<form action="" method="post" class="navbar-form pull-right">
+				<input type="text" id="username" name="_username" placeholder="Utilisateur..." class="span2">
+				<input type="password" id="password" name="_password" placeholder="Mot de passe..." class="span2">
+				<input type="hidden" id="remember_me" name="_remember_me" value="on">
+				<button type="submit" id="_submit" name="_submit" class="btn btn-primary">Connexion</button>
+			</form> -->
+		
+			
+	        {% endblock %}
+	        </div>
+	    </div>
+    </div>
+      
+      <div class="container">
+      {% block content %}
+      	<p>blabla</p>
+      {% endblock %}
+      </div>
+      <footer>
+      {% block footer %}
+      {% endblock %}
+      </footer>
+      {% block modal %}
+      {% endblock %}
+    <script src="{{ asset("bundles/jlmoffice/js/jquery-1.8.0.min.js") }}"></script>
+    <script src="{{ asset("bundles/jlmoffice/js/jquery-ui-1.8.23.min.js") }}"></script>
+    <script src="{{ asset("bundles/jlmoffice/js/i18n/jquery.ui.datepicker-fr.js") }}"></script>
+    <script src="{{ asset("bundles/jlmoffice/js/bootstrap.min.js") }}"></script>
+    <script>
+		$('.dropdown-toggle').dropdown();
+		function dp() {
+		$('form input.date').datepicker({
+			dateFormat: 'dd/mm/yy',
+			firstDay:1,
+			changeMonth: true,
+			changeYear: true
+			}).attr("readonly","readonly");
+		}
+		dp();
+	{% block scripts %}
+	{% endblock scripts %}
+    </script>
+{% endblock %}
