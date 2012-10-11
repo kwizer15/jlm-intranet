@@ -11,15 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 class DocumentContentLine extends DocumentContent
-{
-	
-	/**
-	 * @var Product $product
-	 *
-	 * @ORM\ManyToOne(targetEntity="Product")
-	 */
-	private $product;
-	
+{	
 	/**
 	 * @var string $reference
 	 * 
@@ -153,25 +145,5 @@ class DocumentContentLine extends DocumentContent
     public function getDesignation()
     {
         return $this->designation;
-    }
-
-    /**
-     * Set product
-     *
-     * @param JLM\ModelBundle\Entity\Product $product
-     */
-    public function setProduct(\JLM\ModelBundle\Entity\Product $product)
-    {
-        $this->product = $product;
-    }
-
-    /**
-     * Get product
-     *
-     * @return JLM\ModelBundle\Entity\Product 
-     */
-    public function getProduct()
-    {
-        return $this->product;
     }
 }

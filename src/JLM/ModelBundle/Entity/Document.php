@@ -42,12 +42,12 @@ abstract class Document
     private $trustee;
        
     /**
-     * @var Door[] $doors
+     * @var Door $door
      *
      * @ORM\ManyToMany(targetEntity="Door", inversedBy="documents")
      * @ORM\JoinTable(name="documents_doors")
      */
-    private $doors;
+    private $door;
     
     /**
      * @var datetime $creation

@@ -21,13 +21,6 @@ class Door
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var Trustee[] $trustees
-     * 
-     * @ORM\ManyToMany(targetEntity="Trustee", mappedBy="doors")
-     */
-    private $trustees;
     
     /**
      * @var Address $address
@@ -39,7 +32,7 @@ class Door
     /**
      * @var Contract[] $contracts
      * 
-     * @ORM\ManyToMany(targetEntity="Contract", mappedBy="doors")
+     * @ORM\OneToMany(targetEntity="Contract", mappedBy="door")
      */
     private $contracts;
     
@@ -75,11 +68,11 @@ class Door
      * @ORM\Column(name="transmitter",type="string",length=255)
      */
     private $transmitters;
-    
+   
     /**
      * @var Document[] $documents
-     * 
-     * @ORM\ManyToMany(targetEntity="Document",mappedBy="doors")
+     *
+     * @ORM\OneToMany(targetEntity="Document",mappedBy="trustee")
      */
     private $documents;
     

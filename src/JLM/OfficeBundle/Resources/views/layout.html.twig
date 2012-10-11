@@ -16,6 +16,8 @@
 	        <a href="#" class="brand">JLM</a>
 	        <ul class="nav">
 		      {% block navigation %}
+		      <li><a href="{{ path('product') }}">Produits</a></li>	   
+		      <li><a href="{{ path('supplier') }}">Fournisseurs</a></li>	   
 		      	<li><a href="{{ path('trustee') }}">Client</a></li>	      	
 		      {% endblock %}
 		      </ul>

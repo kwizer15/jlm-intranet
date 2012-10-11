@@ -10,13 +10,20 @@ class EmailType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('user')
-            ->add('domain')
+            ->add('email','email',array('label'=>'Adresse'));
+            
         ;
     }
 
     public function getName()
     {
         return 'jlm_modelbundle_emailtype';
+    }
+    
+    public function getDefaultOptions(array $options)
+    {
+    	return array(
+    			'data_class' => 'JLM\ModelBundle\Entity\Email',
+    	);
     }
 }

@@ -22,18 +22,11 @@ class Email
     private $id;
 
     /**
-     * @var string $user
+     * @var string $email
      *
-     * @ORM\Column(name="user", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255)
      */
-    private $user;
-
-    /**
-     * @var string $domain
-     *
-     * @ORM\Column(name="domain", type="string", length=255)
-     */
-    private $domain;
+    private $email;
 
 
     /**
@@ -47,50 +40,31 @@ class Email
     }
 
     /**
-     * Set user
+     * Set email
      *
-     * @param string $user
+     * @param string $email
      */
-    public function setUser($user)
+    public function setEmail($email)
     {
-        $this->user = $user;
+        $this->email = $email;
     }
 
     /**
-     * Get user
+     * Get email
      *
      * @return string 
      */
-    public function getUser()
+    public function getEmail()
     {
-        return $this->user;
+        return $this->email;
     }
 
-    /**
-     * Set domain
-     *
-     * @param string $domain
-     */
-    public function setDomain($domain)
-    {
-        $this->domain = $domain;
-    }
-
-    /**
-     * Get domain
-     *
-     * @return string 
-     */
-    public function getDomain()
-    {
-        return $this->domain;
-    }
-
+   
     /**
      * To String
      */
     public function __toString()
     {
-    	return $this->user.'@'.$this->domain;
+    	return $this->email;
     }
 }

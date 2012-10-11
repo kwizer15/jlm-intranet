@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Product
 {
     /**
+     * Id
      * @var integer $id
      *
      * @ORM\Column(name="id", type="integer")
@@ -23,6 +24,7 @@ class Product
     private $id;
 
     /**
+     * Designation
      * @var string $designation
      *
      * @ORM\Column(name="designation", type="string", length=255)
@@ -30,13 +32,15 @@ class Product
     private $designation;
 
     /**
+     * Description longue
      * @var text $description
      * 
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
     
     /**
+     * Fournisseur principal
      * @var Supplier $supplier
      * 
      * @ORM\ManyToOne(targetEntity="Supplier")
@@ -44,6 +48,7 @@ class Product
     private $supplier;
     
     /**
+     * Reference produit
      * @var string $reference
      *
      * @ORM\Column(name="reference", type="string", length=16)
@@ -51,58 +56,119 @@ class Product
     private $reference;
 
     /**
+     * Code barre
      * @var string $barcode
      *
-     * @ORM\Column(name="barcode", type="string", length=255)
+     * @ORM\Column(name="barcode", type="string", length=255, nullable=true)
      */
     private $barcode;
 
     /**
+     * Marge (en %)
      * @var decimal $margin
-     *
-     * @ORM\Column(name="margin", type="decimal")
+     * 
+     * @ORM\Column(name="margin", type="smallint")
      */
     private $margin;
 
     /**
+     * Taux de TVA (en %)
      * @var integer $vat
-     *
-     * @ORM\Column(name="vat", type="integer")
+     * 
+     * @ORM\ManyToOne(targetEntity="VAT")
      */
     private $vat;
 
     /**
-     * @var LinkedFile $files
+     * Famille de produit
+     * @var ProductCategory $category
      * 
-     * @ORM\OneToMany(targetEntity="LinkedFile", mappedBy="product")
+     * ORM\ManyToOne(targetEntity="ProductCategory")
      */
-    private $files;
+    // private $category;
+    
+    /**
+     * Prix d'achat HT
+     * @var float $purchase
+     * 
+     * @ORM\Column(name="purchase",type="decimal", scale=2)
+     */
+    private $purchase;
+    
+    /**
+     * Taux de remise fournisseur (en %)
+     * @var float $discountSupplier
+     * 
+     * @ORM\Column(name="discount_supplier", type="smallint")
+     */
+    private $discountSupplier;
+    
+    /**
+     * Taux de frais (en %)
+     * @var float $expenseRatio
+     * 
+     * @ORM\Column(name="expense_ratio", type="smallint")
+     */
+    private $expenseRatio;
+    
+    /**
+     * Frais de port (en €)
+     * @var float $shipping
+     * 
+     * @ORM\Column(name="shipping", type="decimal", scale=2)
+     */
+    private $shipping;
+    
+    /**
+     * Unité (pièce, mètre...)
+     * @var string $unity
+     * 
+     * @ORM\Column(name="unity",type="string",length=255)
+     */
+    private $unity;
+    
+    /**
+     * Fichiers liés (plans, docs...)
+     * @var LinkedFile[] $files
+     * 
+     * ORM\OneToMany(targetEntity="LinkedFile", mappedBy="product")
+     */
+    // private $files;
 
+    /**
+     * Photo
+     * @var LinkedFile $picture
+     *
+     *
+     */
+    // private $picture;
+    
     /**
      * Pour les kits
      * @var Product[] $children
      * 
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="parent")
+     * ORM\OneToMany(targetEntity="Product", mappedBy="parent")
      */
-    private $children;
+    // private $children;
     
     /**
      * Pour les kits
      * @var Product $parent
      * 
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="children")
+     * ORM\ManyToOne(targetEntity="Product", inversedBy="children")
      */
-    private $parent;
+    // private $parent;
     
     /**
      * Constructor
      */
-    public function __construct()
-    {
-    	$this->files = new ArrayCollection;
-    	$this->children = new ArrayCollection;
-    }
+//    public function __construct()
+//    {
+//    	$this->files = new ArrayCollection;
+//    	$this->children = new ArrayCollection;
+//    }
     
+
     /**
      * Get id
      *
@@ -131,6 +197,26 @@ class Product
     public function getDesignation()
     {
         return $this->designation;
+    }
+
+    /**
+     * Set description
+     *
+     * @param text $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Get description
+     *
+     * @return text 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
@@ -194,11 +280,111 @@ class Product
     }
 
     /**
+     * Set purchase
+     *
+     * @param decimal $purchase
+     */
+    public function setPurchase($purchase)
+    {
+        $this->purchase = $purchase;
+    }
+
+    /**
+     * Get purchase
+     *
+     * @return decimal 
+     */
+    public function getPurchase()
+    {
+        return $this->purchase;
+    }
+
+    /**
+     * Set discountSupplier
+     *
+     * @param decimal $discountSupplier
+     */
+    public function setDiscountSupplier($discountSupplier)
+    {
+        $this->discountSupplier = $discountSupplier;
+    }
+
+    /**
+     * Get discountSupplier
+     *
+     * @return decimal 
+     */
+    public function getDiscountSupplier()
+    {
+        return $this->discountSupplier;
+    }
+
+    /**
+     * Set expenseRatio
+     *
+     * @param decimal $expenseRatio
+     */
+    public function setExpenseRatio($expenseRatio)
+    {
+        $this->expenseRatio = $expenseRatio;
+    }
+
+    /**
+     * Get expenseRatio
+     *
+     * @return decimal 
+     */
+    public function getExpenseRatio()
+    {
+        return $this->expenseRatio;
+    }
+
+    /**
+     * Set shipping
+     *
+     * @param decimal $shipping
+     */
+    public function setShipping($shipping)
+    {
+        $this->shipping = $shipping;
+    }
+
+    /**
+     * Get shipping
+     *
+     * @return decimal 
+     */
+    public function getShipping()
+    {
+        return $this->shipping;
+    }
+
+    /**
+     * Set unity
+     *
+     * @param string $unity
+     */
+    public function setUnity($unity)
+    {
+        $this->unity = $unity;
+    }
+
+    /**
+     * Get unity
+     *
+     * @return string 
+     */
+    public function getUnity()
+    {
+        return $this->unity;
+    }
+
+    /**
      * Set vat
      *
-     * @param integer $vat
+     * @param JLM\ModelBundle\Entity\VAT $vat
      */
-    public function setVat($vat)
+    public function setVat(\JLM\ModelBundle\Entity\VAT $vat)
     {
         $this->vat = $vat;
     }
@@ -206,31 +392,32 @@ class Product
     /**
      * Get vat
      *
-     * @return integer 
+     * @return JLM\ModelBundle\Entity\VAT 
      */
     public function getVat()
     {
         return $this->vat;
     }
-
-    /**
-     * Set description
-     *
-     * @param text $description
-     */
-    public function setDescription($description)
+    
+    public function getPurchasePrice()
     {
-        $this->description = $description;
+    	$pa = $this->getPurchase();
+    	$remise_fournisseur = $pa * ($this->getDiscountSupplier()/100);
+    	$pa -= $remise_fournisseur;
+    	$frais = $pa * ($this->getExpenseRatio()/100);
+    	$pa += $frais;
+    	$pa += $this->getShipping();
+    	return $pa;
     }
-
-    /**
-     * Get description
-     *
-     * @return text 
-     */
-    public function getDescription()
+    
+    public function getSellPrice()
     {
-        return $this->description;
+    	return ($this->getPurchasePrice() + $this->getMarginValue());
+    }
+    
+    public function getMarginValue()
+    {
+    	return $this->getPurchasePrice() * ($this->getMargin()/100);
     }
 
     /**
@@ -251,65 +438,5 @@ class Product
     public function getSupplier()
     {
         return $this->supplier;
-    }
-
-    /**
-     * Add files
-     *
-     * @param JLM\ModelBundle\Entity\LinkedFile $files
-     */
-    public function addLinkedFile(\JLM\ModelBundle\Entity\LinkedFile $files)
-    {
-        $this->files[] = $files;
-    }
-
-    /**
-     * Get files
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getFiles()
-    {
-        return $this->files;
-    }
-
-    /**
-     * Add children
-     *
-     * @param JLM\ModelBundle\Entity\Product $children
-     */
-    public function addProduct(\JLM\ModelBundle\Entity\Product $children)
-    {
-        $this->children[] = $children;
-    }
-
-    /**
-     * Get children
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
-     * Set parent
-     *
-     * @param JLM\ModelBundle\Entity\Product $parent
-     */
-    public function setParent(\JLM\ModelBundle\Entity\Product $parent)
-    {
-        $this->parent = $parent;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return JLM\ModelBundle\Entity\Product 
-     */
-    public function getParent()
-    {
-        return $this->parent;
     }
 }

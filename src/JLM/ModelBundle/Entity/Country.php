@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Country
 {
     /**
-     * @var integer $id
+     * @var string $code
      *
      * @ORM\Column(name="code", type="string", length=2)
      * @ORM\Id

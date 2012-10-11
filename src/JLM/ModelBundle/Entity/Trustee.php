@@ -69,11 +69,17 @@ class Trustee
     /**
      * @var Door[] $doors
      * 
-     * @ORM\ManyToMany(targetEntity="Door", inversedBy="trustees")
-     * @ORM\JoinTable(name="trustees_doors")
+     * @ORM\OneToMany(targetEntity="Contract", mappedBy="trustee")
      */
-    private $doors;
+    private $contracts;
 
+    /**
+     * @var Document[] $documents
+     *
+     * @ORM\OneToMany(targetEntity="Document",mappedBy="trustee")
+     */
+    private $documents;
+    
     /**
      * Constructor
      */

@@ -37,12 +37,17 @@ class Contract
     private $type;
     
     /**
-     * @var Door[] $doors
+     * @var Trustee $trustee
      * 
-     * @ORM\ManyToMany(targetEntity="Door", inversedBy="contracts")
-     * @ORM\JoinTable(name="contracts_doors")
+     * @ORM\ManyToOne(targetEntity="Trustee", inversedBy="contracts")
      */
-    private $doors;
+    
+    /**
+     * @var Door $door
+     * 
+     * @ORM\ManyToOne(targetEntity="Door", inversedBy="contracts")
+     */
+    private $door;
     
     /**
      * @var datetime $begin
@@ -71,7 +76,7 @@ class Contract
      * @ORM\Column(name="turnover", type="decimal")
      */
     private $turnover;
-
+    
     /**
      * Constructor
      */

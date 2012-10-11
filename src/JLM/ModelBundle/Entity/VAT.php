@@ -5,12 +5,12 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * JLM\ModelBundle\Entity\Phone
+ * JLM\ModelBundle\Entity\VAT
  *
- * @ORM\Table(name="phones")
+ * @ORM\Table(name="vat")
  * @ORM\Entity
  */
-class Phone
+class VAT
 {
     /**
      * @var integer $id
@@ -22,11 +22,11 @@ class Phone
     private $id;
 
     /**
-     * @var string $number
+     * @var int $rate
      *
-     * @ORM\Column(name="number", type="string", length=16)
+     * @ORM\Column(name="rate", type="decimal", scale=1)
      */
-    private $number;
+    private $rate;
 
 
     /**
@@ -40,30 +40,32 @@ class Phone
     }
 
     /**
-     * Set number
+     * Set name
      *
-     * @param integer $number
+     * @param int $rate
      */
-    public function setNumber($number)
+    public function setRate($rate)
     {
-        $this->number = $number;
+        $this->rate = $rate;
     }
 
     /**
-     * Get number
+     * Get rate
      *
-     * @return integer 
+     * @return int 
      */
-    public function getNumber()
+    public function getRate()
     {
-        return $this->number;
+        return $this->rate;
     }
     
     /**
      * To String
+     * 
+     * @return string
      */
     public function __toString()
     {
-    	return $this->number.'';
+    	return str_replace('.',',',number_format($this->rate,1)).' %';
     }
 }

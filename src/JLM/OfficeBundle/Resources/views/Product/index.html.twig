@@ -1,0 +1,38 @@
+{% extends "JLMOfficeBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Liste des produits</h1>
+
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>Reference</th>
+            <th>Désignation</th>
+            <th>Unité</th>
+            <th>Prix catalogue HT</th>
+            <th>Prix de vente HT</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            
+            <td><a href="{{ path('product_show', { 'id': entity.id }) }}">{{ entity.reference }}</a></td>
+            <td>{{ entity.designation }}</td>
+            <td>{{ entity.unity }}</td>
+            <td>{{ entity.purchase|number_format(2, ',', ' ') }} €</td>
+            <td>{{ entity.sellPrice|number_format(2, ',', ' ') }} €</td>
+            <td>
+            	<a href="{{ path('product_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
+                <a href="{{ path('product_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i></a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="form-actions">
+<a href="{{ path('product_new') }}" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer un nouveau produit</a>
+</div>
+{% endblock %}

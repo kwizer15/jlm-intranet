@@ -10,12 +10,19 @@ class PhoneType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('number')
+            ->add('number',null,array('label'=>'Numéro'))
         ;
     }
 
     public function getName()
     {
         return 'jlm_modelbundle_phonetype';
+    }
+    
+    public function getDefaultOptions(array $options)
+    {
+    	return array(
+    			'data_class' => 'JLM\ModelBundle\Entity\Phone',
+    	);
     }
 }

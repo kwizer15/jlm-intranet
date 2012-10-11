@@ -1,0 +1,33 @@
+{% extends "JLMOfficeBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Liste des fournisseurs</h1>
+
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Téléphone</th>
+            <th>E-mail</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('supplier_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+            <td>{{ entity.phone }}</td>
+            <td>{{ entity.email }}</td>
+            <td>
+                <a href="{{ path('supplier_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
+                <a href="{{ path('supplier_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i></a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="form-actions">
+<a href="{{ path('supplier_new') }}" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer un nouveau produit</a>
+</div>
+{% endblock %}

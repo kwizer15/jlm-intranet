@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * JLM\ModelBundle\Entity\Zip
  *
- * @ORM\Table()
+ * @ORM\Table(name="zip")
  * @ORM\Entity
  */
 class Zip

@@ -18,4 +18,11 @@ class CityType extends AbstractType
     {
         return 'jlm_modelbundle_citytype';
     }
+    
+    public function getDefaultOptions(array $options)
+    {
+    	return array(
+    			'data_class' => 'JLM\ModelBundle\Entity\City',
+    	);
+    }
 }
