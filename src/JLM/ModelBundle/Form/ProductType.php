@@ -12,6 +12,7 @@ class ProductType extends AbstractType
         $builder
        		->add('reference',null,array('label'=>'Référence','attr'=>array('class'=>'input-small')))
        		->add('barcode',null,array('label'=>'Code barre','required'=>false,'attr'=>array('class'=>'input-xlarge')))
+            ->add('category',null,array('label'=>'Famille de produit'))
             ->add('designation',null,array('label'=>'Designation','attr'=>array('class'=>'input-xxlarge')))
             ->add('description',null,array('label'=>'Description longue','required'=>false,'attr'=>array('class'=>'input-xxlarge')))
             ->add('supplier',null,array('label'=>'Fournisseur'))

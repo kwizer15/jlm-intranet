@@ -1,45 +1,23 @@
 {% extends "JLMOfficeBundle::layout.html.twig" %}
 
 {% block content %}
-<h1>Trustee</h1>
+<h1>{{ entity.name }}</h1>
 
-<table class="record_properties">
+<table class="table">
     <tbody>
+    <tr>
+    <th>Numéro de compte</th>
+    <td>{{ entity.accountNumber }}</td>
+    </tr>
         <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Name</th>
-            <td>{{ entity.name }}</td>
-        </tr>
-        <tr>
-            <th>Accession</th>
-            <td>{{ entity.accession }}</td>
-        </tr>
-        <tr>
-            <th>Accountnumber</th>
-            <td>{{ entity.accountNumber }}</td>
+            <th>Accession / Social</th>
+            <td>{{ entity.accession ? 'Accession' : 'Social' }}</td>
         </tr>
     </tbody>
 </table>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('trustee') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('trustee_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('trustee_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+<div class="form-actions">
+	<a href="{{ path('trustee') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	<a href="{{ path('trustee_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+</div>
 {% endblock %}

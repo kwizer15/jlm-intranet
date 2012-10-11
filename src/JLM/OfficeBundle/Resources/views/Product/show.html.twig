@@ -23,6 +23,10 @@
 <table class="table table-bordered table-striped">
     <tbody>
     	<tr>
+            <th>Famille</th>
+            <td>{% if entity.category %}{{ entity.category }}{% endif %}</td>
+        </tr>
+    	<tr>
             <th>Fournisseur</th>
             <td>{% if entity.supplier %}<a href="{{ path('supplier_show',{ 'id' : entity.supplier.id }) }}">{{ entity.supplier }}</a>{% endif %}</td>
         </tr>
@@ -61,11 +65,8 @@
     </tbody>
 </table>
 <div class="form-actions">
-<form action="{{ path('product_delete', { 'id': entity.id }) }}" method="post">
-	{{ form_widget(delete_form) }}
 	<a href="{{ path('product') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
 	<a href="{{ path('product_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
-	<button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i> Supprimer</button>
 </form>
 </div>
 {% endblock %}

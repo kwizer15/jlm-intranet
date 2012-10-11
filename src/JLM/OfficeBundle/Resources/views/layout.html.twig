@@ -16,9 +16,10 @@
 	        <a href="#" class="brand">JLM</a>
 	        <ul class="nav">
 		      {% block navigation %}
+		      <li><a href="{{ path('trustee') }}">Syndics</a></li>
 		      <li><a href="{{ path('product') }}">Produits</a></li>	   
 		      <li><a href="{{ path('supplier') }}">Fournisseurs</a></li>	   
-		      	<li><a href="{{ path('trustee') }}">Client</a></li>	      	
+		      		      	
 		      {% endblock %}
 		      </ul>
 	        
@@ -35,10 +36,23 @@
 	    </div>
     </div>
       
-      <div class="container">
-      {% block content %}
-      	<p>blabla</p>
-      {% endblock %}
+      <div class="container-fluid">
+      <div class="row-fluid">
+	      <div class="span2">
+		      {% block sidebar %}
+		        <ul class="nav nav-tabs nav-stacked">
+		        <li><a href="{{ path('trustee') }}">Syndics</a></li>
+		      <li><a href="{{ path('product') }}">Produits</a></li>	   
+		      <li><a href="{{ path('supplier') }}">Fournisseurs</a></li>
+    			</ul>
+		      {% endblock %}
+	      </div>
+	      <div class="span10">
+		      {% block content %}
+		      <p>blabla</p>
+		      {% endblock %}
+	      </div>
+      </div>
       </div>
       <footer>
       {% block footer %}

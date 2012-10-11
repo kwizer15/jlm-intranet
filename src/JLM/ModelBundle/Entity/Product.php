@@ -83,9 +83,9 @@ class Product
      * Famille de produit
      * @var ProductCategory $category
      * 
-     * ORM\ManyToOne(targetEntity="ProductCategory")
+     * @ORM\ManyToOne(targetEntity="ProductCategory")
      */
-    // private $category;
+    private $category;
     
     /**
      * Prix d'achat HT
@@ -438,5 +438,25 @@ class Product
     public function getSupplier()
     {
         return $this->supplier;
+    }
+
+    /**
+     * Set category
+     *
+     * @param JLM\ModelBundle\Entity\ProductCategory $category
+     */
+    public function setCategory(\JLM\ModelBundle\Entity\ProductCategory $category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * Get category
+     *
+     * @return JLM\ModelBundle\Entity\ProductCategory 
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

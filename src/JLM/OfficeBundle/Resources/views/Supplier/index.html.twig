@@ -26,7 +26,13 @@
     {% endfor %}
     </tbody>
 </table>
-
+<div class="pagination pagination-centered">
+	    <ul>
+		    <li class="disabled"><a href="#">«</a></li>
+		    <li class="active"><a href="#">1</a></li>
+		    <li class="disabled"><a href="#">»</a></li>
+	    </ul>
+    </div>
 <div class="form-actions">
 <a href="{{ path('supplier_new') }}" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer un nouveau produit</a>
 </div>
