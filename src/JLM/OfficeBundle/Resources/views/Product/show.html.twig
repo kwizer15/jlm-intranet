@@ -24,7 +24,7 @@
     <tbody>
     	<tr>
             <th>Famille</th>
-            <td>{% if entity.category %}{{ entity.category }}{% endif %}</td>
+            <td>{% if entity.category %}<a href="{{ path('productcategory_show',{ 'id' : entity.category.id }) }}">{{ entity.category }}</a>{% endif %}</td>
         </tr>
     	<tr>
             <th>Fournisseur</th>
@@ -67,6 +67,5 @@
 <div class="form-actions">
 	<a href="{{ path('product') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
 	<a href="{{ path('product_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
-</form>
 </div>
 {% endblock %}

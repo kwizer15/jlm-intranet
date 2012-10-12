@@ -11,12 +11,11 @@ class TrusteeType extends AbstractType
     {
         $builder
             ->add('name',null,array('label'=>'Nom'))
+            ->add('interlocutors','collection',array('label'=>'Interlocuteurs'))
             ->add('accession','choice',array('label'=>'Accession/Social','choices'=>array('1'=>'Accession','0'=>'Social'),'expanded'=>true,'multiple'=>false))
             ->add('accountNumber',null,array('label'=>'Numéro de compte'))
-            ->add('mainAddress', new AddressType,array('label'=>'Adresse'))
-            ->add('billingAddress', new AddressType,array('label'=>'Adresse de facturation (si différente)','required'=>false))
-            ->add('doors','collection',array('label'=>'Portes'))
-            ->add('interlocutors','collection',array('label'=>'Interlocuteurs'))
+            ->add('contracts','collection',array('label'=>'Contrats')) // contrat -----> portes
+            
         ;
     }
 

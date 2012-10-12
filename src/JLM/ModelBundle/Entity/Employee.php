@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * JLM\ModelBundle\Entity\Employee
@@ -20,11 +21,21 @@ class Employee extends Person
     private $role;
 
     /**
-     * @var Supplier $supplier
+     * @var Company[] $companies
      * 
-     * @ORM\ManyToOne(targetEntity="Supplier", inversedBy="employees")
+     * @ORM\ManyToMany(targetEntity="Company", inversedBy="employees")
+     * @ORM\JoinTable(name="employees_companies")
      */
-    private $supplier;
+    private $companies;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+    	parent::__construct();
+    	$this->companies = new ArrayCollection;
+    }
 
     /**
      * Set role
@@ -47,22 +58,22 @@ class Employee extends Person
     }
 
     /**
-     * Set supplier
+     * Add companies
      *
-     * @param JLM\ModelBundle\Entity\Supplier $supplier
+     * @param JLM\ModelBundle\Entity\Company $companies
      */
-    public function setSupplier(\JLM\ModelBundle\Entity\Supplier $supplier)
+    public function addCompany(\JLM\ModelBundle\Entity\Company $companies)
     {
-        $this->supplier = $supplier;
+        $this->companies[] = $companies;
     }
 
     /**
-     * Get supplier
+     * Get companies
      *
-     * @return JLM\ModelBundle\Entity\Supplier 
+     * @return Doctrine\Common\Collections\Collection 
      */
-    public function getSupplier()
+    public function getCompanies()
     {
-        return $this->supplier;
+        return $this->companies;
     }
 }

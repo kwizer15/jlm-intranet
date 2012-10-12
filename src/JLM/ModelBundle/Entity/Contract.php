@@ -41,6 +41,7 @@ class Contract
      * 
      * @ORM\ManyToOne(targetEntity="Trustee", inversedBy="contracts")
      */
+    private $trustee;
     
     /**
      * @var Door $door
@@ -59,14 +60,14 @@ class Contract
     /**
      * @var datetime $endWarranty
      *
-     * @ORM\Column(name="endWarranty", type="datetime")
+     * @ORM\Column(name="endWarranty", type="datetime", nullable=true)
      */
     private $endWarranty;
 
     /**
      * @var datetime $end
      *
-     * @ORM\Column(name="end", type="datetime")
+     * @ORM\Column(name="end", type="datetime", nullable=true)
      */
     private $end;
 
@@ -76,14 +77,6 @@ class Contract
      * @ORM\Column(name="turnover", type="decimal")
      */
     private $turnover;
-    
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-    	$this->doors = new ArrayCollection;
-    }
 
     /**
      * Get id
@@ -216,22 +209,42 @@ class Contract
     }
 
     /**
-     * Add doors
+     * Set trustee
      *
-     * @param JLM\ModelBundle\Entity\Door $doors
+     * @param JLM\ModelBundle\Entity\Trustee $trustee
      */
-    public function addDoor(\JLM\ModelBundle\Entity\Door $doors)
+    public function setTrustee(\JLM\ModelBundle\Entity\Trustee $trustee)
     {
-        $this->doors[] = $doors;
+        $this->trustee = $trustee;
     }
 
     /**
-     * Get doors
+     * Get trustee
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return JLM\ModelBundle\Entity\Trustee 
      */
-    public function getDoors()
+    public function getTrustee()
     {
-        return $this->doors;
+        return $this->trustee;
+    }
+
+    /**
+     * Set door
+     *
+     * @param JLM\ModelBundle\Entity\Door $door
+     */
+    public function setDoor(\JLM\ModelBundle\Entity\Door $door)
+    {
+        $this->door = $door;
+    }
+
+    /**
+     * Get door
+     *
+     * @return JLM\ModelBundle\Entity\Door 
+     */
+    public function getDoor()
+    {
+        return $this->door;
     }
 }

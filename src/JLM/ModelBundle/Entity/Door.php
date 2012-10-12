@@ -23,9 +23,9 @@ class Door
     private $id;
     
     /**
-     * @var Address $address
+     * @var string $address_street
      * 
-     * @ORM\ManyToOne(targetEntity="Address")
+     * @ORM\OneToOne(targetEntity="Address")
      */
     private $address;
     

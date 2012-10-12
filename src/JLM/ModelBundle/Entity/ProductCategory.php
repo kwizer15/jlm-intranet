@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * JLM\ModelBundle\Entity\ProductCategory
@@ -85,7 +86,7 @@ class ProductCategory
      *
      * @param JLM\ModelBundle\Entity\ProductCategory $parent
      */
-    public function setParent(\JLM\ModelBundle\Entity\ProductCategory $parent)
+    public function setParent($parent)
     {
         $this->parent = $parent;
     }
@@ -105,7 +106,7 @@ class ProductCategory
      *
      * @param JLM\ModelBundle\Entity\ProductCategory $children
      */
-    public function addProductCategory(\JLM\ModelBundle\Entity\ProductCategory $children)
+    public function addProductCategory($children)
     {
         $this->children[] = $children;
     }
@@ -118,5 +119,13 @@ class ProductCategory
     public function getChildren()
     {
         return $this->children;
+    }
+    
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+    	return $this->name;
     }
 }

@@ -10,8 +10,8 @@ class ProductCategoryType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('parent')
+            ->add('name',null,array('label'=>'Nom'))
+            ->add('parent',null,array('required'=>false,'label'=>'Famille parente'))
         ;
     }
 

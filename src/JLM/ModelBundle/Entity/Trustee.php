@@ -11,45 +11,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="trustees")
  * @ORM\Entity
  */
-class Trustee
+class Trustee extends Company
 {
-    /**
-     * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
-     * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=255)
-     */
-    private $name;
-
-    /**
-     * @var Interlocutor[] $interlocutors
-     * 
-     * @ORM\OneToMany(targetEntity="Interlocutor", mappedBy="trustee")
-     */
-    private $interlocutors;
-    
-    /**
-     * @var Address $mainAddress
-     *
-     * @ORM\ManyToOne(targetEntity="Address")
-     */
-    private $mainAddress;
-    
-    /**
-     * @var Address $billingAddress
-     * 
-     * @ORM\ManyToOne(targetEntity="Address")
-     */
-    private $billingAddress;
-    
     /**
      * @var boolean $accession
      * true = accession
@@ -85,38 +48,9 @@ class Trustee
      */
     public function __construct()
     {
-    	$this->interlocutors = new ArrayCollection;
-    	$this->doors = new ArrayCollection;
-    }
-    
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
+    	self::parent();
+    	$this->documents = new ArrayCollection;
+    	$this->contracts = new ArrayCollection;
     }
 
     /**
@@ -160,90 +94,42 @@ class Trustee
     }
 
     /**
-     * Add interlocutors
+     * Add contracts
      *
-     * @param JLM\ModelBundle\Entity\Interlocutor $interlocutors
+     * @param JLM\ModelBundle\Entity\Contract $contracts
      */
-    public function addInterlocutor(\JLM\ModelBundle\Entity\Interlocutor $interlocutors)
+    public function addContract(\JLM\ModelBundle\Entity\Contract $contracts)
     {
-        $this->interlocutors[] = $interlocutors;
+        $this->contracts[] = $contracts;
     }
 
     /**
-     * Get interlocutors
+     * Get contracts
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getInterlocutors()
+    public function getContracts()
     {
-        return $this->interlocutors;
+        return $this->contracts;
     }
 
     /**
-     * Set mainAddress
+     * Add documents
      *
-     * @param JLM\ModelBundle\Entity\Address $mainAddress
+     * @param JLM\ModelBundle\Entity\Document $documents
      */
-    public function setMainAddress(\JLM\ModelBundle\Entity\Address $mainAddress)
+    public function addDocument(\JLM\ModelBundle\Entity\Document $documents)
     {
-        $this->mainAddress = $mainAddress;
+        $this->documents[] = $documents;
     }
 
     /**
-     * Get mainAddress
-     *
-     * @return JLM\ModelBundle\Entity\Address 
-     */
-    public function getMainAddress()
-    {
-        return $this->mainAddress;
-    }
-
-    /**
-     * Set billingAddress
-     *
-     * @param JLM\ModelBundle\Entity\Address $billingAddress
-     */
-    public function setBillingAddress(\JLM\ModelBundle\Entity\Address $billingAddress)
-    {
-        $this->billingAddress = $billingAddress;
-    }
-
-    /**
-     * Get billingAddress
-     *
-     * @return JLM\ModelBundle\Entity\Address 
-     */
-    public function getBillingAddress()
-    {
-        return $this->billingAddress;
-    }
-
-    /**
-     * Add doors
-     *
-     * @param JLM\ModelBundle\Entity\Door $doors
-     */
-    public function addDoor(\JLM\ModelBundle\Entity\Door $doors)
-    {
-        $this->doors[] = $doors;
-    }
-
-    /**
-     * Get doors
+     * Get documents
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getDoors()
+    public function getDocuments()
     {
-        return $this->doors;
-    }
-    
-    /**
-     * To String
-     */
-    public function __toString()
-    {
-    	return $this->name;
+        return $this->documents;
     }
 }

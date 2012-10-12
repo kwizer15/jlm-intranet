@@ -1,0 +1,35 @@
+{% extends "JLMOfficeBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Liste des familles de produit</h1>
+
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Famille parente</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('productcategory_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+            <td>{% if entity.parent %}<a href="{{ path('productcategory_show', { 'id': entity.parent.id }) }}">{{ entity.parent }}</a>{% endif %}</td>
+            <td><a href="{{ path('productcategory_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
+                <a href="{{ path('productcategory_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i></a></td>
+        </tr>
+    {% endfor %}
+   </tbody>
+</table>
+    <div class="pagination pagination-centered">
+	    <ul>
+		    <li class="disabled"><a href="#">«</a></li>
+		    <li class="active"><a href="#">1</a></li>
+		    <li class="disabled"><a href="#">»</a></li>
+	    </ul>
+    </div>
+<div class="form-actions">
+<a href="{{ path('productcategory_new') }}" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer une nouvelle famille produit</a>
+</div>
+{% endblock %}

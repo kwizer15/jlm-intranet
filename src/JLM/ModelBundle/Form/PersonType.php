@@ -21,4 +21,11 @@ class PersonType extends AbstractType
     {
         return 'jlm_modelbundle_persontype';
     }
+    
+    public function getDefaultOptions(array $options)
+    {
+    	return array(
+    			'data_class' => 'JLM\ModelBundle\Entity\Person',
+    	);
+    }
 }

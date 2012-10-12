@@ -6,10 +6,11 @@
 <table class="table table-stripped">
     <thead>
         <tr>
-            <th>Reference</th>
+            <th>Référence</th>
             <th>Désignation</th>
+            <th>Famille</th>
             <th>Unité</th>
-            <th>Prix catalogue HT</th>
+            <th>Prix d'achat HT</th>
             <th>Prix de vente HT</th>
             <th></th>
         </tr>
@@ -17,11 +18,11 @@
     <tbody>
     {% for entity in entities %}
         <tr>
-            
             <td><a href="{{ path('product_show', { 'id': entity.id }) }}">{{ entity.reference }}</a></td>
             <td>{{ entity.designation }}</td>
+            <td>{% if entity.category %}<a href="{{ path('productcategory_show', { 'id': entity.category.id }) }}">{{ entity.category }}</a>{% endif %}</td>
             <td>{{ entity.unity }}</td>
-            <td>{{ entity.purchase|number_format(2, ',', ' ') }} €</td>
+            <td>{{ entity.purchasePrice|number_format(2, ',', ' ') }} €</td>
             <td>{{ entity.sellPrice|number_format(2, ',', ' ') }} €</td>
             <td>
             	<a href="{{ path('product_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>

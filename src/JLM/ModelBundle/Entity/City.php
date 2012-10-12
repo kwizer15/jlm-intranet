@@ -32,18 +32,17 @@ class City
     /**
      * @var string $zips
      * 
-     * @ORM\ManyToMany(targetEntity="Zip", inversedBy="cities")
-     * @ORM\JoinTable(name="cities_zips")
+     * @ORM\Column(name="zip",type="string",length=10)
      */
-    private $zips;
-
+    private $zip;
+    
     /**
-     * Constructor
+     * @var Country $country
+     * 
+     * @ORM\ManyToOne(targetEntity="Country")
+     * @ORM\JoinColumn(name="country_code", referencedColumnName="code")
      */
-    public function __construct()
-    {
-    	$this->zips = new ArrayCollection;
-    }
+    private $country;
     
     /**
      * Get id
@@ -80,6 +79,46 @@ class City
      */
     public function __toString()
     {
-    	return $this->name;
+    	return $this->getName().' ('.$this->getZip().')';
+    }
+
+    /**
+     * Set zip
+     *
+     * @param string $zip
+     */
+    public function setZip($zip)
+    {
+        $this->zip = $zip;
+    }
+
+    /**
+     * Get zip
+     *
+     * @return string 
+     */
+    public function getZip()
+    {
+        return $this->zip;
+    }
+
+    /**
+     * Set country
+     *
+     * @param JLM\ModelBundle\Entity\Country $country
+     */
+    public function setCountry(\JLM\ModelBundle\Entity\Country $country)
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * Get country
+     *
+     * @return JLM\ModelBundle\Entity\Country 
+     */
+    public function getCountry()
+    {
+        return $this->country;
     }
 }

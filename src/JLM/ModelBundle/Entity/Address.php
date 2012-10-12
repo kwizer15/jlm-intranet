@@ -20,42 +20,28 @@ class Address
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+    
+    /**
+     * Adresse de facturation
+     * @var bool $billing;
+     * 
+     * @ORM\Column(name="billing", type="boolean")
+     */
+    private $billing;
+    
     /**
      * @var string $street
      *
-     * @ORM\Column(name="street", type="string", length=255)
+     * @ORM\Column(name="street", type="text")
      */
     private $street;
-
-    /**
-     * @var string $box
-     *
-     * @ORM\Column(name="box", type="smallint", nullable=true)
-     */
-    private $box;
     
-    /**
-     * @var string $zip
-     *
-     * @ORM\ManyToOne(targetEntity="Zip")
-     */
-    private $zip;
-
     /**
      * @var string $city
      *
      * @ORM\ManyToOne(targetEntity="City")
      */
     private $city;
-   
-    /**
-     * @var string $supplement
-     *
-     * @ORM\Column(name="supplement", type="string", length=255, nullable=true)
-     */
-    private $supplement;
-
     
     /**
      * Get id
@@ -88,46 +74,6 @@ class Address
     }
 
     /**
-     * Set box
-     *
-     * @param string $box
-     */
-    public function setBox($box)
-    {
-    	$this->box = $box;
-    }
-    
-    /**
-     * Get box
-     *
-     * @return string
-     */
-    public function getBox()
-    {
-    	return $this->box;
-    }
-    
-    /**
-     * Set zip
-     *
-     * @param string $zip
-     */
-    public function setZip($zip)
-    {
-        $this->zip = $zip;
-    }
-
-    /**
-     * Get zip
-     *
-     * @return string 
-     */
-    public function getZip()
-    {
-        return $this->zip;
-    }
-
-    /**
      * Set city
      *
      * @param string $city
@@ -148,43 +94,22 @@ class Address
     }
 
     /**
-     * Set supplement
+     * Set billing
      *
-     * @param string $supplement
+     * @param boolean $billing
      */
-    public function setSupplement($supplement)
+    public function setBilling($billing)
     {
-    	$this->supplement = $supplement;
-    }
-    
-    /**
-     * Get supplement
-     *
-     * @return string
-     */
-    public function getSupplement()
-    {
-    	return $this->supplement;
-    }
-    
-    /**
-     * Set Country
-     *
-     * @param Country $country
-     */
-    public function setCountry(Country $country)
-    {
-    	$this->country = $country;
-    }
-    
-    /**
-     * Get Country
-     * 
-     * @return Country
-     */
-    public function getCountry()
-    {
-    	return $this->country;
+        $this->billing = $billing;
     }
 
+    /**
+     * Get billing
+     *
+     * @return boolean 
+     */
+    public function getBilling()
+    {
+        return $this->billing;
+    }
 }

@@ -33,37 +33,6 @@ class Country
      * @ORM\Column(name="phone_prefix", type="integer")
      */
     private $phonePrefix;
-    
-    
-    /**
-     * Get code
-     *
-     * @return integer
-     */
-    public function getCode()
-    {
-    	return $this->code;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    /**
-     * Get phonePrefix
-     * 
-     * @return integer
-     */
-    public function getPhonePrefix()
-    {
-    	return $this->phonePrefix;
-    }
 
     /**
      * Set code
@@ -73,6 +42,16 @@ class Country
     public function setCode($code)
     {
         $this->code = $code;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string 
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 
     /**
@@ -86,6 +65,16 @@ class Country
     }
 
     /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * Set phonePrefix
      *
      * @param integer $phonePrefix
@@ -93,5 +82,23 @@ class Country
     public function setPhonePrefix($phonePrefix)
     {
         $this->phonePrefix = $phonePrefix;
+    }
+
+    /**
+     * Get phonePrefix
+     *
+     * @return integer 
+     */
+    public function getPhonePrefix()
+    {
+        return $this->phonePrefix;
+    }
+    
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+    	return $this->getName();
     }
 }

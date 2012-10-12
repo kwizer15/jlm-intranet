@@ -21,13 +21,29 @@ class Phone
      */
     private $id;
 
+	/**
+	 * Fax
+	 * @var bool $fax
+	 * 
+	 * @ORM\Column(name="fax", type="boolean")
+	 */
+    private $fax;
+    
+    /**
+     * Prefix
+     * @var Country $country
+     * 
+     * @ORM\ManyToOne(targetEntity="Country")
+     * @ORM\JoinColumn(name="country_code", referencedColumnName="code")
+     */
+    private $country;
+    
     /**
      * @var string $number
      *
-     * @ORM\Column(name="number", type="string", length=16)
+     * @ORM\Column(name="number", type="string", length=20)
      */
     private $number;
-
 
     /**
      * Get id
@@ -42,17 +58,17 @@ class Phone
     /**
      * Set number
      *
-     * @param integer $number
+     * @param string $number
      */
     public function setNumber($number)
     {
-        $this->number = $number;
+        $this->number = str_replace(array(' ',',','.','-','/'),'',$number);
     }
 
     /**
      * Get number
      *
-     * @return integer 
+     * @return string
      */
     public function getNumber()
     {
@@ -64,6 +80,46 @@ class Phone
      */
     public function __toString()
     {
-    	return $this->number.'';
+    	return $this->getNumber();
+    }
+
+    /**
+     * Set fax
+     *
+     * @param boolean $fax
+     */
+    public function setFax($fax)
+    {
+        $this->fax = $fax;
+    }
+
+    /**
+     * Get fax
+     *
+     * @return boolean 
+     */
+    public function getFax()
+    {
+        return $this->fax;
+    }
+
+    /**
+     * Set country
+     *
+     * @param JLM\ModelBundle\Entity\Country $country
+     */
+    public function setCountry(\JLM\ModelBundle\Entity\Country $country)
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * Get country
+     *
+     * @return JLM\ModelBundle\Entity\Country 
+     */
+    public function getCountry()
+    {
+        return $this->country;
     }
 }

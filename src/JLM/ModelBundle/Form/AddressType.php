@@ -10,11 +10,9 @@ class AddressType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('street',null,array('label'=>'Rue'))
-            ->add('box',null,array('label'=>'Boite postale','required'=>false))
-            ->add('zip',null,array('label'=>'Code postal'))
+            ->add('street',null,array('label'=>'Adresse'))
             ->add('city',null,array('label'=>'Ville'))
-            ->add('supplement',null,array('label'=>'Supplément','required'=>false))
+            ->add('billing',null,array('label'=>'Adresse de facturation'))
         ;
     }
 

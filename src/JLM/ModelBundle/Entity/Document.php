@@ -30,7 +30,7 @@ abstract class Document
     /**
      * @var Collaborator $follower
      * 
-     * @ORM\ManyToOne(targetEntity="Collaborator")
+     * @ORM\ManyToOne(targetEntity="Employee")
      */
     private $follower;
     
@@ -315,5 +315,15 @@ abstract class Document
     public function getContents()
     {
         return $this->contents;
+    }
+
+    /**
+     * Get door
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getDoor()
+    {
+        return $this->door;
     }
 }

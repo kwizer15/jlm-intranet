@@ -16,10 +16,7 @@
 	        <a href="#" class="brand">JLM</a>
 	        <ul class="nav">
 		      {% block navigation %}
-		      <li><a href="{{ path('trustee') }}">Syndics</a></li>
-		      <li><a href="{{ path('product') }}">Produits</a></li>	   
-		      <li><a href="{{ path('supplier') }}">Fournisseurs</a></li>	   
-		      		      	
+   		      	
 		      {% endblock %}
 		      </ul>
 	        
@@ -42,6 +39,7 @@
 		      {% block sidebar %}
 		        <ul class="nav nav-tabs nav-stacked">
 		        <li><a href="{{ path('trustee') }}">Syndics</a></li>
+		        <li><a href="{{ path('productcategory') }}">Familles de produits</a></li>
 		      <li><a href="{{ path('product') }}">Produits</a></li>	   
 		      <li><a href="{{ path('supplier') }}">Fournisseurs</a></li>
     			</ul>
@@ -60,22 +58,51 @@
       </footer>
       {% block modal %}
       {% endblock %}
-    <script src="{{ asset("bundles/jlmoffice/js/jquery-1.8.0.min.js") }}"></script>
-    <script src="{{ asset("bundles/jlmoffice/js/jquery-ui-1.8.23.min.js") }}"></script>
-    <script src="{{ asset("bundles/jlmoffice/js/i18n/jquery.ui.datepicker-fr.js") }}"></script>
+    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
     <script src="{{ asset("bundles/jlmoffice/js/bootstrap.min.js") }}"></script>
     <script>
-		$('.dropdown-toggle').dropdown();
-		function dp() {
-		$('form input.date').datepicker({
-			dateFormat: 'dd/mm/yy',
-			firstDay:1,
-			changeMonth: true,
-			changeYear: true
-			}).attr("readonly","readonly");
-		}
-		dp();
-	{% block scripts %}
-	{% endblock scripts %}
+	
+	$(document).ready(function() {
+    var $container = $('tbody');
+    var collectionCount = $container.children().length;
+
+    function addCollection() {
+        $container.append(
+            $($container.attr('data-prototype').replace(/\$\$name\$\$/g, collectionCount))
+        );
+        collectionCount++;
+    }
+	
+    if($container.children().length == 0) {
+        addCollection();
+    }
+    
+    $('.collection-add').click(function() {
+        addCollection();
+        return false;
+    });
+
+    $('.collection-remove').click(function() {
+        $(this).parent().parent().remove();
+        return false;
+    });
+    
+    $(".delete-modal").click(function(){
+        $.ajax({
+        	url: $(this).attr('href'),
+        	success: function(data){
+            	$('body').append(data);
+            	$('.modal').modal().on('hidden', function() {
+            		$(this).remove();	
+            	});
+        	},
+        	dataType: 'html',
+        	type: 'post'
+        });
+        return false;
+    });
+});
+	
     </script>
 {% endblock %}

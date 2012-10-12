@@ -65,6 +65,26 @@ class ContractType
     {
         return $this->complete;
     }
+    
+    /**
+     * Is complete
+     *
+     * @return boolean
+     */
+    public function isComplete()
+    {
+    	return $this->getComplete();
+    }
+    
+    /**
+     * Is complete
+     *
+     * @return boolean
+     */
+    public function isNormal()
+    {
+    	return !$this->isComplete();
+    }
 
     /**
      * Set options
@@ -84,5 +104,13 @@ class ContractType
     public function getOptions()
     {
         return $this->options;
+    }
+    
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+    	return ($this->getComplete() ? 'C' : 'N').$this->getOptions();
     }
 }

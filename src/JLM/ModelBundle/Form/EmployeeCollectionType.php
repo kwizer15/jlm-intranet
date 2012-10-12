@@ -5,7 +5,7 @@ namespace JLM\ModelBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
-class CollaboratorType extends AbstractType
+class EmployeeCollectionType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
@@ -13,13 +13,18 @@ class CollaboratorType extends AbstractType
             ->add('firstName')
             ->add('lastName')
             ->add('role')
-            ->add('phones','collection')
-            ->add('emails','collection')
         ;
     }
 
     public function getName()
     {
-        return 'jlm_modelbundle_collaboratortype';
+        return 'jlm_modelbundle_employeecollectiontype';
+    }
+    
+    public function getDefaultOptions(array $options)
+    {
+    	return array(
+    			'data_class' => 'JLM\ModelBundle\Entity\Employee',
+    	);
     }
 }
