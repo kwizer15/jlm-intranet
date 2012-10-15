@@ -1,6 +1,6 @@
 <?php
 
-namespace JLM\ModelBundle\Controller;
+namespace JLM\OfficeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -76,7 +76,7 @@ class ContractController extends Controller
      *
      * @Route("/create", name="contract_create")
      * @Method("post")
-     * @Template("JLMModelBundle:Contract:new.html.twig")
+     * @Template("JLMOfficeBundle:Contract:new.html.twig")
      */
     public function createAction()
     {
@@ -131,7 +131,7 @@ class ContractController extends Controller
      *
      * @Route("/{id}/update", name="contract_update")
      * @Method("post")
-     * @Template("JLMModelBundle:Contract:edit.html.twig")
+     * @Template("JLMOfficeBundle:Contract:edit.html.twig")
      */
     public function updateAction($id)
     {

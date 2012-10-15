@@ -29,29 +29,10 @@
         {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
     {% endif %}
     {% set attr = attr|merge({'class': attr.class|default('') ~ ' collection' }) %}
-    <table class="table">
-    	<thead>
-    	{% if form[0] is defined %}
-    	{% for child in form[0] %}
-        <th>{{ form_label(child) }}</th>
-    	{% endfor %}
-    	<th></th>
-    	{% endif %}
-    	</thead>
-    	<tbody {{ block('widget_container_attributes') }}>
+	<ul {{ block('widget_container_attributes') }}>
         {{ block('field_rows') }}
-    	</tbody>
-    	<tfoot>
-    	<tr>
-			<th><a href="#" class="btn btn-success collection-add"><i class="icon-plus-sign icon-white"></i></a></th>
-		{% if form[0] is defined %}
-    	{% for child in form[0] %}
-        	<th></th>
-        {% endfor %}
-        {% endif %}
-    	</tr>
-    	</tfoot>
-    </table>
+    </ul>
+	<a href="#" class="btn btn-success collection-add"><i class="icon-plus-sign icon-white"></i></a>
     {{ form_rest(form) }}
 {% endspaceless %}
 {% endblock collection_widget %}

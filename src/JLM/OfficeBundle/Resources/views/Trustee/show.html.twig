@@ -15,9 +15,38 @@
         </tr>
     </tbody>
 </table>
-
+<h2>Contrats</h2>
+{% if entity.contracts.empty %}
+<p>Aucun contrat</p>
+{% else %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Numéro</th>
+      <th>Type</th>
+      <th>Adresse de la porte</th>
+      <th>Début de contrat</th>
+      <th>Etat</th>
+      <th>CA</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for contract in entity.contracts %}
+    <tr>
+      <td>{{ contract.number }}</td>
+      <td>{{ contract.type }}</td>
+      <td>{{ contract.door.address }}</td>
+      <td>{{ contract.begin }}</td>
+      <td>{{ contract.state }}</td>
+      <td>{{ contract.turnover }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
 <div class="form-actions">
 	<a href="{{ path('trustee') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
 	<a href="{{ path('trustee_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+	<a href="" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter un contrat</a>
 </div>
 {% endblock %}

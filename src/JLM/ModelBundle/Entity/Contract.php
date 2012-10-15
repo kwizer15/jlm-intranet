@@ -247,4 +247,13 @@ class Contract
     {
         return $this->door;
     }
+    
+    /**
+     * Etat du contrat
+     * @return string
+     */
+    public function getState()
+    {
+    	return '';
+    }
 }

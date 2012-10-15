@@ -86,11 +86,7 @@ class TrusteeController extends Controller
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity->setBillingAddress($entity->getMainAddress());
-            $em->persist($entity->getMainAddress());
-            //$em->persist($entity->getBillingAddress());
-           
+            $em = $this->getDoctrine()->getEntityManager();        
             $em->persist($entity);
             $em->flush();
 

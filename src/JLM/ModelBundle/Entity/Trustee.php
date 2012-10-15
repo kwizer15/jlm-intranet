@@ -48,7 +48,7 @@ class Trustee extends Company
      */
     public function __construct()
     {
-    	self::parent();
+    	parent::__construct();
     	$this->documents = new ArrayCollection;
     	$this->contracts = new ArrayCollection;
     }
