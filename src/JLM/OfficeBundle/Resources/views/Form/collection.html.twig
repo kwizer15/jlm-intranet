@@ -6,9 +6,9 @@
 
 {% block form_widget %}
 {% spaceless %}
-    <tr {{ block('widget_container_attributes') }}>
+    <li {{ block('widget_container_attributes') }}>
         {{ block('field_rows') }}
-    </tr>
+    </li>
 {{ form_rest(form) }}
 {% endspaceless %}
 {% endblock form_widget %}
@@ -16,9 +16,9 @@
 {% block field_rows %}
 {% spaceless %}
     {% for child in form %}
-        <td>{{ form_row(child) }}</td>
+        {{ form_row(child) }}
     {% endfor %}
-    <td><a href="#" class="btn btn-danger collection-remove"><i class="icon-trash icon-white"></i></a></td>
+    {{ block('delete_button') }}
 {% endspaceless %}
 {% endblock field_rows %}
 
@@ -28,3 +28,14 @@
 {% endspaceless %}
 {% endblock field_row %}
 
+{% block delete_button %}
+<a href="#" class="btn btn-danger remove"><i class="icon-trash icon-white"></i></a>
+{% endblock delete_button %}
+
+{% block jlm_modelbundle_addresstype_widget %}
+{% spaceless %}
+{{ form_widget(form.street) }} {{ block('delete_button') }}<br>
+{{ form_widget(form.city) }}<br>
+<label class="checkbox">{{ form_widget(form.billing) }} {{ form_label(form.billing) }}</label>
+{% endspaceless %}
+{% endblock jlm_modelbundle_addresstype_widget %}

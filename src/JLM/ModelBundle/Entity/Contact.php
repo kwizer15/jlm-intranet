@@ -32,7 +32,7 @@ abstract class Contact
      * Telephones
      * @var Phone[] $phones
      * 
-     * @ORM\ManyToMany(targetEntity="Phone")
+     * @ORM\ManyToMany(targetEntity="Phone",cascade={"all"})
      * @ORM\JoinTable(name="contacts_phones",
      *      joinColumns={@ORM\JoinColumn(name="contact_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="phone_id", referencedColumnName="id", unique=true)}
@@ -44,7 +44,7 @@ abstract class Contact
      * Adresses
      * @var Address[] $addresses
      *
-     * @ORM\ManyToMany(targetEntity="Address")
+     * @ORM\ManyToMany(targetEntity="Address",cascade={"all"})
      * @ORM\JoinTable(name="contacts_addresses",
      *      joinColumns={@ORM\JoinColumn(name="contact_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="address_id", referencedColumnName="id", unique=true)}
@@ -56,7 +56,7 @@ abstract class Contact
      * Email
      * @var Email[] $emails
      *
-     * @ORM\ManyToMany(targetEntity="Email")
+     * @ORM\ManyToMany(targetEntity="Email",cascade={"all"})
      * @ORM\JoinTable(name="contacts_emails",
      *      joinColumns={@ORM\JoinColumn(name="contact_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="email_id", referencedColumnName="id", unique=true)}

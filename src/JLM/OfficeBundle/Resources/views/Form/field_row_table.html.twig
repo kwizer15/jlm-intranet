@@ -28,12 +28,23 @@
     {% if prototype is defined %}
         {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
     {% endif %}
-    {% set attr = attr|merge({'class': attr.class|default('') ~ ' unstyled' }) %}
-    <ul {{ block('widget_container_attributes') }}>
+    {% set attr = attr|merge({'class': attr.class|default('') ~ ' collection' }) %}
+    <table class="table">
+    	<tbody {{ block('widget_container_attributes') }}>
         {{ block('field_rows') }}
-	</ul>
-	<a href="#" class="btn btn-success add"><i class="icon-plus-sign icon-white"></i></a>
-	{{ form_rest(form) }}
+    	</tbody>
+    	<tfoot>
+    	<tr>
+			<th><a href="#" class="btn btn-success collection-add"><i class="icon-plus-sign icon-white"></i></a></th>
+		{% if form[0] is defined %}
+    	{% for child in form[0] %}
+        	<th></th>
+        {% endfor %}
+        {% endif %}
+    	</tr>
+    	</tfoot>
+    </table>
+    {{ form_rest(form) }}
 {% endspaceless %}
 {% endblock collection_widget %}
 
@@ -96,4 +107,20 @@
 {% endspaceless %}
 {% endblock typeahead_widget %}
 
+{% block jlm_modelbundle_addresstype_widget %}
+{% spaceless %}
+{{ field_widget(form.number) }}
+{% endspaceless %}
+{% endblock jlm_modelbundle_addresstype_widget %}
 
+{% block jlm_modelbundle_phonetype_widget %}
+{% spaceless %}
+{{ field_widget(form.number) }}
+{% endspaceless %}
+{% endblock jlm_modelbundle_phonetype_widget %}
+
+{% block jlm_modelbundle_emailtype_widget %}
+{% spaceless %}
+{{ field_widget(form.email) }}
+{% endspaceless %}
+{% endblock jlm_modelbundle_emailtype_widget %}

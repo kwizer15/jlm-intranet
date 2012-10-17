@@ -10,8 +10,8 @@ class AddressType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('street',null,array('label'=>'Adresse'))
-            ->add('city',new TypeaheadType,array('class'=>'JLMModelBundle:City','label'=>'Ville'))
+            ->add('street',null,array('label'=>'Adresse','attr'=>array('placeholder'=>'Adresse','class'=>'input-xlarge')))
+            ->add('city',new TypeaheadType,array('class'=>'JLMModelBundle:City','label'=>'Ville','attr'=>array('placeholder'=>'Ville (Code postal)','class'=>'input-xlarge')))
             ->add('billing','checkbox',array('label'=>'Adresse de facturation','required'=>false))
         ;
     }
