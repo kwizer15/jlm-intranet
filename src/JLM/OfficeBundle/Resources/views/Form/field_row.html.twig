@@ -99,6 +99,9 @@
 
 {% block typeahead_widget %}
 {% spaceless %}
-{{ form_widget(form.id) }}{{ form_widget(form.search) }}
+{% set type = type|default('text') %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' typeahead' }) %}
+    <input type="hidden" id="{{ id }}" name="{{ full_name }}"{% if value is not empty %}value="{{ value }}" {% endif %}/>
+    <input type="text" {% if required %} required="required"{% endif %}{% if max_length %} maxlength="{{ max_length }}"{% endif %}{% if pattern %} pattern="{{ pattern }}"{% endif %} {% for attrname,attrvalue in attr %}{{attrname}}="{{attrvalue}}" {% endfor %} >
 {% endspaceless %}
 {% endblock typeahead_widget %}

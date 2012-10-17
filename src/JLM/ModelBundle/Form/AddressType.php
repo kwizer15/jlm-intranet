@@ -11,7 +11,7 @@ class AddressType extends AbstractType
     {
         $builder
             ->add('street',null,array('label'=>'Adresse'))
-            ->add('city',new TypeaheadType,array('label'=>'Ville'))
+            ->add('city',new TypeaheadType,array('class'=>'JLMModelBundle:City','label'=>'Ville'))
             ->add('billing','checkbox',array('label'=>'Adresse de facturation','required'=>false))
         ;
     }
