@@ -29,10 +29,21 @@
         {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
     {% endif %}
     {% set attr = attr|merge({'class': attr.class|default('') ~ ' collection' }) %}
-	<ul {{ block('widget_container_attributes') }}>
+    <table class="table">
+    	<tbody {{ block('widget_container_attributes') }}>
         {{ block('field_rows') }}
-    </ul>
-	<a href="#" class="btn btn-success collection-add"><i class="icon-plus-sign icon-white"></i></a>
+    	</tbody>
+    	<tfoot>
+    	<tr>
+			<th><a href="#" class="btn btn-success collection-add"><i class="icon-plus-sign icon-white"></i></a></th>
+		{% if form[0] is defined %}
+    	{% for child in form[0] %}
+        	<th></th>
+        {% endfor %}
+        {% endif %}
+    	</tr>
+    	</tfoot>
+    </table>
     {{ form_rest(form) }}
 {% endspaceless %}
 {% endblock collection_widget %}
@@ -85,3 +96,9 @@
     <div class="input-append">{{ block('field_widget') }}<span class="add-on">%</span></div>
 {% endspaceless %}
 {% endblock percent_widget %}
+
+{% block typeahead_widget %}
+{% spaceless %}
+{{ form_widget(form.id) }}{{ form_widget(form.search) }}
+{% endspaceless %}
+{% endblock typeahead_widget %}

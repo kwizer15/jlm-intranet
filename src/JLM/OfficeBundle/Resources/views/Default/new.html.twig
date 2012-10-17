@@ -13,4 +13,32 @@
 	   <button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer les modifications</button>
 	</div>
 </fieldset>
+</form>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+$(document).ready(function() {
+	$('.typeahead').typeahead({
+    	source : function(query,process){
+			return $.get('{{ path('test_autocomplete', {query:''}) }}/' + query, 
+					function (data) { return process(data.options);
+			});
+        },
+        highlighter: function (item) {
+            var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
+            var a = item.split('|');
+            return a[0].replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+              return '<strong>' + match + '</strong>'
+            })
+        },
+        updater:function(item) {
+        	var a = item.split('|');
+			this.$element.prev().val(a[1]);
+			return a[0];
+        }
+    });
+});
+</script>
 {% endblock %}

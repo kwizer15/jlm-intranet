@@ -3,11 +3,12 @@
 namespace JLM\OfficeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JLM\ModelBundle\Entity\Employee;
-use JLM\ModelBundle\Form\EmployeeType;
+use JLM\ModelBundle\Entity\Address;
+use JLM\ModelBundle\Form\AddressType;
 
 class DefaultController extends Controller
 {
@@ -28,12 +29,29 @@ class DefaultController extends Controller
      */
     public function newAction()
     {
-    	$entity = new Employee();
-    	$form   = $this->createForm(new EmployeeType(), $entity);
-    
+    	$entity = new Address();
+    	$form   = $this->createForm(new AddressType(), $entity);
+
     	return array(
     			'entity' => $entity,
-    			'form'   => $form->createView()
+    			'form'   => $form->createView(),
     	);
+    }
+    
+    /**
+     * Displays a form to create a new Product entity.
+     *
+     * @Route("/autocomplete/{query}", name="test_autocomplete")
+     * @Template("JLMOfficeBundle:Default:autocomplete.json.twig")
+     */
+    public function autocompleteAction($query)
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$results = $em->getRepository('JLMModelBundle:City')->searchResult($query);
+    	$json = '{"options":'.json_encode($results).'}';
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/json');
+    	$response->setContent($json);
+    	return $response;
     }
 }

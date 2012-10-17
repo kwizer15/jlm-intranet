@@ -6,9 +6,9 @@
 
 {% block form_widget %}
 {% spaceless %}
-    <li {{ block('widget_container_attributes') }}>
+    <tr {{ block('widget_container_attributes') }}>
         {{ block('field_rows') }}
-    </li>
+    </tr>
 {{ form_rest(form) }}
 {% endspaceless %}
 {% endblock form_widget %}
@@ -16,7 +16,7 @@
 {% block field_rows %}
 {% spaceless %}
     {% for child in form %}
-        {{ form_row(child) }}
+        <td>{{ form_row(child) }}</td>
     {% endfor %}
     <td><a href="#" class="btn btn-danger collection-remove"><i class="icon-trash icon-white"></i></a></td>
 {% endspaceless %}

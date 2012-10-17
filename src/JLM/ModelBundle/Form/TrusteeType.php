@@ -13,6 +13,9 @@ class TrusteeType extends AbstractType
             ->add('name',null,array('label'=>'Nom'))
             ->add('accession','choice',array('label'=>'Accession/Social','choices'=>array('1'=>'Accession','0'=>'Social'),'expanded'=>true,'multiple'=>false))
             ->add('accountNumber',null,array('label'=>'Numéro de compte'))
+            ->add('addresses','collection',array('type'=>new AddressType))
+            ->add('phones','collection',array('type'=>new PhoneType))
+            ->add('emails','collection',array('type'=>new EmailType))
         ;
     }
 

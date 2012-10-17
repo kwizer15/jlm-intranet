@@ -11,8 +11,8 @@ class AddressType extends AbstractType
     {
         $builder
             ->add('street',null,array('label'=>'Adresse'))
-            ->add('city',null,array('label'=>'Ville'))
-            ->add('billing',null,array('label'=>'Adresse de facturation'))
+            ->add('city',new TypeaheadType,array('label'=>'Ville'))
+            ->add('billing','checkbox',array('label'=>'Adresse de facturation','required'=>false))
         ;
     }
 
