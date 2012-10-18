@@ -20,6 +20,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Person extends Contact
 {
 	
+	/**
+	 * M. Mme Mlle
+	 * @var string $title
+	 * 
+	 * @ORM\Column(name="title", type="string", length=4)
+	 */
+	private $title;
+	
     /**
      * @var string $firstName
      *
@@ -34,7 +42,48 @@ class Person extends Contact
      */
     private $lastName;
     
-
+    /**
+     * @var string $fixedPhone
+     * 
+     * @ORM\Column(name="fixedPhone",type="string", length=20)
+     */
+    private $fixedPhone;
+    
+    /**
+     * @var string $mobilePhone
+     *
+     * @ORM\Column(name="mobilePhone",type="string", length=20)
+     */
+    private $mobilePhone;
+    
+    /**
+     * @var string $professionnalPhone
+     *
+     * @ORM\Column(name="professionnnalPhone", type="string", length=20)
+     */
+    private $professionnnalPhone;
+    
+    /**
+     * @var string $fax
+     *
+     * @ORM\Column(name="fax",type="string", length=20)
+     */
+    private $fax;
+    
+    /**
+     * @var string $email
+     *
+     * @ORM\Column(name="email",type="string", length=20)
+     */
+    private $email;
+    
+    /**
+     * @var string $role
+     *
+     * @ORM\Column(name="role", type="string", length=255)
+     */
+    private $role;
+    
     /**
      * Set firstName
      *
@@ -82,6 +131,6 @@ class Person extends Contact
      */
     public function getName()
     {
-    	return $this->firstName.' '.$this->lastName;
+    	return $this->title.' '.$this->firstName.' '.$this->lastName;
     }
 }

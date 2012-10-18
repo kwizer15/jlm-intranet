@@ -28,11 +28,44 @@ class Company extends Contact
 	private $name;
 	
 	/**
-	 * @var Employee[] $employees
-	 *
-	 * @ORM\ManyToMany(targetEntity="Employee", mappedBy="companies")
+	 * @var Address $address
+	 * 
+	 * @ORM\OneToOne(targetEntity="Address")
 	 */
-	private $employees;
+	private $address;
+	
+	/**
+	 * @var string $phone
+	 * 
+	 * @ORM\Column(name="phone",type="string",length=20)
+	 */
+	private $phone;
+	
+	/**
+	 * @var string $fax
+	 *
+	 * @ORM\Column(name="fax",type="string",length=20)
+	 */
+	private $fax;
+	
+	/**
+	 * @var email $email
+	 *
+	 * @ORM\Column(name="email",type="string",length=255)
+	 */
+	private $email;
+
+	
+	/**
+	 * @var Person[] $contacts
+	 *
+	 * @ORM\ManyToMany(targetEntity="Person",cascade={"all"})
+     * @ORM\JoinTable(name="companies_contacts",
+     *      joinColumns={@ORM\JoinColumn(name="company_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id", unique=true)}
+     *      )
+	 */
+	private $contacts;
 	
 	/**
 	 * Constructor
@@ -40,7 +73,7 @@ class Company extends Contact
 	public function __construct()
 	{
 		parent::__construct();
-		$this->employees = new ArrayCollection;
+		$this->contacts = new ArrayCollection;
 	}
 	
 	/**
@@ -62,24 +95,4 @@ class Company extends Contact
 	{
 		return $this->name;
 	}
-
-    /**
-     * Add employees
-     *
-     * @param JLM\ModelBundle\Entity\Employee $employees
-     */
-    public function addEmployee(\JLM\ModelBundle\Entity\Employee $employees)
-    {
-        $this->employees[] = $employees;
-    }
-
-    /**
-     * Get employees
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getEmployees()
-    {
-        return $this->employees;
-    }
 }

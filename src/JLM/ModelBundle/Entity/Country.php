@@ -28,13 +28,6 @@ class Country
     private $name;
 
     /**
-     * @var integer $phonePrefix
-     * 
-     * @ORM\Column(name="phone_prefix", type="integer")
-     */
-    private $phonePrefix;
-
-    /**
      * Set code
      *
      * @param string $code
@@ -72,26 +65,6 @@ class Country
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set phonePrefix
-     *
-     * @param integer $phonePrefix
-     */
-    public function setPhonePrefix($phonePrefix)
-    {
-        $this->phonePrefix = $phonePrefix;
-    }
-
-    /**
-     * Get phonePrefix
-     *
-     * @return integer 
-     */
-    public function getPhonePrefix()
-    {
-        return $this->phonePrefix;
     }
     
     /**

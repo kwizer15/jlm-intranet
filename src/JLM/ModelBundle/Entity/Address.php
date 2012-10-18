@@ -22,14 +22,6 @@ class Address
     private $id;
     
     /**
-     * Adresse de facturation
-     * @var bool $billing;
-     * 
-     * @ORM\Column(name="billing", type="boolean")
-     */
-    private $billing;
-    
-    /**
      * @var string $street
      *
      * @ORM\Column(name="street", type="text")
@@ -91,25 +83,5 @@ class Address
     public function getCity()
     {
         return $this->city;
-    }
-
-    /**
-     * Set billing
-     *
-     * @param boolean $billing
-     */
-    public function setBilling($billing)
-    {
-        $this->billing = $billing;
-    }
-
-    /**
-     * Get billing
-     *
-     * @return boolean 
-     */
-    public function getBilling()
-    {
-        return $this->billing;
     }
 }

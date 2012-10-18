@@ -43,6 +43,15 @@ class Trustee extends Company
      */
     private $documents;
     
+    
+    /**
+     * Adresse de facturation (si differente)
+     * @var Address $billingAddress
+     *
+     * @ORM\OneToOne(targetEntity="Address")
+     */
+    private $billingAddress;
+    
     /**
      * Constructor
      */
