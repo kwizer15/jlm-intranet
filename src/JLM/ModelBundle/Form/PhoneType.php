@@ -11,6 +11,7 @@ class PhoneType extends AbstractType
     {
         $builder
             ->add('number',null,array('label'=>'Numéro'))
+            ->add('fax',null,array('label'=>'Fax','required'=>false))
         ;
     }
 

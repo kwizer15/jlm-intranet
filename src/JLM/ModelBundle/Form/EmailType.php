@@ -10,7 +10,7 @@ class EmailType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('email','email',array('label'=>'e-mail'));
+            ->add('email','email',array('label'=>'e-mail','attr'=>array('class'=>'input-xxlarge','placeholder'=>'adresse e-mail')));
             
         ;
     }

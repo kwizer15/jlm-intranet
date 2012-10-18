@@ -4,38 +4,62 @@
 {% endspaceless %}
 {% endblock %}
 
-{% block form_widget %}
-{% spaceless %}
-    <li {{ block('widget_container_attributes') }}>
-        {{ block('field_rows') }}
-    </li>
-{{ form_rest(form) }}
-{% endspaceless %}
-{% endblock form_widget %}
-
 {% block field_rows %}
 {% spaceless %}
-    {% for child in form %}
-        {{ form_row(child) }}
-    {% endfor %}
-    {{ block('delete_button') }}
+{% for child in form %}
+  {{ form_row(child) }}
+{% endfor %}
 {% endspaceless %}
 {% endblock field_rows %}
 
 {% block field_row %}
 {% spaceless %}
-    {{ form_widget(form) }}
+  {{ form_widget(form) }}
 {% endspaceless %}
 {% endblock field_row %}
 
-{% block delete_button %}
-<a href="#" class="btn btn-danger remove"><i class="icon-trash icon-white"></i></a>
-{% endblock delete_button %}
+{% block form_widget %}
+{% spaceless %}
+<div class="row-fluid">
+	<div class="span1">
+	  <a href="#" class="btn btn-danger remove"><i class="icon-trash icon-white"></i></a>
+	</div>
+	<div class="span11">
+   {{ block('field_rows') }}
+   </div>
+</div>
+{% endspaceless %}
+{% endblock form_widget %}
 
 {% block jlm_modelbundle_addresstype_widget %}
 {% spaceless %}
-{{ form_widget(form.street) }} {{ block('delete_button') }}<br>
-{{ form_widget(form.city) }}<br>
-<label class="checkbox">{{ form_widget(form.billing) }} {{ form_label(form.billing) }}</label>
+<div class="row-fluid">
+	<div class="span1">
+	  <a href="#" class="btn btn-danger remove"><i class="icon-trash icon-white"></i></a>
+	</div>
+	<div class="span6">
+	  {{ form_widget(form.street) }}<br>
+	  {{ form_widget(form.city) }}
+	</div>
+	<div class="span5">
+    	<label class="checkbox inline">{{ form_widget(form.billing) }} {{ form_label(form.billing) }}</label>
+	</div>
+</div>
 {% endspaceless %}
 {% endblock jlm_modelbundle_addresstype_widget %}
+
+{% block jlm_modelbundle_phonetype_widget %}
+{% spaceless %}
+<div class="row-fluid">
+	<div class="span1">
+	  <a href="#" class="btn btn-danger remove"><i class="icon-trash icon-white"></i></a>
+	</div>
+	<div class="span6">
+		{{ form_widget(form.number) }}
+	</div>
+	<div class="span5">
+		<label class="checkbox inline">{{ form_widget(form.fax) }} {{ form_label(form.fax) }}</label>
+	</div>
+</div>
+{% endspaceless %}
+{% endblock jlm_modelbundle_phonetype_widget %}

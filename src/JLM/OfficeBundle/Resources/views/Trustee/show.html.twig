@@ -2,6 +2,40 @@
 
 {% block content %}
 <h1>{{ entity.name }}</h1>
+<div class="row-fluid">
+	<div class="span4">
+	{%  for a in entity.addresses %}
+		<address>
+			<strong>Adresse de facturation</strong><br>
+			{{ a.street }}<br>
+			{{ a.city.zip }} - {{ a.city.name }}<br>
+			{{ a.city.country }}
+		</address>
+	{% endfor %}
+	</div>
+	<div class="span4">
+		<address>
+			<strong>Téléphone</strong><br>
+		{%  for a in entity.phones if a.fax == false%}
+			{{ a.number }}<br>
+		{% endfor %}
+		</address>
+		<address>
+		<strong>Fax</strong><br>
+		{%  for a in entity.phones if a.fax%}
+			{{ a.number }}<br>
+		{% endfor %}
+		</address>
+	</div>
+	<div class="span4">
+		<address>
+			<strong>E-mail</strong><br>
+		{%  for a in entity.emails %}
+			<a href="mailto:">{{ a }}</a><br>
+		{% endfor %}
+		</address>
+	</div>
+</div>
 
 <table class="table">
     <tbody>
@@ -9,10 +43,10 @@
     <th>Numéro de compte</th>
     <td>{{ entity.accountNumber }}</td>
     </tr>
-        <tr>
-            <th>Accession / Social</th>
-            <td>{{ entity.accession ? 'Accession' : 'Social' }}</td>
-        </tr>
+    <tr>
+        <th>Accession / Social</th>
+        <td>{{ entity.accession ? 'Accession' : 'Social' }}</td>
+    </tr>
     </tbody>
 </table>
 <h2>Contrats</h2>

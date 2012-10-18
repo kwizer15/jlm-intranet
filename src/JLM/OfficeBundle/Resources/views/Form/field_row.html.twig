@@ -28,11 +28,12 @@
     {% if prototype is defined %}
         {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
     {% endif %}
-    {% set attr = attr|merge({'class': attr.class|default('') ~ ' unstyled' }) %}
-    <ul {{ block('widget_container_attributes') }}>
-        {{ block('field_rows') }}
-	</ul>
-	<a href="#" class="btn btn-success add"><i class="icon-plus-sign icon-white"></i></a>
+    <div {{ block('widget_container_attributes') }}>
+    	<div class="row-fluid">
+	        <div class="span12"><a href="#" class="btn btn-success add"><i class="icon-plus-sign icon-white"></i></a></div>
+		</div>
+		{{ block('field_rows') }}
+    </div>
 	{{ form_rest(form) }}
 {% endspaceless %}
 {% endblock collection_widget %}
@@ -42,7 +43,8 @@
 {% form_theme form 'JLMOfficeBundle:Form:choices.html.twig' %}
     {% if expanded %}
         {% for child in form %}
-        <label {{ block('widget_container_attributes') }} class="checkbox inline">
+        {% set attr = attr|merge({'class': attr.class|default('') ~ ' checkbox inline' }) %}
+        <label {{ block('widget_container_attributes') }}>
             {{ form_widget(child) }}
             {{ form_label(child) }}
         </label>
