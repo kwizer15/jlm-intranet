@@ -18,12 +18,11 @@
 
 {% block javascripts %}
 <script>
-	        $('.typeahead').typeahead({
-	        	source : function(query,process){
-	    			return $.get('{{ path('test_autocomplete', {query:''}) }}/' + query, 
-	    					function (data) { return process(data.options);
-	    			});
-	            },
-	        });
+$('.typeahead').typeahead({
+	source : function(query,process){
+		return $.post('{{ path('autocomplete_city') }}',{'query':query}, 
+				function (data) { return process(data.options);},'json');
+    },
+});
 </script>
 {% endblock %}

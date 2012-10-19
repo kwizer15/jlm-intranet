@@ -96,11 +96,14 @@ class DefaultController extends Controller
     /**
      * Displays a form to create a new Product entity.
      *
-     * @Route("/autocomplete/{query}", name="test_autocomplete")
-     * @Template("JLMOfficeBundle:Default:autocomplete.json.twig")
+     * @Route("/autocomplete/city", name="autocomplete_city")
+     * @Method("post")
      */
-    public function autocompleteAction($query)
+    public function autocompleteAction()
     {
+    	$request = $this->get('request');
+    	$query = $request->request->get('query');
+
     	$em = $this->getDoctrine()->getEntityManager();
     	$results = $em->getRepository('JLMModelBundle:City')->searchResult($query);
     	$json = '{"options":'.json_encode($results).'}';
