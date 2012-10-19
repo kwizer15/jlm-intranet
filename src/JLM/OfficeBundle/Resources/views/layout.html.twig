@@ -105,4 +105,18 @@
 });
 	
     </script> #}
+
+<script>
+$('.typeahead').typeahead({
+	source : function(query,process){
+		return $.post(
+			this.$element.attr('data-source'),
+			{'query':query}, 
+			function (data) { return process(data.options);},
+			'json'
+		);
+    },
+});
+</script>
+
 {% endblock %}

@@ -20,13 +20,9 @@ class CityRepository extends EntityRepository
 			   ->setParameter('query', $query.'%')
 		;
 		$res = $qb->getQuery()->getResult();
+		$r2 = array();
 		foreach ($res as $r)
 		{
-			//$obj = new \stdClass;
-			//$obj->id = $r->getId();
-			//$obj->value = ''.$r;
-			//$r2[] = $obj;
-			//$r2[''.$r->getId()] = ''.$r;
 			$r2[] = ''.$r;
 		}
 		return $r2;

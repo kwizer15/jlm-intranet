@@ -15,14 +15,3 @@
 </fieldset>
 {% endblock %}
 
-{% block javascripts %}
-<script>
-	        $('.typeahead').typeahead({
-	        	source : function(query,process){
-	    			return $.get('{{ path('test_autocomplete', {query:''}) }}/' + query, 
-	    					function (data) { return process(data.options);
-	    			});
-	            },
-	        });
-</script>
-{% endblock %}

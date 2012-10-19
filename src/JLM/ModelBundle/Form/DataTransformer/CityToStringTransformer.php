@@ -49,12 +49,17 @@ class CityToStringTransformer implements DataTransformerInterface
 			return null;
 		}
 	
-		preg_match('#^(.+) \((.*)\)$#',$string,$matches);
+		if (preg_match('#^(.+) \((.*)\)$#',$string,$matches))
+		{	
 		
-		$city = $this->om
-			->getRepository('JLMModelBundle:City')
-			->findOneBy(array('name' => $matches[1],'zip' => $matches[2]))
-		;
+			$city = $this->om
+				->getRepository('JLMModelBundle:City')
+				->findOneBy(array('name' => $matches[1],'zip' => $matches[2]))
+			;
+		}
+		else
+			throw new TransformationFailedException(sprintf(
+					'Aucune correspondance'));
 	
 		if (null === $city) {
 			throw new TransformationFailedException(sprintf(

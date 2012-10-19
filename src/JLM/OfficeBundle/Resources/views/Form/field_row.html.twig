@@ -89,14 +89,12 @@
 {% endblock percent_widget %}
 
 // Personal Types
-{% block typeahead_widget %}
+{% block city_widget %}
 {% spaceless %}
-{% set type = type|default('text') %}
-{% set attr = attr|merge({'class': attr.class|default('') ~ ' typeahead' }) %}
-    <input type="hidden" id="{{ id }}" name="{{ full_name }}"{% if value is not empty %} value="{{ value }}" {% endif %}/>
-    <input type="text" {% if required %} required="required"{% endif %}{% if max_length %} maxlength="{{ max_length }}"{% endif %}{% if pattern %} pattern="{{ pattern }}"{% endif %} {% for attrname,attrvalue in attr %}{{attrname}}="{{attrvalue}}" {% endfor %} >
+{% set attr = attr|merge({'data-source':  path('autocomplete_city') }) %}
+{{ block('field_widget') }}
 {% endspaceless %}
-{% endblock typeahead_widget %}
+{% endblock city_widget %}
 
 {% block jlm_modelbundle_addresstype_widget %}
 {% spaceless %}

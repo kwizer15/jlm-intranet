@@ -135,7 +135,7 @@ class TrusteeController extends Controller
      *
      * @Route("/{id}/update", name="trustee_update")
      * @Method("post")
-     * @Template("JLMModelBundle:Trustee:edit.html.twig")
+     * @Template("JLMOfficeBundle:Trustee:edit.html.twig")
      */
     public function updateAction($id)
     {
