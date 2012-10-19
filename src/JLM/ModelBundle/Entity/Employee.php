@@ -46,4 +46,24 @@ class Employee extends Person
     {
         return $this->role;
     }
+
+    /**
+     * Set professionnnalPhone
+     *
+     * @param string $professionnnalPhone
+     */
+    public function setProfessionnnalPhone($professionnnalPhone)
+    {
+        $this->professionnnalPhone = $professionnnalPhone;
+    }
+
+    /**
+     * Get professionnnalPhone
+     *
+     * @return string 
+     */
+    public function getProfessionnnalPhone()
+    {
+        return $this->professionnnalPhone;
+    }
 }

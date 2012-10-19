@@ -17,9 +17,17 @@ use Doctrine\Common\Collections\ArrayCollection;
  *      "employee" = "Employee"
  * })
  */
-class Person extends Contact
+class Person 
 {
-	
+	/**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
 	/**
 	 * M. Mme Mlle
 	 * @var string $title
@@ -31,7 +39,7 @@ class Person extends Contact
     /**
      * @var string $firstName
      *
-     * @ORM\Column(name="firstName", type="string", length=255)
+     * @ORM\Column(name="firstName", type="string", length=255, nullable=true)
      */
     private $firstName;
 
@@ -45,42 +53,42 @@ class Person extends Contact
     /**
      * @var string $fixedPhone
      * 
-     * @ORM\Column(name="fixedPhone",type="string", length=20)
+     * @ORM\Column(name="fixedPhone",type="string", length=20, nullable=true)
      */
     private $fixedPhone;
     
     /**
      * @var string $mobilePhone
      *
-     * @ORM\Column(name="mobilePhone",type="string", length=20)
+     * @ORM\Column(name="mobilePhone",type="string", length=20, nullable=true)
      */
     private $mobilePhone;
     
     /**
      * @var string $professionnalPhone
      *
-     * @ORM\Column(name="professionnnalPhone", type="string", length=20)
+     * @ORM\Column(name="professionnnalPhone", type="string", length=20, nullable=true)
      */
     private $professionnnalPhone;
     
     /**
      * @var string $fax
      *
-     * @ORM\Column(name="fax",type="string", length=20)
+     * @ORM\Column(name="fax",type="string", length=20, nullable=true)
      */
     private $fax;
     
     /**
      * @var string $email
      *
-     * @ORM\Column(name="email",type="string", length=20)
+     * @ORM\Column(name="email",type="string", length=20, nullable=true)
      */
     private $email;
     
     /**
      * @var string $role
      *
-     * @ORM\Column(name="role", type="string", length=255)
+     * @ORM\Column(name="role", type="string", length=255, nullable=true)
      */
     private $role;
     
@@ -132,5 +140,155 @@ class Person extends Contact
     public function getName()
     {
     	return $this->title.' '.$this->firstName.' '.$this->lastName;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set fixedPhone
+     *
+     * @param string $fixedPhone
+     */
+    public function setFixedPhone($fixedPhone)
+    {
+        $this->fixedPhone = $fixedPhone;
+    }
+
+    /**
+     * Get fixedPhone
+     *
+     * @return string 
+     */
+    public function getFixedPhone()
+    {
+        return $this->fixedPhone;
+    }
+
+    /**
+     * Set mobilePhone
+     *
+     * @param string $mobilePhone
+     */
+    public function setMobilePhone($mobilePhone)
+    {
+        $this->mobilePhone = $mobilePhone;
+    }
+
+    /**
+     * Get mobilePhone
+     *
+     * @return string 
+     */
+    public function getMobilePhone()
+    {
+        return $this->mobilePhone;
+    }
+
+    /**
+     * Set professionnnalPhone
+     *
+     * @param string $professionnnalPhone
+     */
+    public function setProfessionnnalPhone($professionnnalPhone)
+    {
+        $this->professionnnalPhone = $professionnnalPhone;
+    }
+
+    /**
+     * Get professionnnalPhone
+     *
+     * @return string 
+     */
+    public function getProfessionnnalPhone()
+    {
+        return $this->professionnnalPhone;
+    }
+
+    /**
+     * Set fax
+     *
+     * @param string $fax
+     */
+    public function setFax($fax)
+    {
+        $this->fax = $fax;
+    }
+
+    /**
+     * Get fax
+     *
+     * @return string 
+     */
+    public function getFax()
+    {
+        return $this->fax;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string 
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 }

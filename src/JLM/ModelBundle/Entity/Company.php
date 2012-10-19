@@ -18,8 +18,17 @@ use Doctrine\Common\Collections\ArrayCollection;
  * 		"company" = "Company"
  *      })
  */
-class Company extends Contact
+class Company
 {
+	/**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+	
 	/**
 	 * @var string $name
 	 *
@@ -44,14 +53,14 @@ class Company extends Contact
 	/**
 	 * @var string $fax
 	 *
-	 * @ORM\Column(name="fax",type="string",length=20)
+	 * @ORM\Column(name="fax",type="string",length=20, nullable=true)
 	 */
 	private $fax;
 	
 	/**
 	 * @var email $email
 	 *
-	 * @ORM\Column(name="email",type="string",length=255)
+	 * @ORM\Column(name="email",type="string",length=255, nullable=true)
 	 */
 	private $email;
 
@@ -95,4 +104,114 @@ class Company extends Contact
 	{
 		return $this->name;
 	}
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string 
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Set fax
+     *
+     * @param string $fax
+     */
+    public function setFax($fax)
+    {
+        $this->fax = $fax;
+    }
+
+    /**
+     * Get fax
+     *
+     * @return string 
+     */
+    public function getFax()
+    {
+        return $this->fax;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set address
+     *
+     * @param JLM\ModelBundle\Entity\Address $address
+     */
+    public function setAddress(\JLM\ModelBundle\Entity\Address $address)
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * Get address
+     *
+     * @return JLM\ModelBundle\Entity\Address 
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Add contacts
+     *
+     * @param JLM\ModelBundle\Entity\Person $contacts
+     */
+    public function addPerson(\JLM\ModelBundle\Entity\Person $contacts)
+    {
+        $this->contacts[] = $contacts;
+    }
+
+    /**
+     * Get contacts
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getContacts()
+    {
+        return $this->contacts;
+    }
 }

@@ -4,6 +4,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+<services>
+<service id="jlm_model.type.city" class="JLM\ModelBundle\Form\CityType">
+    <argument type="service" id="doctrine.orm.entity_manager"/>
+    <tag name="form.type" alias="city" />
+</service>
+</services>
     <!--
     <parameters>
         <parameter key="jlm_model.example.class">JLM\ModelBundle\Example</parameter>
@@ -14,7 +20,7 @@
             <argument type="service" id="service_id" />
             <argument>plain_value</argument>
             <argument>%parameter_name%</argument>
-        </service>
+        
     </services>
     -->
 </container>

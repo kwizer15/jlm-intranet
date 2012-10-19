@@ -32,7 +32,7 @@ class City
     /**
      * @var string $zips
      * 
-     * @ORM\Column(name="zip",type="string",length=10)
+     * @ORM\Column(name="zip",type="string",length=20)
      */
     private $zip;
     

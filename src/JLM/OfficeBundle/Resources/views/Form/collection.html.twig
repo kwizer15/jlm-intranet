@@ -31,35 +31,4 @@
 {% endspaceless %}
 {% endblock form_widget %}
 
-{% block jlm_modelbundle_addresstype_widget %}
-{% spaceless %}
-<div class="row-fluid">
-	<div class="span1">
-	  <a href="#" class="btn btn-danger remove"><i class="icon-trash icon-white"></i></a>
-	</div>
-	<div class="span6">
-	  {{ form_widget(form.street) }}<br>
-	  {{ form_widget(form.city) }}
-	</div>
-	<div class="span5">
-    	<label class="checkbox inline">{{ form_widget(form.billing) }} {{ form_label(form.billing) }}</label>
-	</div>
-</div>
-{% endspaceless %}
-{% endblock jlm_modelbundle_addresstype_widget %}
 
-{% block jlm_modelbundle_phonetype_widget %}
-{% spaceless %}
-<div class="row-fluid">
-	<div class="span1">
-	  <a href="#" class="btn btn-danger remove"><i class="icon-trash icon-white"></i></a>
-	</div>
-	<div class="span6">
-		{{ form_widget(form.number) }}
-	</div>
-	<div class="span5">
-		<label class="checkbox inline">{{ form_widget(form.fax) }} {{ form_label(form.fax) }}</label>
-	</div>
-</div>
-{% endspaceless %}
-{% endblock jlm_modelbundle_phonetype_widget %}

@@ -57,7 +57,6 @@ class Trustee extends Company
      */
     public function __construct()
     {
-    	parent::__construct();
     	$this->documents = new ArrayCollection;
     	$this->contracts = new ArrayCollection;
     }
@@ -140,5 +139,25 @@ class Trustee extends Company
     public function getDocuments()
     {
         return $this->documents;
+    }
+
+    /**
+     * Set billingAddress
+     *
+     * @param JLM\ModelBundle\Entity\Address $billingAddress
+     */
+    public function setBillingAddress(\JLM\ModelBundle\Entity\Address $billingAddress)
+    {
+        $this->billingAddress = $billingAddress;
+    }
+
+    /**
+     * Get billingAddress
+     *
+     * @return JLM\ModelBundle\Entity\Address 
+     */
+    public function getBillingAddress()
+    {
+        return $this->billingAddress;
     }
 }

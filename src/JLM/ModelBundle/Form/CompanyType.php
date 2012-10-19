@@ -11,10 +11,11 @@ class CompanyType extends AbstractType
     {
         $builder
             ->add('name',null,array('label'=>'Nom'))
-            ->add('addresses','collection',array('label'=>'Adresses','type'=>new AddressType))
-            ->add('phones','collection',array('label'=>'Téléphones','type'=>new PhoneType))
-            ->add('emails','collection',array('label'=>'Emails','type'=>new EmailType))
-            ->add('employees','collection',array('label'=>'Contacts','type'=>new EmployeeCollectionType))
+            ->add('address',new AddressType,array('label'=>'Adresse'))
+            ->add('phone',null,array('label'=>'Téléphone'))
+            ->add('fax',null,array('label'=>'Fax','required'=>false))
+            ->add('email','email',array('label'=>'Email','required'=>false))
+         //   ->add('contacts','collection',array('label'=>'Contacts','type'=>new EmployeeCollectionType))
         ;
     }
 

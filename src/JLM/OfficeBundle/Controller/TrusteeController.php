@@ -80,13 +80,17 @@ class TrusteeController extends Controller
      */
     public function createAction()
     {
+    	$em = $this->getDoctrine()->getEntityManager();
         $entity  = new Trustee();
         $request = $this->getRequest();
         $form    = $this->createForm(new TrusteeType(), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();        
+            $em = $this->getDoctrine()->getEntityManager(); 
+            $em->persist($entity->getAddress());
+            if ($entity->getBillingAddress())
+            	$em->persist($entity->getBillingAddress());
             $em->persist($entity);
             $em->flush();
 

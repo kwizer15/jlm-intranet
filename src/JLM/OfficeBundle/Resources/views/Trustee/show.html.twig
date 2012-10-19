@@ -4,36 +4,33 @@
 <h1>{{ entity.name }}</h1>
 <div class="row-fluid">
 	<div class="span4">
-	{%  for a in entity.addresses %}
 		<address>
+		
+			<strong>Adresse</strong><br>
+			{{ entity.address.street }}<br>
+			{{ entity.address.city.zip }} - {{ entity.address.city.name }}<br>
+			{{ entity.address.city.country }}
+		</address>
+	</div>
+	<div class="span4">
+	{% if entity.billingAddress.city %}
+	<address>
 			<strong>Adresse de facturation</strong><br>
-			{{ a.street }}<br>
-			{{ a.city.zip }} - {{ a.city.name }}<br>
-			{{ a.city.country }}
+			{{ entity.billingAddress.street }}<br>
+			{{ entity.billingAddress.city.zip }} - {{ entity.billingAddress.city.name }}<br>
+			{{ entity.billingAddress.city.country }}
 		</address>
-	{% endfor %}
+	{% endif %}
 	</div>
 	<div class="span4">
-		<address>
-			<strong>Téléphone</strong><br>
-		{%  for a in entity.phones if a.fax == false%}
-			{{ a.number }}<br>
-		{% endfor %}
-		</address>
-		<address>
-		<strong>Fax</strong><br>
-		{%  for a in entity.phones if a.fax%}
-			{{ a.number }}<br>
-		{% endfor %}
-		</address>
-	</div>
-	<div class="span4">
-		<address>
-			<strong>E-mail</strong><br>
-		{%  for a in entity.emails %}
-			<a href="mailto:">{{ a }}</a><br>
-		{% endfor %}
-		</address>
+		<dl>
+			<dt>Téléphone</dt>
+			<dd>{{ entity.phone }}</dd>
+			<dt>Fax</dt>
+			<dd>{{ entity.fax }}</dd>
+			<dt>E-mail</dt>
+			<dd><a href="mailto:">{{ entity.email }}</a></dd>	
+		</dl>
 	</div>
 </div>
 

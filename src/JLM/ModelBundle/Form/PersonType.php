@@ -10,10 +10,15 @@ class PersonType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('firstName')
-            ->add('lastName')
-            ->add('phones')
-            ->add('emails')
+        	->add('title','choice',array('label'=>'Titre','choices'=>array('M.','Mme','Mlle')))
+            ->add('firstName',null,array('label'=>'Prénom','required'=>false))
+            ->add('lastName',null,array('label'=>'Nom'))
+            ->add('role',null,array('label'=>'Rôle','required'=>false))
+            ->add('fixedPhone',null,array('label'=>'Téléphone fixe','required'=>false))
+            ->add('mobilePhone',null,array('label'=>'Téléphone mobile','required'=>false))
+            ->add('professionnalPhone',null,array('label'=>'Téléphone professionnel','required'=>false))
+            ->add('fax',null,array('label'=>'Téléphone professionnel','required'=>false))
+            ->add('email',null,array('label'=>'Adresse e-mail','required'=>false))
         ;
     }
 

@@ -8,15 +8,16 @@ use Symfony\Component\Form\FormBuilder;
 class TrusteeType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
-    {
+    {	
         $builder
-            ->add('name',null,array('label'=>'Nom'))
+            ->add('name',null,array('label'=>'Nom','attr'=>array('class'=>'input-large')))
             ->add('accession','choice',array('label'=>'Accession/Social','choices'=>array('1'=>'Accession','0'=>'Social'),'expanded'=>true,'multiple'=>false))
-            ->add('accountNumber',null,array('label'=>'Numéro de compte'))
-            ->add('addresses','collection',array('label'=>'Adresses','type'=>new AddressType,'prototype'=>true,'allow_add'=>true))
-            ->add('phones','collection',array('label'=>'Téléphones','type'=>new PhoneType,'prototype'=>true,'allow_add'=>true))
-            ->add('emails','collection',array('label'=>'E-mails','type'=>new EmailType,'prototype'=>true,'allow_add'=>true))
-        ;
+            ->add('accountNumber',null,array('label'=>'Numéro de compte','attr'=>array('class'=>'input-small')))
+            ->add('address',new AddressType,array('label'=>'Adresse'))
+            ->add('billingAddress',new AddressType,array('label'=>'Adresse de facturation','required'=>false)) // Petite case à cocher + Formulaire
+            ->add('phone',null,array('label'=>'Téléphone','attr'=>array('class'=>'input-medium')))
+            ->add('fax',null,array('label'=>'Fax','required'=>false,'attr'=>array('class'=>'input-medium')))
+            ->add('email','email',array('label'=>'Email','required'=>false,'attr'=>array('class'=>'input-xlarge')));
     }
 
     public function getName()
