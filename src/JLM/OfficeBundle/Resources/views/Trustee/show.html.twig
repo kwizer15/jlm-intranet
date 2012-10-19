@@ -3,34 +3,26 @@
 {% block content %}
 <h1>{{ entity.name }}</h1>
 <div class="row-fluid">
-	<div class="span4">
+	<div class="span6">
 		<address>
-		
-			<strong>Adresse</strong><br>
 			{{ entity.address.street }}<br>
 			{{ entity.address.city.zip }} - {{ entity.address.city.name }}<br>
-			{{ entity.address.city.country }}
+			Tel : {{ entity.phone }}<br>
+			Fax : {{ entity.fax }}<br>
+			e-mail : <a href="mailto:{{ entity.email }}">{{ entity.email }}</a><br>
 		</address>
 	</div>
-	<div class="span4">
+	<div class="span6">
 	{% if entity.billingAddress.city %}
-	<address>
-			<strong>Adresse de facturation</strong><br>
+		<address>
+			<strong>Facturation</strong>
 			{{ entity.billingAddress.street }}<br>
 			{{ entity.billingAddress.city.zip }} - {{ entity.billingAddress.city.name }}<br>
-			{{ entity.billingAddress.city.country }}
+			Tel : {{ entity.billingPhone }}<br>
+			Fax : {{ entity.billingFax }}<br>
+			e-mail : <a href="mailto:{{ entity.billingEmail }}">{{ entity.billingEmail }}</a><br>
 		</address>
 	{% endif %}
-	</div>
-	<div class="span4">
-		<dl>
-			<dt>Téléphone</dt>
-			<dd>{{ entity.phone }}</dd>
-			<dt>Fax</dt>
-			<dd>{{ entity.fax }}</dd>
-			<dt>E-mail</dt>
-			<dd><a href="mailto:">{{ entity.email }}</a></dd>	
-		</dl>
 	</div>
 </div>
 

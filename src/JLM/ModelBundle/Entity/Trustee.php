@@ -53,6 +53,27 @@ class Trustee extends Company
     private $billingAddress;
     
     /**
+     * @var string $phone
+     *
+     * @ORM\Column(name="billingPhone",type="string",length=20, nullable=true)
+     */
+    private $billingPhone;
+    
+    /**
+     * @var string $fax
+     *
+     * @ORM\Column(name="billingFax",type="string",length=20, nullable=true)
+     */
+    private $billingFax;
+    
+    /**
+     * @var email $email
+     *
+     * @ORM\Column(name="billingEmail",type="string",length=255, nullable=true)
+     */
+    private $billingEmail;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -159,5 +180,65 @@ class Trustee extends Company
     public function getBillingAddress()
     {
         return $this->billingAddress;
+    }
+    
+    /**
+     * Set phone
+     *
+     * @param string $billingPhone
+     */
+    public function setBillingPhone($phone)
+    {
+    	$this->billingPhone = $phone;
+    }
+    
+    /**
+     * Get billingPhone
+     *
+     * @return string
+     */
+    public function getBillingPhone()
+    {
+    	return $this->billingPhone;
+    }
+    
+    /**
+     * Set billingFax
+     *
+     * @param string $fax
+     */
+    public function setBillingFax($fax)
+    {
+    	$this->billingFax = $fax;
+    }
+    
+    /**
+     * Get billingFax
+     *
+     * @return string
+     */
+    public function getBillingFax()
+    {
+    	return $this->billingFax;
+    }
+    
+    /**
+     * Set billingEmail
+     *
+     * @param string $email
+     */
+    public function setBillingEmail($email)
+    {
+    	$this->billingEmail = $email;
+    }
+    
+    /**
+     * Get billingEmail
+     *
+     * @return string
+     */
+    public function getBillingEmail()
+    {
+    	return $this->billingEmail;
     }
 }
