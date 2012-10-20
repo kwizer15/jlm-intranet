@@ -5,12 +5,12 @@ namespace JLM\ModelBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
-class DoorType extends AbstractType
+class ContractDoorType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-        	->add('type',new DoorTypeType)
+        	->add('type')
         	->add('address','address')
         	->add('location','text')
         ;
@@ -18,6 +18,13 @@ class DoorType extends AbstractType
 
     public function getName()
     {
-        return 'jlm_modelbundle_doortype';
+        return 'jlm_modelbundle_contractdoortype';
+    }
+    
+    public function getDefaultOptions(array $options)
+    {
+    	return array(
+    			'data_class' => 'JLM\ModelBundle\Entity\Door',
+    	);
     }
 }

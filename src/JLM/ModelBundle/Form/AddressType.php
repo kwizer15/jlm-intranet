@@ -11,16 +11,13 @@ class AddressType extends AbstractType
     {
         $builder
             ->add('street',null,array('label'=>'Adresse','attr'=>array('placeholder'=>'Adresse','class'=>'input-xlarge')))
-            ->add('city','city',array('label'=>'Ville','attr'=>array('placeholder'=>'Ville','class'=>'typeahead input-xlarge')));
-         //   ->add('city',null,array('class'=>'JLMModelBundle:City','required'=>false,'label'=>'Ville','attr'=>array('placeholder'=>'Ville (Code postal)','class'=>'input-xlarge')))
-        	//->add('city',null,array('required'=>true,'label'=>'Ville','attr'=>array('placeholder'=>'Ville (Code postal)','class'=>'input-xlarge')))
-        
+            ->add('city','city_select' ,array('label'=>'Ville','attr'=>array('placeholder'=>'Ville','class'=>'typeahead input-xlarge'))); 
         ;
     }
 
     public function getName()
     {
-        return 'jlm_modelbundle_addresstype';
+        return 'address';
     }
     
 	public function getDefaultOptions(array $options)

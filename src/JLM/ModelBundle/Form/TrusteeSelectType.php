@@ -8,7 +8,7 @@ use JLM\ModelBundle\Form\DataTransformer\CityToStringTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CityType extends AbstractType
+class TrusteeSelectType extends AbstractType
 {
 	/**
 	 * @var ObjectManager
@@ -29,7 +29,7 @@ class CityType extends AbstractType
 	 */
     public function buildForm(FormBuilder $builder, array $options)
     {
-    	$transformer = new CityToStringTransformer($this->om);
+    	$transformer = new TrusteeToStringTransformer($this->om);
     	$builder->prependClientTransformer($transformer);
     	
     }
@@ -41,13 +41,13 @@ class CityType extends AbstractType
     
     public function getName()
     {
-        return 'city';
+        return 'trustee_select';
     }
     
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'invalid_message' => 'The selected city does not exist',
+            'invalid_message' => 'The selected trustee does not exist',
         ));
     }
 }

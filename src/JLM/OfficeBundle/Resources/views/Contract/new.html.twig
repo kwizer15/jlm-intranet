@@ -1,16 +1,16 @@
-<h1>Contract creation</h1>
+{% extends "JLMOfficeBundle::layout.html.twig" %}
 
-<form action="{{ path('contract_create') }}" method="post" {{ form_enctype(form) }}>
+{% block content %}
+<h1>Nouveau contrat</h1>
+
+{% form_theme form 'JLMOfficeBundle:Form:field_row.html.twig' %}
+
+<form action="{{ path('contract_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+    <fieldset>
     {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
-</form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('contract') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+	<div class="form-actions">
+	   <a href="{{ path('contract') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	   <button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer les modifications</button>
+	</div>
+</fieldset>
+{% endblock %}

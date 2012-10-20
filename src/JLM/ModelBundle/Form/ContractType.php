@@ -12,26 +12,11 @@ class ContractType extends AbstractType
         $builder
             ->add('number',null,array('label'=>'Numéro'))
             ->add('type','choice',array('label'=>'Type'))
-            ->add('begin','date',array(
-	            'widget' => 'single_text',
-	            'format' => 'dd/MM/yyyy',
-	            'attr' => array('class' => 'date'),
-            	'label' => 'Date du début'		
-            ))
-            ->add('endWarranty','date',array(
-	            'widget' => 'single_text',
-	            'format' => 'dd/MM/yyyy',
-	            'attr' => array('class' => 'date'),
-            	'label' => 'Date de fin de garantie'		
-            ))
-            ->add('end','date',array(
-	            'widget' => 'single_text',
-	            'format' => 'dd/MM/yyyy',
-	            'attr' => array('class' => 'date'),
-            	'label' => 'Date de fin de contrat'		
-            ))
-            ->add('turnover',null,array('label'=>'CA'))
-            ->add('door',new DoorType,array('label'=>'Porte'))
+            ->add('begin','date')		
+            ->add('endWarranty','date')	
+            ->add('end','date')            
+            ->add('turnover','money',array('label'=>'CA'))
+            ->add('door',new ContractDoorType,array('label'=>'Porte'))
         ;
     }
 

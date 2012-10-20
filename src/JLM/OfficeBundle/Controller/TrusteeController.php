@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Form\TrusteeType;
 
@@ -37,17 +38,9 @@ class TrusteeController extends Controller
      * @Route("/{id}/show", name="trustee_show")
      * @Template()
      */
-    public function showAction($id)
+    public function showAction(Trustee $entity)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Trustee')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Trustee entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         return array(
             'entity'      => $entity,
@@ -76,7 +69,7 @@ class TrusteeController extends Controller
      *
      * @Route("/create", name="trustee_create")
      * @Method("post")
-     * @Template("JLMModelBundle:Trustee:new.html.twig")
+     * @Template("JLMOfficeBundle:Trustee:new.html.twig")
      */
     public function createAction()
     {
@@ -110,18 +103,10 @@ class TrusteeController extends Controller
      * @Route("/{id}/edit", name="trustee_edit")
      * @Template()
      */
-    public function editAction($id)
+    public function editAction(Trustee $entity)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Trustee')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Trustee entity.');
-        }
-
         $editForm = $this->createForm(new TrusteeType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity);
 
         return array(
             'entity'      => $entity,
@@ -137,18 +122,12 @@ class TrusteeController extends Controller
      * @Method("post")
      * @Template("JLMOfficeBundle:Trustee:edit.html.twig")
      */
-    public function updateAction($id)
+    public function updateAction(Trustee $entity)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('JLMModelBundle:Trustee')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Trustee entity.');
-        }
-
         $editForm   = $this->createForm(new TrusteeType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity);
 
         $request = $this->getRequest();
 
@@ -158,7 +137,7 @@ class TrusteeController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('trustee_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('trustee_edit', array('id' => $entity->getId())));
         }
 
         return array(
@@ -174,21 +153,15 @@ class TrusteeController extends Controller
      * @Route("/{id}/delete", name="trustee_delete")
      * @Method("post")
      */
-    public function deleteAction($id)
+    public function deleteAction(Trustee $entity)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($entity);
         $request = $this->getRequest();
 
         $form->bindRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('JLMModelBundle:Trustee')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Trustee entity.');
-            }
-
             $em->remove($entity);
             $em->flush();
         }
@@ -196,9 +169,9 @@ class TrusteeController extends Controller
         return $this->redirect($this->generateUrl('trustee'));
     }
 
-    private function createDeleteForm($id)
+    private function createDeleteForm(Trustee $entity)
     {
-        return $this->createFormBuilder(array('id' => $id))
+        return $this->createFormBuilder(array('id' => $entity->getId()))
             ->add('id', 'hidden')
             ->getForm()
         ;

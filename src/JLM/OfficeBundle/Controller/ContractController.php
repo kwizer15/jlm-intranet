@@ -6,13 +6,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JLM\ModelBundle\Entity\Contract;
+use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Form\ContractType;
 
 /**
  * Contract controller.
  *
- * @Route("/contract")
+ * @Route("/syndic/contrat")
  */
 class ContractController extends Controller
 {

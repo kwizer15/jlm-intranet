@@ -96,16 +96,16 @@
 {% endblock email_widget %}
 
 // Personal Types
-{% block city_widget %}
+{% block city_select_widget %}
 {% spaceless %}
 {% set attr = attr|merge({'data-source':  path('autocomplete_city') }) %}
 {{ block('field_widget') }}
 {% endspaceless %}
-{% endblock city_widget %}
+{% endblock city_select_widget %}
 
-{% block jlm_modelbundle_addresstype_widget %}
+{% block address_widget %}
 {% spaceless %}
 	  {{ form_widget(form.street) }}<br>
 	  {{ form_widget(form.city) }}
 {% endspaceless %}
-{% endblock jlm_modelbundle_addresstype_widget %}
+{% endblock address_widget %}
