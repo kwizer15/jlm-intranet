@@ -10,6 +10,7 @@ class ContractType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
+        	->add('trustee','trustee_select',array('label'=>'Syndic'))
             ->add('number',null,array('label'=>'Numéro'))
             ->add('type','choice',array('label'=>'Type'))
             ->add('begin','date')		

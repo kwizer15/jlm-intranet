@@ -40,7 +40,7 @@ class TrusteeController extends Controller
      */
     public function showAction(Trustee $entity)
     {
-        $deleteForm = $this->createDeleteForm($entity->getId());
+        $deleteForm = $this->createDeleteForm($entity);
 
         return array(
             'entity'      => $entity,

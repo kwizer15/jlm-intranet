@@ -78,6 +78,7 @@ class Trustee extends Company
      */
     public function __construct()
     {
+    	parent::__construct();
     	$this->documents = new ArrayCollection;
     	$this->contracts = new ArrayCollection;
     }
@@ -241,4 +242,6 @@ class Trustee extends Company
     {
     	return $this->billingEmail;
     }
+    
+
 }

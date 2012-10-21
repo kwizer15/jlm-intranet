@@ -14,7 +14,7 @@ use JLM\ModelBundle\Form\ContractType;
 /**
  * Contract controller.
  *
- * @Route("/syndic/contrat")
+ * @Route("/contract")
  */
 class ContractController extends Controller
 {
@@ -59,12 +59,13 @@ class ContractController extends Controller
     /**
      * Displays a form to create a new Contract entity.
      *
-     * @Route("/new", name="contract_new")
+     * @Route("/new/{id}", name="contract_new")
      * @Template()
      */
-    public function newAction()
+    public function newAction(Trustee $trustee)
     {
         $entity = new Contract();
+        $entity->setTrustee($trustee);
         $form   = $this->createForm(new ContractType(), $entity);
 
         return array(

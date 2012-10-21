@@ -22,9 +22,9 @@ class TrusteeToStringTransformer implements DataTransformerInterface
 	}
 	
 	/**
-	 * Transforms an object (city) to a string (name).
+	 * Transforms an object (trustee) to a string (name).
 	 *
-	 * @param  City|null $city
+	 * @param  Trustee|null $entity
 	 * @return string
 	 */
 	public function transform($entity)
@@ -32,7 +32,6 @@ class TrusteeToStringTransformer implements DataTransformerInterface
 		if (null === $entity) {
 			return "";
 		}
-	
 		return $entity->__toString();
 	}
 	

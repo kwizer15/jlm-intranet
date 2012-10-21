@@ -4,7 +4,7 @@ namespace JLM\ModelBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
-use JLM\ModelBundle\Form\DataTransformer\CityToStringTransformer;
+use JLM\ModelBundle\Form\DataTransformer\TrusteeToStringTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
