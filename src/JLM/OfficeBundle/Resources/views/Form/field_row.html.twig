@@ -99,9 +99,18 @@
 {% block city_select_widget %}
 {% spaceless %}
 {% set attr = attr|merge({'data-source':  path('autocomplete_city') }) %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' typeahead' }) %}
 {{ block('field_widget') }}
 {% endspaceless %}
 {% endblock city_select_widget %}
+
+{% block trustee_select_widget %}
+{% spaceless %}
+{% set attr = attr|merge({'data-source':  path('autocomplete_trustee') }) %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' typeahead' }) %}
+{{ block('field_widget') }}
+{% endspaceless %}
+{% endblock trustee_select_widget %}
 
 {% block datepicker_widget %}
 {% spaceless %}

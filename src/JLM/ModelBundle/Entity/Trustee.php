@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * JLM\ModelBundle\Entity\Trustee
  *
  * @ORM\Table(name="trustees")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\TrusteeRepository")
  */
 class Trustee extends Company
 {

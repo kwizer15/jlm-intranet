@@ -10,9 +10,9 @@ class ContractDoorType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-        	->add('type')
-        	->add('address','address')
-        	->add('location','text')
+        	->add('type',null,array('label'=>'Type de porte'))
+        	->add('address','address',array('label'=>'Adresse'))
+        	->add('location','text',array('label'=>'Localisation'))
         ;
     }
 

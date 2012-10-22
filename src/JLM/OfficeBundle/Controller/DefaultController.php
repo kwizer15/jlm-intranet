@@ -92,24 +92,4 @@ class DefaultController extends Controller
     	//		'delete_form' => $deleteForm->createView(),       
     	 );
     }
-    
-    /**
-     * Displays a form to create a new Product entity.
-     *
-     * @Route("/autocomplete/city", name="autocomplete_city")
-     * @Method("post")
-     */
-    public function autocompleteAction()
-    {
-    	$request = $this->get('request');
-    	$query = $request->request->get('query');
-
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$results = $em->getRepository('JLMModelBundle:City')->searchResult($query);
-    	$json = '{"options":'.json_encode($results).'}';
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/json');
-    	$response->setContent($json);
-    	return $response;
-    }
 }
