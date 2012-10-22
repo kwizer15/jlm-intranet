@@ -55,17 +55,18 @@ class ContractController extends Controller
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        );
     }
-
+    
     /**
      * Displays a form to create a new Contract entity.
      *
-     * @Route("/new/{id}", name="contract_new")
+     * @Route("/new/{id}", defaults={"id"=1}, name="contract_new")
      * @Template()
      */
     public function newAction(Trustee $trustee)
     {
         $entity = new Contract();
-        $entity->setTrustee($trustee);
+        if (!empty($trustee))
+        	$entity->setTrustee($trustee);
         $entity->setBegin(new \DateTime);
         $form   = $this->createForm(new ContractType(), $entity);
 
