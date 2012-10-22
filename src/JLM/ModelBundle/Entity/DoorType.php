@@ -58,4 +58,12 @@ class DoorType
     {
         return $this->name;
     }
+    
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+    	return $this->getName();
+    }
 }

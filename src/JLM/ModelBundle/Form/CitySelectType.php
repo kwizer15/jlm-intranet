@@ -8,7 +8,7 @@ use JLM\ModelBundle\Form\DataTransformer\CityToStringTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CityType extends AbstractType
+class CitySelectType extends AbstractType
 {
 	/**
 	 * @var ObjectManager
@@ -41,7 +41,7 @@ class CityType extends AbstractType
     
     public function getName()
     {
-        return 'city';
+        return 'city_select';
     }
     
 	public function setDefaultOptions(OptionsResolverInterface $resolver)

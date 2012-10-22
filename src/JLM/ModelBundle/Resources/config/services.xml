@@ -5,9 +5,16 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
 <services>
-<service id="jlm_model.type.city" class="JLM\ModelBundle\Form\CityType">
+<service id="jlm_model.type.address" class="JLM\ModelBundle\Form\AddressType">
+    <tag name="form.type" alias="address" />
+</service>
+<service id="jlm_model.type.city_select" class="JLM\ModelBundle\Form\CitySelectType">
     <argument type="service" id="doctrine.orm.entity_manager"/>
-    <tag name="form.type" alias="city" />
+    <tag name="form.type" alias="city_select" />
+</service>
+<service id="jlm_model.type.trustee_select" class="JLM\ModelBundle\Form\TrusteeSelectType">
+    <argument type="service" id="doctrine.orm.entity_manager"/>
+    <tag name="form.type" alias="trustee_select" />
 </service>
 </services>
     <!--

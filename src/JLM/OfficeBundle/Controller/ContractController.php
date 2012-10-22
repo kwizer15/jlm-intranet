@@ -6,7 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JLM\ModelBundle\Entity\Contract;
+use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Form\ContractType;
 
 /**
@@ -57,12 +59,13 @@ class ContractController extends Controller
     /**
      * Displays a form to create a new Contract entity.
      *
-     * @Route("/new", name="contract_new")
+     * @Route("/new/{id}", name="contract_new")
      * @Template()
      */
-    public function newAction()
+    public function newAction(Trustee $trustee)
     {
         $entity = new Contract();
+        $entity->setTrustee($trustee);
         $form   = $this->createForm(new ContractType(), $entity);
 
         return array(

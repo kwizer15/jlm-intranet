@@ -81,7 +81,6 @@ class Company
 	 */
 	public function __construct()
 	{
-		parent::__construct();
 		$this->contacts = new ArrayCollection;
 	}
 	
@@ -213,5 +212,13 @@ class Company
     public function getContacts()
     {
         return $this->contacts;
+    }
+    
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+    	return $this->getName();
     }
 }
