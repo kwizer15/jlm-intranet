@@ -62,10 +62,13 @@ class Door
     private $parts;
     
     /**
-     * @var string transmitters
-     * @todo Voir quel type d'objet pour ca
+     * @var string $transmitters
      * 
-     * @ORM\Column(name="transmitter",type="string",length=255)
+     * @ORM\ManyToMany(targetEntity="Product")
+     * @ORM\JoinTable(name="doors_transmitters",
+     * 		joinColumns={@ORM\JoinColumn(name="door_id", referencedColumnName="id")},
+     * 		inverseJoinColumns={@ORM\JoinColumn(name="transmitters_id", referencedColumnName="id")}
+     * 		)
      */
     private $transmitters;
    
@@ -77,6 +80,20 @@ class Door
     private $documents;
     
     /**
+     * @var float latitude
+     * 
+     * @ORM\Column(name="latitude", type="decimal",scale="7",nullable=true)
+     */
+    private $latitude;
+    
+    /**
+     * @var float longitude
+     *
+     * @ORM\Column(name="longitude", type="decimal",scale="7",nullable=true)
+     */
+    private $longitude;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -85,6 +102,7 @@ class Door
     	$this->contracts = new ArrayCollection;
     	$this->parts = new ArrayCollection;
     	$this->documents = new ArrayCollection;
+    	$this->transmitters = new ArrayCollection;
     }
 
     /**
@@ -96,6 +114,7 @@ class Door
     {
         return $this->id;
     }
+
 
     /**
      * Set location
@@ -118,43 +137,43 @@ class Door
     }
 
     /**
-     * Set transmitters
+     * Set latitude
      *
-     * @param string $transmitters
+     * @param decimal $latitude
      */
-    public function setTransmitters($transmitters)
+    public function setLatitude($latitude)
     {
-        $this->transmitters = $transmitters;
+        $this->latitude = $latitude;
     }
 
     /**
-     * Get transmitters
+     * Get latitude
      *
-     * @return string 
+     * @return decimal 
      */
-    public function getTransmitters()
+    public function getLatitude()
     {
-        return $this->transmitters;
+        return $this->latitude;
     }
 
     /**
-     * Add trustees
+     * Set longitude
      *
-     * @param JLM\ModelBundle\Entity\Trustee $trustees
+     * @param decimal $longitude
      */
-    public function addTrustee(\JLM\ModelBundle\Entity\Trustee $trustees)
+    public function setLongitude($longitude)
     {
-        $this->trustees[] = $trustees;
+        $this->longitude = $longitude;
     }
 
     /**
-     * Get trustees
+     * Get longitude
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return decimal 
      */
-    public function getTrustees()
+    public function getLongitude()
     {
-        return $this->trustees;
+        return $this->longitude;
     }
 
     /**
@@ -235,6 +254,16 @@ class Door
     public function getParts()
     {
         return $this->parts;
+    }
+
+    /**
+     * Get transmitters
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTransmitters()
+    {
+        return $this->transmitters;
     }
 
     /**
