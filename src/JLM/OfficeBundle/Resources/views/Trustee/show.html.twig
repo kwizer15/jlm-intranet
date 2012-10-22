@@ -3,7 +3,7 @@
 {% block content %}
 <h1>{{ entity.name }}</h1>
 <div class="row-fluid">
-	<div class="span6">
+	<div class="span4">
 		<address>
 			{{ entity.address.street }}<br>
 			{{ entity.address.city.zip }} - {{ entity.address.city.name }}<br>
@@ -12,7 +12,7 @@
 			e-mail : <a href="mailto:{{ entity.email }}">{{ entity.email }}</a><br>
 		</address>
 	</div>
-	<div class="span6">
+	<div class="span4">
 	{% if entity.billingAddress.city %}
 		<address>
 			<strong>Facturation</strong>
@@ -24,21 +24,15 @@
 		</address>
 	{% endif %}
 	</div>
+	<div class="span4">
+		<dl>
+			<dt>Compte</dt>
+			<dd>N°{{ entity.accountNumber }}</dd>
+			<dd>{{ entity.accession ? 'Accession' : 'Social' }}</dd>
+		</dl>
+	</div>
 </div>
-
-<table class="table">
-    <tbody>
-    <tr>
-    <th>Numéro de compte</th>
-    <td>{{ entity.accountNumber }}</td>
-    </tr>
-    <tr>
-        <th>Accession / Social</th>
-        <td>{{ entity.accession ? 'Accession' : 'Social' }}</td>
-    </tr>
-    </tbody>
-</table>
-<h2>Contrats</h2>
+<h2>Portes</h2>
 {% if entity.contracts.empty %}
 <p>Aucun contrat</p>
 {% else %}
@@ -47,9 +41,10 @@
     <tr>
       <th>Numéro</th>
       <th>Type</th>
-      <th>Type de porte</th>
       <th>Adresse de la porte</th>
-      <th>Début de contrat</th>
+      <th>Localisation</th>
+      <th>Type de porte</th>
+      <th>Emeteurs</th>
       <th>Etat</th>
     </tr>
   </thead>
@@ -58,9 +53,12 @@
     <tr>
       <td><a href="{{ path('contract_show', { 'id': contract.id }) }}">{{ contract.number }}</a></td>
       <td>{{ contract.type }}</td>
-      <td>{{ contract.door.address.street }} - {{ contract.door.address.city }}</td>
+      <td>{{ contract.door.address.street }}<br>{{ contract.door.address.city }}</td>
+      <td>{{ contract.door.location }}</td>
       <td>{{ contract.door.type }}</td>
-      <td>{{ contract.begin|date('d/m/Y') }}</td>
+      <td>{% for trans in contract.door.transmitters %}
+      {{ trans }}
+      {% endfor %}</td>
       <td>{{ contract.state }}</td>
     </tr>
   {% endfor %}
