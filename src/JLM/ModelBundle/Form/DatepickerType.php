@@ -12,7 +12,7 @@ class DatepickerType extends AbstractType
 	            'widget'=>'single_text',
 	            'input'=>'datetime',
 	            'format'=>'dd/MM/yyyy',
-	            'attr'=>array('class'=>'input-small date'),
+	            'attr'=>array('class'=>'input-small datepicker'),
             );
 	}
 

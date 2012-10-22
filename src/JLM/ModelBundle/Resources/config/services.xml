@@ -5,6 +5,9 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
 <services>
+<service id="jlm_model.type.datepicker" class="JLM\ModelBundle\Form\DatepickerType">
+    <tag name="form.type" alias="datepicker" />
+</service>
 <service id="jlm_model.type.address" class="JLM\ModelBundle\Form\AddressType">
     <tag name="form.type" alias="address" />
 </service>

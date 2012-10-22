@@ -66,6 +66,7 @@ class ContractController extends Controller
     {
         $entity = new Contract();
         $entity->setTrustee($trustee);
+        $entity->setBegin(new \DateTime);
         $form   = $this->createForm(new ContractType(), $entity);
 
         return array(

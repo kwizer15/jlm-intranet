@@ -103,6 +103,12 @@
 {% endspaceless %}
 {% endblock city_select_widget %}
 
+{% block datepicker_widget %}
+{% spaceless %}
+<div class="input-prepend"><span class="add-on"><i class="icon-calendar"></i></span>{{ block('field_widget') }}</div>
+{% endspaceless %}
+{% endblock datepicker_widget %}
+
 {% block address_widget %}
 {% spaceless %}
 	  {{ form_widget(form.street) }}<br>

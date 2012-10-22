@@ -12,11 +12,10 @@ class ContractType extends AbstractType
         $builder
         	->add('trustee','trustee_select',array('label'=>'Syndic'))
             ->add('number',null,array('label'=>'Numéro'))
-            ->add('type','choice',array('label'=>'Type'))
-            ->add('begin','date')		
-            ->add('endWarranty','date')	
-            ->add('end','date')            
-            ->add('turnover','money',array('label'=>'CA'))
+            ->add('type',null,array('label'=>'Type','attr'=>array('class'=>'input-mini')))
+            ->add('begin','datepicker',array('label'=>'Début du contrat'))		
+            ->add('endWarranty','datepicker',array('label'=>'Fin de garantie','required'=>false))           
+            ->add('turnover','money',array('label'=>'CA','attr'=>array('class'=>'input-small')))
             ->add('door',new ContractDoorType,array('label'=>'Porte'))
         ;
     }
