@@ -32,7 +32,7 @@ class TrusteeToStringTransformer implements DataTransformerInterface
 		if (null === $entity) {
 			return "";
 		}
-		return $entity->__toString();
+		return $entity.'';
 	}
 	
 	/**
@@ -49,7 +49,7 @@ class TrusteeToStringTransformer implements DataTransformerInterface
 		}
 	
 		
-			$city = $this->om
+			$entity = $this->om
 				->getRepository('JLMModelBundle:Trustee')
 				->findOneBy(array('name' => $string))
 			;

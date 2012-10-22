@@ -42,26 +42,26 @@
 {% if entity.contracts.empty %}
 <p>Aucun contrat</p>
 {% else %}
-<table class="table">
+<table class="table table-stripped">
   <thead>
     <tr>
       <th>Numéro</th>
       <th>Type</th>
+      <th>Type de porte</th>
       <th>Adresse de la porte</th>
       <th>Début de contrat</th>
       <th>Etat</th>
-      <th>CA</th>
     </tr>
   </thead>
   <tbody>
   {% for contract in entity.contracts %}
     <tr>
-      <td>{{ contract.number }}</td>
+      <td><a href="{{ path('contract_show', { 'id': contract.id }) }}">{{ contract.number }}</a></td>
       <td>{{ contract.type }}</td>
-      <td>{{ contract.door.address }}</td>
-      <td>{{ contract.begin }}</td>
+      <td>{{ contract.door.address.street }} - {{ contract.door.address.city }}</td>
+      <td>{{ contract.door.type }}</td>
+      <td>{{ contract.begin|date('d/m/Y') }}</td>
       <td>{{ contract.state }}</td>
-      <td>{{ contract.turnover }}</td>
     </tr>
   {% endfor %}
   </tbody>

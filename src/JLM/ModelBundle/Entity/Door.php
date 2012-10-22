@@ -25,7 +25,7 @@ class Door
     /**
      * @var string $address_street
      * 
-     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\OneToOne(targetEntity="Address",cascade={"all"})
      */
     private $address;
     

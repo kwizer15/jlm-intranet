@@ -46,7 +46,7 @@ class Contract
     /**
      * @var Door $door
      * 
-     * @ORM\ManyToOne(targetEntity="Door", inversedBy="contracts")
+     * @ORM\ManyToOne(targetEntity="Door", inversedBy="contracts",cascade={"all"})
      */
     private $door;
     
