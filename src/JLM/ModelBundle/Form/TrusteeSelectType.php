@@ -3,7 +3,7 @@
 namespace JLM\ModelBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use JLM\ModelBundle\Form\DataTransformer\TrusteeToStringTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -24,17 +24,17 @@ class TrusteeSelectType extends AbstractType
 	}
 	
 	/**
-	 * @param FormBuilder $builder
+	 * @param FormBuilderInterface $builder
 	 * @param array $options
 	 */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
     	$transformer = new TrusteeToStringTransformer($this->om);
     	$builder->prependClientTransformer($transformer);
     	
     }
 
-    public function getParent(array $options)
+    public function getParent()
     {
     	return 'text';
     }

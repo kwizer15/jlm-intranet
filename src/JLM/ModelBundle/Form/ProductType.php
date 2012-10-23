@@ -3,11 +3,11 @@
 namespace JLM\ModelBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class ProductType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
        		->add('reference',null,array('label'=>'Référence','attr'=>array('class'=>'input-small')))

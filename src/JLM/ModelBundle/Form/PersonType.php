@@ -3,11 +3,11 @@
 namespace JLM\ModelBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class PersonType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
         	->add('title','choice',array('label'=>'Titre','choices'=>array('M.'=>'M.','Mme'=>'Mme','Mlle'=>'Mlle'),'attr'=>array('class'=>'input-small')))

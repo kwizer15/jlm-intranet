@@ -2,7 +2,6 @@
 namespace JLM\ModelBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 class DatepickerType extends AbstractType
 {
@@ -16,7 +15,7 @@ class DatepickerType extends AbstractType
             );
 	}
 
-	public function getParent(array $options)
+	public function getParent()
 	{
 		return 'date';
 	}
