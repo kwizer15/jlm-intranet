@@ -3,20 +3,17 @@
 {% block content %}
 
 <h1>{{ entity.name }}</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Téléphone</th>
-            <th>Email</th>
-        </tr>
-    </thead>
-    <tbody>
-    	<tr>
-    		<td>{{ entity.phone }}</td>
-    		<td>{{ entity.email }}</td>
-    	</tr>
-    </tbody>
-</table>
+<address>
+	{{ entity.address.street }}<br>
+	{{ entity.address.city.zip }} {{ entity.address.city.name }}<br>
+	{{ entity.address.city.country }}<br>
+	<br>
+	Tel : {{ entity.phone }}<br>
+	{% if entity.fax %}Fax : {{ entity.fax }}<br>{% endif %}
+	{% if entity.email %}e-mail : <a href="mailto:{{ entity.email }}">{{ entity.email }}</a><br>{% endif %}
+	<br>
+	{% if entity.website %}Site internet : <a href="{{ entity.website }}">{{ entity.website }}</a>{% endif %}
+</address>
 <div class="form-actions">
 	<a href="{{ path('supplier') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
 	<a href="{{ path('supplier_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>

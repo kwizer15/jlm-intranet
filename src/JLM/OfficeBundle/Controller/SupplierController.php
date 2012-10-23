@@ -87,8 +87,7 @@ class SupplierController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity->getPhone());
-            $em->persist($entity->getEmail());
+            $em->persist($entity->getAddress());
             $em->persist($entity);
             $em->flush();
 
@@ -153,8 +152,7 @@ class SupplierController extends Controller
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
-        	$em->persist($entity->getPhone());
-        	$em->persist($entity->getEmail());
+        	$em->persist($entity->getAddress());
             $em->persist($entity);
             $em->flush();
 

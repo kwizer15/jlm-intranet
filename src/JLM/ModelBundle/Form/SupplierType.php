@@ -14,7 +14,8 @@ class SupplierType extends AbstractType
             ->add('address',new AddressType,array('label'=>'Adresse'))
             ->add('phone',null,array('label'=>'Téléphone'))
             ->add('fax',null,array('label'=>'Fax','required'=>false))
-            ->add('email','email',array('label'=>'Email','required'=>false))
+            ->add('email','email',array('label'=>'e-mail','required'=>false))
+            ->add('website','url',array('label'=>'Site internet','required'=>false))
         ;
     }
 

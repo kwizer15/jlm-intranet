@@ -8,6 +8,7 @@
         <tr>
             <th>Nom</th>
             <th>Téléphone</th>
+            <th>Fax</th>
             <th>E-mail</th>
             <th></th>
         </tr>
@@ -17,7 +18,8 @@
         <tr>
             <td><a href="{{ path('supplier_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
             <td>{{ entity.phone }}</td>
-            <td>{{ entity.email }}</td>
+            <td>{{ entity.fax }}</td>
+            <td><a href="mailto:{{ entity.email }}">{{ entity.email }}</a></td>
             <td>
                 <a href="{{ path('supplier_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
                 <a href="{{ path('supplier_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i></a>
@@ -34,6 +36,6 @@
 	    </ul>
     </div>
 <div class="form-actions">
-<a href="{{ path('supplier_new') }}" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer un nouveau produit</a>
+<a href="{{ path('supplier_new') }}" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer un nouveau fournisseur</a>
 </div>
 {% endblock %}
