@@ -67,9 +67,9 @@ class Person
     /**
      * @var string $professionnalPhone
      *
-     * @ORM\Column(name="professionnnalPhone", type="string", length=20, nullable=true)
+     * @ORM\Column(name="professionnalPhone", type="string", length=20, nullable=true)
      */
-    private $professionnnalPhone;
+    private $professionnalPhone;
     
     /**
      * @var string $fax
@@ -213,23 +213,23 @@ class Person
     }
 
     /**
-     * Set professionnnalPhone
+     * Set professionnalPhone
      *
      * @param string $professionnnalPhone
      */
-    public function setProfessionnnalPhone($professionnnalPhone)
+    public function setProfessionnalPhone($professionnalPhone)
     {
-        $this->professionnnalPhone = $professionnnalPhone;
+        $this->professionnalPhone = $professionnalPhone;
     }
 
     /**
-     * Get professionnnalPhone
+     * Get professionnalPhone
      *
      * @return string 
      */
-    public function getProfessionnnalPhone()
+    public function getProfessionnalPhone()
     {
-        return $this->professionnnalPhone;
+        return $this->professionnalPhone;
     }
 
     /**

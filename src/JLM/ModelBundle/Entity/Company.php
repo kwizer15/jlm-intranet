@@ -63,16 +63,16 @@ class Company
 	 * @ORM\Column(name="email",type="string",length=255, nullable=true)
 	 */
 	private $email;
-
+	
 	
 	/**
 	 * @var Person[] $contacts
 	 *
 	 * @ORM\ManyToMany(targetEntity="Person",cascade={"all"})
-     * @ORM\JoinTable(name="companies_contacts",
-     *      joinColumns={@ORM\JoinColumn(name="company_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id", unique=true)}
-     *      )
+	 * @ORM\JoinTable(name="companies_contacts",
+	 *      joinColumns={@ORM\JoinColumn(name="company_id", referencedColumnName="id")},
+	 *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id", unique=true)}
+	 *      )
 	 */
 	private $contacts;
 	
@@ -194,24 +194,25 @@ class Company
         return $this->address;
     }
 
+    
     /**
      * Add contacts
      *
      * @param JLM\ModelBundle\Entity\Person $contacts
      */
-    public function addPerson(\JLM\ModelBundle\Entity\Person $contacts)
+    public function addContact(\JLM\ModelBundle\Entity\Person $contacts)
     {
-        $this->contacts[] = $contacts;
+    	$this->contacts[] = $contacts;
     }
-
+    
     /**
      * Get contacts
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getContacts()
     {
-        return $this->contacts;
+    	return $this->contacts;
     }
     
     /**

@@ -94,10 +94,22 @@ class Door
     private $longitude;
     
     /**
+     * @var Person[] $contacts
+     *
+     * @ORM\ManyToMany(targetEntity="Person",cascade={"all"})
+     * @ORM\JoinTable(name="doors_contacts",
+     *      joinColumns={@ORM\JoinColumn(name="door_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id", unique=true)}
+     *      )
+     */
+    private $contacts;
+    
+    /**
      * Constructor
      */
     public function __construct()
     {
+    	$this->contacts = new ArrayCollection;
     	$this->trustees = new ArrayCollection;
     	$this->contracts = new ArrayCollection;
     	$this->parts = new ArrayCollection;
@@ -115,7 +127,26 @@ class Door
         return $this->id;
     }
 
-
+    /**
+     * Add contacts
+     *
+     * @param JLM\ModelBundle\Entity\Person $contacts
+     */
+    public function addContact(\JLM\ModelBundle\Entity\Person $contacts)
+    {
+    	$this->contacts[] = $contacts;
+    }
+    
+    /**
+     * Get contacts
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getContacts()
+    {
+    	return $this->contacts;
+    }
+    
     /**
      * Set location
      *

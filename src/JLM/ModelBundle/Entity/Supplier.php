@@ -18,6 +18,7 @@ class Supplier extends Company
 	 * @ORM\Column(name="website",type="string",length=255)
 	 */
 	private $website;
+
 	
 	/**
 	 * Get website
@@ -36,4 +37,5 @@ class Supplier extends Company
 	{
 		$this->website = $url;
 	}
+
 }
