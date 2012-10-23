@@ -20,16 +20,20 @@
    		      	
 		      {% endblock %}
 		      </ul>
-	        
-		<!--	<form action="" method="post" class="navbar-form pull-right">
+	            <form class="navbar-search pull-right">
+     <div class="input-append">
+<input type="text" class="search-query" placeholder="Rechercher...">
+</div>
+    </form>
+		<form action="" method="post" class="navbar-form pull-right">
 				<input type="text" id="username" name="_username" placeholder="Utilisateur..." class="span2">
 				<input type="password" id="password" name="_password" placeholder="Mot de passe..." class="span2">
 				<input type="hidden" id="remember_me" name="_remember_me" value="on">
 				<button type="submit" id="_submit" name="_submit" class="btn btn-primary">Connexion</button>
-			</form> -->
+			</form>
 		
 			
-	        {% endblock %}
+	    {% endblock %}
 	        </div>
 	    </div>
     </div>
@@ -37,6 +41,7 @@
       <div class="container-fluid">
       <div class="row-fluid">
 	      <div class="span2">
+	      
 		      {% block sidebar %}
 		        <ul class="nav nav-tabs nav-stacked">
 		        <li><a href="{{ path('trustee') }}">Syndics</a></li>

@@ -139,7 +139,7 @@ class Person
      */
     public function getName()
     {
-    	return $this->title.' '.$this->firstName.' '.$this->lastName;
+    	return $this->lastName;
     }
 
     /**

@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Form\TrusteeType;
+use JLM\ModelBundle\Entity\Person;
+use JLM\ModelBundle\Form\PersonType;
 
 /**
  * Trustee controller.
@@ -175,5 +177,56 @@ class TrusteeController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+    
+    /**
+     * Formulaire d'ajout d'un contact au syndic.
+     *
+     * @Route("/{id}/contact/new", name="trustee_contact_new")
+     * @Template()
+     */
+    public function contactnewAction(Trustee $trustee)
+    {
+    	$entity = new Person();
+    	$form   = $this->createForm(new PersonType(), $entity);
+    	
+    	return array(
+    			'trustee' => $trustee,
+    			'entity' => $entity,
+    			'form'   => $form->createView()
+    	);
+    }
+    
+    /**
+     * Creates a new Trustee entity.
+     *
+     * @Route("/{id}/contact/create", name="trustee_contact_create")
+     * @Method("post")
+     * @Template("JLMOfficeBundle:Trustee:contactnew.html.twig")
+     */
+    public function contactcreateAction(Trustee $trustee)
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$entity  = new Person();
+    	$request = $this->getRequest();
+    	$form    = $this->createForm(new PersonType(), $entity);
+    	$form->bindRequest($request);
+    
+    	if ($form->isValid()) {
+    		$em = $this->getDoctrine()->getEntityManager();
+    		$trustee->addContact($entity);
+    		$em->persist($entity);
+			$em->persist($trustee);
+    		$em->flush();
+    
+    		return $this->redirect($this->generateUrl('trustee_show', array('id' => $trustee->getId())));
+    
+    	}
+    
+    	return array(
+    			'trustee' => $trustee,
+    			'entity' => $entity,
+    			'form'   => $form->createView()
+    	);
     }
 }

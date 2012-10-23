@@ -12,7 +12,7 @@ use JLM\ModelBundle\Form\ProductType;
 /**
  * Product controller.
  *
- * @Route("/product")
+ * @Route("/produits")
  */
 class ProductController extends Controller
 {
@@ -34,7 +34,7 @@ class ProductController extends Controller
     /**
      * Finds and displays a Product entity.
      *
-     * @Route("/{id}/show", name="product_show")
+     * @Route("/{id}/voir", name="product_show")
      * @Template()
      */
     public function showAction($id)
@@ -57,7 +57,7 @@ class ProductController extends Controller
     /**
      * Displays a form to create a new Product entity.
      *
-     * @Route("/new", name="product_new")
+     * @Route("/nouveau", name="product_new")
      * @Template()
      */
     public function newAction()
@@ -74,7 +74,7 @@ class ProductController extends Controller
     /**
      * Creates a new Product entity.
      *
-     * @Route("/create", name="product_create")
+     * @Route("/creer", name="product_create")
      * @Method("post")
      * @Template("JLMOfficeBundle:Product:new.html.twig")
      */
@@ -103,7 +103,7 @@ class ProductController extends Controller
     /**
      * Displays a form to edit an existing Product entity.
      *
-     * @Route("/{id}/edit", name="product_edit")
+     * @Route("/{id}/editer", name="product_edit")
      * @Template()
      */
     public function editAction($id)
@@ -129,7 +129,7 @@ class ProductController extends Controller
     /**
      * Edits an existing Product entity.
      *
-     * @Route("/{id}/update", name="product_update")
+     * @Route("/{id}/miseajour", name="product_update")
      * @Method("post")
      * @Template("JLMOfficeBundle:Product:edit.html.twig")
      */
@@ -167,7 +167,7 @@ class ProductController extends Controller
     /**
      * Deletes a Product entity.
      *
-     * @Route("/{id}/delete", name="product_delete")
+     * @Route("/{id}/supprimer", name="product_delete")
      * @Method("post")
      */
     public function deleteAction($id)

@@ -62,12 +62,39 @@
       <td>{{ contract.state }}</td>
     </tr>
   {% endfor %}
+  
   </tbody>
 </table>
 {% endif %}
+
+<h2>Contacts</h2>
+{% if entity.contacts.empty %}
+<p>Aucun contact</p>
+{% else %}
+<table class="table table-stripped">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Rôle</th>
+      <th>Téléphone</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for contact in entity.contacts %}
+    <tr>
+      <td>{{ contact.name }}</td>
+      <td>{{ contact.role }}</td>
+      <td>{{ contact.fixedPhone }}</td>
+    </tr>
+  {% endfor %}  
+  </tbody>
+</table>
+{% endif %}
+
 <div class="form-actions">
 	<a href="{{ path('trustee') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
 	<a href="{{ path('trustee_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 	<a href="{{ path('contract_new', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter un contrat</a>
+	<a href="{{ path('trustee_contact_new', { 'id': entity.id }) }}" class="btn btn-info"><i class="icon-user icon-white"></i> Ajouter un contact</a>
 </div>
 {% endblock %}
