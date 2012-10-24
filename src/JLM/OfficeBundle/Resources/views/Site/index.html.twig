@@ -1,0 +1,44 @@
+{# Pas utile normalement #}
+{% extends "JLMOfficeBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Liste des sites</h1>
+
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>Adresse</th>
+            <th>Code postal</th>
+            <th>Ville</th>
+            <th>TVA</th>
+            <th>Nb portes</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('site_show', { 'id': entity.id }) }}">{{ entity.address.street }}</a></td>
+            <td>{{ entity.address.city.zip }}</td>
+            <td>{{ entity.address.city.name }}</td>
+            <td>{{ entity.vat }}</td>
+            <td></td>
+            <td>
+                <a href="{{ path('site_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
+                <a href="{{ path('site_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i></a>
+           </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="pagination pagination-centered">
+	    <ul>
+		    <li class="disabled"><a href="#">«</a></li>
+		    <li class="active"><a href="#">1</a></li>
+		    <li class="disabled"><a href="#">»</a></li>
+	    </ul>
+    </div>
+<div class="form-actions">
+<a href="{{ path('site_new') }}" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer un nouveau syndic</a>
+</div>
+{% endblock %}

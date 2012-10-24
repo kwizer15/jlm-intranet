@@ -7,9 +7,9 @@
 		<address>
 			{{ entity.address.street }}<br>
 			{{ entity.address.city.zip }} - {{ entity.address.city.name }}<br>
-			Tel : {{ entity.phone }}<br>
-			Fax : {{ entity.fax }}<br>
-			e-mail : <a href="mailto:{{ entity.email }}">{{ entity.email }}</a><br>
+			{% if entity.phone %}Tel : {{ entity.phone }}<br>{% endif %}
+			{% if entity.fax %}Fax : {{ entity.fax }}<br>{% endif %}
+			{% if entity.email %}e-mail : <a href="mailto:{{ entity.email }}">{{ entity.email }}</a><br>{% endif %}
 		</address>
 	</div>
 	<div class="span4">
@@ -32,69 +32,37 @@
 		</dl>
 	</div>
 </div>
-<h2>Portes</h2>
-{% if entity.contracts.empty %}
-<p>Aucun contrat</p>
-{% else %}
+<h2>Affaires</h2>
+{% if entity.sites %}
 <table class="table table-stripped">
-  <thead>
-    <tr>
-      <th>Numéro</th>
-      <th>Type</th>
-      <th>Adresse de la porte</th>
-      <th>Localisation</th>
-      <th>Type de porte</th>
-      <th>Emeteurs</th>
-      <th>Etat</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for contract in entity.contracts %}
-    <tr>
-      <td><a href="{{ path('contract_show', { 'id': contract.id }) }}">{{ contract.number }}</a></td>
-      <td>{{ contract.type }}</td>
-      <td>{{ contract.door.address.street }}<br>{{ contract.door.address.city }}</td>
-      <td>{{ contract.door.location }}</td>
-      <td>{{ contract.door.type }}</td>
-      <td>{% for trans in contract.door.transmitters %}
-      {{ trans }}
-      {% endfor %}</td>
-      <td>{{ contract.state }}</td>
-    </tr>
-  {% endfor %}
-  
-  </tbody>
+<thead>
+<tr>
+<th>Nb portes</th>
+<th>Adresse</th>
+<th>Code postal</th>
+<th>Ville</th>
+<th>TVA</th>
+</tr>
+</thead>
+<tbody>
+{% for site in entity.sites %}
+<tr>
+<td>{{ site.doors|length }}</td>
+<td><a href="{{ path('site_show',{'id':site.id}) }}">{{ site.address.street }}</a></td>
+<td>{{ site.address.city.zip }}</td>
+<td>{{ site.address.city.name }}</td>
+<td>{{ site.vat }}</td>
+</tr>
+{% endfor %}
+</tbody>
 </table>
-{% endif %}
-
-<h2>Contacts</h2>
-{% if entity.contacts.empty %}
-<p>Aucun contact</p>
 {% else %}
-<table class="table table-stripped">
-  <thead>
-    <tr>
-      <th>Nom</th>
-      <th>Rôle</th>
-      <th>Téléphone</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for contact in entity.contacts %}
-    <tr>
-      <td>{{ contact.name }}</td>
-      <td>{{ contact.role }}</td>
-      <td>{{ contact.fixedPhone }}</td>
-    </tr>
-  {% endfor %}  
-  </tbody>
-</table>
+<p>Aucun site</p>
 {% endif %}
 
 <div class="form-actions">
 	<a href="{{ path('trustee') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
 	<a href="{{ path('trustee_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
-	<a href="{{ path('contract_new', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter un contrat</a>
-	<a href="{{ path('trustee_contact_new', { 'id': entity.id }) }}" class="btn btn-info"><i class="icon-user icon-white"></i> Ajouter un contact</a>
+	<a href="{{ path('site_new_id', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter un site</a>
 </div>
 {% endblock %}

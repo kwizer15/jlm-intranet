@@ -37,6 +37,13 @@ class Trustee extends Company
     private $contracts;
 
     /**
+     * @var ArrayCollection $sites
+     * 
+     * @ORM\OneToMany(targetEntity="Site",mappedBy="trustee")
+     */
+    private $sites;
+    
+    /**
      * @var Document[] $documents
      *
      * @ORM\OneToMany(targetEntity="Document",mappedBy="trustee")
@@ -79,6 +86,7 @@ class Trustee extends Company
     public function __construct()
     {
     	parent::__construct();
+    	$this->sites = new ArrayCollection;
     	$this->documents = new ArrayCollection;
     	$this->contracts = new ArrayCollection;
     }
@@ -87,10 +95,13 @@ class Trustee extends Company
      * Set accession
      *
      * @param boolean $accession
+     * @return Trustee
      */
     public function setAccession($accession)
     {
         $this->accession = $accession;
+    
+        return $this;
     }
 
     /**
@@ -107,10 +118,13 @@ class Trustee extends Company
      * Set accountNumber
      *
      * @param integer $accountNumber
+     * @return Trustee
      */
     public function setAccountNumber($accountNumber)
     {
         $this->accountNumber = $accountNumber;
+    
+        return $this;
     }
 
     /**
@@ -124,13 +138,95 @@ class Trustee extends Company
     }
 
     /**
+     * Set billingPhone
+     *
+     * @param string $billingPhone
+     * @return Trustee
+     */
+    public function setBillingPhone($billingPhone)
+    {
+        $this->billingPhone = $billingPhone;
+    
+        return $this;
+    }
+
+    /**
+     * Get billingPhone
+     *
+     * @return string 
+     */
+    public function getBillingPhone()
+    {
+        return $this->billingPhone;
+    }
+
+    /**
+     * Set billingFax
+     *
+     * @param string $billingFax
+     * @return Trustee
+     */
+    public function setBillingFax($billingFax)
+    {
+        $this->billingFax = $billingFax;
+    
+        return $this;
+    }
+
+    /**
+     * Get billingFax
+     *
+     * @return string 
+     */
+    public function getBillingFax()
+    {
+        return $this->billingFax;
+    }
+
+    /**
+     * Set billingEmail
+     *
+     * @param string $billingEmail
+     * @return Trustee
+     */
+    public function setBillingEmail($billingEmail)
+    {
+        $this->billingEmail = $billingEmail;
+    
+        return $this;
+    }
+
+    /**
+     * Get billingEmail
+     *
+     * @return string 
+     */
+    public function getBillingEmail()
+    {
+        return $this->billingEmail;
+    }
+
+    /**
      * Add contracts
      *
      * @param JLM\ModelBundle\Entity\Contract $contracts
+     * @return Trustee
      */
     public function addContract(\JLM\ModelBundle\Entity\Contract $contracts)
     {
         $this->contracts[] = $contracts;
+    
+        return $this;
+    }
+
+    /**
+     * Remove contracts
+     *
+     * @param JLM\ModelBundle\Entity\Contract $contracts
+     */
+    public function removeContract(\JLM\ModelBundle\Entity\Contract $contracts)
+    {
+        $this->contracts->removeElement($contracts);
     }
 
     /**
@@ -144,13 +240,59 @@ class Trustee extends Company
     }
 
     /**
+     * Add sites
+     *
+     * @param JLM\ModelBundle\Entity\Site $sites
+     * @return Trustee
+     */
+    public function addSite(\JLM\ModelBundle\Entity\Site $sites)
+    {
+        $this->sites[] = $sites;
+    
+        return $this;
+    }
+
+    /**
+     * Remove sites
+     *
+     * @param JLM\ModelBundle\Entity\Site $sites
+     */
+    public function removeSite(\JLM\ModelBundle\Entity\Site $sites)
+    {
+        $this->sites->removeElement($sites);
+    }
+
+    /**
+     * Get sites
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getSites()
+    {
+        return $this->sites;
+    }
+
+    /**
      * Add documents
      *
      * @param JLM\ModelBundle\Entity\Document $documents
+     * @return Trustee
      */
     public function addDocument(\JLM\ModelBundle\Entity\Document $documents)
     {
         $this->documents[] = $documents;
+    
+        return $this;
+    }
+
+    /**
+     * Remove documents
+     *
+     * @param JLM\ModelBundle\Entity\Document $documents
+     */
+    public function removeDocument(\JLM\ModelBundle\Entity\Document $documents)
+    {
+        $this->documents->removeElement($documents);
     }
 
     /**
@@ -167,10 +309,13 @@ class Trustee extends Company
      * Set billingAddress
      *
      * @param JLM\ModelBundle\Entity\Address $billingAddress
+     * @return Trustee
      */
-    public function setBillingAddress(\JLM\ModelBundle\Entity\Address $billingAddress)
+    public function setBillingAddress(\JLM\ModelBundle\Entity\Address $billingAddress = null)
     {
         $this->billingAddress = $billingAddress;
+    
+        return $this;
     }
 
     /**
@@ -182,66 +327,4 @@ class Trustee extends Company
     {
         return $this->billingAddress;
     }
-    
-    /**
-     * Set phone
-     *
-     * @param string $billingPhone
-     */
-    public function setBillingPhone($phone)
-    {
-    	$this->billingPhone = $phone;
-    }
-    
-    /**
-     * Get billingPhone
-     *
-     * @return string
-     */
-    public function getBillingPhone()
-    {
-    	return $this->billingPhone;
-    }
-    
-    /**
-     * Set billingFax
-     *
-     * @param string $fax
-     */
-    public function setBillingFax($fax)
-    {
-    	$this->billingFax = $fax;
-    }
-    
-    /**
-     * Get billingFax
-     *
-     * @return string
-     */
-    public function getBillingFax()
-    {
-    	return $this->billingFax;
-    }
-    
-    /**
-     * Set billingEmail
-     *
-     * @param string $email
-     */
-    public function setBillingEmail($email)
-    {
-    	$this->billingEmail = $email;
-    }
-    
-    /**
-     * Get billingEmail
-     *
-     * @return string
-     */
-    public function getBillingEmail()
-    {
-    	return $this->billingEmail;
-    }
-    
-
 }

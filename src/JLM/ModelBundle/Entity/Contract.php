@@ -46,9 +46,9 @@ class Contract
     /**
      * @var Door $door
      * 
-     * @ORM\ManyToOne(targetEntity="Door", inversedBy="contracts",cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="Door", inversedBy="contracts")
      */
-    private $door;
+    private $doors;
     
     /**
      * @var datetime $begin
@@ -79,6 +79,14 @@ class Contract
     private $turnover;
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->doors = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -92,10 +100,13 @@ class Contract
      * Set number
      *
      * @param string $number
+     * @return Contract
      */
     public function setNumber($number)
     {
         $this->number = $number;
+    
+        return $this;
     }
 
     /**
@@ -111,17 +122,20 @@ class Contract
     /**
      * Set begin
      *
-     * @param datetime $begin
+     * @param \DateTime $begin
+     * @return Contract
      */
     public function setBegin($begin)
     {
         $this->begin = $begin;
+    
+        return $this;
     }
 
     /**
      * Get begin
      *
-     * @return datetime 
+     * @return \DateTime 
      */
     public function getBegin()
     {
@@ -131,17 +145,20 @@ class Contract
     /**
      * Set endWarranty
      *
-     * @param datetime $endWarranty
+     * @param \DateTime $endWarranty
+     * @return Contract
      */
     public function setEndWarranty($endWarranty)
     {
         $this->endWarranty = $endWarranty;
+    
+        return $this;
     }
 
     /**
      * Get endWarranty
      *
-     * @return datetime 
+     * @return \DateTime 
      */
     public function getEndWarranty()
     {
@@ -151,17 +168,20 @@ class Contract
     /**
      * Set end
      *
-     * @param datetime $end
+     * @param \DateTime $end
+     * @return Contract
      */
     public function setEnd($end)
     {
         $this->end = $end;
+    
+        return $this;
     }
 
     /**
      * Get end
      *
-     * @return datetime 
+     * @return \DateTime 
      */
     public function getEnd()
     {
@@ -171,17 +191,20 @@ class Contract
     /**
      * Set turnover
      *
-     * @param decimal $turnover
+     * @param float $turnover
+     * @return Contract
      */
     public function setTurnover($turnover)
     {
         $this->turnover = $turnover;
+    
+        return $this;
     }
 
     /**
      * Get turnover
      *
-     * @return decimal 
+     * @return float 
      */
     public function getTurnover()
     {
@@ -192,10 +215,13 @@ class Contract
      * Set type
      *
      * @param JLM\ModelBundle\Entity\ContractType $type
+     * @return Contract
      */
-    public function setType(\JLM\ModelBundle\Entity\ContractType $type)
+    public function setType(\JLM\ModelBundle\Entity\ContractType $type = null)
     {
         $this->type = $type;
+    
+        return $this;
     }
 
     /**
@@ -212,10 +238,13 @@ class Contract
      * Set trustee
      *
      * @param JLM\ModelBundle\Entity\Trustee $trustee
+     * @return Contract
      */
-    public function setTrustee(\JLM\ModelBundle\Entity\Trustee $trustee)
+    public function setTrustee(\JLM\ModelBundle\Entity\Trustee $trustee = null)
     {
         $this->trustee = $trustee;
+    
+        return $this;
     }
 
     /**
@@ -229,31 +258,35 @@ class Contract
     }
 
     /**
-     * Set door
+     * Add doors
      *
-     * @param JLM\ModelBundle\Entity\Door $door
+     * @param JLM\ModelBundle\Entity\Door $doors
+     * @return Contract
      */
-    public function setDoor(\JLM\ModelBundle\Entity\Door $door)
+    public function addDoor(\JLM\ModelBundle\Entity\Door $doors)
     {
-        $this->door = $door;
+        $this->doors[] = $doors;
+    
+        return $this;
     }
 
     /**
-     * Get door
+     * Remove doors
      *
-     * @return JLM\ModelBundle\Entity\Door 
+     * @param JLM\ModelBundle\Entity\Door $doors
      */
-    public function getDoor()
+    public function removeDoor(\JLM\ModelBundle\Entity\Door $doors)
     {
-        return $this->door;
+        $this->doors->removeElement($doors);
     }
-    
+
     /**
-     * Etat du contrat
-     * @return string
+     * Get doors
+     *
+     * @return Doctrine\Common\Collections\Collection 
      */
-    public function getState()
+    public function getDoors()
     {
-    	return '';
+        return $this->doors;
     }
 }

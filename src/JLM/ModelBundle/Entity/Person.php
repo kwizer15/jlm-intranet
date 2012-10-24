@@ -291,4 +291,14 @@ class Person
     {
         return $this->role;
     }
+    
+    /**
+     * To String
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+    	return $this->lastName;
+    }
 }

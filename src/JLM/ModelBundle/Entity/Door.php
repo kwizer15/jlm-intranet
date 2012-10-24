@@ -23,20 +23,31 @@ class Door
     private $id;
     
     /**
-     * @var string $address_street
+     * Batiment "officiel"
+     * @var Site $site
      * 
-     * @ORM\OneToOne(targetEntity="Address",cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="Site")
      */
-    private $address;
+    private $site;
     
     /**
+     * Indications internes
+     * @var string $street
+     * 
+     * @ORM\Column(name="street",type="text")
+     */
+    private $street;
+    
+    /**
+     * Contrats concernant la porte
      * @var Contract[] $contracts
      * 
-     * @ORM\OneToMany(targetEntity="Contract", mappedBy="door")
+     * @ORM\ManyToMany(targetEntity="Contract", mappedBy="doors")
      */
     private $contracts;
     
     /**
+     * Type de porte
      * @var DoorType $type
      * 
      * @ORM\ManyToOne(targetEntity="DoorType")
@@ -44,6 +55,7 @@ class Door
     private $type;
     
     /**
+     * Localisation (ex: Entrée, façade...)
      * @var string $location
      *
      * @ORM\Column(name="location", type="string", length=255)
@@ -51,6 +63,7 @@ class Door
     private $location;
 
     /**
+     * Pièces de la porte (cellules, bp...)
      * @var Product[] $parts
      * 
      * @ORM\ManyToMany(targetEntity="Product")
@@ -62,6 +75,7 @@ class Door
     private $parts;
     
     /**
+     * Emeteurs
      * @var string $transmitters
      * 
      * @ORM\ManyToMany(targetEntity="Product")
@@ -73,6 +87,7 @@ class Door
     private $transmitters;
    
     /**
+     * Devis concernant la porte
      * @var Document[] $documents
      *
      * @ORM\OneToMany(targetEntity="Document",mappedBy="trustee")
@@ -93,24 +108,13 @@ class Door
      */
     private $longitude;
     
-    /**
-     * @var Person[] $contacts
-     *
-     * @ORM\ManyToMany(targetEntity="Person",cascade={"all"})
-     * @ORM\JoinTable(name="doors_contacts",
-     *      joinColumns={@ORM\JoinColumn(name="door_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id", unique=true)}
-     *      )
-     */
-    private $contacts;
+    
     
     /**
      * Constructor
      */
     public function __construct()
     {
-    	$this->contacts = new ArrayCollection;
-    	$this->trustees = new ArrayCollection;
     	$this->contracts = new ArrayCollection;
     	$this->parts = new ArrayCollection;
     	$this->documents = new ArrayCollection;
@@ -128,33 +132,39 @@ class Door
     }
 
     /**
-     * Add contacts
+     * Set address
      *
-     * @param JLM\ModelBundle\Entity\Person $contacts
+     * @param string $address
+     * @return Door
      */
-    public function addContact(\JLM\ModelBundle\Entity\Person $contacts)
+    public function setAddress($address)
     {
-    	$this->contacts[] = $contacts;
-    }
+        $this->address = $address;
     
+        return $this;
+    }
+
     /**
-     * Get contacts
+     * Get address
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return string 
      */
-    public function getContacts()
+    public function getAddress()
     {
-    	return $this->contacts;
+        return $this->address;
     }
-    
+
     /**
      * Set location
      *
      * @param string $location
+     * @return Door
      */
     public function setLocation($location)
     {
         $this->location = $location;
+    
+        return $this;
     }
 
     /**
@@ -170,17 +180,20 @@ class Door
     /**
      * Set latitude
      *
-     * @param decimal $latitude
+     * @param float $latitude
+     * @return Door
      */
     public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
+    
+        return $this;
     }
 
     /**
      * Get latitude
      *
-     * @return decimal 
+     * @return float 
      */
     public function getLatitude()
     {
@@ -190,17 +203,20 @@ class Door
     /**
      * Set longitude
      *
-     * @param decimal $longitude
+     * @param float $longitude
+     * @return Door
      */
     public function setLongitude($longitude)
     {
         $this->longitude = $longitude;
+    
+        return $this;
     }
 
     /**
      * Get longitude
      *
-     * @return decimal 
+     * @return float 
      */
     public function getLongitude()
     {
@@ -208,33 +224,49 @@ class Door
     }
 
     /**
-     * Set address
+     * Set site
      *
-     * @param JLM\ModelBundle\Entity\Address $address
+     * @param JLM\ModelBundle\Entity\Site $site
+     * @return Door
      */
-    public function setAddress(\JLM\ModelBundle\Entity\Address $address)
+    public function setSite(\JLM\ModelBundle\Entity\Site $site = null)
     {
-        $this->address = $address;
+        $this->site = $site;
+    
+        return $this;
     }
 
     /**
-     * Get address
+     * Get site
      *
-     * @return JLM\ModelBundle\Entity\Address 
+     * @return JLM\ModelBundle\Entity\Site 
      */
-    public function getAddress()
+    public function getSite()
     {
-        return $this->address;
+        return $this->site;
     }
 
     /**
      * Add contracts
      *
      * @param JLM\ModelBundle\Entity\Contract $contracts
+     * @return Door
      */
     public function addContract(\JLM\ModelBundle\Entity\Contract $contracts)
     {
         $this->contracts[] = $contracts;
+    
+        return $this;
+    }
+
+    /**
+     * Remove contracts
+     *
+     * @param JLM\ModelBundle\Entity\Contract $contracts
+     */
+    public function removeContract(\JLM\ModelBundle\Entity\Contract $contracts)
+    {
+        $this->contracts->removeElement($contracts);
     }
 
     /**
@@ -251,10 +283,13 @@ class Door
      * Set type
      *
      * @param JLM\ModelBundle\Entity\DoorType $type
+     * @return Door
      */
-    public function setType(\JLM\ModelBundle\Entity\DoorType $type)
+    public function setType(\JLM\ModelBundle\Entity\DoorType $type = null)
     {
         $this->type = $type;
+    
+        return $this;
     }
 
     /**
@@ -271,10 +306,23 @@ class Door
      * Add parts
      *
      * @param JLM\ModelBundle\Entity\Product $parts
+     * @return Door
      */
-    public function addProduct(\JLM\ModelBundle\Entity\Product $parts)
+    public function addPart(\JLM\ModelBundle\Entity\Product $parts)
     {
         $this->parts[] = $parts;
+    
+        return $this;
+    }
+
+    /**
+     * Remove parts
+     *
+     * @param JLM\ModelBundle\Entity\Product $parts
+     */
+    public function removePart(\JLM\ModelBundle\Entity\Product $parts)
+    {
+        $this->parts->removeElement($parts);
     }
 
     /**
@@ -285,6 +333,29 @@ class Door
     public function getParts()
     {
         return $this->parts;
+    }
+
+    /**
+     * Add transmitters
+     *
+     * @param JLM\ModelBundle\Entity\Product $transmitters
+     * @return Door
+     */
+    public function addTransmitter(\JLM\ModelBundle\Entity\Product $transmitters)
+    {
+        $this->transmitters[] = $transmitters;
+    
+        return $this;
+    }
+
+    /**
+     * Remove transmitters
+     *
+     * @param JLM\ModelBundle\Entity\Product $transmitters
+     */
+    public function removeTransmitter(\JLM\ModelBundle\Entity\Product $transmitters)
+    {
+        $this->transmitters->removeElement($transmitters);
     }
 
     /**
@@ -301,10 +372,23 @@ class Door
      * Add documents
      *
      * @param JLM\ModelBundle\Entity\Document $documents
+     * @return Door
      */
     public function addDocument(\JLM\ModelBundle\Entity\Document $documents)
     {
         $this->documents[] = $documents;
+    
+        return $this;
+    }
+
+    /**
+     * Remove documents
+     *
+     * @param JLM\ModelBundle\Entity\Document $documents
+     */
+    public function removeDocument(\JLM\ModelBundle\Entity\Document $documents)
+    {
+        $this->documents->removeElement($documents);
     }
 
     /**

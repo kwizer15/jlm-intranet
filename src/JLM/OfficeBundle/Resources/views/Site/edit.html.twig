@@ -1,0 +1,17 @@
+{% extends "JLMOfficeBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Edition d'une affaire</h1>
+{% form_theme edit_form 'JLMOfficeBundle:Form:field_row.html.twig' %}
+
+<form action="{{ path('site_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
+    {{ form_widget(edit_form) }}
+    <fieldset>
+    {{ form_widget(edit_form) }}
+    <div class="form-actions">
+	   <a href="{{ path('trustee_show',{'id':entity.trustee.id}) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche {{ entity.trustee }}</a>
+	   <button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer les modifications</button>
+	</div>
+</fieldset>
+</form>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "JLMOfficeBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Affaire {{ entity.trustee }}</h1>
+<div class="row-fluid">
+<div class="span6">
+<address>
+<strong>{{ entity.address.street }}</strong><br>
+{{ entity.address.city.zip }} {{ entity.address.city.name }}<br>
+{{ entity.address.city.country }}<br>
+</address>
+</div>
+<div class="span6">
+<address>
+<strong>Adresse de facturation</strong><br>
+{% if entity.trustee.billingaddress.city %}
+{{ entity.trustee.billingaddress.street }}<br>
+{{ entity.trustee.billingaddress.city.zip }} {{ entity.trustee.billingaddress.city.name }}<br>
+{{ entity.trustee.billingaddress.city.country }}<br>
+{% else %}
+{{ entity.trustee.address.street }}<br>
+{{ entity.trustee.address.city.zip }} {{ entity.trustee.address.city.name }}<br>
+{{ entity.trustee.address.city.country }}<br>
+{% endif %}
+</address>
+</div>
+</div>
+{% if entity.doors|length > 0 %}
+<h2>Portes</h2>
+<table class="table table-stripped">
+<thead>
+<tr>
+<th>Localisation</th>
+<th>Adresse</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+{% for door in entity.doors %}
+<tr>
+<td>{{ door.location }}</th>
+<th>{{ door.street }}</th>
+<th>{{ door.type }}</th>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% else %}
+<h2><small>Aucune porte</small></h2>
+{% endif %}
+{% if entity.contacts|length > 0 %}
+<h2>Interlocuteurs</h2>
+<table class="table table-stripped">
+<thead>
+<tr>
+<th>Nom</th>
+<th>Téléphone</th>
+<th>Fax</th>
+<th>e-mail</th>
+</tr>
+</thead>
+<tbody>
+{% for contact in entity.contacts %}
+<tr>
+<td>{{ contact.name }}</th>
+<th>{{ contact.mobilePhone }}</th>
+<th>{{ contact.fax }}</th>
+<th><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></th>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% else %}
+<h2><small>Aucun interlocuteur</small></h2>
+{% endif %}
+<div class="form-actions">
+	<a href="{{ path('trustee_show', { 'id': entity.trustee.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche {{ entity.trustee }}</a>
+	<a href="{{ path('site_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+</div>
+{% endblock %}
