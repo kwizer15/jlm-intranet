@@ -1,11 +1,12 @@
 <?php
 
-namespace JLM\ModelBundle\Controller;
+namespace JLM\OfficeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Form\DoorType;
 
@@ -51,18 +52,25 @@ class DoorController extends Controller
 
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+            'delete_form' => $deleteForm->createView(),
+        );
     }
 
     /**
      * Displays a form to create a new Door entity.
      *
      * @Route("/new", name="door_new")
+     * @Route("/new/{id}", name="door_new_id")
      * @Template()
      */
-    public function newAction()
+    public function newAction(Site $site = null)
     {
         $entity = new Door();
+        if ($site)
+        {
+        	$entity->setSite($site);
+        	$entity->setStreet($site->getAddress()->getStreet());
+        }
         $form   = $this->createForm(new DoorType(), $entity);
 
         return array(
@@ -76,7 +84,7 @@ class DoorController extends Controller
      *
      * @Route("/create", name="door_create")
      * @Method("post")
-     * @Template("JLMModelBundle:Door:new.html.twig")
+     * @Template("JLMOfficeBundle:Door:new.html.twig")
      */
     public function createAction()
     {
@@ -131,7 +139,7 @@ class DoorController extends Controller
      *
      * @Route("/{id}/update", name="door_update")
      * @Method("post")
-     * @Template("JLMModelBundle:Door:edit.html.twig")
+     * @Template("JLMOfficeBundle:Door:edit.html.twig")
      */
     public function updateAction($id)
     {
@@ -154,7 +162,7 @@ class DoorController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('door_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('door_show', array('id' => $id)));
         }
 
         return array(

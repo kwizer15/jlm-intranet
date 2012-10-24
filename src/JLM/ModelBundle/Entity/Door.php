@@ -121,6 +121,7 @@ class Door
     	$this->transmitters = new ArrayCollection;
     }
 
+
     /**
      * Get id
      *
@@ -132,26 +133,26 @@ class Door
     }
 
     /**
-     * Set address
+     * Set street
      *
-     * @param string $address
+     * @param string $street
      * @return Door
      */
-    public function setAddress($address)
+    public function setStreet($street)
     {
-        $this->address = $address;
+        $this->street = $street;
     
         return $this;
     }
 
     /**
-     * Get address
+     * Get street
      *
      * @return string 
      */
-    public function getAddress()
+    public function getStreet()
     {
-        return $this->address;
+        return $this->street;
     }
 
     /**

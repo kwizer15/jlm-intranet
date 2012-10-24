@@ -214,4 +214,12 @@ class Site
     {
         return $this->vat;
     }
+    
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+    	return $this->getAddress()->getStreet();
+    }
 }

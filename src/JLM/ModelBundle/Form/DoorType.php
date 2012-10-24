@@ -10,9 +10,10 @@ class DoorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+        	->add('site')
         	->add('type',null,array('label'=>'Type de porte'))
-        	->add('address','address',array('label'=>'Adresse'))
-        	->add('location','text',array('label'=>'Localisation'))
+        	->add('street',null,array('label'=>'Adresse'))
+        	->add('location',null,array('label'=>'Localisation'))
         ;
     }
 

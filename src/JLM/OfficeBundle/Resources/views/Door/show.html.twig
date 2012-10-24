@@ -1,0 +1,47 @@
+{% extends "JLMOfficeBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>{{ entity.site.address.street }}</h1>
+<div class="row-fluid">
+	<div class="span8">
+		<address>
+		<strong>{{ entity.type }}</strong><br>
+		{{ entity.location }}<br>
+		{{ entity.street }}<br>
+		{{ entity.site.address.city.zip }} {{ entity.site.address.city.name }}<br>
+		</address>
+	</div>
+	<div class="span4 well">
+		<address>
+			<strong>Adresse de facturation</strong><br>
+			{% if entity.site.trustee.billingaddress.city %}
+			{{ entity.site.trustee.billingaddress.street }}<br>
+			{{ entity.site.trustee.billingaddress.city.zip }} {{ entity.site.trustee.billingaddress.city.name }}<br>
+			{{ entity.site.trustee.billingaddress.city.country }}<br>
+			{% else %}
+			{{ entity.site.trustee.address.street }}<br>
+			{{ entity.site.trustee.address.city.zip }} {{ entity.site.trustee.address.city.name }}<br>
+			{{ entity.site.trustee.address.city.country }}<br>
+			{% endif %}
+		</address>
+	</div>
+</div>
+{% if entity.site.contacts|length > 0 %}
+<h2>Interlocuteurs</h2>
+<table class="table table-striped">
+<thead>
+
+</thead>
+<tbody>
+
+</tbody>
+</table>
+{% else %}
+<h2><small>Aucun interlocuteur</small></h2>
+{% endif %}
+
+<div class="form-actions">
+	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche {{ entity.site }}</a>
+	<a href="{{ path('door_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+</div>
+{% endblock %}
