@@ -52,6 +52,5 @@ class SiteRepository extends EntityRepository
 		}
 		else
 			return null;
-		
 	}
 }

@@ -5,23 +5,23 @@
 <div class="row-fluid">
 <div class="span8">
 <address>
-<strong>Adresse affaire</strong><br>
-{{ entity.address.street }}<br>
-{{ entity.address.city.zip }} {{ entity.address.city.name }}<br>
-{{ entity.address.city.country }}<br>
+<strong>Adresse affaire</strong>
+<br>{{ entity.address.street }}
+<br>{{ entity.address.city.zip }} {{ entity.address.city.name }}
+<br>{{ entity.address.city.country }}
 </address>
 </div>
 <div class="span4 well">
 <address>
-<strong>Adresse de facturation</strong><br>
+<strong>Adresse de facturation</strong>
 {% if entity.trustee.billingaddress.city %}
-{{ entity.trustee.billingaddress.street }}<br>
-{{ entity.trustee.billingaddress.city.zip }} {{ entity.trustee.billingaddress.city.name }}<br>
-{{ entity.trustee.billingaddress.city.country }}<br>
+<br>{{ entity.trustee.billingaddress.street }}
+<br>{{ entity.trustee.billingaddress.city.zip }} {{ entity.trustee.billingaddress.city.name }}
+<br>{{ entity.trustee.billingaddress.city.country }}
 {% else %}
-{{ entity.trustee.address.street }}<br>
-{{ entity.trustee.address.city.zip }} {{ entity.trustee.address.city.name }}<br>
-{{ entity.trustee.address.city.country }}<br>
+<br>{{ entity.trustee.address.street }}
+<br>{{ entity.trustee.address.city.zip }} {{ entity.trustee.address.city.name }}
+<br>{{ entity.trustee.address.city.country }}
 {% endif %}
 </address>
 </div>
@@ -64,9 +64,9 @@
 <tbody>
 {% for contact in entity.contacts %}
 <tr>
-<td>{{ contact.name }}</th>
-<th>{{ contact.mobilePhone }}</th>
-<th>{{ contact.fax }}</th>
+<td><a href="{{ path('sitecontact_show',{'id':contact.id}) }}">{{ contact.name }}</a></td>
+<td>{{ contact.mobilePhone }}</td>
+<td>{{ contact.fax }}</td>
 <th><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></th>
 </tr>
 {% endfor %}
@@ -75,10 +75,10 @@
 {% else %}
 <h2><small>Aucun interlocuteur</small></h2>
 {% endif %}
-	<a href="{{ path('door_new_id', { 'id': entity.id }) }}" class="btn btn-info"><i class="icon-user icon-white"></i> Nouvel interlocuteur</a>
+	<a href="{{ path('sitecontact_new_id', { 'id': entity.id }) }}" class="btn btn-info"><i class="icon-user icon-white"></i> Nouvel interlocuteur</a>
 
 <div class="form-actions">
-	<a href="{{ path('trustee_show', { 'id': entity.trustee.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche {{ entity.trustee }}</a>
+	<a href="{{ path('trustee_show', { 'id': entity.trustee.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche syndic</a>
 	<a href="{{ path('site_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 </div>
 {% endblock %}

@@ -11,52 +11,142 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="site_contacts")
  * @ORM\Entity
  */
-class SiteContact extends Person
+class SiteContact
 {
 	/**
-	 * @var ArrayCollection $sites
-	 * 
-	 * @ORM\ManyToMany(targetEntity="Site", inversedBy="contacts")
-	 */
-	private $sites;
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->sites = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Add sites
+     * @var integer $id
      *
-     * @param JLM\ModelBundle\Entity\Site $sites
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+	
+	/**
+	 * @var $sites
+	 * 
+	 * @ORM\ManyToOne(targetEntity="Site", inversedBy="contacts")
+	 */
+	private $site;
+	
+	/**
+	 * @var $person
+	 *
+	 * @ORM\ManyToOne(targetEntity="Person")
+	 */
+	private $person;
+	
+	/**
+	 * @var $role
+	 * 
+	 * @ORM\Column(name="role",type="string",length=255)
+	 */
+	private $role;
+   
+	
+	/**
+	 * @var string $professionnalPhone
+	 *
+	 * @ORM\Column(name="professionnalPhone", type="string", length=20, nullable=true)
+	 */
+	private $professionnalPhone;
+	
+	/**
+	 * Get id
+	 *
+	 * @return integer
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
+	
+    /**
+     * Set site
+     *
+     * @param JLM\ModelBundle\Entity\Site $site
      * @return SiteContact
      */
-    public function addSite(\JLM\ModelBundle\Entity\Site $sites)
+    public function setSite(\JLM\ModelBundle\Entity\Site $site = null)
     {
-        $this->sites[] = $sites;
+        $this->site = $site;
     
         return $this;
     }
 
     /**
-     * Remove sites
+     * Get site
      *
-     * @param JLM\ModelBundle\Entity\Site $sites
+     * @return JLM\ModelBundle\Entity\Site 
      */
-    public function removeSite(\JLM\ModelBundle\Entity\Site $sites)
+    public function getSite()
     {
-        $this->sites->removeElement($sites);
+        return $this->site;
     }
 
     /**
-     * Get sites
+     * Set person
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @param JLM\ModelBundle\Entity\Person $person
+     * @return SiteContact
      */
-    public function getSites()
+    public function setPerson(\JLM\ModelBundle\Entity\Person $person = null)
     {
-        return $this->sites;
+        $this->person = $person;
+    
+        return $this;
+    }
+
+    /**
+     * Get person
+     *
+     * @return JLM\ModelBundle\Entity\Person 
+     */
+    public function getPerson()
+    {
+        return $this->person;
+    }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     * @return SiteContact
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string 
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+    
+    /**
+     * Set professionnalPhone
+     *
+     * @param string $professionnnalPhone
+     */
+    public function setProfessionnalPhone($professionnalPhone)
+    {
+    	$this->professionnalPhone = $professionnalPhone;
+    }
+    
+    /**
+     * Get professionnalPhone
+     *
+     * @return string
+     */
+    public function getProfessionnalPhone()
+    {
+    	return $this->professionnalPhone;
     }
 }

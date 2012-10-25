@@ -14,7 +14,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
  * 		"person" = "Person",
- *      "sitecontact" = "SiteContact"
  * })
  */
 class Person 
@@ -63,13 +62,7 @@ class Person
      * @ORM\Column(name="mobilePhone",type="string", length=20, nullable=true)
      */
     private $mobilePhone;
-    
-    /**
-     * @var string $professionnalPhone
-     *
-     * @ORM\Column(name="professionnalPhone", type="string", length=20, nullable=true)
-     */
-    private $professionnalPhone;
+
     
     /**
      * @var string $fax
@@ -84,13 +77,6 @@ class Person
      * @ORM\Column(name="email",type="string", length=20, nullable=true)
      */
     private $email;
-    
-    /**
-     * @var string $role
-     *
-     * @ORM\Column(name="role", type="string", length=255, nullable=true)
-     */
-    private $role;
     
     /**
      * Set firstName
@@ -139,7 +125,7 @@ class Person
      */
     public function getName()
     {
-    	return $this->lastName;
+    	return $this->title.' '.$this->lastName.' '.$this->firstName;
     }
 
     /**
@@ -212,25 +198,7 @@ class Person
         return $this->mobilePhone;
     }
 
-    /**
-     * Set professionnalPhone
-     *
-     * @param string $professionnnalPhone
-     */
-    public function setProfessionnalPhone($professionnalPhone)
-    {
-        $this->professionnalPhone = $professionnalPhone;
-    }
-
-    /**
-     * Get professionnalPhone
-     *
-     * @return string 
-     */
-    public function getProfessionnalPhone()
-    {
-        return $this->professionnalPhone;
-    }
+   
 
     /**
      * Set fax
@@ -271,26 +239,6 @@ class Person
     {
         return $this->email;
     }
-
-    /**
-     * Set role
-     *
-     * @param string $role
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-    }
-
-    /**
-     * Get role
-     *
-     * @return string 
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
     
     /**
      * To String
@@ -299,6 +247,6 @@ class Person
      */
     public function __toString()
     {
-    	return $this->lastName;
+    	return $this->getName();
     }
 }

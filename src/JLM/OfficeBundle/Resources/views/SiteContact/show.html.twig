@@ -1,0 +1,39 @@
+{% extends "JLMOfficeBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>{{ entity.person.name }} <small>{{ entity.role }}</small></h1>
+<div class="row-fluid">
+    <div class="span4 well">
+        <address>
+        <strong>Coordonnées</strong>
+        {% if entity.person.fixedPhone %}<br>Tel fixe : {{ entity.person.fixedPhone }}{% endif %}
+        {% if entity.person.mobilePhone %}<br>Tel mobile : {{ entity.person.mobilePhone }}{% endif %}
+        {% if entity.professionnalPhone %}<br>Tel pro : {{ entity.professionnalPhone }}{% endif %}
+        {% if entity.person.fax %}<br>Fax : {{ entity.person.fax }}{% endif %}
+        {% if entity.person.email %}<br>e-mail : <a href="mailto:{{ entity.person.email }}">{{ entity.email }}</a>{% endif %}
+        </address>
+    </div>
+    <div class="span6">
+
+    </div>
+</div>
+
+<h2>Affaires</h2>
+<table class="table table-striped">
+    <thead>
+    	<tr>
+    	    <th>Adresse</th>
+    	</tr>
+    </thead>
+    <tbody>
+    	<tr>
+    	    <td>???</td>
+    	</tr>
+    </tbody>
+</table>
+
+<div class="form-actions">
+	{# <a href="{{ path('trustee_show', { 'id': entity.trustee.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche syndic</a> #}
+	<a href="{{ path('sitecontact_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+</div>
+{% endblock %}
