@@ -19,6 +19,10 @@
     <argument type="service" id="doctrine.orm.entity_manager"/>
     <tag name="form.type" alias="trustee_select" />
 </service>
+<service id="jlm_model.type.site_select" class="JLM\ModelBundle\Form\SiteSelectType">
+    <argument type="service" id="doctrine.orm.entity_manager"/>
+    <tag name="form.type" alias="site_select" />
+</service>
 </services>
     <!--
     <parameters>

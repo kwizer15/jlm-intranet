@@ -51,4 +51,24 @@ class AutocompleteController extends Controller
     	
     	return $response;
     }
+    
+    /**
+     * Displays a form to create a new Product entity.
+     *
+     * @Route("/autocomplete/site", name="autocomplete_site")
+     * @Method("post")
+     */
+    public function siteAction()
+    {
+    	$request = $this->get('request');
+    	$query = $request->request->get('query');
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$results = $em->getRepository('JLMModelBundle:Site')->searchResult($query);
+    	$json = '{"options":'.json_encode($results).'}';
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/json');
+    	$response->setContent($json);
+    	 
+    	return $response;
+    }
 }

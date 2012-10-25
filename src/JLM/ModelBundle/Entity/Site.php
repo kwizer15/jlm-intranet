@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * JLM\ModelBundle\Entity\Site
  *
  * @ORM\Table(name="sites")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SiteRepository")
  */
 class Site
 {
@@ -39,11 +39,7 @@ class Site
     /**
      * @var ArrayCollection $contacts
      *
-     * @ORM\ManyToMany(targetEntity="Person",cascade={"all"})
-     * @ORM\JoinTable(name="sites_contacts",
-     *      joinColumns={@ORM\JoinColumn(name="site_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
-     *      )
+     * @ORM\ManyToMany(targetEntity="SiteContact", mappedBy="sites")
      */
     private $contacts;
     
@@ -220,6 +216,6 @@ class Site
      */
     public function __toString()
     {
-    	return $this->getAddress()->getStreet();
+    	return $this->getAddress()->getStreet().' ('.$this->getAddress()->getCity()->getName().')';
     }
 }

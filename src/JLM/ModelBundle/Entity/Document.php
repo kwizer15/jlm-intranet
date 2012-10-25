@@ -30,7 +30,7 @@ abstract class Document
     /**
      * @var Collaborator $follower
      * 
-     * @ORM\ManyToOne(targetEntity="Employee")
+     * @ORM\Column()
      */
     private $follower;
     
