@@ -465,4 +465,12 @@ class Product
     {
         return $this->category;
     }
+    
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+    	return $this->getSupplier().' '.$this->getDesignation();
+    }
 }

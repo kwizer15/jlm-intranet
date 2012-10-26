@@ -1,135 +1,50 @@
-{% extends "::base.html.twig" %}
+{% extends "::layout.html.twig" %}
 
-{% block title %}JLM{% endblock %}
+{% block header %}
+	<a href="#" class="brand">JLM</a>
+	<ul class="nav">
+	  {% block navigation %}
+   	  	<li><a href="">Journal de bord</a></li>
+   	  	<li><a href="">Devis</a></li>
+	  {% endblock navigation %}
+	</ul>
+	
+	
+	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	<div class="btn-group pull-right">
+	   <a href="#" class="btn btn-info dropdown-toggle" data-toggle="dropdown"><i class="icon-user  icon-white"></i> {{ app.user.username }} <b class="caret"></b></a>
+	   <ul class="dropdown-menu">
+	   		<li><a href="{{ path('fos_user_security_logout') }}"><i class="icon-remove-sign"></i> Déconnexion</a></li>
+	   		<li class="divider"></li>
+	   		<li><a href="{{ path('fos_user_profile_show') }}"><i class="icon-user"></i> Mon profil</a></li>
+	   		<li><a href="{{ path('fos_user_change_password') }}"><i class="icon-lock"></i> Changer mon mot de passe</a></li>  		
+	   </ul>
+	</div>
+	<form class="navbar-search">
+    	<div class="input-append">
+			<input type="text" class="search-query" placeholder="Rechercher...">
+		</div>
+   	</form>
+	{% else %}
+	<div class="btn-group pull-right">Pas connecté</div>
+	{% endif %}	
+{% endblock header %}
 
-{% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('bundles/jlmoffice/css/bootstrap.min.css') }}" type="text/css">
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" type="text/css">
-
-	<link rel="stylesheet" href="{{ asset('bundles/jlmoffice/css/style.css') }}" type="text/css">
-{% endblock %}
-
-{% block body %}
-    <div class="navbar navbar-inverse">
-        <div class="navbar-inner">
-	        <div class="container">
-	      {% block header %}
-	        <a href="#" class="brand">JLM</a>
-	        <ul class="nav">
-		      {% block navigation %}
-   		      	
-		      {% endblock %}
-		      </ul>
-	            <form class="navbar-search pull-right">
-     <div class="input-append">
-<input type="text" class="search-query" placeholder="Rechercher...">
-</div>
-    </form>
-		<form action="" method="post" class="navbar-form pull-right">
-				<input type="text" id="username" name="_username" placeholder="Utilisateur..." class="span2">
-				<input type="password" id="password" name="_password" placeholder="Mot de passe..." class="span2">
-				<input type="hidden" id="remember_me" name="_remember_me" value="on">
-				<button type="submit" id="_submit" name="_submit" class="btn btn-primary">Connexion</button>
-			</form>
-		
-			
-	    {% endblock %}
-	        </div>
-	    </div>
-    </div>
-      
-      <div class="container-fluid">
-      <div class="row-fluid">
-	      <div class="span2">
-	      
-		      {% block sidebar %}
-		        <ul class="nav nav-tabs nav-stacked">
+{% block container %}
+    <div class="row-fluid">
+	    <div class="span2">
+		    {% block sidebar %}
+		    <ul class="nav nav-tabs nav-stacked">
 		        <li><a href="{{ path('trustee') }}">Syndics</a></li>
 		        <li><a href="{{ path('productcategory') }}">Familles de produits</a></li>
-		      <li><a href="{{ path('product') }}">Produits</a></li>	   
-		      <li><a href="{{ path('supplier') }}">Fournisseurs</a></li>
-    			</ul>
-		      {% endblock %}
-	      </div>
-	      <div class="span10">
-		      {% block content %}
-		      <p>blabla</p>
-		      {% endblock %}
-	      </div>
-      </div>
-      </div>
-      <footer>
-      {% block footer %}
-      {% endblock %}
-      </footer>
-      {% block modal %}
-      {% endblock %}
-    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
-    <script src="{{ asset("bundles/jlmoffice/js/bootstrap.js") }}"></script>
-    <script src="{{ asset("bundles/jlmoffice/js/jquery.ui.datepicker-fr.js") }}"></script>
-{#    <script>
-	
-	$(document).ready(function() {
-    var $container = $('.collection');
-    var collectionCount = $container.children().length;
-
-    function addCollection() {
-        $container.append(
-            $($container.attr('data-prototype').replace(/\$\$name\$\$/g, collectionCount))
-        );
-        collectionCount++;
-    }
-	
-    if($container.children().length == 0) {
-        addCollection();
-    }
-    
-    $('.collection-add').click(function() {
-        addCollection();
-        return false;
-    });
-
-    $('.collection-remove').click(function() {
-        $(this).parent().parent().remove();
-        return false;
-    });
-    
-    $(".delete-modal").click(function(){
-        $.ajax({
-        	url: $(this).attr('href'),
-        	success: function(data){
-            	$('body').append(data);
-            	$('.modal').modal().on('hidden', function() {
-            		$(this).remove();	
-            	});
-        	},
-        	dataType: 'html',
-        	type: 'post'
-        });
-        return false;
-    });
-});
-	
-    </script> #}
-
-<script>
-$('.typeahead').typeahead({
-	source : function(query,process){
-		return $.post(
-			this.$element.attr('data-source'),
-			{'query':query}, 
-			function (data) { return process(data.options);},
-			'json'
-		);
-    },
-    items:12,
-});
-$('.datepicker').datepicker({
-	dateFormat:'dd/mm/yy',
-});
-$('.datepicker').datepicker( "option",
-        $.datepicker.regional[ "fr" ] );
-</script>
-
-{% endblock %}
+		        <li><a href="{{ path('product') }}">Produits</a></li>	   
+		        <li><a href="{{ path('supplier') }}">Fournisseurs</a></li>
+		    </ul>
+		    {% endblock sidebar %}
+	    </div>
+	    <div class="span10">
+            {% block content %}
+            {% endblock content %}
+	    </div>
+    </div>
+{% endblock container %}

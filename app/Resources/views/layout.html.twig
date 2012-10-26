@@ -1,0 +1,53 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}JLM{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('bundles/jlmoffice/css/bootstrap.min.css') }}" type="text/css">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" type="text/css">
+	<link rel="stylesheet" href="{{ asset('bundles/jlmoffice/css/style.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+    <div class="navbar">
+        <div class="navbar-inner">
+	        <div class="container">
+	      {% block header %}
+	      {% endblock header %}
+	          </div>
+	      </div>
+      </div>   
+      <div class="container-fluid">
+		  {% block container %}
+		  {% endblock container %}
+      </div>
+      <footer>
+          {% block footer %}
+          {% endblock footer %}
+      </footer>
+{% endblock body%}
+
+{% block javascripts %}
+    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+    <script src="{{ asset("bundles/jlmoffice/js/bootstrap.js") }}"></script>
+    <script src="{{ asset("bundles/jlmoffice/js/jquery.ui.datepicker-fr.js") }}"></script>
+<script>
+$('.typeahead').attr('autocomplete','off').typeahead({
+	source : function(query,process){
+		return $.post(
+			this.$element.attr('data-source'),
+			{'query':query}, 
+			function (data) { return process(data.options);},
+			'json'
+		);
+    },
+    items:12,
+});
+$('.datepicker').datepicker({
+	dateFormat:'dd/mm/yy',
+});
+$('.datepicker').datepicker( "option",
+        $.datepicker.regional[ "fr" ] );
+</script>
+{% endblock javascripts %}

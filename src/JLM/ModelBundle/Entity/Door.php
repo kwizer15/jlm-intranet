@@ -95,20 +95,11 @@ class Door
     private $documents;
     
     /**
-     * @var float latitude
+     * @var float Google Maps (Street)
      * 
-     * @ORM\Column(name="latitude", type="decimal",scale=7,nullable=true)
+     * @ORM\Column(name="googlemaps", type="text", nullable=true)
      */
-    private $latitude;
-    
-    /**
-     * @var float longitude
-     *
-     * @ORM\Column(name="longitude", type="decimal",scale=7,nullable=true)
-     */
-    private $longitude;
-    
-    
+    private $googlemaps;
     
     /**
      * Constructor
@@ -179,14 +170,14 @@ class Door
     }
 
     /**
-     * Set latitude
+     * Set googlemaps
      *
-     * @param float $latitude
+     * @param string $googlemaps
      * @return Door
      */
-    public function setLatitude($latitude)
+    public function setGooglemaps($url)
     {
-        $this->latitude = $latitude;
+        $this->googlemaps = $url;
     
         return $this;
     }
@@ -196,32 +187,9 @@ class Door
      *
      * @return float 
      */
-    public function getLatitude()
+    public function getGooglemaps()
     {
-        return $this->latitude;
-    }
-
-    /**
-     * Set longitude
-     *
-     * @param float $longitude
-     * @return Door
-     */
-    public function setLongitude($longitude)
-    {
-        $this->longitude = $longitude;
-    
-        return $this;
-    }
-
-    /**
-     * Get longitude
-     *
-     * @return float 
-     */
-    public function getLongitude()
-    {
-        return $this->longitude;
+        return $this->googlemaps;
     }
 
     /**
