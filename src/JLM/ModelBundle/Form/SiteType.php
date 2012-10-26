@@ -13,7 +13,10 @@ class SiteType extends AbstractType
         $builder
         	->add('trustee','trustee_select',array('label'=>'Syndic'))
             ->add('address','address',array('label'=>'Adresse'))
-            ->add('vat',null,array('label'=>'TVA'))          
+            ->add('accession','choice',array('label'=>'Accession/Social','choices'=>array('1'=>'Accession','0'=>'Social'),'expanded'=>true,'multiple'=>false))
+            
+            ->add('vat',null,array('label'=>'TVA'))    
+            ->add('group','text',array('label'=>'Groupe RIVP', 'required'=>false))
         ;
     }
 

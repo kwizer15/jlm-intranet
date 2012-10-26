@@ -82,6 +82,8 @@ class ProductController extends Controller
     {
         $entity  = new Product();
         $request = $this->getRequest();
+        print_r($request);
+        exit;
         $form    = $this->createForm(new ProductType(), $entity);
         $form->bindRequest($request);
 

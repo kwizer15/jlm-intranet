@@ -11,7 +11,6 @@ class TrusteeType extends AbstractType
     {	
         $builder
             ->add('name',null,array('label'=>'Nom','attr'=>array('class'=>'input-large')))
-            ->add('accession','choice',array('label'=>'Accession/Social','choices'=>array('1'=>'Accession','0'=>'Social'),'expanded'=>true,'multiple'=>false))
             ->add('accountNumber',null,array('label'=>'Numéro de compte','attr'=>array('class'=>'input-small')))
 
             ->add('address',new AddressType,array('label'=>'Adresse'))

@@ -76,9 +76,9 @@ class Door
     
     /**
      * Emeteurs
-     * @var string $transmitters
+     * @var Transmitter $transmitters
      * 
-     * @ORM\ManyToMany(targetEntity="Product")
+     * @ORM\ManyToMany(targetEntity="Transmitter")
      * @ORM\JoinTable(name="doors_transmitters",
      * 		joinColumns={@ORM\JoinColumn(name="door_id", referencedColumnName="id")},
      * 		inverseJoinColumns={@ORM\JoinColumn(name="transmitters_id", referencedColumnName="id")}

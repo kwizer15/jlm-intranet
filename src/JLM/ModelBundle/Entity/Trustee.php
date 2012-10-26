@@ -13,14 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Trustee extends Company
 {
-    /**
-     * @var boolean $accession
-     * true = accession
-     * false = social
-     * null = unknown
-     * @ORM\Column(name="accession", type="boolean")
-     */
-    private $accession;
+
 
     /**
      * @var integer $accountNumber
@@ -91,29 +84,7 @@ class Trustee extends Company
     	$this->contracts = new ArrayCollection;
     }
 
-    /**
-     * Set accession
-     *
-     * @param boolean $accession
-     * @return Trustee
-     */
-    public function setAccession($accession)
-    {
-        $this->accession = $accession;
-    
-        return $this;
-    }
-
-    /**
-     * Get accession
-     *
-     * @return boolean 
-     */
-    public function getAccession()
-    {
-        return $this->accession;
-    }
-
+   
     /**
      * Set accountNumber
      *

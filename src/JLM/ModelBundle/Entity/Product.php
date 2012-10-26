@@ -10,6 +10,12 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table(name="products")
  * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({
+ * 		"product" = "Product",
+ * 		"transmitter" = "Transmitter"
+ * })
  */
 class Product
 {

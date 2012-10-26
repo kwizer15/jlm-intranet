@@ -32,7 +32,7 @@
 <thead>
 <tr>
 <th>Localisation</th>
-<th>Adresse</th>
+<th>Adresse porte</th>
 <th>Type</th>
 </tr>
 </thead>
@@ -56,6 +56,7 @@
 <thead>
 <tr>
 <th>Nom</th>
+<th>Rôle</th>
 <th>Téléphone</th>
 <th>Fax</th>
 <th>e-mail</th>
@@ -64,10 +65,17 @@
 <tbody>
 {% for contact in entity.contacts %}
 <tr>
-<td><a href="{{ path('sitecontact_show',{'id':contact.id}) }}">{{ contact.name }}</a></td>
-<td>{{ contact.mobilePhone }}</td>
-<td>{{ contact.fax }}</td>
-<th><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></th>
+<td><a href="{{ path('sitecontact_show',{'id':contact.id}) }}">{{ contact.person.name }}</a></td>
+<td>{{ contact.role }}</td>
+<td>
+	<ul class="unstyled">
+	{% if contact.person.fixedPhone %}<li>{{ contact.person.fixedPhone }}</li>{% endif %}
+	{% if contact.person.mobilePhone %}<li>{{ contact.person.mobilePhone }}</li>{% endif %}
+	{% if contact.professionnalPhone %}<li>{{ contact.professionnalPhone }}</li>{% endif %}
+	</ul>
+</td>
+<td>{{ contact.person.fax }}</td>
+<th><a href="mailto:{{ contact.person.email }}">{{ contact.person.email }}</a></th>
 </tr>
 {% endfor %}
 </tbody>

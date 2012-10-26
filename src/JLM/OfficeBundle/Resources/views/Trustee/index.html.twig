@@ -7,7 +7,6 @@
     <thead>
         <tr>
             <th>Nom</th>
-            <th>Accession/social</th>
             <th>Numéro de compte</th>
             <th></th>
         </tr>
@@ -16,7 +15,6 @@
     {% for entity in entities %}
         <tr>
             <td><a href="{{ path('trustee_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
-            <td>{{ entity.accession }}</td>
             <td>{{ entity.accountNumber }}</td>
             <td>
                  <a href="{{ path('trustee_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
