@@ -191,6 +191,31 @@ class Door
     {
         return $this->googlemaps;
     }
+    
+    /**
+     * Get latitude
+     *
+     * @return float
+     */
+    public function getMapsUrl()
+    {
+    	list($url,$params) = explode('?',$this->googlemaps);
+    	$parms = explode('&',$params);
+    	foreach ($parms as $p)
+    	{
+    		list($key,$value) = explode('=',$p);
+    		$arg[$key] = $value;
+    	}
+
+    	$url .= '?hl=fr&z=17&layer=c&output=svembed';
+    	if (isset($arg['ll']))
+    		$url .= '&ll='.$arg['ll'];
+    	if (isset($arg['cbll']))
+    		$url .= '&cbll='.$arg['cbll'];
+    	if (isset($arg['cbp']))
+    		$url .= '&cbp='.$arg['cbp'];
+    	return $url;
+    }
 
     /**
      * Set site

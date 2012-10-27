@@ -3,35 +3,23 @@
 {% block content %}
 <h1>{{ entity.site.address.street }}</h1>
 <div class="row-fluid">
-	<div class="span8">
+	<div class="span6">
 		<address>
 		<strong>{{ entity.type }}</strong><br>
 		{{ entity.location }}<br>
 		{{ entity.street }}<br>
 		{{ entity.site.address.city.zip }} {{ entity.site.address.city.name }}<br>
 		</address>
-	</div>
-	<div class="span4 well">
-		<address>
-			<strong>Adresse de facturation</strong><br>
-			{% if entity.site.trustee.billingaddress %}
-			{{ entity.site.trustee.billingaddress.street }}<br>
-			{{ entity.site.trustee.billingaddress.city.zip }} {{ entity.site.trustee.billingaddress.city.name }}<br>
-			{{ entity.site.trustee.billingaddress.city.country }}<br>
-			{% else %}
-			{{ entity.site.trustee.address.street }}<br>
-			{{ entity.site.trustee.address.city.zip }} {{ entity.site.trustee.address.city.name }}<br>
-			{{ entity.site.trustee.address.city.country }}<br>
-			{% endif %}
-		</address>
-	</div>
-</div>
+{% if entity.transmitters|length > 0 %}
 <h2>Types d'emetteurs</h2>
 <ul>
 {% for transmitter in entity.transmitters %}
 <li><a href="{{ path('product_show',{'id':transmitter.id}) }}">{{ transmitter }}</a></li>
 {% endfor %}
 </ul>
+{% else %}
+<h2><small>Aucun emetteur</small></h2>
+{% endif %}
 {% if entity.site.contacts|length > 0 %}
 <h2>Interlocuteurs</h2>
 <table class="table table-striped">
@@ -65,13 +53,32 @@
 {% else %}
 <h2><small>Aucun interlocuteur</small></h2>
 {% endif %}
+	</div>
+	<div class="span6 well">
+	{% if entity.googlemaps %}
+<iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{ entity.mapsUrl }}"></iframe>
+{% endif %}
+{#		<address>
+			<strong>Adresse de facturation</strong><br>
+			{% if entity.site.trustee.billingaddress %}
+			{{ entity.site.trustee.billingaddress.street }}<br>
+			{{ entity.site.trustee.billingaddress.city.zip }} {{ entity.site.trustee.billingaddress.city.name }}<br>
+			{{ entity.site.trustee.billingaddress.city.country }}<br>
+			{% else %}
+			{{ entity.site.trustee.address.street }}<br>
+			{{ entity.site.trustee.address.city.zip }} {{ entity.site.trustee.address.city.name }}<br>
+			{{ entity.site.trustee.address.city.country }}<br>
+			{% endif %}
+		</address>
+		#}
+	</div>
+	
+</div>
+
 
 <div class="form-actions">
 	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche affaire</a>
 	<a href="{{ path('door_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 </div>
-{% if entity.googlemaps %}
-<h2>Google Maps</h2>
-<iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{ entity.googlemaps }}&amp;f=q&amp;geocode=&amp;source=embed&amp;aq=0&amp;hq=&amp;output=svembed"></iframe>
-{% endif %}
+
 {% endblock %}
