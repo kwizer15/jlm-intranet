@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\ModelBundle\Entity\Country
  *
  * @ORM\Table(name="countries")
- * @ORM\Entity
+ * @ORM\Entity(readOnly=true)
  */
 class Country
 {

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\ModelBundle\Entity\VAT
  *
  * @ORM\Table(name="vat")
- * @ORM\Entity
+ * @ORM\Entity(readOnly=true)
  */
 class VAT
 {

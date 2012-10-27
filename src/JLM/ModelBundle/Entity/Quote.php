@@ -13,6 +13,49 @@ use Doctrine\ORM\Mapping as ORM;
 class Quote extends Document
 {
 	/**
+	 * Numéro du devis
+	 * @var int $id
+	 * 
+	 * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @todo Construire automatiquement
+	 */
+	private $id;
+	
+	/**
+	 * Suiveur (pour le suivi)
+	 * @var Collaborator $follower
+	 * 
+	 * @ORM\Column(name="collaborator",type="string")
+	 */
+	private $follower;
+	
+	/**
+	 * Suiveur (pour le devis)
+	 * @var string $followerCp
+	 *
+	 * @ORM\Column(name="follower_cp",type="string")
+	 */
+	private $followerCp;
+	
+	/**
+	 * Porte concernée (pour le suivi)
+	 * @var Door $door
+	 * 
+	 * @ORM\ManyToOne(targetEntity="Door")
+	 */
+	private $door;
+	
+	/**
+	 * Porte concernée (pour le devis)
+	 * @var string $doorCp
+	 *
+	 * @ORM\Column(name="door_cp",type="text")
+	 */
+	private $doorCp;
+	
+	/**
 	 * @var string $paymentRules
 	 *
 	 * @ORM\Column(name="payment_rules", type="string", length=255)
@@ -33,65 +76,11 @@ class Quote extends Document
 	 */
 	private $customerComments;
 	
-
-
-    /**
-     * Set paymentRules
-     *
-     * @param string $paymentRules
-     */
-    public function setPaymentRules($paymentRules)
-    {
-        $this->paymentRules = $paymentRules;
-    }
-
-    /**
-     * Get paymentRules
-     *
-     * @return string 
-     */
-    public function getPaymentRules()
-    {
-        return $this->paymentRules;
-    }
-
-    /**
-     * Set deliveryRules
-     *
-     * @param string $deliveryRules
-     */
-    public function setDeliveryRules($deliveryRules)
-    {
-        $this->deliveryRules = $deliveryRules;
-    }
-
-    /**
-     * Get deliveryRules
-     *
-     * @return string 
-     */
-    public function getDeliveryRules()
-    {
-        return $this->deliveryRules;
-    }
-
-    /**
-     * Set customerComments
-     *
-     * @param text $customerComments
-     */
-    public function setCustomerComments($customerComments)
-    {
-        $this->customerComments = $customerComments;
-    }
-
-    /**
-     * Get customerComments
-     *
-     * @return text 
-     */
-    public function getCustomerComments()
-    {
-        return $this->customerComments;
-    }
+	/**
+	 * Accordé
+	 * @var bool $given
+	 * 
+	 * @ORM\Column(name="given",type="boolean")
+	 */
+	private $given;
 }

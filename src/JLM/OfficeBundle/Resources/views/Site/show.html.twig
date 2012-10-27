@@ -14,7 +14,7 @@
 <div class="span4 well">
 <address>
 <strong>Adresse de facturation</strong>
-{% if entity.trustee.billingaddress.city %}
+{% if entity.trustee.billingaddress %}
 <br>{{ entity.trustee.billingaddress.street }}
 <br>{{ entity.trustee.billingaddress.city.zip }} {{ entity.trustee.billingaddress.city.name }}
 <br>{{ entity.trustee.billingaddress.city.country }}

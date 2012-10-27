@@ -27,12 +27,6 @@ abstract class DocumentContent
      */
     private $id;
 
-    /**
-     * @var Document $document
-     * 
-     * @ORM\ManyToOne(targetEntity="Document",inversedBy="contents")
-     */
-    private $document;
 
     /**
      * Get id
