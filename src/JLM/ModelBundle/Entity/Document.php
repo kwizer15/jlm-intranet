@@ -42,12 +42,127 @@ abstract class Document
      * @ORM\Column(name="trustee_address", type="text")
      */
     private $trusteeAddress;
+
+    /**
+     * Remise générale
+     * @var float $discount
+     *
+     * @ORM\Column(name="discount", type="decimal", scale=7)
+     */
+    private $discount;
     
     /**
-     * Constructor
+     * Set creation
+     *
+     * @param \DateTime $creation
+     * @return Document
      */
-    public function __construct()
+    public function setCreation($creation)
     {
-    	$this->contents = new ArrayCollection;
+        $this->creation = $creation;
+    
+        return $this;
+    }
+
+    /**
+     * Get creation
+     *
+     * @return \DateTime 
+     */
+    public function getCreation()
+    {
+        return $this->creation;
+    }
+
+    /**
+     * Set trusteeName
+     *
+     * @param string $trusteeName
+     * @return Document
+     */
+    public function setTrusteeName($trusteeName)
+    {
+        $this->trusteeName = $trusteeName;
+    
+        return $this;
+    }
+
+    /**
+     * Get trusteeName
+     *
+     * @return string 
+     */
+    public function getTrusteeName()
+    {
+        return $this->trusteeName;
+    }
+
+    /**
+     * Set trusteeAddress
+     *
+     * @param string $trusteeAddress
+     * @return Document
+     */
+    public function setTrusteeAddress($trusteeAddress)
+    {
+        $this->trusteeAddress = $trusteeAddress;
+    
+        return $this;
+    }
+
+    /**
+     * Get trusteeAddress
+     *
+     * @return string 
+     */
+    public function getTrusteeAddress()
+    {
+        return $this->trusteeAddress;
+    }
+
+    /**
+     * Set trustee
+     *
+     * @param JLM\ModelBundle\Entity\Trustee $trustee
+     * @return Document
+     */
+    public function setTrustee(\JLM\ModelBundle\Entity\Trustee $trustee = null)
+    {
+        $this->trustee = $trustee;
+    
+        return $this;
+    }
+
+    /**
+     * Get trustee
+     *
+     * @return JLM\ModelBundle\Entity\Trustee 
+     */
+    public function getTrustee()
+    {
+        return $this->trustee;
+    }
+
+    /**
+     * Set discount
+     *
+     * @param float $discount
+     * @return Document
+     */
+    public function setDiscount($discount)
+    {
+        $this->discount = $discount;
+    
+        return $this;
+    }
+
+    /**
+     * Get discount
+     *
+     * @return float 
+     */
+    public function getDiscount()
+    {
+        return $this->discount;
     }
 }

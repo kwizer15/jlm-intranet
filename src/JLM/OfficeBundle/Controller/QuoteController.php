@@ -1,6 +1,6 @@
 <?php
 
-namespace JLM\ModelBundle\Controller;
+namespace JLM\OfficeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -53,7 +53,7 @@ class QuoteController extends Controller
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        );
     }
-
+    
     /**
      * Displays a form to create a new Quote entity.
      *
@@ -76,7 +76,7 @@ class QuoteController extends Controller
      *
      * @Route("/create", name="quote_create")
      * @Method("post")
-     * @Template("JLMModelBundle:Quote:new.html.twig")
+     * @Template("JLMOfficeBundle:Quote:new.html.twig")
      */
     public function createAction()
     {
@@ -131,7 +131,7 @@ class QuoteController extends Controller
      *
      * @Route("/{id}/update", name="quote_update")
      * @Method("post")
-     * @Template("JLMModelBundle:Quote:edit.html.twig")
+     * @Template("JLMOfficeBundle:Quote:edit.html.twig")
      */
     public function updateAction($id)
     {

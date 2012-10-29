@@ -10,18 +10,20 @@ class QuoteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('creation','date',array('format'=>'dd/MM/yyyy','label'=>'Date'))
-            ->add('follower',null,array('label'=>'Suivi par'))
-            ->add('trustee',null,array('label'=>'Client'))
-            ->add('trusteeName',null,array('label'=>'Nom'))
-            ->add('trusteeStreet',null,array('label'=>'Rue'))
-            ->add('trusteeZip',null,array('label'=>'Code postal'))
-            ->add('trusteeCity',null,array('label'=>'Ville'))
-            ->add('trusteeInterlocutor',null,array('label'=>'Interlocuteur'))
-            ->add('doors','collection',array('label'=>'Affaires'))
-            ->add('customerComments',null,array('label'=>'Observations'))
-            ->add('paymentRules',null,array('label'=>'Réglement'))
-            ->add('deliveryRules',null,array('label'=>'Livraison'))
+            ->add('creation','datepicker',array('label'=>'Date de création'))
+            ->add('trustee','hidden')
+            ->add('trusteeName',null,array('label'=>'Syndic'))
+            ->add('trusteeAddress',null,array('label'=>'Adresse de facturation'))
+            ->add('discount','percent',array('label'=>'Remise','attr'=>array('class'=>'input-mini')))
+            ->add('follower','hidden')
+            ->add('followerCp',null,array('label'=>'Suivi par'))
+            ->add('door','hidden')
+            ->add('doorCp',null,array('label'=>'Affaire'))
+            ->add('paymentRules','choice',array('label'=>'Réglement','choices'=>array('à réception de la facture', '30% à la commande, le solde fin de travaux'),'attr'=>array('class'=>'input-xxlarge')))
+            ->add('deliveryRules','choice',array('label'=>'Délai','choices'=>array('10 à 15 jours après accord'),'attr'=>array('class'=>'input-xxlarge')))
+            ->add('customerComments',null,array('label'=>'Observations','attr'=>array('class'=>'input-xxlarge')))
+            ->add('given',null,array('label'=>'Accordé'))
+            ->add('intro',null,array('label'=>'Introduction','attr'=>array('class'=>'span12','placeholder'=>'Suite à ...')))
             
         ;
     }

@@ -394,4 +394,12 @@ class Door
     {
         return $this->documents;
     }
+    
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+    	return $this->getSite().' - '.$this->getLocation();
+    }
 }

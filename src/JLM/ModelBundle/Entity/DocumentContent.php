@@ -41,9 +41,9 @@ abstract class DocumentContent
     /**
      * Set document
      *
-     * @param JLM\ModelBundle\Entity\Docuement $document
+     * @param JLM\ModelBundle\Entity\Document $document
      */
-    public function setDocument(\JLM\ModelBundle\Entity\Docuement $document)
+    public function setDocument(\JLM\ModelBundle\Entity\Document $document)
     {
         $this->document = $document;
     }
@@ -51,7 +51,7 @@ abstract class DocumentContent
     /**
      * Get document
      *
-     * @return JLM\ModelBundle\Entity\Docuement 
+     * @return JLM\ModelBundle\Entity\Document 
      */
     public function getDocument()
     {
