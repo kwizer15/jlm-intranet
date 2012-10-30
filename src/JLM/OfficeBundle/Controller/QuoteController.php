@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\ModelBundle\Entity\Quote;
+use JLM\ModelBundle\Entity\QuoteLine;
 use JLM\ModelBundle\Form\QuoteType;
 
 /**
@@ -63,6 +64,9 @@ class QuoteController extends Controller
     public function newAction()
     {
         $entity = new Quote();
+        $entity->setCreation(new \DateTime);
+        $entity->setDiscount(0);
+        $entity->addLine(new QuoteLine);
         $form   = $this->createForm(new QuoteType(), $entity);
 
         return array(
@@ -87,6 +91,8 @@ class QuoteController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
+            foreach ($entity->getLines() as $line)
+            	$em->persist($line);
             $em->persist($entity);
             $em->flush();
 
@@ -198,5 +204,25 @@ class QuoteController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+    
+    /**
+     * Autocomplete door
+     *
+     * @Route("/quote/autocomplete/door", name="quote_auto_door")
+     * @Method("post")
+     */
+    public function trusteeAction()
+    {
+    	$request = $this->get('request');
+    	$query = $request->request->get('query');
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$results = $em->getRepository('JLMModelBundle:Door')->searchResult($query);
+    	$json = '{"options":'.json_encode($results).'}';
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/json');
+    	$response->setContent($json);
+    	 
+    	return $response;
     }
 }

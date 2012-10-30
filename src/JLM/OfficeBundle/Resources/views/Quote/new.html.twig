@@ -1,67 +1,10 @@
 {% extends "JLMOfficeBundle::layout.html.twig" %}
 {% form_theme form 'JLMOfficeBundle:Form:field_row.html.twig' %}
 {% block content %}
-<h1>Devis <small>1210194</small></h1>
+<h1>Nouveau devis</h1>
 <div class="alert"><strong>Attention !</strong> blablablabla</div>
-<form action="{{ path('contract_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form action="{{ path('quote_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
     <fieldset>
-    <div class="row_fluid">
-    	<div class="span6 well">
-    	{{ form_row(form.follower) }}
-    	{{ form_row(form.followerCp) }}
-    	{{ form_row(form.door) }}
-    	{{ form_row(form.doorCp) }}
-    	</div>
-    	<div class="span6">
-    	{{ form_row(form.creation) }}
-    	{{ form_row(form.trustee) }}
-    	{{ form_row(form.trusteeName) }}
-    	{{ form_row(form.trusteeAddress) }}
-    	</div>
-    </div>
-    <div class="row_fluid">
-    {{ form_widget(form.intro) }}
-    </div>
-    <table class="table table-bordered">
-    <thead>
-    <tr>
-    <th>Référence</th>
-    <th>Designation</th>
-    <th>Qté</th>
-    <th>PU HT</th>
-    <th>Remise</th>
-    <th>TVA</th>
-    <th>PT HT</th>
-    <th><a href="#" class="btn btn-success"><i class="icon-plus-sign icon-white"></i></a></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-    <td><input type="text" class="input-small"></td>
-    <td><div class="input-append"><input type="text" class="input-large"><a class="add-on show-description" href="#"><i class="icon-minus-sign"></i></a></div>
-    <textarea class="input-large" placeholder="Description"></textarea>
-    </td>
-    <td><input type="text" class="input-mini" value="1"></td>
-    <td><div class="input-append"><input type="text" class="input-mini"><span class="add-on">€</span></div></td>
-    <td><div class="input-append"><input type="text" class="input-mini"><span class="add-on">%</span></div></td>
-    <td><div class="input-append"><input type="text" class="input-mini"><span class="add-on">%</span></div></td>
-    <td><div class="input-append"><input type="text" class="input-mini"><span class="add-on">€</span></div></td>
-    <td><a href="#" class="btn btn-danger"><i class="icon-minus-sign icon-white"></i></a></td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>{{ form_widget(form.discount) }}</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    </tr>
-    </tfoot>
-    </table>
     {{ form_widget(form) }}
 	<div class="form-actions">
 	 
@@ -73,6 +16,102 @@
 {% block javascripts %}
 {{ parent() }}
 <script>
-$("show-description").click(function(){$(this).children("i").toggleClass("icon-plus-sign",true).toggleClass("icon-minus-sign",false)}
+var lineCount = '{{ form.lines | length }}';
+
+function openDesc() {
+		var plus = $(this).parent().next().attr('value') == 1;
+		plus = !plus;
+		$(this).children("i")
+		       .toggleClass("icon-minus-sign",plus)
+		       .toggleClass("icon-plus-sign",!plus)
+		       .parent().parent().next().attr('value',plus?'1':'0')
+		       .next().slideToggle();
+	    return false;
+}
+
+
+$(document).ready(function() {
+	$("#quote_followerCp").attr('autocomplete','off').typeahead({
+		source:['Yohann Martinez','Emmanuel Bernaszuk','Jean-Louis Martinez','Nadine Martinez','Aurélie Costalat']
+	});
+
+	$("#quote_doorCp").attr('autocomplete','off').typeahead({
+		source: function(query,process){
+			return $.post(
+				{{ path('quote_auto_door') }},
+				{'query':query}, 
+				function (data) { return process(data.options);},
+				'json'
+			);
+	    }
+	    , updater: function (item) {
+	        return item
+	      }
+	    , matcher: function (item) {
+	        return ~item.toLowerCase().indexOf(this.query.toLowerCase())
+	      }
+
+	    , sorter: function (items) {
+	        var beginswith = []
+	          , caseSensitive = []
+	          , caseInsensitive = []
+	          , item
+
+	        while (item = items.shift()) {
+	          if (!item.toLowerCase().indexOf(this.query.toLowerCase())) beginswith.push(item)
+	          else if (~item.indexOf(this.query)) caseSensitive.push(item)
+	          else caseInsensitive.push(item)
+	        }
+
+	        return beginswith.concat(caseSensitive, caseInsensitive)
+	      }
+
+	    , highlighter: function (item) {
+	        var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
+	        return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+	          return '<strong>' + match + '</strong>'
+	        })
+	      },
+	    items:12,});
+	$("#quote_paymentRules").attr('autocomplete','off').typeahead({
+		source:['à réception de la facture', '30% à la commande, le solde fin de travaux']
+	});
+	$("#quote_deliveryRules").attr('autocomplete','off').typeahead({
+		source:['10 à 15 jours après accord','3 à 5 semaines après accord']
+	});
+	
+	$("#quote_").attr('autocomplete','off').typeahead({
+		source : function(query,process){
+			return $.post(
+				this.$element.attr('data-source'),
+				{'query':query}, 
+				function (data) { return process(data.options);},
+				'json'
+			);
+	    },
+	    items:12,
+	});
+
+	
+	$(".show-description").click(openDesc);
+
+	$(".add-line").click(function(){
+		var lineList = $(this).parent().parent().parent().next();
+		lineList.addClass('test');
+		var newWidget = lineList.attr('data-prototype');
+		newWidget = newWidget.replace(/__name__/g,lineCount);
+		lineCount++;
+		$(lineList).append(newWidget);
+		$(".show-description").click(openDesc);
+		$(".remove-line").click(function(){
+			$(this).parent().parent().remove();
+			return false;
+		});
+		return false;
+	});
+
+	
+	
+});
 </script>
 {% endblock %}

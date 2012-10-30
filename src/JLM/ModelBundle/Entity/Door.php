@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * JLM\ModelBundle\Entity\Door
  *
  * @ORM\Table(name="doors")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\DoorRepository")
  */
 class Door
 {
@@ -42,9 +42,9 @@ class Door
      * Contrats concernant la porte
      * @var Contract[] $contracts
      * 
-     * @ORM\ManyToMany(targetEntity="Contract", mappedBy="doors")
+     * ORM\ManyToMany(targetEntity="Contract", mappedBy="doors")
      */
-    private $contracts;
+   // private $contracts;
     
     /**
      * Type de porte
@@ -106,7 +106,7 @@ class Door
      */
     public function __construct()
     {
-    	$this->contracts = new ArrayCollection;
+//    	$this->contracts = new ArrayCollection;
     	$this->parts = new ArrayCollection;
     	$this->documents = new ArrayCollection;
     	$this->transmitters = new ArrayCollection;
@@ -240,38 +240,38 @@ class Door
         return $this->site;
     }
 
-    /**
-     * Add contracts
-     *
-     * @param JLM\ModelBundle\Entity\Contract $contracts
-     * @return Door
-     */
-    public function addContract(\JLM\ModelBundle\Entity\Contract $contracts)
-    {
-        $this->contracts[] = $contracts;
-    
-        return $this;
-    }
-
-    /**
-     * Remove contracts
-     *
-     * @param JLM\ModelBundle\Entity\Contract $contracts
-     */
-    public function removeContract(\JLM\ModelBundle\Entity\Contract $contracts)
-    {
-        $this->contracts->removeElement($contracts);
-    }
-
-    /**
-     * Get contracts
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getContracts()
-    {
-        return $this->contracts;
-    }
+//    /**
+//     * Add contracts
+//     *
+//     * @param JLM\ModelBundle\Entity\Contract $contracts
+//     * @return Door
+//     */
+//    public function addContract(\JLM\ModelBundle\Entity\Contract $contracts)
+//    {
+//        $this->contracts[] = $contracts;
+//    
+//        return $this;
+//    }
+//
+//    /**
+//     * Remove contracts
+//     *
+//     * @param JLM\ModelBundle\Entity\Contract $contracts
+//     */
+//    public function removeContract(\JLM\ModelBundle\Entity\Contract $contracts)
+//    {
+//        $this->contracts->removeElement($contracts);
+//    }
+//
+//    /**
+//     * Get contracts
+//     *
+//     * @return Doctrine\Common\Collections\Collection 
+//     */
+//    public function getContracts()
+//    {
+//        return $this->contracts;
+//    }
 
     /**
      * Set type

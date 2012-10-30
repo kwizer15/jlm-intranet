@@ -23,6 +23,9 @@
     <argument type="service" id="doctrine.orm.entity_manager"/>
     <tag name="form.type" alias="site_select" />
 </service>
+<service id="jlm_model.type.quote_line" class="JLM\ModelBundle\Form\QuoteLineType">
+    <tag name="form.type" alias="quote_line" />
+</service>
 </services>
     <!--
     <parameters>

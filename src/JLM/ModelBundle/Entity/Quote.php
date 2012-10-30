@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * JLM\ModelBundle\Entity\Quote
@@ -27,7 +28,7 @@ class Quote extends Document
 	 * Suiveur (pour le suivi)
 	 * @var Collaborator $follower
 	 * 
-	 * @ORM\Column(name="collaborator",type="string")
+	 * @ORM\Column(name="follower",type="string", nullable=true)
 	 */
 	private $follower;
 	
@@ -90,8 +91,25 @@ class Quote extends Document
 	 * 
 	 * @ORM\Column(name="given",type="boolean")
 	 */
-	private $given;
+	private $given = false;
 
+	/**
+	 * Lignes
+	 * @var ArrayCollection $lines
+	 * 
+	 * @ORM\OneToMany(targetEntity="QuoteLine",mappedBy="quote")
+	 */
+	private $lines;
+	
+	/**
+	 * Construteur
+	 * 
+	 */
+	public function __construct()
+	{
+		$this->lines = new ArrayCollection;
+	}
+	
     /**
      * Get id
      *
@@ -295,5 +313,38 @@ class Quote extends Document
     {
     	$this->intro = $intro;
     	return $this;
+    }
+
+    /**
+     * Add lines
+     *
+     * @param JLM\ModelBundle\Entity\QuoteLine $lines
+     * @return Quote
+     */
+    public function addLine(\JLM\ModelBundle\Entity\QuoteLine $lines)
+    {
+        $this->lines[] = $lines;
+    
+        return $this;
+    }
+
+    /**
+     * Remove lines
+     *
+     * @param JLM\ModelBundle\Entity\QuoteLine $lines
+     */
+    public function removeLine(\JLM\ModelBundle\Entity\QuoteLine $lines)
+    {
+        $this->lines->removeElement($lines);
+    }
+
+    /**
+     * Get lines
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getLines()
+    {
+        return $this->lines;
     }
 }
