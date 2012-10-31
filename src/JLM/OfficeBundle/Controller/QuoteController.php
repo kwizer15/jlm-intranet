@@ -226,4 +226,24 @@ class QuoteController extends Controller
     	 
     	return $response;
     }
+    
+   /**
+    * Autocomplete product
+    *
+    * @Route("/quote/autocomplete/product/designation", name="quote_auto_product_designation")
+    * @Method("post")
+    */
+   public function autoproductAction()
+   {
+   	$request = $this->get('request');
+   	$query = $request->request->get('query');
+   	$em = $this->getDoctrine()->getEntityManager();
+   	$results = $em->getRepository('JLMModelBundle:Product')->searchDesignation($query);
+   	$json = '{"options":'.json_encode($results).'}';
+   	$response = new Response();
+   	$response->headers->set('Content-Type', 'application/json');
+   	$response->setContent($json);
+   
+   	return $response;
+   }
 }
