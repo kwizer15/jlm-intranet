@@ -400,6 +400,7 @@ class Door
      */
     public function __toString()
     {
-    	return $this->getSite().' - '.$this->getLocation();
+    	return $this->getLocation().'
+'.$this->getSite();
     }
 }

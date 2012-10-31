@@ -257,7 +257,7 @@ class Site
      */
     public function __toString()
     {
-    	return $this->getAddress()->getStreet().' ('.$this->getAddress()->getCity()->getName().')';
+    	return $this->getAddress().'';
     }
 
     /**

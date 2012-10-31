@@ -38,7 +38,7 @@ $(document).ready(function() {
 	$("#quote_doorCp").attr('autocomplete','off').typeahead({
 		source: function(query,process){
 			return $.post(
-				{{ path('quote_auto_door') }},
+				'{{ path('quote_auto_door') }}',
 				{'query':query}, 
 				function (data) { return process(data.options);},
 				'json'

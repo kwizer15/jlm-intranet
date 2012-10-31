@@ -33,7 +33,7 @@ class DoorRepository extends EntityRepository
 		$r2 = array();
 		foreach ($res as $r)
 		{
-			$r2[] = ''.$r;
+			$r2[] = $r->getId().'|'.$r.'|'.$r->getSite()->getTrustee()->getId().'|'.$r->getSite()->getTrustee().'|'.$r->getSite()->getTrustee()->getBillingAddress();
 		}
 		return $r2;
 	}

@@ -33,7 +33,7 @@ class CityToStringTransformer implements DataTransformerInterface
 			return "";
 		}
 	
-		return $city->getName().' ('.$city->getZip().')';
+		return $city->getZip().' - '.$city->getName();
 	}
 	
 	/**
@@ -49,12 +49,12 @@ class CityToStringTransformer implements DataTransformerInterface
 			return null;
 		}
 	
-		if (preg_match('#^(.+) \((.*)\)$#',$string,$matches))
+		if (preg_match('#^(.+) - (.+)$#',$string,$matches))
 		{	
 		
 			$city = $this->om
 				->getRepository('JLMModelBundle:City')
-				->findOneBy(array('name' => $matches[1],'zip' => $matches[2]))
+				->findOneBy(array('zip' => $matches[1],'name' => $matches[2]))
 			;
 		}
 		else

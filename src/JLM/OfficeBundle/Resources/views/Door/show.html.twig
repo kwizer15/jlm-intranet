@@ -1,14 +1,12 @@
 {% extends "JLMOfficeBundle::layout.html.twig" %}
 
 {% block content %}
-<h1>{{ entity.site.address.street }}</h1>
 <div class="row-fluid">
 	<div class="span6">
 		<address>
-		<strong>{{ entity.type }}</strong><br>
-		{{ entity.location }}<br>
-		{{ entity.street }}<br>
-		{{ entity.site.address.city.zip }} {{ entity.site.address.city.name }}<br>
+		<strong>{{ entity.type }}</strong>
+		<br>{{ entity.street }}
+		<br>{{ entity|nl2br}}
 		</address>
 {% if entity.transmitters|length > 0 %}
 <h2>Types d'emetteurs</h2>

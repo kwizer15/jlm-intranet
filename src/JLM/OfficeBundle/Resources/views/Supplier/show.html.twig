@@ -4,15 +4,12 @@
 
 <h1>{{ entity.name }}</h1>
 <address>
-	{{ entity.address.street }}<br>
-	{{ entity.address.city.zip }} {{ entity.address.city.name }}<br>
-	{{ entity.address.city.country }}<br>
+	{{ entity.address|nl2br }}
+	<br>Tel : {{ entity.phone }}
+	{% if entity.fax %}<br>Fax : {{ entity.fax }}{% endif %}
 	<br>
-	Tel : {{ entity.phone }}<br>
-	{% if entity.fax %}Fax : {{ entity.fax }}<br>{% endif %}
-	{% if entity.email %}e-mail : <a href="mailto:{{ entity.email }}">{{ entity.email }}</a><br>{% endif %}
-	<br>
-	{% if entity.website %}Site internet : <a href="{{ entity.website }}">{{ entity.website }}</a>{% endif %}
+	{% if entity.email %}<br>e-mail : <a href="mailto:{{ entity.email }}">{{ entity.email }}</a>{% endif %}
+	{% if entity.website %}<br>Site internet : <a href="{{ entity.website }}">{{ entity.website }}</a>{% endif %}
 </address>
 <div class="form-actions">
 	<a href="{{ path('supplier') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>

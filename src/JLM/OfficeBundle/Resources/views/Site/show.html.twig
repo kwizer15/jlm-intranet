@@ -6,23 +6,13 @@
 <div class="span8">
 <address>
 <strong>Adresse affaire</strong>
-<br>{{ entity.address.street }}
-<br>{{ entity.address.city.zip }} {{ entity.address.city.name }}
-<br>{{ entity.address.city.country }}
+<br>{{ entity|nl2br }}
 </address>
 </div>
 <div class="span4 well">
 <address>
 <strong>Adresse de facturation</strong>
-{% if entity.trustee.billingaddress %}
-<br>{{ entity.trustee.billingaddress.street }}
-<br>{{ entity.trustee.billingaddress.city.zip }} {{ entity.trustee.billingaddress.city.name }}
-<br>{{ entity.trustee.billingaddress.city.country }}
-{% else %}
-<br>{{ entity.trustee.address.street }}
-<br>{{ entity.trustee.address.city.zip }} {{ entity.trustee.address.city.name }}
-<br>{{ entity.trustee.address.city.country }}
-{% endif %}
+<br>{{ entity.trustee.billingaddress|nl2br }}
 </address>
 </div>
 </div>

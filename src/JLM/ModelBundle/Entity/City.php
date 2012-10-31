@@ -73,14 +73,6 @@ class City
     {
         return $this->name;
     }
-    
-    /**
-     * To String
-     */
-    public function __toString()
-    {
-    	return $this->getName().' ('.$this->getZip().')';
-    }
 
     /**
      * Set zip
@@ -120,5 +112,13 @@ class City
     public function getCountry()
     {
         return $this->country;
+    }
+    
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+    	return $this->getZip().' - '.$this->getName();
     }
 }

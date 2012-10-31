@@ -5,24 +5,20 @@
 <div class="row-fluid">
 	<div class="span4">
 		<address>
-			{{ entity.address.street }}<br>
-			{{ entity.address.city.zip }} - {{ entity.address.city.name }}<br>
-			{% if entity.phone %}Tel : {{ entity.phone }}<br>{% endif %}
-			{% if entity.fax %}Fax : {{ entity.fax }}<br>{% endif %}
-			{% if entity.email %}e-mail : <a href="mailto:{{ entity.email }}">{{ entity.email }}</a><br>{% endif %}
+			{{ entity.address|nl2br }}
+			{% if entity.phone %}<br>Tel : {{ entity.phone }}{% endif %}
+			{% if entity.fax %}<br>Fax : {{ entity.fax }}{% endif %}
+			{% if entity.email %}<br>e-mail : <a href="mailto:{{ entity.email }}">{{ entity.email }}</a>{% endif %}
 		</address>
 	</div>
 	<div class="span4">
-	{% if entity.billingAddress %}
 		<address>
 			<strong>Facturation</strong>
-			{{ entity.billingAddress.street }}<br>
-			{{ entity.billingAddress.city.zip }} - {{ entity.billingAddress.city.name }}<br>
-			Tel : {{ entity.billingPhone }}<br>
-			Fax : {{ entity.billingFax }}<br>
-			e-mail : <a href="mailto:{{ entity.billingEmail }}">{{ entity.billingEmail }}</a><br>
+			<br>{{ entity.billingAddress|nl2br }}
+			{% if entity.billingPhone %}<br>Tel : {{ entity.billingPhone }}{% endif %}
+			{% if entity.billingFax %}<br>Fax : {{ entity.billingFax }}{% endif %}
+			{% if entity.billingEmail %}<br>e-mail : <a href="mailto:{{ entity.billingEmail }}">{{ entity.billingEmail }}</a>{% endif %}
 		</address>
-	{% endif %}
 	</div>
 	<div class="span4">
 		<dl>
