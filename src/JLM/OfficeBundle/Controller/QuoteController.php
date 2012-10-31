@@ -230,10 +230,30 @@ class QuoteController extends Controller
    /**
     * Autocomplete product
     *
+    * @Route("/quote/autocomplete/product/reference", name="quote_auto_product_reference")
+    * @Method("post")
+    */
+   public function autoproductreferenceAction()
+   {
+   	$request = $this->get('request');
+   	$query = $request->request->get('query');
+   	$em = $this->getDoctrine()->getEntityManager();
+   	$results = $em->getRepository('JLMModelBundle:Product')->searchReference($query);
+   	$json = '{"options":'.json_encode($results).'}';
+   	$response = new Response();
+   	$response->headers->set('Content-Type', 'application/json');
+   	$response->setContent($json);
+   
+   	return $response;
+   }
+   
+   /**
+    * Autocomplete product
+    *
     * @Route("/quote/autocomplete/product/designation", name="quote_auto_product_designation")
     * @Method("post")
     */
-   public function autoproductAction()
+   public function autoproductdesignationAction()
    {
    	$request = $this->get('request');
    	$query = $request->request->get('query');
@@ -243,7 +263,7 @@ class QuoteController extends Controller
    	$response = new Response();
    	$response->headers->set('Content-Type', 'application/json');
    	$response->setContent($json);
-   
+   	 
    	return $response;
    }
 }
