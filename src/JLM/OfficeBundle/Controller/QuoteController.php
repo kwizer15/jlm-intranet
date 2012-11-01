@@ -213,13 +213,13 @@ class QuoteController extends Controller
      * @Route("/quote/autocomplete/door", name="quote_auto_door")
      * @Method("post")
      */
-    public function trusteeAction()
+    public function autodoorAction()
     {
     	$request = $this->get('request');
-    	$query = $request->request->get('query');
+    	$query = $request->request->get('term');
     	$em = $this->getDoctrine()->getEntityManager();
     	$results = $em->getRepository('JLMModelBundle:Door')->searchResult($query);
-    	$json = '{"options":'.json_encode($results).'}';
+    	$json = json_encode($results);
     	$response = new Response();
     	$response->headers->set('Content-Type', 'application/json');
     	$response->setContent($json);

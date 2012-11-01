@@ -49,34 +49,22 @@ $(document).ready(function() {
 
 	$("#quote_doorCp").autocomplete({
 		source: function(request,response){
-			return $.post(
-				'{{ path('quote_auto_door') }}',
-				{'query':request.term}, 
-				function( data ) {
-                    response( data.options);
-                },
-				'json'
+			return $.post('{{ path('quote_auto_door') }}',request,
+					function( data ) { response( data ); },'json'
 			);
 	    }
 	    , select: function (event, ui) {
 		    
-		    var m = ui.item.label.split('|');
-		    $("#quote_door").val(m[0]);
-		    $("#quote_doorCp").val(m[1]);
-		    $("#quote_trustee").val(m[2]);
-		    $("#quote_trusteeName").val(m[3]);
-		    $("#quote_trusteeAddress").val(m[4]);
+		 //   var m = ui.item.label.split('|');
+		    $("#quote_door").val(ui.item.door);
+		    $("#quote_doorCp").val(ui.item.label);
+		    $("#quote_trustee").val(ui.item.trustee);
+		    $("#quote_trusteeName").val(ui.item.trusteeName);
+		    $("#quote_trusteeAddress").val(ui.item.trusteeAddress);
 	        return false;
 	      }
-	    , focus: function (event, ui) {
-	    	var m = ui.item.label.split('|');
-	    	
-		    $("#quote_doorCp").val(m[1]);
-		    
-		    $("#quote_trusteeName").val(m[3]);
-		    $("#quote_trusteeAddress").val(m[4]);
-	    	return false;
-		}
+	    
+		
 	});
 	$("#quote_paymentRules").attr('autocomplete','off').typeahead({
 		source:['à réception de la facture', '30% à la commande, le solde fin de travaux']
