@@ -65,14 +65,7 @@ $(document).ready(function() {
 	});
 
 	$("#quote_doorCp").attr('autocomplete','off').typeahead({
-		source: function(query,process){
-			return $.post(
-				'{{ path('quote_auto_door') }}',
-				{'query':query}, 
-				function (data) { return process(data.options);},
-				'json'
-			);
-	    }
+		source: function(query,process){return $.post('{{ path('quote_auto_door') }}',{'query':query},function (data) { return process(data.options);},'json');}
 	    , updater: function (item) {
 		    var m = item.split('|');
 		    $("#quote_door").val(m[0]);
