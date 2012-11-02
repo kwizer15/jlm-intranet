@@ -64,6 +64,7 @@
 			});
 			$("#quote_discount").on('change',$.proxy(this.total,this));
 			$(".add-line").on('click',$.proxy(this.newline,this));
+			$("#quote_lines > tr").change();
 	  }
    
    	 , newline : function(e){
@@ -173,6 +174,7 @@
 					  }
 					  , select: function (event, ui) {
 						  var id = "#" + this.id.replace("reference","");
+						    $(id + 'product').val(ui.item.id);
 						  	$(id + 'reference').val(ui.item.reference);
 						  	$(id + 'designation').val(ui.item.designation);
 						  	$(id + 'description').val(ui.item.description);
@@ -193,6 +195,7 @@
 				  }
 				  , select: function (event, ui) {
 					  var id = "#" + this.id.replace("designation","");
+					    $(id + 'product').val(ui.item.id);
 					  	$(id + 'reference').val(ui.item.reference);
 					  	$(id + 'designation').val(ui.item.designation);
 					  	$(id + 'description').val(ui.item.description);
@@ -201,7 +204,7 @@
 				      return false;
 				  }
 				});
-			  
+			  $(line + "_quantity").change();
 		  
 		  }
 	   
@@ -212,7 +215,7 @@
 		   		var qty = parseInt($(line + "_quantity").val().replace(',','.').replace(' ',''));
 		   		var up = parseFloat($(line + "_unitPrice").val().replace(',','.').replace(' ',''));
 		   		var dc = parseInt($(line + "_discount").val().replace(',','.').replace(' ',''));
-		   		var vat = parseInt($(line + "_vat").val().replace(',','.').replace(' ',''));
+		   		var vat = parseFloat($(line + "_vat").val().replace(',','.').replace(' ',''));
 		   		var total = qty*(up*((100-dc)/100));
 		   		$(line + "_quantity").val(number_format(qty,0,',',' '));
 		   		$(line + "_unitPrice").val(number_format(up,2,',',' '));

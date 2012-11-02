@@ -11,6 +11,7 @@ class QuoteLineType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+        	->add('product','product_hidden',array('required'=>false))
         	->add('reference',null,array('required'=>false,'attr'=>array('class'=>'input-mini')))
         	->add('designation',null,array('attr'=>array('class'=>'input-xlarge')))
         	->add('description',null,array('required'=>false,'attr'=>array('class'=>'input-xxlarge','style'=>'display:none')))

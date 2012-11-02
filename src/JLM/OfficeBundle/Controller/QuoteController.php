@@ -92,9 +92,14 @@ class QuoteController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
-            foreach ($entity->getLines() as $line)
-            	$em->persist($line);
+            
+            
             $em->persist($entity);
+            foreach ($entity->getLines() as $line)
+            {
+            	$em->persist($line);
+            }
+          
             $em->flush();
 
             return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
@@ -123,7 +128,10 @@ class QuoteController extends Controller
             throw $this->createNotFoundException('Unable to find Quote entity.');
         }
 
+        
         $editForm = $this->createForm(new QuoteType(), $entity);
+       
+        
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -149,8 +157,12 @@ class QuoteController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Quote entity.');
         }
-
+        $originalLines = array();
+        foreach ($entity->getLines() as $line) $originalLines[] = $line;
         $editForm   = $this->createForm(new QuoteType(), $entity);
+        
+        
+        
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
@@ -158,7 +170,19 @@ class QuoteController extends Controller
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
-            $em->persist($entity);
+        	$em->persist($entity);
+        	foreach ($entity->getLines() as $line) 
+        		foreach ($originalLines as $key => $toDel) 
+        			if ($toDel->getId() === $tag->getId()) 
+        				unset($originalLines[$key]);
+        	
+        	foreach ($originalLines as $line) {
+        		$line->setQuote();
+        		$em->persist($line);
+        	}
+        	
+        	
+            
             $em->flush();
 
             return $this->redirect($this->generateUrl('quote_edit', array('id' => $id)));

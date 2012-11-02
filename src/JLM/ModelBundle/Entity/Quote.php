@@ -323,8 +323,9 @@ class Quote extends Document
      */
     public function addLine(\JLM\ModelBundle\Entity\QuoteLine $lines)
     {
+    	$lines->setQuote($this);
         $this->lines[] = $lines;
-    
+    	
         return $this;
     }
 
@@ -335,6 +336,7 @@ class Quote extends Document
      */
     public function removeLine(\JLM\ModelBundle\Entity\QuoteLine $lines)
     {
+    	$lines->setQuote();
         $this->lines->removeElement($lines);
     }
 

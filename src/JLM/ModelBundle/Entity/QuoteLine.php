@@ -21,9 +21,17 @@ class QuoteLine
 	private $id;
 	
 	/**
-	 * @var Product
-	 * @todo A faire
+	 * @var Quote $quote
+	 * 
+	 * @ORM\ManyToOne(targetEntity="Quote",inversedBy="lines")
 	 */
+	private $quote;
+	
+	/**
+	 * @var Product
+	 * @ORM\ManyToOne(targetEntity="Product")
+	 */
+	private $product;
 	
 	/**
 	 * @var string $reference
@@ -275,5 +283,51 @@ class QuoteLine
     public function getVat()
     {
         return $this->vat;
+    }
+
+    /**
+     * Set quote
+     *
+     * @param JLM\ModelBundle\Entity\Quote $quote
+     * @return QuoteLine
+     */
+    public function setQuote(\JLM\ModelBundle\Entity\Quote $quote = null)
+    {
+        $this->quote = $quote;
+    
+        return $this;
+    }
+
+    /**
+     * Get quote
+     *
+     * @return JLM\ModelBundle\Entity\Quote 
+     */
+    public function getQuote()
+    {
+        return $this->quote;
+    }
+
+    /**
+     * Set product
+     *
+     * @param JLM\ModelBundle\Entity\Product $product
+     * @return QuoteLine
+     */
+    public function setProduct(\JLM\ModelBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+    
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return JLM\ModelBundle\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
     }
 }

@@ -24,7 +24,7 @@ class QuoteType extends AbstractType
             ->add('deliveryRules',null,array('label'=>'Délai','attr'=>array('class'=>'input-xxlarge')))
             ->add('customerComments',null,array('label'=>'Observations','required'=>false,'attr'=>array('class'=>'input-xxlarge')))
             ->add('intro',null,array('label'=>'Introduction','attr'=>array('class'=>'span12','placeholder'=>'Suite à ...')))
-            ->add('lines','collection',array('prototype'=>true,'allow_add'=>true,'type'=>'quote_line'))
+            ->add('lines','collection',array('prototype'=>true,'allow_add'=>true,'allow_delete'=>true,'type'=>'quote_line'))
         ;
     }
 
