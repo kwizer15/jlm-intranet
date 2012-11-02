@@ -1,3 +1,7 @@
+/**
+ * Quote plugin
+ */
+
 !function($){
 
   "use strict"; // jshint ;_;
@@ -20,10 +24,11 @@
 			});
 		  
 		  
-		  $("#quote_doorCp").attr('data-source',this.options.doorsSource).autocomplete({
+		  $("#quote_doorCp").attr('data-source',this.options.doorsSource)
+		                    .autocomplete({
 				source: function(request,response){
 					return $.post(
-							$("#quote_doorCp").attr('data-source'),
+							this.element.attr('data-source'),
 							request,
 							function( data ) { response( data ); },
 							'json'
@@ -45,19 +50,57 @@
 			$("#quote_deliveryRules").autocomplete({
 				source:['10 à 15 jours après accord','3 à 5 semaines après accord']
 			});
-			$(".add-line").click(function(){
-				var lineList = $(this).parent().parent().parent().next();
-				lineList.addClass('test');
-				var newWidget = lineList.attr('data-prototype');
-				newWidget = newWidget.replace(/__name__/g,lineCount);
-				
-				$(lineList).append(newWidget);
-				var line = "#quote_lines_" + lineCount;
-				QuoteLine(lineCount);
-				lineCount++;
-				return false;
+			
+			$("#quote_intro").autocomplete({
+				source:[
+				        'Suite à la dégradation',
+				        'Suite à l\'usure '
+				]
 			});
+			
+			this.$element.find("#quote_lines > tr").on('change',$.proxy(this.total,this)).quoteline({
+				referenceSource:this.options.lineReferenceSource,
+				designationSource:this.options.lineDesignationSource,
+			});
+			$("#quote_discount").on('change',$.proxy(this.total,this));
+			$(".add-line").on('click',$.proxy(this.newline,this));
 	  }
+   
+   	 , newline : function(e){
+   		 	e.stopPropagation()
+   		 	e.preventDefault()
+			var lineList = this.$element.find("tbody");
+			var newWidget = lineList.attr('data-prototype');
+			newWidget = newWidget.replace(/__name__/g,this.options.lineCount);
+			lineList.append(newWidget);
+			$("#quote_lines_" + this.options.lineCount).on('change',$.proxy(this.total,this)).quoteline({
+				referenceSource:this.options.lineReferenceSource,
+				designationSource:this.options.lineDesignationSource
+			});
+			this.options.lineCount++;
+			return this;
+		}
+   	 , total : function(e) {
+   		 e.stopPropagation()
+		 e.preventDefault()
+		 var tht = 0;
+   		 var tva = 0;
+		 $.each($("#quote_lines > tr"),function(){
+			 var thtline = parseFloat($("#" + this.id + "_total").html().replace(',','.').replace(' ',''));
+			 var tvaline = parseFloat($("#" + this.id + "_vat").val().replace(',','.').replace(' ',''))/100;
+			 tht += thtline;
+			 tva += (thtline * tvaline);
+		 });
+		 var dis = parseFloat($("#quote_discount").val().replace(',','.').replace(' ',''))/100;
+		 $("#quote_total_htbd").html(number_format(tht,2,',',' '));
+		 $("#quote_total_discount").html(number_format(tht*dis,2,',',' '));	
+		 tht -= tht*dis;
+		 tva -= tva*dis;
+		 $("#quote_total_ht").html(number_format(tht,2,',',' '));
+		 $("#quote_total_tva").html(number_format(tva,2,',',' '));
+		 $("#quote_total_ttc").html(number_format(tht+tva,2,',',' '));
+		 return this;
+   	 }
    }
 
   
@@ -76,88 +119,154 @@
 
   $.fn.quote.defaults = {
 	 followersSource:'',
-	 doorsSource:'bb',
+	 doorsSource:'',
 	 trusteesSource:'',
 	 paymentSource:'',
 	 delaySource:'',
+	 introSource:'',
+	 
+	 lineCount:0,
+	 lineReferenceSource:'',
+	 lineDesignationSource:'',
   }
 
   $.fn.quote.Constructor = Quote
 
 }(window.jQuery);
 
-//
-//$(this.element + " .showDescription").click(this.toggleDescription)
-//		$(this.element + " .remove-line").click(this.remove);
-//		$(this.element + "_quantity").change(this.update);
-//		$(this.element + "_unitPrice").change(this.update);
-//		$(this.element + "_discount").change(this.update);
-//		$(this.element + "_vat").change(this.update);
-//		$(this.element + "_reference").attr('autocomplete','off').typeahead({
-//			source: function(query,process){
-//				return $.post(
-//					'{{ path('quote_auto_product_reference') }}',
-//					{'query':query}, 
-//					function (data) { return process(data.options);},
-//					'json'
-//				);
-//		    }
-//		    , updater: function (item) {
-//			    var m = item.split('|');
-//			    var line = "#" + this.$element.parent().parent().parent().attr("id");
-//			    $(line + "_designation").val(m[2]);
-//			    $(line + "_description").val(m[3]);
-//			    $(line + "_unitPrice").val(m[4]);
-//			    $(line + "_vat").val(m[5]);
-//			    this.update();
-//			    return m[2];
-//		      }
-//		    , matcher: function (item) {
-//		    	var m = item.split('|');
-//		    	item = m[1];
-//		        return ~item.toLowerCase().indexOf(this.query.toLowerCase())
-//		      }
-//
-//		    , highlighter: function (item) {
-//		        var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
-//		        var m = item.split('|');
-//			      item = m[2];
-//		        return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
-//		          return '<strong>' + match + '</strong>'
-//		        })
-//		      },
-//		    items:12,});
-//		$(this.element + "_designation").attr('autocomplete','off').typeahead({
-//			source: function(query,process){
-//				return $.post(
-//					'{{ path('quote_auto_product_designation') }}',
-//					{'query':query}, 
-//					function (data) { return process(data.options);},
-//					'json'
-//				);
-//		    }
-//		    , updater: function (item) {
-//			    var m = item.split('|');
-//			    var line = "#" + this.$element.parent().parent().parent().attr("id");
-//			    $(line + "_reference").val(m[1]);
-//			    $(line + "_description").val(m[3]);
-//			    $(line + "_unitPrice").val(m[4]);
-//			    $(line + "_vat").val(m[5]);
-//			    $(line + "_unitPrice").change();
-//			    return m[2];
-//		      }
-//		    , matcher: function (item) {
-//		    	var m = item.split('|');
-//		    	item = m[2];
-//		        return ~item.toLowerCase().indexOf(this.query.toLowerCase())
-//		      }
-//
-//		    , highlighter: function (item) {
-//		        var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
-//		        var m = item.split('|');
-//			      item = m[2];
-//		        return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
-//		          return '<strong>' + match + '</strong>'
-//		        })
-//		      },
-//		    items:12,});
+
+/*************************************************************************
+ * QuoteLine plugin
+ */
+
+!function($){
+
+	  "use strict"; // jshint ;_;
+	  
+	  /* QUOTELINE PUBLIC CLASS DEFINITION
+	   * ================================= */
+
+	   var QuoteLine = function (element, options) {
+	     this.$element = $(element)
+	     this.options = $.extend({}, $.fn.quoteline.defaults, options)
+	     this.listen()
+	   }
+	  
+	   QuoteLine.prototype = {
+		  constructor: QuoteLine
+		  
+		  , listen : function() {
+			  var line = "#" + this.$element.attr('id');
+			  this.$element.find(".remove-line").on('click',$.proxy(this.remove,this));
+			  this.$element.find(".show-description").on('click',$.proxy(this.toggleDesc,this));
+			  $(line + "_quantity, " + line + "_unitPrice, " + line + "_discount").on('change',$.proxy(this.total,this));
+			
+			  $(line + "_reference").attr('data-source',this.options.referenceSource)
+					              .autocomplete({
+						source: function(request,response){
+							return $.post(
+								this.element.attr('data-source'),
+								request,
+								function( data ) { response( data ); },
+								'json'
+							);
+					  }
+					  , select: function (event, ui) {
+						  var id = "#" + this.id.replace("reference","");
+						  	$(id + 'reference').val(ui.item.reference);
+						  	$(id + 'designation').val(ui.item.designation);
+						  	$(id + 'description').val(ui.item.description);
+						  	$(id + 'unitPrice').val(ui.item.unitPrice).change();
+						  	$(id + 'vat').val(ui.item.vat);
+					      return false;
+					  }
+				});
+			  $(line + "_designation").attr('data-source',this.options.designationSource)
+				              .autocomplete({
+					source: function(request,response){
+						return $.post(
+							this.element.attr('data-source'),
+							request,
+							function( data ) { response( data ); },
+							'json'
+						);
+				  }
+				  , select: function (event, ui) {
+					  var id = "#" + this.id.replace("designation","");
+					  	$(id + 'reference').val(ui.item.reference);
+					  	$(id + 'designation').val(ui.item.designation);
+					  	$(id + 'description').val(ui.item.description);
+					  	$(id + 'unitPrice').val(ui.item.unitPrice).change();
+					  	$(id + 'vat').val(ui.item.vat);
+				      return false;
+				  }
+				});
+			  
+		  
+		  }
+	   
+	   	  , total : function(e) {
+		   		e.stopPropagation()
+		        e.preventDefault()
+	   		  	var line = "#" + this.$element.attr('id');
+		   		var qty = parseInt($(line + "_quantity").val().replace(',','.').replace(' ',''));
+		   		var up = parseFloat($(line + "_unitPrice").val().replace(',','.').replace(' ',''));
+		   		var dc = parseInt($(line + "_discount").val().replace(',','.').replace(' ',''));
+		   		var vat = parseInt($(line + "_vat").val().replace(',','.').replace(' ',''));
+		   		var total = qty*(up*((100-dc)/100));
+		   		$(line + "_quantity").val(number_format(qty,0,',',' '));
+		   		$(line + "_unitPrice").val(number_format(up,2,',',' '));
+		   		$(line + "_discount").val(number_format(dc,0,',',' '));
+		   		$(line + "_vat").val(number_format(vat,1,',',' '));
+		   		$(line + "_total").html(number_format(total,2,',',' '));
+		   		$(line).change();
+		   		return this;
+	   	  }
+	   	  
+	   	  , toggleDesc : function() {
+	   		  	var input = $("#" + this.$element.attr('id') + "_showDescription");
+	   		  	input.attr('test','test');
+		   		var plus = (input.attr('value') != 1);
+		   		this.$element.find(".show-description > i")
+				       .toggleClass("icon-minus-sign",plus)
+				       .toggleClass("icon-plus-sign",!plus);
+				input.attr('value',plus?'1':'0')
+				       .next().slideToggle();
+			    return false;
+	   	  }
+	   	  
+	   	  , remove : function(e) {
+		   		e.stopPropagation()
+		        e.preventDefault()
+		   		this.$element.fadeOut(500,function(){
+		   			$("#" + $(this).attr('id') + "_unitPrice").val(0).change();
+		   			$(this).remove();
+		   		});
+				return this;
+	   	  }
+	   }
+
+	  
+	  /* QUOTELINE PLUGIN DEFINITION
+	   * =========================== */
+
+	  $.fn.quoteline = function (option) {
+	    return this.each(function () {
+	      var $this = $(this)
+	        , data = $this.data('quoteline')
+	        , options = typeof option == 'object' && option
+	      if (!data) $this.data('quoteline', (data = new QuoteLine(this, options)))
+	      if (typeof option == 'string') data[option]()
+	    })
+	  }
+
+	  $.fn.quoteline.defaults = {
+			 referenceSource:'',
+			 designationSource:'',
+			 line:0,
+	  }
+
+	  $.fn.quoteline.Constructor = QuoteLine
+
+	}(window.jQuery);
+	

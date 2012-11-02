@@ -34,12 +34,12 @@
     <script src="{{ asset("bundles/jlmoffice/js/jquery.ui.datepicker-fr.js") }}"></script>
     <script src="{{ asset("bundles/jlmoffice/js/number_format.js") }}"></script>
 <script>
-$('.typeahead').attr('autocomplete','off').typeahead({
-	source : function(query,process){
+$('.autocompletion').autocomplete({
+	source : function(request,response){
 		return $.post(
 			this.$element.attr('data-source'),
-			{'query':query}, 
-			function (data) { return process(data.options);},
+			request, 
+			function (data) { response(data);},
 			'json'
 		);
     },

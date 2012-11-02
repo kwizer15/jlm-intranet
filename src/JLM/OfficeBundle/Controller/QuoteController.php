@@ -210,7 +210,7 @@ class QuoteController extends Controller
     /**
      * Autocomplete door
      *
-     * @Route("/quote/autocomplete/door", name="quote_auto_door")
+     * @Route("/autocomplete/door", name="quote_auto_door")
      * @Method("post")
      */
     public function autodoorAction()
@@ -230,16 +230,16 @@ class QuoteController extends Controller
    /**
     * Autocomplete product
     *
-    * @Route("/quote/autocomplete/product/reference", name="quote_auto_product_reference")
+    * @Route("/autocomplete/product/reference", name="quote_auto_product_reference")
     * @Method("post")
     */
    public function autoproductreferenceAction()
    {
    	$request = $this->get('request');
-   	$query = $request->request->get('query');
+   	$query = $request->request->get('term');
    	$em = $this->getDoctrine()->getEntityManager();
    	$results = $em->getRepository('JLMModelBundle:Product')->searchReference($query);
-   	$json = '{"options":'.json_encode($results).'}';
+   	$json = json_encode($results);
    	$response = new Response();
    	$response->headers->set('Content-Type', 'application/json');
    	$response->setContent($json);
@@ -250,16 +250,16 @@ class QuoteController extends Controller
    /**
     * Autocomplete product
     *
-    * @Route("/quote/autocomplete/product/designation", name="quote_auto_product_designation")
+    * @Route("/autocomplete/product/designation", name="quote_auto_product_designation")
     * @Method("post")
     */
    public function autoproductdesignationAction()
    {
    	$request = $this->get('request');
-   	$query = $request->request->get('query');
+   	$query = $request->request->get('term');
    	$em = $this->getDoctrine()->getEntityManager();
    	$results = $em->getRepository('JLMModelBundle:Product')->searchDesignation($query);
-   	$json = '{"options":'.json_encode($results).'}';
+   	$json = json_encode($results);
    	$response = new Response();
    	$response->headers->set('Content-Type', 'application/json');
    	$response->setContent($json);
