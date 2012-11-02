@@ -21,11 +21,11 @@ class AutocompleteController extends Controller
     public function cityAction()
     {
     	$request = $this->get('request');
-    	$query = $request->request->get('query');
+    	$query = $request->request->get('term');
 
     	$em = $this->getDoctrine()->getEntityManager();
     	$results = $em->getRepository('JLMModelBundle:City')->searchResult($query);
-    	$json = '{"options":'.json_encode($results).'}';
+    	$json = json_encode($results);
     	$response = new Response();
     	$response->headers->set('Content-Type', 'application/json');
     	$response->setContent($json);
@@ -41,10 +41,10 @@ class AutocompleteController extends Controller
     public function trusteeAction()
     {
     	$request = $this->get('request');
-    	$query = $request->request->get('query');
+    	$query = $request->request->get('term');
     	$em = $this->getDoctrine()->getEntityManager();
     	$results = $em->getRepository('JLMModelBundle:Trustee')->searchResult($query);
-    	$json = '{"options":'.json_encode($results).'}';
+    	$json = json_encode($results);
     	$response = new Response();
     	$response->headers->set('Content-Type', 'application/json');
     	$response->setContent($json);
@@ -61,10 +61,10 @@ class AutocompleteController extends Controller
     public function siteAction()
     {
     	$request = $this->get('request');
-    	$query = $request->request->get('query');
+    	$query = $request->request->get('term');
     	$em = $this->getDoctrine()->getEntityManager();
     	$results = $em->getRepository('JLMModelBundle:Site')->searchResult($query);
-    	$json = '{"options":'.json_encode($results).'}';
+    	$json = json_encode($results);
     	$response = new Response();
     	$response->headers->set('Content-Type', 'application/json');
     	$response->setContent($json);

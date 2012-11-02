@@ -23,6 +23,18 @@
     <argument type="service" id="doctrine.orm.entity_manager"/>
     <tag name="form.type" alias="site_select" />
 </service>
+<service id="jlm_model.type.door_hidden" class="JLM\ModelBundle\Form\DoorHiddenType">
+    <argument type="service" id="doctrine.orm.entity_manager"/>
+    <tag name="form.type" alias="door_hidden" />
+</service>
+<service id="jlm_model.type.product_hidden" class="JLM\ModelBundle\Form\ProductHiddenType">
+    <argument type="service" id="doctrine.orm.entity_manager"/>
+    <tag name="form.type" alias="product_hidden" />
+</service>
+<service id="jlm_model.type.trustee_hidden" class="JLM\ModelBundle\Form\TrusteeHiddenType">
+    <argument type="service" id="doctrine.orm.entity_manager"/>
+    <tag name="form.type" alias="trustee_hidden" />
+</service>
 <service id="jlm_model.type.quote_line" class="JLM\ModelBundle\Form\QuoteLineType">
     <tag name="form.type" alias="quote_line" />
 </service>

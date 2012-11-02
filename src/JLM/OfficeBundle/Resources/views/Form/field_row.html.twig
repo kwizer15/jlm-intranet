@@ -86,7 +86,7 @@
 {% block city_select_widget %}
 {% spaceless %}
 {% set attr = attr|merge({'data-source':  path('autocomplete_city') }) %}
-{% set attr = attr|merge({'class': attr.class|default('') ~ ' typeahead' }) %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' autocompletion' }) %}
 {{ block('form_widget_simple') }}
 {% endspaceless %}
 {% endblock city_select_widget %}
@@ -94,7 +94,7 @@
 {% block trustee_select_widget %}
 {% spaceless %}
 {% set attr = attr|merge({'data-source':  path('autocomplete_trustee') }) %}
-{% set attr = attr|merge({'class': attr.class|default('') ~ ' typeahead' }) %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' autocompletion' }) %}
 {{ block('form_widget_simple') }}
 {% endspaceless %}
 {% endblock trustee_select_widget %}
@@ -102,7 +102,7 @@
 {% block site_select_widget %}
 {% spaceless %}
 {% set attr = attr|merge({'data-source':  path('autocomplete_site') }) %}
-{% set attr = attr|merge({'class': attr.class|default('') ~ ' typeahead' }) %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' autocompletion' }) %}
 {{ block('form_widget_simple') }}
 {% endspaceless %}
 {% endblock site_select_widget %}

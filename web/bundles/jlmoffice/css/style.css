@@ -1,0 +1,11 @@
+/**
+ * Autocompletion scrollable
+ */
+
+.ui-autocomplete {
+	font-size:.9em;
+        max-height: 100px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+    }

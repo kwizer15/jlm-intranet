@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('bundles/jlmoffice/css/bootstrap.min.css') }}" type="text/css">
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" type="text/css">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" type="text/css">
 	<link rel="stylesheet" href="{{ asset('bundles/jlmoffice/css/style.css') }}" type="text/css">
 {% endblock %}
 
@@ -29,7 +29,7 @@
 
 {% block javascripts %}
     <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
     <script src="{{ asset("bundles/jlmoffice/js/bootstrap.js") }}"></script>
     <script src="{{ asset("bundles/jlmoffice/js/jquery.ui.datepicker-fr.js") }}"></script>
     <script src="{{ asset("bundles/jlmoffice/js/number_format.js") }}"></script>
@@ -37,7 +37,7 @@
 $('.autocompletion').autocomplete({
 	source : function(request,response){
 		return $.post(
-			this.$element.attr('data-source'),
+			this.element.attr('data-source'),
 			request, 
 			function (data) { response(data);},
 			'json'

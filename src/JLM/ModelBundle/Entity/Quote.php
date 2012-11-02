@@ -81,7 +81,7 @@ class Quote extends Document
 	/**
 	 * @var string $customerComments
 	 *
-	 * @ORM\Column(name="customer_comments", type="text")
+	 * @ORM\Column(name="customer_comments", type="text", nullable=true)
 	 */
 	private $customerComments;
 	

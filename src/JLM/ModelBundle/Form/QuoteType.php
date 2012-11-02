@@ -12,13 +12,13 @@ class QuoteType extends AbstractType
     {
         $builder
             ->add('creation','datepicker',array('label'=>'Date de création'))
-            ->add('trustee','hidden',array('required'=>false))
+            ->add('trustee','trustee_hidden',array('required'=>false))
             ->add('trusteeName',null,array('label'=>'Syndic'))
             ->add('trusteeAddress',null,array('label'=>'Adresse de facturation','attr'=>array('class'=>'input-xlarge')))
             ->add('discount','percent',array('label'=>'Remise','attr'=>array('class'=>'input-mini')))
             ->add('follower','hidden',array('required'=>false))
             ->add('followerCp',null,array('label'=>'Suivi par'))
-            ->add('door','hidden',array('required'=>false))
+            ->add('door','door_hidden',array('required'=>false))
             ->add('doorCp',null,array('label'=>'Affaire','attr'=>array('class'=>'input-xlarge','rows'=>'3')))
             ->add('paymentRules',null,array('label'=>'Réglement','attr'=>array('class'=>'input-xxlarge')))
             ->add('deliveryRules',null,array('label'=>'Délai','attr'=>array('class'=>'input-xxlarge')))

@@ -28,7 +28,7 @@ class QuoteLine
 	/**
 	 * @var string $reference
 	 * 
-	 * @ORM\Column(name="reference")
+	 * @ORM\Column(name="reference", nullable=true)
 	 */
 	private $reference;
 	
@@ -42,7 +42,7 @@ class QuoteLine
 	/**
 	 * @var string $description
 	 *
-	 * @ORM\Column(name="description", type="text")
+	 * @ORM\Column(name="description", type="text", nullable=true)
 	 */
 	private $description;
 	
