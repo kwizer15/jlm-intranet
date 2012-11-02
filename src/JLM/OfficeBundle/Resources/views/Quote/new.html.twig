@@ -15,6 +15,14 @@
 
 {% block javascripts %}
 {{ parent() }}
+<script src="{{ asset("bundles/jlmoffice/js/quote.js") }}"></script>
+<script>
+$("form").quote({
+	doorsSource: "{{ path('quote_auto_door') }}"
+});
+</script>
+
+{#
 <script>
 var lineCount = '{{ form.lines | length }}';
 
@@ -43,35 +51,6 @@ function totalLine(line)
 }
 
 $(document).ready(function() {
-	$("#quote_followerCp").autocomplete({
-		source:['Yohann Martinez','Emmanuel Bernaszuk','Jean-Louis Martinez','Nadine Martinez','Aurélie Costalat']
-	});
-
-	$("#quote_doorCp").autocomplete({
-		source: function(request,response){
-			return $.post('{{ path('quote_auto_door') }}',request,
-					function( data ) { response( data ); },'json'
-			);
-	    }
-	    , select: function (event, ui) {
-		    
-		 //   var m = ui.item.label.split('|');
-		    $("#quote_door").val(ui.item.door);
-		    $("#quote_doorCp").val(ui.item.label);
-		    $("#quote_trustee").val(ui.item.trustee);
-		    $("#quote_trusteeName").val(ui.item.trusteeName);
-		    $("#quote_trusteeAddress").val(ui.item.trusteeAddress);
-	        return false;
-	      }
-	    
-		
-	});
-	$("#quote_paymentRules").attr('autocomplete','off').typeahead({
-		source:['à réception de la facture', '30% à la commande, le solde fin de travaux']
-	});
-	$("#quote_deliveryRules").attr('autocomplete','off').typeahead({
-		source:['10 à 15 jours après accord','3 à 5 semaines après accord']
-	});
 	
 	$(".show-description").click(openDesc);
 
@@ -131,5 +110,6 @@ $(document).ready(function() {
 	
 	
 });
+#}
 </script>
 {% endblock %}
