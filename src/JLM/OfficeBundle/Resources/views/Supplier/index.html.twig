@@ -31,8 +31,8 @@
 <div class="pagination pagination-centered">
 	    <ul>
 		    <li{% if page == 1 %} class="disabled"{% endif %}><a href="{{ path('supplier_page',{ 'page' : page-1 }) }}">«</a></li>
-		    {% for i in 1..nbPages %}
-		    	<li{% if i == page %} class="active"{% endif %}><a href="{{ path('supplier_page',{ 'page' : i }) }}">{{ i }}</a></li>
+		    {% for p in range(1,nbPages) %}
+		    	<li{% if p == page %} class="active"{% endif %}><a href="{{ path('supplier_page',{ 'page' : p }) }}">{{ p }}</a></li>
 		    {% endfor %}
 		    <li{% if page == nbPages %} class="disabled"{% endif %}><a href="{{ path('supplier_page',{ 'page' : page+1 }) }}">»</a></li>
 	    </ul>
