@@ -20,15 +20,33 @@ class SupplierController extends Controller
      * Lists all Supplier entities.
      *
      * @Route("/", name="supplier")
+     * @Route("/page/{page}", name="supplier_page")
+     * @Route("/page/{page}/{limit}", name="supplier_page_limit")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page = 1, $limit = 15)
     {
         $em = $this->getDoctrine()->getEntityManager();
+        $nb = $em->getRepository('JLMModelBundle:Supplier')->getTotal();
+        $nbPages = ceil($nb/$limit);
+        $offset = ($page-1) * $limit;
+        if ($page < 1 || $page > $nbPages)
+        {
+        	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
+        }
 
-        $entities = $em->getRepository('JLMModelBundle:Supplier')->findAll();
+        $entities = $em->getRepository('JLMModelBundle:Supplier')->findBy(
+        		array(),
+        		array('name' => 'asc'),
+        		$limit,
+        		$offset
+        		);
 
-        return array('entities' => $entities);
+        return array(
+        	'entities' => $entities,
+        	'page'     => $page,
+        	'nbPages'  => $nbPages,
+        );
     }
 
     /**

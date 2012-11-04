@@ -53,7 +53,6 @@ Produits
 Fournisseurs  
     - index : pagination
     - show : lister les produit (?)
-    - edit : Aller à show après l'enregistrement
 
 
 -----------------------------------------------

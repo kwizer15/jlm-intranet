@@ -5,10 +5,10 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * JLM\ModelBundle\Entity\Company
+ * JLM\ModelBundle\Entity\Supplier
  *
  * @ORM\Table(name="suppliers")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SupplierRepository")
  */
 class Supplier extends Company
 {

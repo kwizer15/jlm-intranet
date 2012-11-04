@@ -30,9 +30,11 @@
 </table>
 <div class="pagination pagination-centered">
 	    <ul>
-		    <li class="disabled"><a href="#">«</a></li>
-		    <li class="active"><a href="#">1</a></li>
-		    <li class="disabled"><a href="#">»</a></li>
+		    <li{% if page == 1 %} class="disabled"{% endif %}><a href="{{ path('supplier_page',{ 'page' : page-1 }) }}">«</a></li>
+		    {% for i in 1..nbPages %}
+		    	<li{% if i == page %} class="active"{% endif %}><a href="{{ path('supplier_page',{ 'page' : i }) }}">{{ i }}</a></li>
+		    {% endfor %}
+		    <li{% if page == nbPages %} class="disabled"{% endif %}><a href="{{ path('supplier_page',{ 'page' : page+1 }) }}">»</a></li>
 	    </ul>
     </div>
 <div class="form-actions">
