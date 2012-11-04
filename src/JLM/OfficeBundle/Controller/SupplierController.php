@@ -156,7 +156,7 @@ class SupplierController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('supplier_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('supplier_show', array('id' => $id)));
         }
 
         return array(

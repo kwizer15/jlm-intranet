@@ -1,0 +1,78 @@
+User
+    Nom, prénom
+
+Autocompletions
+    - Modeles de texte pour
+        - Delais
+        - Payements
+        - Intros
+        
+Devis
+    js : gérer la tva autrement (via site), par defaut 19.6 
+    new : 
+    create : ne sauve pas l'id du devis des lignes
+    edit :
+    show : a faire
+    pdf : a faire
+
+Interlocuteurs
+    - formtype : mettre le champ affaire en textarea (voir le dataconverteur pour modif)
+    - personaliser un peu le formulaire "contact"
+    ******** à Revoir **********
+
+Door
+    - formtype : mettre le champ affaire en textarea (voir le dataconverteur pour modif)
+                 remonter localisation de 2 crans
+                 label emetteurs -> Types d'emeteurs
+    - entity/formtype/schema : dimensions (nullable, required false)
+    ******** à Revoir **********
+
+Site
+    - entity/formtype/schema : enlever groupe (on le mettra dans l'adresse)
+    - show : Accession / social
+           voir pour l'adresse de facturation
+           TVA
+    - index : à supprimer (inutile)
+
+Syndics
+    - show : "aucune portes" si pas de porte
+             Supprimer le mot "facturation" si pas d'adresse,telephone,fax... de facturation
+    - faire persister $billingAddress (TrusteeController#create et #update)
+    
+    
+Produits
+    - index : pagination
+    - supprimer le parametre TVA (dépend du site + normal uniquement pour les emetteurs)
+        (supprimer dans entity + formtype + show puis schema update)
+    - show : ajouter nl2br à la description
+    - create : pour la famille emetteur, changer la class
+    - voir si "unité" est indispensable (valeur par défaut?)
+    - new, edit : petit js pour voir le prix de vente à la fin, plus remise en forme (number_format)
+    - edit : remise,frais,port,coef revienne à leur valeur par défaut !
+    
+Fournisseurs  
+    - index : pagination
+    - show : lister les produit (?)
+    - edit : Aller à show après l'enregistrement
+
+
+-----------------------------------------------
+A plus long terme
+-----------------------------------------------
+
+Familles de produits
+    - voir pour retirer et fixer un liste (une classe par famille, garder un classe de base accessible avec "Famille")
+        class ProductBase
+            abstract getCategory();
+        
+    - emetteurs (class particuliere)
+    - retirer les sous familles (parent/children)
+    - liste des produits de la famille ?
+Produits
+    - Choisir la famille de produit avant d'accéder au formulaire
+    - Ajouter une (ou plus) photo
+Produit Emeteur
+    - Tarif dégressif
+
+Produit Porte
+    - Créer (type de porte, dimensions)  
