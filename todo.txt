@@ -36,8 +36,6 @@ Site
     - index : à supprimer (inutile)
 
 Syndics
-    - show : "aucune portes" si pas de porte
-             Supprimer le mot "facturation" si pas d'adresse,telephone,fax... de facturation
     - faire persister $billingAddress (TrusteeController#create et #update)
     
     

@@ -296,9 +296,10 @@ class Trustee extends Company
      */
     public function getBillingAddress()
     {
-    	if ($this->billingAddress instanceof Address)
-    		if ($this->billingAddress->getCity() === null)
-    			return $this->getAddress();
+    	if ($this->billingAddress === null)
+    		return $this->getAddress();
+    	elseif ($this->billingAddress->getCity() === null)
+    		return $this->getAddress();
         return $this->billingAddress;
     }
 }

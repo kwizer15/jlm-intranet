@@ -11,24 +11,19 @@
 			{% if entity.email %}<br>e-mail : <a href="mailto:{{ entity.email }}">{{ entity.email }}</a>{% endif %}
 		</address>
 	</div>
-	<div class="span4">
+	<div class="span8">
 		<address>
 			<strong>Facturation</strong>
 			<br>{{ entity.billingAddress|nl2br }}
+			<br><strong>Compte n°{{ entity.accountNumber }}</strong>
 			{% if entity.billingPhone %}<br>Tel : {{ entity.billingPhone }}{% endif %}
 			{% if entity.billingFax %}<br>Fax : {{ entity.billingFax }}{% endif %}
 			{% if entity.billingEmail %}<br>e-mail : <a href="mailto:{{ entity.billingEmail }}">{{ entity.billingEmail }}</a>{% endif %}
 		</address>
 	</div>
-	<div class="span4">
-		<dl>
-			<dt>Compte</dt>
-			<dd>N°{{ entity.accountNumber }}</dd>
-		</dl>
-	</div>
 </div>
+{% if entity.sites | length %}
 <h2>Affaires</h2>
-{% if entity.sites %}
 <table class="table table-stripped">
 <thead>
 <tr>
@@ -52,7 +47,7 @@
 </tbody>
 </table>
 {% else %}
-<p>Aucun site</p>
+<h2><small>Aucune affaire</small></h2>
 {% endif %}
 
 <div class="form-actions">
