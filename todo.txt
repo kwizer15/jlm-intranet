@@ -36,7 +36,7 @@ Site
     - index : à supprimer (inutile)
 
 Syndics
-    - faire persister $billingAddress (TrusteeController#create et #update)
+    - pagination
     
     
 Produits
@@ -67,3 +67,6 @@ Produit Emeteur
 
 Produit Porte
     - Créer (type de porte, dimensions)  
+
+Syndic
+	- voir problème d'adresse de facturation (case à cocher ?)
