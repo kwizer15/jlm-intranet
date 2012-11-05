@@ -51,8 +51,7 @@ Produits
     - edit : remise,frais,port,coef revienne à leur valeur par défaut !
     
 Fournisseurs  
-    - index : pagination
-    - show : lister les produit (?)
+    - show : pagination
 
 
 -----------------------------------------------

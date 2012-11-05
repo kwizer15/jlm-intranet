@@ -55,21 +55,18 @@ class SupplierController extends Controller
      * @Route("/{id}/show", name="supplier_show")
      * @Template()
      */
-    public function showAction($id)
+    public function showAction(Supplier $entity)
     {
         $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Supplier')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Supplier entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
+        $products = $em->getRepository('JLMModelBundle:Product')->findBy(
+        		array('supplier' => $entity),
+        		array('designation'=>'asc')
+        );
+        
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+        	'products'	  => $products,
+        );
     }
 
     /**
