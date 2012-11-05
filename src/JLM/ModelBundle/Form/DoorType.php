@@ -14,6 +14,8 @@ class DoorType extends AbstractType
         	->add('location',null,array('label'=>'Localisation'))
         	->add('street',null,array('label'=>'Adresses d\'accès','required'=>false))
         	->add('type',null,array('label'=>'Type de porte'))
+        	->add('width','distance',array('label'=>'Largeur','required'=>false))
+        	->add('height','distance',array('label'=>'Hauteur','required'=>false))
         	->add('transmitters',null,array('label'=>'Type d\'emetteurs','required'=>false,'attr'=>array('class'=>'input-xlarge')))
         	->add('googlemaps',null,array('label'=>'Lien Google Maps','required'=>false,'attr'=>array('class'=>'input-xxlarge')))
 

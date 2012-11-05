@@ -102,6 +102,20 @@ class Door
     private $googlemaps;
     
     /**
+     * @var int largeur en mm
+     * 
+     * @ORM\Column(name="width", type="integer", nullable=true)
+     */
+    private $width;
+    
+    /**
+     * @var int hauteur en mm
+     *
+     * @ORM\Column(name="height", type="integer", nullable=true)
+     */
+    private $height;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -393,6 +407,48 @@ class Door
     public function getDocuments()
     {
         return $this->documents;
+    }
+    
+    /**
+     * Set largeur
+     * 
+     * @param int $width
+     */
+    public function setWidth($width)
+    {
+    	$this->width = $width;
+    	return $this;
+    }
+    
+    /**
+     * Get largeur
+     * 
+     * @return int $width
+     */
+    public function getWidth()
+    {
+    	return $this->width;
+    }
+    
+    /**
+     * Set hauteur
+     *
+     * @param int $height
+     */
+    public function setHeight($height)
+    {
+    	$this->height = $height;
+    	return $this;
+    }
+    
+    /**
+     * Get hauteur
+     *
+     * @return int $height
+     */
+    public function getHeight()
+    {
+    	return $this->height;
     }
     
     /**

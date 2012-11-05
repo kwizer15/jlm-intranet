@@ -1,13 +1,17 @@
 {% extends "JLMOfficeBundle::layout.html.twig" %}
 
 {% block content %}
+<h1>{{ entity.type }}
+{% if entity.width and entity.height %}<small>{{ entity.width }}x{{ entity.height }}mm</small>{% endif %}</h1>
 <div class="row-fluid">
 	<div class="span6">
 		<address>
-		<strong>{{ entity.type }}</strong>
-		<br>{{ entity.street }}
+		<strong>Affaire</strong>
 		<br>{{ entity|nl2br}}
+		<br><strong>Accès :</strong>
+		<br>{{ entity.street|nl2br }}
 		</address>
+		
 {% if entity.transmitters|length > 0 %}
 <h2>Types d'emetteurs</h2>
 <ul>
@@ -52,10 +56,11 @@
 <h2><small>Aucun interlocuteur</small></h2>
 {% endif %}
 	</div>
+	
+	{% if entity.googlemaps%}
 	<div class="span6 well">
-	{% if entity.googlemaps %}
 <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{ entity.mapsUrl }}"></iframe>
-{% endif %}
+
 {#		<address>
 			<strong>Adresse de facturation</strong><br>
 			{% if entity.site.trustee.billingaddress %}
@@ -70,7 +75,9 @@
 		</address>
 		#}
 	</div>
-	
+	{% else %}
+	<div class="span6"></div>
+	{% endif %}
 </div>
 
 

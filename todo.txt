@@ -22,9 +22,6 @@ Interlocuteurs
     ******** à Revoir **********
 
 Door
-    - formtype : remonter localisation de 2 crans
-                 label emetteurs -> Types d'emeteurs
-    - entity/formtype/schema : dimensions (nullable, required false)
     ******** à Revoir **********
 
 

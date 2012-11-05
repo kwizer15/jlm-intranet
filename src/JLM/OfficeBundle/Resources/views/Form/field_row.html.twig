@@ -113,6 +113,12 @@
 {% endspaceless %}
 {% endblock datepicker_widget %}
 
+{% block distance_widget %}
+{% spaceless %}
+<div class="input-append">{{ block('field_widget') }}<span class="add-on">mm</span></div>
+{% endspaceless %}
+{% endblock distance_widget %}
+
 {% block address_widget %}
 {% spaceless %}
 	  {{ form_widget(form.street) }}<br>
