@@ -1,6 +1,3 @@
-User
-    Nom, prénom
-
 Autocompletions
     - Modeles de texte pour
         - Delais
