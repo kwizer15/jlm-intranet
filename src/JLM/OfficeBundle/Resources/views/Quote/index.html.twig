@@ -1,53 +1,38 @@
-<h1>Quote list</h1>
+{% extends "JLMOfficeBundle::layout.html.twig" %}
 
-<table class="records_list">
+{% block content %}
+<h1>Liste des devis</h1>
+
+<table class="table table-stripped">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Creation</th>
-            <th>Trusteename</th>
-            <th>Trusteestreet</th>
-            <th>Trusteezip</th>
-            <th>Trusteecity</th>
-            <th>Trusteeinterlocutor</th>
-            <th>Paymentrules</th>
-            <th>Deliveryrules</th>
-            <th>Customercomments</th>
-            <th>Actions</th>
+            <th>#</th>
+            <th>Date</th>
+            <th>Suivi par</th>
+            <th>Affaire</th>
+            <th>Syndic</th>
+            <th>Total</th>
+			<th></th>
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
         <tr>
             <td><a href="{{ path('quote_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{% if entity.creation %}{{ entity.creation|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}</td>
+            <td>{{ entity.followerCp }}</td>
+            <td>{{ entity.doorCp | nl2br }}</td>
             <td>{{ entity.trusteeName }}</td>
-            <td>{{ entity.trusteeStreet }}</td>
-            <td>{{ entity.trusteeZip }}</td>
-            <td>{{ entity.trusteeCity }}</td>
-            <td>{{ entity.trusteeInterlocutor }}</td>
-            <td>{{ entity.paymentRules }}</td>
-            <td>{{ entity.deliveryRules }}</td>
-            <td>{{ entity.customerComments }}</td>
+            <td>- €</td>
             <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('quote_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('quote_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                <a href="{{ path('quote_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
+                <a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i></a>
             </td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
-
-<ul>
-    <li>
-        <a href="{{ path('quote_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+<div class="form-actions">
+<a href="{{ path('quote_new') }}" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer un nouveau produit</a>
+</div>
+{% endblock %}
