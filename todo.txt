@@ -17,7 +17,6 @@ Devis
     pdf : a faire
 
 Interlocuteurs
-    - formtype : mettre le champ affaire en textarea (voir le dataconverteur pour modif)
     - personaliser un peu le formulaire "contact"
     ******** à Revoir **********
 

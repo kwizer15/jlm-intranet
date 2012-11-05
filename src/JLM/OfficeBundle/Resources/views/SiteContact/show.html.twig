@@ -10,7 +10,7 @@
         {% if entity.person.mobilePhone %}<br>Tel mobile : {{ entity.person.mobilePhone }}{% endif %}
         {% if entity.professionnalPhone %}<br>Tel pro : {{ entity.professionnalPhone }}{% endif %}
         {% if entity.person.fax %}<br>Fax : {{ entity.person.fax }}{% endif %}
-        {% if entity.person.email %}<br>e-mail : <a href="mailto:{{ entity.person.email }}">{{ entity.email }}</a>{% endif %}
+        {% if entity.person.email %}<br>e-mail : <a href="mailto:{{ entity.person.email }}">{{ entity.person.email }}</a>{% endif %}
         </address>
     </div>
     <div class="span6">
@@ -33,7 +33,7 @@
 </table>
 
 <div class="form-actions">
-	<a href="{{ path('trustee_show', { 'id': entity.site.trustee.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche syndic</a>
+	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche affaire</a>
 	<a href="{{ path('sitecontact_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 </div>
 {% endblock %}

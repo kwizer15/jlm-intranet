@@ -75,6 +75,7 @@ class SiteContactController extends Controller
 
         return array(
             'entity' => $entity,
+        	'site' => $site,
             'form'   => $form->createView(),
         );
     }
