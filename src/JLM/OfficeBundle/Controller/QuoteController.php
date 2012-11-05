@@ -2,6 +2,7 @@
 
 namespace JLM\OfficeBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -39,21 +40,9 @@ class QuoteController extends Controller
      * @Route("/{id}/show", name="quote_show")
      * @Template()
      */
-    public function showAction($id)
+    public function showAction(Quote $entity)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Quote')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Quote entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+        return array('entity'=> $entity);
     }
     
     /**
@@ -83,27 +72,20 @@ class QuoteController extends Controller
      * @Method("post")
      * @Template("JLMOfficeBundle:Quote:new.html.twig")
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $entity  = new Quote();
-        $request = $this->getRequest();
         $form    = $this->createForm(new QuoteType(), $entity);
-        $form->bindRequest($request);
+        $form->bind($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getEntityManager();
-            
-            
             $em->persist($entity);
             foreach ($entity->getLines() as $line)
-            {
             	$em->persist($line);
-            }
-          
             $em->flush();
-
-            return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
-            
+            return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));  
         }
 
         return array(
@@ -118,26 +100,12 @@ class QuoteController extends Controller
      * @Route("/{id}/edit", name="quote_edit")
      * @Template()
      */
-    public function editAction($id)
+    public function editAction(Quote $entity)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Quote')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Quote entity.');
-        }
-
-        
         $editForm = $this->createForm(new QuoteType(), $entity);
-       
-        
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -148,26 +116,13 @@ class QuoteController extends Controller
      * @Method("post")
      * @Template("JLMOfficeBundle:Quote:edit.html.twig")
      */
-    public function updateAction($id)
+    public function updateAction(Request $request, Quote $entity)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Quote')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Quote entity.');
-        }
         $originalLines = array();
-        foreach ($entity->getLines() as $line) $originalLines[] = $line;
-        $editForm   = $this->createForm(new QuoteType(), $entity);
-        
-        
-        
-        $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
+        foreach ($entity->getLines() as $line)
+        	$originalLines[] = $line;
+        $editForm = $this->createForm(new QuoteType(), $entity);
+        $editForm->bind($request);
 
         if ($editForm->isValid()) {
         	$em->persist($entity);
@@ -176,22 +131,19 @@ class QuoteController extends Controller
         			if ($toDel->getId() === $tag->getId()) 
         				unset($originalLines[$key]);
         	
-        	foreach ($originalLines as $line) {
+        	foreach ($originalLines as $line)
+        	{
         		$line->setQuote();
         		$em->persist($line);
         	}
-        	
-        	
-            
-            $em->flush();
 
-            return $this->redirect($this->generateUrl('quote_edit', array('id' => $id)));
+            $em->flush();
+            return $this->redirect($this->generateUrl('quote_edit', array('id' => $entiy->getId())));
         }
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -201,25 +153,14 @@ class QuoteController extends Controller
      * @Route("/{id}/delete", name="quote_delete")
      * @Method("post")
      */
-    public function deleteAction($id)
+    public function deleteAction(Request $request, Quote $quote)
     {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
+        $form = $this->createDeleteForm($quote->getId());
+        $form->bind($request);
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('JLMModelBundle:Quote')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Quote entity.');
-            }
-
             $em->remove($entity);
             $em->flush();
         }
-
         return $this->redirect($this->generateUrl('quote'));
     }
 
@@ -237,9 +178,8 @@ class QuoteController extends Controller
      * @Route("/autocomplete/door", name="quote_auto_door")
      * @Method("post")
      */
-    public function autodoorAction()
+    public function autodoorAction(Request $request)
     {
-    	$request = $this->get('request');
     	$query = $request->request->get('term');
     	$em = $this->getDoctrine()->getEntityManager();
     	$results = $em->getRepository('JLMModelBundle:Door')->searchResult($query);
@@ -257,9 +197,8 @@ class QuoteController extends Controller
     * @Route("/autocomplete/product/reference", name="quote_auto_product_reference")
     * @Method("post")
     */
-   public function autoproductreferenceAction()
+   public function autoproductreferenceAction(Request $request)
    {
-   	$request = $this->get('request');
    	$query = $request->request->get('term');
    	$em = $this->getDoctrine()->getEntityManager();
    	$results = $em->getRepository('JLMModelBundle:Product')->searchReference($query);
@@ -277,12 +216,30 @@ class QuoteController extends Controller
     * @Route("/autocomplete/product/designation", name="quote_auto_product_designation")
     * @Method("post")
     */
-   public function autoproductdesignationAction()
+   public function autoproductdesignationAction(Request $request)
    {
-   	$request = $this->get('request');
    	$query = $request->request->get('term');
    	$em = $this->getDoctrine()->getEntityManager();
    	$results = $em->getRepository('JLMModelBundle:Product')->searchDesignation($query);
+   	$json = json_encode($results);
+   	$response = new Response();
+   	$response->headers->set('Content-Type', 'application/json');
+   	$response->setContent($json);
+   	 
+   	return $response;
+   }
+   
+   /**
+    * Autocomplete intro
+    *
+    * @Route("/autocomplete/intro", name="quote_auto_intro")
+    * @Method("post")
+    */
+   public function autointroAction(Request $request)
+   {
+   	$query = $request->request->get('term');
+   	$em = $this->getDoctrine()->getEntityManager();
+   	$results = $em->getRepository('JLMModelBundle:IntroModel')->searchResult($query);
    	$json = json_encode($results);
    	$response = new Response();
    	$response->headers->set('Content-Type', 'application/json');

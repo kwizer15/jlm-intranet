@@ -51,12 +51,10 @@
 				source:['10 à 15 jours après accord','3 à 5 semaines après accord']
 			});
 			
-			$("#quote_intro").autocomplete({
-				source:[
-				        'Suite à la dégradation',
-				        'Suite à l\'usure '
-				]
-			});
+			$("#quote_intro").attr('data-source',this.options.introSource).autocomplete({
+				source: function(request,response){
+					return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
+			}});
 			
 			this.$element.find("#quote_lines > tr").on('change',$.proxy(this.total,this)).quoteline({
 				referenceSource:this.options.lineReferenceSource,

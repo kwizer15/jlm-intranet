@@ -25,7 +25,7 @@ $("form").quote({
 	 trusteesSource:'',
 	 paymentSource:'',
 	 delaySource:'',
-	 introSource:'',
+	 introSource:'{{ path('quote_auto_intro') }}',
 	 	 
 	 lineCount:{{ form.lines | length }},
 	 lineReferenceSource:'{{ path('quote_auto_product_reference') }}',
