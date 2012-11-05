@@ -50,7 +50,6 @@ class ProductRepository extends EntityRepository
 					'designation'=>$r->getDesignation(),
 					'description'=>$r->getDescription(),
 					'unitPrice'=>$r->getSellPrice(),
-					'vat'=>$r->getVat()->getRate(),
 				);
 		}
 		return $r2;

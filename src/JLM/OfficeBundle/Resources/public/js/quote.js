@@ -179,7 +179,6 @@
 						  	$(id + 'designation').val(ui.item.designation);
 						  	$(id + 'description').val(ui.item.description);
 						  	$(id + 'unitPrice').val(ui.item.unitPrice).change();
-						  	$(id + 'vat').val(ui.item.vat);
 					      return false;
 					  }
 				});
@@ -200,7 +199,6 @@
 					  	$(id + 'designation').val(ui.item.designation);
 					  	$(id + 'description').val(ui.item.description);
 					  	$(id + 'unitPrice').val(ui.item.unitPrice).change();
-					  	$(id + 'vat').val(ui.item.vat);
 				      return false;
 				  }
 				});
@@ -215,12 +213,10 @@
 		   		var qty = parseInt($(line + "_quantity").val().replace(',','.').replace(' ',''));
 		   		var up = parseFloat($(line + "_unitPrice").val().replace(',','.').replace(' ',''));
 		   		var dc = parseInt($(line + "_discount").val().replace(',','.').replace(' ',''));
-		   		var vat = parseFloat($(line + "_vat").val().replace(',','.').replace(' ',''));
 		   		var total = qty*(up*((100-dc)/100));
 		   		$(line + "_quantity").val(number_format(qty,0,',',' '));
 		   		$(line + "_unitPrice").val(number_format(up,2,',',' '));
 		   		$(line + "_discount").val(number_format(dc,0,',',' '));
-		   		$(line + "_vat").val(number_format(vat,1,',',' '));
 		   		$(line + "_total").html(number_format(total,2,',',' '));
 		   		$(line).change();
 		   		return this;
