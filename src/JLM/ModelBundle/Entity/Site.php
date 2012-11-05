@@ -32,14 +32,6 @@ class Site
     private $accession;
     
     /**
-     * Groupe RIVP
-     * @var string $group
-     * 
-     * @ORM\Column(name="grouprivp", type="string", length=10, nullable=true)
-     */
-    private $group;
-    
-    /**
      * @var Address $address
      * 
      * @ORM\OneToOne(targetEntity="Address")
@@ -258,28 +250,5 @@ class Site
     public function __toString()
     {
     	return $this->getAddress().'';
-    }
-
-    /**
-     * Set group
-     *
-     * @param string $group
-     * @return Site
-     */
-    public function setGroup($group)
-    {
-        $this->group = $group;
-    
-        return $this;
-    }
-
-    /**
-     * Get group
-     *
-     * @return string 
-     */
-    public function getGroup()
-    {
-        return $this->group;
     }
 }

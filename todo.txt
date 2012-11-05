@@ -35,16 +35,10 @@ Site
            TVA
     - index : à supprimer (inutile)
 
-Syndics
-    - pagination
-    
-    
 Produits
     - new, edit : petit js pour voir le prix de vente à la fin, plus remise en forme (number_format)
     - fiche descriptive (voir avec yo) 
     
-Fournisseurs  
-    - show : pagination
 
 
 -----------------------------------------------
