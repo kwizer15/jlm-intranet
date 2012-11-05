@@ -53,9 +53,6 @@ Produits
 Produit Emeteur
     - Tarif dégressif
 
-Produit Porte
-    - Créer (type de porte, dimensions)  
-
 Syndic
 	- voir problème d'adresse de facturation (case à cocher ?)
 	
