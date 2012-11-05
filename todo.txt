@@ -16,6 +16,7 @@ Devis
     edit :
     show : ajouter les totaux
     pdf : a faire
+    sortable :
 
 Interlocuteurs
     - personaliser un peu le formulaire "contact"
@@ -44,9 +45,11 @@ Familles de produits
     - emetteurs (class particuliere)
     - retirer les sous familles (parent/children)
     - liste des produits de la famille ?
+    
 Produits
     - Choisir la famille de produit avant d'accéder au formulaire
     - Ajouter une (ou plus) photo
+    
 Produit Emeteur
     - Tarif dégressif
 
