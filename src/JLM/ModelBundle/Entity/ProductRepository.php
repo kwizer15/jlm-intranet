@@ -55,4 +55,13 @@ class ProductRepository extends EntityRepository
 		}
 		return $r2;
 	}
+	
+	public function getTotal()
+	{
+		$qb = $this->createQueryBuilder('p')
+		->select('COUNT(p)');
+		
+		return (int) $qb->getQuery()
+		->getSingleScalarResult();
+	}
 }

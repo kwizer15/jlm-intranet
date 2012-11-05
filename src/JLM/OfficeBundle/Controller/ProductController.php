@@ -20,15 +20,33 @@ class ProductController extends Controller
      * Lists all Product entities.
      *
      * @Route("/", name="product")
+     * @Route("/page/{page}", name="product_page")
+     * @Route("/page/{page}/{limit}", name="product_page_limit")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page = 1, $limit = 15)
     {
         $em = $this->getDoctrine()->getEntityManager();
+        $nb = $em->getRepository('JLMModelBundle:Product')->getTotal();
+        $nbPages = ceil($nb/$limit);
+        $offset = ($page-1) * $limit;
+        if ($page < 1 || $page > $nbPages)
+        {
+        	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
+        }
 
-        $entities = $em->getRepository('JLMModelBundle:Product')->findAll();
+        $entities = $em->getRepository('JLMModelBundle:Product')->findBy(
+        		array(),
+        		array('reference' => 'asc'),
+        		$limit,
+        		$offset
+        		);
 
-        return array('entities' => $entities);
+        return array(
+        	'entities' => $entities,
+        	'page'     => $page,
+        	'nbPages'  => $nbPages,
+        );
     }
 
     /**
