@@ -3,16 +3,26 @@
 {% block content %}
 <h1>Affaire {{ entity.trustee }}</h1>
 <div class="row-fluid">
-<div class="span8">
+<div class="span4">
 <address>
 <strong>Adresse affaire</strong>
 <br>{{ entity|nl2br }}
 </address>
 </div>
+<div class="span4">
+{% if entity.accession %}
+Accession{% else %}Social
+{% endif %}
+<br>TVA : {{ entity.vat }}
+</div>
 <div class="span4 well">
 <address>
 <strong>Adresse de facturation</strong>
+{% if entity.trustee.billingaddress %}
 <br>{{ entity.trustee.billingaddress|nl2br }}
+{% else %}
+<br>{{ entity.trustee.address|nl2br }}
+{% endif %}
 </address>
 </div>
 </div>

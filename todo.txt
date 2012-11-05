@@ -29,10 +29,6 @@ Door
     ******** à Revoir **********
 
 Site
-    - entity/formtype/schema : enlever groupe (on le mettra dans l'adresse)
-    - show : Accession / social
-           voir pour l'adresse de facturation
-           TVA
     - index : à supprimer (inutile)
 
 Produits
