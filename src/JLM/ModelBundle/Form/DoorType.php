@@ -11,10 +11,10 @@ class DoorType extends AbstractType
     {
         $builder
         	->add('site','site_select',array('label'=>'Affaire','attr'=>array('class'=>'input-xxlarge')))
-        	->add('type',null,array('label'=>'Type de porte'))
-        	->add('street',null,array('label'=>'Adresse','required'=>false))
         	->add('location',null,array('label'=>'Localisation'))
-        	->add('transmitters',null,array('label'=>'Emetteurs','required'=>false,'attr'=>array('class'=>'input-xlarge')))
+        	->add('street',null,array('label'=>'Adresses d\'accès','required'=>false))
+        	->add('type',null,array('label'=>'Type de porte'))
+        	->add('transmitters',null,array('label'=>'Type d\'emetteurs','required'=>false,'attr'=>array('class'=>'input-xlarge')))
         	->add('googlemaps',null,array('label'=>'Lien Google Maps','required'=>false,'attr'=>array('class'=>'input-xxlarge')))
 
         ;
