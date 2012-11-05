@@ -78,14 +78,6 @@ class Product
     private $margin;
 
     /**
-     * Taux de TVA (en %)
-     * @var integer $vat
-     * 
-     * @ORM\ManyToOne(targetEntity="VAT")
-     */
-    private $vat;
-
-    /**
      * Famille de produit
      * @var ProductCategory $category
      * 
@@ -385,25 +377,6 @@ class Product
         return $this->unity;
     }
 
-    /**
-     * Set vat
-     *
-     * @param JLM\ModelBundle\Entity\VAT $vat
-     */
-    public function setVat(\JLM\ModelBundle\Entity\VAT $vat)
-    {
-        $this->vat = $vat;
-    }
-
-    /**
-     * Get vat
-     *
-     * @return JLM\ModelBundle\Entity\VAT 
-     */
-    public function getVat()
-    {
-        return $this->vat;
-    }
     
     public function getPurchasePrice()
     {

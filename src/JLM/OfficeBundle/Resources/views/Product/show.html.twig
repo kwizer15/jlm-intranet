@@ -3,7 +3,7 @@
 {% block content %}
 <h1><small>{{ entity.reference }}</small></h1>
 <h2>{{ entity.designation }}</h2>
-<p>{{ entity.description }}</p>
+<p>{{ entity.description|nl2br }}</p>
 <table class="table">
     <thead>
         <tr>
@@ -57,10 +57,6 @@
         <tr>
             <th>Coef.</th>
             <td>{{ entity.margin }} %</td>
-        </tr>
-        <tr>
-            <th>TVA</th>
-            <td>{{ entity.vat }}</td>
         </tr>
     </tbody>
 </table>

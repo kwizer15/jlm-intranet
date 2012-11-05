@@ -8,6 +8,7 @@ Autocompletions
         - Intros
         
 Devis
+	/!\ TVA n'existe plus pour produit
     js : gérer la tva autrement (via site), par defaut 19.6 
     new : 
     create : ne sauve pas l'id du devis des lignes
@@ -41,10 +42,6 @@ Syndics
     
     
 Produits
-    - index : pagination
-    - supprimer le parametre TVA (dépend du site + normal uniquement pour les emetteurs)
-        (supprimer dans entity + formtype + show puis schema update)
-    - show : ajouter nl2br à la description
     - create : pour la famille emetteur, changer la class
     - voir si "unité" est indispensable (valeur par défaut?)
     - new, edit : petit js pour voir le prix de vente à la fin, plus remise en forme (number_format)

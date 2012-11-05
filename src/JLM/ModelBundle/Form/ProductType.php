@@ -22,8 +22,7 @@ class ProductType extends AbstractType
             ->add('expenseRatio','percent',array('type'=>'integer','label'=>'Frais','attr'=>array('class'=>'input-mini'),'data'=>10))
             ->add('shipping','money',array('label'=>'Port','attr'=>array('class'=>'input-mini'),'data'=>0))
             ->add('margin','percent',array('type'=>'integer','label'=>'Coef.','attr'=>array('class'=>'input-mini'),'data'=>40))
-            ->add('vat',null,array('label'=>'TVA','attr'=>array('class'=>'input-small')))
-        
+            
         ;
     }
 
