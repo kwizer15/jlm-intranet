@@ -24,4 +24,13 @@ class TrusteeRepository extends EntityRepository
 			$r2[] = ''.$r;
 		return $r2;
 	}
+	
+	public function getTotal()
+	{
+		$qb = $this->createQueryBuilder('s')
+		->select('COUNT(s)');
+	
+		return (int) $qb->getQuery()
+		->getSingleScalarResult();
+	}
 }

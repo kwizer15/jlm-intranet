@@ -23,15 +23,33 @@ class TrusteeController extends Controller
      * Lists all Trustee entities.
      *
      * @Route("/", name="trustee")
+     * @Route("/page/{page}", name="trustee_page")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page = 1)
     {
+        $limit = 15;
         $em = $this->getDoctrine()->getEntityManager();
+        $nb = $em->getRepository('JLMModelBundle:Trustee')->getTotal();
+        $nbPages = ceil($nb/$limit);
+        $offset = ($page-1) * $limit;
+        if ($page < 1 || $page > $nbPages)
+        {
+        	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
+        }
 
-        $entities = $em->getRepository('JLMModelBundle:Trustee')->findAll();
+        $entities = $em->getRepository('JLMModelBundle:Trustee')->findBy(
+        		array(),
+        		array('name' => 'asc'),
+        		$limit,
+        		$offset
+        		);
 
-        return array('entities' => $entities);
+        return array(
+        	'entities' => $entities,
+        	'page'     => $page,
+        	'nbPages'  => $nbPages,
+        );
     }
 
     /**

@@ -21,11 +21,11 @@ class SupplierController extends Controller
      *
      * @Route("/", name="supplier")
      * @Route("/page/{page}", name="supplier_page")
-     * @Route("/page/{page}/{limit}", name="supplier_page_limit")
      * @Template()
      */
-    public function indexAction($page = 1, $limit = 15)
+    public function indexAction($page = 1)
     {
+    	$limit = 15;
         $em = $this->getDoctrine()->getEntityManager();
         $nb = $em->getRepository('JLMModelBundle:Supplier')->getTotal();
         $nbPages = ceil($nb/$limit);
