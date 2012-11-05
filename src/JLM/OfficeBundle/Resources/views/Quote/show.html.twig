@@ -1,65 +1,78 @@
-<h1>Quote</h1>
+{% extends "JLMOfficeBundle::layout.html.twig" %}
 
-<table class="record_properties">
+{% block content %}
+<h1>Devis</h1>
+<div class="row-fluid">
+    <div class="span5">
+        <strong>Suivi par {{ entity.followerCp }}</strong>
+        <br>{{ entity.doorCp | nl2br }}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Devis n°</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ entity.creation|date('d/m/Y') }}</td>
+                    <td>{{ entity.id }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="span5 offset2 well">
+        {{ entity.trusteeName }}
+        <br>{{ entity.trusteeAddress | nl2br  }}
+        <br>
+        <br>à l'attention de ...
+    </div>
+</div>
+<p>{{ entity.intro }}</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Réf.</th>
+            <th>Designation</th>
+            <th>Qté</th>
+            <th>Prix U.H.T</th>
+            <th>Prix H.T</th>
+            <th>T.V.A</th>
+        </tr>
+    </thead>
     <tbody>
+    {% for line in entity.lines %}
         <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
+            <td>{{ line.reference }}</td>
+            <td>
+                {{ line.designation }}
+                {% if line.showDescription %}
+                <br><em>{{ line.description|nl2br }}</em>
+                {% endif %}
+            </td>
+            <td>{{ line.quantity }}</td>
+            <td>{{ line.unitPrice|number_format(2,',',' ') }} €</td>
+            <td>...</td>
+            <td>{{ line.vat|number_format(1,',',' ') }} %</td>
         </tr>
-        <tr>
-            <th>Creation</th>
-            <td>{{ entity.creation|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Trusteename</th>
-            <td>{{ entity.trusteeName }}</td>
-        </tr>
-        <tr>
-            <th>Trusteestreet</th>
-            <td>{{ entity.trusteeStreet }}</td>
-        </tr>
-        <tr>
-            <th>Trusteezip</th>
-            <td>{{ entity.trusteeZip }}</td>
-        </tr>
-        <tr>
-            <th>Trusteecity</th>
-            <td>{{ entity.trusteeCity }}</td>
-        </tr>
-        <tr>
-            <th>Trusteeinterlocutor</th>
-            <td>{{ entity.trusteeInterlocutor }}</td>
-        </tr>
-        <tr>
-            <th>Paymentrules</th>
-            <td>{{ entity.paymentRules }}</td>
-        </tr>
-        <tr>
-            <th>Deliveryrules</th>
-            <td>{{ entity.deliveryRules }}</td>
-        </tr>
-        <tr>
-            <th>Customercomments</th>
-            <td>{{ entity.customerComments }}</td>
-        </tr>
+    {% endfor %}
     </tbody>
 </table>
+<div class="alert alert-error">
+    <h4>Règlement</h4>
+    {{ entity.paymentRules }}
+</div>
+<div class="alert">
+    <h4>Délais</h4>
+    {{ entity.deliveryRules }}
+</div>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('quote') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('quote_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('quote_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+<div class="alert alert-info">
+    <h4>Commentaires</h4>
+    {{ entity.customerComments }}
+</div>
+<div class="form-actions">
+	<a href="{{ path('quote') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	<a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+</div>
+{% endblock %}

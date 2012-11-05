@@ -8,12 +8,13 @@ Autocompletions
         - Intros
         
 Devis
+	- Ajouter à l'attention de
 	/!\ TVA n'existe plus pour produit
     js : gérer la tva autrement (via site), par defaut 19.6 
     new : 
     create : ne sauve pas l'id du devis des lignes
     edit :
-    show : a faire
+    show : ajouter les totaux
     pdf : a faire
 
 Interlocuteurs
