@@ -22,14 +22,12 @@ Interlocuteurs
     ******** à Revoir **********
 
 Door
-    - formtype : mettre le champ affaire en textarea (voir le dataconverteur pour modif)
-                 remonter localisation de 2 crans
+    - formtype : remonter localisation de 2 crans
                  label emetteurs -> Types d'emeteurs
     - entity/formtype/schema : dimensions (nullable, required false)
     ******** à Revoir **********
 
-Site
-    - index : à supprimer (inutile)
+
 
 Produits
     - new, edit : petit js pour voir le prix de vente à la fin, plus remise en forme (number_format)
@@ -60,3 +58,6 @@ Produit Porte
 
 Syndic
 	- voir problème d'adresse de facturation (case à cocher ?)
+	
+Site
+    - index : à modifier pour recherche

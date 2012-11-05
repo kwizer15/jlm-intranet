@@ -36,17 +36,22 @@ class SiteRepository extends EntityRepository
 	
 	public function match($string)
 	{
-		if (preg_match('#^(.+) - (.+)$#',$string,$matches))
+		if (preg_match('#^(.+)
+(.+) - (.+)$#',$string,$matches))
 		{
 			$qb = $this->createQueryBuilder('s')
 				->leftJoin('s.address','a')
 				->leftJoin('a.city','c')
 				->where('a.street LIKE :querystreet')
-				->andWhere('c.name LIKE :querycity')
-				->setParameter('querystreet', $matches[2])
-				->setParameter('querycity', $matches[1])
+				->andwhere('c.zip = :queryzip')
+				->andWhere('c.name = :querycity')
+				->setParameter('querystreet', trim($matches[1]).'%')
+				->setParameter('queryzip', $matches[2])
+				->setParameter('querycity', $matches[3])
 				;
+				
 			$res = $qb->getQuery()->getResult();
+			
 			if ($res)
 				return $res[0];
 		}

@@ -36,7 +36,7 @@ class SiteSelectType extends AbstractType
 
     public function getParent()
     {
-    	return 'text';
+    	return 'textarea';
     }
     
     public function getName()

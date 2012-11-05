@@ -103,7 +103,7 @@
 {% spaceless %}
 {% set attr = attr|merge({'data-source':  path('autocomplete_site') }) %}
 {% set attr = attr|merge({'class': attr.class|default('') ~ ' autocompletion' }) %}
-{{ block('form_widget_simple') }}
+{{ block('textarea_widget') }}
 {% endspaceless %}
 {% endblock site_select_widget %}
 
