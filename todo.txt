@@ -42,10 +42,7 @@ Syndics
     
     
 Produits
-    - voir si "unité" est indispensable (valeur par défaut?)
     - new, edit : petit js pour voir le prix de vente à la fin, plus remise en forme (number_format)
-    - edit : remise,frais,port,coef revienne à leur valeur par défaut !
-    
     - fiche descriptive (voir avec yo) 
     
 Fournisseurs  
