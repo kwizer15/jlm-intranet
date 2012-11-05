@@ -42,7 +42,6 @@ Syndics
     
     
 Produits
-    - create : pour la famille emetteur, changer la class
     - voir si "unité" est indispensable (valeur par défaut?)
     - new, edit : petit js pour voir le prix de vente à la fin, plus remise en forme (number_format)
     - edit : remise,frais,port,coef revienne à leur valeur par défaut !

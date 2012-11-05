@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JLM\ModelBundle\Entity\Transmitter;
 use JLM\ModelBundle\Entity\Product;
 use JLM\ModelBundle\Form\ProductType;
 
@@ -82,7 +83,8 @@ class ProductController extends Controller
     {
         $entity = new Product();
         $form   = $this->createForm(new ProductType(), $entity);
-
+        	
+        	
         return array(
             'entity' => $entity,
             'form'   => $form->createView()
@@ -106,6 +108,14 @@ class ProductController extends Controller
         $form->bindRequest($request);
 
         if ($form->isValid()) {
+        	// Emetteurs
+        	if ($entity->getCategory()->getId() === 1)
+        	{
+        		$entity = new Transmitter();
+        		$form    = $this->createForm(new ProductType(), $entity);
+        		$form->bindRequest($request);
+        	}
+	
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
