@@ -27,7 +27,7 @@ $("body").quote({
 	 delaySource:'{{ path('quote_auto_delay') }}',
 	 introSource:'{{ path('quote_auto_intro') }}',
 	 	 
-	 lineCount:{{ form.lines | length }},
+	 lineCount:{{ edit_form.lines | length }},
 	 lineReferenceSource:'{{ path('quote_auto_product_reference') }}',
 	 lineDesignationSource:'{{ path('quote_auto_product_designation') }}',
 });
