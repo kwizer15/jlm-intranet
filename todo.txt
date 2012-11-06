@@ -1,12 +1,32 @@
 Devis
-	La TVA passe toute seul a 20% !!!
-	- Ajouter à l'attention de
+	- edit : La TVA passe toute seul a 20% !!!
+	- index : lister à l'envers des dates par défaut
+	          pagination
+	
+	- js : autocompletion syndic
+		- meme systeme
+		
+	- entity, formtype, schema : Ajouter à l'attention de... (lien avec inerlocuteur)
+		- ManyToOne SiteContact
+		- autocompletion avec 2 params  : term et id_door
+	
 	/!\ TVA n'existe plus pour produit
-    js : gérer la tva autrement (via site), par defaut 19.6 
-    new : 
-    create : ne sauve pas l'id du devis des lignes
-    pdf : a faire
-    sortable :
+    - js : gérer la tva autrement (via site), par defaut 19.6 
+    	- Faire un <input text> TVA rempli à 19.6 par défaut (avec le site)
+    	- Lors de l'autocompletion du site, changer cette valeur + toute les case TVA déjà présente sauf "emetteur"
+    	- Lors de la ajout d'une ligne, mettre cette valeur dans TVA
+    	- Lors de l'autocompletion du produit, vérifier si emetteur, si oui, changer à 19.6 <input hidden #transmitter_vat = 19.6>
+    	
+	- js : pouvoir bouger les lignes (position) sort
+		- Ajouter un attribut position à QuoteLine
+		- cf Doctrine, chargement Order = position asc
+	
+	- js : ouverture/fermeture description (selon showDescription)
+		-Remplacer toggleDesc avec 2 fonctions : open et close
+		...
+
+    - pdf : a faire (trouver une solution maintenable)
+		cf PDFlib (/usr/lib/php5/..../*.so)
     
 Interlocuteurs
     - personaliser un peu le formulaire "contact"
