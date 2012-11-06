@@ -24,7 +24,7 @@ $("form").quote({
 	doorsSource: "{{ path('quote_auto_door') }}",
 	 trusteesSource:'',
 	 paymentSource:'',
-	 delaySource:'',
+	 delaySource:'{{ path('quote_auto_delay') }}',
 	 introSource:'{{ path('quote_auto_intro') }}',
 	 	 
 	 lineCount:{{ form.lines | length }},

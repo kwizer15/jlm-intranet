@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\ModelBundle\Entity\DelayModel
  *
  * @ORM\Table(name="delaymodel")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\DelayModelRepository")
  */
 class DelayModel extends TextModel
 {

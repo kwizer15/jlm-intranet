@@ -47,9 +47,10 @@
 		  	$("#quote_paymentRules").autocomplete({
 				source:['à réception de la facture', '30% à la commande, le solde fin de travaux']
 			});
-			$("#quote_deliveryRules").autocomplete({
-				source:['10 à 15 jours après accord','3 à 5 semaines après accord']
-			});
+			$("#quote_deliveryRules").attr('data-source',this.options.delaySource).autocomplete({
+				source: function(request,response){
+					return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
+			}});
 			
 			$("#quote_intro").attr('data-source',this.options.introSource).autocomplete({
 				source: function(request,response){
