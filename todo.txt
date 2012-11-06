@@ -1,9 +1,3 @@
-Autocompletions
-    - Modeles de texte pour
-        - Delais
-        - Payements
-        - Intros
-        
 Devis
 	- Ajouter à l'attention de
 	/!\ TVA n'existe plus pour produit
