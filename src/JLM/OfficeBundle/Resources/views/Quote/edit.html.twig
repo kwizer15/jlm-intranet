@@ -19,15 +19,15 @@
 {{ parent() }}
 <script src="{{ asset("bundles/jlmoffice/js/quote.js") }}"></script>
 <script>
-$("form").quote({
-	followersSource:'',
-	doorsSource: "{{ path('quote_auto_door') }}",
+$("body").quote({
+	 followersSource:'',
+	 doorsSource: "{{ path('quote_auto_door') }}",
 	 trusteesSource:'',
-	 paymentSource:'',
-	 delaySource:'',
-	 introSource:'',
+	 paymentSource:'{{ path('quote_auto_payment') }}',
+	 delaySource:'{{ path('quote_auto_delay') }}',
+	 introSource:'{{ path('quote_auto_intro') }}',
 	 	 
-	 lineCount:{{ edit_form.lines | length }},
+	 lineCount:{{ form.lines | length }},
 	 lineReferenceSource:'{{ path('quote_auto_product_reference') }}',
 	 lineDesignationSource:'{{ path('quote_auto_product_designation') }}',
 });
