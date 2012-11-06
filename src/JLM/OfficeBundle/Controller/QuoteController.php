@@ -83,7 +83,10 @@ class QuoteController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             foreach ($entity->getLines() as $line)
+            {
+            	$line->setQuote($entity);
             	$em->persist($line);
+            }
             $em->flush();
             return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));  
         }

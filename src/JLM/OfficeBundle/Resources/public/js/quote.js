@@ -61,16 +61,15 @@
 			this.$element.find("#quote_lines > tr").on('change',$.proxy(this.total,this)).quoteline({
 				referenceSource:this.options.lineReferenceSource,
 				designationSource:this.options.lineDesignationSource,
-			});
+			}); 
 			$("#quote_discount").on('change',$.proxy(this.total,this));
-			$(".add-line").on('click',$.proxy(this.newline,this));
+			$(".newline").on('click',$.proxy(this.newline,this));
 			$("#quote_lines > tr").change();
 	  }
-   
    	 , newline : function(e){
    		 	e.stopPropagation()
    		 	e.preventDefault()
-			var lineList = this.$element.find("tbody");
+			var lineList = $("#quote_lines");
 			var newWidget = lineList.attr('data-prototype');
 			newWidget = newWidget.replace(/__name__/g,this.options.lineCount);
 			lineList.append(newWidget);

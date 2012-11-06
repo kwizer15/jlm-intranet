@@ -19,6 +19,7 @@
 			  {% endblock navigation %}
 			</ul>
 			{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+		
 			<div class="btn-group pull-right">
 			   <a href="#" class="btn btn-info dropdown-toggle" data-toggle="dropdown"><i class="icon-user  icon-white"></i> {{ app.user.username }} <b class="caret"></b></a>
 			   <ul class="dropdown-menu">

@@ -8,6 +8,7 @@ Devis
     show : ajouter les totaux
     pdf : a faire
     sortable :
+    index : changer le texte du bouton en bas
 
 Interlocuteurs
     - personaliser un peu le formulaire "contact"

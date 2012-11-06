@@ -19,9 +19,9 @@
 {{ parent() }}
 <script src="{{ asset("bundles/jlmoffice/js/quote.js") }}"></script>
 <script>
-$("form").quote({
-	followersSource:'',
-	doorsSource: "{{ path('quote_auto_door') }}",
+$("body").quote({
+	 followersSource:'',
+	 doorsSource: "{{ path('quote_auto_door') }}",
 	 trusteesSource:'',
 	 paymentSource:'{{ path('quote_auto_payment') }}',
 	 delaySource:'{{ path('quote_auto_delay') }}',
