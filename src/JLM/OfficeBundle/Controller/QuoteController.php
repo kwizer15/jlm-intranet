@@ -266,4 +266,23 @@ class QuoteController extends Controller
    	 
    	return $response;
    }
+   
+   /**
+    * Autocomplete payment
+    *
+    * @Route("/autocomplete/payment", name="quote_auto_payment")
+    * @Method("post")
+    */
+   public function autopaymentAction(Request $request)
+   {
+   	$query = $request->request->get('term');
+   	$em = $this->getDoctrine()->getEntityManager();
+   	$results = $em->getRepository('JLMModelBundle:PaymentModel')->searchResult($query);
+   	$json = json_encode($results);
+   	$response = new Response();
+   	$response->headers->set('Content-Type', 'application/json');
+   	$response->setContent($json);
+   	 
+   	return $response;
+   }
 }

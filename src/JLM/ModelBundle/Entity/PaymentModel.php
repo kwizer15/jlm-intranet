@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\ModelBundle\Entity\PaymentModel
  *
  * @ORM\Table(name="paymentmodel")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\PaymentModelRepository")
  */
 class PaymentModel extends TextModel
 {
