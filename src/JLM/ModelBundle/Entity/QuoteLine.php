@@ -330,4 +330,14 @@ class QuoteLine
     {
         return $this->product;
     }
+    
+    /**
+     * Get Total HT
+     * 
+     * @return float
+     */
+    public function getPrice()
+    {
+    	return ($this->getUnitPrice() * $this->getQuantity()) * (1 - $this->getDiscount());
+    }
 }

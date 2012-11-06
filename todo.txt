@@ -1,4 +1,5 @@
 Devis
+	La TVA passe toute seul a 20% !!!
 	- Ajouter à l'attention de
 	/!\ TVA n'existe plus pour produit
     js : gérer la tva autrement (via site), par defaut 19.6 

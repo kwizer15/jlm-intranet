@@ -36,6 +36,7 @@
             <th>Designation</th>
             <th>Qté</th>
             <th>Prix U.H.T</th>
+            <th>Remise</th>
             <th>Prix H.T</th>
             <th>T.V.A</th>
         </tr>
@@ -52,7 +53,8 @@
             </td>
             <td>{{ line.quantity }}</td>
             <td>{{ line.unitPrice|number_format(2,',',' ') }} €</td>
-            <td>...</td>
+            <td>{{ (line.discount*100)|number_format(0,',',' ') }} %</td>
+            <td>{{ line.price|number_format(2,',',' ') }} €</td>
             <td>{{ (line.vat*100)|number_format(1,',',' ') }} %</td>
         </tr>
     {% endfor %}
