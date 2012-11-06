@@ -340,4 +340,22 @@ class QuoteLine
     {
     	return ($this->getUnitPrice() * $this->getQuantity()) * (1 - $this->getDiscount());
     }
+    
+    /**
+     * Get Total TVA
+     * 
+     * @return float
+     */
+    public function getVatValue()
+    {
+    	return $this->getPrice()*$this->getVat();
+    }
+    
+    /**
+     * Get Total TTC
+     */
+    public function getPriceAti()
+    {
+    	return $this->getPrice()*(1 + $this->getVat());
+    }
 }

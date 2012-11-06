@@ -23,7 +23,7 @@
             <td>{{ entity.followerCp }}</td>
             <td>{{ entity.doorCp | nl2br }}</td>
             <td>{{ entity.trusteeName }}</td>
-            <td>- €</td>
+            <td>{{ entity.totalPrice|number_format(2,',',' ') }} €</td>
             <td>
                 <a href="{{ path('quote_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
                 <a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i></a>

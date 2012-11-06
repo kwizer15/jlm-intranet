@@ -60,6 +60,26 @@
     {% endfor %}
     </tbody>
 </table>
+<div class="row-fluid">
+    <div class="span4 offset8">
+    <table class="table table-bordered">
+    	<tbody>
+    		<tr>
+    			<th>Total H.T.</th>
+    			<td>{{ entity.totalPrice|number_format(2,',',' ') }} €</td>
+    		</tr>
+    		<tr>
+    			<th>Total TVA</th>
+    			<td>{{ entity.totalVat|number_format(2,',',' ') }} €</td>
+    		</tr>
+    		<tr>
+    			<th>Total à régler</th>
+    			<td>{{ entity.totalPriceAti|number_format(2,',',' ') }} €</td>
+    		</tr>
+    	</tbody>
+    </table>
+    </div>
+</div>
 <div class="alert alert-error">
     <h4>Règlement</h4>
     {{ entity.paymentRules }}

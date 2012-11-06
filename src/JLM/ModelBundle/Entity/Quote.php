@@ -349,4 +349,40 @@ class Quote extends Document
     {
         return $this->lines;
     }
+    
+    /**
+     * Get Total HT
+     */
+    public function getTotalPrice()
+    {
+    	$total = 0;
+    	foreach ($this->getLines() as $line)
+    		$total += $line->getPrice();
+    	$total *= (1-$this->getDiscount());
+    	return $total;
+    }
+    
+    /**
+     * Get Total TVA
+     */
+    public function getTotalVat()
+    {
+    	$total = 0;
+    	foreach ($this->getLines() as $line)
+    		$total += $line->getVatValue();
+    	$total *= (1-$this->getDiscount());
+    	return $total;
+    }
+    
+    /**
+     * Get Total TTC
+     */
+    public function getTotalPriceAti()
+    {
+    	$total = 0;
+    	foreach ($this->getLines() as $line)
+    		$total += $line->getPriceAti();
+    	$total *= (1-$this->getDiscount());
+    	return $total;
+    }
 }
