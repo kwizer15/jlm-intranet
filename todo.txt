@@ -5,7 +5,9 @@ Devis
     new : 
     create : ne sauve pas l'id du devis des lignes
     show : ajouter les totaux
+    	   verifier l'affichage de la tva (0.02 pour 19.6)
     pdf : a faire
+    edit: ne recharge pas -> qté, remise et tva
     sortable :
 	Vérifier les "remises" des lignes
 

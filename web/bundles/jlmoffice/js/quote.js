@@ -77,6 +77,12 @@
 				referenceSource:this.options.lineReferenceSource,
 				designationSource:this.options.lineDesignationSource
 			});
+			// Valeurs par défaut
+			$("#quote_lines_" + this.options.lineCount + "_description").hide();
+			$("#quote_lines_" + this.options.lineCount + "_showDescription").val(0);
+			$("#quote_lines_" + this.options.lineCount + "_quantity").val(1);
+			$("#quote_lines_" + this.options.lineCount + "_discount").val(0);
+			$("#quote_lines_" + this.options.lineCount + "_vat").val('19,6');
 			this.options.lineCount++;
 			return this;
 		}

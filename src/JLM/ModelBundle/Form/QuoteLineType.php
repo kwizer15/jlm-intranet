@@ -14,12 +14,12 @@ class QuoteLineType extends AbstractType
         	->add('product','product_hidden',array('required'=>false))
         	->add('reference',null,array('required'=>false,'attr'=>array('class'=>'input-mini')))
         	->add('designation',null,array('attr'=>array('class'=>'input-xlarge')))
-        	->add('description',null,array('required'=>false,'attr'=>array('class'=>'input-xxlarge','style'=>'display:none')))
-        	->add('showDescription','hidden',array('attr'=>array('value'=>'0')))
-        	->add('quantity',null,array('attr'=>array('class'=>'span1','value'=>'1')))
+        	->add('description',null,array('required'=>false,'attr'=>array('class'=>'input-xxlarge')))
+        	->add('showDescription','hidden')
+        	->add('quantity',null,array('attr'=>array('class'=>'span1')))
         	->add('unitPrice','money',array('attr'=>array('class'=>'input-mini')))
-        	->add('discount','percent',array('attr'=>array('class'=>'span1','value'=>'0')))
-        	->add('vat','percent',array('attr'=>array('class'=>'input-mini','value'=>'19,6')))
+        	->add('discount','percent',array('attr'=>array('class'=>'span1')))
+        	->add('vat','percent',array('attr'=>array('class'=>'input-mini')))
 
         ;
     }
