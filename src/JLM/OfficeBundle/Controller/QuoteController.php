@@ -128,20 +128,26 @@ class QuoteController extends Controller
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+        	$em = $this->getDoctrine()->getEntityManager();
         	$em->persist($entity);
-        	foreach ($entity->getLines() as $line) 
+        	foreach ($entity->getLines() as $line)
+        	{
+        		// Nouvelles lignes
+        		$line->setQuote($entity);
+        		$em->persist($line);
+        		
+        		// On vire les anciennes
         		foreach ($originalLines as $key => $toDel) 
-        			if ($toDel->getId() === $tag->getId()) 
+        			if ($toDel->getId() === $line->getId()) 
         				unset($originalLines[$key]);
-        	
+        	}
         	foreach ($originalLines as $line)
         	{
-        		$line->setQuote();
-        		$em->persist($line);
+        		$em->remove($line);
         	}
 
             $em->flush();
-            return $this->redirect($this->generateUrl('quote_edit', array('id' => $entiy->getId())));
+            return $this->redirect($this->generateUrl('quote_edit', array('id' => $entity->getId())));
         }
 
         return array(
