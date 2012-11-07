@@ -228,6 +228,7 @@
 			  var line = "#" + this.$element.attr('id');
 			  this.$element.find(".remove-line").on('click',$.proxy(this.remove,this));
 			  this.$element.find(".show-description").on('click',$.proxy(this.toggleDesc,this));
+			  this.showDesc();
 			  $(line + "_quantity, " + line + "_unitPrice, " + line + "_discount").on('change',$.proxy(this.total,this));
 			
 			  $(line + "_reference").attr('data-source',this.options.referenceSource)
@@ -294,19 +295,22 @@
 		   		$(line).change();
 		   		return this;
 	   	  }
-	   	  
+	   	  ,showDesc : function() {
+	   		var input = $("#" + this.$element.attr('id') + "_showDescription");
+	   		var state = input.val() == '1';
+	   		this.$element.find(".show-description > i")
+		       .toggleClass("icon-minus-sign",state)
+		       .toggleClass("icon-plus-sign",!state);
+	   			input.next().toggle(state);	
+	   	  }
 	   	  , toggleDesc : function(e) {
-	   		e.stopPropagation()
-	        e.preventDefault()
-	   		  	var input = $("#" + this.$element.attr('id') + "_showDescription");
-	   		  	input.attr('test','test');
-		   		var plus = (input.attr('value') != 1);
-		   		this.$element.find(".show-description > i")
-				       .toggleClass("icon-minus-sign",plus)
-				       .toggleClass("icon-plus-sign",!plus);
-				input.attr('value',plus?'1':'0')
-				       .next().slideToggle();
-			    return false;
+	   		    e.stopPropagation()
+	            e.preventDefault()
+	   		  	var input = $("#" + this.$element.attr('id') + "_showDescription")
+	   		  	var v = input.val();
+	   		    input.val(v == '1' ? '' : '1');
+	   		    this.showDesc();
+	   		    return false
 	   	  }
 	   	  
 	   	  , remove : function(e) {

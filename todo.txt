@@ -1,10 +1,4 @@
 Devis	
-	/!\ TVA n'existe plus pour produit
-
-	- js : ouverture/fermeture description (selon showDescription)
-		-Remplacer toggleDesc avec 2 fonctions : open et close
-		...
-
 	- new : generer l'id (YYMM0000)
 
     - pdf : a faire (trouver une solution maintenable)

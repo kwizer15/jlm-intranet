@@ -15,7 +15,7 @@ class QuoteLineType extends AbstractType
         	->add('product','product_hidden',array('required'=>false))
         	->add('reference',null,array('required'=>false,'attr'=>array('class'=>'input-mini')))
         	->add('designation',null,array('attr'=>array('class'=>'input-xlarge')))
-        	->add('description',null,array('required'=>false,'attr'=>array('class'=>'input-xxlarge')))
+        	->add('description',null,array('required'=>false,'attr'=>array('class'=>'input-xlarge')))
         	->add('showDescription','hidden')
         	->add('quantity',null,array('attr'=>array('class'=>'span1')))
         	->add('unitPrice','money',array('attr'=>array('class'=>'input-mini')))
