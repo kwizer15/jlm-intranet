@@ -14,15 +14,19 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Quote extends Document
 {
 	/**
-	 * Numéro du devis
 	 * @var int $id
 	 * 
 	 * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @todo Construire automatiquement
 	 */
 	private $id;
+	
+	/**
+	 * Numéro du devis
+	 * @ORM\Column(name="number", type="integer")
+	 */
+	private $number;
 	
 	/**
 	 * Suiveur (pour le suivi)
@@ -149,6 +153,28 @@ class Quote extends Document
         return $this->id;
     }
 
+    /**
+     * Set number
+     * 
+     * @param string $number
+     * @return Quote
+     */
+    public function setNumber($number)
+    {
+    	$this->number = $number;
+    	return $this;
+    }
+    
+    /**
+     * Get number
+     *
+     * @return string
+     */
+    public function getNumber()
+    {
+    	return $this->number;
+    }
+    
     /**
      * Set follower
      *

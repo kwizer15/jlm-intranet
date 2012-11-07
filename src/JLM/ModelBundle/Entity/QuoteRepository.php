@@ -20,4 +20,21 @@ class QuoteRepository extends EntityRepository
 		return (int) $qb->getQuery()
 		->getSingleScalarResult();
 	}
+	
+	public function getLastNumber($year = null)
+	{
+		$year = 2012;
+		$qb = $this->createQueryBuilder('q')
+			->select('SUBSTRING(q.number,5) as num')
+			->where('SUBSTRING(q.creation, 1, 4) = :year')
+			->orderBy('q.number','DESC')
+			->setMaxResults(1)
+			->setParameter('year',$year);
+		$result = $qb->getQuery()->getResult();
+//		var_dump($result); exit;
+		if (!$result)
+			return 0;
+		else
+			return $result[0]['num'];
+	}
 }

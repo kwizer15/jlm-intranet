@@ -31,9 +31,9 @@ class QuoteLine
 	 * Position de la ligne dans le devis
 	 * @var position
 	 * 
-	 * @ORM\Column(name="position", type="smallint")
+	 * @ORM\Column(name="position", type="smallint", nullable=true)
 	 */
-	private $position;
+	private $position = 0;
 	
 	/**
 	 * @var Product
@@ -65,23 +65,23 @@ class QuoteLine
 	/**
 	 * @var bool $showDescription
 	 *
-	 * @ORM\Column(name="show_description", type="boolean")
+	 * @ORM\Column(name="show_description", type="boolean", nullable=true)
 	 */
 	private $showDescription;
 	
 	/**
 	 * @var bool $isTransmitter
 	 *
-	 * @ORM\Column(name="is_transmitter", type="boolean")
+	 * @ORM\Column(name="is_transmitter", type="boolean", nullable=true)
 	 */
-	private $isTransmitter;
+	private $isTransmitter = false;
 	
 	/**
 	 * @var int $quantity
 	 * 
 	 * @ORM\Column(name="quantity", type="integer")
 	 */
-	private $quantity;
+	private $quantity = 1;
 	
 	/**
 	 * @var float $unitPrice
@@ -96,7 +96,7 @@ class QuoteLine
 	 *
 	 * @ORM\Column(name="discount", type="decimal",scale=7)
 	 */
-	private $discount;
+	private $discount = 0;
 	
 	/**
 	 * TVA applicable (en %)

@@ -104,6 +104,9 @@ class QuoteController extends Controller
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getEntityManager();
+            $number = $entity->getCreation()->format('ym');
+            $number.= ($em->getRepository('JLMModelBundle:Quote')->getLastNumber() + 1);
+            $entity->setNumber($number);
             $em->persist($entity);
             foreach ($entity->getLines() as $key => $line)
             {
