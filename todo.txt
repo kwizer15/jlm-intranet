@@ -1,6 +1,5 @@
 Devis
-	- index : lister à l'envers des dates par défaut
-	          pagination
+	- index : pagination
 	
 	- js : autocompletion syndic
 		- meme systeme

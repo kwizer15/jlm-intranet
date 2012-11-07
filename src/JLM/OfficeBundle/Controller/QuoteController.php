@@ -29,7 +29,7 @@ class QuoteController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('JLMModelBundle:Quote')->findAll();
+        $entities = $em->getRepository('JLMModelBundle:Quote')->findBy(array(),array('creation'=>'desc'));
 
         return array('entities' => $entities);
     }
