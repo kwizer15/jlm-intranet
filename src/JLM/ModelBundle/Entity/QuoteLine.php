@@ -28,6 +28,14 @@ class QuoteLine
 	private $quote;
 	
 	/**
+	 * Position de la ligne dans le devis
+	 * @var position
+	 * 
+	 * @ORM\Column(name="position", type="smallint")
+	 */
+	private $position;
+	
+	/**
 	 * @var Product
 	 * @ORM\ManyToOne(targetEntity="Product")
 	 */
@@ -101,6 +109,29 @@ class QuoteLine
         return $this->id;
     }
 
+    /**
+     * Set position
+     *
+     * @param int $position
+     * @return QuoteLine
+     */
+    public function setPosition($position)
+    {
+    	$this->position = $position;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get position
+     *
+     * @return int
+     */
+    public function getPosition()
+    {
+    	return $this->position;
+    }
+    
     /**
      * Set reference
      *

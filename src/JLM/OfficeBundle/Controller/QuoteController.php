@@ -101,8 +101,9 @@ class QuoteController extends Controller
         {
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
-            foreach ($entity->getLines() as $line)
+            foreach ($entity->getLines() as $key => $line)
             {
+            	$line->setPosition($key);
             	$line->setQuote($entity);
             	$em->persist($line);
             }
@@ -149,9 +150,10 @@ class QuoteController extends Controller
         if ($editForm->isValid()) {
         	$em = $this->getDoctrine()->getEntityManager();
         	$em->persist($entity);
-        	foreach ($entity->getLines() as $line)
-        	{
+        	foreach ($entity->getLines() as $key => $line)
+        	{	
         		// Nouvelles lignes
+        		$line->setPosition($key);
         		$line->setQuote($entity);
         		$em->persist($line);
         		

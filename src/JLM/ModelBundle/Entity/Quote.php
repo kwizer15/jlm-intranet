@@ -98,6 +98,7 @@ class Quote extends Document
 	 * @var ArrayCollection $lines
 	 * 
 	 * @ORM\OneToMany(targetEntity="QuoteLine",mappedBy="quote")
+	 * @ORM\OrderBy({"position" = "ASC"})
 	 */
 	private $lines;
 	

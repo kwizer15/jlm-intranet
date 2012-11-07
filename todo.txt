@@ -1,6 +1,4 @@
-Devis
-	- index : pagination
-	
+Devis	
 	- js : autocompletion syndic
 		- meme systeme
 		
@@ -16,8 +14,6 @@ Devis
     	- Lors de l'autocompletion du produit, vérifier si emetteur, si oui, changer à 19.6 <input hidden #transmitter_vat = 19.6>
     	
 	- js : pouvoir bouger les lignes (position) sort
-		- Ajouter un attribut position à QuoteLine
-		- cf Doctrine, chargement Order = position asc
 	
 	- js : ouverture/fermeture description (selon showDescription)
 		-Remplacer toggleDesc avec 2 fonctions : open et close
