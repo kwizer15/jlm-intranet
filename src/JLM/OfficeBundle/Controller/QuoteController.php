@@ -76,6 +76,9 @@ class QuoteController extends Controller
         $entity->setCreation(new \DateTime);
         $entity->setDiscount(0);
         $entity->addLine(new QuoteLine);
+        $em = $this->getDoctrine()->getEntityManager();
+        $vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
+		$entity->setVat($vat);
         $form   = $this->createForm(new QuoteType(), $entity);
 
         return array(
@@ -165,7 +168,7 @@ class QuoteController extends Controller
         		$em->remove($line);
         	}
             $em->flush();
-            return $this->redirect($this->generateUrl('quote_edit', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
         }
 
         return array(

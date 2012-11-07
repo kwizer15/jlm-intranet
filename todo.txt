@@ -1,16 +1,13 @@
 Devis	
-	- SiteContactToInt... contacthiddentype...
-
 	/!\ TVA n'existe plus pour produit
     - js : gérer la tva autrement (via site), par defaut 19.6 
-    	- Faire un <input text> TVA rempli à 19.6 par défaut (avec le site)
-    	- Lors de l'autocompletion du site, changer cette valeur + toute les case TVA déjà présente sauf "emetteur"
-    	- Lors de la ajout d'une ligne, mettre cette valeur dans TVA
     	- Lors de l'autocompletion du produit, vérifier si emetteur, si oui, changer à 19.6 <input hidden #transmitter_vat = 19.6>
 	
 	- js : ouverture/fermeture description (selon showDescription)
 		-Remplacer toggleDesc avec 2 fonctions : open et close
 		...
+
+	- new : generer l'id (YYMM0000)
 
     - pdf : a faire (trouver une solution maintenable)
 		cf PDFlib (/usr/lib/php5/..../*.so)

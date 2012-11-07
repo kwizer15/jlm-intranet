@@ -22,6 +22,7 @@ class QuoteType extends AbstractType
             ->add('followerCp',null,array('label'=>'Suivi par'))
             ->add('door','door_hidden',array('required'=>false))
             ->add('doorCp',null,array('label'=>'Affaire','attr'=>array('class'=>'input-xlarge','rows'=>'3')))
+            ->add('vat','percent',array('precision'=>1,'label'=>'TVA applicable','attr'=>array('class'=>'input-mini')))
             ->add('paymentRules',null,array('label'=>'Réglement','attr'=>array('class'=>'input-xxlarge')))
             ->add('deliveryRules',null,array('label'=>'Délai','attr'=>array('class'=>'input-xxlarge')))
             ->add('customerComments',null,array('label'=>'Observations','required'=>false,'attr'=>array('class'=>'input-xxlarge')))

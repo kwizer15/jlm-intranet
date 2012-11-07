@@ -95,7 +95,7 @@ class QuoteLine
 	 * TVA (en %)
 	 * @var float $vat
 	 *
-	 * @ORM\Column(name="vat", type="decimal",scale=7)
+	 * @ORM\Column(name="vat", type="decimal",precision=3,scale=3)
 	 */
 	private $vat;
 

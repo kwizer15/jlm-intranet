@@ -19,6 +19,8 @@
 	  constructor: Quote
 	  
 	  , listen : function() {
+		  $("#quote_vat").on('change', $.proxy(this.vatchange,this));
+		  
 		  $('#quote_followerCp').autocomplete({
 				source:['Yohann Martinez','Emmanuel Bernaszuk','Jean-Louis Martinez','Nadine Martinez','Aurélie Costalat']
 			});
@@ -37,9 +39,12 @@
 			    , select: function (event, ui) {
 				    $("#quote_door").val(ui.item.door);
 				    $("#quote_doorCp").val(ui.item.label);
+				    $("#quote_vat").val(number_format(ui.item.vat,1,',',' ')).change();
 				    $("#quote_trustee").val(ui.item.trustee);
 				    $("#quote_trusteeName").val(ui.item.trusteeName);
 				    $("#quote_trusteeAddress").val(ui.item.trusteeAddress);
+				    $("#quote_contact").val('');
+					$("#quote_contactCp").val('');
 			        return false;
 			    }
 		  });
@@ -128,7 +133,7 @@
 			$("#quote_lines_" + this.options.lineCount + "_showDescription").val(0);
 			$("#quote_lines_" + this.options.lineCount + "_quantity").val(1);
 			$("#quote_lines_" + this.options.lineCount + "_discount").val(0);
-			$("#quote_lines_" + this.options.lineCount + "_vat").val('19,6');
+			$("#quote_lines_" + this.options.lineCount + "_vat").val($("#quote_vat").val());
 			this.options.lineCount++;
 			return this;
 		}
@@ -152,6 +157,16 @@
 		 $("#quote_total_tva").html(number_format(tva,2,',',' '));
 		 $("#quote_total_ttc").html(number_format(tht+tva,2,',',' '));
 		 return this;
+   	 }
+   	 , vatchange : function(e) {
+   		e.stopPropagation()
+		e.preventDefault()
+		var v = parseFloat($("#quote_vat").val().replace(',','.'));
+   		$("#quote_vat").val(number_format(v,1,',',' '));
+		$.each($("#quote_lines > tr"),function(key,value) {
+						var vatid = "#" + $(value).attr('id') + "_vat";
+						$(vatid).val($("#quote_vat").val());
+					})
    	 }
    }
 

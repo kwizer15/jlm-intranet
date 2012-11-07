@@ -24,7 +24,7 @@ class VAT
     /**
      * @var int $rate
      *
-     * @ORM\Column(name="rate", type="decimal", scale=1)
+     * @ORM\Column(name="rate", type="decimal", precision=3, scale=3)
      */
     private $rate;
 

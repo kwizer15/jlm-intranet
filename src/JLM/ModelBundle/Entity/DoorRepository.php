@@ -36,6 +36,7 @@ class DoorRepository extends EntityRepository
 			$r2[] = array(
 						'door'          => ''.$r->getId(),
 						'label'        => ''.$r,
+						'vat'			=> $r->getSite()->getVat()->getRate(),
 						'trustee'       => ''.$r->getSite()->getTrustee()->getId(),
 						'trusteeName'   => ''.$r->getSite()->getTrustee(),
 						'trusteeAddress'=> ($r->getSite()->getTrustee()->getBillingAddress() === null) ? ''.$r->getSite()->getTrustee()->getAddress() : ''.$r->getSite()->getTrustee()->getBillingAddress(),

@@ -117,6 +117,13 @@ class Quote extends Document
 	private $contactCp;
 	
 	/**
+	 * @var float $vat
+	 * 
+	 * @ORM\Column(name="vat",type="decimal",precision=3,scale=3)
+	 */
+	private $vat;
+	
+	/**
 	 * Construteur
 	 * 
 	 */
@@ -408,6 +415,29 @@ class Quote extends Document
     public function getLines()
     {
         return $this->lines;
+    }
+    
+    /**
+     * Set vat
+     *
+     * @param float $vat
+     * @return Quote
+     */
+    public function setVat($vat)
+    {
+    	$this->vat = $vat;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get vat
+     *
+     * @return float
+     */
+    public function getVat()
+    {
+    	return $this->vat;
     }
     
     /**
