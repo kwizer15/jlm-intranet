@@ -1,6 +1,5 @@
 Devis	
 	- entity, formtype, schema : Ajouter à l'attention de... (lien avec inerlocuteur)
-		- ManyToOne SiteContact
 		- autocompletion avec 2 params  : term et id_door
 	
 	/!\ TVA n'existe plus pour produit

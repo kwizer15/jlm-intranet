@@ -103,6 +103,20 @@ class Quote extends Document
 	private $lines;
 	
 	/**
+	 * @var SiteContact $contact
+	 * 
+	 * @ORM\ManyToOne(targetEntity="SiteContact")
+	 */
+	private $contact;
+	
+	/**
+	 * @var string $contactCp
+	 * 
+	 * @ORM\Column(name="contact_cp", type="string")
+	 */
+	private $contactCp;
+	
+	/**
 	 * Construteur
 	 * 
 	 */
@@ -316,6 +330,51 @@ class Quote extends Document
     	return $this;
     }
 
+    /**
+     * Set contact
+     *
+     * @param string $contact
+     * @return Quote
+     */
+    public function setContact($contact)
+    {
+    	$this->contact = $contact;
+    
+    	return $this;
+    }
+    
+    /**
+     *
+     * @return string
+     */
+    public function getContact()
+    {
+    	return $this->contact;
+    }
+    
+    /**
+     * Set contactCp
+     *
+     * @param string $contactCp
+     * @return Quote
+     */
+    public function setContactCp($contactCp)
+    {
+    	$this->contactCp = $contactCp;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get contactCp
+     *
+     * @return string
+     */
+    public function getContactCp()
+    {
+    	return $this->contactCp;
+    }
+    
     /**
      * Add lines
      *
