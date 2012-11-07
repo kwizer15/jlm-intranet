@@ -65,6 +65,16 @@
 			$("#quote_discount").on('change',$.proxy(this.total,this));
 			$(".newline").on('click',$.proxy(this.newline,this));
 			$("#quote_lines > tr").change();
+			$("#quote_lines").sortable({
+				update: function(e,ui) {
+					$.each($(this).children(),function(key,value) {
+						var posid = "#" + $(value).attr('id') + "_position";
+						$(posid).val(key);
+					})
+				}
+			});
+		
+			
 	  }
    	 , newline : function(e){
    		 	e.stopPropagation()
@@ -78,6 +88,7 @@
 				designationSource:this.options.lineDesignationSource
 			});
 			// Valeurs par défaut
+			$("#quote_lines_" + this.options.lineCount + "_position").val(this.options.lineCount);
 			$("#quote_lines_" + this.options.lineCount + "_description").hide();
 			$("#quote_lines_" + this.options.lineCount + "_showDescription").val(0);
 			$("#quote_lines_" + this.options.lineCount + "_quantity").val(1);
@@ -227,7 +238,9 @@
 		   		return this;
 	   	  }
 	   	  
-	   	  , toggleDesc : function() {
+	   	  , toggleDesc : function(e) {
+	   		e.stopPropagation()
+	        e.preventDefault()
 	   		  	var input = $("#" + this.$element.attr('id') + "_showDescription");
 	   		  	input.attr('test','test');
 		   		var plus = (input.attr('value') != 1);

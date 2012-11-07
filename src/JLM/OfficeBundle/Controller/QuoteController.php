@@ -103,7 +103,6 @@ class QuoteController extends Controller
             $em->persist($entity);
             foreach ($entity->getLines() as $key => $line)
             {
-            	$line->setPosition($key);
             	$line->setQuote($entity);
             	$em->persist($line);
             }
@@ -153,7 +152,6 @@ class QuoteController extends Controller
         	foreach ($entity->getLines() as $key => $line)
         	{	
         		// Nouvelles lignes
-        		$line->setPosition($key);
         		$line->setQuote($entity);
         		$em->persist($line);
         		
@@ -166,7 +164,6 @@ class QuoteController extends Controller
         	{
         		$em->remove($line);
         	}
-
             $em->flush();
             return $this->redirect($this->generateUrl('quote_edit', array('id' => $entity->getId())));
         }
