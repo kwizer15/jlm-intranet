@@ -19,7 +19,7 @@ class QuoteLineType extends AbstractType
         	->add('quantity',null,array('attr'=>array('class'=>'span1')))
         	->add('unitPrice','money',array('attr'=>array('class'=>'input-mini')))
         	->add('discount','percent',array('attr'=>array('class'=>'span1')))
-        	->add('vat','percent',array('attr'=>array('class'=>'input-mini')))
+        	->add('vat','percent',array('precision'=>1,'attr'=>array('class'=>'input-mini')))
 
         ;
     }

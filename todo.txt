@@ -1,5 +1,4 @@
 Devis
-	- edit : La TVA passe toute seul a 20% !!!
 	- index : lister à l'envers des dates par défaut
 	          pagination
 	
