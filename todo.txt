@@ -1,4 +1,6 @@
 Devis	
+	- SiteContactToInt... contacthiddentype...
+
 	/!\ TVA n'existe plus pour produit
     - js : gérer la tva autrement (via site), par defaut 19.6 
     	- Faire un <input text> TVA rempli à 19.6 par défaut (avec le site)
@@ -12,6 +14,8 @@ Devis
 
     - pdf : a faire (trouver une solution maintenable)
 		cf PDFlib (/usr/lib/php5/..../*.so)
+    
+    - Mettre l'utilisateur en cours dans "Suivi par"
     
 Interlocuteurs
     - personaliser un peu le formulaire "contact"

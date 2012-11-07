@@ -15,7 +15,7 @@ class QuoteType extends AbstractType
             ->add('trustee','trustee_hidden',array('required'=>false))
             ->add('trusteeName',null,array('label'=>'Syndic'))
             ->add('trusteeAddress',null,array('label'=>'Adresse de facturation','attr'=>array('class'=>'input-xlarge')))
-            ->add('contact','hidden',array('required'=>false))
+            ->add('contact','sitecontact_hidden',array('required'=>false))
             ->add('contactCp',null,array('label'=>'A l\'attention de'))
             ->add('discount','percent',array('label'=>'Remise','attr'=>array('class'=>'input-mini')))
             ->add('follower','hidden',array('required'=>false))
