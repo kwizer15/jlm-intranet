@@ -331,4 +331,23 @@ class QuoteController extends Controller
    	 
    	return $response;
    }
+   
+   /**
+    * Autocomplete contact
+    *
+    * @Route("/autocomplete/contact", name="quote_auto_contact")
+    * @Method("post")
+    */
+   public function autocontactAction(Request $request)
+   {
+   	$query = $request->request->get('term');
+   	$em = $this->getDoctrine()->getEntityManager();
+   	$results = $em->getRepository('JLMModelBundle:SiteContact')->searchResult($query);
+   	$json = json_encode($results);
+   	$response = new Response();
+   	$response->headers->set('Content-Type', 'application/json');
+   	$response->setContent($json);
+   	 
+   	return $response;
+   }
 }

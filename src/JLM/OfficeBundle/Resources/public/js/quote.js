@@ -60,7 +60,24 @@
 				  $("#quote_trusteeAddress").val(ui.item.trusteeAddress);
 				  return false;
 				}
-				});
+			});
+		  
+		  $("#quote_contactCp").attr('data-source',this.options.contactsSource)
+					          .autocomplete({
+					source: function(request,response){
+						return $.post(
+								this.element.attr('data-source'),
+								{term:$('#quote_door').val()},
+								function( data ) { response( data ); },
+								'json'
+						);
+					}
+					, select: function (event, ui) {
+					  $("#quote_contact").val(ui.item.id);
+					  $("#quote_contactCp").val(ui.item.name);
+					  return false;
+					}
+					});
 		  
 		  	$("#quote_paymentRules").attr('data-source',this.options.paymentSource).autocomplete({
 				source: function(request,response){
@@ -153,6 +170,7 @@
   }
 
   $.fn.quote.defaults = {
+     contactsSource:'',
 	 followersSource:'',
 	 doorsSource:'',
 	 trusteesSource:'',

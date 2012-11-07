@@ -1,7 +1,4 @@
 Devis	
-	- entity, formtype, schema : Ajouter à l'attention de... (lien avec inerlocuteur)
-		- autocompletion avec 2 params  : term et id_door
-	
 	/!\ TVA n'existe plus pour produit
     - js : gérer la tva autrement (via site), par defaut 19.6 
     	- Faire un <input text> TVA rempli à 19.6 par défaut (avec le site)

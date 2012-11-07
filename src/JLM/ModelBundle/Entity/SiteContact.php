@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * JLM\ModelBundle\Entity\SiteContact
  *
  * @ORM\Table(name="site_contacts")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SiteContactRepository")
  */
 class SiteContact
 {
