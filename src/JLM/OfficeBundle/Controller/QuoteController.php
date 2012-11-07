@@ -79,6 +79,7 @@ class QuoteController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
 		$entity->setVat($vat);
+		$entity->setVatTransmitter($vat);
         $form   = $this->createForm(new QuoteType(), $entity);
 
         return array(

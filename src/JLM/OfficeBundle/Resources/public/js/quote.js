@@ -39,7 +39,7 @@
 			    , select: function (event, ui) {
 				    $("#quote_door").val(ui.item.door);
 				    $("#quote_doorCp").val(ui.item.label);
-				    $("#quote_vat").val(number_format(ui.item.vat,1,',',' ')).change();
+				    $("#quote_vat").val(number_format(ui.item.vat*100,1,',',' ')).change();
 				    $("#quote_trustee").val(ui.item.trustee);
 				    $("#quote_trusteeName").val(ui.item.trusteeName);
 				    $("#quote_trusteeAddress").val(ui.item.trusteeAddress);
@@ -165,7 +165,8 @@
    		$("#quote_vat").val(number_format(v,1,',',' '));
 		$.each($("#quote_lines > tr"),function(key,value) {
 						var vatid = "#" + $(value).attr('id') + "_vat";
-						$(vatid).val($("#quote_vat").val());
+						var transmitter = "#" + $(value).attr('id') + "_isTransmitter";
+						$(vatid).val($(transmitter).val() == '1' ? number_format($("#quote_vatTransmitter").val()*100,1,',',' ') : $("#quote_vat").val());
 					})
    	 }
    }
@@ -246,6 +247,9 @@
 						  	$(id + 'designation').val(ui.item.designation);
 						  	$(id + 'description').val(ui.item.description);
 						  	$(id + 'unitPrice').val(ui.item.unitPrice).change();
+						  	$(id + 'isTransmitter').val(ui.item.transmitter ? '1' : '');
+						  	$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? number_format($("#quote_vatTransmitter").val()*100,1,',',' ') : $("#quote_vat").val())
+						
 					      return false;
 					  }
 				});
@@ -266,6 +270,8 @@
 					  	$(id + 'designation').val(ui.item.designation);
 					  	$(id + 'description').val(ui.item.description);
 					  	$(id + 'unitPrice').val(ui.item.unitPrice).change();
+					  	$(id + 'isTransmitter').val(ui.item.transmitter ? '1' : '');
+					  	$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? number_format($("#quote_vatTransmitter").val()*100,1,',',' ') : $("#quote_vat").val())
 				      return false;
 				  }
 				});

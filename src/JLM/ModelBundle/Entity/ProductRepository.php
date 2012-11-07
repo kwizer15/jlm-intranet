@@ -42,7 +42,7 @@ class ProductRepository extends EntityRepository
 	{
 		$r2 = array();
 		foreach ($res as $r)
-		{
+		{	
 			$r2[] = array(
 					'label'=>$r->getReference().' | '.$r->getDesignation(),
 					'id'=>$r->getId(),
@@ -50,6 +50,7 @@ class ProductRepository extends EntityRepository
 					'designation'=>$r->getDesignation(),
 					'description'=>$r->getDescription(),
 					'unitPrice'=>$r->getSellPrice(),
+					'transmitter'=> ($r instanceof Transmitter)
 				);
 		}
 		return $r2;

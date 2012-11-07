@@ -70,6 +70,13 @@ class QuoteLine
 	private $showDescription;
 	
 	/**
+	 * @var bool $isTransmitter
+	 *
+	 * @ORM\Column(name="is_transmitter", type="boolean")
+	 */
+	private $isTransmitter;
+	
+	/**
 	 * @var int $quantity
 	 * 
 	 * @ORM\Column(name="quantity", type="integer")
@@ -92,7 +99,8 @@ class QuoteLine
 	private $discount;
 	
 	/**
-	 * TVA (en %)
+	 * TVA applicable (en %)
+	 * TVA sur tout les produit sauf les emetteurs
 	 * @var float $vat
 	 *
 	 * @ORM\Column(name="vat", type="decimal",precision=3,scale=3)
@@ -388,5 +396,27 @@ class QuoteLine
     public function getPriceAti()
     {
     	return $this->getPrice()*(1 + $this->getVat());
+    }
+    
+    /**
+     * Set Is Transmitter
+     * 
+     * @param bool $tr
+     * @return Quote
+     */
+    public function setIsTransmitter($tr)
+    {
+    	$this->isTransmitter = (bool)$tr;
+    	return $this;
+    }
+    
+    /**
+     * Get Is Transmitter
+     * 
+     * @return bool
+     */
+    public function getIsTransmitter()
+    {
+    	return $this->isTransmitter;
     }
 }

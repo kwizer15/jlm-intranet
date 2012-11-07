@@ -1,8 +1,6 @@
 Devis	
 	/!\ TVA n'existe plus pour produit
-    - js : gérer la tva autrement (via site), par defaut 19.6 
-    	- Lors de l'autocompletion du produit, vérifier si emetteur, si oui, changer à 19.6 <input hidden #transmitter_vat = 19.6>
-	
+
 	- js : ouverture/fermeture description (selon showDescription)
 		-Remplacer toggleDesc avec 2 fonctions : open et close
 		...

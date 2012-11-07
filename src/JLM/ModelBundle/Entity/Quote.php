@@ -124,6 +124,13 @@ class Quote extends Document
 	private $vat;
 	
 	/**
+	 * @var float $vatTransmitter
+	 *
+	 * @ORM\Column(name="vat_transmitter",type="decimal",precision=3,scale=3)
+	 */
+	private $vatTransmitter;
+	
+	/**
 	 * Construteur
 	 * 
 	 */
@@ -438,6 +445,29 @@ class Quote extends Document
     public function getVat()
     {
     	return $this->vat;
+    }
+    
+    /**
+     * Set vatTransmitter
+     *
+     * @param float $vatTransmitter
+     * @return Quote
+     */
+    public function setVatTransmitter($vat)
+    {
+    	$this->vatTransmitter = $vat;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get vatTransmitter
+     *
+     * @return float
+     */
+    public function getVatTransmitter()
+    {
+    	return $this->vatTransmitter;
     }
     
     /**
