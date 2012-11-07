@@ -38,7 +38,7 @@ class DoorRepository extends EntityRepository
 						'label'        => ''.$r,
 						'trustee'       => ''.$r->getSite()->getTrustee()->getId(),
 						'trusteeName'   => ''.$r->getSite()->getTrustee(),
-						'trusteeAddress'=> ''.$r->getSite()->getTrustee()->getBillingAddress(),
+						'trusteeAddress'=> ($r->getSite()->getTrustee()->getBillingAddress() === null) ? ''.$r->getSite()->getTrustee()->getAddress() : ''.$r->getSite()->getTrustee()->getBillingAddress(),
 					);
 		}
 		return $r2;

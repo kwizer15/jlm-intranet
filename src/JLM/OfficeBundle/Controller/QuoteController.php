@@ -218,6 +218,25 @@ class QuoteController extends Controller
     	return $response;
     }
     
+    /**
+     * Autocomplete trustee
+     *
+     * @Route("/autocomplete/trustee", name="quote_auto_trustee")
+     * @Method("post")
+     */
+    public function autotrusteeAction(Request $request)
+    {
+    	$query = $request->request->get('term');
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$results = $em->getRepository('JLMModelBundle:Trustee')->searchResult($query);
+    	$json = json_encode($results);
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/json');
+    	$response->setContent($json);
+    
+    	return $response;
+    }
+    
    /**
     * Autocomplete product
     *

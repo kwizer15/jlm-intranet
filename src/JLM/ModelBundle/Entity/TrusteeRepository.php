@@ -20,8 +20,15 @@ class TrusteeRepository extends EntityRepository
 		;
 		$res = $qb->getQuery()->getResult();
 		$r2 = array();
+
 		foreach ($res as $r)
-			$r2[] = ''.$r;
+		{
+			$r2[] = array(
+					'trustee'       => ''.$r->getId(),
+					'label'         => ''.$r,
+					'trusteeAddress'=> ($r->getBillingAddress() === null) ? ''.$r->getAddress() : ''.$r->getBillingAddress(),
+			);
+		}
 		return $r2;
 	}
 	

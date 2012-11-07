@@ -44,6 +44,24 @@
 			    }
 		  });
 		  
+		  $("#quote_trusteeName").attr('data-source',this.options.trusteesSource)
+		  			.autocomplete({
+				source: function(request,response){
+					return $.post(
+							this.element.attr('data-source'),
+							request,
+							function( data ) { response( data ); },
+							'json'
+					);
+				}
+				, select: function (event, ui) {
+				  $("#quote_trustee").val(ui.item.trustee);
+				  $("#quote_trusteeName").val(ui.item.label);
+				  $("#quote_trusteeAddress").val(ui.item.trusteeAddress);
+				  return false;
+				}
+				});
+		  
 		  	$("#quote_paymentRules").attr('data-source',this.options.paymentSource).autocomplete({
 				source: function(request,response){
 					return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
