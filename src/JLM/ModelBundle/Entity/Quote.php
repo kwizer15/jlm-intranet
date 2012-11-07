@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * JLM\ModelBundle\Entity\Quote
  *
  * @ORM\Table(name="quote")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\QuoteRepository")
  */
 class Quote extends Document
 {

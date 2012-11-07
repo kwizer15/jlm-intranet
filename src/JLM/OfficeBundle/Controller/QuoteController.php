@@ -23,15 +23,34 @@ class QuoteController extends Controller
      * Lists all Quote entities.
      *
      * @Route("/", name="quote")
+     * @Route("/page/{page}", name="quote_page")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page = 1)
     {
+    	$limit = 15;
         $em = $this->getDoctrine()->getEntityManager();
-
-        $entities = $em->getRepository('JLMModelBundle:Quote')->findBy(array(),array('creation'=>'desc'));
-
-        return array('entities' => $entities);
+           
+        $nb = $em->getRepository('JLMModelBundle:Quote')->getTotal();
+        $nbPages = ceil($nb/$limit);
+        $offset = ($page-1) * $limit;
+        if ($page < 1 || $page > $nbPages)
+        {
+        	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
+        }
+        
+        $entities = $em->getRepository('JLMModelBundle:Quote')->findBy(
+        		array(),
+        		array('creation'=>'desc'),
+        		$limit,
+        		$offset
+        );
+        
+        return array(
+        		'entities' => $entities,
+        		'page'     => $page,
+        		'nbPages'  => $nbPages,
+        );
     }
 
     /**
