@@ -28,10 +28,20 @@ class DefaultController extends Controller
      */
     public function testpdfAction()
     {
-    	$pdf = new \FPDF();
-    	$pdf->AddPage();
-    	$pdf->SetFont('Arial','B',16);
-    	$pdf->Cell(40,10,'Hello World !');
+    	$pdf = new \FPDI();
+   // 	var_dump($pdf); exit;
+    	$pageCount = $pdf->setSourceFile($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/pdf/test.pdf');
+    	$onlyPage = $pdf->importPage(1, '/MediaBox');
+    //	$firstPage = $pdf->importPage(2, '/MediaBox');
+    //	$middlePage = $pdf->importPage(3, '/MediaBox');
+    //	$endPage = $pdf->importPage(4 '/MediaBox');
+    	
+    	// Premiere page
+    	$pdf->addPage();
+    	$pdf->useTemplate($onlyPage);
+    	
+    	$pdf->setFont('Arial','B',16);
+    	$pdf->cell(40,10,'Hello World !');
     	$content = $pdf->Output('','S');
     	
     	$response = new Response();
