@@ -28,7 +28,7 @@ class QuoteController extends Controller
      */
     public function indexAction($page = 1)
     {
-    	$limit = 15;
+    	$limit = 10;
         $em = $this->getDoctrine()->getEntityManager();
            
         $nb = $em->getRepository('JLMModelBundle:Quote')->getTotal();
@@ -41,7 +41,7 @@ class QuoteController extends Controller
         
         $entities = $em->getRepository('JLMModelBundle:Quote')->findBy(
         		array(),
-        		array('creation'=>'desc'),
+        		array('number'=>'desc'),
         		$limit,
         		$offset
         );
@@ -105,7 +105,10 @@ class QuoteController extends Controller
         {
             $em = $this->getDoctrine()->getEntityManager();
             $number = $entity->getCreation()->format('ym');
-            $number.= ($em->getRepository('JLMModelBundle:Quote')->getLastNumber() + 1);
+            $n = ($em->getRepository('JLMModelBundle:Quote')->getLastNumber() + 1);
+            for ($i = strlen($n); $i < 4 ; $i++)
+            	$number.= '0';
+            $number.= $n;
             $entity->setNumber($number);
             $em->persist($entity);
             foreach ($entity->getLines() as $key => $line)
