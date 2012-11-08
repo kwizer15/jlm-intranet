@@ -2,17 +2,8 @@ Devis
     - pdf : a faire (trouver une solution maintenable)
 		cf PDFlib (/usr/lib/php5/..../*.so)
     
-    - entity : ajouter valid (bool)
-               ajouter send (bool)
-    
-    
-    - show : bouton Valider (blocage du devis)
-          si validé
-             boutons Imprimer, Envoyer par mail (cf pdf)
-          si imprimé ou envoyé
-             bouton accorder
-          si accordé
-          	 afficher "ACCORDE"
+    - Envoi d'e-mail avec devis en pièce jointe
+    - Imprimer pdf (ouvrir pdf + impression)
     
     - Mettre l'utilisateur en cours dans "Suivi par"
     

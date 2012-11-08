@@ -24,74 +24,21 @@ class DefaultController extends Controller
     }
     
     /**
-     * Displays a form to create a new Product entity.
-     *
-     * @Route("/new", name="test_new")
-     * @Template()
+     * @Route("/testpdf")
      */
-    public function newAction()
+    public function testpdfAction()
     {
-    	$entity = new Address();
-    	$form   = $this->createForm(new AddressType(), $entity);
-
-    	return array(
-    			'entity' => $entity,
-    			'form'   => $form->createView(),
-    	);
-    }
-    
-    /**
-     * Creates a new Product entity.
-     *
-     * @Route("/create", name="test_create")
-     * @Method("post")
-     * @Template("JLMOfficeBundle:Default:new.html.twig")
-     */
-    public function createAction()
-    {
-    	$entity  = new Address();
-    	$request = $this->getRequest();
-    	$form    = $this->createForm(new AddressType(), $entity);
-    	$form->bindRequest($request);
-    
- //   	var_dump($entity);
+    	$pdf = new \FPDF();
+    	$pdf->AddPage();
+    	$pdf->SetFont('Arial','B',16);
+    	$pdf->Cell(40,10,'Hello World !');
+    	$content = $pdf->Output('','S');
     	
-    	if ($form->isValid()) {
-    		$em = $this->getDoctrine()->getEntityManager();
-    		$em->persist($entity);
-    		$em->flush();
-    
-    		return $this->redirect($this->generateUrl('test_show', array('id' => $entity->getId())));
-    
-    	}
-    
-    	return array(
-    			'entity' => $entity,
-    			'form'   => $form->createView()
-    	);
-    }
-    
-    /**
-     * Finds and displays a Product entity.
-     *
-     * @Route("/{id}/show", name="test_show")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-    	$em = $this->getDoctrine()->getEntityManager();
-    
-    	$entity = $em->getRepository('JLMModelBundle:Address')->find($id);
-    
-    	if (!$entity) {
-    		throw $this->createNotFoundException('Unable to find Address entity.');
-    	}
-    
-    	//$deleteForm = $this->createDeleteForm($id);
-    
-    	return array(
-    			'entity'      => $entity,
-    	//		'delete_form' => $deleteForm->createView(),       
-    	 );
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/pdf');
+    	$response->headers->set('Content-Disposition', 'inline; filename=essai.pdf');
+    	$response->setContent($content);
+    	
+    	return $response;
     }
 }
