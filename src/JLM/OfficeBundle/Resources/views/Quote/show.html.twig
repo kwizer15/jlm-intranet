@@ -2,6 +2,28 @@
 
 {% block content %}
 <h1>Devis</h1>
+{% if entity.valid %}
+	{% if entity.send%}
+		{% if entity.given %}
+		<div class="alert alert-success">
+		<h4>Devis accordé</h4>
+		</div>
+		{% else %}
+		<div class="alert alert-info">
+		<h4>Devis envoyé</h4>
+		</div>
+		{% endif %}
+	{% else %}
+	<div class="alert">
+	<h4>En attente d'envoi</h4>
+	</div>
+	{% endif %}
+{% else %}
+<div class="alert">
+<h4>En saisie</h4>
+</div>
+{% endif %}
+
 <div class="row-fluid">
     <div class="span5">
         <strong>Suivi par {{ entity.followerCp }}</strong>
@@ -95,6 +117,21 @@
 </div>
 <div class="form-actions">
 	<a href="{{ path('quote') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	{% if entity.valid %}
+		{% if entity.send%}
+			{% if entity.given == false %}
+				<a href="{{ path('quote_given', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-thumbs-up icon-white"></i> Accorder</a>
+			{% endif %}
+		{% endif %}
+		{% if entity.given == false %}
+			<a href="{{ path('quote_unvalid', { 'id': entity.id }) }}" class="btn btn-inverse"><i class="icon-remove icon-white"></i> Invalider</a>
+		{% endif %}
+	<a href="{{ path('quote_send', { 'id': entity.id }) }}" class="btn btn-info"><i class="icon-envelope icon-white"></i> Envoyer par e-mail</a>
+	<a href="{{ path('quote_send', { 'id': entity.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer</a>
+		
+	{% else %}
 	<a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
-</div>
+	<a href="{{ path('quote_valid', { 'id': entity.id }) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i> Valider</a>
+	{% endif %}
+	</div>
 {% endblock %}

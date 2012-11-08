@@ -18,7 +18,23 @@
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('quote_show', { 'id': entity.id }) }}">{{ entity.number }}</a></td>
+            <td>
+            	<a href="{{ path('quote_show', { 'id': entity.id }) }}">{{ entity.number }}</a><br>
+            	{% if entity.valid %}
+					{% if entity.send%}
+						{% if entity.given %}
+						<span class="label label-success">Accordé</span>
+						{% else %}
+						<span class="label label-info">Envoyé</span>
+						{% endif %}
+					{% else %}
+					<span class="label label-warning">En attente</span>
+					{% endif %}
+				{% else %}
+				<span class="label">En saisie</span>
+				{% endif %}
+            	
+            </td>
             <td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}</td>
             <td>{{ entity.followerCp }}</td>
             <td>{{ entity.doorCp | nl2br }}</td>

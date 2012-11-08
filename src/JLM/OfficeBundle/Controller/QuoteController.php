@@ -134,6 +134,9 @@ class QuoteController extends Controller
      */
     public function editAction(Quote $entity)
     {
+    	// Si le devis est déjà validé, on empèche quelconque modification
+    	if ($entity->isValid())
+    		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
         $editForm = $this->createForm(new QuoteType(), $entity);
         return array(
             'entity'      => $entity,
@@ -150,6 +153,10 @@ class QuoteController extends Controller
      */
     public function updateAction(Request $request, Quote $entity)
     {
+    	// Si le devis est déjà validé, on empèche quelconque odification
+    	if ($entity->isValid())
+    		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
+    	 
         $originalLines = array();
         foreach ($entity->getLines() as $line)
         	$originalLines[] = $line;
@@ -185,6 +192,68 @@ class QuoteController extends Controller
     }
 
     /**
+     * Valid a Quote entity.
+     *
+     * @Route("/{id}/valid", name="quote_valid")
+     */
+    public function validAction(Request $request, Quote $entity)
+    {
+    	$entity->setValid();
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$em->persist($entity);
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
+    }
+    
+    /**
+     * dévalide a Quote entity.
+     *
+     * @Route("/{id}/unvalid", name="quote_unvalid")
+     */
+    public function unvalidAction(Request $request, Quote $entity)
+    {
+    	$entity->setValid(false);
+    	$entity->setSend(false);
+    	$entity->setGiven(false);
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$em->persist($entity);
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
+    }
+    
+    /**
+     * Send a Quote entity.
+     *
+     * @Route("/{id}/send", name="quote_send")
+     */
+    public function sendAction(Request $request, Quote $entity)
+    {
+    	if (!$entity->isValid())
+    		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
+    	$entity->setSend();
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$em->persist($entity);
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
+    }
+    
+	/**
+     * Given a Quote entity.
+     *
+     * @Route("/{id}/given", name="quote_given")
+     */
+    public function givenAction(Request $request, Quote $entity)
+    {
+    	if (!$entity->isSend() || !$entity->isValid())
+    		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
+    	$entity->setGiven();
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$em->persist($entity);
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
+    }
+    
+    /**
      * Deletes a Quote entity.
      *
      * @Route("/{id}/delete", name="quote_delete")
@@ -207,6 +276,37 @@ class QuoteController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+    
+    /**
+     * Autocompletion générale
+     * @Route("/autocomplete", name="quote_autocompletion")
+     * @Method("post")
+     */
+    public function autocompletionAction(Request $request)
+    {
+    	$query = $request->request->get('term');
+    	$entity = $request->request->get('entity');
+    	if (!in_array($entity,array('Door','Trustee','Product','IntroModel','DelayModel','PaymentModel','SiteContact')))
+    		throw $this->createNotFoundException('Entité '.$entity.' inexistante');
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$action = 'search';
+    	if ($entity == 'Product')
+    	{
+    		$by = $request->request->get('by');
+    		if (!in_array($by,array('Reference','Designation')))
+    			throw $this->createNotFoundException('Recherche par '.$by.' impossible');
+    		$action .= $by;
+    	}
+    	else
+    		$action .= 'Result';
+    	$results = $em->getRepository('JLMModelBundle:'.$entity)->$action($query);
+    	$json = json_encode($results);
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/json');
+    	$response->setContent($json);
+    
+    	return $response;
     }
     
     /**

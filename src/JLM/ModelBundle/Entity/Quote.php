@@ -90,6 +90,22 @@ class Quote extends Document
 	private $customerComments;
 	
 	/**
+	 * Validé
+	 * @var bool $valid
+	 *
+	 * @ORM\Column(name="valid",type="boolean")
+	 */
+	private $valid = false;
+	
+	/**
+	 * Envoyé
+	 * @var bool $send
+	 *
+	 * @ORM\Column(name="send",type="boolean")
+	 */
+	private $send = false;
+	
+	/**
 	 * Accordé
 	 * @var bool $given
 	 * 
@@ -314,14 +330,80 @@ class Quote extends Document
     }
 
     /**
+     * Set valid
+     *
+     * @param boolean $valid
+     * @return Quote
+     */
+    public function setValid($valid = true)
+    {
+    	$this->valid = (bool)$valid;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get valid
+     *
+     * @return boolean
+     */
+    public function getValid()
+    {
+    	return $this->valid;
+    }
+    
+    /**
+     * Is valid
+     *
+     * @return boolean
+     */
+    public function isValid()
+    {
+    	return $this->getValid();
+    }
+    
+    /**
+     * Set send
+     *
+     * @param boolean $send
+     * @return Quote
+     */
+    public function setSend($send = true)
+    {
+    	$this->send = (bool)$send;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get send
+     *
+     * @return boolean
+     */
+    public function getSend()
+    {
+    	return $this->send;
+    }
+    
+    /**
+     * Is send
+     *
+     * @return boolean
+     */
+    public function isSend()
+    {
+    	return $this->getSend();
+    }
+    
+    /**
      * Set given
      *
      * @param boolean $given
      * @return Quote
      */
-    public function setGiven($given)
+    public function setGiven($given = true)
     {
-        $this->given = $given;
+        $this->given = (bool)$given;
     
         return $this;
     }
@@ -334,6 +416,16 @@ class Quote extends Document
     public function getGiven()
     {
         return $this->given;
+    }
+    
+    /**
+     * Is given
+     *
+     * @return boolean
+     */
+    public function isGiven()
+    {
+    	return $this->getGiven();
     }
 
     /**
