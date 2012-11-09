@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Address;
 use JLM\ModelBundle\Form\AddressType;
 
@@ -17,6 +18,7 @@ class AutocompleteController extends Controller
      *
      * @Route("/autocomplete/city", name="autocomplete_city")
      * @Method("post")
+     * @Secure(roles="ROLE_USER")
      */
     public function cityAction()
     {
@@ -37,6 +39,7 @@ class AutocompleteController extends Controller
      *
      * @Route("/autocomplete/trustee", name="autocomplete_trustee")
      * @Method("post")
+     * @Secure(roles="ROLE_USER")
      */
     public function trusteeAction()
     {
@@ -57,6 +60,7 @@ class AutocompleteController extends Controller
      *
      * @Route("/autocomplete/site", name="autocomplete_site")
      * @Method("post")
+     * @Secure(roles="ROLE_USER")
      */
     public function siteAction()
     {

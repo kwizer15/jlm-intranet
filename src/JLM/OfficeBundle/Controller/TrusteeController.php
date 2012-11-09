@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Form\TrusteeType;
 use JLM\ModelBundle\Entity\Person;
@@ -25,6 +26,7 @@ class TrusteeController extends Controller
      * @Route("/", name="trustee")
      * @Route("/page/{page}", name="trustee_page")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function indexAction($page = 1)
     {
@@ -57,6 +59,7 @@ class TrusteeController extends Controller
      *
      * @Route("/{id}/show", name="trustee_show")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function showAction(Trustee $entity)
     {
@@ -72,6 +75,7 @@ class TrusteeController extends Controller
      *
      * @Route("/new", name="trustee_new")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function newAction()
     {
@@ -90,6 +94,7 @@ class TrusteeController extends Controller
      * @Route("/create", name="trustee_create")
      * @Method("post")
      * @Template("JLMOfficeBundle:Trustee:new.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function createAction()
     {
@@ -122,6 +127,7 @@ class TrusteeController extends Controller
      *
      * @Route("/{id}/edit", name="trustee_edit")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function editAction(Trustee $entity)
     {
@@ -141,6 +147,7 @@ class TrusteeController extends Controller
      * @Route("/{id}/update", name="trustee_update")
      * @Method("post")
      * @Template("JLMOfficeBundle:Trustee:edit.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function updateAction(Trustee $entity)
     {
@@ -175,6 +182,7 @@ class TrusteeController extends Controller
      *
      * @Route("/{id}/delete", name="trustee_delete")
      * @Method("post")
+     * @Secure(roles="ROLE_USER")
      */
     public function deleteAction(Trustee $entity)
     {
@@ -205,6 +213,7 @@ class TrusteeController extends Controller
      *
      * @Route("/{id}/contact/new", name="trustee_contact_new")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function contactnewAction(Trustee $trustee)
     {
@@ -224,6 +233,7 @@ class TrusteeController extends Controller
      * @Route("/{id}/contact/create", name="trustee_contact_create")
      * @Method("post")
      * @Template("JLMOfficeBundle:Trustee:contactnew.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function contactcreateAction(Trustee $trustee)
     {

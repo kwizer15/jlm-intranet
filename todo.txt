@@ -3,7 +3,6 @@ Devis
 		cf PDFlib (/usr/lib/php5/..../*.so)
     
     - Envoi d'e-mail avec devis en pièce jointe
-    - Imprimer pdf (ouvrir pdf + impression)
     
     - Mettre l'utilisateur en cours dans "Suivi par"
     

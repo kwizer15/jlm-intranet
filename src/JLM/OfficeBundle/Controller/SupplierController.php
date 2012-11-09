@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Supplier;
 use JLM\ModelBundle\Form\SupplierType;
 
@@ -22,6 +23,7 @@ class SupplierController extends Controller
      * @Route("/", name="supplier")
      * @Route("/page/{page}", name="supplier_page")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function indexAction($page = 1)
     {
@@ -54,6 +56,7 @@ class SupplierController extends Controller
      *
      * @Route("/{id}/show", name="supplier_show")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function showAction(Supplier $entity)
     {
@@ -74,6 +77,7 @@ class SupplierController extends Controller
      *
      * @Route("/new", name="supplier_new")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function newAction()
     {
@@ -92,6 +96,7 @@ class SupplierController extends Controller
      * @Route("/create", name="supplier_create")
      * @Method("post")
      * @Template("JLMOfficeBundle:Supplier:new.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function createAction()
     {
@@ -121,6 +126,7 @@ class SupplierController extends Controller
      *
      * @Route("/{id}/edit", name="supplier_edit")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function editAction($id)
     {
@@ -148,6 +154,7 @@ class SupplierController extends Controller
      * @Route("/{id}/update", name="supplier_update")
      * @Method("post")
      * @Template("JLMOfficeBundle:Supplier:edit.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function updateAction($id)
     {
@@ -186,6 +193,7 @@ class SupplierController extends Controller
      *
      * @Route("/{id}/delete", name="supplier_delete")
      * @Method("post")
+     * @Secure(roles="ROLE_USER")
      */
     public function deleteAction($id)
     {

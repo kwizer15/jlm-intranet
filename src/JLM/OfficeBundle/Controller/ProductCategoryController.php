@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\ProductCategory;
 use JLM\ModelBundle\Form\ProductCategoryType;
 
@@ -21,6 +22,7 @@ class ProductCategoryController extends Controller
      *
      * @Route("/", name="productcategory")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function indexAction()
     {
@@ -36,6 +38,7 @@ class ProductCategoryController extends Controller
      *
      * @Route("/{id}/show", name="productcategory_show")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function showAction($id)
     {
@@ -59,6 +62,7 @@ class ProductCategoryController extends Controller
      *
      * @Route("/new", name="productcategory_new")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function newAction()
     {
@@ -77,6 +81,7 @@ class ProductCategoryController extends Controller
      * @Route("/create", name="productcategory_create")
      * @Method("post")
      * @Template("JLMOfficeBundle:ProductCategory:new.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function createAction()
     {
@@ -105,6 +110,7 @@ class ProductCategoryController extends Controller
      *
      * @Route("/{id}/edit", name="productcategory_edit")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function editAction($id)
     {
@@ -132,6 +138,7 @@ class ProductCategoryController extends Controller
      * @Route("/{id}/update", name="productcategory_update")
      * @Method("post")
      * @Template("JLMOfficeBundle:ProductCategory:edit.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function updateAction($id)
     {
@@ -169,6 +176,7 @@ class ProductCategoryController extends Controller
      *
      * @Route("/{id}/delete", name="productcategory_delete")
      * @Method("post")
+     * @Secure(roles="ROLE_USER")
      */
     public function deleteAction($id)
     {

@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Contract;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Form\ContractType;
@@ -23,6 +24,7 @@ class ContractController extends Controller
      *
      * @Route("/", name="contract")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function indexAction()
     {
@@ -38,6 +40,7 @@ class ContractController extends Controller
      *
      * @Route("/{id}/show", name="contract_show")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function showAction($id)
     {
@@ -61,6 +64,7 @@ class ContractController extends Controller
      *
      * @Route("/new/{id}", defaults={"id"=1}, name="contract_new")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function newAction(Trustee $trustee)
     {
@@ -82,6 +86,7 @@ class ContractController extends Controller
      * @Route("/create", name="contract_create")
      * @Method("post")
      * @Template("JLMOfficeBundle:Contract:new.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function createAction()
     {
@@ -110,6 +115,7 @@ class ContractController extends Controller
      *
      * @Route("/{id}/edit", name="contract_edit")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function editAction($id)
     {
@@ -137,6 +143,7 @@ class ContractController extends Controller
      * @Route("/{id}/update", name="contract_update")
      * @Method("post")
      * @Template("JLMOfficeBundle:Contract:edit.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function updateAction($id)
     {
@@ -174,6 +181,7 @@ class ContractController extends Controller
      *
      * @Route("/{id}/delete", name="contract_delete")
      * @Method("post")
+     * @Secure(roles="ROLE_USER")
      */
     public function deleteAction($id)
     {

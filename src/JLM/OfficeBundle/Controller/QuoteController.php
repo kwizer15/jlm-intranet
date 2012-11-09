@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Quote;
 use JLM\ModelBundle\Entity\QuoteLine;
 use JLM\ModelBundle\Form\QuoteType;
@@ -25,6 +26,7 @@ class QuoteController extends Controller
      * @Route("/", name="quote")
      * @Route("/page/{page}", name="quote_page")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function indexAction($page = 1)
     {
@@ -58,6 +60,7 @@ class QuoteController extends Controller
      *
      * @Route("/{id}/show", name="quote_show")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function showAction(Quote $entity)
     {
@@ -69,6 +72,7 @@ class QuoteController extends Controller
      *
      * @Route("/new", name="quote_new")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function newAction()
     {
@@ -94,6 +98,7 @@ class QuoteController extends Controller
      * @Route("/create", name="quote_create")
      * @Method("post")
      * @Template("JLMOfficeBundle:Quote:new.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function createAction(Request $request)
     {
@@ -131,6 +136,7 @@ class QuoteController extends Controller
      *
      * @Route("/{id}/edit", name="quote_edit")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function editAction(Quote $entity)
     {
@@ -150,6 +156,7 @@ class QuoteController extends Controller
      * @Route("/{id}/update", name="quote_update")
      * @Method("post")
      * @Template("JLMOfficeBundle:Quote:edit.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function updateAction(Request $request, Quote $entity)
     {
@@ -195,6 +202,7 @@ class QuoteController extends Controller
      * Valid a Quote entity.
      *
      * @Route("/{id}/valid", name="quote_valid")
+     * @Secure(roles="ROLE_USER")
      */
     public function validAction(Request $request, Quote $entity)
     {
@@ -209,6 +217,7 @@ class QuoteController extends Controller
      * dévalide a Quote entity.
      *
      * @Route("/{id}/unvalid", name="quote_unvalid")
+     * @Secure(roles="ROLE_USER")
      */
     public function unvalidAction(Request $request, Quote $entity)
     {
@@ -225,6 +234,7 @@ class QuoteController extends Controller
      * Send a Quote entity.
      *
      * @Route("/{id}/send", name="quote_send")
+     * @Secure(roles="ROLE_USER")
      */
     public function sendAction(Request $request, Quote $entity)
     {
@@ -241,6 +251,7 @@ class QuoteController extends Controller
      * Given a Quote entity.
      *
      * @Route("/{id}/given", name="quote_given")
+     * @Secure(roles="ROLE_USER")
      */
     public function givenAction(Request $request, Quote $entity)
     {
@@ -258,6 +269,7 @@ class QuoteController extends Controller
      *
      * @Route("/{id}/delete", name="quote_delete")
      * @Method("post")
+     * @Secure(roles="ROLE_USER")
      */
     public function deleteAction(Request $request, Quote $quote)
     {
@@ -282,6 +294,7 @@ class QuoteController extends Controller
      * Autocompletion générale
      * @Route("/autocomplete", name="quote_autocompletion")
      * @Method("post")
+     * @Secure(roles="ROLE_USER")
      */
     public function autocompletionAction(Request $request)
     {
@@ -314,6 +327,7 @@ class QuoteController extends Controller
      *
      * @Route("/autocomplete/door", name="quote_auto_door")
      * @Method("post")
+     * @Secure(roles="ROLE_USER")
      */
     public function autodoorAction(Request $request)
     {
@@ -333,6 +347,7 @@ class QuoteController extends Controller
      *
      * @Route("/autocomplete/trustee", name="quote_auto_trustee")
      * @Method("post")
+     * @Secure(roles="ROLE_USER")
      */
     public function autotrusteeAction(Request $request)
     {
@@ -352,7 +367,8 @@ class QuoteController extends Controller
     *
     * @Route("/autocomplete/product/reference", name="quote_auto_product_reference")
     * @Method("post")
-    */
+    * @Secure(roles="ROLE_USER")
+     */
    public function autoproductreferenceAction(Request $request)
    {
    	$query = $request->request->get('term');
@@ -371,7 +387,8 @@ class QuoteController extends Controller
     *
     * @Route("/autocomplete/product/designation", name="quote_auto_product_designation")
     * @Method("post")
-    */
+    * @Secure(roles="ROLE_USER")
+     */
    public function autoproductdesignationAction(Request $request)
    {
    	$query = $request->request->get('term');
@@ -390,7 +407,8 @@ class QuoteController extends Controller
     *
     * @Route("/autocomplete/intro", name="quote_auto_intro")
     * @Method("post")
-    */
+    * @Secure(roles="ROLE_USER")
+     */
    public function autointroAction(Request $request)
    {
    	$query = $request->request->get('term');
@@ -409,7 +427,8 @@ class QuoteController extends Controller
     *
     * @Route("/autocomplete/delay", name="quote_auto_delay")
     * @Method("post")
-    */
+    * @Secure(roles="ROLE_USER")
+     */
    public function autodelayAction(Request $request)
    {
    	$query = $request->request->get('term');
@@ -428,7 +447,8 @@ class QuoteController extends Controller
     *
     * @Route("/autocomplete/payment", name="quote_auto_payment")
     * @Method("post")
-    */
+    * @Secure(roles="ROLE_USER")
+     */
    public function autopaymentAction(Request $request)
    {
    	$query = $request->request->get('term');
@@ -447,7 +467,8 @@ class QuoteController extends Controller
     *
     * @Route("/autocomplete/contact", name="quote_auto_contact")
     * @Method("post")
-    */
+    * @Secure(roles="ROLE_USER")
+     */
    public function autocontactAction(Request $request)
    {
    	$query = $request->request->get('term');
@@ -463,7 +484,8 @@ class QuoteController extends Controller
    
    /**
     * @Route("/{id}/pdf",name="quote_pdf")
-    */
+    * @Secure(roles="ROLE_USER")
+     */
    public function pdfAction(Quote $entity)
    {
 	   	if (!$entity->isValid())
@@ -490,7 +512,8 @@ class QuoteController extends Controller
      /*  for ($x = 0; $x < 300; $x += 10)
         	for ($y  = 0; $y < 300; $y += 10)
         		$pdf->rect($x,$y,10,10);
-      */  
+      * @Secure(roles="ROLE_USER")
+     */  
         
         $pdf->setFillColor(200);
         $pdf->setLeftMargin(4);

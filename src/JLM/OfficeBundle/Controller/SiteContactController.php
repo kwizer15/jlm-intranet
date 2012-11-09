@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\SiteContact;
 use JLM\ModelBundle\Form\SiteContactType;
@@ -23,6 +24,7 @@ class SiteContactController extends Controller
      *
      * @Route("/", name="sitecontact")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function indexAction()
     {
@@ -40,6 +42,7 @@ class SiteContactController extends Controller
      *
      * @Route("/{id}/show", name="sitecontact_show")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function showAction($id)
     {
@@ -65,6 +68,7 @@ class SiteContactController extends Controller
      * @Route("/new", name="sitecontact_new")
      * @Route("/new/{id}", name="sitecontact_new_id")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function newAction(Site $site = null)
     {
@@ -86,6 +90,7 @@ class SiteContactController extends Controller
      * @Route("/create", name="sitecontact_create")
      * @Method("POST")
      * @Template("JLMOfficeBundle:SiteContact:new.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function createAction(Request $request)
     {
@@ -113,6 +118,7 @@ class SiteContactController extends Controller
      *
      * @Route("/{id}/edit", name="sitecontact_edit")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function editAction($id)
     {
@@ -140,6 +146,7 @@ class SiteContactController extends Controller
      * @Route("/{id}/update", name="sitecontact_update")
      * @Method("POST")
      * @Template("JLMOfficeBundle:SiteContact:edit.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function updateAction(Request $request, $id)
     {
@@ -175,6 +182,7 @@ class SiteContactController extends Controller
      *
      * @Route("/{id}/delete", name="sitecontact_delete")
      * @Method("POST")
+     * @Secure(roles="ROLE_USER")
      */
     public function deleteAction(Request $request, $id)
     {

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Transmitter;
 use JLM\ModelBundle\Entity\Product;
 use JLM\ModelBundle\Form\ProductType;
@@ -24,6 +25,7 @@ class ProductController extends Controller
      * @Route("/page/{page}", name="product_page")
      * @Route("/page/{page}/{limit}", name="product_page_limit")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function indexAction($page = 1, $limit = 15)
     {
@@ -55,6 +57,7 @@ class ProductController extends Controller
      *
      * @Route("/{id}/show", name="product_show")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function showAction($id)
     {
@@ -78,6 +81,7 @@ class ProductController extends Controller
      *
      * @Route("/new", name="product_new")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function newAction()
     {
@@ -103,6 +107,7 @@ class ProductController extends Controller
      * @Route("/create", name="product_create")
      * @Method("post")
      * @Template("JLMOfficeBundle:Product:new.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function createAction()
     {
@@ -141,6 +146,7 @@ class ProductController extends Controller
      *
      * @Route("/{id}/edit", name="product_edit")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function editAction($id)
     {
@@ -168,6 +174,7 @@ class ProductController extends Controller
      * @Route("/{id}/update", name="product_update")
      * @Method("post")
      * @Template("JLMOfficeBundle:Product:edit.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function updateAction($id)
     {
@@ -205,6 +212,7 @@ class ProductController extends Controller
      *
      * @Route("/{id}/delete", name="product_delete")
      * @Method("post")
+     * @Secure(roles="ROLE_USER")
      */
     public function deleteAction($id)
     {

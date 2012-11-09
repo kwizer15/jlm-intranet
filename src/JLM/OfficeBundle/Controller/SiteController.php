@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Form\SiteType;
@@ -23,6 +24,7 @@ class SiteController extends Controller
      *
      * @Route("/", name="site")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function indexAction()
     {
@@ -40,6 +42,7 @@ class SiteController extends Controller
      *
      * @Route("/{id}/show", name="site_show")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function showAction($id)
     {
@@ -65,6 +68,7 @@ class SiteController extends Controller
      * @Route("/new", name="site_new")
      * @Route("/new/{id}", requirements={"id" = "\d+"}, name="site_new_id")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function newAction(Trustee $trustee = null)
     {
@@ -86,6 +90,7 @@ class SiteController extends Controller
      * @Route("/create", name="site_create")
      * @Method("POST")
      * @Template("JLMOfficeBundle:Site:new.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function createAction(Request $request)
     {
@@ -113,6 +118,7 @@ class SiteController extends Controller
      *
      * @Route("/{id}/edit", name="site_edit")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function editAction($id)
     {
@@ -140,6 +146,7 @@ class SiteController extends Controller
      * @Route("/{id}/update", name="site_update")
      * @Method("POST")
      * @Template("JLMOfficeBundle:Site:edit.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function updateAction(Request $request, $id)
     {
@@ -175,6 +182,7 @@ class SiteController extends Controller
      *
      * @Route("/{id}/delete", name="site_delete")
      * @Method("POST")
+     * @Secure(roles="ROLE_USER")
      */
     public function deleteAction(Request $request, $id)
     {

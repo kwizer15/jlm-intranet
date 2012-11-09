@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Form\DoorType;
@@ -22,6 +23,7 @@ class DoorController extends Controller
      *
      * @Route("/", name="door")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function indexAction()
     {
@@ -37,6 +39,7 @@ class DoorController extends Controller
      *
      * @Route("/{id}/show", name="door_show")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function showAction($id)
     {
@@ -62,6 +65,7 @@ class DoorController extends Controller
      * @Route("/new", name="door_new")
      * @Route("/new/{id}", name="door_new_id")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function newAction(Site $site = null)
     {
@@ -85,6 +89,7 @@ class DoorController extends Controller
      * @Route("/create", name="door_create")
      * @Method("post")
      * @Template("JLMOfficeBundle:Door:new.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function createAction()
     {
@@ -113,6 +118,7 @@ class DoorController extends Controller
      *
      * @Route("/{id}/edit", name="door_edit")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function editAction($id)
     {
@@ -140,6 +146,7 @@ class DoorController extends Controller
      * @Route("/{id}/update", name="door_update")
      * @Method("post")
      * @Template("JLMOfficeBundle:Door:edit.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function updateAction($id)
     {
@@ -177,6 +184,7 @@ class DoorController extends Controller
      *
      * @Route("/{id}/delete", name="door_delete")
      * @Method("post")
+     * @Secure(roles="ROLE_USER")
      */
     public function deleteAction($id)
     {
