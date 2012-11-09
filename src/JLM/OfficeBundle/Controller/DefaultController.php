@@ -22,33 +22,4 @@ class DefaultController extends Controller
     {
         return array('name'=>'Bonjour');
     }
-    
-    /**
-     * @Route("/testpdf")
-     */
-    public function testpdfAction()
-    {
-    	$pdf = new \FPDI();
-   // 	var_dump($pdf); exit;
-    	$pageCount = $pdf->setSourceFile($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/pdf/test.pdf');
-    	$onlyPage = $pdf->importPage(1, '/MediaBox');
-    //	$firstPage = $pdf->importPage(2, '/MediaBox');
-    //	$middlePage = $pdf->importPage(3, '/MediaBox');
-    //	$endPage = $pdf->importPage(4 '/MediaBox');
-    	
-    	// Premiere page
-    	$pdf->addPage();
-    	$pdf->useTemplate($onlyPage);
-    	
-    	$pdf->setFont('Arial','B',16);
-    	$pdf->cell(40,10,'Hello World !');
-    	$content = $pdf->Output('','S');
-    	
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/pdf');
-    	$response->headers->set('Content-Disposition', 'inline; filename=essai.pdf');
-    	$response->setContent($content);
-    	
-    	return $response;
-    }
 }
