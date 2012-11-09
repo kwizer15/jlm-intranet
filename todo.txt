@@ -1,7 +1,4 @@
 Devis	
-    - pdf : a faire (trouver une solution maintenable)
-		cf PDFlib (/usr/lib/php5/..../*.so)
-    
     - Envoi d'e-mail avec devis en pièce jointe
     
     - Mettre l'utilisateur en cours dans "Suivi par"
