@@ -126,7 +126,7 @@
 		{% if entity.given == false %}
 			<a href="{{ path('quote_unvalid', { 'id': entity.id }) }}" class="btn btn-inverse"><i class="icon-remove icon-white"></i> Invalider</a>
 		{% endif %}
-	<a href="{{ path('quote_send', { 'id': entity.id }) }}" class="btn btn-info"><i class="icon-envelope icon-white"></i> Envoyer par e-mail</a>
+	<a href="{{ path('quote_mail', { 'id': entity.id }) }}" class="btn btn-info"><i class="icon-envelope icon-white"></i> Envoyer par e-mail</a>
 	<a href="{{ path('quote_pdf', { 'id': entity.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer</a>
 		
 	{% else %}

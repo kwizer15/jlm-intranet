@@ -623,4 +623,170 @@ class Quote extends Document
     	$total *= (1-$this->getDiscount());
     	return $total;
     }
+    
+    /**
+     * Get PDF content
+     */
+    public function getPdf()
+    {
+    	$entity = $this;
+    	$pdf = new \FPDI();
+    	
+    	// Template
+    	$pageCount = $pdf->setSourceFile($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/pdf/devis.pdf');
+    	$onlyPage = $pdf->importPage(1, '/MediaBox');
+    	//	$firstPage = $pdf->importPage(2, '/MediaBox');
+    	//	$middlePage = $pdf->importPage(3, '/MediaBox');
+    	//	$endPage = $pdf->importPage(4 '/MediaBox');
+    	 
+    	// Premiere page
+    	$pdf->addPage();
+    	$pdf->useTemplate($onlyPage);
+    	
+    	/* Cadrillage */
+    	/*  for ($x = 0; $x < 300; $x += 10)
+    	 for ($y  = 0; $y < 300; $y += 10)
+    		$pdf->rect($x,$y,10,10);
+    	* @Secure(roles="ROLE_USER")
+    	*/
+    	
+    	$pdf->setFillColor(200);
+    	$pdf->setLeftMargin(4);
+    	// Follower
+    	$pdf->setFont('Arial','BU',11);
+    	$pdf->setY(63);
+    	$pdf->cell(20,7,utf8_decode('suivi par : '),0,0);
+    	$pdf->setFont('Arial','B',11);
+    	$pdf->cell(65,7,utf8_decode($entity->getFollowerCp()),0,1);
+    	
+    	// Door
+    	$pdf->setFont('Arial','BU',11);
+    	$pdf->cell(15,5,utf8_decode('affaire : '),0,0);
+    	$pdf->setFont('Arial','',11);
+    	$pdf->multiCell(90,5,utf8_decode($entity->getDoorCp()));
+    	
+    	 
+    	// Trustee
+    	$pdf->setXY(130,69.5);
+    	$pdf->multiCell(80,5,utf8_decode($entity->getTrusteeName().chr(10).$entity->getTrusteeAddress()));
+    	
+    	// Contact
+    	$pdf->setFont('Arial','',10);
+    	$pdf->setXY(130,93);
+    	$pdf->cell(40,5,utf8_decode('à l\'attention de '.$entity->getContactCp()),0,1);
+    	
+    	// Création
+    	$pdf->setFont('Arial','B',10);
+    	$pdf->setY(93);
+    	$pdf->cell(22,6,'Date','LRT',0,'C',true);
+    	$pdf->cell(19,6,utf8_decode('Devis n°'),'LRT',1,'C',true);
+    	$pdf->setFont('Arial','',10);
+    	$pdf->cell(22,6,$entity->getCreation()->format('d/m/Y'),'LRB',0,'C');
+    	$pdf->cell(19,6,$entity->getNumber(),'LRB',1,'C');
+    	
+    	$pdf->cell(0,3,'',0,1);
+    	
+    	// En tête lignes
+    	$pdf->setFont('Arial','B',10);
+    	
+    	$pdf->cell(22,6,utf8_decode('Référence'),1,0,'C',true);
+    	$pdf->cell(19,6,utf8_decode('Quantité'),1,0,'C',true);
+    	$pdf->cell(101,6,utf8_decode('Désignation'),1,0,'C',true);
+    	$pdf->cell(24.5,6,utf8_decode('Prix U.H.T'),1,0,'C',true);
+    	$pdf->cell(25,6,utf8_decode('Prix H.T'),1,1,'C',true);
+    	
+    	
+    	
+    	// Lignes
+    	$pdf->setFont('Arial','',10);
+    	$lines = $entity->getLines();
+    	foreach ($lines as $line)
+    	{
+    		$pdf->cell(22,7,utf8_decode($line->getReference()),'RL',0);
+    		$pdf->cell(19,7,$line->getQuantity(),'RL',0,'R');
+    		$pdf->cell(101,7,utf8_decode($line->getDesignation()),'RL',0);
+    		$pdf->cell(24.5,7,number_format($line->getUnitPrice()*(1-$line->getDiscount()),2,',',' ').' '.chr(128),'RL',0,'R');
+    		$pdf->cell(25,7,number_format($line->getPrice(),2,',',' ').' '.chr(128),'RL',1,'R');
+    		if ($line->getShowDescription())
+    		{
+    			$y = $pdf->getY() - 2;
+    			$pdf->setXY(45,$y);
+    			$pdf->setFont('Arial','I',10);
+    			$pdf->multiCell(101,5,utf8_decode($line->getDescription()),0,1);
+    			$pdf->setFont('Arial','',10);
+    			$h = $pdf->getY() - $y;
+    			$pdf->setY($y);
+    			$pdf->cell(22,$h,'','RL',0);
+    			$pdf->cell(19,$h,'','RL',0);
+    			$pdf->cell(101,$h,'','RL',0);
+    			$pdf->cell(24.5,$h,'','RL',0);
+    			$pdf->cell(25,$h,'','RL',1);
+    	
+    		}
+    	}
+    	$h=20;
+    	$pdf->cell(22,$h,'','RL',0);
+    	$pdf->cell(19,$h,'','RL',0);
+    	$pdf->cell(101,$h,'','RL',0);
+    	$pdf->cell(24.5,$h,'','RL',0);
+    	$pdf->cell(25,$h,'','RL',1);
+    	$pdf->setFont('Arial','B',10);
+    	$pdf->cell(166.5,6,'MONTANT TOTAL H.T',1,0,'R',true);
+    	$pdf->cell(25,6,number_format($entity->getTotalPrice(),2,',',' ').' '.chr(128),1,1,'R',true);
+    	 
+    	$pdf->setFont('Arial','',10);
+    	$pdf->cell(22,6,'Tx T.V.A',1,0,'R');
+    	$pdf->cell(19,6,number_format($entity->getVat()*100,1,',',' ').' %',1,0,'R');
+    	$pdf->cell(101,6,'',1,0);
+    	$pdf->setFont('Arial','B',10);
+    	$pdf->cell(24.5,6,'montant TVA',1,0);
+    	$pdf->cell(25,6,number_format($entity->getTotalVat(),2,',',' ').' '.chr(128),1,1,'R');
+    	 
+    	$pdf->cell(142,6,'',1,0);
+    	$pdf->cell(24.5,6,'TOTAL T.T.C',1,0);
+    	$pdf->cell(25,6,number_format($entity->getTotalPriceAti(),2,',',' ').' '.chr(128),1,1,'R');
+    	 
+    	$pdf->cell(0,6,'',0,1);
+    	 
+    	// Observations
+    	$pdf->setFont('Arial','',10);
+    	$pdf->cell(142,6,utf8_decode('Réservé au client'),1,0,'C',true);
+    	$pdf->cell(49.5,6,utf8_decode('BON POUR ACCORD'),1,1,'C',true);
+    	$pdf->setFont('Arial','IU',10);
+    	$pdf->cell(142,6,utf8_decode('Observations éventuelles'),'LR',0,'C');
+    	$pdf->cell(49.5,6,utf8_decode('Tampon, date et signature'),'LR',1,'C');
+    	$pdf->cell(142,20,'','LRB',0);
+    	$pdf->cell(49.5,20,'','LRB',1);
+    	 
+    	// Réglement
+    	$pdf->cell(0,6,'',0,1);
+    	$pdf->setFont('Arial','BU',10);
+    	$pdf->cell(0,5,utf8_decode('Réglement'),0,1);
+    	$pdf->setFont('Arial','',10);
+    	$pdf->cell(0,5,utf8_decode($entity->getPaymentRules()),0,1);
+    	 
+    	// Délais
+    	$pdf->cell(0,6,'',0,1);
+    	$pdf->setFont('Arial','BU',10);
+    	$pdf->cell(0,5,utf8_decode('Délais'),0,1);
+    	$pdf->setFont('Arial','',10);
+    	$pdf->cell(0,5,utf8_decode($entity->getDeliveryRules()),0,1);
+    	 
+    	// Délais
+    	 
+    	$ct = substr($entity->getContactCp(),0,2);
+    	if ($ct == 'M.')
+    		$who = 'Monsieur';
+    	elseif ($ct == 'Mm')
+    	$who = 'Madame';
+    	elseif ($ct == 'Ml')
+    	$who = 'Mademoiselle';
+    	else
+    		$who = 'Madame, Monsieur';
+    	$pdf->cell(0,6,'',0,1);
+    	$pdf->multiCell(0,5,utf8_decode('Nous vous en souhaitons bonne récéption et vous prions d\'agréer, '.$who.' l\'expression de nos'.chr(10).'sentiments les meilleurs.'),0,1);
+    	 
+    	 
+    	return $pdf->Output('','S');
+    }
 }

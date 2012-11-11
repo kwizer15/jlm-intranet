@@ -7,7 +7,7 @@ parameters:
     database_password: sslover
 
     mailer_transport:  smtp
-    mailer_host:       localhost
+    mailer_host:       192.168.16.2
     mailer_user:       ~
     mailer_password:   ~
 
