@@ -34,13 +34,12 @@ class QuotePDF extends \FPDI
 		$this->cell(20,7,utf8_decode('suivi par : '),0,0);
 		$this->setFont('Arial','B',11);
 		$this->cell(65,7,utf8_decode($entity->getFollowerCp()),0,1);
-			
+		
 		// Door
 		$this->setFont('Arial','BU',11);
 		$this->cell(15,5,utf8_decode('affaire : '),0,0);
 		$this->setFont('Arial','',11);
 		$this->multiCell(90,5,utf8_decode($entity->getDoorCp()));
-			
 		
 		// Trustee
 		$this->setXY(130,69.5);

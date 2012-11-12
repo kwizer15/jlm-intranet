@@ -1,3 +1,6 @@
+
+
+
 Devis	
     - Envoi d'e-mail avec devis en pièce jointe
     
@@ -45,3 +48,9 @@ Syndic
 	
 Site
     - index : à modifier pour recherche
+    
+    
+------------------------------------------------
+Journal de bord
+-----------------------------------------------
+Rapport d'intervention client (PDF)
