@@ -540,13 +540,16 @@ class QuoteController extends Controller
 	   	$em->persist($entity);
 	   	$em->flush();
    	
-        $content = $entity->getPDF();
+    //    $content = $entity->getPDF();
+	   	
+	   	
 	   	
         $response = new Response();
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
-        $response->setContent($content);
+        $response->setContent($this->render('JLMOfficeBundle:Quote:older.pdf.php',array('entity'=>$entity)));
          
+     //   return array('entity'=>$entity);
         return $response;
    }
 }

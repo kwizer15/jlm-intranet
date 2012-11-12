@@ -778,13 +778,13 @@ class Quote extends Document
     	if ($ct == 'M.')
     		$who = 'Monsieur';
     	elseif ($ct == 'Mm')
-    	$who = 'Madame';
+    		$who = 'Madame';
     	elseif ($ct == 'Ml')
-    	$who = 'Mademoiselle';
+    		$who = 'Mademoiselle';
     	else
     		$who = 'Madame, Monsieur';
     	$pdf->cell(0,6,'',0,1);
-    	$pdf->multiCell(0,5,utf8_decode('Nous vous en souhaitons bonne récéption et vous prions d\'agréer, '.$who.' l\'expression de nos'.chr(10).'sentiments les meilleurs.'),0,1);
+    	$pdf->multiCell(0,5,utf8_decode('Nous vous en souhaitons bonne réception et vous prions d\'agréer, '.$who.' l\'expression de nos'.chr(10).'sentiments les meilleurs.'),0,1);
     	 
     	 
     	return $pdf->Output('','S');
