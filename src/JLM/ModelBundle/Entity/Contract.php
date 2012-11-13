@@ -3,7 +3,6 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * JLM\ModelBundle\Entity\Contract
@@ -30,25 +29,27 @@ class Contract
     private $number;
 
     /**
-     * @var ContractType $type
+     * Contrat complet
+     * @var bool $complete
      * 
-     * @ORM\ManyToOne(targetEntity="ContractType")
+     * @ORM\Column(name="complete", type="boolean")
      */
-    private $type;
+    private $complete;
     
     /**
-     * @var Trustee $trustee
-     * 
-     * @ORM\ManyToOne(targetEntity="Trustee", inversedBy="contracts")
+     * Contract C1 C2...
+     * @var smallint $option
+     *
+     * @ORM\Column(name="option", type="smallint")
      */
-    private $trustee;
+    private $option;
     
     /**
      * @var Door $door
      * 
-     * @ORM\ManyToMany(targetEntity="Door", inversedBy="contracts")
+     * @ORM\ManyToOne(targetEntity="Door")
      */
-    private $doors;
+    private $door;
     
     /**
      * @var datetime $begin
@@ -77,15 +78,15 @@ class Contract
      * @ORM\Column(name="turnover", type="decimal")
      */
     private $turnover;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->doors = new \Doctrine\Common\Collections\ArrayCollection();
-    }
     
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+    	return ($this->isComplete() ? 'C' : 'N').$this->getOption();
+    }
+
     /**
      * Get id
      *
@@ -117,6 +118,95 @@ class Contract
     public function getNumber()
     {
         return $this->number;
+    }
+
+    /**
+     * Set complete
+     *
+     * @param boolean $complete
+     * @return Contract
+     */
+    public function setComplete($complete = true)
+    {
+        $this->complete = $complete;
+    
+        return $this;
+    }
+
+    /**
+     * Get complete
+     *
+     * @return boolean 
+     */
+    public function getComplete()
+    {
+        return $this->complete;
+    }
+    
+    /**
+     * Is complete
+     *
+     * @return boolean
+     */
+    public function isComplete()
+    {
+    	return $this->getComplete();
+    }
+
+    /**
+     * Set normal
+     *
+     * @param boolean $normal
+     * @return Contract
+     */
+    public function setNormal($normal = true)
+    {
+    	$this->complete = !$normal;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get normal
+     *
+     * @return boolean
+     */
+    public function getNormal()
+    {
+    	return !$this->getComplete();
+    }
+    
+    /**
+     * Is normal
+     *
+     * @return boolean
+     */
+    public function isNormal()
+    {
+    	return $this->getNormal();
+    }
+    
+    /**
+     * Set option
+     *
+     * @param integer $option
+     * @return Contract
+     */
+    public function setOption($option)
+    {
+        $this->option = $option;
+    
+        return $this;
+    }
+
+    /**
+     * Get option
+     *
+     * @return integer 
+     */
+    public function getOption()
+    {
+        return $this->option;
     }
 
     /**
@@ -212,81 +302,25 @@ class Contract
     }
 
     /**
-     * Set type
+     * Set door
      *
-     * @param JLM\ModelBundle\Entity\ContractType $type
+     * @param JLM\ModelBundle\Entity\Door $door
      * @return Contract
      */
-    public function setType(\JLM\ModelBundle\Entity\ContractType $type = null)
+    public function setDoor(\JLM\ModelBundle\Entity\Door $door = null)
     {
-        $this->type = $type;
+        $this->door = $door;
     
         return $this;
     }
 
     /**
-     * Get type
+     * Get door
      *
-     * @return JLM\ModelBundle\Entity\ContractType 
+     * @return JLM\ModelBundle\Entity\Door 
      */
-    public function getType()
+    public function getDoor()
     {
-        return $this->type;
-    }
-
-    /**
-     * Set trustee
-     *
-     * @param JLM\ModelBundle\Entity\Trustee $trustee
-     * @return Contract
-     */
-    public function setTrustee(\JLM\ModelBundle\Entity\Trustee $trustee = null)
-    {
-        $this->trustee = $trustee;
-    
-        return $this;
-    }
-
-    /**
-     * Get trustee
-     *
-     * @return JLM\ModelBundle\Entity\Trustee 
-     */
-    public function getTrustee()
-    {
-        return $this->trustee;
-    }
-
-    /**
-     * Add doors
-     *
-     * @param JLM\ModelBundle\Entity\Door $doors
-     * @return Contract
-     */
-    public function addDoor(\JLM\ModelBundle\Entity\Door $doors)
-    {
-        $this->doors[] = $doors;
-    
-        return $this;
-    }
-
-    /**
-     * Remove doors
-     *
-     * @param JLM\ModelBundle\Entity\Door $doors
-     */
-    public function removeDoor(\JLM\ModelBundle\Entity\Door $doors)
-    {
-        $this->doors->removeElement($doors);
-    }
-
-    /**
-     * Get doors
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getDoors()
-    {
-        return $this->doors;
+        return $this->door;
     }
 }
