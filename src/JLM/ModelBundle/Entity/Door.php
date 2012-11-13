@@ -39,14 +39,6 @@ class Door
     private $street;
     
     /**
-     * Contrats concernant la porte
-     * @var Contract[] $contracts
-     * 
-     * ORM\ManyToMany(targetEntity="Contract", mappedBy="doors")
-     */
-   // private $contracts;
-    
-    /**
      * Type de porte
      * @var DoorType $type
      * 
@@ -85,14 +77,6 @@ class Door
      * 		)
      */
     private $transmitters;
-   
-    /**
-     * Devis concernant la porte
-     * @var Document[] $documents
-     *
-     * @ORM\OneToMany(targetEntity="Document",mappedBy="trustee")
-     */
-    private $documents;
     
     /**
      * @var float Google Maps (Street)
@@ -120,9 +104,7 @@ class Door
      */
     public function __construct()
     {
-//    	$this->contracts = new ArrayCollection;
     	$this->parts = new ArrayCollection;
-    	$this->documents = new ArrayCollection;
     	$this->transmitters = new ArrayCollection;
     }
 
@@ -254,39 +236,6 @@ class Door
         return $this->site;
     }
 
-//    /**
-//     * Add contracts
-//     *
-//     * @param JLM\ModelBundle\Entity\Contract $contracts
-//     * @return Door
-//     */
-//    public function addContract(\JLM\ModelBundle\Entity\Contract $contracts)
-//    {
-//        $this->contracts[] = $contracts;
-//    
-//        return $this;
-//    }
-//
-//    /**
-//     * Remove contracts
-//     *
-//     * @param JLM\ModelBundle\Entity\Contract $contracts
-//     */
-//    public function removeContract(\JLM\ModelBundle\Entity\Contract $contracts)
-//    {
-//        $this->contracts->removeElement($contracts);
-//    }
-//
-//    /**
-//     * Get contracts
-//     *
-//     * @return Doctrine\Common\Collections\Collection 
-//     */
-//    public function getContracts()
-//    {
-//        return $this->contracts;
-//    }
-
     /**
      * Set type
      *
@@ -374,39 +323,6 @@ class Door
     public function getTransmitters()
     {
         return $this->transmitters;
-    }
-
-    /**
-     * Add documents
-     *
-     * @param JLM\ModelBundle\Entity\Document $documents
-     * @return Door
-     */
-    public function addDocument(\JLM\ModelBundle\Entity\Document $documents)
-    {
-        $this->documents[] = $documents;
-    
-        return $this;
-    }
-
-    /**
-     * Remove documents
-     *
-     * @param JLM\ModelBundle\Entity\Document $documents
-     */
-    public function removeDocument(\JLM\ModelBundle\Entity\Document $documents)
-    {
-        $this->documents->removeElement($documents);
-    }
-
-    /**
-     * Get documents
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getDocuments()
-    {
-        return $this->documents;
     }
     
     /**

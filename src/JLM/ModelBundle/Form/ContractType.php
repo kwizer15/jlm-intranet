@@ -10,13 +10,15 @@ class ContractType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+        	->add('door','door_hidden')
         	->add('trustee','trustee_select',array('label'=>'Syndic'))
             ->add('number',null,array('label'=>'Numéro'))
-            ->add('type',null,array('label'=>'Type','attr'=>array('class'=>'input-mini')))
+            ->add('complete','choice',array('label'=>'Type','choices'=>array('0'=>'Normal','1'=>'Complet'),'attr'=>array('class'=>'input-small')))
+            ->add('option',null,array('label'=>'Option','attr'=>array('class'=>'input-mini')))
             ->add('begin','datepicker',array('label'=>'Début du contrat'))		
             ->add('endWarranty','datepicker',array('label'=>'Fin de garantie','required'=>false))           
-            ->add('turnover','money',array('label'=>'CA','attr'=>array('class'=>'input-small')))
-            ->add('door',new ContractDoorType,array('label'=>'Porte'))
+            ->add('fee','money',array('label'=>'Redevance annuelle','attr'=>array('class'=>'input-small')))
+            
         ;
     }
 

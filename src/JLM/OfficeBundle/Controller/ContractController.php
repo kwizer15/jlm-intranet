@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Contract;
-use JLM\ModelBundle\Entity\Trustee;
+use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Form\ContractType;
 
 /**
@@ -62,15 +62,19 @@ class ContractController extends Controller
     /**
      * Displays a form to create a new Contract entity.
      *
-     * @Route("/new/{id}", defaults={"id"=1}, name="contract_new")
+     * @Route("/new/{id}", name="contract_new")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function newAction(Trustee $trustee)
+    public function newAction(Door $door)
     {
         $entity = new Contract();
-        if (!empty($trustee))
-        	$entity->setTrustee($trustee);
+        if (!empty($door))
+        {
+        	$entity->setDoor($door);
+        	$entity->setTrustee($door->getSite()->getTrustee());
+        }
+  
         $entity->setBegin(new \DateTime);
         $form   = $this->createForm(new ContractType(), $entity);
 

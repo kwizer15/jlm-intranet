@@ -29,6 +29,13 @@ class Contract
     private $number;
 
     /**
+     * @var Trustee $trustee
+     * 
+     * @ORM\ManyToOne(targetEntity="Trustee")
+     */
+    private $trustee;
+    
+    /**
      * Contrat complet
      * @var bool $complete
      * 
@@ -73,11 +80,11 @@ class Contract
     private $end;
 
     /**
-     * @var decimal $turnover
+     * @var decimal $fee
      *
-     * @ORM\Column(name="turnover", type="decimal")
+     * @ORM\Column(name="fee", type="decimal")
      */
-    private $turnover;
+    private $fee;
     
     /**
      * To String
@@ -279,26 +286,26 @@ class Contract
     }
 
     /**
-     * Set turnover
+     * Set fee
      *
-     * @param float $turnover
+     * @param float $fee
      * @return Contract
      */
-    public function setTurnover($turnover)
+    public function setFee($fee)
     {
-        $this->turnover = $turnover;
+        $this->fee = $fee;
     
         return $this;
     }
 
     /**
-     * Get turnover
+     * Get fee
      *
      * @return float 
      */
-    public function getTurnover()
+    public function getFee()
     {
-        return $this->turnover;
+        return $this->fee;
     }
 
     /**
@@ -322,5 +329,28 @@ class Contract
     public function getDoor()
     {
         return $this->door;
+    }
+
+    /**
+     * Set trustee
+     *
+     * @param JLM\ModelBundle\Entity\Trustee $trustee
+     * @return Contract
+     */
+    public function setTrustee(\JLM\ModelBundle\Entity\Trustee $trustee = null)
+    {
+        $this->trustee = $trustee;
+    
+        return $this;
+    }
+
+    /**
+     * Get trustee
+     *
+     * @return JLM\ModelBundle\Entity\Trustee 
+     */
+    public function getTrustee()
+    {
+        return $this->trustee;
     }
 }

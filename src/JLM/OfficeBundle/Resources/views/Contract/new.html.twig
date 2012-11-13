@@ -2,6 +2,11 @@
 
 {% block content %}
 <h1>Nouveau contrat</h1>
+<address>
+<strong>Affaire</strong>
+<br>{{ entity.door | nl2br }}
+</address>
+
 
 {% form_theme form 'JLMOfficeBundle:Form:field_row.html.twig' %}
 
