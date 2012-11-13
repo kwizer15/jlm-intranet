@@ -66,6 +66,6 @@ class VAT
      */
     public function __toString()
     {
-    	return str_replace('.',',',number_format($this->rate,1)).' %';
+    	return str_replace('.',',',number_format($this->rate * 100,1)).' %';
     }
 }
