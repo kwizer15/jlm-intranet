@@ -60,7 +60,7 @@ class InterventionReport
      * Bon d'intervention
      * @var int $orderNumber
      * 
-     * @ORM\Column(name="order_number",type="int")
+     * @ORM\Column(name="order_number",type="integer")
      */
     private $orderNumber;
     
@@ -126,5 +126,120 @@ class InterventionReport
     public function getReport()
     {
         return $this->report;
+    }
+
+    /**
+     * Set orderNumber
+     *
+     * @param integer $orderNumber
+     * @return InterventionReport
+     */
+    public function setOrderNumber($orderNumber)
+    {
+        $this->orderNumber = $orderNumber;
+    
+        return $this;
+    }
+
+    /**
+     * Get orderNumber
+     *
+     * @return integer 
+     */
+    public function getOrderNumber()
+    {
+        return $this->orderNumber;
+    }
+
+    /**
+     * Set comments
+     *
+     * @param string $comments
+     * @return InterventionReport
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    
+        return $this;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return string 
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Set intervention
+     *
+     * @param JLM\DailyBundle\Entity\InterventionPlanned $intervention
+     * @return InterventionReport
+     */
+    public function setIntervention(\JLM\DailyBundle\Entity\InterventionPlanned $intervention = null)
+    {
+        $this->intervention = $intervention;
+    
+        return $this;
+    }
+
+    /**
+     * Get intervention
+     *
+     * @return JLM\DailyBundle\Entity\InterventionPlanned 
+     */
+    public function getIntervention()
+    {
+        return $this->intervention;
+    }
+
+    /**
+     * Set nature
+     *
+     * @param JLM\DailyBundle\Entity\Nature $nature
+     * @return InterventionReport
+     */
+    public function setNature(\JLM\DailyBundle\Entity\Nature $nature = null)
+    {
+        $this->nature = $nature;
+    
+        return $this;
+    }
+
+    /**
+     * Get nature
+     *
+     * @return JLM\DailyBundle\Entity\Nature 
+     */
+    public function getNature()
+    {
+        return $this->nature;
+    }
+
+    /**
+     * Set actionDone
+     *
+     * @param JLM\DailyBundle\Entity\ActionDone $actionDone
+     * @return InterventionReport
+     */
+    public function setActionDone(\JLM\DailyBundle\Entity\ActionDone $actionDone = null)
+    {
+        $this->actionDone = $actionDone;
+    
+        return $this;
+    }
+
+    /**
+     * Get actionDone
+     *
+     * @return JLM\DailyBundle\Entity\ActionDone 
+     */
+    public function getActionDone()
+    {
+        return $this->actionDone;
     }
 }

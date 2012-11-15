@@ -22,6 +22,7 @@ class InterventionScheduled
     private $id;
 
     /**
+     * Date du début de l'intervention (prévue)
      * @var \DateTime
      * 
      * @ORM\Column(name="scheduled_begin",type="datetime")
@@ -29,6 +30,7 @@ class InterventionScheduled
     private $scheduledBegin;
     
     /**
+     * Date de fin de l'intervention (prévue)
      * @var \DateTime
      *
      * @ORM\Column(name="scheduled_end",type="datetime")
@@ -45,12 +47,9 @@ class InterventionScheduled
     /**
      * @var Technician $technician
      * 
-     * @ORM\ManyToOne(targetEntity="Technician")
+     * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Technician")
      */
     private $technician;
-    
-    
-
 
     /**
      * Get id
@@ -63,48 +62,94 @@ class InterventionScheduled
     }
 
     /**
-     * Set creation
+     * Set scheduledBegin
      *
-     * @param \DateTime $creation
-     * @return Event
+     * @param \DateTime $scheduledBegin
+     * @return InterventionScheduled
      */
-    public function setCreation($creation)
+    public function setScheduledBegin($scheduledBegin)
     {
-        $this->creation = $creation;
+        $this->scheduledBegin = $scheduledBegin;
     
         return $this;
     }
 
     /**
-     * Get creation
+     * Get scheduledBegin
      *
      * @return \DateTime 
      */
-    public function getCreation()
+    public function getScheduledBegin()
     {
-        return $this->creation;
+        return $this->scheduledBegin;
     }
 
     /**
-     * Set reason
+     * Set scheduledEnd
      *
-     * @param string $reason
-     * @return Event
+     * @param \DateTime $scheduledEnd
+     * @return InterventionScheduled
      */
-    public function setReason($reason)
+    public function setScheduledEnd($scheduledEnd)
     {
-        $this->reason = $reason;
+        $this->scheduledEnd = $scheduledEnd;
     
         return $this;
     }
 
     /**
-     * Get reason
+     * Get scheduledEnd
      *
-     * @return string 
+     * @return \DateTime 
      */
-    public function getReason()
+    public function getScheduledEnd()
     {
-        return $this->reason;
+        return $this->scheduledEnd;
+    }
+
+    /**
+     * Set intervention
+     *
+     * @param JLM\DailyBundle\Entity\InterventionPlanned $intervention
+     * @return InterventionScheduled
+     */
+    public function setIntervention(\JLM\DailyBundle\Entity\InterventionPlanned $intervention = null)
+    {
+        $this->intervention = $intervention;
+    
+        return $this;
+    }
+
+    /**
+     * Get intervention
+     *
+     * @return JLM\DailyBundle\Entity\InterventionPlanned 
+     */
+    public function getIntervention()
+    {
+        return $this->intervention;
+    }
+
+    /**
+     * Set technician
+     *
+     * @param JLM\ModelBundle\Entity\Technician $technician
+     * @return InterventionScheduled
+     */
+    public function setTechnician(\JLM\ModelBundle\Entity\Technician $technician = null)
+    {
+        $this->technician = $technician;
+    
+        return $this;
+    }
+
+    /**
+     * Get technician
+     *
+     * @return JLM\ModelBundle\Entity\Technician 
+     */
+    public function getTechnician()
+    {
+        return $this->technician;
     }
 }

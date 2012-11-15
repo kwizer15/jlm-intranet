@@ -3,14 +3,15 @@
 namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JLM\ModelBundle\Entity\StringModel;
 
 /**
  * JLM\DailyBundle\Entity\ActionType
  *
- * @ORM\Table()
+ * @ORM\Table(name="action_types")
  * @ORM\Entity
  */
-class ActionType
+class ActionType extends StringModel
 {
     /**
      * @var integer $id
@@ -22,14 +23,6 @@ class ActionType
     private $id;
 
     /**
-     * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=255)
-     */
-    private $name;
-
-
-    /**
      * Get id
      *
      * @return integer 
@@ -37,28 +30,5 @@ class ActionType
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return ActionType
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 }
