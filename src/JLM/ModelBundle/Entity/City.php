@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="cities")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\CityRepository", readOnly=true)
  */
-class City
+class City extends StringModel
 {
     /**
      * @var integer $id
@@ -21,13 +21,6 @@ class City
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=255)
-     */
-    private $name;
 
     /**
      * @var string $zips
@@ -52,26 +45,6 @@ class City
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="countries")
  * @ORM\Entity(readOnly=true)
  */
-class Country
+class Country extends StringModel
 {
     /**
      * @var string $code
@@ -19,13 +19,6 @@ class Country
      * @ORM\Id
      */
     private $code;
-
-    /**
-     * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=255)
-     */
-    private $name;
 
     /**
      * Set code
@@ -45,33 +38,5 @@ class Country
     public function getCode()
     {
         return $this->code;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    /**
-     * To String
-     */
-    public function __toString()
-    {
-    	return $this->getName();
     }
 }
