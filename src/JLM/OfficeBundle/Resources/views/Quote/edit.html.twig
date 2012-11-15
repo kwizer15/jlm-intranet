@@ -19,17 +19,8 @@
 <script src="{{ asset("bundles/jlmoffice/js/quote.js") }}"></script>
 <script>
 $("body").quote({
-	 followersSource:'',
-	 doorsSource: '{{ path('quote_auto_door') }}',
-	 trusteesSource:'{{ path('quote_auto_trustee') }}',
-	 paymentSource:'{{ path('quote_auto_payment') }}',
-	 delaySource:'{{ path('quote_auto_delay') }}',
-	 introSource:'{{ path('quote_auto_intro') }}',
-	 contactsSource:'{{ path('quote_auto_contact') }}',
-	 	 
-	 lineCount:{{ edit_form.lines | length }},
-	 lineReferenceSource:'{{ path('quote_auto_product_reference') }}',
-	 lineDesignationSource:'{{ path('quote_auto_product_designation') }}',
+	 autoSource:'{{ path('autocomplete') }}',
+	 lineCount:{{ form.lines | length }}
 });
 </script>
 {% endblock %}

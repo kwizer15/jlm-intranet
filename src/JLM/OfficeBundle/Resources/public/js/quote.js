@@ -26,9 +26,10 @@
 			});
 		  
 		  
-		  $("#quote_doorCp").attr('data-source',this.options.doorsSource)
+		  $("#quote_doorCp").attr('data-source',this.options.autoSource)
 		                    .autocomplete({
 				source: function(request,response){
+					request.repository = 'JLMModelBundle:Door';
 					return $.post(
 							this.element.attr('data-source'),
 							request,
@@ -49,9 +50,10 @@
 			    }
 		  });
 		  
-		  $("#quote_trusteeName").attr('data-source',this.options.trusteesSource)
+		  $("#quote_trusteeName").attr('data-source',this.options.autoSource)
 		  			.autocomplete({
 				source: function(request,response){
+					request.repository = 'JLMModelBundle:Trustee';
 					return $.post(
 							this.element.attr('data-source'),
 							request,
@@ -67,12 +69,14 @@
 				}
 			});
 		  
-		  $("#quote_contactCp").attr('data-source',this.options.contactsSource)
+		  $("#quote_contactCp").attr('data-source',this.options.autoSource)
 					          .autocomplete({
 					source: function(request,response){
+						request.term = $('#quote_door').val();
+						request.repository = 'JLMModelBundle:SiteContact';
 						return $.post(
 								this.element.attr('data-source'),
-								{term:$('#quote_door').val()},
+								request,
 								function( data ) { response( data ); },
 								'json'
 						);
@@ -84,23 +88,25 @@
 					}
 					});
 		  
-		  	$("#quote_paymentRules").attr('data-source',this.options.paymentSource).autocomplete({
+		  	$("#quote_paymentRules").attr('data-source',this.options.autoSource).autocomplete({
 				source: function(request,response){
+					request.repository = 'JLMOfficeBundle:PaymentModel';
 					return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
 			}});
-			$("#quote_deliveryRules").attr('data-source',this.options.delaySource).autocomplete({
+			$("#quote_deliveryRules").attr('data-source',this.options.autoSource).autocomplete({
 				source: function(request,response){
+					request.repository = 'JLMOfficeBundle:DelayModel';
 					return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
 			}});
 			
-			$("#quote_intro").attr('data-source',this.options.introSource).autocomplete({
+			$("#quote_intro").attr('data-source',this.options.autoSource).autocomplete({
 				source: function(request,response){
+					request.repository = 'JLMOfficeBundle:IntroModel';
 					return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
 			}});
 			
 			this.$element.find("#quote_lines > tr").on('change',$.proxy(this.total,this)).quoteline({
-				referenceSource:this.options.lineReferenceSource,
-				designationSource:this.options.lineDesignationSource,
+				autoSource:this.options.autoSource,
 			}); 
 			$("#quote_discount").on('change',$.proxy(this.total,this));
 			$(".newline").on('click',$.proxy(this.newline,this));
@@ -124,8 +130,7 @@
 			newWidget = newWidget.replace(/__name__/g,this.options.lineCount);
 			lineList.append(newWidget);
 			$("#quote_lines_" + this.options.lineCount).on('change',$.proxy(this.total,this)).quoteline({
-				referenceSource:this.options.lineReferenceSource,
-				designationSource:this.options.lineDesignationSource
+				autoSource:this.options.autoSource
 			});
 			// Valeurs par défaut
 			$("#quote_lines_" + this.options.lineCount + "_position").val(this.options.lineCount);
@@ -186,13 +191,7 @@
   }
 
   $.fn.quote.defaults = {
-     contactsSource:'',
-	 followersSource:'',
-	 doorsSource:'',
-	 trusteesSource:'',
-	 paymentSource:'',
-	 delaySource:'',
-	 introSource:'',
+	 autoSource:'',
 	 
 	 lineCount:0,
 	 lineReferenceSource:'',
@@ -231,9 +230,11 @@
 			  this.showDesc();
 			  $(line + "_quantity, " + line + "_unitPrice, " + line + "_discount").on('change',$.proxy(this.total,this));
 			
-			  $(line + "_reference").attr('data-source',this.options.referenceSource)
+			  $(line + "_reference").attr('data-source',this.options.autoSource)
 					              .autocomplete({
 						source: function(request,response){
+							request.repository = 'JLMModelBundle:Product';
+							request.action = 'Reference';
 							return $.post(
 								this.element.attr('data-source'),
 								request,
@@ -254,9 +255,11 @@
 					      return false;
 					  }
 				});
-			  $(line + "_designation").attr('data-source',this.options.designationSource)
+			  $(line + "_designation").attr('data-source',this.options.autoSource)
 				              .autocomplete({
 					source: function(request,response){
+						request.repository = 'JLMModelBundle:Product';
+						request.action = 'Designation';
 						return $.post(
 							this.element.attr('data-source'),
 							request,
@@ -339,8 +342,7 @@
 	  }
 
 	  $.fn.quoteline.defaults = {
-			 referenceSource:'',
-			 designationSource:'',
+			 autoSource:'',
 			 line:0,
 	  }
 

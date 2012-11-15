@@ -2,6 +2,7 @@
 
 namespace JLM\ModelBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -75,4 +76,26 @@ class AutocompleteController extends Controller
     	 
     	return $response;
     }
+    
+    /**
+     * @Route("/autocomplete", name="autocomplete")
+     * @Method("post")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function indexAction(Request $request)
+    {
+    	$query = $request->request->get('term');
+    	$em = $this->getDoctrine()->getEntityManager();  	
+    	$repository = $request->request->get('repository');
+    	$action = $request->request->get('action');
+    	$action = empty($action) ? 'Result' : $action;
+    	$action = 'search'.$action;
+    	$results = $em->getRepository($repository)->$action($query);
+    	$json = json_encode($results);
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/json');
+    	$response->setContent($json); 
+    	return $response;
+    }
+
 }
