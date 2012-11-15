@@ -24,7 +24,7 @@ abstract class StringModel
 	 */
 	public function setName($name)
 	{
-		$this->text = $name;
+		$this->name = $name;
 	}
 
 	/**
@@ -34,7 +34,7 @@ abstract class StringModel
 	 */
 	public function getName()
 	{
-		return $this->text;
+		return $this->name;
 	}
 
 	/**
