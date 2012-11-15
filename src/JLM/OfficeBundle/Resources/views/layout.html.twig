@@ -1,1 +1,25 @@
-{% extends "JLMModelBundle::layout.html.twig" %}
+{% extends "::layout.html.twig" %}
+
+{% block container %}
+    <div class="row-fluid">
+    
+	    <div class="span2">
+		    {% block sidebar %}
+		        <form class="form-search">
+					<input type="text" class="search-query input-block-level" placeholder="Rechercher...">
+			    </form>
+		    <ul class="nav nav-tabs nav-stacked">
+		    	<li><a href="{{ path('quote') }}">Devis</a></li>
+		        <li><a href="{{ path('trustee') }}">Syndics</a></li>
+		        <li><a href="{{ path('product') }}">Produits</a></li>	   
+		        <li><a href="{{ path('supplier') }}">Fournisseurs</a></li>
+		    </ul>
+		    {% endblock sidebar %}
+		    
+	    </div>
+	    <div class="span10">
+            {% block content %}
+            {% endblock content %}
+	    </div>
+    </div>
+{% endblock container %}

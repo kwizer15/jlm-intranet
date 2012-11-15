@@ -13,12 +13,17 @@
         <div class="navbar-inner">
 	        <div class="container">
 	      {% block header %}
+	      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 	      	<a href="#" class="brand">JLM</a>
 			<ul class="nav">
 			  {% block navigation %}
+			    <li><a href="{{ path('trustee') }}">Saisie</a></li>
+		        <li><a href="{{ path('quote') }}">Devis</a></li>
+		        <li><a href="">Journal de bord</a></li>
+		        <li><a href="">Gestion des utilisateurs</a></li>
 			  {% endblock navigation %}
 			</ul>
-			{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+			
 		
 			<div class="btn-group pull-right">
 			   <a href="#" class="btn btn-info dropdown-toggle" data-toggle="dropdown"><i class="icon-user  icon-white"></i> {{ app.user.username }} <b class="caret"></b></a>
@@ -29,11 +34,6 @@
 			   		<li><a href="{{ path('fos_user_change_password') }}"><i class="icon-lock"></i> Changer mon mot de passe</a></li>  		
 			   </ul>
 			</div>
-			<form class="navbar-search">
-		    	<div class="input-append">
-					<input type="text" class="search-query" placeholder="Rechercher...">
-				</div>
-		   	</form>
 			{% else %}
 			<div class="btn-group pull-right"><a href="{{ path('fos_user_security_login') }}" class="btn">Se connecter</a></div>
 			{% endif %}	
