@@ -44,7 +44,7 @@
 
 {% block choice_widget_expanded %}
 {% spaceless %}
-{% form_theme form 'JLMOfficeBundle:Form:choices.html.twig' %}
+{% form_theme form 'JLMModelBundle:Form:choices.html.twig' %}
     {% for child in form %}
         {% set attr = attr|merge({'class': attr.class|default('') ~ ' checkbox inline' }) %}
         <label {{ block('widget_container_attributes') }}>

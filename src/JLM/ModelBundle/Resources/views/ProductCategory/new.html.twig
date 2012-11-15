@@ -1,9 +1,6 @@
-{% extends "JLMOfficeBundle::layout.html.twig" %}
-
+{% extends "JLMModelBundle::layout.html.twig" %}
 {% block content %}
 <h1>Nouvelle famille de produit</h1>
-{% form_theme form 'JLMOfficeBundle:Form:field_row.html.twig' %}
-
 <form action="{{ path('productcategory_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 <fieldset>
     {{ form_widget(form) }}

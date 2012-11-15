@@ -1,6 +1,6 @@
 <?php
 
-namespace JLM\OfficeBundle\Controller;
+namespace JLM\ModelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Entity\Site;
-use JLM\ModelBundle\Form\SiteType;
+use JLM\ModelBundle\Form\Type\SiteType;
 
 /**
  * Site controller.
@@ -89,7 +89,7 @@ class SiteController extends Controller
      *
      * @Route("/create", name="site_create")
      * @Method("POST")
-     * @Template("JLMOfficeBundle:Site:new.html.twig")
+     * @Template("JLMModelBundle:Site:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function createAction(Request $request)
@@ -145,7 +145,7 @@ class SiteController extends Controller
      *
      * @Route("/{id}/update", name="site_update")
      * @Method("POST")
-     * @Template("JLMOfficeBundle:Site:edit.html.twig")
+     * @Template("JLMModelBundle:Site:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function updateAction(Request $request, $id)

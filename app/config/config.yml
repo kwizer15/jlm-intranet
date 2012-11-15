@@ -21,6 +21,9 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    form:
+        resources:
+            - 'JLMModelBundle:Form:field_row.html.twig'
 
 # Assetic Configuration
 assetic:

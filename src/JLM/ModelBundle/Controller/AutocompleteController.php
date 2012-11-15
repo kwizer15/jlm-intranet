@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Address;
-use JLM\ModelBundle\Form\AddressType;
+use JLM\ModelBundle\Form\Type\AddressType;
 
 class AutocompleteController extends Controller
 {

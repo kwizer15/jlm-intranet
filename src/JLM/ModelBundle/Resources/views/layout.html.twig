@@ -1,0 +1,28 @@
+{% extends "::layout.html.twig" %}
+
+{% block navigation %}
+	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+		<li><a href="">Journal de bord</a></li>
+		<li><a href="">Devis</a></li>
+	{% endif %}
+{% endblock navigation %}
+
+{% block container %}
+    <div class="row-fluid">
+	    <div class="span2">
+		    {% block sidebar %}
+		    <ul class="nav nav-tabs nav-stacked">
+		    	<li><a href="{{ path('quote') }}">Devis</a></li>
+		        <li><a href="{{ path('trustee') }}">Syndics</a></li>
+		        <li><a href="{{ path('productcategory') }}">Familles de produits</a></li>
+		        <li><a href="{{ path('product') }}">Produits</a></li>	   
+		        <li><a href="{{ path('supplier') }}">Fournisseurs</a></li>
+		    </ul>
+		    {% endblock sidebar %}
+	    </div>
+	    <div class="span10">
+            {% block content %}
+            {% endblock content %}
+	    </div>
+    </div>
+{% endblock container %}

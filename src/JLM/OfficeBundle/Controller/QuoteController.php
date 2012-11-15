@@ -10,10 +10,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Mail;
-use JLM\ModelBundle\Entity\Quote;
-use JLM\ModelBundle\Entity\QuoteLine;
-use JLM\ModelBundle\Form\QuoteType;
-use JLM\ModelBundle\Form\MailType;
+use JLM\ModelBundle\Form\Type\MailType;
+use JLM\OfficeBundle\Entity\Quote;
+use JLM\OfficeBundle\Form\Type\QuoteType;
+use JLM\OfficeBundle\Entity\QuoteLine;
+
+
 
 /**
  * Quote controller.
@@ -35,7 +37,7 @@ class QuoteController extends Controller
     	$limit = 10;
         $em = $this->getDoctrine()->getEntityManager();
            
-        $nb = $em->getRepository('JLMModelBundle:Quote')->getTotal();
+        $nb = $em->getRepository('JLMOfficeBundle:Quote')->getTotal();
         $nbPages = ceil($nb/$limit);
         $offset = ($page-1) * $limit;
         if ($page < 1 || $page > $nbPages)
@@ -43,7 +45,7 @@ class QuoteController extends Controller
         	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
         }
         
-        $entities = $em->getRepository('JLMModelBundle:Quote')->findBy(
+        $entities = $em->getRepository('JLMOfficeBundle:Quote')->findBy(
         		array(),
         		array('number'=>'desc'),
         		$limit,
@@ -73,7 +75,7 @@ class QuoteController extends Controller
      * Displays a form to create a new Quote entity.
      *
      * @Route("/new", name="quote_new")
-     * @Template()
+     * @Template()Office
      * @Secure(roles="ROLE_USER")
      */
     public function newAction()
@@ -112,7 +114,7 @@ class QuoteController extends Controller
         {
             $em = $this->getDoctrine()->getEntityManager();
             $number = $entity->getCreation()->format('ym');
-            $n = ($em->getRepository('JLMModelBundle:Quote')->getLastNumber() + 1);
+            $n = ($em->getRepository('JLMOfficeBundle:Quote')->getLastNumber() + 1);
             for ($i = strlen($n); $i < 4 ; $i++)
             	$number.= '0';
             $number.= $n;
@@ -345,11 +347,18 @@ class QuoteController extends Controller
     {
     	$query = $request->request->get('term');
     	$entity = $request->request->get('entity');
-    	if (!in_array($entity,array('Door','Trustee','Product','IntroModel','DelayModel','PaymentModel','SiteContact')))
+    	if (!in_array($entity,array(
+    			'JLMModelBundle:Door',
+    			'JLMModelBundle:Trustee',
+    			'JLMModelBundle:Product',
+    			'JLMOfficeBundle:IntroModel',
+    			'JLMOfficeBundle:DelayModel',
+    			'JLMOfficeBundle:PaymentModel',
+    			'JLMModelBundle:SiteContact')))
     		throw $this->createNotFoundException('Entité '.$entity.' inexistante');
     	$em = $this->getDoctrine()->getEntityManager();
     	$action = 'search';
-    	if ($entity == 'Product')
+    	if ($entity == 'JLMModelBundleProduct')
     	{
     		$by = $request->request->get('by');
     		if (!in_array($by,array('Reference','Designation')))
@@ -358,7 +367,7 @@ class QuoteController extends Controller
     	}
     	else
     		$action .= 'Result';
-    	$results = $em->getRepository('JLMModelBundle:'.$entity)->$action($query);
+    	$results = $em->getRepository($entity)->$action($query);
     	$json = json_encode($results);
     	$response = new Response();
     	$response->headers->set('Content-Type', 'application/json');
@@ -458,7 +467,7 @@ class QuoteController extends Controller
    {
    	$query = $request->request->get('term');
    	$em = $this->getDoctrine()->getEntityManager();
-   	$results = $em->getRepository('JLMModelBundle:IntroModel')->searchResult($query);
+   	$results = $em->getRepository('JLMOfficeBundle:IntroModel')->searchResult($query);
    	$json = json_encode($results);
    	$response = new Response();
    	$response->headers->set('Content-Type', 'application/json');
@@ -478,7 +487,7 @@ class QuoteController extends Controller
    {
    	$query = $request->request->get('term');
    	$em = $this->getDoctrine()->getEntityManager();
-   	$results = $em->getRepository('JLMModelBundle:DelayModel')->searchResult($query);
+   	$results = $em->getRepository('JLMOfficeBundle:DelayModel')->searchResult($query);
    	$json = json_encode($results);
    	$response = new Response();
    	$response->headers->set('Content-Type', 'application/json');
@@ -498,7 +507,7 @@ class QuoteController extends Controller
    {
    	$query = $request->request->get('term');
    	$em = $this->getDoctrine()->getEntityManager();
-   	$results = $em->getRepository('JLMModelBundle:PaymentModel')->searchResult($query);
+   	$results = $em->getRepository('JLMOfficeBundle:PaymentModel')->searchResult($query);
    	$json = json_encode($results);
    	$response = new Response();
    	$response->headers->set('Content-Type', 'application/json');

@@ -10,6 +10,9 @@ Voir interaction Contract / Door
 	
 Créer DoorModel extends Product
 
+Contract - Door - SiteContact
+	- index : ne sert à rien
+
 Journal de Bord
 	- Voir avec Yo les description d'intervention (amélioration des stats)
 

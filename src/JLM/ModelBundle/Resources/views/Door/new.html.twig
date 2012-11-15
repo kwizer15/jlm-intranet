@@ -1,8 +1,7 @@
-{% extends "JLMOfficeBundle::layout.html.twig" %}
+{% extends "JLMModelBundle::layout.html.twig" %}
 
 {% block content %}
 <h1>Nouvelle porte</h1>
-{% form_theme form 'JLMOfficeBundle:Form:field_row.html.twig' %}
 <form action="{{ path('door_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
     {{ form_widget(form) }}
 <fieldset>

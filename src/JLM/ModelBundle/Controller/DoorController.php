@@ -1,6 +1,6 @@
 <?php
 
-namespace JLM\OfficeBundle\Controller;
+namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\Door;
-use JLM\ModelBundle\Form\DoorType;
+use JLM\ModelBundle\Form\Type\DoorType;
 
 /**
  * Door controller.
@@ -88,7 +88,7 @@ class DoorController extends Controller
      *
      * @Route("/create", name="door_create")
      * @Method("post")
-     * @Template("JLMOfficeBundle:Door:new.html.twig")
+     * @Template("JLMModelBundle:Door:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function createAction()
@@ -145,7 +145,7 @@ class DoorController extends Controller
      *
      * @Route("/{id}/update", name="door_update")
      * @Method("post")
-     * @Template("JLMOfficeBundle:Door:edit.html.twig")
+     * @Template("JLMModelBundle:Door:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function updateAction($id)

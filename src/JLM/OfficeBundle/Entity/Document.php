@@ -3,7 +3,6 @@
 namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * JLM\OfficeBundle\Entity\Document

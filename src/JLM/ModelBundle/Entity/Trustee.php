@@ -36,12 +36,6 @@ class Trustee extends Company
      */
     private $sites;
     
-    /**
-     * @var Document[] $documents
-     *
-     * @ORM\OneToMany(targetEntity="Document",mappedBy="trustee")
-     */
-    private $documents;
 
     /**
      * Adresse de facturation (si differente)
@@ -79,7 +73,6 @@ class Trustee extends Company
     {
     	parent::__construct();
     	$this->sites = new ArrayCollection;
-    	$this->documents = new ArrayCollection;
     	$this->contracts = new ArrayCollection;
     }
 
@@ -240,39 +233,6 @@ class Trustee extends Company
     public function getSites()
     {
         return $this->sites;
-    }
-
-    /**
-     * Add documents
-     *
-     * @param JLM\ModelBundle\Entity\Document $documents
-     * @return Trustee
-     */
-    public function addDocument(\JLM\ModelBundle\Entity\Document $documents)
-    {
-        $this->documents[] = $documents;
-    
-        return $this;
-    }
-
-    /**
-     * Remove documents
-     *
-     * @param JLM\ModelBundle\Entity\Document $documents
-     */
-    public function removeDocument(\JLM\ModelBundle\Entity\Document $documents)
-    {
-        $this->documents->removeElement($documents);
-    }
-
-    /**
-     * Get documents
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getDocuments()
-    {
-        return $this->documents;
     }
 
     /**

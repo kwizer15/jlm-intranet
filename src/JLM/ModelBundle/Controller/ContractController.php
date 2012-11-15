@@ -1,6 +1,6 @@
 <?php
 
-namespace JLM\OfficeBundle\Controller;
+namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Contract;
 use JLM\ModelBundle\Entity\Door;
-use JLM\ModelBundle\Form\ContractType;
+use JLM\ModelBundle\Form\Type\ContractType;
 
 /**
  * Contract controller.
@@ -89,7 +89,7 @@ class ContractController extends Controller
      *
      * @Route("/create", name="contract_create")
      * @Method("post")
-     * @Template("JLMOfficeBundle:Contract:new.html.twig")
+     * @Template("JLMModelBundle:Contract:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function createAction()
@@ -146,7 +146,7 @@ class ContractController extends Controller
      *
      * @Route("/{id}/update", name="contract_update")
      * @Method("post")
-     * @Template("JLMOfficeBundle:Contract:edit.html.twig")
+     * @Template("JLMModelBundle:Contract:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function updateAction($id)

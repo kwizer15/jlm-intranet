@@ -1,6 +1,6 @@
 <?php
 
-namespace JLM\OfficeBundle\Controller;
+namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\ProductCategory;
-use JLM\ModelBundle\Form\ProductCategoryType;
+use JLM\ModelBundle\Form\Type\ProductCategoryType;
 
 /**
  * ProductCategory controller.
@@ -80,7 +80,7 @@ class ProductCategoryController extends Controller
      *
      * @Route("/create", name="productcategory_create")
      * @Method("post")
-     * @Template("JLMOfficeBundle:ProductCategory:new.html.twig")
+     * @Template("JLMModelBundle:ProductCategory:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function createAction()
@@ -137,7 +137,7 @@ class ProductCategoryController extends Controller
      *
      * @Route("/{id}/update", name="productcategory_update")
      * @Method("post")
-     * @Template("JLMOfficeBundle:ProductCategory:edit.html.twig")
+     * @Template("JLMModelBundle:ProductCategory:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function updateAction($id)

@@ -1,6 +1,6 @@
 <?php
 
-namespace JLM\OfficeBundle\Controller;
+namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -9,9 +9,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Trustee;
-use JLM\ModelBundle\Form\TrusteeType;
+use JLM\ModelBundle\Form\Type\TrusteeType;
 use JLM\ModelBundle\Entity\Person;
-use JLM\ModelBundle\Form\PersonType;
+use JLM\ModelBundle\Form\Type\PersonType;
 
 /**
  * Trustee controller.
@@ -93,7 +93,7 @@ class TrusteeController extends Controller
      *
      * @Route("/create", name="trustee_create")
      * @Method("post")
-     * @Template("JLMOfficeBundle:Trustee:new.html.twig")
+     * @Template("JLMModeleBundle:Trustee:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function createAction()
@@ -146,7 +146,7 @@ class TrusteeController extends Controller
      *
      * @Route("/{id}/update", name="trustee_update")
      * @Method("post")
-     * @Template("JLMOfficeBundle:Trustee:edit.html.twig")
+     * @Template("JLMModelBundle:Trustee:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function updateAction(Trustee $entity)
@@ -232,7 +232,7 @@ class TrusteeController extends Controller
      *
      * @Route("/{id}/contact/create", name="trustee_contact_create")
      * @Method("post")
-     * @Template("JLMOfficeBundle:Trustee:contactnew.html.twig")
+     * @Template("JLMModelBundle:Trustee:contactnew.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function contactcreateAction(Trustee $trustee)

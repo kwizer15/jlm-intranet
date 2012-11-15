@@ -1,5 +1,4 @@
 {% extends "JLMOfficeBundle::layout.html.twig" %}
-{% form_theme form 'JLMOfficeBundle:Form:field_row.html.twig' %}
 {% block content %}
 <h1>Envoyer un devis par e-mail</h1>
 <form action="{{ path('quote_send',{'id': entity.id }) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">

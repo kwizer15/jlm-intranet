@@ -1,6 +1,6 @@
 <?php
 
-namespace JLM\OfficeBundle\Controller;
+namespace JLM\ModelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\SiteContact;
-use JLM\ModelBundle\Form\SiteContactType;
+use JLM\ModelBundle\Form\Type\SiteContactType;
 
 /**
  * SiteContact controller.
@@ -89,7 +89,7 @@ class SiteContactController extends Controller
      *
      * @Route("/create", name="sitecontact_create")
      * @Method("POST")
-     * @Template("JLMOfficeBundle:SiteContact:new.html.twig")
+     * @Template("JLMModelBundle:SiteContact:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function createAction(Request $request)
@@ -145,7 +145,7 @@ class SiteContactController extends Controller
      *
      * @Route("/{id}/update", name="sitecontact_update")
      * @Method("POST")
-     * @Template("JLMOfficeBundle:SiteContact:edit.html.twig")
+     * @Template("JLMModelBundle:SiteContact:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function updateAction(Request $request, $id)

@@ -1,7 +1,7 @@
 JLMOfficeBundle:
     resource: "@JLMOfficeBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /office
 
 JLMModelBundle:
     resource: "@JLMModelBundle/Controller/"

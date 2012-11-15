@@ -1,6 +1,6 @@
 <?php
 
-namespace JLM\OfficeBundle\Controller;
+namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Transmitter;
 use JLM\ModelBundle\Entity\Product;
-use JLM\ModelBundle\Form\ProductType;
+use JLM\ModelBundle\Form\Type\ProductType;
 
 /**
  * Product controller.
@@ -106,7 +106,7 @@ class ProductController extends Controller
      *
      * @Route("/create", name="product_create")
      * @Method("post")
-     * @Template("JLMOfficeBundle:Product:new.html.twig")
+     * @Template("JLMModelBundle:Product:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function createAction()
@@ -173,7 +173,7 @@ class ProductController extends Controller
      *
      * @Route("/{id}/update", name="product_update")
      * @Method("post")
-     * @Template("JLMOfficeBundle:Product:edit.html.twig")
+     * @Template("JLMModelBundle:Product:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function updateAction($id)

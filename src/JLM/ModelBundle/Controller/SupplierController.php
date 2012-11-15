@@ -1,6 +1,6 @@
 <?php
 
-namespace JLM\OfficeBundle\Controller;
+namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Supplier;
-use JLM\ModelBundle\Form\SupplierType;
+use JLM\ModelBundle\Form\Type\SupplierType;
 
 /**
  * Supplier controller.
@@ -95,7 +95,7 @@ class SupplierController extends Controller
      *
      * @Route("/create", name="supplier_create")
      * @Method("post")
-     * @Template("JLMOfficeBundle:Supplier:new.html.twig")
+     * @Template("JLMModelBundle:Supplier:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function createAction()
@@ -153,7 +153,7 @@ class SupplierController extends Controller
      *
      * @Route("/{id}/update", name="supplier_update")
      * @Method("post")
-     * @Template("JLMOfficeBundle:Supplier:edit.html.twig")
+     * @Template("JLMModelBundle:Supplier:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function updateAction($id)
