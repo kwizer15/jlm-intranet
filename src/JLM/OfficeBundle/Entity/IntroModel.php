@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\OfficeBundle\Entity\IntroModel
  *
  * @ORM\Table(name="intromodel")
- * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\IntroModelRepository")
+ * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\TextModelRepository")
  */
 class IntroModel extends TextModel
 {

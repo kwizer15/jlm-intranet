@@ -38,7 +38,6 @@ Produits
 A plus long terme
 -----------------------------------------------
 
-Séparer les différentes parties !!!!
 
 Familles de produits
     - voir pour retirer et fixer un liste (une classe par famille, garder un classe de base accessible avec "Famille")
