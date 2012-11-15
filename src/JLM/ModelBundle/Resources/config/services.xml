@@ -5,45 +5,42 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
 <services>
-<service id="jlm_model.type.distance" class="JLM\ModelBundle\Form\DistanceType">
+<service id="jlm_model.type.distance" class="JLM\ModelBundle\Form\Type\DistanceType">
     <tag name="form.type" alias="distance" />
 </service>
-<service id="jlm_model.type.datepicker" class="JLM\ModelBundle\Form\DatepickerType">
+<service id="jlm_model.type.datepicker" class="JLM\ModelBundle\Form\Type\DatepickerType">
     <tag name="form.type" alias="datepicker" />
 </service>
-<service id="jlm_model.type.address" class="JLM\ModelBundle\Form\AddressType">
+<service id="jlm_model.type.address" class="JLM\ModelBundle\Form\Type\AddressType">
     <tag name="form.type" alias="address" />
 </service>
-<service id="jlm_model.type.city_select" class="JLM\ModelBundle\Form\CitySelectType">
+<service id="jlm_model.type.city_select" class="JLM\ModelBundle\Form\Type\CitySelectType">
     <argument type="service" id="doctrine.orm.entity_manager"/>
     <tag name="form.type" alias="city_select" />
 </service>
-<service id="jlm_model.type.trustee_select" class="JLM\ModelBundle\Form\TrusteeSelectType">
+<service id="jlm_model.type.trustee_select" class="JLM\ModelBundle\Form\Type\TrusteeSelectType">
     <argument type="service" id="doctrine.orm.entity_manager"/>
     <tag name="form.type" alias="trustee_select" />
 </service>
-<service id="jlm_model.type.site_select" class="JLM\ModelBundle\Form\SiteSelectType">
+<service id="jlm_model.type.site_select" class="JLM\ModelBundle\Form\Type\SiteSelectType">
     <argument type="service" id="doctrine.orm.entity_manager"/>
     <tag name="form.type" alias="site_select" />
 </service>
-<service id="jlm_model.type.door_hidden" class="JLM\ModelBundle\Form\DoorHiddenType">
+<service id="jlm_model.type.door_hidden" class="JLM\ModelBundle\Form\Type\DoorHiddenType">
     <argument type="service" id="doctrine.orm.entity_manager"/>
     <tag name="form.type" alias="door_hidden" />
 </service>
-<service id="jlm_model.type.sitecontact_hidden" class="JLM\ModelBundle\Form\SiteContactHiddenType">
+<service id="jlm_model.type.sitecontact_hidden" class="JLM\ModelBundle\Form\Type\SiteContactHiddenType">
     <argument type="service" id="doctrine.orm.entity_manager"/>
     <tag name="form.type" alias="sitecontact_hidden" />
 </service>
-<service id="jlm_model.type.product_hidden" class="JLM\ModelBundle\Form\ProductHiddenType">
+<service id="jlm_model.type.product_hidden" class="JLM\ModelBundle\Form\Type\ProductHiddenType">
     <argument type="service" id="doctrine.orm.entity_manager"/>
     <tag name="form.type" alias="product_hidden" />
 </service>
-<service id="jlm_model.type.trustee_hidden" class="JLM\ModelBundle\Form\TrusteeHiddenType">
+<service id="jlm_model.type.trustee_hidden" class="JLM\ModelBundle\Form\Type\TrusteeHiddenType">
     <argument type="service" id="doctrine.orm.entity_manager"/>
     <tag name="form.type" alias="trustee_hidden" />
-</service>
-<service id="jlm_model.type.quote_line" class="JLM\ModelBundle\Form\QuoteLineType">
-    <tag name="form.type" alias="quote_line" />
 </service>
 </services>
     <!--

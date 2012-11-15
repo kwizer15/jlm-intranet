@@ -3,7 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 /**
- * JLM\ModelBundle\Entity\Mail
+ * JLM\OfficeBundle\Entity\Mail
  */
 class Mail
 {
