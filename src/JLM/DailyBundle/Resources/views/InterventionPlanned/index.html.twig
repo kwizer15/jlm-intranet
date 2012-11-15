@@ -1,0 +1,47 @@
+<h1>InterventionPlanned list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Creation</th>
+            <th>Contactname</th>
+            <th>Contactphones</th>
+            <th>Contactemail</th>
+            <th>Reason</th>
+            <th>Priority</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('interventionplanned_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{% if entity.creation %}{{ entity.creation|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ entity.contactName }}</td>
+            <td>{{ entity.contactPhones }}</td>
+            <td>{{ entity.contactEmail }}</td>
+            <td>{{ entity.reason }}</td>
+            <td>{{ entity.priority }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('interventionplanned_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('interventionplanned_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('interventionplanned_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
