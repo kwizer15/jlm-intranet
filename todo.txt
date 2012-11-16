@@ -67,6 +67,6 @@ Journal de bord
 -----------------------------------------------
 
 InterventionPlanned
-	- js : autocompletion doorCp
+	- js : autocompletion doorCp->door, contact->telephone-email
 
 Rapport d'intervention client (PDF)
