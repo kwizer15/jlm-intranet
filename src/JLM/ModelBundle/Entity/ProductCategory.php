@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="product_category")
  * @ORM\Entity
  */
-class ProductCategory
+class ProductCategory extends StringModel
 {
     /**
      * @var integer $id
@@ -21,13 +21,6 @@ class ProductCategory
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=255)
-     */
-    private $name;
 
     /**
      * @var ProductCategory $parent
@@ -59,26 +52,6 @@ class ProductCategory
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -120,12 +93,5 @@ class ProductCategory
     {
         return $this->children;
     }
-    
-    /**
-     * To String
-     */
-    public function __toString()
-    {
-    	return $this->name;
-    }
+
 }

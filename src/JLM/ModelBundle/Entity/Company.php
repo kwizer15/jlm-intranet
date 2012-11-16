@@ -18,7 +18,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * 		"company" = "Company"
  *      })
  */
-class Company
+class Company extends StringModel
 {
 	/**
      * @var integer $id
@@ -28,13 +28,6 @@ class Company
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-	
-	/**
-	 * @var string $name
-	 *
-	 * @ORM\Column(name="name", type="string", length=255)
-	 */
-	private $name;
 	
 	/**
 	 * @var Address $address
@@ -82,26 +75,6 @@ class Company
 	public function __construct()
 	{
 		$this->contacts = new ArrayCollection;
-	}
-	
-	/**
-	 * Set name
-	 *
-	 * @param string $name
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
-	}
-	
-	/**
-	 * Get name
-	 *
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
 	}
 
     /**
@@ -213,13 +186,5 @@ class Company
     public function getContacts()
     {
     	return $this->contacts;
-    }
-    
-    /**
-     * To String
-     */
-    public function __toString()
-    {
-    	return $this->getName();
     }
 }

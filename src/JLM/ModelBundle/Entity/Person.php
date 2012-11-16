@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
  * 		"person" = "Person",
+ *      "technician" = "Technician",
  * })
  */
 class Person 

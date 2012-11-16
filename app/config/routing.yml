@@ -1,9 +1,14 @@
-JLMOfficeBundle:
+jlm_daily:
+    resource: "@JLMDailyBundle/Controller/"
+    type:     annotation
+    prefix:   /daily
+
+jlm_office:
     resource: "@JLMOfficeBundle/Controller/"
     type:     annotation
     prefix:   /office
 
-JLMModelBundle:
+jlm_model:
     resource: "@JLMModelBundle/Controller/"
     type:     annotation
     prefix:   /model
