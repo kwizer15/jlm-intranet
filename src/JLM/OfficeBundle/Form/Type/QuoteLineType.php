@@ -5,6 +5,7 @@ namespace JLM\OfficeBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use JLM\OfficeBundle\Form\DataTransformer\PriceNormalizer;
 
 class QuoteLineType extends AbstractType
 {
@@ -18,7 +19,7 @@ class QuoteLineType extends AbstractType
         	->add('description',null,array('required'=>false,'attr'=>array('class'=>'input-xlarge')))
         	->add('showDescription','hidden')
         	->add('quantity',null,array('attr'=>array('class'=>'input-mini')))
-        	->add('unitPrice','money',array('attr'=>array('class'=>'input-mini')))
+        	->add('unitPrice','money',array('grouping'=>true,'attr'=>array('class'=>'input-mini')))
         	->add('discount','percent',array('attr'=>array('class'=>'input-mini')))
         	->add('vat','percent',array('precision'=>1,'attr'=>array('class'=>'input-mini')))
         	->add('isTransmitter','hidden')

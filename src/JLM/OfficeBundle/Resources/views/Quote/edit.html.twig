@@ -20,7 +20,7 @@
 <script>
 $("body").quote({
 	 autoSource:'{{ path('autocomplete') }}',
-	 lineCount:{{ form.lines | length }}
+	 lineCount:{{ edit_form.lines | length }}
 });
 </script>
 {% endblock %}

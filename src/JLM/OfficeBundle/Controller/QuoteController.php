@@ -109,7 +109,7 @@ class QuoteController extends Controller
         $entity  = new Quote();
         $form    = $this->createForm(new QuoteType(), $entity);
         $form->bind($request);
-
+		
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getEntityManager();
@@ -164,6 +164,7 @@ class QuoteController extends Controller
      */
     public function updateAction(Request $request, Quote $entity)
     {
+    	
     	// Si le devis est déjà validé, on empèche quelconque odification
     	if ($entity->isValid())
     		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
@@ -173,12 +174,13 @@ class QuoteController extends Controller
         	$originalLines[] = $line;
         $editForm = $this->createForm(new QuoteType(), $entity);
         $editForm->bind($request);
-
+        
         if ($editForm->isValid()) {
         	$em = $this->getDoctrine()->getEntityManager();
         	$em->persist($entity);
         	foreach ($entity->getLines() as $key => $line)
         	{	
+      
         		// Nouvelles lignes
         		$line->setQuote($entity);
         		$em->persist($line);
