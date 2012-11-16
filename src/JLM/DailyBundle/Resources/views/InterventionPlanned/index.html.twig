@@ -31,7 +31,7 @@
         		<br>{{ entity.actionType }}
         	</td>
             <td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}</td>
-            <td><a href="{{ path('interventionplanned_show', { 'id': entity.id }) }}">{{ entity.door | nl2br }}</a></td>
+            <td><a href="{{ path('interventionplanned_show', { 'id': entity.id }) }}">{{ entity.doorCp | nl2br }}</a></td>
             <td>{{ entity.contactName }}</td>
             <td>{{ entity.contactPhones | nl2br }}</td>
             <td>{{ entity.reason | nl2br }}</td>

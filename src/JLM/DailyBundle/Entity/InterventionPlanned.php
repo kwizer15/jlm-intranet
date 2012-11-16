@@ -30,11 +30,18 @@ class InterventionPlanned
     private $creation;
     
     /**
-     * Porte
+     * Porte (lien)
      * @var JLM\ModelBundle\Entity\Door
      * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Door")
      */
     private $door;
+    
+    /**
+     * Porte (copie)
+     * @var string
+     * @ORM\Column(name="door_cp", type="text")
+     */
+    private $doorCp;
     
     /**
      * @var string $contactName
@@ -274,5 +281,28 @@ class InterventionPlanned
     public function getActionType()
     {
         return $this->actionType;
+    }
+
+    /**
+     * Set doorCp
+     *
+     * @param string $doorCp
+     * @return InterventionPlanned
+     */
+    public function setDoorCp($doorCp)
+    {
+        $this->doorCp = $doorCp;
+    
+        return $this;
+    }
+
+    /**
+     * Get doorCp
+     *
+     * @return string 
+     */
+    public function getDoorCp()
+    {
+        return $this->doorCp;
     }
 }

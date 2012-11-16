@@ -11,7 +11,8 @@ class InterventionPlannedType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-      		->add('door',null,array('label'=>'Porte','attr'=>array('class'=>'input-xxlarge')))
+      		->add('door','door_hidden')
+      		->add('doorCp','textarea',array('label'=>'Porte','attr'=>array('class'=>'input-xlarge')))
       		->add('actionType',null,array('label'=>'Action'))
             ->add('contactName',null,array('label'=>'Nom du contact','required'=>false))
             ->add('contactPhones',null,array('label'=>'Téléphones','required'=>false))
