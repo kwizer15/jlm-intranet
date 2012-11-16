@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * JLM\DailyBundle\Entity\ScheduledSurgery
  *
- * @ORM\Table(name="intervention_scheduled")
+ * @ORM\Table(name="interventions_scheduled")
  * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\InterventionScheduledRepository")
  */
 class InterventionScheduled

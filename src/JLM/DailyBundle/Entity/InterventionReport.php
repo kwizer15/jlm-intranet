@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * JLM\DailyBundle\Entity\InterventionReport
  *
- * @ORM\Table()
+ * @ORM\Table(name="intervention_reports")
  * @ORM\Entity
  */
 class InterventionReport

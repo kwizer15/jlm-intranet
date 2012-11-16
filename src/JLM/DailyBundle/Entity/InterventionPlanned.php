@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Plannification d'intervention
  * JLM\DailyBundle\Entity\InterventionPlanned
  *
- * @ORM\Table(name="intervention_planned")
+ * @ORM\Table(name="interventions_planned")
  * @ORM\Entity
  */
 class InterventionPlanned
@@ -38,20 +38,20 @@ class InterventionPlanned
     
     /**
      * @var string $contactName
-     * @ORM\Column(name="contact_name", type="string")
+     * @ORM\Column(name="contact_name", type="string", nullable=true)
      */
     private $contactName;
     
     /**
      * @var string $contactPhone
-     * @ORM\Column(name="contact_phones", type="text")
+     * @ORM\Column(name="contact_phones", type="text", nullable=true)
      */
     private $contactPhones;
     
     /**
      * E-mail pour envoyer le rapport
      * @var string $contactEmail
-     * @ORM\Column(name="contact_email", type="text")
+     * @ORM\Column(name="contact_email", type="text", nullable=true)
      */
     private $contactEmail;
     
@@ -236,7 +236,7 @@ class InterventionPlanned
      * @param JLM\DailyBundle\Entity\Door $door
      * @return InterventionPlanned
      */
-    public function setDoor(\JLM\DailyBundle\Entity\Door $door = null)
+    public function setDoor(\JLM\ModelBundle\Entity\Door $door = null)
     {
         $this->door = $door;
     

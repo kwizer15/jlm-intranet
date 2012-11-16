@@ -7,8 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\InterventionPlanned;
-use JLM\DailyBundle\Form\InterventionPlannedType;
+use JLM\DailyBundle\Form\Type\InterventionPlannedType;
 
 /**
  * InterventionPlanned controller.
@@ -22,12 +23,13 @@ class InterventionPlannedController extends Controller
      *
      * @Route("/", name="interventionplanned")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('JLMDailyBundle:InterventionPlanned')->findAll();
+        $entities = $em->getRepository('JLMDailyBundle:InterventionPlanned')->findBy(array(),array('priority'=>'asc','creation'=>'asc'));
 
         return array(
             'entities' => $entities,
@@ -39,18 +41,11 @@ class InterventionPlannedController extends Controller
      *
      * @Route("/{id}/show", name="interventionplanned_show")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
-    public function showAction($id)
+    public function showAction(InterventionPlanned $entity)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMDailyBundle:InterventionPlanned')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find InterventionPlanned entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity);
 
         return array(
             'entity'      => $entity,
@@ -63,6 +58,7 @@ class InterventionPlannedController extends Controller
      *
      * @Route("/new", name="interventionplanned_new")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function newAction()
     {
@@ -81,6 +77,7 @@ class InterventionPlannedController extends Controller
      * @Route("/create", name="interventionplanned_create")
      * @Method("POST")
      * @Template("JLMDailyBundle:InterventionPlanned:new.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function createAction(Request $request)
     {
@@ -89,6 +86,7 @@ class InterventionPlannedController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
+        	$entity->setCreation(new \DateTime);
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -107,19 +105,12 @@ class InterventionPlannedController extends Controller
      *
      * @Route("/{id}/edit", name="interventionplanned_edit")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
-    public function editAction($id)
+    public function editAction(InterventionPlanned $entity)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMDailyBundle:InterventionPlanned')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find InterventionPlanned entity.');
-        }
-
         $editForm = $this->createForm(new InterventionPlannedType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity);
 
         return array(
             'entity'      => $entity,
@@ -134,18 +125,13 @@ class InterventionPlannedController extends Controller
      * @Route("/{id}/update", name="interventionplanned_update")
      * @Method("POST")
      * @Template("JLMDailyBundle:InterventionPlanned:edit.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, InterventionPlanned $entity)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('JLMDailyBundle:InterventionPlanned')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find InterventionPlanned entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity);
         $editForm = $this->createForm(new InterventionPlannedType(), $entity);
         $editForm->bind($request);
 
@@ -153,7 +139,7 @@ class InterventionPlannedController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('interventionplanned_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('interventionplanned_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -168,20 +154,15 @@ class InterventionPlannedController extends Controller
      *
      * @Route("/{id}/delete", name="interventionplanned_delete")
      * @Method("POST")
+     * @Secure(roles="ROLE_USER")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, InterventionPlanned $entity)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($entity);
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('JLMDailyBundle:InterventionPlanned')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find InterventionPlanned entity.');
-            }
-
             $em->remove($entity);
             $em->flush();
         }
@@ -189,9 +170,9 @@ class InterventionPlannedController extends Controller
         return $this->redirect($this->generateUrl('interventionplanned'));
     }
 
-    private function createDeleteForm($id)
+    private function createDeleteForm(InterventionPlanned $entity)
     {
-        return $this->createFormBuilder(array('id' => $id))
+        return $this->createFormBuilder(array('id' => $entity->getId()))
             ->add('id', 'hidden')
             ->getForm()
         ;

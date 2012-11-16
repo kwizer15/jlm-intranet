@@ -8,7 +8,7 @@ use JLM\ModelBundle\Entity\StringModel;
 /**
  * JLM\DailyBundle\Entity\Nature
  *
- * @ORM\Table(name="nature")
+ * @ORM\Table(name="natures")
  * @ORM\Entity
  */
 class Nature extends StringModel
