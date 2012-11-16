@@ -287,9 +287,9 @@
 		   		e.stopPropagation()
 		        e.preventDefault()
 	   		  	var line = "#" + this.$element.attr('id');
-		   		var qty = parseInt($(line + "_quantity").val().replace(',','.').replaceAll("\\s", "" ));
-		   		var up = parseFloat($(line + "_unitPrice").val().replace(',','.').replaceAll("\\s", "" ));
-		   		var dc = parseInt($(line + "_discount").val().replace(',','.').replaceAll("\\s", "" ));
+		   		var qty = parseInt($(line + "_quantity").val().replace(',','.').replace(/[\s]{1,}/g,""));
+		   		var up = parseFloat($(line + "_unitPrice").val().replace(',','.').replace(/[\s]{1,}/g,""));
+		   		var dc = parseInt($(line + "_discount").val().replace(',','.').replace(/[\s]{1,}/g,""));
 		   		var total = qty*(up*((100-dc)/100));
 		   		$(line + "_quantity").val(number_format(qty,0,',',' '));
 		   		$(line + "_unitPrice").val(number_format(up,2,',',' '));

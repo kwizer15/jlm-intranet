@@ -260,7 +260,8 @@ class QuoteController extends Controller
     	if ($form->isValid()) {
     		$message = $mail->getSwift();
 	    	$message->attach(\Swift_Attachment::newInstance(
-    				$entity->getPDF(),$entity->getNumber().'.pdf','application/pdf'
+	    			$this->render('JLMOfficeBundle:Quote:older.pdf.php',array('entity'=>$entity)),
+	    			$entity->getNumber().'.pdf','application/pdf'
     			))
     		;
   	

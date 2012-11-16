@@ -34,6 +34,11 @@ Produits
     - autocompletion pour fournisseur
 
 
+Quote
+	- voir chiffrage
+	- afficher l'intro dans le pdf
+
+
 -----------------------------------------------
 A plus long terme
 -----------------------------------------------
