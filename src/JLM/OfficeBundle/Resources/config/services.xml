@@ -8,5 +8,8 @@
     	<service id="jlm_model.type.quote_line" class="JLM\OfficeBundle\Form\Type\QuoteLineType">
    			<tag name="form.type" alias="quote_line" />
 		</service>
+		<service id="jlm_model.type.coding_line" class="JLM\OfficeBundle\Form\Type\CodingLineType">
+   			<tag name="form.type" alias="coding_line" />
+		</service>
 	</services>
 </container>
