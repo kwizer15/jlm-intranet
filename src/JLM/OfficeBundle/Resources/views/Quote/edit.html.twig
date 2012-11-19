@@ -1,4 +1,5 @@
 {% extends "JLMOfficeBundle::layout.html.twig" %}
+{% form_theme edit_form with 'JLMOfficeBundle:Form:quote.html.twig' %}
 {% block content %}
 <h1>Devis <small>{{ entity.number }}</small></h1>
 {% if form_errors(edit_form) %}
