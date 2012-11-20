@@ -19,7 +19,7 @@
 {{ parent() }}
 <script src="{{ asset("bundles/jlmoffice/js/coding.js") }}"></script>
 <script>
-$("body").quote({
+$("body").coding({
 	 autoSource:'{{ path('autocomplete') }}',
 	 lineCount:{{ form.lines | length }}
 });

@@ -50,6 +50,10 @@ class ProductRepository extends EntityRepository
 					'designation'=>$r->getDesignation(),
 					'description'=>$r->getDescription(),
 					'unitPrice'=>$r->getSellPrice(),
+					'purchase'=>$r->getPurchase(),
+					'discountSupplier'=>$r->getDiscountSupplier(),
+					'expenseRatio'=>$r->getExpenseRatio(),
+					'shipping'=>$r->getShipping(),
 					'transmitter'=> ($r instanceof Transmitter)
 				);
 		}

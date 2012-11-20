@@ -17,9 +17,9 @@
 
 {% block javascripts %}
 {{ parent() }}
-<script src="{{ asset("bundles/jlmoffice/js/quote.js") }}"></script>
+<script src="{{ asset("bundles/jlmoffice/js/coding.js") }}"></script>
 <script>
-$("body").quote({
+$("body").coding({
 	 autoSource:'{{ path('autocomplete') }}',
 	 lineCount:{{ edit_form.lines | length }}
 });
