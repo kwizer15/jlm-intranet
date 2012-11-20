@@ -1,6 +1,7 @@
 {% extends "JLMOfficeBundle::layout.html.twig" %}
+{% form_theme form with 'JLMOfficeBundle:Form:coding.html.twig' %}
 {% block content %}
-<h1>Nouveau devis</h1>
+<h1>Nouveau chiffrage</h1>
 {% if form_errors(form) %}
 <div class="alert">{{ form_errors(form) }}</div>
 {% endif %}

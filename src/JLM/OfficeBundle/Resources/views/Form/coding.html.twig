@@ -1,0 +1,60 @@
+{% block coding_widget %}
+<div class="row_fluid">
+    	<div class="span6 well">
+    	{{ form_row(form.follower) }}
+    	{{ form_row(form.followerCp) }}
+    	{{ form_row(form.door) }}
+    	{{ form_row(form.doorCp) }}
+    	{{ form_row(form.vat) }}
+    	{{ form_row(form.vatTransmitter) }}
+    	</div>
+    	<div class="span6">
+    	{{ form_row(form.creation) }}
+    	{{ form_row(form.trustee) }}
+    	{{ form_row(form.trusteeName) }}
+    	{{ form_row(form.trusteeAddress) }}
+    	{{ form_row(form.contact) }}
+    	{{ form_row(form.contactCp) }}
+    	</div>
+    </div>
+
+    <table class="table table-bordered">
+    <thead>
+    <tr>
+    <th>Référence</th>
+    <th>Designation</th>
+    <th>Qté</th>
+    <th>PA HT</th>
+    <th>Rem Fourn</th>
+    <th>Frais</th>
+    <th>Port</th>
+    <th>PV HT</th>
+    <th>T.V.A.</th>
+    <th class="span1"><a href="#" class="btn btn-success newline"><i class="icon-plus-sign icon-white"></i></a></th>
+    </tr>
+    </thead>
+    {{ form_widget(form.lines) }}
+    </table>
+    
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block coding_line_row %}
+<tr {{ block('widget_container_attributes') }}>
+    <td>
+        {{ form_widget(form.position) }}
+        {{ form_widget(form.product) }}
+        {{ form_widget(form.isTransmitter) }}
+        {{ form_widget(form.reference) }}
+    </td>
+    <td>{{ form_widget(form.designation) }}</td>
+    <td>{{ form_widget(form.quantity) }}</td>
+    <td>{{ form_widget(form.purchase) }}</td>
+    <td>{{ form_widget(form.discountSupplier) }}</td>
+    <td>{{ form_widget(form.expenseRatio) }}</td>
+    <td>{{ form_widget(form.shipping) }}</td>
+    <td>{{ form_widget(form.vat) }}</td>
+    <td><div class="input-append"><span class="input-mini uneditable-input" id="{{ id }}_total">0,00</span><span class="add-on">€</span></div></td>
+    <td><a href="#" class="btn btn-danger remove-line"><i class="icon-minus-sign icon-white"></i></a></td>
+</tr>
+{% endblock coding_line_row %}
