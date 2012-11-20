@@ -23,7 +23,6 @@ class CodingLineType extends AbstractType
         	->add('shipping','money',array('grouping'=>true,'attr'=>array('class'=>'input-mini')))
         	->add('vat','percent',array('precision'=>1,'attr'=>array('class'=>'input-mini')))
         	->add('isTransmitter','hidden')
-
         ;
     }
 
