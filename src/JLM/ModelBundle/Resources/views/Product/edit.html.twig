@@ -1,5 +1,5 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
-
+{% form_theme edit_form with 'JLMModelBundle:Form:product.html.twig' %}
 {% block content %}
 <h1>Edition d'un produit</h1>
 
@@ -12,4 +12,12 @@
 	</div>
 </fieldset>
 </form>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset("bundles/jlmmodel/js/product.js") }}"></script>
+<script>
+$("body").product();
+</script>
 {% endblock %}
