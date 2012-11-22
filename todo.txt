@@ -29,14 +29,12 @@ Door
 
 
 Produits
-    - new, edit : petit js pour voir le prix de vente à la fin, plus remise en forme (number_format)
     - fiche descriptive (voir avec yo) 
     - autocompletion pour fournisseur
 
 
 Quote
 	- voir chiffrage
-	- afficher l'intro dans le pdf
 
 
 -----------------------------------------------

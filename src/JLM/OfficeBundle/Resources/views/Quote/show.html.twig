@@ -83,7 +83,17 @@
     </tbody>
 </table>
 <div class="row-fluid">
-    <div class="span4 offset8">
+	<div class="span8">
+		<dl>
+			<dt>Règlement</dt>
+			<dd>{{ entity.paymentRules }}</dd>
+			<dt>Délais</dt>
+			<dd>{{ entity.deliveryRules }}</dd>
+			<dt>Commentaires</dt>
+			<dd>{{ entity.customerComments }}</dd>
+		</dl>
+	</div>
+    <div class="span4">
     <table class="table table-bordered">
     	<tbody>
     		<tr>
@@ -102,14 +112,6 @@
     </table>
     </div>
 </div>
-<dl>
-<dt>Règlement</dt>
-<dd>{{ entity.paymentRules }}</dd>
-<dt>Délais</dt>
-<dd>{{ entity.deliveryRules }}</dd>
-<dt>Commentaires</dt>
-<dd>{{ entity.customerComments }}</dd>
-</dl>
 <div class="form-actions">
 	<a href="{{ path('quote') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
 	{% if entity.valid %}
