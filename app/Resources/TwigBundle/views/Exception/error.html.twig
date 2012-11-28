@@ -4,7 +4,27 @@
 {{ parent() }} - Une erreur est survenue : {{ status_text }}
 {% endblock %}
 
-{% block container %}
-	<h1>Oups! Une erreur est survenue</h1>
+{% block body %}
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+	        <div class="container">
+	      {% block header %}
+	    
+	      	<a href="#" class="brand">JLM</a>
+
+
+	      {% endblock header %}
+	          </div>
+	      </div>
+      </div>   
+      <div class="container-fluid">
+		  {% block container %}
+		  <h1>Oups! Une erreur est survenue</h1>
     <h2>Le serveur a retourné une erreur "{{ status_code }} {{ status_text }}".</h2>
-{% endblock %}
+		  {% endblock container %}
+      </div>
+      <footer>
+          {% block footer %}
+          {% endblock footer %}
+      </footer>
+{% endblock body%}
