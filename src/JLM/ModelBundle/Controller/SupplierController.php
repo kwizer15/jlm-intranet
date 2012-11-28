@@ -31,6 +31,7 @@ class SupplierController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $nb = $em->getRepository('JLMModelBundle:Supplier')->getTotal();
         $nbPages = ceil($nb/$limit);
+        $nbPages = ($nbPages < 1) ? 1 : $nbPages;
         $offset = ($page-1) * $limit;
         if ($page < 1 || $page > $nbPages)
         {

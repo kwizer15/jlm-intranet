@@ -34,8 +34,7 @@ class TrusteeController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $nb = $em->getRepository('JLMModelBundle:Trustee')->getTotal();
         $nbPages = ceil($nb/$limit);
-        if ($nbPages == 0)
-        	$nbPages = 1;
+        $nbPages = ($nbPages < 1) ? 1 : $nbPages;
         $offset = ($page-1) * $limit;
         if ($page < 1 || $page > $nbPages)
         {
