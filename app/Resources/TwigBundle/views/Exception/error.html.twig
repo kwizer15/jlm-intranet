@@ -1,11 +1,11 @@
-{% extends "::layout.html.twig" %}
+{% extends "::base.html.twig" %}
 
 {% block title %}
 {{ parent() }} - Une erreur est survenue : {{ status_text }}
 {% endblock %}
 
 
-{% block container %}
+{% block body %}
 	<h1>Oups! Une erreur est survenue</h1>
     <h2>Le serveur a retourné une erreur "{{ status_code }} {{ status_text }}".</h2>
-{% endblock container %}
+{% endblock body %}
