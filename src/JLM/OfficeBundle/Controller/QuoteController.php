@@ -39,6 +39,7 @@ class QuoteController extends Controller
            
         $nb = $em->getRepository('JLMOfficeBundle:Quote')->getTotal();
         $nbPages = ceil($nb/$limit);
+        $nbPages = ($nbPages < 1) ? 1 : $nbPages;
         $offset = ($page-1) * $limit;
         if ($page < 1 || $page > $nbPages)
         {
