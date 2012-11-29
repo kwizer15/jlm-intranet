@@ -21,11 +21,11 @@ class QuoteLine
 	private $id;
 	
 	/**
-	 * @var Quote $quote
+	 * @var QuoteVariant $variant
 	 * 
-	 * @ORM\ManyToOne(targetEntity="Quote",inversedBy="lines")
+	 * @ORM\ManyToOne(targetEntity="QuoteVariant",inversedBy="lines")
 	 */
-	private $quote;
+	private $variant;
 	
 	/**
 	 * Position de la ligne dans le devis
@@ -325,26 +325,26 @@ class QuoteLine
     }
 
     /**
-     * Set quote
+     * Set variant
      *
-     * @param JLM\ModelBundle\Entity\Quote $quote
+     * @param JLM\ModelBundle\Entity\QuoteVariant $variant
      * @return QuoteLine
      */
-    public function setQuote(\JLM\OfficeBundle\Entity\Quote $quote = null)
+    public function setVariant(\JLM\OfficeBundle\Entity\QuoteVariant $variant = null)
     {
-        $this->quote = $quote;
+        $this->variant = $variant;
     
         return $this;
     }
 
     /**
-     * Get quote
+     * Get variant
      *
-     * @return JLM\OfficeBundle\Entity\Quote 
+     * @return JLM\OfficeBundle\Entity\QuoteVariant 
      */
-    public function getQuote()
+    public function getVariant()
     {
-        return $this->quote;
+        return $this->variant;
     }
 
     /**
