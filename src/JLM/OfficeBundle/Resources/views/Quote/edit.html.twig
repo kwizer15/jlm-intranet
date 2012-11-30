@@ -20,8 +20,7 @@
 <script src="{{ asset("bundles/jlmoffice/js/quote.js") }}"></script>
 <script>
 $("body").quote({
-	 autoSource:'{{ path('autocomplete') }}',
-	 lineCount:{# edit_form.lines | length #}
+	 autoSource:'{{ path('autocomplete') }}'
 });
 </script>
 {% endblock %}

@@ -69,7 +69,7 @@
 {% else %}
 <p>Pas encore de devis</p>
 {% endif %}
-<a href="#" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter une variante</a>
+<a href="{{ path('variant_new',{ 'id' : entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter une variante</a>
 <div class="form-actions">
 	<a href="{{ path('quote') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
 	{% if entity.valid %}

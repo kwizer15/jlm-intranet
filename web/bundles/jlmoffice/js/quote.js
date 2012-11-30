@@ -86,93 +86,13 @@
 					  $("#quote_contactCp").val(ui.item.name);
 					  return false;
 					}
-					});
-		  
-		  	$("#quote_paymentRules").attr('data-source',this.options.autoSource).autocomplete({
-				source: function(request,response){
-					request.repository = 'JLMOfficeBundle:PaymentModel';
-					return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
-			}});
-			$("#quote_deliveryRules").attr('data-source',this.options.autoSource).autocomplete({
-				source: function(request,response){
-					request.repository = 'JLMOfficeBundle:DelayModel';
-					return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
-			}});
-			
-			$("#quote_intro").attr('data-source',this.options.autoSource).autocomplete({
-				source: function(request,response){
-					request.repository = 'JLMOfficeBundle:IntroModel';
-					return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
-			}});
-			
-			this.$element.find("#quote_lines > tr").on('change',$.proxy(this.total,this)).quoteline({
-				autoSource:this.options.autoSource,
-			}); 
-			$("#quote_discount").on('change',$.proxy(this.total,this));
-			$(".newline").on('click',$.proxy(this.newline,this));
-			$("#quote_lines > tr").change();
-			$("#quote_lines").sortable({
-				update: function(e,ui) {
-					$.each($(this).children(),function(key,value) {
-						var posid = "#" + $(value).attr('id') + "_position";
-						$(posid).val(key);
-					})
-				}
-			});
-		
-			
+				});
 	  }
-   	 , newline : function(e){
-   		 	e.stopPropagation()
-   		 	e.preventDefault()
-			var lineList = $("#quote_lines");
-			var newWidget = lineList.attr('data-prototype');
-			newWidget = newWidget.replace(/__name__/g,this.options.lineCount);
-			lineList.append(newWidget);
-			$("#quote_lines_" + this.options.lineCount).on('change',$.proxy(this.total,this)).quoteline({
-				autoSource:this.options.autoSource
-			});
-			// Valeurs par défaut
-			$("#quote_lines_" + this.options.lineCount + "_position").val(this.options.lineCount);
-			$("#quote_lines_" + this.options.lineCount + "_description").hide();
-			$("#quote_lines_" + this.options.lineCount + "_showDescription").val(0);
-			$("#quote_lines_" + this.options.lineCount + "_quantity").val(1);
-			$("#quote_lines_" + this.options.lineCount + "_discount").val(0);
-			$("#quote_lines_" + this.options.lineCount + "_vat").val($("#quote_vat").val());
-			this.options.lineCount++;
-			return this;
-		}
-   	 , total : function(e) {
-   		 e.stopPropagation()
-		 e.preventDefault()
-		 var tht = 0;
-   		 var tva = 0;
-		 $.each($("#quote_lines > tr"),function(){
-			 var thtline = parseFloat($("#" + this.id + "_total").html().replace(',','.').replace(' ',''));
-			 var tvaline = parseFloat($("#" + this.id + "_vat").val().replace(',','.').replace(' ',''))/100;
-			 tht += thtline;
-			 tva += (thtline * tvaline);
-		 });
-		 var dis = parseFloat($("#quote_discount").val().replace(',','.').replace(' ',''))/100;
-		 $("#quote_total_htbd").html(number_format(tht,2,',',' '));
-		 $("#quote_total_discount").html(number_format(tht*dis,2,',',' '));	
-		 tht -= tht*dis;
-		 tva -= tva*dis;
-		 $("#quote_total_ht").html(number_format(tht,2,',',' '));
-		 $("#quote_total_tva").html(number_format(tva,2,',',' '));
-		 $("#quote_total_ttc").html(number_format(tht+tva,2,',',' '));
-		 return this;
-   	 }
    	 , vatchange : function(e) {
    		e.stopPropagation()
 		e.preventDefault()
 		var v = parseFloat($("#quote_vat").val().replace(',','.'));
-   		$("#quote_vat").val(number_format(v,1,',',' '));
-		$.each($("#quote_lines > tr"),function(key,value) {
-						var vatid = "#" + $(value).attr('id') + "_vat";
-						var transmitter = "#" + $(value).attr('id') + "_isTransmitter";
-						$(vatid).val($(transmitter).val() == '1' ? number_format($("#quote_vatTransmitter").val()*100,1,',',' ') : $("#quote_vat").val());
-					})
+   		$("#quote_vat").val(number_format(v,1,',',' '));	
    	 }
    }
 
@@ -192,13 +112,167 @@
 
   $.fn.quote.defaults = {
 	 autoSource:'',
-	 
-	 lineCount:0,
-	 lineReferenceSource:'',
-	 lineDesignationSource:'',
   }
 
   $.fn.quote.Constructor = Quote
+
+}(window.jQuery);
+
+/**
+ * Quote variant plugin
+ */
+
+!function($){
+
+  "use strict"; // jshint ;_;
+  
+  /* QUOTE VARIANT PUBLIC CLASS DEFINITION
+   * ================================= */
+
+   var QuoteVariant = function (element, options) {
+     this.$element = $(element)
+     this.options = $.extend({}, $.fn.quote.defaults, options)
+     this.listen()
+   }
+  
+   QuoteVariant.prototype = {
+	  constructor: QuoteVariant
+	  
+	  , listen : function() {
+		    $(".col-coding").hide();
+		    $("#tab-quote").click(function(){
+		    	if (!$("#tab-quote").hasClass('active'))
+		    	{
+		    		$("#tab-quote").addClass('active');
+		    		$(".col-quote").show();
+		    		$("#tab-coding").removeClass('active');
+		    		$(".col-coding").hide();
+		    	}
+		    	return false;
+		    });
+		    
+		    $("#tab-coding").click(function(){
+		    	if (!$("#tab-coding").hasClass('active'))
+		    	{
+		    		$("#tab-quote").removeClass('active');
+		    		$(".col-quote").hide();
+		    		$("#tab-coding").addClass('active');
+		    		$(".col-coding").show();
+		    	}
+		    	return false;
+		    });
+		    
+		  	$("#quote_variant_paymentRules").attr('data-source',this.options.autoSource).autocomplete({
+				source: function(request,response){
+					request.repository = 'JLMOfficeBundle:PaymentModel';
+					return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
+			}});
+			$("#quote_variant_deliveryRules").attr('data-source',this.options.autoSource).autocomplete({
+				source: function(request,response){
+					request.repository = 'JLMOfficeBundle:DelayModel';
+					return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
+			}});
+			
+			$("#quote_variant_intro").attr('data-source',this.options.autoSource).autocomplete({
+				source: function(request,response){
+					request.repository = 'JLMOfficeBundle:IntroModel';
+					return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
+			}});
+			
+			this.$element.find("#quote_variant_lines > tr").on('change',$.proxy(this.total,this)).quoteline({
+				autoSource:this.options.autoSource,
+			}); 
+			$("#quote_variant_discount").on('change',$.proxy(this.total,this));
+			$(".newline").on('click',$.proxy(this.newline,this));
+			$("#quote_variant_lines > tr").change();
+			$("#quote_variant_lines").sortable({
+				update: function(e,ui) {
+					$.each($(this).children(),function(key,value) {
+						var posid = "#" + $(value).attr('id') + "_position";
+						$(posid).val(key);
+					})
+				}
+			});
+		
+			
+	  }
+   	 , newline : function(e){
+   		 	e.stopPropagation()
+   		 	e.preventDefault()
+			var lineList = $("#quote_variant_lines");
+			var newWidget = lineList.attr('data-prototype');
+			newWidget = newWidget.replace(/__name__/g,this.options.lineCount);
+			lineList.append(newWidget);
+			$("#quote_variant_lines_" + this.options.lineCount).on('change',$.proxy(this.total,this)).quoteline({
+				autoSource:this.options.autoSource
+			});
+			// Valeurs par défaut
+			$("#quote_variant_lines_" + this.options.lineCount + "_position").val(this.options.lineCount);
+			$("#quote_variant_lines_" + this.options.lineCount + "_description").hide();
+			$("#quote_variant_lines_" + this.options.lineCount + "_showDescription").val(0);
+			$("#quote_variant_lines_" + this.options.lineCount + "_quantity").val(1);
+			$("#quote_variant_lines_" + this.options.lineCount + "_puchasePrice").val(0);
+			$("#quote_variant_lines_" + this.options.lineCount + "_discountSupplier").val(0);
+			$("#quote_variant_lines_" + this.options.lineCount + "_expenseRatio").val(10);
+			$("#quote_variant_lines_" + this.options.lineCount + "_shipping").val('0,00');
+			$("#quote_variant_lines_" + this.options.lineCount + "_discount").val(0);
+			$("#quote_variant_lines_" + this.options.lineCount + "_vat").val($("#quote_vat").val());
+			if (!$("#tab-coding").hasClass('active'))
+	    	{
+	    		$(".col-quote").show();
+	    		$(".col-coding").hide();
+	    	}
+			else
+			{
+		    	$(".col-quote").hide();
+		    	$(".col-coding").show();
+			}
+			this.options.lineCount++;
+			return this;
+		}
+   	 , total : function(e) {
+   		 e.stopPropagation()
+		 e.preventDefault()
+		 var tht = 0;
+   		 var tva = 0;
+		 $.each($("#quote_variant_lines > tr"),function(){
+			 var thtline = parseFloat($("#" + this.id + "_total").html().replace(',','.').replace(' ',''));
+			 var tvaline = parseFloat($("#" + this.id + "_vat").val().replace(',','.').replace(' ',''))/100;
+			 tht += thtline;
+			 tva += (thtline * tvaline);
+		 });
+		 var dis = parseFloat($("#quote_variant_discount").val().replace(',','.').replace(' ',''))/100;
+		 $("#quote_variant_total_htbd").html(number_format(tht,2,',',' '));
+		 $("#quote_variant_total_discount").html(number_format(tht*dis,2,',',' '));	
+		 tht -= tht*dis;
+		 tva -= tva*dis;
+		 $("#quote_variant_total_ht").html(number_format(tht,2,',',' '));
+		 $("#quote_variant_total_tva").html(number_format(tva,2,',',' '));
+		 $("#quote_variant_total_ttc").html(number_format(tht+tva,2,',',' '));
+		 return this;
+   	   }
+   }
+
+  
+  /* QUOTE VARIANT PLUGIN DEFINITION
+   * =========================== */
+
+  $.fn.quotevariant = function (option) {
+    return this.each(function () {
+      var $this = $(this)
+        , data = $this.data('quote')
+        , options = typeof option == 'object' && option
+      if (!data) $this.data('quote', (data = new QuoteVariant(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  $.fn.quote.defaults = {
+	 autoSource:'', 
+	 lineCount:0,
+  }
+
+  $.fn.quote.Constructor = QuoteVariant
 
 }(window.jQuery);
 
@@ -228,7 +302,7 @@
 			  this.$element.find(".remove-line").on('click',$.proxy(this.remove,this));
 			  this.$element.find(".show-description").on('click',$.proxy(this.toggleDesc,this));
 			  this.showDesc();
-			  $(line + "_quantity, " + line + "_unitPrice, " + line + "_discount").on('change',$.proxy(this.total,this));
+			  $(line + "_quantity, " + line + "_unitPrice, " + line + "_discount, " + line + "_purchasePrice, " + line + "_discountSupplier, " + line + "_expenseRatio, " + line + "_shipping").on('change',$.proxy(this.total,this));
 			
 			  $(line + "_reference").attr('data-source',this.options.autoSource)
 					              .autocomplete({
@@ -248,6 +322,10 @@
 						  	$(id + 'reference').val(ui.item.reference);
 						  	$(id + 'designation').val(ui.item.designation);
 						  	$(id + 'description').val(ui.item.description);
+						  	$(id + 'purchasePrice').val(ui.item.purchase);
+						  	$(id + 'discountSupplier').val(ui.item.discountSupplier);
+						  	$(id + 'expenseRatio').val(ui.item.expenseRatio);
+						  	$(id + 'shipping').val(ui.item.shipping);
 						  	$(id + 'unitPrice').val(ui.item.unitPrice).change();
 						  	$(id + 'isTransmitter').val(ui.item.transmitter ? '1' : '');
 						  	$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? number_format($("#quote_vatTransmitter").val()*100,1,',',' ') : $("#quote_vat").val())
@@ -273,6 +351,10 @@
 					  	$(id + 'reference').val(ui.item.reference);
 					  	$(id + 'designation').val(ui.item.designation);
 					  	$(id + 'description').val(ui.item.description);
+					  	$(id + 'purchasePrice').val(ui.item.purchase);
+					  	$(id + 'discountSupplier').val(ui.item.discountSupplier);
+					  	$(id + 'expenseRatio').val(ui.item.expenseRatio);
+					  	$(id + 'shipping').val(ui.item.shipping);
 					  	$(id + 'unitPrice').val(ui.item.unitPrice).change();
 					  	$(id + 'isTransmitter').val(ui.item.transmitter ? '1' : '');
 					  	$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? number_format($("#quote_vatTransmitter").val()*100,1,',',' ') : $("#quote_vat").val())
@@ -288,10 +370,18 @@
 		        e.preventDefault()
 	   		  	var line = "#" + this.$element.attr('id');
 		   		var qty = parseInt($(line + "_quantity").val().replace(',','.').replace(/[\s]{1,}/g,""));
+		   		var pp = parseFloat($(line + "_purchasePrice").val().replace(',','.').replace(/[\s]{1,}/g,""));
+		   		var ds = parseFloat($(line + "_discountSupplier").val().replace(',','.').replace(/[\s]{1,}/g,""));
+		   		var er = parseFloat($(line + "_expenseRatio").val().replace(',','.').replace(/[\s]{1,}/g,""));
+		   		var sh = parseFloat($(line + "_shipping").val().replace(',','.').replace(/[\s]{1,}/g,""));
 		   		var up = parseFloat($(line + "_unitPrice").val().replace(',','.').replace(/[\s]{1,}/g,""));
 		   		var dc = parseInt($(line + "_discount").val().replace(',','.').replace(/[\s]{1,}/g,""));
 		   		var total = qty*(up*((100-dc)/100));
 		   		$(line + "_quantity").val(number_format(qty,0,',',' '));
+		   		$(line + '_purchasePrice').val(number_format(pp,2,',',' '));
+			  	$(line + '_discountSupplier').val(number_format(ds,0,',',' '));
+			  	$(line + '_expenseRatio').val(number_format(er,0,',',' '));
+			  	$(line + '_shipping').val(number_format(sh,2,',',' '));
 		   		$(line + "_unitPrice").val(number_format(up,2,',',' '));
 		   		$(line + "_discount").val(number_format(dc,0,',',' '));
 		   		$(line + "_total").html(number_format(total,2,',',' '));
@@ -320,6 +410,8 @@
 		   		e.stopPropagation()
 		        e.preventDefault()
 		   		this.$element.fadeOut(500,function(){
+		   			$("#" + $(this).attr('id') + "_purchasePrice").val(0);
+		   			$("#" + $(this).attr('id') + "_shippingPrice").val(0);
 		   			$("#" + $(this).attr('id') + "_unitPrice").val(0).change();
 		   			$(this).remove();
 		   		});

@@ -21,19 +21,76 @@
 {% endblock %}
 
 {% block quote_variant_widget %}
-<table class="table table-bordered">
-<thead>
-</thead>
-<tbody>
-{{ form_row(form.lines) }}
-</tbody>
-</table>
+{{ form_row(form.creation) }}
+<div class="row_fluid">
+    {{ form_widget(form.intro) }}
+    </div><br>
+    <ul class="nav nav-tabs">
+  <li id="tab-quote" class="active"><a href="#">Devis</a></li>
+  <li id="tab-coding"><a href="#">Chiffrage</a></li>
+</ul>
+    <table class="table table-bordered">
+    <thead>
+    <tr>
+    <th class="col-quote">Référence</th>
+    <th>Designation</th>
+    <th>Qté</th>
+    <th class="col-coding">PA HT</th>
+    <th class="col-coding">Remise</th>
+    <th class="col-coding">Frais</th>
+    <th class="col-coding">Port</th>
+    <th class="col-quote">PU HT</th>
+    <th class="col-quote">Remise</th>
+    <th class="col-quote">TVA</th>
+    <th>PT HT</th>
+    <th class="span1"><a href="#" class="btn btn-success newline"><i class="icon-plus-sign icon-white"></i></a></th>
+    </tr>
+    </thead>
+    {{ form_widget(form.lines) }}
+    </table>
+    <div class="row_fluid">
+	    <div class="span6">
+	    <div class="control-group">
+	    		<label class="control-label">Total HT avant remise</label>
+	    		<div class="controls">
+	    			<div class="input-append"><span class="input-small uneditable-input" id="quote_total_htbd">0,00</span><span class="add-on">€</span></div>
+	    		</div>
+	    	</div>
+	    	{{ form_row(form.discount) }}
+	    	<div class="control-group">
+	    		<label class="control-label">Montant remise</label>
+	    		<div class="controls">
+	    			<div class="input-append"><span class="input-small uneditable-input" id="quote_total_discount">0,00</span><span class="add-on">€</span></div>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="span6 well">
+	    	<div class="control-group">
+	    		<label class="control-label">Total HT</label>
+	    		<div class="controls">
+	    			<div class="input-append"><span class="input-small uneditable-input" id="quote_total_ht">0,00</span><span class="add-on">€</span></div>
+	    		</div>
+	    	</div>
+	    	<div class="control-group">
+	    		<label class="control-label">Total TVA</label>
+	    		<div class="controls">
+	    			<div class="input-append"><span class="input-small uneditable-input" id="quote_total_tva">0,00</span><span class="add-on">€</span></div>
+	    		</div>
+	    	</div>
+	    	<div class="control-group">
+	    		<label class="control-label">Total TTC</label>
+	    		<div class="controls">
+	    			<div class="input-append"><span class="input-small uneditable-input" id="quote_total_ttc">0,00</span><span class="add-on">€</span></div>
+	    		</div>
+	    	</div>
+	    </div>
+    </div>
 {{ form_rest(form) }}
 {% endblock %}
 
 {% block quote_line_row %}
 <tr {{ block('widget_container_attributes') }}>
-    <td>
+    <td class="col-quote">
         {{ form_widget(form.position) }}
         {{ form_widget(form.product) }}
         {{ form_widget(form.isTransmitter) }}

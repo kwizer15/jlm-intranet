@@ -106,7 +106,7 @@ class QuoteLine
 	 *
 	 * @ORM\Column(name="expense_ratio", type="decimal", scale=7)
 	 */
-	private $expenseRatio;
+	private $expenseRatio = .1;
 	
 	/**
 	 * Frais de port (€)

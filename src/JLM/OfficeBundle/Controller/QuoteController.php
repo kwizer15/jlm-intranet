@@ -160,35 +160,16 @@ class QuoteController extends Controller
     public function updateAction(Request $request, Quote $entity)
     {
     	
-    	// Si le devis est déjà validé, on empèche quelconque odification
+    	// Si le devis est déjà validé, on empèche quelconque modification
     	if ($entity->isValid())
     		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
     	 
-        $originalLines = array();
-        foreach ($entity->getLines() as $line)
-        	$originalLines[] = $line;
         $editForm = $this->createForm(new QuoteType(), $entity);
         $editForm->bind($request);
         
         if ($editForm->isValid()) {
         	$em = $this->getDoctrine()->getEntityManager();
         	$em->persist($entity);
-        	foreach ($entity->getLines() as $key => $line)
-        	{	
-      
-        		// Nouvelles lignes
-        		$line->setQuote($entity);
-        		$em->persist($line);
-        		
-        		// On vire les anciennes
-        		foreach ($originalLines as $key => $toDel) 
-        			if ($toDel->getId() === $line->getId()) 
-        				unset($originalLines[$key]);
-        	}
-        	foreach ($originalLines as $line)
-        	{
-        		$em->remove($line);
-        	}
             $em->flush();
             return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
         }
