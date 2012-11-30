@@ -9,10 +9,11 @@
     <fieldset>
     {{ form_widget(form) }}
 	<div class="form-actions">
-	 
-	   <button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer les modifications</button>
+	  <a href="{{ path('quote') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	  <button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer les modifications</button>
 	</div>
 </fieldset>
+</form>
 {% endblock %}
 
 {% block javascripts %}
@@ -21,7 +22,7 @@
 <script>
 $("body").quote({
 	 autoSource:'{{ path('autocomplete') }}',
-	 lineCount:{{ form.lines | length }}
+	 lineCount:{# form.lines | length #} 
 });
 </script>
 {% endblock %}

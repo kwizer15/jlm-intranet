@@ -91,7 +91,7 @@ class Quote extends Document
 	/**
 	 * @var ArrayCollection $variants
 	 * 
-	 * @ORM\OneToMany(targetEntity="QuoteVariant")
+	 * @ORM\OneToMany(targetEntity="QuoteVariant",mappedBy="quote")
 	 */
 	private $variants;
 	

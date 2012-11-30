@@ -83,8 +83,7 @@ class QuoteController extends Controller
     {
         $entity = new Quote();
         $entity->setCreation(new \DateTime);
-        $entity->setDiscount(0);
-        $entity->addLine(new QuoteLine);
+      //  $entity->addLine(new QuoteLine);
         $em = $this->getDoctrine()->getEntityManager();
         $vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
 		$entity->setVat($vat);
@@ -121,11 +120,6 @@ class QuoteController extends Controller
             $number.= $n;
             $entity->setNumber($number);
             $em->persist($entity);
-            foreach ($entity->getLines() as $key => $line)
-            {
-            	$line->setQuote($entity);
-            	$em->persist($line);
-            }
             $em->flush();
             return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));  
         }

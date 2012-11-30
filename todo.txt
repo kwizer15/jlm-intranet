@@ -1,5 +1,3 @@
-Voir si regrouper les 3 ModelRepository dans TextModelRepository fonctionne
-
 Barre de recherche
 	- Recherche sur les adresses des sites
 
@@ -34,8 +32,17 @@ Produits
 
 
 Quote
-	- voir chiffrage
+	- Changer redirection de création de Devis (createAction)
+	- Afficher QuoteVariant dans Quote:show
+	- Créer lien "ajouter une variante"
 
+		
+	TVA applicable : 19.6 au lieu de 19,6
+		+ ne s'affiche pas sur la premiere ligne pour un nouveau devis
+	Formulaire Coding
+	
+	
+	-js : réadapter et séparer devis et variante
 
 -----------------------------------------------
 A plus long terme

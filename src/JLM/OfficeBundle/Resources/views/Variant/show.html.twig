@@ -50,26 +50,68 @@
         <br>à l'attention de {{ entity.contactCp }}
     </div>
 </div>
-
-<ul id="variants" class="nav nav-tabs">
-	{% for variant in entity.variants %}
-    <li{% if loop.first %} class="active"{% endif %}>
-        <a href="#variant-{{ variant.number }}" data-toggle="tab">{{ variant.number }}</a>
-    </li>
+<p>{{ entity.intro }}</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Réf.</th>
+            <th>Designation</th>
+            <th>Qté</th>
+            <th>Prix U.H.T</th>
+            <th>Remise</th>
+            <th>Prix H.T</th>
+            <th>T.V.A</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for line in entity.lines %}
+        <tr>
+            <td>{{ line.reference }}</td>
+            <td>
+                {{ line.designation }}
+                {% if line.showDescription %}
+                <br><em>{{ line.description|nl2br }}</em>
+                {% endif %}
+            </td>
+            <td>{{ line.quantity }}</td>
+            <td>{{ line.unitPrice|number_format(2,',',' ') }} €</td>
+            <td>{{ (line.discount*100)|number_format(0,',',' ') }} %</td>
+            <td>{{ line.price|number_format(2,',',' ') }} €</td>
+            <td>{{ (line.vat*100)|number_format(1,',',' ') }} %</td>
+        </tr>
     {% endfor %}
-</ul>
-{%  if entity.variants | length %}
-<div id="variantsContent" class="tab-content">
-{% for variant in entity.variants %}
-    <div class="tab-pane fade{% if loop.first %} active in{% endif %}" id="variant-{{ variant.number }}">
-    
+    </tbody>
+</table>
+<div class="row-fluid">
+	<div class="span8">
+		<dl>
+			<dt>Règlement</dt>
+			<dd>{{ entity.paymentRules }}</dd>
+			<dt>Délais</dt>
+			<dd>{{ entity.deliveryRules }}</dd>
+			<dt>Commentaires</dt>
+			<dd>{{ entity.customerComments }}</dd>
+		</dl>
+	</div>
+    <div class="span4">
+    <table class="table table-bordered">
+    	<tbody>
+    		<tr>
+    			<th>Total H.T.</th>
+    			<td>{{ entity.totalPrice|number_format(2,',',' ') }} €</td>
+    		</tr>
+    		<tr>
+    			<th>Total TVA</th>
+    			<td>{{ entity.totalVat|number_format(2,',',' ') }} €</td>
+    		</tr>
+    		<tr>
+    			<th>Total à régler</th>
+    			<td>{{ entity.totalPriceAti|number_format(2,',',' ') }} €</td>
+    		</tr>
+    	</tbody>
+    </table>
     </div>
-{% endfor %}
 </div>
-{% else %}
-<p>Pas encore de devis</p>
-{% endif %}
-<a href="#" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter une variante</a>
 <div class="form-actions">
 	<a href="{{ path('quote') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
 	{% if entity.valid %}

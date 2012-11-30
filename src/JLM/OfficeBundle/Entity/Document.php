@@ -43,14 +43,6 @@ abstract class Document
     private $trusteeAddress;
 
     /**
-     * Remise générale
-     * @var float $discount
-     *
-     * @ORM\Column(name="discount", type="decimal", scale=7)
-     */
-    private $discount;
-    
-    /**
      * Set creation
      *
      * @param \DateTime $creation
@@ -140,28 +132,5 @@ abstract class Document
     public function getTrustee()
     {
         return $this->trustee;
-    }
-
-    /**
-     * Set discount
-     *
-     * @param float $discount
-     * @return Document
-     */
-    public function setDiscount($discount)
-    {
-        $this->discount = $discount;
-    
-        return $this;
-    }
-
-    /**
-     * Get discount
-     *
-     * @return float 
-     */
-    public function getDiscount()
-    {
-        return $this->discount;
     }
 }

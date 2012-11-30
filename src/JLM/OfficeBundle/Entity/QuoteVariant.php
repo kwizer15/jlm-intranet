@@ -1,5 +1,5 @@
 <?php
-<?php
+
 namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -24,12 +24,24 @@ class QuoteVariant
 	/**
 	 * Quote
 	 * @var Quote $quote
+	 * 
+	 * @ORM\ManyToOne(targetEntity="Quote",inversedBy="quote")
 	 */
 	private $quote;
 	
 	/**
+	 * Création
+	 * @var \DateTime
+	 * 
+	 * @ORM\Column(name="creation", type="datetime")
+	 */
+	private $creation;
+	
+	/**
 	 * Variant number
 	 * @var int $variantNumber
+	 * 
+	 * @ORM\Column(name="variant_number",type="smallint")
 	 */
 	private $variantNumber;
 	
@@ -54,6 +66,14 @@ class QuoteVariant
 	 * @ORM\Column(name="delivery_rules", type="string", length=255)
 	 */
 	private $deliveryRules;
+	
+	/**
+	 * Remise générale
+	 * @var float $discount
+	 *
+	 * @ORM\Column(name="discount", type="decimal", scale=7)
+	 */
+	private $discount;
 	
 	/**
 	 * Validé
@@ -130,6 +150,29 @@ class QuoteVariant
 	}
 	
 	/**
+	 * Set creation
+	 *
+	 * @param \DateTime $creation
+	 * @return Document
+	 */
+	public function setCreation($creation)
+	{
+		$this->creation = $creation;
+	
+		return $this;
+	}
+	
+	/**
+	 * Get creation
+	 *
+	 * @return \DateTime
+	 */
+	public function getCreation()
+	{
+		return $this->creation;
+	}
+	
+	/**
 	 * Get number
 	 *
 	 * @return string
@@ -137,7 +180,7 @@ class QuoteVariant
 	public function getNumber()
 	{
 		if ($this->getVariantNumber() == 0)
-			return $this->getQuote()->getNumber()
+			return $this->getQuote()->getNumber();
 		return $this->getQuote()->getNumber().'-'.$this->getVariantNumber();
 	}
 	
@@ -308,6 +351,29 @@ class QuoteVariant
 	}
 	
 	/**
+	 * Set discount
+	 *
+	 * @param float $discount
+	 * @return Document
+	 */
+	public function setDiscount($discount)
+	{
+		$this->discount = $discount;
+	
+		return $this;
+	}
+	
+	/**
+	 * Get discount
+	 *
+	 * @return float
+	 */
+	public function getDiscount()
+	{
+		return $this->discount;
+	}
+	
+	/**
 	 * Add lines
 	 *
 	 * @param JLM\ModelBundle\Entity\QuoteLine $lines
@@ -376,5 +442,26 @@ class QuoteVariant
 			$total += $line->getPriceAti();
 		$total *= (1-$this->getDiscount());
 		return $total;
+	}
+	
+	/**
+	 * Get TotalPurchase
+	 */
+	public function getTotalPurchase()
+	{
+		$total = 0;
+		foreach ($this->getLines() as $line)
+			$total += $line->getTotalPurchasePrice();
+		return $total;
+	}
+	
+	/**
+	 * Get totalMargin
+	 * 
+	 * @retunr float
+	 */
+	public function getTotalMargin()
+	{
+		return $this->getTotalPrice() - $this->getTotalPurchase();
 	}
 }
