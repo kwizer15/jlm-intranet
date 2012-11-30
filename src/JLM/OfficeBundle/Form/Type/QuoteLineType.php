@@ -25,7 +25,7 @@ class QuoteLineType extends AbstractType
         	->add('shipping','money',array('grouping'=>true,'attr'=>array('class'=>'input-mini')))
         	->add('unitPrice','money',array('grouping'=>true,'attr'=>array('class'=>'input-mini')))
         	->add('discount','percent',array('precision'=>0,'attr'=>array('class'=>'input-mini')))
-        	->add('vat','percent',array('precision'=>1,'attr'=>array('class'=>'input-mini')))
+        	->add('vat','percent',array('precision'=>1,'disabled' => true,'attr'=>array('class'=>'input-mini')))
         	->add('isTransmitter','hidden')
 
         ;

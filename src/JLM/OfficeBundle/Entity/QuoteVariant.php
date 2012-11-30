@@ -74,7 +74,7 @@ class QuoteVariant
 	 *
 	 * @ORM\Column(name="discount", type="decimal", scale=7)
 	 */
-	private $discount;
+	private $discount = 0;
 	
 	/**
 	 * Validé

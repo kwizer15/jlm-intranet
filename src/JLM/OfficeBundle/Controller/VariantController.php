@@ -38,7 +38,9 @@ class VariantController extends Controller
         $entity->setQuote($quote);
         
         $entity->setCreation(new \DateTime);
-        $entity->addLine(new QuoteLine);
+        $l = new QuoteLine;
+        $l->setVat($quote->getVat());
+        $entity->addLine($l);
         $form   = $this->createForm(new QuoteVariantType(), $entity);
 
         return array(

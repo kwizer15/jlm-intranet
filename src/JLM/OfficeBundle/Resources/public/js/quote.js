@@ -260,9 +260,9 @@
   $.fn.quotevariant = function (option) {
     return this.each(function () {
       var $this = $(this)
-        , data = $this.data('quote')
+        , data = $this.data('quotevariant')
         , options = typeof option == 'object' && option
-      if (!data) $this.data('quote', (data = new QuoteVariant(this, options)))
+      if (!data) $this.data('quotevariant', (data = new QuoteVariant(this, options)))
       if (typeof option == 'string') data[option]()
     })
   }

@@ -34,15 +34,8 @@ Produits
 Quote
 	- Changer redirection de création de Devis (createAction)
 	- Afficher QuoteVariant dans Quote:show
-	- Créer lien "ajouter une variante"
-
-		
-	TVA applicable : 19.6 au lieu de 19,6
-		+ ne s'affiche pas sur la premiere ligne pour un nouveau devis
-	Formulaire Coding
-	
-	
-	-js : réadapter et séparer devis et variante
+	- Finir les calculs de chiffrage (js)
+	- Edition Variant
 
 -----------------------------------------------
 A plus long terme
