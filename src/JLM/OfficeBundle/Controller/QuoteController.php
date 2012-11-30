@@ -76,7 +76,7 @@ class QuoteController extends Controller
      * Displays a form to create a new Quote entity.
      *
      * @Route("/new", name="quote_new")
-     * @Template()Office
+     * @Template()
      * @Secure(roles="ROLE_USER")
      */
     public function newAction()

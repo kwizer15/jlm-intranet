@@ -3,6 +3,7 @@
 namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * JLM\OfficeBundle\Entity\QuoteVariant
@@ -125,6 +126,27 @@ class QuoteVariant
 	public function getId()
 	{
 		return $this->id;
+	}
+	
+	/**
+	 * Set quote
+	 *
+	 * @return Quote
+	 */
+	public function setQuote(Quote $quote)
+	{
+		$this->quote = $quote;
+		return $this;
+	}
+	
+	/**
+	 * Get quote
+	 * 
+	 * @return Quote
+	 */
+	public function getQuote()
+	{
+		return $this->quote;
 	}
 	
 	/**
@@ -458,7 +480,7 @@ class QuoteVariant
 	/**
 	 * Get totalMargin
 	 * 
-	 * @retunr float
+	 * @return float
 	 */
 	public function getTotalMargin()
 	{

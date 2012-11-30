@@ -338,6 +338,29 @@ class QuoteLine
     {
         return $this->discount;
     }
+    
+    /**
+     * Set discountSupplier
+     *
+     * @param float $discountSupplier
+     * @return QuoteLine
+     */
+    public function setDiscountSupplier($discountSupplier)
+    {
+    	$this->discountSupplier = $discountSupplier;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get discount
+     *
+     * @return float
+     */
+    public function getDiscountSupplier()
+    {
+    	return $this->discountSupplier;
+    }
 
     /**
      * Set vat
