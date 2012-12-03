@@ -140,23 +140,23 @@
 	  
 	  , listen : function() {
 		    $(".col-coding").hide();
-		    $("#tab-quote").click(function(){
-		    	if (!$("#tab-quote").hasClass('active'))
+		    $(".tab-quote").click(function(){
+		    	if (!$(".tab-quote").hasClass('active'))
 		    	{
-		    		$("#tab-quote").addClass('active');
+		    		$(".tab-quote").addClass('active');
 		    		$(".col-quote").show();
-		    		$("#tab-coding").removeClass('active');
+		    		$(".tab-coding").removeClass('active');
 		    		$(".col-coding").hide();
 		    	}
 		    	return false;
 		    });
 		    
-		    $("#tab-coding").click(function(){
-		    	if (!$("#tab-coding").hasClass('active'))
+		    $(".tab-coding").click(function(){
+		    	if (!$(".tab-coding").hasClass('active'))
 		    	{
-		    		$("#tab-quote").removeClass('active');
+		    		$(".tab-quote").removeClass('active');
 		    		$(".col-quote").hide();
-		    		$("#tab-coding").addClass('active');
+		    		$(".tab-coding").addClass('active');
 		    		$(".col-coding").show();
 		    	}
 		    	return false;
@@ -215,9 +215,10 @@
 			$("#quote_variant_lines_" + this.options.lineCount + "_discountSupplier").val(0);
 			$("#quote_variant_lines_" + this.options.lineCount + "_expenseRatio").val(10);
 			$("#quote_variant_lines_" + this.options.lineCount + "_shipping").val('0,00');
+			$("#quote_variant_lines_" + this.options.lineCount + "_coef").val('40,00');
 			$("#quote_variant_lines_" + this.options.lineCount + "_discount").val(0);
 			$("#quote_variant_lines_" + this.options.lineCount + "_vat").val($("#quote_vat").val());
-			if (!$("#tab-coding").hasClass('active'))
+			if (!$(".tab-coding").hasClass('active'))
 	    	{
 	    		$(".col-quote").show();
 	    		$(".col-coding").hide();
@@ -260,7 +261,9 @@
 		 $("#quote_variant_total_tva").html(number_format(tva,2,',',' '));
 		 $("#quote_variant_total_ttc").html(number_format(tht+tva,2,',',' '));
 		 return this;
-   	   }
+   	   
+   		
+   	 }
    }
 
   
@@ -312,8 +315,17 @@
 			  this.$element.find(".remove-line").on('click',$.proxy(this.remove,this));
 			  this.$element.find(".show-description").on('click',$.proxy(this.toggleDesc,this));
 			  this.showDesc();
-			  $(line + "_quantity, " + line + "_unitPrice, " + line + "_discount, " + line + "_purchasePrice, " + line + "_discountSupplier, " + line + "_expenseRatio, " + line + "_shipping").on('change',$.proxy(this.total,this));
-			
+			  
+			  $(line + "_quantity, "
+			  + line + "_unitPrice, "
+			  + line + "_discount").on('change',$.proxy(this.totalQuote,this));
+			  
+			  $(line + "_purchasePrice, "
+			  + line + "_discountSupplier, "
+			  + line + "_expenseRatio, "
+			  + line + "_shipping, "
+			  + line + "_coef").on('change',$.proxy(this.totalCoding,this));
+			  
 			  $(line + "_reference").attr('data-source',this.options.autoSource)
 					              .autocomplete({
 						source: function(request,response){
@@ -372,31 +384,54 @@
 				  }
 				});
 			  $(line + "_quantity").change();
+			  $(line + "_coef").val('40,00').change();
 		  
 		  }
 	   
-	   	  , total : function(e) {
+	   	  , totalQuote : function(e) {
 		   		e.stopPropagation()
 		        e.preventDefault()
 	   		  	var line = "#" + this.$element.attr('id');
 		   		var qty = parseInt($(line + "_quantity").val().replace(',','.').replace(/[\s]{1,}/g,""));
 		   		var pp = parseFloat($(line + "_purchasePrice").val().replace(',','.').replace(/[\s]{1,}/g,""));
-		   		var ds = parseFloat($(line + "_discountSupplier").val().replace(',','.').replace(/[\s]{1,}/g,""));
-		   		var er = parseFloat($(line + "_expenseRatio").val().replace(',','.').replace(/[\s]{1,}/g,""));
+		   		var ds = parseFloat($(line + "_discountSupplier").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
+		   		var er = parseFloat($(line + "_expenseRatio").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
 		   		var sh = parseFloat($(line + "_shipping").val().replace(',','.').replace(/[\s]{1,}/g,""));
 		   		var up = parseFloat($(line + "_unitPrice").val().replace(',','.').replace(/[\s]{1,}/g,""));
-		   		var dc = parseInt($(line + "_discount").val().replace(',','.').replace(/[\s]{1,}/g,""));
-		   		var total = qty*(up*((100-dc)/100));
+		   		var dc = parseInt($(line + "_discount").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
+		   		var totalunit = up*(1-dc);
+		   		var total = qty*totalunit;
+		   		var coef = ((totalunit/(pp*(1-ds)*(1+er)+sh))-1);
 		   		$(line + "_quantity").val(number_format(qty,0,',',' '));
-		   		$(line + '_purchasePrice').val(number_format(pp,2,',',' '));
-			  	$(line + '_discountSupplier').val(number_format(ds,0,',',' '));
-			  	$(line + '_expenseRatio').val(number_format(er,0,',',' '));
-			  	$(line + '_shipping').val(number_format(sh,2,',',' '));
+			  	$(line + '_coef').val(number_format(coef*100,2,',',' '));
 		   		$(line + "_unitPrice").val(number_format(up,2,',',' '));
-		   		$(line + "_discount").val(number_format(dc,0,',',' '));
+		   		$(line + "_discount").val(number_format(dc*100,0,',',' '));
 		   		$(line + "_total").html(number_format(total,2,',',' '));
 		   		$(line).change();
 		   		return this;
+	   	  }
+	   	  , totalCoding : function(e) {
+	   		e.stopPropagation()
+	        e.preventDefault()
+	        var line = "#" + this.$element.attr('id');
+	   		var qty = parseInt($(line + "_quantity").val().replace(',','.').replace(/[\s]{1,}/g,""));
+	   		var pp = parseFloat($(line + "_purchasePrice").val().replace(',','.').replace(/[\s]{1,}/g,""));
+	   		var ds = parseFloat($(line + "_discountSupplier").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
+	   		var er = parseFloat($(line + "_expenseRatio").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
+	   		var sh = parseFloat($(line + "_shipping").val().replace(',','.').replace(/[\s]{1,}/g,""));
+	   		var coef = parseFloat($(line + "_coef").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
+	   		var dc = parseInt($(line + "_discount").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
+	   		var up = (pp*(1-ds)*(1+er))*(1+coef)+sh;
+	   		var total = qty*(up*((100-dc)/100));
+	   		$(line + '_purchasePrice').val(number_format(pp,2,',',' '));
+		  	$(line + '_discountSupplier').val(number_format(ds*100,0,',',' '));
+		  	$(line + '_expenseRatio').val(number_format(er*100,0,',',' '));
+		  	$(line + '_shipping').val(number_format(sh,2,',',' '));
+		  	$(line + '_coef').val(number_format(coef*100,2,',',' '));
+	   		$(line + "_unitPrice").val(number_format(up,2,',',' '));
+	   		$(line + "_total").html(number_format(total,2,',',' '));
+	   		$(line).change();
+	   		return this;
 	   	  }
 	   	  ,showDesc : function() {
 	   		var input = $("#" + this.$element.attr('id') + "_showDescription");

@@ -206,72 +206,17 @@ class Quote extends Document
     }
 
     /**
-     * Get valid
+     * Get state
      *
-     * @return boolean
+     * @return int
      */
-    public function getValid()
+    public function getState()
     {
+    	$state = 0;
     	foreach ($this->variants as $variant)
-    		if ($variant->isValid())
-    			return true;
-    	return false;
-    }
-    
-    /**
-     * Is valid
-     *
-     * @return boolean
-     */
-    public function isValid()
-    {
-    	return $this->getValid();
-    }
-    
-    /**
-     * Get send
-     *
-     * @return boolean
-     */
-    public function getSend()
-    {
-    	foreach ($this->variants as $variant)
-    		if ($variant->isSend())
-    			return true;
-    	return false;
-    }
-    
-    /**
-     * Is send
-     *
-     * @return boolean
-     */
-    public function isSend()
-    {
-    	return $this->getSend();
-    }
-    
-    /**
-     * Get given
-     *
-     * @return boolean 
-     */
-    public function getGiven()
-    {
-        foreach ($this->variants as $variant)
-    		if ($variant->isGiven())
-    			return true;
-    	return false;
-    }
-    
-    /**
-     * Is given
-     *
-     * @return boolean
-     */
-    public function isGiven()
-    {
-    	return $this->getGiven();
+    		if ($variant->getState() > $state)
+    			$state = $variant->getState();
+    	return $state;
     }
 
     /**

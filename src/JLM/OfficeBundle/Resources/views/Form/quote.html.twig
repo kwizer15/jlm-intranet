@@ -26,8 +26,8 @@
     {{ form_widget(form.intro) }}
     </div><br>
     <ul class="nav nav-tabs">
-  <li id="tab-quote" class="active"><a href="#">Devis</a></li>
-  <li id="tab-coding"><a href="#">Chiffrage</a></li>
+  <li class="tab-quote active"><a href="#">Devis</a></li>
+  <li class="tab-coding"><a href="#">Chiffrage</a></li>
 </ul>
     <table class="table table-bordered">
     <thead>
@@ -39,6 +39,7 @@
     <th class="col-coding">Remise</th>
     <th class="col-coding">Frais</th>
     <th class="col-coding">Port</th>
+    <th class="col-coding">Coef.</th>
     <th class="col-quote">PU HT</th>
     <th class="col-quote">Remise</th>
     <th class="col-quote">TVA</th>
@@ -117,6 +118,12 @@
     <td class="col-coding">{{ form_widget(form.discountSupplier) }}</td>
     <td class="col-coding">{{ form_widget(form.expenseRatio) }}</td>
     <td class="col-coding">{{ form_widget(form.shipping) }}</td>
+    <td class="col-coding">
+    	<div class="input-append">
+			<input id="{{ id }}_coef" class="input-mini" type="text">
+			<span class="add-on">%</span>
+		</div>
+	</td>
     <td class="col-quote">{{ form_widget(form.unitPrice) }}</td>
     <td class="col-quote">{{ form_widget(form.discount) }}</td>
     <td class="col-quote">{{ form_widget(form.vat) }}</td>

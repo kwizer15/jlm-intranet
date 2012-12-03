@@ -68,7 +68,10 @@ class VariantController extends Controller
     		$em = $this->getDoctrine()->getEntityManager();
     		$lines = $entity->getLines();
     		foreach ($lines as $line)
+    		{
+    			$line->setVariant($entity);
     			$em->persist($line);
+    		}
 			$number = $em->getRepository('JLMOfficeBundle:QuoteVariant')->getCount($entity->getQuote())+1;
 			$entity->setVariantNumber($number);
     		$em->persist($entity);

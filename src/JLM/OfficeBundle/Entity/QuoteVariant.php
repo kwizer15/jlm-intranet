@@ -75,36 +75,27 @@ class QuoteVariant
 	 * @ORM\Column(name="discount", type="decimal", scale=7)
 	 */
 	private $discount = 0;
-	
+
 	/**
-	 * Validé
-	 * @var bool $valid
+	 * Etat
+	 * -1 = annulé
+	 * 0 = en saisie
+	 * 1 = près à envoyer
+	 * 2 = imprimer
+	 * 3 = envoyé (en attente de l'accusé)
+	 * 4 = envoyé (accusé reçu)
+	 * 5 = accordé
+	 * @var int $state
 	 *
-	 * @ORM\Column(name="valid",type="boolean")
+	 * @ORM\Column(name="state",type="smallint")
 	 */
-	private $valid = false;
-	
-	/**
-	 * Envoyé
-	 * @var bool $send
-	 *
-	 * @ORM\Column(name="send",type="boolean")
-	 */
-	private $send = false;
-	
-	/**
-	 * Accordé
-	 * @var bool $given
-	 *
-	 * @ORM\Column(name="given",type="boolean")
-	 */
-	private $given = false;
+	private $state = 0;
 	
 	/**
 	 * Lignes
 	 * @var ArrayCollection $lines
 	 *
-	 * @ORM\OneToMany(targetEntity="QuoteLine",mappedBy="quote")
+	 * @ORM\OneToMany(targetEntity="QuoteLine",mappedBy="variant")
 	 * @ORM\OrderBy({"position" = "ASC"})
 	 */
 	private $lines;
@@ -274,102 +265,25 @@ class QuoteVariant
 	}
 	
 	/**
-	 * Set valid
+	 * Set state
 	 *
-	 * @param boolean $valid
-	 * @return Quote
+	 * @param int $state
+	 * @return QuoteVariant
 	 */
-	public function setValid($valid = true)
+	public function setState($state)
 	{
-		$this->valid = (bool)$valid;
-	
+		$this->state = $state;
 		return $this;
 	}
 	
 	/**
-	 * Get valid
+	 * Get state
 	 *
-	 * @return boolean
+	 * @return int
 	 */
-	public function getValid()
+	public function getState()
 	{
-		return $this->valid;
-	}
-	
-	/**
-	 * Is valid
-	 *
-	 * @return boolean
-	 */
-	public function isValid()
-	{
-		return $this->getValid();
-	}
-	
-	/**
-	 * Set send
-	 *
-	 * @param boolean $send
-	 * @return Quote
-	 */
-	public function setSend($send = true)
-	{
-		$this->send = (bool)$send;
-	
-		return $this;
-	}
-	
-	/**
-	 * Get send
-	 *
-	 * @return boolean
-	 */
-	public function getSend()
-	{
-		return $this->send;
-	}
-	
-	/**
-	 * Is send
-	 *
-	 * @return boolean
-	 */
-	public function isSend()
-	{
-		return $this->getSend();
-	}
-	
-	/**
-	 * Set given
-	 *
-	 * @param boolean $given
-	 * @return Quote
-	 */
-	public function setGiven($given = true)
-	{
-		$this->given = (bool)$given;
-	
-		return $this;
-	}
-	
-	/**
-	 * Get given
-	 *
-	 * @return boolean
-	 */
-	public function getGiven()
-	{
-		return $this->given;
-	}
-	
-	/**
-	 * Is given
-	 *
-	 * @return boolean
-	 */
-	public function isGiven()
-	{
-		return $this->getGiven();
+		return $this->state;
 	}
 	
 	/**
