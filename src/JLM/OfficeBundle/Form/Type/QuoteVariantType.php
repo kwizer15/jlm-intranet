@@ -11,6 +11,7 @@ class QuoteVariantType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
+			->add('quote','quote_hidden')
 			->add('creation','datepicker',array('label'=>'Date de création'))
 			->add('discount','percent',array('label'=>'Remise','attr'=>array('class'=>'input-mini')))
 			->add('paymentRules',null,array('label'=>'Réglement','attr'=>array('class'=>'input-xxlarge')))

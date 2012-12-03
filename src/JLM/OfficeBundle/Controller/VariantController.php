@@ -65,9 +65,15 @@ class VariantController extends Controller
     
     	if ($form->isValid())
     	{
+    		$em = $this->getDoctrine()->getEntityManager();
+    		$lines = $entity->getLines();
+    		foreach ($lines as $line)
+    			$em->persist($line);
+			$number = $em->getRepository('JLMOfficeBundle:QuoteVariant')->getCount($entity->getQuote())+1;
+			$entity->setVariantNumber($number);
     		$em->persist($entity);
     		$em->flush();
-    		return $this->redirect($this->generateUrl('variant_show', array('id' => $entity->getId())));
+    		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
     	}
     
     	return array(
