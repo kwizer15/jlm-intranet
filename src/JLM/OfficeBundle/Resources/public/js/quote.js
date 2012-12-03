@@ -235,17 +235,27 @@
 		 e.preventDefault()
 		 var tht = 0;
    		 var tva = 0;
+   		 var tpc = 0;
 		 $.each($("#quote_variant_lines > tr"),function(){
 			 var thtline = parseFloat($("#" + this.id + "_total").html().replace(',','.').replace(' ',''));
 			 var tvaline = parseFloat($("#" + this.id + "_vat").val().replace(',','.').replace(' ',''))/100;
+			 var qtyline = parseFloat($("#" + this.id + "_quantity").val().replace(',','.').replace(' ',''));
+			 var pcline = parseFloat($("#" + this.id + "_purchasePrice").val().replace(',','.').replace(' ',''));
+			 var dsline = parseFloat($("#" + this.id + "_discountSupplier").val().replace(',','.').replace(' ',''))/100;
+			 var erline = parseFloat($("#" + this.id + "_expenseRatio").val().replace(',','.').replace(' ',''))/100;
+			 var shline = parseFloat($("#" + this.id + "_shipping").val().replace(',','.').replace(' ',''));
+			 tpc += (pcline*(1-dsline)*(1+erline)+shline)*qtyline;
 			 tht += thtline;
 			 tva += (thtline * tvaline);
 		 });
 		 var dis = parseFloat($("#quote_variant_discount").val().replace(',','.').replace(' ',''))/100;
 		 $("#quote_variant_total_htbd").html(number_format(tht,2,',',' '));
 		 $("#quote_variant_total_discount").html(number_format(tht*dis,2,',',' '));	
+		 $("#quote_variant_total_purchase").html(number_format(tpc,2,',',' '));
+		 	
 		 tht -= tht*dis;
 		 tva -= tva*dis;
+		 $("#quote_variant_total_margin").html(number_format(tht-tpc,2,',',' '));
 		 $("#quote_variant_total_ht").html(number_format(tht,2,',',' '));
 		 $("#quote_variant_total_tva").html(number_format(tva,2,',',' '));
 		 $("#quote_variant_total_ttc").html(number_format(tht+tva,2,',',' '));
