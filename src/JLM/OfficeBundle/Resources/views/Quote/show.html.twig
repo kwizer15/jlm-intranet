@@ -128,7 +128,11 @@
    <div class="span4">
     <table class="table table-bordered">
     	<tbody>
-    	<tr>
+    		<tr>
+    			<th>Remise</th>
+    			<td>{{ variant.discount*100|number_format(2,',',' ') }} %</td>
+    		</tr>
+    		<tr class="info">
     			<th>Total H.T.</th>
     			<td>{{ variant.totalPrice|number_format(2,',',' ') }} €</td>
     		</tr>
@@ -136,7 +140,6 @@
     			<th>Total achat</th>
     			<td>{{ variant.totalPurchase|number_format(2,',',' ') }} €</td>
     		</tr>
-    		
     		<tr class="col-coding">
     			<th>Total marge</th>
     			<td>{{ variant.totalMargin|number_format(2,',',' ') }} €</td>
@@ -167,7 +170,6 @@
 	{% endif %}
 	{% if variant.state == 0 %}
 		<a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
-		<a href="{{ path('quote_valid', { 'id': entity.id }) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i> Valider</a>
 	{% endif %}
 	</div>
 
