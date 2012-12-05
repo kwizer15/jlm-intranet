@@ -164,6 +164,9 @@ class VariantController extends Controller
 	{
 		if ($entity->getState() == 0)
 			$entity->setState(1);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($entity);
+		$em->flush();
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	}
 }
