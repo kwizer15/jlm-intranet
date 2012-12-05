@@ -85,73 +85,73 @@ class VariantController extends Controller
     	);
     }
     
-///**
-// * Displays a form to edit an existing Quote entity.
-// *
-// * @Route("/{id}/edit", name="quote_edit")
-// * @Template()
-// * @Secure(roles="ROLE_USER")
-// */
-//public function editAction(Quote $entity)
-//{
-//	// Si le devis est déjà validé, on empèche quelconque modification
-//	if ($entity->isValid())
-//		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
-//	$editForm = $this->createForm(new QuoteType(), $entity);
-//	return array(
-//			'entity'      => $entity,
-//			'edit_form'   => $editForm->createView(),
-//	);
-//}
-//
-///**
-// * Edits an existing Quote entity.
-// *
-// * @Route("/{id}/update", name="quote_update")
-// * @Method("post")
-// * @Template("JLMOfficeBundle:Quote:edit.html.twig")
-// * @Secure(roles="ROLE_USER")
-// */
-//public function updateAction(Request $request, Quote $entity)
-//{
-//	 
-//	// Si le devis est déjà validé, on empèche quelconque odification
-//	if ($entity->isValid())
-//		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
-//
-//	$originalLines = array();
-//	foreach ($entity->getLines() as $line)
-//		$originalLines[] = $line;
-//	$editForm = $this->createForm(new QuoteType(), $entity);
-//	$editForm->bind($request);
-//
-//	if ($editForm->isValid()) {
-//		$em = $this->getDoctrine()->getEntityManager();
-//		$em->persist($entity);
-//		foreach ($entity->getLines() as $key => $line)
-//		{
-//
-//			// Nouvelles lignes
-//			$line->setQuote($entity);
-//			$em->persist($line);
-//
-//			// On vire les anciennes
-//			foreach ($originalLines as $key => $toDel)
-//				if ($toDel->getId() === $line->getId())
-//				unset($originalLines[$key]);
-//		}
-//		foreach ($originalLines as $line)
-//		{
-//			$em->remove($line);
-//		}
-//		$em->flush();
-//		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
-//	}
-//
-//	return array(
-//			'entity'      => $entity,
-//			'edit_form'   => $editForm->createView(),
-//	);
-//}
-//
+	/**
+	 * Displays a form to edit an existing QuoteVariant entity.
+	 *
+	 * @Route("/{id}/edit", name="variant_edit")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function editAction(QuoteVariant $entity)
+	{
+		// Si le devis est déjà validé, on empèche quelconque modification
+		if ($entity->getState())
+			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+		$editForm = $this->createForm(new QuoteVariantType(), $entity);
+		return array(
+				'entity'      => $entity,
+				'edit_form'   => $editForm->createView(),
+		);
+	}
+	
+	/**
+	 * Edits an existing QuoteVariant entity.
+	 *
+	 * @Route("/{id}/update", name="variant_update")
+	 * @Method("post")
+	 * @Template("JLMOfficeBundle:Variant:edit.html.twig")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function updateAction(Request $request, QuoteVariant $entity)
+	{
+		 
+		// Si le devis est déjà validé, on empèche quelconque odification
+		if ($entity->getState())
+			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+	
+		$originalLines = array();
+		foreach ($entity->getLines() as $line)
+			$originalLines[] = $line;
+		$editForm = $this->createForm(new QuoteVariantType(), $entity);
+		$editForm->bind($request);
+	
+		if ($editForm->isValid()) {
+			$em = $this->getDoctrine()->getEntityManager();
+			$em->persist($entity);
+			foreach ($entity->getLines() as $key => $line)
+			{
+	
+				// Nouvelles lignes
+				$line->setQuote($entity);
+				$em->persist($line);
+	
+				// On vire les anciennes
+				foreach ($originalLines as $key => $toDel)
+					if ($toDel->getId() === $line->getId())
+					unset($originalLines[$key]);
+			}
+			foreach ($originalLines as $line)
+			{
+				$em->remove($line);
+			}
+			$em->flush();
+			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+		}
+	
+		return array(
+				'entity'      => $entity,
+				'edit_form'   => $editForm->createView(),
+		);
+	}
+	
 }

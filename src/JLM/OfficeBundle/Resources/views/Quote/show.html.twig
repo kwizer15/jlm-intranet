@@ -169,7 +169,7 @@
 		<a href="{{ path('quote_pdf', { 'id': entity.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer</a>
 	{% endif %}
 	{% if variant.state == 0 %}
-		<a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+		<a href="{{ path('variant_edit', { 'id': variant.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 	{% endif %}
 	</div>
 

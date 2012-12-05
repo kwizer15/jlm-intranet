@@ -140,7 +140,7 @@ class QuoteController extends Controller
     public function editAction(Quote $entity)
     {
     	// Si le devis est déjà validé, on empèche quelconque modification
-    	if ($entity->isValid())
+    	if ($entity->getState())
     		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
         $editForm = $this->createForm(new QuoteType(), $entity);
         return array(

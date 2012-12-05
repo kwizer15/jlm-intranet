@@ -215,9 +215,9 @@
 			$("#quote_variant_lines_" + this.options.lineCount + "_discountSupplier").val(0);
 			$("#quote_variant_lines_" + this.options.lineCount + "_expenseRatio").val(10);
 			$("#quote_variant_lines_" + this.options.lineCount + "_shipping").val('0,00');
-			$("#quote_variant_lines_" + this.options.lineCount + "_coef").val('40,00');
 			$("#quote_variant_lines_" + this.options.lineCount + "_discount").val(0);
 			$("#quote_variant_lines_" + this.options.lineCount + "_vat").val($("#quote_vat").val());
+			$("#quote_variant_lines_" + this.options.lineCount + "_coef").val('40,00').change();
 			if (!$(".tab-coding").hasClass('active'))
 	    	{
 	    		$(".col-quote").show();
@@ -347,10 +347,11 @@
 						  	$(id + 'purchasePrice').val(ui.item.purchase);
 						  	$(id + 'discountSupplier').val(ui.item.discountSupplier);
 						  	$(id + 'expenseRatio').val(ui.item.expenseRatio);
-						  	$(id + 'shipping').val(ui.item.shipping);
-						  	$(id + 'unitPrice').val(ui.item.unitPrice).change();
+						  	
 						  	$(id + 'isTransmitter').val(ui.item.transmitter ? '1' : '');
-						  	$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? number_format($("#quote_vatTransmitter").val()*100,1,',',' ') : $("#quote_vat").val())
+						  	$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? number_format($("#quote_vatTransmitter").val()*100,1,',',' ') : $("#quote_vat").val());
+						  	$(id + 'shipping').val(ui.item.shipping).change();
+						  	$(id + 'unitPrice').val(ui.item.unitPrice).change();
 						
 					      return false;
 					  }
@@ -376,15 +377,16 @@
 					  	$(id + 'purchasePrice').val(ui.item.purchase);
 					  	$(id + 'discountSupplier').val(ui.item.discountSupplier);
 					  	$(id + 'expenseRatio').val(ui.item.expenseRatio);
-					  	$(id + 'shipping').val(ui.item.shipping);
-					  	$(id + 'unitPrice').val(ui.item.unitPrice).change();
+					  	
 					  	$(id + 'isTransmitter').val(ui.item.transmitter ? '1' : '');
-					  	$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? number_format($("#quote_vatTransmitter").val()*100,1,',',' ') : $("#quote_vat").val())
+					  	$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? $("#quote_vatTransmitter").val() : $("#quote_vat").val());
+					  	$(id + 'shipping').val(ui.item.shipping).change();
+					  	$(id + 'unitPrice').val(ui.item.unitPrice).change();
 				      return false;
 				  }
 				});
 			  $(line + "_quantity").change();
-			  $(line + "_coef").val('40,00').change();
+
 		  
 		  }
 	   
@@ -401,7 +403,7 @@
 		   		var dc = parseInt($(line + "_discount").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
 		   		var totalunit = up*(1-dc);
 		   		var total = qty*totalunit;
-		   		var coef = ((totalunit/(pp*(1-ds)*(1+er)+sh))-1);
+		   		var coef = ((totalunit-sh)/(pp*(1-ds)*(1+er)))-1;
 		   		$(line + "_quantity").val(number_format(qty,0,',',' '));
 			  	$(line + '_coef').val(number_format(coef*100,2,',',' '));
 		   		$(line + "_unitPrice").val(number_format(up,2,',',' '));

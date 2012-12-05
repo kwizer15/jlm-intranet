@@ -90,7 +90,7 @@ class QuoteLine
 	 *
 	 * @ORM\Column(name="purchasePrice", type="decimal",scale=2)
 	 */
-	private $purchasePrice;
+	private $purchasePrice = 0;
 	
 	/**
 	 * Remise Fournisseur (%)
@@ -98,7 +98,7 @@ class QuoteLine
 	 * 
 	 * @ORM\Column(name="discount_supplier", type="decimal", scale=7)
 	 */
-	private $discountSupplier;
+	private $discountSupplier = 0;
 	
 	/**
 	 * Frais (%)
@@ -114,7 +114,7 @@ class QuoteLine
 	 *
 	 * @ORM\Column(name="shipping", type="decimal", scale=2)
 	 */
-	private $shipping;
+	private $shipping = 0;
 	
 	/**
 	 * Prix de vente unitaire (€)
@@ -126,7 +126,7 @@ class QuoteLine
 	 *
 	 * @ORM\Column(name="unit_price", type="decimal",scale=2)
 	 */
-	private $unitPrice;
+	private $unitPrice = 0;
 	
 	/**
 	 * Remise (%)
