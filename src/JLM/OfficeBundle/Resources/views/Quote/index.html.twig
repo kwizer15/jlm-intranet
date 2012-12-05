@@ -20,20 +20,21 @@
         <tr>
             <td>
             	<a href="{{ path('quote_show', { 'id': entity.id }) }}">{{ entity.number }}</a><br>
-            	{% if entity.valid %}
-					{% if entity.send%}
-						{% if entity.given %}
-						<span class="label label-success">Accordé</span>
-						{% else %}
-						<span class="label label-info">Envoyé</span>
-						{% endif %}
-					{% else %}
-					<span class="label label-warning">En attente</span>
-					{% endif %}
-				{% else %}
-				<span class="label">En saisie</span>
-				{% endif %}
-            	
+            	{% if entity.state == 0 %}
+            		<span class="label">En saisie</span>
+            	{% elseif entity.state == 1 %}
+            		<span class="label label-warning">En attente</span>
+            	{% elseif entity.state == 2 %}
+            		<span class="label label-warning">En attente</span>
+            	{% elseif entity.state == 3 %}
+            		<span class="label label-info">Envoyé</span>
+            	{% elseif entity.state == 4 %}
+            		<span class="label label-info">Envoyé</span>
+            	{% elseif entity.state == 5 %}
+            		<span class="label label-success">Accordé</span>
+            	{% else %}
+            		<span class="label label-inverse">Annulé</span>
+            	{% endif %}
             </td>
             <td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}</td>
             <td>{{ entity.followerCp }}</td>
