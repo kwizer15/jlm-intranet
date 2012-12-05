@@ -1,72 +1,30 @@
-{% extends "JLMOfficeBundle::layout.html.twig" %}
-
-{% block content %}
-<h1>Devis</h1>
-{% if entity.valid %}
-	{% if entity.send%}
-		{% if entity.given %}
-		<div class="alert alert-success">
-		<h4>Devis accordé</h4>
-		</div>
-		{% else %}
-		<div class="alert alert-info">
-		<h4>Devis envoyé</h4>
-		</div>
-		{% endif %}
-	{% else %}
-	<div class="alert">
-	<h4>En attente d'envoi</h4>
-	</div>
-	{% endif %}
-{% else %}
-<div class="alert">
-<h4>En saisie</h4>
-</div>
-{% endif %}
-
-<div class="row-fluid">
-    <div class="span5">
-        <strong>Suivi par {{ entity.followerCp }}</strong>
-        <br>{{ entity.doorCp | nl2br }}
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Devis n°</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ entity.creation|date('d/m/Y') }}</td>
-                    <td>{{ entity.number }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="span5 offset2 well">
-        {{ entity.trusteeName }}
-        <br>{{ entity.trusteeAddress | nl2br  }}
-        <br>
-        <br>à l'attention de {{ entity.contactCp }}
-    </div>
-</div>
-<p>{{ entity.intro }}</p>
-<table class="table table-bordered">
+    <div class="tab-pane fade{% if loop.first %} active in{% endif %}" id="variant-{{ variant.number }}">
+	<strong>Créé le {{ entity.creation|date('d/m/Y') }}</strong>
+    <p>{{ variant.intro }}</p>
+  	<ul class="nav nav-pills">
+	  <li class="active tab-quote"><a href="#">Devis</a></li>
+	  <li class="tab-coding"><a href="#">Chiffrage</a></li>
+	</ul>
+    <table class="table table-bordered">
     <thead>
         <tr>
-            <th>Réf.</th>
+            <th class="col-quote">Réf.</th>
             <th>Designation</th>
             <th>Qté</th>
-            <th>Prix U.H.T</th>
-            <th>Remise</th>
+            <th class="col-coding">PA HT</th>
+   			<th class="col-coding">Remise</th>
+    		<th class="col-coding">Frais</th>
+    		<th class="col-coding">Port</th>
+            <th class="col-quote">Prix U.H.T</th>
+            <th class="col-quote">Remise</th>
             <th>Prix H.T</th>
-            <th>T.V.A</th>
+            <th class="col-quote">T.V.A</th>
         </tr>
     </thead>
     <tbody>
-    {% for line in entity.lines %}
-        <tr>
-            <td>{{ line.reference }}</td>
+    {% for line in variant.lines %}
+         <tr>
+            <td class="col-quote">{{ line.reference }}</td>
             <td>
                 {{ line.designation }}
                 {% if line.showDescription %}
@@ -74,61 +32,74 @@
                 {% endif %}
             </td>
             <td>{{ line.quantity }}</td>
-            <td>{{ line.unitPrice|number_format(2,',',' ') }} €</td>
-            <td>{{ (line.discount*100)|number_format(0,',',' ') }} %</td>
+            <td class="col-coding">{{ line.purchasePrice|number_format(2,',',' ') }} €</th>
+   			<td class="col-coding">{{ line.discountSupplier*100|number_format(0,',',' ') }} %</th>
+    		<td class="col-coding">{{ line.expenseRatio*100|number_format(0,',',' ') }} %</th>
+    		<td class="col-coding">{{ line.shipping|number_format(2,',',' ') }} €</th>
+            <td class="col-quote">{{ line.unitPrice|number_format(2,',',' ') }} €</td>
+            <td class="col-quote">{{ (line.discount*100)|number_format(0,',',' ') }} %</td>
             <td>{{ line.price|number_format(2,',',' ') }} €</td>
-            <td>{{ (line.vat*100)|number_format(1,',',' ') }} %</td>
-        </tr>
+            <td class="col-quote">{{ (line.vat*100)|number_format(1,',',' ') }} %</td>
+       </tr>  
     {% endfor %}
     </tbody>
 </table>
+
 <div class="row-fluid">
 	<div class="span8">
 		<dl>
 			<dt>Règlement</dt>
-			<dd>{{ entity.paymentRules }}</dd>
+			<dd>{{ variant.paymentRules }}</dd>
 			<dt>Délais</dt>
-			<dd>{{ entity.deliveryRules }}</dd>
-			<dt>Commentaires</dt>
-			<dd>{{ entity.customerComments }}</dd>
+			<dd>{{ variant.deliveryRules }}</dd>
 		</dl>
 	</div>
-    <div class="span4">
+   <div class="span4">
     <table class="table table-bordered">
     	<tbody>
     		<tr>
+    			<th>Remise</th>
+    			<td>{{ variant.discount*100|number_format(2,',',' ') }} %</td>
+    		</tr>
+    		<tr class="info">
     			<th>Total H.T.</th>
-    			<td>{{ entity.totalPrice|number_format(2,',',' ') }} €</td>
+    			<td>{{ variant.totalPrice|number_format(2,',',' ') }} €</td>
     		</tr>
-    		<tr>
+    		<tr class="col-coding">
+    			<th>Total achat</th>
+    			<td>{{ variant.totalPurchase|number_format(2,',',' ') }} €</td>
+    		</tr>
+    		<tr class="col-coding">
+    			<th>Total marge</th>
+    			<td>{{ variant.totalMargin|number_format(2,',',' ') }} €</td>
+    		</tr>
+     		<tr class="col-quote">
     			<th>Total TVA</th>
-    			<td>{{ entity.totalVat|number_format(2,',',' ') }} €</td>
+    			<td>{{ variant.totalVat|number_format(2,',',' ') }} €</td>
     		</tr>
-    		<tr>
+    		<tr class="col-quote">
     			<th>Total à régler</th>
-    			<td>{{ entity.totalPriceAti|number_format(2,',',' ') }} €</td>
+    			<td>{{ variant.totalPriceAti|number_format(2,',',' ') }} €</td>
     		</tr>
     	</tbody>
     </table>
     </div>
-</div>
+</div> 
 <div class="form-actions">
-	<a href="{{ path('quote') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
-	{% if entity.valid %}
-		{% if entity.send%}
-			{% if entity.given == false %}
-				<a href="{{ path('quote_given', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-thumbs-up icon-white"></i> Accorder</a>
-			{% endif %}
-		{% endif %}
-		{% if entity.given == false %}
-			<a href="{{ path('quote_unvalid', { 'id': entity.id }) }}" class="btn btn-inverse"><i class="icon-remove icon-white"></i> Invalider</a>
-		{% endif %}
-	<a href="{{ path('quote_mail', { 'id': entity.id }) }}" class="btn btn-info"><i class="icon-envelope icon-white"></i> Envoyer par e-mail</a>
-	<a href="{{ path('quote_pdf', { 'id': entity.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer</a>
-		
-	{% else %}
-	<a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
-	<a href="{{ path('quote_valid', { 'id': entity.id }) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i> Valider</a>
+
+	{% if variant.state == 4 %}
+		<a href="{{ path('quote_given', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-thumbs-up icon-white"></i> Accorder</a>
+	{% endif %}
+	{% if variant.state > 0 and variant.state < 5%}
+		<a href="{{ path('quote_unvalid', { 'id': entity.id }) }}" class="btn btn-inverse"><i class="icon-remove icon-white"></i> Invalider</a>
+	{% endif %}
+	{% if variant.state > 0 %}
+		<a href="{{ path('quote_mail', { 'id': entity.id }) }}" class="btn btn-info"><i class="icon-envelope icon-white"></i> Envoyer par e-mail</a>
+		<a href="{{ path('quote_pdf', { 'id': entity.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer</a>
+	{% endif %}
+	{% if variant.state == 0 %}
+		<a href="{{ path('variant_edit', { 'id': variant.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 	{% endif %}
 	</div>
-{% endblock %}
+
+</div>
