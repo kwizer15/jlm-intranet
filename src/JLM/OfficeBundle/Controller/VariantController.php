@@ -132,7 +132,7 @@ class VariantController extends Controller
 			{
 	
 				// Nouvelles lignes
-				$line->setQuote($entity);
+				$line->setVariant($entity);
 				$em->persist($line);
 	
 				// On vire les anciennes

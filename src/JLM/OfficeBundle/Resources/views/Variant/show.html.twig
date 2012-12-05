@@ -1,5 +1,6 @@
-    <div class="tab-pane fade{% if loop.first %} active in{% endif %}" id="variant-{{ variant.number }}">
-	<strong>Créé le {{ entity.creation|date('d/m/Y') }}</strong>
+
+	{% include 'JLMOfficeBundle:Quote:stateheader.html.twig' with {'state': variant.state} %}
+	<strong>Créé le {{ variant.creation|date('d/m/Y') }}</strong>
     <p>{{ variant.intro }}</p>
   	<ul class="nav nav-pills">
 	  <li class="active tab-quote"><a href="#">Devis</a></li>
@@ -86,7 +87,16 @@
     </div>
 </div> 
 <div class="form-actions">
-
+	{% if variant.state == 0 %}
+		<a href="{{ path('variant_edit', { 'id': variant.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+		<a href="{{ path('variant_ready', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-thumbs-up icon-white"></i> Prêt à evoyer</a>
+	{% elseif variant.state == 0 %}
+	{% elseif variant.state == 0 %}
+	{% elseif variant.state == 0 %}
+	{% elseif variant.state == 0 %}
+	{% elseif variant.state == 0 %}
+	{% else %}
+	{% endif %}
 	{% if variant.state == 4 %}
 		<a href="{{ path('quote_given', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-thumbs-up icon-white"></i> Accorder</a>
 	{% endif %}
@@ -97,9 +107,5 @@
 		<a href="{{ path('quote_mail', { 'id': entity.id }) }}" class="btn btn-info"><i class="icon-envelope icon-white"></i> Envoyer par e-mail</a>
 		<a href="{{ path('quote_pdf', { 'id': entity.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer</a>
 	{% endif %}
-	{% if variant.state == 0 %}
-		<a href="{{ path('variant_edit', { 'id': variant.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
-	{% endif %}
-	</div>
-
 </div>
+
