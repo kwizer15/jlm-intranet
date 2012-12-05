@@ -5,11 +5,14 @@
     
 	    <div class="span2">
 		    {% block sidebar %}
-		        <form  action="{{ path('quote_search') }}" method="post" class="form-search">
-					<input type="text" class="search-query input-block-level" name="query" placeholder="Rechercher...">
-			    </form>
-		    <ul class="nav nav-list">
-		    	<li><a href="{{ path('quote') }}">Liste des devis</a></li>
+		        
+		    <ul class="nav nav-list  affix">
+		    <li><form  action="{{ path('quote_search') }}" method="post" class="form-search">
+					<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher...">
+			    </form></li>
+			    <li class="nav-header">Actions</li>
+		    	<li><a href="{{ path('quote') }}"><i class="icon-list"></i> Liste des devis</a></li>
+		    	<li><a href="{{ path('quote_new') }}"><i class="icon-plus-sign"></i> Nouveau devis</a></li>
 		    	<li class="divider"></li>
 				{% render "JLMOfficeBundle:Quote:last" with {'limit': 10} %}
 			</ul>
