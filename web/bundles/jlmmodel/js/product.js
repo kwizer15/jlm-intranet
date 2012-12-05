@@ -25,8 +25,9 @@
 		    line + "expenseRatio, " + 
 		    line + "shipping, " + 
 		    line + "margin")
-		    .on('change',$.proxy(this.total,this));
-		  $(line + "purchase").change();
+		    .on('change',$.proxy(this.totalCoef,this));
+		  $(line + "unitPrice").on('change',$.proxy(this.total,this));
+		  $(line + "unitPrice").change();
 			
 	  }
    	 
@@ -35,19 +36,37 @@
 		 e.preventDefault()
 		 var line = "#product_";
 		   		var p = parseFloat($(line + "purchase").val().replace(',','.').replace(/[\s]{1,}/g,""));
-		   		var d = parseInt($(line + "discountSupplier").val().replace(',','.').replace(/[\s]{1,}/g,""));
-		   		var e = parseInt($(line + "expenseRatio").val().replace(',','.').replace(/[\s]{1,}/g,""));
+		   		var d = parseFloat($(line + "discountSupplier").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
+		   		var e = parseFloat($(line + "expenseRatio").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
 		   		var s = parseFloat($(line + "shipping").val().replace(',','.').replace(/[\s]{1,}/g,""));
-		   		var m = parseInt($(line + "margin").val().replace(',','.').replace(/[\s]{1,}/g,""));
-		   		var total = (p*((100-d)/100)*((100+e)/100))*((100+m)/100)+s;
+		   		var u = parseFloat($(line + "unitPrice").val().replace(',','.').replace(/[\s]{1,}/g,""));
+		   		var m = ((u-s)/(p*(1-d)*(1+e)))-1;
 		   		$(line + "purchase").val(number_format(p,2,',',' '));
-		   		$(line + "discountSupplier").val(number_format(d,0,',',' '));
-		   		$(line + "expenseRatio").val(number_format(e,0,',',' '));
+		   		$(line + "discountSupplier").val(number_format(d*100,0,',',' '));
+		   		$(line + "expenseRatio").val(number_format(e*100,0,',',' '));
 		   		$(line + "shipping").val(number_format(s,2,',',' '));
-		   		$(line + "margin").val(number_format(m,0,',',' '));
-		   		$(line + "unitPrice").html(number_format(total,2,',',' '));
+		   		$(line + "margin").val(number_format(m*100,2,',',' '));
+		   		$(line + "unitPrice").val(number_format(u,2,',',' '));
 		 return this;
    	 }
+   	, totalCoef : function(e) {
+  		 e.stopPropagation()
+		 e.preventDefault()
+		 var line = "#product_";
+		   		var p = parseFloat($(line + "purchase").val().replace(',','.').replace(/[\s]{1,}/g,""));
+		   		var d = parseFloat($(line + "discountSupplier").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
+		   		var e = parseFloat($(line + "expenseRatio").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
+		   		var s = parseFloat($(line + "shipping").val().replace(',','.').replace(/[\s]{1,}/g,""));
+		   		var m = parseFloat($(line + "margin").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
+		   		var u = p*(1-d)*(1+e)*(1+m)+s;
+		   		$(line + "purchase").val(number_format(p,2,',',' '));
+		   		$(line + "discountSupplier").val(number_format(d*100,0,',',' '));
+		   		$(line + "expenseRatio").val(number_format(e*100,0,',',' '));
+		   		$(line + "shipping").val(number_format(s,2,',',' '));
+		   		$(line + "margin").val(number_format(m*100,2,',',' '));
+		   		$(line + "unitPrice").val(number_format(u,2,',',' '));
+		 return this;
+  	 }
    	 
    }
 

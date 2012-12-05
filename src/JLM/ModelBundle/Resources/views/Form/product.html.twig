@@ -13,8 +13,8 @@
 			<th>{{ form.discountSupplier.vars.label }}</th>
 			<th>{{ form.expenseRatio.vars.label }}</th>
 			<th>{{ form.shipping.vars.label }}</th>
-			<th>{{ form.margin.vars.label }}</th>
-			<th>Prix de vente HT</th>
+			<th>Coef.</th>
+			<th>{{ form.unitPrice.vars.label }}</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -23,10 +23,10 @@
 			<td>{{ form_widget(form.discountSupplier) }}</td>
 			<td>{{ form_widget(form.expenseRatio) }}</td>
 			<td>{{ form_widget(form.shipping) }}</td>
-			<td>{{ form_widget(form.margin) }}</td>
 			<td>
-	    		<div class="input-append"><span class="input-small uneditable-input" id="product_unitPrice">0,00</span><span class="add-on">€</span></div>
+	    		<div class="input-append"><input type="text" class="input-mini" id="product_margin" value="40,00"><span class="add-on">%</span></div>
 	    	</td>
+			<td>{{ form_widget(form.unitPrice) }}</td>
 		</tr>
 	</tbody>
 </table>

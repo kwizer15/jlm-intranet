@@ -49,7 +49,7 @@ class ProductRepository extends EntityRepository
 					'reference'=>$r->getReference(),
 					'designation'=>$r->getDesignation(),
 					'description'=>$r->getDescription(),
-					'unitPrice'=>$r->getSellPrice(),
+					'unitPrice'=>$r->getUnitPrice(),
 					'purchase'=>$r->getPurchase(),
 					'discountSupplier'=>$r->getDiscountSupplier(),
 					'expenseRatio'=>$r->getExpenseRatio(),

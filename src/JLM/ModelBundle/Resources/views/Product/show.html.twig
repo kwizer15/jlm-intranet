@@ -14,8 +14,8 @@
     <tbody>
     	<tr>
     		<td>{{ entity.purchasePrice|number_format(2, ',', ' ') }} €</td>
-    		<td>{{ entity.sellPrice|number_format(2, ',', ' ') }} €</td>
-    		<td>{{ entity.marginValue|number_format(2, ',', ' ') }} €</td>
+    		<td>{{ entity.unitPrice|number_format(2, ',', ' ') }} €</td>
+    		<td>{{ entity.margin|number_format(2, ',', ' ') }} €</td>
     	</tr>
     </tbody>
 </table>
@@ -55,7 +55,7 @@
         </tr>
         <tr>
             <th>Coef.</th>
-            <td>{{ entity.margin }} %</td>
+            <td>{{ entity.coef|number_format(2, ',', ' ') }} %</td>
         </tr>
     </tbody>
 </table>

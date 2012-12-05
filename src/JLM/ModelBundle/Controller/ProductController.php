@@ -91,7 +91,7 @@ class ProductController extends Controller
         $entity->setDiscountSupplier(0);
         $entity->setExpenseRatio(10);
         $entity->setShipping(0);
-        $entity->setMargin(40);
+        $entity->setUnitPrice(0);
         
         $form   = $this->createForm(new ProductType(), $entity);
         	
