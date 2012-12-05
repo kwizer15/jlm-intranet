@@ -154,4 +154,16 @@ class VariantController extends Controller
 		);
 	}
 	
+	/**
+	 * Note QuoteVariant as ready to send.
+	 *
+	 * @Route("/{id}/ready", name="variant_ready")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function readyAction(Request $request, QuoteVariant $entity)
+	{
+		if ($entity->getState() == 0)
+			$entity->setState(1);
+		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+	}
 }
