@@ -8,10 +8,11 @@
 		        <form class="form-search">
 					<input type="text" class="search-query input-block-level" placeholder="Rechercher...">
 			    </form>
-		    <ul class="nav nav-tabs nav-stacked">
-		    	<li><a href="{{ path('coding') }}">Chiffrages</a></li>
-		    	<li><a href="{{ path('quote') }}">Devis</a></li>
-		    </ul>
+		    <ul class="nav nav-list">
+		    	<li><a href="{{ path('quote') }}">Liste des devis</a></li>
+		    	<li class="divider"></li>
+				{% render "JLMOfficeBundle:Quote:last" with {'limit': 10} %}
+			</ul>
 		    {% endblock sidebar %}
 		    
 	    </div>

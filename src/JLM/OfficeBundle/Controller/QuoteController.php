@@ -59,6 +59,27 @@ class QuoteController extends Controller
         		'nbPages'  => $nbPages,
         );
     }
+    
+    /**
+     * Lists lasts Quote entities.
+     *
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function lastAction($limit = 10)
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+
+    	$entities = $em->getRepository('JLMOfficeBundle:Quote')->findBy(
+    			array(),
+    			array('number'=>'desc'),
+    			$limit
+    	);
+    
+    	return array(
+    			'entities' => $entities,
+    	);
+    }
 
     /**
      * Finds and displays a Quote entity.
