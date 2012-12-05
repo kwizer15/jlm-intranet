@@ -29,7 +29,6 @@
             <td>{{ entity.variants|length }}</td>
             <td>
                 <a href="{{ path('quote_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
-                <a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i></a>
             </td>
         </tr>
     {% endfor %}
