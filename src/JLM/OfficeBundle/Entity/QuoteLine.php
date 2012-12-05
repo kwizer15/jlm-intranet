@@ -554,7 +554,7 @@ class QuoteLine
      */
     public function getTotalUnitPurchasePrice()
     {
-    	return $this->getPurchasePrice()*(1+$this->getExpenseRatio())+$this->getShipping();
+    	return $this->getPurchasePrice()*(1-$this->getDiscountSupplier())*(1+$this->getExpenseRatio())+$this->getShipping();
     }
     
     /**

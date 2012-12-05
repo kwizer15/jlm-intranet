@@ -70,7 +70,7 @@
     			<th>Total achat</th>
     			<td>{{ variant.totalPurchase|number_format(2,',',' ') }} €</td>
     		</tr>
-    		<tr class="col-coding">
+    		<tr class="col-coding{% if variant.totalMargin < 0 %} error{% endif %}">
     			<th>Total marge</th>
     			<td>{{ variant.totalMargin|number_format(2,',',' ') }} €</td>
     		</tr>
@@ -90,22 +90,21 @@
 	{% if variant.state == 0 %}
 		<a href="{{ path('variant_edit', { 'id': variant.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 		<a href="{{ path('variant_ready', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-thumbs-up icon-white"></i> Prêt à evoyer</a>
-	{% elseif variant.state == 0 %}
-	{% elseif variant.state == 0 %}
-	{% elseif variant.state == 0 %}
-	{% elseif variant.state == 0 %}
-	{% elseif variant.state == 0 %}
-	{% else %}
-	{% endif %}
-	{% if variant.state == 4 %}
-		<a href="{{ path('quote_given', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-thumbs-up icon-white"></i> Accorder</a>
-	{% endif %}
-	{% if variant.state > 0 and variant.state < 5%}
-		<a href="{{ path('quote_unvalid', { 'id': entity.id }) }}" class="btn btn-inverse"><i class="icon-remove icon-white"></i> Invalider</a>
-	{% endif %}
-	{% if variant.state > 0 %}
-		<a href="{{ path('quote_mail', { 'id': entity.id }) }}" class="btn btn-info"><i class="icon-envelope icon-white"></i> Envoyer par e-mail</a>
-		<a href="{{ path('quote_pdf', { 'id': entity.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer</a>
+	{% elseif variant.state >= 1 %}
+		{% if variant.state == 3 %}
+			<a href="{{ path('variant_receipt', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-thumbs-up icon-white"></i> Accusé reçu</a>
+		{% endif %}
+{#		{% if variant.state == 2 or variant.state == 3 %}
+			<a href="{{ path('variant_fax', { 'id': variant.id }) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Envoyer par fax</a>
+		{% endif %}  #}
+		{% if variant.state == 4 %}
+			<a href="{{ path('variant_given', { 'id': variant.id }) }}" class="btn btn-success"><i class="icon-thumbs-up icon-white"></i> Accorder</a>
+		{% endif %}
+		<a href="{{ path('variant_mail', { 'id': variant.id }) }}" class="btn btn-info"><i class="icon-envelope icon-white"></i> Envoyer par e-mail</a>
+		<a href="{{ path('variant_print', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer</a>
+		{% if variant.state < 5 %}
+			<a href="{{ path('variant_unvalid', { 'id': variant.id }) }}" class="btn btn-inverse"><i class="icon-fast-backward icon-white"></i> Revenir à la saisie</a>
+		{% endif %}
 	{% endif %}
 </div>
 

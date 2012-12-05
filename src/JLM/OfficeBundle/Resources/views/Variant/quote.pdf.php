@@ -44,17 +44,17 @@ class QuotePDF extends \FPDF
 	//	$this->setY(63);
 		$this->cell(20,7,utf8_decode('suivi par : '),0,0);
 		$this->setFont('Arial','B',11);
-		$this->cell(65,7,utf8_decode($this->entity->getFollowerCp()),0,1);
+		$this->cell(65,7,utf8_decode($this->entity->getQuote()->getFollowerCp()),0,1);
 		
 		// Door
 		$this->setFont('Arial','B',11);
 		$this->cell(15,5,utf8_decode('affaire : '),0,0);
 		$this->setFont('Arial','',11);
 		$y = $this->getY();
-		$this->multiCell(90,5,utf8_decode($this->entity->getDoorCp()),0);
+		$this->multiCell(90,5,utf8_decode($this->entity->getQuote()->getDoorCp()),0);
 		$this->setXY(130,$y);
 		// Trustee
-		$this->multiCell(0,5,utf8_decode($this->entity->getTrusteeName().chr(10).$this->entity->getTrusteeAddress()));
+		$this->multiCell(0,5,utf8_decode($this->entity->getQuote()->getTrusteeName().chr(10).$this->entity->getQuote()->getTrusteeAddress()));
 		$this->ln(10);
 		
 		// Création haut
@@ -66,7 +66,7 @@ class QuotePDF extends \FPDF
 		$this->setFont('Arial','',10);
 		
 		$this->setX(130);
-		$this->cell(0,5,utf8_decode('à l\'attention de '.$this->entity->getContactCp()),0,1);
+		$this->cell(0,5,utf8_decode('à l\'attention de '.$this->entity->getQuote()->getContactCp()),0,1);
 		
 		// Création bas
 		$this->setFont('Arial','',10);
@@ -148,7 +148,7 @@ class QuotePDF extends \FPDF
 		
 		$this->setFont('Arial','',10);
 		$this->cell(22,6,'Tx T.V.A',1,0,'R');
-		$this->cell(19,6,number_format($this->entity->getVat()*100,1,',',' ').' %',1,0,'R');
+		$this->cell(19,6,number_format($this->entity->getQuote()->getVat()*100,1,',',' ').' %',1,0,'R');
 		$this->cell(101,6,'',1,0);
 		$this->setFont('Arial','B',10);
 		$this->cell(25,6,'montant TVA',1,0);
@@ -175,7 +175,7 @@ class QuotePDF extends \FPDF
 		
 		// Politesse
 		
-		$ct = substr($this->entity->getContactCp(),0,2);
+		$ct = substr($this->entity->getQuote()->getContactCp(),0,2);
 		if ($ct == 'M.')
 			$who = 'Monsieur';
 		elseif ($ct == 'Mm')
