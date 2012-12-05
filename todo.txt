@@ -29,12 +29,9 @@ Door
 Produits
     - fiche descriptive (voir avec yo) 
     - autocompletion pour fournisseur
-    - Case coeff. (sauver le prix de vente et non le coeff)
-
 
 Quote
 	- Changer redirection de création de Devis (createAction)
-	- Edition Variant
 	- Cycle d'évolution
 
 -----------------------------------------------
