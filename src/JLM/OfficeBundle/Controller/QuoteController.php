@@ -226,4 +226,23 @@ class QuoteController extends Controller
             ->getForm()
         ;
     }
+    
+    /**
+     * Resultats de la barre de recherche.
+     *
+     * @Route("/search", name="quote_search")
+     * @Method("post")
+     * @Secure(roles="ROLE_USER")
+     * @Template()
+     */
+    public function searchAction(Request $request)
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$query = $request->request->get('query');
+    	$results = $em->getRepository('JLMOfficeBundle:Quote')->search($query);
+    	return array(
+    		'query'   => $query,
+    		'results' => $results,
+    	);
+    }
 }

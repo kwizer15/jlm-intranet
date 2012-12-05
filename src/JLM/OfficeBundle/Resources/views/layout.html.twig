@@ -5,8 +5,8 @@
     
 	    <div class="span2">
 		    {% block sidebar %}
-		        <form class="form-search">
-					<input type="text" class="search-query input-block-level" placeholder="Rechercher...">
+		        <form  action="{{ path('quote_search') }}" method="post" class="form-search">
+					<input type="text" class="search-query input-block-level" name="query" placeholder="Rechercher...">
 			    </form>
 		    <ul class="nav nav-list">
 		    	<li><a href="{{ path('quote') }}">Liste des devis</a></li>
