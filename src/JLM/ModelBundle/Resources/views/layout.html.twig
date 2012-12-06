@@ -4,11 +4,19 @@
     <div class="row-fluid">
 	    <div class="span2">
 		    {% block sidebar %}
-		    <ul class="nav nav-tabs nav-stacked">
-		        <li><a href="{{ path('trustee') }}">Syndics</a></li>
-		        <li><a href="{{ path('productcategory') }}">Familles de produit</a></li>
-		        <li><a href="{{ path('product') }}">Produits</a></li>	   
-		        <li><a href="{{ path('supplier') }}">Fournisseurs</a></li>
+		    <ul class="nav nav-list">
+				<li class="nav-header">Syndics</li>
+				<li><a href="{{ path('trustee') }}"><i class="icon-list"></i> Liste syndics</a></li>
+		        <li><a href="{{ path('trustee_new') }}"><i class="icon-plus-sign"></i> Nouveau syndic</a></li>
+		        <li class="nav-header">Fournisseurs</li>
+		        <li><a href="{{ path('supplier') }}"><i class="icon-list"></i> Liste fournisseurs</a></li>
+		        <li><a href="{{ path('supplier_new') }}"><i class="icon-plus-sign"></i> Nouveau fournisseur</a></li>
+		        <li class="nav-header">Familles produit</li>
+		        <li><a href="{{ path('productcategory') }}"><i class="icon-list"></i> Liste familles</a></li>
+		        <li><a href="{{ path('productcategory_new') }}"><i class="icon-plus-sign"></i> Nouvelle famille</a></li>
+		        <li class="nav-header">Produits</li>   
+		        <li><a href="{{ path('product') }}"><i class="icon-list"></i> Liste produits</a></li>
+		        <li><a href="{{ path('product_new') }}"><i class="icon-plus-sign"></i> Nouveau produit</a></li>	   
 		    </ul>
 		    {% endblock sidebar %}
 	    </div>
