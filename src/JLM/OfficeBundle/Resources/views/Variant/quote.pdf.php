@@ -52,8 +52,9 @@ class QuotePDF extends \FPDF
 		$this->setFont('Arial','',11);
 		$y = $this->getY();
 		$this->multiCell(90,5,utf8_decode($this->entity->getQuote()->getDoorCp()),0);
-		$this->setXY(130,$y);
+		$this->setXY(100,$y);
 		// Trustee
+	//	$this->rect(86,47,99,39);
 		$this->multiCell(0,5,utf8_decode($this->entity->getQuote()->getTrusteeName().chr(10).$this->entity->getQuote()->getTrusteeAddress()));
 		$this->ln(10);
 		
@@ -65,7 +66,7 @@ class QuotePDF extends \FPDF
 		// Contact
 		$this->setFont('Arial','',10);
 		
-		$this->setX(130);
+		$this->setX(100);
 		$this->cell(0,5,utf8_decode('à l\'attention de '.$this->entity->getQuote()->getContactCp()),0,1);
 		
 		// Création bas
@@ -154,7 +155,7 @@ class QuotePDF extends \FPDF
 		
 		$this->setFont('Arial','B',10);
 		if ($this->entity->getQuote()->getVat() > 0.1)
-			$this->cell(142,6,'Si T.V.A. à 7%, merci de nous fournir l\'attestation',1,0);
+			$this->cell(142,6,utf8_decode('Si T.V.A. à 7,0 %, merci de nous fournir l\'attestation'),1,0);
 		
 		
 		$this->cell(25,6,'montant TVA',1,0);
@@ -209,15 +210,15 @@ class QuotePDF extends \FPDF
 	{
 		if ($this->pageNo() == 1)
 		{
-			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-header.jpg',10,10,190);
+			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-header.jpg',10,4,190);
 			$this->setFont('Arial','B',24);
 			$this->cell(60,35,'DEVIS',0,1,'C');
-			$this->ln(15);
+			$this->ln(5);
 		}
 		else
 		{
 			// Création
-			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-logo.jpg',90,10,30);
+			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-logo.jpg',90,4,30);
 			$this->setFont('Arial','B',20);
 			$this->cell(60,12,'DEVIS',0,0,'L');
 			$this->cell(89,6);
