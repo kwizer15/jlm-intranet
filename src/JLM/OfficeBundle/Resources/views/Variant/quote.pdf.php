@@ -84,9 +84,10 @@ class QuotePDF extends \FPDF
 		$this->setFont('Arial','B',10);
 			
 		$this->cell(22,6,utf8_decode('Référence'),1,0,'C',true);
-		$this->cell(19,6,utf8_decode('Quantité'),1,0,'C',true);
-		$this->cell(101,6,utf8_decode('Désignation'),1,0,'C',true);
+		$this->cell(100,6,utf8_decode('Désignation'),1,0,'C',true);
+		$this->cell(7,6,utf8_decode('Qté'),1,0,'C',true);	
 		$this->cell(25,6,utf8_decode('Prix U.H.T'),1,0,'C',true);
+		$this->cell(13,6,utf8_decode('TVA'),1,0,'C',true);
 		$this->cell(25,6,utf8_decode('Prix H.T'),1,1,'C',true);
 		$this->setFont('Arial','',10);
 		$lines = $this->entity->getLines();
@@ -100,10 +101,13 @@ class QuotePDF extends \FPDF
 	{
 		
 		$this->cell(22,8,utf8_decode($line->getReference()),'RL',0);
-		$this->cell(19,8,$line->getQuantity(),'RL',0,'R');
-		$this->cell(101,8,utf8_decode($line->getDesignation()),'RL',0);
+		$this->cell(100,8,utf8_decode($line->getDesignation()),'RL',0);
+		$this->cell(7,8,$line->getQuantity(),'RL',0,'R');
 		$this->cell(25,8,number_format($line->getUnitPrice()*(1-$line->getDiscount()),2,',',' ').' '.chr(128),'RL',0,'R');
+		$this->cell(13,8,utf8_decode(number_format($line->getVat()*100,1,',',' ').' %'),'RL',0,'R');
 		$this->cell(25,8,number_format($line->getPrice(),2,',',' ').' '.chr(128),'RL',1,'R');
+		
+		
 		if ($line->getShowDescription())
 		{
 			$text = explode(chr(10),$line->getDescription());
@@ -113,9 +117,10 @@ class QuotePDF extends \FPDF
 			foreach ($text as $l)
 			{
 				$this->cell(22,5,'','RL',0);
-				$this->cell(19,5,'','RL',0);
-				$this->cell(101,5,utf8_decode($l),'RL');
+				$this->cell(100,5,utf8_decode($l),'RL');
+				$this->cell(7,5,'','RL',0);
 				$this->cell(25,5,'','RL',0);
+				$this->cell(13,5,'','RL',0);
 				$this->cell(25,5,'','RL',1);
 			}
 			$this->setFont('Arial','',10);
@@ -136,9 +141,10 @@ class QuotePDF extends \FPDF
 		$this->end = true;
 		$h = 210 - $y;
 		$this->cell(22,$h,'','RL',0);
-		$this->cell(19,$h,'','RL',0);
-		$this->cell(101,$h,'','RL',0);
+		$this->cell(100,$h,'','RL',0);
+		$this->cell(7,$h,'','RL',0);
 		$this->cell(25,$h,'','RL',0);
+		$this->cell(13,$h,'','RL',0);
 		$this->cell(25,$h,'','RL',1);
 		
 		// Réglement
@@ -146,11 +152,11 @@ class QuotePDF extends \FPDF
 		$this->cell(167,6,'MONTANT TOTAL H.T',1,0,'R',true);
 		$this->cell(25,6,number_format($this->entity->getTotalPrice(),2,',',' ').' '.chr(128),1,1,'R',true);
 		
-		$this->setFont('Arial','',10);
-		$this->cell(22,6,'Tx T.V.A',1,0,'R');
-		$this->cell(19,6,number_format($this->entity->getQuote()->getVat()*100,1,',',' ').' %',1,0,'R');
-		$this->cell(101,6,'',1,0);
 		$this->setFont('Arial','B',10);
+		if ($this->entity->getQuote()->getVat() > 0.1)
+			$this->cell(142,6,'Si T.V.A. à 7%, merci de nous fournir l\'attestation',1,0);
+		
+		
 		$this->cell(25,6,'montant TVA',1,0);
 		$this->cell(25,6,number_format($this->entity->getTotalVat(),2,',',' ').' '.chr(128),1,1,'R');
 		
