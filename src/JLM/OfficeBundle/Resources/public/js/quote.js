@@ -349,7 +349,7 @@
 						  	$(id + 'expenseRatio').val(ui.item.expenseRatio);
 						  	
 						  	$(id + 'isTransmitter').val(ui.item.transmitter ? '1' : '');
-						  	$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? number_format($("#quote_vatTransmitter").val()*100,1,',',' ') : $("#quote_vat").val());
+						  	$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? $("#quote_vatTransmitter").val() : $("#quote_vat").val());
 						  	$(id + 'shipping').val(ui.item.shipping).change();
 						  	$(id + 'unitPrice').val(ui.item.unitPrice).change();
 						
