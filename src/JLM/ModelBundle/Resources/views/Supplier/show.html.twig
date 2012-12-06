@@ -30,7 +30,7 @@
             <td>{% if product.category %}<a href="{{ path('productcategory_show', { 'id': product.category.id }) }}">{{ product.category }}</a>{% endif %}</td>
             <td>{{ product.unity }}</td>
             <td>{{ product.purchasePrice|number_format(2, ',', ' ') }} €</td>
-            <td>{{ product.sellPrice|number_format(2, ',', ' ') }} €</td>
+            <td>{{ product.unitPrice|number_format(2, ',', ' ') }} €</td>
             <td>
             	<a href="{{ path('product_show', { 'id': product.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
                 <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i></a>

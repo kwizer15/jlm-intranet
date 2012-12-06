@@ -12,6 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductRepository extends EntityRepository
 {
+	public function search($query)
+	{
+		$qb = $this->createQueryBuilder('p')
+		->where('p.designation LIKE :query')
+		->orWhere('p.reference LIKE :query')
+		->setParameter('query', '%'.$query.'%')
+		;
+		return $qb->getQuery()->getResult();
+	}
+	
 	public function searchDesignation($query)
 	{
 		

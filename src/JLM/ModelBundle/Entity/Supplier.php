@@ -18,7 +18,13 @@ class Supplier extends Company
 	 * @ORM\Column(name="website",type="string",length=255, nullable=true)
 	 */
 	private $website;
-
+	
+	/**
+	 * @var string $shortName
+	 *
+	 * ORM\Column(name="short_name",type="string",length=255)
+	 */
+//	private $shortName;
 	
 	/**
 	 * Get website
@@ -38,4 +44,23 @@ class Supplier extends Company
 		$this->website = $url;
 	}
 
+	/**
+	 * Get shortName
+	 * @return string
+	 */
+	public function getShortName()
+	{
+		return $this->getName();
+//		return $this->shortName;
+	}
+	
+	/**
+	 * Set shortName
+	 * @param string $name
+	 */
+	public function setShortName($name)
+	{
+//		$this->shortName = $name;
+		return $this;
+	}
 }

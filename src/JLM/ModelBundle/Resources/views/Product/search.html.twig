@@ -1,0 +1,30 @@
+<table class="table table-stripped">
+    <thead>
+        <tr>
+       		<th></th>
+            <th>Référence</th>
+            <th>Désignation</th>
+            <th>Famille</th>
+            <th>Unité</th>
+            <th>Prix d'achat HT</th>
+            <th>Marge</th>
+            <th>Prix de vente HT</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in products %}
+        <tr>
+        	<td>
+            	<a href="{{ path('product_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
+            </td>
+            <td>{{ entity.reference }}</td>
+            <td>{{ entity.designation }}</td>
+            <td>{{ entity.category }}</td>
+            <td>{{ entity.unity }}</td>
+            <td>{{ entity.purchasePrice|number_format(2, ',', ' ') }} €</td>
+            <td>{{ entity.margin|number_format(2, ',', ' ') }} €</td>
+            <td>{{ entity.unitPrice|number_format(2, ',', ' ') }} €</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

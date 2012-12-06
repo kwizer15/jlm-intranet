@@ -12,13 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class SupplierRepository extends EntityRepository
 {
-	public function searchResult($query, $limit = 8)
+	public function search($query)
 	{
 		$qb = $this->createQueryBuilder('c')
-			   ->where('c.name LIKE :query')
-			   ->setParameter('query', $query.'%')
+					->where('c.name LIKE :query')
+					->setParameter('query', $query.'%')
 		;
-		$res = $qb->getQuery()->getResult();
+		return $qb->getQuery()->getResult();
+	}
+	
+	public function searchResult($query, $limit = 8)
+	{
+		$res = $this->search($query);
 		$r2 = array();
 		foreach ($res as $r)
 			$r2[] = ''.$r;

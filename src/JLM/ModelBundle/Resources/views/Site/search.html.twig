@@ -1,0 +1,28 @@
+<table class="table table-stripped">
+    <thead>
+        <tr>
+        	<th></th>
+        	<th>Syndic</th>
+            <th>Adresse</th>
+            <th>Code postal</th>
+            <th>Ville</th>
+            <th>TVA</th>
+            <th>Nb portes</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in sites %}
+        <tr>
+        	<td>
+                <a href="{{ path('site_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
+           </td>
+        	<td>{{ entity.trustee }}</td>
+            <td>{{ entity.address.street }}</td>
+            <td>{{ entity.address.city.zip }}</td>
+            <td>{{ entity.address.city.name }}</td>
+            <td>{{ entity.vat }}</td>
+            <td>{{ entity.doors|length }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

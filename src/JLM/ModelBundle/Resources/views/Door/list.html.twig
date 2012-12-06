@@ -1,0 +1,23 @@
+{% if doors|length > 0 %}
+<h2>Portes</h2>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Localisation</th>
+			<th>Adresse porte</th>
+			<th>Type</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for door in doors %}
+		<tr>
+			<td><a href="{{ path('door_show',{'id': door.id}) }}">{{ door.location }}</a></td>
+			<td>{{ door.street | nl2br }}</td>
+			<td>{{ door.type }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% else %}
+<h2><small>Aucune porte</small></h2>
+{% endif %}

@@ -4,7 +4,12 @@
     <div class="row-fluid">
 	    <div class="span2">
 		    {% block sidebar %}
-		    <ul class="nav nav-list">
+		    <ul class="nav nav-list affix">
+		    	<li>
+		    		<form  action="{{ path('model_search') }}" method="post" class="form-search">
+						<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher...">
+			    	</form>
+			    </li>
 				<li class="nav-header">Syndics</li>
 				<li><a href="{{ path('trustee') }}"><i class="icon-list"></i> Liste syndics</a></li>
 		        <li><a href="{{ path('trustee_new') }}"><i class="icon-plus-sign"></i> Nouveau syndic</a></li>

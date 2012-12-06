@@ -446,6 +446,6 @@ class Product
      */
     public function __toString()
     {
-    	return $this->getSupplier().' '.$this->getDesignation();
+    	return $this->getCategory().' '.$this->getSupplier()->getShortName().' '.$this->getDesignation();
     }
 }

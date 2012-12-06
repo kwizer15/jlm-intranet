@@ -1,0 +1,24 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Syndic</th>
+			<th>Site</th>
+			<th>Localisation</th>
+			<th>Adresse porte</th>
+			<th>Type</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for door in doors %}
+		<tr>
+			<td><a href="{{ path('door_show',{'id': door.id}) }}" class="btn"><i class="icon-eye-open"></i></a></td>
+			<td>{{ door.site.trustee }}</td>
+			<td>{{ door.site | nl2br }}</td>
+			<td>{{ door.location }}</td>
+			<td>{{ door.street | nl2br }}</td>
+			<td>{{ door.type }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>

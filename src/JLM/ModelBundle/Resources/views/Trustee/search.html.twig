@@ -1,0 +1,26 @@
+<table class="table table-stripped">
+    <thead>
+        <tr>
+        	<th></th>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>Téléphone</th>
+            <th>Fax</th>
+            <th>e-mail</th>
+            <th>Affaires</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in trustees %}
+        <tr>
+        	<td><a href="{{ path('trustee_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a></td>
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.address|nl2br }}</td>
+            <td>{{ entity.phone }}</td>
+			<td>{{ entity.fax }}</td>
+			<td>{% if entity.email %}<a href="mailto:{{ entity.email }}">{{ entity.email }}</a>{% endif %}</td>
+            <td>{{ entity.sites | length }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

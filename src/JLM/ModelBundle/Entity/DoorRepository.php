@@ -12,21 +12,26 @@ use Doctrine\ORM\EntityRepository;
  */
 class DoorRepository extends EntityRepository
 {
+	public function search($query)
+	{
+		$qb = $this->createQueryBuilder('d')
+		->leftJoin('d.site','s')
+		->leftJoin('s.address','a')
+		->leftJoin('a.city','c')
+		->where('a.street LIKE :querystreet')
+		->orWhere('d.street LIKE :querystreet')
+		->orWhere('c.name LIKE :querycity')
+		->setParameter('querystreet', '%'.$query.'%')
+		->setParameter('querycity', $query.'%')
+		;
+		
+		return $qb->getQuery()->getResult();
+	}
+	
 	public function searchResult($query, $limit = 8)
 	{
 		
-		$qb = $this->createQueryBuilder('d')
-			   ->leftJoin('d.site','s')
-			   ->leftJoin('s.address','a')
-			   ->leftJoin('a.city','c')
-			   ->where('a.street LIKE :querystreet')
-			   ->orWhere('d.street LIKE :querystreet')
-			   ->orWhere('c.name LIKE :querycity')
-			   ->setParameter('querystreet', '%'.$query.'%')
-			   ->setParameter('querycity', $query.'%')
-		;
-
-		$res = $qb->getQuery()->getResult();
+		$res = $this->search($query);
 		
 		// Structure
 		// array(IdPorte,Affaire,IdSyndic,Syndic,Adresse de facturation)

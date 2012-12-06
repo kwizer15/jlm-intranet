@@ -25,29 +25,7 @@ Accession{% else %}Social
 </address>
 </div>
 </div>
-{% if entity.doors|length > 0 %}
-<h2>Portes</h2>
-<table class="table table-striped">
-<thead>
-<tr>
-<th>Localisation</th>
-<th>Adresse porte</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-{% for door in entity.doors %}
-<tr>
-<td><a href="{{ path('door_show',{'id': door.id}) }}">{{ door.location }}</a></td>
-<td>{{ door.street }}</td>
-<td>{{ door.type }}</td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
-{% else %}
-<h2><small>Aucune porte</small></h2>
-{% endif %}
+{% include 'JLMModelBundle:Door:list.html.twig' with {'doors': entity.doors } %}
 	<a href="{{ path('door_new_id', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Nouvelle porte</a>
 {% if entity.contacts|length > 0 %}
 <h2>Interlocuteurs</h2>
