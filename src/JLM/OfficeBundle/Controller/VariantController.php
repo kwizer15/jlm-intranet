@@ -259,6 +259,29 @@ class VariantController extends Controller
 	}
 	
 	/**
+	 * @Route("/{id}/printcoding",name="variant_printcoding")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function printcodingAction(QuoteVariant $entity)
+	{
+		if ($entity->getState() < 0)
+			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+	
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($entity);
+		$em->flush();
+			
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/pdf');
+		$response->headers->set('Content-Disposition', 'inline; filename=chiffrage'.$entity->getNumber().'.pdf');
+		$response->setContent($this->render('JLMOfficeBundle:Variant:coding.pdf.php',array('entity'=>$entity)));
+			
+		//   return array('entity'=>$entity);
+		return $response;
+	}
+	
+	
+	/**
 	 * Note QuoteVariant as not ready.
 	 *
 	 * @Route("/{id}/unvalid", name="variant_unvalid")

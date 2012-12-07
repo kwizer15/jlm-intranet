@@ -90,6 +90,8 @@
 	{% if variant.state == 0 %}
 		<a href="{{ path('variant_edit', { 'id': variant.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 		<a href="{{ path('variant_ready', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-thumbs-up icon-white"></i> Prêt à evoyer</a>
+		<a href="{{ path('variant_printcoding', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer chiffrage</a>
+		
 	{% elseif variant.state >= 1 %}
 		{% if variant.state == 3 %}
 			<a href="{{ path('variant_receipt', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-thumbs-up icon-white"></i> Accusé reçu</a>
@@ -102,6 +104,7 @@
 		{% endif %}
 		<a href="{{ path('variant_mail', { 'id': variant.id }) }}" class="btn btn-info"><i class="icon-envelope icon-white"></i> Envoyer par e-mail</a>
 		<a href="{{ path('variant_print', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer</a>
+		<a href="{{ path('variant_printcoding', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer chiffrage</a>
 		{% if variant.state < 5 %}
 			<a href="{{ path('variant_unvalid', { 'id': variant.id }) }}" class="btn btn-inverse"><i class="icon-fast-backward icon-white"></i> Revenir à la saisie</a>
 		{% endif %}
