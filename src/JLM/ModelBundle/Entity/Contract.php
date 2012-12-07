@@ -39,7 +39,7 @@ class Contract
      * Contrat complet
      * @var bool $complete
      * 
-     * @ORM\Column(name="complete", type="boolean")
+     * @ORM\Column(name="complete", type="smallint")
      */
     private $complete;
     
@@ -47,7 +47,7 @@ class Contract
      * Contract C1 C2...
      * @var smallint $option
      *
-     * @ORM\Column(name="option", type="smallint")
+     * @ORM\Column(name="contract_option", type="smallint")
      */
     private $option;
     
@@ -68,21 +68,21 @@ class Contract
     /**
      * @var datetime $endWarranty
      *
-     * @ORM\Column(name="endWarranty", type="datetime", nullable=true)
+     * @ORM\Column(name="end_warranty", type="datetime", nullable=true)
      */
     private $endWarranty;
 
     /**
      * @var datetime $end
      *
-     * @ORM\Column(name="end", type="datetime", nullable=true)
+     * @ORM\Column(name="end_contract", type="datetime", nullable=true)
      */
     private $end;
 
     /**
      * @var decimal $fee
      *
-     * @ORM\Column(name="fee", type="decimal")
+     * @ORM\Column(name="fee", type="decimal", scale=2)
      */
     private $fee;
     
@@ -91,7 +91,7 @@ class Contract
      */
     public function __toString()
     {
-    	return ($this->isComplete() ? 'C' : 'N').$this->getOption();
+    	return ($this->isComplete() ? 'C'.($this->getOption()+1) : 'N'.($this->getOption()+3));
     }
 
     /**

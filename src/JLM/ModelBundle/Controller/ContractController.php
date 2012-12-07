@@ -104,7 +104,7 @@ class ContractController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('contract_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('door_show', array('id' => $entity->getDoor()->getId())));
             
         }
 
@@ -114,6 +114,25 @@ class ContractController extends Controller
         );
     }
 
+    /**
+     * Stop a contract
+     * 
+     * @Route("/{id}/stop", name="contract_stop")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function stopAction(Contract $entity)
+    {
+    	if ($entity->getEnd() === null)
+    	{	
+	    	$entity->setEnd(new \DateTime());
+	    	$em = $this->getDoctrine()->getEntityManager();
+	    	$em->persist($entity);
+	    	$em->flush();
+    	}
+    	return $this->redirect($this->generateUrl('door_show', array('id' => $entity->getDoor()->getId())));
+    }
+    
     /**
      * Displays a form to edit an existing Contract entity.
      *

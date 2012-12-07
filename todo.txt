@@ -1,6 +1,3 @@
-Barre de recherche
-	- Recherche sur les adresses des sites
-
 Voir interaction Contract / Door
 	- ajouter un contrat (si pas de contrat en cours)
 	- arrêter le contrat (si contrat en cours)
@@ -32,7 +29,6 @@ Produits
 
 Quote
 	- Changer redirection de création de Devis (createAction)
-	- Cycle d'évolution
 
 -----------------------------------------------
 A plus long terme
@@ -57,9 +53,7 @@ Produit Emeteur
 
 Syndic
 	- voir problème d'adresse de facturation (case à cocher ?)
-	
-Site
-    - index : à modifier pour recherche
+
     
     
 ------------------------------------------------

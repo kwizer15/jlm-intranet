@@ -1,0 +1,34 @@
+<table class="table table-striped">
+<thead>
+<tr>
+<th>Etat</th>
+<th>Numéro</th>
+<th>Syndic</th>
+<th>Type</th>
+<th>Début</th>
+<th>Fin de garantie</th>
+<th>Fin</th>
+<th>Dernière redevance</th>
+</tr>
+</thead>
+<tbody>
+{% for contract in contracts %}
+<tr>
+<td>
+	{% if not contract.end %}
+	<span class="label label-success">en cours</span>
+	{% else %}
+	<span class="label label-inverse">terminé</span>
+	{% endif %}
+</td>
+<td>{{ contract.number }}</td>
+<td>{{ contract.trustee }}</td>
+<td>{{ contract }}</td>
+<td>{{ contract.begin|date('d/m/Y') }}</td>
+<td>{% if contract.endWarranty %}{{ contract.endWarranty|date('d/m/Y') }}{% endif %}</td>
+<td>{% if contract.end %}{{ contract.end|date('d/m/Y') }}{% else %}<a href="{{ path('contract_stop',{'id' : contract.id }) }}" class="btn btn-danger">Arrêter</a>{% endif %}</td>
+<td>{{ contract.fee|number_format(2,',',' ') }} €</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>

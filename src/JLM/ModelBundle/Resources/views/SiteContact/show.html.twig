@@ -7,7 +7,6 @@
         <strong>Coordonnées</strong>
         {% if entity.person.fixedPhone %}<br>Tel fixe : {{ entity.person.fixedPhone }}{% endif %}
         {% if entity.person.mobilePhone %}<br>Tel mobile : {{ entity.person.mobilePhone }}{% endif %}
-        {% if entity.professionnalPhone %}<br>Tel pro : {{ entity.professionnalPhone }}{% endif %}
         {% if entity.person.fax %}<br>Fax : {{ entity.person.fax }}{% endif %}
         {% if entity.person.email %}<br>e-mail : <a href="mailto:{{ entity.person.email }}">{{ entity.person.email }}</a>{% endif %}
         </address>

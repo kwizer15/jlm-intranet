@@ -41,20 +41,17 @@ class DoorController extends Controller
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function showAction($id)
+    public function showAction(Door $entity)
     {
         $em = $this->getDoctrine()->getEntityManager();
+		
+        $contracts = $em->getRepository('JLMModelBundle:Contract')->findByDoor($entity,array('end'=>'DESC','begin'=>'DESC'));
 
-        $entity = $em->getRepository('JLMModelBundle:Door')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Door entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         return array(
             'entity'      => $entity,
+        	'contracts'	  => $contracts,
             'delete_form' => $deleteForm->createView(),
         );
     }
