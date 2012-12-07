@@ -14,7 +14,7 @@
 {% for site in sites %}
 <tr>
 <td>{{ site.doors|length }}</td>
-<td><a href="{{ path('site_show',{'id':site.id}) }}">{{ site.address.street }}</a></td>
+<td><a href="{{ path('site_show',{'id':site.id}) }}">{{ site.address.street |nl2br }}</a></td>
 <td>{{ site.address.city.zip }}</td>
 <td>{{ site.address.city.name }}</td>
 <td>{{ site.vat }}</td>

@@ -54,8 +54,9 @@ class CityToStringTransformer implements DataTransformerInterface
 		
 			$city = $this->om
 				->getRepository('JLMModelBundle:City')
-				->findOneBy(array('zip' => $matches[1],'name' => $matches[2]))
+				->findOneBy(array('zip' => trim($matches[1]),'name' => trim($matches[2])))
 			;
+			//echo '|'.$matches[1].'|'.$matches[2].'|'; exit;
 		}
 		else
 			throw new TransformationFailedException(sprintf(

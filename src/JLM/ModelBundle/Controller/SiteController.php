@@ -120,23 +120,12 @@ class SiteController extends Controller
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function editAction($id)
+    public function editAction(Site $entity)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Site')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Site entity.');
-        }
-
         $editForm = $this->createForm(new SiteType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -148,32 +137,23 @@ class SiteController extends Controller
      * @Template("JLMModelBundle:Site:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, Site $entity)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Site')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Site entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new SiteType(), $entity);
         $editForm->bind($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isValid())
+        {
         	$em->persist($entity->getAddress());
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('site_show', array('id' => $id)));
+            return $this->redirect($this->generateUrl('site_show', array('id' => $entity->getId())));
         }
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 

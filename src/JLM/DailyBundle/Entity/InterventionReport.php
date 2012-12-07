@@ -52,7 +52,7 @@ class InterventionReport
     /**
      * @var string $report
      *
-     * @ORM\Column(name="report", type="text")
+     * @ORM\Column(name="report", type="text",nullable=true)
      */
     private $report;
 
@@ -60,7 +60,7 @@ class InterventionReport
      * Bon d'intervention
      * @var int $orderNumber
      * 
-     * @ORM\Column(name="order_number",type="integer")
+     * @ORM\Column(name="order_number",type="integer",nullable=true)
      */
     private $orderNumber;
     
