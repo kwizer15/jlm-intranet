@@ -156,6 +156,7 @@ class QuotePDF extends \FPDF
 		$this->setFont('Arial','B',10);
 		if ($this->entity->getQuote()->getVat() > 0.1)
 			$this->cell(142,6,utf8_decode('Si T.V.A. à 7,0 %, merci de nous fournir l\'attestation'),1,0);
+		else $this->cell(142,6,'',1,0);
 		
 		
 		$this->cell(25,6,'montant TVA',1,0);
