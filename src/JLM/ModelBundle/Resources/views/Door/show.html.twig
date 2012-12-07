@@ -1,16 +1,19 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
 
 {% block content %}
-<h1>{{ entity.type }}
-{% if entity.width and entity.height %}<small>{{ entity.width }}x{{ entity.height }}mm</small>{% endif %}</h1>
+<h1>Fiche installation</h1>
+{% if entity.stopped %}
+<div class="alert alert-danger"><h4>Porte à l'arrêt</h4></div>
+{% endif %}
+
+{% if entity.width and entity.height %}{{ entity.width }}x{{ entity.height }}mm</small>{% endif %}</h1>
 <div class="row-fluid">
 	<div class="span6">
-	<h4>Adresse</h4>
-		<address>
-			{{ entity|nl2br}}
-			<br><strong>Accès :</strong>
+		<h4>{{ entity|nl2br}}</h4>
+		<h2><small>{{ entity.type }}</small></h2>
+			<strong>Accès :</strong>
 			<br>{{ entity.street|nl2br }}
-		</address>		
+				
 		{% if entity.transmitters|length > 0 %}
 		<h2><small>Types d'emetteurs</small></h2>
 		<ul>
@@ -69,10 +72,11 @@
 
 <div class="form-actions">
 	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche affaire</a>
-	<a href="{{ path('door_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
-	<a href="{{ path('contract_new', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter un contrat</a>
+	<a href="{{ path('door_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>	
 </div>
 <h2><small>Contrats</small></h2>
 {% include 'JLMModelBundle:Contract:list.html.twig' with { 'contracts':contracts } %}
-
+<div class="form-actions">
+	<a href="{{ path('contract_new', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter un contrat</a>
+</div>
 {% endblock %}

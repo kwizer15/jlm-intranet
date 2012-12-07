@@ -100,6 +100,14 @@ class Door
     private $height;
     
     /**
+     * Porte à l'arrêt
+     * @var bool $stoped
+     * 
+     * @ORM\Column(name="stopped", type="boolean")
+     */
+    private $stopped;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -365,6 +373,37 @@ class Door
     public function getHeight()
     {
     	return $this->height;
+    }
+    
+    /**
+     * Get stopped
+     * 
+     * @return bool $stopped
+     */
+    public function getStopped()
+    {
+    	return $this->stopped;
+    }
+    
+    /**
+     * Is stopped
+     * 
+     * @return bool $stopped
+     */
+    public function isStopped()
+    {
+    	return $ths->getStopped();
+    }
+    
+    /**
+     * Set stopped
+     * 
+     * @param bool $stopped
+     */
+    public function setStopped($stopped = true)
+    {
+    	$this->stopped = (bool)$stopped;
+    	return $this;
     }
     
     /**

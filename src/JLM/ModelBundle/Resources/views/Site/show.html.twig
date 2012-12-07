@@ -1,9 +1,9 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
 {% block content %}
-<h1>Fiche affaire {{ entity.trustee }}</h1>
+<h1>Fiche affaire</h1>
 <div class="row-fluid">
 	<div class="span4">
-		<h1><small>{{ entity|nl2br }}</small></h1>
+		<h4>{{ entity|nl2br }}</h4>
 	</div>
 	<div class="span4">
 		{% if entity.accession %}Accession
@@ -14,6 +14,7 @@
 	<div class="span4 well">
 		<address>
 			<strong>Adresse de facturation</strong>
+			 <br>{{ entity.trustee }}
 			{% if entity.trustee.billingaddress %}
 			<br>{{ entity.trustee.billingaddress|nl2br }}
 			{% else %}

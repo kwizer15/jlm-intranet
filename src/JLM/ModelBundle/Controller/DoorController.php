@@ -45,7 +45,7 @@ class DoorController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 		
-        $contracts = $em->getRepository('JLMModelBundle:Contract')->findByDoor($entity,array('end'=>'DESC','begin'=>'DESC'));
+        $contracts = $em->getRepository('JLMModelBundle:Contract')->findByDoor($entity,array('begin'=>'DESC'));
 
         $deleteForm = $this->createDeleteForm($entity->getId());
 
