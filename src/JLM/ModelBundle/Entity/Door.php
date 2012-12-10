@@ -105,7 +105,7 @@ class Door
      * 
      * @ORM\Column(name="stopped", type="boolean")
      */
-    private $stopped;
+    private $stopped = false;
     
     /**
      * Constructor

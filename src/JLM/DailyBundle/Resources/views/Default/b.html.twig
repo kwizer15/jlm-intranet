@@ -1,0 +1,50 @@
+{% extends "JLMDailyBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Fiche intervention</h1>
+<div class="row-fluid">
+	<div class="span6">
+	<table class="table">
+	<tbody>
+	<tr><th>Créée le</th><td>11/12/2012 15:02</td></tr>
+	<tr><th>Type</th><td>Travaux</td></tr>
+	<tr><th>Suite à devis</th><td>12110203</td></tr>
+	</tbody>
+	</table>
+	<h4>Rapport</h4>
+	<table class="table">
+	<tbody>
+	<tr><th>Nature</th><td>Réparation</td></tr>
+	<tr class="error"><th>Action menée</th><td>Mise à l'arrêt</td></tr>
+	<tr><th>Rapport</th><td>Rigel 4 à remplacer</td></tr>
+	<tr><th>Action bureau</th><td>Devis à faire</td></tr>
+	</tbody>
+	</table>
+	</div>
+	<div class="span6 well">
+		<h4>Porte façade<br>rue Eugène Renault<br>94700 - Maison-Alfort</h4>
+		M. Chemin<br>01 23 45 67 89
+	</div>
+</div>
+<table class="table table-stripped">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th>Technicien</th>
+			<th>Début</th>
+			<th>Fin</th>
+			<th>Retour</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>10/12/2012 15:31</td>
+			<td>Cyrille</td>
+			<td>16:00</td>
+			<td>17:23</td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+
+{% endblock %}

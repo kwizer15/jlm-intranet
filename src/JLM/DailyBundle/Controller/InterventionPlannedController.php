@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\InterventionPlanned;
 use JLM\DailyBundle\Form\Type\InterventionPlannedType;
+use JLM\DailyBundle\Form\Type\FaultType;
+use JLM\ModelBundle\Entity\Door;
 
 /**
  * InterventionPlanned controller.
@@ -70,7 +72,60 @@ class InterventionPlannedController extends Controller
             'form'   => $form->createView(),
         );
     }
+    
+    /**
+     * Displays a form to create a new InterventionPlanned entity.
+     *
+     * @Route("/newfault/{id}", name="interventionplanned_newfault")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function newfaultAction(Door $door)
+    {
+    	$entity = new InterventionPlanned();
+    	$form   = $this->createForm(new FaultType(), $entity);
+    
+    	return array(
+    			'door' => $door,
+    			'entity' => $entity,
+    			'form'   => $form->createView(),
+    	);
+    }
 
+    /**
+     * Creates a new InterventionPlanned entity.
+     *
+     * @Route("/create/{id}", name="interventionplanned_createfault")
+     * @Method("POST")
+     * @Template("JLMDailyBundle:InterventionPlanned:newfault.html.twig")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function createfaultAction(Request $request, Door $door)
+    {
+    	$entity  = new InterventionPlanned();
+    	$form = $this->createForm(new FaultType(), $entity);
+    	$form->bind($request);
+    
+    	if ($form->isValid()) {
+    		$em = $this->getDoctrine()->getManager();
+    		$entity->setCreation(new \DateTime);
+    		$entity->setDoor($door);
+ 			$entity->setDoorCp($door.'');
+    		$entity->setActionType($em->getRepository('JLMDailyBundle:ActionType')->find(1));
+    		$entity->setPriority(2);
+    		
+    		$em->persist($entity);
+    		$em->flush();
+    
+    		return $this->redirect($this->generateUrl('interventionplanned_show', array('id' => $entity->getId())));
+    	}
+    
+    	return array(
+    			'entity' => $entity,
+    			'form'   => $form->createView(),
+    	);
+    }
+    
     /**
      * Creates a new InterventionPlanned entity.
      *

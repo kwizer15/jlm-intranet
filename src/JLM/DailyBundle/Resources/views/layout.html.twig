@@ -4,9 +4,22 @@
     <div class="row-fluid">
 	    <div class="span2">
 		    {% block sidebar %}
-		    <ul class="nav nav-tabs nav-stacked">
-		        <li><a href="">A prévoir</a></li>
-		   </ul>
+		    <ul class="nav nav-list affix">
+		    	<li>
+		    		<form  action="{{ path('daily_search') }}" method="post" class="form-search">
+						<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher...">
+			    	</form>
+			    </li>
+			    <li class="nav-header">Actions</li>
+			    <li><a href="#"><i class="icon-plus-sign"></i> Nouvelle panne</a></li>
+			    <li><a href="#"><i class="icon-plus-sign"></i> Nouveaux travaux</a></li>
+			    <li class="nav-header">Interventions</li>
+			    <li><a href="#"><span class="badge badge-success">2</span> En cours</a></li>
+			    <li><a href="#"><span class="badge badge-important">7</span> A l'arrêt</a></li>
+		    	<li><a href="#"><span class="badge badge-warning">5</span> Pannes</a></li>
+		        <li><a href="#"><span class="badge badge-info">2</span> Travaux</a></li>
+		        <li><a href="#"><span class="badge">231</span> Entretiens</a></li>
+			</ul>
 		    {% endblock sidebar %}
 	    </div>
 	    <div class="span10">
