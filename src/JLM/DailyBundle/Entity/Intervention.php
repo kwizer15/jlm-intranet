@@ -8,10 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
  * Plannification d'intervention
  * JLM\DailyBundle\Entity\InterventionPlanned
  *
- * @ORM\Table(name="interventions")
+ * @ORM\Table(name="shifting_interventions")
  * @ORM\Entity
  */
-class Intervention extends Shifting
+abstract class Intervention extends Shifting
 {
     /**
      * Porte (lien)
@@ -39,6 +39,40 @@ class Intervention extends Shifting
      */
     private $contactEmail;
    
+    /**
+     * Report
+     * @var string $report
+     * @ORM\Column(name="report",type="text", nullable=true)
+     */
+    private $report;
+    
+    /**
+     * Commentaires (interne à la société)
+     * @var string $comments
+     *
+     * @ORM\Column(name="comments", type="text")
+     */
+    private $comments;
+    
+    /**
+     * Priorité
+     * @var int $priority
+     * 1 - Très Urgent
+     * 2 - Urgent
+     * ....
+     *
+     * @ORM\Column(name="priority", type="smallint")
+     */
+    private $priority;
+    
+    /**
+     * Closed
+     * @var bool
+     * 
+     * @ORM\Column(name="closed", type="boolean")
+     */
+    private $closed;
+    
     /**
      * Set contactName
      *
@@ -132,6 +166,93 @@ class Intervention extends Shifting
         return $this->door;
     }
 
+    /**
+     * Get report
+     *
+     * @return string
+     */
+    public function getReport()
+    {
+    	return $this->report;
+    }
     
+    /**
+     * Set report
+     *
+     * @param string $report
+     * @return Fixing
+     */
+    public function setReport($report)
+    {
+    	$this->report = $report;
+    	return $this;
+    }
     
+    /**
+     * Set priority
+     *
+     * @param integer $priority
+     * @return InterventionPlanned
+     */
+    public function setPriority($priority)
+    {
+    	$this->priority = $priority;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get priority
+     *
+     * @return integer
+     */
+    public function getPriority()
+    {
+    	return $this->priority;
+    }
+    
+    /**
+     * Set Closed
+     * 
+     * @param bool $closed
+     * @return Intervention
+     */
+    public function setClosed($closed = true)
+    {
+    	$this->closed = (bool)$closed;
+    	return $this;
+    }
+    
+    /**
+     * Get closed
+     * 
+     * @return bool
+     */
+    public function getClosed()
+    {
+    	return $this->closed;
+    }
+    
+    /**
+     * Set comments
+     *
+     * @param string $comments
+     * @return InterventionReport
+     */
+    public function setComments($comments)
+    {
+    	$this->comments = $comments;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get comments
+     *
+     * @return string
+     */
+    public function getComments()
+    {
+    	return $this->comments;
+    }
 }

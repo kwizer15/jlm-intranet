@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use JLM\ModelBundle\Entity\StringModel;
 
 /**
- * JLM\DailyBundle\Entity\ActionType
+ * JLM\DailyBundle\Entity\WorkCategory
  *
- * @ORM\Table(name="action_types")
+ * @ORM\Table(name="work_categories")
  * @ORM\Entity
  */
-class ActionType extends StringModel
+class WorkCategory extends StringModel
 {
     /**
      * @var integer $id

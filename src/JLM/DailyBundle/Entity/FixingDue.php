@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use JLM\ModelBundle\Entity\StringModel;
 
 /**
- * JLM\DailyBundle\Entity\Nature
+ * JLM\DailyBundle\Entity\FixingDue
  *
- * @ORM\Table(name="natures")
+ * @ORM\Table(name="fixing_dues")
  * @ORM\Entity
  */
-class Nature extends StringModel
+class FixingDue extends StringModel
 {
     /**
      * @var integer $id

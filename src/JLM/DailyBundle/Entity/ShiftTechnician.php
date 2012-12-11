@@ -46,11 +46,11 @@ class ShiftTechnician
     private $end;
     
     /**
-     * @var InterventionPlanned $intervention
+     * @var Shifting $shifting
      * 
-     * @ORM\ManyToOne(targetEntity="InterventionPlanned")
+     * @ORM\ManyToOne(targetEntity="Shifting")
      */
-    private $intervention;
+    private $shifting;
     
     /**
      * @var Technician $technician
@@ -144,21 +144,21 @@ class ShiftTechnician
      * @param JLM\DailyBundle\Entity\InterventionPlanned $intervention
      * @return InterventionScheduled
      */
-    public function setIntervention(\JLM\DailyBundle\Entity\InterventionPlanned $intervention = null)
+    public function setShifting(\JLM\DailyBundle\Entity\Shifting $shifting = null)
     {
-        $this->intervention = $intervention;
+        $this->shifting = $shifting;
     
         return $this;
     }
 
     /**
-     * Get intervention
+     * Get shifting
      *
-     * @return JLM\DailyBundle\Entity\InterventionPlanned 
+     * @return JLM\DailyBundle\Entity\Shifting 
      */
-    public function getIntervention()
+    public function getShifting()
     {
-        return $this->intervention;
+        return $this->shifting;
     }
 
     /**

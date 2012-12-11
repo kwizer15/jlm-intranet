@@ -6,19 +6,18 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Déplacement
- * JLM\DailyBundle\Entity\InterventionPlanned
+ * JLM\DailyBundle\Entity\Shifting
  *
- * @ORM\Table(name="interventions_planned")
+ * @ORM\Table(name="shifting")
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="actionType", type="string")
  * @ORM\DiscriminatorMap({
- * 		"shifting" = "Shifting",
- * 		"fixing" = "Fixing",
+ * 		"equipment" = "Equipment",
+ *  	"fixing" = "Fixing",
  * 		"work" = "Work",
  * 		"maintenance" = "Maintenance",
  * 		"receiver" = "Receiver"
- * 		
  * })
  */
 abstract class Shifting
@@ -53,16 +52,7 @@ abstract class Shifting
      */
     private $reason;
     
-    /**
-     * Priorité
-     * @var int $priority
-     * 1 - Très Urgent
-     * 2 - Urgent
-     * ....
-     *
-     * @ORM\Column(name="priority", type="smallint")
-     */
-    private $priority;
+
     
     /**
      * Get id
@@ -118,29 +108,6 @@ abstract class Shifting
     public function getReason()
     {
         return $this->reason;
-    }
-
-    /**
-     * Set priority
-     *
-     * @param integer $priority
-     * @return InterventionPlanned
-     */
-    public function setPriority($priority)
-    {
-        $this->priority = $priority;
-    
-        return $this;
-    }
-
-    /**
-     * Get priority
-     *
-     * @return integer 
-     */
-    public function getPriority()
-    {
-        return $this->priority;
     }
 
     /**

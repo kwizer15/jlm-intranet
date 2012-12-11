@@ -22,7 +22,7 @@
 			<td>{{ door.location }}<br>{{ door.site | nl2br }}</td>
 			<td>{{ door.type }}</td>
 			<td>{{ door.street | nl2br }}</td>
-			<td><a href="{{  path('interventionplanned_newfault',{'id': door.id}) }}" class="btn btn-danger"><i class="icon-wrench icon-white"></i></a></td>
+			<td><a href="{{  path('fixing_new',{'id': door.id}) }}" class="btn btn-danger"><i class="icon-wrench icon-white"></i></a></td>
 		</tr>
 		{% endfor %}
 	</tbody>
