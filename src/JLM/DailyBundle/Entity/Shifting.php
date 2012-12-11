@@ -132,4 +132,11 @@ abstract class Shifting
     {
         return $this->place;
     }
+    
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    abstract public function getType();
 }

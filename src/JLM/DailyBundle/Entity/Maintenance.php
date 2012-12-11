@@ -12,5 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Maintenance extends Intervention
 {
-	
+	/**
+	 * Get Type
+	 * @see Shifting
+	 * @return string
+	 */
+	public function getType()
+	{
+		return 'Entretien';
+	}
 }

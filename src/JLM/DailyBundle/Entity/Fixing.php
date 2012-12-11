@@ -103,5 +103,13 @@ class Fixing extends Intervention
 		return $this->orderNumber;
 	}
 	
-	
+	/**
+	 * Get Type
+	 * @see Shifting
+	 * @return string
+	 */
+	public function getType()
+	{
+		return 'Dépannage';
+	}
 }

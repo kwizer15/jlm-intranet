@@ -95,4 +95,14 @@ class Work extends Intervention
 		$this->objective = $objective;
 		return $this;
 	}
+	
+	/**
+	 * Get Type
+	 * @see Shifting
+	 * @return string
+	 */
+	public function getType()
+	{
+		return 'Travaux';
+	}
 }

@@ -12,5 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Receiver extends Intervention
 {
-	
+	/**
+	 * Get Type
+	 * @see Shifting
+	 * @return string
+	 */
+	public function getType()
+	{
+		return 'Récépteur';
+	}
 }
