@@ -18,4 +18,9 @@ class Technician extends Person
 	 * @ORM\Column(name="internalPhone",type="string", length=20, nullable=true)
 	 */
 	private $internalPhone;
+	
+	public function __toString()
+	{
+		return $this->getFirstName();
+	}
 }

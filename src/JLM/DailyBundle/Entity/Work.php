@@ -22,9 +22,16 @@ class Work extends Intervention
 	/**
 	 * Work category
 	 * 
-	 * @ORM\ManyToOne(targetEntiy="WorkCategory")
+	 * @ORM\ManyToOne(targetEntity="WorkCategory")
 	 */
 	private $category;
+	
+	/**
+	 * Work objective
+	 *
+	 * @ORM\ManyToOne(targetEntity="WorkObjective")
+	 */
+	private $objective;
 	
 	/**
 	 * Get Quote
@@ -65,6 +72,27 @@ class Work extends Intervention
 	public function setCategory(WorkCategory $category = null)
 	{
 		$this->category = $category;
+		return $this;
+	}
+	
+	/**
+	 * Get work objective
+	 * @return WorkObjective
+	 */
+	public function getObjective()
+	{
+		return $this->objective;
+	}
+	
+	/**
+	 * Set work objective
+	 *
+	 * @param WorkObjective $objective
+	 * @return Work
+	 */
+	public function setObjective(WorkObjective $objective = null)
+	{
+		$this->objective = $objective;
 		return $this;
 	}
 }

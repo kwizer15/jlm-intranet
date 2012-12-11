@@ -1,0 +1,27 @@
+{% extends "JLMDailyBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Déplacements de {{ technician }}</h1>
+<table class="table table-stripped">
+<thead>
+<tr>
+<th>Création</th>
+<th>Début</th>
+<th>Lieu</th>
+<th>Raison</th>
+<th>Fin</th>
+</tr>
+</thead>
+<tbody>
+{% for shifting in shiftings %}
+<tr>
+<td>{{ shifting.creation | date('d/m/Y H:i')}}</td>
+<td>{{ shifting.begin | date('d/m/Y H:i')}}</td>
+<td>{{ shifting.shifting.place | nl2br}}</td>
+<td>{{ shifting.shifting.reason | nl2br}}</td>
+<td>{{ shifting.end | date('d/m/Y H:i')}}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

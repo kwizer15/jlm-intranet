@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\DailyBundle\Entity\ShiftTechnician
  *
  * @ORM\Table(name="shift_technician")
- * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\ShiftTechnicianRepository")
+ * @ORM\Entity()
  */
 class ShiftTechnician
 {
@@ -33,7 +33,7 @@ class ShiftTechnician
      * Date du début de l'intervention (prévue)
      * @var \DateTime
      * 
-     * @ORM\Column(name="begin",type="datetime")
+     * @ORM\Column(name="begin",type="datetime",nullable=true)
      */
     private $begin;
     
@@ -41,7 +41,7 @@ class ShiftTechnician
      * Date de fin de l'intervention (prévue)
      * @var \DateTime
      *
-     * @ORM\Column(name="end",type="datetime")
+     * @ORM\Column(name="end",type="datetime",nullable=true)
      */
     private $end;
     
