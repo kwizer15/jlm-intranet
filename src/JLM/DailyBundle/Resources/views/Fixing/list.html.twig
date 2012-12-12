@@ -16,7 +16,7 @@
 	<tbody>
 		{% for entity in entities %}
 		<tr>
-			<td><a href="#" class="btn"><i class="icon-eye-open"></i></a></td>
+			<td><a href="{{ path('fixing_show',{'id':entity.id}) }}" class="btn"><i class="icon-eye-open"></i></a></td>
 			<td>{{ entity.creation|date('d/m/Y') }}<br><span class="badge badge-important">{{ entity.priority }}</span> {{ entity.creation|date('H:i') }}</td>
 			<td>{{ entity.door | nl2br }}</td>
 			<td>{{ entity.contactName }}<br>{{ entity.contactPhones | nl2br }}</td>
@@ -27,7 +27,7 @@
 				{% endfor %}
 				<a href="#" class="btn"><i class="icon-plus-sign"></i> Ajouter</a>
 			</td>
-			<td><a href="#" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a></td>
+			<td><a href="{{ path('fixing_edit',{'id':entity.id}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a></td>
 		</tr>
 		{% endfor %}
 	</tbody>

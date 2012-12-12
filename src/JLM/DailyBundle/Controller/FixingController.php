@@ -101,4 +101,49 @@ class FixingController extends Controller
 				'form'   => $form->createView(),
 		);
 	}
+	
+	/**
+	 * Displays a form to edit an existing Fixing entity.
+	 *
+	 * @Route("/{id}/edit", name="fixing_edit")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function editAction(Fixing $entity)
+	{
+		$editForm = $this->createForm(new FixingType(), $entity);
+	
+		return array(
+				'entity'      => $entity,
+				'form'   => $editForm->createView(),
+		);
+	}
+	
+	/**
+	 * Edits an existing Fixng entity.
+	 *
+	 * @Route("/{id}/update", name="fixing_update")
+	 * @Method("POST")
+	 * @Template("JLMDailyBundle:Fixing:edit.html.twig")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function updateAction(Request $request, Fixing $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+			
+		$editForm = $this->createForm(new FixingType(), $entity);
+		$editForm->bind($request);
+	
+		if ($editForm->isValid())
+		{
+			$em->persist($entity);
+			$em->flush();
+			return $this->redirect($this->generateUrl('fixing_show', array('id' => $entity->getId())));
+		}
+	
+		return array(
+				'entity'      => $entity,
+				'form'   => $editForm->createView(),
+		);
+	}
 }
