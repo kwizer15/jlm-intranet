@@ -71,7 +71,7 @@ abstract class Intervention extends Shifting
      * 
      * @ORM\Column(name="closed", type="boolean")
      */
-    private $closed;
+    private $closed = false;
     
     /**
      * Set contactName
