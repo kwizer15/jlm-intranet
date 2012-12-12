@@ -19,7 +19,7 @@
 	  constructor: Quote
 	  
 	  , listen : function() {
-		  $("#quote_vat").on('change', $.proxy(this.vatchange,this));
+		  $("#quote_vat").on('change', $.proxy(this.vatchange,this)).change();
 		  
 		  $('#quote_followerCp').autocomplete({
 				source:['Yohann Martinez','Emmanuel Bernaszuk','Jean-Louis Martinez','Nadine Martinez','Aurélie Costalat']
