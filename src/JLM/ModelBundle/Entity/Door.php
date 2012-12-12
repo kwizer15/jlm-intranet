@@ -106,6 +106,14 @@ class Door
      * @ORM\Column(name="stopped", type="boolean")
      */
     private $stopped = false;
+
+    /**
+     * Prélibellé de factration
+     * @var string $billingPrelabel
+     * 
+     * @ORM\Column(name="billing_prelabel", type="text", nullable=true)
+     */
+    private $billingPrelabel;
     
     /**
      * Constructor
@@ -403,6 +411,28 @@ class Door
     public function setStopped($stopped = true)
     {
     	$this->stopped = (bool)$stopped;
+    	return $this;
+    }
+    
+    /**
+     * Get billingPrelabel
+     * 
+     * @return string
+     */
+    public function getBillingPrelabel()
+    {
+    	return $this->billingPrelabel();
+    }
+    
+    /**
+     * Set billingPrelabel
+     * 
+     * @param string $label
+     * @return Door
+     */
+    public function setBillingPrelabel($label)
+    {
+    	$this->billingPrelabel = $label;
     	return $this;
     }
     
