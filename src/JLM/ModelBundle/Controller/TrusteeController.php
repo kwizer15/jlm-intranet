@@ -105,7 +105,8 @@ class TrusteeController extends Controller
         $form    = $this->createForm(new TrusteeType(), $entity);
         $form->bindRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getEntityManager(); 
             $em->persist($entity->getAddress());
             if ($entity->getBillingAddress() !== null)
@@ -116,7 +117,6 @@ class TrusteeController extends Controller
             return $this->redirect($this->generateUrl('trustee_show', array('id' => $entity->getId())));
             
         }
-
         return array(
             'entity' => $entity,
             'form'   => $form->createView()

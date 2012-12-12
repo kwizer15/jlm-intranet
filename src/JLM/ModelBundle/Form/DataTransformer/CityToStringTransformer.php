@@ -61,7 +61,7 @@ class CityToStringTransformer implements DataTransformerInterface
 		else
 			throw new TransformationFailedException(sprintf(
 					'Aucune correspondance'));
-	
+		
 		if (null === $city) {
 			throw new TransformationFailedException(sprintf(
 					'An issue with name "%s" does not exist!',
