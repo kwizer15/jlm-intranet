@@ -30,6 +30,21 @@ class DefaultController extends Controller
 	}
 	
 	/**
+	 * Sidebar
+	 * @Route("/sidebar", name="daily_sidebar")
+     * @Secure(roles="ROLE_USER")
+	 * @Template()
+	 */
+	public function sidebarAction()
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+
+		return array(
+			'fixing' => $em->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),		
+		);
+	}
+	
+	/**
 	 * @Route("/", name="daily")
 	 * @Template()
 	 */

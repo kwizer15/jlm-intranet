@@ -17,4 +17,13 @@ class FixingRepository extends EntityRepository
 			->orderBy('f.creation','desc');
 		return $qb->getQuery()->getResult();
 	}
+	
+	public function getCountOpened()
+	{
+		$qb = $this->createQueryBuilder('f')
+			->select('COUNT(f)')
+			->where('f.closed = false');
+		return (int) $qb->getQuery()
+			->getSingleScalarResult();
+	}
 }
