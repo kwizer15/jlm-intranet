@@ -32,7 +32,7 @@ class TrusteeRepository extends EntityRepository
 			$r2[] = array(
 					'trustee'       => ''.$r->getId(),
 					'label'         => ''.$r,
-					'trusteeAddress'=> ($r->getBillingAddress() === null) ? ''.$r->getAddress() : ''.$r->getBillingAddress(),
+					'trusteeAddress'=> ''.$r->getAddress(),
 			);
 		}
 		return $r2;
