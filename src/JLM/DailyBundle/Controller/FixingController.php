@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Fixing;
 use JLM\DailyBundle\Form\Type\FixingType;
+use JLM\DailyBundle\Form\Type\FixingEditType;
 use JLM\ModelBundle\Entity\Door;
 
 /**
@@ -111,7 +112,7 @@ class FixingController extends Controller
 	 */
 	public function editAction(Fixing $entity)
 	{
-		$editForm = $this->createForm(new FixingType(), $entity);
+		$editForm = $this->createForm(new FixingEditType(), $entity);
 	
 		return array(
 				'entity'      => $entity,
@@ -131,7 +132,7 @@ class FixingController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 			
-		$editForm = $this->createForm(new FixingType(), $entity);
+		$editForm = $this->createForm(new FixingEditType(), $entity);
 		$editForm->bind($request);
 	
 		if ($editForm->isValid())

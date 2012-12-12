@@ -2,7 +2,6 @@
 
 {% block content %}
 <h1>Editer panne</h1>
-<h4>{{ entity.door|nl2br }}</h4>
 <form action="{{ path('fixing_update', {'id':entity.id}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 <fieldset>
 {{ form_widget(form) }}
