@@ -40,6 +40,7 @@
 		<br><a href="mailto:{{ entity.contactEmail}}">{{ entity.contactEmail}}</a>
 	</div>
 </div>
+{% if entity.shiftTechnicians|length > 0 %}
 <table class="table table-stripped">
 	<thead>
 		<tr>
@@ -51,19 +52,22 @@
 		</tr>
 	</thead>
 	<tbody>
+		{% for shift in entity.shiftTechnicians %}
 		<tr>
-			<td>10/12/2012 15:31</td>
-			<td>Cyrille</td>
-			<td>16:00</td>
-			<td>17:23</td>
-			<td></td>
+			<td>{{ shift.creation | date('d/m/Y H:i') }}</td>
+			<td>{{ shift.technician }}</td>
+			<td>{{ shift.begin | date('d/m/Y H:i') }}</td>
+			<td>{{ shift.end | date('H:i') }}</td>
 		</tr>
+		{% endfor %}
 	</tbody>
 </table>
-
+{% else %}
+<h2><small>Aucun déplacement technicien prévu</small></h2>
+{% endif %}
+<a href="#" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter</a>
 <div class="form-actions">
     <a href="{{ path('fixing_list') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
-    <a href="{{ path('fixing_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
-	<a href="{{ path('fixing_show', { 'id': entity.id }) }}" class="btn btn-primary"><i class="icon-calendar icon-white"></i> Programmer un technicien</a> 
+    <a href="{{ path('fixing_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a> 
 </div>
 {% endblock %}
