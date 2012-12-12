@@ -1,8 +1,8 @@
 <?php
 $lines = file('out.txt');
 $dsn = 'mysql:dbname=jlm;host=localhost';
-$user = 'root';
-$password = 'sslover';
+$user = 'jlm';
+$password = 'Hary_99';
 try {
 	$pdo = new PDO($dsn,$user,$password);
 	$query = $pdo->prepare('INSERT INTO `jlm`.`cities` (`id`, `country_code`, `zip`, `name`) VALUES (NULL, ?, ?, ?)');
