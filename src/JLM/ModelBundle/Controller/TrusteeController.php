@@ -94,7 +94,7 @@ class TrusteeController extends Controller
      *
      * @Route("/create", name="trustee_create")
      * @Method("post")
-     * @Template("JLMModeleBundle:Trustee:new.html.twig")
+     * @Template("JLMModelBundle:Trustee:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function createAction()
