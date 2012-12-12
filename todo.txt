@@ -1,15 +1,27 @@
-Voir interaction Contract / Door
-	- ajouter un contrat (si pas de contrat en cours)
-	- arrêter le contrat (si contrat en cours)
-	- liste des contrats concernant la porte (à récuperer dans le controller)
+------------------------------------------------
+Journal de bord
+-----------------------------------------------
+
+InterventionPlanned
+	- js : autocompletion doorCp->door, contact->telephone-email
+
+Rapport d'intervention client (PDF)
+
+RecuperationEquipmentEditType
+	Type date-time : datepicker + deroulant heure/minutes
+	ajouter les class a timetype
 	
+	
+
+
+-------------------------------------------------------------
+
+
+
 Créer DoorModel extends Product
 
 Contract - Door - SiteContact
 	- index : ne sert à rien
-
-Journal de Bord
-	- Voir avec Yo les description d'intervention (amélioration des stats)
 
 Devis	
     - Mettre l'utilisateur en cours dans "Suivi par"
@@ -21,14 +33,9 @@ Interlocuteurs
 Door
     ******** à Revoir **********
 
-
-
 Produits
     - fiche descriptive (voir avec yo) 
     - autocompletion pour fournisseur
-
-Quote
-	- Changer redirection de création de Devis (createAction)
 
 -----------------------------------------------
 A plus long terme
@@ -40,7 +47,6 @@ Familles de produits
         class ProductBase
             abstract getCategory();
         
-    - emetteurs (class particuliere)
     - retirer les sous familles (parent/children)
     - liste des produits de la famille ?
     
@@ -56,11 +62,6 @@ Syndic
 
     
     
-------------------------------------------------
-Journal de bord
------------------------------------------------
 
-InterventionPlanned
-	- js : autocompletion doorCp->door, contact->telephone-email
 
-Rapport d'intervention client (PDF)
+

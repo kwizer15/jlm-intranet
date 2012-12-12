@@ -3,6 +3,7 @@
 namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Déplacement
@@ -52,7 +53,20 @@ abstract class Shifting
      */
     private $reason;
     
-
+	/**
+	 * @var ArrayCollection $shiftTechnicians
+	 * 
+	 * @ORM\OneToMany(targetEntity="ShiftTechnician", mappedBy="shifting")
+	 */
+    private $shiftTechnicians;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+    	$this->shiftTechnicians = new ArrayCollection;
+    }
     
     /**
      * Get id
@@ -131,6 +145,39 @@ abstract class Shifting
     public function getPlace()
     {
         return $this->place;
+    }
+    
+    /**
+     * Add shiftTechnicians
+     *
+     * @param JLM\DailyBundle\Entity\ShiftTechnician $shiftTechnicians
+     * @return Shifting
+     */
+    public function addShiftTechnician(\JLM\DailyBundle\Entity\ShiftTechnician $shiftTechnicians)
+    {
+    	$this->shiftTechnicians[] = $shiftTechnicians;
+    
+    	return $this;
+    }
+    
+    /**
+     * Remove shiftTechnicians
+     *
+     * @param JLM\DailyBundle\Entity\ShiftTechnician $shiftTechnicians
+     */
+    public function removeShiftTechnician(\JLM\DailyBundle\Entity\ShiftTechnician $shiftTechnicians)
+    {
+    	$this->shiftTechnicians->removeElement($shiftTechnicians);
+    }
+    
+    /**
+     * Get shiftTechnicians
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getShiftTechnicians()
+    {
+    	return $this->shiftTechnicians;
     }
     
     /**

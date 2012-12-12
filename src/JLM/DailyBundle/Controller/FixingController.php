@@ -22,6 +22,22 @@ class FixingController extends Controller
 	/**
 	 * Finds and displays a InterventionPlanned entity.
 	 *
+	 * @Route("/list", name="fixing_list")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function listAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$entities = $em->getRepository('JLMDailyBundle:Fixing')->getPrioritary();
+		return array(
+				'entities'      => $entities,
+		);
+	}
+	
+	/**
+	 * Finds and displays a InterventionPlanned entity.
+	 *
 	 * @Route("/{id}/show", name="fixing_show")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")

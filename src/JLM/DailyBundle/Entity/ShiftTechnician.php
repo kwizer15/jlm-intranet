@@ -48,7 +48,7 @@ class ShiftTechnician
     /**
      * @var Shifting $shifting
      * 
-     * @ORM\ManyToOne(targetEntity="Shifting")
+     * @ORM\ManyToOne(targetEntity="Shifting", inversedBy="shiftTechnicians")
      */
     private $shifting;
     

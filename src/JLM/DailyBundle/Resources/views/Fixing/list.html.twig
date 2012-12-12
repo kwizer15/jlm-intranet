@@ -1,0 +1,36 @@
+{% extends "JLMDailyBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Dépannages <small>({{ entities|length }})</small></h1>
+<table class="table table-stripped">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Date</th>
+			<th>Installation</th>
+			<th>Interlocuteur</th>
+			<th>Info</th>
+			<th>Technicien</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for entity in entities %}
+		<tr>
+			<td><a href="#" class="btn"><i class="icon-eye-open"></i></a></td>
+			<td>{{ entity.creation|date('d/m/Y') }}<br><span class="badge badge-important">{{ entity.priority }}</span> {{ entity.creation|date('H:i') }}</td>
+			<td>{{ entity.door | nl2br }}</td>
+			<td>{{ entity.contactName }}<br>{{ entity.contactPhones | nl2br }}</td>
+			<td><strong>{{ entity.door.type }}</strong><br>{{ entity.reason }}</td>
+			<td>
+				{% for shift in entity.shiftTechnicians %}
+				<strong>{{ shift.technician }}</strong> {{ shift.begin }}<br>
+				{% endfor %}
+				<a href="#" class="btn"><i class="icon-plus-sign"></i> Ajouter</a>
+			</td>
+			<td><a href="#" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}
