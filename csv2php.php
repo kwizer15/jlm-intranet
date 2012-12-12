@@ -13,8 +13,10 @@ try {
 $i = 0;
 foreach ($lines as $line)
 {
-    $line = utf8_decode(str_replace('"','',$line));
-    $query->execute(explode(';',$line));
+    $tab = explode(';',$line);
+    foreach($tab as $key=>$t)
+    	$tab[$key] = trim(utf8_decode(str_replace('"','',$t)));
+    $query->execute($tab);
     $i++;
 }
 echo $i;
