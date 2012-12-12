@@ -50,7 +50,7 @@ abstract class Intervention extends Shifting
      * Commentaires (interne à la société)
      * @var string $comments
      *
-     * @ORM\Column(name="comments", type="text")
+     * @ORM\Column(name="comments", type="text", nullable=true)
      */
     private $comments;
     
