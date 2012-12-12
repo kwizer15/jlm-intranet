@@ -10,17 +10,18 @@
 			<th>Installation</th>
 			<th>Interlocuteur</th>
 			<th>Info</th>
-			<th>Technicien</th>
+			<th>Techniciens</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
 		{% for entity in entities %}
 		<tr>
 			<td><a href="{{ path('fixing_show',{'id':entity.id}) }}" class="btn"><i class="icon-eye-open"></i></a></td>
-			<td>{{ entity.creation|date('d/m/Y') }}<br><span class="badge badge-important">{{ entity.priority }}</span> {{ entity.creation|date('H:i') }}</td>
+			<td>{{ entity.creation|date('d/m/Y') }}<br>{{ entity.creation|date('H:i') }}</td>
 			<td>{{ entity.door | nl2br }}</td>
 			<td>{{ entity.contactName }}<br>{{ entity.contactPhones | nl2br }}</td>
-			<td><strong>{{ entity.door.type }}</strong><br>{{ entity.reason }}</td>
+			<td>{% include "JLMDailyBundle:Default:priority.html.twig" with {'priority' : entity.priority} %}<br><strong>{{ entity.door.type }}</strong><br>{{ entity.reason }}</td>
 			<td>
 				{% for shift in entity.shiftTechnicians %}
 				<strong>{{ shift.technician }}</strong> {{ shift.begin }}<br>

@@ -211,6 +211,7 @@ abstract class Intervention extends Shifting
     	return $this->priority;
     }
     
+    
     /**
      * Set Closed
      * 
