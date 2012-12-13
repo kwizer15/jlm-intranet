@@ -421,7 +421,7 @@ class Door
      */
     public function getBillingPrelabel()
     {
-    	return $this->billingPrelabel();
+    	return $this->billingPrelabel;
     }
     
     /**

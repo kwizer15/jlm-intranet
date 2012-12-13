@@ -1,0 +1,17 @@
+{% block jlm_modelbundle_doortype_widget %}
+<fieldset>
+<legend>Intallation</legend>
+{{ form_row(form.site) }}
+{{ form_row(form.location) }}
+{{ form_row(form.street) }}
+{{ form_row(form.billingPrelabel) }}
+{{ form_row(form.googlemaps) }}
+</fielset>
+<fieldset>
+<legend>Détails</legend>
+{{ form_row(form.type) }}
+{{ form_row(form.width) }}
+{{ form_row(form.height) }}
+{{ form_row(form.transmitters) }}
+</fieldset>
+{% endblock %}

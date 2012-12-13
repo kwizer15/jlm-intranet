@@ -44,14 +44,12 @@ class TrusteeToStringTransformer implements DataTransformerInterface
 	 */
 	public function reverseTransform($string)
 	{
-		if (!$string) {
+		if (!$string)
 			return null;
-		}
-	
 		
 			$entity = $this->om
 				->getRepository('JLMModelBundle:Trustee')
-				->findOneBy(array('name' => $string))
+				->findOneBy(array('name' => trim($string)))
 			;
 		if (null === $entity) {
 			throw new TransformationFailedException(sprintf(
@@ -59,7 +57,6 @@ class TrusteeToStringTransformer implements DataTransformerInterface
 					$string
 			));
 		}
-	
 		return $entity;
 	}
 }

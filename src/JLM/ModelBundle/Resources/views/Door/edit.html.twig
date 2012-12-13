@@ -1,14 +1,12 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
-
+{% form_theme edit_form 'JLMModelBundle:Form:door.html.twig' %}
 {% block content %}
 <h1>Edition une porte</h1>
 <form action="{{ path('door_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
-    <fieldset>
     {{ form_widget(edit_form) }}
     <div class="form-actions">
 	   <a href="{{ path('site_show',{'id':entity.site.id}) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche affaire</a>
 	   <button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer les modifications</button>
 	</div>
-</fieldset>
 </form>
 {% endblock %}
