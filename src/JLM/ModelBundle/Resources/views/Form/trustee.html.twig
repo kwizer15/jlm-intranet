@@ -1,0 +1,20 @@
+{% block jlm_modelbundle_trusteetype_widget %}
+<fieldset>
+	<legend>Informations principales</legend>
+	{{ form_row(form.name) }}
+	{{ form_row(form.address) }}
+	{{ form_row(form.phone) }}
+	{{ form_row(form.fax) }}
+	{{ form_row(form.email) }}
+</fieldset>
+<fieldset>
+	<legend>Facturation</legend>
+	{{ form_row(form.accountNumber) }}
+	{{ form_row(form.billingLabel) }}
+	{{ form_row(form.billingAddress) }}
+	{{ form_row(form.billingPhone) }}
+	{{ form_row(form.billingFax) }}
+	{{ form_row(form.billingEmail) }}
+</fieldset>
+{{ form_rest(form) }}
+{% endblock %}
