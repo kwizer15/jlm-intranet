@@ -5,7 +5,9 @@
     <thead>
         <tr>
             <th>Nom</th>
-            <th>Numéro de compte</th>
+            <th>Adresse</th>
+            <th>Téléphone</th>
+            <th>Fax</th>
             <th></th>
         </tr>
     </thead>
@@ -13,7 +15,9 @@
     {% for entity in entities %}
         <tr>
             <td><a href="{{ path('trustee_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
-            <td>{{ entity.accountNumber }}</td>
+            <td>{{ entity.address | nl2br }}</td>
+            <td>{{ entity.phone }}</td>
+            <td>{{ entity.fax }}</td>
             <td>
                  <a href="{{ path('trustee_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
                 <a href="{{ path('trustee_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i></a>
