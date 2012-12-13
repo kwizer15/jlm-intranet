@@ -11,10 +11,10 @@ class SiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('trustee','trustee_select',array('label'=>'Syndic'))
+        	->add('trustee','trustee_select',array('label'=>'Syndic','attr'=>array('class'=>'input-large')))
             ->add('address','address',array('label'=>'Adresse'))
             ->add('accession','choice',array('label'=>'Accession/Social','choices'=>array('1'=>'Accession','0'=>'Social'),'expanded'=>true,'multiple'=>false))
-            ->add('vat',null,array('label'=>'TVA'))    
+            ->add('vat',null,array('label'=>'TVA','attr'=>array('class'=>'input-small')))    
         ;
     }
 
