@@ -16,7 +16,7 @@ class TrusteeRepository extends EntityRepository
 	{
 		$qb = $this->createQueryBuilder('c')
 		->where('c.name LIKE :query')
-		->setParameter('query', $query.'%')
+		->setParameter('query', '%'.$query.'%')
 		;
 		return $qb->getQuery()->getResult();
 	}
