@@ -47,7 +47,7 @@ class SiteSelectType extends AbstractType
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'invalid_message' => 'The selected trustee does not exist',
+            'invalid_message' => 'The selected site does not exist',
         ));
     }
 }

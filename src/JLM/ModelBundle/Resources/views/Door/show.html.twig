@@ -9,8 +9,9 @@
 {% if entity.width and entity.height %}{{ entity.width }}x{{ entity.height }}mm</small>{% endif %}</h1>
 <div class="row-fluid">
 	<div class="span6">
-		<h4>{{ entity|nl2br}}</h4>
 		<h2><small>{{ entity.type }}</small></h2>
+		<h4>{{ entity|nl2br}}</h4>
+		
 			<strong>Accès :</strong>
 			<br>{{ entity.street|nl2br }}
 				

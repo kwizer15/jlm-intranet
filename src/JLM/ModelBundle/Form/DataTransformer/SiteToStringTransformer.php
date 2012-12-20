@@ -56,12 +56,12 @@ class SiteToStringTransformer implements DataTransformerInterface
 		
 		
 		if (null === $entity) {
+			
 			throw new TransformationFailedException(sprintf(
-					'A trustee with name "%s" does not exist!',
+					'A site with name "%s" does not exist!',
 					$string
 			));
 		}
-	
 		return $entity;
 	}
 }

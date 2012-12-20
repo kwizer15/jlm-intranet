@@ -41,9 +41,8 @@ class SiteRepository extends EntityRepository
 	
 	public function match($string)
 	{
-		if (preg_match('#^((.+\s)+)(.+) - (.+)$#',$string,$matches))
+		if (preg_match('#^([\w,\-\s]+)\s([0-9]{5}( CEDEX)?) - (.+)$#',$string,$matches))
 		{
-	
 			$qb = $this->createQueryBuilder('s')
 				->leftJoin('s.address','a')
 				->leftJoin('a.city','c')
@@ -51,7 +50,7 @@ class SiteRepository extends EntityRepository
 				->andwhere('c.zip = :queryzip')
 				->andWhere('c.name = :querycity')
 				->setParameter('querystreet', trim($matches[1]).'%')
-				->setParameter('queryzip', $matches[3])
+				->setParameter('queryzip', $matches[2])
 				->setParameter('querycity', $matches[4])
 				;
 				

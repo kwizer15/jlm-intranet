@@ -1,4 +1,10 @@
 {% block jlm_modelbundle_doortype_widget %}
+{% if form_errors(form) %}
+<div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Erreurs :</strong><br>{{ form_errors(form) }}
+</div>
+{% endif %}
 <fieldset>
 <legend>Intallation</legend>
 {{ form_row(form.site) }}
@@ -14,4 +20,5 @@
 {{ form_row(form.height) }}
 {{ form_row(form.transmitters) }}
 </fieldset>
+{{ form_rest(form) }}
 {% endblock %}

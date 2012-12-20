@@ -14,11 +14,12 @@ class TrusteeRepository extends EntityRepository
 {
 	public function search($query)
 	{
-		$qb = $this->createQueryBuilder('c')
-		->where('c.name LIKE :query')
-		->setParameter('query', '%'.$query.'%')
+		$qb = $this->createQueryBuilder('t')
+			->where('t.name LIKE :query')
+			->setParameter('query', '%'.$query.'%')
 		;
 		return $qb->getQuery()->getResult();
+		
 	}
 	
 	public function searchResult($query, $limit = 8)
