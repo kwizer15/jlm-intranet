@@ -108,6 +108,14 @@ class Door
     private $stopped = false;
 
     /**
+     * Porte à l'arrêt
+     * @var bool $stoped
+     *
+     * @ORM\Column(name="last_maintenance", type="date", nullable=true)
+     */
+    private $lastMaintenance;
+    
+    /**
      * Prélibellé de factration
      * @var string $billingPrelabel
      * 
@@ -412,6 +420,29 @@ class Door
     {
     	$this->stopped = (bool)$stopped;
     	return $this;
+    }
+    
+    /**
+     * Set lastMaintenance
+     *
+     * @param \DateTime $lastMaintenance
+     * @return Door
+     */
+    public function setLastMaintenance($lastMaintenance)
+    {
+    	$this->lastMaintenance = $lastMaintenance;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get lastMaintenance
+     *
+     * @return \DateTime
+     */
+    public function getLastMaintenance()
+    {
+    	return $this->lastMaintenance;
     }
     
     /**
