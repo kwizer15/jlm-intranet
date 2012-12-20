@@ -28,7 +28,7 @@ class ShiftingController extends Controller
 	public function listAction(Technician $technician)
 	{
 		$em = $this->getDoctrine()->getEntityManager();
-		$shiftings = $em->getRepository('JLMDailyBundle:ShiftTechnician')->findByTechnician($technician,array('creation'=>'desc'),10);
+		$shiftings = $em->getRepository('JLMDailyBundle:ShiftTechnician')->findByTechnician($technician,array('creation'=>'desc'));
 		return array(
 				'technician'=>$technician,
 				'shiftings' => $shiftings
@@ -44,6 +44,7 @@ class ShiftingController extends Controller
 	public function newAction(Shifting $shifting)
 	{
 		$entity = new ShiftTechnician();
+		$entity->setBegin(new \DateTime);
 		$form   = $this->createForm(new AddTechnicianType(), $entity);
 		
 		return array(

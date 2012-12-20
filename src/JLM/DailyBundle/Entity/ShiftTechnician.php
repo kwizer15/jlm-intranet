@@ -137,6 +137,18 @@ class ShiftTechnician
     {
         return $this->end;
     }
+    
+    /**
+     * Temps d'intervention
+     * @return DateInterval Nombre de minutes
+     */
+    public function getTime()
+    {
+    	if ($this->end === null)
+    		return null;
+    	return $this->end->diff($this->begin);
+    	
+    }
 
     /**
      * Set intervention

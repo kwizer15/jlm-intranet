@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\DailyBundle\Entity\InterventionPlanned
  *
  * @ORM\Table(name="shifting_interventions")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\InterventionRepository")
  */
 abstract class Intervention extends Shifting
 {
