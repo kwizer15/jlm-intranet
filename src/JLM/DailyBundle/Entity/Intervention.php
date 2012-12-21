@@ -74,12 +74,12 @@ abstract class Intervention extends Shifting
     private $closed = false;
     
     /**
-     * Facture
-     * @var JLM\OfficeBundle\Entity\Bill
+     * Action Bureau
+     * @var JLM\OfficeBundle\Entity\Task
      *
-     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Bill")
+     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Task", inversedBy="intervention")
      */
-    private $bill;
+    private $officeAction;
     
     /**
      * Set contactName
@@ -279,32 +279,24 @@ abstract class Intervention extends Shifting
     }
     
     /**
-     * Get Bill
+     * Get Office Action
      *
-     * @return JLM\OfficeBundle\Entity\Bill
+     * @return JLM\OfficeBundle\Entity\Task
      */
-    public function getBill()
+    public function getOfficeAction()
     {
-    	return $this->bill;
+    	return $this->officeAction;
     }
     
     /**
-     * Set Bill
+     * Set OfficeAction
      *
-     * @param JLM\OfficeBundle\Entity\Bill $bill
+     * @param JLM\OfficeBundle\Entity\Task $officeAction
      * @return Fixing
      */
-    public function setBill(\JLM\OfficeBundle\Entity\Bill $bill = null)
+    public function setOfficeAction(\JLM\OfficeBundle\Entity\Task $task = null)
     {
-    	$this->bill = $bill;
+    	$this->officeAction = $task;
     	return $this;
-    }
-    
-    /**
-     * Is Billed
-     */
-    public function isBilled()
-    {
-    	return
     }
 }
