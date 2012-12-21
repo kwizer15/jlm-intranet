@@ -1,0 +1,21 @@
+{% if entity.due.id == 1 %}
+	{% if entity.done.id == 1 %}
+		{% if entity.completeContract %}Non Facturé
+		{% else %}Facturer
+		{% endif %}
+	{% elseif entity.done.id == 2 %}
+		{% if entity.completeContract %}Non Facturé
+		{% else %}Facturer
+		{% endif %}
+	{% elseif entity.done.id == 3 %}
+	{% if entity.completeContract %}Commander matériel
+		{% else %}Devis
+		{% endif %}
+	{% endif %}
+{% elseif entity.due.id == 2 %}
+	{% if entity.done.id == 1 %}Facturer
+	{% elseif entity.done.id == 2 %}Facturer
+	{% elseif entity.done.id == 3 %}Devis
+	{% endif %}
+{% elseif entity.due.id == 3 or entity.due.id == 4 %}Contacter client pour voir problème
+{% endif %}

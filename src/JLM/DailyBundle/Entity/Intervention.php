@@ -165,6 +165,19 @@ abstract class Intervention extends Shifting
     {
         return $this->door;
     }
+    
+    /**
+     * Get contractType
+     * 
+     * @return bool
+     */
+    public function isCompleteContract()
+    {
+    	$contract = $this->getDoor()->getActualContract();
+    	if ($contract === null)
+    		return false;
+    	return $contract->getComplete();
+    }
 
     /**
      * Get report
