@@ -103,6 +103,6 @@ class Work extends Intervention
 	 */
 	public function getType()
 	{
-		return 'Travaux';
+		return 'work';
 	}
 }

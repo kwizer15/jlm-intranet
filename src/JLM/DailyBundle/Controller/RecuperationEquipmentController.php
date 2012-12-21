@@ -70,52 +70,5 @@ class RecuperationEquipmentController extends Controller
 		);
 	}
 	
-	/**
-	 * Displays a form to edit an existing ShiftTechnician entity.
-	 *
-	 * @Route("/{id}/edit", name="recuperationequipment_edit")
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function editAction(ShiftTechnician $entity)
-	{
-		$editForm = $this->createForm(new RecuperationEquipmentEditType(), $entity);
 	
-		return array(
-				'entity'      => $entity,
-				'form'   => $editForm->createView(),
-		);
-	}
-	
-	/**
-	 * Edits an existing InterventionPlanned entity.
-	 *
-	 * @Route("/{id}/update", name="recuperationequipment_update")
-	 * @Method("POST")
-	 * @Template("JLMDailyBundle:RecuperationEquipment:edit.html.twig")
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function updateAction(Request $request, ShiftTechnician $entity)
-	{
-		$em = $this->getDoctrine()->getManager();
-	
-		$editForm = $this->createForm(new RecuperationEquipmentEditType(), $entity);
-		$editForm->bind($request);
-	
-		if ($editForm->isValid()) {
-			$begin = $entity->getBegin();
-			$end = $entity->getEnd();
-			$end->setDate($begin->format('Y'),$begin->format('m'),$begin->format('d'));
-			$entity->setEnd($end);
-			$em->persist($entity);
-			$em->flush();
-	
-			return $this->redirect($this->generateUrl('shifting_list', array('id' => $entity->getTechnician()->getId())));
-		}
-	
-		return array(
-				'entity'      => $entity,
-				'form'   => $editForm->createView(),
-		);
-	}
 }

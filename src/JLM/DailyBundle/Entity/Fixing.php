@@ -12,7 +12,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Fixing extends Intervention
 {
-	
+	/**
+	 * Get Type
+	 * @see Shifting
+	 * @return string
+	 */
+	public function getType()
+	{
+		return 'fixing';
+	}
 	
 	/**
 	 * Cause du dépannage
@@ -101,15 +109,5 @@ class Fixing extends Intervention
 	public function getOrderNumber()
 	{
 		return $this->orderNumber;
-	}
-	
-	/**
-	 * Get Type
-	 * @see Shifting
-	 * @return string
-	 */
-	public function getType()
-	{
-		return 'Dépannage';
 	}
 }

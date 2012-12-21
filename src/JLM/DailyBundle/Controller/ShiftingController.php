@@ -9,8 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Technician;
 use JLM\DailyBundle\Entity\Shifting;
+use JLM\DailyBundle\Entity\Intervention;
 use JLM\DailyBundle\Entity\ShiftTechnician;
 use JLM\DailyBundle\Form\Type\AddTechnicianType;
+use JLM\DailyBundle\Form\Type\ShiftingEditType;
 
 /**
  * Fixing controller.
@@ -76,12 +78,64 @@ class ShiftingController extends Controller
 			$em->persist($entity);
 			$em->flush();
 	
-			return $this->redirect($this->generateUrl('daily'));
+			if ($shifting instanceof Intervention)
+				return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$shifting->getId(),'act'=>'show')));
+			else
+				return $this->redirect($this->generateUrl('shifting_list',array('id'=>$entity->getTechnician()->getId())));
 		}
 	
 		return array(
 				'entity' => $entity,
 				'form'   => $form->createView(),
+		);
+	}
+	
+	/**
+	 * Displays a form to edit an existing ShiftTechnician entity.
+	 *
+	 * @Route("/{id}/edit", name="shifting_edit")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function editAction(ShiftTechnician $entity)
+	{
+		$editForm = $this->createForm(new ShiftingEditType(), $entity);
+	
+		return array(
+				'entity'      => $entity,
+				'form'   => $editForm->createView(),
+		);
+	}
+	
+	/**
+	 * Edits an existing InterventionPlanned entity.
+	 *
+	 * @Route("/{id}/update", name="shifting_update")
+	 * @Method("POST")
+	 * @Template("JLMDailyBundle:Shifting:edit.html.twig")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function updateAction(Request $request, ShiftTechnician $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+	
+		$editForm = $this->createForm(new ShiftingEditType(), $entity);
+		$editForm->bind($request);
+	
+		if ($editForm->isValid()) {
+			$begin = $entity->getBegin();
+			$end = $entity->getEnd();
+			$end->setDate($begin->format('Y'),$begin->format('m'),$begin->format('d'));
+			$entity->setEnd($end);
+			$em->persist($entity);
+			$em->flush();
+	
+			return $this->redirect($this->generateUrl('shifting_list', array('id' => $entity->getTechnician()->getId())));
+		}
+	
+		return array(
+				'entity'      => $entity,
+				'form'   => $editForm->createView(),
 		);
 	}
 }

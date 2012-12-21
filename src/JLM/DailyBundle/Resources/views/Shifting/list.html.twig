@@ -19,12 +19,12 @@
 	{% for shifting in shiftings %}
 		<tr>
 			<td>{{ shifting.creation | date('d/m/Y H:i')}}</td>
-			<td>{{ shifting.shifting.type}}</td>
+			<td>{% include "JLMDailyBundle:Intervention:type.html.twig" with {'type' : shifting.shifting.type} %}</td>
 			<td>{% if shifting.begin %}{{ shifting.begin | date('d/m/Y H:i')}}{% endif %}</td>
 			<td>{{ shifting.shifting.place | nl2br}}</td>
 			<td>{{ shifting.shifting.reason | nl2br}}</td>
 			<td>{% if shifting.end %}{{ shifting.end | date('H:i')}}{% endif %}</td>
-			<td><a href="{{ path('recuperationequipment_edit',{'id':shifting.id}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a></td>
+			<td><a href="{{ path('shifting_edit',{'id':shifting.id}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a></td>
 		</tr>
 	{% endfor %}
 	</tbody>

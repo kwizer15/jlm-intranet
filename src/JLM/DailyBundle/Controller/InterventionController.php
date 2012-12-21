@@ -27,7 +27,8 @@ class InterventionController extends Controller
 	public function indexAction()
 	{
 		$em = $this->getDoctrine()->getManager();
-		$entities = $em->getRepository('JLMDailyBundle:Intervention')->getPrioritary();
+		$entities = $em->getRepository('JLMDailyBundle:Intervention')
+					   ->getPrioritary();
 		return array(
 				'entities'      => $entities,
 		);
@@ -36,14 +37,13 @@ class InterventionController extends Controller
 	/**
 	 * Finds and displays a Intervention entity.
 	 *
-	 * @Route("/{id}/show", name="intervention_show")
-	 * @Template()
+	 * @Route("/{id}/{act}", name="intervention_redirect")
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function showAction(Intervention $entity)
+	public function redirectAction(Intervention $entity, $act)
 	{
-		return array(
-				'entity'      => $entity,
-		);
+		if (in_array($act,array('show','edit','close')))
+			return $this->redirect($this->generateUrl($entity->getType() . '_' . $act,array('id'=>$entity->getId())));
+		throw $this->createNotFoundException('Page inexistante');
 	}
 }

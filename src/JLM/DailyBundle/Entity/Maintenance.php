@@ -19,6 +19,6 @@ class Maintenance extends Intervention
 	 */
 	public function getType()
 	{
-		return 'Entretien';
+		return 'maintenance';
 	}
 }

@@ -19,6 +19,6 @@ class Receiver extends Intervention
 	 */
 	public function getType()
 	{
-		return 'Récépteur';
+		return 'receiver';
 	}
 }

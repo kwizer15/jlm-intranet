@@ -3,37 +3,7 @@
 
 {% block content %}
 <h1>Dépannages <small>({{ entities|length }})</small></h1>
-<table class="table table-stripped">
-	<thead>
-		<tr>
-			<th>Date</th>
-			<th>Installation</th>
-			<th>Interlocuteur</th>
-			<th>Info</th>
-			<th>Techniciens</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for entity in entities %}
-		<tr>
-			<td>{{ entity.creation|date('d/m/Y') }}<br>{{ entity.creation|date('H:i') }}</td>
-			<td><a href="{{ path('fixing_show',{'id':entity.id}) }}">{{ entity.door | nl2br }}</a></td>
-			<td>{{ entity.contactName }}<br>{{ entity.contactPhones | nl2br }}</td>
-			<td>{% include "JLMDailyBundle:Default:priority.html.twig" with {'priority' : entity.priority} %}<br><strong>{{ entity.door.type }}</strong><br>{{ entity.reason }}</td>
-			<td>
-				{% for shift in entity.shiftTechnicians %}
-				<a href="{{ path('recuperationequipment_edit',{'id':shift.id}) }}"><strong>{{ shift.technician }}</strong> {{ shift.begin | date('d/m/Y')}}</a><br>
-				{% endfor %}
-				<a href="{{ path('shifting_new',{'id':entity.id}) }}" class="btn"><i class="icon-plus-sign"></i> Ajouter</a>
-			</td>
-			<td>
-				<a href="{{ path('fixing_show',{'id':entity.id}) }}" class="btn"><i class="icon-eye-open"></i></a>
-				<a href="{{ path('fixing_edit',{'id':entity.id}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a>
-			</td>
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
+{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : entities} %}
+
 
 {% endblock %}

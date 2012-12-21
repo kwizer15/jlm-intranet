@@ -57,6 +57,7 @@ abstract class Shifting
 	 * @var ArrayCollection $shiftTechnicians
 	 * 
 	 * @ORM\OneToMany(targetEntity="ShiftTechnician", mappedBy="shifting")
+	 * @ORM\OrderBy({"begin" = "ASC"})
 	 */
     private $shiftTechnicians;
     
