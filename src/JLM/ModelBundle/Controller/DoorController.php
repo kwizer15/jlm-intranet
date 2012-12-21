@@ -95,13 +95,12 @@ class DoorController extends Controller
         $form    = $this->createForm(new DoorType(), $entity);
         $form->bindRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
-
             return $this->redirect($this->generateUrl('door_show', array('id' => $entity->getId())));
-            
         }
 
         return array(

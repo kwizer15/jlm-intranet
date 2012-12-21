@@ -11,6 +11,7 @@ RecuperationEquipmentEditType
 	Type date-time : datepicker + deroulant heure/minutes
 	ajouter les class a timetype
 	
+Creation des entretiens automatique
 	
 
 
