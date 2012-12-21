@@ -359,6 +359,22 @@ class Door
     }
     
     /**
+     * Get actual(s) contracts
+     * 
+     * @return JLM\ModelBundle\Entity\Contract
+     */
+    public function getActualContract()
+    {
+    	$today = new \DateTime;
+    	foreach ($this->contracts as $contract)
+    	{
+    		if ($contract->getBegin() < $today && $contract->getEnd() == null)
+    			return $contract;
+    	}
+    	return null;
+    }
+    
+    /**
      * Add transmitters
      *
      * @param JLM\ModelBundle\Entity\Product $transmitters
