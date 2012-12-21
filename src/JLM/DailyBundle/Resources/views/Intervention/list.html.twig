@@ -29,9 +29,13 @@
 				<a href="{{ path('shifting_new',{'id':entity.id}) }}" class="btn"><i class="icon-plus-sign"></i> Ajouter</a>
 			</td>
 			<td>
+			{% if entity.closed %}
+				Cloturée
+			{% else %}
 				<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}" class="btn"><i class="icon-eye-open"></i></a>
 				<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'edit'}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a>
 				<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'close'}) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i></a>
+			{% endif %}
 			</td>
 		</tr>
 		{% endfor %}

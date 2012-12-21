@@ -255,6 +255,5 @@ abstract class Intervention extends Shifting
     public function getComments()
     {
     	return $this->comments;
-    }
-   
+    }  
 }

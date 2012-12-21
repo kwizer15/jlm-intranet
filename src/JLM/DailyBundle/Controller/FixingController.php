@@ -11,6 +11,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Fixing;
 use JLM\DailyBundle\Form\Type\FixingType;
 use JLM\DailyBundle\Form\Type\FixingEditType;
+use JLM\DailyBundle\Form\Type\FixingCloseType;
 use JLM\ModelBundle\Entity\Door;
 
 /**
@@ -121,7 +122,7 @@ class FixingController extends Controller
 	}
 	
 	/**
-	 * Edits an existing Fixng entity.
+	 * Edits an existing Fixing entity.
 	 *
 	 * @Route("/{id}/update", name="fixing_update")
 	 * @Method("POST")
@@ -145,6 +146,52 @@ class FixingController extends Controller
 		return array(
 				'entity'      => $entity,
 				'form'   => $editForm->createView(),
+		);
+	}
+	
+	/**
+	 * Close an existing Fixing entity.
+	 *
+	 * @Route("/{id}/close", name="fixing_close")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function closeAction(Fixing $entity)
+	{
+		$form = $this->createForm(new FixingCloseType(), $entity);
+	
+		return array(
+				'entity'      => $entity,
+				'form'   => $form->createView(),
+		);
+	}
+	
+	/**
+	 * Close an existing Fixing entity.
+	 *
+	 * @Route("/{id}/closeupdate", name="fixing_closeupdate")
+	 * @Method("POST")
+	 * @Template("JLMDailyBundle:Fixing:close.html.twig")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function closeupdateAction(Request $request, Fixing $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+			
+		$form = $this->createForm(new FixingCloseType(), $entity);
+		$form->bind($request);
+	
+		if ($form->isValid())
+		{
+			$entity->setClosed();
+			$em->persist($entity);
+			$em->flush();
+			return $this->redirect($this->generateUrl('fixing_show', array('id' => $entity->getId())));
+		}
+	
+		return array(
+				'entity'      => $entity,
+				'form'   => $form->createView(),
 		);
 	}
 }

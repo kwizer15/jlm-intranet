@@ -2,19 +2,21 @@
 {% extends "JLMDailyBundle::layout.html.twig" %}
 
 {% block content %}
+
 {% include "JLMDailyBundle:Intervention:show.html.twig" with {'entity' : entity} %}
 
-	 {% if false %}
+{% if entity.closed %}
 	 <h4>Rapport</h4>
 	 <table class="table">
 	 <tbody>
-	 <tr><th>Nature</th><td>Usure</td></tr>
-	 <tr class="error"><th>Action menée</th><td>Mise à l'arrêt</td></tr>
-	 <tr><th>Rapport</th><td>Rigel 4 à remplacer</td></tr>
-	 <tr><th>Action bureau</th><td>Devis à faire</td></tr>
+	 <tr><th>Cause</th><td>{{ entity.due }}</td></tr>
+	 <tr><th>Action menée</th><td>{{ entity.done }}</td></tr>
+	 <tr><th>Rapport</th><td>{{ entity.report }}</td></tr>
+	 <tr><th>Action bureau</th><td>{{ entity.actionOffice }}</td></tr>
 	 </tbody>
 	 </table>
-	 {% endif %}
+{% endif %}
+
 <div class="form-actions">
     <a href="{{ path('fixing_list') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
     <a href="{{ path('fixing_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a> 
