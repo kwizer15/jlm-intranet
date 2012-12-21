@@ -54,7 +54,7 @@ class Contract
     /**
      * @var Door $door
      * 
-     * @ORM\ManyToOne(targetEntity="Door")
+     * @ORM\ManyToOne(targetEntity="Door", mappedBy="contracts")
      */
     private $door;
     
