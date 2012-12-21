@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\OfficeBundle\Entity\Task
  *
  * @ORM\Table(name="task")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\TaskRepository")
  */
 class Task
 {
@@ -21,6 +21,13 @@ class Task
 	 */
 	private $id;
 	
+	/**
+	 * Date de création
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="open",type="datetime")
+	 */
+	private $open;
 	
 	/**
 	 * Intervention source
@@ -47,12 +54,12 @@ class Task
 	private $url;
 	
 	/**
-	 * Tache terminée
-	 * @var bool
+	 * Date de création
+	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="closed",type="boolean")
+	 * @ORM\Column(name="close",type="datetime")
 	 */
-	private $closed = false;
+	private $close;
 	
 	
 

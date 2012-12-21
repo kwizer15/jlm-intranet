@@ -10,6 +10,9 @@
 		    <li><form  action="{{ path('quote_search') }}" method="post" class="form-search">
 					<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher...">
 			    </form></li>
+			    <li class="nav-header">Tâches</li>
+			    <li><a href="{{ path('task') }}"><i class="icon-list"></i> Liste des taches</a></li>
+			    <li class="divider"></li>
 			    <li class="nav-header">Actions</li>
 		    	<li><a href="{{ path('quote') }}"><i class="icon-list"></i> Liste des devis</a></li>
 		    	<li><a href="{{ path('quote_new') }}"><i class="icon-plus-sign"></i> Nouveau devis</a></li>
