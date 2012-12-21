@@ -54,7 +54,7 @@ class Contract
     /**
      * @var Door $door
      * 
-     * @ORM\ManyToOne(targetEntity="Door", mappedBy="contracts")
+     * @ORM\ManyToOne(targetEntity="Door", inversedBy="contracts")
      */
     private $door;
     

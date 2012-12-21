@@ -127,7 +127,7 @@ class Door
      * Contrats
      * @var Contract $contracts
      * 
-     * @ORM\OneToMany(targetEntity="Contract",inversedBy="door")
+     * @ORM\OneToMany(targetEntity="Contract",mappedBy="door")
      */
     private $contracts;
     
@@ -390,8 +390,6 @@ class Door
     {
         return $this->transmitters;
     }
-    
-    $this->transmitters = new ArrayCollection;
     
     /**
      * Set largeur
