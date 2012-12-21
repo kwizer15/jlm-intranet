@@ -74,6 +74,14 @@ abstract class Intervention extends Shifting
     private $closed = false;
     
     /**
+     * Facture
+     * @var JLM\OfficeBundle\Entity\Bill
+     *
+     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Bill")
+     */
+    private $bill;
+    
+    /**
      * Set contactName
      *
      * @param string $contactName
@@ -268,5 +276,35 @@ abstract class Intervention extends Shifting
     public function getComments()
     {
     	return $this->comments;
-    }  
+    }
+    
+    /**
+     * Get Bill
+     *
+     * @return JLM\OfficeBundle\Entity\Bill
+     */
+    public function getBill()
+    {
+    	return $this->bill;
+    }
+    
+    /**
+     * Set Bill
+     *
+     * @param JLM\OfficeBundle\Entity\Bill $bill
+     * @return Fixing
+     */
+    public function setBill(\JLM\OfficeBundle\Entity\Bill $bill = null)
+    {
+    	$this->bill = $bill;
+    	return $this;
+    }
+    
+    /**
+     * Is Billed
+     */
+    public function isBilled()
+    {
+    	return
+    }
 }
