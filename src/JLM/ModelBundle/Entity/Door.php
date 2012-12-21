@@ -124,12 +124,21 @@ class Door
     private $billingPrelabel;
     
     /**
+     * Contrats
+     * @var Contract $contracts
+     * 
+     * @ORM\OneToMany(targetEntity="Contract",inversedBy="door")
+     */
+    private $contracts;
+    
+    /**
      * Constructor
      */
     public function __construct()
     {
     	$this->parts = new ArrayCollection;
     	$this->transmitters = new ArrayCollection;
+    	$this->contracts = new ArrayCollection;
     }
 
 
@@ -317,6 +326,39 @@ class Door
     }
 
     /**
+     * Add contract
+     *
+     * @param JLM\ModelBundle\Entity\Contract $contract
+     * @return Door
+     */
+    public function addContract(\JLM\ModelBundle\Entity\Contract $contract)
+    {
+    	$this->contracts[] = $contract;
+    
+    	return $this;
+    }
+    
+    /**
+     * Remove contract
+     *
+     * @param JLM\ModelBundle\Entity\Contract $contract
+     */
+    public function removeContract(\JLM\ModelBundle\Entity\Contract $contract)
+    {
+    	$this->contracts->removeElement($contract);
+    }
+    
+    /**
+     * Get contracts
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getContracts()
+    {
+    	return $this->contracts;
+    }
+    
+    /**
      * Add transmitters
      *
      * @param JLM\ModelBundle\Entity\Product $transmitters
@@ -348,6 +390,8 @@ class Door
     {
         return $this->transmitters;
     }
+    
+    $this->transmitters = new ArrayCollection;
     
     /**
      * Set largeur
