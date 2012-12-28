@@ -12,12 +12,17 @@
 	 <tr><th>Cause</th><td>{{ entity.due }}</td></tr>
 	 <tr><th>Action menée</th><td>{{ entity.done }}</td></tr>
 	 <tr><th>Rapport</th><td>{{ entity.report }}</td></tr>
-	 <tr><th>Action bureau</th><td>{% include "JLMDailyBundle:Fixing:officeaction.html.twig" with {'entity' : entity} %}</td></tr>
+	 <tr><th>Action bureau</th><td>
+	{% if entity.officeAction %}{{ entity.officeAction.type }}
+	{% else %}{% include "JLMDailyBundle:Fixing:officeaction.html.twig" with {'entity' : entity} %}
+	{% endif %}
+	 </td></tr>
 	 </tbody>
 	 </table>
 {% endif %}
+
 <div class="form-actions">
     <a href="{{ path('fixing_list') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
-    <a href="{{ path('fixing_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a> 
+    {% if not entity.closed %}<a href="{{ path('fixing_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>{% endif %} 
 </div>
 {% endblock %}

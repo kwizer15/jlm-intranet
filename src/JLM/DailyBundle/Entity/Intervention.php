@@ -77,7 +77,7 @@ abstract class Intervention extends Shifting
      * Action Bureau
      * @var JLM\OfficeBundle\Entity\Task
      *
-     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Task", inversedBy="intervention")
+     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Task")
      */
     private $officeAction;
     

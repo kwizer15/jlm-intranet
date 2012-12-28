@@ -12,7 +12,7 @@ class InterventionRepository extends EntityRepository
 	public function getPrioritary()
 	{
 		$qb = $this->createQueryBuilder('i')
-			->where('i.closed = false')
+			->where('i.officeAction IS NULL')
 			->orderBy('i.priority','desc')
 			->orderBy('i.creation','desc');
 		return $qb->getQuery()->getResult();
@@ -22,7 +22,7 @@ class InterventionRepository extends EntityRepository
 	{
 		$qb = $this->createQueryBuilder('i')
 			->select('COUNT(f)')
-			->where('i.closed = false');
+			->where('i.officeAction IS NULL');
 		return (int) $qb->getQuery()
 			->getSingleScalarResult();
 	}

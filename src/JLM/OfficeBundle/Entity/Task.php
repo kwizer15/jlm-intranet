@@ -45,7 +45,7 @@ class Task
 	
 	/**
 	 * Type de tache
-	 * @var JLM\ModelBundle\Entity\Door
+	 * @var JLM\OfficeBundle\Entity\TaskType
 	 * @ORM\ManyToOne(targetEntity="TaskType")
 	 */
 	private $type;
@@ -78,9 +78,9 @@ class Task
 	 * Date de création
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="close",type="datetime")
+	 * @ORM\Column(name="close",type="datetime",nullable=true)
 	 */
-	private $close = false;
+	private $close;
 	
 	/**
 	 * Constructor
@@ -100,6 +100,15 @@ class Task
         return $this->id;
     }
 
+    /**
+     * Get open
+     * @return DateTime
+     */
+    public function getOpen()
+    {
+    	return $this->open;
+    }
+    
     /**
      * Set todo
      *
@@ -172,10 +181,10 @@ class Task
     /**
      * Set closed
      *
-     * @param boolean $close
+     * @param DateTime $close
      * @return Task
      */
-    public function setClose($closed = true)
+    public function setClose(\DateTime $closed = null)
     {
         $this->closed = $closed;
     
@@ -185,21 +194,11 @@ class Task
     /**
      * Get closed
      *
-     * @return boolean 
+     * @return DateTime
      */
     public function getClose()
     {
         return $this->close;
-    }
-    
-    /**
-     * Is closed
-     *
-     * @return boolean
-     */
-    public function isClose()
-    {
-    	return $this->getClose();
     }
     
     /**

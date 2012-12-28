@@ -42,7 +42,7 @@ class InterventionController extends Controller
 	 * @Route("/{id}/{act}", name="intervention_redirect")
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function redirectAction(Intervention $entity, $act)
+	public function redirectAction(Intervention $entity, $act) 
 	{
 		if (in_array($act,array('show','edit','close')))
 			return $this->redirect($this->generateUrl($entity->getType() . '_' . $act,array('id'=>$entity->getId())));
@@ -52,7 +52,7 @@ class InterventionController extends Controller
 	/**
 	 * Close an existing Fixing entity.
 	 *
-	 * @Route("/{id}/generatetask/{task}", name="fixing_generatetask")
+	 * @Route("/{id}/generatetask/{task}", name="intervention_generatetask")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function generatetaskAction(Intervention $entity, TaskType $tasktype)
@@ -61,7 +61,7 @@ class InterventionController extends Controller
 		if ($entity->getDoor() !== null)
 			$task->setDoor($entity->getDoor());
 		$task->setPlace($entity->getPlace());
-		$task->setUrlSource($this->generateUrl('intervention_show', array('id' => $entity->getId())));
+		$task->setUrlSource($this->generateUrl('intervention_redirect', array('id' => $entity->getId(),'act'=>'show')));
 		$task->setType($tasktype);
 		$task->setTodo($entity->getReport());
 		switch ($tasktype->getId())
@@ -95,5 +95,7 @@ class InterventionController extends Controller
 		$em->persist($task);
 		$em->persist($entity);
 		$em->flush();
+		
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 }

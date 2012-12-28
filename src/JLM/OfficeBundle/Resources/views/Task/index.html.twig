@@ -7,20 +7,20 @@
     <thead>
         <tr>
             <th>Date</th>
-            <th>Intervention</th>
-            <th>Rapport</th>
+            <th>Lieu</th>
             <th>A faire</th>
+            <th>Details</th>
 			<th></th>
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
     	<tr>
-            <th>{{ entity.open | date('d/m/Y') }}</th>
-            <th>{{ entity.intervention.place }}</th>
-            <th>{{ entity.intervention.report }}</th>
-            <th><a href="{{ entity.url }}">{{ entity.todo }}</a></th>
-			<th><a href="{{ path('task_close',{'id':entity.id}) }}" class="btn btn-primary">Fait</a></th>
+            <td>{{ entity.open | date('d/m/Y') }}</td>
+            <td><a href="{{ entity.urlSource }}">{{ entity.place | nl2br }}</td>
+            <td><strong>{% if entity.urlAction %}<a href="{{ entity.urlAction }}">{{ entity.type }}</a>{% else %}{{ entity.type }}{% endif %}</strong></td>
+            <td>{{ entity.todo }}</td>
+			<td><a href="{{ path('task_close',{'id':entity.id}) }}" class="btn btn-primary">Fait</a></td>
         </tr>
     {% endfor %}
     </tbody>

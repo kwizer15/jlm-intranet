@@ -12,7 +12,7 @@ class FixingRepository extends EntityRepository
 	public function getPrioritary()
 	{
 		$qb = $this->createQueryBuilder('f')
-			->where('f.closed = 0')
+			->where('f.officeAction IS NULL')
 			->orderBy('f.priority','desc')
 			->orderBy('f.creation','desc');
 		return $qb->getQuery()->getResult();
@@ -22,7 +22,7 @@ class FixingRepository extends EntityRepository
 	{
 		$qb = $this->createQueryBuilder('f')
 			->select('COUNT(f)')
-			->where('f.closed = false');
+			->where('f.officeAction IS NULL');
 		return (int) $qb->getQuery()
 			->getSingleScalarResult();
 	}

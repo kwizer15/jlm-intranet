@@ -1,21 +1,24 @@
 {% if entity.due.id == 1 %}
-	{% if entity.done.id == 1 %}
-		{% if entity.completeContract %}Non Facturé
-		{% else %}Facturer
-		{% endif %}
-	{% elseif entity.done.id == 2 %}
-		{% if entity.completeContract %}Non Facturé
-		{% else %}Facturer
+	{% if entity.done.id == 1 or entity.done.id == 2 %}
+		{% if entity.completeContract %}
+			<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'task' : 5 }) }}" class="btn btn-primary">Ne rien faire</a>
+		{% else %}
+			<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'task' : 1 }) }}" class="btn btn-primary">Facturer</a>
+			<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'task' : 5 }) }}" class="btn">Ne rien faire</a>
 		{% endif %}
 	{% elseif entity.done.id == 3 %}
-	{% if entity.completeContract %}Commander matériel
-		{% else %}Devis
+		{% if entity.completeContract %}
+			<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'task' : 3 }) }}" class="btn btn-primary">Commander matériel</a>
+		{% else %}
+			<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'task' : 2 }) }}" class="btn btn-primary">Devis</a>
 		{% endif %}
 	{% endif %}
 {% elseif entity.due.id == 2 %}
-	{% if entity.done.id == 1 %}Facturer
-	{% elseif entity.done.id == 2 %}Facturer
-	{% elseif entity.done.id == 3 %}Devis
+	{% if entity.done.id == 1  or entity.done.id == 2 %}
+		<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'task' : 1 }) }}" class="btn btn-primary">Facturer</a>
+	{% elseif entity.done.id == 3 %}
+		<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'task' : 2 }) }}" class="btn btn-primary">Devis</a>
 	{% endif %}
-{% elseif entity.due.id == 3 or entity.due.id == 4 %}Contacter client pour voir problème
+{% elseif entity.due.id == 3 or entity.due.id == 4 %}
+	<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'task' : 4 }) }}" class="btn btn-primary">Contacter le client</a>
 {% endif %}
