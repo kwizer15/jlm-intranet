@@ -9,7 +9,7 @@ use JLM\ModelBundle\Entity\StringModel;
  * JLM\DailyBundle\Entity\FixingDone
  *
  * @ORM\Table(name="fixing_dones")
- * @ORM\Entity
+ * @ORM\Entity(readOnly=true)
  */
 class FixingDone extends StringModel
 {

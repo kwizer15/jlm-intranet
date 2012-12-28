@@ -1,17 +1,16 @@
 <?php
 
-namespace JLM\DailyBundle\Entity;
+namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JLM\ModelBundle\Entity\StringModel;
 
 /**
- * JLM\DailyBundle\Entity\WorkCategory
+ * JLM\OfficeBundle\Entity\IntroModel
  *
- * @ORM\Table(name="work_categories")
- * @ORM\Entity(readOnly=true)
+ * @ORM\Table(name="tasktype")
+ * @ORM\Entity(readOnly=true,repositoryClass="JLM\OfficeBundle\Entity\TextModelRepository")
  */
-class WorkCategory extends StringModel
+class TaskType extends TextModel
 {
     /**
      * @var integer $id

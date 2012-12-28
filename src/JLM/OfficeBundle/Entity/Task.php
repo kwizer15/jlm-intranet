@@ -30,12 +30,18 @@ class Task
 	private $open;
 	
 	/**
-	 * Intervention source
-	 * @var Intervention
-	 * 
-	 * @ORM\OneToOne(targetEntity="JLM\DailyBundle\Entity\Intervention", mappedBy="officeAction")
+	 * Porte (lien)
+	 * @var JLM\ModelBundle\Entity\Door
+	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Door")
 	 */
-	private $intervention;
+	private $door;
+	
+	/**
+	 * Type de tache
+	 * @var JLM\ModelBundle\Entity\Door
+	 * @ORM\ManyToOne(targetEntity="TaskType")
+	 */
+	private $type;
 	
 	/**
 	 * A faire
@@ -46,12 +52,20 @@ class Task
 	private $todo;
 	
 	/**
-	 * Raccourci vers l'action à effectuer
+	 * Raccourci vers l'origine de la tache
 	 * @var string
 	 * 
-	 * @ORM\Column(name="url",type="text")
+	 * @ORM\Column(name="url_source",type="text",nullable=true)
 	 */
-	private $url;
+	private $urlSource;
+	
+	/**
+	 * Raccourci vers l'action à effectuer
+	 * @var string
+	 *
+	 * @ORM\Column(name="url_action",type="text",nullable=true)
+	 */
+	private $urlAction;
 	
 	/**
 	 * Date de création
@@ -61,7 +75,13 @@ class Task
 	 */
 	private $close;
 	
-	
+	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+		$this->open = new \DateTime;
+	}
 
     /**
      * Get id
@@ -102,9 +122,9 @@ class Task
      * @param string $url
      * @return Task
      */
-    public function setUrl($url)
+    public function setUrlSource($url)
     {
-        $this->url = $url;
+        $this->urlSource = $url;
     
         return $this;
     }
@@ -114,18 +134,41 @@ class Task
      *
      * @return string 
      */
-    public function getUrl()
+    public function getUrlSource()
     {
-        return $this->url;
+        return $this->urlSource;
+    }
+    
+    /**
+     * Set url
+     *
+     * @param string $url
+     * @return Task
+     */
+    public function setUrlAction($url)
+    {
+    	$this->urlAction = $url;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrlAction()
+    {
+    	return $this->urlAction;
     }
 
     /**
      * Set closed
      *
-     * @param boolean $closed
+     * @param boolean $close
      * @return Task
      */
-    public function setClosed($closed)
+    public function setClose($closed = true)
     {
         $this->closed = $closed;
     
@@ -137,31 +180,64 @@ class Task
      *
      * @return boolean 
      */
-    public function getClosed()
+    public function getClose()
     {
-        return $this->closed;
+        return $this->close;
     }
-
+    
     /**
-     * Set intervention
+     * Is closed
      *
-     * @param JLM\DailyBundle\Entity\Intervention $intervention
+     * @return boolean
+     */
+    public function isClose()
+    {
+    	return $this->getClose();
+    }
+    
+    /**
+     * Set door
+     *
+     * @param JLM\ModelBundle\Entity\Door $door
      * @return Task
      */
-    public function setIntervention(\JLM\DailyBundle\Entity\Intervention $intervention = null)
+    public function setDoor(\JLM\ModelBundle\Entity\Door $door = null)
     {
-        $this->intervention = $intervention;
+    	$this->door = $door;
     
-        return $this;
+    	return $this;
     }
-
+    
     /**
-     * Get intervention
+     * Get door
      *
-     * @return JLM\DailyBundle\Entity\Intervention 
+     * @return JLM\ModelBundle\Entity\Door
      */
-    public function getIntervention()
+    public function getDoor()
     {
-        return $this->intervention;
+    	return $this->door;
+    }
+    
+    /**
+     * Set type
+     *
+     * @param JLM\OfficeBundle\Entity\TaskType $type
+     * @return Task
+     */
+    public function setType(TaskType $type = null)
+    {
+    	$this->type = $type;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get type
+     *
+     * @return JLM\OfficeBundle\Entity\TaskType
+     */
+    public function getType()
+    {
+    	return $this->type;
     }
 }

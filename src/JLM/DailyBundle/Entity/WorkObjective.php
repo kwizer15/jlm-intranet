@@ -9,7 +9,7 @@ use JLM\ModelBundle\Entity\StringModel;
  * JLM\DailyBundle\Entity\WorkObjective
  *
  * @ORM\Table(name="work_objectives")
- * @ORM\Entity
+ * @ORM\Entity(readOnly=true)
  */
 class WorkObjective extends StringModel
 {
