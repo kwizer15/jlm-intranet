@@ -31,7 +31,7 @@ class TaskController extends Controller
 		$limit = 10;
 		$em = $this->getDoctrine()->getEntityManager();
 		 
-		$nb = $em->getRepository('JLMOfficeBundle:Task')->getTotal();
+		$nb = $em->getRepository('JLMOfficeBundle:Task')->getCountOpened();
 		$nbPages = ceil($nb/$limit);
 		$nbPages = ($nbPages < 1) ? 1 : $nbPages;
 		$offset = ($page-1) * $limit;
@@ -41,7 +41,7 @@ class TaskController extends Controller
 		}
 	
 		$entities = $em->getRepository('JLMOfficeBundle:Task')->findBy(
-				array(),
+				array('close'=>null),
 				array('open'=>'asc'),
 				$limit,
 				$offset
@@ -61,7 +61,7 @@ class TaskController extends Controller
 	 */
 	public function closeAction(Task $entity)
 	{
-		$em->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getEntityManager();
 		$entity->setClose(new \DateTime);
 		$em->persist($entity);
 		$em->flush();

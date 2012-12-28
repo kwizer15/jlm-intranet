@@ -179,14 +179,14 @@ class Task
     }
 
     /**
-     * Set closed
+     * Set close
      *
      * @param DateTime $close
      * @return Task
      */
-    public function setClose(\DateTime $closed = null)
+    public function setClose(\DateTime $close = null)
     {
-        $this->closed = $closed;
+        $this->close = $close;
     
         return $this;
     }
