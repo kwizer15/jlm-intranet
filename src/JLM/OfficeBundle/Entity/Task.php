@@ -37,6 +37,13 @@ class Task
 	private $door;
 	
 	/**
+	 * Lieu
+	 * @var JLM\ModelBundle\Entity\Door
+	 * @ORM\Column(name="place",type="text")
+	 */
+	private $place;
+	
+	/**
 	 * Type de tache
 	 * @var JLM\ModelBundle\Entity\Door
 	 * @ORM\ManyToOne(targetEntity="TaskType")
@@ -73,7 +80,7 @@ class Task
 	 *
 	 * @ORM\Column(name="close",type="datetime")
 	 */
-	private $close;
+	private $close = false;
 	
 	/**
 	 * Constructor
@@ -239,5 +246,28 @@ class Task
     public function getType()
     {
     	return $this->type;
+    }
+    
+    /**
+     * Set place
+     *
+     * @param string $place
+     * @return Shifting
+     */
+    public function setPlace($place)
+    {
+    	$this->place = $place;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get place
+     *
+     * @return string
+     */
+    public function getPlace()
+    {
+    	return $this->place;
     }
 }
