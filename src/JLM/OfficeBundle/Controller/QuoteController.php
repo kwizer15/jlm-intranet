@@ -14,6 +14,8 @@ use JLM\ModelBundle\Form\Type\MailType;
 use JLM\OfficeBundle\Entity\Quote;
 use JLM\OfficeBundle\Form\Type\QuoteType;
 use JLM\OfficeBundle\Entity\QuoteLine;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use FOS\UserBundle\Model\UserInterface;
 
 
 
@@ -102,8 +104,13 @@ class QuoteController extends Controller
      */
     public function newAction()
     {
+    	$user = $this->container->get('security.context')->getToken()->getUser();
+    	if (!is_object($user) || !$user instanceof UserInterface) {
+    		throw new AccessDeniedException('This user does not have access to this section.');
+    	}
         $entity = new Quote();
         $entity->setCreation(new \DateTime);
+		$entity->setFollowerCp($user->getPerson()->getName());
       //  $entity->addLine(new QuoteLine);
         $em = $this->getDoctrine()->getEntityManager();
         $vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
