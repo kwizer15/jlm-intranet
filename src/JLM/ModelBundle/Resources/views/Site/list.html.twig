@@ -1,0 +1,27 @@
+{% if sites | length %}
+<h2>Affaires</h2>
+<table class="table table-stripped">
+<thead>
+<tr>
+<th>Nb portes</th>
+<th>Adresse</th>
+<th>Code postal</th>
+<th>Ville</th>
+<th>TVA</th>
+</tr>
+</thead>
+<tbody>
+{% for site in sites %}
+<tr>
+<td>{{ site.doors|length }}</td>
+<td><a href="{{ path('site_show',{'id':site.id}) }}">{{ site.address.street |nl2br }}</a></td>
+<td>{{ site.address.city.zip }}</td>
+<td>{{ site.address.city.name }}</td>
+<td>{{ site.vat }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% else %}
+<h2><small>Aucune affaire</small></h2>
+{% endif %}

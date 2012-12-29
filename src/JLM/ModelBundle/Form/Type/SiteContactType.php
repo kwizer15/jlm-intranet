@@ -14,7 +14,7 @@ class SiteContactType extends AbstractType
         	->add('site','site_select',array('label'=>'Affaire','attr'=>array('class'=>'input-xxlarge')))
         	->add('role',null,array('label'=>'Rôle du contact','required'=>false))
         	->add('person',new PersonType,array('label'=>'Contact'))
-        	->add('professionnalPhone',null,array('label'=>'Téléphone pro','required'=>false))  
+        //	->add('professionnalPhone',null,array('label'=>'Téléphone pro','required'=>false))  
         ;
     }
 

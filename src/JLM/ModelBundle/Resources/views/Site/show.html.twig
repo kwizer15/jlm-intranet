@@ -1,83 +1,58 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
 {% block content %}
-<h1>Affaire {{ entity.trustee }}</h1>
+<h1>Fiche affaire</h1>
 <div class="row-fluid">
-<div class="span4">
-<address>
-<strong>Adresse affaire</strong>
-<br>{{ entity|nl2br }}
-</address>
+	<div class="span4">
+		<h4>{{ entity|nl2br }}</h4>
+	</div>
+	<div class="span4">
+		{% if entity.accession %}Accession
+		{% else %}Social
+		{% endif %}
+		<br>TVA : {{ entity.vat }}
+	</div>
+	<div class="span4 well">
+		<address>
+			<strong>Adresse de facturation</strong>
+			 <br>{{ entity.trustee }}
+			{% if entity.trustee.billingaddress %}
+			<br>{{ entity.trustee.billingaddress|nl2br }}
+			{% else %}
+			<br>{{ entity.trustee.address|nl2br }}
+			{% endif %}
+		</address>
+	</div>
 </div>
-<div class="span4">
-{% if entity.accession %}
-Accession{% else %}Social
-{% endif %}
-<br>TVA : {{ entity.vat }}
-</div>
-<div class="span4 well">
-<address>
-<strong>Adresse de facturation</strong>
-{% if entity.trustee.billingaddress %}
-<br>{{ entity.trustee.billingaddress|nl2br }}
-{% else %}
-<br>{{ entity.trustee.address|nl2br }}
-{% endif %}
-</address>
-</div>
-</div>
-{% if entity.doors|length > 0 %}
-<h2>Portes</h2>
-<table class="table table-striped">
-<thead>
-<tr>
-<th>Localisation</th>
-<th>Adresse porte</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-{% for door in entity.doors %}
-<tr>
-<td><a href="{{ path('door_show',{'id': door.id}) }}">{{ door.location }}</a></td>
-<td>{{ door.street }}</td>
-<td>{{ door.type }}</td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
-{% else %}
-<h2><small>Aucune porte</small></h2>
-{% endif %}
-	<a href="{{ path('door_new_id', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Nouvelle porte</a>
+{% include 'JLMModelBundle:Door:list.html.twig' with {'doors': entity.doors } %}
+<a href="{{ path('door_new_id', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Nouvelle porte</a>
 {% if entity.contacts|length > 0 %}
 <h2>Interlocuteurs</h2>
 <table class="table table-stripped">
-<thead>
-<tr>
-<th>Nom</th>
-<th>Rôle</th>
-<th>Téléphone</th>
-<th>Fax</th>
-<th>e-mail</th>
-</tr>
-</thead>
-<tbody>
-{% for contact in entity.contacts %}
-<tr>
-<td><a href="{{ path('sitecontact_show',{'id':contact.id}) }}">{{ contact.person.name }}</a></td>
-<td>{{ contact.role }}</td>
-<td>
-	<ul class="unstyled">
-	{% if contact.person.fixedPhone %}<li>{{ contact.person.fixedPhone }}</li>{% endif %}
-	{% if contact.person.mobilePhone %}<li>{{ contact.person.mobilePhone }}</li>{% endif %}
-	{% if contact.professionnalPhone %}<li>{{ contact.professionnalPhone }}</li>{% endif %}
-	</ul>
-</td>
-<td>{{ contact.person.fax }}</td>
-<td><a href="mailto:{{ contact.person.email }}">{{ contact.person.email }}</a></td>
-</tr>
-{% endfor %}
-</tbody>
+	<thead>
+		<tr>
+			<th>Nom</th>
+			<th>Rôle</th>
+			<th>Téléphone</th>
+			<th>Fax</th>
+			<th>e-mail</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for contact in entity.contacts %}
+		<tr>
+			<td><a href="{{ path('sitecontact_show',{'id':contact.id}) }}">{{ contact.person.name }}</a></td>
+			<td>{{ contact.role }}</td>
+			<td>
+				<ul class="unstyled">
+				{% if contact.person.fixedPhone %}<li>{{ contact.person.fixedPhone }}</li>{% endif %}
+				{% if contact.person.mobilePhone %}<li>{{ contact.person.mobilePhone }}</li>{% endif %}
+				</ul>
+			</td>
+			<td>{{ contact.person.fax }}</td>
+			<td><a href="mailto:{{ contact.person.email }}">{{ contact.person.email }}</a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
 </table>
 {% else %}
 <h2><small>Aucun interlocuteur</small></h2>

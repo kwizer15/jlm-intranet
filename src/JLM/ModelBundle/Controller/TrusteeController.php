@@ -34,6 +34,7 @@ class TrusteeController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $nb = $em->getRepository('JLMModelBundle:Trustee')->getTotal();
         $nbPages = ceil($nb/$limit);
+        $nbPages = ($nbPages < 1) ? 1 : $nbPages;
         $offset = ($page-1) * $limit;
         if ($page < 1 || $page > $nbPages)
         {
@@ -93,7 +94,7 @@ class TrusteeController extends Controller
      *
      * @Route("/create", name="trustee_create")
      * @Method("post")
-     * @Template("JLMModeleBundle:Trustee:new.html.twig")
+     * @Template("JLMModelBundle:Trustee:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function createAction()
@@ -104,7 +105,8 @@ class TrusteeController extends Controller
         $form    = $this->createForm(new TrusteeType(), $entity);
         $form->bindRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getEntityManager(); 
             $em->persist($entity->getAddress());
             if ($entity->getBillingAddress() !== null)
@@ -115,7 +117,6 @@ class TrusteeController extends Controller
             return $this->redirect($this->generateUrl('trustee_show', array('id' => $entity->getId())));
             
         }
-
         return array(
             'entity' => $entity,
             'form'   => $form->createView()

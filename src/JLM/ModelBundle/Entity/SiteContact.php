@@ -44,12 +44,12 @@ class SiteContact
 	private $role;
    
 	
-	/**
-	 * @var string $professionnalPhone
-	 *
-	 * @ORM\Column(name="professionnalPhone", type="string", length=20, nullable=true)
-	 */
-	private $professionnalPhone;
+//	/**
+//	 * @var string $professionnalPhone
+//	 *
+//	 * ORM\Column(name="professionnalPhone", type="string", length=20, nullable=true)
+//	 */
+//	private $professionnalPhone;
 	
 	/**
 	 * Get id
@@ -130,23 +130,23 @@ class SiteContact
         return $this->role;
     }
     
-    /**
-     * Set professionnalPhone
-     *
-     * @param string $professionnnalPhone
-     */
-    public function setProfessionnalPhone($professionnalPhone)
-    {
-    	$this->professionnalPhone = $professionnalPhone;
-    }
-    
-    /**
-     * Get professionnalPhone
-     *
-     * @return string
-     */
-    public function getProfessionnalPhone()
-    {
-    	return $this->professionnalPhone;
-    }
+//    /**
+//     * Set professionnalPhone
+//     *
+//     * @param string $professionnnalPhone
+//     */
+//    public function setProfessionnalPhone($professionnalPhone)
+//    {
+//    	$this->professionnalPhone = $professionnalPhone;
+//    }
+//    
+//    /**
+//     * Get professionnalPhone
+//     *
+//     * @return string
+//     */
+//    public function getProfessionnalPhone()
+//    {
+//    	return $this->professionnalPhone;
+//    }
 }

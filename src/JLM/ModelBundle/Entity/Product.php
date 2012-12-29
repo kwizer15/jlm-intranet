@@ -70,12 +70,12 @@ class Product
     private $barcode;
 
     /**
-     * Marge (en %)
-     * @var decimal $margin
+     * Prix de vente unitaire (en €)
+     * @var float $unitPrice
      * 
-     * @ORM\Column(name="margin", type="smallint")
+     * @ORM\Column(name="unitPrice", type="decimal" ,scale=2)
      */
-    private $margin;
+    private $unitPrice;
 
     /**
      * Famille de produit
@@ -258,23 +258,23 @@ class Product
     }
 
     /**
-     * Set margin
+     * Set unitPrice
      *
-     * @param decimal $margin
+     * @param float $unitPrice
      */
-    public function setMargin($margin)
+    public function setUnitPrice($unitPrice)
     {
-        $this->margin = $margin;
+        $this->unitPrice = $unitPrice;
     }
 
     /**
-     * Get margin
+     * Get unitPrice
      *
-     * @return decimal 
+     * @return float 
      */
-    public function getMargin()
+    public function getUnitPrice()
     {
-        return $this->margin;
+        return $this->unitPrice;
     }
 
     /**
@@ -389,14 +389,16 @@ class Product
     	return $pa;
     }
     
-    public function getSellPrice()
+    public function getMargin()
     {
-    	return ($this->getPurchasePrice() + $this->getMarginValue());
+    	return ($this->getUnitPrice() - $this->getPurchasePrice());
     }
     
-    public function getMarginValue()
+    public function getCoef()
     {
-    	return $this->getPurchasePrice() * ($this->getMargin()/100);
+    	$d = $this->getPurchasePrice() - $this->getShipping();
+    	$n = $this->getUnitPrice() - $this->getShipping();
+    	return (($n / $d) - 1)*100;
     }
 
     /**
@@ -444,6 +446,6 @@ class Product
      */
     public function __toString()
     {
-    	return $this->getSupplier().' '.$this->getDesignation();
+    	return $this->getDesignation();
     }
 }

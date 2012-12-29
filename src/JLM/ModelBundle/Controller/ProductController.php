@@ -32,10 +32,11 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $nb = $em->getRepository('JLMModelBundle:Product')->getTotal();
         $nbPages = ceil($nb/$limit);
+        $nbPages = ($nbPages < 1) ? 1 : $nbPages;
         $offset = ($page-1) * $limit;
         if ($page < 1 || $page > $nbPages)
         {
-        	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
+        	throw $this->createNotFoundException('Page inexistante (page '.$page.'/'.$nbPages.')');
         }
 
         $entities = $em->getRepository('JLMModelBundle:Product')->findBy(
@@ -90,7 +91,7 @@ class ProductController extends Controller
         $entity->setDiscountSupplier(0);
         $entity->setExpenseRatio(10);
         $entity->setShipping(0);
-        $entity->setMargin(40);
+        $entity->setUnitPrice(0);
         
         $form   = $this->createForm(new ProductType(), $entity);
         	

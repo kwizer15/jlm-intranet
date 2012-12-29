@@ -1,0 +1,8 @@
+{# JLMDailyBundle:Intervention:index.html.twig #}
+{% extends "JLMDailyBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Interventions <small>({{ entities|length }})</small></h1>
+{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : entities} %}
+
+{% endblock %}

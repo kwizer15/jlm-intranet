@@ -1,23 +1,22 @@
-Voir si regrouper les 3 ModelRepository dans TextModelRepository fonctionne
+------------------------------------------------
+Journal de bord
+-----------------------------------------------
 
-Barre de recherche
-	- Recherche sur les adresses des sites
+Rapport d'intervention client (PDF)
 
-Voir interaction Contract / Door
-	- ajouter un contrat (si pas de contrat en cours)
-	- arrêter le contrat (si contrat en cours)
-	- liste des contrats concernant la porte (à récuperer dans le controller)
+RecuperationEquipmentEditType
+	Type date-time : datepicker + deroulant heure/minutes
+	ajouter les class a timetype
 	
+Creation des entretiens automatique
+	
+
+
+-------------------------------------------------------------
+
+
+
 Créer DoorModel extends Product
-
-Contract - Door - SiteContact
-	- index : ne sert à rien
-
-Journal de Bord
-	- Voir avec Yo les description d'intervention (amélioration des stats)
-
-Devis	
-    - Mettre l'utilisateur en cours dans "Suivi par"
     
 Interlocuteurs
     - personaliser un peu le formulaire "contact"
@@ -26,18 +25,9 @@ Interlocuteurs
 Door
     ******** à Revoir **********
 
-
-
 Produits
-    - new, edit : petit js pour voir le prix de vente à la fin, plus remise en forme (number_format)
     - fiche descriptive (voir avec yo) 
     - autocompletion pour fournisseur
-
-
-Quote
-	- voir chiffrage
-	- afficher l'intro dans le pdf
-
 
 -----------------------------------------------
 A plus long terme
@@ -49,7 +39,6 @@ Familles de produits
         class ProductBase
             abstract getCategory();
         
-    - emetteurs (class particuliere)
     - retirer les sous familles (parent/children)
     - liste des produits de la famille ?
     
@@ -62,16 +51,9 @@ Produit Emeteur
 
 Syndic
 	- voir problème d'adresse de facturation (case à cocher ?)
-	
-Site
-    - index : à modifier pour recherche
+
     
     
-------------------------------------------------
-Journal de bord
------------------------------------------------
 
-InterventionPlanned
-	- js : autocompletion doorCp->door, contact->telephone-email
 
-Rapport d'intervention client (PDF)
+

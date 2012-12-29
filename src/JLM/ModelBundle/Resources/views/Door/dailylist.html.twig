@@ -1,0 +1,29 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Syndic</th>
+			<th>Etat</th>
+			<th>Installation</th>
+			<th>Type</th>
+			<th>Accès</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for door in doors %}
+		<tr>
+			<td><a href="{# path('daily_door',{'id': door.id}) #}" class="btn"><i class="icon-eye-open"></i></a></td>
+			<td>{{ door.site.trustee }}</td>	
+			<td><span class="label">Prévoir entretien</span><br>
+			<span class="label label-info">Travaux en préparation</span><br>
+			<span class="label label-important">Mise à l'arrêt</span>
+			</td>
+			<td>{{ door.location }}<br>{{ door.site | nl2br }}</td>
+			<td>{{ door.type }}</td>
+			<td>{{ door.street | nl2br }}</td>
+			<td><a href="{{  path('fixing_new',{'id': door.id}) }}" class="btn btn-danger"><i class="icon-wrench icon-white"></i></a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>

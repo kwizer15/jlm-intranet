@@ -1,0 +1,8 @@
+{# JLMDailyBundle:Default:priority.html.twig #}
+<span class="label{% if priority == 1 %} label-important">
+TRES URGENT{% elseif priority == 2 %} label-important">
+Urgent{% elseif priority == 3 %} label-warning">
+Haute{% elseif priority == 4 %} label-warning">
+Normal{% elseif priority == 5 %} label-info">
+Basse{% else %}">
+Très basse{% endif %}</span>

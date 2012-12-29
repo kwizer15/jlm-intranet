@@ -1,137 +1,45 @@
 {% extends "JLMOfficeBundle::layout.html.twig" %}
 
 {% block content %}
-<h1>Devis</h1>
-{% if entity.valid %}
-	{% if entity.send%}
-		{% if entity.given %}
-		<div class="alert alert-success">
-		<h4>Devis accordé</h4>
-		</div>
-		{% else %}
-		<div class="alert alert-info">
-		<h4>Devis envoyé</h4>
-		</div>
-		{% endif %}
-	{% else %}
-	<div class="alert">
-	<h4>En attente d'envoi</h4>
-	</div>
-	{% endif %}
-{% else %}
-<div class="alert">
-<h4>En saisie</h4>
-</div>
-{% endif %}
+<h1>Devis <small>{{ entity.number }}</small></h1>
+{% include 'JLMOfficeBundle:Quote:stateheader.html.twig' with {'state': entity.state} %}
+{% include 'JLMOfficeBundle:Quote:showheader.html.twig' with {'quote': entity} %}
 
-<div class="row-fluid">
-    <div class="span5">
-        <strong>Suivi par {{ entity.followerCp }}</strong>
-        <br>{{ entity.doorCp | nl2br }}
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Devis n°</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ entity.creation|date('d/m/Y') }}</td>
-                    <td>{{ entity.number }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="span5 offset2 well">
-        {{ entity.trusteeName }}
-        <br>{{ entity.trusteeAddress | nl2br  }}
-        <br>
-        <br>à l'attention de {{ entity.contactCp }}
-    </div>
-</div>
-<p>{{ entity.intro }}</p>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Réf.</th>
-            <th>Designation</th>
-            <th>Qté</th>
-            <th>Prix U.H.T</th>
-            <th>Remise</th>
-            <th>Prix H.T</th>
-            <th>T.V.A</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for line in entity.lines %}
-        <tr>
-            <td>{{ line.reference }}</td>
-            <td>
-                {{ line.designation }}
-                {% if line.showDescription %}
-                <br><em>{{ line.description|nl2br }}</em>
-                {% endif %}
-            </td>
-            <td>{{ line.quantity }}</td>
-            <td>{{ line.unitPrice|number_format(2,',',' ') }} €</td>
-            <td>{{ (line.discount*100)|number_format(0,',',' ') }} %</td>
-            <td>{{ line.price|number_format(2,',',' ') }} €</td>
-            <td>{{ (line.vat*100)|number_format(1,',',' ') }} %</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-<div class="row-fluid">
-    <div class="span4 offset8">
-    <table class="table table-bordered">
-    	<tbody>
-    		<tr>
-    			<th>Total H.T.</th>
-    			<td>{{ entity.totalPrice|number_format(2,',',' ') }} €</td>
-    		</tr>
-    		<tr>
-    			<th>Total TVA</th>
-    			<td>{{ entity.totalVat|number_format(2,',',' ') }} €</td>
-    		</tr>
-    		<tr>
-    			<th>Total à régler</th>
-    			<td>{{ entity.totalPriceAti|number_format(2,',',' ') }} €</td>
-    		</tr>
-    	</tbody>
-    </table>
-    </div>
-</div>
-<div class="alert alert-error">
-    <h4>Règlement</h4>
-    {{ entity.paymentRules }}
-</div>
-<div class="alert">
-    <h4>Délais</h4>
-    {{ entity.deliveryRules }}
-</div>
-
-<div class="alert alert-info">
-    <h4>Commentaires</h4>
-    {{ entity.customerComments }}
-</div>
 <div class="form-actions">
 	<a href="{{ path('quote') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
-	{% if entity.valid %}
-		{% if entity.send%}
-			{% if entity.given == false %}
-				<a href="{{ path('quote_given', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-thumbs-up icon-white"></i> Accorder</a>
-			{% endif %}
-		{% endif %}
-		{% if entity.given == false %}
-			<a href="{{ path('quote_unvalid', { 'id': entity.id }) }}" class="btn btn-inverse"><i class="icon-remove icon-white"></i> Invalider</a>
-		{% endif %}
-	<a href="{{ path('quote_mail', { 'id': entity.id }) }}" class="btn btn-info"><i class="icon-envelope icon-white"></i> Envoyer par e-mail</a>
-	<a href="{{ path('quote_pdf', { 'id': entity.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer</a>
-		
-	{% else %}
+	{% if entity.state == 0 %}
 	<a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
-	<a href="{{ path('quote_valid', { 'id': entity.id }) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i> Valider</a>
 	{% endif %}
+	<a href="{{ path('variant_new',{ 'id' : entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter une variante</a>
+</div>
+
+
+<ul id="variants" class="nav nav-tabs">
+	{% for variant in entity.variants %}
+    <li{% if loop.first %} class="active"{% endif %}>
+        <a href="#variant-{{ variant.number }}" data-toggle="tab">{{ variant.number }}
+		{% include 'JLMOfficeBundle:Quote:statelabel.html.twig' with {'state': variant.state} %}
+         </a>
+    </li>
+    {% endfor %}
+</ul>
+{%  if entity.variants | length %}
+<div id="variantsContent" class="tab-content">
+{% for variant in entity.variants %}
+    <div class="tab-pane fade{% if loop.first %} active in{% endif %}" id="variant-{{ variant.number }}">
+		{% include 'JLMOfficeBundle:Variant:show.html.twig' with {'variant': variant} %}
 	</div>
+{% endfor %}
+</div>
+{% else %}
+<p>Pas encore de devis</p>
+{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset("bundles/jlmoffice/js/quote.js") }}"></script>
+<script>
+$("body").quotevariant();
+</script>
 {% endblock %}

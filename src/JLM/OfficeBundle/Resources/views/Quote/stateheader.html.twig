@@ -1,0 +1,16 @@
+<div class="alert{% if state == 0 %}">
+<h4>En saisie</h4>
+{% elseif state == 1 %}">
+<h4>Prêt à être envoyé</h4>
+{% elseif state == 2 %}">
+<h4>Imprimé (prêt à faxer)</h4>
+{% elseif state == 3 %} alert-info">
+<h4>Envoyé (en attente de l'accusé)</h4>
+{% elseif state == 4 %} alert-info">
+<h4>Envoyé</h4>
+{% elseif state == 5 %} alert-success">
+<h4>Accordé</h4>
+{% else %} alert-error">
+<h4>Annulé</h4>
+{% endif %}
+</div>

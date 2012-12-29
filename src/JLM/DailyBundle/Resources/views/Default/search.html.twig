@@ -1,0 +1,13 @@
+{# JLMDailyBundle:Default:search.html.twig #}
+{% extends "JLMDailyBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Intallations correspondants à "{{ query }}"</h1>
+	{% if doors|length == 0  %} 
+		<h2><small>Aucun résultat</small></h2>
+	{% endif %}
+	{% if doors|length %}
+		<h2><small>Portes</small></h2>
+		{% include 'JLMModelBundle:Door:dailylist.html.twig' with {'doors': doors } %}
+	{% endif %}
+{% endblock %}

@@ -37,4 +37,20 @@ class QuoteRepository extends EntityRepository
 		else
 			return $result[0]['num'];
 	}
+	
+	public function search($query)
+	{
+		$qb = $this->createQueryBuilder('q')
+				->where('q.followerCp LIKE :query')
+				->orWhere('q.number LIKE :query')
+				->orWhere('q.trusteeName LIKE :query')
+				->orWhere('q.trusteeAddress LIKE :query')
+				->orWhere('q.doorCp LIKE :query')
+				->orWhere('q.contactCp LIKE :query')
+				->orWhere('q.followerCp LIKE :query')
+				->orderBy('q.creation','DESC')
+				->setParameter('query', '%'.$query.'%');
+		
+		return $qb->getQuery()->getResult();
+	}
 }

@@ -21,37 +21,11 @@
 		</address>
 	</div>
 </div>
-{% if entity.sites | length %}
-<h2>Affaires</h2>
-<table class="table table-stripped">
-<thead>
-<tr>
-<th>Nb portes</th>
-<th>Adresse</th>
-<th>Code postal</th>
-<th>Ville</th>
-<th>TVA</th>
-</tr>
-</thead>
-<tbody>
-{% for site in entity.sites %}
-<tr>
-<td>{{ site.doors|length }}</td>
-<td><a href="{{ path('site_show',{'id':site.id}) }}">{{ site.address.street }}</a></td>
-<td>{{ site.address.city.zip }}</td>
-<td>{{ site.address.city.name }}</td>
-<td>{{ site.vat }}</td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
-{% else %}
-<h2><small>Aucune affaire</small></h2>
-{% endif %}
+{% include 'JLMModelBundle:Site:list.html.twig' with {'sites': entity.sites } %}
 
 <div class="form-actions">
 	<a href="{{ path('trustee') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
 	<a href="{{ path('trustee_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
-	<a href="{{ path('site_new_id', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter un site</a>
+	<a href="{{ path('site_new_id', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter une affaire</a>
 </div>
 {% endblock %}

@@ -10,19 +10,19 @@
         </tr>
         {% if entity.endWarranty %}
         <tr>
-            <th>Endwarranty</th>
+            <th>Fin de garantie</th>
             <td>{{ entity.endWarranty|date('d/m/Y') }}</td>
         </tr>
         {% endif %}
         {% if entity.end %}
         <tr>
-            <th></th>
+            <th>Fin du contrat</th>
             <td>{{ entity.end|date('d/m/Y') }}</td>
         </tr>
         {% endif %}
         <tr>
             <th>Chiffre d'affaire</th>
-            <td>{{ entity.turnover|number_format(2,',',' ') }} €</td>
+            <td>{{ entity.fee|number_format(2,',',' ') }} €</td>
         </tr>
     </tbody>
 </table>

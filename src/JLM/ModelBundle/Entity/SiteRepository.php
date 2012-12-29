@@ -12,19 +12,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class SiteRepository extends EntityRepository
 {
+	public function search($query)
+	{
+		$qb = $this->createQueryBuilder('s')
+		->leftJoin('s.address','a')
+		->leftJoin('a.city','c')
+		->where('a.street LIKE :querystreet')
+		->orWhere('c.name LIKE :querycity')
+		->setParameter('querystreet', '%'.$query.'%')
+		->setParameter('querycity', $query.'%')
+		;
+		
+		return $qb->getQuery()->getResult();
+	}
+	
 	public function searchResult($query, $limit = 8)
 	{
+		$res = $this->search($query);
 		
-		$qb = $this->createQueryBuilder('s')
-			   ->leftJoin('s.address','a')
-			   ->leftJoin('a.city','c')
-			   ->where('a.street LIKE :querystreet')
-			   ->orWhere('c.name LIKE :querycity')
-			   ->setParameter('querystreet', '%'.$query.'%')
-			   ->setParameter('querycity', $query.'%')
-		;
-
-		$res = $qb->getQuery()->getResult();
 		
 		$r2 = array();
 		foreach ($res as $r)
@@ -36,8 +41,7 @@ class SiteRepository extends EntityRepository
 	
 	public function match($string)
 	{
-		if (preg_match('#^(.+)
-(.+) - (.+)$#',$string,$matches))
+		if (preg_match('#^([\w,\-\s]+)\s([0-9]{5}( CEDEX)?) - (.+)$#',$string,$matches))
 		{
 			$qb = $this->createQueryBuilder('s')
 				->leftJoin('s.address','a')
@@ -47,7 +51,7 @@ class SiteRepository extends EntityRepository
 				->andWhere('c.name = :querycity')
 				->setParameter('querystreet', trim($matches[1]).'%')
 				->setParameter('queryzip', $matches[2])
-				->setParameter('querycity', $matches[3])
+				->setParameter('querycity', $matches[4])
 				;
 				
 			$res = $qb->getQuery()->getResult();

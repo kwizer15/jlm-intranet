@@ -100,12 +100,45 @@ class Door
     private $height;
     
     /**
+     * Porte à l'arrêt
+     * @var bool $stoped
+     * 
+     * @ORM\Column(name="stopped", type="boolean")
+     */
+    private $stopped = false;
+
+    /**
+     * Porte à l'arrêt
+     * @var bool $stoped
+     *
+     * @ORM\Column(name="last_maintenance", type="date", nullable=true)
+     */
+    private $lastMaintenance;
+    
+    /**
+     * Prélibellé de factration
+     * @var string $billingPrelabel
+     * 
+     * @ORM\Column(name="billing_prelabel", type="text", nullable=true)
+     */
+    private $billingPrelabel;
+    
+    /**
+     * Contrats
+     * @var Contract $contracts
+     * 
+     * @ORM\OneToMany(targetEntity="Contract",mappedBy="door")
+     */
+    private $contracts;
+    
+    /**
      * Constructor
      */
     public function __construct()
     {
     	$this->parts = new ArrayCollection;
     	$this->transmitters = new ArrayCollection;
+    	$this->contracts = new ArrayCollection;
     }
 
 
@@ -293,6 +326,55 @@ class Door
     }
 
     /**
+     * Add contract
+     *
+     * @param JLM\ModelBundle\Entity\Contract $contract
+     * @return Door
+     */
+    public function addContract(\JLM\ModelBundle\Entity\Contract $contract)
+    {
+    	$this->contracts[] = $contract;
+    
+    	return $this;
+    }
+    
+    /**
+     * Remove contract
+     *
+     * @param JLM\ModelBundle\Entity\Contract $contract
+     */
+    public function removeContract(\JLM\ModelBundle\Entity\Contract $contract)
+    {
+    	$this->contracts->removeElement($contract);
+    }
+    
+    /**
+     * Get contracts
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getContracts()
+    {
+    	return $this->contracts;
+    }
+    
+    /**
+     * Get actual(s) contracts
+     * 
+     * @return JLM\ModelBundle\Entity\Contract
+     */
+    public function getActualContract()
+    {
+    	$today = new \DateTime;
+    	foreach ($this->contracts as $contract)
+    	{
+    		if ($contract->getBegin() < $today && $contract->getEnd() == null)
+    			return $contract;
+    	}
+    	return null;
+    }
+    
+    /**
      * Add transmitters
      *
      * @param JLM\ModelBundle\Entity\Product $transmitters
@@ -365,6 +447,82 @@ class Door
     public function getHeight()
     {
     	return $this->height;
+    }
+    
+    /**
+     * Get stopped
+     * 
+     * @return bool $stopped
+     */
+    public function getStopped()
+    {
+    	return $this->stopped;
+    }
+    
+    /**
+     * Is stopped
+     * 
+     * @return bool $stopped
+     */
+    public function isStopped()
+    {
+    	return $ths->getStopped();
+    }
+    
+    /**
+     * Set stopped
+     * 
+     * @param bool $stopped
+     */
+    public function setStopped($stopped = true)
+    {
+    	$this->stopped = (bool)$stopped;
+    	return $this;
+    }
+    
+    /**
+     * Set lastMaintenance
+     *
+     * @param \DateTime $lastMaintenance
+     * @return Door
+     */
+    public function setLastMaintenance($lastMaintenance)
+    {
+    	$this->lastMaintenance = $lastMaintenance;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get lastMaintenance
+     *
+     * @return \DateTime
+     */
+    public function getLastMaintenance()
+    {
+    	return $this->lastMaintenance;
+    }
+    
+    /**
+     * Get billingPrelabel
+     * 
+     * @return string
+     */
+    public function getBillingPrelabel()
+    {
+    	return $this->billingPrelabel;
+    }
+    
+    /**
+     * Set billingPrelabel
+     * 
+     * @param string $label
+     * @return Door
+     */
+    public function setBillingPrelabel($label)
+    {
+    	$this->billingPrelabel = $label;
+    	return $this;
     }
     
     /**

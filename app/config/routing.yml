@@ -1,3 +1,8 @@
+jlm_default:
+    resource: "@JLMDefaultBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 jlm_daily:
     resource: "@JLMDailyBundle/Controller/"
     type:     annotation

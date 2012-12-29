@@ -1,0 +1,5 @@
+<li class="nav-header">Derniers devis</li>
+{% for quote in entities %}
+<li><a href="{{ path('quote_show', {'id' : quote.id }) }}">{{ quote.number }}
+{% include 'JLMOfficeBundle:Quote:statelabel.html.twig' with {'state': quote.state} %}</a></li>
+{% endfor %}

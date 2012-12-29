@@ -12,6 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductRepository extends EntityRepository
 {
+	public function search($query)
+	{
+		$qb = $this->createQueryBuilder('p')
+		->where('p.designation LIKE :query')
+		->orWhere('p.reference LIKE :query')
+		->setParameter('query', '%'.$query.'%')
+		;
+		return $qb->getQuery()->getResult();
+	}
+	
 	public function searchDesignation($query)
 	{
 		
@@ -49,7 +59,11 @@ class ProductRepository extends EntityRepository
 					'reference'=>$r->getReference(),
 					'designation'=>$r->getDesignation(),
 					'description'=>$r->getDescription(),
-					'unitPrice'=>$r->getSellPrice(),
+					'unitPrice'=>$r->getUnitPrice(),
+					'purchase'=>$r->getPurchase(),
+					'discountSupplier'=>$r->getDiscountSupplier(),
+					'expenseRatio'=>$r->getExpenseRatio(),
+					'shipping'=>$r->getShipping(),
 					'transmitter'=> ($r instanceof Transmitter)
 				);
 		}

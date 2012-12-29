@@ -1,23 +1,25 @@
+{# JLMDailyBundle::layout.html.twig #}
 {% extends "::layout.html.twig" %}
-
-{% block navigation %}
-	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-		<li><a href="">Journal de bord</a></li>
-		<li><a href="">Devis</a></li>
-	{% endif %}
-{% endblock navigation %}
 
 {% block container %}
     <div class="row-fluid">
 	    <div class="span2">
 		    {% block sidebar %}
-		    <ul class="nav nav-tabs nav-stacked">
-		    	<li><a href="{{ path('quote') }}">Devis</a></li>
-		        <li><a href="{{ path('trustee') }}">Syndics</a></li>
-		        <li><a href="{{ path('productcategory') }}">Familles de produits</a></li>
-		        <li><a href="{{ path('product') }}">Produits</a></li>	   
-		        <li><a href="{{ path('supplier') }}">Fournisseurs</a></li>
-		    </ul>
+		    <ul class="nav nav-list affix">
+		    	<li>
+		    		<form  action="{{ path('daily_search') }}" method="post" class="form-search">
+						<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher...">
+			    	</form>
+			    </li>
+			    <li class="nav-header">Techniciens</li>
+			    <li><a href="{{ path('shifting_list', {'id':6}) }}"><i class="icon-user"></i> Cyrille</a></li>
+			    <li><a href="{{ path('shifting_list', {'id':5}) }}"><i class="icon-user"></i> Christophe</a></li>
+			    <li><a href="{{ path('shifting_list', {'id':4}) }}"><i class="icon-user"></i> Oscar</a></li>
+			    <li class="nav-header">Ajouter</li>
+			    <li><a href="{{ path('recuperationequipment_new') }}"><i class="icon-plus-sign"></i> Récupération matériel</a></li>
+			    <li class="nav-header">Interventions</li>
+				{% render "JLMDailyBundle:Default:sidebar" %}
+			</ul>
 		    {% endblock sidebar %}
 	    </div>
 	    <div class="span10">

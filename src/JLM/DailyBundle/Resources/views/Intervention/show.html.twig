@@ -1,0 +1,62 @@
+{# JLMDailyBundle:Intervention:show.html.twig #}
+<h1>Fiche Intervention</h1>
+<div class="alert{% if entity.closed %} alert-success{% elseif entity.priority < 3 %} alert-error{% elseif entity.priority > 4 %} alert-info{% endif %}"><h4>
+{% if entity.closed %}Cloturée
+{% elseif entity.priority == 1 %}TRES URGENT
+{% elseif entity.priority == 2 %}Urgent
+{% elseif entity.priority == 3 %}Haute
+{% elseif entity.priority == 4 %}Normal
+{% elseif entity.priority == 5 %}Basse
+{% elseif entity.priority == 6 %}Très basse
+{% endif %}</h4>
+</div>
+
+<div class="row-fluid">
+	<div class="span6">
+	 <table class="table">
+	 <tbody>
+	 <tr><th>Créée le</th><td>{{ entity.creation|date('d/m/Y H:i') }}</td></tr>
+	 <tr><th>Type</th><td>{% include "JLMDailyBundle:Intervention:type.html.twig" with {'type' : entity.type} %}</td></tr>
+	 <tr><th>Raison</th><td>{{ entity.reason | nl2br }}</td></tr>
+	 </tbody>
+	 </table>
+	</div>
+	<div class="span6 well">
+		<h4>{{ entity.place | nl2br }}</h4>
+		{{ entity.contactName }}
+		<br>{{ entity.contactPhones | nl2br }}
+		<br><a href="mailto:{{ entity.contactEmail}}">{{ entity.contactEmail}}</a>
+	</div>
+</div>
+<h2><small>Déplacements techniciens</small></h2>
+{% if entity.shiftTechnicians|length > 0 %}
+<table class="table table-stripped">
+	<thead>
+		<tr>
+			<th>Plannifié le</th>
+			<th>Technicien</th>
+			<th>Date</th>
+			<th>Début</th>
+			<th>Fin</th>
+			<th>Temps</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for shift in entity.shiftTechnicians %}
+		<tr>
+			<td>{{ shift.creation | date('d/m/Y H:i') }}</td>
+			<td>{{ shift.technician }}</td>
+			<td>{{ shift.begin | date('d/m/Y') }}</td>
+			<td>{% if shift.begin | date('H:i') != '00:00' %}{{ shift.begin | date('H:i') }}{% endif %}</td>
+			<td>{% if shift.end %}{{ shift.end | date('H:i') }}{% endif %}</td>
+			<td>{% if shift.end %}{{ shift.time.format('%hh%I') }}{% endif %}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% else %}
+<p>Aucun</p>
+{% endif %}
+{% if entity.closed == false %}
+	<a href="{{ path('shifting_new',{'id':entity.id}) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter</a>
+{% endif %}

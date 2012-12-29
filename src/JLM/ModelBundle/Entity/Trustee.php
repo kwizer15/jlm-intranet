@@ -18,7 +18,7 @@ class Trustee extends Company
     /**
      * @var integer $accountNumber
      *
-     * @ORM\Column(name="accountNumber", type="integer")
+     * @ORM\Column(name="accountNumber", type="integer", nullable=true)
      */
     private $accountNumber;
 
@@ -37,6 +37,14 @@ class Trustee extends Company
     private $sites;
     
 
+    /**
+     * Libelé de facturation
+     * @var string $billingLabel
+     * 
+     * @ORM\Column(name="billingLabel", type="string", nullable=true)
+     */
+    private $billingLabel;
+    
     /**
      * Adresse de facturation (si differente)
      * @var Address $billingAddress
@@ -257,5 +265,27 @@ class Trustee extends Company
     {
     	return $this->billingAddress;
         
+    }
+    
+    /**
+     * Get BillingLabel
+     * 
+     * @return string
+     */
+    public function getBillingLabel()
+    {
+    	return $this->billingLabel;
+    }
+    
+    /**
+     * Set billingLabel
+     * 
+     * @param string $label
+     * @return Trustee
+     */
+    public function setBillingLabel($label)
+    {
+    	$this->billingLabel = $label;
+    	return $this;
     }
 }
