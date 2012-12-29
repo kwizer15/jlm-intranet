@@ -2,9 +2,6 @@
 Journal de bord
 -----------------------------------------------
 
-InterventionPlanned
-	- js : autocompletion doorCp->door, contact->telephone-email
-
 Rapport d'intervention client (PDF)
 
 RecuperationEquipmentEditType
@@ -20,12 +17,6 @@ Creation des entretiens automatique
 
 
 Créer DoorModel extends Product
-
-Contract - Door - SiteContact
-	- index : ne sert à rien
-
-Devis	
-    - Mettre l'utilisateur en cours dans "Suivi par"
     
 Interlocuteurs
     - personaliser un peu le formulaire "contact"
