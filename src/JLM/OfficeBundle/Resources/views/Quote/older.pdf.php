@@ -1,7 +1,5 @@
 <?php
 
-echo QuotePDF::get($entity);
-
 class QuotePDF extends \FPDI
 {
 	private $entity;
@@ -174,3 +172,6 @@ class QuotePDF extends \FPDI
 		$this->multiCell(0,5,utf8_decode('Nous vous en souhaitons bonne réception et vous prions d\'agréer, '.$who.' l\'expression de nos'.chr(10).'sentiments les meilleurs.'),0,1);
 	}
 }
+
+
+echo QuotePDF::get($entity);
