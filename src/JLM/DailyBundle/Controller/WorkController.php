@@ -52,17 +52,62 @@ class WorkController extends Controller
 	/**
 	 * Displays a form to create a new Work entity.
 	 *
-	 * @Route("/new/{id}", name="work_new")
+	 * @Route("/new/door/{id}", name="work_new_door")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function newAction(Door $door)
+	public function newdoorAction(Door $door)
 	{
 		$entity = new Work();
+		$entity->setDoor($door);
 		$form   = $this->createForm(new WorkType(), $entity);
 	
 		return array(
-				'door' => $door,
+				'entity' => $entity,
+				'form'   => $form->createView(),
+		);
+	}
+	
+	/**
+	 * Displays a form to create a new Work entity.
+	 *
+	 * @Route("/new/quote/{id}", name="work_new_quote")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function newquoteAction(QuoteVariant $quote)
+	{
+		$entity = new Work();
+		$entity->setQuote($quote);
+		$door = $quote->getQuote()->getDoor();
+		$entity->setDoor($door);
+		$entity->setPlace($quote->getQuote()->getDoorCp());
+		$entity->setReason($quote->getIntro());
+		$contact = $quote->getContact();
+		if ($contact === null)
+			$entity->setContactName($quote->getContactCp());
+		else
+		{
+			$entity->setContactName($contact->getPerson()->getName().' ('.$contact->getRole().')');
+			$mobilePhone = $contact->getPerson()->getMobilePhone();
+			$fixedPhone = $contact->getPerson()->getFixedPhone();
+			$email = $contact->getPerson()->getEmail();
+			$phones = '';
+			if ($mobilePhone != null)
+				$phones .= $mobilePhone;
+			if ($fixedPhone != null)
+			{
+				if ($phones != '')
+					$phones .= chr(10);
+				$phones .= $fixedPhone;
+			}
+			if ($email != null)
+				$entity->setContactEmail($email);
+			$entity->setContactPhones($phones);
+		}
+		$form   = $this->createForm(new WorkType(), $entity);
+	
+		return array(
 				'entity' => $entity,
 				'form'   => $form->createView(),
 		);
@@ -71,12 +116,12 @@ class WorkController extends Controller
 	/**
 	 * Creates a new Work entity.
 	 *
-	 * @Route("/create/{id}", name="work_create")
+	 * @Route("/create", name="work_create")
 	 * @Method("POST")
 	 * @Template("JLMDailyBundle:Work:new.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function createAction(Request $request, Door $door)
+	public function createAction(Request $request)
 	{
 		$entity  = new Work();
 		$form = $this->createForm(new WorkType(), $entity);
@@ -85,8 +130,6 @@ class WorkController extends Controller
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 			$entity->setCreation(new \DateTime);
-			$entity->setDoor($door);
-			$entity->setPlace($door.'');
 			$entity->setPriority(4);
 	
 			$em->persist($entity);
@@ -96,7 +139,6 @@ class WorkController extends Controller
 		}
 	
 		return array(
-				'door' => $door,
 				'entity' => $entity,
 				'form'   => $form->createView(),
 		);
