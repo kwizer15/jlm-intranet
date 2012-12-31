@@ -13,6 +13,7 @@ use JLM\DailyBundle\Form\Type\WorkType;
 use JLM\DailyBundle\Form\Type\WorkditType;
 use JLM\DailyBundle\Form\Type\WorkCloseType;
 use JLM\ModelBundle\Entity\Door;
+use JLM\OfficeBundle\Entity\QuoteVariant;
 
 /**
  * Work controller.
@@ -53,13 +54,14 @@ class WorkController extends Controller
 	 * Displays a form to create a new Work entity.
 	 *
 	 * @Route("/new/door/{id}", name="work_new_door")
-	 * @Template()
+	 * @Template("JLMDailyBundle:Work:new.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function newdoorAction(Door $door)
 	{
 		$entity = new Work();
 		$entity->setDoor($door);
+		$entity->setPlace($door.'');
 		$form   = $this->createForm(new WorkType(), $entity);
 	
 		return array(
@@ -72,7 +74,7 @@ class WorkController extends Controller
 	 * Displays a form to create a new Work entity.
 	 *
 	 * @Route("/new/quote/{id}", name="work_new_quote")
-	 * @Template()
+	 * @Template("JLMDailyBundle:Work:new.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function newquoteAction(QuoteVariant $quote)
@@ -83,9 +85,9 @@ class WorkController extends Controller
 		$entity->setDoor($door);
 		$entity->setPlace($quote->getQuote()->getDoorCp());
 		$entity->setReason($quote->getIntro());
-		$contact = $quote->getContact();
+		$contact = $quote->getQuote()->getContact();
 		if ($contact === null)
-			$entity->setContactName($quote->getContactCp());
+			$entity->setContactName($quote->getQuote()->getContactCp());
 		else
 		{
 			$entity->setContactName($contact->getPerson()->getName().' ('.$contact->getRole().')');
