@@ -12,5 +12,9 @@
 			<argument type="service" id="doctrine.orm.entity_manager"/>
    			<tag name="form.type" alias="quote_hidden" />
 		</service>
+		<service id="jlm_office.type.quotevariant_hidden" class="JLM\OfficeBundle\Form\Type\QuoteVariantHiddenType">
+			<argument type="service" id="doctrine.orm.entity_manager"/>
+   			<tag name="form.type" alias="quotevariant_hidden" />
+		</service>
 	</services>
 </container>

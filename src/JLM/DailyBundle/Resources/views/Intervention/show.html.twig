@@ -1,5 +1,5 @@
 {# JLMDailyBundle:Intervention:show.html.twig #}
-<h1>Fiche Intervention</h1>
+
 <div class="alert{% if entity.closed %} alert-success{% elseif entity.priority < 3 %} alert-error{% elseif entity.priority > 4 %} alert-info{% endif %}"><h4>
 {% if entity.closed %}Cloturée
 {% elseif entity.priority == 1 %}TRES URGENT

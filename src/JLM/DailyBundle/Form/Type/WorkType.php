@@ -13,7 +13,7 @@ class WorkType extends AbstractType
         $builder
         	->add('door','door_hidden')
         	->add('place',null,array('attr'=>array('class'=>'input-xlarge')))
-        	->add('quote','quote_hidden',array('required'=>false))
+        	->add('quote','quotevariant_hidden',array('required'=>false))
         	->add('reason',null,array('label'=>'Raison de l\'intervention','attr'=>array('class'=>'input-xxlarge')))
             ->add('contactName',null,array('label'=>'Nom du contact','required'=>false))
             ->add('contactPhones',null,array('label'=>'Téléphones','required'=>false))

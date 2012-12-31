@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class FixingEditType extends AbstractType
+class WorkEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -26,12 +26,12 @@ class FixingEditType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'JLM\DailyBundle\Entity\Fixing'
+            'data_class' => 'JLM\DailyBundle\Entity\Work'
         ));
     }
 
     public function getName()
     {
-        return 'jlm_dailybundle_fixingedittype';
+        return 'jlm_dailybundle_workedittype';
     }
 }

@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Work;
 use JLM\DailyBundle\Form\Type\WorkType;
-use JLM\DailyBundle\Form\Type\WorkditType;
+use JLM\DailyBundle\Form\Type\WorkEditType;
 use JLM\DailyBundle\Form\Type\WorkCloseType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\QuoteVariant;
