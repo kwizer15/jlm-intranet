@@ -41,8 +41,9 @@ class DefaultController extends Controller
 
 		return array(
 			'fixing' => $em->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),
-			'work' => $em->getRepository('JLMDailyBundle:Work')->getCountOpened(),
-			);
+			'work'   => $em->getRepository('JLMDailyBundle:Work')->getCountOpened(),
+			'maintenance' => $em->getRepository('JLMDailyBundle:Maintenance')->getCountOpened(),
+		);
 	}
 	
 	/**

@@ -1,0 +1,28 @@
+{# JLMDailyBundle:Fixing:show.html.twig #}
+{% extends "JLMDailyBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Entretien</h1>
+{% include "JLMDailyBundle:Intervention:show.html.twig" with {'entity' : entity} %}
+
+{% if entity.closed %}
+	 <h4>Rapport</h4>
+	 <table class="table">
+	 <tbody>
+	 <tr><th>Rapport</th><td>{{ entity.report }}</td></tr>
+	 <tr><th>Action bureau</th><td>
+	{% if entity.officeAction %}{{ entity.officeAction.type }}
+	{% else %}<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 5 }) }}" class="btn btn-primary">Ne rien faire</a>
+	{% endif %}
+	 </td></tr>
+	 </tbody>
+	 </table>
+{% endif %}
+
+<div class="form-actions">
+    <a href="{{ path('fixing_list') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+    {% if not entity.closed %}
+    <a href="{{ path('fixing_close',{'id':entity.id}) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i> Cloturer</a>
+    {% endif %}
+</div>
+{% endblock %}
