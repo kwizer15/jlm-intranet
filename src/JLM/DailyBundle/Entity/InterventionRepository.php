@@ -21,7 +21,7 @@ class InterventionRepository extends EntityRepository
 	public function getCountOpened()
 	{
 		$qb = $this->createQueryBuilder('i')
-			->select('COUNT(f)')
+			->select('COUNT(i)')
 			->where('i.officeAction IS NULL');
 		return (int) $qb->getQuery()
 			->getSingleScalarResult();

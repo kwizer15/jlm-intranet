@@ -40,8 +40,9 @@ class DefaultController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 
 		return array(
-			'fixing' => $em->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),		
-		);
+			'fixing' => $em->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),
+			'work' => $em->getRepository('JLMDailyBundle:Work')->getCountOpened(),
+			);
 	}
 	
 	/**

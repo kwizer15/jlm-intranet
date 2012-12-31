@@ -15,6 +15,7 @@ use JLM\OfficeBundle\Entity\Quote;
 use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\OfficeBundle\Form\Type\QuoteVariantType;
 use JLM\OfficeBundle\Entity\QuoteLine;
+use JLM\OfficeBundle\Entity\Task;
 
 
 
@@ -351,8 +352,19 @@ class VariantController extends Controller
 	
 		if ($entity->getState() < 5)
 			$entity->setState(5);
+		
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		$task = new Task();
+		$task->setDoor($entity->getQuote()->getDoor());
+		$task->setPlace($entity->getQuote()->getDoorCp());
+		$task->setTodo($entity->getIntro());
+		$task->setType($em->getRepository('JLMOfficeBundle:TaskType')->find(3));
+		$task->setUrlSource($this->generateUrl('variant_print', array('id' => $entity->getId())));
+		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($entity);
+		$em->persist($task);
 		$em->flush();
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	}

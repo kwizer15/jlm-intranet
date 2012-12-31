@@ -8,14 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\DailyBundle\Entity\Work
  *
  * @ORM\Table(name="shifting_works")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\InterventionRepository")
  */
 class Work extends Intervention
 {
 	/**
 	 * Devis source
 	 * 
-	 * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\QuoteVariant")
+	 * @ORM\ManyToOne(targetEntity="JLM\OfficeBundle\Entity\QuoteVariant")
 	 */
 	private $quote;
 	

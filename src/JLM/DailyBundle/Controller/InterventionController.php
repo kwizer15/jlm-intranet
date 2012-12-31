@@ -52,11 +52,16 @@ class InterventionController extends Controller
 	/**
 	 * Close an existing Fixing entity.
 	 *
-	 * @Route("/{id}/generatetask/{task}", name="intervention_generatetask")
+	 * @Route("/{id}/generatetask/{type}", name="intervention_generatetask")
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function generatetaskAction(Intervention $entity, TaskType $tasktype)
+	public function generatetaskAction(Intervention $entity, $type)
 	{
+		$em = $this->getDoctrine()->getManager();
+		$tasktype = $em->getRepository('JLMOfficeBundle:TaskType')->find($type);
+		if ($tasktype === null)
+			return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+		
 		$task = new Task;
 		if ($entity->getDoor() !== null)
 			$task->setDoor($entity->getDoor());
@@ -86,12 +91,12 @@ class InterventionController extends Controller
 					
 				// Ne rien faire
 			case 5 :
-				$task->setClose();
+				$task->setClose(new \DateTime);
 				break;
 		}
 		$entity->setOfficeAction($task);
 		
-		$em = $this->getDoctrine()->getManager();
+		
 		$em->persist($task);
 		$em->persist($entity);
 		$em->flush();

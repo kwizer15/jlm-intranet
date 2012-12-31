@@ -15,3 +15,4 @@ CREATE INDEX IDX_527EDB2558639EAE ON task (door_id);
 CREATE INDEX IDX_527EDB25C54C8C93 ON task (type_id);
 INSERT INTO `jlm`.`tasktype` (`id`, `text`) VALUES (NULL, 'Facturer'), (NULL, 'Devis'), (NULL, 'Commander matériel'), (NULL, 'Contacter client'), (NULL, 'Ne rien faire');
 ALTER TABLE task CHANGE close close DATETIME DEFAULT NULL
+ALTER TABLE shifting_works DROP INDEX UNIQ_57D2710BDB805178, ADD INDEX IDX_57D2710BDB805178 (quote_id)
