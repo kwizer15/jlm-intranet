@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\DailyBundle\Entity\Fixing
  *
  * @ORM\Table(name="shifting_fixing")
- * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\FixingRepository")
+ * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\InterventionRepository")
  */
 class Fixing extends Intervention
 {
