@@ -15,7 +15,7 @@ class Work extends Intervention
 	/**
 	 * Devis source
 	 * 
-	 * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Quote")
+	 * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\QuoteVariant")
 	 */
 	private $quote;
 	
@@ -35,7 +35,7 @@ class Work extends Intervention
 	
 	/**
 	 * Get Quote
-	 * @return Quote
+	 * @return QuoteVariant
 	 */
 	public function getQuote()
 	{
@@ -45,10 +45,10 @@ class Work extends Intervention
 	/**
 	 * Set Quote
 	 * 
-	 * @param Quote $quote
+	 * @param QuoteVariant $quote
 	 * @return Work
 	 */
-	public function setQuote(\JLM\OfficeBundle\Entity\Quote $quote = null)
+	public function setQuote(\JLM\OfficeBundle\Entity\QuoteVariant $quote = null)
 	{
 		$this->quote = $quote;
 		return $this;
