@@ -28,7 +28,7 @@ class DefaultController extends Controller
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function indexAction()
+	public function infoAction()
 	{
 	
 		phpinfo();exit;
