@@ -22,4 +22,17 @@ class DefaultController extends Controller
 
         return array('var'=>$request->getLocale());
 	}
+	
+	/**
+	 * @Route("/info")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function indexAction()
+	{
+	
+		phpinfo();exit;
+	
+		return array();
+	}
 }
