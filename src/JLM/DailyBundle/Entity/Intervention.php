@@ -74,12 +74,46 @@ abstract class Intervention extends Shifting
     private $closed = false;
     
     /**
-     * Action Bureau
+     * Action Bureau (facturation)
      * @var JLM\OfficeBundle\Entity\Task
      *
      * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Task")
      */
     private $officeAction;
+    
+    /**
+     * Action Bureau (autre)
+     * @var JLM\OfficeBundle\Entity\Task
+     *
+     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Task")
+     */
+    private $otherAction;
+    
+    /**
+     * Reste a faire
+     *
+     * @ORM\Column(name="rest",type="text",nullable=true)
+     */
+    private $rest;
+    
+    /**
+     * Get rest
+     * @return string
+     */
+    public function getRest()
+    {
+    	return $this->rest;
+    }
+    
+    /**
+     * Set rest
+     * @return string
+     */
+    public function setRest($rest)
+    {
+    	$this->rest = $rest;
+    	return $this;
+    }
     
     /**
      * Set contactName
@@ -297,6 +331,28 @@ abstract class Intervention extends Shifting
     public function setOfficeAction(\JLM\OfficeBundle\Entity\Task $task = null)
     {
     	$this->officeAction = $task;
+    	return $this;
+    }
+    
+    /**
+     * Get Office Action
+     *
+     * @return JLM\OfficeBundle\Entity\Task
+     */
+    public function getOtherAction()
+    {
+    	return $this->otherAction;
+    }
+    
+    /**
+     * Set OfficeAction
+     *
+     * @param JLM\OfficeBundle\Entity\Task $otherAction
+     * @return Fixing
+     */
+    public function setOtherAction(\JLM\OfficeBundle\Entity\Task $task = null)
+    {
+    	$this->otherAction = $task;
     	return $this;
     }
 }

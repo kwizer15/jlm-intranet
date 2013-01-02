@@ -14,6 +14,7 @@ class FixingCloseType extends AbstractType
 	        ->add('due',null,array('label'=>'Cause','attr'=>array('class'=>'input-large')))
 	        ->add('done',null,array('label'=>'Action','attr'=>array('class'=>'input-large')))
 	        ->add('report','textarea',array('label'=>'Rapport','attr'=>array('class'=>'input-xxlarge')))
+	        ->add('rest','textarea',array('label'=>'Reste à faire','required'=>false,'attr'=>array('class'=>'input-xxlarge')))
         	->add('comments','textarea',array('label'=>'Commentaires','required'=>false,'attr'=>array('class'=>'input-xxlarge')))
         ;
     }

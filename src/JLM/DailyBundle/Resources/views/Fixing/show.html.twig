@@ -12,6 +12,7 @@
 	 <tr><th>Cause</th><td>{{ entity.due }}</td></tr>
 	 <tr><th>Action menée</th><td>{{ entity.done }}</td></tr>
 	 <tr><th>Rapport</th><td>{{ entity.report }}</td></tr>
+	 {% if entity.rest %}<tr><th>Reste à faire</th><td>{{ entity.rest }}<br>{% include "JLMDailyBundle:Fixing:otheraction.html.twig" with {'entity' : entity} %}</td></tr>{% endif %}
 	 <tr><th>Action bureau</th><td>
 	{% if entity.officeAction %}{{ entity.officeAction.type }}
 	{% else %}{% include "JLMDailyBundle:Fixing:officeaction.html.twig" with {'entity' : entity} %}

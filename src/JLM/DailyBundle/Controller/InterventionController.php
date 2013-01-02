@@ -68,35 +68,42 @@ class InterventionController extends Controller
 		$task->setPlace($entity->getPlace());
 		$task->setUrlSource($this->generateUrl('intervention_redirect', array('id' => $entity->getId(),'act'=>'show')));
 		$task->setType($tasktype);
-		$task->setTodo($entity->getReport());
+		
 		switch ($tasktype->getId())
 		{
 			// Facturer
 			case 1 :
+				$entity->setOfficeAction($task);
+				$task->setTodo($entity->getReport());
 				break;
 	
-				// Faire devis
+			// Faire devis
 			case 2 :
+				$entity->setOtherAction($task);
+				$task->setTodo($entity->getRest());
 				$task->setUrlAction($this->generateUrl('quote_new'));
 				break;
 					
 				// Commander matériel
 			case 3 :
+				$entity->setOtherAction($task);
+				$task->setTodo($entity->getRest());
 				break;
 	
 				// Contacter le client
 			case 4 :
+				$entity->setOtherAction($task);
 				$task->setTodo($entity->getReason());
 				break;
 					
 				// Ne rien faire
 			case 5 :
+				$entity->setOfficeAction($task);
+				$task->setTodo($entity->getReport());
 				$task->setClose(new \DateTime);
 				break;
 		}
-		$entity->setOfficeAction($task);
-		
-		
+
 		$em->persist($task);
 		$em->persist($entity);
 		$em->flush();

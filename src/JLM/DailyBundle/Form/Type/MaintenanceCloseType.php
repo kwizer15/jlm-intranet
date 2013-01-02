@@ -12,6 +12,7 @@ class MaintenanceCloseType extends AbstractType
     {
         $builder
 	        ->add('report','textarea',array('label'=>'Rapport','attr'=>array('class'=>'input-xxlarge')))
+	        ->add('rest','textarea',array('label'=>'Reste à faire','required'=>false,'attr'=>array('class'=>'input-xxlarge')))
         	->add('comments','textarea',array('label'=>'Commentaires','required'=>false,'attr'=>array('class'=>'input-xxlarge')))
         ;
     }
