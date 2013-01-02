@@ -12,8 +12,8 @@
 	 <tr><th>Type</th><td>{{ entity.category }}</td></tr>
 	 <tr><th>Objectif</th><td>{{ entity.objective }}</td></tr>
 {% if entity.closed %}
-	 <tr><th>Rapport</th><td>{{ entity.report }}</td></tr>
-	 {% if entity.rest %}<tr><th>Reste à faire</th><td>{{ entity.rest }}<br>{% include "JLMDailyBundle:Work:otheraction.html.twig" with {'entity' : entity} %}</td></tr>{% endif %}
+	 <tr><th>Rapport</th><td>{{ entity.report | nl2br}}</td></tr>
+	 {% if entity.rest %}<tr><th>Reste à faire</th><td>{{ entity.rest  | nl2br }}<br>{% include "JLMDailyBundle:Work:otheraction.html.twig" with {'entity' : entity} %}</td></tr>{% endif %}
 	 <tr><th>Action bureau</th><td>
 	{% if entity.officeAction %}{{ entity.officeAction.type }}
 	{% else %}{% include "JLMDailyBundle:Work:officeaction.html.twig" with {'entity' : entity} %}

@@ -9,8 +9,8 @@
 	 <h4>Rapport</h4>
 	 <table class="table">
 	 <tbody>
-	 <tr><th>Rapport</th><td>{{ entity.report }}</td></tr>
-	 {% if entity.rest %}<tr><th>Reste à faire</th><td>{{ entity.rest }}<br>{% include "JLMDailyBundle:Maintenance:otheraction.html.twig" with {'entity' : entity} %}</td></tr>{% endif %}
+	 <tr><th>Rapport</th><td>{{ entity.report | nl2br}}</td></tr>
+	 {% if entity.rest %}<tr><th>Reste à faire</th><td>{{ entity.rest  | nl2br}}<br>{% include "JLMDailyBundle:Maintenance:otheraction.html.twig" with {'entity' : entity} %}</td></tr>{% endif %}
 	 <tr><th>Action bureau</th><td>
 	{% if entity.officeAction %}{{ entity.officeAction.type }}
 	{% else %}<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 5 }) }}" class="btn btn-primary">Ne rien faire</a>
