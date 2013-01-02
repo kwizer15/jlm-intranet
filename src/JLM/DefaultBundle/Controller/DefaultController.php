@@ -16,6 +16,8 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array();
+    	$request = $this->getRequest();
+    //	$request->setLocale('en_US');
+        return array('var'=>$this->getRequest()->getLocale());
     }
 }

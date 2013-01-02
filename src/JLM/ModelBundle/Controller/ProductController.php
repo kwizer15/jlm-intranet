@@ -191,7 +191,7 @@ class ProductController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
-
+        echo $this->getRequest()->getLocale(); exit;
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
