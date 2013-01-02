@@ -2,6 +2,7 @@
 {% form_theme form 'JLMModelBundle:Form:trustee.html.twig' %}
 {% block content %}
 <h1>Nouveau syndic</h1>
+<div class="alert">{{ form.errors }}</div>
 <form action="{{ path('trustee_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
     {{ form_widget(form) }}
 	<div class="form-actions">

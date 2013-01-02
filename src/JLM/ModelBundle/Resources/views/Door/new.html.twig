@@ -5,7 +5,7 @@
 <form action="{{ path('door_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 	{{ form_widget(form) }}
     <div class="form-actions">
-	   <a href="{{ path('door') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	   <a href="{{ path('site_show', { 'id': entity.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
 	   <button type="submit" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer</button>
 	</div>
 </form>

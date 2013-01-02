@@ -119,6 +119,14 @@ class MaintenanceController extends Controller
 	 */
 	public function scanAction()
 	{
-	
+		$em = $this->getDoctrine()->getEntityManager();
+		$doors = $em->getRepository('JLMModelBundle:Door')->findAll();
+		foreach ($doors as $door)
+		{
+			if ($em->getRepository('JLMDailyBundle:Maintenance')->isPlanned($door))
+			{
+				
+			}
+		}
 	}
 }

@@ -1,6 +1,9 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
 {% block content %}
 <h1>Nouvelle affaire</h1>
+{% if  form_errors(form) %}
+<div class="alert"><strong>Erreurs</strong> : {{ form_errors(form) }}</div>
+{% endif %}
 <form action="{{ path('site_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 <fieldset>
 {{ form_widget(form) }}

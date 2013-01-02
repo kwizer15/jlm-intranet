@@ -49,14 +49,15 @@ class CityToStringTransformer implements DataTransformerInterface
 			return null;
 		}
 	
-		if (preg_match('#^(.+) - (.+)$#',$string,$matches))
+		if (preg_match('#^([0-9AB]{5}( CEDEX)?) - (.+)$#',$string,$matches))
 		{	
 		
 			$city = $this->om
 				->getRepository('JLMModelBundle:City')
-				->findOneBy(array('zip' => trim($matches[1]),'name' => trim($matches[2])))
+				->findOneBy(array('zip' => trim($matches[1]),'name' => trim($matches[3])))
 			;
-			//echo '|'.$matches[1].'|'.$matches[2].'|'; exit;
+		//	print_r($matches);
+		//	echo '|'.$matches[1].'|'.$matches[3].'|'; exit;
 		}
 		else
 			throw new TransformationFailedException(sprintf(
@@ -68,7 +69,6 @@ class CityToStringTransformer implements DataTransformerInterface
 					$matches[1]
 			));
 		}
-	
 		return $city;
 	}
 }

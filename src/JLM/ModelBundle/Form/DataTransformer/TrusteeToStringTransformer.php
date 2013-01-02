@@ -45,18 +45,23 @@ class TrusteeToStringTransformer implements DataTransformerInterface
 	public function reverseTransform($string)
 	{
 		if (!$string)
+		{
 			return null;
+		}
+			
 		
 			$entity = $this->om
 				->getRepository('JLMModelBundle:Trustee')
 				->findOneBy(array('name' => trim($string)))
 			;
 		if (null === $entity) {
+			
 			throw new TransformationFailedException(sprintf(
 					'A trustee with name "%s" does not exist!',
 					$string
 			));
 		}
+		
 		return $entity;
 	}
 }

@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class DoorRepository extends EntityRepository
 {
+
 	public function search($query)
 	{
 		$qb = $this->createQueryBuilder('d')
