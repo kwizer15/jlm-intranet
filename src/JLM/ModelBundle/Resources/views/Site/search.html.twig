@@ -17,7 +17,7 @@
                 <a href="{{ path('site_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
            </td>
         	<td>{{ entity.trustee }}</td>
-            <td>{{ entity.address.street }}</td>
+            <td>{{ entity.address.street | nl2br}}</td>
             <td>{{ entity.address.city.zip }}</td>
             <td>{{ entity.address.city.name }}</td>
             <td>{{ entity.vat }}</td>
