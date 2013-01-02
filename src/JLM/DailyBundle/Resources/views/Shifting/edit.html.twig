@@ -14,7 +14,7 @@
 <fieldset>
 {{ form_widget(form) }}
     <div class="form-actions">
-	   <a href="{{ path('daily') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	   <a href="{{ path('shifting_list',{'id':entity.id}) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
 	   <button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer les modifications</button>
 	</div>
 	</fieldset>

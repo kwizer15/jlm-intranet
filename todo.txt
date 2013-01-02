@@ -1,6 +1,4 @@
 - vue Fiche Interlocuteur
-- Ajouter nl2br a reason cloture travaux
-- idem pour info liste intervention
 - Pouvoir retirer un technicien d'une intervention
 - autocompletion contact dans la creation de panne ou travaux
 - Fiche porte avec boutons ajouter traveaux, ajouter panne

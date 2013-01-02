@@ -15,9 +15,9 @@
 		{% for entity in entities %}
 		<tr>
 			<td>{% include "JLMDailyBundle:Default:priority.html.twig" with {'priority' : entity.priority} %}<br>{{ entity.creation|date('d/m/Y') }}<br>{{ entity.creation|date('H:i') }}</td>
-			<td><strong>{% include "JLMDailyBundle:Intervention:type.html.twig" with {'type' : entity.type} %}</strong><br><a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}">{{ entity.door | nl2br }}</a></td>
+			<td><a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}">{{ entity.door.site.address.street | nl2br }}<br><strong>{{ entity.door.site.address.city.name }}</strong> ({{ entity.door.site.address.city.zip }})</a></td>
 			<td>{{ entity.contactName }}<br>{{ entity.contactPhones | nl2br }}</td>
-			<td><strong>{{ entity.door.type }}</strong><br>{{ entity.reason }}</td>
+			<td><strong>{{ entity.door.type }} - {{ entity.door.location }}</strong><br>{{ entity.reason | nl2br }}</td>
 			<td>
 				{% for shift in entity.shiftTechnicians %}
 				{% if shift.end %}
@@ -31,7 +31,7 @@
 			<td>
 			{% if entity.closed %}
 				Cloturée
-			{% else %}
+			{% else %}<strong>{% include "JLMDailyBundle:Intervention:type.html.twig" with {'type' : entity.type} %}</strong><br>
 				<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}" class="btn"><i class="icon-eye-open"></i></a>
 				<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'edit'}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a>
 				<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'close'}) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i></a>
