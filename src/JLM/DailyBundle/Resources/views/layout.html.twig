@@ -28,3 +28,13 @@
 	    </div>
     </div>
 {% endblock container %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset("bundles/jlmdaily/js/intervention.js") }}"></script>
+<script>
+$("body").intervention({
+	 autoSource:'{{ path('autocomplete') }}'
+});
+</script>
+{% endblock %}

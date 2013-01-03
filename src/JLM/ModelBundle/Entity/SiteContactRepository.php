@@ -27,9 +27,16 @@ class SiteContactRepository extends EntityRepository
 		$r2 = array();
 		foreach ($res as $r)
 		{
+			$phones = $r->getPerson()->getMobilePhone();
+			if ($phones != '')
+				$phones .= chr(10);
+			$phones = $r->getPerson()->getFixedPhone();
+			
 			$r2[] = array(
 				'label'=> $r->getPerson().' ('.$r->getRole().')',
 				'name' => $r->getPerson().'',
+				'phones' => $phones,
+				'email' => $r->getPerson()->getEmail().'',
 				'id'=> $r->getId()
 			);
 		}

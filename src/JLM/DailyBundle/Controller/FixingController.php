@@ -61,6 +61,7 @@ class FixingController extends Controller
 	public function newAction(Door $door)
 	{
 		$entity = new Fixing();
+		$entity->setDoor($door);
 		$form   = $this->createForm(new FixingType(), $entity);
 	
 		return array(
