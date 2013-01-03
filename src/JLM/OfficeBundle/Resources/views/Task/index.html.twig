@@ -19,7 +19,7 @@
             <td>{{ entity.open | date('d/m/Y') }}</td>
             <td><a href="{{ entity.urlSource }}">{{ entity.place | nl2br }}</td>
             <td><strong>{% if entity.urlAction %}<a href="{{ entity.urlAction }}">{{ entity.type }}</a>{% else %}{{ entity.type }}{% endif %}</strong></td>
-            <td>{{ entity.todo }}</td>
+            <td>{{ entity.todo | nl2br}}</td>
 			<td><a href="{{ path('task_close',{'id':entity.id}) }}" class="btn btn-primary">Fait</a></td>
         </tr>
     {% endfor %}
