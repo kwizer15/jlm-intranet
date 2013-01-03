@@ -604,4 +604,16 @@ class QuoteLine
     {
     	return $this->getMargin()*$this->getQuantity();
     }
+    
+    /**
+     * Is Service
+     * 
+     * @return boolean
+     */
+    public function isService()
+    {
+    	if ($this->getProduct() === null)
+    		return false;
+    	return ($this->getProduct()->getCategory()->getId() == 2);
+    }
 }

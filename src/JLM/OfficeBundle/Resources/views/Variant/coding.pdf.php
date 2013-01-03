@@ -30,7 +30,7 @@ class CodingPDF extends \FPDF
 
 		$content = array();
 		$fill = array();
-		$content[] = array('',utf8_decode($this->entity->getQuote()->getDoorCp()),'','','','','','','','','','','');
+		$content[] = array('',utf8_decode(str_replace(chr(10),' / ',$this->entity->getQuote()->getDoorCp())),'','','','','','','','','','','');
 		$content[] = array('',$this->entity->getQuote()->getCreation()->format('d/m/Y'),'','','','','','','','','','','');
 		$content[] = array('Q','fourniture','PA','taux','remise','PU','frais','port','PAHT','coef','marge','PU HT','PVHT');
 		$content[] = array('','','','','','','','','','','','','');
@@ -45,24 +45,53 @@ class CodingPDF extends \FPDF
 		$totalsell = 0;
 		foreach ($this->entity->getLines() as $line)
 		{
-			$content[] = array(
-					number_format($line->getQuantity(),0,',',' '),
-					utf8_decode($line->getDesignation()),
-					number_format($line->getPurchasePrice(),2,',',' ').' '.chr(128),
-					number_format($line->getDiscountSupplier()*100,0,',',' ').' %',
-					number_format($line->getPurchasePrice()*$line->getDiscountSupplier(),2,',',' ').' '.chr(128),
-					number_format($line->getPurchasePrice()*(1-$line->getDiscountSupplier()),2,',',' ').' '.chr(128),
-					number_format($line->getExpenseRatio()+1,1,',',' '),
-					number_format($line->getShipping(),2,',',' ').' '.chr(128),
-					number_format($line->getQuantity()*$line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1)+$line->getShipping(),2,',',' ').' '.chr(128),
-					number_format(($line->getUnitPrice()-$line->getShipping())/($line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1))*100,0,',',' ').' %',
-					number_format($line->getQuantity()*($line->getUnitPrice()-($line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1)+$line->getShipping())),2,',',' ').' '.chr(128),
-					number_format($line->getUnitPrice(),2,',',' ').' '.chr(128),
-					number_format($line->getQuantity()*$line->getUnitPrice(),2,',',' ').' '.chr(128),
+			if (!$line->isService())
+			{
+				$content[] = array(
+						number_format($line->getQuantity(),0,',',' '),
+						utf8_decode($line->getDesignation()),
+						number_format($line->getPurchasePrice(),2,',',' ').' '.chr(128),
+						number_format($line->getDiscountSupplier()*100,0,',',' ').' %',
+						number_format($line->getPurchasePrice()*$line->getDiscountSupplier(),2,',',' ').' '.chr(128),
+						number_format($line->getPurchasePrice()*(1-$line->getDiscountSupplier()),2,',',' ').' '.chr(128),
+						number_format($line->getExpenseRatio()+1,1,',',' '),
+						number_format($line->getShipping(),2,',',' ').' '.chr(128),
+						number_format($line->getQuantity()*$line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1)+$line->getShipping(),2,',',' ').' '.chr(128),
+						number_format(($line->getUnitPrice()-$line->getShipping())/($line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1))*100,0,',',' ').' %',
+						number_format($line->getQuantity()*($line->getUnitPrice()-($line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1)+$line->getShipping())),2,',',' ').' '.chr(128),
+						number_format($line->getUnitPrice(),2,',',' ').' '.chr(128),
+						number_format($line->getQuantity()*$line->getUnitPrice(),2,',',' ').' '.chr(128),
+					);
+				$totalpurchase += $line->getQuantity()*$line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1)+$line->getShipping();
+				$totalsell += $line->getQuantity()*$line->getUnitPrice();
+				$fill[] = array(255,255,255);
+			}
+		}
+		$content[] = array('','achat','','','','','','',number_format($totalpurchase,2,',',' ').' '.chr(128),'','','',number_format($totalsell,2,',',' ').' '.chr(128));
+		$fill[] = array(192,192,192);
+		foreach ($this->entity->getLines() as $line)
+		{
+			if ($line->isService())
+			{
+				$content[] = array(
+						number_format($line->getQuantity(),0,',',' '),
+						utf8_decode($line->getDesignation()),
+						number_format($line->getPurchasePrice(),2,',',' ').' '.chr(128),
+						number_format($line->getDiscountSupplier()*100,0,',',' ').' %',
+						number_format($line->getPurchasePrice()*$line->getDiscountSupplier(),2,',',' ').' '.chr(128),
+						number_format($line->getPurchasePrice()*(1-$line->getDiscountSupplier()),2,',',' ').' '.chr(128),
+						number_format($line->getExpenseRatio()+1,1,',',' '),
+						number_format($line->getShipping(),2,',',' ').' '.chr(128),
+						number_format($line->getQuantity()*$line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1)+$line->getShipping(),2,',',' ').' '.chr(128),
+						number_format(($line->getUnitPrice()-$line->getShipping())/($line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1))*100,0,',',' ').' %',
+						number_format($line->getQuantity()*($line->getUnitPrice()-($line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1)+$line->getShipping())),2,',',' ').' '.chr(128),
+						number_format($line->getUnitPrice(),2,',',' ').' '.chr(128),
+						number_format($line->getQuantity()*$line->getUnitPrice(),2,',',' ').' '.chr(128),
 				);
-			$totalpurchase += $line->getQuantity()*$line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1)+$line->getShipping();
-			$totalsell += $line->getQuantity()*$line->getUnitPrice();
-			$fill[] = array(255,255,255);
+				$totalpurchase += $line->getQuantity()*$line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1)+$line->getShipping();
+				$totalsell += $line->getQuantity()*$line->getUnitPrice();
+				$fill[] = array(255,255,255);
+			}
 		}
 		$content[] = array('','total','','','','','','',number_format($totalpurchase,2,',',' ').' '.chr(128),'','','',number_format($totalsell,2,',',' ').' '.chr(128));
 		$fill[] = array(255,255,0);
