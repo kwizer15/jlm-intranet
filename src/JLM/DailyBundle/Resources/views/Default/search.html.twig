@@ -8,6 +8,6 @@
 	{% endif %}
 	{% if doors|length %}
 		<h2><small>Portes</small></h2>
-		{% include 'JLMModelBundle:Door:dailylist.html.twig' with {'doors': doors } %}
+		{% include 'JLMDailyBundle:Door:list.html.twig' with {'doors': doors } %}
 	{% endif %}
 {% endblock %}
