@@ -13,6 +13,7 @@ class AddTechnicianType extends AbstractType
         $builder
       		->add('technician',null,array('label'=>'Technicien'))
       		->add('begin','datepicker',array('label'=>'Date'))
+      		->add('comment','textarea',array('label'=>'Commentaire','required'=>false,'attr'=>array('class'=>'input-xxlarge')))
         ;
     }
 

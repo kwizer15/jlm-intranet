@@ -21,7 +21,9 @@ class ShiftingEditType extends AbstractType
       				'hours'=>array(8,9,10,11,12,13,14,15,16,17,18),
       				'minutes'=>array(0,5,10,15,20,25,30,35,40,45,50,55),
       			))
+      			->add('comment','textarea',array('label'=>'Commentaire','required'=>false,'attr'=>array('class'=>'input-xxlarge')))
         ;
+        
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

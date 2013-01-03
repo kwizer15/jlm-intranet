@@ -60,6 +60,13 @@ class ShiftTechnician
     private $technician;
 
     /**
+     * Commentaire
+     * 
+     * @ORM\Column(name="comment",type="text",nullable=true)
+     */
+    private $comment;
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -194,5 +201,27 @@ class ShiftTechnician
     public function getTechnician()
     {
         return $this->technician;
+    }
+    
+    /**
+     * Get comment
+     * 
+     * @return string
+     */
+    public function getComment()
+    {
+    	return $this->comment;
+    }
+    
+    /**
+     * Set comment
+     * 
+     * @param string $comment
+     * @return ShiftTechnician
+     */
+    public function setComment($comment)
+    {
+    	$this->comment = $comment;
+    	return $this;
     }
 }
