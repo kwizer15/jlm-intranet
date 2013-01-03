@@ -49,13 +49,16 @@ class QuotePDF extends \FPDF
 		// Door
 		$this->setFont('Arial','B',11);
 		$this->cell(15,5,utf8_decode('affaire : '),0,0);
-		$this->setFont('Arial','',11);
+		$this->setFont('Arial','I',11);
 		$y = $this->getY();
 		$this->multiCell(90,5,utf8_decode($this->entity->getQuote()->getDoorCp()),0);
-		$this->setXY(100,$y);
+		$this->setXY(120,$y);
 		// Trustee
 	//	$this->rect(86,47,99,39);
-		$this->multiCell(0,5,utf8_decode($this->entity->getQuote()->getTrusteeName().chr(10).$this->entity->getQuote()->getTrusteeAddress()));
+		$this->setFont('Arial','B',11);
+		$this->cell(0,5,utf8_decode($this->entity->getQuote()->getTrusteeName()),0,2);
+		$this->setFont('Arial','',11);
+		$this->multiCell(0,5,utf8_decode($this->entity->getQuote()->getTrusteeAddress()));
 		$this->ln(10);
 		
 		// Création haut
@@ -66,7 +69,7 @@ class QuotePDF extends \FPDF
 		// Contact
 		$this->setFont('Arial','',10);
 		
-		$this->setX(100);
+		$this->setX(120);
 		$this->cell(0,5,utf8_decode('à l\'attention de '.$this->entity->getQuote()->getContactCp()),0,1);
 		
 		// Création bas
