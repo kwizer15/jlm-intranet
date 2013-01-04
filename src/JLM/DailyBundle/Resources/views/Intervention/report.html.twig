@@ -1,0 +1,5 @@
+{# JLMDailyBundle:Intervention:show.html.twig #}
+{{ entities|length }}
+{% for entity in entities %}
+{{entity.creation | date('d/m/Y')}} - {{ entity.place }}<br>
+{% endfor %}

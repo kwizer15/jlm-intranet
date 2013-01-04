@@ -30,4 +30,17 @@ class InterventionRepository extends EntityRepository
 		return (int) $qb->getQuery()
 			->getSingleScalarResult();
 	}
+	
+	public function getWithDate(\DateTime $date1, \DateTime $date2 = null)
+	{
+		if (empty($date2))
+		{
+			$date2 = \DateTime::createFromFormat('Ymd',$date1->format('Ymd'));
+		}
+		$date2->add(new \DateInterval('P1D'));
+		$q = $this->getEntityManager()->createQuery('SELECT i FROM JLM\DailyBundle\Entity\Shifting i JOIN i.shiftTechnicians s WHERE s.begin BETWEEN ?1 AND ?2');
+		$q->setParameter(1,$date1);
+		$q->setParameter(2,$date2);
+		return $q->getResult();
+	}
 }

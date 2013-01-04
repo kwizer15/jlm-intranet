@@ -39,7 +39,7 @@ class InterventionController extends Controller
 	/**
 	 * Finds and displays a Intervention entity.
 	 *
-	 * @Route("/{id}/{act}", name="intervention_redirect")
+	 * @Route("/{id}/{act}", name="intervention_redirect", requirements={"id"="/d+"})
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function redirectAction(Intervention $entity, $act) 
@@ -109,5 +109,28 @@ class InterventionController extends Controller
 		$em->flush();
 		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Liste des interventions par date(s)
+	 *
+	 * @Route("/list", name="intervention_list")
+	 * @Route("/list/{date1}", name="intervention_listdate1")
+	 * @Route("/list/{date1}/{date2}", name="intervention_listdate2")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function reportAction($date1 = null,$date2 = null)
+	{
+		$d1 = ($date1 === null) ? new \DateTime : \DateTime::createFromFormat('Ymd',$date1);
+		$d2 = ($date2 === null) ? null : \DateTime::createFromFormat('Ymd',$date2);
+		$em = $this->getDoctrine()->getManager();
+		$repo = $em->getRepository('JLMDailyBundle:Intervention');
+		
+			$intervs = empty($date2) ? $repo->getWithDate($d1)
+									 : $repo->getWithDate($d1,$d2);
+		return array(
+				'entities' => $intervs,
+		);
 	}
 }
