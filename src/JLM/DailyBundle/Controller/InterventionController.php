@@ -81,7 +81,7 @@ class InterventionController extends Controller
 			case 2 :
 				$entity->setOtherAction($task);
 				$task->setTodo($entity->getRest());
-				$task->setUrlAction($this->generateUrl('quote_new'));
+				$task->setUrlAction($this->generateUrl('quote_new_door',array('id'=>$entity->getDoor()->getId())));
 				break;
 					
 				// Commander matériel

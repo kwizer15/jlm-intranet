@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
+use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\Quote;
 use JLM\OfficeBundle\Form\Type\QuoteType;
 use JLM\OfficeBundle\Entity\QuoteLine;
@@ -99,10 +100,11 @@ class QuoteController extends Controller
      * Displays a form to create a new Quote entity.
      *
      * @Route("/new", name="quote_new")
+     * @Route("/new/door/{id}", name="quote_new_door")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function newAction()
+    public function newAction(Door $door = null)
     {
     	$user = $this->container->get('security.context')->getToken()->getUser();
     	if (!is_object($user) || !$user instanceof UserInterface) {
@@ -111,11 +113,26 @@ class QuoteController extends Controller
         $entity = new Quote();
         $entity->setCreation(new \DateTime);
 		$entity->setFollowerCp($user->getPerson()->getName());
+		$em = $this->getDoctrine()->getEntityManager();
+		$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
+		
+		if (!empty($door))
+		{
+			$entity->setDoor($door);
+			$entity->setDoorCp($door.'');
+			$contract = $door->getActualContract();
+			$trustee = (empty($contract)) ? $door->getSite()->getTrustee() : $contract->getTrustee();		
+			$entity->setTrustee($trustee);
+			$entity->setTrusteeName($trustee->getName());
+			$entity->setTrusteeAddress($trustee->getAddress().'');
+			$entity->setVat($door->getSite()->getVat()->getRate());
+		}
+		else
+		{
+			$entity->setVat($vat);
+		}
       //  $entity->addLine(new QuoteLine);
-        $em = $this->getDoctrine()->getEntityManager();
-        $vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
-		$entity->setVat($vat);
-		$entity->setVatTransmitter($vat);
+        $entity->setVatTransmitter($vat);
         $form   = $this->createForm(new QuoteType(), $entity);
 
         return array(
