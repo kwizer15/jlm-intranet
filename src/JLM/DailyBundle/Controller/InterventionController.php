@@ -112,14 +112,13 @@ class InterventionController extends Controller
 	public function reportAction($date1 = null,$date2 = null)
 	{
 		$now = new \DateTime;
-		$today = \DateTime::createFromFormat('Ymd',$now->format('Ymd'));
-		$d1 = ($date1 === null) ? $today : \DateTime::createFromFormat('Ymd',$date1);
-		$d2 = ($date2 === null) ? null : \DateTime::createFromFormat('Ymd',$date2);
+		$today = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'000000');
+		$d1 = ($date1 === null) ? $today : \DateTime::createFromFormat('YmdHis',$date1.'000000');
+		$d2 = ($date2 === null) ? \DateTime::createFromFormat('YmdHis',$d1->format('Ymd').'235959') : \DateTime::createFromFormat('YmdHis',$date2.'235959');
 		$em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('JLMDailyBundle:Intervention');
 		
-			$intervs = empty($d2) ? $repo->getWithDate($d1)
-									 : $repo->getWithDate($d1,$d2);
+		$intervs = $repo->getWithDate($d1,$d2);
 		return array(
 				'd1' => $d1,
 				'd2' => $d2,

@@ -40,7 +40,8 @@ class DefaultController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 
 		$now = new \DateTime;
-		$today = \DateTime::createFromFormat('Ymd',$now->format('Ymd'));
+		$today = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'000000');
+		$tomorow = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'235959');
 		return array(
 		    'today' => $em->getRepository('JLMDailyBundle:Intervention')->getCountWithDate($today),
 			'stopped' => 0,
