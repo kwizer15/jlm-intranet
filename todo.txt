@@ -2,6 +2,12 @@
 - Fiche porte avec boutons ajouter traveaux, ajouter panne
 - Edition contrat (date de début et redevence)
 
+- Rajouter colonne contrat
+- Ville en majuscule
+- Virer les icones
+- Virer "/2013"
+- Voir le probleme de date (affiche date +1)
+
 
 
 ------------------------------------------------
