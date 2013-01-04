@@ -2,7 +2,7 @@
 {% extends "JLMDailyBundle::layout.html.twig" %}
 
 {% block content %}
-<h1>Intervention de <small>({{ entities|length }})</small></h1>
+<h1>Intervention du {{ d1 | date('d/m/Y') }}{% if d2 %} au {{ d2 | date('d/m/Y') }}{% endif %} <small>({{ entities|length }})</small></h1>
 {% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : entities} %}
 
 

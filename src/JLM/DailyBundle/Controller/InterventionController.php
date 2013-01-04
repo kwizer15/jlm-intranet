@@ -116,9 +116,11 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('JLMDailyBundle:Intervention');
 		
-			$intervs = empty($date2) ? $repo->getWithDate($d1)
+			$intervs = empty($d2) ? $repo->getWithDate($d1)
 									 : $repo->getWithDate($d1,$d2);
 		return array(
+				'd1' => $d1,
+				'd2' => $d2,
 				'entities' => $intervs,
 		);
 	}
