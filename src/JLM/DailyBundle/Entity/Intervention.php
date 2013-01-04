@@ -97,6 +97,32 @@ abstract class Intervention extends Shifting
     private $rest;
     
     /**
+     * Type de contrat
+     * @ORM\Column(name="contract",type="string",nullable=true)
+     */
+    private $contract;
+    
+    /**
+     * Get contract
+     * @return string
+     */
+    public function getContract()
+    {
+    	return $this->contract;
+    }
+    
+    /**
+     * Set contract
+     * @param string $contract
+     * @return Intervention
+     */
+    public function setContract($contract)
+    {
+    	$this->contract = $contract;
+    	return $this;
+    }
+    
+    /**
      * Get rest
      * @return string
      */
