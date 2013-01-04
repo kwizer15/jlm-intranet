@@ -325,8 +325,10 @@ abstract class Intervention extends Shifting
      * @param DateTime $close
      * @return Intervention
      */
-    public function setClose(\DateTime $close)
+    public function setClose(\DateTime $close = null)
     {
+    	if ($close === null)
+    		$close = new \DateTime;
     	$this->close = $close;
     	return $this;
     }
