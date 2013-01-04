@@ -184,7 +184,11 @@ class FixingController extends Controller
 	
 		if ($form->isValid())
 		{
-			$entity->setClosed();
+			// Mise à l'arrêt
+			if ($entity->getDone()->getId() == 3)
+				$entity->getDoor()->setStopped(true);
+			
+			$entity->setClose(new \DateTime);
 			$em->persist($entity);
 			$em->flush();
 			return $this->redirect($this->generateUrl('fixing_show', array('id' => $entity->getId())));
