@@ -39,9 +39,10 @@ class DefaultController extends Controller
 	{
 		$em = $this->getDoctrine()->getEntityManager();
 
-		
+		$now = new \DateTime;
+		$today = \DateTime::createFromFormat('Ymd',$now->format('Ymd'));
 		return array(
-		    'today' => $em->getRepository('JLMDailyBundle:Intervention')->getCountWithDate(new \DateTime),
+		    'today' => $em->getRepository('JLMDailyBundle:Intervention')->getCountWithDate($today),
 			'stopped' => 0,
 			'fixing' => $em->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),
 			'work'   => $em->getRepository('JLMDailyBundle:Work')->getCountOpened(),
