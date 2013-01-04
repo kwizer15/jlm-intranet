@@ -98,7 +98,7 @@ class MaintenanceController extends Controller
 	
 		if ($form->isValid())
 		{
-			$entity->setClosed();
+			$entity->setClose(new \DateTime);
 			$em->persist($entity);
 			$em->flush();
 			return $this->redirect($this->generateUrl('maintenance_show', array('id' => $entity->getId())));
