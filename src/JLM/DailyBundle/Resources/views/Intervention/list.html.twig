@@ -14,10 +14,11 @@
 	<tbody>
 		{% for entity in entities %}
 		<tr>
+		{% if entity.type != 'equipment' %}
 			<td>{% include "JLMDailyBundle:Default:priority.html.twig" with {'priority' : entity.priority} %} <strong>{% include "JLMDailyBundle:Intervention:type.html.twig" with {'type' : entity.type} %}</strong><br>{{ entity.creation| localizeddate('full', 'none') }}<br>{{ entity.creation|date('H:i') }}</td>
-			<td><a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}">{{ entity.door.site.address.street | nl2br }}<br><strong>{{ entity.door.site.address.city.name }}</strong> ({{ entity.door.site.address.city.zip }})</a></td>
+			<td><a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}">{% if entity.door %}{{ entity.door.site.address.street | nl2br }}<br><strong>{{ entity.door.site.address.city.name }}</strong> ({{ entity.door.site.address.city.zip }}){% else %}{{ entity.place }}{% endif %}</a></td>
 			<td>{{ entity.contactName }}<br>{{ entity.contactPhones | nl2br }}</td>
-			<td><strong>{{ entity.door.type }} - {{ entity.door.location }}</strong><br>{{ entity.reason | nl2br }}</td>
+			<td>{% if entity.door %}<strong>{{ entity.door.type }} - {{ entity.door.location }}</strong>{% endif %}<br>{{ entity.reason | nl2br }}</td>
 			<td>
 				{% for shift in entity.shiftTechnicians %}
 				{% if shift.end %}
@@ -37,6 +38,9 @@
 				<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'close'}) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i></a>
 			{% endif %}
 			</td>
+			{% else %}
+			<td>Equipment</td>
+			{% endif %}
 		</tr>
 		{% endfor %}
 	</tbody>

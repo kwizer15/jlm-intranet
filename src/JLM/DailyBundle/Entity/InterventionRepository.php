@@ -12,7 +12,7 @@ class InterventionRepository extends EntityRepository
 	public function getPrioritary($limit = null, $offset = null)
 	{
 		$qb = $this->createQueryBuilder('i')
-			->where('i.officeAction IS NULL')
+			->where('i.officeAction IS NULL')			
 			->orderBy('i.priority','desc')
 			->orderBy('i.creation','desc');
 		if ($offset)
@@ -38,9 +38,14 @@ class InterventionRepository extends EntityRepository
 			$date2 = \DateTime::createFromFormat('Ymd',$date1->format('Ymd'));
 		}
 		$date2->add(new \DateInterval('P1D'));
-		$q = $this->getEntityManager()->createQuery('SELECT i FROM JLM\DailyBundle\Entity\Shifting i JOIN i.shiftTechnicians s WHERE s.begin BETWEEN ?1 AND ?2');
-		$q->setParameter(1,$date1);
-		$q->setParameter(2,$date2);
-		return $q->getResult();
+		
+		$qb = $this->createQueryBuilder('i')
+			->leftJoin('i.shiftTechnicians','t')
+			->where('t.begin BETWEEN ?1 AND ?2')
+			->orderBy('t.begin','asc')
+			->setParameter(1,$date1)
+			->setParameter(2,$date2);
+		return $qb->getQuery()->getResult();
+	
 	}
 }

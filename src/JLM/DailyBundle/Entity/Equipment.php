@@ -19,6 +19,6 @@ class Equipment extends Shifting
 	 */
 	public function getType()
 	{
-		return 'Matériel';
+		return 'equipment';
 	}
 }

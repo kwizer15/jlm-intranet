@@ -36,18 +36,7 @@ class InterventionController extends Controller
 		);
 	}
 
-	/**
-	 * Finds and displays a Intervention entity.
-	 *
-	 * @Route("/{id}/{act}", name="intervention_redirect", requirements={"id"="/d+"})
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function redirectAction(Intervention $entity, $act) 
-	{
-		if (in_array($act,array('show','edit','close')))
-			return $this->redirect($this->generateUrl($entity->getType() . '_' . $act,array('id'=>$entity->getId())));
-		throw $this->createNotFoundException('Page inexistante');
-	}
+	
 	
 	/**
 	 * Close an existing Fixing entity.
@@ -132,5 +121,18 @@ class InterventionController extends Controller
 		return array(
 				'entities' => $intervs,
 		);
+	}
+	
+	/**
+	 * Finds and displays a Intervention entity.
+	 *
+	 * @Route("/{id}/{act}", name="intervention_redirect", requirements={"id"="[0-9]+"})
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function redirectAction(Intervention $entity, $act)
+	{
+		if (in_array($act,array('show','edit','close')))
+			return $this->redirect($this->generateUrl($entity->getType() . '_' . $act,array('id'=>$entity->getId())));
+		throw $this->createNotFoundException('Page inexistante');
 	}
 }

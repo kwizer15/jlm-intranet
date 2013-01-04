@@ -1,5 +1,9 @@
-{# JLMDailyBundle:Intervention:show.html.twig #}
-{{ entities|length }}
-{% for entity in entities %}
-{{entity.creation | date('d/m/Y')}} - {{ entity.place }}<br>
-{% endfor %}
+{# JLMDailyBundle:Intervention:report.html.twig #}
+{% extends "JLMDailyBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Intervention de <small>({{ entities|length }})</small></h1>
+{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : entities} %}
+
+
+{% endblock %}

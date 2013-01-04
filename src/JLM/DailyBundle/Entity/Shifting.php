@@ -15,10 +15,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\DiscriminatorColumn(name="actionType", type="string")
  * @ORM\DiscriminatorMap({
  * 		"equipment" = "Equipment",
- *  	"fixing" = "Fixing",
+ * 		"fixing" = "Fixing",
  * 		"work" = "Work",
  * 		"maintenance" = "Maintenance",
- * 		"receiver" = "Receiver"
+ * 		"receiver" = "Receiver",
  * })
  */
 abstract class Shifting
