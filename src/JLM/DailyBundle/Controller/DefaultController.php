@@ -41,9 +41,9 @@ class DefaultController extends Controller
 
 		$now = new \DateTime;
 		$today = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'000000');
-		$tomorow = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'235959');
+		$tommorow = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'235959');
 		return array(
-		    'today' => $em->getRepository('JLMDailyBundle:Intervention')->getCountWithDate($today),
+		    'today' => $em->getRepository('JLMDailyBundle:Intervention')->getCountWithDate($today,$tommorow),
 			'stopped' => 0,
 			'fixing' => $em->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),
 			'work'   => $em->getRepository('JLMDailyBundle:Work')->getCountOpened(),
