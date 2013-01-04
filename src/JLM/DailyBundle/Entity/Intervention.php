@@ -344,6 +344,17 @@ abstract class Intervention extends Shifting
     }
     
     /**
+     * Re-open
+     * 
+     * @return Intervention
+     */
+    public function reOpen()
+    {
+    	$this->close = null;
+    	return $this;
+    }
+    
+    /**
      * Set comments
      *
      * @param string $comments
