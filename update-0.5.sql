@@ -1,1 +1,1 @@
-ALTER TABLE shift_technician ADD comment LONGTEXT DEFAULT NULL
+ALTER TABLE shifting_interventions ADD close DATETIME DEFAULT NULL, ADD contract VARCHAR(255) DEFAULT NULL, DROP closed

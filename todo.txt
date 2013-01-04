@@ -1,8 +1,5 @@
 - vue Fiche Interlocuteur
-- Pouvoir retirer un technicien d'une intervention
-- autocompletion contact dans la creation de panne ou travaux
 - Fiche porte avec boutons ajouter traveaux, ajouter panne
-- Ajouter traveaux
 - Edition contrat (date de début et redevence)
 
 
