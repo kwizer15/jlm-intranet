@@ -37,15 +37,13 @@ class InterventionRepository extends EntityRepository
 		{
 			$date2 = \DateTime::createFromFormat('Ymd',$date1->format('Ymd'));
 		}
-		$date2->add(new \DateInterval('P1D'));
-	
 		$qb = $this->createQueryBuilder('i')
 		->select('COUNT(i)')
 		->leftJoin('i.shiftTechnicians','t')
 		->where('t.begin BETWEEN ?1 AND ?2')
 		->orderBy('t.begin','asc')
-		->setParameter(1,$date1)
-		->setParameter(2,$date2);
+		->setParameter(1,$date1->format('Y-m-d'))
+		->setParameter(2,$date2->format('Y-m-d'));
 		return $qb->getQuery()->getSingleScalarResult();
 	
 	}
@@ -56,14 +54,12 @@ class InterventionRepository extends EntityRepository
 		{
 			$date2 = \DateTime::createFromFormat('Ymd',$date1->format('Ymd'));
 		}
-		$date2->add(new \DateInterval('P1D'));
-		
 		$qb = $this->createQueryBuilder('i')
 			->leftJoin('i.shiftTechnicians','t')
 			->where('t.begin BETWEEN ?1 AND ?2')
 			->orderBy('t.begin','asc')
-			->setParameter(1,$date1)
-			->setParameter(2,$date2);
+			->setParameter(1,$date1->format('Y-m-d'))
+			->setParameter(2,$date2->format('Y-m-d'));
 		return $qb->getQuery()->getResult();
 	
 	}
