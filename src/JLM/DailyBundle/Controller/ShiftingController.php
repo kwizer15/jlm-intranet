@@ -138,4 +138,21 @@ class ShiftingController extends Controller
 				'form'   => $editForm->createView(),
 		);
 	}
+	
+	/**
+	 * Delete an existing ShiftTechnician entity.
+	 *
+	 * @Route("/{id}/delete", name="shifting_delete")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function deleteAction(ShiftTechnician $entity)
+	{
+		$intervId = $entity->getShifting()->getId();
+		$em = $this->getDoctrine()->getManager();
+		$em->remove($entity);
+		$em->flush();
+	
+		return $this->redirect($this->generateUrl('intervention_redirect', array('id' => $intervId, 'act'=>'show')));
+	}
 }
