@@ -69,9 +69,9 @@ abstract class Intervention extends Shifting
      * Closed
      * @var bool
      * 
-     * @ORM\Column(name="closed", type="boolean")
+     * @ORM\Column(name="close", type="datetime", nullable=true)
      */
-    private $closed = false;
+    private $close;
     
     /**
      * Action Bureau (facturation)
@@ -298,21 +298,47 @@ abstract class Intervention extends Shifting
      * 
      * @param bool $closed
      * @return Intervention
+     * @deprecated
      */
     public function setClosed($closed = true)
     {
-    	$this->closed = (bool)$closed;
-    	return $this;
+    	$this->setClose(new \DateTime);
+       	return $this;
     }
     
     /**
      * Get closed
      * 
      * @return bool
+     * @deprecated
      */
     public function getClosed()
     {
-    	return $this->closed;
+    	if ($this->getClose() === null)
+    		return false;
+    	return true;
+    }
+    
+    /**
+     * Set Close
+     *
+     * @param DateTime $close
+     * @return Intervention
+     */
+    public function setClose(\DateTime $close)
+    {
+    	$this->close = $close;
+    	return $this;
+    }
+    
+    /**
+     * Get close
+     *
+     * @return DateTime
+     */
+    public function getClose()
+    {
+    	return $this->close;
     }
     
     /**
