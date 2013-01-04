@@ -1,0 +1,59 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Rapport installation</h1>
+{% if entity.stopped %}
+<div class="alert alert-danger"><h4>Porte à l'arrêt</h4></div>
+{% endif %}
+
+{% if entity.width and entity.height %}{{ entity.width }}x{{ entity.height }}mm</small>{% endif %}</h1>
+<div class="row-fluid">
+	<div class="span6">
+		<h2><small>{{ entity.type }}</small></h2>
+		<h4>{{ entity|nl2br}}</h4>
+		
+			<strong>Accès :</strong>
+			<br>{{ entity.street|nl2br }}
+	</div>
+	
+	{% if entity.googlemaps%}
+	<div class="span6 well">
+		<iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{ entity.mapsUrl }}"></iframe>
+	</div>
+	{% else %}
+	<div class="span6 well">Pas de photo</div>
+	{% endif %}
+</div>
+
+<div class="form-actions">
+	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche affaire</a>
+	<a href="{{ path('door_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>	
+</div>
+
+<table class="table table-striped">
+<thead>
+<tr>
+<th>Dates</th>
+<th>Type</th>
+<th>Raison</th>
+<th>Rapport</th>
+<th>Techniciens</th>
+</thead>
+<tbody>
+{% for interv in interventions %}
+<tr>
+<td>{{ interv.creation | localizeddate('full', 'none') }}</td>
+<td>{% include "JLMDailyBundle:Intervention:type.html.twig" with {'type': interv.type } %}</td>
+<td>{{ interv.reason |nl2br }}</td>
+<td>{{ interv.report |nl2br }}</td>
+<td>
+<ul>
+{% for shift in interv.shiftTechnicians %}
+<li>{{ shift.technician }}</li>
+{% endfor %}
+</ul>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}
