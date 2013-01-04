@@ -3,7 +3,7 @@
 namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use JLM\ModelBundle\Entity\Contract;
 /**
  * Plannification d'intervention
  * JLM\DailyBundle\Entity\InterventionPlanned
@@ -113,12 +113,16 @@ abstract class Intervention extends Shifting
     
     /**
      * Set contract
-     * @param string $contract
+     * @param string|Contract|null $contract
      * @return Intervention
      */
     public function setContract($contract)
     {
-    	$this->contract = $contract;
+    	if ($contract instanceof \JLM\ModelBundle\Entity\Contract)
+    		$this->contract = $contract.'';
+    	elseif ($contract === null)
+    		$this->contract = 'Hors contrat';
+    	else $this->contract = ''.$contract;
     	return $this;
     }
     
