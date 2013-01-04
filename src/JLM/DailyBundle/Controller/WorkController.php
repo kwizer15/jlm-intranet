@@ -131,6 +131,7 @@ class WorkController extends Controller
 	
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
+			$entity->setContract($entity->getDoor()->getActualContract());
 			$entity->setCreation(new \DateTime);
 			$entity->setPriority(4);
 	

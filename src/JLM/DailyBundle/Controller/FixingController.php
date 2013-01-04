@@ -89,6 +89,7 @@ class FixingController extends Controller
 			$em = $this->getDoctrine()->getManager();
 			$entity->setCreation(new \DateTime);
 			$entity->setDoor($door);
+			$entity->setContract($door->getActualContract());
 			$entity->setPlace($door.'');
 			$entity->setPriority(2);
 	
