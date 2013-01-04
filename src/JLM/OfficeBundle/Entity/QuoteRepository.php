@@ -21,9 +21,9 @@ class QuoteRepository extends EntityRepository
 		->getSingleScalarResult();
 	}
 	
-	public function getLastNumber($year = null)
+	public function getLastNumber($year = 2013)
 	{
-		$year = 2012;
+		
 		$qb = $this->createQueryBuilder('q')
 			->select('SUBSTRING(q.number,5) as num')
 			->where('SUBSTRING(q.creation, 1, 4) = :year')
