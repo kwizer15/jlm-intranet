@@ -127,6 +127,21 @@ class InterventionController extends Controller
 	}
 	
 	/**
+	 * Liste des interventions par date(s)
+	 *
+	 * @Route("/listpost", name="intervention_list_post")
+	 * @Method("post")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function reportdateAction(Request $request)
+	{
+		$d = $request->request->get('datepicker');
+		$date1 = \DateTime::createFromFormat('d/m/Y',$d);
+		//print_r($d); exit;
+		return $this->redirect($this->generateUrl('intervention_listdate1',array('date1'=>$date1->format('Ymd'))));
+	}
+	
+	/**
 	 * Finds and displays a Intervention entity.
 	 *
 	 * @Route("/{id}/{act}", name="intervention_redirect", requirements={"id"="[0-9]+"})
