@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use JLM\ModelBundle\Form\Type\DatepickerType;
 
 class DefaultController extends Controller
 {
@@ -39,10 +40,14 @@ class DefaultController extends Controller
 	{
 		$em = $this->getDoctrine()->getEntityManager();
 
+		$entity = new \DateTime();
+		$form   = $this->createForm(new DatepickerType(), $entity);
+		
 		$now = new \DateTime;
 		$today = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'000000');
 		$tommorow = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'235959');
 		return array(
+			'form' => $form->createView(),
 		    'today' => $em->getRepository('JLMDailyBundle:Intervention')->getCountWithDate($today,$tommorow),
 			'stopped' => 0,
 			'fixing' => $em->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),

@@ -90,15 +90,16 @@
 	{% if variant.state == 0 %}
 		<a href="{{ path('variant_edit', { 'id': variant.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 		<a href="{{ path('variant_ready', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-thumbs-up icon-white"></i> Prêt à evoyer</a>
-		<a href="{{ path('variant_printcoding', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer chiffrage</a>
+		<a href="{{ path('variant_print', { 'id': variant.id }) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer devis</a>
+		<a href="{{ path('variant_printcoding', { 'id': variant.id }) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer chiffrage</a>
 		
 	{% elseif variant.state >= 1 %}
 		{% if variant.state == 3 %}
 			<a href="{{ path('variant_receipt', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-thumbs-up icon-white"></i> Accusé reçu</a>
 		{% endif %}
-{#		{% if variant.state == 2 or variant.state == 3 %}
+		{% if variant.state == 1 or variant.state == 1 %}
 			<a href="{{ path('variant_fax', { 'id': variant.id }) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Envoyer par fax</a>
-		{% endif %}  #}
+		{% endif %}
 		{% if variant.state == 4 %}
 			<a href="{{ path('variant_given', { 'id': variant.id }) }}" class="btn btn-success"><i class="icon-thumbs-up icon-white"></i> Accorder</a>
 		{% endif %}

@@ -235,17 +235,14 @@ class VariantController extends Controller
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	}
 	
+	
+	
 	/**
 	 * @Route("/{id}/print",name="variant_print")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function printAction(QuoteVariant $entity)
 	{
-		if ($entity->getState() < 1)
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		
-		if ($entity->getState() < 3)		// Normalement 2
-			$entity->setState(3);			// et 2
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($entity);
 		$em->flush();
@@ -309,7 +306,7 @@ class VariantController extends Controller
 	 */
 	public function faxAction(QuoteVariant $entity)
 	{
-		if ($entity->getState() < 2)
+		if ($entity->getState() < 1)
 			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	
 		if ($entity->getState() < 3)
