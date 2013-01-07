@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Intervention;
+
+use JLM\ModelBundle\Form\Type\DatepickerType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\Task;
 use JLM\OfficeBundle\Entity\TaskType;
@@ -119,10 +121,19 @@ class InterventionController extends Controller
 		$repo = $em->getRepository('JLMDailyBundle:Intervention');
 		
 		$intervs = $repo->getWithDate($d1,$d2);
+		$now->sub(new \DateInterval('P4D'));
+		$days = array(
+			\DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000'),
+			\DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000'),
+			\DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000'),
+			\DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000'),
+			\DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000'),
+		);
 		return array(
 				'd1' => $d1,
 				'd2' => ($date2 === null) ? null : $d2,
 				'entities' => $intervs,
+				'days' => $days,
 		);
 	}
 	
@@ -135,10 +146,8 @@ class InterventionController extends Controller
 	 */
 	public function reportdateAction(Request $request)
 	{
-		$d = $request->request->get('datepicker');
-		$date1 = \DateTime::createFromFormat('d/m/Y',$d);
-		//print_r($d); exit;
-		return $this->redirect($this->generateUrl('intervention_listdate1',array('date1'=>$date1->format('Ymd'))));
+		$date = \DateTime::createFromFormat('d/m/Y',$request->get('datepicker'));
+		return $this->redirect($this->generateUrl('intervention_listdate1',array('date1'=>$date->format('Ymd'))));
 	}
 	
 	/**

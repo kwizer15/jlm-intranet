@@ -2,8 +2,16 @@
 {% extends "JLMDailyBundle::layout.html.twig" %}
 
 {% block content %}
-<h1>Intervention du {{ d1 | date('d/m/Y') }}{% if d2 %} au {{ d2 | date('d/m/Y') }}{% endif %} <small>({{ entities|length }})</small></h1>
-
+<h1>Interventions <small>({{ entities|length }})</small></h1>
+<h3>du {{ d1 | localizeddate('full', 'none') }}{% if d2 %} au {{ d2 | localizeddate('full', 'none') }}{% endif %} </h3>
+<div class="pagination pagination-centered">
+<ul>
+{% for day in days %}
+<li{% if day == d1 %} class="active"{% endif %}><a href="{{ path('intervention_listdate1',{'date1':day|date('Ymd')}) }}">{{ day | localizeddate('full', 'none') }}</a></li>
+{% endfor %}
+{# <li><input type="text"></li> #}
+</ul>
+</div>
 {% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : entities} %}
 
 
