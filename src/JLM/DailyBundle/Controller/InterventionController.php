@@ -121,7 +121,7 @@ class InterventionController extends Controller
 		$intervs = $repo->getWithDate($d1,$d2);
 		return array(
 				'd1' => $d1,
-				'd2' => $d2,
+				'd2' => ($date2 === null) ? null : $d2,
 				'entities' => $intervs,
 		);
 	}

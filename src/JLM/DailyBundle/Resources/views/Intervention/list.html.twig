@@ -13,7 +13,7 @@
 	</thead>
 	<tbody>
 		{% for entity in entities %}
-		<tr{% if entity.shiftTechnicians|length %} class="{% if entity.close %}success{% else %}warning{% endif %}"{% endif %}>
+		<tr{% if entity.shiftTechnicians|length %} class="{% if entity.close %}{% if entity.officeAction %}success{% else %}info{% endif %}{% else %}warning{% endif %}"{% endif %}>
 		{% if entity.type != 'equipment' %}
 			<td><small>{{ entity.creation| localizeddate('full', 'none') }}</small><br>{% include "JLMDailyBundle:Intervention:labeltype.html.twig" with {'type' : entity.type} %} {{ entity.creation|date('H:i') }}</td>
 			<td><a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}">{% if entity.door %}<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}{% else %}{{ entity.place }}{% endif %}</a></td>
@@ -23,7 +23,7 @@
 			{% if entity.shiftTechnicians|length %}
 				{% for shift in entity.shiftTechnicians %}
 				{% if shift.end %}
-				{{ shift.begin | date('d/m')}} - <strong>{{ shift.technician }}</strong> ({{ shift.time.format('%hh%I') }})<br>
+				<small>{{ shift.begin | date('d/m')}}</small> <strong>{{ shift.technician }}</strong><br>
 				{% else %}
 				<a href="{{ path('shifting_edit',{'id':shift.id}) }}"><small>{{ shift.begin | date('d/m')}}</small> <strong>{{ shift.technician }}</strong></a><br>
 				{% endif %}
@@ -32,15 +32,15 @@
 				<a href="{{ path('shifting_new',{'id':entity.id}) }}" class="btn"><i class="icon-plus-sign"></i> Ajouter</a>
 				{% endif %}
 			</td>
-			<td>
+{#			<td>
 			{% if entity.closed %}
 				Cloturée
 			{% else %}
-			{#	<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}" class="btn"><i class="icon-eye-open"></i></a>
+				<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}" class="btn"><i class="icon-eye-open"></i></a>
 				<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'edit'}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a>
-				<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'close'}) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i></a> #}
+				<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'close'}) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i></a>
 			{% endif %}
-			</td>
+			</td>  #}
 			{% else %}
 			<td>Equipment</td>
 			{% endif %}
