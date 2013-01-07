@@ -41,7 +41,7 @@ class SiteRepository extends EntityRepository
 	
 	public function match($string)
 	{
-		if (preg_match('#^([\w\-\/,\'âêîôûéèà\s]+)\s([0-9AB]{5}( CEDEX)?) - (.+)$#',$string,$matches))
+		if (preg_match('#^([\w\-\/",\'âêîôûéèà\s]+)\s([0-9AB]{5}( CEDEX)?) - (.+)$#',$string,$matches))
 		{
 			$qb = $this->createQueryBuilder('s')
 				->leftJoin('s.address','a')
