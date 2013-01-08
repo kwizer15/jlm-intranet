@@ -214,7 +214,7 @@ class QuotePDF extends \FPDF
 	{
 		if ($this->pageNo() == 1)
 		{
-			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-header.jpg',10,4,190);
+			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-header-comp.jpg',10,4,190);
 			$this->setFont('Arial','B',24);
 			$this->cell(60,35,'DEVIS',0,1,'C');
 			$this->ln(5);
@@ -222,7 +222,7 @@ class QuotePDF extends \FPDF
 		else
 		{
 			// Création
-			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-logo.jpg',90,4,30);
+			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-logo-comp.jpg',90,4,30);
 			$this->setFont('Arial','B',20);
 			$this->cell(60,12,'DEVIS',0,0,'L');
 			$this->cell(89,6);
