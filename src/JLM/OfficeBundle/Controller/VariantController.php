@@ -218,7 +218,10 @@ class VariantController extends Controller
 		$form->bind($request);
 		 
 		if ($form->isValid()) {
+			$mail->setCC('commerce@jlm-entreprise.fr');
+			
 			$message = $mail->getSwift();
+			$message->setReadReceiptTo('commerce@jlm-entreprise.fr');
 			$message->attach(\Swift_Attachment::newInstance(
 					$this->render('JLMOfficeBundle:Variant:quote.pdf.php',array('entity'=>$entity)),
 					$entity->getNumber().'.pdf','application/pdf'

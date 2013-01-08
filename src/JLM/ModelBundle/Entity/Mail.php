@@ -23,6 +23,11 @@ class Mail
 	private $to;
 	
 	/**
+	 * @var string $cc
+	 */
+	private $cc;
+	
+	/**
 	 * @var string $body
 	 */
 	private $body;
@@ -94,6 +99,27 @@ class Mail
 	}
 	
 	/**
+	 * Set cc
+	 * @param string $cc
+	 * @return Mail
+	 */
+	public function setCc($cc)
+	{
+		$this->cc = $cc;
+		return $this;
+	}
+	
+	/**
+	 * Get cc
+	 * @return string
+	 */
+	public function getCc()
+	{
+		return $this->cc;
+	}
+	
+	
+	/**
 	 * Set body
 	 * @param string $body
 	 * @return Mail
@@ -142,6 +168,7 @@ class Mail
 			->setSubject($this->getSubject())
 			->setFrom($this->getFrom())
 			->setTo($this->getTo())
+			->setBcc($this->getCc())
 			->setBody($this->getBody().chr(10).chr(10).'--'.chr(10).$this->getSignature());
 	}
 	
