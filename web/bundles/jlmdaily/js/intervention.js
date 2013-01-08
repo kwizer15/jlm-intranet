@@ -23,11 +23,10 @@
 					"#jlm_dailybundle_fixingedittype," +
 					"#jlm_dailybundle_worktype," +
 				  	"#jlm_dailybundle_workedittype").attr('id') + "_";
-		  console.log('1' + id);
 		  $(id + "contactName").attr('data-source',this.options.autoSource)
 					          .autocomplete({
 					source: function(request,response){
-						console.log('2' + id);
+						
 						request.term = $(id + 'door').val();
 						request.repository = 'JLMModelBundle:SiteContact';
 						return $.post(
