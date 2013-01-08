@@ -61,7 +61,7 @@ class RecuperationEquipmentController extends Controller
 			$em->persist($entity);
 			$em->flush();
 
-			return $this->redirect($this->generateUrl('daily'));
+			return $this->redirect($this->generateUrl('shifting_list',array('id'=>$entity->getTechnician()->getId())));
 		}
 
 		return array(
