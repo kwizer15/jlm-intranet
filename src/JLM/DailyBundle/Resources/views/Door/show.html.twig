@@ -29,10 +29,7 @@
 	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche affaire</a>
 	<a href="{{ path('door_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>	
 </div>
-{% for interv in interventions %}
 
-
-{% endfor %}
 <table class="table table-striped">
 <thead>
 <tr>
@@ -43,7 +40,7 @@
 <th>Techniciens</th>
 </thead>
 <tbody>
-
+{% for interv in interventions %}
 <tr>
 <td>{{ interv.creation | localizeddate('full', 'none') }}</td>
 <td>{% include "JLMDailyBundle:Intervention:type.html.twig" with {'type': interv.type } %}</td>

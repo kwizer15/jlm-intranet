@@ -57,7 +57,7 @@ class MaintenanceController extends Controller
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function showAction(Fixing $entity)
+	public function showAction(Maintenance $entity)
 	{
 		return array(
 				'entity'      => $entity,
@@ -84,12 +84,12 @@ class MaintenanceController extends Controller
 	/**
 	 * Close an existing Maintenance entity.
 	 *
-	 * @Route("/{id}/closeupdate", name="Maintenance_closeupdate")
+	 * @Route("/{id}/closeupdate", name="maintenance_closeupdate")
 	 * @Method("POST")
 	 * @Template("JLMDailyBundle:Maintenance:close.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function closeupdateAction(Request $request, Fixing $entity)
+	public function closeupdateAction(Request $request, Maintenance $entity)
 	{
 		$em = $this->getDoctrine()->getManager();
 			
@@ -138,21 +138,26 @@ class MaintenanceController extends Controller
 	 */
 	public function generateAction(Door $door)
 	{
-		$main = new Maintenance;
-		$main->setCreation(new \DateTime);
-		$main->setPlace($door.'');
-		$main->setReason('Visite d\'entretien');
-		$main->setContract($door->getActualContract());
-		$main->setDoor($door);
-		$main->setPriority(5);
 		$em = $this->getDoctrine()->getEntityManager();
-		$other = $em->getRepository('JLMBundle:Maintenance')->findByDoor($door);
+		$other = $em->getRepository('JLMDailyBundle:Maintenance')->findOneByDoor($door);
 		if ($other === null)
 		{
-			$em->persist($door);
-			$em->flush();
-		}
+			$main = new Maintenance;
+			$main->setCreation(new \DateTime);
+			$main->setPlace($door.'');
+			$main->setReason('Visite d\'entretien');
+			$main->setContract($door->getActualContract());
+			$main->setDoor($door);
+			$main->setPriority(5);
+			
 		
-		return $this->redirect($this->generateUrl('maintenance_show', array('id' => $entity->getId())));
+			$em->persist($main);
+			$em->flush();
+			
+			$id = $main->getId();
+		}
+		else
+			$id = $other->getId();
+		return $this->redirect($this->generateUrl('maintenance_show', array('id' => $id)));
 	}
 }
