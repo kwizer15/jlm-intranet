@@ -13,7 +13,7 @@
 	<tbody>
 		{% for door in doors %}
 		<tr>
-			<td><a href="{# path('daily_door',{'id': door.id}) #}" class="btn"><i class="icon-eye-open"></i></a></td>
+			<td><a href="{{ path('daily_door_show',{'id': door.id}) }}" class="btn"><i class="icon-eye-open"></i></a></td>
 			<td>{{ door.site.trustee }}</td>	
 			<td><span class="label">Prévoir entretien</span><br>
 			<span class="label label-info">Travaux en préparation</span><br>

@@ -129,4 +129,30 @@ class MaintenanceController extends Controller
 			}
 		}
 	}
+	
+	/**
+	 * Creation des entretiens a faire
+	 *
+	 * @Route("/generate/{id}", name="maintenance_generate")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function generateAction(Door $door)
+	{
+		$main = new Maintenance;
+		$main->setCreation(new \DateTime);
+		$main->setPlace($door.'');
+		$main->setReason('Visite d\'entretien');
+		$main->setContract($door->getActualContract());
+		$main->setDoor($door);
+		$main->setPriority(5);
+		$em = $this->getDoctrine()->getEntityManager();
+		$other = $em->getRepository('JLMBundle:Maintenance')->findByDoor($door);
+		if ($other === null)
+		{
+			$em->persist($door);
+			$em->flush();
+		}
+		
+		return $this->redirect($this->generateUrl('maintenance_show', array('id' => $entity->getId())));
+	}
 }
