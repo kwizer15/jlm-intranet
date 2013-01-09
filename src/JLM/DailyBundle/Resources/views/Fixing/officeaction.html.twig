@@ -7,7 +7,7 @@
 			<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 1 }) }}" class="btn btn-primary">Facturer</a>
 			<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 5 }) }}" class="btn">Ne pas facturer</a>
 		{% endif %}
-	{% elseif entity.done.id == 3 %}
+	{% else %}
 			<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 5 }) }}" class="btn btn-primary">Ne pas facturer</a>
 			<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 1 }) }}" class="btn">Facturer</a>
 	{% endif %}
@@ -15,7 +15,7 @@
 	{% if entity.done.id == 1  or entity.done.id == 2 %}
 		<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 1 }) }}" class="btn btn-primary">Facturer</a>
 		<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 5 }) }}" class="btn">Ne pas facturer</a>
-	{% elseif entity.done.id == 3 %}
+	{% else %}
 		<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 5 }) }}" class="btn btn-primary">Ne pas facturer</a>
 		<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 1 }) }}" class="btn">Facturer</a>
 	{% endif %}
