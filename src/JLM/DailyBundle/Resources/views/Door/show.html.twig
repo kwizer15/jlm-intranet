@@ -34,18 +34,19 @@
 <thead>
 <tr>
 <th>Dates</th>
-<th>Type</th>
 <th>Raison</th>
 <th>Rapport</th>
 <th>Techniciens</th>
 </thead>
 <tbody>
 {% for interv in interventions %}
-<tr>
-<td>{{ interv.creation | localizeddate('full', 'none') }}</td>
-<td>{% include "JLMDailyBundle:Intervention:type.html.twig" with {'type': interv.type } %}</td>
-<td>{{ interv.reason |nl2br }}</td>
+<tr{% if interv.close %} class="{% if interv.officeAction and ((interv.otherAction and interv.rest) or not interv.rest) %}success{% else %}info{% endif %}"{% endif %}>
+<td><small>{{ interv.creation| localizeddate('full', 'none') }}</small><br>{% include "JLMDailyBundle:Intervention:labeltype.html.twig" with {'type' : interv.type} %} {{ interv.creation|date('H:i') }}</td>
+<td><a href="{{ path('intervention_redirect',{'id':interv.id,'act':'show'}) }}">{{ interv.reason |nl2br }}</a></td>
 <td>{{ interv.report |nl2br }}</td>
+<td>{% if interv.officeAction %}{{ interv.officeAction.type }}<br>{% endif %}
+{% if interv.otherAction %}{{ interv.otherAction.type }}{% endif %}
+</td>
 <td>
 <ul>
 {% for shift in interv.shiftTechnicians %}
