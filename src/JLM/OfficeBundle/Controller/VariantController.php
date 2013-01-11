@@ -358,7 +358,7 @@ class VariantController extends Controller
 		$task = new Task();
 		$task->setDoor($entity->getQuote()->getDoor());
 		$task->setPlace($entity->getQuote()->getDoorCp());
-		$task->setTodo($entity->getIntro());
+		$task->setTodo('Accord du devis n°'.$entity->getNumber());
 		$task->setType($em->getRepository('JLMOfficeBundle:TaskType')->find(3));
 		$task->setUrlSource($this->generateUrl('variant_print', array('id' => $entity->getId())));
 		
