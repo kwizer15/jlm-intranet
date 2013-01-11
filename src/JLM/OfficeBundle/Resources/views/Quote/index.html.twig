@@ -8,8 +8,8 @@
         <tr>
             <th>#</th>
             <th>Date</th>
-            <th>Suivi par</th>
             <th>Affaire</th>
+            <th>Installation</th>
             <th>Syndic</th>
             <th>Var.</th>
 			<th></th>
@@ -23,8 +23,8 @@
             	{% include 'JLMOfficeBundle:Quote:statelabel.html.twig' with {'state': entity.state} %}
             </td>
             <td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}</td>
-            <td>{{ entity.followerCp }}</td>
-            <td>{{ entity.doorCp | nl2br }}</td>
+            <td><strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}</td>
+            <td>{{ entity.door.type }}<br>{{ entity.door.location }}</td>
             <td>{{ entity.trusteeName }}</td>
             <td>{{ entity.variants|length }}</td>
             <td>
