@@ -1,0 +1,4 @@
+{% set l = (phone|length / 2) - 1 %}
+{% for i in 0..l %}
+{{ phone|slice(i*2,2) }}{% if not loop.last %}.{% endif %}
+{% endfor %}

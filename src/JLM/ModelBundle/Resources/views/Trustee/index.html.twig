@@ -16,8 +16,8 @@
         <tr>
             <td><a href="{{ path('trustee_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
             <td>{% include 'JLMModelBundle:Helpers:address.html.twig' with {'address':entity.address} %}</td>
-            <td>{{ entity.phone }}</td>
-            <td>{{ entity.fax }}</td>
+            <td>{% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone':entity.phone} %}</td>
+            <td>{% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone':entity.fax} %}</td>
             <td>
                  <a href="{{ path('trustee_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
                 <a href="{{ path('trustee_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i></a>
