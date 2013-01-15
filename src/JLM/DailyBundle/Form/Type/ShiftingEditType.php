@@ -13,13 +13,9 @@ class ShiftingEditType extends AbstractType
         $builder
         	->add('begin','datetime',array(
       				'label'=>'Début',
-      				'hours'=>array(8,9,10,11,12,13,14,15,16,17,18),
-      				
       			))
       		->add('end','time',array(
       				'label'=>'Fin',
-      				'hours'=>array(8,9,10,11,12,13,14,15,16,17,18),
-      				
       			))
       			->add('comment','textarea',array('label'=>'Commentaire','required'=>false,'attr'=>array('class'=>'input-xxlarge')))
         ;
