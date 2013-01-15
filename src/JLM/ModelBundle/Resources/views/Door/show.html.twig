@@ -9,13 +9,13 @@
 {% if entity.width and entity.height %}{{ entity.width }}x{{ entity.height }}mm</small>{% endif %}</h1>
 <div class="row-fluid">
 	<div class="span6">
-		<h2><small>{{ entity.type }}</small></h2>
-		<h4>{{ entity|nl2br}}</h4>
 		
-			<strong>Accès :</strong>
-			<br>{{ entity.street|nl2br }}
+		<h4><span class="text-info">{{ entity.type }} - {{ entity.location }}</span>
+		<br>{{ entity.street|nl2br }}
+		<br>{{ entity.site.address.city}}</h4>
+		
 				
-		{% if entity.transmitters|length > 0 %}
+{#		{% if entity.transmitters|length > 0 %}
 		<h2><small>Types d'emetteurs</small></h2>
 		<ul>
 		{% for transmitter in entity.transmitters %}
@@ -25,6 +25,7 @@
 		{% else %}
 		<h2><small>Aucun emetteur</small></h2>
 		{% endif %}
+#}
 	</div>
 	
 	{% if entity.googlemaps%}
@@ -35,6 +36,7 @@
 	<div class="span6 well">Pas de photo</div>
 	{% endif %}
 </div>
+{#
 {% if entity.site.contacts|length > 0 %}
 <h2><small>Interlocuteurs</small></h2>
 <table class="table table-striped">
@@ -67,7 +69,7 @@
 {% else %}
 <h2><small>Aucun interlocuteur</small></h2>
 {% endif %}
-	
+#}
 
 
 

@@ -3,7 +3,7 @@
 <h1>Fiche affaire</h1>
 <div class="row-fluid">
 	<div class="span4">
-		<h4>{{ entity|nl2br }}</h4>
+		<h4>{% include 'JLMModelBundle:Helpers:address.html.twig' with {'address':entity.address} %}</h4>
 	</div>
 	<div class="span4">
 		{% if entity.accession %}Accession
@@ -16,9 +16,9 @@
 			<strong>Adresse de facturation</strong>
 			 <br>{{ entity.trustee }}
 			{% if entity.trustee.billingaddress %}
-			<br>{{ entity.trustee.billingaddress|nl2br }}
+			<br>{% include 'JLMModelBundle:Helpers:address.html.twig' with {'address':entity.trustee.billingAddress} %}
 			{% else %}
-			<br>{{ entity.trustee.address|nl2br }}
+			<br>{% include 'JLMModelBundle:Helpers:address.html.twig' with {'address':entity.trustee.address} %}
 			{% endif %}
 		</address>
 	</div>

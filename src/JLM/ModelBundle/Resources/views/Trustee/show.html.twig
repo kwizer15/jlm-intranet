@@ -4,19 +4,19 @@
 <div class="row-fluid">
 	<div class="span4">
 		<address>
-			{{ entity.address|nl2br }}
-			{% if entity.phone %}<br>Tel : {{ entity.phone }}{% endif %}
-			{% if entity.fax %}<br>Fax : {{ entity.fax }}{% endif %}
+{% include 'JLMModelBundle:Helpers:address.html.twig' with {'address':entity.address} %}
+			{% if entity.phone %}<br>Tel : {% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone':entity.phone} %}{% endif %}
+			{% if entity.fax %}<br>Fax : {% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone':entity.fax} %}{% endif %}
 			{% if entity.email %}<br>e-mail : <a href="mailto:{{ entity.email }}">{{ entity.email }}</a>{% endif %}
 		</address>
 	</div>
 	<div class="span8">
 		<address>
 			<strong>Facturation</strong>
-			<br>{{ entity.billingAddress|nl2br }}
+			<br>{% include 'JLMModelBundle:Helpers:address.html.twig' with {'address':entity.billingAddress} %}
 			<br><strong>Compte n°{{ entity.accountNumber }}</strong>
-			{% if entity.billingPhone %}<br>Tel : {{ entity.billingPhone }}{% endif %}
-			{% if entity.billingFax %}<br>Fax : {{ entity.billingFax }}{% endif %}
+			{% if entity.billingPhone %}<br>Tel : {% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone':entity.billingPhone} %}{% endif %}
+			{% if entity.billingFax %}<br>Fax : {% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone':entity.billingFax} %}{% endif %}
 			{% if entity.billingEmail %}<br>e-mail : <a href="mailto:{{ entity.billingEmail }}">{{ entity.billingEmail }}</a>{% endif %}
 		</address>
 	</div>

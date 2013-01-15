@@ -6,6 +6,7 @@
 			<th>Localisation</th>
 			<th>Adresse porte</th>
 			<th>Type</th>
+			<th>Contrat</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -14,6 +15,7 @@
 			<td><a href="{{ path('door_show',{'id': door.id}) }}">{{ door.location }}</a></td>
 			<td>{{ door.street | nl2br }}</td>
 			<td>{{ door.type }}</td>
+			<td>{{ door.actualContract }}
 		</tr>
 		{% endfor %}
 	</tbody>
