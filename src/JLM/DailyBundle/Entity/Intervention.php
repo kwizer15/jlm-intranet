@@ -67,7 +67,7 @@ abstract class Intervention extends Shifting
     
     /**
      * Closed
-     * @var bool
+     * @var DateTime
      * 
      * @ORM\Column(name="close", type="datetime", nullable=true)
      */

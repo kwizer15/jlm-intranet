@@ -14,10 +14,10 @@ class InterventionRepository extends EntityRepository
 		$qb = $this->createQueryBuilder('i')
 			->leftJoin('i.shiftTechnicians','s')
 			->where('i.officeAction IS NULL')
-			->orderBy('i.close','asc')
-			->orderBy('s.creation','asc')
-			->orderBy('i.priority','desc')
-			->orderBy('i.creation','asc');
+			->addOrderBy('i.close','asc')
+			->addOrderBy('s.creation','asc')
+			->addOrderBy('i.priority','desc')
+			->addOrderBy('i.creation','asc');
 		if ($offset)
 			$qb->setFirstResult( $offset );
 		if ($limit)
@@ -52,11 +52,11 @@ class InterventionRepository extends EntityRepository
 		$qb = $this->createQueryBuilder('i')
 			->leftJoin('i.shiftTechnicians','t')
 			->where('t.begin BETWEEN ?1 AND ?2')
-			->orderBy('t.begin','asc')
-			->orderBy('i.close','asc')
-			->orderBy('s.creation','asc')
-			->orderBy('i.priority','desc')
-			->orderBy('i.creation','asc')
+			->addOrderBy('t.begin','asc')
+			->addOrderBy('i.close','asc')
+			->addOrderBy('t.creation','asc')
+			->addOrderBy('i.priority','desc')
+			->addOrderBy('i.creation','asc')
 			->setParameter(1,$date1)
 			->setParameter(2,$date2);
 		return $qb->getQuery()->getResult();
