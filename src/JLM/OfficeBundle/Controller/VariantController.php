@@ -187,7 +187,8 @@ class VariantController extends Controller
 		$mail = new Mail();
 		$mail->setSubject('Devis n°'.$entity->getNumber());
 		$mail->setFrom('commerce@jlm-entreprise.fr');
-		$mail->setBody($this->renderView('JLMOfficeBundle:Variant:email.txt.twig', array('intro' => $entity->getIntro())));
+		$mail->setBody($this->renderView('JLMOfficeBundle:Variant:email.txt.twig', array('intro' => $entity->getIntro(),'door' => $entity->getQuote()->getDoorCp())));
+		$mail->setSignature($this->renderView('JLMOfficeBundle:Variant:emailsignature.txt.twig', array('name' => $entity->getQuote()->getFollowerCp())));
 		if ($entity->getQuote()->getContact())
 			if ($entity->getQuote()->getContact()->getPerson())
 			if ($entity->getQuote()->getContact()->getPerson()->getEmail())
