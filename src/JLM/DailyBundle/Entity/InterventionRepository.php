@@ -12,9 +12,11 @@ class InterventionRepository extends EntityRepository
 	public function getPrioritary($limit = null, $offset = null)
 	{
 		$qb = $this->createQueryBuilder('i')
-			->where('i.officeAction IS NULL')			
-			->orderBy('i.priority','desc')
-			->orderBy('i.creation','desc');
+			->leftJoin('i.shiftTechnicians','s')
+			->where('i.officeAction IS NULL')
+			->orderBy('i.close','asc')
+			->orderBy('s.creation')
+			->orderBy('i.creation','asc');
 		if ($offset)
 			$qb->setFirstResult( $offset );
 		if ($limit)
