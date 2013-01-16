@@ -15,7 +15,8 @@ class InterventionRepository extends EntityRepository
 			->leftJoin('i.shiftTechnicians','s')
 			->where('i.officeAction IS NULL')
 			->orderBy('i.close','asc')
-			->orderBy('s.creation')
+			->orderBy('s.creation','asc')
+			->orderBy('i.priority','desc')
 			->orderBy('i.creation','asc');
 		if ($offset)
 			$qb->setFirstResult( $offset );
@@ -52,6 +53,10 @@ class InterventionRepository extends EntityRepository
 			->leftJoin('i.shiftTechnicians','t')
 			->where('t.begin BETWEEN ?1 AND ?2')
 			->orderBy('t.begin','asc')
+			->orderBy('i.close','asc')
+			->orderBy('s.creation','asc')
+			->orderBy('i.priority','desc')
+			->orderBy('i.creation','asc')
 			->setParameter(1,$date1)
 			->setParameter(2,$date2);
 		return $qb->getQuery()->getResult();
