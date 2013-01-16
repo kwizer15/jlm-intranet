@@ -125,8 +125,13 @@ class ShiftingController extends Controller
 		if ($editForm->isValid()) {
 			$begin = $entity->getBegin();
 			$end = $entity->getEnd();
-			$end->setDate($begin->format('Y'),$begin->format('m'),$begin->format('d'));
-			$entity->setEnd($end);
+			if ($end->format('Hi') != '0000')
+			{
+				$end->setDate($begin->format('Y'),$begin->format('m'),$begin->format('d'));
+				$entity->setEnd($end);
+			}
+			else
+				$entity->setEnd();
 			$em->persist($entity);
 			$em->flush();
 	
