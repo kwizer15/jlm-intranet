@@ -47,7 +47,7 @@ class CodingPDF extends \FPDF
 		{
 			if (!$line->isService())
 			{
-				try { $p =($line->getUnitPrice()-$line->getShipping())/($line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1))*100; }
+				try { $p =(($line->getUnitPrice()-$line->getShipping())/($line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1))-1)*100; }
 				catch (Exception $e) { $p= 0; }
 				$content[] = array(
 						number_format($line->getQuantity(),0,',',' '),
@@ -85,7 +85,7 @@ class CodingPDF extends \FPDF
 						number_format($line->getExpenseRatio()+1,1,',',' '),
 						number_format($line->getShipping(),2,',',' ').' '.chr(128),
 						number_format($line->getQuantity()*$line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1)+$line->getShipping(),2,',',' ').' '.chr(128),
-						number_format(($line->getUnitPrice()-$line->getShipping())/($line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1))*100,0,',',' ').' %',
+						number_format((($line->getUnitPrice()-$line->getShipping())/($line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1))-1)*100,0,',',' ').' %',
 						number_format($line->getQuantity()*($line->getUnitPrice()-($line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1)+$line->getShipping())),2,',',' ').' '.chr(128),
 						number_format($line->getUnitPrice(),2,',',' ').' '.chr(128),
 						number_format($line->getQuantity()*$line->getUnitPrice(),2,',',' ').' '.chr(128),
