@@ -1,7 +1,7 @@
 
 	{% include 'JLMOfficeBundle:Quote:stateheader.html.twig' with {'state': variant.state} %}
 	<strong>Créé le {{ variant.creation|date('d/m/Y') }}</strong>
-    <p>{{ variant.intro }}</p>
+    <p>{{ variant.intro | nl2br }}</p>
   	<ul class="nav nav-pills">
 	  <li class="active tab-quote"><a href="#">Devis</a></li>
 	  <li class="tab-coding"><a href="#">Chiffrage</a></li>
