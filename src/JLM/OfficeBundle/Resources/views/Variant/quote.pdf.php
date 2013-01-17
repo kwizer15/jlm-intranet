@@ -237,9 +237,11 @@ class QuotePDF extends \FPDF
 			$this->setFont('Arial','B',10);
 				
 			$this->cell(22,6,utf8_decode('Référence'),1,0,'C',true);
-			$this->cell(19,6,utf8_decode('Quantité'),1,0,'C',true);
-			$this->cell(101,6,utf8_decode('Désignation'),1,0,'C',true);
+			$this->cell(100,6,utf8_decode('Désignation'),1,0,'C',true);
+			$this->cell(7,6,utf8_decode('Qté'),1,0,'C',true);
+			
 			$this->cell(25,6,utf8_decode('Prix U.H.T'),1,0,'C',true);
+			$this->cell(13,6,utf8_decode('TVA'),1,0,'C',true);
 			$this->cell(25,6,utf8_decode('Prix H.T'),1,1,'C',true);
 			$this->setFont('Arial','',10);
 		}
@@ -253,9 +255,10 @@ class QuotePDF extends \FPDF
 			$y = $this->getY();
 			$h = 278 - $y;
 			$this->cell(22,$h,'','RLB',0);
-			$this->cell(19,$h,'','RLB',0);
-			$this->cell(101,$h,'','RLB',0);
+			$this->cell(100,$h,'','RLB',0);
+			$this->cell(7,$h,'','RLB',0);
 			$this->cell(25,$h,'','RLB',0);
+			$this->cell(13,$h,'','RLB',0);
 			$this->cell(25,$h,'','RLB',1);
 		}
 	
