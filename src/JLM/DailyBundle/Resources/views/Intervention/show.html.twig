@@ -18,6 +18,7 @@
 	 <tr><th>Créée le</th><td>{{ entity.creation|date('d/m/Y H:i') }}</td></tr>
 	 <tr><th>Type</th><td>{% include "JLMDailyBundle:Intervention:type.html.twig" with {'type' : entity.type} %}</td></tr>
 	 <tr><th>Raison</th><td>{{ entity.reason | nl2br }}</td></tr>
+	 <tr><th>Contrat</th><td>{{ entity.contract }}</td></tr>
 	 </tbody>
 	 </table>
 	</div>
