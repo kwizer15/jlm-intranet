@@ -247,10 +247,6 @@ class VariantController extends Controller
 	 */
 	public function printAction(QuoteVariant $entity)
 	{
-		$em = $this->getDoctrine()->getEntityManager();
-		$em->persist($entity);
-		$em->flush();
-		 
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
