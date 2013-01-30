@@ -7,12 +7,14 @@
 
 <div class="form-actions">
 	<a href="{{ path('quote') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
-	<a href="{{ path('quote_print',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-white icon-print"></i> Imprimer tout</a>
-	<a href="{{ path('quote_mail',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-white icon-envelope"></i> Envoyer tout par mail</a>	
+{% if entity.variants|length > 0 %}	
+	<a href="{{ path('quote_print',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-white icon-print"></i> Imprimer tout</a>	
+{% endif %}
 {% if entity.state == 0 %}
 	<a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
-	
-	{% endif %}
+{% else %}
+<a href="{{ path('quote_mail',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-white icon-envelope"></i> Envoyer tout par mail</a>
+{% endif %}
 	<a href="{{ path('variant_new',{ 'id' : entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter une variante</a>
 </div>
 
