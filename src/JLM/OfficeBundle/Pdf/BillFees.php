@@ -45,6 +45,9 @@ class BillFees extends \FPDF
 		$this->setFont('Arial','B',11);
 		$this->cell(0,5,utf8_decode($this->entity->getTrustee()),0,2);
 		$this->setFont('Arial','',11);
+		$address = $this->entity->getTrustee()->getBillingAddress();
+		if ($address === null)
+			$address = $this->entity->getTrustee()->getAddress();
 		$this->multiCell(0,5,utf8_decode($this->entity->getTrustee()->getBillingAddress()));
 		$this->cell(0,5,'',0,1);
 		
@@ -53,8 +56,8 @@ class BillFees extends \FPDF
 		$this->cell(0,5,utf8_decode('Affaire'),0,2);
 		$this->setFont('Arial','B',11);
 		$this->cell(0,5,utf8_decode('Contrat d\'entretien : '.$this->entity->getNumber()),0,2);
-		if ($this->entity->getTrustee()->getId() == 1)
-			$this->cell(0,5,utf8_decode('Groupe : '),0,2);
+		if ($this->entity->getDoor()->getSite()->getGroupNumber() != null)
+			$this->cell(0,5,utf8_decode('Groupe : '.$this->entity->getDoor()->getSite()->getGroupNumber()),0,2);
 		else
 			$this->ln(5);
 		$this->setFont('Arial','',11);
