@@ -39,6 +39,13 @@ class Site
     private $address;
     
     /**
+     * @var string $groupnumber
+     * 
+     * @ORM\Column(name="groupNumber", type="string", lenght=6)
+     */
+    private $groupNumber;
+    
+    /**
      * @var ArrayCollection $doors
      * 
      * @ORM\OneToMany(targetEntity="Door", mappedBy="site")
@@ -132,6 +139,25 @@ class Site
         return $this->address;
     }
 
+    /**
+     * Set groupnumber
+     * 
+     */
+    public function setGroupNumber($groupNumber)
+    {
+    	$this->groupNumber = $groupNumber;
+    	return $this;
+    }
+    
+    /**
+     * Get groupnumber
+     *
+     */
+    public function getGroupNumber()
+    {
+    	return $this->groupNumber;
+    }
+    
     /**
      * Add doors
      *
