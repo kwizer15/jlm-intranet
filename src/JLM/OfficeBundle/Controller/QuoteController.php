@@ -269,4 +269,21 @@ class QuoteController extends Controller
     		'results' => $results,
     	);
     }
+    
+    /**
+     * Imprimer toute les variantes
+     *
+     * @Route("/{id}/print", name="quote_print")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function printAction(Quote $entity)
+    {
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/pdf');
+    	$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
+    	$response->setContent($this->render('JLMOfficeBundle:Quote:quote.pdf.php',array('entities'=>$entity->getVariants())));
+    		
+    	//   return array('entity'=>$entity);
+    	return $response;
+    }
 }

@@ -1,43 +1,41 @@
 <?php
-
-echo QuotePDF::get($entity);
+namespace JLM\OfficeBundle\Pdf;
 
 class QuotePDF extends \FPDF
 {
 	private $entity;
 	private $end = false;
+	private $variantpage;
 	
-	public static function get($entity)
+	public static function get($entities)
 	{
 		
 		$pdf = new self();
-		$pdf->setEntity($entity);
 		$pdf->_init();
-		$pdf->_header();
-		$pdf->_content();
-		$pdf->_footer();
+		foreach ($entities as $entity)
+			$pdf->addEntity($entity);
 		return $pdf->Output('','S');
 	}
 	
-	private function setEntity($entity)
+	public function addEntity($entity)
 	{
 		$this->entity = $entity;
+		$this->variantpage = $this->pageNo() + 1;
+		$this->addPage();
+		
+		$this->_header();
+		$this->_content();
+		$this->_footer();
 		return $this;
 	}
 	
-	private function _init()
+	public function _init()
 	{
 		$this->aliasNbPages();
 		$this->setFillColor(200);
-	//	$pageCount = $this->setSourceFile($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/pdf/devis.pdf');
-	//	$onlyPage = $this->importPage(1, '/MediaBox');
-		$this->addPage();
-	//	$this->useTemplate($onlyPage);
-		
-	//	$this->setLeftMargin(4);
 	}
 	
-	private function _header()
+	public function _header()
 	{
 		// Follower
 		$this->setFont('Arial','B',11);
@@ -82,7 +80,7 @@ class QuotePDF extends \FPDF
 		$this->ln(3);
 	}
 	
-	private function _content()
+	public function _content()
 	{
 		// En tête lignes
 		$this->setFont('Arial','B',10);
@@ -101,7 +99,7 @@ class QuotePDF extends \FPDF
 		}	
 	}
 	
-	private function _line($line)
+	public function _line($line)
 	{
 		
 		$this->cell(22,8,utf8_decode($line->getReference()),'RL',0);
@@ -212,7 +210,7 @@ class QuotePDF extends \FPDF
 	
 	public function header()
 	{
-		if ($this->pageNo() == 1)
+		if ($this->pageNo() == $this->variantpage )
 		{
 			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-header-comp.jpg',10,4,190);
 			$this->setFont('Arial','B',24);
@@ -221,6 +219,7 @@ class QuotePDF extends \FPDF
 		}
 		else
 		{
+			
 			// Création
 			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-logo-comp.jpg',90,4,30);
 			$this->setFont('Arial','B',20);
