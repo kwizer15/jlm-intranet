@@ -9,6 +9,7 @@
 <th>Fin de garantie</th>
 <th>Fin</th>
 <th>Dernière redevance</th>
+<th></th>
 </tr>
 </thead>
 <tbody>
@@ -28,6 +29,7 @@
 <td>{% if contract.endWarranty %}{{ contract.endWarranty|date('d/m/Y') }}{% endif %}</td>
 <td>{% if contract.end %}{{ contract.end|date('d/m/Y') }}{% else %}<a href="{{ path('contract_stop',{'id' : contract.id }) }}" class="btn btn-danger">Arrêter</a>{% endif %}</td>
 <td>{{ contract.fee|number_format(2,',',' ') }} €</td>
+<td><a href="{{ path('contract_print',{'id':contract.id}) }}">Imprimer</a>
 </tr>
 {% endfor %}
 </tbody>
