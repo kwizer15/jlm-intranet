@@ -93,13 +93,14 @@ class City extends StringModel
     public function __toString()
     {
     //	return $this->getZip().' - '.$this->getName();
-    	$zip = $this->getZip();
-    	$name = $this->getName();
-    	$zip = substr(0,5,$zip);
-    	$cedex = str_replace($zip,'',$this->getZip());
-    	if (substr(0,5,$name) == 'Paris')
-    		$name = 'Paris';
-    	$name = strtoupper($name.$cedex);
-    	return $zip.' - '.$name;
+	    
+	    	$name = $this->getName();
+	    	$zip = substr($this->getZip(),0,5);
+	    	$cedex = str_replace($zip,'',$this->getZip());
+	    	if (substr($name,0,5) == 'Paris')
+	    		$name = 'Paris';
+	    	$name = strtoupper($name.$cedex);
+	    	return $zip.' - '.$name;
+
     }
 }

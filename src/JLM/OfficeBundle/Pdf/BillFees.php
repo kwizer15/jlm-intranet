@@ -89,10 +89,10 @@ class BillFees extends \FPDF
 		$this->cell(0,5,utf8_decode('Net T.T.C'),1,1);
 		
 		$this->cell(55,5,utf8_decode('A réception'),1,0,'C');
-		$this->cell(27,5,utf8_decode(number_format($amount,2,',',' ')).' ').chr(128),1,0,'R');
+		$this->cell(27,5,utf8_decode(number_format($amount,2,',',' ').' ').chr(128),1,0,'R');
 		$this->cell(30,5,utf8_decode($this->entity->getDoor()->getSite()->getVat()),1,0,'R');
 		$tva = $amount * $this->entity->getDoor()->getSite()->getVat()->getRate();
-		$this->cell(32,5,utf8_decode(number_format($tva,2,',',' ')).chr(128),1,0,'R');
+		$this->cell(32,5,utf8_decode(number_format($tva,2,',',' ').' ').chr(128),1,0,'R');
 		$this->cell(0,5,utf8_decode(number_format($amount + $tva,2,',',' ').' ').chr(128),1,1,'R');
 		$this->ln(10);
 		
