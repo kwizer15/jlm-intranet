@@ -41,7 +41,7 @@ class Site
     /**
      * @var string $groupnumber
      * 
-     * @ORM\Column(name="groupNumber", type="string", length=6)
+     * @ORM\Column(name="groupNumber", type="string", length=6, nullable=true)
      */
     private $groupNumber;
     
