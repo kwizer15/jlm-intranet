@@ -5,20 +5,23 @@ class BillFees extends \FPDF
 {
 	private $entity;
 	
-	public static function get($entities)
+	public static function get($entities,$number)
 	{
 		$pdf = new self();
 		$pdf->_init();
 		foreach ($entities as $entity)
-			$pdf->addEntity($entity);
+		{
+			$pdf->addEntity($entity,$number);
+			$number++;
+		}
 		return $pdf->Output('','S');
 	}
 	
-	private function addEntity($entity)
+	private function addEntity($entity,$number)
 	{
 		$this->entity = $entity;
 		$this->addPage();
-		$this->_header();
+		$this->_header($number);
 		$this->_content();
 		$this->_footer();
 		return $this;
@@ -29,13 +32,13 @@ class BillFees extends \FPDF
 		
 	}
 	
-	private function _header()
+	private function _header($number)
 	{
 		// Date facture
 		$datef = new \DateTime();
 		
 		// Numéro de facture
-		$billnumber = 13020000;
+		$billnumber = 1302;
 		
 		
 		// Adresse de facturation
@@ -69,13 +72,14 @@ class BillFees extends \FPDF
 		$this->cell(30,5,utf8_decode('N° Facture'),1,1);
 		$this->cell(30,5,utf8_decode($this->entity->getTrustee()->getAccountNumber()),1,0,'R');
 		$this->cell(30,5,utf8_decode($datef->format('d/m/Y')),1,0,'R');
-		$this->cell(30,5,utf8_decode($billnumber),1,1,'R');
+		$this->cell(30,5,utf8_decode($billnumber.$number),1,1,'R');
 		$this->ln(5);
 		
 		$this->cell(140,5,utf8_decode('Désignation'),1,0,'C');
 		$this->cell(0,5,utf8_decode('Montant H.T'),1,1,'C');
 		$this->cell(140,90,utf8_decode('Redevance semestielle du 01/01/2013 au 30/06/2013'),1,0);
-		$this->cell(0,90,utf8_decode(str_replace('.',',',$this->entity->getFee()).' ').chr(128),1,1,'R');
+		$amount = $this->entity->getFee()/2;
+		$this->cell(0,90,utf8_decode(number_format($amount,2,',',' ').' ').chr(128),1,1,'R');
 		$this->ln(5);
 		
 		$this->cell(55,5,utf8_decode('Échéance'),1,0,'C');
@@ -85,18 +89,18 @@ class BillFees extends \FPDF
 		$this->cell(0,5,utf8_decode('Net T.T.C'),1,1);
 		
 		$this->cell(55,5,utf8_decode('A réception'),1,0,'C');
-		$this->cell(27,5,utf8_decode(str_replace('.',',',$this->entity->getFee()).' ').chr(128),1,0,'R');
+		$this->cell(27,5,utf8_decode(number_format($amount,2,',',' ')).' ').chr(128),1,0,'R');
 		$this->cell(30,5,utf8_decode($this->entity->getDoor()->getSite()->getVat()),1,0,'R');
-		$tva = $this->entity->getFee() * $this->entity->getDoor()->getSite()->getVat()->getRate();
-		$this->cell(32,5,utf8_decode(str_replace('.',',',$tva)).chr(128),1,0,'R');
-		$this->cell(0,5,utf8_decode(str_replace('.',',',$this->entity->getFee() + $tva).' ').chr(128),1,1,'R');
+		$tva = $amount * $this->entity->getDoor()->getSite()->getVat()->getRate();
+		$this->cell(32,5,utf8_decode(number_format($tva,2,',',' ')).chr(128),1,0,'R');
+		$this->cell(0,5,utf8_decode(number_format($amount + $tva,2,',',' ').' ').chr(128),1,1,'R');
 		$this->ln(10);
 		
 		
 		$this->cell(0,7,utf8_decode('En votre aimable réglement - Merci -'),0,1);
 		$this->setFont('Arial','',8);
-		$this->cell(0,5,utf8_decode('Escompte 0,00% pour paiement anticipé.'),0,1);
-		$this->cell(0,5,utf8_decode('Pénalité de 1,50% par mois pour paiement différé'),0,1);
+		$this->cell(0,5,utf8_decode('Escompte 0,00 % pour paiement anticipé.'),0,1);
+		$this->cell(0,5,utf8_decode('Pénalité de 1,50 % par mois pour paiement différé'),0,1);
 		
 		
 		

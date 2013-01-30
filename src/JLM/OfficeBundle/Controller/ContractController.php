@@ -18,16 +18,16 @@ use JLM\ModelBundle\Entity\Contract;
 class ContractController extends Controller
 {
 	/**
-	 * @Route("/{id}/print",name="contract_print")
+	 * @Route("/{id}/print/{number}",name="contract_print")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function printAction(Contract $entity)
+	public function printAction(Contract $entity,$number = 0)
 	{
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
-		$response->setContent($this->render('JLMOfficeBundle:Contract:bill.pdf.php',array('entities'=>array($entity))));
+		$response->setContent($this->render('JLMOfficeBundle:Contract:bill.pdf.php',array('entities'=>array($entity),'number'=>$number)));
 			
 		//   return array('entity'=>$entity);
 		return $response;
