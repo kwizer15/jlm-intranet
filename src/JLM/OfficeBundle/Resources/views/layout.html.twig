@@ -10,6 +10,9 @@
 		    <li><form  action="{{ path('quote_search') }}" method="post" class="form-search">
 					<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher...">
 			    </form></li>
+			    <li class="nav-header">Redevances</li>
+			    <li><a href="{{ path('contract_printall') }}"><i class="icon-list"></i> Imprimer les redevances</a></li>
+			    <li class="divider"></li>
 			    <li class="nav-header">Tâches</li>
 			    <li><a href="{{ path('task') }}"><i class="icon-list"></i> Liste des taches</a></li>
 			    <li class="divider"></li>
