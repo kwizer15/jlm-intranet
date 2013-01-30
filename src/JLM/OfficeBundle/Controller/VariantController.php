@@ -219,12 +219,12 @@ class VariantController extends Controller
 		$form->bind($request);
 		 
 		if ($form->isValid()) {
-			$mail->setCC('commerce@jlm-entreprise.fr');
+			$mail->setBcc('commerce@jlm-entreprise.fr');
 			
 			$message = $mail->getSwift();
 			$message->setReadReceiptTo('commerce@jlm-entreprise.fr');
 			$message->attach(\Swift_Attachment::newInstance(
-					$this->render('JLMOfficeBundle:Quote:quote.pdf.php',array('entity'=>array($entity))),
+					$this->render('JLMOfficeBundle:Quote:quote.pdf.php',array('entities'=>array($entity))),
 					$entity->getNumber().'.pdf','application/pdf'
 			))
 			;
@@ -250,7 +250,7 @@ class VariantController extends Controller
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
-		$response->setContent($this->render('JLMOfficeBundle:Quote:quote.pdf.php',array('entity'=>array($entity))));
+		$response->setContent($this->render('JLMOfficeBundle:Quote:quote.pdf.php',array('entities'=>array($entity))));
 		 
 		//   return array('entity'=>$entity);
 		return $response;

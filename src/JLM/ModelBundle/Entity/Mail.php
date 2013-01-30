@@ -28,6 +28,11 @@ class Mail
 	private $cc;
 	
 	/**
+	 * @var string $bcc
+	 */
+	private $bcc;
+	
+	/**
 	 * @var string $body
 	 */
 	private $body;
@@ -118,6 +123,26 @@ class Mail
 		return $this->cc;
 	}
 	
+	/**
+	 * Set bcc
+	 * @param string $bcc
+	 * @return Mail
+	 */
+	public function setBcc($bcc)
+	{
+		$this->bcc = $bcc;
+		return $this;
+	}
+	
+	/**
+	 * Get bcc
+	 * @return string
+	 */
+	public function getBcc()
+	{
+		return $this->bcc;
+	}
+	
 	
 	/**
 	 * Set body
@@ -164,12 +189,15 @@ class Mail
 	 */
 	public function getSwift()
 	{
-		return \Swift_Message::newInstance()
+		$swift = \Swift_Message::newInstance()
 			->setSubject($this->getSubject())
 			->setFrom($this->getFrom())
 			->setTo($this->getTo())
-			->setBcc($this->getCc())
+			->setBcc($this->getBcc())
 			->setBody($this->getBody().chr(10).chr(10).'--'.chr(10).$this->getSignature());
+		if ($this->getCc() !== null)
+			$swift->setCc($this->getCc());
+		return $swift;
 	}
 	
 }

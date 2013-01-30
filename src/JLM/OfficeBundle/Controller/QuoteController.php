@@ -286,4 +286,71 @@ class QuoteController extends Controller
     	//   return array('entity'=>$entity);
     	return $response;
     }
+    
+    /**
+     * Mail
+     * @Route("/{id}/mail", name="quote_mail")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function mailAction(Quote $entity)
+    {
+    	if ($entity->getState() < 1)
+    		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+    	$mail = new Mail();
+    	$mail->setSubject('Devis n°'.$entity->getNumber());
+    	$mail->setFrom('commerce@jlm-entreprise.fr');
+    	$mail->setBody($this->renderView('JLMOfficeBundle:Quote:email.txt.twig', array('door' => $entity->getDoorCp())));
+    	$mail->setSignature($this->renderView('JLMOfficeBundle:Variant:emailsignature.txt.twig', array('name' => $entity->getFollowerCp())));
+    	if ($entity->getContact())
+    		if ($entity->getContact()->getPerson())
+    		if ($entity->getContact()->getPerson()->getEmail())
+    		$mail->setTo($entity->getContact()->getPerson()->getEmail());
+    	$form   = $this->createForm(new MailType(), $mail);
+    
+    	return array(
+    			'entity' => $entity,
+    			'form'   => $form->createView()
+    	);
+    }
+    
+    /**
+     * Send by mail a QuoteVariant entity.
+     *
+     * @Route("/{id}/sendmail", name="quote_sendmail")
+     * @Method("post")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function sendmailAction(Request $request, Quote $entity)
+    {
+    	if ($entity->getState() < 1)
+    		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
+    
+    	// Message
+    	$mail = new Mail;
+    	$form = $this->createForm(new MailType(), $mail);
+    	$form->bind($request);
+    		
+    	if ($form->isValid()) {
+    		$mail->setBcc('commerce@jlm-entreprise.fr');
+    			
+    		$message = $mail->getSwift();
+    		$message->setReadReceiptTo('commerce@jlm-entreprise.fr');
+    		foreach ($entity->getVariants() as $variant)
+    			if ($variant->getState() > 0)
+		    		$message->attach(\Swift_Attachment::newInstance(
+		    				$this->render('JLMOfficeBundle:Quote:quote.pdf.php',array('entities'=>array($variant))),
+		    				$variant->getNumber().'.pdf','application/pdf'
+		    		))
+		    		;
+    
+    		$this->get('mailer')->send($message);
+    		if ($entity->getState() < 3)
+    			$entity->setState(3);
+    		$em = $this->getDoctrine()->getEntityManager();
+    		$em->persist($entity);
+    		$em->flush();
+    	}
+    	return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
+    }
 }
