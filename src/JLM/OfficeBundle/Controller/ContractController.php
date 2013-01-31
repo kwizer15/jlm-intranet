@@ -19,7 +19,7 @@ class ContractController extends Controller
 {
 	/**
 	 * @Route("/{id}/print",name="contract_print")
-	 * @Route("/{id}/print/{number}",name="contract_print")
+	 * @Route("/{id}/print/{number}",name="contract_printnumb")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
