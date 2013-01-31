@@ -18,6 +18,7 @@ use JLM\ModelBundle\Entity\Contract;
 class ContractController extends Controller
 {
 	/**
+	 * @Route("/{id}/print",name="contract_print")
 	 * @Route("/{id}/print/{number}",name="contract_print")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
