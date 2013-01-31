@@ -49,11 +49,12 @@ class BillFees extends \FPDF
 		$this->cell(0,5,utf8_decode($this->entity->getTrustee()),0,2);
 		$this->setFont('Arial','',11);
 		$address = $this->entity->getTrustee()->getAddress().'';
-		if ($this->entity->getTrustee()->getBillingAddress())
-			if ($this->entity->getTrustee()->getBillingAddress()->getStreet())
-			$address = $this->entity->getTrustee()->getBillingAddress().'';
+		$billingaddress = $this->entity->getTrustee()->getBillingAddress();
+		if ($billingaddress)
+			if ($billingaddress->getStreet())
+			$address = $billingaddress.'';
 			
-		$this->multiCell(0,5,utf8_decode($this->entity->getTrustee()->getBillingAddress()));
+		$this->multiCell(0,5,utf8_decode($address));
 		$this->cell(0,5,'',0,1);
 		
 		// Affaire
