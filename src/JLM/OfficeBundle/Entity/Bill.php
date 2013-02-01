@@ -29,96 +29,396 @@ class Bill extends Document
 	private $number;
 	
 	/**
-	 * Porte concernée (pour le suivi)
-	 * @var Door $door
-	 *
-	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Door")
+	 * Pré label
+	 * @ORM\Column(name="prelabel", type="text")
 	 */
-	private $door;
+	private $prelabel;
 	
 	/**
-	 * Porte concernée (pour le devis)
-	 * @var string $doorCp
+	 * Reference
+	 * @var string
+	 * 
+	 * @ORM\Column(name="reference",type="text")
+	 */
+	private $reference;
+	
+	/**
+	 * Numéro de client
+	 * @var string
+	 * 
+	 * @ORM\Column(name="accountNumber",type="string")
+	 */
+	private $accountNumber;
+	
+	/**
+	 * Details
+	 * @var string $details
+	 *
+	 * @ORM\Column(name="details",type="text")
+	 */
+	private $details;
+	
+	/**
+	 * Affaire concernée
+	 * @var string $site
 	 *
 	 * @ORM\Column(name="door_cp",type="text")
 	 */
-	private $doorCp;
+	private $site;
 	
 	/**
-	 * Get id
+	 * Porte concernée
+	 * @var string $doors
 	 *
-	 * @return integer
+	 * @ORM\Column(name="doors",type="text")
 	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+	private $doors;
 	
 	/**
-	 * Set number
-	 *
-	 * @param string $number
-	 * @return Quote
+	 * Redevance
+	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Fee")
 	 */
-	public function setNumber($number)
-	{
-		$this->number = $number;
-		return $this;
-	}
+	private $fee;
 	
 	/**
-	 * Get number
-	 *
-	 * @return string
+	 * Suivi de redevance
+	 * @ORM\ManyToOne(targetEntity="FeesFollower")
 	 */
-	public function getNumber()
-	{
-		return $this->number;
-	}
+	private $feesFollower;
 	
 	/**
-	 * Set door
-	 *
-	 * @param JLM\ModelBundle\Entity\Door $door
-	 * @return Quote
+	 * Clause de propriété
+	 * @ORM\Column(name="property",type="string", nullable=true)
 	 */
-	public function setDoor(\JLM\ModelBundle\Entity\Door $door = null)
-	{
-		$this->door = $door;
-	
-		return $this;
-	}
+	private $property;
 	
 	/**
-	 * Get door
-	 *
-	 * @return JLM\ModelBundle\Entity\Door
+	 * Escompte
+	 * @ORM\Column(name="earlyPaiement",type="string")
 	 */
-	public function getDoor()
-	{
-		return $this->door;
-	}	
+	private $earlyPaiement;
 	
 	/**
-	 * Set doorCp
-	 *
-	 * @param string $doorCp
-	 * @return Quote
+	 * Pénalités
+	 * @ORM\Column(name="penalty",type="string")
 	 */
-	public function setDoorCp($doorCp)
-	{
-		$this->doorCp = $doorCp;
-	
-		return $this;
-	}
+	private $penalty;
 	
 	/**
-	 * Get doorCp
-	 *
-	 * @return string
+	 * Maturity
+	 * @ORM\Column(name="maturity",type="date")
 	 */
-	public function getDoorCp()
-	{
-		return $this->doorCp;
-	}
+	private $maturity;
+	
+	
+	
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set number
+     *
+     * @param integer $number
+     * @return Bill
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+    
+        return $this;
+    }
+
+    /**
+     * Get number
+     *
+     * @return integer 
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * Set prelabel
+     *
+     * @param string $prelabel
+     * @return Bill
+     */
+    public function setPrelabel($prelabel)
+    {
+        $this->prelabel = $prelabel;
+    
+        return $this;
+    }
+
+    /**
+     * Get prelabel
+     *
+     * @return string 
+     */
+    public function getPrelabel()
+    {
+        return $this->prelabel;
+    }
+
+    /**
+     * Set reference
+     *
+     * @param string $reference
+     * @return Bill
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+    
+        return $this;
+    }
+
+    /**
+     * Get reference
+     *
+     * @return string 
+     */
+    public function getReference()
+    {
+        return $this->reference;
+    }
+
+    /**
+     * Set accountNumber
+     *
+     * @param string $accountNumber
+     * @return Bill
+     */
+    public function setAccountNumber($accountNumber)
+    {
+        $this->accountNumber = $accountNumber;
+    
+        return $this;
+    }
+
+    /**
+     * Get accountNumber
+     *
+     * @return string 
+     */
+    public function getAccountNumber()
+    {
+        return $this->accountNumber;
+    }
+
+    /**
+     * Set details
+     *
+     * @param string $details
+     * @return Bill
+     */
+    public function setDetails($details)
+    {
+        $this->details = $details;
+    
+        return $this;
+    }
+
+    /**
+     * Get details
+     *
+     * @return string 
+     */
+    public function getDetails()
+    {
+        return $this->details;
+    }
+
+    /**
+     * Set site
+     *
+     * @param string $site
+     * @return Bill
+     */
+    public function setSite($site)
+    {
+        $this->site = $site;
+    
+        return $this;
+    }
+
+    /**
+     * Get site
+     *
+     * @return string 
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * Set doors
+     *
+     * @param string $doors
+     * @return Bill
+     */
+    public function setDoors($doors)
+    {
+        $this->doors = $doors;
+    
+        return $this;
+    }
+
+    /**
+     * Get doors
+     *
+     * @return string 
+     */
+    public function getDoors()
+    {
+        return $this->doors;
+    }
+
+    /**
+     * Set property
+     *
+     * @param string $property
+     * @return Bill
+     */
+    public function setProperty($property)
+    {
+        $this->property = $property;
+    
+        return $this;
+    }
+
+    /**
+     * Get property
+     *
+     * @return string 
+     */
+    public function getProperty()
+    {
+        return $this->property;
+    }
+
+    /**
+     * Set earlyPaiement
+     *
+     * @param string $earlyPaiement
+     * @return Bill
+     */
+    public function setEarlyPaiement($earlyPaiement)
+    {
+        $this->earlyPaiement = $earlyPaiement;
+    
+        return $this;
+    }
+
+    /**
+     * Get earlyPaiement
+     *
+     * @return string 
+     */
+    public function getEarlyPaiement()
+    {
+        return $this->earlyPaiement;
+    }
+
+    /**
+     * Set penalty
+     *
+     * @param string $penalty
+     * @return Bill
+     */
+    public function setPenalty($penalty)
+    {
+        $this->penalty = $penalty;
+    
+        return $this;
+    }
+
+    /**
+     * Get penalty
+     *
+     * @return string 
+     */
+    public function getPenalty()
+    {
+        return $this->penalty;
+    }
+
+    /**
+     * Set maturity
+     *
+     * @param \DateTime $maturity
+     * @return Bill
+     */
+    public function setMaturity($maturity)
+    {
+        $this->maturity = $maturity;
+    
+        return $this;
+    }
+
+    /**
+     * Get maturity
+     *
+     * @return \DateTime 
+     */
+    public function getMaturity()
+    {
+        return $this->maturity;
+    }
+
+    /**
+     * Set fee
+     *
+     * @param JLM\ModelBundle\Entity\Fee $fee
+     * @return Bill
+     */
+    public function setFee(\JLM\ModelBundle\Entity\Fee $fee = null)
+    {
+        $this->fee = $fee;
+    
+        return $this;
+    }
+
+    /**
+     * Get fee
+     *
+     * @return JLM\ModelBundle\Entity\Fee 
+     */
+    public function getFee()
+    {
+        return $this->fee;
+    }
+
+    /**
+     * Set feesFollower
+     *
+     * @param JLM\OfficeBundle\Entity\FeesFollower $feesFollower
+     * @return Bill
+     */
+    public function setFeesFollower(\JLM\OfficeBundle\Entity\FeesFollower $feesFollower = null)
+    {
+        $this->feesFollower = $feesFollower;
+    
+        return $this;
+    }
+
+    /**
+     * Get feesFollower
+     *
+     * @return JLM\OfficeBundle\Entity\FeesFollower 
+     */
+    public function getFeesFollower()
+    {
+        return $this->feesFollower;
+    }
 }
