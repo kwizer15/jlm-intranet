@@ -110,6 +110,11 @@ class Bill extends Document
 	 */
 	private $maturity;
 	
+	/**
+	 * Lignes
+	 * @ORM\OneToMany(targetEntity="BillLine", inversedBy="bill")
+	 */
+	private $lines;
 	
 	
 
