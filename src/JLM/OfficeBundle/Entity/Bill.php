@@ -87,6 +87,29 @@ class Bill extends Document
 	private $feesFollower;
 	
 	/**
+	 * Texte d'intro
+	 * @var string $intro
+	 *
+	 * @ORM\Column(name="intro",type="text")
+	 */
+	private $intro;
+	
+	/**
+	 * Etat
+	 * -1 = annulé
+	 * 0 = en saisie
+	 * 1 = près à envoyer
+	 * 2 = imprimer
+	 * 3 = envoyé (en attente de l'accusé)
+	 * 4 = envoyé (accusé reçu)
+	 * 5 = accordé
+	 * @var int $state
+	 *
+	 * @ORM\Column(name="state",type="smallint")
+	 */
+	private $state = 0;
+	
+	/**
 	 * Clause de propriété
 	 * @ORM\Column(name="property",type="string", nullable=true)
 	 */
@@ -112,7 +135,7 @@ class Bill extends Document
 	
 	/**
 	 * Lignes
-	 * @ORM\OneToMany(targetEntity="BillLine", inversedBy="bill")
+	 * @ORM\OneToMany(targetEntity="BillLine", mappedBy="bill")
 	 */
 	private $lines;
 	
@@ -425,5 +448,91 @@ class Bill extends Document
     public function getFeesFollower()
     {
         return $this->feesFollower;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->lines = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Set intro
+     *
+     * @param string $intro
+     * @return Bill
+     */
+    public function setIntro($intro)
+    {
+        $this->intro = $intro;
+    
+        return $this;
+    }
+
+    /**
+     * Get intro
+     *
+     * @return string 
+     */
+    public function getIntro()
+    {
+        return $this->intro;
+    }
+
+    /**
+     * Set state
+     *
+     * @param integer $state
+     * @return Bill
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+    
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return integer 
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Add lines
+     *
+     * @param JLM\OfficeBundle\Entity\BillLine $lines
+     * @return Bill
+     */
+    public function addLine(\JLM\OfficeBundle\Entity\BillLine $lines)
+    {
+        $this->lines[] = $lines;
+    
+        return $this;
+    }
+
+    /**
+     * Remove lines
+     *
+     * @param JLM\OfficeBundle\Entity\BillLine $lines
+     */
+    public function removeLine(\JLM\OfficeBundle\Entity\BillLine $lines)
+    {
+        $this->lines->removeElement($lines);
+    }
+
+    /**
+     * Get lines
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getLines()
+    {
+        return $this->lines;
     }
 }
