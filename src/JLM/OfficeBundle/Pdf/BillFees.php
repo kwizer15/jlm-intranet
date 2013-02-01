@@ -48,13 +48,13 @@ class BillFees extends \FPDF
 		$this->setFont('Arial','B',11);
 		$this->cell(0,5,utf8_decode($this->entity->getTrustee()),0,2);
 		$this->setFont('Arial','',11);
-		$address = $this->entity->getTrustee()->getAddress().'';
+		$address = $this->entity->getTrustee()->getAddress();
 		$billingaddress = $this->entity->getTrustee()->getBillingAddress();
 		if ($billingaddress)
 			if ($billingaddress->getStreet())
-			$address = $billingaddress.'';
+			$address = $billingaddress;
 			
-		$this->multiCell(0,5,utf8_decode($address));
+		$this->multiCell(0,5,utf8_decode($address->toString()));
 		$this->cell(0,5,'',0,1);
 		
 		// Affaire
@@ -67,7 +67,7 @@ class BillFees extends \FPDF
 		else
 			$this->ln(5);
 		$this->setFont('Arial','',11);
-		$this->multiCell(0,5,utf8_decode($this->entity->getDoor()->getSite()->getAddress()),0);
+		$this->multiCell(0,5,utf8_decode($this->entity->getDoor()->getSite()->getAddress()->toString()),0);
 		$this->ln(5);
 		
 		$this->cell(30,5,utf8_decode('N° Client'),1,0);

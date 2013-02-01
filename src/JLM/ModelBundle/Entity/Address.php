@@ -92,4 +92,12 @@ class Address
     {
     	return $this->getStreet().chr(10).$this->getCity();
     }
+    
+    /**
+     * To String
+     */
+    public function toString()
+    {
+    	return $this->getStreet().chr(10).$this->getCity()->toString();
+    }
 }
