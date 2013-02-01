@@ -67,14 +67,6 @@ class Bill extends Document
 	private $site;
 	
 	/**
-	 * Porte concernée
-	 * @var string $doors
-	 *
-	 * @ORM\Column(name="doors",type="text")
-	 */
-	private $doors;
-	
-	/**
 	 * Redevance
 	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Fee")
 	 */
@@ -287,29 +279,6 @@ class Bill extends Document
     public function getSite()
     {
         return $this->site;
-    }
-
-    /**
-     * Set doors
-     *
-     * @param string $doors
-     * @return Bill
-     */
-    public function setDoors($doors)
-    {
-        $this->doors = $doors;
-    
-        return $this;
-    }
-
-    /**
-     * Get doors
-     *
-     * @return string 
-     */
-    public function getDoors()
-    {
-        return $this->doors;
     }
 
     /**
