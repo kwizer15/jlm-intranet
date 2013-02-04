@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class QuoteLineType extends AbstractType
+class BillLineType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -18,10 +18,6 @@ class QuoteLineType extends AbstractType
         	->add('description',null,array('required'=>false,'attr'=>array('class'=>'input-xlarge')))
         	->add('showDescription','hidden')
         	->add('quantity',null,array('attr'=>array('class'=>'input-mini')))
-        	->add('purchasePrice','money',array('grouping'=>true,'attr'=>array('class'=>'input-mini')))
-        	->add('discountSupplier','percent',array('precision'=>0,'attr'=>array('class'=>'input-mini')))
-        	->add('expenseRatio','percent',array('precision'=>0,'attr'=>array('class'=>'input-mini')))
-        	->add('shipping','money',array('grouping'=>true,'attr'=>array('class'=>'input-mini')))
         	->add('unitPrice','money',array('grouping'=>true,'attr'=>array('class'=>'input-mini')))
         	->add('discount','percent',array('precision'=>0,'attr'=>array('class'=>'input-mini')))
         	->add('vat','percent',array('precision'=>1,'attr'=>array('class'=>'input-mini')))
@@ -33,12 +29,12 @@ class QuoteLineType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
     	$resolver->setDefaults(array(
-    			'data_class' => 'JLM\OfficeBundle\Entity\QuoteLine'
+    			'data_class' => 'JLM\OfficeBundle\Entity\BillLine'
     	));
     }
     
     public function getName()
     {
-        return 'quote_line';
+        return 'bill_line';
     }
 }

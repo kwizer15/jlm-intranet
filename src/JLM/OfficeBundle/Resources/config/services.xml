@@ -8,6 +8,9 @@
     	<service id="jlm_office.type.quote_line" class="JLM\OfficeBundle\Form\Type\QuoteLineType">
    			<tag name="form.type" alias="quote_line" />
 		</service>
+		<service id="jlm_office.type.bill_line" class="JLM\OfficeBundle\Form\Type\BillLineType">
+   			<tag name="form.type" alias="bill_line" />
+		</service>
 		<service id="jlm_office.type.quote_hidden" class="JLM\OfficeBundle\Form\Type\QuoteHiddenType">
 			<argument type="service" id="doctrine.orm.entity_manager"/>
    			<tag name="form.type" alias="quote_hidden" />

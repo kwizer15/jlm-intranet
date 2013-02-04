@@ -74,19 +74,7 @@ class Quote extends Document
 	 */
 	private $contactCp;
 	
-	/**
-	 * @var float $vat
-	 * 
-	 * @ORM\Column(name="vat",type="decimal",precision=3,scale=3)
-	 */
-	private $vat;
-	
-	/**
-	 * @var float $vatTransmitter
-	 *
-	 * @ORM\Column(name="vat_transmitter",type="decimal",precision=3,scale=3)
-	 */
-	private $vatTransmitter;
+
 	
 	/**
 	 * @var ArrayCollection $variants
@@ -287,52 +275,7 @@ class Quote extends Document
     	return $this->contactCp;
     }
 
-    
-    /**
-     * Set vat
-     *
-     * @param float $vat
-     * @return Quote
-     */
-    public function setVat($vat)
-    {
-    	$this->vat = $vat;
-    
-    	return $this;
-    }
-    
-    /**
-     * Get vat
-     *
-     * @return float
-     */
-    public function getVat()
-    {
-    	return $this->vat;
-    }
-    
-    /**
-     * Set vatTransmitter
-     *
-     * @param float $vatTransmitter
-     * @return Quote
-     */
-    public function setVatTransmitter($vat)
-    {
-    	$this->vatTransmitter = $vat;
-    
-    	return $this;
-    }
-    
-    /**
-     * Get vatTransmitter
-     *
-     * @return float
-     */
-    public function getVatTransmitter()
-    {
-    	return $this->vatTransmitter;
-    }
+
     
     /**
      * Add variant

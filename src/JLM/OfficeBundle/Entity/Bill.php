@@ -109,9 +109,9 @@ class Bill extends Document
 	
 	/**
 	 * Escompte
-	 * @ORM\Column(name="earlyPaiement",type="string")
+	 * @ORM\Column(name="earlyPayment",type="string")
 	 */
-	private $earlyPaiement;
+	private $earlyPayment;
 	
 	/**
 	 * Pénalités
@@ -130,8 +130,14 @@ class Bill extends Document
 	 * @ORM\OneToMany(targetEntity="BillLine", mappedBy="bill")
 	 */
 	private $lines;
-	
-	
+
+	/**
+	 * Remise générale
+	 * @var float $discount
+	 *
+	 * @ORM\Column(name="discount", type="decimal", scale=7)
+	 */
+	private $discount = 0;
 
     /**
      * Get id
@@ -305,26 +311,26 @@ class Bill extends Document
     }
 
     /**
-     * Set earlyPaiement
+     * Set earlyPayment
      *
-     * @param string $earlyPaiement
+     * @param string $earlyPayment
      * @return Bill
      */
-    public function setEarlyPaiement($earlyPaiement)
+    public function setEarlyPayment($earlyPayment)
     {
-        $this->earlyPaiement = $earlyPaiement;
+        $this->earlyPayment = $earlyPayment;
     
         return $this;
     }
 
     /**
-     * Get earlyPaiement
+     * Get earlyPayment
      *
      * @return string 
      */
-    public function getEarlyPaiement()
+    public function getEarlyPayment()
     {
-        return $this->earlyPaiement;
+        return $this->earlyPayment;
     }
 
     /**
@@ -503,5 +509,28 @@ class Bill extends Document
     public function getLines()
     {
         return $this->lines;
+    }
+    
+    /**
+     * Set discount
+     *
+     * @param float $discount
+     * @return Document
+     */
+    public function setDiscount($discount)
+    {
+    	$this->discount = $discount;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get discount
+     *
+     * @return float
+     */
+    public function getDiscount()
+    {
+    	return $this->discount;
     }
 }

@@ -104,63 +104,6 @@ class BillFees extends \FPDF
 		$this->setFont('Arial','',8);
 		$this->cell(0,5,utf8_decode('Escompte 0,00 % pour paiement anticipé.'),0,1);
 		$this->cell(0,5,utf8_decode('Pénalité de 1,50 % par mois pour paiement différé'),0,1);
-		
-		
-		
-		
-		
-		
-		
-//	// Affaire
-//	$this->setFont('Arial','BU',11);
-//	//	$this->setY(63);
-//	$this->cell(20,7,utf8_decode('Affaire '),0,1);
-//	$this->setFont('Arial','B',11);
-//	$this->cell(100,7,utf8_decode('Contrat d\'entretien : '.$this->entity->getNumber()),0,1);
-//	
-//	
-//	if (false)
-//		$this->cell(100,7,utf8_decode('Groupe : '),0,1);	// Groupe RIVP
-//	
-//	$this->setFont('Arial','',11);
-//	$this->multiCell(100,7,utf8_decode($this->entity->getDoor()));
-//	
-//	
-//	
-//	// Door
-//	$this->setFont('Arial','B',11);
-//	$this->cell(15,5,utf8_decode('affaire : '),0,0);
-//	$this->setFont('Arial','I',11);
-//	$y = $this->getY();
-//	$this->multiCell(90,5,utf8_decode($this->entity->getQuote()->getDoorCp()),0);
-//	$this->setX(120);
-//	// Trustee
-//	//	$this->rect(86,47,99,39);
-//	$this->setFont('Arial','B',11);
-//	$this->cell(0,5,utf8_decode($this->entity->getQuote()->getTrusteeName()),0,2);
-//	$this->setFont('Arial','',11);
-//	$this->multiCell(0,5,utf8_decode($this->entity->getQuote()->getTrusteeAddress()));
-//	$this->ln(10);
-//
-//	// Création haut
-//	$this->setFont('Arial','B',10);
-//	$this->cell(22,6,'Date','LRT',0,'C',true);
-//	$this->cell(22,6,utf8_decode('Devis n°'),'LRT',0,'C',true);
-//
-//	// Contact
-//	$this->setFont('Arial','',10);
-//
-//	$this->setX(120);
-//	$this->cell(0,5,utf8_decode('à l\'attention de '.$this->entity->getQuote()->getContactCp()),0,1);
-//
-//	// Création bas
-//	$this->setFont('Arial','',10);
-//	$this->cell(22,6,$this->entity->getCreation()->format('d/m/Y'),'LRB',0,'C');
-//	$this->cell(22,6,$this->entity->getNumber(),'LRB',1,'C');
-//		
-//	$this->ln(6);
-//	$this->multiCell(0,6,utf8_decode($this->entity->getIntro()),0,1);
-//	$this->ln(3);
 	}
 	
 	private function _content()
