@@ -62,7 +62,7 @@ class Bill extends Document
 	 * Affaire concernée
 	 * @var string $site
 	 *
-	 * @ORM\Column(name="door_cp",type="text")
+	 * @ORM\Column(name="site",type="text")
 	 */
 	private $site;
 	
