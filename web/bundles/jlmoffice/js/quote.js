@@ -39,7 +39,7 @@
 			    }
 			    , select: function (event, ui) {
 				    $("#quote_door").val(ui.item.door);
-				    $("#quote_doorCp").val(ui.item.label);
+				    $("#quote_doorCp").val(ui.item.doorCp);
 				    $("#quote_vat").val(number_format(ui.item.vat*100,1,',',' ')).change();
 				    $("#quote_trustee").val(ui.item.trustee);
 				    $("#quote_trusteeName").val(ui.item.trusteeName);

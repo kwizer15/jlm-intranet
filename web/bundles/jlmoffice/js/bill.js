@@ -33,18 +33,46 @@
 					);
 			    }
 			    , select: function (event, ui) {
-				    $("#bill_site").val(ui.item.label);
+				    $("#bill_site").val(ui.item.siteCp);
 				    $("#bill_vat").val(number_format(ui.item.vat*100,1,',',' ')).change();
 				    $("#bill_trustee").val(ui.item.trustee);
 				    $("#bill_prelabel").val(ui.item.prelabel);
 				    $("#bill_trusteeName").val(ui.item.trusteeName);
-				    $("#bill_trusteeAddress").val(ui.item.trusteeAddress);
+				    $("#bill_trusteeAddress").val(ui.item.trusteeBillingAddress);
 				    $("#bill_accountNumber").val(ui.item.accountNumber);
 				    $("#bill_reference").val(ui.item.reference);
-				    $("#bill_details").val(ui.item.details);
+				    $("#bill_details").val(ui.item.doorDetails);
+				    $("#bill_reference").val(ui.item.reference);
 			        return false;
 			    }
 		  });
+		  
+		  $("#bill_details").attr('data-source',this.options.autoSource)
+          .autocomplete({
+source: function(request,response){
+	request.repository = 'JLMModelBundle:Door';
+	return $.post(
+			this.element.attr('data-source'),
+			request,
+			function( data ) { response( data ); },
+			'json'
+	);
+}
+, select: function (event, ui) {
+  $("#bill_site").val(ui.item.siteCp);
+  $("#bill_details").val(ui.item.doorDetails)
+  $("#bill_vat").val(number_format(ui.item.vat*100,1,',',' ')).change();
+  $("#bill_trustee").val(ui.item.trustee);
+  $("#bill_prelabel").val(ui.item.prelabel);
+  $("#bill_trusteeName").val(ui.item.trusteeName);
+  $("#bill_trusteeAddress").val(ui.item.trusteeBillingAddress);
+  $("#bill_accountNumber").val(ui.item.accountNumber);
+  $("#bill_reference").val(ui.item.reference);
+  $("#bill_details").val(ui.item.doorDetails);
+  $("#bill_reference").val(ui.item.reference);
+  return false;
+}
+});
 		  
 		  $("#bill_trusteeName").attr('data-source',this.options.autoSource)
 		  			.autocomplete({
@@ -60,7 +88,7 @@
 				, select: function (event, ui) {
 				  $("#bill_trustee").val(ui.item.trustee);
 				  $("#bill_trusteeName").val(ui.item.label);
-				  $("#bill_trusteeAddress").val(ui.item.trusteeAddress);
+				  $("#bill_trusteeAddress").val(ui.item.trusteeBillingAddress);
 				  $("#bill_accountNumber").val(ui.item.accountNumber);
 				  return false;
 				}
@@ -106,6 +134,7 @@
 		e.preventDefault()
 		var v = parseFloat($("#bill_vat").val().replace(',','.'));
    		$("#bill_vat").val(number_format(v,1,',',' '));	
+   		// boucle pour changer la tva sur toute les lignes (sauf emetteurs)
    	 }
    	, newline : function(e){
 		 	e.stopPropagation()
@@ -130,6 +159,7 @@
 	 , total : function(e) {
 		 e.stopPropagation()
 	 e.preventDefault()
+	
 	 var tht = 0;
 		 var tva = 0;
 	 $.each($("#bill_lines > tr"),function(){
@@ -142,7 +172,6 @@
 	 var dis = parseFloat($("#bill_discount").val().replace(',','.').replace(' ',''))/100;
 	 $("#bill_total_htbd").html(number_format(tht,2,',',' '));
 	 $("#bill_total_discount").html(number_format(tht*dis,2,',',' '));	
-	 	
 	 tht -= tht*dis;
 	 tva -= tva*dis;
 	 $("#bill_total_ht").html(number_format(tht,2,',',' '));
@@ -204,7 +233,7 @@
 			  
 			  $(line + "_quantity, "
 			  + line + "_unitPrice, "
-			  + line + "_discount").on('change',$.proxy(this.totalQuote,this));
+			  + line + "_discount").on('change',$.proxy(this.totalBill,this));
 			  $(line + "_reference").attr('data-source',this.options.autoSource)
 					              .autocomplete({
 						source: function(request,response){
@@ -224,7 +253,7 @@
 						  	$(id + 'designation').val(ui.item.designation);
 						  	$(id + 'description').val(ui.item.description);
 						  	$(id + 'isTransmitter').val(ui.item.transmitter ? '1' : '');
-						  	$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? $("#bill_vatTransmitter").val() : $("#quote_vat").val());
+						  	$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? $("#bill_vatTransmitter").val() : $("#bill_vat").val());
 						  	$(id + 'unitPrice').val(ui.item.unitPrice).change();
 						
 					      return false;

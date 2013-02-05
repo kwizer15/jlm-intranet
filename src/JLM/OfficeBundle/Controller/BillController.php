@@ -105,7 +105,7 @@ class BillController extends Controller
 //	{
 			$entity->setVat($vat);
 //	}
-      //  $entity->addLine(new QuoteLine);
+        $entity->addLine(new BillLine);
         $entity->setVatTransmitter($vat);
         $form   = $this->createForm(new BillType(), $entity);
 

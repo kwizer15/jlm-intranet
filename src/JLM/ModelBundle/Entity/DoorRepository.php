@@ -40,6 +40,9 @@ class DoorRepository extends EntityRepository
 		foreach ($res as $r)
 		{
 			$trustee = $r->getSite()->getTrustee();
+			$reference = '';
+			if ($r->getSite()->getGroupNumber())
+				$reference .= 'Groupe : '.$r->getSite()->getGroupNumber();
 			$r2[] = array(
 						'door'          => ''.$r->getId(),
 						'label'        => ''.$r,
@@ -53,6 +56,7 @@ class DoorRepository extends EntityRepository
 						'doorDetails' => $r->getType().' - '.$r->getLocation(),
 						'siteCp'=> $r->getSite()->toString(),
 						'prelabel'=> $r->getBillingPrelabel(),
+						'reference'=>$reference,
 					);
 		}
 		return $r2;
