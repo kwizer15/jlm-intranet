@@ -103,6 +103,9 @@ class City extends StringModel
 	    if (substr($name,0,5) == 'Paris')
 	    	$name = 'Paris';
 	    $name = strtoupper($name.$cedex);
+	    $replace = array('à'=>'À','é'=>'É','è'=>'È','ê'=>'Ê','ô'=>'Ô','û'=>'Û');
+	    foreach ($replace as $before => $after)
+	    	$name = str_replace($before,$after,$name);
 	    return $zip.' - '.$name;
     }
 }

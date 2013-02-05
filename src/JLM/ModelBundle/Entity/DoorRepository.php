@@ -39,13 +39,20 @@ class DoorRepository extends EntityRepository
 		$r2 = array();
 		foreach ($res as $r)
 		{
+			$trustee = $r->getSite()->getTrustee();
 			$r2[] = array(
 						'door'          => ''.$r->getId(),
 						'label'        => ''.$r,
+						'doorCp'		=> ''.$r->toString(),
 						'vat'			=> $r->getSite()->getVat()->getRate(),
-						'trustee'       => ''.$r->getSite()->getTrustee()->getId(),
-						'trusteeName'   => ''.$r->getSite()->getTrustee(),
-						'trusteeAddress'=> ''.$r->getSite()->getTrustee()->getAddress(),
+						'trustee'       => ''.$trustee->getId(),
+						'trusteeName'   => ''.$trustee,
+						'trusteeAddress'=> ''.$trustee->getAddress()->toString(),
+						'trusteeBillingAddress'=> ''.$trustee->getAddressForBill()->toString(),
+						'accountNumber'=> $trustee->getAccountNumber(),
+						'doorDetails' => $r->getType().' - '.$r->getLocation(),
+						'siteCp'=> $r->getSite()->toString(),
+						'prelabel'=> $r->getBillingPrelabel(),
 					);
 		}
 		return $r2;

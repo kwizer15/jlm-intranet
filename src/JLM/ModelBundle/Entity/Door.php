@@ -532,4 +532,12 @@ class Door
     {
     	return $this->getLocation().chr(10).$this->getSite();
     }
+    
+    /**
+     * To String
+     */
+    public function toString()
+    {
+    	return $this->getType().' - '.$this->getLocation().chr(10).$this->getSite()->toString();
+    }
 }

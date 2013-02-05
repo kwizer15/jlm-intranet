@@ -34,6 +34,7 @@ class TrusteeRepository extends EntityRepository
 					'trustee'       => ''.$r->getId(),
 					'label'         => ''.$r,
 					'trusteeAddress'=> ''.$r->getAddress(),
+					'accountNumber' => $r->getAccountNumber(),
 			);
 		}
 		return $r2;
