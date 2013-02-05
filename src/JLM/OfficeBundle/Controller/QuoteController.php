@@ -338,15 +338,17 @@ class QuoteController extends Controller
     		$message->setReadReceiptTo('commerce@jlm-entreprise.fr');
     		foreach ($entity->getVariants() as $variant)
     			if ($variant->getState() > 0)
+    			{
 		    		$message->attach(\Swift_Attachment::newInstance(
 		    				$this->render('JLMOfficeBundle:Quote:quote.pdf.php',array('entities'=>array($variant))),
 		    				$variant->getNumber().'.pdf','application/pdf'
 		    		))
 		    		;
+		    		if ($variant->getState() < 3)
+		    			$variant->setState(3);
+    			}
     
     		$this->get('mailer')->send($message);
-    		if ($entity->getState() < 3)
-    			$entity->setState(3);
     		$em = $this->getDoctrine()->getEntityManager();
     		$em->persist($entity);
     		$em->flush();
