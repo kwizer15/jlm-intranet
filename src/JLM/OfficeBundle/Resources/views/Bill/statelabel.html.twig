@@ -1,0 +1,15 @@
+{% if state == 0 %}
+	<span class="label">En saisie</span>
+{% elseif state == 1 %}
+	<span class="label label-warning">En attente</span>
+{% elseif state == 2 %}
+	<span class="label label-warning">En attente</span>
+{% elseif state == 3 %}
+	<span class="label label-info">Envoyée</span>
+{% elseif state == 4 %}
+	<span class="label label-info">Envoyée</span>
+{% elseif state == 5 %}
+	<span class="label label-success">Réglée</span>
+{% else %}
+	<span class="label label-inverse">Annulée</span>
+{% endif %}

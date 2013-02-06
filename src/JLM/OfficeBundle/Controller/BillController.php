@@ -138,6 +138,12 @@ class BillController extends Controller
             	$number.= '0';
             $number.= $n;
             $entity->setNumber($number);
+            $lines = $entity->getLines();
+            foreach ($lines as $line)
+            {
+            	$line->setBill($entity);
+            	$em->persist($line);
+            }
             $em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));  

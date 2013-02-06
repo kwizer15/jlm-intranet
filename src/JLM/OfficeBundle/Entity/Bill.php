@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * JLM\OfficeBundle\Entity\Bill
  *
  * @ORM\Table(name="bill")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\BillRepository")
  */
 class Bill extends Document
 {
@@ -82,7 +82,7 @@ class Bill extends Document
 	 * Texte d'intro
 	 * @var string $intro
 	 *
-	 * @ORM\Column(name="intro",type="text")
+	 * @ORM\Column(name="intro",type="text",nullable=true)
 	 */
 	private $intro;
 	
@@ -121,7 +121,7 @@ class Bill extends Document
 	
 	/**
 	 * Maturity
-	 * @ORM\Column(name="maturity",type="date")
+	 * @ORM\Column(name="maturity",type="date",nullable=true)
 	 */
 	private $maturity;
 	
@@ -532,5 +532,41 @@ class Bill extends Document
     public function getDiscount()
     {
     	return $this->discount;
+    }
+    
+    /**
+     * Get Total HT
+     */
+    public function getTotalPrice()
+    {
+    	$total = 0;
+    	foreach ($this->getLines() as $line)
+    		$total += $line->getPrice();
+    	$total *= (1-$this->getDiscount());
+    	return $total;
+    }
+    
+    /**
+     * Get Total TVA
+     */
+    public function getTotalVat()
+    {
+    	$total = 0;
+    	foreach ($this->getLines() as $line)
+    		$total += $line->getVatValue();
+    	$total *= (1-$this->getDiscount());
+    	return $total;
+    }
+    
+    /**
+     * Get Total TTC
+     */
+    public function getTotalPriceAti()
+    {
+    	$total = 0;
+    	foreach ($this->getLines() as $line)
+    		$total += $line->getPriceAti();
+    	$total *= (1-$this->getDiscount());
+    	return $total;
     }
 }
