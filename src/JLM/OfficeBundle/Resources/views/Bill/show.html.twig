@@ -104,7 +104,8 @@
     </div>
 </div>
 <div class="form-actions">
-	<a href="" class="btn btn-info">Imprimer</a>
+	<a href="{{ path('bill_print',{'id':entity.id}) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer</a>
+	<a href="{{ path('bill_edit',{'id':entity.id}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 	{% if entity.state == 0 %}
 	<a href="" class="btn btn-primary">Prête à envoyer</a>
 	{% endif %}

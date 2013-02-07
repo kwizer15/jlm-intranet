@@ -203,5 +203,22 @@ class BillController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
         );
-    }  
+    } 
+    
+    /**
+     * Imprimer la facture
+     *
+     * @Route("/{id}/print", name="bill_print")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function printAction(Bill $entity)
+    {
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/pdf');
+    	$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
+    	$response->setContent($this->render('JLMOfficeBundle:Bill:print.pdf.php',array('entities'=>array($entity))));
+    
+    	//   return array('entity'=>$entity);
+    	return $response;
+    }
 }
