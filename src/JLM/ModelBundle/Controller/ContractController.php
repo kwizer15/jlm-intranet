@@ -42,21 +42,11 @@ class ContractController extends Controller
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function showAction($id)
+    public function showAction(Contract $entity)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Contract')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Contract entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+        );
     }
     
     /**
@@ -140,23 +130,13 @@ class ContractController extends Controller
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function editAction($id)
+    public function editAction(Contract $entity)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Contract')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Contract entity.');
-        }
-
         $editForm = $this->createForm(new ContractType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -168,71 +148,24 @@ class ContractController extends Controller
      * @Template("JLMModelBundle:Contract:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function updateAction($id)
+    public function updateAction(Contract $entity)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Contract')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Contract entity.');
-        }
-
         $editForm   = $this->createForm(new ContractType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
         $request = $this->getRequest();
-
         $editForm->bindRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isValid())
+        {
+        	$em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('contract_show', array('id' => $id)));
+            return $this->redirect($this->generateUrl('door_show', array('id' => $entity->getDoor()->getId())));
         }
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
-    }
-
-    /**
-     * Deletes a Contract entity.
-     *
-     * @Route("/{id}/delete", name="contract_delete")
-     * @Method("post")
-     * @Secure(roles="ROLE_USER")
-     */
-    public function deleteAction($id)
-    {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('JLMModelBundle:Contract')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Contract entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('contract'));
-    }
-
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
     }
 }
