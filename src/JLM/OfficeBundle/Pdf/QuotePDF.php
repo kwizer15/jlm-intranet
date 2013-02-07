@@ -6,6 +6,7 @@ class QuotePDF extends \FPDF
 	private $entity;
 	private $end = false;
 	private $variantpage;
+	private $colsize = array(100,7,24,24,13,24);
 	
 	public static function get($entities)
 	{
@@ -85,12 +86,7 @@ class QuotePDF extends \FPDF
 		// En tête lignes
 		$this->setFont('Arial','B',10);
 			
-		$this->cell(22,6,utf8_decode('Référence'),1,0,'C',true);
-		$this->cell(100,6,utf8_decode('Désignation'),1,0,'C',true);
-		$this->cell(7,6,utf8_decode('Qté'),1,0,'C',true);	
-		$this->cell(25,6,utf8_decode('Prix U.H.T'),1,0,'C',true);
-		$this->cell(13,6,utf8_decode('TVA'),1,0,'C',true);
-		$this->cell(25,6,utf8_decode('Prix H.T'),1,1,'C',true);
+		$this->tabHeader();
 		$this->setFont('Arial','',10);
 		$lines = $this->entity->getLines();
 		foreach ($lines as $line)
@@ -102,12 +98,14 @@ class QuotePDF extends \FPDF
 	public function _line($line)
 	{
 		
-		$this->cell(22,8,utf8_decode($line->getReference()),'RL',0);
-		$this->cell(100,8,utf8_decode($line->getDesignation()),'RL',0);
-		$this->cell(7,8,$line->getQuantity(),'RL',0,'R');
-		$this->cell(25,8,number_format($line->getUnitPrice()*(1-$line->getDiscount()),2,',',' ').' '.chr(128),'RL',0,'R');
-		$this->cell(13,8,utf8_decode(number_format($line->getVat()*100,1,',',' ').' %'),'RL',0,'R');
-		$this->cell(25,8,number_format($line->getPrice(),2,',',' ').' '.chr(128),'RL',1,'R');
+	//	$this->cell($this->colsize[0],8,utf8_decode($line->getReference()),'RL',0);
+		$this->cell($this->colsize[0],8,utf8_decode($line->getDesignation()),'RL',0);
+		$this->cell($this->colsize[1],8,$line->getQuantity(),'RL',0,'R');
+		$this->cell($this->colsize[2],8,number_format($line->getUnitPrice()*(1-$line->getDiscount()),2,',',' ').' '.chr(128),'RL',0,'R');
+		$this->cell($this->colsize[3],8,number_format($line->getPrice(),2,',',' ').' '.chr(128),'RL',0,'R');
+		$this->cell($this->colsize[4],8,utf8_decode(number_format($line->getVat()*100,1,',',' ').' %'),'RL',0,'R');
+		$this->cell($this->colsize[5],8,number_format($line->getPriceAti(),2,',',' ').' '.chr(128),'RL',1,'R');
+		
 		
 		
 		if ($line->getShowDescription())
@@ -118,12 +116,13 @@ class QuotePDF extends \FPDF
 			$this->setFont('Arial','I',10);
 			foreach ($text as $l)
 			{
-				$this->cell(22,5,'','RL',0);
-				$this->cell(100,5,utf8_decode($l),'RL');
-				$this->cell(7,5,'','RL',0);
-				$this->cell(25,5,'','RL',0);
-				$this->cell(13,5,'','RL',0);
-				$this->cell(25,5,'','RL',1);
+//				$this->cell($this->colsize[0],5,'','RL',0);
+				$this->cell($this->colsize[0],5,utf8_decode($l),'RL');
+				$this->cell($this->colsize[1],5,'','RL',0);
+				$this->cell($this->colsize[2],5,'','RL',0);
+				$this->cell($this->colsize[3],5,'','RL',0);
+				$this->cell($this->colsize[4],5,'','RL',0);
+				$this->cell($this->colsize[5],5,'','RL',1);
 			}
 			$this->setFont('Arial','',10);
 		}
@@ -142,38 +141,39 @@ class QuotePDF extends \FPDF
 		}
 		$this->end = true;
 		$h = 210 - $y;
-		$this->cell(22,$h,'','RL',0);
-		$this->cell(100,$h,'','RL',0);
-		$this->cell(7,$h,'','RL',0);
-		$this->cell(25,$h,'','RL',0);
-		$this->cell(13,$h,'','RL',0);
-		$this->cell(25,$h,'','RL',1);
+		$this->cell($this->colsize[0],$h,'','RL',0);
+		$this->cell($this->colsize[1],$h,'','RL',0);
+		$this->cell($this->colsize[2],$h,'','RL',0);
+		$this->cell($this->colsize[3],$h,'','RL',0);
+		$this->cell($this->colsize[4],$h,'','RL',0);
+		$this->cell($this->colsize[5],$h,'','RL',1);
 		
 		// Réglement
 		$this->setFont('Arial','B',10);
-		$this->cell(167,6,'MONTANT TOTAL H.T',1,0,'R',true);
-		$this->cell(25,6,number_format($this->entity->getTotalPrice(),2,',',' ').' '.chr(128),1,1,'R',true);
+		$this->cell($this->colsize[0]+$this->colsize[1]+$this->colsize[2]+$this->colsize[3]+$this->colsize[4],6,'MONTANT TOTAL H.T',1,0,'R',true);
+		$this->cell($this->colsize[5],6,number_format($this->entity->getTotalPrice(),2,',',' ').' '.chr(128),1,1,'R',true);
 		
 		$this->setFont('Arial','B',10);
+		$cs = $this->colsize[0]+$this->colsize[1]+$this->colsize[2]+$this->colsize[4];
 		if ($this->entity->getQuote()->getVat() > 0.1)
-			$this->cell(142,6,utf8_decode('Si T.V.A. à 7,0 %, merci de nous fournir l\'attestation'),1,0);
-		else $this->cell(142,6,'',1,0);
+			$this->cell($cs,6,utf8_decode('Si T.V.A. à 7,0 %, merci de nous fournir l\'attestation'),1,0);
+		else $this->cell($cs,6,'',1,0);
 		
 		
-		$this->cell(25,6,'montant TVA',1,0);
-		$this->cell(25,6,number_format($this->entity->getTotalVat(),2,',',' ').' '.chr(128),1,1,'R');
+		$this->cell($this->colsize[3],6,'montant TVA',1,0);
+		$this->cell($this->colsize[5],6,number_format($this->entity->getTotalVat(),2,',',' ').' '.chr(128),1,1,'R');
 		
-		$this->cell(142,6,'',1,0);
-		$this->cell(25,6,'TOTAL T.T.C',1,0);
-		$this->cell(25,6,number_format($this->entity->getTotalPriceAti(),2,',',' ').' '.chr(128),1,1,'R');
+		$this->cell($cs,6,'',1,0);
+		$this->cell($this->colsize[3],6,'TOTAL T.T.C',1,0);
+		$this->cell($this->colsize[5],6,number_format($this->entity->getTotalPriceAti(),2,',',' ').' '.chr(128),1,1,'R');
 		
 		$this->ln(6);
 		
 		$y = $this->getY();
 		$this->setFont('Arial','BU',10);
-		$this->cell(142,5,utf8_decode('Réglement'),0,1);
+		$this->cell($cs,5,utf8_decode('Réglement'),0,1);
 		$this->setFont('Arial','',10);
-		$this->cell(142,5,utf8_decode($this->entity->getPaymentRules()),0,1);
+		$this->cell($cs,5,utf8_decode($this->entity->getPaymentRules()),0,1);
 	
 		// Délais
 		$this->ln(3);
@@ -194,7 +194,7 @@ class QuotePDF extends \FPDF
 		else
 			$who = 'Madame, Monsieur';
 		$this->ln(3);
-		$this->multiCell(142,5,utf8_decode('Nous vous en souhaitons bonne réception et vous prions d\'agréer, '.$who.' l\'expression de nos sentiments les meilleurs.'),0,1);
+		$this->multiCell($cs,5,utf8_decode('Nous vous en souhaitons bonne réception et vous prions d\'agréer, '.$who.' l\'expression de nos sentiments les meilleurs.'),0,1);
 		
 		// Signature
 		$this->setFont('Arial','',10);
@@ -233,15 +233,7 @@ class QuotePDF extends \FPDF
 			$this->cell(22,6,$this->entity->getCreation()->format('d/m/Y'),'LRB',0,'C');
 			$this->cell(19,6,$this->entity->getNumber(),'LRB',1,'C');
 			$this->ln(6);
-			$this->setFont('Arial','B',10);
-				
-			$this->cell(22,6,utf8_decode('Référence'),1,0,'C',true);
-			$this->cell(100,6,utf8_decode('Désignation'),1,0,'C',true);
-			$this->cell(7,6,utf8_decode('Qté'),1,0,'C',true);
-			
-			$this->cell(25,6,utf8_decode('Prix U.H.T'),1,0,'C',true);
-			$this->cell(13,6,utf8_decode('TVA'),1,0,'C',true);
-			$this->cell(25,6,utf8_decode('Prix H.T'),1,1,'C',true);
+			$this->tabHeader();
 			$this->setFont('Arial','',10);
 		}
 	}
@@ -268,5 +260,17 @@ class QuotePDF extends \FPDF
 		// Numéro de page
 		$this->Cell(0,10,$this->PageNo().'/{nb}',0,0,'R');
 		
+	}
+	
+	private function tabHeader()
+	{
+		$this->setFont('Arial','B',10);
+		//	$this->cell($this->colsize[0],6,utf8_decode('Référence'),1,0,'C',true);
+		$this->cell($this->colsize[0],6,utf8_decode('Désignation'),1,0,'C',true);
+		$this->cell($this->colsize[1],6,utf8_decode('Qté'),1,0,'C',true);
+		$this->cell($this->colsize[2],6,utf8_decode('Prix U.H.T'),1,0,'C',true);
+		$this->cell($this->colsize[3],6,utf8_decode('Prix H.T'),1,0,'C',true);
+		$this->cell($this->colsize[4],6,utf8_decode('TVA'),1,0,'C',true);
+		$this->cell($this->colsize[5],6,utf8_decode('Prix TTC'),1,1,'C',true);
 	}
 }
