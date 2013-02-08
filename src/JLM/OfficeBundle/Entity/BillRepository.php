@@ -24,7 +24,7 @@ class BillRepository extends EntityRepository
 	public function getLastNumber()
 	{
 		$date = new \DateTime;
-		$year = $date->format('y');
+		$year = $date->format('Y');
 		$qb = $this->createQueryBuilder('q')
 			->select('SUBSTRING(q.number,5) as num')
 			->where('SUBSTRING(q.creation, 1, 4) = :year')
