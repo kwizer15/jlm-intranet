@@ -30,7 +30,7 @@ class Bill extends Document
 	
 	/**
 	 * Pré label
-	 * @ORM\Column(name="prelabel", type="text")
+	 * @ORM\Column(name="prelabel", type="text", nullable=true)
 	 */
 	private $prelabel;
 	
