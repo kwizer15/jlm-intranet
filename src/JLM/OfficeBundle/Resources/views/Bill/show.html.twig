@@ -1,7 +1,7 @@
 {% extends "JLMOfficeBundle::layout.html.twig" %}
 {% block content %}
 <h1>Facture <small>{{ entity.number }}</small></h1>
-
+{% include 'JLMOfficeBundle:Bill:stateheader.html.twig' with {'state': entity.state} %}
 <div class="row-fluid">
     <div class="span5">
     	<strong>{{ entity.reference | nl2br }}</strong>
@@ -105,12 +105,14 @@
 </div>
 <div class="form-actions">
 	<a href="{{ path('bill_print',{'id':entity.id}) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer</a>
-	<a href="{{ path('bill_edit',{'id':entity.id}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 	{% if entity.state == 0 %}
-	<a href="" class="btn btn-primary">Prête à envoyer</a>
-	{% endif %}
-	{% if entity.state == 1 %}
-	<a href="" class="btn btn-primary">Envoyée</a>
+	<a href="{{ path('bill_edit',{'id':entity.id}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+	<a href="{{ path('bill_ready',{'id':entity.id}) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i> Prête à envoyer</a>
+	{% elseif entity.state == 1 %}
+	<a href="{{ path('bill_back',{'id':entity.id}) }}" class="btn btn-inverse"><i class="icon-fast-backward icon-white"></i> Revenir à la saisie</a>
+	<a href="{{ path('bill_send',{'id':entity.id}) }}" class="btn btn-primary"><i class="icon-share icon-white"></i> Envoyée</a>
+	{% elseif entity.state == 3 %}
+	<a href="{{ path('bill_cancel',{'id':entity.id}) }}" class="btn btn-danger"><i class="icon-white icon-remove"></i> Annuler</a>
 	{% endif %}
 </div>
 {% endblock %}

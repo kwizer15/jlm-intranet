@@ -7,6 +7,8 @@ class Bill extends \FPDF
 	private $end = false;
 	private $head = true;
 	
+	private $angle = 0;
+	
 	public static function get($entities)
 	{
 		
@@ -21,7 +23,6 @@ class Bill extends \FPDF
 	{
 		$this->entity = $entity;
 		$this->addPage();
-		
 		$this->_header();
 		$this->_content();
 		$this->_footer();
@@ -36,6 +37,20 @@ class Bill extends \FPDF
 	
 	public function _header()
 	{
+		if ($this->entity->getState() == -1)
+		{
+			$this->setFont('Arial','B',120);
+			$this->setTextColor(230);
+			$this->rotatedText(40,90,utf8_decode('Annulée'),-45);
+			$this->setTextColor(0);
+		}
+		elseif ($this->entity->getState() == 3)
+		{
+			$this->setFont('Arial','B',120);
+			$this->setTextColor(230);
+			$this->rotatedText(40,90,utf8_decode('Duplicata'),-45);
+			$this->setTextColor(0);
+		}
 		$this->setFont('Arial','B',11);
 		$this->multicell(0,5,utf8_decode($this->entity->getReference()),0);
 		$this->ln(5);
@@ -65,8 +80,8 @@ class Bill extends \FPDF
 		$this->setY($y);
 		// Création haut
 		$this->setFont('Arial','B',10);
-		$this->cell(25,6,'N° Client','LRT',0,'C',true);
-		$this->cell(25,6,'Date','LRT',0,'C',true);
+		$this->cell(25,6,utf8_decode('N° Client'),'LRT',0,'C',true);
+		$this->cell(25,6,utf8_decode('Date'),'LRT',0,'C',true);
 		$this->cell(25,6,utf8_decode('N° Facture'),'LRT',1,'C',true);
 		
 		// Création bas
@@ -163,11 +178,11 @@ class Bill extends \FPDF
 		$this->cell(38,6,utf8_decode('Net T.T.C'),1,1,'C',true);
 		$maturity = $this->entity->getMaturity();
 		if ($maturity == null)
-			$this->cell(40,6,utf8_decode('A récéption'),1,0,'C');
+			$this->cell(40,6,utf8_decode('A réception'),1,0,'C');
 		else 
 			$this->cell(40,6,$this->entity->getMaturity()->format('d/m/Y'),1,0,'C');
 		$this->cell(38,6,number_format($this->entity->getTotalPrice(),2,',',' ').' '.chr(128),1,0,'R');
-		$this->cell(38,6,number_format($this->entity->getVat(),2,',',' ').' '.chr(128),1,0,'R');
+		$this->cell(38,6,number_format($this->entity->getVat()*100,1,',',' ').' %',1,0,'R');
 		$this->cell(38,6,number_format($this->entity->getTotalVat(),2,',',' ').' '.chr(128),1,0,'R');
 		$this->cell(38,6,number_format($this->entity->getTotalPriceAti(),2,',',' ').' '.chr(128),1,1,'R');
 		
@@ -183,19 +198,19 @@ class Bill extends \FPDF
 		$this->ln(6);
 		if ($this->entity->getProperty())
 		{
-			$this->setFont('Arial','BU',7);
-			$this->cell(24,3,utf8_decode('Clause de propriété'),0,0);
-			$this->setFont('Arial','',7);
-			$this->cell(0,3,utf8_decode($this->entity->getProperty()),0,1);
+			$this->setFont('Arial','BU',8);
+			$this->cell(30,4,utf8_decode('Clause de propriété'),0,0);
+			$this->setFont('Arial','',8);
+			$this->cell(0,4,utf8_decode($this->entity->getProperty()),0,1);
 		}
-		$this->setFont('Arial','BU',7);
-		$this->cell(10,3,utf8_decode('Pénalité'),0,0);
-		$this->setFont('Arial','',7);
-		$this->cell(0,3,utf8_decode($this->entity->getPenalty()),0,1);
-		$this->setFont('Arial','BU',7);
-		$this->cell(12,3,utf8_decode('Escompte'),0,0);
-		$this->setFont('Arial','',7);
-		$this->cell(0,3,utf8_decode($this->entity->getEarlyPayment()),0,1);
+		$this->setFont('Arial','BU',8);
+		$this->cell(12,4,utf8_decode('Pénalité'),0,0);
+		$this->setFont('Arial','',8);
+		$this->cell(0,4,utf8_decode($this->entity->getPenalty()),0,1);
+		$this->setFont('Arial','BU',8);
+		$this->cell(15,4,utf8_decode('Escompte'),0,0);
+		$this->setFont('Arial','',8);
+		$this->cell(0,4,utf8_decode($this->entity->getEarlyPayment()),0,1);
 		
 	}
 	
@@ -252,12 +267,39 @@ class Bill extends \FPDF
 			$this->cell(25,$h,'','RLB',1);
 		}
 	
-		$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-footer.jpg',50,280,110);
-		$this->SetY(-15);
+		$this->image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-footer.jpg',50,280,110);
+		$this->setY(-15);
 		// Police Arial italique 8
-		$this->SetFont('Arial','',12);
+		$this->setFont('Arial','',12);
 		// Numéro de page
-		$this->Cell(0,10,$this->PageNo().'/{nb}',0,0,'R');
-		
+		$this->cell(0,10,$this->PageNo().'/{nb}',0,0,'R');
+	}
+	
+	public function rotate($angle,$x=-1,$y=-1)
+	{
+		if($x==-1)
+			$x=$this->x;
+		if($y==-1)
+			$y=$this->y;
+		if($this->angle!=0)
+			$this->_out('Q');
+		$this->angle=$angle;
+		if($angle!=0)
+		{
+			$angle*=M_PI/180;
+			$c=cos($angle);
+			$s=sin($angle);
+			$cx=$x*$this->k;
+			$cy=($this->h-$y)*$this->k;
+			$this->_out(sprintf('q %.5F %.5F %.5F %.5F %.2F %.2F cm 1 0 0 1 %.2F %.2F cm',$c,$s,-$s,$c,$cx,$cy,-$cx,-$cy));
+		}
+	}
+	
+	public function rotatedText($x,$y,$txt,$angle)
+	{
+		//Rotation du texte autour de son origine
+		$this->Rotate($angle,$x,$y);
+		$this->Text($x,$y,$txt);
+		$this->Rotate(0);
 	}
 }

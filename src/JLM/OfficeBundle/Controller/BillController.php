@@ -221,4 +221,78 @@ class BillController extends Controller
     	//   return array('entity'=>$entity);
     	return $response;
     }
+    
+    /**
+     * Note Bill as ready to send.
+     *
+     * @Route("/{id}/ready", name="bill_ready")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function readyAction(Bill $entity)
+    {
+    	if ($entity->getState() < 0)
+    		return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    
+    	if ($entity->getState() < 1)
+    		$entity->setState(1);
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$em->persist($entity);
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    }
+    
+    /**
+     * Note Bill as been send.
+     *
+     * @Route("/{id}/send", name="bill_send")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function sendAction(Bill $entity)
+    {
+    	if ($entity->getState() < 1)
+    		return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    
+    	if ($entity->getState() < 3)
+    		$entity->setState(3);
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$em->persist($entity);
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    }
+    
+    /**
+     * Note Bill as been canceled.
+     *
+     * @Route("/{id}/cancel", name="bill_cancel")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function cancelAction(Bill $entity)
+    {
+    	if ($entity->getState() < 3)
+    		return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    	if ($entity->getState() > -1)
+    		$entity->setState(-1);
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$em->persist($entity);
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    }
+    
+    /**
+     * Note Bill reour à la saisie.
+     *
+     * @Route("/{id}/back", name="bill_back")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function backAction(Bill $entity)
+    {
+    	if ($entity->getState() < 1)
+    		return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    	if ($entity->getState() > 0)
+    		$entity->setState(0);
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$em->persist($entity);
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    }
 }
