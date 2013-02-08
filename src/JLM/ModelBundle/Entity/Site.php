@@ -277,4 +277,29 @@ class Site
     {
     	return $this->getAddress().'';
     }
+    
+    /**
+     * To String
+     */
+    public function toString()
+    {
+    	return $this->getAddress()->toString();
+    }
+    
+    /**
+     * Get Billing Prelabel
+     * @return string
+     */
+    public function getBillingPrelabel()
+    {
+    	$prelabel = '';
+    	foreach ($this->getDoors() as $door)
+    	{
+    		if (!$prelabel)
+    		{
+    			return $door->getBillingPrelabel();
+    		}
+    	}
+    	return '';
+    }
 }

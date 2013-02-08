@@ -23,7 +23,7 @@ class BillType extends AbstractType
             ->add('details',null,array('label'=>'Détails','attr'=>array('class'=>'input-xlarge','rows'=>'3')))
             
             ->add('discount','percent',array('label'=>'Remise','attr'=>array('class'=>'input-mini')))
-            ->add('maturity','datepicker',array('label'=>'Echéance','required'=>false,'attr'=>array('class'=>'input-small')))
+            ->add('maturity','datepicker',array('label'=>'Echéance','required'=>false))
             ->add('property',null,array('label'=>'Clause de propriété','required'=>false,'attr'=>array('class'=>'input-xxlarge')))
             
             ->add('earlyPayment',null,array('label'=>'Escompte','attr'=>array('class'=>'input-xxlarge')))

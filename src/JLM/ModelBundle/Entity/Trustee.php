@@ -267,6 +267,14 @@ class Trustee extends Company
         
     }
     
+    public function getAddressForBill()
+    {
+    	if ($this->billingAddress)
+    		if ($this->billingAddress->getStreet())
+    			return $this->billingAddress;
+    	return $this->getAddress();
+    }
+    
     /**
      * Get BillingLabel
      * 

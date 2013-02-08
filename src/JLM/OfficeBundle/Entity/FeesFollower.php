@@ -12,9 +12,17 @@ use Doctrine\ORM\Mapping as ORM;
 class FeesFollower
 {
 	/**
+	 * @var int $id
+	 *
+	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $id;
+	
+	/**
 	 * @var DateTime
 	 * @ORM\Column(name="activation", type="datetime")
-	 * @ORM\Id
 	 */
 	private $activation;
 	
@@ -45,6 +53,14 @@ class FeesFollower
 	 */
 	private $frequence4;
 	
+	/**
+	 * Get Id
+	 * @return int
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
 
     /**
      * Set activation
