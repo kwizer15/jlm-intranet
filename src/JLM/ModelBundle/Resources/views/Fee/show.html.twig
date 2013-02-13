@@ -1,0 +1,49 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Fiche Redevance</h1>
+<div class="row-fluid">
+<div class="span4 well">
+{{ entity.address |nl2br }}
+</div>
+<div class="span6 offset2">
+<small>{{ entity.prelabel }}</small><br>
+<strong>{{ entity.trustee.name }}</strong><br>
+{{ entity.trustee.addressForBill | nl2br}}
+</div>
+</div>
+<h4>Contrats</h4>
+<table class="table table-stripped">
+<thead>
+<tr>
+<th>Numéro</th>
+<th>Type</th>
+<th>Installation</th>
+<th>Montant annuel</th>
+</tr>
+<tbody>
+{% for contract in entity.contracts %}
+<tr>
+	<td>{{ contract.number }}</td>
+	<td>{% if contract.complete %}Complet{% else %}Normal{% endif %}<br>{% if contract.option %}24/24h 7/7j{% else %}Lundi au vendredi 8h30-18h00{% endif %}</td>
+	<td>{{ contract.door.type }}<br>{{ contract.door.location }}</td>
+	<td>{{ contract.fee  | number_format(2,',',' ') }} €</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+<table class="table">
+<tbody>
+<tr><th>Périodicité</th><td>{{ entity.frequence }}</td></tr>
+<tr><th>Montant par redevance</th><td>{{ entity.amount | number_format(2,',',' ') }} €</td></tr>
+<tr><th>Montant annuel</th><td>{{ entity.yearAmount | number_format(2,',',' ') }} €</td></tr>
+
+
+</tbody>
+</table>
+
+<div class="form-actions">
+	<a href="{{ path('fee_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>	
+</div>
+
+{% endblock %}

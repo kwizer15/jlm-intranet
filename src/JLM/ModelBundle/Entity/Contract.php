@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\ModelBundle\Entity\Contract
  *
  * @ORM\Table(name="contracts")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\ContractRepository")
  */
 class Contract
 {

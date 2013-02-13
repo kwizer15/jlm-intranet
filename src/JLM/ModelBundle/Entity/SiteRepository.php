@@ -49,6 +49,7 @@ class SiteRepository extends EntityRepository
 					'accountNumber'=>$r->getTrustee()->getAccountNumber(),
 					'prelabel'=>$r->getBillingPrelabel(),
 					'vat'=>$r->getVat()->getRate(),
+					'vatid'=>$r->getVat()->getId(),
 					'doorDetails'=>$doorDetails,
 					'reference'=>$reference,
 				);

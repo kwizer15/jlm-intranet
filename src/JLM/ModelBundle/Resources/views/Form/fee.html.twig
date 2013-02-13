@@ -1,0 +1,25 @@
+{% block fee_widget %}
+<table class="table">
+	<thead>
+		<tr>
+			<th>Contrats</th>
+			<th>
+				<a href="#" class="btn btn-success newcontract"><i class="icon-plus-sign icon-white"></i></a>
+			</th>
+		</tr>
+	</thead>
+{{ form_widget(form.contracts) }}
+</table>
+{{ form_rest(form) }}
+{% endblock fee_widget %}
+
+{% block contract_select_row %}
+{% spaceless %}
+{% set attr = attr|merge({'data-source':  path('autocomplete_contract') }) %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' autocompletion  input-xxlarge' }) %}
+<tr {{ block('widget_container_attributes') }}>
+<td>{{ block('form_widget_simple') }}</td>
+<td><a href="#" class="btn btn-danger remove-line"><i class="icon-minus-sign icon-white"></i></a></td>
+</tr>
+{% endspaceless %}
+{% endblock contract_select_row %}

@@ -285,7 +285,7 @@ class Fee
      */
     public function getAmount()
     {
-    	return $this->getAmount() / $this->getFrequence();
+    	return $this->getYearAmount() / $this->getFrequence();
     }
    
 }
