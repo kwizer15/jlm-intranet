@@ -198,6 +198,7 @@ source: function(request,response){
 
   $.fn.bill.defaults = {
 	 autoSource:'',
+	 lineCount:0,
   }
 
   $.fn.bill.Constructor = Bill

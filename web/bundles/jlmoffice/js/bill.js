@@ -6,7 +6,7 @@
 
   "use strict"; // jshint ;_;
   
-  /* QUOTE PUBLIC CLASS DEFINITION
+  /* BILL PUBLIC CLASS DEFINITION
    * ================================= */
 
    var Bill = function (element, options) {
@@ -42,7 +42,6 @@
 				    $("#bill_accountNumber").val(ui.item.accountNumber);
 				    $("#bill_reference").val(ui.item.reference);
 				    $("#bill_details").val(ui.item.doorDetails);
-				    $("#bill_reference").val(ui.item.reference);
 			        return false;
 			    }
 		  });
@@ -199,6 +198,7 @@ source: function(request,response){
 
   $.fn.bill.defaults = {
 	 autoSource:'',
+	 lineCount:0,
   }
 
   $.fn.bill.Constructor = Bill

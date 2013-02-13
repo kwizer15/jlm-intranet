@@ -20,7 +20,8 @@
 <script src="{{ asset("bundles/jlmoffice/js/bill.js") }}"></script>
 <script>
 $("body").bill({
-	 autoSource:'{{ path('autocomplete') }}'
+	 autoSource:'{{ path('autocomplete') }}',
+	 lineCount:{{ form.lines | length }},
 });
 </script>
 {% endblock %}
