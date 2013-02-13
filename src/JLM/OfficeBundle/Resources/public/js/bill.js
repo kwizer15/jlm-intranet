@@ -6,7 +6,7 @@
 
   "use strict"; // jshint ;_;
   
-  /* QUOTE PUBLIC CLASS DEFINITION
+  /* BILL PUBLIC CLASS DEFINITION
    * ================================= */
 
    var Bill = function (element, options) {
