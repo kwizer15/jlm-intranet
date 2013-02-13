@@ -42,7 +42,6 @@
 				    $("#bill_accountNumber").val(ui.item.accountNumber);
 				    $("#bill_reference").val(ui.item.reference);
 				    $("#bill_details").val(ui.item.doorDetails);
-				    $("#bill_reference").val(ui.item.reference);
 			        return false;
 			    }
 		  });
