@@ -296,7 +296,7 @@ class Fee
     	$group = '';
     	foreach ($this->contracts as $contract)
     	{
-    		$group = $contract->getDoor()->getSite()->getGroupNumber();
+    		$group .= $contract->getDoor()->getSite()->getGroupNumber();
     		if ($group != '')
     			$group .= ' ';
     	}
