@@ -18,13 +18,27 @@
 			<ul class="nav">
 			  {% block navigation %}
 			    <li><a href="{{ path('trustee') }}">Saisie</a></li>
-		        <li><a href="{{ path('task') }}">Bureau</a></li>
+		        <li class="dropdown">
+		        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Bureau <b class="caret"></b></a>
+		        	<ul class="dropdown-menu">
+		        		<li class="nav-header">Tâches</li>
+		        		<li><a href="{{ path('task') }}"><i class="icon-list"></i> Liste</a></li>
+		        		<li class="divider"></li>
+                        <li class="nav-header">Devis</li>
+		        		<li><a href="{{ path('quote') }}"><i class="icon-list"></i> Liste</a></li>
+		        		<li><a href="{{ path('quote_new') }}"><i class="icon-plus-sign"></i> Nouveau</a></li>
+		        		<li class="divider"></li>
+                        <li class="nav-header">Facture</li>
+		        		<li><a href="{{ path('bill') }}"><i class="icon-list"></i> Liste</a></li>
+		        		<li><a href="{{ path('bill_new') }}"><i class="icon-plus-sign"></i> Nouvelle</a></li>
+		        		<li class="divider"></li>
+                        <li class="nav-header">Redevances</li>
+		        		<li><a href="{{ path('fees') }}"><i class="icon-list"></i> Liste</a></li>
+		        	</ul>
+		        </li>
 		        <li><a href="{{ path('fixing_list') }}">Journal de bord</a></li>
-		        <li><a href="">Gestion des utilisateurs</a></li>
 			  {% endblock navigation %}
 			</ul>
-			
-		
 			<div class="btn-group pull-right">
 			   <a href="#" class="btn btn-info dropdown-toggle" data-toggle="dropdown"><i class="icon-user  icon-white"></i> {{ app.user.person.firstName }} <b class="caret"></b></a>
 			   <ul class="dropdown-menu">
