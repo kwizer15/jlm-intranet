@@ -77,7 +77,7 @@ class QuotePDF extends \FPDF
 		$this->cell(22,6,$this->entity->getNumber(),'LRB',1,'C');
 			
 		$this->ln(6);
-		$this->multiCell(0,6,utf8_decode($this->entity->getIntro()),0,1);
+		$this->multiCell(0,5,utf8_decode($this->entity->getIntro()),0,1);
 		$this->ln(3);
 	}
 	
