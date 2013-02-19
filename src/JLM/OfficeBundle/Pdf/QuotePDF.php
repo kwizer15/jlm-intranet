@@ -245,12 +245,12 @@ class QuotePDF extends \FPDF
 		{
 			$y = $this->getY();
 			$h = 278 - $y;
-			$this->cell(22,$h,'','RLB',0);
-			$this->cell(100,$h,'','RLB',0);
-			$this->cell(7,$h,'','RLB',0);
-			$this->cell(25,$h,'','RLB',0);
-			$this->cell(13,$h,'','RLB',0);
-			$this->cell(25,$h,'','RLB',1);
+			$this->cell($this->colsize[0],$h,'','RLB',0);
+			$this->cell($this->colsize[1],$h,'','RLB',0);
+			$this->cell($this->colsize[2],$h,'','RLB',0);
+			$this->cell($this->colsize[3],$h,'','RLB',0);
+			$this->cell($this->colsize[4],$h,'','RLB',0);
+			$this->cell($this->colsize[5],$h,'','RLB',1);
 		}
 	
 		$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-footer.jpg',50,280,110);
