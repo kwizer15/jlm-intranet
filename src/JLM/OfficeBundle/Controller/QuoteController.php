@@ -288,6 +288,23 @@ class QuoteController extends Controller
     }
     
     /**
+     * Imprimer la chemise
+     *
+     * @Route("/{id}/jacket", name="quote_jacket")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function jacketAction(Quote $entity)
+    {
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/pdf');
+    	$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
+    	$response->setContent($this->render('JLMOfficeBundle:Quote:jacket.pdf.php',array('entity'=>$entity)));
+    
+    	//   return array('entity'=>$entity);
+    	return $response;
+    }
+    
+    /**
      * Mail
      * @Route("/{id}/mail", name="quote_mail")
      * @Template()

@@ -7,6 +7,7 @@
 
 <div class="form-actions">
 	<a href="{{ path('quote') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	<a href="{{ path('quote_jacket',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer la chemise</a>
 {% if entity.variants|length > 0 %}	
 	<a href="{{ path('quote_print',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-white icon-print"></i> Imprimer tout</a>	
 {% endif %}
@@ -15,6 +16,7 @@
 {% else %}
 <a href="{{ path('quote_mail',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-white icon-envelope"></i> Envoyer tout par mail</a>
 {% endif %}
+
 	<a href="{{ path('variant_new',{ 'id' : entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter une variante</a>
 </div>
 
