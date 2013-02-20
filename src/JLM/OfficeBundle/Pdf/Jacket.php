@@ -27,7 +27,9 @@ class Jacket extends \FPDF
 		}
 		$pdf->setFont('Arial','BI',11);
 		$pdf->cell(0,6,utf8_decode($entity->getContactCp()),0,1);
-		$contact = $entity->getContact()->getPerson();
+		$contact = null;
+		if ($entity->getContact())
+			$contact = $entity->getContact()->getPerson();
 		if ($contact)
 		{
 			$pdf->setFont('Arial','I',11);
