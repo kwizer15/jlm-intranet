@@ -27,12 +27,14 @@ class Jacket extends \FPDF
 		}
 		$pdf->setFont('Arial','BI',11);
 		$pdf->cell(0,6,utf8_decode($entity->getContactCp()),0,1);
-		$contact = $entity->getContact();
+		$contact = $entity->getContact()->getPerson();
 		if ($contact)
 		{
 			$pdf->setFont('Arial','I',11);
-			if ($contact->getPhone())
-				$pdf->cell(0,5,utf8_decode('Tèl : '.$contact->getPhone()),0,1);
+			if ($contact->getMobilePhone())
+				$pdf->cell(0,5,utf8_decode('Tél port. : '.$contact->getMobilePhone()),0,1);
+			if ($contact->getFixedPhone())
+				$pdf->cell(0,5,utf8_decode('Tél fixe : '.$contact->getFixedPhone()),0,1);
 			if ($contact->getFax())
 				$pdf->cell(0,5,utf8_decode('Fax : '.$contact->getFax()),0,1);
 			if ($contact->getEmail())
