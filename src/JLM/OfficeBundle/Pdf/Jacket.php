@@ -38,7 +38,7 @@ class Jacket extends \FPDF
 			if ($contact->getFax())
 				$pdf->cell(0,5,utf8_decode('Fax : '.$contact->getFax()),0,1);
 			if ($contact->getEmail())
-				$pdf->cell(0,5,utf8_decode('Fax : '.$contact->getEmail()),0,1);
+				$pdf->cell(0,5,utf8_decode('Email : '.$contact->getEmail()),0,1);
 		}
 		$pdf->setXY(100,230);
 		$pdf->setFont('Arial','B',14);
