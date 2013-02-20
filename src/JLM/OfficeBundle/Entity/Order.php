@@ -13,6 +13,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Order
 {
+	const STATE_INPUT = 0;
+	const STATE_ORDERED = 1;
+	const STATE_RECEIVED = 2;
+	
 	/**
 	 * @var int $id
 	 *
