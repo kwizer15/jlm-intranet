@@ -23,6 +23,12 @@ class Order
 	private $id;
 	
 	/**
+	 * @var DateTime $creation
+	 * @ORM\Column(name="creation",type="datetime") 
+	 */
+	private $creation;
+	
+	/**
 	 * Lignes
 	 * @var ArrayCollection $lines
 	 * @ORM\OneToMany(targetEntity="OrderLine", mappedBy="order")
@@ -42,6 +48,17 @@ class Order
 	 * @ORM\ManyToOne(targetEntity="QuoteVariant")
 	 */
 	private $quote;
+	
+	/**
+	 * Etat
+	 * @var int
+	 * 0 - en saisie
+	 * 1 - commandé
+	 * 2 - reçue
+	 * @ORM\Column(name="state",type="integer")
+	 */
+	private $state;
+	
     /**
      * Constructor
      */
@@ -137,5 +154,51 @@ class Order
     public function getQuote()
     {
         return $this->quote;
+    }
+    
+    /**
+     * Set creation
+     *
+     * @param \DateTime $creation
+     * @return Document
+     */
+    public function setCreation($creation)
+    {
+    	$this->creation = $creation;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get creation
+     *
+     * @return \DateTime
+     */
+    public function getCreation()
+    {
+    	return $this->creation;
+    }
+    
+    /**
+     * Set state
+     *
+     * @param int $state
+     * @return Order
+     */
+    public function setState($state)
+    {
+    	if ($state >= 0 && $state < 3)
+    	$this->state = $state;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get state
+     * @return string
+     */
+    public function getState()
+    {
+    	return $this->state;
     }
 }
