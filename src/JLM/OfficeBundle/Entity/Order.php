@@ -61,7 +61,7 @@ class Order
 	 * 2 - reçue
 	 * @ORM\Column(name="state",type="integer")
 	 */
-	private $state;
+	private $state = 0;
 	
     /**
      * Constructor
@@ -69,6 +69,7 @@ class Order
     public function __construct()
     {
         $this->lines = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->creation = new \DateTime;
     }
     
     /**
