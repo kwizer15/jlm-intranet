@@ -18,21 +18,36 @@ class TaskRepository extends EntityRepository
 		->getSingleScalarResult();
 	}
 	
-	public function getCountOpened()
+	public function getCountOpened($type = null)
 	{
 		$qb = $this->createQueryBuilder('t')
 		->select('COUNT(t)')
 		->where('t.close IS NULL');
+		
+		if ($type)
+		{
+			$qb->andWhere('t.type = ?1')
+				->setParameter(1,$type)
+			;
+		}
 	
 		return (int) $qb->getQuery()
 		->getSingleScalarResult();
 	}
 	
-	public function getOpened()
+	public function getOpened($type = null,$limit = 10, $offset = 0)
 	{
 		$qb = $this->createQueryBuilder('t')
 		->where('t.close IS NULL');
-	
+		if ($type)
+		{
+			$qb->andWhere('t.type = ?1')
+			->setParameter(1,$type)
+			;
+		}
+		$qb->orderBy('t.open','asc')
+			->setFirstResult($offset)
+			->setMaxResults($limit);
 		return $qb->getQuery()->getResult();
 	}
 }

@@ -23,15 +23,16 @@ class TaskController extends Controller
 	 *
 	 * @Route("/", name="task")
 	 * @Route("/page/{page}", name="task_page")
+	 * @Route("/page/{page}/type/{type}", name="task_type")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function indexAction($page = 1)
+	public function indexAction($page = 1, $type = null)
 	{
 		$limit = 10;
 		$em = $this->getDoctrine()->getEntityManager();
 		 
-		$nb = $em->getRepository('JLMOfficeBundle:Task')->getCountOpened();
+		$nb = $em->getRepository('JLMOfficeBundle:Task')->getCountOpened($type);
 		$nbPages = ceil($nb/$limit);
 		$nbPages = ($nbPages < 1) ? 1 : $nbPages;
 		$offset = ($page-1) * $limit;
@@ -40,9 +41,8 @@ class TaskController extends Controller
 			throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
 		}
 	
-		$entities = $em->getRepository('JLMOfficeBundle:Task')->findBy(
-				array('close'=>null),
-				array('open'=>'asc'),
+		$entities = $em->getRepository('JLMOfficeBundle:Task')->getOpened(
+				$type,
 				$limit,
 				$offset
 		);
@@ -73,5 +73,24 @@ class TaskController extends Controller
 			return $this->redirect($this->generateUrl('work_new_door',array('id'=>$entity->getDoor()->getId())));
 		}
 		return $this->redirect($this->generateUrl('task'));
+	}
+	
+	/**
+	 * Sidebar
+	 * @Route("/sidebar", name="task_sidebar")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function sidebarAction()
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		return array(
+				'all' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(),
+				'quotes' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(2),
+				'orders' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(3),
+				'bills' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(1),
+				'contacts' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(4),
+			);
 	}
 }

@@ -1,0 +1,12 @@
+{% extends "JLMOfficeBundle::layout.html.twig" %}
+
+{% block sidebar %}
+			<h4>Tâches</h4>
+			<ul class="nav nav-list  affix">
+		    <li><form  action="{{ path('quote_search') }}" method="post" class="form-search">
+					<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher...">
+			    </form></li>
+			    <li class="nav-header">Tâches</li>
+			    {% render "JLMOfficeBundle:Task:sidebar" %}
+			</ul>
+{% endblock sidebar %}
