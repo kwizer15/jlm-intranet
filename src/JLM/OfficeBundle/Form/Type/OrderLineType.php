@@ -12,8 +12,8 @@ class OrderLineType extends AbstractType
 	{
 		$builder
 		->add('position','hidden')
-		->add('reference',null,array('required'=>false,'attr'=>array('class'=>'input-mini')))
-		->add('designation',null,array('attr'=>array('class'=>'input-xlarge')))
+		->add('reference',null,array('required'=>false,'attr'=>array('class'=>'input-small')))
+		->add('designation',null,array('attr'=>array('class'=>'input-xxlarge')))
 		->add('quantity',null,array('attr'=>array('class'=>'input-mini')))
 		;
 	}

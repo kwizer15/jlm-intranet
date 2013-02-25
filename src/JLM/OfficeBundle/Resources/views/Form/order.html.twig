@@ -1,7 +1,7 @@
 {% block order_widget %}
 <div class="row_fluid clearfix">
 	<div class="span6 well">
-    	{{ form_row(form.reference) }}
+    	{{ form_row(form.place) }}
     </div>
     <div class="span6">
     	{{ form_row(form.creation) }}
@@ -13,10 +13,6 @@
 			<th>Référence</th>
 			<th>Designation</th>
 			<th>Qté</th>
-			<th>PU HT</th>
-			<th>Remise</th>
-			<th>TVA</th>
-			<th>PT HT</th>
 			<th class="span1"><a href="#" class="btn btn-success newline"><i class="icon-plus-sign icon-white"></i></a></th>
 		</tr>
 	</thead>
@@ -25,7 +21,7 @@
 {{ form_rest(form) }}
 {% endblock %}
 
-{% block bill_line_row %}
+{% block order_line_row %}
 <tr {{ block('widget_container_attributes') }}>
     <td>
         {{ form_widget(form.position) }}
@@ -35,4 +31,4 @@
     <td>{{ form_widget(form.quantity) }}</td>
     <td><a href="#" class="btn btn-danger remove-line"><i class="icon-minus-sign icon-white"></i></a></td>
 </tr>
-{% endblock bill_line_row %}
+{% endblock order_line_row %}

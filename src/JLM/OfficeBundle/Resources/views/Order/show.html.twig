@@ -15,11 +15,20 @@
 	<tbody>
 	{% for line in entity.lines %}
 		<tr>
-			<th>{{ line.reference }}</th>
-			<th>{{ line.designation }}</th>
-			<th>{{ line.quantity }}</th>
+			<td>{{ line.reference }}</td>
+			<td>{{ line.designation }}</td>
+			<td>{{ line.quantity }}</td>
 		</tr>
 	{% endfor %}
 	</tbody>
 </table>
+
+<div class="form-actions">
+	<a href="{{ path('order') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+{#	<a href="{{ path('order_print',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer</a> #}
+{% if entity.state < 3 %}
+	<a href="{{ path('order_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+{% endif %}
+</div>
+
 {% endblock %}

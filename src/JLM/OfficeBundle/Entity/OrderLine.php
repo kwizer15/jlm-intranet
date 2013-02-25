@@ -20,6 +20,14 @@ class OrderLine
 	private $id;
 	
 	/**
+	 * Commande a laquelle appartien la ligne
+	 * @var Order $order
+	 * 
+	 * @ORM\ManyToOne(targetEntity="Order", inversedBy="lines")
+	 */
+	private $order;
+	
+	/**
 	 * Position de la ligne dans le devis
 	 * @var position
 	 *
@@ -58,6 +66,28 @@ class OrderLine
         return $this->id;
     }
 
+    /**
+     * Set order
+     *
+     * @param Order $order
+     * @return OrderLine
+     */
+    public function setOrder(Order $order)
+    {
+    	$this->order = $order;
+    	return $this;
+    }
+    
+    /**
+     * Get order
+     *
+     * @return Order
+     */
+    public function getOrder()
+    {
+    	return $this->order;
+    }
+    
     /**
      * Set position
      *

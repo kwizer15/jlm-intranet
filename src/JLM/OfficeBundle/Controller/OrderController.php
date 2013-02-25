@@ -12,7 +12,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use JLM\OfficeBundle\Entity\Order;
 use JLM\OfficeBundle\Entity\OrderLine;
-use JLM\OfficeBundle\Form\OrderType;
+use JLM\OfficeBundle\Form\Type\OrderType;
 use JLM\OfficeBundle\Entity\QuoteVariant;
 
 
@@ -67,12 +67,17 @@ class OrderController extends Controller
 		$entity = new Order();
 		if ($variant)
 		{
-			$entity->setPlace($variant->getSiteCp());
+			$entity->setPlace($variant->getQuote()->getDoorCp());
 			$entity->setQuote($variant);
 			$vlines = $variant->getLines();
 			foreach ($vlines as $vline)
 			{
-				if ($vline->getProduct()->getCategory()->getId() != 2)
+				$flag = true;
+				if ($product = $vline->getProduct())
+					if ($category = $product->getCategory())
+						if ($category->getId() != 2)
+							$flag = false;
+				if ($flag)
 				{
 					$oline = new OrderLine;
 					$oline->setReference($vline->getReference());
