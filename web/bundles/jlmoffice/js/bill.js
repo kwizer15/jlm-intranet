@@ -4,34 +4,86 @@
 
 !function($){
 
-	"use strict"; // jshint ;_;
+  "use strict"; // jshint ;_;
+  
+  /* BILL PUBLIC CLASS DEFINITION
+   * ================================= */
 
-	/* QUOTE PUBLIC CLASS DEFINITION
-	 * ================================= */
-
-	var Bill = function (element, options) {
-		this.$element = $(element)
-		this.options = $.extend({}, $.fn.bill.defaults, options)
-		this.listen()
-	}
-
-	Bill.prototype = {
-			constructor: Bill
-
-			, listen : function() {
-				$("#bill_vat").on('change', $.proxy(this.vatchange,this)).change();
-
-				$("#bill_site").attr('data-source',this.options.autoSource)
-				.autocomplete({
-					source: function(request,response){
-						request.repository = 'JLMModelBundle:Site';
-						return $.post(
-								this.element.attr('data-source'),
-								request,
-								function( data ) { response( data ); },
-								'json'
-						);
-					}
+   var Bill = function (element, options) {
+     this.$element = $(element)
+     this.options = $.extend({}, $.fn.bill.defaults, options)
+     this.listen()
+   }
+  
+   Bill.prototype = {
+	  constructor: Bill
+	  
+	  , listen : function() {
+		  $("#bill_vat").on('change', $.proxy(this.vatchange,this)).change();
+		  
+		  $("#bill_site").attr('data-source',this.options.autoSource)
+		                    .autocomplete({
+				source: function(request,response){
+					request.repository = 'JLMModelBundle:Site';
+					return $.post(
+							this.element.attr('data-source'),
+							request,
+							function( data ) { response( data ); },
+							'json'
+					);
+			    }
+			    , select: function (event, ui) {
+				    $("#bill_site").val(ui.item.siteCp);
+				    $("#bill_vat").val(number_format(ui.item.vat*100,1,',',' ')).change();
+				    $("#bill_trustee").val(ui.item.trustee);
+				    $("#bill_prelabel").val(ui.item.prelabel);
+				    $("#bill_trusteeName").val(ui.item.trusteeName);
+				    $("#bill_trusteeAddress").val(ui.item.trusteeBillingAddress);
+				    $("#bill_accountNumber").val(ui.item.accountNumber);
+				    $("#bill_reference").val(ui.item.reference);
+				    $("#bill_details").val(ui.item.doorDetails);
+			        return false;
+			    }
+		  });
+		  
+		  $("#bill_details").attr('data-source',this.options.autoSource)
+          .autocomplete({
+source: function(request,response){
+	request.repository = 'JLMModelBundle:Door';
+	return $.post(
+			this.element.attr('data-source'),
+			request,
+			function( data ) { response( data ); },
+			'json'
+	);
+}
+, select: function (event, ui) {
+  $("#bill_site").val(ui.item.siteCp);
+  $("#bill_details").val(ui.item.doorDetails)
+  $("#bill_vat").val(number_format(ui.item.vat*100,1,',',' ')).change();
+  $("#bill_trustee").val(ui.item.trustee);
+  $("#bill_prelabel").val(ui.item.prelabel);
+  $("#bill_trusteeName").val(ui.item.trusteeName);
+  $("#bill_trusteeAddress").val(ui.item.trusteeBillingAddress);
+  $("#bill_accountNumber").val(ui.item.accountNumber);
+  $("#bill_reference").val(ui.item.reference);
+  $("#bill_details").val(ui.item.doorDetails);
+  $("#bill_reference").val(ui.item.reference);
+  return false;
+}
+});
+		  
+		  $("#bill_trusteeName").attr('data-source',this.options.autoSource)
+		  			.autocomplete({
+				source: function(request,response){
+					request.repository = 'JLMModelBundle:Trustee';
+					return $.post(
+							this.element.attr('data-source'),
+							request,
+							function( data ) { response( data ); },
+							'json'
+					);
+				}
 				, select: function (event, ui) {
 					$("#bill_site").val(ui.item.siteCp);
 					$("#bill_vat").val(number_format(ui.item.vat*100,1,',',' ')).change();
@@ -179,9 +231,10 @@
 		$("#bill_total_ttc").html(number_format(tht+tva,2,',',' '));
 		return this;
 
-
-	}
-	}
+  $.fn.bill.defaults = {
+	 autoSource:'',
+	 lineCount:0,
+  }
 
 
 	/* BILL PLUGIN DEFINITION

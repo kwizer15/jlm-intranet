@@ -1,0 +1,23 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+{% form_theme form with 'JLMModelBundle:Form:fee.html.twig' %}
+{% block content %}
+<h1>Nouvelle redevance</h1>
+<form action="{{ path('fee_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	{{ form_widget(form) }}
+    <div class="form-actions">
+	   <a href="{{ path('fee_show', { 'id': entity.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	   <button type="submit" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer</button>
+	</div>
+</form>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset("bundles/jlmmodel/js/fee.js") }}"></script>
+<script>
+$("body").fee({
+	 autoSource:'{{ path('autocomplete') }}',
+	 lineCount:{{ form.contracts | length }},
+});
+</script>
+{% endblock %}

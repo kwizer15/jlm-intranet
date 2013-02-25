@@ -197,4 +197,12 @@ class FeesFollower
     	}
     	return null;
     }
+    
+    public function isActive()
+    {
+    	$today = new \DateTime();
+    	if ($today > $this->getActivation())
+    		return true;
+    	return false;
+    }
 }

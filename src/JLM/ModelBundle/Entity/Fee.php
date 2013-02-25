@@ -285,7 +285,81 @@ class Fee
      */
     public function getAmount()
     {
-    	return $this->getAmount() / $this->getFrequence();
+    	return $this->getYearAmount() / $this->getFrequence();
     }
    
+    /**
+     * Get Reference
+     */
+    public function getGroup()
+    {
+    	$group = '';
+    	foreach ($this->contracts as $contract)
+    	{
+    		$group .= $contract->getDoor()->getSite()->getGroupNumber();
+    		if ($group != '')
+    			$group .= ' ';
+    	}
+    	return $group;
+    }
+    
+    public function getBill($number, Product $product,\JLM\OfficeBundle\Entity\FeesFollower $follower)
+    {
+    	$bill = new \JLM\OfficeBundle\Entity\Bill;
+    	$bill->setFee($this);
+    	$bill->setFeesFollower($follower);
+    	$bill->setCreation(new \DateTime);
+    	$bill->setNumber($number);
+    	$bill->setTrustee($this->getTrustee());
+    	$bill->setTrusteeName($this->getTrustee()->getName());
+    	$bill->setTrusteeAddress($this->getBillingAddress());
+    	$bill->setAccountNumber($this->getTrustee()->getAccountNumber());
+    	$bill->setPrelabel($this->getPrelabel());
+    	$bill->setVat($this->getVat()->getRate());
+    	$ref = '';
+    	if ($this->getGroup() != '')
+    		$ref .= 'Groupe : '.$this->getGroup().chr(10);
+    	$ref .= 'Contrat : ';
+    	foreach ($this->getContractNumbers() as $key=>$n)
+    	{
+    		if ($key > 0)
+    			$ref .= ', ';
+    		$ref .= $n;
+    	}
+    	$bill->setReference($ref);
+    	$bill->setSite($this->getAddress());
+    	$dd = '';
+    	foreach ($this->getDoorDescription() as $key=>$desc)
+    	{
+    		if ($key > 0)
+    			$dd .= chr(10);
+    		$dd .= $desc;
+    	}
+    	$bill->setDetails($dd);
+    	foreach ($this->getContracts() as $key=>$contract)
+    	{
+    		$begin = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
+    		$end = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
+    		$periods = array('1'=>'P1Y','2'=>'P6M','4'=>'P3M');
+    		$end->add(new \DateInterval($periods[$this->getFrequence()]));
+    		$end->sub(new \DateInterval('P1D'));
+    		$line = new \JLM\OfficeBundle\Entity\BillLine();
+    		$line->setBill($bill);
+    		$line->setPosition($key);
+    		$line->setReference($product->getReference());
+    		$line->setDesignation($product->getDesignation().' du '.$begin->format('d/m/Y').' au '.$end->format('d/m/Y'));
+    		
+    		$line->setShowDescription(true);
+    		$line->setDescription($contract->getDoor()->getType().' / '.$contract->getDoor()->getLocation());
+    		$line->setUnitPrice($contract->getFee() / $this->getFrequence());
+    		$line->setQuantity(1);
+    		$line->setVat($this->getVat()->getRate());
+    		$bill->addLine($line);
+    	}
+    	$bill->setEarlyPayment('0,00% pour paiement anticipé');
+    	$bill->setMaturity(null);
+    	$bill->setPenalty('de 1,50% par mois pour paiement différé');
+    	return $bill;
+    }
+    
 }

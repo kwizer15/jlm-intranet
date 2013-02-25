@@ -398,6 +398,8 @@ class Product
     {
     	$d = $this->getPurchasePrice() - $this->getShipping();
     	$n = $this->getUnitPrice() - $this->getShipping();
+    	if ($d == 0)
+    		return 0;
     	return (($n / $d) - 1)*100;
     }
 
