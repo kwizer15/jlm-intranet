@@ -22,7 +22,7 @@
 		        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Bureau <b class="caret"></b></a>
 		        	<ul class="dropdown-menu">
 		        		<li class="nav-header">Tâches</li>
-		        		<li><a href="{{ path('task') }}"><i class="icon-list"></i> Liste</a></li>
+		        		{% render "JLMOfficeBundle:Task:sidebar" %}
 		        		<li class="divider"></li>
                         <li class="nav-header">Devis</li>
 		        		<li><a href="{{ path('quote') }}"><i class="icon-list"></i> Liste</a></li>

@@ -51,6 +51,7 @@ class TaskController extends Controller
 				'entities' => $entities,
 				'page'     => $page,
 				'nbPages'  => $nbPages,
+				'type' => $type
 		);
 	}
 	

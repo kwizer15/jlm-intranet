@@ -1,7 +1,13 @@
 {% extends "JLMOfficeBundle:Task:layout.html.twig" %}
 
 {% block content %}
-<h1>Liste des tâches</h1>
+<h1>Liste des
+{% if type == 1 %}factures à faire
+{% elseif type == 2 %}devis à faire
+{% elseif type == 3 %}fiches travaux à faire
+{% elseif type == 4 %}clients à contacter
+{% else %}tâches
+{% endif %}</h1>
 
 <table class="table table-stripped">
     <thead>
