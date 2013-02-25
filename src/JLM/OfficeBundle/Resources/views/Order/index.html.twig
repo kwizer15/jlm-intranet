@@ -17,7 +17,7 @@
         	<td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}
        {# 	<br>{% include 'JLMOfficeBundle:Order:statelabel.html.twig' with {'state': entity.state} %}</td> #}
             <td>
-            	<a href="{{ path('order_show', { 'id': entity.id }) }}">{{ entity.place }}</a>
+            	<a href="{{ path('order_show', { 'id': entity.id }) }}">{{ entity.place | nl2br }}</a>
             </td>
             <td>
                 <a href="{{ path('order_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
