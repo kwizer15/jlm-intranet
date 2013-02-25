@@ -1,0 +1,25 @@
+{% extends "JLMOfficeBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Fiche travaux</h1>
+<strong>{{ entity.creation | date('d/m/Y') }}</strong><br><br>
+<strong>{{ entity.place |nl2br }}</strong>
+<table class="table table-stripped">
+	<thead>
+		<tr>
+			<th>Référence</th>
+			<th>Désignation</th>
+			<th>Qté</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for line in entity.lines %}
+		<tr>
+			<th>{{ line.reference }}</th>
+			<th>{{ line.designation }}</th>
+			<th>{{ line.quantity }}</th>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% endblock %}

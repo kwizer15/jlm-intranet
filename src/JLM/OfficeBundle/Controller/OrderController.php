@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use JLM\OfficeBundle\Entity\Order;
 use JLM\OfficeBundle\Entity\OrderLine;
 use JLM\OfficeBundle\Form\OrderType;
+use JLM\OfficeBundle\Entity\QuoteVariant;
 
 
 
@@ -34,7 +35,8 @@ class OrderController extends Controller
 	 */
 	public function indexAction()
 	{
-		$entities = $em->getRepository('JLMOfficeBundle:Quote')->findAll();
+		$em = $this->getDoctrine()->getEntityManager();
+		$entities = $em->getRepository('JLMOfficeBundle:Order')->findAll();
 		return array(
 				'entities' => $entities
 				);
@@ -56,14 +58,30 @@ class OrderController extends Controller
 	 * Displays a form to create a new Bill entity.
 	 *
 	 * @Route("/new", name="order_new")
-	 *
+	 * @Route("/new/quotevariant/{id}", name="order_new_quotevariant")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
-	 * Route("/new/quotevariant/{id}", name="order_new_quotevariant")
 	 */
 	public function newAction(QuoteVariant $variant = null)
 	{
 		$entity = new Order();
+		if ($variant)
+		{
+			$entity->setPlace($variant->getSiteCp());
+			$entity->setQuote($variant);
+			$vlines = $variant->getLines();
+			foreach ($vlines as $vline)
+			{
+				if ($vline->getProduct()->getCategory()->getId() != 2)
+				{
+					$oline = new OrderLine;
+					$oline->setReference($vline->getReference());
+					$oline->setQuantity($vline->getQuantity());
+					$oline->setDesignation($vline->getDesignation());
+					$entity->addLine($oline);
+				}
+			}
+		}
 		$form   = $this->createForm(new OrderType(), $entity);
 		return array(
 				'entity' => $entity,
