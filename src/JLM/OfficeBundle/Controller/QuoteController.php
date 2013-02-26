@@ -32,10 +32,11 @@ class QuoteController extends Controller
      *
      * @Route("/", name="quote")
      * @Route("/page/{page}", name="quote_page")
+     * @Route("/page/{page}/state/{state}", name="quote_state")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function indexAction($page = 1)
+    public function indexAction($page = 1, $state = null)
     {
     	$limit = 10;
         $em = $this->getDoctrine()->getEntityManager();
@@ -49,12 +50,15 @@ class QuoteController extends Controller
         	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
         }
         
-        $entities = $em->getRepository('JLMOfficeBundle:Quote')->findBy(
-        		array(),
-        		array('number'=>'desc'),
-        		$limit,
-        		$offset
-        );
+        if ($state === null)
+	        $entities = $em->getRepository('JLMOfficeBundle:Quote')->findBy(
+	        		array(),
+	        		array('number'=>'desc'),
+	        		$limit,
+	        		$offset
+	        );
+        else
+        	$entities = $em->getRepository('JLMOfficeBundle:Quote')->getByState($state,$limit,$offset);
         
         return array(
         		'entities' => $entities,
@@ -83,6 +87,27 @@ class QuoteController extends Controller
     			'entities' => $entities,
     	);
     }
+    
+    /**
+     * sidebar Quote entities.
+     *
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function sidebarAction()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+
+    $repo = $em->getRepository('JLMOfficeBundle:Quote');
+    	return array(
+    			'all' => $repo->getTotal(),
+    			'input' => $repo->getCountState(0),
+    			'wait' => $repo->getCountState(1),
+    			'send' => ($repo->getCountState(3) + $repo->getCountState(4)),
+    			'given' => $repo->getCountState(5),
+    	);
+    }
+    
 
     /**
      * Finds and displays a Quote entity.

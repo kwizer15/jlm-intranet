@@ -54,4 +54,52 @@ class QuoteRepository extends EntityRepository
 		
 		return $qb->getQuery()->getResult();
 	}
+
+	public function getCountState($state)
+	{
+		if ($state == 1 || $state == 2)
+			$state = array(1,2);
+		elseif ($state == 3 || $state == 4)
+			$state = array(3,4);
+		else
+			$state = array($state);
+		$qb = $this->createQueryBuilder('q');
+		$result = $qb->getQuery()->getResult();
+		$count = 0;
+		foreach ($result as $r)
+			if (in_array($r->getState(),$state))
+				$count++;
+		return $count;
+	}
+	
+	public function getByState($state,$limit,$offset)
+	{
+		if ($state == 1 || $state == 2)
+			$state = array(1,2);
+		elseif ($state == 3 || $state == 4)
+			$state = array(3,4);
+		else
+			$state = array($state);
+		$qb = $this->createQueryBuilder('q')
+					->orderBy('q.number','desc')
+		;
+		$results = $qb->getQuery()->getResult();
+		$quotes = array();
+		foreach ($results as $key=>$r)
+			if (in_array($r->getState(),$state))
+				if ($offset)
+				{
+					unset($results[$key]);
+					$offset--;
+				}
+				elseif (!$limit)
+					unset($results[$key]);
+				else 
+					$limit--;
+			else
+				unset($results[$key]);
+				
+		return $results;
+	}
+
 }

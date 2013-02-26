@@ -1,4 +1,4 @@
-{% extends "JLMOfficeBundle::layout.html.twig" %}
+{% extends "JLMOfficeBundle:Quote:layout.html.twig" %}
 {% block content %}
 <h1>Envoyer un devis par e-mail</h1>
 <form action="{{ path('variant_sendmail',{'id': entity.id }) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
