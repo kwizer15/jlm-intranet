@@ -184,4 +184,21 @@ class OrderController extends Controller
 				'edit_form'   => $editForm->createView(),
 		);
 	}
+	
+	/**
+	 * Imprimer la fiche travaux
+	 *
+	 * @Route("/{id}/print", name="order_print")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function printAction(Order $entity)
+	{
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/pdf');
+		$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getId().'.pdf');
+		$response->setContent($this->render('JLMOfficeBundle:Order:print.pdf.php',array('entity'=>array($entity))));
+	
+		//   return array('entity'=>$entity);
+		return $response;
+	}
 }
