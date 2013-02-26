@@ -87,6 +87,8 @@ class OrderController extends Controller
 				}
 			}
 		}
+		else
+			$entity->addLine(new OrderLine);
 		$form   = $this->createForm(new OrderType(), $entity);
 		return array(
 				'entity' => $entity,
