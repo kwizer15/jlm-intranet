@@ -9,8 +9,10 @@
 	</li>
 	<li><a href="{{ path('quote_new') }}"><i class="icon-plus-sign"></i> Nouveau devis</a></li>
 	<li class="divider"></li>
+	<li class="nav-header">Etats</li>
 	{% render "JLMOfficeBundle:Quote:sidebar" %}
 	<li class="divider"></li>
+	<li class="nav-header">Derniers devis</li>
 	{% render "JLMOfficeBundle:Quote:last" with {'limit': 5} %}
 </ul>
 {% endblock sidebar %}

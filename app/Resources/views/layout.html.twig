@@ -21,13 +21,20 @@
 		        <li class="dropdown">
 		        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Bureau <b class="caret"></b></a>
 		        	<ul class="dropdown-menu">
-		        		<li class="nav-header">Tâches</li>
-		        		{% render "JLMOfficeBundle:Task:sidebar" %}
-		        		<li class="divider"></li>
-                        <li class="nav-header">Devis</li>
-		        		<li><a href="{{ path('quote') }}"><i class="icon-list"></i> Liste</a></li>
-		        		<li><a href="{{ path('quote_new') }}"><i class="icon-plus-sign"></i> Nouveau</a></li>
-		        		<li class="divider"></li>
+		        		<li class="dropdown-submenu">
+		        			<a tabindex="-1" href="#">Tâches</a>
+		        			<ul class="dropdown-menu">
+		        				{% render "JLMOfficeBundle:Task:sidebar" %}
+		        			</ul>
+		        		</li>
+                        <li class="dropdown-submenu">
+		        			<a tabindex="-1" href="#">Devis</a>
+		        			<ul class="dropdown-menu">
+		        				<li>
+		        					<a href="{{ path('quote_new') }}"><i class="icon-plus-sign"></i> Nouveau</a></li>
+		        				{% render "JLMOfficeBundle:Quote:sidebar" %}
+		        			</ul>
+		        		</li>
                         <li class="nav-header">Facture</li>
 		        		<li><a href="{{ path('bill') }}"><i class="icon-list"></i> Liste</a></li>
 		        		<li><a href="{{ path('bill_new') }}"><i class="icon-plus-sign"></i> Nouvelle</a></li>

@@ -1,6 +1,5 @@
-<li class="nav-header">Etats</li>
 <li><a href="{{ path('quote_page', {'page' : 1 }) }}"><span class="badge badge-inverse">{{ all }}</span> Tout les devis</a></li>
-<li><a href="{{ path('quote_state', {'page' : 1, 'state' : 0 }) }}"><span class="badge">{{ input }}</span> En saisir</a></li>
+<li><a href="{{ path('quote_state', {'page' : 1, 'state' : 0 }) }}"><span class="badge">{{ input }}</span> En saisie</a></li>
 <li><a href="{{ path('quote_state', {'page' : 1, 'state' : 1 }) }}"><span class="badge badge-warning">{{ wait }}</span> En attente</a></li>
 <li><a href="{{ path('quote_state', {'page' : 1, 'state' : 3 }) }}"><span class="badge badge-info">{{ send }}</span> Envoyés</a></li>
 <li><a href="{{ path('quote_state', {'page' : 1, 'state' : 5 }) }}"><span class="badge badge-success">{{ given }}</span> Accordés</a></li>
