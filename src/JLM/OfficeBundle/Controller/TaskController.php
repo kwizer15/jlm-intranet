@@ -73,7 +73,7 @@ class TaskController extends Controller
 				return $this->redirect($this->generateUrl('work_new_quote',array('id'=>$matches[1])));
 			return $this->redirect($this->generateUrl('work_new_door',array('id'=>$entity->getDoor()->getId())));
 		}
-*/		return $this->redirect($this->generateUrl('task'));
+*/		return $this->redirect($this->generateUrl('task_type',array('page'=>1,'type'=>$entity->getType()->getId())));
 	}
 	
 	/**
