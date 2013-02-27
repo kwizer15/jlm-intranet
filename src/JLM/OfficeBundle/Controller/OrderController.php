@@ -68,6 +68,8 @@ class OrderController extends Controller
 		if ($variant)
 		{
 			$entity->setPlace($variant->getQuote()->getDoorCp());
+			if ($variant->getQuote()->getDoor())
+				$entity->setDoor($variant->getQuote()->getDoor());
 			$entity->setQuote($variant);
 			$vlines = $variant->getLines();
 			foreach ($vlines as $vline)
@@ -200,5 +202,48 @@ class OrderController extends Controller
 	
 		//   return array('entity'=>$entity);
 		return $response;
+	}
+	
+	/**
+	 * En préparation
+	 * 
+	 * @Route("/{id}/ordered", name="order_ordered")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function orderedAction(Order $entity)
+	{
+		if ($entity->getState() < 2)
+			return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
+		
+		if ($entity->getState() < 1)
+			$entity->setState(1);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
+	}
+	
+	/**
+	 * En préparation
+	 *
+	 * @Route("/{id}/ordered", name="order_ordered")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function readyAction(Order $entity)
+	{
+		if ($entity->getState() < 3)
+			return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
+	
+		if ($entity->getState() < 2)
+			$entity->setState(2);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($entity);
+		$em->flush();
+		if ($entity->getQuote())
+			return $this->redirect($this->generateUrl('work_new_quote',array('id'=>$entity->getQuote()->getId())));
+		elseif ($entity->getDoor())
+			return $this->redirect($this->generateUrl('work_new_door',array('id'=>$entity->getDoor()->getId())));
+		else 
+			return $this->redirect($this->generateUrl('work_new'));
 	}
 }

@@ -67,13 +67,13 @@ class TaskController extends Controller
 		$em->persist($entity);
 		$em->flush();
 		// Commander materiel -> on crée les travaux
-		if ($entity->getType()->getId() == 3)
+/*		if ($entity->getType()->getId() == 3)
 		{
 			if (preg_match('#quote/variant/([0-9]+)/print#',$entity->getUrlSource(),$matches))
 				return $this->redirect($this->generateUrl('work_new_quote',array('id'=>$matches[1])));
 			return $this->redirect($this->generateUrl('work_new_door',array('id'=>$entity->getDoor()->getId())));
 		}
-		return $this->redirect($this->generateUrl('task'));
+*/		return $this->redirect($this->generateUrl('task'));
 	}
 	
 	/**

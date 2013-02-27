@@ -30,6 +30,7 @@
 						);
 					}
 				, select: function (event, ui) {
+					$("#order_door").val(ui.item.door);
 					$("#order_place").val(ui.item.doorCp);
 					return false;
 				}

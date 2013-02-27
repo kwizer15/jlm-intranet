@@ -47,6 +47,13 @@ class Order
 	private $place;
 	
 	/**
+	 * Porte
+	 * @var Door $door
+	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Door")
+	 */
+	private $door;
+	
+	/**
 	 * Devis source
 	 * @var Quote
 	 * @ORM\ManyToOne(targetEntity="QuoteVariant")
@@ -159,6 +166,29 @@ class Order
     public function getQuote()
     {
         return $this->quote;
+    }
+    
+    /**
+     * Set door
+     *
+     * @param JLM\ModelBundle\Entity\Door $door
+     * @return Order
+     */
+    public function setDoor(\JLM\ModelBundle\Entity\Door $door = null)
+    {
+    	$this->door = $door;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get door
+     *
+     * @return JLM\ModelBundle\Entity\Door
+     */
+    public function getDoor()
+    {
+    	return $this->door;
     }
     
     /**
