@@ -360,7 +360,6 @@ class VariantController extends Controller
 		$task->setUrlSource($this->generateUrl('variant_print', array('id' => $entity->getId())));
 		$task->setUrlAction($this->generateUrl('order_new_quotevariant', array('id' => $entity->getId())));
 		
-		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($entity);
 		$em->persist($task);
 		$em->flush();

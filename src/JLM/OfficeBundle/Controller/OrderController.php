@@ -247,7 +247,7 @@ class OrderController extends Controller
 	/**
 	 * En préparation
 	 *
-	 * @Route("/{id}/ordered", name="order_ordered")
+	 * @Route("/{id}/ready", name="order_ready")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function readyAction(Order $entity)
@@ -258,14 +258,28 @@ class OrderController extends Controller
 		if ($entity->getState() < 2)
 			$entity->setState(2);
 		$em = $this->getDoctrine()->getEntityManager();
-		$em->persist($entity);
-		$em->flush();
+		
+		$task = new Task();
+		if ($entity->getDoor())
+			$task->setDoor($entity->getDoor());
+		$task->setPlace($entity->getPlace());
 		if ($entity->getQuote())
-			return $this->redirect($this->generateUrl('work_new_quote',array('id'=>$entity->getQuote()->getId())));
+			$task->setTodo('Planifier les travaux du devis '.$entity->getQuote()->getNumber());
+		else
+			$task->setTodo('Planifier les travaux');
+		$task->setType($em->getRepository('JLMOfficeBundle:TaskType')->find(6));
+		$task->setUrlSource($this->generateUrl('order_show', array('id' => $entity->getId())));
+		if ($entity->getQuote())
+			$task->setUrlAction($this->generateUrl('work_new_quote', array('id' => $entity->getQuote()->getId())));
 		elseif ($entity->getDoor())
-			return $this->redirect($this->generateUrl('work_new_door',array('id'=>$entity->getDoor()->getId())));
-		else 
-			return $this->redirect($this->generateUrl('work_new'));
+			$task->setUrlAction($this->generateUrl('work_new_door', array('id' => $entity->getDoor()->getId())));
+		else
+			$task->setUrlAction($this->generateUrl('work_new'));
+		
+		$em->persist($entity);
+		$em->persist($task);
+		$em->flush();
+		return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
 	}
 	
 	/**

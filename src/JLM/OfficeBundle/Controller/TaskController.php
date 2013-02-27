@@ -91,6 +91,7 @@ class TaskController extends Controller
 				'quotes' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(2),
 				'orders' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(3),
 				'bills' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(1),
+				'works' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(6),
 				'contacts' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(4),
 			);
 	}
