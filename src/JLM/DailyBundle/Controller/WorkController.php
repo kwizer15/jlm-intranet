@@ -73,6 +73,24 @@ class WorkController extends Controller
 	/**
 	 * Displays a form to create a new Work entity.
 	 *
+	 * @Route("/new", name="work_new")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function newAction()
+	{
+		$entity = new Work();
+		$form   = $this->createForm(new WorkType(), $entity);
+	
+		return array(
+				'entity' => $entity,
+				'form'   => $form->createView(),
+		);
+	}
+	
+	/**
+	 * Displays a form to create a new Work entity.
+	 *
 	 * @Route("/new/quote/{id}", name="work_new_quote")
 	 * @Template("JLMDailyBundle:Work:new.html.twig")
 	 * @Secure(roles="ROLE_USER")

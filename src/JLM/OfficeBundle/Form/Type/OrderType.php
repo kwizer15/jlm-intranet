@@ -12,6 +12,8 @@ class OrderType extends AbstractType
 	{
 		$builder
 		->add('door','door_hidden')
+		->add('quote','quotevariant_hidden')
+		->add('creation','datepicker',array('label'=>'Date'))
 		->add('place',null,array('label'=>'Référence','attr'=>array('class'=>'input-xlarge','rows'=>'5')))
 		->add('lines','collection',array('prototype'=>true,'allow_add'=>true,'allow_delete'=>true,'type'=>'order_line'))
 		;

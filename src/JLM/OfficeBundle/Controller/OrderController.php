@@ -14,7 +14,8 @@ use JLM\OfficeBundle\Entity\Order;
 use JLM\OfficeBundle\Entity\OrderLine;
 use JLM\OfficeBundle\Form\Type\OrderType;
 use JLM\OfficeBundle\Entity\QuoteVariant;
-
+use JLM\ModelBundle\Entity\Door;
+use JLM\OfficeBundle\Entity\Task;
 
 
 
@@ -233,7 +234,7 @@ class OrderController extends Controller
 	 */
 	public function orderedAction(Order $entity)
 	{
-		if ($entity->getState() < 2)
+		if ($entity->getState() > 0)
 			return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
 		
 		if ($entity->getState() < 1)
@@ -252,7 +253,7 @@ class OrderController extends Controller
 	 */
 	public function readyAction(Order $entity)
 	{
-		if ($entity->getState() < 3)
+		if ($entity->getState() != 1)
 			return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
 	
 		if ($entity->getState() < 2)

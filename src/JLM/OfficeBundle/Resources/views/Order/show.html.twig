@@ -30,7 +30,7 @@
 	<a href="{{ path('order_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 	<a href="{{ path('order_ordered', { 'id': entity.id }) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i> A préparer</a>
 {% endif %}
-{% if entity.state = 1 %}
+{% if entity.state == 1 %}
 	<a href="{{ path('order_ready', { 'id': entity.id }) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i> Prête</a>
 {% endif %}
 </div>
