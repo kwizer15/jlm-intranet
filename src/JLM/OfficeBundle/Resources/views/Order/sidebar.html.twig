@@ -1,4 +1,4 @@
 <li><a href="{{ path('order') }}"><span class="badge badge-inverse">{{ all }}</span> Toutes</a></li>
 <li><a href="{{ path('order_state', {'page':1, 'state':0 }) }}"><span class="badge">{{ input }}</span> En saisie</a></li>
-<li><a href="{{ path('order_state', {'page':1, 'state':0 }) }}"><span class="badge badge-info">{{ ordered }}</span> En préparation</a></li>
-<li><a href="{{ path('order_state', {'page':1, 'state':0 }) }}"><span class="badge badge-success">{{ ready }}</span> Prêtes</a></li>
+<li><a href="{{ path('order_state', {'page':1, 'state':1 }) }}"><span class="badge badge-info">{{ ordered }}</span> En préparation</a></li>
+<li><a href="{{ path('order_state', {'page':1, 'state':2 }) }}"><span class="badge badge-success">{{ ready }}</span> Prêtes</a></li>
