@@ -22,13 +22,13 @@
 		        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Bureau <b class="caret"></b></a>
 		        	<ul class="dropdown-menu">
 		        		<li class="dropdown-submenu">
-		        			<a tabindex="-1" href="#">Tâches</a>
+		        			<a tabindex="-1" href="{{ path('task') }}">Tâches</a>
 		        			<ul class="dropdown-menu">
 		        				{% render "JLMOfficeBundle:Task:sidebar" %}
 		        			</ul>
 		        		</li>
                         <li class="dropdown-submenu">
-		        			<a tabindex="-1" href="#">Devis</a>
+		        			<a tabindex="-1" href="{{ path('quote') }}">Devis</a>
 		        			<ul class="dropdown-menu">
 		        				<li><a href="{{ path('quote_new') }}"><i class="icon-plus-sign"></i> Nouveau devis</a></li>
 		        				<li class="divider"></li>
@@ -36,7 +36,7 @@
 		        			</ul>
 		        		</li>
 		        		<li class="dropdown-submenu">
-		        			<a tabindex="-1" href="#">Fiches travaux</a>
+		        			<a tabindex="-1" href="{{ path('order') }}">Fiches travaux</a>
 		        			<ul class="dropdown-menu">
 		        				<li><a href="{{ path('order_new') }}"><i class="icon-plus-sign"></i> Nouvelle fiche</a></li>
 								<li class="divider"></li>
@@ -44,14 +44,14 @@
 		        			</ul>
 		        		</li>
                         <li class="dropdown-submenu">
-		        			<a tabindex="-1" href="#">Facture</a>
+		        			<a tabindex="-1" href="{{ path('bill') }}">Facture</a>
 		        			<ul class="dropdown-menu">
 				        		<li><a href="{{ path('bill') }}"><i class="icon-list"></i> Liste</a></li>
 				        		<li><a href="{{ path('bill_new') }}"><i class="icon-plus-sign"></i> Nouvelle</a></li>
 		        			</ul>
 		        		</li>
                         <li class="dropdown-submenu">
-		        			<a tabindex="-1" href="#">Redevances</a>
+		        			<a tabindex="-1" href="{{ path('fees') }}">Redevances</a>
 		        			<ul class="dropdown-menu">
 		        				<li><a href="{{ path('fees') }}"><i class="icon-list"></i> Liste</a></li>
 		        			</ul>
