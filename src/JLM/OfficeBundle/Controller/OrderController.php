@@ -30,16 +30,37 @@ class OrderController extends Controller
 	 * Lists all Order entities.
 	 *
 	 * @Route("/", name="order")
+	 * @Route("/page/{page}", name="order_page")
+	 * @Route("/page/{page}/state/{state}", name="order_state")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function indexAction()
+	public function indexAction($page = 1, $state = null)
 	{
+		$limit = 10;
 		$em = $this->getDoctrine()->getEntityManager();
-		$entities = $em->getRepository('JLMOfficeBundle:Order')->findAll();
+			
+		$nb = $em->getRepository('JLMOfficeBundle:Order')->getCount($state);
+		$nbPages = ceil($nb/$limit);
+		$nbPages = ($nbPages < 1) ? 1 : $nbPages;
+		$offset = ($page-1) * $limit;
+		if ($page < 1 || $page > $nbPages)
+		{
+			throw $this->createNotFoundException('Page inexistante (page '.$page.'/'.$nbPages.')');
+		}
+		
+		$entities = $em->getRepository('JLMOfficeBundle:Order')->getByState(
+				$state,
+				$limit,
+				$offset
+		);
+		
 		return array(
-				'entities' => $entities
-				);
+				'entities' => $entities,
+				'page'     => $page,
+				'nbPages'  => $nbPages,
+				'state' => $state,
+		);
 	}
 	
 	/**
@@ -245,5 +266,23 @@ class OrderController extends Controller
 			return $this->redirect($this->generateUrl('work_new_door',array('id'=>$entity->getDoor()->getId())));
 		else 
 			return $this->redirect($this->generateUrl('work_new'));
+	}
+	
+	/**
+	 * Sidebar
+	 * @Route("/sidebar", name="order_sidebar")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function sidebarAction()
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+	
+		return array(
+				'all' => $em->getRepository('JLMOfficeBundle:Order')->getTotal(),
+				'input' => $em->getRepository('JLMOfficeBundle:Order')->getCount(0),
+				'ordered' => $em->getRepository('JLMOfficeBundle:Order')->getCount(1),
+				'ready' => $em->getRepository('JLMOfficeBundle:Order')->getCount(2),
+		);
 	}
 }

@@ -1,12 +1,14 @@
 {% extends "JLMOfficeBundle::layout.html.twig" %}
 
 {% block sidebar %}
-			<h4>Tâches</h4>
+			<h4>Fiches travaux</h4>
 			<ul class="nav nav-list  affix">
 {#		    <li><form  action="{{ path('quote_search') }}" method="post" class="form-search">
 					<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher...">
 			    </form></li> #}
-			    <li class="nav-header">Types</li>
-			    {% render "JLMOfficeBundle:Task:sidebar" %}
+			    <li><a href="{{ path('order_new') }}"><i class="icon-plus-sign"></i> Nouvelle fiche</a></li>
+			    <li class="divider"></li>
+			    <li class="nav-header">Etats</li>
+			    {% render "JLMOfficeBundle:Order:sidebar" %}
 			</ul>
 {% endblock sidebar %}

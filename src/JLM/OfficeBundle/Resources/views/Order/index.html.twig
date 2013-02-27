@@ -1,7 +1,7 @@
-{% extends "JLMOfficeBundle::layout.html.twig" %}
+{% extends "JLMOfficeBundle:Order:layout.html.twig" %}
 
 {% block content %}
-<h1>Liste des commandes</h1>
+<h1>Liste des fiches travaux{% if state is not null %}{% if state == 0 %} en saisie{% elseif state == 1 %} en préparation{% elseif state == 2 %} prêtes{% endif %}{% endif %}</h1>
 
 <table class="table table-stripped">
     <thead>
@@ -15,7 +15,7 @@
     {% for entity in entities %}
         <tr>
         	<td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}
-       {# 	<br>{% include 'JLMOfficeBundle:Order:statelabel.html.twig' with {'state': entity.state} %}</td> #}
+        	<br>{% include 'JLMOfficeBundle:Order:statelabel.html.twig' with {'state': entity.state} %}</td>
             <td>
             	<a href="{{ path('order_show', { 'id': entity.id }) }}">{{ entity.place | nl2br }}</a>
             </td>
@@ -26,17 +26,17 @@
     {% endfor %}
     </tbody>
 </table>
-{#
+
 <div class="pagination pagination-centered">
 	<ul>
-	    <li{% if page == 1 %} class="disabled"{% endif %}><a href="{{ path('order_page',{ 'page' : page-1 }) }}">«</a></li>
+	    <li{% if page == 1 %} class="disabled"{% endif %}><a href="{% if state is null %}{{ path('order_page',{ 'page' : page-1 }) }}{% else %}{{ path('order_state',{ 'page' : page-1, 'state':state }) }}{% endif %}">«</a></li>
 		{% for p in range(1,nbPages) %}
-		<li{% if p == page %} class="active"{% endif %}><a href="{{ path('order_page',{ 'page' : p }) }}">{{ p }}</a></li>
+		<li{% if p == page %} class="active"{% endif %}><a href="{% if state is null %}{{ path('order_page',{ 'page' : p }) }}{% else %}{{ path('order_state',{ 'page' : p, 'state':state }) }}{% endif %}">{{ p }}</a></li>
 		{% endfor %}
-		<li{% if page == nbPages %} class="disabled"{% endif %}><a href="{{ path('order_page',{ 'page' : page+1 }) }}">»</a></li>
+		<li{% if page == nbPages %} class="disabled"{% endif %}><a href="{% if state is null %}{{ path('order_page',{ 'page' : page+1 }) }}{% else %}{{ path('order_state',{ 'page' : page+1, 'state':state }) }}{% endif %}">»</a></li>
 	</ul>
 </div>
-#}
+
 <div class="form-actions">
 <a href="{{ path('order_new') }}" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer une nouvelle commande</a>
 </div>
