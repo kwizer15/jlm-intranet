@@ -44,7 +44,7 @@ class Bill extends \FPDF
 			$this->rotatedText(40,90,utf8_decode('Annulée'),-45);
 			$this->setTextColor(0);
 		}
-		elseif ($this->entity->getState() == 3)
+		elseif ($this->entity->getState() == 2)
 		{
 			$this->setFont('Arial','B',120);
 			$this->setTextColor(230);

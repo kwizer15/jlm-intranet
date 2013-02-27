@@ -90,11 +90,8 @@ class Bill extends Document
 	 * Etat
 	 * -1 = annulé
 	 * 0 = en saisie
-	 * 1 = près à envoyer
-	 * 2 = imprimer
-	 * 3 = envoyé (en attente de l'accusé)
-	 * 4 = envoyé (accusé reçu)
-	 * 5 = accordé
+	 * 1 = envoyée
+	 * 2 = réglée
 	 * @var int $state
 	 *
 	 * @ORM\Column(name="state",type="smallint")

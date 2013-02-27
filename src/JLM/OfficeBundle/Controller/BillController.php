@@ -249,11 +249,11 @@ class BillController extends Controller
      */
     public function sendAction(Bill $entity)
     {
-    	if ($entity->getState() < 1)
+    	if ($entity->getState() > 1)
     		return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     
-    	if ($entity->getState() < 3)
-    		$entity->setState(3);
+    	if ($entity->getState() < 1)
+    		$entity->setState(1);
     	$em = $this->getDoctrine()->getEntityManager();
     	$em->persist($entity);
     	$em->flush();
@@ -268,7 +268,7 @@ class BillController extends Controller
      */
     public function cancelAction(Bill $entity)
     {
-    	if ($entity->getState() < 3)
+    	if ($entity->getState() < 1)
     		return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     	if ($entity->getState() > -1)
     		$entity->setState(-1);
@@ -279,7 +279,7 @@ class BillController extends Controller
     }
     
     /**
-     * Note Bill reour à la saisie.
+     * Note Bill retour à la saisie.
      *
      * @Route("/{id}/back", name="bill_back")
      * @Secure(roles="ROLE_USER")
@@ -290,6 +290,24 @@ class BillController extends Controller
     		return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     	if ($entity->getState() > 0)
     		$entity->setState(0);
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$em->persist($entity);
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    }
+    
+    /**
+     * Note Bill réglée.
+     *
+     * @Route("/{id}/payed", name="bill_payed")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function payedAction(Bill $entity)
+    {
+    	if ($entity->getState() > 1)
+    		return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    	if ($entity->getState() == 1)
+    		$entity->setState(2);
     	$em = $this->getDoctrine()->getEntityManager();
     	$em->persist($entity);
     	$em->flush();
