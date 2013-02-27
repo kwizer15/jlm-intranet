@@ -31,15 +31,18 @@ class BillController extends Controller
      *
      * @Route("/", name="bill")
      * @Route("/page/{page}", name="bill_page")
+     * @Route("/page/{page}/state/{state}", name="bill_state")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function indexAction($page = 1)
+    public function indexAction($page = 1, $state = null)
     {
     	$limit = 10;
         $em = $this->getDoctrine()->getEntityManager();
-           
-        $nb = $em->getRepository('JLMOfficeBundle:Bill')->getTotal();
+        if ($state === null)
+        	$nb = $em->getRepository('JLMOfficeBundle:Bill')->getTotal();
+        else
+        	$nb = $em->getRepository('JLMOfficeBundle:Bill')->getCount($state);
         $nbPages = ceil($nb/$limit);
         $nbPages = ($nbPages < 1) ? 1 : $nbPages;
         $offset = ($page-1) * $limit;
@@ -48,9 +51,8 @@ class BillController extends Controller
         	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
         }
         
-        $entities = $em->getRepository('JLMOfficeBundle:Bill')->findBy(
-        		array(),
-        		array('number'=>'desc'),
+        $entities = $em->getRepository('JLMOfficeBundle:Bill')->getByState(
+        		$state,
         		$limit,
         		$offset
         );
@@ -312,5 +314,24 @@ class BillController extends Controller
     	$em->persist($entity);
     	$em->flush();
     	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    }
+    
+    /**
+     * Sidebar
+     * @Route("/sidebar", name="bill_sidebar")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function sidebarAction()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    
+    	return array(
+    			'all' => $em->getRepository('JLMOfficeBundle:Bill')->getTotal(),
+    			'input' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(0),
+    			'send' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(1),
+    			'payed' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(2),
+    			'canceled' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(-1),
+    	);
     }
 }

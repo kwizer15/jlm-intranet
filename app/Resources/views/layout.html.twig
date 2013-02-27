@@ -46,8 +46,9 @@
                         <li class="dropdown-submenu">
 		        			<a tabindex="-1" href="{{ path('bill') }}">Facture</a>
 		        			<ul class="dropdown-menu">
-				        		<li><a href="{{ path('bill') }}"><i class="icon-list"></i> Liste</a></li>
-				        		<li><a href="{{ path('bill_new') }}"><i class="icon-plus-sign"></i> Nouvelle</a></li>
+				        		<li><a href="{{ path('bill_new') }}"><i class="icon-plus-sign"></i> Nouvelle facture</a></li>
+				        		<li class="divider"></li>
+				        		{% render "JLMOfficeBundle:Bill:sidebar" %}
 		        			</ul>
 		        		</li>
                         <li class="dropdown-submenu">

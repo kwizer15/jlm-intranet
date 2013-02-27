@@ -1,15 +1,11 @@
 {% if state == 0 %}
 	<div class="alert"><h4>En saisie</h4></div>
 {% elseif state == 1 %}
-	<div class="alert"><h4>Prête à être envoyée</h4></div>
+	<div class="alert alert-info"><h4>Envoyée</h4></div>
 {% elseif state == 2 %}
-	<div class="alert"><h4>Prête à être envoyée</h4></div>
-{% elseif state == 3 %}
-	<div class="alert alert-info"><h4>Envoyée</h4></div>
-{% elseif state == 4 %}
-	<div class="alert alert-info"><h4>Envoyée</h4></div>
-{% elseif state == 5 %}
 	<div class="alert alert-success"><h4>Réglée</h4></div>
-{% else %}
+{% elseif state == -1 %}
 	<div class="alert alert-error"><h4>Annulée</h4></div>
+{% else %}
+	<div class="alert"><h4>Etat incorrect</h4></div>
 {% endif %}
