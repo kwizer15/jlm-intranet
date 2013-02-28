@@ -61,4 +61,24 @@ class BillLine extends DocumentLine
     {
         return $this->bill;
     }
+    
+    /**
+     * Populate from QuoteLine
+     */
+    public function populateFromQuoteLine(QuoteLine $line)
+    {
+    	$this->setPosition($line->getPosition());
+    	$this->setProduct($line->getProduct());
+    	$this->setReference($line->getReference());
+    	$this->setDesignation($line->getDesignation());
+    	$this->setDescription($line->getDescription());
+    	$this->setShowDescription($line->getShowDescription());
+    	$this->setIsTransmitter($line->getIsTransmitter());
+    	$this->setQuantity($line->getQuantity());
+    	$this->setUnitPrice($line->getUnitPrice());
+    	$this->setDiscount($line->getDiscount());
+    	$this->setVat($line->getVat());
+    	return $this;
+    	
+    }
 }

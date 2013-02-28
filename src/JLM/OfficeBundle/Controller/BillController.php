@@ -80,43 +80,67 @@ class BillController extends Controller
      * Displays a form to create a new Bill entity.
      *
      * @Route("/new", name="bill_new")
-     * 
      * @Template()
      * @Secure(roles="ROLE_USER")
-     * Route("/new/door/{id}", name="bill_new_quotevariant")
      */
-    public function newAction(QuoteVariant $variant = null)
+    public function newAction()
     {
         $entity = new Bill();
-        $entity->setCreation(new \DateTime);
 		$em = $this->getDoctrine()->getEntityManager();
 		$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
-		
-//	if (!empty($door))
-//	{
-//		$entity->setDoor($door);
-//		$entity->setDoorCp($door.'');
-//		$contract = $door->getActualContract();
-//		$trustee = (empty($contract)) ? $door->getSite()->getTrustee() : $contract->getTrustee();		
-//		$entity->setTrustee($trustee);
-//		$entity->setTrusteeName($trustee->getName());
-//		$entity->setTrusteeAddress($trustee->getAddress().'');
-//		$entity->setVat($door->getSite()->getVat()->getRate());
-//	}
-//	else
-//	{
-			$entity->setVat($vat);
-//	}
+		$entity->setVat($vat);
         $entity->addLine(new BillLine);
         $entity->setVatTransmitter($vat);
-        $form   = $this->createForm(new BillType(), $entity);
+        $form   = $this->createForm(new BillType, $entity);
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView()
         );
     }
+    
+    /**
+     * Displays a form to create a new Bill entity.
+     *
+     * @Route("/new/door/{id}", name="bill_new_door")
+     * @Template("JLMOfficeBundle:Bill:new.html.twig")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function newdoorAction(Door $door)
+    {
+    	$entity = new Bill();
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
+    	$entity->populateFromDoor($door);
+    	$entity->addLine(new BillLine);
+    	$entity->setVatTransmitter($vat);
+    	$form   = $this->createForm(new BillType, $entity);
+    
+    	return array(
+    			'entity' => $entity,
+    			'form'   => $form->createView()
+    	);
+    }
 
+    /**
+     * Displays a form to create a new Bill entity.
+     *
+     * @Route("/new/quote/{id}", name="bill_new_quote")
+     * @Template("JLMOfficeBundle:Bill:new.html.twig")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function newquoteAction(QuoteVariant $quote)
+    {
+    	$entity = new Bill();
+    	$entity->populateFromQuoteVariant($quote);
+    	$form   = $this->createForm(new BillType, $entity);
+    
+    	return array(
+    			'entity' => $entity,
+    			'form'   => $form->createView()
+    	);
+    }
+    
     /**
      * Creates a new Bill entity.
      *

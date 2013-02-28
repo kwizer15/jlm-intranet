@@ -4,6 +4,7 @@ namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\ModelBundle\Enitity\Door;
 
 /**
  * JLM\OfficeBundle\Entity\Bill
@@ -23,13 +24,17 @@ class Bill extends Document
 	private $id;
 	
 	/**
-	 * Numéro du devis
+	 * Numéro de la facture
+	 * @var int
+	 * 
 	 * @ORM\Column(name="number", type="integer")
 	 */
 	private $number;
 	
 	/**
 	 * Pré label
+	 * @var string
+	 * 
 	 * @ORM\Column(name="prelabel", type="text", nullable=true)
 	 */
 	private $prelabel;
@@ -68,12 +73,16 @@ class Bill extends Document
 	
 	/**
 	 * Redevance
+	 * @var Fee
+	 * 
 	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Fee")
 	 */
 	private $fee;
 	
 	/**
 	 * Suivi de redevance
+	 * @var FeesFollower
+	 * 
 	 * @ORM\ManyToOne(targetEntity="FeesFollower")
 	 */
 	private $feesFollower;
@@ -100,30 +109,40 @@ class Bill extends Document
 	
 	/**
 	 * Clause de propriété
+	 * @var string
+	 * 
 	 * @ORM\Column(name="property",type="string", nullable=true)
 	 */
 	private $property;
 	
 	/**
 	 * Escompte
+	 * @var string
+	 * 
 	 * @ORM\Column(name="earlyPayment",type="string")
 	 */
 	private $earlyPayment;
 	
 	/**
 	 * Pénalités
+	 * @var string
+	 * 
 	 * @ORM\Column(name="penalty",type="string")
 	 */
 	private $penalty;
 	
 	/**
 	 * Maturity
+	 * @var \DateTime
+	 * 
 	 * @ORM\Column(name="maturity",type="date",nullable=true)
 	 */
 	private $maturity;
 	
 	/**
 	 * Lignes
+	 * @var ArrayCollection
+	 * 
 	 * @ORM\OneToMany(targetEntity="BillLine", mappedBy="bill")
 	 */
 	private $lines;
@@ -427,6 +446,7 @@ class Bill extends Document
     public function __construct()
     {
         $this->lines = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->creation = new \DateTime;
     }
     
     /**
@@ -565,5 +585,52 @@ class Bill extends Document
     		$total += $line->getPriceAti();
     	$total *= (1-$this->getDiscount());
     	return $total;
+    }
+    
+    /**
+     * Populate from QuoteVariant
+     * 
+     * @param QuoteVariant $variant
+     * @return Bill
+     */
+    public function populateFromQuoteVariant(QuoteVariant $variant)
+    {
+    	$quote = $variant->getQuote();
+    	$this->populateFromDoor($quote->getDoor());
+    	$this->setVatTransmitter($quote->getVatTransmitter());
+    	$this->setDiscount($variant->getDiscount());
+    	$this->setIntro('Suite à notre devis n°'.$variant->getNumber());
+    	$lines = $variant->getLines();
+    	foreach ($lines as $line)
+    	{
+    		$l = new BillLine;
+    		$l->setBill($this);
+    		$l->populateFromQuoteLine($line);
+    		$this->addLine($l);
+    	}
+    	return $this;
+    }
+    
+    /**
+     * Populate from Door
+     *
+     * @param Door $door
+     * @return Bill
+     */
+    public function populateFromDoor(Door $door)
+    {
+    	$this->setSite($door->getSite()->toString());
+    	$this->setDetails($door->getType().' - '.$door->getLocation());
+    	$contract = $door->getActualContract();
+    	$trustee = (empty($contract)) ? $door->getSite()->getTrustee() : $contract->getTrustee();
+    	if ($group = $door->getSite()->getGroupNumber())
+    		$this->setReference('Groupe : '.$group);
+    	$this->setTrustee($trustee);
+    	$this->setTrusteeName($trustee->getName());
+    	$this->setTrusteeAddress($trustee->getAddressForBill().'');
+    	$this->setAccountNumber($trustee->getAccountNumber());
+    	$this->setPrelabel($door->getSite()->getBillingPrelabel());
+    	$this->setVat($door->getSite()->getVat()->getRate());
+    	return $this;
     }
 }
