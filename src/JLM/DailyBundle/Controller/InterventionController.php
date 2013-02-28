@@ -63,35 +63,36 @@ class InterventionController extends Controller
 		switch ($tasktype->getId())
 		{
 			// Facturer
-			case 1 :
-				$entity->setOfficeAction($task);
+			case 1 :				
 				$task->setTodo($entity->getReport());
+				$entity->setOfficeAction($task);
 				break;
 	
 			// Faire devis
 			case 2 :
-				$entity->setOtherAction($task);
 				$task->setTodo($entity->getRest());
 				$task->setUrlAction($this->generateUrl('quote_new_door',array('id'=>$entity->getDoor()->getId())));
+				$entity->setOtherAction($task);
 				break;
 					
 				// Commander matériel
 			case 3 :
-				$entity->setOtherAction($task);
 				$task->setTodo($entity->getRest());
+				$task->setUrlAction($this->generateUrl('order_new_door',array('id'=>$entity->getDoor()->getId())));
+				$entity->setOtherAction($task);
 				break;
 	
 				// Contacter le client
 			case 4 :
-				$entity->setOtherAction($task);
 				$task->setTodo($entity->getReason());
+				$entity->setOtherAction($task);
 				break;
 					
 				// Ne rien faire
 			case 5 :
-				$entity->setOfficeAction($task);
 				$task->setTodo($entity->getReport());
 				$task->setClose(new \DateTime);
+				$entity->setOfficeAction($task);
 				break;
 		}
 
