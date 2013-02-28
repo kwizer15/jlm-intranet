@@ -68,9 +68,9 @@ class Door
     
     /**
      * Emeteurs
-     * @var Transmitter $transmitters
+     * @var TransmitterType $transmitters
      * 
-     * @ORM\ManyToMany(targetEntity="Transmitter")
+     * @ORM\ManyToMany(targetEntity="TransmitterType")
      * @ORM\JoinTable(name="doors_transmitters",
      * 		joinColumns={@ORM\JoinColumn(name="door_id", referencedColumnName="id")},
      * 		inverseJoinColumns={@ORM\JoinColumn(name="transmitters_id", referencedColumnName="id")}
@@ -377,10 +377,10 @@ class Door
     /**
      * Add transmitters
      *
-     * @param JLM\ModelBundle\Entity\Product $transmitters
+     * @param JLM\ModelBundle\Entity\TransmitterType $transmitters
      * @return Door
      */
-    public function addTransmitter(\JLM\ModelBundle\Entity\Product $transmitters)
+    public function addTransmitter(TransmitterType $transmitters)
     {
         $this->transmitters[] = $transmitters;
     
@@ -390,9 +390,9 @@ class Door
     /**
      * Remove transmitters
      *
-     * @param JLM\ModelBundle\Entity\Product $transmitters
+     * @param JLM\ModelBundle\Entity\TransmitterType $transmitters
      */
-    public function removeTransmitter(\JLM\ModelBundle\Entity\Product $transmitters)
+    public function removeTransmitter(TransmitterType $transmitters)
     {
         $this->transmitters->removeElement($transmitters);
     }
