@@ -119,15 +119,8 @@ class ProductController extends Controller
         $form    = $this->createForm(new ProductType(), $entity);
         $form->bindRequest($request);
 
-        if ($form->isValid()) {
-        	// Emetteurs
-        	if ($entity->getCategory()->getId() === 1)
-        	{
-        		$entity = new Transmitter();
-        		$form    = $this->createForm(new ProductType(), $entity);
-        		$form->bindRequest($request);
-        	}
-	
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();

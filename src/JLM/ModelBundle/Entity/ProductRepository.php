@@ -64,7 +64,7 @@ class ProductRepository extends EntityRepository
 					'discountSupplier'=>$r->getDiscountSupplier(),
 					'expenseRatio'=>$r->getExpenseRatio(),
 					'shipping'=>$r->getShipping(),
-					'transmitter'=> ($r instanceof Transmitter)
+					'transmitter'=> ($r->getCategory()->getId() == 1)
 				);
 		}
 		return $r2;
