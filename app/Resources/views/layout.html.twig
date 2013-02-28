@@ -24,6 +24,8 @@
 		        		<li class="dropdown-submenu">
 		        			<a tabindex="-1" href="{{ path('task') }}">Tâches</a>
 		        			<ul class="dropdown-menu">
+		        				<li><a href="{{ path('task_new') }}"><i class="icon-plus-sign"></i> Nouvelle tâche</a></li>
+		        				<li class="divider"></li>
 		        				{% render "JLMOfficeBundle:Task:sidebar" %}
 		        			</ul>
 		        		</li>

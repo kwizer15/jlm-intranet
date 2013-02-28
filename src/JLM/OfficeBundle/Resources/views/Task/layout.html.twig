@@ -6,6 +6,7 @@
 {#		    <li><form  action="{{ path('quote_search') }}" method="post" class="form-search">
 					<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher...">
 			    </form></li> #}
+			    <li><a href="{{ path('task_new') }}"><i class="icon-plus-sign"></i> Nouvelle tâche</a></li>
 			    <li class="nav-header">Types</li>
 			    {% render "JLMOfficeBundle:Task:sidebar" %}
 			</ul>

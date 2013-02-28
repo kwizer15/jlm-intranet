@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\OfficeBundle\Entity\Task;
+use JLM\OfficeBundle\Form\Type\TaskType;
 
 /**
  * Task controller.
@@ -52,6 +53,97 @@ class TaskController extends Controller
 				'page'     => $page,
 				'nbPages'  => $nbPages,
 				'type' => $type
+		);
+	}
+	
+	/**
+	 * Displays a form to create a new Task entity.
+	 *
+	 * @Route("/new", name="task_new")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function newAction()
+	{
+		$entity = new Task();
+		$form   = $this->createForm(new TaskType(), $entity);
+	
+		return array(
+				'entity' => $entity,
+				'form'   => $form->createView()
+		);
+	}
+	
+	/**
+	 * Creates a new Task entity.
+	 *
+	 * @Route("/create", name="task_create")
+	 * @Method("post")
+	 * @Template("JLMOfficeBundle:Task:new.html.twig")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function createAction(Request $request)
+	{
+		$entity  = new Task();
+		$form    = $this->createForm(new TaskType(), $entity);
+		$form->bind($request);
+	
+		if ($form->isValid())
+		{
+			$em = $this->getDoctrine()->getEntityManager();
+			$em->persist($entity);
+			$em->flush();
+			return $this->redirect($this->generateUrl('task_type', array('page'=>1,'type' => $entity->getType()->getId())));
+		}
+	
+		return array(
+		'entity' => $entity,
+		'form'   => $form->createView()
+		);
+	}
+	
+	/**
+	 * Displays a form to edit an existing Task entity.
+	 *
+	 * @Route("/{id}/edit", name="task_edit")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function editAction(Task $entity)
+	{
+		$editForm = $this->createForm(new TaskType(), $entity);
+	
+		return array(
+				'entity'      => $entity,
+				'edit_form'   => $editForm->createView(),
+		);
+	}
+	
+	/**
+	 * Edits an existing ProductCategory entity.
+	 *
+	 * @Route("/{id}/update", name="task_update")
+	 * @Method("post")
+	 * @Template("JLMModelBundle:Task:edit.html.twig")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function updateAction(Task $entity)
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$editForm   = $this->createForm(new TaskType(), $entity);
+		$request = $this->getRequest();
+		$editForm->bindRequest($request);
+	
+		if ($editForm->isValid())
+		{
+			$em->persist($entity);
+			$em->flush();
+			return $this->redirect($this->generateUrl('task_edit', array('id' => $entity->getId())));
+		}
+	
+		return array(
+				'entity'      => $entity,
+				'edit_form'   => $editForm->createView(),
 		);
 	}
 	
