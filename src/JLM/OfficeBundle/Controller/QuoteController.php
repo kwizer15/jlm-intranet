@@ -103,7 +103,7 @@ class QuoteController extends Controller
     			'all' => $repo->getTotal(),
     			'input' => $repo->getCountState(0),
     			'wait' => $repo->getCountState(1),
-    			'send' => ($repo->getCountState(3) + $repo->getCountState(4)),
+    			'send' => $repo->getCountState(3),
     			'given' => $repo->getCountState(5),
     	);
     }
