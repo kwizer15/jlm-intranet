@@ -4,7 +4,8 @@ namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use JLM\ModelBundle\Enitity\Door;
+use JLM\ModelBundle\Entity\Door;
+use JLM\OfficeBundle\Entity\QuoteVariant;
 
 /**
  * JLM\OfficeBundle\Entity\Bill
