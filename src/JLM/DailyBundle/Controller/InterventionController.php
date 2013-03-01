@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Intervention;
-
+use JLM\DailyBundle\Entity\Work;
 use JLM\ModelBundle\Form\Type\DatepickerType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\Task;
@@ -65,6 +65,18 @@ class InterventionController extends Controller
 			// Facturer
 			case 1 :				
 				$task->setTodo($entity->getReport());
+				if ($entity instanceof Work)
+				{
+					if ($entity->getQuote() !== null)
+						$task->setUrlAction($this->generateUrl('bill_new_quotevariant',array('id'=>$entity->getQuote()->getId())));
+					elseif ($entity->getDoor() !== null)
+						$task->setUrlAction($this->generateUrl('bill_new_door',array('id'=>$entity->getDoor()->getId())));	
+				}
+				elseif ($entity->getDoor() !== null)
+					$task->setUrlAction($this->generateUrl('bill_new_door',array('id'=>$entity->getDoor()->getId())));
+				
+				else
+					$task->setUrlAction($this->generateUrl('bill_new'));
 				$entity->setOfficeAction($task);
 				break;
 	
