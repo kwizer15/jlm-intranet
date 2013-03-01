@@ -80,6 +80,13 @@ class Person
     private $email;
     
     /**
+     * @var string $address
+     * 
+     * @ORM\OneToOne(targetEntity="Address")
+     */
+    private $address;
+    
+    /**
      * Set firstName
      *
      * @param string $firstName
@@ -239,6 +246,26 @@ class Person
     public function getEmail()
     {
         return $this->email;
+    }
+    
+    /**
+     * Set address
+     *
+     * @param string $address
+     */
+    public function setAddress($address)
+    {
+    	$this->address = $address;
+    }
+    
+    /**
+     * Get address
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+    	return $this->address;
     }
     
     /**

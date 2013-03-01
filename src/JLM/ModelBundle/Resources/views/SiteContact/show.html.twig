@@ -9,26 +9,16 @@
         {% if entity.person.mobilePhone %}<br>Tel mobile : {{ entity.person.mobilePhone }}{% endif %}
         {% if entity.person.fax %}<br>Fax : {{ entity.person.fax }}{% endif %}
         {% if entity.person.email %}<br>e-mail : <a href="mailto:{{ entity.person.email }}">{{ entity.person.email }}</a>{% endif %}
+        
         </address>
     </div>
-    <div class="span6">
-
+    {% if entity.person.address %}
+    <div class="span6 well">
+		<strong>Adresse : </strong>
+		<br>{{ entity.person.address.toString | nl2br }}
     </div>
+    {% endif %}
 </div>
-
-<h2>Affaires</h2>
-<table class="table table-striped">
-    <thead>
-    	<tr>
-    	    <th>Adresse</th>
-    	</tr>
-    </thead>
-    <tbody>
-    	<tr>
-    	    <td>???</td>
-    	</tr>
-    </tbody>
-</table>
 
 <div class="form-actions">
 	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche affaire</a>
