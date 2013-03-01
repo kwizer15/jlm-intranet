@@ -1,0 +1,13 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+{% block content %}
+<h1>Liste des types d'emetteurs</h1>
+
+<ul>
+    {% for entity in entities %}
+	<li><a href="{{ path('transmittertype_edit', { 'id': entity.id }) }}">{{ entity.name }}</a></li>
+    {% endfor %}
+</ul>
+<div class="form-actions">
+<a href="{{ path('transmittertype_new') }}" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer un nouveau type d'emetteur</a>
+</div>
+{% endblock %}

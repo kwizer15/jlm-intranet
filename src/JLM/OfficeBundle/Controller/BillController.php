@@ -15,6 +15,7 @@ use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\OfficeBundle\Form\Type\BillType;
 use JLM\OfficeBundle\Entity\BillLine;
+use JLM\ModelBundle\Entity\Door;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
