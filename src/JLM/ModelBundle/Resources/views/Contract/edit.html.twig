@@ -12,3 +12,12 @@
 </fieldset>
 </form>
 {% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset("bundles/jlmmodel/js/contract.js") }}"></script>
+<script>
+$("body").contract();
+</script>
+{% endblock %}
