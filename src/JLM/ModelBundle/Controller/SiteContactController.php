@@ -100,7 +100,8 @@ class SiteContactController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity->getPerson()->getAddress());
+            if ($entity->getPerson()->getAddress() !== null)
+            	$em->persist($entity->getPerson()->getAddress());
             $em->persist($entity->getPerson());
             $em->persist($entity);
             $em->flush();
@@ -164,7 +165,8 @@ class SiteContactController extends Controller
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
-        	$em->persist($entity->getPerson()->getAddress());
+        	if ($entity->getPerson()->getAddress() !== null)
+        		$em->persist($entity->getPerson()->getAddress());
         	$em->persist($entity->getPerson());
             $em->persist($entity);
             $em->flush();
