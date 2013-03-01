@@ -99,7 +99,7 @@ class OrderController extends Controller
 				$flag = true;
 				if ($product = $vline->getProduct())
 					if ($category = $product->getCategory())
-						if ($category->getId() != 2)
+						if ($category->getId() == 2)
 							$flag = false;
 				if ($flag)
 				{
