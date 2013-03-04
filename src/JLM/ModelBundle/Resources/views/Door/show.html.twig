@@ -82,9 +82,9 @@
 <h2><small>Contrats</small></h2>
 {% include 'JLMModelBundle:Contract:list.html.twig' with { 'contracts':contracts } %}
 <div class="form-actions">
-	{#	<a href="{{ path('contract_new', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter un contrat</a> #}
 	<a href="#modalContractNew" class="btn btn-success" role="button" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Ajouter un contrat</a>
-	<form action="{{ path('contract_create') }}" method="post" {{ form_enctype(form_contractNew) }} class="form-horizontal">
+	{% render 'JLMModelBundle:Contract:new' with {'id':entity.id} %}
+{#	<form action="{{ path('contract_create') }}" method="post" {{ form_enctype(form_contractNew) }} class="form-horizontal">
 		<div id="modalContractNew" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalContractNewLabel" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -98,7 +98,7 @@
 				<button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer les modifications</button>
 			</div>
 		</div>
-	</form>
+	</form> #}
 </div>
 {% endblock %}
 

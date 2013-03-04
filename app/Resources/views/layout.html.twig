@@ -108,11 +108,11 @@ $('.autocompletion').autocomplete({
     },
     items:12,
 });
-{# Autocompletion dans une modal #}
+{# z-index pour appartition dans une modal #}
 $('.ui-autocomplete').css('z-index','1050');
 $('.datepicker').datepicker({
 	dateFormat:'dd/mm/yy',
-});
+}).css('z-index','1050');
 $('.datepicker').datepicker( "option",
         $.datepicker.regional[ "fr" ] );
 </script>
