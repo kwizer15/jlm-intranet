@@ -13,19 +13,21 @@
 		<h4><span class="text-info">{{ entity.type }} - {{ entity.location }}</span>
 		<br>{{ entity.street|nl2br }}
 		<br>{{ entity.site.address.city}}</h4>
-		
-				
-{#		{% if entity.transmitters|length > 0 %}
-		<h2><small>Types d'emetteurs</small></h2>
+		<hr>
+		{% if entity.transmitters|length > 0 %}
+		<h5>Types d'emetteurs
+		{% if entity.transmitterCode %}
+		<br><small>{{ entity.transmitterCode }}</small>
+		{% endif %}</h5>
 		<ul>
 		{% for transmitter in entity.transmitters %}
 			<li><a href="{{ path('product_show',{'id':transmitter.id}) }}">{{ transmitter }}</a></li>
 		{% endfor %}
 		</ul>
 		{% else %}
-		<h2><small>Aucun emetteur</small></h2>
+		<h5>Aucun emetteur</h5s>
 		{% endif %}
-#}
+
 	</div>
 	
 	{% if entity.googlemaps%}

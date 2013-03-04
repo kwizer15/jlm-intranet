@@ -1,0 +1,1 @@
+ALTER TABLE doors ADD transmitter_code VARCHAR(255) DEFAULT NULL;

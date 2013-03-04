@@ -79,7 +79,14 @@ class Door
     private $transmitters;
     
     /**
-     * @var float Google Maps (Street)
+     * @var string $transmitterCode
+     *
+     * @ORM\Column(name="transmitter_code", type="string", nullable=true)
+     */
+    private $transmitterCode;
+    
+    /**
+     * @var string Google Maps (Street)
      * 
      * @ORM\Column(name="googlemaps", type="text", nullable=true)
      */
@@ -198,6 +205,29 @@ class Door
         return $this->location;
     }
 
+    /**
+     * Set transmitterCode
+     *
+     * @param string $transmitterCode
+     * @return Door
+     */
+    public function setTransmitterCode($transmitterCode)
+    {
+    	$this->transmitterCode = $transmitterCode;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get transmitterCode
+     *
+     * @return string
+     */
+    public function getTransmitterCode()
+    {
+    	return $this->transmitterCode;
+    }
+    
     /**
      * Set googlemaps
      *
