@@ -17,7 +17,7 @@ class ContractType extends AbstractType
             ->add('option','choice',array('label'=>'Option','choices'=>array('0'=>'24/24h 7/7j','1'=>'8h30-17h30 du lundi au vendredi')))
             ->add('begin','datepicker',array('label'=>'Début du contrat'))		
             ->add('endWarranty','datepicker',array('label'=>'Fin de garantie','required'=>false))           
-            ->add('fee','money',array('label'=>'Redevance annuelle','attr'=>array('class'=>'input-small')))
+            ->add('fee','money',array('label'=>'Redevance annuelle','grouping'=>true,'attr'=>array('class'=>'input-small')))
             
         ;
     }
