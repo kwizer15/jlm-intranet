@@ -9,7 +9,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\Door;
+use JLM\ModelBundle\Entity\Contract;
 use JLM\ModelBundle\Form\Type\DoorType;
+use JLM\ModelBundle\Form\Type\ContractType;
 
 /**
  * Door controller.
@@ -47,12 +49,17 @@ class DoorController extends Controller
 		
         $contracts = $em->getRepository('JLMModelBundle:Contract')->findByDoor($entity,array('begin'=>'DESC'));
 
-        $deleteForm = $this->createDeleteForm($entity->getId());
-
+        // Modal nouveau contrat
+        $contractNew = new Contract();
+        $contractNew->setDoor($entity);
+        $contractNew->setTrustee($entity->getSite()->getTrustee());
+        $contractNew->setBegin(new \DateTime);
+        $form_contractNew   = $this->createForm(new ContractType(), $contractNew);
+         
         return array(
             'entity'      => $entity,
         	'contracts'	  => $contracts,
-            'delete_form' => $deleteForm->createView(),
+        	'form_contractNew'   => $form_contractNew->createView()
         );
     }
 

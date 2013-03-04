@@ -82,6 +82,30 @@
 <h2><small>Contrats</small></h2>
 {% include 'JLMModelBundle:Contract:list.html.twig' with { 'contracts':contracts } %}
 <div class="form-actions">
-	<a href="{{ path('contract_new', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter un contrat</a>
+	{#	<a href="{{ path('contract_new', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter un contrat</a> #}
+	<a href="#modalContractNew" class="btn btn-success" role="button" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Ajouter un contrat</a>
+	<form action="{{ path('contract_create') }}" method="post" {{ form_enctype(form_contractNew) }} class="form-horizontal">
+		<div id="modalContractNew" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalContractNewLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="modalContractNewLabel">Ajouter un contrat</h3>
+			</div>
+			<div class="modal-body">
+				{{ form_widget(form_contractNew) }}
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+				<button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer les modifications</button>
+			</div>
+		</div>
+	</form>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset("bundles/jlmmodel/js/contract.js") }}"></script>
+<script>
+$("body").contract();
+</script>
 {% endblock %}
