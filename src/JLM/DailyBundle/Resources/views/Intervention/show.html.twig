@@ -60,12 +60,12 @@
 {% endif %}
 {% if entity.closed == false %}
 	{# <a href="{{ path('shifting_new',{'id':entity.id}) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter</a> #}
-	<a href="#modal-shifting-new" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter</a>
+	<a href="#modalAddTech" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter</a>
 	<form action="{{ path('shifting_create',{'id':entity.id}) }}" method="post" {{ form_enctype(form_newtech) }} class="form-horizontal">
-		<div id="modal-shifting-new" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div id="modalAddTech" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalAddTechLabel" aria-hidden="true">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3>Ajouter un technicien</h3>
+				<h3 id="modalAddTechLabel">Ajouter un technicien</h3>
 			</div>
 			<div class="modal-body">
 				{{ form_widget(form_newtech) }}
