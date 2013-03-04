@@ -59,8 +59,13 @@ class MaintenanceController extends Controller
 	 */
 	public function showAction(Maintenance $entity)
 	{
+		$st = new ShiftTechnician();
+		$st->setBegin(new \DateTime);
+		$form   = $this->createForm(new AddTechnicianType(), $st);
+		
 		return array(
-				'entity'      => $entity,
+				'entity' => $entity,
+				'form_newtech'   => $form->createView(),
 		);
 	}
 	

@@ -45,8 +45,13 @@ class WorkController extends Controller
 	 */
 	public function showAction(Work $entity)
 	{
+		$st = new ShiftTechnician();
+		$st->setBegin(new \DateTime);
+		$form   = $this->createForm(new AddTechnicianType(), $st);
+		
 		return array(
-				'entity'      => $entity,
+				'entity' => $entity,
+				'form_newtech'   => $form->createView(),
 		);
 	}
 	

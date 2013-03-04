@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Fixing;
+use JLM\DailyBundle\Entity\ShiftTechnician;
+use JLM\DailyBundle\Form\Type\AddTechnicianType;
 use JLM\DailyBundle\Form\Type\FixingType;
 use JLM\DailyBundle\Form\Type\FixingEditType;
 use JLM\DailyBundle\Form\Type\FixingCloseType;
@@ -46,6 +48,18 @@ class FixingController extends Controller
 	 */
 	public function showAction(Fixing $entity)
 	{
+		$st = new ShiftTechnician();
+		$st->setBegin(new \DateTime);
+		$form   = $this->createForm(new AddTechnicianType(), $st);
+		
+		return array(
+				'entity' => $entity,
+				'form_newtech'   => $form->createView(),
+		);
+		
+		
+		
+		//////////////////////////
 		return array(
 				'entity'      => $entity,
 		);

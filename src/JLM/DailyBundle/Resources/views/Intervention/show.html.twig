@@ -59,5 +59,21 @@
 <p>Aucun</p>
 {% endif %}
 {% if entity.closed == false %}
-	<a href="{{ path('shifting_new',{'id':entity.id}) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter</a>
+	{# <a href="{{ path('shifting_new',{'id':entity.id}) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter</a> #}
+	<a href="#modal-shifting-new" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter</a>
+	<form action="{{ path('shifting_create',{'id':entity.id}) }}" method="post" {{ form_enctype(form_newtech) }} class="form-horizontal">
+		<div id="modal-shifting-new" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3>Ajouter un technicien</h3>
+			</div>
+			<div class="modal-body">
+				{{ form_widget(form_newtech) }}
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+				<button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer</button>
+			</div>
+		</div>
+	</form>
 {% endif %}
