@@ -40,30 +40,34 @@ class QuoteController extends Controller
     {
     	$limit = 10;
         $em = $this->getDoctrine()->getEntityManager();
-           
-        $nb = $em->getRepository('JLMOfficeBundle:Quote')->getTotal();
+        $repo = $em->getRepository('JLMOfficeBundle:Quote');
+        if ($state === null)
+        	$nb = $repo->getTotal();
+        else
+        	$nb = $repo->getCountState($state);
         $nbPages = ceil($nb/$limit);
         $nbPages = ($nbPages < 1) ? 1 : $nbPages;
         $offset = ($page-1) * $limit;
-        if ($page < 1 || $page > $nbPages)
-        {
-        	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
-        }
+        if ($page < 1)
+        	$page = 1;
+        elseif ($page > $nbPages)
+        	$page = $nbPages;
         
         if ($state === null)
-	        $entities = $em->getRepository('JLMOfficeBundle:Quote')->findBy(
+	        $entities = $repo->findBy(
 	        		array(),
 	        		array('number'=>'desc'),
 	        		$limit,
 	        		$offset
 	        );
         else
-        	$entities = $em->getRepository('JLMOfficeBundle:Quote')->getByState($state,$limit,$offset);
+        	$entities = $repo->getByState($state,$limit,$offset);
         
         return array(
         		'entities' => $entities,
         		'page'     => $page,
         		'nbPages'  => $nbPages,
+        		'state'	   => $state,
         );
     }
     
