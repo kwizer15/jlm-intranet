@@ -19,17 +19,16 @@
 	  constructor: Contract
 	  
 	  , listen : function() {
-		  var line = "#jlm_modelbundle_contracttype_";
-		  $(line + "fee").on('change',$.proxy(this.dot,this));
+		  $("#jlm_modelbundle_contracttype_fee").on('change',$.proxy(this.dot,this));
 			
 	  }
    	 
    	 , dot : function(e) {
    		 e.stopPropagation()
 		 e.preventDefault()
-		 var line = "#jlm_modelbundle_contracttype_";
-		 var p = parseFloat($(line + "fee").val().replace(',','.').replace(/[\s]{1,}/g,""));
-		 $(line + "fee").val(number_format(p,2,',',' '));
+		 var line = "#jlm_modelbundle_contracttype_fee";
+		 var p = parseFloat($(line).val().replace(',','.').replace(/[\s]{1,}/g,""));
+		 $(line).val(number_format(p,2,',',' '));
 		 return this;
    	 }
    }

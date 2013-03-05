@@ -115,5 +115,17 @@ $('.datepicker').datepicker({
 }).css('z-index','1050');
 $('.datepicker').datepicker( "option",
         $.datepicker.regional[ "fr" ] );
+$(".input-money").on('change',function(){
+	$(this).val(
+		number_format(
+			parseFloat(
+				$(this).val()
+				       .replace(',','.')
+				       .replace(/[\s]{1,}/g,"")
+			),2,',',' '
+		)
+	);
+	return this;
+});
 </script>
 {% endblock javascripts %}

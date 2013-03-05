@@ -57,6 +57,7 @@
 
 {% block money_widget %}
 {% spaceless %}
+	{% set attr = attr|merge({'class': attr.class|default('') ~ ' input-money' }) %}
     <div class="input-append">{{ block('form_widget_simple') }}<span class="add-on">€</span></div>
 {% endspaceless %}
 {% endblock money_widget %}

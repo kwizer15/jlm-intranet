@@ -132,7 +132,7 @@ class ContractController extends Controller
      */
     public function editAction(Contract $entity)
     {
-        $editForm = $this->createForm(new ContractType(), $entity);
+        $editForm = $this->createForm(new ContractType, $entity);
 
         return array(
             'entity'      => $entity,
