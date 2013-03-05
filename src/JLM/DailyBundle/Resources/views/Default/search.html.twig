@@ -5,9 +5,8 @@
 <h1>Intallations correspondants à "{{ query }}"</h1>
 	{% if doors|length == 0  %} 
 		<h2><small>Aucun résultat</small></h2>
-	{% endif %}
-	{% if doors|length %}
-		<h2><small>Portes</small></h2>
+	{% else %}
+		<h2><small>Intallations</small></h2>
 		{% include 'JLMDailyBundle:Door:list.html.twig' with {'doors': doors } %}
 	{% endif %}
 {% endblock %}

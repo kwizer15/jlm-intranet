@@ -12,6 +12,25 @@ use Doctrine\ORM\EntityRepository;
  */
 class DoorRepository extends EntityRepository
 {
+	
+	public function getStopped($limit = null, $offset = null)
+	{
+		$qb = $this->createQueryBuilder('d')
+			->where('d.stopped = 1');
+		if ($limit !== null)
+			$qb->setMaxResults($limit);
+		if ($offset !== null)
+			$qb->setFirstResult($offset);
+		return $qb->getQuery()->getResult();
+	}
+	
+	public function getCountStopped()
+	{
+		$qb = $this->createQueryBuilder('d')
+			->select('COUNT(d)')
+			->where('d.stopped = 1');
+		return $qb->getQuery()->getSingleScalarResult();
+	}
 
 	public function search($query)
 	{

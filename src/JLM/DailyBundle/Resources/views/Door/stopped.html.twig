@@ -1,0 +1,11 @@
+{% extends "JLMDailyBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Intallations à l'arrêt <small>({{ entities | length }})</small></h1>
+	{% if entities|length == 0  %} 
+		<h2><small>Aucun résultat</small></h2>
+	{% else %}
+		<h2><small>Intallations</small></h2>
+		{% include 'JLMDailyBundle:Door:list.html.twig' with {'doors': entities } %}
+	{% endif %}
+{% endblock %}

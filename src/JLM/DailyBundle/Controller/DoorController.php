@@ -33,4 +33,20 @@ class DoorController extends Controller
 				'interventions' => $interventions,
 		);
 	}
+	
+	/**
+	 * Displays Doors stopped
+	 *
+	 * @Route("/stopped", name="daily_door_stopped")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function stoppedAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$doors = $em->getRepository("JLMModelBundle:Door")->getStopped();
+		return array(
+				'entities' => $doors,
+		);
+	}
 }
