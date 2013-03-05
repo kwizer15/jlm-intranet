@@ -39,7 +39,29 @@ class DefaultController extends Controller
 	public function sidebarAction()
 	{
 		$em = $this->getDoctrine()->getEntityManager();
-
+		
+		$now = new \DateTime;
+		$today = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'000000');
+		$tommorow = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'235959');
+		return array(
+		    'today' => $em->getRepository('JLMDailyBundle:Intervention')->getCountWithDate($today,$tommorow),
+			'stopped' => $em->getRepository('JLMModelBundle:Door')->getCountStopped(),
+			'fixing' => $em->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),
+			'work'   => $em->getRepository('JLMDailyBundle:Work')->getCountOpened(),
+			'maintenance' => $em->getRepository('JLMDailyBundle:Maintenance')->getCountOpened(),
+		);
+	}
+	
+	/**
+	 * Search by date form
+	 * @Route("/sidebar", name="daily_datesearch")
+	 * @Secure(roles="ROLE_USER")
+	 * @Template()
+	 */
+	public function datesearchAction()
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		
 		$entity = new \DateTime();
 		$form   = $this->createForm(new DatepickerType(), $entity);
 		
@@ -47,15 +69,9 @@ class DefaultController extends Controller
 		$today = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'000000');
 		$tommorow = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'235959');
 		return array(
-			'form' => $form->createView(),
-		    'today' => $em->getRepository('JLMDailyBundle:Intervention')->getCountWithDate($today,$tommorow),
-			'stopped' => 0,
-			'fixing' => $em->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),
-			'work'   => $em->getRepository('JLMDailyBundle:Work')->getCountOpened(),
-			'maintenance' => $em->getRepository('JLMDailyBundle:Maintenance')->getCountOpened(),
+				'form' => $form->createView(),
 		);
 	}
-	
 	/**
 	 * @Route("/", name="daily")
 	 * @Template()

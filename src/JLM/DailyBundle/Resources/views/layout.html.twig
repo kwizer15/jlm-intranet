@@ -19,6 +19,7 @@
 			    <li class="nav-header">Ajouter</li>
 			    <li><a href="{{ path('recuperationequipment_new') }}"><i class="icon-plus-sign"></i> Récupération matériel</a></li>
 			    <li class="nav-header">Interventions</li>
+				{% render "JLMDailyBundle:Default:datesearch" %}
 				{% render "JLMDailyBundle:Default:sidebar" %}
 			</ul>
 		    {% endblock sidebar %}

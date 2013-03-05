@@ -1,12 +1,7 @@
 {# JLMDailyBundle:Default:sidebar.html.twig #}
-{% form_theme form with 'JLMDailyBundle:Form:selectdate.html.twig' %}
-<li>
-	<form action="{{ path('intervention_list_post') }}" method="post" {{ form_enctype(form) }} class="">
-		{{ form_widget(form) }}
-	</form>
-</li>
+
 			    <li><a href="{{ path('intervention_list') }}"><span class="badge badge-success">{{ today }}</span> Aujourd'hui</a></li>
-		    	<li><a href="{# path('stopped_list') #}"><span class="badge badge-important">{{ stopped }}</span> A l'arrêt</a></li>
+		    	<li><a href="{{ path('daily_door_stopped') }}"><span class="badge badge-important">{{ stopped }}</span> A l'arrêt</a></li>
 		    	<li><a href="{{ path('fixing_list') }}"><span class="badge badge-warning">{{ fixing }}</span> Dépannages</a></li>
 		        <li><a href="{{ path('work_list') }}"><span class="badge badge-info">{{ work }}</span> Travaux</a></li>
 		        <li><a href="{{ path('maintenance_list') }}"><span class="badge">{{ maintenance }}</span> Entretiens</a></li>
