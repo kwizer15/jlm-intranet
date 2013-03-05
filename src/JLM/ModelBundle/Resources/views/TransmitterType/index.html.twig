@@ -4,10 +4,14 @@
 
 <ul>
     {% for entity in entities %}
-	<li><a href="{{ path('transmittertype_edit', { 'id': entity.id }) }}">{{ entity.name }}</a></li>
+	<li>
+		<a href="#modalEdit{{ entity.id }}" role="button" data-toggle="modal">{{ entity.name }}</a>
+		{% render 'JLMModelBundle:TransmitterType:edit' with {'id':entity.id} %}
+	</li>
     {% endfor %}
 </ul>
 <div class="form-actions">
-<a href="{{ path('transmittertype_new') }}" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer un nouveau type d'emetteur</a>
+<a href="#modalNew" class="btn btn-primary" role="button" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Créer un nouveau type d'emetteur</a>
+{% render 'JLMModelBundle:TransmitterType:new' %}
 </div>
 {% endblock %}
