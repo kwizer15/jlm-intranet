@@ -66,13 +66,13 @@ class BillRepository extends EntityRepository
 	public function getByState($state = null,$limit = 10, $offset = 0)
 	{
 		$qb = $this->createQueryBuilder('t');
-		if ($state)
+		if ($state !== null)
 		{
 			$qb->where('t.state = ?1')
 			->setParameter(1,$state)
 			;
 		}
-		$qb->orderBy('t.creation','asc')
+		$qb->orderBy('t.creation','desc')
 		->setFirstResult($offset)
 		->setMaxResults($limit);
 		return $qb->getQuery()->getResult();

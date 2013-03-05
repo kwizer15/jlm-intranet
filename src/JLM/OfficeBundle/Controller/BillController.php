@@ -40,10 +40,9 @@ class BillController extends Controller
     {
     	$limit = 10;
         $em = $this->getDoctrine()->getEntityManager();
-        if ($state === null)
-        	$nb = $em->getRepository('JLMOfficeBundle:Bill')->getTotal();
-        else
-        	$nb = $em->getRepository('JLMOfficeBundle:Bill')->getCount($state);
+        $repo = $em->getRepository('JLMOfficeBundle:Bill');
+        $nb = $repo->getCount($state);
+        	
         $nbPages = ceil($nb/$limit);
         $nbPages = ($nbPages < 1) ? 1 : $nbPages;
         $offset = ($page-1) * $limit;
@@ -62,6 +61,7 @@ class BillController extends Controller
         		'entities' => $entities,
         		'page'     => $page,
         		'nbPages'  => $nbPages,
+        		'state' => $state,
         );
     }
     
