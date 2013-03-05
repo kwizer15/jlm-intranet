@@ -38,11 +38,11 @@
 
 <div class="pagination pagination-centered">
 	<ul>
-	    <li{% if page == 1 %} class="disabled"{% endif %}><a href="{{ path('task_page',{ 'page' : page-1 }) }}">«</a></li>
+	    <li{% if page == 1 %} class="disabled"{% endif %}><a href="{% if type is null %}{{ path('task_page',{ 'page' : page-1 }) }}{% else %}{{ path('task_type',{ 'type' : type, 'page' : page-1 }) }}{% endif %}">«</a></li>
 		{% for p in range(1,nbPages) %}
-		<li{% if p == page %} class="active"{% endif %}><a href="{{ path('task_page',{ 'page' : p }) }}">{{ p }}</a></li>
+		<li{% if p == page %} class="active"{% endif %}><a href="{% if type is null %}{{ path('task_page',{ 'page' : p }) }}{% else %}{{ path('task_type',{ 'type' : type, 'page' : p }) }}{% endif %}">{{ p }}</a></li>
 		{% endfor %}
-		<li{% if page == nbPages %} class="disabled"{% endif %}><a href="{{ path('task_page',{ 'page' : page+1 }) }}">»</a></li>
+		<li{% if page == nbPages %} class="disabled"{% endif %}><a href="{% if type is null %}{{ path('task_page',{ 'page' : page+1 }) }}{% else %}{{ path('task_type',{ 'type' : type, 'page' : page+1 }) }}{% endif %}">»</a></li>
 	</ul>
 </div>
 {% endblock %}
