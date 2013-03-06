@@ -4,6 +4,7 @@
 			<th>Affaire</th>
 			<th>Installation</th>
 			<th>Etat</th>
+			<th>Ctr</th>
 			<th>Syndic</th>
 		</tr>
 	</thead>
@@ -20,6 +21,7 @@
 				{% elseif door.waitWork %}<span class="label label-info">En attente travaux</span><br>{% endif %}
 				{% if door.waitMaintenance %}<span class="label">Entretien à faire</span><br>{% endif %}
 			</td>
+			<td>{{ door.actualContract }}</td>
 			<td>{{ door.site.trustee }}</td>
 		</tr>
 		{% endfor %}
