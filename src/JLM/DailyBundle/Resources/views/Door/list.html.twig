@@ -16,7 +16,7 @@
 			<td>
 				{% if door.stopped %}<span class="label label-important">Mise à l'arrêt</span><br>{% endif %}
 				{% if door.fixingInProgress %}<span class="label label-warning">Dépannage en cours</span><br>
-				{% elseif door.waitWork %}<span class="label label-warning">En attente dépannage</span><br>{% endif %}
+				{% elseif door.waitFixing %}<span class="label label-warning">En attente dépannage</span><br>{% endif %}
 				{% if door.workInProgress %}<span class="label label-info">Travaux en cours</span><br>
 				{% elseif door.waitWork %}<span class="label label-info">En attente travaux</span><br>{% endif %}
 				{% if door.waitMaintenance %}<span class="label">Entretien à faire</span><br>{% endif %}
