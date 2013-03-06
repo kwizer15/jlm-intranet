@@ -26,11 +26,8 @@ class DoorController extends Controller
 	 */
 	public function showAction(Door $door)
 	{
-		$em = $this->getDoctrine()->getManager();
-		$interventions = $em->getRepository("JLMDailyBundle:Intervention")->findByDoor($door,array('creation'=>'DESC'));
 		return array(
-				'entity'      => $door,
-				'interventions' => $interventions,
+			'entity'      => $door,
 		);
 	}
 	

@@ -3,7 +3,9 @@
 {% block content %}
 <h1>Rapport installation</h1>
 {% if entity.stopped %}
-<div class="alert alert-danger"><h4>Porte à l'arrêt</h4></div>
+<div class="alert alert-danger">
+	<h4>Porte à l'arrêt</h4>
+</div>
 {% endif %}
 
 {% if entity.width and entity.height %}{{ entity.width }}x{{ entity.height }}mm</small>{% endif %}</h1>
@@ -11,9 +13,8 @@
 	<div class="span6">
 		<h2><small>{{ entity.type }}</small></h2>
 		<h4>{{ entity|nl2br}}</h4>
-		
-			<strong>Accès :</strong>
-			<br>{{ entity.street|nl2br }}
+		<strong>Accès :</strong>
+		<br>{{ entity.street|nl2br }}
 	</div>
 	
 	{% if entity.googlemaps%}
@@ -27,35 +28,40 @@
 
 <div class="form-actions">
 	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche affaire</a>
-	<a href="{{ path('door_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>	
+	<a href="{{ path('door_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+	<a href="{{ path('maintenance_generate', { 'id':entity.id } ) }}" class="btn">Créer entretien</a>	
 </div>
-
+{% if entity.interventions | length %}
 <table class="table table-striped">
-<thead>
-<tr>
-<th>Dates</th>
-<th>Raison</th>
-<th>Rapport</th>
-<th>Techniciens</th>
-</thead>
-<tbody>
-{% for interv in interventions %}
-<tr{% if interv.close %} class="{% if interv.officeAction and ((interv.otherAction and interv.rest) or not interv.rest) %}success{% else %}info{% endif %}"{% endif %}>
-<td><small>{{ interv.creation| localizeddate('full', 'none') }}</small><br>{% include "JLMDailyBundle:Intervention:labeltype.html.twig" with {'type' : interv.type} %} {{ interv.creation|date('H:i') }}</td>
-<td><a href="{{ path('intervention_redirect',{'id':interv.id,'act':'show'}) }}">{{ interv.reason |nl2br }}</a></td>
-<td>{{ interv.report |nl2br }}</td>
-<td>{% if interv.officeAction %}{{ interv.officeAction.type }}<br>{% endif %}
-{% if interv.otherAction %}{{ interv.otherAction.type }}{% endif %}
-</td>
-<td>
-<ul>
-{% for shift in interv.shiftTechnicians %}
-<li>{{ shift.technician }}</li>
-{% endfor %}
-</ul>
-</tr>
-{% endfor %}
-</tbody>
+	<thead>
+		<tr>
+		<th>Dates</th>
+		<th>Raison</th>
+		<th>Rapport</th>
+		<th>Techniciens</th>
+	</thead>
+	<tbody>
+		{% for interv in entity.interventions %}
+		<tr{% if interv.close %} class="{% if interv.officeAction and ((interv.otherAction and interv.rest) or not interv.rest) %}success{% else %}info{% endif %}"{% endif %}>
+			<td><small>{{ interv.creation| localizeddate('full', 'none') }}</small><br>{% include "JLMDailyBundle:Intervention:labeltype.html.twig" with {'type' : interv.type} %} {{ interv.creation|date('H:i') }}</td>
+			<td><a href="{{ path('intervention_redirect',{'id':interv.id,'act':'show'}) }}">{{ interv.reason |nl2br }}</a></td>
+			<td>{{ interv.report |nl2br }}</td>
+			<td>
+				{% if interv.officeAction %}{{ interv.officeAction.type }}<br>{% endif %}
+				{% if interv.otherAction %}{{ interv.otherAction.type }}{% endif %}
+			</td>
+			<td>
+				<ul>
+					{% for shift in interv.shiftTechnicians %}
+					<li>{{ shift.technician }}</li>
+					{% endfor %}
+				</ul>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
 </table>
-<a href="{{ path('maintenance_generate',{'id':entity.id}) }}" class="btn">Créer entretien</a>
+{% else %}
+<h4>Pas d'intervention</h4>
+{% endif %}
 {% endblock %}

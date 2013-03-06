@@ -16,7 +16,7 @@ abstract class Intervention extends Shifting
     /**
      * Porte (lien)
      * @var JLM\ModelBundle\Entity\Door
-     * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Door")
+     * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Door", inversedBy="interventions")
      */
     private $door;
     

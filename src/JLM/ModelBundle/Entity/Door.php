@@ -113,14 +113,6 @@ class Door
      * @ORM\Column(name="stopped", type="boolean")
      */
     private $stopped = false;
-
-    /**
-     * Porte à l'arrêt
-     * @var bool $stoped
-     *
-     * @ORM\Column(name="last_maintenance", type="date", nullable=true)
-     */
-    private $lastMaintenance;
     
     /**
      * Prélibellé de factration
@@ -139,6 +131,14 @@ class Door
     private $contracts;
     
     /**
+     * Interventions
+     * @var ArrayCollection
+     * 
+     * @ORM\OneToMany(targetEntity="JLM\DailyBundle\Entity\Intervention",mappedBy="door")
+     */
+    private $interventions;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -146,6 +146,7 @@ class Door
     	$this->parts = new ArrayCollection;
     	$this->transmitters = new ArrayCollection;
     	$this->contracts = new ArrayCollection;
+    	$this->interventions = new ArrayCollection;
     }
 
 
@@ -364,7 +365,7 @@ class Door
     public function addContract(\JLM\ModelBundle\Entity\Contract $contract)
     {
     	$this->contracts[] = $contract;
-    
+    	
     	return $this;
     }
     
@@ -386,6 +387,39 @@ class Door
     public function getContracts()
     {
     	return $this->contracts;
+    }
+    
+    /**
+     * Add intervention
+     *
+     * @param JLM\DailyBundle\Entity\Intervention $interventions
+     * @return Door
+     */
+    public function addIntervention(\JLM\DailyBundle\Entity\Intervention $intervention)
+    {
+    	$this->interventions[] = $intervention;
+    
+    	return $this;
+    }
+    
+    /**
+     * Remove intervention
+     *
+     * @param JLM\DailyBundle\Entity\Intervention $interventions
+     */
+    public function removeIntervention(\JLM\DailyBundle\Entity\Intervention $intervention)
+    {
+    	$this->interventions->removeElement($intervention);
+    }
+    
+    /**
+     * Get interventions
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getInterventions()
+    {
+    	return $this->interventions;
     }
     
     /**
@@ -511,26 +545,13 @@ class Door
     }
     
     /**
-     * Set lastMaintenance
-     *
-     * @param \DateTime $lastMaintenance
-     * @return Door
-     */
-    public function setLastMaintenance($lastMaintenance)
-    {
-    	$this->lastMaintenance = $lastMaintenance;
-    
-    	return $this;
-    }
-    
-    /**
      * Get lastMaintenance
      *
      * @return \DateTime
      */
     public function getLastMaintenance()
     {
-    	return $this->lastMaintenance;
+    	return null;
     }
     
     /**

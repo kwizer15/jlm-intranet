@@ -15,7 +15,6 @@ class DoorType extends AbstractType
         	->add('street',null,array('label'=>'Adresses d\'accès','required'=>false))
 			->add('billingPrelabel',null,array('label'=>'Libélé de facturation', 'required'=>false))
         	->add('type',null,array('label'=>'Type de porte'))
-        	->add('lastMaintenance','datepicker',array('label'=>'Date du dernier entretien','required'=>false))
         	->add('width','distance',array('label'=>'Largeur','required'=>false))
         	->add('height','distance',array('label'=>'Hauteur','required'=>false))
         	->add('transmitters',null,array('label'=>'Type d\'emetteurs','required'=>false,'attr'=>array('class'=>'input-xlarge')))
