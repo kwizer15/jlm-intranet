@@ -109,10 +109,11 @@ $('.autocompletion').autocomplete({
     items:12,
 });
 {# z-index pour appartition dans une modal #}
-$('.ui-autocomplete').css('z-index','1050');
+$('.modal .ui-autocomplete').css('z-index','1050');
+$('.modal .datepicker').css('z-index','1050');
 $('.datepicker').datepicker({
 	dateFormat:'dd/mm/yy',
-}).css('z-index','1050');
+});
 $('.datepicker').datepicker( "option",
         $.datepicker.regional[ "fr" ] );
 $(".input-money").on('change',function(){

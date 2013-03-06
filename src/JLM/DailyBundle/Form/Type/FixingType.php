@@ -12,7 +12,7 @@ class FixingType extends AbstractType
     {
         $builder
         	->add('door','door_hidden')
-        	->add('reason',null,array('label'=>'Raison de l\'intervention','attr'=>array('class'=>'input-xxlarge')))
+        	->add('reason',null,array('label'=>'Raison de l\'intervention','attr'=>array('class'=>'input-xlarge')))
             ->add('contactName',null,array('label'=>'Nom du contact','required'=>false))
             ->add('contactPhones',null,array('label'=>'Téléphones','required'=>false))
             ->add('contactEmail','email',array('label'=>'e-mail','required'=>false,'attr'=>array('class'=>'input-xlarge')))

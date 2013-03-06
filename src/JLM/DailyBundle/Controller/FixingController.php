@@ -90,7 +90,7 @@ class FixingController extends Controller
 	 *
 	 * @Route("/create/{id}", name="fixing_create")
 	 * @Method("POST")
-	 * @Template("JLMDailyBundle:Fixing:new.html.twig")
+	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function createAction(Request $request, Door $door)

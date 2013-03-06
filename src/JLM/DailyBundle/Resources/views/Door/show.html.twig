@@ -30,7 +30,12 @@
 </div>
 
 <div class="form-actions">
-	<a href="{{ path('fixing_new',{'id': entity.id}) }}" class="btn btn-warning"><i class="icon-wrench icon-white"></i> Dépannage</a>
+<a href="#modalNewFixing" class="btn btn-warning" role="button" data-toggle="modal"><i class="icon-wrench icon-white"></i> Dépannage</a>
+{% render 'JLMDailyBundle:Fixing:new' with {'id':entity.id} %}
+
+
+
+	
 	<a href="{{ path('work_new_door',{'id': entity.id}) }}" class="btn btn-primary"><i class="icon-wrench icon-white"></i> Travaux</a>
 	{% if false %}<a href="{{ path('maintenance_generate', { 'id':entity.id } ) }}" class="btn"><i class="icon-wrench"></i> Entretien</a>{% endif %}
 	{% if entity.stopped %}<a href="{{ path('daily_door_unstop',{'id': entity.id}) }}" class="btn btn-success"><i class="icon-ok icon-white"></i> Mettre en service</a>

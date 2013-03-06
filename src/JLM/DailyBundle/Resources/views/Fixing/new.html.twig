@@ -1,17 +1,14 @@
-{# JLMDailyBundle:Fixing:new.html.twig #}
-{% extends "JLMDailyBundle::layout.html.twig" %}
-
-{% block content %}
-<h1>Nouvelle panne</h1>
-<h4>{{ door|nl2br }}</h4>
-<form action="{{ path('fixing_create', {'id':door.id}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-<fieldset>
-{{ form_widget(form) }}
-    <div class="form-actions">
-	   <a href="{{ path('fixing_list') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
-	   <button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Valider la nouvelle panne</button>
+<form action="{{ path('fixing_create', {'id':door.id}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal modal hide fade" id="modalNewFixing" tabindex="-1" role="dialog" aria-labelledby="modalNewFixingLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="modalNewFixingLabel">Nouvelle panne</h3>
 	</div>
-	</fieldset>
+	<div class="modal-body">
+		<h4>{{ door|nl2br }}</h4>
+		{{ form_widget(form) }}
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+		<button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Valider</button>
+	</div>
 </form>
-{% endblock %}
-
