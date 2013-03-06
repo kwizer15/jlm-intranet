@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Maintenance;
+use JLM\DailyBundle\Entity\ShiftTechnician;
+use JLM\DailyBundle\Form\Type\AddTechnicianType;
 use JLM\DailyBundle\Form\Type\MaintenanceCloseType;
 use JLM\ModelBundle\Entity\Door;
 

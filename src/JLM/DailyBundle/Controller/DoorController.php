@@ -46,4 +46,40 @@ class DoorController extends Controller
 				'entities' => $doors,
 		);
 	}
+	
+	/**
+	 * Stop door
+	 *
+	 * @Route("/{id}/stop", name="daily_door_stop")
+	 * @Template("JLMDailyBundle:Door:show.html.twig")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function stopAction(Door $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$entity->setStopped(true);
+		$em->persist($entity);
+		$em->flush();
+		return array(
+				'entity' => $entity,
+		);
+	}
+	
+	/**
+	 * Unstop door
+	 *
+	 * @Route("/{id}/unstop", name="daily_door_unstop")
+	 * @Template("JLMDailyBundle:Door:show.html.twig")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function unstopAction(Door $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$entity->setStopped(false);
+		$em->persist($entity);
+		$em->flush();
+		return array(
+				'entity' => $entity,
+		);
+	}
 }

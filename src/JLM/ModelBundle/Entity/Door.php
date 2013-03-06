@@ -545,13 +545,102 @@ class Door
     }
     
     /**
+     * Get waitMaintenance
+     * 
+     * @return bool
+     */
+    public function getWaitMaintenance()
+    {
+    	foreach($this->interventions as $interv)
+    		if ($interv instanceof \JLM\DailyBundle\Entity\Maintenance)
+    			if (!$interv->getClosed())
+       				if (!sizeof($interv->getShiftTechnicians()))
+    					return true;
+		return false;
+    }
+    
+    /**
+     * Get WorkInProgress
+     */
+    public function getWorkInProgress()
+    {
+    	foreach($this->interventions as $interv)
+    		if ($interv instanceof \JLM\DailyBundle\Entity\Work)
+    			if (!$interv->getClosed())
+    				if (sizeof($interv->getShiftTechnicians()))
+    					return true;
+    	return false;
+    }
+    
+    /**
+     * Get waitWork
+     */
+    public function getWaitWork()
+    {
+    	foreach($this->interventions as $interv)
+    		if ($interv instanceof \JLM\DailyBundle\Entity\Work)
+    			if (!$interv->getClosed())
+    				if (!sizeof($interv->getShiftTechnicians()))
+    					return true;
+    	return false;
+    }
+    
+    /**
+     * Get FixingInProgress
+     */
+    public function getFixingInProgress()
+    {
+    	foreach($this->interventions as $interv)
+    		if ($interv instanceof \JLM\DailyBundle\Entity\Fixing)
+    			if (!$interv->getClosed())
+    				if (sizeof($interv->getShiftTechnicians()))
+    					return true;
+    	return false;
+    }
+    
+    /**
+     * Get waitFixing
+     */
+    public function getWaitFixing()
+    {
+    	foreach($this->interventions as $interv)
+    		if ($interv instanceof \JLM\DailyBundle\Entity\Fixing)
+    			if (!$interv->getClosed())
+    				if (!sizeof($interv->getShiftTechnicians()))
+    					return true;
+    	return false;
+    }
+    
+    /**
      * Get lastMaintenance
      *
-     * @return \DateTime
+     * @return \DateTime | null
      */
     public function getLastMaintenance()
     {
-    	return null;
+    	$last = null;
+    	foreach($this->interventions as $interv)
+    	{
+    		if ($interv instanceof \JLM\DailyBundle\Entity\Maintenance)
+    		{
+    			if ($interv->getClosed())
+    			{
+    				$shifts = $interv->getShiftTechnicians();
+    				$date = null;
+    				foreach ($shifts as $shift)
+    				{
+    					$dateShift = ($shift->getEnd() === null) ? $shift->getBegin() : $shift->getEnd();
+    					if ($date === null || $date < $dateShift)
+    						$date = $dateShift;
+    				}
+    				if ($last === null || $last < $date)
+    				{
+    					$last = $date;
+    				}
+    			}
+    		}
+    	}
+    	return $last;
     }
     
     /**

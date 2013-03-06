@@ -249,6 +249,11 @@ class WorkController extends Controller
 	
 		if ($form->isValid())
 		{
+			if ($entity->getObjective()->getId() == 1)  // Mise en service
+			{
+				$entity->getDoor()->setStopped(false);
+				$em->persist($entity->getDoor());
+			}
 			$entity->setClose(new \DateTime);
 			$em->persist($entity);
 			$em->flush();
