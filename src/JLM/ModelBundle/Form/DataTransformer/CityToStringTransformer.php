@@ -66,7 +66,7 @@ class CityToStringTransformer implements DataTransformerInterface
 		if (null === $city) {
 			throw new TransformationFailedException(sprintf(
 					'An issue with name "%s" does not exist!',
-					$matches[1]
+					$matches[1].' - '.$matches[3]
 			));
 		}
 		return $city;

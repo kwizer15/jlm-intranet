@@ -74,6 +74,20 @@ class Site
     private $vat;
     
     /**
+     * @var Address $lodge
+     *
+     * @ORM\OneToOne(targetEntity="Address")
+     */
+    private $lodge;
+    
+    /**
+     * @var string $observations
+     *
+     * @ORM\Column(name="observations", type="text", nullable=true)
+     */
+    private $observations;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -139,6 +153,52 @@ class Site
         return $this->address;
     }
 
+    /**
+     * Set lodge
+     *
+     * @param JLM\ModelBundle\Entity\Address $lodge
+     * @return Site
+     */
+    public function setLodge(\JLM\ModelBundle\Entity\Address $lodge = null)
+    {
+    	$this->lodge = $lodge;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get lodge
+     *
+     * @return JLM\ModelBundle\Entity\Address
+     */
+    public function getLodge()
+    {
+    	return $this->lodge;
+    }
+    
+    /**
+     * Set observations
+     *
+     * @param string $observations
+     * @return Door
+     */
+    public function setObservations($observations)
+    {
+    	$this->observations = $observations;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get observations
+     *
+     * @return string
+     */
+    public function getObservations()
+    {
+    	return $this->observations;
+    }
+    
     /**
      * Set groupnumber
      * 

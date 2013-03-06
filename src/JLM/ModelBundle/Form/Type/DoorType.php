@@ -18,7 +18,7 @@ class DoorType extends AbstractType
         	->add('width','distance',array('label'=>'Largeur','required'=>false))
         	->add('height','distance',array('label'=>'Hauteur','required'=>false))
         	->add('transmitters',null,array('label'=>'Type d\'emetteurs','required'=>false,'attr'=>array('class'=>'input-xlarge')))
-        	->add('transmitterCode',null,array('label'=>'Code emetteur','required'=>false,'attr'=>array('class'=>'input-large')))
+        	->add('observations',null,array('label'=>'Observations','required'=>false,'attr'=>array('class'=>'input-large')))
         	->add('googlemaps',null,array('label'=>'Lien Google Maps','required'=>false,'attr'=>array('class'=>'input-xxlarge')))
 
         ;
