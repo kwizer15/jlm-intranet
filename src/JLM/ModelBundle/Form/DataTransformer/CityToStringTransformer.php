@@ -49,7 +49,7 @@ class CityToStringTransformer implements DataTransformerInterface
 			return null;
 		}
 	
-		if (preg_match('#^([0-9AB]{5}( CEDEX[ 0-9]{0,3})?) - (.+)$#',$string,$matches))
+		if (preg_match('#^([0-9AB]{5}( CEDEX[ 0-9]*)?) - (.+)$#',$string,$matches))
 		{	
 		
 			$city = $this->om
