@@ -91,6 +91,7 @@ abstract class Intervention extends Shifting
     
     /**
      * Reste a faire
+     * @var string
      *
      * @ORM\Column(name="rest",type="text",nullable=true)
      */
@@ -98,6 +99,7 @@ abstract class Intervention extends Shifting
     
     /**
      * Type de contrat
+     * @var string
      * @ORM\Column(name="contract",type="string",nullable=true)
      */
     private $contract;

@@ -135,6 +135,7 @@ class Door
      * @var ArrayCollection
      * 
      * @ORM\OneToMany(targetEntity="JLM\DailyBundle\Entity\Intervention",mappedBy="door")
+     * @ORM\OrderBy({"creation" = "DESC"})
      */
     private $interventions;
     
