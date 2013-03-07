@@ -41,6 +41,7 @@ class QuoteRepository extends EntityRepository
 	
 	public function search($query)
 	{
+		$query = str_replace(array('-1','-2','-3','-4','-5'),'',$query);
 		$qb = $this->createQueryBuilder('q')
 				->where('q.followerCp LIKE :query')
 				->orWhere('q.number LIKE :query')

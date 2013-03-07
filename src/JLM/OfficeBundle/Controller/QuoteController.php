@@ -293,6 +293,8 @@ class QuoteController extends Controller
     	$em = $this->getDoctrine()->getEntityManager();
     	$query = $request->request->get('query');
     	$results = $em->getRepository('JLMOfficeBundle:Quote')->search($query);
+    	if (sizeof($results) == 1)
+    		return $this->redirect($this->generateUrl('quote_show', array('id' => $results[0]->getId())));
     	return array(
     		'query'   => $query,
     		'results' => $results,
