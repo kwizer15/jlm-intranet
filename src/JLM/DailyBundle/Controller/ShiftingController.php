@@ -61,7 +61,6 @@ class ShiftingController extends Controller
 	 *
 	 * @Route("/create/{id}", name="shifting_create")
 	 * @Method("POST")
-	 * @Template("JLMDailyBundle:Shifting:new.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function createAction(Request $request, Shifting $shifting)
