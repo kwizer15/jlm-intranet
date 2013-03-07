@@ -12,6 +12,8 @@ use JLM\DailyBundle\Entity\Work;
 use JLM\DailyBundle\Form\Type\WorkType;
 use JLM\DailyBundle\Form\Type\WorkEditType;
 use JLM\DailyBundle\Form\Type\WorkCloseType;
+use JLM\DailyBundle\Entity\ShiftTechnician;
+use JLM\DailyBundle\Form\Type\AddTechnicianType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\QuoteVariant;
 
