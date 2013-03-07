@@ -44,21 +44,10 @@ class SiteContactController extends Controller
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function showAction($id)
+    public function showAction(SiteContact $entity)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMModelBundle:SiteContact')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SiteContact entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -98,10 +87,12 @@ class SiteContactController extends Controller
         $form = $this->createForm(new SiteContactType(), $entity);
         $form->bind($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             if ($entity->getPerson()->getAddress() !== null)
             	$em->persist($entity->getPerson()->getAddress());
+            $entity->getPerson()->formatPhones();
             $em->persist($entity->getPerson());
             $em->persist($entity);
             $em->flush();
@@ -167,6 +158,7 @@ class SiteContactController extends Controller
         if ($editForm->isValid()) {
         	if ($entity->getPerson()->getAddress() !== null)
         		$em->persist($entity->getPerson()->getAddress());
+        	$entity->getPerson()->formatPhones();
         	$em->persist($entity->getPerson());
             $em->persist($entity);
             $em->flush();

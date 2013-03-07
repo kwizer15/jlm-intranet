@@ -167,6 +167,21 @@ class Person
     }
 
     /**
+     * Format phones
+     * 
+     * @return Person
+     */
+    public function formatPhones()
+    {
+    	$this->fixedPhone = str_replace('+33','0',$this->fixedPhone);
+    	$this->fixedPhone = str_replace(array('-','/','.',','),'',$this->fixedPhone);
+    	$this->mobilePhone = str_replace('+33','0',$this->mobilePhone);
+    	$this->mobilePhone = str_replace(array('-','/','.',','),'',$this->mobilePhone);
+    	$this->fax = str_replace('+33','0',$this->fax);
+    	$this->fax = str_replace(array('-','/','.',','),'',$this->fax);
+    }
+    
+    /**
      * Set fixedPhone
      *
      * @param string $fixedPhone
