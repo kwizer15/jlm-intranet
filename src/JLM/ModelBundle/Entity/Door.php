@@ -433,7 +433,7 @@ class Door
     	$today = new \DateTime;
     	foreach ($this->contracts as $contract)
     	{
-    		if ($contract->getBegin() < $today && $contract->getEnd() == null)
+    		if ($contract->getInProgress())
     			return $contract;
     	}
     	return null;
