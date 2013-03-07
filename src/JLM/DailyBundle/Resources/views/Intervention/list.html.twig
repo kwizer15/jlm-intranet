@@ -27,7 +27,8 @@
 				{% if shift.end %}
 				<small>{{ shift.begin | date('d/m')}}</small> <strong>{{ shift.technician }}</strong><br>
 				{% else %}
-				<a href="{{ path('shifting_edit',{'id':shift.id}) }}"><small>{{ shift.begin | date('d/m')}}</small> <strong>{{ shift.technician }}</strong></a><br>
+				<a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}}</small> <strong>{{ shift.technician }}</strong></a><br>
+				{% render 'JLMDailyBundle:Shifting:edit' with {'id':shift.id} %}
 				{% endif %}
 				{% endfor %}
 				{% else %}

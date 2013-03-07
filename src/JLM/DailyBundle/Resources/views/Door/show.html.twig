@@ -60,7 +60,8 @@
 			<td>
 				<ul>
 					{% for shift in interv.shiftTechnicians %}
-					<li>{{ shift.technician }}</li>
+					<a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}}</small> <strong>{{ shift.technician }}</strong></a><br>
+					{% render 'JLMDailyBundle:Shifting:edit' with {'id':shift.id} %}
 					{% endfor %}
 				</ul>
 			</td>

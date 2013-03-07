@@ -128,7 +128,7 @@ class ShiftTechnician
      * @param \DateTime $end
      * @return InterventionScheduled
      */
-    public function setEnd($end)
+    public function setEnd($end = null)
     {
         $this->end = $end;
     

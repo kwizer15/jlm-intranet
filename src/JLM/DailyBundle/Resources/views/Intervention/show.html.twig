@@ -51,7 +51,10 @@
 			<td>{{ shift.begin | date('d/m/Y') }}{% if shift.begin | date('H:i') != '00:00' %}<br>de {{ shift.begin | date('H:i') }}{% endif %}{% if shift.end %} à {{ shift.end | date('H:i') }}{% endif %}</td>
 			<td>{% if shift.end %}{{ shift.time.format('%hh%I') }}{% endif %}</td>
 			<td>{{ shift.comment | nl2br}}</td>
-			<td><a href="{{ path('shifting_delete',{'id':shift.id}) }}" class="btn btn-danger"><i class="icon-white icon-remove"></i></a>
+			<td>
+				<a href="#modalEditTech{{ shift.id }}" data-toggle="modal" role="button" class="btn btn-warning"><i class="icon-wrench icon-white"></i></a>
+				{% render 'JLMDailyBundle:Shifting:edit' with {'id':shift.id} %}
+				<a href="{{ path('shifting_delete',{'id':shift.id}) }}" class="btn btn-danger"><i class="icon-white icon-remove"></i></a>
 		</tr>
 		{% endfor %}
 	</tbody>

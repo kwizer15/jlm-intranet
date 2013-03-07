@@ -1,22 +1,13 @@
-{# JLMDailyBundle:Shifting:edit.html.twig #}
-{% extends "JLMDailyBundle::layout.html.twig" %}
-
-{% block content %}
-<h1>Récupération matériel</h1>
-<h4>{{ entity.technician}}</h4>
-<dl>
-<dt>Lieu</dt>
-<dd>{{ entity.shifting.place | nl2br }}</dd>
-<dt>Matériel</dt>
-<dd>{{ entity.shifting.reason | nl2br }}</dd>
-</dl>
-<form action="{{ path('shifting_update',{'id':entity.id}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-<fieldset>
-{{ form_widget(form) }}
-    <div class="form-actions">
-	   <a href="{{ path('shifting_list',{'id':entity.id}) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
-	   <button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer les modifications</button>
+<form id="modalEditTech{{ entity.id }}" action="{{ path('shifting_update',{'id':entity.id}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalEditTech{{ entity.id }}Label" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="modalEditTech{{ entity.id }}Label">Déplacement de {{ entity.technician }}</h3>
 	</div>
-	</fieldset>
+	<div class="modal-body">
+		{{ form_widget(form) }}
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+		<button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer</button>
+	</div>
 </form>
-{% endblock %}

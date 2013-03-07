@@ -111,7 +111,6 @@ class ShiftingController extends Controller
 	 *
 	 * @Route("/{id}/update", name="shifting_update")
 	 * @Method("POST")
-	 * @Template("JLMDailyBundle:Shifting:edit.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function updateAction(Request $request, ShiftTechnician $entity)
@@ -134,6 +133,8 @@ class ShiftingController extends Controller
 			$em->persist($entity);
 			$em->flush();
 	
+			if ($entity->getShifting() instanceof \JLM\DailyBundle\Entity\Intervention)
+				return $this->redirect($this->generateUrl('intervention_redirect', array('id' => $entity->getShifting()->getId(),'act'=>'show')));
 			return $this->redirect($this->generateUrl('shifting_list', array('id' => $entity->getTechnician()->getId())));
 		}
 	
