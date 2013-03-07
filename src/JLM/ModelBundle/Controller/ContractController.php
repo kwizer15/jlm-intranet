@@ -11,6 +11,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Contract;
 use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Form\Type\ContractType;
+use JLM\ModelBundle\Form\Type\ContractStopType;
 
 /**
  * Contract controller.
@@ -107,20 +108,47 @@ class ContractController extends Controller
     /**
      * Stop a contract
      * 
+     * @Route("/{id}/stopupdate", name="contract_stopupdate")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function stopupdateAction(Contract $entity)
+    {
+    	$editForm   = $this->createForm(new ContractStopType(), $entity);
+        $request = $this->getRequest();
+        $editForm->bindRequest($request);
+
+        if ($editForm->isValid())
+        {
+        	$em = $this->getDoctrine()->getEntityManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('door_show', array('id' => $entity->getDoor()->getId())));
+        }
+
+        return array(
+            'entity'      => $entity,
+            'form'   => $editForm->createView(),
+        );
+    }
+    
+    /**
+     * Stop a contract
+     *
      * @Route("/{id}/stop", name="contract_stop")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
     public function stopAction(Contract $entity)
     {
-    	if ($entity->getEnd() === null)
-    	{	
-	    	$entity->setEnd(new \DateTime());
-	    	$em = $this->getDoctrine()->getEntityManager();
-	    	$em->persist($entity);
-	    	$em->flush();
-    	}
-    	return $this->redirect($this->generateUrl('door_show', array('id' => $entity->getDoor()->getId())));
+    	
+    	$form = $this->createForm(new ContractStopType, $entity);
+    	
+    	return array(
+    			'entity'      => $entity,
+    			'form'   => $form->createView(),
+    	);
     }
     
     /**

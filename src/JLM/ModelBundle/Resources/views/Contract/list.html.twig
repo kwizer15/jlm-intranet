@@ -16,7 +16,7 @@
 		{% for contract in contracts %}
 		<tr>
 			<td>
-				{% if not contract.end %}
+				{% if contract.inProgress %}
 				<span class="label label-success">en cours</span>
 				{% else %}
 				<span class="label label-inverse">terminé</span>
@@ -27,7 +27,15 @@
 			<td>{{ contract }}</td>
 			<td>{{ contract.begin|date('d/m/Y') }}</td>
 			<td>{% if contract.endWarranty %}{{ contract.endWarranty|date('d/m/Y') }}{% endif %}</td>
-			<td>{% if contract.end %}{{ contract.end|date('d/m/Y') }}{% else %}<a href="{{ path('contract_stop',{'id' : contract.id }) }}" class="btn btn-danger">Arrêter</a>{% endif %}</td>
+			<td>
+				{% if contract.end %}
+				<a href="#modalStop{{ contract.id }}" data-toggle="modal">{{ contract.end|date('d/m/Y') }}</a>
+				{% else %}
+				{# <a href="{{ path('contract_stop',{'id' : contract.id }) }}" class="btn btn-danger">Arrêter</a> #}
+				<a href="#modalStop{{ contract.id }}" class="btn btn-danger" role="button" data-toggle="modal">Arrêter</a>
+				{% endif %}
+				{% render 'JLMModelBundle:Contract:stop' with {'id':contract.id} %}
+			</td>
 			<td>{{ contract.fee|number_format(2,',',' ') }} €</td>
 			{#<td><a href="{{ path('contract_edit',{'id':contract.id}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a> #}
 			{# <td><a href="#modalContractEdit" class="btn btn-warning" role="button" data-toggle="modal">Editer</a> #}

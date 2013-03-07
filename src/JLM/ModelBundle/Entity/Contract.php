@@ -284,6 +284,17 @@ class Contract
     {
         return $this->end;
     }
+    
+    /**
+     * Get inProgress
+     *
+     * @return bool
+     */
+    public function getInProgress()
+    {
+    	$today = new \DateTime;
+    	return (($this->end > $today || $this->end === null) && ($this->begin <= $today));
+    }
 
     /**
      * Set fee
