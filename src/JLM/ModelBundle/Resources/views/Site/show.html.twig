@@ -44,11 +44,11 @@
 			<td>{{ contact.role }}</td>
 			<td>
 				<ul class="unstyled">
-				{% if contact.person.fixedPhone %}<li>{{ contact.person.fixedPhone }}</li>{% endif %}
-				{% if contact.person.mobilePhone %}<li>{{ contact.person.mobilePhone }}</li>{% endif %}
+				{% if contact.person.fixedPhone %}<li>{% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone' : contact.person.fixedPhone } %}</li>{% endif %}
+				{% if contact.person.mobilePhone %}<li>{% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone' :  contact.person.mobilePhone } %}</li>{% endif %}
 				</ul>
 			</td>
-			<td>{{ contact.person.fax }}</td>
+			<td>{% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone' :  contact.person.fax } %}</td>
 			<td><a href="mailto:{{ contact.person.email }}">{{ contact.person.email }}</a></td>
 		</tr>
 		{% endfor %}
