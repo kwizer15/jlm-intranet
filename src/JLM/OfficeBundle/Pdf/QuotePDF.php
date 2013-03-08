@@ -171,16 +171,16 @@ class QuotePDF extends \FPDF
 		
 		$y = $this->getY();
 		$this->setFont('Arial','BU',10);
-		$this->cell($cs,5,utf8_decode('Réglement'),0,1);
+		$this->cell(20,5,utf8_decode('Réglement'),0,0);
 		$this->setFont('Arial','',10);
-		$this->cell($cs,5,utf8_decode($this->entity->getPaymentRules()),0,1);
+		$this->cell($cs-15,5,utf8_decode($this->entity->getPaymentRules()),0,1);
 	
 		// Délais
 		$this->ln(3);
 		$this->setFont('Arial','BU',10);
-		$this->cell(0,5,utf8_decode('Délais'),0,1);
+		$this->cell(15,5,utf8_decode('Délais'),0,0);
 		$this->setFont('Arial','',10);
-		$this->cell(0,5,utf8_decode($this->entity->getDeliveryRules()),0,1);
+		$this->cell($cs-15,5,utf8_decode($this->entity->getDeliveryRules()),0,1);
 		
 		// Politesse
 		
@@ -195,7 +195,19 @@ class QuotePDF extends \FPDF
 			$who = 'Madame, Monsieur';
 		$this->ln(3);
 		$this->multiCell($cs,5,utf8_decode('Nous vous en souhaitons bonne réception et vous prions d\'agréer, '.$who.' l\'expression de nos sentiments les meilleurs.'),0,1);
-		
+		$this->ln(3);
+		$this->setFont('Arial','B',7);
+		$this->cell(38,4,utf8_decode('Clause de réserve de propriété: '),'',0);
+		$this->setFont('Arial','',7);
+		$this->cell(0,4,utf8_decode('JLM conserve l\'entière propriété des marchandises jusqu\'au complet paiement du prix facturé.'),'',1);
+		$this->setFont('Arial','B',7);
+		$this->cell(13,4,utf8_decode('Escompte '),'',0);
+		$this->setFont('Arial','',7);
+		$this->cell(0,4,utf8_decode('0,00 % pour paiement anticipé.'),'',1);
+		$this->setFont('Arial','B',7);
+		$this->cell(11,4,utf8_decode('Pénalité '),'',0);
+		$this->setFont('Arial','',7);
+		$this->cell(0,4,utf8_decode('pour non respect de la date d\'échéance: 1,3 %/mois. Loi n° 92-144 du 31/12/92'),'',1);
 		// Signature
 		$this->setFont('Arial','',10);
 		$this->setXY(152,$y);
