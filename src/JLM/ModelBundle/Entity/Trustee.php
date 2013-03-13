@@ -296,4 +296,19 @@ class Trustee extends Company
     	$this->billingLabel = $label;
     	return $this;
     }
+    
+    /**
+     * Get Contract Sum
+     * @return float 
+     */
+    public function getContractsSum()
+    {
+    	$sum = 0;
+    	foreach ($this->contracts as $contract)
+    	{
+    		if ($contract->getInProgress())
+    			$sum += $contract->getFee();
+    	}
+    	return $sum;
+    }
 }
