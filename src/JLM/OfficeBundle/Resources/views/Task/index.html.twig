@@ -24,7 +24,7 @@
     {% for entity in entities %}
     	<tr>
             <td>{{ entity.open | date('d/m/Y') }}</td>
-            <td><a href="{{ entity.urlSource }}">{% if entity.door %}<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}{% else %}{{ entity.place }}{% endif %}</a></td>
+            <td><a href="{{ entity.urlSource }}">{% if entity.door %}<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}{% else %}{{ entity.place | nl2br }}{% endif %}</a></td>
             <td><strong>{% if entity.urlAction %}<a href="{{ entity.urlAction }}">{{ entity.type }}</a>{% else %}{{ entity.type }}{% endif %}</strong></td>
             <td>{{ entity.todo | nl2br}}</td>
 			<td>
