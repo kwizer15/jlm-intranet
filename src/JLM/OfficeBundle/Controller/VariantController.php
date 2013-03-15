@@ -318,6 +318,24 @@ class VariantController extends Controller
 	}
 	
 	/**
+	 * Note QuoteVariant as canceled.
+	 *
+	 * @Route("/{id}/cancel", name="variant_cancel")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function cancelAction(QuoteVariant $entity)
+	{
+		if ($entity->getState() > 4)
+			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+
+			$entity->setState(-1);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+	}
+	
+	/**
 	 * Note QuoteVariant as receipt.
 	 *
 	 * @Route("/{id}/receipt", name="variant_receipt")
