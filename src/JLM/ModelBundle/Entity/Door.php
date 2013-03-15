@@ -645,6 +645,27 @@ class Door
     }
     
     /**
+     * Get nextMaintenance
+     *
+     * @return \DateTime | null
+     */
+    public function getNextMaintenance()
+    {
+    	$last = null;
+    	foreach($this->interventions as $interv)
+    	{
+    		if ($interv instanceof \JLM\DailyBundle\Entity\Maintenance)
+    		{
+    			if (!$interv->getClosed())
+    			{
+    				return $interv;
+    			}
+    		}
+    	}
+    	return null;
+    }
+    
+    /**
      * Get billingPrelabel
      * 
      * @return string

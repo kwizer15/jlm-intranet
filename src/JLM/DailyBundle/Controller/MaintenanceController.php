@@ -39,7 +39,7 @@ class MaintenanceController extends Controller
 		$offset = ($page-1) * $limit;
 		if ($page < 1 || $page > $nbPages)
 		{
-			throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
+			throw $this->createNotFoundException('Page inexistante (page '.$page.'/'.$nbPages.')');
 		}
 		
 
@@ -122,19 +122,32 @@ class MaintenanceController extends Controller
 	 *
 	 * @Route("/scan", name="maintenance_scan")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
 	 */
 	public function scanAction()
 	{
+		$date = new \DateTime;
+		$date->sub(new \DateInterval('P5M'));
 		$em = $this->getDoctrine()->getEntityManager();
 		$doors = $em->getRepository('JLMModelBundle:Door')->findAll();
+		$count = 0;
 		foreach ($doors as $door)
 		{
-			if ($em->getRepository('JLMDailyBundle:Maintenance')->isPlanned($door))
-			{
-				
-			}
+			if ($door->getActualContract() !== null)
+				if ($door->getLastMaintenance() < $date && $door->getNextMaintenance() === null)
+				{
+					$main = new Maintenance;
+					$main->setCreation(new \DateTime);
+					$main->setPlace($door.'');
+					$main->setReason('Visite d\'entretien');
+					$main->setContract($door->getActualContract());
+					$main->setDoor($door);
+					$main->setPriority(5);
+					$em->persist($main);
+					$count++;
+				}
 		}
+		$em->flush();
+		return array('count' => $count);
 	}
 	
 	/**
