@@ -200,7 +200,7 @@ class Quote extends Document
      */
     public function getState()
     {
-    	$state = (sizeof($this->variants > 0)) -1 : 0;
+    	$state = (sizeof($this->variants > 0)) ? -1 : 0;
     	foreach ($this->variants as $variant)
     		if ($variant->getState() > $state)
     			$state = $variant->getState();
