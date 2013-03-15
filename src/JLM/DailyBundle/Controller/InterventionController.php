@@ -118,6 +118,34 @@ class InterventionController extends Controller
 	/**
 	 * Liste des interventions par date(s)
 	 *
+	 * @Route("/today", name="intervention_today")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function todayAction()
+	{
+		$now = new \DateTime;
+		$begin = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'000000');
+		$end = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'235959');
+		$em = $this->getDoctrine()->getManager();
+		$repo = $em->getRepository('JLMDailyBundle:Intervention');
+		$intervs = $repo->getToday();
+		return array(
+				'entities' => $intervs,
+		);
+		
+		// ORDRE DES INTERVS
+		// - Toutes ayant au moins un intervenant aujourd'hui
+		// - Les dépannages sans intervenant
+		// - Les travaux non cloturés
+		// - Les travaux sans intervenant
+		// - Les entretiens sans intervenant
+		
+	}
+	
+	/**
+	 * Liste des interventions par date(s)
+	 *
 	 * @Route("/list", name="intervention_list")
 	 * @Route("/list/{date1}", name="intervention_listdate1")
 	 * @Route("/list/{date1}/{date2}", name="intervention_listdate2")

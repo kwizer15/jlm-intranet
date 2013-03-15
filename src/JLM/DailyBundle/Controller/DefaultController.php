@@ -44,7 +44,7 @@ class DefaultController extends Controller
 		$today = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'000000');
 		$tommorow = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'235959');
 		return array(
-		    'today' => $em->getRepository('JLMDailyBundle:Intervention')->getCountWithDate($today,$tommorow),
+		    'today' => $em->getRepository('JLMDailyBundle:Intervention')->getCountToday(),
 			'stopped' => $em->getRepository('JLMModelBundle:Door')->getCountStopped(),
 			'fixing' => $em->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),
 			'work'   => $em->getRepository('JLMDailyBundle:Work')->getCountOpened(),
@@ -78,33 +78,6 @@ class DefaultController extends Controller
 	 */
 	public function indexAction()
 	{
-		return array();
+		return $this->redirect($this->generateUrl('intervention_today'));
 	}
-	
-    /**
-     * @Route("/a", name="daily_a")
-     * @Template()
-     */
-    public function aAction()
-    {
-        return array();
-    }
-    
-    /**
-     * @Route("/b", name="daily_b")
-     * @Template()
-     */
-    public function bAction()
-    {
-    	return array();
-    }
-    
-    /**
-     * @Route("/c", name="daily_c")
-     * @Template()
-     */
-    public function cAction()
-    {
-    	return array();
-    }
 }
