@@ -33,7 +33,7 @@ class OrderRepository extends EntityRepository
 	public function getByState($state = null,$limit = 10, $offset = 0)
 	{
 		$qb = $this->createQueryBuilder('t');
-		if ($state)
+		if ($state !== null)
 		{
 			$qb->where('t.state = ?1')
 			->setParameter(1,$state)
