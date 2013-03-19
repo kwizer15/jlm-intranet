@@ -182,6 +182,26 @@ abstract class Shifting
     }
     
     /**
+     * Get getTotalTime
+     * 
+     * @return DateInterval
+     */
+    public function getTotalTime()
+    {
+    	$hours = 0;
+    	$minutes = 0;
+    	foreach ($this->shiftTechnicians as $shift)
+    	{
+    		$hours += $shift->getTime()->format('h');
+    		$minutes += $shift->getTime()->format('i');
+    	}
+    	$min = $minutes % 60;
+    	$minutes -= $min;
+    	$hours += $minutes / 60;
+    	return new DateInterval('T'.$hours.'H'.$min.'M');
+    }
+    
+    /**
      * Get type
      *
      * @return string

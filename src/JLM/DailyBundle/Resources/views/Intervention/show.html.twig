@@ -68,10 +68,20 @@
 		<a href="{{ path('shifting_delete',{'id':shift.id}) }}" class="btn btn-danger">Oui</a>
 	</div>
 </div>
-				
+				</td>
 		</tr>
-		{% endfor %}
 	</tbody>
+		{% endfor %}
+	<tfoot>
+		<tr>
+			<th></th>
+			<th>Total</th>
+			<th></th>
+			<th>{{ entity.totalTime.format('%hh%I')  }}</th>
+			<th></th>
+			<th></th>
+		</tr>
+	</tfoot>
 </table>
 {% else %}
 <p>Aucun</p>
