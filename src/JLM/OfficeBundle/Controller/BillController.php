@@ -126,7 +126,7 @@ class BillController extends Controller
     /**
      * Displays a form to create a new Bill entity.
      *
-     * @Route("/new/quote/{id}", name="bill_new_quote")
+     * @Route("/new/quote/{id}", name="bill_new_quotevariant")
      * @Template("JLMOfficeBundle:Bill:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
