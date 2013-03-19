@@ -24,7 +24,7 @@ class TaskRepository extends EntityRepository
 		->select('COUNT(t)')
 		->where('t.close IS NULL');
 		
-		if ($type)
+		if ($type !== null)
 		{
 			$qb->andWhere('t.type = ?1')
 				->setParameter(1,$type)
@@ -39,7 +39,7 @@ class TaskRepository extends EntityRepository
 	{
 		$qb = $this->createQueryBuilder('t')
 		->where('t.close IS NULL');
-		if ($type)
+		if ($type !== null)
 		{
 			$qb->andWhere('t.type = ?1')
 			->setParameter(1,$type)
