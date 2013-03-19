@@ -121,6 +121,27 @@ class OrderController extends Controller
 	}
 	
 	/**
+	 * Displays a form to create a new Bill entity.
+	 *
+	 * @Route("/new/door/{id}", name="order_new_door")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function newAction(Door $door = null)
+	{
+		$entity = new Order();
+		$entity->setPlace($door.'');
+		$entity->setDoor($door);
+
+		$entity->addLine(new OrderLine);
+		$form   = $this->createForm(new OrderType(), $entity);
+		return array(
+				'entity' => $entity,
+				'form'   => $form->createView()
+		);
+	}
+	
+	/**
 	 * Creates a new Bill entity.
 	 *
 	 * @Route("/create", name="order_create")
