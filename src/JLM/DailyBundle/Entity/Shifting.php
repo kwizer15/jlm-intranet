@@ -198,7 +198,7 @@ abstract class Shifting
     	$min = $minutes % 60;
     	$minutes -= $min;
     	$hours += $minutes / 60;
-    	return new \DateInterval('T'.$hours.'H'.$min.'M');
+    	return $hours.'h'.$min;
     }
     
     /**
