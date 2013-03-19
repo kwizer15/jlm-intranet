@@ -126,7 +126,7 @@ class InterventionRepository extends EntityRepository
 					{
 						if (!$flag)
 						{
-							$work[] = $interv;
+							//$work[] = $interv;
 							$flag = true;
 						}
 					}
@@ -134,10 +134,10 @@ class InterventionRepository extends EntityRepository
 					{
 						if (!$flag)
 						{
-							$maintenance[] = $interv;
+							//$maintenance[] = $interv;
 							$flag = true;
 						}
-					}
+					} 
 				}
 				else
 				{
@@ -160,7 +160,14 @@ class InterventionRepository extends EntityRepository
 				$flag = true;
 			}
 		}
-		return array_merge($inprogress,$fixing,$notclosed,$closed,$work,$maintenance);
+		return array(
+				'inprogress'	=> $inprogress,
+				'fixing'		=> $fixing,
+				'notclosed'		=> $notclosed,
+				'closed'		=> $closed,
+//				'work'			=> $work,
+//				'maintenance'	=> $maintenance,
+			);
 	}
 	
 }

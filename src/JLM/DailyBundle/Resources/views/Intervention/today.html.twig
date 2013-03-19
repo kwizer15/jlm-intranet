@@ -2,6 +2,13 @@
 {% extends "JLMDailyBundle::layout.html.twig" %}
 
 {% block content %}
-<h1>Aujourd'hui <small>({{ entities|length }})</small></h1>
-{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : entities} %}
+<h1>Aujourd'hui</h1>
+<h2><small>En cours</small></h2>
+{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : inprogress} %}
+<h2><small>Dépannages à donner</small></h2>
+{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : fixing} %}
+<h2><small>A cloturer</small></h2>
+{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : notclosed} %}
+<h2><small>Terminé aujourd'hui</small></h2>
+{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : closed} %}
 {% endblock %}

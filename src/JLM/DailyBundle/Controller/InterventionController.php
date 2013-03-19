@@ -131,7 +131,10 @@ class InterventionController extends Controller
 		$repo = $em->getRepository('JLMDailyBundle:Intervention');
 		$intervs = $repo->getToday();
 		return array(
-				'entities' => $intervs,
+				'inprogress' => $intervs['inprogress'],
+				'fixing' => $intervs['fixing'],
+				'notclosed' => $intervs['notclosed'],
+				'closed' => $intervs['closed'],
 		);
 		
 		// ORDRE DES INTERVS

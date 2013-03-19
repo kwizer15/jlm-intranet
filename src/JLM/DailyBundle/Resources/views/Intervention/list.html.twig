@@ -1,5 +1,7 @@
 {# JLMDailyBundle:Intervention:list.html.twig #}
-
+{% if entities|length == 0 %}
+<p>Aucune intervention</p>
+{% else %}
 <table class="table table-stripped">
 	<thead>
 		<tr>
@@ -52,3 +54,4 @@
 		{% endfor %}
 	</tbody>
 </table>
+{% endif %}
