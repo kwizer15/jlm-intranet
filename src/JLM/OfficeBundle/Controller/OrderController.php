@@ -124,10 +124,10 @@ class OrderController extends Controller
 	 * Displays a form to create a new Bill entity.
 	 *
 	 * @Route("/new/door/{id}", name="order_new_door")
-	 * @Template()
+	 * @Template("JLMOfficeBundle:Order:new.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function newAction(Door $door = null)
+	public function newdoorAction(Door $door = null)
 	{
 		$entity = new Order();
 		$entity->setPlace($door.'');
