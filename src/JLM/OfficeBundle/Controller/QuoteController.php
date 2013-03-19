@@ -395,6 +395,10 @@ class QuoteController extends Controller
 		    		if ($variant->getState() < 3)
 		    			$variant->setState(3);
     			}
+    			if ($entity->getVat() == $entity->getVatTransmitter())
+    				$message->attach(\Swift_Attachment::fromPath(
+						$this->get('kernel')->getRootDir().'/../web/bundles/jlmoffice/pdf/attestation.pdf'
+				));
     
     		$this->get('mailer')->send($message);
     		$em = $this->getDoctrine()->getEntityManager();

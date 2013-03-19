@@ -228,11 +228,17 @@ class VariantController extends Controller
 					$entity->getNumber().'.pdf','application/pdf'
 			))
 			;
+			$em = $this->getDoctrine()->getEntityManager();
+			if ($entity->getQuote()->getVat() == $entity->getQuote()->getVatTransmitter())
+				$message->attach(\Swift_Attachment::fromPath(
+						$this->get('kernel')->getRootDir().'/../web/bundles/jlmoffice/pdf/attestation.pdf'
+				))
+				;
 			 
 			$this->get('mailer')->send($message);
 			if ($entity->getState() < 3)
 				$entity->setState(3);
-			$em = $this->getDoctrine()->getEntityManager();
+			
 			$em->persist($entity);
 			$em->flush();
 		}

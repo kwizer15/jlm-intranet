@@ -12,7 +12,8 @@
 				<span class="input-xlarge uneditable-input">
     {% for variant in entity.variants %}
     {% if variant.state > 0 %}
-    {{ variant.number }}.pdf {% endif %}{% endfor %}</span>
+    {{ variant.number }}.pdf {% endif %}{% endfor %}
+    {% if entity.vat == entity.vatTransmitter %}attestation.pdf{% endif %}</span>
 			</div>
 		</div>
 	</div>
