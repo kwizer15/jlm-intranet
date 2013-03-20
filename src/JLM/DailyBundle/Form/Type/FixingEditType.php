@@ -12,7 +12,7 @@ class FixingEditType extends AbstractType
     {
         $builder
 	        ->add('door','door_hidden')
-	        ->add('place','textarea',array('label'=>'Porte','attr'=>array('class'=>'input-xlarge')))
+	        ->add('place',null,array('label'=>'Porte','attr'=>array('class'=>'input-xlarge')))
         	->add('reason',null,array('label'=>'Raison de l\'intervention','attr'=>array('class'=>'input-xxlarge')))
             ->add('contactName',null,array('label'=>'Nom du contact','required'=>false))
             ->add('contactPhones',null,array('label'=>'Téléphones','required'=>false))
