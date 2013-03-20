@@ -331,10 +331,7 @@ class VariantController extends Controller
 	 */
 	public function cancelAction(QuoteVariant $entity)
 	{
-		if ($entity->getState() > 4)
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-
-			$entity->setState(-1);
+		$entity->setState(-1);
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($entity);
 		$em->flush();

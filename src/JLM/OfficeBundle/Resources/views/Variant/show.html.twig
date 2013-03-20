@@ -108,9 +108,10 @@
 		<a href="{{ path('variant_printcoding', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer chiffrage</a>
 		{% if variant.state < 5 %}
 			<a href="{{ path('variant_unvalid', { 'id': variant.id }) }}" class="btn btn-inverse"><i class="icon-fast-backward icon-white"></i> Revenir à la saisie</a>
-			{% if variant.state > -1 %}<a href="{{ path('variant_cancel', { 'id': variant.id }) }}" class="btn btn-danger"><i class="icon-remove icon-white"></i> Annuler</a>{% endif %}
+			
 			
 		{% endif %}
+		{% if variant.state > -1 %}<a href="{{ path('variant_cancel', { 'id': variant.id }) }}" class="btn btn-danger"><i class="icon-remove icon-white"></i> Annuler</a>{% endif %}
 	{% endif %}
 </div>
 
