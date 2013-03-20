@@ -193,13 +193,16 @@ abstract class Shifting
     	$shifts = $this->getShiftTechnicians();
     	foreach ($shifts as $shift)
     	{
-    		$hours += (int)$shift->getTime()->format('h');
-    		$minutes += (int)$shift->getTime()->format('i');
+    		if ($shift->getTime())
+    		{
+	    		$hours += (int)$shift->getTime()->format('%h');
+	    		$minutes += (int)$shift->getTime()->format('%i');
+    		}
     	}
     	$min = $minutes % 60;
     	$minutes -= $min;
     	$hours += $minutes / 60;
-    	return $hours.'h'.$min;
+    	return new \DateInterval('PT'.$hours.'H'.$min.'M');
     }
     
     /**
