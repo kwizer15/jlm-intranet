@@ -38,18 +38,31 @@
 			<td>{% if entity.door %}<strong>{{ entity.door.type }} - {{ entity.door.location }}</strong>{% endif %}<br><small>{{ entity.reason | nl2br }}</small></td>
 			<td>
 			{% if entity.shiftTechnicians|length %}
-				{% for shift in entity.shiftTechnicians %}
-				{% if shift.end %}
-				<small>{{ shift.begin | date('d/m')}}</small> <strong>{{ shift.technician }}</strong><br>
+				{% if entity.shiftTechnicians|length < 4%}
+					{% for shift in entity.shiftTechnicians %}
+						<a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a><br>
+						{% render 'JLMDailyBundle:Shifting:edit' with {'id':shift.id} %}
+					{% endfor %}
 				{% else %}
-				<a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}}</small> <strong>{{ shift.technician }}</strong></a><br>
-				{% render 'JLMDailyBundle:Shifting:edit' with {'id':shift.id} %}
+					<div class="btn-group">
+					    <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+					    	{{ entity.shiftTechnicians|length }} déplacements
+					    	<span class="caret"></span>
+					    </a>
+					    <ul class="dropdown-menu">
+					    {% for shift in entity.shiftTechnicians %}
+								<li><a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a></li>
+						{% endfor %}
+					    </ul>
+					    {% for shift in entity.shiftTechnicians %}
+					    	{% render 'JLMDailyBundle:Shifting:edit' with {'id':shift.id} %}
+					    {% endfor %}
+					 </div>
 				{% endif %}
-				{% endfor %}
-				{% else %}
+			{% else %}
 				<a href="#modalAddTech{{ entity.id }}" role="button" data-toggle="modal" class="btn"><i class="icon-plus-sign"></i> Ajouter</a>
 				{% render 'JLMDailyBundle:Shifting:new' with {'id':entity.id} %}
-				{% endif %}
+			{% endif %}
 			</td>
 {#			<td>
 			{% if entity.closed %}
@@ -82,12 +95,8 @@
 				<td>
 			{% if entity.shiftTechnicians|length %}
 				{% for shift in entity.shiftTechnicians %}
-				{% if shift.end %}
-				<small>{{ shift.begin | date('d/m')}}</small> <strong>{{ shift.technician }}</strong><br>
-				{% else %}
-				<a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}}</small> <strong>{{ shift.technician }}</strong></a><br>
+				<a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a><br>
 				{% render 'JLMDailyBundle:Shifting:edit' with {'id':shift.id} %}
-				{% endif %}
 				{% endfor %}
 				{% else %}
 				<a href="#modalAddTech{{ entity.id }}" role="button" data-toggle="modal" class="btn"><i class="icon-plus-sign"></i> Ajouter</a>
