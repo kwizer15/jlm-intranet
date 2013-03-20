@@ -130,9 +130,11 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('JLMDailyBundle:Intervention');
 		$intervs = $repo->getToday();
+		$equipment = $em->getRepository('JLMDailyBundle:Equipment')->getToday();
 		return array(
 				'inprogress' => $intervs['inprogress'],
 				'fixing' => $intervs['fixing'],
+				'equipment' => $equipment,
 				'notclosed' => $intervs['notclosed'],
 				'closed' => $intervs['closed'],
 		);
@@ -165,6 +167,7 @@ class InterventionController extends Controller
 		$repo = $em->getRepository('JLMDailyBundle:Intervention');
 		
 		$intervs = $repo->getWithDate($d1,$d2);
+		$equipment = $em->getRepository('JLMDailyBundle:Equipment')->getWithDate($d1,$d2);
 		$now->sub(new \DateInterval('P4D'));
 		$days = array(
 			\DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000'),
@@ -177,6 +180,7 @@ class InterventionController extends Controller
 				'd1' => $d1,
 				'd2' => ($date2 === null) ? null : $d2,
 				'entities' => $intervs,
+				'equipment' => $equipment,
 				'days' => $days,
 		);
 	}

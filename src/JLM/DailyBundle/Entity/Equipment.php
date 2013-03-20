@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\DailyBundle\Entity\Equipment
  *
  * @ORM\Table(name="shifting_equipments")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\EquipmentRepository")
  */
 class Equipment extends Shifting
 {

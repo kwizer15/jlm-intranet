@@ -12,7 +12,8 @@
 {# <li><input type="text"></li> #}
 </ul>
 </div>
+<h2><small>Autres déplacements</small></h2>
+{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : equipment} %}
+<h2><small>Interventions</small></h2>
 {% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : entities} %}
-
-
 {% endblock %}
