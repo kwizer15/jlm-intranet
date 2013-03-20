@@ -179,8 +179,7 @@ class InterventionController extends Controller
 		return array(
 				'd1' => $d1,
 				'd2' => ($date2 === null) ? null : $d2,
-				'entities' => $intervs,
-				'equipment' => $equipment,
+				'entities' => array_merge($equipment,$intervs),
 				'days' => $days,
 		);
 	}
