@@ -22,6 +22,7 @@
 
 <div class="form-actions">
     <a href="{{ path('maintenance_list') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
-    <a href="{{ path('maintenance_close',{'id':entity.id}) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i> {% if not entity.closed %}Cloturer{% else %}Editer cloture{% endif %}</a>
+    <a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-primary"><i class="icon-ok icon-white"></i> {% if not entity.closed %}Cloturer{% else %}Editer cloture{% endif %}</a>
+	{% render 'JLMDailyBundle:Maintenance:close' with {'id':entity.id} %}
 </div>
 {% endblock %}

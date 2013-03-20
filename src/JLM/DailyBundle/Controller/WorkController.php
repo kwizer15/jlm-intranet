@@ -239,7 +239,7 @@ class WorkController extends Controller
 	 *
 	 * @Route("/{id}/closeupdate", name="work_closeupdate")
 	 * @Method("POST")
-	 * @Template("JLMDailyBundle:Work:close.html.twig")
+	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function closeupdateAction(Request $request, Work $entity)

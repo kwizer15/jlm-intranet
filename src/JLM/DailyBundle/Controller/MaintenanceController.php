@@ -93,7 +93,7 @@ class MaintenanceController extends Controller
 	 *
 	 * @Route("/{id}/closeupdate", name="maintenance_closeupdate")
 	 * @Method("POST")
-	 * @Template("JLMDailyBundle:Maintenance:close.html.twig")
+	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function closeupdateAction(Request $request, Maintenance $entity)
