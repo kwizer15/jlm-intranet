@@ -177,28 +177,61 @@ abstract class Shifting
      * @return Doctrine\Common\Collections\Collection
      */
     public function getShiftTechnicians()
-    {
+    {	
     	return $this->shiftTechnicians;
     }
     
     /**
      * Get getTotalTime
      * 
-     * @return DateInterval
+     * @return string
      */
     public function getTotalTime()
     {
     	$hours = 0;
     	$minutes = 0;
-    	foreach ($this->shiftTechnicians as $shift)
+    	$shifts = $this->getShiftTechnicians();
+    	foreach ($shifts as $shift)
     	{
-    		$hours += $shift->getTime()->format('h');
-    		$minutes += $shift->getTime()->format('i');
+    		$hours += (int)$shift->getTime()->format('h');
+    		$minutes += (int)$shift->getTime()->format('i');
     	}
     	$min = $minutes % 60;
     	$minutes -= $min;
     	$hours += $minutes / 60;
     	return $hours.'h'.$min;
+    }
+    
+    /**
+     * getFirstDate
+     * @return \DateTime
+     */
+    public function getFirstDate()
+    {
+    	$firstDate = null;
+    	$shifts = $this->getShiftTechnicians();
+    	foreach ($shifts as $shift)
+    	{
+    		if ($firstDate === null || $firstDate > $shift->getBegin())
+    			$firstDate = $shift->getBegin();
+    	}
+    	return $firstDate;
+    }
+    
+    /**
+     * getLastDate
+     * @return \DateTime
+     */
+    public function getLastDate()
+    {
+    	$lastDate = null;
+    	$shifts = $this->getShiftTechnicians();
+    	foreach ($shifts as $shift)
+    	{
+    		if ($lastDate === null || $lastDate < $shift->getBegin())
+    			$lastDate = $shift->getBegin();
+    	}
+    	return $lastDate;
     }
     
     /**

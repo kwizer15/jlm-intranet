@@ -41,7 +41,7 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-		<th>Dates</th>
+		<th>Date</th>
 		<th>Raison</th>
 		<th>Rapport</th>
 		<th>Actions</th>
@@ -50,7 +50,18 @@
 	<tbody>
 		{% for interv in entity.interventions %}
 		<tr{% if interv.close %} class="{% if interv.officeAction and ((interv.otherAction and interv.rest) or not interv.rest) %}success{% else %}info{% endif %}"{% endif %}>
-			<td><small>{{ interv.creation| localizeddate('full', 'none') }}</small><br>{% include "JLMDailyBundle:Intervention:labeltype.html.twig" with {'type' : interv.type} %} {{ interv.creation|date('H:i') }}</td>
+			<td>
+			{% include "JLMDailyBundle:Intervention:labeltype.html.twig" with {'type' : interv.type} %}<br>
+				<small>
+		{% if interv.firstDate %}
+			{% if interv.lastDate != interv.firstDate %}du {{ interv.firstDate | localizeddate('full', 'none') }}
+			                                        <br>au {{ interv.lastDate | localizeddate('full', 'none') }}
+			{% else %}{{ interv.firstDate | localizeddate('full', 'none') }}
+			{% endif %}
+		{% else %}
+			{{ interv.creation | localizeddate('full', 'none') }}
+			{% endif %}
+				</small></td>
 			<td><a href="{{ path('intervention_redirect',{'id':interv.id,'act':'show'}) }}">{{ interv.reason |nl2br }}</a></td>
 			<td>{{ interv.report |nl2br }}</td>
 			<td>

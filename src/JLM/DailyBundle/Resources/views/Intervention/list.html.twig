@@ -18,7 +18,18 @@
 		{% for entity in entities %}
 		<tr{% if entity.shiftTechnicians|length %} class="{% if entity.close %}{% if entity.officeAction %}success{% else %}info{% endif %}{% else %}warning{% endif %}"{% endif %}>
 		{% if entity.type != 'equipment' %}
-			<td><small>{{ entity.creation| localizeddate('full', 'none') }}</small><br>{% include "JLMDailyBundle:Intervention:labeltype.html.twig" with {'type' : entity.type} %} {{ entity.creation|date('H:i') }}</td>
+			<td>
+			{% include "JLMDailyBundle:Intervention:labeltype.html.twig" with {'type' : entity.type} %}<br>
+				<small>
+		{% if entity.firstDate %}
+			{% if entity.lastDate != entity.firstDate %}du {{ entity.firstDate | localizeddate('full', 'none') }}
+			                                        <br>au {{ entity.lastDate | localizeddate('full', 'none') }}
+			{% else %}{{ entity.firstDate | localizeddate('full', 'none') }}
+			{% endif %}
+		{% else %}
+			{{ entity.creation | localizeddate('full', 'none') }}
+			{% endif %}
+				</small></td>
 			<td><a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}">{% if entity.door %}<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}{% else %}{{ entity.place }}{% endif %}</a></td>
 			<td>{{ entity.contract }}</td>
 			<td>{{ entity.contactName }}<br>{{ entity.contactPhones | nl2br }}</td>

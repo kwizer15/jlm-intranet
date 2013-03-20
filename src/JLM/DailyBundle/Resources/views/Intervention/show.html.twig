@@ -35,9 +35,9 @@
 <table class="table table-stripped">
 	<thead>
 		<tr>
-			<th>Transmis le</th>
-			<th>Technicien</th>
 			<th>Date</th>
+			<th>Technicien</th>
+			<th>Heures</th>
 			<th>Temps</th>
 			<th>Commentaire</th>
 			<th></th>
@@ -46,9 +46,9 @@
 	<tbody>
 		{% for shift in entity.shiftTechnicians %}
 		<tr>
-			<td>{{ shift.creation | date('d/m/Y H:i') }}</td>
+			<td>{{ shift.begin | date('d/m/Y') }}</td>
 			<td>{{ shift.technician }}</td>
-			<td>{{ shift.begin | date('d/m/Y') }}{% if shift.begin | date('H:i') != '00:00' %}<br>de {{ shift.begin | date('H:i') }}{% endif %}{% if shift.end %} à {{ shift.end | date('H:i') }}{% endif %}</td>
+			<td>{% if shift.begin | date('H:i') != '00:00' %}<br>de {{ shift.begin | date('H:i') }}{% endif %}{% if shift.end %} à {{ shift.end | date('H:i') }}{% endif %}</td>
 			<td>{% if shift.end %}{{ shift.time.format('%hh%I') }}{% endif %}</td>
 			<td>{{ shift.comment | nl2br}}</td>
 			<td>
