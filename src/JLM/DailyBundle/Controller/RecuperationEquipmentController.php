@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\ShiftTechnician;
+use JLM\DailyBundle\Entity\Equipment;
 
 use JLM\DailyBundle\Form\Type\RecuperationEquipmentType;
 use JLM\DailyBundle\Form\Type\RecuperationEquipmentEditType;
@@ -31,6 +32,11 @@ class RecuperationEquipmentController extends Controller
 	public function newAction()
 	{
 		$entity = new ShiftTechnician();
+		$entity->setBegin(new \DateTime);
+		$shifting = new Equipment();
+		$shifting->setPlace('Saint-Soupplets (Bureau)');
+		$shifting->setReason('Récupération matériel');
+		$entity->setShifting($shifting);
 		$form   = $this->createForm(new RecuperationEquipmentType(), $entity);
 
 		return array(
