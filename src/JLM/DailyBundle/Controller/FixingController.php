@@ -187,7 +187,7 @@ class FixingController extends Controller
 	 *
 	 * @Route("/{id}/closeupdate", name="fixing_closeupdate")
 	 * @Method("POST")
-	 * @Template("JLMDailyBundle:Fixing:close.html.twig")
+	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function closeupdateAction(Request $request, Fixing $entity)
