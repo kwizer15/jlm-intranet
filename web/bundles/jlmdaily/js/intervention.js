@@ -44,6 +44,23 @@
 					  return false;
 					}
 				});
+		  $(id + "place").attr('data-source',this.options.autoSource)
+			.autocomplete({
+				source: function(request,response){
+					request.repository = 'JLMModelBundle:Door';
+					return $.post(
+							this.element.attr('data-source'),
+							request,
+							function( data ) { response( data ); },
+							'json'
+					);
+				}
+			, select: function (event, ui) {
+				$(id + "door").val(ui.item.door);
+				$(id + "place").val(ui.item.doorCp);
+				return false;
+			}
+			});
 	  }
    }
 

@@ -86,7 +86,5 @@
 {% else %}
 <p>Aucun</p>
 {% endif %}
-{% if entity.closed == false %}
-	<a href="#modalAddTech{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter</a>
-	{% render 'JLMDailyBundle:Shifting:new' with {'id':entity.id} %}
-{% endif %}
+<a href="#modalAddTech{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter</a>
+{% render 'JLMDailyBundle:Shifting:new' with {'id':entity.id} %}
