@@ -71,9 +71,6 @@ class InterventionRepository extends EntityRepository
 			->select('COUNT(i)')
 			->leftJoin('i.shiftTechnicians','t')
 			->where('t.begin = ?1')
-			->orWhere('t is null')
-			->orWhere('i.close is null')
-			->orWhere('i.report is null')
 			->setParameter(1,$todaystring)
 			;
 //			$intervs = $qb->getQuery()->getResult();
