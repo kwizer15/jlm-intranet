@@ -12,7 +12,7 @@ class EquipmentType extends AbstractType
 	{
 		$builder
 			->add('place',null,array('label'=>'Lieu'))
-			->add('reason',null,array('label'=>'Materiel'))
+			->add('reason',null,array('label'=>'Raison'))
 		;
 	}
 

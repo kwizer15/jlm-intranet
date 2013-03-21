@@ -17,7 +17,9 @@
 			    <li><a href="{{ path('shifting_list', {'id':5}) }}"><i class="icon-user"></i> Christophe</a></li>
 			    <li><a href="{{ path('shifting_list', {'id':4}) }}"><i class="icon-user"></i> Oscar</a></li>
 			    <li class="nav-header">Ajouter</li>
-			    <li><a href="{{ path('recuperationequipment_new') }}"><i class="icon-plus-sign"></i> Récupération matériel</a></li>
+			    <li><a href="#modalNewShift" data-toggle="modal"><i class="icon-plus-sign"></i> Récupération matériel</a>
+				{% render 'JLMDailyBundle:Equipment:new' %}</li>
+			    
 			    <li class="nav-header">Interventions</li>
 				{% render "JLMDailyBundle:Default:datesearch" %}
 				{% render "JLMDailyBundle:Default:sidebar" %}
