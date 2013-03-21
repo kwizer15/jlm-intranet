@@ -109,6 +109,7 @@ class ShiftingController extends Controller
 	 *
 	 * @Route("/{id}/update", name="shifting_update")
 	 * @Method("POST")
+	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function updateAction(Request $request, ShiftTechnician $entity)
