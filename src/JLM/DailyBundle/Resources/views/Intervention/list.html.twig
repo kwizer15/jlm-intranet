@@ -62,7 +62,7 @@
 					 </div>
 				{% endif %}
 			{% else %}
-				<a href="#modalAddTech{{ entity.id }}" role="button" data-toggle="modal" class="btn"><i class="icon-plus-sign"></i> Ajouter</a>
+				<a href="#modalAddTech{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-small"><i class="icon-plus-sign"></i> Ajouter</a>
 				{% render 'JLMDailyBundle:Shifting:new' with {'id':entity.id} %}
 			{% endif %}
 			</td>
