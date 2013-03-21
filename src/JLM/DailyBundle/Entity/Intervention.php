@@ -476,7 +476,7 @@ abstract class Intervention extends Shifting
     		return -1;
     	if (!$this->getClosed())
     		return 1;
-    	if (!$this->getOfficeAction() || !($this->getOtherAction() && $this->getRest()))
+    	if (!$this->getOfficeAction() || (!$this->getOtherAction() && $this->getRest()))
     		return 2;
     	return 3;
     }
