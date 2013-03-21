@@ -19,6 +19,10 @@
 	{% else %}{% include "JLMDailyBundle:Work:officeaction.html.twig" with {'entity' : entity} %}
 	{% endif %}
 	 </td></tr>
+	 <tr>
+	 	<th>Bon d'intervention</th>
+	 	<td>{{ entity.voucher }}</td>
+	 </tr>
 {% endif %}
 	 </tbody>
 	 </table>

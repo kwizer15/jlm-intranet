@@ -105,6 +105,13 @@ abstract class Intervention extends Shifting
     private $contract;
     
     /**
+     * Numéro de bon d'intervention
+     * @var string
+     * @ORM\Column(name="voucher",type="string",nullable=true)
+     */
+    private $voucher;
+    
+    /**
      * Get contract
      * @return string
      */
@@ -144,6 +151,25 @@ abstract class Intervention extends Shifting
     public function setRest($rest)
     {
     	$this->rest = $rest;
+    	return $this;
+    }
+    
+    /**
+     * Get voucher
+     * @return string
+     */
+    public function getVoucher()
+    {
+    	return $this->voucher;
+    }
+    
+    /**
+     * Set voucher
+     * @return string
+     */
+    public function setVoucher($voucher)
+    {
+    	$this->voucher = $voucher;
     	return $this;
     }
     

@@ -16,6 +16,10 @@
 	{% else %}<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 5 }) }}" class="btn btn-primary">Ne rien faire</a>
 	{% endif %}
 	 </td></tr>
+	 <tr>
+	 	<th>Bon d'intervention</th>
+	 	<td>{{ entity.voucher }}</td>
+	 </tr>
 	 </tbody>
 	 </table>
 {% endif %}
