@@ -194,6 +194,7 @@ class InterventionController extends Controller
 	public function reportdateAction(Request $request)
 	{
 		$date = \DateTime::createFromFormat('d/m/Y',$request->get('datepicker'));
+
 		return $this->redirect($this->generateUrl('intervention_listdate1',array('date1'=>$date->format('Ymd'))));
 	}
 	
@@ -208,5 +209,21 @@ class InterventionController extends Controller
 		if (in_array($act,array('show','edit','close')))
 			return $this->redirect($this->generateUrl($entity->getType() . '_' . $act,array('id'=>$entity->getId())));
 		throw $this->createNotFoundException('Page inexistante');
+	}
+	
+	/**
+	 * Supprimer une intervention
+	 *
+	 * @Route("/{id}/delete", name="intervention_delete")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function deleteAction(Shifting $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$em->remove($entity);
+		$em->flush();
+	
+		return $this->redirect($this->generateUrl('intervention_today'));
 	}
 }
