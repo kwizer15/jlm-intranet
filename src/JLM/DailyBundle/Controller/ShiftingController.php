@@ -133,9 +133,9 @@ class ShiftingController extends Controller
 			$em->persist($entity);
 			$em->flush();
 	
-			if ($entity->getShifting() instanceof \JLM\DailyBundle\Entity\Intervention)
-				return $this->redirect($this->generateUrl('intervention_redirect', array('id' => $entity->getShifting()->getId(),'act'=>'show')));
-			return $this->redirect($this->generateUrl('shifting_list', array('id' => $entity->getTechnician()->getId())));
+			//if ($entity->getShifting() instanceof \JLM\DailyBundle\Entity\Intervention)
+			//	return $this->redirect($this->generateUrl('intervention_redirect', array('id' => $entity->getShifting()->getId(),'act'=>'show')));
+			return $this->redirect($this->generateUrl('intervention_listdate1', array('id' => $entity->$entity->getBegin()->format('Ymd'))));
 		}
 	
 		return array(
