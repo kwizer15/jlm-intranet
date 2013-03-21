@@ -60,6 +60,7 @@ class ShiftingController extends Controller
 	 * Creates a new ShiftTechnician entity.
 	 *
 	 * @Route("/create/{id}", name="shifting_create")
+	 * @Template()
 	 * @Method("POST")
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -77,10 +78,7 @@ class ShiftingController extends Controller
 			$em->persist($entity);
 			$em->flush();
 	
-			if ($shifting instanceof Intervention)
-				return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$shifting->getId(),'act'=>'show')));
-			else
-				return $this->redirect($this->generateUrl('shifting_list',array('id'=>$entity->getTechnician()->getId())));
+			return $this->redirect($request->headers->get('referer'));
 		}
 	
 		return array(
