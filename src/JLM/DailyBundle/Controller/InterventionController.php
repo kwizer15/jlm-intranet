@@ -199,6 +199,25 @@ class InterventionController extends Controller
 		return $this->redirect($this->generateUrl('intervention_listdate1',array('date1'=>$date->format('Ymd'))));
 	}
 	
+	
+	/**
+	 * Supprimer une intervention
+	 *
+	 * @Route("/delete/{id}", name="intervention_delete")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function deleteAction(Shifting $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		foreach ($entity->getShiftTechnicians() as $tech)
+			$em->remove($tech);
+		$em->remove($entity);
+		$em->flush();
+	
+		return $this->redirect($this->generateUrl('intervention_today'));
+	}
+	
 	/**
 	 * Finds and displays a Intervention entity.
 	 *
@@ -212,19 +231,5 @@ class InterventionController extends Controller
 		throw $this->createNotFoundException('Page inexistante');
 	}
 	
-	/**
-	 * Supprimer une intervention
-	 *
-	 * @Route("/{id}/delete", name="intervention_delete")
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function deleteAction(Shifting $entity)
-	{
-		$em = $this->getDoctrine()->getManager();
-		$em->remove($entity);
-		$em->flush();
 	
-		return $this->redirect($this->generateUrl('intervention_today'));
-	}
 }
