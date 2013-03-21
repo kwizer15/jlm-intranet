@@ -49,7 +49,7 @@
 	</thead>
 	<tbody>
 		{% for interv in entity.interventions %}
-		<tr{% if interv.close %} class="{% if interv.officeAction and ((interv.otherAction and interv.rest) or not interv.rest) %}success{% else %}info{% endif %}"{% endif %}>
+		<tr{% if entity.state %} class="{% if entity.state == 1 %}warning{% elseif entity.state == 2 %}info{% elseif entity.state == 3 %}success{% else %}error{% endif %}"{% endif %}>
 			<td>
 			{% include "JLMDailyBundle:Intervention:labeltype.html.twig" with {'type' : interv.type} %}<br>
 				<small>

@@ -18,7 +18,7 @@
 
 		{% for entity in entities %}
 			{% if entity.type != 'equipment' %}
-		<tr{% if entity.shiftTechnicians|length %} class="{% if entity.close %}{% if entity.officeAction %}success{% else %}info{% endif %}{% else %}warning{% endif %}"{% endif %}>
+		<tr{% if entity.state %} class="{% if entity.state == 1 %}warning{% elseif entity.state == 2 %}info{% elseif entity.state == 3 %}success{% else %}error{% endif %}"{% endif %}>
 			<td>
 			{% include "JLMDailyBundle:Intervention:labeltype.html.twig" with {'type' : entity.type} %}<br>
 				<small>

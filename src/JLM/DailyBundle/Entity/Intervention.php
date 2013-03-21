@@ -452,4 +452,32 @@ abstract class Intervention extends Shifting
     	$this->otherAction = $task;
     	return $this;
     }
+    
+    /**
+     * hasTachnician
+     * @return boolean
+     */
+    public function hasTechnician()
+    {
+    	return (sizeof($this->getShiftTechnicians()) > 0);
+    }
+    
+    /**
+     * Get State
+     * 
+     * @return integer
+     */
+    public function getState()
+    {
+    
+    	if (!$this->hasTechnician() && !$this->getClosed())
+    		return 0;
+    	if (!$this->hasTechnician() && $this->getClosed())
+    		return -1;
+    	if (!$this->getClosed())
+    		return 1;
+    	if (!$this->getOfficeAction() || !($this->getOtherAction() && $this->getRest()))
+    		return 2;
+    	return 3;
+    }
 }
