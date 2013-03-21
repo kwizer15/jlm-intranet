@@ -35,7 +35,9 @@
 			<td><a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}">{% if entity.door %}<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}{% else %}{{ entity.place }}{% endif %}</a></td>
 			<td>{{ entity.contract }}</td>
 			<td>{{ entity.contactName }}<br>{{ entity.contactPhones | nl2br }}</td>
-			<td>{% if entity.door %}<strong>{{ entity.door.type }} - {{ entity.door.location }}</strong>{% endif %}<br><small>{{ entity.reason | nl2br }}</small></td>
+			<td>{% if entity.door %}<strong>{{ entity.door.type }} - {{ entity.door.location }}</strong>{% endif %}<br>
+			<small>{% if entity.type == 'work' %}
+	 	{% if entity.quote %}Selon devis n°{{ entity.quote.number }}<br>{% endif %}{% endif %}{{ entity.reason | nl2br }}</small></td>
 			<td>
 			{% if entity.shiftTechnicians|length %}
 				{% if entity.shiftTechnicians|length < 4%}

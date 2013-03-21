@@ -20,7 +20,7 @@
 	 <tr>
 		<th>Raison</th>
 	 	<td>{% if entity.type == 'work' %}
-	 	{% if entity.quote %}<strong>Selon devis n°{{ entity.quote.number }}</strong><br>{% endif %}{% endif %}
+	 	{% if entity.quote %}Selon devis n°{{ entity.quote.number }}<br>{% endif %}{% endif %}
 		{{ entity.reason | nl2br }}</td></tr>
 	 <tr><th>Contrat</th><td>{{ entity.contract }}</td></tr>
 	 </tbody>

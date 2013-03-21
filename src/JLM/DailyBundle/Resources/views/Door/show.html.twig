@@ -62,9 +62,11 @@
 			{{ interv.creation | localizeddate('full', 'none') }}
 			{% endif %}
 				</small></td>
-			<td><a href="{{ path('intervention_redirect',{'id':interv.id,'act':'show'}) }}">{{ interv.reason |nl2br }}</a></td>
-			<td>{% if interv.type == 'work' %}
-	 	{% if interv.quote %}<strong>Selon devis n°{{ interv.quote.number }}</strong><br>{% endif %}{% endif %}{{ interv.report |nl2br }}</td>
+			<td><a href="{{ path('intervention_redirect',{'id':interv.id,'act':'show'}) }}">
+			{% if interv.type == 'work' %}
+	 	{% if interv.quote %}Selon devis n°{{ interv.quote.number }}<br>{% endif %}{% endif %}
+			{{ interv.reason |nl2br }}</a></td>
+			<td>{{ interv.report |nl2br }}</td>
 			<td>
 				{% if interv.officeAction %}{{ interv.officeAction.type }}<br>{% endif %}
 				{% if interv.otherAction %}{{ interv.otherAction.type }}{% endif %}
