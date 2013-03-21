@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Intervention;
 use JLM\DailyBundle\Entity\Work;
+use JLM\DailyBundle\Entity\Shifting;
 use JLM\ModelBundle\Form\Type\DatepickerType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\Task;
