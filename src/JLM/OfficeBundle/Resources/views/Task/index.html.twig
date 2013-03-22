@@ -26,7 +26,7 @@
             <td>{{ entity.open | date('d/m/Y') }}</td>
             <td><a href="{{ entity.urlSource }}">{% if entity.door %}<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}{% else %}{{ entity.place | nl2br }}{% endif %}</a></td>
             <td><strong>{% if entity.urlAction %}<a href="{{ entity.urlAction }}">{{ entity.type }}</a>{% else %}{{ entity.type }}{% endif %}</strong></td>
-            <td>{{ entity.todo | nl2br}}</td>
+            <td>{% if entity.door %}<strong>{{ entity.door.type }} - {{ entity.door.location }}</strong><br>{% endif %}{{ entity.todo | nl2br}}</td>
 			<td>
 				<a href="{{ path('task_edit',{'id':entity.id}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 				<a href="{{ path('task_close',{'id':entity.id}) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i> Fait</a>
