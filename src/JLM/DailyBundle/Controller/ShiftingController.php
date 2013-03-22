@@ -67,7 +67,7 @@ class ShiftingController extends Controller
 	public function createAction(Request $request, Shifting $shifting)
 	{
 		$entity  = new ShiftTechnician();
-		$form = $this->createForm(new AddTechnicianType(), $entity);
+		$form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(),new AddTechnicianType(), $entity);
 		$form->bind($request);
 	
 		if ($form->isValid()) {
@@ -114,8 +114,7 @@ class ShiftingController extends Controller
 	public function updateAction(Request $request, ShiftTechnician $entity)
 	{
 		$em = $this->getDoctrine()->getManager();
-	
-		$editForm = $this->createForm(new ShiftingEditType(), $entity);
+		$editForm = $this->get('form.factory')->createNamed('shiftTech'.$entity->getId(),new ShiftingEditType(), $entity);
 		$editForm->bind($request);
 	
 		if ($editForm->isValid()) {
