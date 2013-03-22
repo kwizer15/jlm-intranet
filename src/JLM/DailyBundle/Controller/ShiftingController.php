@@ -96,8 +96,8 @@ class ShiftingController extends Controller
 	 */
 	public function editAction(ShiftTechnician $entity)
 	{
-		$editForm = $this->createForm(new ShiftingEditType(), $entity);
-	
+	//	$editForm = $this->createForm(new ShiftingEditType(), $entity, array('id'=>$entity->getId()));
+		$editForm = $this->get('form.factory')->createNamed('shiftTech'.$entity->getId(),new ShiftingEditType(), $entity);
 		return array(
 				'entity'      => $entity,
 				'form'   => $editForm->createView(),

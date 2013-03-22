@@ -15,20 +15,25 @@ class ShiftingEditType extends AbstractType
       				'label'=>'Début',
         			'date_widget'=>'single_text',
         			'date_format'=>'dd/MM/yyyy',
-        			
       			))
       		->add('end','time',array(
       				'label'=>'Fin',
       			))
-      			->add('comment','textarea',array('label'=>'Commentaire','required'=>false,'attr'=>array('class'=>'input-xlarge')))
+      		->add('comment','textarea',array(
+      			'label' => 'Commentaire',
+      			'required' => false,
+      			'attr' => array(
+      				'class'=>'input-xlarge'
+      				)
+      			)
+      		)
         ;
-        
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'JLM\DailyBundle\Entity\ShiftTechnician'
+            'data_class' => 'JLM\DailyBundle\Entity\ShiftTechnician',
         ));
     }
 
