@@ -15,7 +15,7 @@
 	 <tr><th>Rapport</th><td>{{ entity.report | nl2br}}</td></tr>
 	 {% if entity.rest %}<tr><th>Reste à faire</th><td>{{ entity.rest  | nl2br }}<br>{% include "JLMDailyBundle:Work:otheraction.html.twig" with {'entity' : entity} %}</td></tr>{% endif %}
 	 <tr><th>Action bureau</th><td>
-	{% if entity.officeAction %}{{ entity.officeAction.type }}
+	{% if entity.officeAction %}<a href="{{ path('task_edit',{'id':entity.officeAction.id}) }}">{{ entity.officeAction.type }}</a>
 	{% else %}{% include "JLMDailyBundle:Work:officeaction.html.twig" with {'entity' : entity} %}
 	{% endif %}
 	 </td></tr>
