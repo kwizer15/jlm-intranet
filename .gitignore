@@ -2,3 +2,5 @@
 /app/logs/*
 /app/cache/*
 /vendor/*
+/log
+/vendor
