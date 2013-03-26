@@ -40,7 +40,11 @@ class TaskList extends \FPDF
 		$this->setFont('Arial','',11);
 		$h = 0;
 		$y = $this->getY();
-		if ($y > 260)
+		$nbl = substr_count($entity->getPlace(),chr(10));
+		$nbl2 = substr_count($entity->getTodo(),chr(10));
+		$n = ($nbl > $nbl2) ? $nbl : $nbl2;
+		$n *= 5;
+		if ($y > (290-$n))
 		{
 			$this->addPage();
 			$y = $this->getY();
