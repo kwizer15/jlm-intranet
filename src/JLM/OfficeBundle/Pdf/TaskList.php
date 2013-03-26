@@ -44,7 +44,7 @@ class TaskList extends \FPDF
 		$nbl2 = substr_count($entity->getTodo(),chr(10));
 		$n = ($nbl > $nbl2) ? $nbl : $nbl2;
 		$n *= 5;
-		if ($y > (280-$n))
+		if ($y > (270-$n))
 		{
 			$this->addPage();
 			$y = $this->getY();
