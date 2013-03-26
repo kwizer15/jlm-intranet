@@ -40,6 +40,11 @@ class TaskList extends \FPDF
 		$this->setFont('Arial','',11);
 		$h = 0;
 		$y = $this->getY();
+		if ($y > 270)
+		{
+			$this->addPage();
+			$y = $this->getY();
+		}
 		$x = $this->getX();
 		$this->multicell(25,5,utf8_decode($entity->getOpen()->format('d/m/Y').chr(10).$entity->getType()),0);
 		$h = ($h < $this->getY() - $y) ? $this->getY() - $y : $h;
