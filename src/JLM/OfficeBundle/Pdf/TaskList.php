@@ -40,7 +40,7 @@ class TaskList extends \FPDF
 		$this->setFont('Arial','',11);
 		$h = 0;
 		$y = $this->getY();
-		if ($y > 270)
+		if ($y > 260)
 		{
 			$this->addPage();
 			$y = $this->getY();
