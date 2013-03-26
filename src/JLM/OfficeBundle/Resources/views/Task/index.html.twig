@@ -1,6 +1,11 @@
 {% extends "JLMOfficeBundle:Task:layout.html.twig" %}
 
 {% block content %}
+{% if type %}
+<a href="{{ path('task_print_type',{'type':type}) }}" class="btn btn-info"><i class="icon-white icon-print"></i> Imprimer la liste</a>
+{% else %}
+<a href="{{ path('task_print') }}" class="btn btn-info"><i class="icon-white icon-print"></i> Imprimer la liste</a>
+{% endif %}
 <h1>Liste des
 {% if type == 1 %}factures à faire
 {% elseif type == 2 %}devis à faire

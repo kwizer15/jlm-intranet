@@ -35,7 +35,7 @@ class TaskRepository extends EntityRepository
 		->getSingleScalarResult();
 	}
 	
-	public function getOpened($type = null,$limit = 10, $offset = 0)
+	public function getOpened($type = null,$limit = null, $offset = null)
 	{
 		$qb = $this->createQueryBuilder('t')
 		->where('t.close IS NULL');
@@ -45,9 +45,11 @@ class TaskRepository extends EntityRepository
 			->setParameter(1,$type)
 			;
 		}
-		$qb->orderBy('t.open','asc')
-			->setFirstResult($offset)
-			->setMaxResults($limit);
+		$qb->orderBy('t.open','asc');
+		if (null !== $offset)
+			$qb->setFirstResult($offset);
+		if (null !== $limit)
+			$qb->setMaxResults($limit);
 		return $qb->getQuery()->getResult();
 	}
 }
