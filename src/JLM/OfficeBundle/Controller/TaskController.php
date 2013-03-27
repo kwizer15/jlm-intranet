@@ -57,6 +57,24 @@ class TaskController extends Controller
 	}
 	
 	/**
+	 * @Route("/print",name="task_print")
+	 * @Route("/print/{type}",name="task_print_type")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function printAction($type = null)
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$entities = $em->getRepository('JLMOfficeBundle:Task')->getOpened($type);
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/pdf');
+		$response->headers->set('Content-Disposition', 'inline; filename=taches-'.'.pdf');
+		$response->setContent($this->render('JLMOfficeBundle:Task:printlist.pdf.php',array('entities'=>$entities)));
+			
+		//   return array('entity'=>$entity);
+		return $response;
+	}
+	
+	/**
 	 * Displays a form to create a new Task entity.
 	 *
 	 * @Route("/new", name="task_new")
