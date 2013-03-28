@@ -24,16 +24,31 @@ class ShiftingController extends Controller
 	/**
 	 * List
 	 * @Route("/list/{id}", name="shifting_list")
+	 * @Route("/list/{id}/page/{page}", name="shifting_list_page")
 	 * @Secure(roles="ROLE_USER")
 	 * @Template()
 	 */
-	public function listAction(Technician $technician)
+	public function listAction(Technician $technician, $page = 1)
 	{
+		$limit = 10;
 		$em = $this->getDoctrine()->getEntityManager();
-		$shiftings = $em->getRepository('JLMDailyBundle:ShiftTechnician')->findByTechnician($technician,array('creation'=>'desc'));
+			
+		$nb = $em->getRepository('JLMDailyBundle:ShiftTechnician')->getCountWithoutTime($technician);
+		$nbPages = ceil($nb/$limit);
+		$nbPages = ($nbPages < 1) ? 1 : $nbPages;
+		$offset = ($page-1) * $limit;
+		if ($page < 1 || $page > $nbPages)
+		{
+			throw $this->createNotFoundException('Page inexistante (page '.$page.'/'.$nbPages.')');
+		}
+		$entities = $em->getRepository('JLMDailyBundle:ShiftTechnician')->getWithoutTime($technician,$limit,
+				$offset);
+		
 		return array(
 				'technician'=>$technician,
-				'shiftings' => $shiftings
+				'shiftings' => $entities,
+				'page'     => $page,
+				'nbPages'  => $nbPages,
 		);
 	}
 	

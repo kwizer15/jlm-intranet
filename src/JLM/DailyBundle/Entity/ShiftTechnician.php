@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\DailyBundle\Entity\ShiftTechnician
  *
  * @ORM\Table(name="shift_technician")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\ShiftTechnicianRepository")
  */
 class ShiftTechnician
 {
