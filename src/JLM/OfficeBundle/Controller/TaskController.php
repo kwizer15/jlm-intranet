@@ -154,7 +154,10 @@ class TaskController extends Controller
 	
 		if ($editForm->isValid())
 		{
-			$entity->setClose();
+			if ($entity->getType()->getId() == 5)
+				$entity->setClose(new \DateTime);
+			else
+				$entity->setClose();
 			$em->persist($entity);
 			$em->flush();
 			return $this->redirect($this->generateUrl('task_type', array('id' => $entity->getId(),'page'=>1,'type'=>$entity->getType()->getId())));
