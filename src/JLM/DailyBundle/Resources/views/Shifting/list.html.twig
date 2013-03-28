@@ -6,25 +6,17 @@
 <table class="table table-stripped">
 	<thead>
 		<tr>
-			<th>Type</th>
+			<th>Type/Date</th>
 			<th>Lieu</th>
 			<th>Raison</th>
-			<th>Date</th>
-			<th>Début</th>
-			<th>Fin</th>
-			<th>Temps</th>
 		</tr>
 	</thead>
 	<tbody>
 	{% for shifting in shiftings %}
 		<tr>
-			<td>{% include "JLMDailyBundle:Intervention:type.html.twig" with {'type' : shifting.shifting.type} %}</td>
+			<td>{% include "JLMDailyBundle:Intervention:labeltype.html.twig" with {'type' : shifting.shifting.type} %}<br>{{ shifting.begin | date('d/m/Y')}}</td>
 			<td>{{ shifting.shifting.place | nl2br}}</td>
 			<td>{{ shifting.shifting.reason | nl2br}}</td>
-			<td>{{ shifting.begin | date('d/m/Y')}}</td>
-			<td>{% if shifting.begin | date('Hi') != '0000' %}{{ shifting.begin | date('H:i')}}{% endif %}</td>
-			<td>{% if shifting.end %}{{ shifting.end | date('H:i')}}{% endif %}</td>
-			<td>{% if shifting.time %}{{ shifting.time.format('%hh%I') }}{% endif %}</td>
 			<td><a href="#modalEditTech{{ shifting.id }}" data-toggle="modal" role="button" class="btn btn-warning"><i class="icon-wrench icon-white"></i></a>
 				{% render 'JLMDailyBundle:Shifting:edit' with {'id':shifting.id} %}</td>
 		</tr>
