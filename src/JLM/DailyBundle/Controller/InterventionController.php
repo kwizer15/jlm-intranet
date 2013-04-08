@@ -177,7 +177,20 @@ class InterventionController extends Controller
 			\DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000'),
 			\DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000'),
 		);
+		$standby = $em->getRepository('JLMDailyBundle:Standby')
+			->createQueryBuilder('s')
+			->where('s.begin <= ?1 AND s.end >= ?1')
+			->setParameter(1,$date1)
+			->setMaxResults(1)
+			->getQuery()
+			->getResult()
+		;
+		if (empty($standby))
+			$standby = null;
+		else
+			$standby = $standby[0]->getTechnician();
 		return array(
+				'standby' => $standby,
 				'd1' => $d1,
 				'd2' => ($date2 === null) ? null : $d2,
 				'entities' => array_merge($equipment,$intervs),
