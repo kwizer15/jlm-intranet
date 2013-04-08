@@ -3,6 +3,7 @@ namespace JLM\DailyBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -252,5 +253,50 @@ class InterventionController extends Controller
 		throw $this->createNotFoundException('Page inexistante');
 	}
 	
-	
+	/**
+	 * Imprime les intervs de la prochaine journée
+	 *
+	 * @Route("/printtomorrow", name="intervention_printtomorrow")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function printtomorrowAction()
+	{
+		$now = new \DateTime;
+		$em = $this->getDoctrine()->getManager();
+		
+		do {
+			$tomorrow = \DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000');
+			
+			$results = $em->getRepository('JLMDailyBundle:Standby')
+				->createQueryBuilder('s')
+				->select('COUNT(s)')
+				->where('s.begin <= ?1')
+				->andWhere('s.end >= ?1')
+				->setParameter(1,$tomorrow->format('Y-m-d'))
+				->getQuery()
+				->getSingleScalarResult();
+		} while ($results);
+		
+		$intervs = $em->getRepository('JLMDailyBundle:Intervention')->getWithDate($tomorrow,$tomorrow);
+		$equipment = $em->getRepository('JLMDailyBundle:Equipment')->getWithDate($tomorrow,$tomorrow);
+		$fixing = $em->getRepository('JLMDailyBundle:Fixing')->createQueryBuilder('i')
+			->leftJoin('i.shiftTechnicians','t')
+			->where('t is null')
+			->orWhere('i.close is null')
+			->orWhere('i.report is null')
+			->orderBy('i.creation','asc')
+			->getQuery()
+			->getResult();
+			;
+		
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/pdf');
+		$response->headers->set('Content-Disposition', 'inline; filename='.$tomorrow->format('Y-m-d').'.pdf');
+		$response->setContent($this->render('JLMDailyBundle:Intervention:printtomorrow.pdf.php',
+				array('date' => $tomorrow,
+					'entities' => array_merge($equipment,$intervs,$fixing),
+		)));
+		
+		return $response;
+	}
 }

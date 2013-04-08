@@ -26,6 +26,8 @@
 			    <li class="nav-header">Interventions</li>
 				{% render "JLMDailyBundle:Default:datesearch" %}
 				{% render "JLMDailyBundle:Default:sidebar" %}
+				<li class="nav-header">Imprimer</li>
+				<li><a href="{{ path('intervention_printtomorrow') }}"><i class="icon-print"></i> Demain</a></li>
 			</ul>
 		    {% endblock sidebar %}
 	    </div>
