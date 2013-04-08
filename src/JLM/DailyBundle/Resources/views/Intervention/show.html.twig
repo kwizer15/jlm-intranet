@@ -23,11 +23,32 @@
 	 	{% if entity.quote %}Selon devis n°{{ entity.quote.number }}<br>{% endif %}{% endif %}
 		{{ entity.reason | nl2br }}</td></tr>
 	 <tr><th>Contrat</th><td>{{ entity.contract }}</td></tr>
+	 {% if entity.door %}
+	 <tr>
+	 	<th>Emetteurs</th>
+	 	<td>
+			<ul>
+				{% for trans in entity.door.transmitters %}
+				<li>{{ trans }}</li>
+				{% endfor %}
+			</ul>
+	 	</td></tr>
+	 <tr><th>Notes</th><td>{{ entity.door.site.observations | nl2br }}
+	 <br>{{ entity.door.observations | nl2br }}</td></tr>
+	 {% endif %}
 	 </tbody>
 	 </table>
 	</div>
 	<div class="span6 well">
-		<h4>{{ entity.place | nl2br }}</h4>
+	<h4>
+		{% if entity.door %}
+			{{ entity.door.type }} - {{ entity.door.location }}<br>
+			{{ entity.door.street | nl2br }}<br>
+			{{ entity.door.site.address.city }}
+		{% else %}
+			{{ entity.place | nl2br }}
+		{% endif %}
+	</h4>
 		{{ entity.contactName }}
 		<br>{{ entity.contactPhones | nl2br }}
 		<br><a href="mailto:{{ entity.contactEmail}}">{{ entity.contactEmail}}</a>
