@@ -82,7 +82,7 @@ class ShiftingController extends Controller
 	public function createAction(Request $request, Shifting $shifting)
 	{
 		$entity  = new ShiftTechnician();
-		$form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(),new AddTechnicianType(), $entity);
+		$form = $this->get('form.factory')->createNamed('shiftTechNew'.$shifting->getId(),new AddTechnicianType(), $entity);
 		$form->bind($request);
 	
 		if ($form->isValid()) {
