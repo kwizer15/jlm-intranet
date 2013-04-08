@@ -34,7 +34,10 @@
 				
 			<td>
 				<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}">
-					{% if entity.door %}<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}
+					{% if entity.door %}
+						{% if door.stopped %}<br><span class="label label-important">Mise à l'arrêt</span>{% endif %}
+						{% if door.waitMaintenance %}<span class="label">Entretien à faire</span><br>{% endif %}
+						<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}
 					{% else %}{{ entity.place | nl2br }}
 					{% endif %}
 				</a>
