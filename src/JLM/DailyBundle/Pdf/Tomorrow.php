@@ -12,7 +12,7 @@ class Tomorrow extends \FPDF
 		$pdf->_init();
 		$pdf->_header($date);
 		foreach ($entities as $entity)
-			$pdf->_show($entity);
+			$pdf->_show($entity,$date);
 		return $pdf->Output('','S');
 	}
 	
@@ -37,7 +37,7 @@ class Tomorrow extends \FPDF
 		$this->setFont('Arial','',10);
 	}
 	
-	private function _show($entity)
+	private function _show($entity,$date)
 	{
 		$types = array(
 				'fixing' => 'Dépannage',
@@ -88,7 +88,8 @@ class Tomorrow extends \FPDF
 		$this->setXY($x,$yorig);
 		foreach($entity->getShiftTechnicians() as $tech)
 		{
-			$this->cell(40,5,$tech->getTechnician(),'RL',0,'L');
+			if ($tech->getBegin() == $date)
+				$this->cell(40,5,$tech->getTechnician(),0,2,'L');
 		}
 		$ymax = max($ymax,$this->getY());
 		$this->setXY($xorig,$yorig);
