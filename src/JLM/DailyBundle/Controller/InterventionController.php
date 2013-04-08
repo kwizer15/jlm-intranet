@@ -282,8 +282,7 @@ class InterventionController extends Controller
 		$fixing = $em->getRepository('JLMDailyBundle:Fixing')->createQueryBuilder('i')
 			->leftJoin('i.shiftTechnicians','t')
 			->where('t is null')
-			->orWhere('i.close is null')
-			->orWhere('i.report is null')
+			->andWhere('i.close is null')
 			->orderBy('i.creation','asc')
 			->getQuery()
 			->getResult();
