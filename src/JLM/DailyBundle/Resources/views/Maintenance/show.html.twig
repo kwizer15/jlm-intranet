@@ -29,6 +29,6 @@
     <a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-primary"><i class="icon-ok icon-white"></i> {% if not entity.closed %}Cloturer{% else %}Editer cloture{% endif %}</a>
 	{% render 'JLMDailyBundle:Maintenance:close' with {'id':entity.id} %}
 	<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a>
-	{% render 'JLMDailyBundle:Intervention:delete.html.twig' with {'id':entity.id} %}
+	{% include 'JLMDailyBundle:Intervention:delete.html.twig' with {'id':entity.id} %}
 </div>
 {% endblock %}
