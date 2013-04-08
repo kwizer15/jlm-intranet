@@ -1,0 +1,45 @@
+<?php
+namespace JLM\DailyBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Astreintes techniciens
+ * JLM\DailyBundle\Entity\Stanby
+ *
+ * @ORM\Table(name="technician_standby")
+ * @ORM\Entity
+ */
+class Standby
+{
+	/**
+	 * Id
+	 * @var int $id
+	 * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $id;
+	
+	/**
+	 * @var \DateTime $begin
+	 *
+	 * @ORM\Column(name="begin", type="date")
+	 */
+	private $begin;
+	
+	/**
+	 * @var \DateTime $end
+	 *
+	 * @ORM\Column(name="end", type="date")
+	 */
+	private $end;
+	
+	/**
+	 * @var Technician $technician
+	 *
+	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Technician")
+	 */
+	private $technician;
+	
+}
