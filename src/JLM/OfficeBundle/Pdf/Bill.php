@@ -124,10 +124,10 @@ class Bill extends FPDFext
 		
 		$this->cell(100,8,$line->getDesignation(),'RL',0);
 		$this->cell(7,8,$line->getQuantity(),'RL',0,'R');
-		$this->cell(24,8,number_format($line->getUnitPrice()*(1-$line->getDiscount()),2,',',' ').' '.chr(128),'RL',0,'R');
-		$this->cell(24,8,number_format($line->getPrice(),2,',',' ').' '.chr(128),'RL',0,'R');
+		$this->cell(24,8,number_format($line->getUnitPrice()*(1-$line->getDiscount()),2,',',' ').' €','RL',0,'R');
+		$this->cell(24,8,number_format($line->getPrice(),2,',',' ').' €','RL',0,'R');
 		$this->cell(13,8,number_format($line->getVat()*100,1,',',' ').' %','RL',0,'R');
-		$this->cell(24,8,number_format($line->getPriceAti(),2,',',' ').' '.chr(128),'RL',1,'R');
+		$this->cell(24,8,number_format($line->getPriceAti(),2,',',' ').' €','RL',1,'R');
 		
 		
 		
@@ -183,10 +183,10 @@ class Bill extends FPDFext
 			$this->cell(40,6,'A réception',1,0,'C');
 		else 
 			$this->cell(40,6,$this->entity->getMaturity()->format('d/m/Y'),1,0,'C');
-		$this->cell(38,6,number_format($this->entity->getTotalPrice(),2,',',' ').' '.chr(128),1,0,'R');
+		$this->cell(38,6,number_format($this->entity->getTotalPrice(),2,',',' ').' €',1,0,'R');
 		$this->cell(38,6,number_format($this->entity->getVat()*100,1,',',' ').' %',1,0,'R');
-		$this->cell(38,6,number_format($this->entity->getTotalVat(),2,',',' ').' '.chr(128),1,0,'R');
-		$this->cell(38,6,number_format($this->entity->getTotalPriceAti(),2,',',' ').' '.chr(128),1,1,'R');
+		$this->cell(38,6,number_format($this->entity->getTotalVat(),2,',',' ').' €',1,0,'R');
+		$this->cell(38,6,number_format($this->entity->getTotalPriceAti(),2,',',' ').' €',1,1,'R');
 		
 		$this->setFont('Arial','B',10);
 		if ($this->entity->getVat() > 0.1)

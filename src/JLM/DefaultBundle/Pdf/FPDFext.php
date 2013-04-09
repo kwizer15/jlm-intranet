@@ -99,6 +99,10 @@ class FPDFext extends \FPDF {
 	
 	public function cell($w, $h = 0, $txt = '', $border = 0, $ln = 0, $align = '', $fill = false, $link = '')
 	{
-		return parent::cell($w,$h,utf8_decode($txt),$border,$ln,$align,$fill,$link);
+		// Choper les € pour les transformer en chr(128) à l'exterieur du utf8_decode
+		$txt = str_replace('€','$$euro$$',$txt);
+		$txt = utf8_decode($txt);
+		$txt = str_replace('$$euro$$',chr(128),$txt);
+		return parent::cell($w,$h,$txt,$border,$ln,$align,$fill,$link);
 	}
 }

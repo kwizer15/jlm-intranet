@@ -103,10 +103,10 @@ class QuotePDF extends FPDFext
 	//	$this->cell($this->colsize[0],8,$line->getReference(),'RL',0);
 		$this->cell($this->colsize[0],8,$line->getDesignation(),'RL',0);
 		$this->cell($this->colsize[1],8,$line->getQuantity(),'RL',0,'R');
-		$this->cell($this->colsize[2],8,number_format($line->getUnitPrice()*(1-$line->getDiscount()),2,',',' ').' '.chr(128),'RL',0,'R');
-		$this->cell($this->colsize[3],8,number_format($line->getPrice(),2,',',' ').' '.chr(128),'RL',0,'R');
+		$this->cell($this->colsize[2],8,number_format($line->getUnitPrice()*(1-$line->getDiscount()),2,',',' ').' €','RL',0,'R');
+		$this->cell($this->colsize[3],8,number_format($line->getPrice(),2,',',' ').' €','RL',0,'R');
 		$this->cell($this->colsize[4],8,number_format($line->getVat()*100,1,',',' ').' %','RL',0,'R');
-		$this->cell($this->colsize[5],8,number_format($line->getPriceAti(),2,',',' ').' '.chr(128),'RL',1,'R');
+		$this->cell($this->colsize[5],8,number_format($line->getPriceAti(),2,',',' ').' €','RL',1,'R');
 		
 		
 		
@@ -153,7 +153,7 @@ class QuotePDF extends FPDFext
 		// Réglement
 		$this->setFont('Arial','B',10);
 		$this->cell($this->colsize[0]+$this->colsize[1]+$this->colsize[2]+$this->colsize[3]+$this->colsize[4],6,'MONTANT TOTAL H.T',1,0,'R',true);
-		$this->cell($this->colsize[5],6,number_format($this->entity->getTotalPrice(),2,',',' ').' '.chr(128),1,1,'R',true);
+		$this->cell($this->colsize[5],6,number_format($this->entity->getTotalPrice(),2,',',' ').' €',1,1,'R',true);
 		
 		$this->setFont('Arial','B',10);
 		$cs = $this->colsize[0]+$this->colsize[1]+$this->colsize[2]+$this->colsize[4];
@@ -163,11 +163,11 @@ class QuotePDF extends FPDFext
 		
 		
 		$this->cell($this->colsize[3],6,'montant TVA',1,0);
-		$this->cell($this->colsize[5],6,number_format($this->entity->getTotalVat(),2,',',' ').' '.chr(128),1,1,'R');
+		$this->cell($this->colsize[5],6,number_format($this->entity->getTotalVat(),2,',',' ').' €',1,1,'R');
 		
 		$this->cell($cs,6,'',1,0);
 		$this->cell($this->colsize[3],6,'TOTAL T.T.C',1,0);
-		$this->cell($this->colsize[5],6,number_format($this->entity->getTotalPriceAti(),2,',',' ').' '.chr(128),1,1,'R');
+		$this->cell($this->colsize[5],6,number_format($this->entity->getTotalPriceAti(),2,',',' ').' €',1,1,'R');
 		
 		$this->ln(6);
 		
