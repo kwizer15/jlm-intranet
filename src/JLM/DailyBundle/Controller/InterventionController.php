@@ -256,6 +256,47 @@ class InterventionController extends Controller
 	/**
 	 * Imprime les intervs de la prochaine journée
 	 *
+	 * @Route("/printday/{date1}", name="intervention_printday")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function printdayAction($date1)
+	{
+		$now = new \DateTime;
+		$today = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'000000');
+		$d1 = \DateTime::createFromFormat('YmdHis',$date1.'000000');
+		$d2 =  \DateTime::createFromFormat('YmdHis',$d1->format('Ymd').'235959');
+		$em = $this->getDoctrine()->getManager();
+		$repo = $em->getRepository('JLMDailyBundle:Intervention');
+		
+		$intervs = $repo->getWithDate($d1,$d2);
+		$equipment = $em->getRepository('JLMDailyBundle:Equipment')->getWithDate($d1,$d2);
+		$standby = $em->getRepository('JLMDailyBundle:Standby')
+			->createQueryBuilder('s')
+			->where('s.begin <= ?1 AND s.end >= ?1')
+			->setParameter(1,$date1)
+			->setMaxResults(1)
+			->getQuery()
+			->getResult()
+		;
+		if (empty($standby))
+			$standby = null;
+		else
+			$standby = $standby[0]->getTechnician();
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/pdf');
+		$response->headers->set('Content-Disposition', 'inline; filename='.$d1->format('Y-m-d').'.pdf');
+		$response->setContent($this->render('JLMDailyBundle:Intervention:printday.pdf.php',
+				array('date' => $d1,
+						'entities' => array_merge($equipment,$intervs),
+						'standby' => $standby,
+				)));
+		
+		return $response;
+	}
+	
+	/**
+	 * Imprime les intervs de la prochaine journée
+	 *
 	 * @Route("/printtomorrow", name="intervention_printtomorrow")
 	 * @Secure(roles="ROLE_USER")
 	 */
