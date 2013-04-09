@@ -75,8 +75,7 @@ class Tomorrow extends FPDFext
 		{
 			if ($tech->getBegin() == $date)
 			{
-				if ($datas[5] != '')
-					$datas[5] .= chr(10);
+				$datas[5] .= ($datas[5] != '') ? chr(10) : '';
 				$datas[5] .= $tech->getTechnician();
 			}
 		}
