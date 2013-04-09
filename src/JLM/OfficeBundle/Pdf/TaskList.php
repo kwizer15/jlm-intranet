@@ -2,8 +2,9 @@
 
 namespace JLM\OfficeBundle\Pdf;
 use JLM\OfficeBundle\Entity\Task;
+use \JLM\DefaultBundle\Pdf\FPDFext;
 
-class TaskList extends \FPDF
+class TaskList extends FPDFext
 {
 	private $entities;
 
@@ -29,10 +30,10 @@ class TaskList extends \FPDF
 	public function header()
 	{
 		$this->setFont('Arial','B',11);
-		$this->cell(25,6,utf8_decode('Date'),1,0,'L',1);
-		$this->cell(60,6,utf8_decode('Affaire'),1,0,'L',1);
-		$this->cell(75,6,utf8_decode('Détails'),1,0,'L',1);
-		$this->cell(30,6,utf8_decode('Notes'),1,1,'L',1);
+		$this->cell(25,6,'Date',1,0,'L',1);
+		$this->cell(60,6,'Affaire',1,0,'L',1);
+		$this->cell(75,6,'Détails',1,0,'L',1);
+		$this->cell(30,6,'Notes',1,1,'L',1);
 	}
 	
 	public function _line(Task $entity)
@@ -50,15 +51,15 @@ class TaskList extends \FPDF
 			$y = $this->getY();
 		}
 		$x = $this->getX();
-		$this->multicell(25,5,utf8_decode($entity->getOpen()->format('d/m/Y').chr(10).$entity->getType()),0);
+		$this->multicell(25,5,$entity->getOpen()->format('d/m/Y').chr(10).$entity->getType(),0);
 		$h = ($h < $this->getY() - $y) ? $this->getY() - $y : $h;
 		$this->setXY($x+25,$y);
 		$this->setFont('Arial','I',11);
-		$this->multicell(60,5,utf8_decode($entity->getPlace()),0);
+		$this->multicell(60,5,$entity->getPlace(),0);
 		$h = ($h < $this->getY() - $y) ? $this->getY() - $y : $h;
 		$this->setXY($x+85,$y);
 		$this->setFont('Arial','',11);
-		$this->multicell(75,5,utf8_decode($entity->getTodo()),0);
+		$this->multicell(75,5,$entity->getTodo(),0);
 		$h = ($h < $this->getY() - $y) ? $this->getY() - $y : $h;
 		$this->setXY($x,$y);
 		$h += 3;

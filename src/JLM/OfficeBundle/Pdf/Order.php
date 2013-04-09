@@ -2,7 +2,9 @@
 
 namespace JLM\OfficeBundle\Pdf;
 
-class Order extends \FPDF
+use \JLM\DefaultBundle\Pdf\FPDFext;
+
+class Order extends FPDFext
 {
 	private $entity;
 	
@@ -32,24 +34,24 @@ class Order extends \FPDF
 	public function _header()
 	{
 		$this->setFont('Arial','B',16);
-		$this->cell(0,8,utf8_decode('Référence'),0,1);
+		$this->cell(0,8,'Référence',0,1);
 		$this->setFont('Arial','',16);
-		$this->multicell(0,8,utf8_decode($this->entity->getPlace()),0);
+		$this->multicell(0,8,$this->entity->getPlace(),0);
 		$this->ln(12);
 	}
 	
 	public function _content()
 	{
 		$this->setFont('Arial','B',16);
-		$this->cell(0,8,utf8_decode('Désignations'),0,1);
+		$this->cell(0,8,'Désignations',0,1);
 		$this->setFont('Arial','',16);
 		$this->ln(5);
 		$nbl = 13;
 		$lines = $this->entity->getLines();
 		foreach ($lines as $line)
 		{
-			$this->cell(10,8,utf8_decode($line->getQuantity()),'B',0);
-			$this->cell(170,8,utf8_decode($line->getDesignation()),'B',0);
+			$this->cell(10,8,$line->getQuantity(),'B',0);
+			$this->cell(170,8,$line->getDesignation(),'B',0);
 			$this->cell(10,8,'',1,1);
 			$this->ln(5);
 			$nbl--;

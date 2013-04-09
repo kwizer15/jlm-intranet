@@ -1,7 +1,9 @@
 <?php
 namespace JLM\OfficeBundle\Pdf;
 
-class Bill extends \FPDF
+use \JLM\DefaultBundle\Pdf\FPDFext;
+
+class Bill extends FPDFext
 {
 	private $entity;
 	private $end = false;
@@ -41,25 +43,25 @@ class Bill extends \FPDF
 		{
 			$this->setFont('Arial','B',120);
 			$this->setTextColor(230);
-			$this->rotatedText(40,90,utf8_decode('Annulée'),-45);
+			$this->rotatedText(40,90,'Annulée',-45);
 			$this->setTextColor(0);
 		}
 		elseif ($this->entity->getState() == 2)
 		{
 			$this->setFont('Arial','B',120);
 			$this->setTextColor(230);
-			$this->rotatedText(40,90,utf8_decode('Duplicata'),-45);
+			$this->rotatedText(40,90,'Duplicata',-45);
 			$this->setTextColor(0);
 		}
 		$this->setFont('Arial','B',11);
-		$this->multicell(0,5,utf8_decode($this->entity->getReference()),0);
+		$this->multicell(0,5,$this->entity->getReference(),0);
 		$this->ln(5);
 		$this->setFont('Arial','BU',11);
-		$this->cell(0,5,utf8_decode('Affaire :'),0,1);
+		$this->cell(0,5,'Affaire :',0,1);
 		$this->setFont('Arial','',11);
-		$this->multicell(0,5,utf8_decode($this->entity->getSite()),0);
+		$this->multicell(0,5,$this->entity->getSite(),0);
 		$this->setFont('Arial','I',11);
-		$this->multicell(0,5,utf8_decode($this->entity->getDetails()),0);
+		$this->multicell(0,5,$this->entity->getDetails(),0);
 		$this->ln(10);
 		$y = $this->getY();
 		$this->setXY(120,60);
@@ -68,21 +70,21 @@ class Bill extends \FPDF
 		if ($this->entity->getPrelabel())
 		{
 			$this->setFont('Arial','',9);
-			$this->multicell(0,4,utf8_decode($this->entity->getPrelabel()),0);
+			$this->multicell(0,4,$this->entity->getPrelabel(),0);
 		}
 		$this->setX(120);
 		$this->setFont('Arial','B',11);
-		$this->cell(0,5,utf8_decode($this->entity->getTrusteeName()),0,2);
+		$this->cell(0,5,$this->entity->getTrusteeName(),0,2);
 		$this->setX(120);
 		$this->setFont('Arial','',11);
-		$this->multiCell(0,5,utf8_decode($this->entity->getTrusteeAddress()));
+		$this->multiCell(0,5,$this->entity->getTrusteeAddress());
 		
 		$this->setY($y);
 		// Création haut
 		$this->setFont('Arial','B',10);
-		$this->cell(25,6,utf8_decode('N° Client'),'LRT',0,'C',true);
-		$this->cell(25,6,utf8_decode('Date'),'LRT',0,'C',true);
-		$this->cell(25,6,utf8_decode('N° Facture'),'LRT',1,'C',true);
+		$this->cell(25,6,'N° Client','LRT',0,'C',true);
+		$this->cell(25,6,'Date','LRT',0,'C',true);
+		$this->cell(25,6,'N° Facture','LRT',1,'C',true);
 		
 		// Création bas
 		$this->setFont('Arial','',10);
@@ -93,7 +95,7 @@ class Bill extends \FPDF
 		$this->ln(6);
 		if ($this->entity->getIntro())
 		{
-			$this->multiCell(0,6,utf8_decode($this->entity->getIntro()),0,1);
+			$this->multiCell(0,6,$this->entity->getIntro(),0,1);
 			$this->ln(3);
 		}
 	}
@@ -103,12 +105,12 @@ class Bill extends \FPDF
 		// En tête lignes
 		$this->setFont('Arial','B',10);
 			
-		$this->cell(100,6,utf8_decode('Désignation'),1,0,'C',true);
-		$this->cell(7,6,utf8_decode('Qté'),1,0,'C',true);	
-		$this->cell(24,6,utf8_decode('Prix U.H.T'),1,0,'C',true);
-		$this->cell(24,6,utf8_decode('Prix H.T'),1,0,'C',true);
-		$this->cell(13,6,utf8_decode('TVA'),1,0,'C',true);
-		$this->cell(24,6,utf8_decode('Prix TTC'),1,1,'C',true);
+		$this->cell(100,6,'Désignation',1,0,'C',true);
+		$this->cell(7,6,'Qté',1,0,'C',true);	
+		$this->cell(24,6,'Prix U.H.T',1,0,'C',true);
+		$this->cell(24,6,'Prix H.T',1,0,'C',true);
+		$this->cell(13,6,'TVA',1,0,'C',true);
+		$this->cell(24,6,'Prix TTC',1,1,'C',true);
 		$this->setFont('Arial','',10);
 		$lines = $this->entity->getLines();
 		foreach ($lines as $line)
@@ -120,11 +122,11 @@ class Bill extends \FPDF
 	public function _line($line)
 	{
 		
-		$this->cell(100,8,utf8_decode($line->getDesignation()),'RL',0);
+		$this->cell(100,8,$line->getDesignation(),'RL',0);
 		$this->cell(7,8,$line->getQuantity(),'RL',0,'R');
 		$this->cell(24,8,number_format($line->getUnitPrice()*(1-$line->getDiscount()),2,',',' ').' '.chr(128),'RL',0,'R');
 		$this->cell(24,8,number_format($line->getPrice(),2,',',' ').' '.chr(128),'RL',0,'R');
-		$this->cell(13,8,utf8_decode(number_format($line->getVat()*100,1,',',' ').' %'),'RL',0,'R');
+		$this->cell(13,8,number_format($line->getVat()*100,1,',',' ').' %','RL',0,'R');
 		$this->cell(24,8,number_format($line->getPriceAti(),2,',',' ').' '.chr(128),'RL',1,'R');
 		
 		
@@ -137,7 +139,7 @@ class Bill extends \FPDF
 			$this->setFont('Arial','I',10);
 			foreach ($text as $l)
 			{
-				$this->cell(100,5,utf8_decode($l),'RL');
+				$this->cell(100,5,$l,'RL');
 				$this->cell(7,5,'','RL',0);
 				$this->cell(24,5,'','RL',0);
 				$this->cell(24,5,'','RL',0);
@@ -171,14 +173,14 @@ class Bill extends \FPDF
 		$this->ln(6);
 		// Réglement
 		$this->setFont('Arial','B',10);
-		$this->cell(40,6,utf8_decode('Échéance'),1,0,'C',true);
-		$this->cell(38,6,utf8_decode('Base H.T'),1,0,'C',true);
-		$this->cell(38,6,utf8_decode('Taux T.V.A'),1,0,'C',true);
-		$this->cell(38,6,utf8_decode('Montant T.V.A'),1,0,'C',true);
-		$this->cell(38,6,utf8_decode('Net T.T.C'),1,1,'C',true);
+		$this->cell(40,6,'Échéance',1,0,'C',true);
+		$this->cell(38,6,'Base H.T',1,0,'C',true);
+		$this->cell(38,6,'Taux T.V.A',1,0,'C',true);
+		$this->cell(38,6,'Montant T.V.A',1,0,'C',true);
+		$this->cell(38,6,'Net T.T.C',1,1,'C',true);
 		$maturity = $this->entity->getMaturity();
 		if ($maturity == null)
-			$this->cell(40,6,utf8_decode('A réception'),1,0,'C');
+			$this->cell(40,6,'A réception',1,0,'C');
 		else 
 			$this->cell(40,6,$this->entity->getMaturity()->format('d/m/Y'),1,0,'C');
 		$this->cell(38,6,number_format($this->entity->getTotalPrice(),2,',',' ').' '.chr(128),1,0,'R');
@@ -188,29 +190,29 @@ class Bill extends \FPDF
 		
 		$this->setFont('Arial','B',10);
 		if ($this->entity->getVat() > 0.1)
-			$this->cell(0,6,utf8_decode('Si T.V.A. à 7,0 %, merci de nous fournir l\'attestation'),1,0);
+			$this->cell(0,6,'Si T.V.A. à 7,0 %, merci de nous fournir l\'attestation',1,0);
 		$this->ln(6);
 		
 		$y = $this->getY();
 		
 		$this->setFont('Arial','',11);
-		$this->cell(0,5,utf8_decode('En votre aimable réglement - Merci -'),0,1);
+		$this->cell(0,5,'En votre aimable réglement - Merci -',0,1);
 		$this->ln(6);
 		if ($this->entity->getProperty())
 		{
 			$this->setFont('Arial','BU',8);
-			$this->cell(30,4,utf8_decode('Clause de propriété'),0,0);
+			$this->cell(30,4,'Clause de propriété',0,0);
 			$this->setFont('Arial','',8);
-			$this->cell(0,4,utf8_decode($this->entity->getProperty()),0,1);
+			$this->cell(0,4,$this->entity->getProperty(),0,1);
 		}
 		$this->setFont('Arial','BU',8);
-		$this->cell(12,4,utf8_decode('Pénalité'),0,0);
+		$this->cell(12,4,'Pénalité',0,0);
 		$this->setFont('Arial','',8);
-		$this->cell(0,4,utf8_decode($this->entity->getPenalty()),0,1);
+		$this->cell(0,4,$this->entity->getPenalty(),0,1);
 		$this->setFont('Arial','BU',8);
-		$this->cell(15,4,utf8_decode('Escompte'),0,0);
+		$this->cell(15,4,'Escompte',0,0);
 		$this->setFont('Arial','',8);
-		$this->cell(0,4,utf8_decode($this->entity->getEarlyPayment()),0,1);
+		$this->cell(0,4,$this->entity->getEarlyPayment(),0,1);
 		
 	}
 	
@@ -233,7 +235,7 @@ class Bill extends \FPDF
 			$this->cell(89,6);
 			$this->setFont('Arial','B',10);
 			$this->cell(22,6,'Date','LRT',0,'C',true);
-			$this->cell(19,6,utf8_decode('Facture n°'),'LRT',1,'C',true);
+			$this->cell(19,6,'Facture n°','LRT',1,'C',true);
 			$this->setFont('Arial','',10);
 			$this->cell(149,6);
 			$this->cell(22,6,$this->entity->getCreation()->format('d/m/Y'),'LRB',0,'C');
@@ -241,13 +243,13 @@ class Bill extends \FPDF
 			$this->ln(6);
 			$this->setFont('Arial','B',10);
 				
-			$this->cell(22,6,utf8_decode('Référence'),1,0,'C',true);
-			$this->cell(100,6,utf8_decode('Désignation'),1,0,'C',true);
-			$this->cell(7,6,utf8_decode('Qté'),1,0,'C',true);
+			$this->cell(22,6,'Référence',1,0,'C',true);
+			$this->cell(100,6,'Désignation',1,0,'C',true);
+			$this->cell(7,6,'Qté',1,0,'C',true);
 			
-			$this->cell(25,6,utf8_decode('Prix U.H.T'),1,0,'C',true);
-			$this->cell(13,6,utf8_decode('TVA'),1,0,'C',true);
-			$this->cell(25,6,utf8_decode('Prix H.T'),1,1,'C',true);
+			$this->cell(25,6,'Prix U.H.T',1,0,'C',true);
+			$this->cell(13,6,'TVA',1,0,'C',true);
+			$this->cell(25,6,'Prix H.T',1,1,'C',true);
 			$this->setFont('Arial','',10);
 		}
 	}
