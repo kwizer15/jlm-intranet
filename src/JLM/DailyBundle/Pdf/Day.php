@@ -75,7 +75,7 @@ class Day extends FPDFext
 		$datas[5] = '';
 		foreach($entity->getShiftTechnicians() as $tech)
 		{
-			if ($tech->getBegin() == $date)
+			if ($tech->getBegin()->format('Ymd') == $date->format('Ymd'))
 			{
 				$datas[5] .= ($datas[5] != '') ? chr(10) : '';
 				$datas[5] .= $tech->getTechnician();
