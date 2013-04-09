@@ -31,6 +31,18 @@ class DefaultController extends Controller
 	}
 	
 	/**
+	 * Search
+	 * @Route("/search", name="daily_search_get")
+	 * @Method("get")
+	 * @Secure(roles="ROLE_USER")
+	 * @Template()
+	 */
+	public function searchgetAction(Request $request)
+	{
+		return $this->redirect($this->generateUrl('intervention_today'));
+	}
+	
+	/**
 	 * Sidebar
 	 * @Route("/sidebar", name="daily_sidebar")
      * @Secure(roles="ROLE_USER")
