@@ -37,15 +37,22 @@ class TaskRepository extends EntityRepository
 	
 	public function getOpened($type = null,$limit = null, $offset = null)
 	{
-		$qb = $this->createQueryBuilder('t')
-		->where('t.close IS NULL');
+		$qb = $this->createQueryBuilder('a')
+		->select('a,b,c,d,e,f,g')
+		->leftJoin('a.door','b')
+		->leftJoin('b.site','c')
+		->leftJoin('c.address','d')
+		->leftJoin('d.city','e')
+		->leftJoin('a.type','f')
+		->leftJoin('b.type','g')
+		->where('a.close IS NULL');
 		if ($type !== null)
 		{
-			$qb->andWhere('t.type = ?1')
+			$qb->andWhere('a.type = ?1')
 			->setParameter(1,$type)
 			;
 		}
-		$qb->orderBy('t.open','asc');
+		$qb->orderBy('a.open','asc');
 		if (null !== $offset)
 			$qb->setFirstResult($offset);
 		if (null !== $limit)

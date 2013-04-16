@@ -2,6 +2,7 @@
 
 namespace JLM\DailyBundle\Entity;
 
+use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityRepository;
 use JLM\ModelBundle\Entity\Technician;
 
@@ -13,6 +14,9 @@ class ShiftTechnicianRepository extends EntityRepository
 	public function getWithoutTime(Technician $technician, $limit = null, $offset = null)
 	{
 		$qb = $this->createQueryBuilder('s')
+			->select('s, t, f')
+			->join('s.technician','t')
+			->join('s.shifting','f')
 			->where('s.technician = ?1')
 			->andWhere('s.end is null')
 			->orderBy('s.begin','ASC');
@@ -33,4 +37,15 @@ class ShiftTechnicianRepository extends EntityRepository
 			->setParameter(1,$technician);
 		return (int) $qb->getQuery()->getSingleScalarResult();
 	}
+	/*
+	public function find($id, $lockMode = LockMode::NONE, $lockVersion = null)
+	{
+		$qb = $this->createQueryBuilder('s')
+			->select('s, t, f')
+			->join('s.technician','t')
+			->join('s.shifting','f')
+			->where('s.id = :id')
+			->setParameter('id',$id);
+		return $qb->getQuery()->getSingleResult();
+	} */
 }

@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class QuoteRepository extends EntityRepository
 {
+
 	public function getTotal()
 	{
 		$qb = $this->createQueryBuilder('q')
@@ -43,6 +44,8 @@ class QuoteRepository extends EntityRepository
 	{
 		$query = str_replace(array('-1','-2','-3','-4','-5'),'',$query);
 		$qb = $this->createQueryBuilder('q')
+//				->select('q,v')
+//				->leftJoin('q.variants','v')
 				->where('q.followerCp LIKE :query')
 				->orWhere('q.number LIKE :query')
 				->orWhere('q.trusteeName LIKE :query')
@@ -64,7 +67,10 @@ class QuoteRepository extends EntityRepository
 			$state = array(3,4);
 		else
 			$state = array($state);
-		$qb = $this->createQueryBuilder('q');
+		$qb = $this->createQueryBuilder('q')
+			->select('q,v')
+			->leftJoin('q.variants','v')
+		;
 		$result = $qb->getQuery()->getResult();
 		$count = 0;
 		foreach ($result as $r)
@@ -75,6 +81,9 @@ class QuoteRepository extends EntityRepository
 	
 	public function getByState($state,$limit,$offset)
 	{
+		if (isset($this->byState))
+			return $this->byState;
+		
 		if ($state == 1 || $state == 2)
 			$state = array(1,2);
 		elseif ($state == 3 || $state == 4)
@@ -82,7 +91,9 @@ class QuoteRepository extends EntityRepository
 		else
 			$state = array($state);
 		$qb = $this->createQueryBuilder('q')
-					->orderBy('q.number','desc')
+		//		->select('q,v')
+		//		->leftJoin('q.variants','v')
+				->orderBy('q.number','desc')
 		;
 		$results = $qb->getQuery()->getResult();
 		$quotes = array();
@@ -99,7 +110,7 @@ class QuoteRepository extends EntityRepository
 					$limit--;
 			else
 				unset($results[$key]);
-				
+		$this->byState = $results;
 		return $results;
 	}
 

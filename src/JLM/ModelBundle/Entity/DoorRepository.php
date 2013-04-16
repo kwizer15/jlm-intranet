@@ -15,8 +15,17 @@ class DoorRepository extends EntityRepository
 	
 	public function getStopped($limit = null, $offset = null)
 	{
-		$qb = $this->createQueryBuilder('d')
-			->where('d.stopped = 1');
+		$qb = $this->createQueryBuilder('a')
+			->select('a,b,c,d,e,f,g,h,i')
+			->leftJoin('a.site','b')
+			->leftJoin('b.address','c')
+			->leftJoin('c.city','d')
+			->leftJoin('a.interventions','e')
+			->leftJoin('e.shiftTechnicians','f')
+			->leftJoin('a.contracts','g')
+			->leftJoin('g.trustee','h')
+			->leftJoin('a.type','i')
+			->where('a.stopped = 1');
 		if ($limit !== null)
 			$qb->setMaxResults($limit);
 		if ($offset !== null)

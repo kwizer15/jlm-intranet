@@ -3,6 +3,7 @@
 namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\DBAL\LockMode;
 
 /**
  * QuoteRepository
@@ -21,5 +22,17 @@ class QuoteVariantRepository extends EntityRepository
 		
 		return (int) $qb->getQuery()
 		->getSingleScalarResult();
+	}
+	
+	public function find($id, $lockMode = LockMode::NONE, $lockVersion = null)
+	{
+		$qb = $this->createQueryBuilder('v')
+		->select('v,q')
+		->leftJoin('v.quote','q')
+		->where('v.quote = :quote')
+		->setParameter('quote',$quote);
+		
+		return (int) $qb->getQuery()
+		->getSingleResult();
 	}
 }

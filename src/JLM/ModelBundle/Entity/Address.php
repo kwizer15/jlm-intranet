@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\ModelBundle\Entity\Address
  *
  * @ORM\Table(name="addresses")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\AddressRepository", readOnly=true)
  */
 class Address
 {
