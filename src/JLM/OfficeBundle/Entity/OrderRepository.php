@@ -11,23 +11,30 @@ class OrderRepository extends EntityRepository
 {
 	public function getTotal()
 	{
-		$qb = $this->createQueryBuilder('t')
-		->select('COUNT(t)');
-		
-		return (int) $qb->getQuery()
-		->getSingleScalarResult();
+		return $this->getCount();
 	}
 	
 	public function getCount($state = null)
 	{
-		$qb = $this->createQueryBuilder('t')
-		->select('COUNT(t)');
-		if ($state !== null)
-			$qb->where('t.state = ?1')
-				->setParameter(1,$state);
-
-		return (int) $qb->getQuery()
-		->getSingleScalarResult();
+		if (!isset($this->count))
+		{
+			$qb = $this->createQueryBuilder('a')
+					->select('COUNT(a)')
+					->orderBy('a.state','ASC')
+					->groupBy('a.state')
+			;
+			$results = $qb->getQuery()->getResult();
+			$this->count[0] = 0;
+			$this->total = 0;
+			foreach ($results as $result)
+			{
+				$this->total += $result[1];
+				$this->count[] = $result[1];
+			}
+		}
+		if ($state === null)
+			return $this->total;
+		return $this->count[$state];
 	}
 	
 	public function getByState($state = null,$limit = 10, $offset = 0)

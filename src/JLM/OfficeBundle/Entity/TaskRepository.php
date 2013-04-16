@@ -11,28 +11,30 @@ class TaskRepository extends EntityRepository
 {
 	public function getTotal()
 	{
-		$qb = $this->createQueryBuilder('t')
-		->select('COUNT(t)');
-		
-		return (int) $qb->getQuery()
-		->getSingleScalarResult();
+		return $this->getCountOpened();
 	}
 	
 	public function getCountOpened($type = null)
 	{
-		$qb = $this->createQueryBuilder('t')
-		->select('COUNT(t)')
-		->where('t.close IS NULL');
-		
-		if ($type !== null)
+		if (!isset($this->countOpened))
 		{
-			$qb->andWhere('t.type = ?1')
-				->setParameter(1,$type)
-			;
+			$qb = $this->createQueryBuilder('a')
+					->select('COUNT(a)')
+					->where('a.close IS NULL')
+					->orderBy('a.type')
+					->groupBy('a.type');
+			$results = $qb->getQuery()->getResult();
+			$this->countOpened[0] = 0;
+			$this->total = 0;
+			foreach ($results as $result)
+			{
+				$this->total += $result[1];
+				$this->countOpened[] = $result[1];
+			}
 		}
-	
-		return (int) $qb->getQuery()
-		->getSingleScalarResult();
+		if ($type === null)
+			return $this->total;
+		return $this->countOpened[$type];
 	}
 	
 	public function getOpened($type = null,$limit = null, $offset = null)

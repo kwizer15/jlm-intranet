@@ -61,22 +61,41 @@ class QuoteRepository extends EntityRepository
 
 	public function getCountState($state)
 	{
-		if ($state == 1 || $state == 2)
-			$state = array(1,2);
-		elseif ($state == 3 || $state == 4)
-			$state = array(3,4);
-		else
-			$state = array($state);
-		$qb = $this->createQueryBuilder('q')
-			->select('q,v')
-			->leftJoin('q.variants','v')
-		;
-		$result = $qb->getQuery()->getResult();
-		$count = 0;
-		foreach ($result as $r)
-			if (in_array($r->getState(),$state))
-				$count++;
-		return $count;
+		if (!isset($this->countState))
+		{
+			$qb = $this->createQueryBuilder('q')
+				->select('q,v')
+				->leftJoin('q.variants','v')
+			;
+			$result = $qb->getQuery()->getResult();
+			$this->countState = array(0=>0, 1=>0, 2=>0, 3=>0, 4=>0);
+			$this->total = 0;
+			foreach ($result as $r)
+			{
+				if (!isset($this->countState[$r->getState()]))
+					$this->countState[$r->getState()] = 0;
+				switch ($r->getState())
+				{
+					case 1:
+					case 2:
+						$this->countState[1]++;
+						$this->countState[2]++;
+						break;
+					case 3:
+					case 4:
+						$this->countState[3]++;
+						$this->countState[4]++;
+						break;
+					default:
+						$this->countState[$r->getState()]++;
+				}
+				$this->total++;
+			}
+		}
+		
+		if ($state === null)
+			return $this->total;
+		return $this->countState[$state];
 	}
 	
 	public function getByState($state,$limit,$offset)
