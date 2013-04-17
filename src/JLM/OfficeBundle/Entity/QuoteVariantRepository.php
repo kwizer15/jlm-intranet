@@ -24,15 +24,4 @@ class QuoteVariantRepository extends EntityRepository
 		->getSingleScalarResult();
 	}
 	
-	public function find($id, $lockMode = LockMode::NONE, $lockVersion = null)
-	{
-		$qb = $this->createQueryBuilder('v')
-		->select('v,q')
-		->leftJoin('v.quote','q')
-		->where('v.quote = :quote')
-		->setParameter('quote',$quote);
-		
-		return (int) $qb->getQuery()
-		->getSingleResult();
-	}
 }
