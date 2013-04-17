@@ -19,17 +19,17 @@ class OrderRepository extends EntityRepository
 		if (!isset($this->count))
 		{
 			$qb = $this->createQueryBuilder('a')
-					->select('COUNT(a)')
+					->select('a.state, COUNT(a) as c')
 					->orderBy('a.state','ASC')
 					->groupBy('a.state')
 			;
 			$results = $qb->getQuery()->getResult();
-			$this->count[0] = 0;
+			$this->count = array(0,0,0);
 			$this->total = 0;
 			foreach ($results as $result)
 			{
-				$this->total += $result[1];
-				$this->count[] = $result[1];
+				$this->total += $result['c'];
+				$this->count[$result['state']] = $result['c'];
 			}
 		}
 		if ($state === null)

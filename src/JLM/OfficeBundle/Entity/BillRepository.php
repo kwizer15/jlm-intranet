@@ -12,13 +12,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class BillRepository extends EntityRepository
 {
+	
 	public function getTotal()
 	{
-		$qb = $this->createQueryBuilder('q')
-		->select('COUNT(q)');
-		
-		return (int) $qb->getQuery()
-		->getSingleScalarResult();
+		return $this->getCount();
 	}
 	
 	public function getLastNumber()
@@ -53,14 +50,25 @@ class BillRepository extends EntityRepository
 	
 	public function getCount($state = null)
 	{
-		$qb = $this->createQueryBuilder('t')
-		->select('COUNT(t)');
-		if ($state !== null)
-			$qb->where('t.state = ?1')
-			->setParameter(1,$state);
-	
-		return (int) $qb->getQuery()
-		->getSingleScalarResult();
+		if (!isset($this->count))
+		{
+			$qb = $this->createQueryBuilder('a')
+				->select('a.state, COUNT(a) as c')
+				->orderBy('a.state','ASC')
+				->groupBy('a.state')
+			;
+			$results = $qb->getQuery()->getResult();
+			$this->count = array(-1=>0,0,0,0,0,0);
+			$this->total = 0;
+			foreach ($results as $result)
+			{
+				$this->total += $result['c'];
+				$this->count[$result['state']] = $result['c'];
+			}
+		}
+		if ($state === null)
+			return $this->total;
+		return $this->count[$state];
 	}
 	
 	public function getByState($state = null,$limit = 10, $offset = 0)

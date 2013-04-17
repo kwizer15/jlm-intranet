@@ -19,17 +19,18 @@ class TaskRepository extends EntityRepository
 		if (!isset($this->countOpened))
 		{
 			$qb = $this->createQueryBuilder('a')
-					->select('COUNT(a)')
+					->select('b.id, COUNT(a) as c')
+					->leftJoin('a.type','b')
 					->where('a.close IS NULL')
-					->orderBy('a.type')
+					->orderBy('a.type','ASC')
 					->groupBy('a.type');
 			$results = $qb->getQuery()->getResult();
-			$this->countOpened[0] = 0;
+			$this->countOpened = array(0,0,0,0,0,0,0);
 			$this->total = 0;
 			foreach ($results as $result)
 			{
-				$this->total += $result[1];
-				$this->countOpened[] = $result[1];
+				$this->total += $result['c'];
+				$this->countOpened[$result['id']] = $result['c'];
 			}
 		}
 		if ($type === null)

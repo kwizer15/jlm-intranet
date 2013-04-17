@@ -15,11 +15,7 @@ class QuoteRepository extends EntityRepository
 
 	public function getTotal()
 	{
-		$qb = $this->createQueryBuilder('q')
-		->select('COUNT(q)');
-		
-		return (int) $qb->getQuery()
-		->getSingleScalarResult();
+		return $this->getCountState();
 	}
 	
 	public function getLastNumber()
@@ -59,7 +55,7 @@ class QuoteRepository extends EntityRepository
 		return $qb->getQuery()->getResult();
 	}
 
-	public function getCountState($state)
+	public function getCountState($state = null)
 	{
 		if (!isset($this->countState))
 		{
@@ -68,7 +64,7 @@ class QuoteRepository extends EntityRepository
 				->leftJoin('q.variants','v')
 			;
 			$result = $qb->getQuery()->getResult();
-			$this->countState = array(0=>0, 1=>0, 2=>0, 3=>0, 4=>0);
+			$this->countState = array(0=>0, 1=>0, 2=>0, 3=>0, 4=>0, 5=>0);
 			$this->total = 0;
 			foreach ($result as $r)
 			{
