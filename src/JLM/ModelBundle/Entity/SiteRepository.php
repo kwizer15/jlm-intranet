@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\DBAL\LockMode;
 
 /**
  * SiteRepository
@@ -12,6 +13,25 @@ use Doctrine\ORM\EntityRepository;
  */
 class SiteRepository extends EntityRepository
 {
+	public function find($id, $lockMode = LockMode::NONE, $lockVersion = null)
+	{
+		$qb = $this->createQueryBuilder('a')
+		->select('a,b,c,d,e,f,g,h,i,j,k')
+		->leftJoin('a.address','b')
+		->leftJoin('b.city','c')
+		->leftJoin('c.country','j')
+		->leftJoin('a.doors','d')
+		->leftJoin('d.type','k')
+		->leftJoin('d.interventions','e')
+		->leftJoin('e.shiftTechnicians','f')
+		->leftJoin('d.contracts','g')
+		->leftJoin('a.contacts','h')
+		->leftJoin('h.person','i')
+		->where('a.id = ?1')
+		->setParameter(1,$id);
+		return $qb->getQuery()->getSingleResult();
+	}
+	
 	public function search($query)
 	{
 		$qb = $this->createQueryBuilder('s')
