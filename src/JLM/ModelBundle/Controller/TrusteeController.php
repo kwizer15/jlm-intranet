@@ -32,7 +32,8 @@ class TrusteeController extends Controller
     {
         $limit = 15;
         $em = $this->getDoctrine()->getEntityManager();
-        $nb = $em->getRepository('JLMModelBundle:Trustee')->getTotal();
+        $repo = $em->getRepository('JLMModelBundle:Trustee');
+        $nb = $repo->getTotal();
         $nbPages = ceil($nb/$limit);
         $nbPages = ($nbPages < 1) ? 1 : $nbPages;
         $offset = ($page-1) * $limit;
@@ -41,12 +42,7 @@ class TrusteeController extends Controller
         	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
         }
 
-        $entities = $em->getRepository('JLMModelBundle:Trustee')->findBy(
-        		array(),
-        		array('name' => 'asc'),
-        		$limit,
-        		$offset
-        		);
+        $entities = $repo->getList($limit,$offset); 
 
         return array(
         	'entities' => $entities,
@@ -64,11 +60,9 @@ class TrusteeController extends Controller
      */
     public function showAction(Trustee $entity)
     {
-        $deleteForm = $this->createDeleteForm($entity);
-
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+        );
     }
 
     /**

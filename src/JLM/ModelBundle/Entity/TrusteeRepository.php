@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\DBAL\LockMode;
 
 /**
  * TrusteeRepository
@@ -12,10 +13,37 @@ use Doctrine\ORM\EntityRepository;
  */
 class TrusteeRepository extends EntityRepository
 {
+	public function getList($limit,$offset)
+	{
+		$qb = $this->createQueryBuilder('a')
+			->select('a,b,c')
+			->leftJoin('a.address','b')
+			->leftJoin('b.city','c')
+			->orderBy('a.name','ASC')
+			->setFirstResult($offset)
+			->setMaxResults($limit);
+		return $qb->getQuery()->getResult();
+	}
+	
+	public function find($id, $lockMode = LockMode::NONE, $lockVersion = null)
+	{
+		$qb = $this->createQueryBuilder('a')
+		->select('a,b,c,d,e,f,g')
+		->leftJoin('a.address','b')
+		->leftJoin('b.city','c')
+		->leftJoin('a.sites','d')
+		->leftJoin('d.address','e')
+		->leftJoin('e.city','f')
+		->leftJoin('d.doors','g')
+		->where('a.id = ?1')
+		->setParameter(1,$id);
+		return $qb->getQuery()->getSingleResult();
+	}
+	
 	public function search($query)
 	{
-		$qb = $this->createQueryBuilder('t')
-			->where('t.name LIKE :query')
+		$qb = $this->createQueryBuilder('a')
+			->where('a.name LIKE :query')
 			->setParameter('query', '%'.$query.'%')
 		;
 		return $qb->getQuery()->getResult();
