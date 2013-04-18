@@ -113,6 +113,8 @@ class InterventionRepository extends EntityRepository
 			->orWhere('b is null')
 			->orWhere('a.close is null')
 			->orWhere('a.report is null')
+			->orWhere('a.officeAction is null')
+			->orWhere('a.otherAction is null and a.rest is not null')
 			->orderBy('a.creation','asc')
 			->setParameter(1,$todaystring)
 			;
@@ -121,7 +123,7 @@ class InterventionRepository extends EntityRepository
 		foreach ($intervs as $interv)
 		{
 			$flag = false;
-			if ($interv->getClosed())
+			if ($interv->getClosed() && $interv->getOfficeAction() && (!$interv->getRest() || $interv->getOtherAction()))
 			{
 				if (!$flag)
 				{
