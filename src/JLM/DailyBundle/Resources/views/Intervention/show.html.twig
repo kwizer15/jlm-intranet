@@ -33,8 +33,12 @@
 				{% endfor %}
 			</ul>
 	 	</td></tr>
-	 <tr><th>Notes</th><td>{{ entity.door.site.observations | nl2br }}
-	 <br>{{ entity.door.observations | nl2br }}</td></tr>
+	 <tr>
+	 	<th>Notes</th>
+	 	<td>{{ entity.door.site.observations | nl2br }}
+	 	{% if entity.door.site.observations and entity.door.observations %}<br>{% endif %}
+	 	{{ entity.door.observations | nl2br }}</td>
+	 </tr>
 	 {% endif %}
 	 </tbody>
 	 </table>
