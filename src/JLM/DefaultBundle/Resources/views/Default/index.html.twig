@@ -223,17 +223,16 @@ $(function () {
 			name : 'Evolution des entretiens',
 			data : [{% for d,data in evolution %}{% if not loop.first %},{% endif %}{ x:{{ d }},y:{{ data }} }{% endfor %} ],
 			type : 'area',
-			threshold : null,
-			fillColor : {
-				linearGradient : {
-					x1: 0, 
-					y1: 0, 
-					x2: 0, 
-					y2: 1
-				},
-				stops : [[0, Highcharts.getOptions().colors[0]], [1, 'rgba(0,0,0,0)']]
-			}
-		}]
+			threshold : null
+		},
+		{
+			name : 'Objectifs d\'entretiens',
+			data : [{% for d,data in evolutionBase %}{% if not loop.first %},{% endif %}{ x:{{ d }},y:{{ data }} }{% endfor %} ],
+			type : 'line',
+			threshold : null
+			
+		},
+		]
     });
 });
 </script>

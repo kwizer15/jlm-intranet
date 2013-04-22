@@ -60,15 +60,13 @@ class MaintenanceRepository extends InterventionRepository
 			->setParameter(1, $date1)
 			->setParameter(2, $date2);
 		$results = $qb->getQuery()->getResult();
-		$datas = array();
 		$previousDate = null;
-		$total = $this->getCountTotal($secondSemestre,$year);
 		foreach ($results as $result)
 		{
-			
 			$result['begin']->setTime(0,0,0);
-			$datas[$result['begin']->getTimestamp()*1000] = ($previousDate === null) ? 1 : $datas[$previousDate] + 1;
-			$previousDate = $result['begin']->getTimestamp()*1000;
+			$ts = $result['begin']->getTimestamp()*1000;
+			$datas[$ts] = ($previousDate === null) ? 1 : $datas[$previousDate] + 1;
+			$previousDate = $ts;
 		}
 		return $datas;
 	}
