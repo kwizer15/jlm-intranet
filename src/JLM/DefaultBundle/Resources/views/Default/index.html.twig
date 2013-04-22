@@ -2,80 +2,90 @@
 
 {% block content %}
 <h1>Tableau de bord (beta)</h1>
-<div class="span6">
-<h2>Quantité</h2>
-
-<table class="table table-bordered">
-	<thead>
-		<tr>
-			<th></th>
-			<th>Dépannages</th>
-			<th>Travaux</th>
-			<th>Entretiens</th>
-			<th>Autres</th>
-			<th>Total</th>
-		</tr>
-	</thead>
-	<tbody>
-	{% for type, datas in numbers if type != 'total' %}
-		<tr>
-			<th>{{ type }}</th>
-			<td>{{ datas.fixing }}</td>
-			<td>{{ datas.work }}</td>
-			<td>{{ datas.maintenance }}</td>
-			<td>{{ datas.equipment }}</td>
-			<td>{{ datas.total }}</td>
-		</tr>
-	{% endfor %}
-	</tbody>
-	<tfoot>
-		<tr>
-			<th>Total</th>
-			<th>{{ numbers.total.fixing }}</th>
-			<th>{{ numbers.total.work }}</th>
-			<th>{{ numbers.total.maintenance }}</th>
-			<th>{{ numbers.total.equipment }}</th>
-			<th>{{ numbers.total.total }}</th>
-		</tr>
-	</tfoot>
-</table>
-<h2>Temps</h2>
-<table class="table table-bordered">
-	<thead>
-		<tr>
-			<th></th>
-			<th>Dépannages</th>
-			<th>Travaux</th>
-			<th>Entretiens</th>
-			<th>Autres</th>
-			<th>Total</th>
-		</tr>
-	</thead>
-	<tbody>
-	{% for type, datas in times if type != 'total' %}
-		<tr>
-			<th>{{ type }}</th>
-			<td>{{ datas.fixing.format('%hh%I') }}</td>
-			<td>{{ datas.work.format('%hh%I') }}</td>
-			<td>{{ datas.maintenance.format('%hh%I') }}</td>
-			<td>{{ datas.equipment.format('%hh%I') }}</td>
-			<td>{{ datas.total.format('%hh%I') }}</td>
-		</tr>
-	{% endfor %}
-	</tbody>
-	<tfoot>
-		<tr>
-			<th>Total</th>
-			<th>{{ times.total.fixing.format('%hh%I') }}</th>
-			<th>{{ times.total.work.format('%hh%I') }}</th>
-			<th>{{ times.total.maintenance.format('%hh%I') }}</th>
-			<th>{{ times.total.equipment.format('%hh%I') }}</th>
-			<th>{{ times.total.total.format('%hh%I') }}</th>
-		</tr>
-	</tfoot>
-</table>
+<div class="row">
+	<div class="span6">
+		<h2>Quantité</h2>
+		
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Dépannages</th>
+					<th>Travaux</th>
+					<th>Entretiens</th>
+					<th>Atl / Frn</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for type, datas in numbers if type != 'total' %}
+				<tr>
+					<th>{{ type }}</th>
+					<td>{{ datas.fixing }}</td>
+					<td>{{ datas.work }}</td>
+					<td>{{ datas.maintenance }}</td>
+					<td>{{ datas.equipment }}</td>
+					<td>{{ datas.total }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>Total</th>
+					<th>{{ numbers.total.fixing }}</th>
+					<th>{{ numbers.total.work }}</th>
+					<th>{{ numbers.total.maintenance }}</th>
+					<th>{{ numbers.total.equipment }}</th>
+					<th>{{ numbers.total.total }}</th>
+				</tr>
+			</tfoot>
+		</table>
+		<h2>Temps</h2>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Dépannages</th>
+					<th>Travaux</th>
+					<th>Entretiens</th>
+					<th>Atl / Frn</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for type, datas in times if type != 'total' %}
+				<tr>
+					<th>{{ type }}</th>
+					<td>{{ datas.fixing.format('%hh%I') }}</td>
+					<td>{{ datas.work.format('%hh%I') }}</td>
+					<td>{{ datas.maintenance.format('%hh%I') }}</td>
+					<td>{{ datas.equipment.format('%hh%I') }}</td>
+					<td>{{ datas.total.format('%hh%I') }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>Total</th>
+					<th>{{ times.total.fixing.format('%hh%I') }}</th>
+					<th>{{ times.total.work.format('%hh%I') }}</th>
+					<th>{{ times.total.maintenance.format('%hh%I') }}</th>
+					<th>{{ times.total.equipment.format('%hh%I') }}</th>
+					<th>{{ times.total.total.format('%hh%I') }}</th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<div class="span5 well" id="graphTech">
+	</div>
 </div>
-<div class="span4 well" id="graph">
+<div class="row">
+<div class="span6">
+	<h2>Entretiens</h2>
+	<p>{{ maintenanceDoes }} / {{ maintenanceTotal }}</p>
+	</div>
+	<div class="span5 well" id="graphMaintenance">
+	</div>
 </div>
 {% endblock %}
 
@@ -97,7 +107,7 @@ $(function () {
 	});
 	
 	// Build the chart
-    $('#graph').highcharts({
+    $('#graphTech').highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
@@ -145,9 +155,55 @@ $(function () {
                     y : {{ times.total.maintenance.format('%h')*60+times.total.maintenance.format('%i') }}
                 },
                 {
-                	name : 'Autres',
+                	name : 'Ateliers / Fournisseurs',
                 	color : '#333333',
                 	y : {{ times.total.equipment.format('%h')*60+times.total.equipment.format('%i') }}
+                }
+            ]
+        }]
+    });
+
+    $('#graphMaintenance').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Entretiens'
+        },
+        tooltip: {
+        	formatter : function(){
+                return this.point.name + ': <b>' + this.point.y + '</b>';
+            }  
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    formatter: function() {
+                    	return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage*100)/100 +' %';
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Temps passé',
+            data: [
+                {
+                    name : 'Fait',
+                    color : '#468847', 
+                    y : {{ maintenanceDoes }}
+                },
+                {
+                    name : 'Pas fait',
+					color : '#b94a48',
+                    y : {{ maintenanceTotal - maintenanceDoes }}
                 }
             ]
         }]

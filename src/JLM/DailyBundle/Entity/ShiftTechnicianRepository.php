@@ -37,6 +37,23 @@ class ShiftTechnicianRepository extends EntityRepository
 			->setParameter(1,$technician);
 		return (int) $qb->getQuery()->getSingleScalarResult();
 	}
+	
+	public function getAll($year = null)
+	{
+		$today = new \DateTime;
+		$year = ($year === null) ? $today->format('Y') : $year;
+		$qb = $this->createQueryBuilder('a')
+			->select('a,b,c')
+			->leftJoin('a.shifting','b')
+			->leftJoin('a.technician','c')
+			->where('a.begin > ?1')
+			->andWhere('a.begin < ?2')
+			->setParameter(1, $year.'-01-01 00:00:00')
+			->setParameter(2, $year.'-12-31 23:59:59')
+		;
+		
+		return $qb->getQuery()->getResult();
+	}
 	/*
 	public function find($id, $lockMode = LockMode::NONE, $lockVersion = null)
 	{

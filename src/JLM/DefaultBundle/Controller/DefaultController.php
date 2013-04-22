@@ -16,15 +16,9 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+    	// Stats Techs
 		$em =$this->getDoctrine()->getManager();
-		$shifts = $em->getRepository('JLMDailyBundle:ShiftTechnician')
-			->createQueryBuilder('a')
-			->select('a,b,c')
-			->leftJoin('a.shifting','b')
-			->leftJoin('a.technician','c')
-			->getQuery()
-			->getResult()
-			;
+		$shifts = $em->getRepository('JLMDailyBundle:ShiftTechnician')->getAll();
 		$base = array(
 				'fixing'=> 0,
 				'work'=> 0,
@@ -60,9 +54,12 @@ class DefaultController extends Controller
 				$times[$key][$key2] = new \DateInterval('PT'.round($type/60,0,PHP_ROUND_HALF_ODD).'H'.($type%60).'M');
 			}
 		}
+			
         return array(
         		'numbers'=>$numbers,
         		'times'=>$times,
+        		'maintenanceDoes' => $em->getRepository('JLMDailyBundle:Maintenance')->getCountDoes(false),
+        		'maintenanceTotal' => $em->getRepository('JLMDailyBundle:Maintenance')->getCountTotal(false),
         );
 	}
 	
