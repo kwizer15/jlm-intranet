@@ -83,6 +83,7 @@
 <div class="span6">
 	<h2>Entretiens</h2>
 	<p>{{ maintenanceDoes }} / {{ maintenanceTotal }}</p>
+	<div id="graphEvolution"></div>
 	</div>
 	<div class="span5 well" id="graphMaintenance">
 	</div>
@@ -207,6 +208,32 @@ $(function () {
                 }
             ]
         }]
+    });
+
+    $('#graphEvolution').highcharts('StockChart', {
+    	rangeSelector : {
+			selected : 1
+		},
+
+		title : {
+			text : 'Evolution des entretiens'
+		},
+
+		series : [{
+			name : 'Evolution des entretiens',
+			data : [{% for d,data in evolution %}{% if not loop.first %},{% endif %}{ x:{{ d }},y:{{ data }} }{% endfor %} ],
+			type : 'area',
+			threshold : null,
+			fillColor : {
+				linearGradient : {
+					x1: 0, 
+					y1: 0, 
+					x2: 0, 
+					y2: 1
+				},
+				stops : [[0, Highcharts.getOptions().colors[0]], [1, 'rgba(0,0,0,0)']]
+			}
+		}]
     });
 });
 </script>

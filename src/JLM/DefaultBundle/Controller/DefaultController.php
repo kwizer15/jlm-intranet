@@ -54,12 +54,19 @@ class DefaultController extends Controller
 				$times[$key][$key2] = new \DateInterval('PT'.round($type/60,0,PHP_ROUND_HALF_ODD).'H'.($type%60).'M');
 			}
 		}
-			
+		$repo = $em->getRepository('JLMDailyBundle:Maintenance');
+		$maintenanceTotal = $repo->getCountTotal(false);
+		$evolutionBaseDay = $maintenanceTotal / 182;
+		$date1 = \DateTime::createFromFormat('Y-m-d H:i:s','2013-01-01 00:00:00');
+		for ($i = 1; $i <= 182; $i++)
+			$evolutionBase[$date1->getTimestamp()*1000] = $evolutionBaseDay*$i;
         return array(
         		'numbers'=>$numbers,
         		'times'=>$times,
-        		'maintenanceDoes' => $em->getRepository('JLMDailyBundle:Maintenance')->getCountDoes(false),
-        		'maintenanceTotal' => $em->getRepository('JLMDailyBundle:Maintenance')->getCountTotal(false),
+        		'maintenanceDoes' => $repo->getCountDoes(false),
+        		'maintenanceTotal' => $maintenanceTotal,
+        		'evolution' => $repo->getCountDoesByDay(false),
+        		'evolutionBase' => $evolutionBase,
         );
 	}
 	
