@@ -692,7 +692,7 @@ class Door
      */
     public function __toString()
     {
-    	return $this->getLocation().chr(10).$this->getSite();
+    	return $this->getType().' - '.$this->getLocation().chr(10).$this->getSite();
     }
     
     /**

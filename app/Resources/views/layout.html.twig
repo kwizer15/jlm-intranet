@@ -14,7 +14,7 @@
 	        <div class="container">
 	      {% block header %}
 	      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-	      	<a href="#" class="brand">JLM</a>
+	      	<a href="{{ path('default') }}" class="brand">JLM</a>
 			<ul class="nav">
 			  {% block navigation %}
 			    <li><a href="{{ path('trustee') }}">Saisie</a></li>

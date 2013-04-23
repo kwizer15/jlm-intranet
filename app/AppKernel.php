@@ -25,6 +25,7 @@ class AppKernel extends Kernel
         	new JLM\OfficeBundle\JLMOfficeBundle(),
             new JLM\DailyBundle\JLMDailyBundle(),
             new JLM\DefaultBundle\JLMDefaultBundle(),
+            new JLM\StateBundle\JLMStateBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

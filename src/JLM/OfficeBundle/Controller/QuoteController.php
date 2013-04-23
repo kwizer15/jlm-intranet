@@ -148,7 +148,7 @@ class QuoteController extends Controller
 		if (!empty($door))
 		{
 			$entity->setDoor($door);
-			$entity->setDoorCp($door->getType().' - '.$door.'');
+			$entity->setDoorCp($door->toString().' - '.$door.'');
 			$contract = $door->getActualContract();
 			$trustee = (empty($contract)) ? $door->getSite()->getTrustee() : $contract->getTrustee();		
 			$entity->setTrustee($trustee);

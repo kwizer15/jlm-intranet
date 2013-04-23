@@ -10,7 +10,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/",name="default")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
