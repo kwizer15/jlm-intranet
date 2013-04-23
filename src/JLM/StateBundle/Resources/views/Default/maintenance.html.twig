@@ -1,0 +1,121 @@
+{% extends "JLMDefaultBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Stats Entretiens</h1>
+<div class="row">
+<div class="span6">
+	<div id="graphEvolution"></div>
+	</div>
+	<div class="span5 well" id="graphMaintenance">
+	</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset("bundles/jlmdefault/js/highstock.js") }}"></script>
+<script>
+$(function () {
+	Highcharts.setOptions({
+		lang: {
+			shortMonths : ['Jan', 'Fév' ,'Mar', 'Avr','Mai','Jun','Jui','Aoû','Sep','Oct','Nov','Déc'],
+			decimalPoint : ',',
+			months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 
+				'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+			weekdays: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+			printChart: 'Imprimer le graphique',
+			contextButtonTitle : 'Menu contextuel',
+			downloadJPEG : 'Télécharger en JPEG',
+			downloadPDF : 'Télécharger en PDF',
+			downloadPNG : 'Télécharger en PNG',
+			downloadSVG : 'Télécharger en SVG',
+			loading : 'Chargement',
+			thousandsSep: ' '
+		
+		}
+	});
+	// Radialize the colors
+	Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
+	    return {
+	        radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+	        stops: [
+	            [0, color],
+	            [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+	        ]
+	    };
+	});
+
+    $('#graphMaintenance').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Entretiens'
+        },
+        tooltip: {
+        	formatter : function(){
+                return this.point.name + ': <b>' + this.point.y + '</b>';
+            }  
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    formatter: function() {
+                    	return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage*100)/100 +' %';
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Temps passé',
+            data: [
+                {
+                    name : 'Fait',
+                    color : '#468847', 
+                    y : {{ maintenanceDoes }}
+                },
+                {
+                    name : 'Pas fait',
+					color : '#b94a48',
+                    y : {{ maintenanceTotal - maintenanceDoes }}
+                }
+            ]
+        }]
+    });
+
+    $('#graphEvolution').highcharts('StockChart', {
+    	rangeSelector : {
+			selected : 1
+		},
+
+		title : {
+			text : 'Evolution des entretiens'
+		},
+
+		series : [{
+			name : 'Evolution des entretiens',
+			data : [{% for d,data in evolution %}{% if not loop.first %},{% endif %}{ x:{{ d }},y:{{ data }} }{% endfor %} ],
+			type : 'area',
+			step : true,
+			threshold : null
+		},
+		{
+			name : 'Objectifs d\'entretiens',
+			data : [{% for d,data in evolutionBase %}{% if not loop.first %},{% endif %}{ x:{{ d }},y:{{ data }} }{% endfor %} ],
+			type : 'line',
+			threshold : null
+			
+		},
+		]
+    });
+});
+</script>
+{% endblock %}

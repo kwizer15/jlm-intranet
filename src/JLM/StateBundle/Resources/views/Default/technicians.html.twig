@@ -1,0 +1,176 @@
+{% extends "JLMDefaultBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Stats techniciens</h1>
+<div class="row">
+	<div class="span6">
+		<h2>Quantité</h2>
+		
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Dépannages</th>
+					<th>Travaux</th>
+					<th>Entretiens</th>
+					<th>Atl / Frn</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for type, datas in numbers if type != 'total' %}
+				<tr>
+					<th>{{ type }}</th>
+					<td>{{ datas.fixing }}</td>
+					<td>{{ datas.work }}</td>
+					<td>{{ datas.maintenance }}</td>
+					<td>{{ datas.equipment }}</td>
+					<td>{{ datas.total }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>Total</th>
+					<th>{{ numbers.total.fixing }}</th>
+					<th>{{ numbers.total.work }}</th>
+					<th>{{ numbers.total.maintenance }}</th>
+					<th>{{ numbers.total.equipment }}</th>
+					<th>{{ numbers.total.total }}</th>
+				</tr>
+			</tfoot>
+		</table>
+		<h2>Temps</h2>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Dépannages</th>
+					<th>Travaux</th>
+					<th>Entretiens</th>
+					<th>Atl / Frn</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for type, datas in times if type != 'total' %}
+				<tr>
+					<th>{{ type }}</th>
+					<td>{{ datas.fixing.format('%hh%I') }}</td>
+					<td>{{ datas.work.format('%hh%I') }}</td>
+					<td>{{ datas.maintenance.format('%hh%I') }}</td>
+					<td>{{ datas.equipment.format('%hh%I') }}</td>
+					<td>{{ datas.total.format('%hh%I') }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>Total</th>
+					<th>{{ times.total.fixing.format('%hh%I') }}</th>
+					<th>{{ times.total.work.format('%hh%I') }}</th>
+					<th>{{ times.total.maintenance.format('%hh%I') }}</th>
+					<th>{{ times.total.equipment.format('%hh%I') }}</th>
+					<th>{{ times.total.total.format('%hh%I') }}</th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<div class="span5 well" id="graphTech">
+	</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset("bundles/jlmdefault/js/highstock.js") }}"></script>
+<script>
+$(function () {
+	Highcharts.setOptions({
+		lang: {
+			shortMonths : ['Jan', 'Fév' ,'Mar', 'Avr','Mai','Jun','Jui','Aoû','Sep','Oct','Nov','Déc'],
+			decimalPoint : ',',
+			months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 
+				'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+			weekdays: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+			printChart: 'Imprimer le graphique',
+			contextButtonTitle : 'Menu contextuel',
+			downloadJPEG : 'Télécharger en JPEG',
+			downloadPDF : 'Télécharger en PDF',
+			downloadPNG : 'Télécharger en PNG',
+			downloadSVG : 'Télécharger en SVG',
+			loading : 'Chargement',
+			thousandsSep: ' '
+		
+		}
+	});
+	// Radialize the colors
+	Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
+	    return {
+	        radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+	        stops: [
+	            [0, color],
+	            [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+	        ]
+	    };
+	});
+	
+	// Build the chart
+    $('#graphTech').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Temps passé par type d\'intervention'
+        },
+        tooltip: {
+        	formatter : function(){
+                return this.point.name + ': <b>' + Math.round(this.point.y/60) + 'h' + this.point.y%60 + '</b>';
+            }  
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    formatter: function() {
+                    	return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage*100)/100 +' %';
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Temps passé',
+            data: [
+                {
+                    name : 'Dépannages',
+                    color : '#f89406', 
+                    y : {{ times.total.fixing.format('%h')*60+times.total.fixing.format('%i') }}
+                },
+                {
+                    name : 'Travaux',
+					color : '#3a87ad',
+                    y : {{ times.total.work.format('%h')*60+times.total.work.format('%i') }}
+                },
+                {
+                    name : 'Entretiens',
+                    color : '#999999',
+                    y : {{ times.total.maintenance.format('%h')*60+times.total.maintenance.format('%i') }}
+                },
+                {
+                	name : 'Ateliers / Fournisseurs',
+                	color : '#333333',
+                	y : {{ times.total.equipment.format('%h')*60+times.total.equipment.format('%i') }}
+                }
+            ]
+        }]
+    });
+});
+</script>
+{% endblock %}
