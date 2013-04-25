@@ -5,6 +5,7 @@ namespace JLM\StateBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * Default controller.
@@ -16,6 +17,7 @@ class DefaultController extends Controller
     /**
      * @Route("/technicians", name="state_technicians")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function techniciansAction()
     {
@@ -65,6 +67,7 @@ class DefaultController extends Controller
     /**
      * @Route("/maintenance", name="state_maintenance")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function maintenanceAction()
     {
@@ -85,5 +88,34 @@ class DefaultController extends Controller
     			'evolution' => $repo->getCountDoesByDay(false),
     			'evolutionBase' => $evolutionBase,
     		);
+    }
+    
+    /**
+     * @Route("/top", name="state_top")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function topAction()
+    {
+    	$em =$this->getDoctrine()->getManager();
+    	$repo = $em->getRepository('JLMDailyBundle:Fixing');
+    	$result = $repo->createQueryBuilder('a')
+    		->select('b.id, f.name as type, b.location, d.street, e.name as city, e.zip, g.begin,  COUNT(g) as nb')
+    		->leftJoin('a.door','b')
+    		->leftJoin('b.site','c')
+    		->leftJoin('c.address','d')
+    		->leftJoin('d.city','e')
+    		->leftJoin('b.type','f')
+    		->leftJoin('a.shiftTechnicians','g')
+    		->orderBy('nb','desc')
+    		->addOrderBy('g.begin','desc')
+    		->where('g.begin > ?1')
+    		->groupBy('b')
+    		->setParameter(1,'2013-01-01')
+    		->setMaxResults(50)
+    		->getQuery()
+    		->getResult();
+    	;
+    	return array('results' => $result);
     }
 }
