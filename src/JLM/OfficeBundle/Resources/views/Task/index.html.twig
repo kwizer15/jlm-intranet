@@ -20,6 +20,7 @@
         <tr>
             <th>Date</th>
             <th>Lieu</th>
+            <th>Syndic</th>
             <th>A faire</th>
             <th>Details</th>
 			<th></th>
@@ -30,6 +31,7 @@
     	<tr>
             <td>{{ entity.open | date('d/m/Y') }}</td>
             <td><a href="{{ entity.urlSource }}">{% if entity.door %}<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}{% else %}{{ entity.place | nl2br }}{% endif %}</a></td>
+            <td>{% if entity.door %}{% if entity.door.actualContract %}{{ entity.door.actualContract.trustee }}{%else%}{{ entity.door.site.trustee }}{%endif%}{% endif %}</td>
             <td><strong>{% if entity.urlAction %}<a href="{{ entity.urlAction }}">{{ entity.type }}</a>{% else %}{{ entity.type }}{% endif %}</strong></td>
             <td>{% if entity.door %}<strong>{{ entity.door.type }} - {{ entity.door.location }}</strong><br>{% endif %}{{ entity.todo | nl2br}}</td>
 			<td>
