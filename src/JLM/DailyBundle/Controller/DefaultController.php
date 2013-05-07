@@ -66,7 +66,7 @@ class DefaultController extends Controller
 	
 	/**
 	 * Search by date form
-	 * @Route("/sidebar", name="daily_datesearch")
+	 * @Route("/datesearch", name="daily_datesearch")
 	 * @Secure(roles="ROLE_USER")
 	 * @Template()
 	 */
