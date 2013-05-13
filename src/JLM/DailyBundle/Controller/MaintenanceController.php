@@ -132,7 +132,9 @@ class MaintenanceController extends Controller
 		$count = 0;
 		foreach ($doors as $door)
 		{
-			if ($door->getActualContract() !== null)
+			if ($door->getActualContract() !== null 
+				&& $door->getTrustee()->getId() != 1 
+				&& $door->getTrustee()->getId() != 2 )
 				if ($door->getLastMaintenance() < $date && $door->getNextMaintenance() === null)
 				{
 					$main = new Maintenance;
@@ -145,6 +147,42 @@ class MaintenanceController extends Controller
 					$em->persist($main);
 					$count++;
 				}
+		}
+		$em->flush();
+		return array('count' => $count);
+	}
+	
+	/**
+	 * Purge entretiens RIVP
+	 *
+	 * @Route("/purgerivp", name="maintenance_purgerivp")
+	 * @Template()
+	 */
+	public function purgerivpAction()
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$repotrustee = $em->getRepository('JLMModelBundle:Trustee');
+		$repomain = $em->getRepository('JLMDailyBundle:Maintenance');
+		$mains = $repomain->createQueryBuilder('a')
+			->select('a,b,c')
+			->leftJoin('a.door','b')
+			->leftJoin('b.site','c')
+			->leftJoin('c.trustee','d')
+			->where('d.id = ?1')
+			->orWhere('d.id = ?2')
+			->setParameter(1, 1)
+			->setParameter(2, 2)
+			->getQuery()
+			->getResult()
+		;
+		$count = 0;
+		foreach ($mains as $main)
+		{
+			if (!$main->hasTechnician())
+			{
+				$em->remove($main);
+				$count++;
+			}
 		}
 		$em->flush();
 		return array('count' => $count);
