@@ -8,4 +8,7 @@
 		<h2><small>Intallations</small></h2>
 		{% include 'JLMDailyBundle:Door:list.html.twig' with {'doors': entities } %}
 	{% endif %}
+	<div class="form-actions">
+<a href="{{ path('daily_door_printstopped') }}" class="btn btn-info"><i class="icon-white icon-print"></i> Imprimer</a>
+</div>
 {% endblock %}

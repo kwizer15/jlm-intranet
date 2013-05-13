@@ -440,6 +440,32 @@ class Door
     }
     
     /**
+     * Get Trustee
+     *
+     * @return JLM\ModelBundle\Entity\Trustee
+     */
+    public function getTrustee()
+    {
+    	$contract = $this->getActualContract();
+    	if ($contract === null)
+    		return $this->getSite()->getTrustee();
+    	return $contract->getTrustee();
+    }
+    
+    /**
+     * Get Address
+     *
+     * @return JLM\ModelBundle\Entity\Address
+     */
+    public function getAddress()
+    {
+    	$address = new Address;
+    	$address->setStreet($this->getStreet());
+    	$address->setCity($this->getSite()->getAddress()->getCity());
+    	return $address;
+    }
+    
+    /**
      * Add transmitters
      *
      * @param JLM\ModelBundle\Entity\TransmitterType $transmitters

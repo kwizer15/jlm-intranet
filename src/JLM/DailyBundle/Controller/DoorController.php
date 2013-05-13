@@ -3,6 +3,7 @@
 namespace JLM\DailyBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -45,6 +46,27 @@ class DoorController extends Controller
 		return array(
 				'entities' => $doors,
 		);
+	}
+	
+	/**
+	 * Displays Doors stopped
+	 *
+	 * @Route("/printstopped", name="daily_door_printstopped")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function printstoppedAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$doors = $em->getRepository("JLMModelBundle:Door")->getStopped();
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/pdf');
+		$response->headers->set('Content-Disposition', 'inline; filename=portes-arret.pdf');
+		$response->setContent($this->render('JLMDailyBundle:Door:printstopped.pdf.php',
+				array(	'entities' => $doors,
+			)));
+		
+		return $response;
 	}
 	
 	/**
