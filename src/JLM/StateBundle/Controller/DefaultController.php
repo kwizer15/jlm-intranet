@@ -78,7 +78,7 @@ class DefaultController extends Controller
     	$now = new \DateTime;
     	for ($i = 1; $i <= 182 && $date1 < $now  ; $i++)
     	{
-	    	$evolutionBase[$date1->getTimestamp()*1000] = (int)$maintenanceTotal*($i/182);
+	    	$evolutionBase[$date1->getTimestamp()*1000] = (int)($maintenanceTotal*($i/182));
 	    	$date1->add(new \DateInterval('P1D'));
 		}
     	return array(
