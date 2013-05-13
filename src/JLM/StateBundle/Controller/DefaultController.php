@@ -74,12 +74,11 @@ class DefaultController extends Controller
     	$em =$this->getDoctrine()->getManager();
     	$repo = $em->getRepository('JLMDailyBundle:Maintenance');
     	$maintenanceTotal = $repo->getCountTotal(false);
-    	$evolutionBaseDay = $maintenanceTotal / 182.0;
     	$date1 = \DateTime::createFromFormat('Y-m-d H:i:s','2013-01-01 00:00:00');
     	$now = new \DateTime;
     	for ($i = 1; $i <= 182 && $date1 < $now  ; $i++)
     	{
-	    	$evolutionBase[$date1->getTimestamp()*1000] = (int)$evolutionBaseDay*$i;
+	    	$evolutionBase[$date1->getTimestamp()*1000] = (int)$maintenanceTotal*($i/182);
 	    	$date1->add(new \DateInterval('P1D'));
 		}
     	return array(
