@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * JLM\OfficeBundle\Entity\Bill
+ * JLM\OfficeBundle\Entity\Order
  *
  * @ORM\Table(name="orders")
  * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\OrderRepository")
