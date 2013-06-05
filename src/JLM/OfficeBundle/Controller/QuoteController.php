@@ -13,6 +13,7 @@ use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\Quote;
+use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\OfficeBundle\Form\Type\QuoteType;
 use JLM\OfficeBundle\Entity\QuoteLine;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -123,6 +124,52 @@ class QuoteController extends Controller
     public function showAction(Quote $entity)
     {
         return array('entity'=> $entity);
+    }
+    
+    /**
+     * Nouveau devis depuis un demande de devis
+     * 
+     * @Route("/new/fromask/{id}", name="quote_newfromask")
+     * @Template("JLMOfficeBundle:Quote:new.html.twig")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function newfromaskAction(AskQuote $askquote)
+    {
+    	$user = $this->container->get('security.context')->getToken()->getUser();
+    	if (!is_object($user) || !$user instanceof UserInterface) {
+    		throw new AccessDeniedException('This user does not have access to this section.');
+    	}
+    	$entity = new Quote();
+    	$entity->setCreation(new \DateTime);
+    	$entity->setFollowerCp($user->getPerson()->getName());
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
+    
+    	if ($door = $askquote->getDoor() !== null)
+    	{
+    		$entity->setDoor($door);
+    		$entity->setDoorCp($door->toString().' - '.$door.'');
+    		$entity->setVat($door->getSite()->getVat()->getRate());
+    	}
+		else 
+		{
+			$site = $askquote->getSite();
+			$entity->setDoorCp($site->toString());
+			$entity->setVat($site->getVat()->getRate());
+		}
+		$entity->setTrustee($trustee = $askquote->getTrustee());
+		$entity->setTrusteeName($trustee->getName());
+		$entity->setTrusteeAddress($trustee->getAddress().'');
+		$entity->setContact($askquote->getPerson());
+		$entity->setContactCp($askquote->getPerson().'');
+    	$entity->setVatTransmitter($vat);
+    	$entity->setAsk($askquote);
+    	$form   = $this->createForm(new QuoteType(), $entity);
+    
+    	return array(
+    			'entity' => $entity,
+    			'form'   => $form->createView()
+    	);
     }
     
     /**
