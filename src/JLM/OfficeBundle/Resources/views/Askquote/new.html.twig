@@ -1,0 +1,13 @@
+{% extends "JLMOfficeBundle:Askquote:layout.html.twig" %}
+
+{% block content %}
+<h1>Nouvelle demande de devis</h1>
+<form action="{{ path('askquote_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	<filedset>
+    {{ form_widget(form) }}
+	    <div class="form-actions">
+	    	<button type="submit" class="btn btn-primary">Enregistrer</button>
+	    </div>
+    </filedset>
+</form>
+{% endblock %}

@@ -38,7 +38,7 @@ class QuoteController extends Controller
      */
     public function indexAction($page = 1, $state = null)
     {
-    	$limit = 10;
+    	$limit = 20;
         $em = $this->getDoctrine()->getEntityManager();
         $repo = $em->getRepository('JLMOfficeBundle:Quote');
         if ($state === null)

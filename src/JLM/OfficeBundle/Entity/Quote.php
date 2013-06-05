@@ -84,6 +84,14 @@ class Quote extends Document
 	private $variants;
 	
 	/**
+	 * Demande de devis liée
+	 * @var AskQuote
+	 * 
+	 * @ORM\ManyToOne(targetEntity="AskQuote",inversedBy="quotes")
+	 */
+	private $ask;
+	
+	/**
 	 * Construteur
 	 *
 	 */
@@ -314,5 +322,28 @@ class Quote extends Document
     public function getVariants()
     {
     	return $this->variants;
+    }
+
+    /**
+     * Set ask
+     *
+     * @param \JLM\OfficeBundle\Entity\AskQuote $ask
+     * @return Quote
+     */
+    public function setAsk(\JLM\OfficeBundle\Entity\AskQuote $ask = null)
+    {
+        $this->ask = $ask;
+    
+        return $this;
+    }
+
+    /**
+     * Get ask
+     *
+     * @return \JLM\OfficeBundle\Entity\AskQuote 
+     */
+    public function getAsk()
+    {
+        return $this->ask;
     }
 }
