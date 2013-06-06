@@ -1,12 +1,22 @@
 {# JLMDailyBundle:Work:show.html.twig #}
 {% extends "JLMDailyBundle:Intervention:show.html.twig" %}
 
-{% block intervention_type %}Travaux{% endblock %}
+{% block officeaction %}
+	{% if entity.objective.id == 1 %}
+		{% set preferbill = 1 %}
+	{% else %}
+		{% set preferbill = 0 %}
+	{% endif %}
+	{{ parent() }}
+{% endblock %}
 
+{% block reference %}
+	 	{% if entity.quote %}Selon devis n°{{ entity.quote.number }}<br>{% endif %}
+{% endblock %}
 
 {% block report %}
-	 <tr><th>Type</th><td>{{ entity.category }}</td></tr>
-	 <tr><th>Objectif</th><td>{{ entity.objective }}</td></tr>
+	 <tr><th>Type</th><td>{{ entity.category }}</td><td></td></tr>
+	 <tr><th>Objectif</th><td>{{ entity.objective }}</td><td></td></tr>
 {% endblock %}
 
 {% block actions %}

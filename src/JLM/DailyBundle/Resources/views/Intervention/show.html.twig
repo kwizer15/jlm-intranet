@@ -1,7 +1,7 @@
 {# JLMDailyBundle:Intervention:show.html.twig #}
 {% extends "JLMDailyBundle::layout.html.twig" %}
 {% block content %}
-<h1>{% block intervention_type %}Intervention{% endblock %}</h1>
+<h1>{% include "JLMDailyBundle:Intervention:type.html.twig" with {'type' : entity.type} %}</h1>
 
 <div class="alert{% if entity.closed %} alert-success{% elseif entity.priority < 3 %} alert-error{% elseif entity.priority > 4 %} alert-info{% endif %}"><h4>
 {% if entity.closed %}Cloturée
@@ -19,12 +19,13 @@
 	 <table class="table">
 	 <tbody>
 	 <tr><th>Créée le</th><td>{{ entity.creation|date('d/m/Y H:i') }}</td></tr>
-	 <tr><th>Type</th><td>{% include "JLMDailyBundle:Intervention:type.html.twig" with {'type' : entity.type} %}</td></tr>
 	 <tr>
 		<th>Raison</th>
-	 	<td>{% if entity.type == 'work' %}
-	 	{% if entity.quote %}Selon devis n°{{ entity.quote.number }}<br>{% endif %}{% endif %}
-		{{ entity.reason | nl2br }}</td></tr>
+	 	<td>
+	 		{% block reference %}{% endblock %}
+			{{ entity.reason | nl2br }}
+		</td>
+	</tr>
 	 <tr><th>Contrat</th><td>{{ entity.contract }}</td></tr>
 	 {% if entity.door %}
 	 <tr>
@@ -139,22 +140,66 @@
 	 <tr>
 	 	<th>Reste à faire</th>
 	 	<td>{{ entity.rest  | nl2br}}</td>
-	 	<td>{% include "JLMDailyBundle:Maintenance:otheraction.html.twig" with {'entity' : entity} %}</td>
+	 		{% set preferother = 0 %}
+			{% block otheraction %}
+			{% if entity.otherAction %}
+				<td><strong>{{ entity.otherAction.type }}</strong>
+				<br><a href="{{ path('task_edit',{'id':entity.otherAction.id}) }}" class="btn">Modifier</a></td>
+			{% else %}
+				<td>
+					{% if preferother == 0 %}
+					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 2 }) }}" class="btn btn-primary">Devis</a>
+					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 3 }) }}" class="btn">Commander matériel</a>
+					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 4 }) }}" class="btn">Contacter client</a>
+					{% elseif preferother == 1 %}
+					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 3 }) }}" class="btn btn-primary">Commander matériel</a>
+					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 2 }) }}" class="btn">Devis</a>
+					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 4 }) }}" class="btn">Contacter client</a>
+					{% else %}
+					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 4 }) }}" class="btn btn-primary">Contacter client</a>
+					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 2 }) }}" class="btn">Devis</a>
+					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 3 }) }}" class="btn">Commander matériel</a>
+					{% endif %}
+				</td>
+			{% endif %}
+			{% endblock otheraction %}
+		</td>
 	 	</tr>
 	 {% endif %}
 	 <tr>
 	 	<th>Action bureau</th>
-	 	<td>
 			{% if entity.officeAction %}
-			<a href="{{ path('task_edit',{'id':entity.officeAction.id}) }}">{{ entity.officeAction.type }}</a>
+			<td>
+				{{ entity.officeAction.type }}
+			</td>
+			<td>
+				<a href="{{ path('task_edit',{'id':entity.officeAction.id}) }}" class="btn">Modifier</a>
+			</td>
 			{% else %}
-			<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 5 }) }}" class="btn btn-primary">Ne rien faire</a>
+			<td>
+				Non définie
+			</td>
+			<td>
+				{% set preferbill = 0 %}
+				{% block officeaction %}
+				{% if preferbill < 1 %}
+				<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 5 }) }}" class="btn btn-primary">Ne pas facturer</a>
+					{% if preferbill == 0 %}
+					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 1 }) }}" class="btn">Facturer</a>
+					{% endif %}
+				{% else %}
+				<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 1 }) }}" class="btn btn-primary">Facturer</a>
+				<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 5 }) }}" class="btn">Ne pas facturer</a>
+				{% endif %}
+				{% endblock %}
+			</td>
 			{% endif %}
 	 	</td>
 	 </tr>
 	 <tr>
 	 	<th>Bon d'intervention</th>
 	 	<td>{{ entity.voucher }}</td>
+	 	<td></td>
 	 </tr>
 
 {% endblock %}
@@ -166,5 +211,8 @@
 		<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a>
 		{% include 'JLMDailyBundle:Intervention:delete.html.twig' with {'id':entity.id} %}
 	{% endblock %}
-</div>
 {% endblock %}
+
+{% macro bill(id,preferbill) %}
+
+{% endmacro %}

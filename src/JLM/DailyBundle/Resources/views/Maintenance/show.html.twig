@@ -1,7 +1,10 @@
 {# JLMDailyBundle:Maintenance:show.html.twig #}
 {% extends "JLMDailyBundle:Intervention:show.html.twig" %}
 
-{% block intervention_type %}Entretien{% endblock %}
+{% block officeaction %}
+	{% set preferbill = -1 %}
+	{{ parent() }}
+{% endblock %}
 
 {% block actions %}
 	    <a href="{{ path('maintenance_list') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>

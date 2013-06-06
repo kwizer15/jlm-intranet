@@ -1,11 +1,20 @@
 {# JLMDailyBundle:Fixing:show.html.twig #}
 {% extends "JLMDailyBundle:Intervention:show.html.twig" %}
 
-{% block intervention_type %}Dépannage{% endblock %}
+{% block officeaction %}
+	{% if entity.due.id == 1 or entity.due.id == 2%}
+		{% if entity.done.id == 1 or entity.done.id == 2 %}
+			{% if not entity.completeContract %}
+				{% set preferbill = 1 %}
+			{% endif %}
+		{% endif %}
+	{% endif %}
+	{{ parent() }}
+{% endblock %}
 
 {% block reportclosed %}
-	 <tr><th>Cause</th><td>{{ entity.due }}</td></tr>
-	 <tr><th>Action menée</th><td>{{ entity.done }}</td></tr>
+	 <tr><th>Cause</th><td>{{ entity.due }}</td><td></td></tr>
+	 <tr><th>Action menée</th><td>{{ entity.done }}</td><td></td></tr>
 	 {{ parent() }}
 {% endblock %}
 
