@@ -1,4 +1,7 @@
 {# JLMDailyBundle:Intervention:show.html.twig #}
+{% extends "JLMDailyBundle::layout.html.twig" %}
+{% block content %}
+<h1>{% block intervention_type %}Intervention{% endblock %}</h1>
 
 <div class="alert{% if entity.closed %} alert-success{% elseif entity.priority < 3 %} alert-error{% elseif entity.priority > 4 %} alert-info{% endif %}"><h4>
 {% if entity.closed %}Cloturée
@@ -117,3 +120,51 @@
 {% endif %}
 <a href="#modalAddTech{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter</a>
 {% render 'JLMDailyBundle:Shifting:new' with {'id':entity.id} %}
+
+<h4>Rapport</h4>
+<table class="table">
+	<tbody>
+{% block report %}
+{% endblock %}
+
+{% if entity.closed %}
+{% block reportclosed %}
+
+	 <tr>
+	 	<th>Rapport</th>
+	 	<td>{{ entity.report | nl2br}}</td>
+	 	<td></td>
+	 </tr>
+	 {% if entity.rest %}
+	 <tr>
+	 	<th>Reste à faire</th>
+	 	<td>{{ entity.rest  | nl2br}}</td>
+	 	<td>{% include "JLMDailyBundle:Maintenance:otheraction.html.twig" with {'entity' : entity} %}</td>
+	 	</tr>
+	 {% endif %}
+	 <tr>
+	 	<th>Action bureau</th>
+	 	<td>
+			{% if entity.officeAction %}
+			<a href="{{ path('task_edit',{'id':entity.officeAction.id}) }}">{{ entity.officeAction.type }}</a>
+			{% else %}
+			<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 5 }) }}" class="btn btn-primary">Ne rien faire</a>
+			{% endif %}
+	 	</td>
+	 </tr>
+	 <tr>
+	 	<th>Bon d'intervention</th>
+	 	<td>{{ entity.voucher }}</td>
+	 </tr>
+
+{% endblock %}
+{% endif %}
+	 </tbody>
+</table>
+<div class="form-actions">
+	{% block actions %}
+		<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a>
+		{% include 'JLMDailyBundle:Intervention:delete.html.twig' with {'id':entity.id} %}
+	{% endblock %}
+</div>
+{% endblock %}
