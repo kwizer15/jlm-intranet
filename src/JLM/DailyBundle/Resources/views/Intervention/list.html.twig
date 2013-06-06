@@ -6,6 +6,7 @@
 	<thead>
 		<tr>
 			<th>Date</th>
+			<th>Syndic</th>
 			<th>Installation</th>
 			<th>Ctr</th>
 			<th>Interlocuteur</th>
@@ -32,7 +33,7 @@
 			{{ entity.creation | localizeddate('full', 'none') }}
 			{% endif %}
 				</small></td>
-				
+			<td>{% if entity.door.actualContract %}{{ entity.door.actualContract.trustee }}{% else %}{{ entity.door.site.trustee }}{% endif %}</td>
 			<td>
 				<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}">
 					{% if entity.door %}
