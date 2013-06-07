@@ -25,10 +25,10 @@
             <td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}</td>
             <td>
             {% if entity.door %}<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}
-            {% else %}{{ entity.place | nl2br}}
+            {% else %}{{ entity.doorCp | nl2br}}
             {% endif %}
             </td>
-            <td>{{ entity.door.type }}<br>{{ entity.door.location }}</td>
+            <td>{% if entity.door %}{{ entity.door.type }}<br>{{ entity.door.location }}{% endif %}</td>
             <td>{{ entity.trusteeName }}</td>
             <td>{{ entity.variants|length }}</td>
             <td>
