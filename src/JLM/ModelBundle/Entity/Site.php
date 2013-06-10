@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -28,6 +29,8 @@ class Site
      * false = social
      * null = unknown
      * @ORM\Column(name="accession", type="boolean")
+     * @Assert\Choice(choices={0,1})
+     * @Assert\NotNull
      */
     private $accession;
     
@@ -35,6 +38,8 @@ class Site
      * @var Address $address
      * 
      * @ORM\OneToOne(targetEntity="Address")
+     * @Assert\Valid
+     * @Assert\NotNull
      */
     private $address;
     
@@ -42,6 +47,8 @@ class Site
      * @var string $groupnumber
      * 
      * @ORM\Column(name="groupNumber", type="string", length=6, nullable=true)
+     * @Assert\Type(type="int")
+     * @Assert\Length(min=4,max=6)
      */
     private $groupNumber;
     
@@ -49,6 +56,7 @@ class Site
      * @var ArrayCollection $doors
      * 
      * @ORM\OneToMany(targetEntity="Door", mappedBy="site")
+     * 
      */
     private $doors;
     
@@ -56,6 +64,7 @@ class Site
      * @var ArrayCollection $contacts
      *
      * @ORM\OneToMany(targetEntity="SiteContact", mappedBy="site")
+     * 
      */
     private $contacts;
     
@@ -63,6 +72,8 @@ class Site
      * @var Trustee $trustee
      * 
      * @ORM\ManyToOne(targetEntity="Trustee",inversedBy="sites")
+     * @Assert\Valid
+     * @Assert\NotNull
      */
     private $trustee;
     
@@ -70,6 +81,8 @@ class Site
      * @var VAT $vat
      * 
      * @ORM\ManyToOne(targetEntity="VAT")
+     * @Assert\Valid
+     * @Assert\NotNull
      */
     private $vat;
     
@@ -77,6 +90,7 @@ class Site
      * @var Address $lodge
      *
      * @ORM\OneToOne(targetEntity="Address")
+     * @Assert\Valid
      */
     private $lodge;
     
@@ -84,6 +98,7 @@ class Site
      * @var string $observations
      *
      * @ORM\Column(name="observations", type="text", nullable=true)
+     * @Assert\Type(type="string")
      */
     private $observations;
     

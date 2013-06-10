@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -26,6 +27,7 @@ class ProductCategory extends StringModel
      * @var ProductCategory $parent
      * 
      * @ORM\ManyToOne(targetEntity="ProductCategory", inversedBy="children")
+     * @Assert\Valid
      */
     private $parent;
 
@@ -33,6 +35,7 @@ class ProductCategory extends StringModel
      * @var ProductCategory $children
      *
      * @ORM\OneToMany(targetEntity="ProductCategory", mappedBy="parent")
+     * @Assert\Valid(traverse=true)
      */
     private $children;
     

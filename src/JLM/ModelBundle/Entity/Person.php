@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -33,6 +34,8 @@ class Person
 	 * @var string $title
 	 * 
 	 * @ORM\Column(name="title", type="string", length=4)
+	 * @Assert\Choice(choices={"M.","Mme","Mlle"})
+	 * @Assert\NotNull
 	 */
 	private $title;
 	
@@ -40,6 +43,7 @@ class Person
      * @var string $firstName
      *
      * @ORM\Column(name="firstName", type="string", length=255, nullable=true)
+     * @Assert\Type(type="string")
      */
     private $firstName;
 
@@ -47,6 +51,8 @@ class Person
      * @var string $lastName
      *
      * @ORM\Column(name="lastName", type="string", length=255)
+     * @Assert\Type(type="string")
+     * @Assert\NotNull
      */
     private $lastName;
     
@@ -54,6 +60,7 @@ class Person
      * @var string $fixedPhone
      * 
      * @ORM\Column(name="fixedPhone",type="string", length=20, nullable=true)
+     * @Assert\Regex(pattern="/^\d{10}$/",message="Ce numéro ne contient pas uniquement 10 chiffres")
      */
     private $fixedPhone;
     
@@ -61,6 +68,7 @@ class Person
      * @var string $mobilePhone
      *
      * @ORM\Column(name="mobilePhone",type="string", length=20, nullable=true)
+     * @Assert\Regex(pattern="/^\d{10}$/",message="Ce numéro ne contient pas uniquement 10 chiffres")
      */
     private $mobilePhone;
 
@@ -69,6 +77,7 @@ class Person
      * @var string $fax
      *
      * @ORM\Column(name="fax",type="string", length=20, nullable=true)
+     * @Assert\Regex(pattern="/^\d{10}$/",message="Ce numéro ne contient pas uniquement 10 chiffres")
      */
     private $fax;
     
@@ -76,6 +85,7 @@ class Person
      * @var string $email
      *
      * @ORM\Column(name="email",type="string", length=255, nullable=true)
+     * @Assert\Email
      */
     private $email;
     
@@ -83,6 +93,7 @@ class Person
      * @var string $address
      * 
      * @ORM\OneToOne(targetEntity="Address")
+     * @Assert\Valid
      */
     private $address;
     

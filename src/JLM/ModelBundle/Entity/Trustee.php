@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -19,6 +20,7 @@ class Trustee extends Company
      * @var integer $accountNumber
      *
      * @ORM\Column(name="accountNumber", type="integer", nullable=true)
+     * @Assert\Regex(pattern="/^\d{3,8}$/")
      */
     private $accountNumber;
 
@@ -42,6 +44,7 @@ class Trustee extends Company
      * @var string $billingLabel
      * 
      * @ORM\Column(name="billingLabel", type="string", nullable=true)
+     * @Assert\Type(type="string")
      */
     private $billingLabel;
     
@@ -50,6 +53,7 @@ class Trustee extends Company
      * @var Address $billingAddress
      *
      * @ORM\OneToOne(targetEntity="Address")
+     * @Assert\Valid
      */
     private $billingAddress;
     
@@ -57,6 +61,7 @@ class Trustee extends Company
      * @var string $phone
      *
      * @ORM\Column(name="billingPhone",type="string",length=20, nullable=true)
+     * @Assert\Regex(pattern="/^\d{10}$/",message="Ce numéro ne contient pas 10 chiffres")
      */
     private $billingPhone;
     
@@ -64,6 +69,7 @@ class Trustee extends Company
      * @var string $fax
      *
      * @ORM\Column(name="billingFax",type="string",length=20, nullable=true)
+     * @Assert\Regex(pattern="/^\d{10}$/",message="Ce numéro ne contient pas 10 chiffres")
      */
     private $billingFax;
     
@@ -71,6 +77,7 @@ class Trustee extends Company
      * @var email $email
      *
      * @ORM\Column(name="billingEmail",type="string",length=255, nullable=true)
+     * @Assert\Email
      */
     private $billingEmail;
     

@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * JLM\ModelBundle\Entity\Supplier
@@ -16,6 +17,7 @@ class Supplier extends Company
 	 * @var string $website
 	 * 
 	 * @ORM\Column(name="website",type="string",length=255, nullable=true)
+	 * @Assert\Url
 	 */
 	private $website;
 	

@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -26,6 +27,8 @@ class SiteContact
 	 * @var $sites
 	 * 
 	 * @ORM\ManyToOne(targetEntity="Site", inversedBy="contacts")
+	 * @Assert\Valid
+	 * @Assert\NotNull
 	 */
 	private $site;
 	
@@ -33,6 +36,8 @@ class SiteContact
 	 * @var $person
 	 *
 	 * @ORM\ManyToOne(targetEntity="Person")
+	 * @Assert\Valid
+	 * @Assert\NotNull
 	 */
 	private $person;
 	
@@ -40,6 +45,8 @@ class SiteContact
 	 * @var $role
 	 * 
 	 * @ORM\Column(name="role",type="string",length=255)
+	 * @Assert\Type(type="string")
+	 * @Assert\NotBlank
 	 */
 	private $role;
    

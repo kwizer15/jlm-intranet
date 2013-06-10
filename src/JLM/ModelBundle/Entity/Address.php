@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * JLM\ModelBundle\Entity\Address
@@ -25,6 +26,7 @@ class Address
      * @var string $street
      *
      * @ORM\Column(name="street", type="text", nullable=true)
+     * @Assert\Type(type="string")
      */
     private $street;
     
@@ -32,6 +34,8 @@ class Address
      * @var string $city
      *
      * @ORM\ManyToOne(targetEntity="City")
+     * @Assert\NotNull
+     * @Assert\Valid
      */
     private $city;
     

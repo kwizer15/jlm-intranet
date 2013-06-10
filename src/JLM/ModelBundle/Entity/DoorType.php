@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * JLM\ModelBundle\Entity\DoorType
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="door_types")
  * @ORM\Entity
  */
-class DoorType
+class DoorType extends StringModel
 {
     /**
      * @var integer $id
@@ -22,14 +23,6 @@ class DoorType
     private $id;
 
     /**
-     * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=255)
-     */
-    private $name;
-
-
-    /**
      * Get id
      *
      * @return integer 
@@ -37,33 +30,5 @@ class DoorType
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-    
-    /**
-     * To String
-     */
-    public function __toString()
-    {
-    	return $this->getName();
     }
 }

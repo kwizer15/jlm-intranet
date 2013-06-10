@@ -4,6 +4,7 @@ namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * JLM\ModelBundle\Entity\City
@@ -26,6 +27,9 @@ class City extends StringModel
      * @var string $zips
      * 
      * @ORM\Column(name="zip",type="string",length=20)
+     * @Assert\Type(type="string")
+     * @Assert\Length(min=4,max=20)
+     * @Assert\NotNull
      */
     private $zip;
     
@@ -34,6 +38,8 @@ class City extends StringModel
      * 
      * @ORM\ManyToOne(targetEntity="Country")
      * @ORM\JoinColumn(name="country_code", referencedColumnName="code")
+     * @Assert\NotNull
+     * @Assert\Valid
      */
     private $country;
     

@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -27,6 +28,7 @@ class Door
      * @var Site $site
      * 
      * @ORM\ManyToOne(targetEntity="Site")
+     * @Assert\Valid
      */
     private $site;
     
@@ -35,6 +37,7 @@ class Door
      * @var string $street
      * 
      * @ORM\Column(name="street",type="text")
+     * @Assert\Type(type="string")
      */
     private $street;
     
@@ -43,6 +46,7 @@ class Door
      * @var DoorType $type
      * 
      * @ORM\ManyToOne(targetEntity="DoorType")
+     * @Assert\Valid
      */
     private $type;
     
@@ -51,6 +55,7 @@ class Door
      * @var string $location
      *
      * @ORM\Column(name="location", type="string", length=255)
+     * @Assert\Type(type="string")
      */
     private $location;
 
@@ -63,6 +68,7 @@ class Door
      *      joinColumns={@ORM\JoinColumn(name="door_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="part_id", referencedColumnName="id")}
      *      )
+     * 
      */
     private $parts;
     
@@ -75,6 +81,7 @@ class Door
      * 		joinColumns={@ORM\JoinColumn(name="door_id", referencedColumnName="id")},
      * 		inverseJoinColumns={@ORM\JoinColumn(name="transmitters_id", referencedColumnName="id")}
      * 		)
+     * 
      */
     private $transmitters;
     
@@ -82,6 +89,7 @@ class Door
      * @var string $observations
      *
      * @ORM\Column(name="observations", type="text", nullable=true)
+     * @Assert\Type(type="string")
      */
     private $observations;
     
@@ -89,6 +97,7 @@ class Door
      * @var string Google Maps (Street)
      * 
      * @ORM\Column(name="googlemaps", type="text", nullable=true)
+     * @Assert\Url
      */
     private $googlemaps;
     
@@ -96,6 +105,8 @@ class Door
      * @var int largeur en mm
      * 
      * @ORM\Column(name="width", type="integer", nullable=true)
+     * @Assert\Type(type="int")
+     * @Assert\Length(min=3,max=4)
      */
     private $width;
     
@@ -103,6 +114,8 @@ class Door
      * @var int hauteur en mm
      *
      * @ORM\Column(name="height", type="integer", nullable=true)
+     * @Assert\Type(type="int")
+     * @Assert\Length(min=3,max=4)
      */
     private $height;
     
@@ -111,6 +124,7 @@ class Door
      * @var bool $stoped
      * 
      * @ORM\Column(name="stopped", type="boolean")
+     * @Assert\Type(type="bool")
      */
     private $stopped = false;
     
@@ -119,6 +133,7 @@ class Door
      * @var string $billingPrelabel
      * 
      * @ORM\Column(name="billing_prelabel", type="text", nullable=true)
+     * @Assert\Type(type="string")
      */
     private $billingPrelabel;
     
@@ -127,6 +142,7 @@ class Door
      * @var Contract $contracts
      * 
      * @ORM\OneToMany(targetEntity="Contract",mappedBy="door")
+     *
      */
     private $contracts;
     
@@ -136,6 +152,7 @@ class Door
      * 
      * @ORM\OneToMany(targetEntity="JLM\DailyBundle\Entity\Intervention",mappedBy="door")
      * @ORM\OrderBy({"creation" = "DESC"})
+     * 
      */
     private $interventions;
     
