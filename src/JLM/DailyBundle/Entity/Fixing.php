@@ -81,27 +81,4 @@ class Fixing extends Intervention
 		$this->done = $done;
 		return $this;
 	}
-	
-	/**
-	 * Set orderNumber
-	 *
-	 * @param integer $orderNumber
-	 * @return InterventionReport
-	 */
-	public function setOrderNumber($orderNumber)
-	{
-		$this->orderNumber = $orderNumber;
-	
-		return $this;
-	}
-	
-	/**
-	 * Get orderNumber
-	 *
-	 * @return integer
-	 */
-	public function getOrderNumber()
-	{
-		return $this->orderNumber;
-	}
 }
