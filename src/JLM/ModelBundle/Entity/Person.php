@@ -60,7 +60,7 @@ class Person
      * @var string $fixedPhone
      * 
      * @ORM\Column(name="fixedPhone",type="string", length=20, nullable=true)
-     * @Assert\Regex(pattern="/^0[1-589]\d{8}$/",message="Ce numéro ne contient pas 10 chiffres")
+     * @Assert\Regex(pattern="/^0[1-589]\d{8}$/",message="Ce n'est pas un numéro de téléphone fixe valide")
      */
     private $fixedPhone;
     
@@ -68,7 +68,7 @@ class Person
      * @var string $mobilePhone
      *
      * @ORM\Column(name="mobilePhone",type="string", length=20, nullable=true)
-     * @Assert\Regex(pattern="/^0[1-589]\d{8}$/",message="Ce numéro ne contient pas 10 chiffres")
+     * @Assert\Regex(pattern="/^0[67]\d{8}$/",message="Ce n'est pas un numéro de téléphone portable valide")
      */
     private $mobilePhone;
 
@@ -77,7 +77,7 @@ class Person
      * @var string $fax
      *
      * @ORM\Column(name="fax",type="string", length=20, nullable=true)
-     * @Assert\Regex(pattern="/^0[6-7]\d{8}$/",message="Ce numéro ne contient pas 10 chiffres")
+     * @Assert\Regex(pattern="/^0[1-589]\d{8}$/",message="Ce n'est pas un numéro de fax valide")
      */
     private $fax;
     
