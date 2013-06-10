@@ -20,7 +20,7 @@ class Trustee extends Company
      * @var integer $accountNumber
      *
      * @ORM\Column(name="accountNumber", type="integer", nullable=true)
-     * @Assert\Regex(pattern="/^\d{3,8}$/")
+     * @Assert\Regex(pattern="/^411\d{3,5}$/")
      */
     private $accountNumber;
 
@@ -61,7 +61,7 @@ class Trustee extends Company
      * @var string $phone
      *
      * @ORM\Column(name="billingPhone",type="string",length=20, nullable=true)
-     * @Assert\Regex(pattern="/^\d{10}$/",message="Ce numéro ne contient pas 10 chiffres")
+     * @Assert\Regex(pattern="/^0[1-9]\d{8}$/",message="Ce numéro ne contient pas 10 chiffres")
      */
     private $billingPhone;
     
@@ -69,7 +69,7 @@ class Trustee extends Company
      * @var string $fax
      *
      * @ORM\Column(name="billingFax",type="string",length=20, nullable=true)
-     * @Assert\Regex(pattern="/^\d{10}$/",message="Ce numéro ne contient pas 10 chiffres")
+     * @Assert\Regex(pattern="/^0[1-9]\d{8}$/",message="Ce numéro ne contient pas 10 chiffres")
      */
     private $billingFax;
     

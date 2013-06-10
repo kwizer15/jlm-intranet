@@ -44,7 +44,7 @@ class Company extends StringModel
 	 * 
 	 * @ORM\Column(name="phone",type="string",length=20)
 	 * @Assert\NotNull
-	 * @Assert\Type(type="string")
+	 * @Assert\Regex(pattern="/^0[1-589]\d{8}$/",message="Ce numéro ne contient pas 10 chiffres")
 	 */
 	private $phone;
 	
@@ -52,7 +52,7 @@ class Company extends StringModel
 	 * @var string $fax
 	 *
 	 * @ORM\Column(name="fax",type="string",length=20, nullable=true)
-	 * @Assert\Type(type="string")
+	 * @Assert\Regex(pattern="/^0[1-589]\d{8}$/",message="Ce numéro ne contient pas 10 chiffres")
 	 */
 	private $fax;
 	
