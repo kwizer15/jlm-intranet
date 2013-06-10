@@ -29,14 +29,6 @@ class Fixing extends Intervention
 	private $done;
 	
 	/**
-	 * Bon d'intervention
-	 * @var int $orderNumber
-	 *
-	 * @ORM\Column(name="order_number",type="integer",nullable=true)
-	 */
-	private $orderNumber;
-	
-	/**
 	 * Get Type
 	 * @see Shifting
 	 * @return string
