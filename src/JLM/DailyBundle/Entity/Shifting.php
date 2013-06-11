@@ -37,7 +37,7 @@ abstract class Shifting
      *
      * @ORM\Column(name="creation", type="datetime")
      * @Assert\DateTime
-     * @Assert\NotNull
+     * @Assert\NotNull(message="Pas de date de création du déplacement")
      */
     private $creation;
     
@@ -46,7 +46,7 @@ abstract class Shifting
      * @var string
      * @ORM\Column(name="place", type="text")
      * @Assert\Type(type="string")
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="Pas de lieu pour le déplacement")
      */
     private $place;
     
@@ -55,7 +55,7 @@ abstract class Shifting
      *
      * @ORM\Column(name="reason", type="text")
      * @Assert\Type(type="string")
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="Pas de raison pour le déplacement")
      */
     private $reason;
     
@@ -64,7 +64,6 @@ abstract class Shifting
 	 * 
 	 * @ORM\OneToMany(targetEntity="ShiftTechnician", mappedBy="shifting")
 	 * @ORM\OrderBy({"begin" = "ASC"})
-     * @Assert\Valid(traverse=true)
 	 */
     private $shiftTechnicians;
     

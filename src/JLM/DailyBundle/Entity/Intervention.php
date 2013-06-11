@@ -71,7 +71,7 @@ abstract class Intervention extends Shifting
      *
      * @ORM\Column(name="priority", type="smallint")
      * @Assert\Choice(choices = {1,2,3,4,5,6})
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="Pas de priorité définie")
      */
     private $priority;
     
@@ -115,7 +115,7 @@ abstract class Intervention extends Shifting
      * @var string
      * @ORM\Column(name="contract",type="string",nullable=true)
      * @Assert\Type(type="string")
-     * @Assert\NotNull
+     * @Assert\NotNull(message="Pas de type de contrat défini")
      */
     private $contract;
     

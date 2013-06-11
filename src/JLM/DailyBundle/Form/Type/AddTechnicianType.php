@@ -11,6 +11,8 @@ class AddTechnicianType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+//        	->add('creation','hidden',array('data_class'=>'\DateTime'))
+//        	->add('shifting','shifting_hidden')
       		->add('technician',null,array('label'=>'Technicien'))
       		->add('begin','datepicker',array('label'=>'Date'))
       		->add('comment','textarea',array('label'=>'Commentaire','required'=>false,'attr'=>array('class'=>'input-xlarge')))
