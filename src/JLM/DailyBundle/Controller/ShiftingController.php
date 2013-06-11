@@ -97,6 +97,7 @@ class ShiftingController extends Controller
 		}
 	
 		return array(
+				'shifting'=>$shifting,
 				'entity' => $entity,
 				'form'   => $form->createView(),
 		);

@@ -28,7 +28,8 @@ class ShiftTechnician
      *
      * @ORM\Column(name="creation",type="datetime")
      * @Assert\DateTime
-     * @Assert\NotNull
+     * Assert\NotNull(message="Date de création n'existe pas")
+     * @todo Corriger
      */
     private $creation;
     
@@ -38,7 +39,7 @@ class ShiftTechnician
      * 
      * @ORM\Column(name="begin",type="datetime")
      * @Assert\DateTime
-     * @Assert\NotNull
+     * @Assert\NotNull(message="Date de début n'existe pas")
      */
     private $begin;
     
@@ -56,7 +57,8 @@ class ShiftTechnician
      * 
      * @ORM\ManyToOne(targetEntity="Shifting", inversedBy="shiftTechnicians")
      * @Assert\Valid
-     * @Assert\NotNull
+     * Assert\NotNull(message="Déplacement n'existe pas")
+     * @todo Corriger
      */
     private $shifting;
     
