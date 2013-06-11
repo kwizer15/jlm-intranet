@@ -2,6 +2,7 @@
 namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Plannification de travaux
@@ -13,9 +14,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Work extends Intervention
 {
 	/**
-	 * Devis source
+	 * Devis source (pour "selon devis...")
 	 * 
 	 * @ORM\ManyToOne(targetEntity="JLM\OfficeBundle\Entity\QuoteVariant")
+	 * @Assert\Valid
 	 */
 	private $quote;
 	
@@ -23,6 +25,8 @@ class Work extends Intervention
 	 * Work category
 	 * 
 	 * @ORM\ManyToOne(targetEntity="WorkCategory")
+	 * @Assert\Valid
+	 * @Assert\NotNull
 	 */
 	private $category;
 	
@@ -30,8 +34,18 @@ class Work extends Intervention
 	 * Work objective
 	 *
 	 * @ORM\ManyToOne(targetEntity="WorkObjective")
+	 * @Assert\Valid
+	 * @Assert\NotNull
 	 */
 	private $objective;
+	
+	/**
+	 * Fiche travaux
+	 * 
+	 * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Order")
+	 * @Assert\Valid
+	 */
+	private $order;
 	
 	/**
 	 * Get Quote
@@ -105,4 +119,27 @@ class Work extends Intervention
 	{
 		return 'work';
 	}
+
+    /**
+     * Set order
+     *
+     * @param \JLM\OfficeBundle\Entity\Order $order
+     * @return Work
+     */
+    public function setOrder(\JLM\OfficeBundle\Entity\Order $order = null)
+    {
+        $this->order = $order;
+    
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return \JLM\OfficeBundle\Entity\Order 
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
 }

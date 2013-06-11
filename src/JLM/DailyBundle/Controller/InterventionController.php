@@ -40,7 +40,20 @@ class InterventionController extends Controller
 		);
 	}
 
-	
+	/**
+	 * Bill intervention
+	 *
+	 * @Route("/{id}/tobill", name="intervention_tobill")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function tobillAction(Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$entity->setMustBeBilled(true);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
 	
 	/**
 	 * Close an existing Fixing entity.
@@ -338,5 +351,38 @@ class InterventionController extends Controller
 		)));
 		
 		return $response;
+	}
+	
+	/**
+	 * Mise à jour des tâches facturation
+	 *
+	 * @Route("/upgradeoffice", name="intervention_upgradeoffice")
+	 * @Secure(roles="ROLE_USER")
+	 * @Template()
+	 */
+	public function upgradeofficeAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$id_bill = 1;
+		$id_not = 5;
+		$intervs = $em->getRepository('JLMDailyBundle:Intervention')->findAll();
+		foreach ($intervs as $interv)
+		{
+			if ($interv->getOfficeAction() !== null)
+			{
+				if ($interv->getOfficeAction()->getType()->getId() == $id_bill)
+				{
+					$interv->setMustBeBilled(true);
+				}
+				elseif ($interv->getOfficeAction()->getType()->getId() == $id_not)
+				{
+					$interv->setMustBeBilled(false);
+				}
+				$em->persist($interv);
+			}
+		}
+		$em->flush();
+		
+		return array();
 	}
 }

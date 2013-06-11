@@ -19,21 +19,21 @@ abstract class Ask extends UploadDocument
 	/**
 	 * Syndic
 	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Trustee")
-	 * @Assert\NotNull()
+	 * @Assert\NotNull
 	 */
 	private $trustee;
 	
 	/**
 	 * Affaire
 	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Site")
-	 * @Assert\NotNull()
+	 * @Assert\NotNull
 	 */
 	private $site;
 	
 	/**
 	 * Méthode de la demande
 	 * @ORM\ManyToOne(targetEntity="AskMethod")
-	 * @Assert\NotNull()
+	 * @Assert\NotNull
 	 */
 	private $method;
 	
@@ -55,6 +55,7 @@ abstract class Ask extends UploadDocument
 	/**
 	 * Contact
 	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Person")
+	 * @Assert\Valid
 	 */
 	private $person;
 

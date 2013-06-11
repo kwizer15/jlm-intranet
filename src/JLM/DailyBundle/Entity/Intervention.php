@@ -3,7 +3,9 @@
 namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use JLM\ModelBundle\Entity\Contract;
+
 /**
  * Plannification d'intervention
  * JLM\DailyBundle\Entity\InterventionPlanned
@@ -17,18 +19,21 @@ abstract class Intervention extends Shifting
      * Porte (lien)
      * @var JLM\ModelBundle\Entity\Door
      * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Door", inversedBy="interventions")
+     * @Assert\NotNull(message="Une intervention doit être liée à une porte")
      */
     private $door;
     
     /**
      * @var string $contactName
      * @ORM\Column(name="contact_name", type="string", nullable=true)
+     * @Assert\Type(type="string")
      */
     private $contactName;
     
     /**
      * @var string $contactPhone
      * @ORM\Column(name="contact_phones", type="text", nullable=true)
+     * @Assert\Type(type="string")
      */
     private $contactPhones;
     
@@ -36,6 +41,7 @@ abstract class Intervention extends Shifting
      * E-mail pour envoyer le rapport
      * @var string $contactEmail
      * @ORM\Column(name="contact_email", type="text", nullable=true)
+     * @Assert\Email
      */
     private $contactEmail;
    
@@ -43,6 +49,7 @@ abstract class Intervention extends Shifting
      * Report
      * @var string $report
      * @ORM\Column(name="report",type="text", nullable=true)
+     * @Assert\Type(type="string")
      */
     private $report;
     
@@ -51,6 +58,7 @@ abstract class Intervention extends Shifting
      * @var string $comments
      *
      * @ORM\Column(name="comments", type="text", nullable=true)
+     * @Assert\Type(type="string")
      */
     private $comments;
     
@@ -62,6 +70,8 @@ abstract class Intervention extends Shifting
      * ....
      *
      * @ORM\Column(name="priority", type="smallint")
+     * @Assert\Choice(choices = {1,2,3,4,5,6})
+     * @Assert\NotBlank
      */
     private $priority;
     
@@ -70,6 +80,7 @@ abstract class Intervention extends Shifting
      * @var DateTime
      * 
      * @ORM\Column(name="close", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
     private $close;
     
@@ -78,6 +89,7 @@ abstract class Intervention extends Shifting
      * @var JLM\OfficeBundle\Entity\Task
      *
      * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Task")
+     * 
      */
     private $officeAction;
     
@@ -94,6 +106,7 @@ abstract class Intervention extends Shifting
      * @var string
      *
      * @ORM\Column(name="rest",type="text",nullable=true)
+     * @Assert\Type(type="string")
      */
     private $rest;
     
@@ -101,6 +114,8 @@ abstract class Intervention extends Shifting
      * Type de contrat
      * @var string
      * @ORM\Column(name="contract",type="string",nullable=true)
+     * @Assert\Type(type="string")
+     * @Assert\NotNull
      */
     private $contract;
     
@@ -108,8 +123,33 @@ abstract class Intervention extends Shifting
      * Numéro de bon d'intervention
      * @var string
      * @ORM\Column(name="voucher",type="string",nullable=true)
+     * @Assert\Type(type="int")
      */
     private $voucher;
+    
+    /**
+     * Facture
+     * @var JLM\OfficeBundle\Entity\Bill
+     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Bill")
+     * @Assert\Valid
+     */
+    private $bill;
+    
+    /**
+     * Numéro de facture (pour pointer avant la mise en service des factures)
+     * @var string
+     * @ORM\Column(name="billNumber", type="string", nullable=true)
+     * @Assert\Type(type="int")
+     */
+    private $billNumber;
+    
+    /**
+     * Doit etre facturée
+     * @var bool
+     * @ORM\Column(name="mustBeBilled", type="boolean", nullable=true)
+     * @Assert\Type(type="bool")
+     */
+    private $mustBeBilled;
     
     /**
      * Get contract
@@ -479,5 +519,87 @@ abstract class Intervention extends Shifting
     	if (!$this->getOfficeAction() || (!$this->getOtherAction() && $this->getRest()))
     		return 2;
     	return 3;
+    }
+    
+    /**
+     * Vérifie qu'une intervention devant être facturée possède une facture
+     * et inversement
+     */
+    public function isBilled()
+    {
+    	if (!$this->mustBeBilled === ($this->bill === null))
+    		return true;
+    	if ($this->billNumber)
+    		return true;
+    	return false; 
+    }
+
+    /**
+     * Set billNumber
+     *
+     * @param string $billNumber
+     * @return Intervention
+     */
+    public function setBillNumber($billNumber)
+    {
+        $this->billNumber = $billNumber;
+    
+        return $this;
+    }
+
+    /**
+     * Get billNumber
+     *
+     * @return string 
+     */
+    public function getBillNumber()
+    {
+        return $this->billNumber;
+    }
+
+    /**
+     * Set mustBeBilled
+     *
+     * @param boolean $mustBeBilled
+     * @return Intervention
+     */
+    public function setMustBeBilled($mustBeBilled)
+    {
+        $this->mustBeBilled = $mustBeBilled;
+    
+        return $this;
+    }
+
+    /**
+     * Get mustBeBilled
+     *
+     * @return boolean 
+     */
+    public function getMustBeBilled()
+    {
+        return $this->mustBeBilled;
+    }
+
+    /**
+     * Set bill
+     *
+     * @param \JLM\OfficeBundle\Entity\Bill $bill
+     * @return Intervention
+     */
+    public function setBill(\JLM\OfficeBundle\Entity\Bill $bill = null)
+    {
+        $this->bill = $bill;
+    
+        return $this;
+    }
+
+    /**
+     * Get bill
+     *
+     * @return \JLM\OfficeBundle\Entity\Bill 
+     */
+    public function getBill()
+    {
+        return $this->bill;
     }
 }

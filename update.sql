@@ -26,3 +26,13 @@ ALTER TABLE askquote DROP quote_id;
 ALTER TABLE quote ADD ask_id INT DEFAULT NULL;
 ALTER TABLE quote ADD CONSTRAINT FK_6B71CBF4B93F8B63 FOREIGN KEY (ask_id) REFERENCES askquote (id);
 CREATE INDEX IDX_6B71CBF4B93F8B63 ON quote (ask_id)
+ALTER TABLE contracts CHANGE complete complete TINYINT(1) NOT NULL, CHANGE contract_option contract_option TINYINT(1) NOT NULL;
+ALTER TABLE askmethods CHANGE text name VARCHAR(255) NOT NULL;
+ALTER TABLE shifting_interventions ADD bill_id INT DEFAULT NULL, ADD billNumber VARCHAR(255) DEFAULT NULL, ADD mustBeBilled TINYINT(1) DEFAULT NULL;
+ALTER TABLE shifting_interventions ADD CONSTRAINT FK_291B3FA21A8C12F5 FOREIGN KEY (bill_id) REFERENCES bill (id);
+CREATE UNIQUE INDEX UNIQ_291B3FA21A8C12F5 ON shifting_interventions (bill_id);
+ALTER TABLE shift_technician CHANGE begin begin DATETIME NOT NULL;
+ALTER TABLE shifting_fixing DROP order_number;
+ALTER TABLE shifting_works ADD order_id INT DEFAULT NULL;
+ALTER TABLE shifting_works ADD CONSTRAINT FK_57D2710B8D9F6D38 FOREIGN KEY (order_id) REFERENCES orders (id);
+CREATE UNIQUE INDEX UNIQ_57D2710B8D9F6D38 ON shifting_works (order_id)

@@ -2,6 +2,7 @@
 namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Plannification d'une panne
@@ -18,6 +19,7 @@ class Fixing extends Intervention
 	 * Cause du dépannage
 	 * @var FixingDue $due;
 	 * @ORM\ManyToOne(targetEntity="FixingDue")
+	 * @Assert\Valid
 	 */
 	private $due;
 	
@@ -25,6 +27,7 @@ class Fixing extends Intervention
 	 * Action
 	 * @var FixingDone $done;
 	 * @ORM\ManyToOne(targetEntity="FixingDone")
+	 * @Assert\Valid
 	 */
 	private $done;
 	

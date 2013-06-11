@@ -3,6 +3,7 @@
 namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * JLM\DailyBundle\Entity\ShiftTechnician
@@ -26,6 +27,8 @@ class ShiftTechnician
      * @var \DateTime
      *
      * @ORM\Column(name="creation",type="datetime")
+     * @Assert\DateTime
+     * @Assert\NotNull
      */
     private $creation;
     
@@ -33,7 +36,9 @@ class ShiftTechnician
      * Date du début de l'intervention (prévue)
      * @var \DateTime
      * 
-     * @ORM\Column(name="begin",type="datetime",nullable=true)
+     * @ORM\Column(name="begin",type="datetime")
+     * @Assert\DateTime
+     * @Assert\NotNull
      */
     private $begin;
     
@@ -42,6 +47,7 @@ class ShiftTechnician
      * @var \DateTime
      *
      * @ORM\Column(name="end",type="datetime",nullable=true)
+     * @Assert\DateTime
      */
     private $end;
     
@@ -49,6 +55,8 @@ class ShiftTechnician
      * @var Shifting $shifting
      * 
      * @ORM\ManyToOne(targetEntity="Shifting", inversedBy="shiftTechnicians")
+     * @Assert\Valid
+     * @Assert\NotNull
      */
     private $shifting;
     
@@ -56,6 +64,8 @@ class ShiftTechnician
      * @var Technician $technician
      * 
      * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Technician")
+     * @Assert\Valid
+     * @Assert\NotNull
      */
     private $technician;
 
@@ -63,6 +73,7 @@ class ShiftTechnician
      * Commentaire
      * 
      * @ORM\Column(name="comment",type="text",nullable=true)
+     * @Assert\Type(type="string")
      */
     private $comment;
     
