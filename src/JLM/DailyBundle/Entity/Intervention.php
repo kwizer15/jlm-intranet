@@ -5,6 +5,7 @@ namespace JLM\DailyBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JLM\ModelBundle\Entity\Contract;
+use JLM\OfficeBundle\Entity\Bill;
 
 /**
  * Plannification d'intervention
@@ -130,18 +131,10 @@ abstract class Intervention extends Shifting
     /**
      * Facture
      * @var JLM\OfficeBundle\Entity\Bill
-     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Bill")
+     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Bill", mappedBy="intervention")
      * @Assert\Valid
      */
     private $bill;
-    
-    /**
-     * Numéro de facture (pour pointer avant la mise en service des factures)
-     * @var string
-     * @ORM\Column(name="billNumber", type="string", nullable=true)
-     * @Assert\Type(type="int")
-     */
-    private $billNumber;
     
     /**
      * Doit etre facturée
@@ -527,34 +520,7 @@ abstract class Intervention extends Shifting
      */
     public function isBilled()
     {
-    	if (!$this->mustBeBilled === ($this->bill === null))
-    		return true;
-    	if ($this->billNumber)
-    		return true;
-    	return false; 
-    }
-
-    /**
-     * Set billNumber
-     *
-     * @param string $billNumber
-     * @return Intervention
-     */
-    public function setBillNumber($billNumber)
-    {
-        $this->billNumber = $billNumber;
-    
-        return $this;
-    }
-
-    /**
-     * Get billNumber
-     *
-     * @return string 
-     */
-    public function getBillNumber()
-    {
-        return $this->billNumber;
+    	return !$this->mustBeBilled === ($this->bill === null);
     }
 
     /**
@@ -589,7 +555,7 @@ abstract class Intervention extends Shifting
     public function setBill(\JLM\OfficeBundle\Entity\Bill $bill = null)
     {
         $this->bill = $bill;
-    
+    	
         return $this;
     }
 

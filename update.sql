@@ -36,3 +36,9 @@ ALTER TABLE shifting_fixing DROP order_number;
 ALTER TABLE shifting_works ADD order_id INT DEFAULT NULL;
 ALTER TABLE shifting_works ADD CONSTRAINT FK_57D2710B8D9F6D38 FOREIGN KEY (order_id) REFERENCES orders (id);
 CREATE UNIQUE INDEX UNIQ_57D2710B8D9F6D38 ON shifting_works (order_id)
+ALTER TABLE bill ADD intervention_id INT DEFAULT NULL;
+ALTER TABLE bill ADD CONSTRAINT FK_7A2119E38EAE3863 FOREIGN KEY (intervention_id) REFERENCES shifting_interventions (id);
+CREATE UNIQUE INDEX UNIQ_7A2119E38EAE3863 ON bill (intervention_id);
+ALTER TABLE shifting_interventions DROP FOREIGN KEY FK_291B3FA21A8C12F5;
+DROP INDEX UNIQ_291B3FA21A8C12F5 ON shifting_interventions;
+ALTER TABLE shifting_interventions DROP bill_id, DROP billNumber

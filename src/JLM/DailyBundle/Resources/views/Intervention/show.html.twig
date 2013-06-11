@@ -170,10 +170,36 @@
 	 	<th>Action bureau</th>
 			{% if entity.mustBeBilled is not null %}
 			<td>
-				{% if entity.mustBeBilled %}Facturer{% else %}Ne pas facturer{% endif %}
+				{% if entity.mustBeBilled %}
+					{% if entity.bill %}
+					<a href="{{ path('bill_show',{'id': entity.bill.id }) }}">Facture n°{{ entity.bill.number }}</a>
+					{% else %}
+					<a href="{{ path('bill_new_intervention',{'id':entity.id}) }}">A facturer</a>
+					{% endif %}
+				{% else %}
+					Ne pas facturer
+				{% endif %}
 			</td>
 			<td>
-				<a href="{{ path('intervention_cancelbill',{'id':entity.id}) }}" class="btn">Changer</a>
+					{% if entity.bill is not null%}
+				<a href="#modalDeleteBill" class="btn" data-toggle="modal" role="button">Changer</a>
+				<div id="modalDeleteBill" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalDeleteBillLabel" aria-hidden="true">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h3 id="modalDeleteBillLabel">Annuler cette la facturation</h3>
+					</div>
+					<div class="modal-body">
+						<p>Cette action annulera automatiquement la facture qui a été créée.</p>
+						<p>Êtes-vous bien sûr de vouloir annuler la facture n°{{ entity.bill.number }} ?</p>
+					</div>
+					<div class="modal-footer">
+						<button class="btn" data-dismiss="modal" aria-hidden="true">Non</button>
+						<a href="{{ path('intervention_cancelbill',{'id':entity.id}) }}" class="btn btn-danger">Oui</a>
+					</div>
+				</div>
+					{% else %}
+					<a href="{{ path('intervention_cancelbill',{'id':entity.id}) }}" class="btn">Changer</a>
+					{% endif %}
 			</td>
 			{% else %}
 			<td>

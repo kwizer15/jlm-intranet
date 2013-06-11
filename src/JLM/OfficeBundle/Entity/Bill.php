@@ -4,8 +4,10 @@ namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\QuoteVariant;
+use JLM\DailyBundle\Entity\Intervention;
 
 /**
  * JLM\OfficeBundle\Entity\Bill
@@ -155,6 +157,15 @@ class Bill extends Document
 	 * @ORM\Column(name="discount", type="decimal", scale=7)
 	 */
 	private $discount = 0;
+	
+	/**
+	 * Intervention (si suite à intervention)
+	 * @var JLM\DailyBundle\Entity\Intervention $intervention
+	 * 
+	 * @ORM\OneToOne(targetEntity="JLM\DailyBundle\Entity\Intervention",inversedBy="bill")
+	 */
+	private $intervention;
+	
 
     /**
      * Get id
@@ -447,7 +458,6 @@ class Bill extends Document
     public function __construct()
     {
         $this->lines = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->creation = new \DateTime;
     }
     
     /**
@@ -482,7 +492,6 @@ class Bill extends Document
     public function setState($state)
     {
         $this->state = $state;
-    
         return $this;
     }
 
@@ -633,5 +642,65 @@ class Bill extends Document
     	$this->setPrelabel($door->getSite()->getBillingPrelabel());
     	$this->setVat($door->getSite()->getVat()->getRate());
     	return $this;
+    }
+    
+    /**
+     * Populate from Intervention
+     *
+     * @param Intervention $interv
+     * @return Bill
+     */
+    public function populateFromIntervention(Intervention $interv)
+    {
+    	if ($interv->getType() == 'work')
+    	{
+    		if ($interv->getQuote !== null)
+    			$this->populateFromQuoteVariant($interv->getQuote());
+    	}
+    	else
+    	{
+    		$this->populateFromDoor($interv->getDoor());
+    		$this->setIntro('Suite à notre intervention du '.$interv->getLastDate()->format('d/m/Y'));
+    	}
+    	$this->setIntervention($interv);
+    	
+    	return $this;
+    }
+    
+    /**
+     * Vérifie les sources
+     * @Assert\True
+     */
+    public function isOneSource()
+    {
+    	if ($this->fee !== null)
+    	{
+    		if ($this->intervention !== null)
+    			return false;
+    	}
+    	return true;
+    }
+
+    /**
+     * Set intervention
+     *
+     * @param \JLM\DailyBundle\Entity\Intervention $intervention
+     * @return Bill
+     */
+    public function setIntervention(\JLM\DailyBundle\Entity\Intervention $intervention = null)
+    {
+        $this->intervention = $intervention;
+    
+        return $this;
+    }
+
+    /**
+     * Get intervention
+     *
+     * @return \JLM\DailyBundle\Entity\Intervention 
+     */
+    public function getIntervention()
+    {
+        return $this->intervention;
     }
 }

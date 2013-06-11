@@ -14,6 +14,7 @@ use JLM\DailyBundle\Entity\Shifting;
 use JLM\ModelBundle\Form\Type\DatepickerType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\Task;
+use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\TaskType;
 
 /**
@@ -84,9 +85,11 @@ class InterventionController extends Controller
 			if ($entity->getBill() !== null)
 			{
 				// 	annuler la facture existante
-				// $bill = $entity->getBill();
-				// $entity->removeBill();
-				// $em->persist($bill);
+				$bill = $entity->getBill();
+				$bill->setIntervention();
+				$bill->setState(-1);
+				$entity->setBill();
+				$em->persist($bill);
 			}
 		}
 		$entity->setMustBeBilled(null);
