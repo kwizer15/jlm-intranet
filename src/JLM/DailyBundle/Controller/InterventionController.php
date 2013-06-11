@@ -56,6 +56,46 @@ class InterventionController extends Controller
 	}
 	
 	/**
+	 * Don't Bill intervention
+	 *
+	 * @Route("/{id}/dontbill", name="intervention_dontbill")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function dontbillAction(Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$entity->setMustBeBilled(false);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Cancel Bill action
+	 *
+	 * @Route("/{id}/cancelbill", name="intervention_cancelbill")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function cancelbillAction(Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		if ($entity->getMustBeBilled())
+		{
+			if ($entity->getBill() !== null)
+			{
+				// 	annuler la facture existante
+				// $bill = $entity->getBill();
+				// $entity->removeBill();
+				// $em->persist($bill);
+			}
+		}
+		$entity->setMustBeBilled(null);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
 	 * Close an existing Fixing entity.
 	 *
 	 * @Route("/{id}/generatetask/{type}", name="intervention_generatetask")

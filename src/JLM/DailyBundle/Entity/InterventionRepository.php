@@ -18,7 +18,7 @@ class InterventionRepository extends EntityRepository
 			->leftJoin('d.site','a')
 			->leftJoin('a.address','b')
 			->leftJoin('b.city','c')
-			->where('i.officeAction IS NULL')
+			->where('i.mustBeBilled IS NULL')
 			->addOrderBy('i.close','asc')
 			->addOrderBy('s.creation','asc')
 			->addOrderBy('i.priority','desc')
@@ -34,7 +34,7 @@ class InterventionRepository extends EntityRepository
 	{
 		$qb = $this->createQueryBuilder('i')
 			->select('COUNT(i)')
-			->where('i.officeAction IS NULL');
+			->where('i.mustBeBilled IS NULL');
 		return (int) $qb->getQuery()
 			->getSingleScalarResult();
 	}
@@ -113,7 +113,7 @@ class InterventionRepository extends EntityRepository
 			->orWhere('b is null')
 			->orWhere('a.close is null')
 			->orWhere('a.report is null')
-			->orWhere('a.officeAction is null')
+			->orWhere('a.mustBeBilled is null')
 			->orWhere('a.otherAction is null and a.rest is not null')
 			->orderBy('a.creation','asc')
 			->setParameter(1,$todaystring)
@@ -123,7 +123,7 @@ class InterventionRepository extends EntityRepository
 		foreach ($intervs as $interv)
 		{
 			$flag = false;
-			if ($interv->getClosed() && $interv->getOfficeAction() && (!$interv->getRest() || $interv->getOtherAction()))
+			if ($interv->getClosed() && $interv->getMustBeBilled() && (!$interv->getRest() || $interv->getOtherAction()))
 			{
 				if (!$flag)
 				{
