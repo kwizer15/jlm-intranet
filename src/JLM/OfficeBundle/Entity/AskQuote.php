@@ -28,7 +28,7 @@ class AskQuote extends Ask
 	
 	/**
 	 * Suite à intervention
-	 * @ORM\ManyToOne(targetEntity="JLM\DailyBundle\Entity\Intervention")
+	 * @ORM\OneToOne(targetEntity="JLM\DailyBundle\Entity\Intervention", inversedBy="askQuote")
 	 */
 	private $intervention;
 	
@@ -100,7 +100,7 @@ class AskQuote extends Ask
     public function setIntervention(\JLM\DailyBundle\Entity\Intervention $intervention = null)
     {
         $this->intervention = $intervention;
-    
+        $this->setDoor(null);
         return $this;
     }
 
@@ -123,7 +123,8 @@ class AskQuote extends Ask
     public function setDoor(\JLM\ModelBundle\Entity\Door $door = null)
     {
         $this->door = $door;
-    
+    	$this->site = null;
+    	$this->trustee = null;
         return $this;
     }
 
@@ -133,37 +134,41 @@ class AskQuote extends Ask
      */
     public function getDoor()
     {
+    	if ($this->getIntervention() !== null)
+    		return $this->getIntervention()->getDoor();
         return $this->door;
     }
     
     /**
-     * Vérifie si l'installation se situe bien sur l'affaire
-     * @Assert\True(message = "L'installation ne se situe pas sur cette affaire")
+     * Get Site
      */
-    public function isDoorOnSite()
+    public function getSite()
     {
-    	$door = $this->getDoor();
-    	if ($door === null)
-    		return true;
-    	return $door->getSite()->getId() === $this->getSite()->getId();
+    	if ($this->getDoor() !== null)
+    		return $this->getDoor()->getSite();
+    	return parent::getSite();
     }
     
     /**
-     * Vérifie si l'intervention à bien eu lieu sur le site
-     * @Assert\True(message = "L'intervention n'a pas été effectué sur cette affaire")
+     * Get Trustee
      */
-    public function isInterventionOnSite()
+    public function getTrustee()
     {
-    	if ($this->intervention === null)
-    		return true;
-    	$door = $this->intervention->getDoor();
-    	if ($door === null)
-    		return true;
-    	$site = $this->getSite();
-    	if ($site === null)
-    		return false;
-    	return $door->getSite()->getId() == $site->getId();
+    	if ($this->getDoor() !== null)
+    		return $this->getDoor()->getTrustee();
+    	return parent::getTrustee();
     }
+    
+    /**
+     * Get method
+     */
+    public function getMethod()
+    {
+    	if ($this->getIntervention() !== null)
+    		return null;
+    	return parent::getMethod();
+    }
+    
     /**
      * Constructor
      */

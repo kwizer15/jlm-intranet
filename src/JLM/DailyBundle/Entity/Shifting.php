@@ -244,6 +244,16 @@ abstract class Shifting
     }
     
     /**
+     * Est en cours
+     */
+    public function isInProgress()
+    {
+    	if (sizeof($this->shiftTechnicians) > 0)
+    		return true;
+    	return false;
+    }   
+     
+    /**
      * Get type
      *
      * @return string

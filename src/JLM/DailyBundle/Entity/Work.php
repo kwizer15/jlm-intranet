@@ -16,7 +16,7 @@ class Work extends Intervention
 	/**
 	 * Devis source (pour "selon devis...")
 	 * 
-	 * @ORM\ManyToOne(targetEntity="JLM\OfficeBundle\Entity\QuoteVariant")
+	 * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\QuoteVariant")
 	 * @Assert\Valid
 	 */
 	private $quote;
@@ -42,31 +42,16 @@ class Work extends Intervention
 	/**
 	 * Fiche travaux
 	 * 
-	 * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Order")
+	 * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Order",mappedBy="work")
 	 * @Assert\Valid
 	 */
 	private $order;
 	
 	/**
-	 * Get Quote
-	 * @return QuoteVariant
+	 * Intervention source
+	 * @ORM\OneToOne(targetEntity="Intervention", inversedBy="work")
 	 */
-	public function getQuote()
-	{
-		return $this->quote;
-	}
-	
-	/**
-	 * Set Quote
-	 * 
-	 * @param QuoteVariant $quote
-	 * @return Work
-	 */
-	public function setQuote(\JLM\OfficeBundle\Entity\QuoteVariant $quote = null)
-	{
-		$this->quote = $quote;
-		return $this;
-	}
+	private $intervention;
 	
 	/**
 	 * Get work category
@@ -141,5 +126,51 @@ class Work extends Intervention
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * Set quote
+     *
+     * @param \JLM\OfficeBundle\Entity\QuoteVariant $quote
+     * @return Work
+     */
+    public function setQuote(\JLM\OfficeBundle\Entity\QuoteVariant $quote = null)
+    {
+        $this->quote = $quote;
+    
+        return $this;
+    }
+
+    /**
+     * Get quote
+     *
+     * @return \JLM\OfficeBundle\Entity\QuoteVariant 
+     */
+    public function getQuote()
+    {
+        return $this->quote;
+    }
+
+    /**
+     * Set intervention
+     *
+     * @param \JLM\DailyBundle\Entity\Intervention $intervention
+     * @return Work
+     */
+    public function setIntervention(\JLM\DailyBundle\Entity\Intervention $intervention = null)
+    {
+        $this->intervention = $intervention;
+    
+        return $this;
+    }
+
+    /**
+     * Get intervention
+     *
+     * @return \JLM\DailyBundle\Entity\Intervention 
+     */
+    public function getIntervention()
+    {
+        return $this->intervention;
     }
 }

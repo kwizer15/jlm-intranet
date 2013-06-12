@@ -40,25 +40,11 @@ class Order
 	private $lines;
 	
 	/**
-	 * Lieu
-	 * @var string $place
-	 * @ORM\Column(name="place",type="text") 
+	 * Intervention source
+	 * @var Work
+	 * @ORM\OneToOne(targetEntity="JLM\DailyBundle\Entity\Work",inversedBy="order")
 	 */
-	private $place;
-	
-	/**
-	 * Porte
-	 * @var Door $door
-	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Door")
-	 */
-	private $door;
-	
-	/**
-	 * Devis source
-	 * @var Quote
-	 * @ORM\ManyToOne(targetEntity="QuoteVariant")
-	 */
-	private $quote;
+	private $work;
 	
 	/**
 	 * Etat
@@ -87,29 +73,6 @@ class Order
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set place
-     *
-     * @param string $place
-     * @return Order
-     */
-    public function setPlace($place)
-    {
-        $this->place = $place;
-    
-        return $this;
-    }
-
-    /**
-     * Get place
-     *
-     * @return string 
-     */
-    public function getPlace()
-    {
-        return $this->place;
     }
 
     /**
@@ -143,52 +106,6 @@ class Order
     public function getLines()
     {
         return $this->lines;
-    }
-
-    /**
-     * Set quote
-     *
-     * @param JLM\OfficeBundle\Entity\QuoteVariant $quote
-     * @return Order
-     */
-    public function setQuote(\JLM\OfficeBundle\Entity\QuoteVariant $quote = null)
-    {
-        $this->quote = $quote;
-    
-        return $this;
-    }
-
-    /**
-     * Get quote
-     *
-     * @return JLM\OfficeBundle\Entity\QuoteVariant 
-     */
-    public function getQuote()
-    {
-        return $this->quote;
-    }
-    
-    /**
-     * Set door
-     *
-     * @param JLM\ModelBundle\Entity\Door $door
-     * @return Order
-     */
-    public function setDoor(\JLM\ModelBundle\Entity\Door $door = null)
-    {
-    	$this->door = $door;
-    
-    	return $this;
-    }
-    
-    /**
-     * Get door
-     *
-     * @return JLM\ModelBundle\Entity\Door
-     */
-    public function getDoor()
-    {
-    	return $this->door;
     }
     
     /**
@@ -235,5 +152,28 @@ class Order
     public function getState()
     {
     	return $this->state;
+    }
+
+    /**
+     * Set work
+     *
+     * @param \JLM\DailyBundle\Entity\Work $work
+     * @return Order
+     */
+    public function setWork(\JLM\DailyBundle\Entity\Work $work = null)
+    {
+        $this->work = $work;
+    
+        return $this;
+    }
+
+    /**
+     * Get work
+     *
+     * @return \JLM\DailyBundle\Entity\Work 
+     */
+    public function getWork()
+    {
+        return $this->work;
     }
 }

@@ -654,7 +654,7 @@ class Bill extends Document
     {
     	if ($interv->getType() == 'work')
     	{
-    		if ($interv->getQuote !== null)
+    		if ($interv->getQuote() !== null)
     			$this->populateFromQuoteVariant($interv->getQuote());
     	}
     	else

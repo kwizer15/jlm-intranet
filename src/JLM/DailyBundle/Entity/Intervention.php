@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JLM\ModelBundle\Entity\Contract;
 use JLM\OfficeBundle\Entity\Bill;
+use JLM\OfficeBundle\Entity\AskQuote;
 
 /**
  * Plannification d'intervention
@@ -90,7 +91,8 @@ abstract class Intervention extends Shifting
      * @var JLM\OfficeBundle\Entity\Task
      *
      * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Task")
-     * 
+     * @deprecated
+     * Remplacé par bill et mustBeBilled
      */
     private $officeAction;
     
@@ -99,6 +101,8 @@ abstract class Intervention extends Shifting
      * @var JLM\OfficeBundle\Entity\Task
      *
      * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Task")
+     * @deprecated
+     * Remplacé par askQuote, work et contactCustomer
      */
     private $otherAction;
     
@@ -143,6 +147,27 @@ abstract class Intervention extends Shifting
      * @Assert\Type(type="bool")
      */
     private $mustBeBilled;
+    
+    /**
+     * Intervention lancée pour le reste à faire
+     * @var Work
+     * @ORM\OneToOne(targetEntity="Work", mappedBy="intervention")
+     */
+    private $work;
+    
+    /**
+     * Demande de devis lancée pour le reste à faire
+     * @var AskQuote
+     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\AskQuote", mappedBy="intervention")
+     */
+    private $askQuote;
+    
+    /**
+     * Contacter client pour le reste à faire
+     * @var bool
+     * @ORM\Column(name="contact_customer", type="boolean", nullable=true)
+     */
+    private $contactCustomer = null;
     
     /**
      * Get contract
@@ -567,5 +592,88 @@ abstract class Intervention extends Shifting
     public function getBill()
     {
         return $this->bill;
+    }
+
+    /**
+     * Set contactCustomer
+     *
+     * @param boolean $contactCustomer
+     * @return Intervention
+     */
+    public function setContactCustomer($contactCustomer = null)
+    {
+        $this->contactCustomer = $contactCustomer;
+    
+        return $this;
+    }
+
+    /**
+     * Get contactCustomer
+     *
+     * @return boolean 
+     */
+    public function getContactCustomer()
+    {
+        return $this->contactCustomer;
+    }
+
+    /**
+     * Set work
+     *
+     * @param \JLM\DailyBundle\Entity\Work $work
+     * @return Intervention
+     */
+    public function setWork(\JLM\DailyBundle\Entity\Work $work = null)
+    {
+        $this->work = $work;
+    
+        return $this;
+    }
+
+    /**
+     * Get work
+     *
+     * @return \JLM\DailyBundle\Entity\Work 
+     */
+    public function getWork()
+    {
+        return $this->work;
+    }
+
+    /**
+     * Set askQuote
+     *
+     * @param \JLM\OfficeBundle\Entity\AskQuote $askQuote
+     * @return Intervention
+     */
+    public function setAskQuote(\JLM\OfficeBundle\Entity\AskQuote $askQuote = null)
+    {
+        $this->askQuote = $askQuote;
+    
+        return $this;
+    }
+
+    /**
+     * Get askQuote
+     *
+     * @return \JLM\OfficeBundle\Entity\AskQuote 
+     */
+    public function getAskQuote()
+    {
+        return $this->askQuote;
+    }
+    
+    /**
+     * Test pour les actions suite à reste à faire
+     * @Assert\True(message="Une action reste à faire ne peut pas être lancée si le champ reste à faire est vide")
+     */
+    public function isRestActionValid()
+    {
+    	if (!$this->getRest())
+    	{
+    		if ($this->getAskQuote() !== null || $this->getWork() !== null || $this->getContactCustomer())
+    			return false;
+    	}
+    	return true;
     }
 }

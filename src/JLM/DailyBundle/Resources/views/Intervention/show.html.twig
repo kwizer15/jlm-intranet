@@ -139,31 +139,71 @@
 	 {% if entity.rest %}
 	 <tr>
 	 	<th>Reste à faire</th>
-	 	<td>{{ entity.rest  | nl2br}}</td>
+	 	<td>
+	 		{{ entity.rest  | nl2br}}
+	 		
+	 	</td>
+	 	<td>
 	 		{% set preferother = 0 %}
 			{% block otheraction %}
-			{% if entity.otherAction %}
-				<td><strong>{{ entity.otherAction.type }}</strong>
-				<br><a href="{{ path('task_edit',{'id':entity.otherAction.id}) }}" class="btn">Modifier</a></td>
-			{% else %}
-				<td>
-					{% if preferother == 0 %}
-					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 2 }) }}" class="btn btn-primary">Devis</a>
-					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 3 }) }}" class="btn">Commander matériel</a>
-					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 4 }) }}" class="btn">Contacter client</a>
-					{% elseif preferother == 1 %}
-					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 3 }) }}" class="btn btn-primary">Commander matériel</a>
-					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 2 }) }}" class="btn">Devis</a>
-					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 4 }) }}" class="btn">Contacter client</a>
-					{% else %}
-					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 4 }) }}" class="btn btn-primary">Contacter client</a>
-					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 2 }) }}" class="btn">Devis</a>
-					<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 3 }) }}" class="btn">Commander matériel</a>
+			<div class="btn-group">
+				{# Bouton devis #}
+				{% if entity.askQuote is not null %}
+					{% if entity.askQuote.quotes|length %}
+			    		<a href="#" class="btn {% if preferother == 0 %} btn-primary{% endif %} disabled">
+			    	{% else %}
+			    		<a href="{{ path('intervention_cancelquote',{'id' : entity.id }) }}" class="btn {% if preferother == 0 %} btn-primary{% endif %} active">
+			    	{% endif %}
+			    {% else %}
+			    	<a href="{{ path('intervention_toquote',{'id' : entity.id }) }}" class="btn {% if preferother == 0 %} btn-primary{% endif %}">
+			    {% endif %}
+			    Devis</a>
+				
+				{# Bouton commande #}
+				{% if entity.work is not null %}
+					{% if entity.work.inProgress %}
+			    		<a href="#" class="btn {% if preferother == 1 %} btn-primary{% endif %} disabled">
+			    	{% else %}
+			    		<a href="{{ path('intervention_cancelwork',{'id' : entity.id }) }}" class="btn {% if preferother == 1 %} btn-primary{% endif %} active">
+			    	{% endif %}
+			    {% else %}
+			    	<a href="{{ path('intervention_towork',{'id' : entity.id }) }}" class="btn {% if preferother == 1 %} btn-primary{% endif %}">
+			    {% endif %}
+			    Prévoir intervention</a>
+			    
+				{# Bouton contacter client #}
+				{% if entity.contactCustomer is not null %}
+					{% if entity.contactCustomer %}
+			    		<a href="#" class="btn {% if preferother == 2 %} btn-primary{% endif %} disabled">
+			    	{% else %}
+			    		<a href="{{ path('intervention_cancelcontact',{'id' : entity.id }) }}" class="btn {% if preferother == 2 %} btn-primary{% endif %} active">
+			    	{% endif %}
+			    {% else %}
+			    	<a href="{{ path('intervention_tocontact',{'id' : entity.id }) }}" class="btn {% if preferother == 2 %} btn-primary{% endif %}">
+			    {% endif %}
+			    Contacter client</a>
+
+				</div>
+				{% if entity.askQuote is not null %}
+			 		{% if entity.askQuote.quotes|length %}
+			 		<div>Devis fait :
+			 			<ul>
+						{% for quote in entity.askQuote.quotes %}
+							<li><a href="{{ path('quote_show',{ 'id':quote.id }) }}">{{ quote.number }}</a></li> 
+						{% endfor %}
+						</ul>
+					</div>
 					{% endif %}
-				</td>
-			{% endif %}
+	 			{% endif %}
+	 			{% if entity.work %}
+	 				<div>
+	 					<a href="{{ path('work_show',{'id':entity.work.id}) }}">
+	 					Travaux {% if entity.work.closed %}terminées{% elseif entity.work.inProgress %}en cours{% else %}planifiés{% endif %}
+	 					</a>
+	 				</div>
+	 			{% endif %}
 			{% endblock otheraction %}
-		</td>
+			</td>
 	 	</tr>
 	 {% endif %}
 	 <tr>
@@ -206,18 +246,23 @@
 				Non définie
 			</td>
 			<td>
+				
 				{% set preferbill = 0 %}
 				{% block officeaction %}
+				<div class="btn-group">
 				{% if preferbill < 1 %}
-				<a href="{{ path('intervention_dontbill',{'id' : entity.id }) }}" class="btn btn-primary">Ne pas facturer</a>
-					{% if preferbill == 0 %}
+				{% if preferbill == 0 %}
 					<a href="{{ path('intervention_tobill',{'id' : entity.id }) }}" class="btn">Facturer</a>
 					{% endif %}
+				<a href="{{ path('intervention_dontbill',{'id' : entity.id }) }}" class="btn btn-primary">Ne pas facturer</a>
+					
 				{% else %}
 				<a href="{{ path('intervention_tobill',{'id' : entity.id }) }}" class="btn btn-primary">Facturer</a>
 				<a href="{{ path('intervention_dontbill',{'id' : entity.id }) }}" class="btn">Ne pas facturer</a>
 				{% endif %}
+				</div>
 				{% endblock %}
+				
 			</td>
 			{% endif %}
 	 	</td>

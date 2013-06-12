@@ -19,21 +19,18 @@ abstract class Ask extends UploadDocument
 	/**
 	 * Syndic
 	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Trustee")
-	 * @Assert\NotNull
 	 */
 	private $trustee;
 	
 	/**
 	 * Affaire
 	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Site")
-	 * @Assert\NotNull
 	 */
 	private $site;
 	
 	/**
 	 * Méthode de la demande
 	 * @ORM\ManyToOne(targetEntity="AskMethod")
-	 * @Assert\NotNull
 	 */
 	private $method;
 	

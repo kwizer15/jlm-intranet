@@ -16,6 +16,7 @@ use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\Task;
 use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\TaskType;
+use JLM\OfficeBundle\Entity\AskQuote;
 
 /**
  * Fixing controller.
@@ -93,6 +94,120 @@ class InterventionController extends Controller
 			}
 		}
 		$entity->setMustBeBilled(null);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Crée une demande de devis
+	 * @Route("/{id}/toquote", name="intervention_toquote")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function toquoteAction(Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$ask = new AskQuote;
+		$ask->setCreation(new \DateTime);
+		$maturity = new \DateTime;
+		$maturity->add(new \DateInterval('P15D'));
+		$ask->setMaturity($maturity);
+		$ask->setIntervention($entity);
+		$ask->setAsk($entity->getRest());
+		$em->persist($ask);
+		$entity->setAskQuote($ask);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Supprime une demande de devis
+	 * @Route("/{id}/cancelquote", name="intervention_cancelquote")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function cancelquoteAction(Intervention $entity)
+	{
+		if ($ask = $entity->getAskQuote())
+		{
+			$em = $this->getDoctrine()->getManager();
+			$entity->setAskQuote();
+			$em->remove($ask);
+			$em->persist($entity);
+			$em->flush();
+		}
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Active contacter client
+	 * @Route("/{id}/tocontact", name="intervention_tocontact")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function tocontactAction(Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$entity->setContactCustomer(false);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Supprime une demande de devis
+	 * @Route("/{id}/cancelcontact", name="intervention_cancelcontact")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function cancelcontactAction(Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$entity->setContactCustomer(null);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Créer un ligne travaux
+	 * @Route("/{id}/towork", name="intervention_towork")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function toworkAction(Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$workCat = $em->getRepository('JLMDailyBundle:WorkCategory')->find(1);
+		$workObj = $em->getRepository('JLMDailyBundle:WorkObjective')->find(1);
+		$work = new Work;
+		$work->setCreation(new \DateTime);
+		$work->setPlace($entity->getPlace());
+		$work->setReason($entity->getRest());
+		$work->setDoor($entity->getDoor());
+		$work->setContactName($entity->getContactName());
+		$work->setContactPhones($entity->getContactPhones());
+		$work->setContactEmail($entity->getContactEmail());
+		$work->setPriority(3);
+		$work->setContract($entity->getDoor()->getActualContract().'');
+		$work->setCategory($workCat);
+		$work->setObjective($workObj);
+		$work->setIntervention($entity);
+		$em->persist($work);
+		$entity->setWork($work);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Supprime une ligne travaux
+	 * @Route("/{id}/cancelwork", name="intervention_cancelwork")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function cancelworkAction(Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$work = $entity->getWork();
+		$entity->setWork();
+		$em->remove($work);
 		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));

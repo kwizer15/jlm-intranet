@@ -16,6 +16,7 @@ use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\OfficeBundle\Form\Type\QuoteVariantType;
 use JLM\OfficeBundle\Entity\QuoteLine;
 use JLM\OfficeBundle\Entity\Task;
+use JLM\DailyBundle\Entity\Work;
 
 
 
