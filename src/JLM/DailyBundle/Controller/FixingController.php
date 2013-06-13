@@ -96,16 +96,17 @@ class FixingController extends Controller
 	public function createAction(Request $request, Door $door)
 	{
 		$entity  = new Fixing();
+		$entity->setCreation(new \DateTime);
+		$entity->setDoor($door);
+		$entity->setContract($door->getActualContract());
+		$entity->setPlace($door.'');
+		$entity->setPriority(2);
 		$form = $this->createForm(new FixingType(), $entity);
 		$form->bind($request);
 	
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
-			$entity->setCreation(new \DateTime);
-			$entity->setDoor($door);
-			$entity->setContract($door->getActualContract());
-			$entity->setPlace($door.'');
-			$entity->setPriority(2);
+			
 	
 			$em->persist($entity);
 			$em->flush();
