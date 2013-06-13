@@ -297,13 +297,12 @@ class InterventionController extends Controller
 	 */
 	public function todayAction()
 	{
-		$now = new \DateTime;
-		$begin = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'000000');
-		$end = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'235959');
 		$em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('JLMDailyBundle:Intervention');
 		$intervs = $repo->getToday();
+		
 		$equipment = $em->getRepository('JLMDailyBundle:Equipment')->getToday();
+
 		return array(
 				'inprogress' => $intervs['inprogress'],
 				'fixing' => $intervs['fixing'],
