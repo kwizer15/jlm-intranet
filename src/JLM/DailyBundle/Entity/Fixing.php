@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * JLM\DailyBundle\Entity\Fixing
  *
  * @ORM\Table(name="shifting_fixing")
- * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\InterventionRepository")
+ * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\FixingRepository")
  */
 class Fixing extends Intervention
 {

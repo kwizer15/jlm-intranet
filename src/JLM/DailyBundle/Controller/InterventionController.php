@@ -298,14 +298,14 @@ class InterventionController extends Controller
 	public function todayAction()
 	{
 		$em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('JLMDailyBundle:Intervention');
-		$intervs = $repo->getToday();
+		$intervs = $em->getRepository('JLMDailyBundle:Intervention')->getToday();
+		$fixings = $em->getRepository('JLMDailyBundle:Fixing')->getToGive();
 		
 		$equipment = $em->getRepository('JLMDailyBundle:Equipment')->getToday();
 
 		return array(
 				'inprogress' => $intervs['inprogress'],
-				'fixing' => $intervs['fixing'],
+				'fixing' => $fixings,
 				'equipment' => $equipment,
 				'notclosed' => $intervs['notclosed'],
 				'closed' => $intervs['closed'],
