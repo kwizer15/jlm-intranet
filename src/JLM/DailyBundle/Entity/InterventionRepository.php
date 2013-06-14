@@ -127,33 +127,24 @@ class InterventionRepository extends EntityRepository
 		foreach ($intervs as $interv)
 		{
 			$flag = false;
-			if ($interv->getState() == 3)
+			if ($interv->getState() == 3 && !$flag)
 			{
-				if (!$flag)
-				{
-					$closed[] = $interv;
-					$flag = true;
-				}
+				$closed[] = $interv;
+				$flag = true;
 			}
 			else
 			{
 				foreach ($interv->getShiftTechnicians() as $tech)
 				{
-					if ($tech->getBegin()->format('Y-m-d') == $todaystring)
+					if ($tech->getBegin()->format('Y-m-d') == $todaystring && !$flag)
 					{
-						if (!$flag)
-						{
-							$inprogress[] = $interv;
-							$flag = true;
-						}	
-					}	
+						$inprogress[] = $interv;
+						$flag = true;
+					}
 				}
 			}
 			if (!$flag)
-			{
 				$notclosed[] = $interv;
-				$flag = true;
-			}
 		}
 		return array(
 				'inprogress'	=> $inprogress,
