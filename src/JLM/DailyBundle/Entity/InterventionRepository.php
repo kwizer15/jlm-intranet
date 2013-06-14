@@ -127,7 +127,7 @@ class InterventionRepository extends EntityRepository
 		foreach ($intervs as $interv)
 		{
 			$flag = false;
-			if ($interv->getClosed() && $interv->getMustBeBilled() && (!$interv->getRest() || $interv->getOtherAction()))
+			if ($interv->getState() == 3)
 			{
 				if (!$flag)
 				{
@@ -137,52 +137,17 @@ class InterventionRepository extends EntityRepository
 			}
 			else
 			{
-//				if (sizeof($interv->getShiftTechnicians()) == 0)
-//				{
-//					if ($interv instanceof \JLM\DailyBundle\Entity\Fixing)
-//					{
-//						if (!$flag)
-//						{
-//							$fixing[] = $interv;
-//							$flag = true;
-//						}
-//					}
-//					else {
-//						unset($interv);
-//						$flag = true;
-//					}
-//					elseif ($interv instanceof \JLM\DailyBundle\Entity\Work)
-//					{
-//						if (!$flag)
-//						{
-//							//$work[] = $interv;
-//							$flag = true;
-//						}
-//					}
-//					elseif ($interv instanceof \JLM\DailyBundle\Entity\Maintenance)
-//					{
-//						if (!$flag)
-//						{
-//							//$maintenance[] = $interv;
-//							$flag = true;
-//						}
-//					} 
-//
-//				}
-//				else
-//				{
-					foreach ($interv->getShiftTechnicians() as $tech)
+				foreach ($interv->getShiftTechnicians() as $tech)
+				{
+					if ($tech->getBegin()->format('Y-m-d') == $todaystring)
 					{
-						if ($tech->getBegin()->format('Y-m-d') == $todaystring)
+						if (!$flag)
 						{
-							if (!$flag)
-							{
-								$inprogress[] = $interv;
-								$flag = true;
-							}	
+							$inprogress[] = $interv;
+							$flag = true;
 						}	
-					}
-//				}
+					}	
+				}
 			}
 			if (!$flag)
 			{
