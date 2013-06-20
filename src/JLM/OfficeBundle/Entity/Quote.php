@@ -4,6 +4,7 @@ namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\DailyBundle\Entity\Work;
 
 /**
  * JLM\OfficeBundle\Entity\Quote
@@ -345,5 +346,27 @@ class Quote extends Document
     public function getAsk()
     {
         return $this->ask;
+    }
+    
+    /**
+     * Create Work
+     */
+    public function createWork()
+    {
+    	$work = new Work;
+    	$work->setCreation(new \DateTime);
+    	$work->setDoor($this->getDoor());
+    	$work->setPlace($this->getDoor().'');
+    	if ($this->getAsk() !== null)
+    		$work->setReason($this->getAsk()->getAsk());
+    	$work->setContactName($this->getContactCp());
+    	if ($this->getContact())
+    		$work->setContactPhones(
+    				$this->getContact()->getPerson()->getFixedPhone().chr(10)
+    				.$this->getContact()->getPerson()->getMobilePhone()
+    		);
+    	$work->setPriority(3);
+    	$work->setContract($this->getDoor()->getActualContract().'');
+    	return $work;
     }
 }
