@@ -4,6 +4,7 @@ namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\DailyBundle\Entity\Work;
 
 /**
  * JLM\OfficeBundle\Entity\Order
@@ -175,5 +176,36 @@ class Order
     public function getWork()
     {
         return $this->work;
+    }
+    
+    /**
+     * Create from QuoteVariant
+     */
+    public static function createFromWork(Work $work)
+    {
+    	$order = new Order;
+    	$order->setCreation(new \DateTime);
+    	$order->setWork($work);
+    	if ($variant = $work->getQuote())
+    	{
+    		$vlines = $variant->getLines();
+    		foreach ($vlines as $vline)
+    		{
+    			$flag = true;
+    			if ($product = $vline->getProduct())
+    			if ($category = $product->getCategory())
+    			if ($category->getId() == 2)
+    				$flag = false;
+    			if ($flag)
+    			{
+    				$oline = new OrderLine;
+    				$oline->setReference($vline->getReference());
+    				$oline->setQuantity($vline->getQuantity());
+    				$oline->setDesignation($vline->getDesignation());
+    				$entity->addLine($oline);
+    			}
+    		}
+    	}
+    	return $order;
     }
 }

@@ -80,9 +80,9 @@ class InterventionController extends Controller
 	 */
 	public function cancelbillAction(Intervention $entity)
 	{
-		$em = $this->getDoctrine()->getManager();
 		if ($entity->getMustBeBilled())
 		{
+			$em = $this->getDoctrine()->getManager();
 			if ($entity->getBill() !== null)
 			{
 				// 	annuler la facture existante
@@ -92,10 +92,10 @@ class InterventionController extends Controller
 				$entity->setBill();
 				$em->persist($bill);
 			}
+			$entity->setMustBeBilled(null);
+			$em->persist($entity);
+			$em->flush();
 		}
-		$entity->setMustBeBilled(null);
-		$em->persist($entity);
-		$em->flush();
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
@@ -108,12 +108,7 @@ class InterventionController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$ask = new AskQuote;
-		$ask->setCreation(new \DateTime);
-		$maturity = new \DateTime;
-		$maturity->add(new \DateInterval('P15D'));
-		$ask->setMaturity($maturity);
-		$ask->setIntervention($entity);
-		$ask->setAsk($entity->getRest());
+		$ask->populateFromIntervention($entity);
 		$em->persist($ask);
 		$entity->setAskQuote($ask);
 		$em->persist($entity);
@@ -128,7 +123,7 @@ class InterventionController extends Controller
 	 */
 	public function cancelquoteAction(Intervention $entity)
 	{
-		if ($ask = $entity->getAskQuote())
+		if ($ask = $entity->getAskQuote() !== null)
 		{
 			$em = $this->getDoctrine()->getManager();
 			$entity->setAskQuote();
@@ -178,18 +173,9 @@ class InterventionController extends Controller
 		$workCat = $em->getRepository('JLMDailyBundle:WorkCategory')->find(1);
 		$workObj = $em->getRepository('JLMDailyBundle:WorkObjective')->find(1);
 		$work = new Work;
-		$work->setCreation(new \DateTime);
-		$work->setPlace($entity->getPlace());
-		$work->setReason($entity->getRest());
-		$work->setDoor($entity->getDoor());
-		$work->setContactName($entity->getContactName());
-		$work->setContactPhones($entity->getContactPhones());
-		$work->setContactEmail($entity->getContactEmail());
-		$work->setPriority(3);
-		$work->setContract($entity->getDoor()->getActualContract().'');
+		$work->populateFromIntervention($entity);
 		$work->setCategory($workCat);
 		$work->setObjective($workObj);
-		$work->setIntervention($entity);
 		$em->persist($work);
 		$entity->setWork($work);
 		$em->persist($entity);
@@ -512,6 +498,7 @@ class InterventionController extends Controller
 	
 	/**
 	 * Mise à jour des tâches facturation
+	 * (à faire évoluer pour les devis, plannification et contact)
 	 *
 	 * @Route("/upgradeoffice", name="intervention_upgradeoffice")
 	 * @Secure(roles="ROLE_USER")

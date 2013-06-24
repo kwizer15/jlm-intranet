@@ -431,16 +431,4 @@ class QuoteVariant
     {
         return $this->work;
     }
-    
-    /**
-     * Create Work
-     */
-    public function createWork()
-    {
-    	$work = $this->getQuote()->createWork();
-    	$work->setQuote($this);
-    	if ($work->getReason() === null)
-    		$work->setReason($this->getintro());
-    	return $work;
-    }
 }

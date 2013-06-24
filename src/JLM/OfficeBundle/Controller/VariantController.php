@@ -410,7 +410,8 @@ class VariantController extends Controller
 		if ($entity->getWork() === null)
 		{			
 			// Création de la ligne travaux pré-remplie
-			$work = $entity->createWork();
+			$work = Work::createFromQuoteVariant($entity);
+			// ajouter la fiche travaux
 			$work->setCategory($em->getRepository('JLMDailyBundle:WorkCategory')->find(1));
 			$work->setObjective($em->getRepository('JLMDailyBundle:WorkObjective')->find(1));
 			$em->persist($work);

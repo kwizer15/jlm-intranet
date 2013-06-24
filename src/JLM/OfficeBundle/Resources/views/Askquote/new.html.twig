@@ -11,3 +11,14 @@
     </filedset>
 </form>
 {% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset("bundles/jlmoffice/js/askquote.js") }}"></script>
+<script>
+$("body").askquote({
+	 autoSource:'{{ path('autocomplete') }}',
+	 autoSourceDoor:'{{ path('autocomplete_doorsite') }}'
+});
+</script>
+{% endblock %}

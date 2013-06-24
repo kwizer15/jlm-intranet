@@ -349,24 +349,44 @@ class Quote extends Document
     }
     
     /**
-     * Create Work
+     * Creation depuis une demande de devis
      */
-    public function createWork()
+    public static function createFromAskQuote(AskQuote $askquote)
     {
-    	$work = new Work;
-    	$work->setCreation(new \DateTime);
-    	$work->setDoor($this->getDoor());
-    	$work->setPlace($this->getDoor().'');
-    	if ($this->getAsk() !== null)
-    		$work->setReason($this->getAsk()->getAsk());
-    	$work->setContactName($this->getContactCp());
-    	if ($this->getContact())
-    		$work->setContactPhones(
-    				$this->getContact()->getPerson()->getFixedPhone().chr(10)
-    				.$this->getContact()->getPerson()->getMobilePhone()
-    		);
-    	$work->setPriority(3);
-    	$work->setContract($this->getDoor()->getActualContract().'');
-    	return $work;
+    	$quote = new Quote();
+    	$quote->setCreation(new \DateTime);
+    	if (($door = $askquote->getDoor()) !== null)
+    	{
+    		$quote->setDoor($door);
+    		$quote->setDoorCp($door->toString());
+    		$quote->setVat($door->getSite()->getVat()->getRate());
+    	}
+    	else
+    	{
+    		$site = $askquote->getSite();
+    		$quote->setDoorCp($site->toString());
+    		$quote->setVat($site->getVat()->getRate());
+    	}
+    	$quote->setTrustee($trustee = $askquote->getTrustee());
+    	$quote->setTrusteeName($trustee->getName());
+    	$quote->setTrusteeAddress($trustee->getAddress().'');
+    	$quote->setContact($askquote->getPerson());
+    	$quote->setContactCp($askquote->getPerson().'');
+    	$quote->setAsk($askquote);
+    	return $quote;
+    }
+    
+    /**
+     * Generation du numéro de devis
+     */
+    public function generateNumber($lastnumber)
+    {
+    	$n = $lastnumber + 1;
+    	$number = $this->getCreation()->format('ym');
+    	for ($i = strlen($n); $i < 4 ; $i++)
+    		$number.= '0';
+    		$number.= $n;
+    	$this->setNumber($number);
+    	return $number;
     }
 }

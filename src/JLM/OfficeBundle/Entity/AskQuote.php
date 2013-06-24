@@ -209,4 +209,20 @@ class AskQuote extends Ask
     {
         return $this->quotes;
     }
+    
+    /**
+     * Populate from intervention
+     * 
+     * @param Intervention $interv
+     * @return void
+     */
+    public function populateFromIntervention(Intervention $interv)
+    {
+    	$this->setCreation(new \DateTime);
+    	$maturity = new \DateTime;
+    	$maturity->add(new \DateInterval('P15D'));
+    	$this->setMaturity($maturity);
+    	$this->setIntervention($interv);
+    	$this->setAsk($interv->getRest());
+    }
 }

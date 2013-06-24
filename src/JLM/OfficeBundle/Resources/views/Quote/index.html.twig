@@ -47,7 +47,4 @@
 		<li{% if page == nbPages %} class="disabled"{% endif %}><a href="{% if state is null %}{{ path('quote_page',{ 'page' : page+1 }) }}{% else %}{{ path('quote_state',{ 'page' : page+1 , 'state' : state }) }}{% endif %}">»</a></li>
 	</ul>
 </div>
-<div class="form-actions">
-<a href="{{ path('quote_new') }}" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer un nouveau devis</a>
-</div>
 {% endblock %}

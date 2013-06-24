@@ -3,6 +3,7 @@ namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JLM\OfficeBundle\Entity\QuoteVariant;
 
 /**
  * Plannification de travaux
@@ -172,5 +173,72 @@ class Work extends Intervention
     public function getIntervention()
     {
         return $this->intervention;
+    }
+    
+    /**
+     * Populate from intervention
+     * 
+     * @param Intervention $interv
+     * @return void
+     */
+    public function populateFromIntervention(Intervention $interv)
+    {
+    	$this->setCreation(new \DateTime);
+    	$this->setPlace($interv->getPlace());
+    	$this->setReason($interv->getRest());
+    	$this->setDoor($interv->getDoor());
+    	$this->setContactName($interv->getContactName());
+    	$this->setContactPhones($interv->getContactPhones());
+    	$this->setContactEmail($interv->getContactEmail());
+    	$this->setPriority(3);
+    	$this->setContract($interv->getDoor()->getActualContract().'');
+    	$this->setIntervention($interv);
+    }
+    
+    public static function createFromIntervention(Intervention $interv)
+    {
+    	$work = new Work;
+    	$work->populateFromIntervention($interv);
+    	return $work;
+    }
+    
+    /**
+     * Populate from QuoteVariant
+     * @param QuoteVariant $variant
+     * @return void
+     */
+    public function populateFromQuoteVariante(QuoteVariant $variant)
+    {
+    	$quote = $variant->getQuote();
+    	$this->setCreation(new \DateTime);
+    	$this->setDoor($quote->getDoor());
+    	$this->setPlace($quote->getDoor().'');
+    	if ($quote->getAsk() !== null)
+    		$this->setReason($quote->getAsk()->getAsk());
+    	$this->setContactName($quote->getContactCp());
+    	if ($quote->getContact())
+    		$this->setContactPhones(
+    				$quote->getContact()->getPerson()->getFixedPhone().chr(10)
+    				.$quote->getContact()->getPerson()->getMobilePhone()
+    		);
+    	$this->setPriority(3);
+    	$this->setContract($quote->getDoor()->getActualContract().'');
+    	$this->setQuote($variant);
+    	
+    	if ($this->getReason() === null)
+    		$this->setReason($variant->getIntro());
+    }
+    
+    /**
+     * Create from QuoteVariant
+     * 
+     * @param QuoteVariant $variant
+     * @return \JLM\DailyBundle\Entity\Work
+     */
+    public static function createFromQuoteVariant(QuoteVariant $variant)
+    {
+    	$work = new Work;
+    	$work->populateFromQuoteVariant($variant);
+    	return $work;
     }
 }

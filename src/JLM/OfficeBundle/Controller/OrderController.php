@@ -86,30 +86,7 @@ class OrderController extends Controller
 	 */
 	public function newAction(Work $work)
 	{
-		$entity = new Order();
-		$entity->setWork($work);
-		if ($variant = $work->getQuote())
-		{
-			$vlines = $variant->getLines();
-			foreach ($vlines as $vline)
-			{
-				$flag = true;
-				if ($product = $vline->getProduct())
-					if ($category = $product->getCategory())
-						if ($category->getId() == 2)
-							$flag = false;
-				if ($flag)
-				{
-					$oline = new OrderLine;
-					$oline->setReference($vline->getReference());
-					$oline->setQuantity($vline->getQuantity());
-					$oline->setDesignation($vline->getDesignation());
-					$entity->addLine($oline);
-				}
-			}
-		}
-		else
-			$entity->addLine(new OrderLine);
+		$entity = Order::createFromWork($work);
 		$form  = $this->createForm(new OrderType(), $entity);
 		return array(
 				'entity' => $entity,

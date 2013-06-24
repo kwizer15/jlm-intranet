@@ -652,18 +652,17 @@ class Bill extends Document
      */
     public function populateFromIntervention(Intervention $interv)
     {
+    	$this->setIntervention($interv);
     	if ($interv->getType() == 'work')
     	{
     		if ($interv->getQuote() !== null)
+    		{
     			$this->populateFromQuoteVariant($interv->getQuote());
+    			return $this;
+    		}
     	}
-    	else
-    	{
-    		$this->populateFromDoor($interv->getDoor());
-    		$this->setIntro('Suite à notre intervention du '.$interv->getLastDate()->format('d/m/Y'));
-    	}
-    	$this->setIntervention($interv);
-    	
+    	$this->populateFromDoor($interv->getDoor());
+    	$this->setIntro('Suite à notre intervention du '.$interv->getLastDate()->format('d/m/Y'));
     	return $this;
     }
     

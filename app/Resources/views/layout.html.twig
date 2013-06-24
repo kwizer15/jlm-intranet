@@ -4,6 +4,7 @@
 
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('bundles/jlmdefault/css/bootstrap.min.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ asset('bundles/jlmdefault/css/bootstrap-responsive.min.css') }}" type="text/css">
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" type="text/css">
 	<link rel="stylesheet" href="{{ asset('bundles/jlmdefault/css/style.css') }}" type="text/css">
 {% endblock %}
@@ -32,7 +33,9 @@
                         <li class="dropdown-submenu">
 		        			<a tabindex="-1" href="{{ path('quote') }}">Devis</a>
 		        			<ul class="dropdown-menu">
-		        				<li><a href="{{ path('quote_new') }}"><i class="icon-plus-sign"></i> Nouveau devis</a></li>
+		        				<li><a href="{{ path('askquote_new') }}"><i class="icon-plus-sign"></i> Nouvelle demande de devis</a></li>
+		        				<li><a href="{{ path('askquote') }}"><i class="icon-list"></i> Liste des demandes de devis</a></li>
+		        			{#	<li><a href="{{ path('quote_new') }}"><i class="icon-plus-sign"></i> Nouveau devis</a></li> #}
 		        				<li class="divider"></li>
 		        				{% render "JLMOfficeBundle:Quote:sidebar" %}
 		        			</ul>
