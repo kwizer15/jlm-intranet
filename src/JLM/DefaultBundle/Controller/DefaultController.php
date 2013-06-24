@@ -86,4 +86,14 @@ class DefaultController extends Controller
 	
 		return array();
 	}
+	
+	/**
+	 * @Route("/robot.txt")
+	 * @Template("JLMDefaultBundle:Default:robot.txt.twig")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function robotAction()
+	{
+		return array();
+	}
 }
