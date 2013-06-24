@@ -691,6 +691,35 @@ class Door
     	return null;
     }
     
+    public function getCountMaintenance($year = null)
+    {
+    	if ($year === null)
+    	{
+    		$d = new \DateTime;
+    		$year  = $d->format('Y');
+    		unset($d);
+    	}
+    	$count = 0;
+    	foreach($this->interventions as $interv)
+    	{
+    		if ($interv instanceof \JLM\DailyBundle\Entity\Maintenance)
+    		{
+    			if ($interv->getClosed())
+    			{
+    				$shifts = $interv->getShiftTechnicians();
+    				$date = null;
+    				foreach ($shifts as $shift)
+    				{
+    					$dateShift = ($shift->getEnd() === null) ? $shift->getBegin() : $shift->getEnd();
+    					if ($dateShift->format('Y') == $year)
+    						$count++;
+    				}
+    			}
+    		}
+    	}
+    	return $count;
+    }
+    
     /**
      * Get billingPrelabel
      * 

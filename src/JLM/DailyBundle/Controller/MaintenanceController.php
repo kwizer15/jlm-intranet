@@ -133,9 +133,11 @@ class MaintenanceController extends Controller
 		foreach ($doors as $door)
 		{
 			if ($door->getActualContract() !== null 
-				&& $door->getTrustee()->getId() != 1 
-				&& $door->getTrustee()->getId() != 2 )
-				if ($door->getLastMaintenance() < $date && $door->getNextMaintenance() === null)
+					&& $door->getTrustee()->getId() != 1 
+					&& $door->getTrustee()->getId() != 2 )
+				if ($door->getLastMaintenance() < $date 
+						&& $door->getNextMaintenance() === null 
+						&& $door->getCountMaintenance() < 2)
 				{
 					$main = new Maintenance;
 					$main->setCreation(new \DateTime);
