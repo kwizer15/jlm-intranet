@@ -63,9 +63,11 @@ class AskquoteController extends Controller
 		$entity = new AskQuote;
 		$form = $this->createForm(new AskQuoteType,$entity);
 		
-		if ($this->getRequest()->isMethod('POST')) {
+		if ($this->getRequest()->isMethod('POST'))
+		{
 			$form->bind($this->getRequest());
-			if ($form->isValid()) {
+			if ($form->isValid())
+			{
 				if ($entity->getMaturity() === null)
 				{
 					$matu = clone $entity->getCreation();
@@ -74,7 +76,7 @@ class AskquoteController extends Controller
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($entity);
 				$em->flush();
-				$this->redirect($this->generateUrl('askquote_show', array('id' => $entity->getId())));
+				return $this->redirect($this->generateUrl('askquote_show', array('id' => $entity->getId())));
 			}
 		}
 		

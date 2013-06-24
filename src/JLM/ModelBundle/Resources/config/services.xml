@@ -46,6 +46,10 @@
     <argument type="service" id="doctrine.orm.entity_manager"/>
     <tag name="form.type" alias="trustee_hidden" />
 </service>
+<service id="jlm_model.type.door_select" class="JLM\ModelBundle\Form\Type\DoorSelectType">
+    <argument type="service" id="doctrine.orm.entity_manager"/>
+    <tag name="form.type" alias="door_select" />
+</service>
 </services>
     <!--
     <parameters>

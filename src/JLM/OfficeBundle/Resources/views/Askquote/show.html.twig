@@ -20,7 +20,9 @@
 	</div>
 </div>
 <div class="form-actions">
-<a href="/{{ entity.webPath }}" class="btn btn-info"><i class="icon-file icon-white"></i> Fichier joint</a>
+{% if entity.webPath %}<a href="/{{ entity.webPath }}" class="btn btn-info"><i class="icon-file icon-white"></i> Fichier joint</a>
+{% else %}<a href="#" class="btn btn-info disabled"><i class="icon-file icon-white"></i> Pas de fichier joint</a>
+{% endif %}
 <a href="{{ path('quote_newfromask',{'id':entity.id}) }}" class="btn btn-success"><i class="icon-white icon-plus-sign"></i> Nouveau devis</a>
 </div>
 {% if entity.quotes|length %}
