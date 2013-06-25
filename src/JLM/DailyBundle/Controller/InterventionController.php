@@ -349,17 +349,22 @@ class InterventionController extends Controller
 	public function printdoorAction($id)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$shifts = $em->getRepository('JLMDailyBundle:Intervention')->createQueryBuilder('a')
-		->select('b')
-		->from('JLMDailyBundle:Intervention','a')
-		->leftJoin('a.shiftTechnicians','b')
-		->leftJoin('b.technician','c')
-		->leftJoin('a.door','d')
-		->where('d.id = ?1')
-		->orderBy('b.begin')
-		->setParameter(1,$id);
+		$intervs = $em->getRepository('JLMDailyBundle:Intervention')
+			->createQueryBuilder('a.id')
+			->select('a')
+			->leftJoin('a.door','d')
+			->where('d.id = ?1')
+			->setParameter(1,$id)
+			->getQuery()
+			->getArrayResult();
 		
-		print_r($shifts->getQuery()->getArrayResult()); exit;
+		print_r($intervs); exit;
+		$shifts = $em->getRepository('JLMDailyBundle:ShiftTechnician')
+			->createQueryBuilder('a')
+			->select('a')
+			->leftJoin('a.shifting','b')
+			->where('b.id in ?1')
+			->setParameter(1,$intervs);
 		
 	}
 }
