@@ -8,7 +8,7 @@ class Door extends FPDFext
 	private $entities;
 	private $door;
 	
-	public static function get(\DateTime $date, $entities, $standby)
+	public static function get($door, $entities)
 	{
 		$pdf = new self();
 		$pdf->_init();
@@ -36,7 +36,7 @@ class Door extends FPDFext
 		$this->setFont('Arial','',10);
 	}
 	
-	private function _show($entity,$date)
+	private function _show($entity)
 	{
 		$shifting = $entity->getShifting();
 		$types = array(
