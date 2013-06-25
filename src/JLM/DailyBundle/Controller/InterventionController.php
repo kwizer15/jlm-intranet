@@ -339,4 +339,26 @@ class InterventionController extends Controller
 		
 		return $response;
 	}
+	
+	/**
+	 * Imprime les intervs d'une intallation
+	 *
+	 * @Route("/printdoor/{id}", name="intervention_printdoor")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function printdoorAction($id)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$shifts = $em->getRepository('JLMDailyBundle:Intervention')->createQueryBuilder('a')
+		->select('b')
+		->leftJoin('a.shiftTechnician','b')
+		->leftJoin('b.technician','c')
+		->leftJoin('a.door','d')
+		->where('d.id = ?1')
+		->orderBy('b.begin')
+		->setParameter(1,$id);
+		
+		print_r($shifts->getQuery()->getArrayResult()); exit;
+		
+	}
 }
