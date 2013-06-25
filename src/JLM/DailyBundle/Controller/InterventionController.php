@@ -362,7 +362,7 @@ class InterventionController extends Controller
 		{
 			$i[] = $interv['id'];
 		}
-		
+		echo 'test1<br>';
 
 		$shifts = $em->getRepository('JLMDailyBundle:ShiftTechnician')
 			->createQueryBuilder('a')
