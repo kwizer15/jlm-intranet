@@ -48,10 +48,14 @@ class Door extends FPDFext
 		$datas[1] = $types[$shifting->getType()];
 		$datas[2] = ($shifting->getContract() == 'Hors contrat') ? 'HC' : $shifting->getContract();
 		$datas[3] = $shifting->getReason();
-		$datas[4] = 'rapport : '.$shifting->getReport();
-		if ($shifting->getRest())
-			$datas[4] .= chr(10).chr(10).'Reste à faire :'.chr(10).$shifting->getRest();
-		
+		if ($entity->getComment())
+			$datas[4] = $entity->getComment();
+		else
+		{
+			$datas[4] = 'rapport : '.$shifting->getReport();
+			if ($shifting->getRest())
+				$datas[4] .= chr(10).chr(10).'Reste à faire :'.chr(10).$shifting->getRest();
+		}
 		$datas[5] = $entity->getTechnician().'';
 		$this->row($datas,5,1,false);
 	}
