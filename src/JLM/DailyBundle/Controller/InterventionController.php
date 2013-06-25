@@ -346,7 +346,7 @@ class InterventionController extends Controller
 	 * @Route("/printdoor/{id}", name="intervention_printdoor")
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function printdoorAction($id)
+	public function printdoorAction(Door $door)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$intervs = $em->getRepository('JLMDailyBundle:Intervention')
@@ -354,7 +354,7 @@ class InterventionController extends Controller
 			->select('a.id')
 			->leftJoin('a.door','d')
 			->where('d.id = ?1')
-			->setParameter(1,$id)
+			->setParameter(1,$door->getId())
 			->getQuery()
 			->getArrayResult();
 		$i = array();
@@ -372,12 +372,16 @@ class InterventionController extends Controller
 			->orderBy('a.begin','desc');
 		$shifts = $qb->getQuery()
 			->getResult();
-		echo 'test<br>';
-		foreach ($shifts as $shift)
-		{
-			echo $shift->getBegin()->format('d/m/Y').' - '.$shift->getTechnician().'<br>';
-		}
-		exit;
-		return array('entities'=>$shifts);
+		
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/pdf');
+		$response->headers->set('Content-Disposition', 'inline; filename='.$door->getId().'.pdf');
+		$response->setContent($this->render('JLMDailyBundle:Intervention:printdoor.pdf.php',
+				array('door' => $door,
+					  'entities' => $shifts,
+				)));
+		
+		return $response;
+		
 	}
 }
