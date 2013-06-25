@@ -350,8 +350,8 @@ class InterventionController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$intervs = $em->getRepository('JLMDailyBundle:Intervention')
-			->createQueryBuilder('a.id')
-			->select('a')
+			->createQueryBuilder('a')
+			->select('a.id')
 			->leftJoin('a.door','d')
 			->where('d.id = ?1')
 			->setParameter(1,$id)
