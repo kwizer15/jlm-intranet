@@ -372,7 +372,7 @@ class InterventionController extends Controller
 			->orderBy('a.begin','desc')
 			->getQuery()
 			->getResult();
-		
+		echo 'test<br>';
 		foreach ($shifts as $shift)
 		{
 			echo $shift->getBegin()->format('d/m/Y').' - '.$shift->getTechnician().'<br>';
