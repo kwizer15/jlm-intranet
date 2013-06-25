@@ -365,7 +365,7 @@ class InterventionController extends Controller
 
 		$qb = $em->getRepository('JLMDailyBundle:ShiftTechnician')
 			->createQueryBuilder('a');
-		$qb->select('a')
+		$qb->select('a,b')
 			->leftJoin('a.shifting','b')
 			->add('where',$qb->expr()->in('b.id',$i))
 			->orderBy('a.begin','desc');
