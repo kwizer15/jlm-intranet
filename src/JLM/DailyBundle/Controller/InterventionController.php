@@ -368,9 +368,8 @@ class InterventionController extends Controller
 			->createQueryBuilder('a')
 			->select('a')
 			->leftJoin('a.shifting','b')
-			->where('b.id in ?1')
+			->in('b.id',$i)
 			->orderBy('a.begin','desc')
-			->setParameter(1,$i)
 			->getQuery()
 			->getResult();
 		
