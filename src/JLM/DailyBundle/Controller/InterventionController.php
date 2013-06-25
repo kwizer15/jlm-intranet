@@ -357,14 +357,28 @@ class InterventionController extends Controller
 			->setParameter(1,$id)
 			->getQuery()
 			->getArrayResult();
+		$i = array();
+		foreach ($intervs as $interv)
+		{
+			$i[] = $interv['id'];
+		}
 		
-		print_r($intervs); exit;
+
 		$shifts = $em->getRepository('JLMDailyBundle:ShiftTechnician')
 			->createQueryBuilder('a')
 			->select('a')
 			->leftJoin('a.shifting','b')
 			->where('b.id in ?1')
-			->setParameter(1,$intervs);
+			->orderBy('a.begin','desc')
+			->setParameter(1,$i)
+			->getQuery()
+			->getResult();
 		
+		foreach ($shifts as $shift)
+		{
+			echo $shift->getBegin()->format('d/m/Y').' - '.$shift->getTechnician().'<br>';
+		}
+		exit;
+		return array('entities'=>$shifts);
 	}
 }
