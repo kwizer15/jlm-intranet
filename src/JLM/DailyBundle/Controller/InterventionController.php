@@ -364,13 +364,13 @@ class InterventionController extends Controller
 		}
 		echo 'test1<br>';
 
-		$shifts = $em->getRepository('JLMDailyBundle:ShiftTechnician')
-			->createQueryBuilder('a')
-			->select('a')
+		$qb = $em->getRepository('JLMDailyBundle:ShiftTechnician')
+			->createQueryBuilder('a');
+		$qb->select('a')
 			->leftJoin('a.shifting','b')
-			->in('b.id',$i)
-			->orderBy('a.begin','desc')
-			->getQuery()
+			->add('where',$qb->expr()->in('b.id',$i))
+			->orderBy('a.begin','desc');
+		$shifts = $qb->getQuery()
 			->getResult();
 		echo 'test<br>';
 		foreach ($shifts as $shift)
