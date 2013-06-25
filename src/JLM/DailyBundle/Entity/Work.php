@@ -4,6 +4,7 @@ namespace JLM\DailyBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JLM\OfficeBundle\Entity\QuoteVariant;
+use JLM\OfficeBundle\Entity\Order;
 
 /**
  * Plannification de travaux
@@ -207,7 +208,7 @@ class Work extends Intervention
      * @param QuoteVariant $variant
      * @return void
      */
-    public function populateFromQuoteVariante(QuoteVariant $variant)
+    public function populateFromQuoteVariant(QuoteVariant $variant)
     {
     	$quote = $variant->getQuote();
     	$this->setCreation(new \DateTime);
@@ -226,7 +227,7 @@ class Work extends Intervention
     	$this->setQuote($variant);
     	
     	if ($this->getReason() === null)
-    		$this->setReason($variant->getIntro());
+    		$this->setReason($variant->getIntro());	
     }
     
     /**

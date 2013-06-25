@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block reference %}
-	 	{% if entity.quote %}Selon devis n°{{ entity.quote.number }}<br>{% endif %}
+	 	{% if entity.quote %}Selon devis n°<a href="{{ path('quote_show',{'id':entity.quote.quote.id}) }}">{{ entity.quote.number }}</a><br>{% endif %}
 {% endblock %}
 
 {% block report %}
@@ -20,6 +20,9 @@
 {% endblock %}
 
 {% block actions %}
+	{% if entity.order %}<a href="{{ path('order_show',{'id': entity.order.id }) }}" class="btn btn-info">Voir la fiche matériel</a>
+	{% else %}<a href="{{ path('order_new',{'id': entity.id }) }}" class="btn btn-info">Créer la fiche matériel</a>
+	{% endif %}
     <a href="{{ path('work_list') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
     <a href="{{ path('work_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a> 
 	<a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-primary"><i class="icon-ok icon-white"></i> {% if not entity.closed %}Cloturer{% else %}Editer cloture{% endif %}</a>

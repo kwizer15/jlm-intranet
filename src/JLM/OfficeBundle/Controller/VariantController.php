@@ -16,6 +16,7 @@ use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\OfficeBundle\Form\Type\QuoteVariantType;
 use JLM\OfficeBundle\Entity\QuoteLine;
 use JLM\OfficeBundle\Entity\Task;
+use JLM\OfficeBundle\Entity\Order;
 use JLM\DailyBundle\Entity\Work;
 
 
@@ -411,9 +412,17 @@ class VariantController extends Controller
 		{			
 			// Création de la ligne travaux pré-remplie
 			$work = Work::createFromQuoteVariant($entity);
-			// ajouter la fiche travaux
 			$work->setCategory($em->getRepository('JLMDailyBundle:WorkCategory')->find(1));
 			$work->setObjective($em->getRepository('JLMDailyBundle:WorkObjective')->find(1));
+			$order = Order::createFromWork($work);
+			$em->persist($order);
+			$olines = $order->getLines();
+			foreach ($olines as $oline)
+			{
+				$oline->setOrder($order);
+				$em->persist($oline);
+			}
+			$work->setOrder($order);
 			$em->persist($work);
 			$entity->setWork($work);
 		}

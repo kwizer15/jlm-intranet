@@ -3,7 +3,8 @@
 {% block content %}
 <h1>Fiche travaux</h1>
 <strong>{{ entity.creation | date('d/m/Y') }}</strong><br><br>
-<strong>{{ entity.place |nl2br }}</strong>
+<strong>{{ entity.work.place |nl2br }}</strong>
+{% if entity.lines|length %}
 <table class="table table-stripped">
 	<thead>
 		<tr>
@@ -22,9 +23,11 @@
 	{% endfor %}
 	</tbody>
 </table>
-
+{% else %}
+<h2><small>Pas de matériel</small></h2>
+{% endif %}
 <div class="form-actions">
-	<a href="{{ path('order') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	<a href="{{ path('work_show',{'id':entity.work.id}) }}" class="btn"><i class="icon-arrow-left"></i> Retour aux travaux</a>
 	<a href="{{ path('order_print',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer</a>
 {% if entity.state < 1 %}
 	<a href="{{ path('order_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>

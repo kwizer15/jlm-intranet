@@ -181,11 +181,10 @@ class Order
     /**
      * Create from QuoteVariant
      */
-    public static function createFromWork(Work $work)
+    public function populateFromWork(Work $work)
     {
-    	$order = new Order;
-    	$order->setCreation(new \DateTime);
-    	$order->setWork($work);
+    	$this->setCreation(new \DateTime);
+    	$this->setWork($work);
     	if ($variant = $work->getQuote())
     	{
     		$vlines = $variant->getLines();
@@ -202,10 +201,17 @@ class Order
     				$oline->setReference($vline->getReference());
     				$oline->setQuantity($vline->getQuantity());
     				$oline->setDesignation($vline->getDesignation());
-    				$entity->addLine($oline);
+    				$this->addLine($oline);
     			}
     		}
     	}
+    	return $this;
+    }
+    
+    public static function createFromWork(Work $work)
+    {
+    	$order = new Order;
+    	$order->populateFromWork($work);
     	return $order;
     }
 }

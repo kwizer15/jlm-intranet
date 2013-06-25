@@ -12,7 +12,6 @@ class OrderType extends AbstractType
 	{
 		$builder
 		->add('work','intervention_hidden')
-		->add('creation','datepicker',array('label'=>'Date'))
 		->add('lines','collection',array('prototype'=>true,'allow_add'=>true,'allow_delete'=>true,'type'=>'order_line'))
 		;
 	}
