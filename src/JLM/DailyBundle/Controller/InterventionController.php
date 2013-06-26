@@ -349,7 +349,7 @@ class InterventionController extends Controller
 	public function printdoorAction($id)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$door = $em->getRepostory('JLMModelBundle:Door')->find($id);
+		$door = $em->getRepository('JLMModelBundle:Door')->find($id);
 		$entities = $em->getRepository('JLMDailyBundle:Intervention')
 			->createQueryBuilder('a')
 			->select('t')
