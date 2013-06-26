@@ -352,7 +352,7 @@ class InterventionController extends Controller
 		$door = $em->getRepository('JLMModelBundle:Door')->find($id);
 		$entities = $em->getRepository('JLMDailyBundle:Intervention')
 			->createQueryBuilder('a')
-			->select('t')
+			->select('a,d,t')
 			->leftJoin('a.door','d')
 			->leftJoin('a.shiftTechnicians','t')
 			->where('d.id = ?1')
@@ -376,6 +376,7 @@ class InterventionController extends Controller
 //			->getResult();
 		
 //		$intervs = $door->getInterventions();
+echo get_class($entities[0]); exit;
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$door->getId().'.pdf');
