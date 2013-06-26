@@ -346,19 +346,20 @@ class InterventionController extends Controller
 	 * @Route("/printdoor/{id}", name="intervention_printdoor")
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function printdoorAction(Door $door)
+	public function printdoorAction($id)
 	{
-//		$em = $this->getDoctrine()->getManager();
-//		$intervs = $em->getRepository('JLMDailyBundle:Intervention')
-//			->createQueryBuilder('a')
-//			->select('a')
-//			->leftJoin('a.door','d')
-//			->leftJoin('a.shiftTechnicians','t')
-//			->where('d.id = ?1')
-//			->orderBy('t.begin','desc')
-//			->setParameter(1,$door->getId())
-//			->getQuery()
-//			->getResult();
+		$em = $this->getDoctrine()->getManager();
+		$door = $em->getRepostory('JLMModelBundle:Door')->find($id);
+		$entities = $em->getRepository('JLMDailyBundle:Intervention')
+			->createQueryBuilder('a')
+			->select('t')
+			->leftJoin('a.door','d')
+			->leftJoin('a.shiftTechnicians','t')
+			->where('d.id = ?1')
+			->orderBy('t.begin','desc')
+			->setParameter(1,$id)
+			->getQuery()
+			->getResult();
 //		$i = array();
 //		foreach ($intervs as $interv)
 //		{
@@ -374,17 +375,14 @@ class InterventionController extends Controller
 //		$shifts = $qb->getQuery()
 //			->getResult();
 		
-		$intervs = $door->getInterventions();
-		$entities = array();
-		foreach ($intervs as $interv)
-			$entities = array_merge($entities,$interv->getShiftTechnicians());
-		echo sizeof($entities); exit;
+//		$intervs = $door->getInterventions();
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$door->getId().'.pdf');
 		$response->setContent($this->render('JLMDailyBundle:Intervention:printdoor.pdf.php',
-				array('door' => $door,
-					  'entities' => $shifts,
+				array(
+					  'door' => $door,
+					  'entities' => $entities,
 				)));
 		
 		return $response;

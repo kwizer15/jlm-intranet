@@ -8,7 +8,7 @@ use \JLM\DailyBundle\Entity\ShiftTechnician;
 class Door extends FPDFext
 {
 	
-	public static function get(ModelDoor $door, $entities)
+	public static function get($door,$entities)
 	{
 		$pdf = new self();
 		$pdf->_init();
