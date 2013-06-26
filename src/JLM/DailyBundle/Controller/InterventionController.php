@@ -378,7 +378,7 @@ class InterventionController extends Controller
 		$entities = array();
 		foreach ($intervs as $interv)
 			$entities = array_merge($entities,$interv->getShiftTechnicians());
-		
+		echo sizeof($entities); exit;
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$door->getId().'.pdf');
