@@ -2,12 +2,13 @@
 namespace JLM\DailyBundle\Pdf;
 
 use \JLM\DefaultBundle\Pdf\FPDFext;
+use \JLM\ModelBundle\Entity\Door;
+use \JLM\DailyBundle\Entity\ShiftTechnician;
 
 class Door extends FPDFext
 {
-	private $door;
 	
-	public static function get($door)
+	public static function get(Door $door)
 	{
 		$pdf = new self();
 		$pdf->_init();
@@ -18,7 +19,7 @@ class Door extends FPDFext
 			$entities = array_merge($entities,$interv->getShiftTechnicians());
 
 		foreach ($entities as $entity)
-			$pdf->_show($entity,$door);
+			$pdf->_show($entity);
 		return $pdf->Output('','S');
 	}
 	
@@ -29,7 +30,7 @@ class Door extends FPDFext
 		$this->addPage('L');
 	}
 	
-	private function _header($door)
+	private function _header(Door $door)
 	{
 		$this->setFont('Arial','B',18);
 		$this->multicell(0,12,$door->toString(),1,1,'C',true);
@@ -40,7 +41,7 @@ class Door extends FPDFext
 		$this->setFont('Arial','',10);
 	}
 	
-	private function _show($entity,$door)
+	private function _show(ShiftTechnician $entity)
 	{
 		$shifting = $entity->getShifting();
 		$types = array(
@@ -56,22 +57,11 @@ class Door extends FPDFext
 			$datas[4] = $entity->getComment();
 		else
 		{
-			$idinterv = $shifting->getId();
-			$intervs = $door->getInterventions();
-			foreach ($intervs as $interv)
-			{
-				if ($interv->getId() == $idinterv)
-				{
-					if ($interv->getReport() === null)
-						$datas[4] = 'pas de rapport...';
-					else
-						$datas[4] = ' rapport : '.$interv->getReport();
-					if ($interv->getRest())
-						$datas[4] .= chr(10).chr(10).'Reste à faire :'.chr(10).$interv->getRest();
-					continue;
-				}
-			}
-			
+			$interv = $entity->getIntervention();
+			$datas[4] = ' rapport : '.$interv->getReport();
+			if ($interv->getRest())
+				$datas[4] .= chr(10).chr(10).'Reste à faire :'.chr(10).$interv->getRest();
+			continue;
 		}
 		$datas[5] = $entity->getTechnician().'';
 		$this->row($datas,5,1,false);
