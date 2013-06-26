@@ -8,15 +8,12 @@ use \JLM\DailyBundle\Entity\ShiftTechnician;
 class Door extends FPDFext
 {
 	
-	public static function get(ModelDoor $door)
+	public static function get(ModelDoor $door, $entities)
 	{
 		$pdf = new self();
 		$pdf->_init();
 		$pdf->_header($door);
-		$intervs = $door->getInterventions();
-		$entities = array();
-		foreach ($intervs as $interv)
-			$entities = array_merge($entities,$interv->getShiftTechnicians());
+		
 
 		foreach ($entities as $entity)
 			$pdf->_show($entity);
