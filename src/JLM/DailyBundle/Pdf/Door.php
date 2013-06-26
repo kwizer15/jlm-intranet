@@ -14,7 +14,7 @@ class Door extends FPDFext
 		$pdf->_init();
 		$pdf->_header($door);
 		foreach ($entities as $entity)
-			$pdf->_show($entity);
+			$pdf->_show($entity,$door);
 		return $pdf->Output('','S');
 	}
 	
@@ -36,7 +36,7 @@ class Door extends FPDFext
 		$this->setFont('Arial','',10);
 	}
 	
-	private function _show($entity)
+	private function _show($entity,$door)
 	{
 		$shifting = $entity->getShifting();
 		$types = array(
@@ -52,9 +52,19 @@ class Door extends FPDFext
 			$datas[4] = $entity->getComment();
 		else
 		{
-			$datas[4] = 'rapport : '.$shifting->getReport();
-			if ($shifting->getRest())
-				$datas[4] .= chr(10).chr(10).'Reste à faire :'.chr(10).$shifting->getRest();
+			$idinterv = $shifting->getId();
+			$intervs = $door->getInterventions();
+			foreach ($intervs as $interv)
+			{
+				if ($interv->getId() == $idinterv)
+				{
+					$datas[4] = $interv->getReport();
+					if ($interv->getRest())
+						$datas[4] .= chr(10).chr(10).'Reste à faire :'.chr(10).$interv->getRest();
+					continue;
+				}
+			}
+			
 		}
 		$datas[5] = $entity->getTechnician().'';
 		$this->row($datas,5,1,false);
