@@ -5,14 +5,18 @@ use \JLM\DefaultBundle\Pdf\FPDFext;
 
 class Door extends FPDFext
 {
-	private $entities;
 	private $door;
 	
-	public static function get($door, $entities)
+	public static function get($door)
 	{
 		$pdf = new self();
 		$pdf->_init();
 		$pdf->_header($door);
+		$intervs = $door->getInterventions();
+		$entities = array();
+		foreach ($intervs as $interv)
+			$entities = array_merge($entities,$interv->getShiftTechnicians());
+
 		foreach ($entities as $entity)
 			$pdf->_show($entity,$door);
 		return $pdf->Output('','S');

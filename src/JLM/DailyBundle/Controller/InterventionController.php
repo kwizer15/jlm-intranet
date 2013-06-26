@@ -348,36 +348,38 @@ class InterventionController extends Controller
 	 */
 	public function printdoorAction(Door $door)
 	{
-		$em = $this->getDoctrine()->getManager();
-		$intervs = $em->getRepository('JLMDailyBundle:Intervention')
-			->createQueryBuilder('a')
-			->select('a.id')
-			->leftJoin('a.door','d')
-			->where('d.id = ?1')
-			->setParameter(1,$door->getId())
-			->getQuery()
-			->getArrayResult();
-		$i = array();
-		foreach ($intervs as $interv)
-		{
-			$i[] = $interv['id'];
-		}
-
-		$qb = $em->getRepository('JLMDailyBundle:ShiftTechnician')
-			->createQueryBuilder('a');
-		$qb->select('a,b')
-			->leftJoin('a.shifting','b')
-			->add('where',$qb->expr()->in('b.id',$i))
-			->orderBy('a.begin','desc');
-		$shifts = $qb->getQuery()
-			->getResult();
+//		$em = $this->getDoctrine()->getManager();
+//		$intervs = $em->getRepository('JLMDailyBundle:Intervention')
+//			->createQueryBuilder('a')
+//			->select('a')
+//			->leftJoin('a.door','d')
+//			->leftJoin('a.shiftTechnicians','t')
+//			->where('d.id = ?1')
+//			->orderBy('t.begin','desc')
+//			->setParameter(1,$door->getId())
+//			->getQuery()
+//			->getResult();
+//		$i = array();
+//		foreach ($intervs as $interv)
+//		{
+//			$i[] = $interv['id'];
+//		}
+//
+//		$qb = $em->getRepository('JLMDailyBundle:ShiftTechnician')
+//			->createQueryBuilder('a');
+//		$qb->select('a,b')
+//			->leftJoin('a.shifting','b')
+//			->add('where',$qb->expr()->in('b.id',$i))
+//			->orderBy('a.begin','desc');
+//		$shifts = $qb->getQuery()
+//			->getResult();
 		
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$door->getId().'.pdf');
 		$response->setContent($this->render('JLMDailyBundle:Intervention:printdoor.pdf.php',
 				array('door' => $door,
-					  'entities' => $shifts,
+//					  'entities' => $shifts,
 				)));
 		
 		return $response;
