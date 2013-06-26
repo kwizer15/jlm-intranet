@@ -2,13 +2,13 @@
 namespace JLM\DailyBundle\Pdf;
 
 use \JLM\DefaultBundle\Pdf\FPDFext;
-use \JLM\ModelBundle\Entity\Door;
+use \JLM\ModelBundle\Entity\Door as ModelDoor;
 use \JLM\DailyBundle\Entity\ShiftTechnician;
 
 class Door extends FPDFext
 {
 	
-	public static function get(Door $door)
+	public static function get(ModelDoor $door)
 	{
 		$pdf = new self();
 		$pdf->_init();
@@ -30,7 +30,7 @@ class Door extends FPDFext
 		$this->addPage('L');
 	}
 	
-	private function _header(Door $door)
+	private function _header(ModelDoor $door)
 	{
 		$this->setFont('Arial','B',18);
 		$this->multicell(0,12,$door->toString(),1,1,'C',true);
