@@ -58,7 +58,10 @@ class Door extends FPDFext
 			{
 				if ($interv->getId() == $idinterv)
 				{
-					$datas[4] = get_class($interv).' rapport : '.$interv->getReport();
+					if ($interv->getReport() === null)
+						$datas[4] = 'pas de rapport...';
+					else
+						$datas[4] = ' rapport : '.$interv->getReport();
 					if ($interv->getRest())
 						$datas[4] .= chr(10).chr(10).'Reste à faire :'.chr(10).$interv->getRest();
 					continue;
