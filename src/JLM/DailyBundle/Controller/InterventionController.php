@@ -350,17 +350,17 @@ class InterventionController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$door = $em->getRepository('JLMModelBundle:Door')->find($id);
-		$entities = $em->getRepository('JLMDailyBundle:ShiftTechnician')
-			->createQueryBuilder('a')
-			->select('a,b,c')
-			->leftJoin('a.shifting','b')
-			->leftJoin('b.door','c')
-			->where('c.id = ?1')
-			->andWhere('b INSTANCE OF JLM\DailyBundle\Entity\Intervention')
-			->orderBy('t.begin','desc')
-			->setParameter(1,$id)
-			->getQuery()
-			->getResult();
+//		$entities = $em->getRepository('JLMDailyBundle:ShiftTechnician')
+//			->createQueryBuilder('a')
+//			->select('a,b,c')
+//			->leftJoin('a.shifting','b')
+//			->leftJoin('b.door','c')
+//			->where('c.id = ?1')
+//			->andWhere('b INSTANCE OF JLM\DailyBundle\Entity\Intervention')
+//			->orderBy('t.begin','desc')
+//			->setParameter(1,$id)
+//			->getQuery()
+//			->getResult();
 //		$i = array();
 //		foreach ($intervs as $interv)
 //		{
@@ -377,7 +377,11 @@ class InterventionController extends Controller
 //			->getResult();
 		
 //		$intervs = $door->getInterventions();
-echo get_class($entities[0]); exit;
+		foreach ($door->getInterventions() as $interv)
+		{
+			echo $interv->getCreation()->format('d/m/Y').' - '.$interv->getReport();
+		}
+		exit;
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$door->getId().'.pdf');
