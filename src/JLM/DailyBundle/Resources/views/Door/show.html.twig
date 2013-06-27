@@ -38,6 +38,7 @@
 	{% else %}<a href="{{ path('daily_door_stop',{'id': entity.id}) }}" class="btn btn-danger"><i class="icon-remove icon-white"></i> Mettre à l'arrêt</a>{% endif %}
 </div>
 {% if entity.interventions | length %}
+<a href="{{ path('intervention_printdoor',{'id':entity.id}) }}" class="btn btn-info"><i class="icon-print"></i> Imprimer les rapports d'intervention</a>
 <table class="table table-striped">
 	<thead>
 		<tr>
