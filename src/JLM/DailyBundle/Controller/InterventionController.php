@@ -350,7 +350,7 @@ class InterventionController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$door = $em->getRepository('JLMModelBundle:Door')->find($id);
-		$entities = $em->getRepository('JLMDailyBundle:ShiftTecnician')
+		$entities = $em->getRepository('JLMDailyBundle:ShiftTechnician')
 			->createQueryBuilder('a')
 			->select('a,b,c')
 			->leftJoin('a.shifting','b')
