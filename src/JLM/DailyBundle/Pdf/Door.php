@@ -58,7 +58,6 @@ class Door extends FPDFext
 			$datas[4] = ' rapport : '.$interv->getReport();
 			if ($interv->getRest())
 				$datas[4] .= chr(10).chr(10).'Reste à faire :'.chr(10).$interv->getRest();
-			continue;
 		}
 		$datas[5] = $entity->getTechnician().'';
 		$this->row($datas,5,1,false);
