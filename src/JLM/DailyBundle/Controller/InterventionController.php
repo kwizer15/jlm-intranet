@@ -379,7 +379,10 @@ class InterventionController extends Controller
 //		$intervs = $door->getInterventions();
 		foreach ($door->getInterventions() as $interv)
 		{
-			echo $interv->getCreation()->format('d/m/Y').' - '.$interv->getReport();
+			foreach($interv->getShiftTechnicians() as $shift)
+			{
+				echo $shift->getBegin()->format('d/m/Y').' - '.$shift->getTechnician();
+			}
 		}
 		exit;
 		$response = new Response();
