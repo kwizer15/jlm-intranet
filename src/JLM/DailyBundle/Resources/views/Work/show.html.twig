@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block reference %}
+		{% if entity.intervention %}D'après l'invervention du <a href="{{ path('intervention_redirect',{'id':entity.intervention.id ,'act':'show'}) }}">{{ entity.intervention.lastDate|date('d/m/Y') }}</a><br>{% endif %} 
 	 	{% if entity.quote %}Selon devis n°<a href="{{ path('quote_show',{'id':entity.quote.quote.id}) }}">{{ entity.quote.number }}</a><br>{% endif %}
 {% endblock %}
 

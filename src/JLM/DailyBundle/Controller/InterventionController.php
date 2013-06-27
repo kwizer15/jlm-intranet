@@ -80,9 +80,10 @@ class InterventionController extends Controller
 	 */
 	public function cancelbillAction(Intervention $entity)
 	{
+		$em = $this->getDoctrine()->getManager();
 		if ($entity->getMustBeBilled())
 		{
-			$em = $this->getDoctrine()->getManager();
+			
 			if ($entity->getBill() !== null)
 			{
 				// 	annuler la facture existante
@@ -92,10 +93,11 @@ class InterventionController extends Controller
 				$entity->setBill();
 				$em->persist($bill);
 			}
-			$entity->setMustBeBilled(null);
-			$em->persist($entity);
-			$em->flush();
+			
 		}
+		$entity->setMustBeBilled(null);
+		$em->persist($entity);
+		$em->flush();
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
@@ -123,7 +125,7 @@ class InterventionController extends Controller
 	 */
 	public function cancelquoteAction(Intervention $entity)
 	{
-		if ($ask = $entity->getAskQuote() !== null)
+		if (($ask = $entity->getAskQuote()) !== null)
 		{
 			$em = $this->getDoctrine()->getManager();
 			$entity->setAskQuote();
