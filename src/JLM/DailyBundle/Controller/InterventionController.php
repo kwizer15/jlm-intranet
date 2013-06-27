@@ -384,11 +384,7 @@ class InterventionController extends Controller
 				$shifts[(string)$shift->getBegin()->getTimestamp()] = $shift;
 		}
 		krsort($shifts);
-		foreach ($shifts as $s)
-		{
-			echo $s->getBegin()->format('d/m/Y H:i');'<br>';
-		}
-		exit;
+		
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$door->getId().'.pdf');
