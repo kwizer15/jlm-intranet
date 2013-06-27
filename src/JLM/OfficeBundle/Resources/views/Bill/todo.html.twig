@@ -1,0 +1,52 @@
+{% extends "JLMOfficeBundle:Bill:layout.html.twig" %}
+{% block content %}
+<h1>Liste des factures à faire</h1>
+<h2><small>Interventions</small></h2>
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Syndic</th>
+            <th>Installation</th>
+            <th>Contrat</th>
+            <th>Infos</th>
+            <th>Temps passé</th>
+            <th>Facturer</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{% include 'JLMDailyBundle:Intervention:labeltype.html.twig' with {'type': entity.type} %}
+            	<br><small>
+		{% if entity.firstDate %}
+			{% if entity.lastDate != entity.firstDate %}du {{ entity.firstDate | localizeddate('full', 'none') }}
+			                                        <br>au {{ entity.lastDate | localizeddate('full', 'none') }}
+			{% else %}{{ entity.firstDate | localizeddate('full', 'none') }}
+			{% endif %}
+		{% else %}
+			{{ entity.creation | localizeddate('full', 'none') }}
+			{% endif %}
+				</small>
+            </td>
+            <td>{{ entity.contract }}</td>
+            <td><a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}">
+					{% if entity.door %}
+						<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}
+					{% else %}{{ entity.place | nl2br }}
+					{% endif %}
+				</a></td>
+				<td>{{ entity.contract }}</td>
+            <td>{% if entity.door %}
+			<strong>{{ entity.door.type }} - {{ entity.door.location }}</strong>{% endif %}<br>
+			<small>{% if entity.type == 'work' %}
+	 	{% if entity.quote %}Selon devis n°{{ entity.quote.number }}<br>{% endif %}{% endif %}{{ entity.reason | nl2br }}</small></td>
+			
+            <td>{{ entity.totalTime.format('%hh%I') }}</td>
+            <td><a href="{{ path('bill_new_intervention',{'id':entity.id}) }}" class="btn btn-primary">Facturer...</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+    

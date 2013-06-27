@@ -17,17 +17,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
  */
 class ActionsController extends Controller
 {
-	/**
-	 * @Route("/bill/list", name="actions_billlist")
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function billlistAction()
-	{
-		$em = $this->getDoctrine()->getEntityManager();
-		$list = $em->getRepository('JLMDailyBundle:Intervention')->getToBilled();
-		return array('entities'=>$list);
-	}
+
 	
 	/**
 	 * @Route("/contact/list", name="actions_contactlist")

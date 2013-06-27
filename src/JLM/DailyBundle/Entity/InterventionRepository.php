@@ -153,4 +153,27 @@ class InterventionRepository extends EntityRepository
 			);
 	}
 	
+	public function getToBilled($limit = null, $offset = null)
+	{
+		$qb = $this->createQueryBuilder('i')
+		->select('i,s,d,a,b,c,e,f')
+		->leftJoin('i.shiftTechnicians','s')
+		->leftJoin('i.door','d')
+		->leftJoin('d.site','a')
+		->leftJoin('a.address','b')
+		->leftJoin('b.city','c')
+		->leftJoin('i.askQuote','e')
+		->leftJoin('i.bill','f')
+		->where('i.mustBeBilled = ?1')
+		->andWhere('f is null')
+		->addOrderBy('i.close','asc')
+		->setParameter(1,1)
+		;
+		if ($offset)
+			$qb->setFirstResult( $offset );
+		if ($limit)
+			$qb->setMaxResults( $limit );
+		return $qb->getQuery()->getResult();
+	}
+	
 }

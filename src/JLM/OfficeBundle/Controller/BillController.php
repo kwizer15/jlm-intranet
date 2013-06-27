@@ -392,4 +392,16 @@ class BillController extends Controller
     			'canceled' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(-1),
     	);
     }
+    
+    /**
+     * @Route("/todo", name="bill_todo")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function todoAction()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$list = $em->getRepository('JLMDailyBundle:Intervention')->getToBilled();
+    	return array('entities'=>$list);
+    }
 }
