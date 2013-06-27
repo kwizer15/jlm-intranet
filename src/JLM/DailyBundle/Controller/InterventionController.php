@@ -383,7 +383,7 @@ class InterventionController extends Controller
 			foreach($interv->getShiftTechnicians() as $shift)
 				$shifts[(string)$shift->getBegin()->getTimestamp()] = $shift;
 		}
-		
+		krsort($shifts);
 		foreach ($shifts as $s)
 		{
 			echo $s->getBegin()->format('d/m/Y H:i');'<br>';
@@ -395,7 +395,7 @@ class InterventionController extends Controller
 		$response->setContent($this->render('JLMDailyBundle:Intervention:printdoor.pdf.php',
 				array(
 					  'door' => $door,
-					  'entities' => krsort($shifts),
+					  'entities' => $shifts,
 				)));
 		
 		return $response;
