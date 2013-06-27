@@ -377,21 +377,19 @@ class InterventionController extends Controller
 //			->getResult();
 		
 //		$intervs = $door->getInterventions();
+		$shifts = array();
 		foreach ($door->getInterventions() as $interv)
 		{
 			foreach($interv->getShiftTechnicians() as $shift)
-			{
-				echo $shift->getBegin()->format('d/m/Y').' - '.$shift->getTechnician();
-			}
+				$shifts[(string)$shift->getBegin()->getTimestamp()] = $shift;
 		}
-		exit;
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$door->getId().'.pdf');
 		$response->setContent($this->render('JLMDailyBundle:Intervention:printdoor.pdf.php',
 				array(
 					  'door' => $door,
-					  'entities' => $entities,
+					  'entities' => krsort($shifts),
 				)));
 		
 		return $response;
