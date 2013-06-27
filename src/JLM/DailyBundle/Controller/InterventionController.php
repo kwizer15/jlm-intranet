@@ -383,6 +383,12 @@ class InterventionController extends Controller
 			foreach($interv->getShiftTechnicians() as $shift)
 				$shifts[(string)$shift->getBegin()->getTimestamp()] = $shift;
 		}
+		
+		foreach ($shifts as $s)
+		{
+			echo $s->getBegin()->format('d/m/Y H:i');'<br>';
+		}
+		exit;
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$door->getId().'.pdf');
