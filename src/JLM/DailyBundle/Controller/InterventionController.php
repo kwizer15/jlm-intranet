@@ -350,12 +350,13 @@ class InterventionController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$door = $em->getRepository('JLMModelBundle:Door')->find($id);
-		$entities = $em->getRepository('JLMDailyBundle:Intervention')
+		$entities = $em->getRepository('JLMDailyBundle:ShiftTecnician')
 			->createQueryBuilder('a')
-			->select('a,d,t')
-			->leftJoin('a.door','d')
-			->leftJoin('a.shiftTechnicians','t')
-			->where('d.id = ?1')
+			->select('a,b,c')
+			->leftJoin('a.shifting','b')
+			->leftJoin('b.door','c')
+			->where('c.id = ?1')
+			->andWhere('b INSTANCE OF JLM\DailyBundle\Entity\Intervention')
 			->orderBy('t.begin','desc')
 			->setParameter(1,$id)
 			->getQuery()
