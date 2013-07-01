@@ -135,7 +135,7 @@ abstract class Intervention extends Shifting
     /**
      * Facture
      * @var JLM\OfficeBundle\Entity\Bill
-     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Bill", mappedBy="intervention")
+     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Bill", inversedBy="intervention")
      * @Assert\Valid
      */
     private $bill;
@@ -151,14 +151,14 @@ abstract class Intervention extends Shifting
     /**
      * Intervention lancée pour le reste à faire
      * @var Work
-     * @ORM\OneToOne(targetEntity="Work", mappedBy="intervention")
+     * @ORM\OneToOne(targetEntity="Work", inversedBy="intervention")
      */
     private $work;
     
     /**
      * Demande de devis lancée pour le reste à faire
      * @var AskQuote
-     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\AskQuote", mappedBy="intervention")
+     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\AskQuote", inversedBy="intervention")
      */
     private $askQuote;
     

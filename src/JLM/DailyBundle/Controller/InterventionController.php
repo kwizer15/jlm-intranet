@@ -285,18 +285,51 @@ class InterventionController extends Controller
 	 */
 	public function todayAction()
 	{
+		$today = new \DateTime;
+		$todaystring =  $today->format('Y-m-d');
 		$em = $this->getDoctrine()->getManager();
-		$intervs = $em->getRepository('JLMDailyBundle:Intervention')->getToday();
-		$fixings = $em->getRepository('JLMDailyBundle:Fixing')->getToGive();
+		$f = $em->getRepository('JLMDailyBundle:Fixing')->getToday();
+		$w = $em->getRepository('JLMDailyBundle:Work')->getToday();
+		$m = $em->getRepository('JLMDailyBundle:Maintenance')->getToday();
+		$intervs = array_merge($f,$w,$m);
+		unset($f);
+		unset($w);
+		unset($m);
+		
+		$inprogress = $notclosed = $closed = $work = $maintenance = array();
+		foreach ($intervs as $interv)
+		{
+			$flag = false;
+			if ($interv->getState() == 3 && !$flag)
+			{
+				$closed[] = $interv;
+				$flag = true;
+			}
+			else
+			{
+				foreach ($interv->getShiftTechnicians() as $tech)
+				{
+					if ($tech->getBegin()->format('Y-m-d') == $todaystring && !$flag)
+					{
+						$inprogress[] = $interv;
+						$flag = true;
+					}
+				}
+			}
+			if (!$flag)
+				$notclosed[] = $interv;
+		}
+		
+		$fixingstogive = $em->getRepository('JLMDailyBundle:Fixing')->getToGive();
 		
 		$equipment = $em->getRepository('JLMDailyBundle:Equipment')->getToday();
 
 		return array(
-				'inprogress' => $intervs['inprogress'],
-				'fixing' => $fixings,
+				'inprogress' => $inprogress,
+				'fixing' => $fixingstogive,
 				'equipment' => $equipment,
-				'notclosed' => $intervs['notclosed'],
-				'closed' => $intervs['closed'],
+				'notclosed' => $notclosed,
+				'closed' => $closed,
 		);
 		
 		// ORDRE DES INTERVS

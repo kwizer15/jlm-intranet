@@ -11,7 +11,7 @@ use JLM\OfficeBundle\Entity\Order;
  * JLM\DailyBundle\Entity\Work
  *
  * @ORM\Table(name="shifting_works")
- * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\InterventionRepository")
+ * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\WorkRepository")
  */
 class Work extends Intervention
 {
@@ -44,14 +44,14 @@ class Work extends Intervention
 	/**
 	 * Fiche travaux
 	 * 
-	 * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Order",mappedBy="work")
+	 * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Order",inversedBy="work")
 	 * @Assert\Valid
 	 */
 	private $order;
 	
 	/**
 	 * Intervention source
-	 * @ORM\OneToOne(targetEntity="Intervention", inversedBy="work")
+	 * @ORM\OneToOne(targetEntity="Intervention", mappedBy="work")
 	 */
 	private $intervention;
 	

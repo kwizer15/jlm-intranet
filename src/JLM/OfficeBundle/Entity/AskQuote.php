@@ -28,7 +28,7 @@ class AskQuote extends Ask
 	
 	/**
 	 * Suite à intervention
-	 * @ORM\OneToOne(targetEntity="JLM\DailyBundle\Entity\Intervention", inversedBy="askQuote")
+	 * @ORM\OneToOne(targetEntity="JLM\DailyBundle\Entity\Intervention", mappedBy="askQuote")
 	 */
 	private $intervention;
 	

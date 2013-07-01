@@ -62,3 +62,38 @@ ALTER TABLE shifting_works ADD intervention_id INT DEFAULT NULL;
 ALTER TABLE shifting_works ADD CONSTRAINT FK_57D2710B8EAE3863 FOREIGN KEY (intervention_id) REFERENCES shifting_interventions (id);
 CREATE UNIQUE INDEX UNIQ_57D2710B8EAE3863 ON shifting_works (intervention_id)
 ALTER TABLE shifting_interventions CHANGE contact_customer contact_customer TINYINT(1) DEFAULT NULL
+ALTER TABLE bill DROP FOREIGN KEY FK_7A2119E38EAE3863;
+DROP INDEX UNIQ_7A2119E38EAE3863 ON bill;
+ALTER TABLE bill DROP intervention_id;
+ALTER TABLE shifting_interventions ADD bill_id INT DEFAULT NULL;
+ALTER TABLE shifting_interventions ADD CONSTRAINT FK_291B3FA21A8C12F5 FOREIGN KEY (bill_id) REFERENCES bill (id);
+CREATE UNIQUE INDEX UNIQ_291B3FA21A8C12F5 ON shifting_interventions (bill_id)
+ALTER TABLE askquote DROP FOREIGN KEY FK_6B83768A8EAE3863;
+DROP INDEX UNIQ_6B83768A8EAE3863 ON askquote;
+ALTER TABLE askquote DROP intervention_id;
+ALTER TABLE shifting_interventions ADD work_id INT DEFAULT NULL, ADD askQuote_id INT DEFAULT NULL;
+ALTER TABLE shifting_interventions ADD CONSTRAINT FK_291B3FA2BB3453DB FOREIGN KEY (work_id) REFERENCES shifting_works (id);
+ALTER TABLE shifting_interventions ADD CONSTRAINT FK_291B3FA27E4135B1 FOREIGN KEY (askQuote_id) REFERENCES askquote (id);
+CREATE UNIQUE INDEX UNIQ_291B3FA2BB3453DB ON shifting_interventions (work_id);
+CREATE UNIQUE INDEX UNIQ_291B3FA27E4135B1 ON shifting_interventions (askQuote_id);
+ALTER TABLE shifting_works DROP FOREIGN KEY FK_57D2710B8EAE3863;
+DROP INDEX UNIQ_57D2710B8EAE3863 ON shifting_works;
+ALTER TABLE shifting_works DROP intervention_id
+ALTER TABLE orders DROP FOREIGN KEY FK_E52FFDEEBB3453DB;
+DROP INDEX UNIQ_E52FFDEEBB3453DB ON orders;
+ALTER TABLE orders DROP work_id;
+ALTER TABLE shifting_works ADD order_id INT DEFAULT NULL;
+ALTER TABLE shifting_works ADD CONSTRAINT FK_57D2710B8D9F6D38 FOREIGN KEY (order_id) REFERENCES orders (id);
+CREATE UNIQUE INDEX UNIQ_57D2710B8D9F6D38 ON shifting_works (order_id)
+ALTER TABLE shifting_interventions DROP FOREIGN KEY FK_291B3FA2BB3453DB;
+DROP INDEX UNIQ_291B3FA2BB3453DB ON shifting_interventions;
+ALTER TABLE shifting_interventions DROP work_id;
+ALTER TABLE shifting_works ADD intervention_id INT DEFAULT NULL;
+ALTER TABLE shifting_works ADD CONSTRAINT FK_57D2710B8EAE3863 FOREIGN KEY (intervention_id) REFERENCES shifting_interventions (id);
+CREATE UNIQUE INDEX UNIQ_57D2710B8EAE3863 ON shifting_works (intervention_id)
+ALTER TABLE shifting_interventions ADD work_id INT DEFAULT NULL;
+ALTER TABLE shifting_interventions ADD CONSTRAINT FK_291B3FA2BB3453DB FOREIGN KEY (work_id) REFERENCES shifting_works (id);
+CREATE UNIQUE INDEX UNIQ_291B3FA2BB3453DB ON shifting_interventions (work_id);
+ALTER TABLE shifting_works DROP FOREIGN KEY FK_57D2710B8EAE3863;
+DROP INDEX UNIQ_57D2710B8EAE3863 ON shifting_works;
+ALTER TABLE shifting_works DROP intervention_id

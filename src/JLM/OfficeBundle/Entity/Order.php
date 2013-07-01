@@ -43,7 +43,7 @@ class Order
 	/**
 	 * Intervention source
 	 * @var Work
-	 * @ORM\OneToOne(targetEntity="JLM\DailyBundle\Entity\Work",inversedBy="order")
+	 * @ORM\OneToOne(targetEntity="JLM\DailyBundle\Entity\Work",mappedBy="order")
 	 */
 	private $work;
 	

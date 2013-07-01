@@ -64,7 +64,7 @@ class InterventionRepository extends EntityRepository
 			->leftJoin('a.address','b')
 			->leftJoin('b.city','c')
 			->leftJoin('i.work','g')
-			->leftJoin('i.askquote','h')
+			->leftJoin('i.askQuote','h')
 			->where('s.begin BETWEEN ?1 AND ?2')
 			->addOrderBy('s.begin','asc')
 			->addOrderBy('i.close','asc')
@@ -101,7 +101,7 @@ class InterventionRepository extends EntityRepository
 		$todaystring =  $today->format('Y-m-d');
 		// Interventions en cours
 		$qb = $this->createQueryBuilder('a')
-			->select('a,b,c,d,e,g,h,i,j,k,l,m')
+			->select('a,b,c,d,e,g,h,i,j,k,l,m,n,z')
 			->leftJoin('a.shiftTechnicians','b')
 			->leftJoin('a.door','c')
 			->leftJoin('c.site','d')
@@ -113,50 +113,24 @@ class InterventionRepository extends EntityRepository
 			->leftJoin('a.askQuote','k')
 			->leftJoin('a.work','l')
 			->leftJoin('a.bill','m')
+			->leftJoin('l.order','n')
+			->leftJoin('c.interventions','z')
 			->where('b.begin = ?1')
 //			->orWhere('b is null')
 //			->orWhere('a.close is null')
 //			->orWhere('a.report is null')
 			->orWhere('a.mustBeBilled is null and b is not null')
-			->orWhere('l is null and k is null and a.contactCustomer is null and a.rest is not null and b is not null')
+			->orWhere('(l is null and k is null and a.contactCustomer is null and a.otherAction is null) and a.rest is not null and b is not null')
 			->orderBy('a.creation','asc')
 			->setParameter(1,$todaystring)
 			;
-		$intervs = $qb->getQuery()->getResult();
-		$inprogress = $notclosed = $closed = $work = $maintenance = array();
-		foreach ($intervs as $interv)
-		{
-			$flag = false;
-			if ($interv->getState() == 3 && !$flag)
-			{
-				$closed[] = $interv;
-				$flag = true;
-			}
-			else
-			{
-				foreach ($interv->getShiftTechnicians() as $tech)
-				{
-					if ($tech->getBegin()->format('Y-m-d') == $todaystring && !$flag)
-					{
-						$inprogress[] = $interv;
-						$flag = true;
-					}
-				}
-			}
-			if (!$flag)
-				$notclosed[] = $interv;
-		}
-		return array(
-				'inprogress'	=> $inprogress,
-				'notclosed'		=> $notclosed,
-				'closed'		=> $closed,
-			);
+		return $qb->getQuery()->getResult();
 	}
 	
 	public function getToBilled($limit = null, $offset = null)
 	{
 		$qb = $this->createQueryBuilder('i')
-		->select('i,s,d,a,b,c,e,f')
+		->select('i,s,d,a,b,c,e,f,g,h')
 		->leftJoin('i.shiftTechnicians','s')
 		->leftJoin('i.door','d')
 		->leftJoin('d.site','a')
@@ -164,6 +138,7 @@ class InterventionRepository extends EntityRepository
 		->leftJoin('b.city','c')
 		->leftJoin('i.askQuote','e')
 		->leftJoin('i.bill','f')
+		->leftJoin('i.work','g')
 		->where('i.mustBeBilled = ?1')
 		->andWhere('f is null')
 		->addOrderBy('i.close','asc')
@@ -176,4 +151,67 @@ class InterventionRepository extends EntityRepository
 		return $qb->getQuery()->getResult();
 	}
 	
+	public function getCountToBilled()
+	{
+		$qb = $this->createQueryBuilder('i')
+		->select('COUNT(i)')
+		->leftJoin('i.shiftTechnicians','s')
+		->leftJoin('i.door','d')
+		->leftJoin('d.site','a')
+		->leftJoin('a.address','b')
+		->leftJoin('b.city','c')
+		->leftJoin('i.askQuote','e')
+		->leftJoin('i.bill','f')
+		->leftJoin('i.work','g')
+		->where('i.mustBeBilled = ?1')
+		->andWhere('f is null')
+		->addOrderBy('i.close','asc')
+		->setParameter(1,1)
+		;
+
+		return $qb->getQuery()->getScalarResult();
+	}
+	
+	public function getToContact($limit = null, $offset = null)
+	{
+		$qb = $this->createQueryBuilder('i')
+		->select('i,s,d,a,b,c,e,f,g')
+		->leftJoin('i.shiftTechnicians','s')
+		->leftJoin('i.door','d')
+		->leftJoin('d.site','a')
+		->leftJoin('a.address','b')
+		->leftJoin('b.city','c')
+		->leftJoin('i.askQuote','e')
+		->leftJoin('i.bill','f')
+		->leftJoin('i.work','g')
+		->where('i.contactCustomer = ?1')
+		->andWhere('i.contactCustomer is not null')
+		->addOrderBy('i.close','asc')
+		->setParameter(1,0)
+		;
+		if ($offset)
+			$qb->setFirstResult( $offset );
+		if ($limit)
+			$qb->setMaxResults( $limit );
+		return $qb->getQuery()->getResult();
+	}
+	
+	public function getCountToContact()
+	{
+		$qb = $this->createQueryBuilder('i')
+		->select('COUNT(i)')
+		->leftJoin('i.shiftTechnicians','s')
+		->leftJoin('i.door','d')
+		->leftJoin('d.site','a')
+		->leftJoin('a.address','b')
+		->leftJoin('b.city','c')
+		->leftJoin('i.askQuote','e')
+		->leftJoin('i.bill','f')
+		->where('i.contactCustomer = ?1')
+		->andWhere('i.contactCustomer is not null')
+		->addOrderBy('i.close','asc')
+		->setParameter(1,0)
+		;
+		return $qb->getQuery()->getScalarResult();
+	}
 }

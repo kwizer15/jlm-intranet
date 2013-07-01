@@ -162,7 +162,7 @@ class Bill extends Document
 	 * Intervention (si suite à intervention)
 	 * @var JLM\DailyBundle\Entity\Intervention $intervention
 	 * 
-	 * @ORM\OneToOne(targetEntity="JLM\DailyBundle\Entity\Intervention",inversedBy="bill")
+	 * @ORM\OneToOne(targetEntity="JLM\DailyBundle\Entity\Intervention",mappedBy="bill")
 	 */
 	private $intervention;
 	
