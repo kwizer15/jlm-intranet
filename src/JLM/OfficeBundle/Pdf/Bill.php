@@ -9,7 +9,7 @@ class Bill extends FPDFext
 	private $end = false;
 	private $head = true;
 	
-	private $angle = 0;
+
 	
 	public static function get($entities)
 	{
@@ -110,7 +110,7 @@ class Bill extends FPDFext
 		$this->cell(24,6,'Prix U.H.T',1,0,'C',true);
 		$this->cell(24,6,'Prix H.T',1,0,'C',true);
 		$this->cell(13,6,'TVA',1,0,'C',true);
-		$this->cell(24,6,'Prix TTC',1,1,'C',true);
+		$this->cell(22,6,'Prix TTC',1,1,'C',true);
 		$this->setFont('Arial','',10);
 		$lines = $this->entity->getLines();
 		foreach ($lines as $line)
@@ -127,7 +127,7 @@ class Bill extends FPDFext
 		$this->cell(24,8,number_format($line->getUnitPrice()*(1-$line->getDiscount()),2,',',' ').' €','RL',0,'R');
 		$this->cell(24,8,number_format($line->getPrice(),2,',',' ').' €','RL',0,'R');
 		$this->cell(13,8,number_format($line->getVat()*100,1,',',' ').' %','RL',0,'R');
-		$this->cell(24,8,number_format($line->getPriceAti(),2,',',' ').' €','RL',1,'R');
+		$this->cell(22,8,number_format($line->getPriceAti(),2,',',' ').' €','RL',1,'R');
 		
 		
 		
@@ -144,7 +144,7 @@ class Bill extends FPDFext
 				$this->cell(24,5,'','RL',0);
 				$this->cell(24,5,'','RL',0);
 				$this->cell(13,5,'','RL',0);
-				$this->cell(24,5,'','RL',1);
+				$this->cell(22,5,'','RL',1);
 			}
 			$this->setFont('Arial','',10);
 		}
@@ -169,7 +169,7 @@ class Bill extends FPDFext
 		$this->cell(24,$h,'','RLB',0);
 		$this->cell(24,$h,'','RLB',0);
 		$this->cell(13,$h,'','RLB',0);
-		$this->cell(24,$h,'','RLB',1);
+		$this->cell(22,$h,'','RLB',1);
 		$this->ln(6);
 		// Réglement
 		$this->setFont('Arial','B',10);
@@ -177,7 +177,7 @@ class Bill extends FPDFext
 		$this->cell(38,6,'Base H.T',1,0,'C',true);
 		$this->cell(38,6,'Taux T.V.A',1,0,'C',true);
 		$this->cell(38,6,'Montant T.V.A',1,0,'C',true);
-		$this->cell(38,6,'Net T.T.C',1,1,'C',true);
+		$this->cell(36,6,'Net T.T.C',1,1,'C',true);
 		$maturity = $this->entity->getMaturity();
 		if ($maturity == null)
 			$this->cell(40,6,'A réception',1,0,'C');
@@ -186,7 +186,7 @@ class Bill extends FPDFext
 		$this->cell(38,6,number_format($this->entity->getTotalPrice(),2,',',' ').' €',1,0,'R');
 		$this->cell(38,6,number_format($this->entity->getVat()*100,1,',',' ').' %',1,0,'R');
 		$this->cell(38,6,number_format($this->entity->getTotalVat(),2,',',' ').' €',1,0,'R');
-		$this->cell(38,6,number_format($this->entity->getTotalPriceAti(),2,',',' ').' €',1,1,'R');
+		$this->cell(36,6,number_format($this->entity->getTotalPriceAti(),2,',',' ').' €',1,1,'R');
 		
 		$this->setFont('Arial','B',10);
 		if ($this->entity->getVat() > 0.1)
@@ -276,32 +276,5 @@ class Bill extends FPDFext
 		// Numéro de page
 		$this->cell(0,10,$this->PageNo().'/{nb}',0,0,'R');
 	}
-	
-	public function rotate($angle,$x=-1,$y=-1)
-	{
-		if($x==-1)
-			$x=$this->x;
-		if($y==-1)
-			$y=$this->y;
-		if($this->angle!=0)
-			$this->_out('Q');
-		$this->angle=$angle;
-		if($angle!=0)
-		{
-			$angle*=M_PI/180;
-			$c=cos($angle);
-			$s=sin($angle);
-			$cx=$x*$this->k;
-			$cy=($this->h-$y)*$this->k;
-			$this->_out(sprintf('q %.5F %.5F %.5F %.5F %.2F %.2F cm 1 0 0 1 %.2F %.2F cm',$c,$s,-$s,$c,$cx,$cy,-$cx,-$cy));
-		}
-	}
-	
-	public function rotatedText($x,$y,$txt,$angle)
-	{
-		//Rotation du texte autour de son origine
-		$this->Rotate($angle,$x,$y);
-		$this->Text($x,$y,$txt);
-		$this->Rotate(0);
-	}
+
 }
