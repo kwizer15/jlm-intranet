@@ -609,7 +609,7 @@ class Bill extends Document
     	$this->populateFromDoor($quote->getDoor());
     	$this->setVatTransmitter($quote->getVatTransmitter());
     	$this->setDiscount($variant->getDiscount());
-    	$this->setIntro('Suite à notre devis n°'.$variant->getNumber());
+    	$this->setReference('Suite à notre devis n°'.$variant->getNumber());
     	$lines = $variant->getLines();
     	foreach ($lines as $line)
     	{
@@ -662,7 +662,7 @@ class Bill extends Document
     		}
     	}
     	$this->populateFromDoor($interv->getDoor());
-    	$this->setIntro('Suite à notre intervention du '.$interv->getLastDate()->format('d/m/Y'));
+    	$this->setReference('Suite à notre intervention du '.$interv->getLastDate()->format('d/m/Y'));
     	return $this;
     }
     

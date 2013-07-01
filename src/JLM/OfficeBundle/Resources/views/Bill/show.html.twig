@@ -7,16 +7,7 @@
     	<strong>{{ entity.reference | nl2br }}</strong>
         <br><strong>Affaire :</strong><br>{{ entity.site | nl2br }}
         <br><em>{{ entity.details | nl2br }}</em>
-
-    </div>
-    <div class="span5 offset2 well">
-    	<small>{{ entity.prelabel | nl2br }}</small>
-        <br><strong>{{ entity.trusteeName }}</strong>
-        <br>{{ entity.trusteeAddress | nl2br  }}
-    </div>
-</div>
-<div class="span4">
-<table class="table table-bordered">
+		<table class="table table-bordered">
 	<thead>
 		<tr>
 			<th>N° Client</th>
@@ -32,8 +23,16 @@
 		</tr>
 	</tbody>
 </table>
+    </div>
+    <div class="span5 offset2 well">
+    	<small>{{ entity.prelabel | nl2br }}</small>
+        <br><strong>{{ entity.trusteeName }}</strong>
+        <br>{{ entity.trusteeAddress | nl2br  }}
+    </div>
 </div>
-<p>{{ entity.intro | nl2br }} <a href="{{ path('intervention_redirect',{'id':entity.intervention.id,'act':'show'}) }}">Voir intervention</a></p>
+
+
+<p>{{ entity.intro | nl2br }} {% if entity.intervention %}<br><a href="{{ path('intervention_redirect',{'id':entity.intervention.id,'act':'show'}) }}">Voir intervention</a>{% endif %}</p>
 <table class="table table-bordered">
     <thead>
         <tr>
