@@ -296,7 +296,7 @@ class InterventionController extends Controller
 		unset($w);
 		unset($m);
 		
-		$inprogress = $notclosed = $closed = $work = $maintenance = array();
+		$inprogress = $notclosed = $closed = array();
 		foreach ($intervs as $interv)
 		{
 			$flag = false;
