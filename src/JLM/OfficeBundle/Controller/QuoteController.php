@@ -56,12 +56,6 @@ class QuoteController extends Controller
         
         if ($state === null)
         	$entities = $repo->getAll($limit,$offset);
-//	        $entities = $repo->findBy(
-//	        		array(),
-//	        		array('number'=>'desc'),
-//	        		$limit,
-//	        		$offset
-//	        );
         else
         	$entities = $repo->getByState($state,$limit,$offset);
         
