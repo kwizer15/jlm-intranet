@@ -543,23 +543,71 @@ class InterventionController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$id_bill = 1;
+		$id_quote = 2;
+		$id_order = 3;
+		$id_contact = 4;
 		$id_not = 5;
+		$work_objective = $em->getRepository('JLMDailyBundle:WorkObjective')->find(1);
+		$work_category = $em->getRepository('JLMDailyBundle:WorkCategory')->find(1);
 		$intervs = $em->getRepository('JLMDailyBundle:Intervention')->findAll();
 		foreach ($intervs as $interv)
 		{
 			if ($interv->getOfficeAction() !== null)
 			{
-				if ($interv->getOfficeAction()->getType()->getId() == $id_bill)
+				$id = $interv->getOfficeAction()->getType()->getId();
+				if ($id == $id_bill)
 				{
 					$interv->setMustBeBilled(true);
+					// On ne crée pas la facture pour gérer les non facturé et les numéros plus tard
 				}
-				elseif ($interv->getOfficeAction()->getType()->getId() == $id_not)
+				elseif ($id == $id_not)
 				{
 					$interv->setMustBeBilled(false);
 				}
-				$em->persist($interv);
+				
 			}
+			if ($interv->getOtherAction() !== null)
+			{
+				$id = $interv->getOtherAction()->getType()->getId();
+				if ($id == $id_quote)
+				{
+					$askQuote = new AskQuote;
+					$maturity = clone $interv->getOtherAction()->getOpen();
+					$maturity->add(new \DateIntervel('P15D'));
+					$askQuote->setCreation($interv->getOtherAction()->getOpen());
+					$askQuote->setMaturity($maturity);
+					$askQuote->setIntervention($interv);
+					$askQuote->setAsk($interv->getRest());
+					$em->persist($askQuote);
+					$interv->setAskQuote($askQuote);
+				}
+				elseif ($id == $id_order)
+				{
+					$work = new Work;
+					$work->setCreation(new \DateTime);
+					$work->setPlace($interv->getPlace());
+					$work->setReason($interv->getRest());
+					$work->setDoor($interv->getDoor());
+					$work->setContactName($interv->getContactName());
+					$work->setContactPhones($interv->getContactPhones());
+					$work->setContactEmail($interv->getContactEmail());
+					$work->setPriority(4);
+					$work->setContact($interv->getContact());
+					$work->setObjective($work_objective);
+					$work->setCategory($work_category);
+					$work->setIntervention($interv);
+					// Remplir l'objet
+					$em->persist($work);
+					$interv->setWork($work);
+				}
+				elseif ($id == $id_contact)
+				{
+					$interv->setContactCustomer(false);
+				}
+			}
+			$em->persist($interv);
 		}
+		
 		$em->flush();
 		
 		return array();
