@@ -55,12 +55,13 @@ class QuoteController extends Controller
         	$page = $nbPages;
         
         if ($state === null)
-	        $entities = $repo->findBy(
-	        		array(),
-	        		array('number'=>'desc'),
-	        		$limit,
-	        		$offset
-	        );
+        	$entities = $repo->getAll($limit,$offset);
+//	        $entities = $repo->findBy(
+//	        		array(),
+//	        		array('number'=>'desc'),
+//	        		$limit,
+//	        		$offset
+//	        );
         else
         	$entities = $repo->getByState($state,$limit,$offset);
         
