@@ -156,13 +156,13 @@ class Bill extends FPDFext
 	public function _footer()
 	{
 		$y = $this->getY();
-		if ($y > 230)
+		if ($y > 220)
 		{
 			$this->addPage();
 			$y = $this->getY();
 		}
 		$this->end = true;
-		$h = 230 - $y;
+		$h = 220 - $y;
 
 		$this->cell(100,$h,'','RLB',0);
 		$this->cell(7,$h,'','RLB',0);
