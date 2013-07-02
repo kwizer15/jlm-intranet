@@ -29,7 +29,9 @@
 <h4>Devis</h4>
 <ul>
 {% for quote in entity.quotes %}
-<li><a href="{{ path('quote_show',{'id':quote.id}) }}">Devis n°{{ quote.number }}</a></li>
+<li><a href="{{ path('quote_show',{'id':quote.id}) }}">Devis n°{{ quote.number }}</a>
+{% include 'JLMOfficeBundle:Quote:statelabel.html.twig' with {'state': quote.state} %}
+</li>
 {% endfor %}
 </ul>
 {% else %}

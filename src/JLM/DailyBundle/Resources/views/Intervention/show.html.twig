@@ -189,7 +189,7 @@
 			 		<div>Devis fait :
 			 			<ul>
 						{% for quote in entity.askQuote.quotes %}
-							<li><a href="{{ path('quote_show',{ 'id':quote.id }) }}">{{ quote.number }}</a></li> 
+							<li><a href="{{ path('quote_show',{ 'id':quote.id }) }}">{{ quote.number }}</a> {% include 'JLMOfficeBundle:Quote:statelabel.html.twig' with {'state': quote.state} %}</li> 
 						{% endfor %}
 						</ul>
 					</div>
