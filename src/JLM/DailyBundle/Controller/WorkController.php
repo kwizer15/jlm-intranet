@@ -14,6 +14,7 @@ use JLM\DailyBundle\Form\Type\WorkEditType;
 use JLM\DailyBundle\Form\Type\WorkCloseType;
 use JLM\DailyBundle\Entity\ShiftTechnician;
 use JLM\DailyBundle\Form\Type\AddTechnicianType;
+use JLM\DailyBundle\Form\Type\ExternalBillType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\QuoteVariant;
 
@@ -50,10 +51,11 @@ class WorkController extends Controller
 		$st = new ShiftTechnician();
 		$st->setBegin(new \DateTime);
 		$form   = $this->createForm(new AddTechnicianType(), $st);
-		
+		$form_externalbill = $this->createForm(new ExternalBillType(), $entity);
 		return array(
 				'entity' => $entity,
 				'form_newtech'   => $form->createView(),
+				'form_externalbill' => $form_externalbill->createView(),
 		);
 	}
 	

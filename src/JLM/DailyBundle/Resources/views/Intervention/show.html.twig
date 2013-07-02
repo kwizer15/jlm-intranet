@@ -213,8 +213,25 @@
 				{% if entity.mustBeBilled %}
 					{% if entity.bill %}
 					<a href="{{ path('bill_show',{'id': entity.bill.id }) }}">Facture n°{{ entity.bill.number }}</a>
+					{% elseif entity.externalBill %}
+					Facture n°{{ entity.externalBill }} (externe)
 					{% else %}
 					<a href="{{ path('bill_new_intervention',{'id':entity.id}) }}">A facturer</a>
+					<br><a href="#modalExternalBill" data-toggle="modal">Saisir le numéro</a>
+					{# Modal #}
+					<form id="modalExternalBill" action="{{ path('intervention_externalbill',{'id':entity.id}) }}" method="post" {{ form_enctype(form_externalbill) }} class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalExternalBillLabel" aria-hidden="true">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h3 id="modalExternalBillLabel">Numéro de facture externe</h3>
+						</div>
+						<div class="modal-body">
+							{{ form_widget(form_externalbill) }}
+						</div>
+						<div class="modal-footer">
+							<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+							<button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer</button>
+						</div>
+					</form>
 					{% endif %}
 				{% else %}
 					Ne pas facturer
@@ -226,7 +243,7 @@
 				<div id="modalDeleteBill" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalDeleteBillLabel" aria-hidden="true">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						<h3 id="modalDeleteBillLabel">Annuler cette la facturation</h3>
+						<h3 id="modalDeleteBillLabel">Annuler cette facturation</h3>
 					</div>
 					<div class="modal-body">
 						<p>Cette action annulera automatiquement la facture qui a été créée.</p>

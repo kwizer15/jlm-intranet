@@ -97,3 +97,4 @@ CREATE UNIQUE INDEX UNIQ_291B3FA2BB3453DB ON shifting_interventions (work_id);
 ALTER TABLE shifting_works DROP FOREIGN KEY FK_57D2710B8EAE3863;
 DROP INDEX UNIQ_57D2710B8EAE3863 ON shifting_works;
 ALTER TABLE shifting_works DROP intervention_id
+ALTER TABLE shifting_interventions ADD external_bill VARCHAR(255) DEFAULT NULL

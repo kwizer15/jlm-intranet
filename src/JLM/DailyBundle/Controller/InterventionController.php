@@ -17,6 +17,7 @@ use JLM\OfficeBundle\Entity\Task;
 use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\TaskType;
 use JLM\OfficeBundle\Entity\AskQuote;
+use JLM\DailyBundle\Form\Type\ExternalBillType;
 
 /**
  * Fixing controller.
@@ -93,7 +94,10 @@ class InterventionController extends Controller
 				$entity->setBill();
 				$em->persist($bill);
 			}
-			
+			elseif ($entity->getExternalBill() !== null)
+			{
+				$entity->setExternalBill();
+			}
 		}
 		$entity->setMustBeBilled(null);
 		$em->persist($entity);
@@ -198,6 +202,25 @@ class InterventionController extends Controller
 		$em->remove($work);
 		$em->persist($entity);
 		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Numéro de facture
+	 * @Route("/{id}/externalbill", name="intervention_externalbill")
+	 * @Method("POST")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function externalbillAction(Request $request, Intervention $entity)
+	{
+		$form = $this->createForm(new ExternalBillType(), $entity);
+		$form->bind($request);
+		if ($form->isValid())
+		{
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($entity);
+			$em->flush();
+		}
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	

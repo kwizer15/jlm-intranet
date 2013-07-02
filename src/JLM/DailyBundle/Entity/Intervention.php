@@ -141,6 +141,13 @@ abstract class Intervention extends Shifting
     private $bill;
     
     /**
+     * Facture externe
+     * @var string
+     * @ORM\Column(name="external_bill", nullable=true)
+     */
+    private $externalBill;
+    
+    /**
      * Doit etre facturée
      * @var bool
      * @ORM\Column(name="mustBeBilled", type="boolean", nullable=true)
@@ -594,6 +601,29 @@ abstract class Intervention extends Shifting
         return $this->bill;
     }
 
+    /**
+     * Set externalBill
+     *
+     * @param string $number
+     * @return Intervention
+     */
+    public function setExternalBill($number = null)
+    {
+    	$this->externalBill = $number;
+    	 
+    	return $this;
+    }
+    
+    /**
+     * Get externalBill
+     * 
+     * @return string
+     */
+    public function getExternalBill()
+    {
+    	return $this->externalBill;
+    }
+    
     /**
      * Set contactCustomer
      *

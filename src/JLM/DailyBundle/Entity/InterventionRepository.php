@@ -141,6 +141,7 @@ class InterventionRepository extends EntityRepository
 		->leftJoin('i.work','g')
 		->where('i.mustBeBilled = ?1')
 		->andWhere('f is null')
+		->andWhere('i.externalBill is null')
 		->addOrderBy('i.close','asc')
 		->setParameter(1,1)
 		;
