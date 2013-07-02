@@ -385,6 +385,7 @@ class BillController extends Controller
     	$em = $this->getDoctrine()->getEntityManager();
     
     	return array(
+    			'todo' => $em->getRepository('JLMDailyBundle:Intervention')->getCountToBilled(),
     			'all' => $em->getRepository('JLMOfficeBundle:Bill')->getTotal(),
     			'input' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(0),
     			'send' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(1),

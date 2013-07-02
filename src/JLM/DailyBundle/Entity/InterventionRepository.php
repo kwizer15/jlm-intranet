@@ -130,7 +130,7 @@ class InterventionRepository extends EntityRepository
 	public function getToBilled($limit = null, $offset = null)
 	{
 		$qb = $this->createQueryBuilder('i')
-		->select('i,s,d,a,b,c,e,f,g,h')
+		->select('i,s,d,a,b,c,e,f,g')
 		->leftJoin('i.shiftTechnicians','s')
 		->leftJoin('i.door','d')
 		->leftJoin('d.site','a')
@@ -156,21 +156,14 @@ class InterventionRepository extends EntityRepository
 	{
 		$qb = $this->createQueryBuilder('i')
 		->select('COUNT(i)')
-		->leftJoin('i.shiftTechnicians','s')
-		->leftJoin('i.door','d')
-		->leftJoin('d.site','a')
-		->leftJoin('a.address','b')
-		->leftJoin('b.city','c')
-		->leftJoin('i.askQuote','e')
-		->leftJoin('i.bill','f')
-		->leftJoin('i.work','g')
 		->where('i.mustBeBilled = ?1')
-		->andWhere('f is null')
+		->andWhere('i.bill is null')
+		->andWhere('i.externalBill is null')
 		->addOrderBy('i.close','asc')
 		->setParameter(1,1)
 		;
 
-		return $qb->getQuery()->getScalarResult();
+		return $qb->getQuery()->getSingleScalarResult();
 	}
 	
 	public function getToContact($limit = null, $offset = null)
@@ -201,18 +194,11 @@ class InterventionRepository extends EntityRepository
 	{
 		$qb = $this->createQueryBuilder('i')
 		->select('COUNT(i)')
-		->leftJoin('i.shiftTechnicians','s')
-		->leftJoin('i.door','d')
-		->leftJoin('d.site','a')
-		->leftJoin('a.address','b')
-		->leftJoin('b.city','c')
-		->leftJoin('i.askQuote','e')
-		->leftJoin('i.bill','f')
 		->where('i.contactCustomer = ?1')
 		->andWhere('i.contactCustomer is not null')
 		->addOrderBy('i.close','asc')
 		->setParameter(1,0)
 		;
-		return $qb->getQuery()->getScalarResult();
+		return $qb->getQuery()->getSingleScalarResult();
 	}
 }

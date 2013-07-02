@@ -22,20 +22,17 @@
 		        <li class="dropdown">
 		        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Bureau <b class="caret"></b></a>
 		        	<ul class="dropdown-menu">
-		        		<li class="dropdown-submenu">
-		        			<a tabindex="-1" href="{{ path('task') }}">Tâches</a>
-		        			<ul class="dropdown-menu">
-		        				<li><a href="{{ path('task_new') }}"><i class="icon-plus-sign"></i> Nouvelle tâche</a></li>
-		        				<li class="divider"></li>
-		        				{% render "JLMOfficeBundle:Task:sidebar" %}
-		        			</ul>
-		        		</li>
                         <li class="dropdown-submenu">
 		        			<a tabindex="-1" href="{{ path('quote') }}">Devis</a>
 		        			<ul class="dropdown-menu">
-		        				<li><a href="{{ path('askquote_new') }}"><i class="icon-plus-sign"></i> Nouvelle demande de devis</a></li>
-		        				<li><a href="{{ path('askquote') }}"><i class="icon-list"></i> Liste des demandes de devis</a></li>
-		        			{#	<li><a href="{{ path('quote_new') }}"><i class="icon-plus-sign"></i> Nouveau devis</a></li> #}
+		        				<li class="dropdown-submenu">
+		        					<a tabindex="-1" href="{{ path('askquote') }}">Demandes</a>
+		        					<ul class="dropdown-menu">
+		        						<li><a href="{{ path('askquote_new') }}"><i class="icon-plus-sign"></i> Nouvelle demande de devis</a></li>
+		        						<li class="divider"></li>
+		        						{% render "JLMOfficeBundle:Askquote:sidebar" %}
+		        					</ul>
+		        				</li>
 		        				<li class="divider"></li>
 		        				{% render "JLMOfficeBundle:Quote:sidebar" %}
 		        			</ul>

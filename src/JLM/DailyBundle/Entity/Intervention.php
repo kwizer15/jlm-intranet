@@ -120,7 +120,7 @@ abstract class Intervention extends Shifting
      * @var string
      * @ORM\Column(name="contract",type="string",nullable=true)
      * @Assert\Type(type="string")
-     * @Assert\NotNull(message="Pas de type de contrat défini")
+     * Assert\NotNull(message="Pas de type de contrat défini")
      */
     private $contract;
     

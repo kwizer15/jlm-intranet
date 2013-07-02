@@ -607,7 +607,7 @@ class InterventionController extends Controller
 				elseif ($id == $id_order)
 				{
 					$work = new Work;
-					$work->setCreation(new \DateTime);
+					$work->setCreation($interv->getClose());
 					$work->setPlace($interv->getPlace());
 					$work->setReason($interv->getRest());
 					$work->setDoor($interv->getDoor());
@@ -619,7 +619,6 @@ class InterventionController extends Controller
 					$work->setObjective($work_objective);
 					$work->setCategory($work_category);
 					$work->setIntervention($interv);
-					// Remplir l'objet
 					$em->persist($work);
 					$interv->setWork($work);
 				}

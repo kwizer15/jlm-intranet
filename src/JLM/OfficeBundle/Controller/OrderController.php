@@ -251,10 +251,23 @@ class OrderController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 	
 		return array(
+				'todo' => $em->getRepository('JLMDailyBundle:Work')->getCountOrderTodo(),
 				'all' => $em->getRepository('JLMOfficeBundle:Order')->getTotal(),
 				'input' => $em->getRepository('JLMOfficeBundle:Order')->getCount(0),
 				'ordered' => $em->getRepository('JLMOfficeBundle:Order')->getCount(1),
 				'ready' => $em->getRepository('JLMOfficeBundle:Order')->getCount(2),
 		);
+	}
+	
+	/**
+	 * @Route("/todo", name="order_todo")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function todoAction()
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$list = $em->getRepository('JLMDailyBundle:Work')->getOrderTodo();
+		return array('entities'=>$list);
 	}
 }

@@ -26,7 +26,31 @@ class AskquoteController extends Controller
 	public function indexAction()
 	{
 		$em = $this->getDoctrine()->getEntityManager();
-		$entities = $em->getRepository('JLMOfficeBundle:AskQuote')->findAll();
+		$entities = $em->getRepository('JLMOfficeBundle:AskQuote')->getAll();
+		return array('entities'=>$entities);
+	}
+	
+	/**
+	 * @Route("/treated", name="askquote_listtreated")
+	 * @Template("JLMOfficeBundle:Askquote:index.html.twig")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function listtreatedAction()
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$entities = $em->getRepository('JLMOfficeBundle:AskQuote')->getTreated();
+		return array('entities'=>$entities);
+	}
+	
+	/**
+	 * @Route("/untreated", name="askquote_listuntreated")
+	 * @Template("JLMOfficeBundle:Askquote:index.html.twig")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function listuntreatedAction()
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$entities = $em->getRepository('JLMOfficeBundle:AskQuote')->getUntreated();
 		return array('entities'=>$entities);
 	}
 	
@@ -81,5 +105,22 @@ class AskquoteController extends Controller
 		}
 		
 		return array('form' => $form->createView());
+	}
+	
+	/**
+	 * Sidebar
+	 * @Route("/sidebar", name="askquote_sidebar")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function sidebarAction()
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+	
+		return array(
+				'all' => $em->getRepository('JLMOfficeBundle:AskQuote')->getTotal(),
+				'untreated' => $em->getRepository('JLMOfficeBundle:AskQuote')->getCountUntreated(),
+				'treated' => $em->getRepository('JLMOfficeBundle:AskQuote')->getCountTreated(),
+		);
 	}
 }

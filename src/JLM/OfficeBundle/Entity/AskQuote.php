@@ -15,7 +15,7 @@ use JLM\DailyBundle\Entity\Intervention;
  * JLM\OfficeBundle\Entity\AskQuote
  *
  * @ORM\Table(name="askquote")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\AskQuoteRepository")
  */
 class AskQuote extends Ask
 {
