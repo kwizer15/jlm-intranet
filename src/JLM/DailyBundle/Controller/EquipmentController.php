@@ -56,9 +56,10 @@ class EquipmentController extends Controller
 	public function createAction(Request $request)
 	{
 		$entity  = new ShiftTechnician();
+		$entity->setCreation(new \DateTime);
 		$form = $this->createForm(new RecuperationEquipmentType(), $entity);
 		$form->bind($request);
-		$entity->setCreation(new \DateTime);
+		
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity->getShifting()->setCreation(new \DateTime));
