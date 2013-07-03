@@ -97,7 +97,6 @@ class Contract
      * @var decimal $fee
      *
      * @ORM\Column(name="fee", type="decimal", scale=2)
-     * @Assert\Regex(pattern="/^\d+\.\d{2}$/",message="Valeur en euro non valide")
      */
     private $fee;
     
