@@ -109,7 +109,7 @@ class ContractController extends Controller
      * Stop a contract
      * 
      * @Route("/{id}/stopupdate", name="contract_stopupdate")
-     * @Template()
+     * @Template("JLMModelBundle:Contract:stop.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function stopupdateAction(Contract $entity)
