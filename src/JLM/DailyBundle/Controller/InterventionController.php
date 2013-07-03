@@ -535,7 +535,8 @@ class InterventionController extends Controller
 				)));
 		
 		return $response;
-
+	}
+	
 	/*
 	 * Mise à jour des tâches facturation
 	 * (à faire évoluer pour les devis, plannification et contact)
