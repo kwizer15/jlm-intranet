@@ -515,22 +515,26 @@ class InterventionController extends Controller
 				}
 				
 			}
-			if ($interv->getOtherAction() !== null)
+			if ($interv->getOtherAction() !== null && $interv->getRest() !== null)
 			{
 				$id = $interv->getOtherAction()->getType()->getId();
-				if ($id == $id_quote)
+				if ($id == $id_quote && $interv->getAskQuote() === null)
 				{
 					$askQuote = new AskQuote;
 					$maturity = clone $interv->getOtherAction()->getOpen();
-					$maturity->add(new \DateIntervel('P15D'));
+					$maturity->add(new \DateInterval('P15D'));
 					$askQuote->setCreation($interv->getOtherAction()->getOpen());
 					$askQuote->setMaturity($maturity);
 					$askQuote->setIntervention($interv);
+					if ($interv->getRest() === null)
+					{
+						echo $interv->getId(); exit;
+					}
 					$askQuote->setAsk($interv->getRest());
 					$em->persist($askQuote);
 					$interv->setAskQuote($askQuote);
 				}
-				elseif ($id == $id_order)
+				elseif ($id == $id_order && $interv->getWork() === null)
 				{
 					$work = new Work;
 					$work->setCreation($interv->getClose());
@@ -541,7 +545,7 @@ class InterventionController extends Controller
 					$work->setContactPhones($interv->getContactPhones());
 					$work->setContactEmail($interv->getContactEmail());
 					$work->setPriority(4);
-					$work->setContact($interv->getContact());
+//					$work->setContact($interv->getContact());
 					$work->setObjective($work_objective);
 					$work->setCategory($work_category);
 					$work->setIntervention($interv);
