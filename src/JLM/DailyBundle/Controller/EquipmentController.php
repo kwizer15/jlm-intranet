@@ -58,11 +58,9 @@ class EquipmentController extends Controller
 		$entity  = new ShiftTechnician();
 		$form = $this->createForm(new RecuperationEquipmentType(), $entity);
 		$form->bind($request);
-
+		$entity->setCreation(new \DateTime);
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
-			$entity->setCreation(new \DateTime);
-			
 			$em->persist($entity->getShifting()->setCreation(new \DateTime));
 			$em->persist($entity);
 			$em->flush();
