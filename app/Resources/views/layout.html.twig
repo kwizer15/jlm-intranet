@@ -4,6 +4,7 @@
 
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('bundles/jlmdefault/css/bootstrap.min.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ asset('bundles/jlmdefault/css/bootstrap-responsive.min.css') }}" type="text/css">
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" type="text/css">
 	<link rel="stylesheet" href="{{ asset('bundles/jlmdefault/css/style.css') }}" type="text/css">
 {% endblock %}
@@ -21,18 +22,17 @@
 		        <li class="dropdown">
 		        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Bureau <b class="caret"></b></a>
 		        	<ul class="dropdown-menu">
-		        		<li class="dropdown-submenu">
-		        			<a tabindex="-1" href="{{ path('task') }}">Tâches</a>
-		        			<ul class="dropdown-menu">
-		        				<li><a href="{{ path('task_new') }}"><i class="icon-plus-sign"></i> Nouvelle tâche</a></li>
-		        				<li class="divider"></li>
-		        				{% render "JLMOfficeBundle:Task:sidebar" %}
-		        			</ul>
-		        		</li>
                         <li class="dropdown-submenu">
 		        			<a tabindex="-1" href="{{ path('quote') }}">Devis</a>
 		        			<ul class="dropdown-menu">
-		        				<li><a href="{{ path('quote_new') }}"><i class="icon-plus-sign"></i> Nouveau devis</a></li>
+		        				<li class="dropdown-submenu">
+		        					<a tabindex="-1" href="{{ path('askquote') }}">Demandes</a>
+		        					<ul class="dropdown-menu">
+		        						<li><a href="{{ path('askquote_new') }}"><i class="icon-plus-sign"></i> Nouvelle demande de devis</a></li>
+		        						<li class="divider"></li>
+		        						{% render "JLMOfficeBundle:Askquote:sidebar" %}
+		        					</ul>
+		        				</li>
 		        				<li class="divider"></li>
 		        				{% render "JLMOfficeBundle:Quote:sidebar" %}
 		        			</ul>
@@ -40,8 +40,8 @@
 		        		<li class="dropdown-submenu">
 		        			<a tabindex="-1" href="{{ path('order') }}">Fiches travaux</a>
 		        			<ul class="dropdown-menu">
-		        				<li><a href="{{ path('order_new') }}"><i class="icon-plus-sign"></i> Nouvelle fiche</a></li>
-								<li class="divider"></li>
+		        			{#	<li><a href="{{ path('order_new') }}"><i class="icon-plus-sign"></i> Nouvelle fiche</a></li>
+								<li class="divider"></li> #}
 				        		{% render "JLMOfficeBundle:Order:sidebar" %} 
 		        			</ul>
 		        		</li>
@@ -81,8 +81,6 @@
 			   		<li><a href="{{ path('fos_user_change_password') }}"><i class="icon-lock"></i> Changer mon mot de passe</a></li>  		
 			   </ul>
 			</div>
-			{% else %}
-			<div class="btn-group pull-right"><a href="{{ path('fos_user_security_login') }}" class="btn">Se connecter</a></div>
 			{% endif %}	
 	      {% endblock header %}
 	          </div>

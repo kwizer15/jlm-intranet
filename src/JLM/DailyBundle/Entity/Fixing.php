@@ -2,13 +2,14 @@
 namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Plannification d'une panne
  * JLM\DailyBundle\Entity\Fixing
  *
  * @ORM\Table(name="shifting_fixing")
- * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\InterventionRepository")
+ * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\FixingRepository")
  */
 class Fixing extends Intervention
 {
@@ -18,6 +19,7 @@ class Fixing extends Intervention
 	 * Cause du dépannage
 	 * @var FixingDue $due;
 	 * @ORM\ManyToOne(targetEntity="FixingDue")
+	 * @Assert\Valid
 	 */
 	private $due;
 	
@@ -25,16 +27,9 @@ class Fixing extends Intervention
 	 * Action
 	 * @var FixingDone $done;
 	 * @ORM\ManyToOne(targetEntity="FixingDone")
+	 * @Assert\Valid
 	 */
 	private $done;
-	
-	/**
-	 * Bon d'intervention
-	 * @var int $orderNumber
-	 *
-	 * @ORM\Column(name="order_number",type="integer",nullable=true)
-	 */
-	private $orderNumber;
 	
 	/**
 	 * Get Type
@@ -88,28 +83,5 @@ class Fixing extends Intervention
 	{
 		$this->done = $done;
 		return $this;
-	}
-	
-	/**
-	 * Set orderNumber
-	 *
-	 * @param integer $orderNumber
-	 * @return InterventionReport
-	 */
-	public function setOrderNumber($orderNumber)
-	{
-		$this->orderNumber = $orderNumber;
-	
-		return $this;
-	}
-	
-	/**
-	 * Get orderNumber
-	 *
-	 * @return integer
-	 */
-	public function getOrderNumber()
-	{
-		return $this->orderNumber;
 	}
 }

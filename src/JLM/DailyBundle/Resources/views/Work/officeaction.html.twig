@@ -1,8 +1,0 @@
-{% if entity.objective.id == 1 %}
-<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 1 }) }}" class="btn btn-primary">Facturer</a>
-<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 5 }) }}" class="btn">Ne rien faire</a>
-{% else %}
-<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 5 }) }}" class="btn btn-primary">Ne rien faire</a>
-<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 1 }) }}" class="btn btn">Facturer</a>
-{% endif %}
-	

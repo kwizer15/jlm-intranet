@@ -1,4 +1,7 @@
 {# JLMDailyBundle:Intervention:show.html.twig #}
+{% extends "JLMDailyBundle::layout.html.twig" %}
+{% block content %}
+<h1>{% include "JLMDailyBundle:Intervention:type.html.twig" with {'type' : entity.type} %}</h1>
 
 <div class="alert{% if entity.closed %} alert-success{% elseif entity.priority < 3 %} alert-error{% elseif entity.priority > 4 %} alert-info{% endif %}"><h4>
 {% if entity.closed %}Cloturée
@@ -16,12 +19,13 @@
 	 <table class="table">
 	 <tbody>
 	 <tr><th>Créée le</th><td>{{ entity.creation|date('d/m/Y H:i') }}</td></tr>
-	 <tr><th>Type</th><td>{% include "JLMDailyBundle:Intervention:type.html.twig" with {'type' : entity.type} %}</td></tr>
 	 <tr>
 		<th>Raison</th>
-	 	<td>{% if entity.type == 'work' %}
-	 	{% if entity.quote %}Selon devis n°{{ entity.quote.number }}<br>{% endif %}{% endif %}
-		{{ entity.reason | nl2br }}</td></tr>
+	 	<td>
+	 		{% block reference %}{% endblock %}
+			{{ entity.reason | nl2br }}
+		</td>
+	</tr>
 	 <tr><th>Contrat</th><td>{{ entity.contract }}</td></tr>
 	 {% if entity.door %}
 	 <tr>
@@ -117,3 +121,184 @@
 {% endif %}
 <a href="#modalAddTech{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter</a>
 {% render 'JLMDailyBundle:Shifting:new' with {'id':entity.id} %}
+
+<h4>Rapport</h4>
+<table class="table">
+	<tbody>
+{% block report %}
+{% endblock %}
+
+{% if entity.closed %}
+{% block reportclosed %}
+
+	 <tr>
+	 	<th>Rapport</th>
+	 	<td>{{ entity.report | nl2br}}</td>
+	 	<td></td>
+	 </tr>
+	 {% if entity.rest %}
+	 <tr>
+	 	<th>Reste à faire</th>
+	 	<td>
+	 		{{ entity.rest  | nl2br}}
+	 		
+	 	</td>
+	 	<td>
+	 		{% set preferother = 0 %}
+			{% block otheraction %}
+			<span class="btn-group">
+				{# Bouton devis #}
+				{% if entity.askQuote is not null %}
+					{% if entity.askQuote.quotes|length %}
+						<a href="#" class="btn{% if preferother == 0 %} btn-info{% endif %} disabled">Devis</a>
+						<a href="#" class="btn {% if preferother == 0 %} btn-info{% endif %} dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+			 			<ul class="dropdown-menu">
+			 				<li><a href="{{ path('askquote_show',{'id' : entity.askQuote.id }) }}">Voir la demande de devis</a></li>
+			    			<li class="divider"></li>
+						{% for quote in entity.askQuote.quotes %}
+							<li><a href="{{ path('quote_show',{ 'id':quote.id }) }}" tabindex="-1">{{ quote.number }} {% include 'JLMOfficeBundle:Quote:statelabel.html.twig' with {'state': quote.state} %}</a></li> 
+						{% endfor %}
+						</ul>
+
+			    	{% else %}
+			    		<a href="{{ path('intervention_cancelquote',{'id' : entity.id }) }}" class="btn{% if preferother == 0 %} btn-info{% endif %} active">Devis</a>
+			    		<a href="#" class="btn{% if preferother == 0 %} btn-info{% endif %} dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+			    		<ul class="dropdown-menu">
+			    			<li><a href="{{ path('askquote_show',{'id' : entity.askQuote.id }) }}">Voir la demande de devis</a></li>
+			    		</ul>
+			    	{% endif %}
+			    {% else %}
+			    	<a href="{{ path('intervention_toquote',{'id' : entity.id }) }}" class="btn {% if preferother == 0 %} btn-info{% endif %}">Devis</a>
+			    	<a href="#" class="btn{% if preferother == 0 %} btn-info{% endif %} disabled"><b class="caret"></b></a>
+			    {% endif %}
+			   </span>
+				
+				{# Bouton commande #}
+				<span class="btn-group">
+				{% if entity.work is not null %}
+					{% if entity.work.inProgress %}
+						<a href="#" class="btn{% if preferother == 1 %} btn-info{% endif %} disabled">Prévoir intervention </a>
+			    		<a href="#" class="btn{% if preferother == 1 %} btn-info{% endif %} dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+			    		<ul class="dropdown-menu">
+			    			<li><a href="{{ path('work_show',{'id':entity.work.id}) }}">Voir les travaux</a></li>
+			    		</ul>
+			    	{% else %}
+			    		<a href="{{ path('intervention_cancelwork',{'id' : entity.id }) }}" class="btn{% if preferother == 1 %} btn-info{% endif %} active">Prévoir intervention </a>
+			    		<a href="#" class="btn{% if preferother == 1 %} btn-info{% endif %} dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+			    		<ul class="dropdown-menu">
+			    			<li><a href="{{ path('work_show',{'id':entity.work.id}) }}">Voir les travaux</a></li>
+			    		</ul>
+			    	{% endif %}
+			    {% else %}
+			    	<a href="{{ path('intervention_towork',{'id' : entity.id }) }}" class="btn {% if preferother == 1 %} btn-info{% endif %}">Prévoir intervention</a>
+			    	<a href="#" class="btn{% if preferother == 1 %} btn-info{% endif %} disabled"><b class="caret"></b></a>
+			    {% endif %}
+			    </span>
+			    
+				{# Bouton contacter client #}
+				<span class="btn-group">
+				{% if entity.contactCustomer is not null %}
+					{% if entity.contactCustomer %}
+			    		<a href="#" class="btn{% if preferother == 2 %} btn-info{% endif %} disabled">Contacter client</a>
+			    	{% else %}
+			    		<a href="{{ path('intervention_cancelcontact',{'id' : entity.id }) }}" class="btn{% if preferother == 2 %} btn-info{% endif %} active">Contacter client</a>
+			    	{% endif %}
+			    {% else %}
+			    	<a href="{{ path('intervention_tocontact',{'id' : entity.id }) }}" class="btn{% if preferother == 2 %} btn-info{% endif %}">Contacter client</a>
+			    {% endif %}
+			    </span>
+			{% endblock otheraction %}
+			</td>
+	 	</tr>
+	 {% endif %}
+	 <tr>
+	 	<th>Action bureau</th>
+			{% if entity.mustBeBilled is not null %}
+			<td>
+				{% if entity.mustBeBilled %}
+					{% if entity.bill %}
+					<a href="{{ path('bill_show',{'id': entity.bill.id }) }}">Facture n°{{ entity.bill.number }}</a>
+					{% elseif entity.externalBill %}
+					Facture n°{{ entity.externalBill }} (externe)
+					{% else %}
+					<a href="{{ path('bill_new_intervention',{'id':entity.id}) }}">A facturer</a>
+					<br><a href="#modalExternalBill" data-toggle="modal">Saisir le numéro</a>
+					{# Modal #}
+					<form id="modalExternalBill" action="{{ path('intervention_externalbill',{'id':entity.id}) }}" method="post" {{ form_enctype(form_externalbill) }} class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalExternalBillLabel" aria-hidden="true">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h3 id="modalExternalBillLabel">Numéro de facture externe</h3>
+						</div>
+						<div class="modal-body">
+							{{ form_widget(form_externalbill) }}
+						</div>
+						<div class="modal-footer">
+							<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+							<button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer</button>
+						</div>
+					</form>
+					{% endif %}
+				{% else %}
+					Ne pas facturer
+				{% endif %}
+			</td>
+			<td>
+					{% if entity.bill is not null%}
+					<a href="#" class="btn disabled" data-toggle="modal" role="button">Changer</a>
+					{% else %}
+					<a href="{{ path('intervention_cancelbill',{'id':entity.id}) }}" class="btn">Changer</a>
+					{% endif %}
+			</td>
+			{% else %}
+			<td>
+				Non définie
+			</td>
+			<td>
+				
+				{% set preferbill = 0 %}
+				{% block officeaction %}
+				
+				{% if preferbill < 1 %}
+				{% if preferbill == 0 %}
+				<span class="btn-group">
+					<a href="{{ path('intervention_tobill',{'id' : entity.id }) }}" class="btn">Facturer</a>
+				</span>
+				{% endif %}
+				<span class="btn-group">
+					<a href="{{ path('intervention_dontbill',{'id' : entity.id }) }}" class="btn btn-info">Ne pas facturer</a>
+				</span>
+				{% else %}
+				<span class="btn-group">
+				<a href="{{ path('intervention_tobill',{'id' : entity.id }) }}" class="btn btn-info">Facturer</a>
+				</span>
+				<span class="btn-group">
+				<a href="{{ path('intervention_dontbill',{'id' : entity.id }) }}" class="btn">Ne pas facturer</a>
+				</span>
+				{% endif %}
+				</span>
+				{% endblock %}
+				
+			</td>
+			{% endif %}
+	 	</td>
+	 </tr>
+	 <tr>
+	 	<th>Bon d'intervention</th>
+	 	<td>{{ entity.voucher }}</td>
+	 	<td></td>
+	 </tr>
+
+{% endblock %}
+{% endif %}
+	 </tbody>
+</table>
+<div class="form-actions">
+	{% block actions %}
+		<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a>
+		{% include 'JLMDailyBundle:Intervention:delete.html.twig' with {'id':entity.id} %}
+	{% endblock %}
+{% endblock %}
+
+{% macro bill(id,preferbill) %}
+
+{% endmacro %}

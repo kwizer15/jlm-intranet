@@ -4,9 +4,10 @@
 <h1>Devis <small>{{ entity.number }}</small></h1>
 {% include 'JLMOfficeBundle:Quote:stateheader.html.twig' with {'state': entity.state} %}
 {% include 'JLMOfficeBundle:Quote:showheader.html.twig' with {'quote': entity} %}
-
 <div class="form-actions">
-	<a href="{{ path('quote') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+{% if entity.ask %}
+	<a href="{{ path('askquote_show',{'id':entity.ask.id}) }}" class="btn"><i class="icon-arrow-left"></i> Voir la demande</a>
+{% endif %}
 	<a href="{{ path('quote_jacket',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer la chemise</a>
 {% if entity.variants|length > 0 %}	
 	<a href="{{ path('quote_print',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-white icon-print"></i> Imprimer tout</a>	

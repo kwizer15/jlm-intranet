@@ -60,6 +60,7 @@ class SiteRepository extends EntityRepository
 			foreach ($r->getDoors() as $d)
 				$doorDetails = $d->getType().' - '.$d->getLocation().chr(10);
 			$r2[] = array(
+					'id'=>''.$r->getId(),
 					'label'=>''.$r,
 					'siteCp'=>''.$r->toString(),
 					'trustee'=>''.$r->getTrustee()->getId(),

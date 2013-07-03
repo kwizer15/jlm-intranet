@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -33,6 +34,8 @@ class Company extends StringModel
 	 * @var Address $address
 	 * 
 	 * @ORM\OneToOne(targetEntity="Address")
+	 * @Assert\NotNull
+	 * @Assert\Valid
 	 */
 	private $address;
 	
@@ -40,6 +43,8 @@ class Company extends StringModel
 	 * @var string $phone
 	 * 
 	 * @ORM\Column(name="phone",type="string",length=20)
+	 * @Assert\NotNull
+	 * @Assert\Regex(pattern="/^0[1-589]\d{8}$/",message="Ce n'est pas un numéro de téléphone fixe valide")
 	 */
 	private $phone;
 	
@@ -47,6 +52,7 @@ class Company extends StringModel
 	 * @var string $fax
 	 *
 	 * @ORM\Column(name="fax",type="string",length=20, nullable=true)
+	 * @Assert\Regex(pattern="/^0[1-589]\d{8}$/",message="Ce n'est pas un numéro de fax valide")
 	 */
 	private $fax;
 	
@@ -54,6 +60,7 @@ class Company extends StringModel
 	 * @var email $email
 	 *
 	 * @ORM\Column(name="email",type="string",length=255, nullable=true)
+	 * @Assert\Email
 	 */
 	private $email;
 	
@@ -66,6 +73,7 @@ class Company extends StringModel
 	 *      joinColumns={@ORM\JoinColumn(name="company_id", referencedColumnName="id")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id", unique=true)}
 	 *      )
+	 * @Assert\Valid(traverse="true")
 	 */
 	private $contacts;
 	

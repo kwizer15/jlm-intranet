@@ -118,5 +118,30 @@ class AutocompleteController extends Controller
     	$response->setContent($json); 
     	return $response;
     }
+    
+    /**
+     * @Route("/autocomplete/doorsite", name="autocomplete_doorsite")
+     * @Method("post")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function doorsite(Request $request)
+    {
+    	$id = $request->request->get('id_site');
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$site = $em->getRepository('JLMModelBundle:Site')->find($id);
+    	$results = $em->getRepository('JLMModelBundle:Door')->findBy(array('site'=>$site));
+    	foreach($results as $result)
+    	{
+    		$doors[] = array(
+    				'id'=>$result->getId(),
+    				'string'=>$result->getType().' - '.$result->getLocation().' / '.$result->getStreet()
+    		);
+    	}
+    	$json = json_encode($doors);
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/json');
+    	$response->setContent($json);
+    	return $response;
+    }
 
 }

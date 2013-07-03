@@ -21,9 +21,9 @@ class DoorToIntTransformer implements DataTransformerInterface
 	}
 	
 	/**
-	 * Transforms an object (trustee) to a string (name).
+	 * Transforms an object (door) to a string (name).
 	 *
-	 * @param  Trustee|null $entity
+	 * @param  Door|null $entity
 	 * @return string
 	 */
 	public function transform($entity)
@@ -35,27 +35,27 @@ class DoorToIntTransformer implements DataTransformerInterface
 	}
 	
 	/**
-	 * Transforms a string (number) to an object (trustee).
+	 * Transforms an int (number) to an object (door).
 	 *
-	 * @param  string $number
-	 * @return Trustee|null
-	 * @throws TransformationFailedException if object (trustee) is not found.
+	 * @param  int $number
+	 * @return Door|null
+	 * @throws TransformationFailedException if object (door) is not found.
 	 */
-	public function reverseTransform($string)
+	public function reverseTransform($number)
 	{
-		if (!$string) {
+		if (!$number) {
 			return null;
 		}
 	
 		
 			$entity = $this->om
 				->getRepository('JLMModelBundle:Door')
-				->find($string)
+				->find($number)
 			;
 		if (null === $entity) {
 			throw new TransformationFailedException(sprintf(
-					'A trustee with id "%s" does not exist!',
-					$string
+					'A door with id "%s" does not exist!',
+					$number
 			));
 		}
 	

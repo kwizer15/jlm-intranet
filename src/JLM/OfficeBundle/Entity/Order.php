@@ -4,9 +4,10 @@ namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\DailyBundle\Entity\Work;
 
 /**
- * JLM\OfficeBundle\Entity\Bill
+ * JLM\OfficeBundle\Entity\Order
  *
  * @ORM\Table(name="orders")
  * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\OrderRepository")
@@ -40,25 +41,11 @@ class Order
 	private $lines;
 	
 	/**
-	 * Lieu
-	 * @var string $place
-	 * @ORM\Column(name="place",type="text") 
+	 * Intervention source
+	 * @var Work
+	 * @ORM\OneToOne(targetEntity="JLM\DailyBundle\Entity\Work",mappedBy="order")
 	 */
-	private $place;
-	
-	/**
-	 * Porte
-	 * @var Door $door
-	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Door")
-	 */
-	private $door;
-	
-	/**
-	 * Devis source
-	 * @var Quote
-	 * @ORM\ManyToOne(targetEntity="QuoteVariant")
-	 */
-	private $quote;
+	private $work;
 	
 	/**
 	 * Etat
@@ -87,29 +74,6 @@ class Order
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set place
-     *
-     * @param string $place
-     * @return Order
-     */
-    public function setPlace($place)
-    {
-        $this->place = $place;
-    
-        return $this;
-    }
-
-    /**
-     * Get place
-     *
-     * @return string 
-     */
-    public function getPlace()
-    {
-        return $this->place;
     }
 
     /**
@@ -143,52 +107,6 @@ class Order
     public function getLines()
     {
         return $this->lines;
-    }
-
-    /**
-     * Set quote
-     *
-     * @param JLM\OfficeBundle\Entity\QuoteVariant $quote
-     * @return Order
-     */
-    public function setQuote(\JLM\OfficeBundle\Entity\QuoteVariant $quote = null)
-    {
-        $this->quote = $quote;
-    
-        return $this;
-    }
-
-    /**
-     * Get quote
-     *
-     * @return JLM\OfficeBundle\Entity\QuoteVariant 
-     */
-    public function getQuote()
-    {
-        return $this->quote;
-    }
-    
-    /**
-     * Set door
-     *
-     * @param JLM\ModelBundle\Entity\Door $door
-     * @return Order
-     */
-    public function setDoor(\JLM\ModelBundle\Entity\Door $door = null)
-    {
-    	$this->door = $door;
-    
-    	return $this;
-    }
-    
-    /**
-     * Get door
-     *
-     * @return JLM\ModelBundle\Entity\Door
-     */
-    public function getDoor()
-    {
-    	return $this->door;
     }
     
     /**
@@ -235,5 +153,65 @@ class Order
     public function getState()
     {
     	return $this->state;
+    }
+
+    /**
+     * Set work
+     *
+     * @param \JLM\DailyBundle\Entity\Work $work
+     * @return Order
+     */
+    public function setWork(\JLM\DailyBundle\Entity\Work $work = null)
+    {
+        $this->work = $work;
+    
+        return $this;
+    }
+
+    /**
+     * Get work
+     *
+     * @return \JLM\DailyBundle\Entity\Work 
+     */
+    public function getWork()
+    {
+        return $this->work;
+    }
+    
+    /**
+     * Create from QuoteVariant
+     */
+    public function populateFromWork(Work $work)
+    {
+    	$this->setCreation(new \DateTime);
+    	$this->setWork($work);
+    	if ($variant = $work->getQuote())
+    	{
+    		$vlines = $variant->getLines();
+    		foreach ($vlines as $vline)
+    		{
+    			$flag = true;
+    			if ($product = $vline->getProduct())
+    			if ($category = $product->getCategory())
+    			if ($category->getId() == 2)
+    				$flag = false;
+    			if ($flag)
+    			{
+    				$oline = new OrderLine;
+    				$oline->setReference($vline->getReference());
+    				$oline->setQuantity($vline->getQuantity());
+    				$oline->setDesignation($vline->getDesignation());
+    				$this->addLine($oline);
+    			}
+    		}
+    	}
+    	return $this;
+    }
+    
+    public static function createFromWork(Work $work)
+    {
+    	$order = new Order;
+    	$order->populateFromWork($work);
+    	return $order;
     }
 }

@@ -105,10 +105,14 @@ class QuoteRepository extends EntityRepository
 			$state = array(3,4);
 		else
 			$state = array($state);
-		$qb = $this->createQueryBuilder('q')
-		//		->select('q,v')
-		//		->leftJoin('q.variants','v')
-				->orderBy('q.number','desc')
+		$qb = $this->createQueryBuilder('a')
+				->select('a,b,c,d,e,f')
+				->leftJoin('a.door','b')
+				->leftJoin('b.site','c')
+				->leftJoin('c.address','d')
+				->leftJoin('d.city','e')
+				->leftJoin('b.type','f')
+				->orderBy('a.number','desc')
 		;
 		$results = $qb->getQuery()->getResult();
 		$quotes = array();
@@ -127,6 +131,27 @@ class QuoteRepository extends EntityRepository
 				unset($results[$key]);
 		$this->byState = $results;
 		return $results;
+	}
+	
+	public function getAll($limit = null,$offset = null)
+	{
+		$qb = $this->createQueryBuilder('a')
+			->select('a,b,c,d,e,f')
+			->leftJoin('a.door','b')
+			->leftJoin('b.site','c')
+			->leftJoin('c.address','d')
+			->leftJoin('d.city','e')
+			->leftJoin('b.type','f')
+			->orderBy('a.number','desc');
+		if ($limit !== null)
+		{
+			$qb->setMaxResults($limit);
+		}
+		if ($offset !== null)
+		{
+			$qb->setFirstResult($offset);
+		}
+		return $qb->getQuery()->getResult();
 	}
 
 }

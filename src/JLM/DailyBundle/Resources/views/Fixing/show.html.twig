@@ -1,37 +1,28 @@
 {# JLMDailyBundle:Fixing:show.html.twig #}
-{% extends "JLMDailyBundle::layout.html.twig" %}
+{% extends "JLMDailyBundle:Intervention:show.html.twig" %}
 
-{% block content %}
-<h1>Dépannage</h1>
-{% include "JLMDailyBundle:Intervention:show.html.twig" with {'entity' : entity} %}
-
-{% if entity.closed %}
-	 <h4>Rapport</h4>
-	 <table class="table">
-	 <tbody>
-	 <tr><th>Cause</th><td>{{ entity.due }}</td></tr>
-	 <tr><th>Action menée</th><td>{{ entity.done }}</td></tr>
-	 <tr><th>Rapport</th><td>{{ entity.report | nl2br }}</td></tr>
-	 {% if entity.rest %}<tr><th>Reste à faire</th><td>{{ entity.rest  | nl2br}}<br>{% include "JLMDailyBundle:Fixing:otheraction.html.twig" with {'entity' : entity} %}</td></tr>{% endif %}
-	 <tr><th>Action bureau</th><td>
-	{% if entity.officeAction %}<a href="{{ path('task_edit',{'id':entity.officeAction.id}) }}">{{ entity.officeAction.type }}</a>
-	{% else %}{% include "JLMDailyBundle:Fixing:officeaction.html.twig" with {'entity' : entity} %}
+{% block officeaction %}
+	{% if entity.due.id == 1 or entity.due.id == 2%}
+		{% if entity.done.id == 1 or entity.done.id == 2 %}
+			{% if not entity.completeContract %}
+				{% set preferbill = 1 %}
+			{% endif %}
+		{% endif %}
 	{% endif %}
-	 </td></tr>
-	 <tr>
-	 	<th>Bon d'intervention</th>
-	 	<td>{{ entity.voucher }}</td>
-	 </tr>
-	 </tbody>
-	 </table>
-{% endif %}
+	{{ parent() }}
+{% endblock %}
 
-<div class="form-actions">
+{% block reportclosed %}
+	 <tr><th>Cause</th><td>{{ entity.due }}</td><td></td></tr>
+	 <tr><th>Action menée</th><td>{{ entity.done }}</td><td></td></tr>
+	 {{ parent() }}
+{% endblock %}
+
+{% block actions %}
     <a href="{{ path('fixing_list') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
     <a href="{{ path('fixing_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 	<a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-primary"><i class="icon-ok icon-white"></i> {% if not entity.closed %}Cloturer{% else %}Editer cloture{% endif %}</a>
 	{% render 'JLMDailyBundle:Fixing:close' with {'id':entity.id} %}
-	<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a>
-	{% include 'JLMDailyBundle:Intervention:delete.html.twig' with {'id':entity.id} %}
+	{{ parent() }}
 </div>
 {% endblock %}

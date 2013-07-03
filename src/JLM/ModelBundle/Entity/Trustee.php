@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -19,6 +20,7 @@ class Trustee extends Company
      * @var integer $accountNumber
      *
      * @ORM\Column(name="accountNumber", type="integer", nullable=true)
+     * @Assert\Regex(pattern="/^411\d{3,5}$/",message="Ce n'est pas un numéro de compte valide.")
      */
     private $accountNumber;
 
@@ -42,6 +44,7 @@ class Trustee extends Company
      * @var string $billingLabel
      * 
      * @ORM\Column(name="billingLabel", type="string", nullable=true)
+     * @Assert\Type(type="string")
      */
     private $billingLabel;
     
@@ -50,6 +53,7 @@ class Trustee extends Company
      * @var Address $billingAddress
      *
      * @ORM\OneToOne(targetEntity="Address")
+     * @Assert\Valid
      */
     private $billingAddress;
     
@@ -57,6 +61,7 @@ class Trustee extends Company
      * @var string $phone
      *
      * @ORM\Column(name="billingPhone",type="string",length=20, nullable=true)
+     * @Assert\Regex(pattern="/^0[1-9]\d{8}$/",message="Ce n'est pas un numéro de téléphone fixe valide")
      */
     private $billingPhone;
     
@@ -64,6 +69,7 @@ class Trustee extends Company
      * @var string $fax
      *
      * @ORM\Column(name="billingFax",type="string",length=20, nullable=true)
+     * @Assert\Regex(pattern="/^0[1-9]\d{8}$/",message="Ce n'est pas un numéro de fax valide")
      */
     private $billingFax;
     
@@ -71,6 +77,7 @@ class Trustee extends Company
      * @var email $email
      *
      * @ORM\Column(name="billingEmail",type="string",length=255, nullable=true)
+     * @Assert\Email
      */
     private $billingEmail;
     

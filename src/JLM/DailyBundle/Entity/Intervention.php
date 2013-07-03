@@ -3,7 +3,11 @@
 namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use JLM\ModelBundle\Entity\Contract;
+use JLM\OfficeBundle\Entity\Bill;
+use JLM\OfficeBundle\Entity\AskQuote;
+
 /**
  * Plannification d'intervention
  * JLM\DailyBundle\Entity\InterventionPlanned
@@ -17,18 +21,21 @@ abstract class Intervention extends Shifting
      * Porte (lien)
      * @var JLM\ModelBundle\Entity\Door
      * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Door", inversedBy="interventions")
+     * @Assert\NotNull(message="Une intervention doit être liée à une porte")
      */
     private $door;
     
     /**
      * @var string $contactName
      * @ORM\Column(name="contact_name", type="string", nullable=true)
+     * @Assert\Type(type="string")
      */
     private $contactName;
     
     /**
      * @var string $contactPhone
      * @ORM\Column(name="contact_phones", type="text", nullable=true)
+     * @Assert\Type(type="string")
      */
     private $contactPhones;
     
@@ -36,6 +43,7 @@ abstract class Intervention extends Shifting
      * E-mail pour envoyer le rapport
      * @var string $contactEmail
      * @ORM\Column(name="contact_email", type="text", nullable=true)
+     * @Assert\Email
      */
     private $contactEmail;
    
@@ -43,6 +51,7 @@ abstract class Intervention extends Shifting
      * Report
      * @var string $report
      * @ORM\Column(name="report",type="text", nullable=true)
+     * @Assert\Type(type="string")
      */
     private $report;
     
@@ -51,6 +60,7 @@ abstract class Intervention extends Shifting
      * @var string $comments
      *
      * @ORM\Column(name="comments", type="text", nullable=true)
+     * @Assert\Type(type="string")
      */
     private $comments;
     
@@ -62,6 +72,8 @@ abstract class Intervention extends Shifting
      * ....
      *
      * @ORM\Column(name="priority", type="smallint")
+     * @Assert\Choice(choices = {1,2,3,4,5,6})
+     * @Assert\NotBlank(message="Pas de priorité définie")
      */
     private $priority;
     
@@ -70,6 +82,7 @@ abstract class Intervention extends Shifting
      * @var DateTime
      * 
      * @ORM\Column(name="close", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
     private $close;
     
@@ -78,6 +91,8 @@ abstract class Intervention extends Shifting
      * @var JLM\OfficeBundle\Entity\Task
      *
      * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Task")
+     * @deprecated
+     * Remplacé par bill et mustBeBilled
      */
     private $officeAction;
     
@@ -86,6 +101,8 @@ abstract class Intervention extends Shifting
      * @var JLM\OfficeBundle\Entity\Task
      *
      * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Task")
+     * @deprecated
+     * Remplacé par askQuote, work et contactCustomer
      */
     private $otherAction;
     
@@ -94,6 +111,7 @@ abstract class Intervention extends Shifting
      * @var string
      *
      * @ORM\Column(name="rest",type="text",nullable=true)
+     * @Assert\Type(type="string")
      */
     private $rest;
     
@@ -101,6 +119,8 @@ abstract class Intervention extends Shifting
      * Type de contrat
      * @var string
      * @ORM\Column(name="contract",type="string",nullable=true)
+     * @Assert\Type(type="string")
+     * Assert\NotNull(message="Pas de type de contrat défini")
      */
     private $contract;
     
@@ -108,8 +128,53 @@ abstract class Intervention extends Shifting
      * Numéro de bon d'intervention
      * @var string
      * @ORM\Column(name="voucher",type="string",nullable=true)
+     * @Assert\Type(type="int")
      */
     private $voucher;
+    
+    /**
+     * Facture
+     * @var JLM\OfficeBundle\Entity\Bill
+     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Bill", inversedBy="intervention")
+     * @Assert\Valid
+     */
+    private $bill;
+    
+    /**
+     * Facture externe
+     * @var string
+     * @ORM\Column(name="external_bill", nullable=true)
+     */
+    private $externalBill;
+    
+    /**
+     * Doit etre facturée
+     * @var bool
+     * @ORM\Column(name="mustBeBilled", type="boolean", nullable=true)
+     * @Assert\Type(type="bool")
+     */
+    private $mustBeBilled;
+    
+    /**
+     * Intervention lancée pour le reste à faire
+     * @var Work
+     * @ORM\OneToOne(targetEntity="Work", inversedBy="intervention")
+     */
+    private $work;
+    
+    /**
+     * Demande de devis lancée pour le reste à faire
+     * @var AskQuote
+     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\AskQuote", inversedBy="intervention")
+     */
+    private $askQuote;
+    
+    /**
+     * Contacter client pour le reste à faire
+     * @var bool
+     * @ORM\Column(name="contact_customer", type="boolean", nullable=true)
+     */
+    private $contactCustomer = null;
     
     /**
      * Get contract
@@ -476,8 +541,169 @@ abstract class Intervention extends Shifting
     		return -1;
     	if (!$this->getClosed())
     		return 1;
-    	if (!$this->getOfficeAction() || (!$this->getOtherAction() && $this->getRest()))
+    	if ($this->getMustBeBilled() === null || ($this->getContactCustomer() === null && $this->getAskQuote() === null && $this->getWork() === null && $this->getRest()))
     		return 2;
     	return 3;
+    }
+    
+    /**
+     * Vérifie qu'une intervention devant être facturée possède une facture
+     * et inversement
+     */
+    public function isBilled()
+    {
+    	return !$this->mustBeBilled === ($this->bill === null);
+    }
+
+    /**
+     * Set mustBeBilled
+     *
+     * @param boolean $mustBeBilled
+     * @return Intervention
+     */
+    public function setMustBeBilled($mustBeBilled)
+    {
+        $this->mustBeBilled = $mustBeBilled;
+    
+        return $this;
+    }
+
+    /**
+     * Get mustBeBilled
+     *
+     * @return boolean 
+     */
+    public function getMustBeBilled()
+    {
+        return $this->mustBeBilled;
+    }
+
+    /**
+     * Set bill
+     *
+     * @param \JLM\OfficeBundle\Entity\Bill $bill
+     * @return Intervention
+     */
+    public function setBill(\JLM\OfficeBundle\Entity\Bill $bill = null)
+    {
+        $this->bill = $bill;
+    	
+        return $this;
+    }
+
+    /**
+     * Get bill
+     *
+     * @return \JLM\OfficeBundle\Entity\Bill 
+     */
+    public function getBill()
+    {
+        return $this->bill;
+    }
+
+    /**
+     * Set externalBill
+     *
+     * @param string $number
+     * @return Intervention
+     */
+    public function setExternalBill($number = null)
+    {
+    	$this->externalBill = $number;
+    	 
+    	return $this;
+    }
+    
+    /**
+     * Get externalBill
+     * 
+     * @return string
+     */
+    public function getExternalBill()
+    {
+    	return $this->externalBill;
+    }
+    
+    /**
+     * Set contactCustomer
+     *
+     * @param boolean $contactCustomer
+     * @return Intervention
+     */
+    public function setContactCustomer($contactCustomer = null)
+    {
+        $this->contactCustomer = $contactCustomer;
+    
+        return $this;
+    }
+
+    /**
+     * Get contactCustomer
+     *
+     * @return boolean 
+     */
+    public function getContactCustomer()
+    {
+        return $this->contactCustomer;
+    }
+
+    /**
+     * Set work
+     *
+     * @param \JLM\DailyBundle\Entity\Work $work
+     * @return Intervention
+     */
+    public function setWork(\JLM\DailyBundle\Entity\Work $work = null)
+    {
+        $this->work = $work;
+    
+        return $this;
+    }
+
+    /**
+     * Get work
+     *
+     * @return \JLM\DailyBundle\Entity\Work 
+     */
+    public function getWork()
+    {
+        return $this->work;
+    }
+
+    /**
+     * Set askQuote
+     *
+     * @param \JLM\OfficeBundle\Entity\AskQuote $askQuote
+     * @return Intervention
+     */
+    public function setAskQuote(\JLM\OfficeBundle\Entity\AskQuote $askQuote = null)
+    {
+        $this->askQuote = $askQuote;
+    
+        return $this;
+    }
+
+    /**
+     * Get askQuote
+     *
+     * @return \JLM\OfficeBundle\Entity\AskQuote 
+     */
+    public function getAskQuote()
+    {
+        return $this->askQuote;
+    }
+    
+    /**
+     * Test pour les actions suite à reste à faire
+     * @Assert\True(message="Une action reste à faire ne peut pas être lancée si le champ reste à faire est vide")
+     */
+    public function isRestActionValid()
+    {
+    	if (!$this->getRest())
+    	{
+    		if ($this->getAskQuote() !== null || $this->getWork() !== null || $this->getContactCustomer())
+    			return false;
+    	}
+    	return true;
     }
 }

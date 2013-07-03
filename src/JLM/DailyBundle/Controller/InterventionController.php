@@ -14,7 +14,10 @@ use JLM\DailyBundle\Entity\Shifting;
 use JLM\ModelBundle\Form\Type\DatepickerType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\Task;
+use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\TaskType;
+use JLM\OfficeBundle\Entity\AskQuote;
+use JLM\DailyBundle\Form\Type\ExternalBillType;
 
 /**
  * Fixing controller.
@@ -40,82 +43,187 @@ class InterventionController extends Controller
 		);
 	}
 
-	
-	
 	/**
-	 * Close an existing Fixing entity.
+	 * Bill intervention
 	 *
-	 * @Route("/{id}/generatetask/{type}", name="intervention_generatetask")
+	 * @Route("/{id}/tobill", name="intervention_tobill")
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function generatetaskAction(Intervention $entity, $type)
+	public function tobillAction(Intervention $entity)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$tasktype = $em->getRepository('JLMOfficeBundle:TaskType')->find($type);
-		if ($tasktype === null)
-			return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
-		
-		$task = new Task;
-		if ($entity->getDoor() !== null)
-			$task->setDoor($entity->getDoor());
-		$task->setPlace($entity->getPlace());
-		$task->setUrlSource($this->generateUrl('intervention_redirect', array('id' => $entity->getId(),'act'=>'show')));
-		$task->setType($tasktype);
-		
-		switch ($tasktype->getId())
-		{
-			// Facturer
-			case 1 :				
-				$task->setTodo($entity->getReport());
-				if ($entity instanceof Work)
-				{
-					if ($entity->getQuote() !== null)
-						$task->setUrlAction($this->generateUrl('bill_new_quotevariant',array('id'=>$entity->getQuote()->getId())));
-					elseif ($entity->getDoor() !== null)
-						$task->setUrlAction($this->generateUrl('bill_new_door',array('id'=>$entity->getDoor()->getId())));	
-				}
-				elseif ($entity->getDoor() !== null)
-					$task->setUrlAction($this->generateUrl('bill_new_door',array('id'=>$entity->getDoor()->getId())));
-				
-				else
-					$task->setUrlAction($this->generateUrl('bill_new'));
-				$entity->setOfficeAction($task);
-				break;
-	
-			// Faire devis
-			case 2 :
-				$task->setTodo($entity->getRest());
-				$task->setUrlAction($this->generateUrl('quote_new_door',array('id'=>$entity->getDoor()->getId())));
-				$entity->setOtherAction($task);
-				break;
-					
-				// Commander matériel
-			case 3 :
-				$task->setTodo($entity->getRest());
-				$task->setUrlAction($this->generateUrl('order_new_door',array('id'=>$entity->getDoor()->getId())));
-				$entity->setOtherAction($task);
-				break;
-	
-				// Contacter le client
-			case 4 :
-				$task->setTodo($entity->getReason());
-				$entity->setOtherAction($task);
-				break;
-					
-				// Ne rien faire
-			case 5 :
-				$task->setTodo($entity->getReport());
-				$task->setClose(new \DateTime);
-				$entity->setOfficeAction($task);
-				break;
-		}
-
-		$em->persist($task);
+		$entity->setMustBeBilled(true);
 		$em->persist($entity);
 		$em->flush();
-		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
+	
+	/**
+	 * Don't Bill intervention
+	 *
+	 * @Route("/{id}/dontbill", name="intervention_dontbill")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function dontbillAction(Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$entity->setMustBeBilled(false);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Cancel Bill action
+	 *
+	 * @Route("/{id}/cancelbill", name="intervention_cancelbill")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function cancelbillAction(Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		if ($entity->getMustBeBilled())
+		{
+			
+			if ($entity->getBill() !== null)
+			{
+				// 	annuler la facture existante
+				$bill = $entity->getBill();
+				$bill->setIntervention();
+				$bill->setState(-1);
+				$entity->setBill();
+				$em->persist($bill);
+			}
+			elseif ($entity->getExternalBill() !== null)
+			{
+				$entity->setExternalBill();
+			}
+		}
+		$entity->setMustBeBilled(null);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Crée une demande de devis
+	 * @Route("/{id}/toquote", name="intervention_toquote")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function toquoteAction(Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$ask = new AskQuote;
+		$ask->populateFromIntervention($entity);
+		$em->persist($ask);
+		$entity->setAskQuote($ask);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Supprime une demande de devis
+	 * @Route("/{id}/cancelquote", name="intervention_cancelquote")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function cancelquoteAction(Intervention $entity)
+	{
+		if (($ask = $entity->getAskQuote()) !== null)
+		{
+			$em = $this->getDoctrine()->getManager();
+			$entity->setAskQuote();
+			$em->remove($ask);
+			$em->persist($entity);
+			$em->flush();
+		}
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Active contacter client
+	 * @Route("/{id}/tocontact", name="intervention_tocontact")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function tocontactAction(Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$entity->setContactCustomer(false);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Supprime une demande de devis
+	 * @Route("/{id}/cancelcontact", name="intervention_cancelcontact")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function cancelcontactAction(Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$entity->setContactCustomer(null);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Créer un ligne travaux
+	 * @Route("/{id}/towork", name="intervention_towork")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function toworkAction(Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$workCat = $em->getRepository('JLMDailyBundle:WorkCategory')->find(1);
+		$workObj = $em->getRepository('JLMDailyBundle:WorkObjective')->find(1);
+		$work = new Work;
+		$work->populateFromIntervention($entity);
+		$work->setCategory($workCat);
+		$work->setObjective($workObj);
+		$em->persist($work);
+		$entity->setWork($work);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Supprime une ligne travaux
+	 * @Route("/{id}/cancelwork", name="intervention_cancelwork")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function cancelworkAction(Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$work = $entity->getWork();
+		$entity->setWork();
+		$em->remove($work);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Numéro de facture
+	 * @Route("/{id}/externalbill", name="intervention_externalbill")
+	 * @Method("POST")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function externalbillAction(Request $request, Intervention $entity)
+	{
+		$form = $this->createForm(new ExternalBillType(), $entity);
+		$form->bind($request);
+		if ($form->isValid())
+		{
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($entity);
+			$em->flush();
+		}
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
 	
 	/**
 	 * Liste des interventions par date(s)
@@ -126,19 +234,51 @@ class InterventionController extends Controller
 	 */
 	public function todayAction()
 	{
-		$now = new \DateTime;
-		$begin = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'000000');
-		$end = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'235959');
+		$today = new \DateTime;
+		$todaystring =  $today->format('Y-m-d');
 		$em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('JLMDailyBundle:Intervention');
-		$intervs = $repo->getToday();
+		$f = $em->getRepository('JLMDailyBundle:Fixing')->getToday();
+		$w = $em->getRepository('JLMDailyBundle:Work')->getToday();
+		$m = $em->getRepository('JLMDailyBundle:Maintenance')->getToday();
+		$intervs = array_merge($f,$w,$m);
+		unset($f);
+		unset($w);
+		unset($m);
+		
+		$inprogress = $notclosed = $closed = array();
+		foreach ($intervs as $interv)
+		{
+			$flag = false;
+			if ($interv->getState() == 3 && !$flag)
+			{
+				$closed[] = $interv;
+				$flag = true;
+			}
+			else
+			{
+				foreach ($interv->getShiftTechnicians() as $tech)
+				{
+					if ($tech->getBegin()->format('Y-m-d') == $todaystring && !$flag)
+					{
+						$inprogress[] = $interv;
+						$flag = true;
+					}
+				}
+			}
+			if (!$flag)
+				$notclosed[] = $interv;
+		}
+		
+		$fixingstogive = $em->getRepository('JLMDailyBundle:Fixing')->getToGive();
+		
 		$equipment = $em->getRepository('JLMDailyBundle:Equipment')->getToday();
+
 		return array(
-				'inprogress' => $intervs['inprogress'],
-				'fixing' => $intervs['fixing'],
+				'inprogress' => $inprogress,
+				'fixing' => $fixingstogive,
 				'equipment' => $equipment,
-				'notclosed' => $intervs['notclosed'],
-				'closed' => $intervs['closed'],
+				'notclosed' => $notclosed,
+				'closed' => $closed,
 		);
 		
 		// ORDRE DES INTERVS
@@ -395,6 +535,89 @@ class InterventionController extends Controller
 				)));
 		
 		return $response;
+
+	/*
+	 * Mise à jour des tâches facturation
+	 * (à faire évoluer pour les devis, plannification et contact)
+	 *
+	 * @Route("/upgradeoffice", name="intervention_upgradeoffice")
+	 * @Secure(roles="ROLE_USER")
+	 * @Template()
+	 */
+	public function upgradeofficeAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$id_bill = 1;
+		$id_quote = 2;
+		$id_order = 3;
+		$id_contact = 4;
+		$id_not = 5;
+		$work_objective = $em->getRepository('JLMDailyBundle:WorkObjective')->find(1);
+		$work_category = $em->getRepository('JLMDailyBundle:WorkCategory')->find(1);
+		$intervs = $em->getRepository('JLMDailyBundle:Intervention')->findAll();
+		foreach ($intervs as $interv)
+		{
+			if ($interv->getOfficeAction() !== null)
+			{
+				$id = $interv->getOfficeAction()->getType()->getId();
+				if ($id == $id_bill)
+				{
+					$interv->setMustBeBilled(true);
+					// On ne crée pas la facture pour gérer les non facturé et les numéros plus tard
+				}
+				elseif ($id == $id_not)
+				{
+					$interv->setMustBeBilled(false);
+				}
+				
+			}
+			if ($interv->getOtherAction() !== null && $interv->getRest() !== null)
+			{
+				$id = $interv->getOtherAction()->getType()->getId();
+				if ($id == $id_quote && $interv->getAskQuote() === null)
+				{
+					$askQuote = new AskQuote;
+					$maturity = clone $interv->getOtherAction()->getOpen();
+					$maturity->add(new \DateInterval('P15D'));
+					$askQuote->setCreation($interv->getOtherAction()->getOpen());
+					$askQuote->setMaturity($maturity);
+					$askQuote->setIntervention($interv);
+					if ($interv->getRest() === null)
+					{
+						echo $interv->getId(); exit;
+					}
+					$askQuote->setAsk($interv->getRest());
+					$em->persist($askQuote);
+					$interv->setAskQuote($askQuote);
+				}
+				elseif ($id == $id_order && $interv->getWork() === null)
+				{
+					$work = new Work;
+					$work->setCreation($interv->getClose());
+					$work->setPlace($interv->getPlace());
+					$work->setReason($interv->getRest());
+					$work->setDoor($interv->getDoor());
+					$work->setContactName($interv->getContactName());
+					$work->setContactPhones($interv->getContactPhones());
+					$work->setContactEmail($interv->getContactEmail());
+					$work->setPriority(4);
+//					$work->setContact($interv->getContact());
+					$work->setObjective($work_objective);
+					$work->setCategory($work_category);
+					$work->setIntervention($interv);
+					$em->persist($work);
+					$interv->setWork($work);
+				}
+				elseif ($id == $id_contact)
+				{
+					$interv->setContactCustomer(false);
+				}
+			}
+			$em->persist($interv);
+		}
 		
+		$em->flush();
+		
+		return array();
 	}
 }

@@ -8,21 +8,29 @@
         <tr>
             <th>Date</th>
             <th>Affaire</th>
-			<th></th>
+            <th>Infos</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
+    {% if entity.work %}
         <tr>
         	<td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}
         	<br>{% include 'JLMOfficeBundle:Order:statelabel.html.twig' with {'state': entity.state} %}</td>
-            <td>
-            	<a href="{{ path('order_show', { 'id': entity.id }) }}">{{ entity.place | nl2br }}</a>
-            </td>
-            <td>
-                <a href="{{ path('order_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
-            </td>
+            <td><a href="{{ path('intervention_redirect',{'id':entity.work.id, 'act':'show'}) }}">
+					{% if entity.work.door %}
+						<strong>{{ entity.work.door.site.address.city.name | upper }}</strong> <small>{{ entity.work.door.site.address.city.zip }}</small><br>{{ entity.work.door.street | nl2br }}
+					{% else %}{{ entity.work.place | nl2br }}
+					{% endif %}
+				</a></td>
+			<td>{% if entity.work.door %}
+				<strong>{{ entity.work.door.type }} - {{ entity.work.door.location }}</strong>{% endif %}<br>
+				<small>
+	 		{% if entity.work.quote %}Selon devis n°{{ entity.work.quote.number }}<br>{% endif %}{{ entity.work.reason | nl2br }}</small></td>
+	 		<td><a href="{{ path('order_show',{'id':entity.id}) }}" class="btn btn-info">Voir la fiche</a>
         </tr>
+        {% endif %}
     {% endfor %}
     </tbody>
 </table>
@@ -35,9 +43,5 @@
 		{% endfor %}
 		<li{% if page == nbPages %} class="disabled"{% endif %}><a href="{% if state is null %}{{ path('order_page',{ 'page' : page+1 }) }}{% else %}{{ path('order_state',{ 'page' : page+1, 'state':state }) }}{% endif %}">»</a></li>
 	</ul>
-</div>
-
-<div class="form-actions">
-<a href="{{ path('order_new') }}" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer une nouvelle commande</a>
 </div>
 {% endblock %}

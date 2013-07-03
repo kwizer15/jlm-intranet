@@ -2,6 +2,7 @@
 namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Astreintes techniciens
@@ -25,6 +26,8 @@ class Standby
 	 * @var \DateTime $begin
 	 *
 	 * @ORM\Column(name="begin", type="date")
+	 * @Assert\Date
+	 * @Assert\NotNull
 	 */
 	private $begin;
 	
@@ -32,6 +35,8 @@ class Standby
 	 * @var \DateTime $end
 	 *
 	 * @ORM\Column(name="end", type="date")
+	 * @Assert\Date
+	 * @Assert\NotNull
 	 */
 	private $end;
 	
@@ -39,6 +44,8 @@ class Standby
 	 * @var Technician $technician
 	 *
 	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Technician")
+	 * @Assert\Valid
+	 * @Assert\NotNull
 	 */
 	private $technician;
 	

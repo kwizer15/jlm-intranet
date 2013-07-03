@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * JLM\ModelBundle\Entity\Contract
@@ -25,6 +26,7 @@ class Contract
      * @var string $number
      *
      * @ORM\Column(name="number", type="string", length=32)
+     * @Assert\Type(type="string")
      */
     private $number;
 
@@ -32,6 +34,8 @@ class Contract
      * @var Trustee $trustee
      * 
      * @ORM\ManyToOne(targetEntity="Trustee")
+     * @Assert\NotNull
+     * @Assert\Valid
      */
     private $trustee;
     
@@ -39,7 +43,9 @@ class Contract
      * Contrat complet
      * @var bool $complete
      * 
-     * @ORM\Column(name="complete", type="smallint")
+     * @ORM\Column(name="complete", type="boolean")
+     * @Assert\Choice(choices={0,1})
+     * @Assert\NotBlank
      */
     private $complete;
     
@@ -47,7 +53,9 @@ class Contract
      * Contract C1 C2...
      * @var smallint $option
      *
-     * @ORM\Column(name="contract_option", type="smallint")
+     * @ORM\Column(name="contract_option", type="boolean")
+     * @Assert\Choice(choices={0,1})
+     * @Assert\NotBlank
      */
     private $option;
     
@@ -55,6 +63,8 @@ class Contract
      * @var Door $door
      * 
      * @ORM\ManyToOne(targetEntity="Door", inversedBy="contracts")
+     * @Assert\NotNull
+     * @Assert\Valid
      */
     private $door;
     
@@ -62,6 +72,8 @@ class Contract
      * @var datetime $begin
      *
      * @ORM\Column(name="begin", type="datetime")
+     * @Assert\Date
+     * @Assert\NotNull
      */
     private $begin;
 
@@ -69,6 +81,7 @@ class Contract
      * @var datetime $endWarranty
      *
      * @ORM\Column(name="end_warranty", type="datetime", nullable=true)
+     * @Assert\Date
      */
     private $endWarranty;
 
@@ -76,6 +89,7 @@ class Contract
      * @var datetime $end
      *
      * @ORM\Column(name="end_contract", type="datetime", nullable=true)
+     * @Assert\Date
      */
     private $end;
 
@@ -83,6 +97,7 @@ class Contract
      * @var decimal $fee
      *
      * @ORM\Column(name="fee", type="decimal", scale=2)
+     * @Assert\Regex(pattern="/^\d+\.\d{2}$/",message="Valeur en euro non valide")
      */
     private $fee;
     
@@ -365,5 +380,27 @@ class Contract
     public function getTrustee()
     {
         return $this->trustee;
+    }
+    
+    /**
+     * Test la date de fin
+     * @Assert\True(message="La date de fin doit être supérieure à la date de début")
+     */
+    public function isEndAfterBegin()
+    {
+    	if ($this->end === null)
+    		return true;
+    	return $this->end > $this->begin;
+    }
+    
+    /**
+     * Test la date de garantie
+     * @Assert\True(message="La date de fin de garantie doit être supérieure à la date de début")
+     */
+    public function isEndWarrantyAfterBegin()
+    {
+    	if ($this->endWarranty === null)
+    		return true;
+    	return $this->endWarranty > $this->begin;
     }
 }

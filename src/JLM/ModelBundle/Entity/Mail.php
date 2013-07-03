@@ -2,6 +2,8 @@
 
 namespace JLM\ModelBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * JLM\OfficeBundle\Entity\Mail
  */
@@ -9,36 +11,47 @@ class Mail
 {
 	/**
 	 * @var string $subject
+	 * @Assert\Type(type="string")
+	 * @Assert\NotNull
 	 */
 	private $subject;
 	
 	/**
 	 * @var string $from
+	 * @Assert\Email
+	 * @Assert\NotNull
 	 */
 	private $from;
 	
 	/**
 	 * @var string $to
+	 * @Assert\Email
+	 * @Assert\NotNull
 	 */
 	private $to;
 	
 	/**
 	 * @var string $cc
+	 * @Assert\Email
 	 */
 	private $cc;
 	
 	/**
 	 * @var string $bcc
+	 * @Assert\Email
 	 */
 	private $bcc;
 	
 	/**
 	 * @var string $body
+	 * @Assert\Type(type="string")
+	 * @Assert\NotNull
 	 */
 	private $body;
 	
 	/**
 	 * @var string $signature
+	 * @Assert\Type(type="string")
 	 */
 	private $signature;
 	

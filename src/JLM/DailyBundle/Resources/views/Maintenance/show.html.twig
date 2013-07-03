@@ -1,34 +1,14 @@
 {# JLMDailyBundle:Maintenance:show.html.twig #}
-{% extends "JLMDailyBundle::layout.html.twig" %}
+{% extends "JLMDailyBundle:Intervention:show.html.twig" %}
 
-{% block content %}
-<h1>Entretien</h1>
-{% include "JLMDailyBundle:Intervention:show.html.twig" with {'entity' : entity} %}
+{% block officeaction %}
+	{% set preferbill = -1 %}
+	{{ parent() }}
+{% endblock %}
 
-{% if entity.closed %}
-	 <h4>Rapport</h4>
-	 <table class="table">
-	 <tbody>
-	 <tr><th>Rapport</th><td>{{ entity.report | nl2br}}</td></tr>
-	 {% if entity.rest %}<tr><th>Reste à faire</th><td>{{ entity.rest  | nl2br}}<br>{% include "JLMDailyBundle:Maintenance:otheraction.html.twig" with {'entity' : entity} %}</td></tr>{% endif %}
-	 <tr><th>Action bureau</th><td>
-	{% if entity.officeAction %}<a href="{{ path('task_edit',{'id':entity.officeAction.id}) }}">{{ entity.officeAction.type }}</a>
-	{% else %}<a href="{{ path('intervention_generatetask',{'id' : entity.id, 'type' : 5 }) }}" class="btn btn-primary">Ne rien faire</a>
-	{% endif %}
-	 </td></tr>
-	 <tr>
-	 	<th>Bon d'intervention</th>
-	 	<td>{{ entity.voucher }}</td>
-	 </tr>
-	 </tbody>
-	 </table>
-{% endif %}
-
-<div class="form-actions">
-    <a href="{{ path('maintenance_list') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
-    <a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-primary"><i class="icon-ok icon-white"></i> {% if not entity.closed %}Cloturer{% else %}Editer cloture{% endif %}</a>
-	{% render 'JLMDailyBundle:Maintenance:close' with {'id':entity.id} %}
-	<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a>
-	{% include 'JLMDailyBundle:Intervention:delete.html.twig' with {'id':entity.id} %}
-</div>
+{% block actions %}
+	    <a href="{{ path('maintenance_list') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	    <a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-primary"><i class="icon-ok icon-white"></i> {% if not entity.closed %}Cloturer{% else %}Editer cloture{% endif %}</a>
+		{% render 'JLMDailyBundle:Maintenance:close' with {'id':entity.id} %}
+		{{ parent() }}
 {% endblock %}

@@ -5,6 +5,7 @@ class FPDFext extends \FPDF {
 
 	var $widths;
 	var $aligns;
+	private $angler = 0;
 
 	function SetWidths($w) {
 		//Set the array of column widths
@@ -104,5 +105,41 @@ class FPDFext extends \FPDF {
 		$txt = utf8_decode($txt);
 		$txt = str_replace('$$euro$$',chr(128),$txt);
 		return parent::cell($w,$h,$txt,$border,$ln,$align,$fill,$link);
+	}
+	
+	public function Text($x,$y,$txt)
+	{
+		$txt = str_replace('€','$$euro$$',$txt);
+		$txt = utf8_decode($txt);
+		$txt = str_replace('$$euro$$',chr(128),$txt);
+		return parent::Text($x,$y,$txt);
+	}
+	
+	public function rotate($angle,$x=-1,$y=-1)
+	{
+		if($x==-1)
+			$x=$this->x;
+		if($y==-1)
+			$y=$this->y;
+		if($this->angler!=0)
+			$this->_out('Q');
+		$this->angler=$angle;
+		if($angle!=0)
+		{
+			$angle*=M_PI/180;
+			$c=cos($angle);
+			$s=sin($angle);
+			$cx=$x*$this->k;
+			$cy=($this->h-$y)*$this->k;
+			$this->_out(sprintf('q %.5F %.5F %.5F %.5F %.2F %.2F cm 1 0 0 1 %.2F %.2F cm',$c,$s,-$s,$c,$cx,$cy,-$cx,-$cy));
+		}
+	}
+	
+	public function rotatedText($x,$y,$txt,$angle)
+	{
+		//Rotation du texte autour de son origine
+		$this->Rotate($angle,$x,$y);
+		$this->Text($x,$y,$txt);
+		$this->Rotate(0);
 	}
 }

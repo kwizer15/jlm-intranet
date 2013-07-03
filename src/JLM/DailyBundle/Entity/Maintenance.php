@@ -2,6 +2,7 @@
 namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Plannification d'un entretien
@@ -21,4 +22,15 @@ class Maintenance extends Intervention
 	{
 		return 'maintenance';
 	}
+	
+	/**
+	 * Un entretien ne sera jamais facturé
+	 * @Assert\False
+	 *
+	public function isBilled()
+	{
+		return $this->mustBeBilled;
+	}
+	*/
+	
 }

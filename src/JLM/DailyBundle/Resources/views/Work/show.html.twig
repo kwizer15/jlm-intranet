@@ -1,39 +1,32 @@
 {# JLMDailyBundle:Work:show.html.twig #}
-{% extends "JLMDailyBundle::layout.html.twig" %}
+{% extends "JLMDailyBundle:Intervention:show.html.twig" %}
 
-{% block content %}
-<h1>Travaux</h1>
-{% include "JLMDailyBundle:Intervention:show.html.twig" with {'entity' : entity} %}
-
-
-	 <h4>Rapport</h4>
-	 <table class="table">
-	 <tbody>
-	 <tr><th>Type</th><td>{{ entity.category }}</td></tr>
-	 <tr><th>Objectif</th><td>{{ entity.objective }}</td></tr>
-{% if entity.closed %}
-	 <tr><th>Rapport</th><td>{{ entity.report | nl2br}}</td></tr>
-	 {% if entity.rest %}<tr><th>Reste à faire</th><td>{{ entity.rest  | nl2br }}<br>{% include "JLMDailyBundle:Work:otheraction.html.twig" with {'entity' : entity} %}</td></tr>{% endif %}
-	 <tr><th>Action bureau</th><td>
-	{% if entity.officeAction %}<a href="{{ path('task_edit',{'id':entity.officeAction.id}) }}">{{ entity.officeAction.type }}</a>
-	{% else %}{% include "JLMDailyBundle:Work:officeaction.html.twig" with {'entity' : entity} %}
+{% block officeaction %}
+	{% if entity.objective.id == 1 %}
+		{% set preferbill = 1 %}
+	{% else %}
+		{% set preferbill = 0 %}
 	{% endif %}
-	 </td></tr>
-	 <tr>
-	 	<th>Bon d'intervention</th>
-	 	<td>{{ entity.voucher }}</td>
-	 </tr>
-{% endif %}
-	 </tbody>
-	 </table>
+	{{ parent() }}
+{% endblock %}
 
+{% block reference %}
+		{% if entity.intervention %}D'après l'invervention du <a href="{{ path('intervention_redirect',{'id':entity.intervention.id ,'act':'show'}) }}">{{ entity.intervention.lastDate|date('d/m/Y') }}</a><br>{% endif %} 
+	 	{% if entity.quote %}Selon devis n°<a href="{{ path('quote_show',{'id':entity.quote.quote.id}) }}">{{ entity.quote.number }}</a><br>{% endif %}
+{% endblock %}
 
-<div class="form-actions">
+{% block report %}
+	 <tr><th>Type</th><td>{{ entity.category }}</td><td></td></tr>
+	 <tr><th>Objectif</th><td>{{ entity.objective }}</td><td></td></tr>
+{% endblock %}
+
+{% block actions %}
+	{% if entity.order %}<a href="{{ path('order_show',{'id': entity.order.id }) }}" class="btn btn-info">Voir la fiche matériel</a>
+	{% else %}<a href="{{ path('order_new',{'id': entity.id }) }}" class="btn btn-info">Créer la fiche matériel</a>
+	{% endif %}
     <a href="{{ path('work_list') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
     <a href="{{ path('work_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a> 
 	<a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-primary"><i class="icon-ok icon-white"></i> {% if not entity.closed %}Cloturer{% else %}Editer cloture{% endif %}</a>
 	{% render 'JLMDailyBundle:Work:close' with {'id':entity.id} %}
-	<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a>
-	{% include 'JLMDailyBundle:Intervention:delete.html.twig' with {'id':entity.id} %}
-</div>
+	{{ parent() }}
 {% endblock %}

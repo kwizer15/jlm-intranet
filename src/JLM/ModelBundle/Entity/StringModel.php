@@ -2,6 +2,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * JLM\ModelBundle\Entity\NameModel
@@ -14,6 +15,9 @@ abstract class StringModel
 	 * @var string
 	 * 
 	 * @ORM\Column(name="name")
+	 * @Assert\NotNull
+	 * @Assert\Type(type="string")
+	 * @Assert\NotBlank
 	 */
 	private $name;
 	

@@ -189,24 +189,5 @@ class TaskController extends Controller
 		}
 */		return $this->redirect($this->generateUrl('task_type',array('page'=>1,'type'=>$entity->getType()->getId())));
 	}
-	
-	/**
-	 * Sidebar
-	 * @Route("/sidebar", name="task_sidebar")
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function sidebarAction()
-	{
-		$em = $this->getDoctrine()->getEntityManager();
-		
-		return array(
-				'all' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(),
-				'quotes' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(2),
-				'orders' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(3),
-				'bills' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(1),
-				'works' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(6),
-				'contacts' => $em->getRepository('JLMOfficeBundle:Task')->getCountOpened(4),
-			);
-	}
+
 }

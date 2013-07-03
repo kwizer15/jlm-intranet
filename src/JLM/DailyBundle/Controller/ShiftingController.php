@@ -61,6 +61,7 @@ class ShiftingController extends Controller
 	public function newAction(Shifting $shifting)
 	{
 		$entity = new ShiftTechnician();
+		
 		$entity->setBegin(new \DateTime);
 		$form = $this->get('form.factory')->createNamed('shiftTechNew'.$shifting->getId(),new AddTechnicianType(), $entity);
 				
@@ -82,13 +83,13 @@ class ShiftingController extends Controller
 	public function createAction(Request $request, Shifting $shifting)
 	{
 		$entity  = new ShiftTechnician();
+		$entity->setShifting($shifting);
+		$entity->setCreation(new \DateTime);
 		$form = $this->get('form.factory')->createNamed('shiftTechNew'.$shifting->getId(),new AddTechnicianType(), $entity);
 		$form->bind($request);
-	
+
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
-			$entity->setCreation(new \DateTime);
-			$entity->setShifting($shifting);
 			$em->persist($shifting);
 			$em->persist($entity);
 			$em->flush();
@@ -97,6 +98,7 @@ class ShiftingController extends Controller
 		}
 	
 		return array(
+				'shifting'=>$shifting,
 				'entity' => $entity,
 				'form'   => $form->createView(),
 		);

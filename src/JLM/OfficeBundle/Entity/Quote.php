@@ -4,6 +4,7 @@ namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\DailyBundle\Entity\Work;
 
 /**
  * JLM\OfficeBundle\Entity\Quote
@@ -82,6 +83,14 @@ class Quote extends Document
 	 * @ORM\OneToMany(targetEntity="QuoteVariant",mappedBy="quote")
 	 */
 	private $variants;
+	
+	/**
+	 * Demande de devis liée
+	 * @var AskQuote
+	 * 
+	 * @ORM\ManyToOne(targetEntity="AskQuote",inversedBy="quotes")
+	 */
+	private $ask;
 	
 	/**
 	 * Construteur
@@ -314,5 +323,70 @@ class Quote extends Document
     public function getVariants()
     {
     	return $this->variants;
+    }
+
+    /**
+     * Set ask
+     *
+     * @param \JLM\OfficeBundle\Entity\AskQuote $ask
+     * @return Quote
+     */
+    public function setAsk(\JLM\OfficeBundle\Entity\AskQuote $ask = null)
+    {
+        $this->ask = $ask;
+    
+        return $this;
+    }
+
+    /**
+     * Get ask
+     *
+     * @return \JLM\OfficeBundle\Entity\AskQuote 
+     */
+    public function getAsk()
+    {
+        return $this->ask;
+    }
+    
+    /**
+     * Creation depuis une demande de devis
+     */
+    public static function createFromAskQuote(AskQuote $askquote)
+    {
+    	$quote = new Quote();
+    	$quote->setCreation(new \DateTime);
+    	if (($door = $askquote->getDoor()) !== null)
+    	{
+    		$quote->setDoor($door);
+    		$quote->setDoorCp($door->toString());
+    		$quote->setVat($door->getSite()->getVat()->getRate());
+    	}
+    	else
+    	{
+    		$site = $askquote->getSite();
+    		$quote->setDoorCp($site->toString());
+    		$quote->setVat($site->getVat()->getRate());
+    	}
+    	$quote->setTrustee($trustee = $askquote->getTrustee());
+    	$quote->setTrusteeName($trustee->getName());
+    	$quote->setTrusteeAddress($trustee->getAddress().'');
+    	$quote->setContact($askquote->getPerson());
+    	$quote->setContactCp($askquote->getPerson().'');
+    	$quote->setAsk($askquote);
+    	return $quote;
+    }
+    
+    /**
+     * Generation du numéro de devis
+     */
+    public function generateNumber($lastnumber)
+    {
+    	$n = $lastnumber + 1;
+    	$number = $this->getCreation()->format('ym');
+    	for ($i = strlen($n); $i < 4 ; $i++)
+    		$number.= '0';
+    		$number.= $n;
+    	$this->setNumber($number);
+    	return $number;
     }
 }

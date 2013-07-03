@@ -13,6 +13,7 @@ use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\Quote;
+use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\OfficeBundle\Form\Type\QuoteType;
 use JLM\OfficeBundle\Entity\QuoteLine;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -38,7 +39,7 @@ class QuoteController extends Controller
      */
     public function indexAction($page = 1, $state = null)
     {
-    	$limit = 10;
+    	$limit = 20;
         $em = $this->getDoctrine()->getEntityManager();
         $repo = $em->getRepository('JLMOfficeBundle:Quote');
         if ($state === null)
@@ -54,12 +55,7 @@ class QuoteController extends Controller
         	$page = $nbPages;
         
         if ($state === null)
-	        $entities = $repo->findBy(
-	        		array(),
-	        		array('number'=>'desc'),
-	        		$limit,
-	        		$offset
-	        );
+        	$entities = $repo->getAll($limit,$offset);
         else
         	$entities = $repo->getByState($state,$limit,$offset);
         
@@ -126,48 +122,30 @@ class QuoteController extends Controller
     }
     
     /**
-     * Displays a form to create a new Quote entity.
-     *
-     * @Route("/new", name="quote_new")
-     * @Route("/new/door/{id}", name="quote_new_door")
+     * Nouveau devis depuis un demande de devis
+     * 
+     * @Route("/new/fromask/{id}", name="quote_newfromask")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function newAction(Door $door = null)
+    public function newAction(AskQuote $askquote)
     {
     	$user = $this->container->get('security.context')->getToken()->getUser();
     	if (!is_object($user) || !$user instanceof UserInterface) {
     		throw new AccessDeniedException('This user does not have access to this section.');
     	}
-        $entity = new Quote();
-        $entity->setCreation(new \DateTime);
-		$entity->setFollowerCp($user->getPerson()->getName());
-		$em = $this->getDoctrine()->getEntityManager();
-		$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
-		
-		if (!empty($door))
-		{
-			$entity->setDoor($door);
-			$entity->setDoorCp($door->toString().' - '.$door.'');
-			$contract = $door->getActualContract();
-			$trustee = (empty($contract)) ? $door->getSite()->getTrustee() : $contract->getTrustee();		
-			$entity->setTrustee($trustee);
-			$entity->setTrusteeName($trustee->getName());
-			$entity->setTrusteeAddress($trustee->getAddress().'');
-			$entity->setVat($door->getSite()->getVat()->getRate());
-		}
-		else
-		{
-			$entity->setVat($vat);
-		}
-      //  $entity->addLine(new QuoteLine);
-        $entity->setVatTransmitter($vat);
-        $form   = $this->createForm(new QuoteType(), $entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        );
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
+    	$entity = Quote::createFromAskQuote($askquote);
+    	$entity->setFollowerCp($user->getPerson()->getName());
+    	$entity->setVatTransmitter($vat);
+    	
+    	$form   = $this->createForm(new QuoteType(), $entity);
+    
+    	return array(
+    			'entity' => $entity,
+    			'form'   => $form->createView()
+    	);
     }
 
     /**
@@ -187,12 +165,8 @@ class QuoteController extends Controller
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getEntityManager();
-            $number = $entity->getCreation()->format('ym');
-            $n = ($em->getRepository('JLMOfficeBundle:Quote')->getLastNumber() + 1);
-            for ($i = strlen($n); $i < 4 ; $i++)
-            	$number.= '0';
-            $number.= $n;
-            $entity->setNumber($number);
+            $lastNumber = $em->getRepository('JLMOfficeBundle:Quote')->getLastNumber();
+            $entity->generateNumber($lastNumber);
             $em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));  

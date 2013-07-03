@@ -16,6 +16,8 @@ use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\OfficeBundle\Form\Type\QuoteVariantType;
 use JLM\OfficeBundle\Entity\QuoteLine;
 use JLM\OfficeBundle\Entity\Task;
+use JLM\OfficeBundle\Entity\Order;
+use JLM\DailyBundle\Entity\Work;
 
 
 
@@ -360,10 +362,10 @@ class VariantController extends Controller
 	/**
 	 * Note QuoteVariant as given.
 	 *
-	 * @Route("/{id}/given", name="variant_given")
+	 * @Route("/{id}/oldgiven", name="variant_oldgiven")
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function givenAction(QuoteVariant $entity)
+	public function oldgivenAction(QuoteVariant $entity)
 	{
 		if ($entity->getState() < 4)
 			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
@@ -372,6 +374,9 @@ class VariantController extends Controller
 			$entity->setState(5);
 		
 		$em = $this->getDoctrine()->getEntityManager();
+		
+		
+		
 		
 		$task = new Task();
 		$task->setDoor($entity->getQuote()->getDoor());
@@ -383,6 +388,45 @@ class VariantController extends Controller
 		
 		$em->persist($entity);
 		$em->persist($task);
+		$em->flush();
+		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+	}
+	
+	/**
+	 * Accord du devis / Création de l'intervention
+	 *
+	 * @Route("/{id}/given", name="variant_given")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function givenAction(QuoteVariant $entity)
+	{
+		// Redirection si l'état n'est pas envoyé
+		if ($entity->getState() < 4)
+			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+		
+		if ($entity->getState() < 5)
+			$entity->setState(5);
+		
+		$em = $this->getDoctrine()->getEntityManager();
+		if ($entity->getWork() === null)
+		{			
+			// Création de la ligne travaux pré-remplie
+			$work = Work::createFromQuoteVariant($entity);
+			$work->setCategory($em->getRepository('JLMDailyBundle:WorkCategory')->find(1));
+			$work->setObjective($em->getRepository('JLMDailyBundle:WorkObjective')->find(1));
+			$order = Order::createFromWork($work);
+			$em->persist($order);
+			$olines = $order->getLines();
+			foreach ($olines as $oline)
+			{
+				$oline->setOrder($order);
+				$em->persist($oline);
+			}
+			$work->setOrder($order);
+			$em->persist($work);
+			$entity->setWork($work);
+		}
+		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	}

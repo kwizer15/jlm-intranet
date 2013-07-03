@@ -4,6 +4,7 @@ namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\DailyBundle\Entity\Work;
 
 /**
  * JLM\OfficeBundle\Entity\QuoteVariant
@@ -99,6 +100,13 @@ class QuoteVariant
 	 * @ORM\OrderBy({"position" = "ASC"})
 	 */
 	private $lines;
+	
+	/**
+	 * Work
+	 * Ligne Travaux suite au devis
+	 * @ORM\OneToOne(targetEntity="JLM\DailyBundle\Entity\Work",inversedBy="quote")
+	 */
+	private $work;
 	
 	/**
 	 * Construteur
@@ -400,4 +408,27 @@ class QuoteVariant
 	{
 		return $this->getTotalPrice() - $this->getTotalPurchase();
 	}
+
+    /**
+     * Set work
+     *
+     * @param \JLM\DailyBundle\Entity\Work $work
+     * @return QuoteVariant
+     */
+    public function setWork(\JLM\DailyBundle\Entity\Work $work = null)
+    {
+        $this->work = $work;
+    
+        return $this;
+    }
+
+    /**
+     * Get work
+     *
+     * @return \JLM\DailyBundle\Entity\Work 
+     */
+    public function getWork()
+    {
+        return $this->work;
+    }
 }

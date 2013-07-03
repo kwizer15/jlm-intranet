@@ -16,6 +16,7 @@ use JLM\OfficeBundle\Form\Type\OrderType;
 use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\Task;
+use JLM\DailyBundle\Entity\Work;
 
 
 
@@ -79,62 +80,14 @@ class OrderController extends Controller
 	/**
 	 * Displays a form to create a new Bill entity.
 	 *
-	 * @Route("/new", name="order_new")
-	 * @Route("/new/quotevariant/{id}", name="order_new_quotevariant")
+	 * @Route("/new/{id}", name="order_new")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function newAction(QuoteVariant $variant = null)
+	public function newAction(Work $work)
 	{
-		$entity = new Order();
-		if ($variant)
-		{
-			$entity->setPlace($variant->getQuote()->getDoorCp());
-			if ($variant->getQuote()->getDoor())
-				$entity->setDoor($variant->getQuote()->getDoor());
-			$entity->setQuote($variant);
-			$vlines = $variant->getLines();
-			foreach ($vlines as $vline)
-			{
-				$flag = true;
-				if ($product = $vline->getProduct())
-					if ($category = $product->getCategory())
-						if ($category->getId() == 2)
-							$flag = false;
-				if ($flag)
-				{
-					$oline = new OrderLine;
-					$oline->setReference($vline->getReference());
-					$oline->setQuantity($vline->getQuantity());
-					$oline->setDesignation($vline->getDesignation());
-					$entity->addLine($oline);
-				}
-			}
-		}
-		else
-			$entity->addLine(new OrderLine);
-		$form   = $this->createForm(new OrderType(), $entity);
-		return array(
-				'entity' => $entity,
-				'form'   => $form->createView()
-		);
-	}
-	
-	/**
-	 * Displays a form to create a new Bill entity.
-	 *
-	 * @Route("/new/door/{id}", name="order_new_door")
-	 * @Template("JLMOfficeBundle:Order:new.html.twig")
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function newdoorAction(Door $door = null)
-	{
-		$entity = new Order();
-		$entity->setPlace($door.'');
-		$entity->setDoor($door);
-
-		$entity->addLine(new OrderLine);
-		$form   = $this->createForm(new OrderType(), $entity);
+		$entity = Order::createFromWork($work);
+		$form  = $this->createForm(new OrderType(), $entity);
 		return array(
 				'entity' => $entity,
 				'form'   => $form->createView()
@@ -164,6 +117,9 @@ class OrderController extends Controller
 				$em->persist($line);
 			}
 			$em->persist($entity);
+			$work = $entity->getWork();
+			$work->setOrder($entity);
+			$em->persist($work);
 			$em->flush();
 			return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
 		}
@@ -183,7 +139,6 @@ class OrderController extends Controller
 	 */
 	public function editAction(Order $entity)
 	{
-		// Si le devis est déjà validé, on empèche quelconque modification
 		if ($entity->getState() > 2)
 			return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
 		$editForm = $this->createForm(new OrderType(), $entity);
@@ -280,26 +235,7 @@ class OrderController extends Controller
 		if ($entity->getState() < 2)
 			$entity->setState(2);
 		$em = $this->getDoctrine()->getEntityManager();
-		
-		$task = new Task();
-		if ($entity->getDoor())
-			$task->setDoor($entity->getDoor());
-		$task->setPlace($entity->getPlace());
-		if ($entity->getQuote())
-			$task->setTodo('Planifier les travaux du devis '.$entity->getQuote()->getNumber());
-		else
-			$task->setTodo('Planifier les travaux');
-		$task->setType($em->getRepository('JLMOfficeBundle:TaskType')->find(6));
-		$task->setUrlSource($this->generateUrl('order_show', array('id' => $entity->getId())));
-		if ($entity->getQuote())
-			$task->setUrlAction($this->generateUrl('work_new_quote', array('id' => $entity->getQuote()->getId())));
-		elseif ($entity->getDoor())
-			$task->setUrlAction($this->generateUrl('work_new_door', array('id' => $entity->getDoor()->getId())));
-		else
-			$task->setUrlAction($this->generateUrl('work_new'));
-		
 		$em->persist($entity);
-		$em->persist($task);
 		$em->flush();
 		return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
 	}
@@ -315,10 +251,23 @@ class OrderController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 	
 		return array(
+				'todo' => $em->getRepository('JLMDailyBundle:Work')->getCountOrderTodo(),
 				'all' => $em->getRepository('JLMOfficeBundle:Order')->getTotal(),
 				'input' => $em->getRepository('JLMOfficeBundle:Order')->getCount(0),
 				'ordered' => $em->getRepository('JLMOfficeBundle:Order')->getCount(1),
 				'ready' => $em->getRepository('JLMOfficeBundle:Order')->getCount(2),
 		);
+	}
+	
+	/**
+	 * @Route("/todo", name="order_todo")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function todoAction()
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$list = $em->getRepository('JLMDailyBundle:Work')->getOrderTodo();
+		return array('entities'=>$list);
 	}
 }

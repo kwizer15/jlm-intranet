@@ -11,6 +11,7 @@ class BillType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+        	->add('intervention','intervention_hidden',array('required'=>false))
             ->add('creation','datepicker',array('label'=>'Date de création'))
             ->add('trustee','trustee_hidden',array('required'=>false))
             ->add('prelabel',null,array('label'=>'Libellé de facturation','required'=>false))

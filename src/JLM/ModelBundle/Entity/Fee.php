@@ -2,6 +2,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * 
@@ -27,36 +28,44 @@ class Fee
 	 * 				  joinColumns={@ORM\JoinColumn(name="fee_id", referencedColumnName="id")},
 	 * 				  inverseJoinColumns={@ORM\JoinColumn(name="contract_id", referencedColumnName="id")}
 	 * )
+	 * @Assert\Valid(traverse=true)
 	 */
 	private $contracts;
 	
 	/**
 	 * @var Trustee $trustee
 	 * @ORM\ManyToOne(targetEntity="Trustee")
+	 * @Assert\Valid
 	 */
 	private $trustee;
 	
 	/**
 	 * @var string $address
 	 * @ORM\Column(name="address",type="text")
+	 * @Assert\Type(type="string")
+	 * @Assert\NotNull
 	 */
 	private $address;
 	
 	/**
 	 * @var string $prelabel
 	 * @ORM\Column(name="prelabel",type="text", nullable=true)
+	 * @Assert\Type(type="string")
 	 */
 	private $prelabel;
 	
 	/**
 	 * @var int $frequence
 	 * @ORM\Column(name="frequence",type="integer")
+	 * @Assert\Choice(choices={1,2,3,4})
+	 * @Assert\NotNull
 	 */
 	private $frequence = 2;
 	
 	/**
 	 * @var Vat $vat
 	 * @ORM\ManyToOne(targetEntity="VAT")
+	 * @Assert\Valid
 	 */
 	private $vat;
 	

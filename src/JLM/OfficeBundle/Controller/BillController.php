@@ -16,6 +16,7 @@ use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\OfficeBundle\Form\Type\BillType;
 use JLM\OfficeBundle\Entity\BillLine;
 use JLM\ModelBundle\Entity\Door;
+use JLM\DailyBundle\Entity\Intervention;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
@@ -87,6 +88,7 @@ class BillController extends Controller
     public function newAction()
     {
         $entity = new Bill();
+        $entity->setCreation(new \DateTime);
 		$em = $this->getDoctrine()->getEntityManager();
 		$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
 		$entity->setVat($vat);
@@ -110,6 +112,7 @@ class BillController extends Controller
     public function newdoorAction(Door $door)
     {
     	$entity = new Bill();
+    	$entity->setCreation(new \DateTime);
     	$em = $this->getDoctrine()->getEntityManager();
     	$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
     	$entity->populateFromDoor($door);
@@ -133,7 +136,34 @@ class BillController extends Controller
     public function newquoteAction(QuoteVariant $quote)
     {
     	$entity = new Bill();
+    	$entity->setCreation(new \DateTime);
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
     	$entity->populateFromQuoteVariant($quote);
+    	$entity->setVatTransmitter($vat);
+    	$form   = $this->createForm(new BillType, $entity);
+    
+    	return array(
+    			'entity' => $entity,
+    			'form'   => $form->createView()
+    	);
+    }
+    
+    /**
+     * Displays a form to create a new Bill entity.
+     *
+     * @Route("/new/intervention/{id}", name="bill_new_intervention")
+     * @Template("JLMOfficeBundle:Bill:new.html.twig")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function newinterventionAction(Intervention $interv)
+    {
+    	$entity = new Bill();
+    	$entity->setCreation(new \DateTime);
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
+    	$entity->populateFromIntervention($interv);
+    	$entity->setVatTransmitter($vat);
     	$form   = $this->createForm(new BillType, $entity);
     
     	return array(
@@ -172,6 +202,9 @@ class BillController extends Controller
             	$em->persist($line);
             }
             $em->persist($entity);
+            $interv = $entity->getIntervention();
+            $interv->setBill($entity);
+            $em->persist($interv);
             $em->flush();
             return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));  
         }
@@ -352,11 +385,24 @@ class BillController extends Controller
     	$em = $this->getDoctrine()->getEntityManager();
     
     	return array(
+    			'todo' => $em->getRepository('JLMDailyBundle:Intervention')->getCountToBilled(),
     			'all' => $em->getRepository('JLMOfficeBundle:Bill')->getTotal(),
     			'input' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(0),
     			'send' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(1),
     			'payed' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(2),
     			'canceled' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(-1),
     	);
+    }
+    
+    /**
+     * @Route("/todo", name="bill_todo")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function todoAction()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$list = $em->getRepository('JLMDailyBundle:Intervention')->getToBilled();
+    	return array('entities'=>$list);
     }
 }

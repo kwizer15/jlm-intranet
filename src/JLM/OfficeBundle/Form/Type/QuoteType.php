@@ -23,6 +23,7 @@ class QuoteType extends AbstractType
             ->add('doorCp',null,array('label'=>'Affaire','attr'=>array('class'=>'input-xlarge','rows'=>'3')))
             ->add('vat','percent',array('precision'=>1,'label'=>'TVA applicable','attr'=>array('class'=>'input-mini')))
             ->add('vatTransmitter','hidden')
+            ->add('ask','askquote_hidden')
          ;
     }
 

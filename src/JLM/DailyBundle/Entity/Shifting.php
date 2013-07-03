@@ -3,6 +3,7 @@
 namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -18,7 +19,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  * 		"fixing" = "Fixing",
  * 		"work" = "Work",
  * 		"maintenance" = "Maintenance",
- * 		"receiver" = "Receiver",
  * })
  */
 abstract class Shifting
@@ -36,6 +36,8 @@ abstract class Shifting
      * @var \DateTime $creation
      *
      * @ORM\Column(name="creation", type="datetime")
+     * @Assert\DateTime
+     * @Assert\NotNull(message="Pas de date de création du déplacement")
      */
     private $creation;
     
@@ -43,6 +45,8 @@ abstract class Shifting
      * Lieu du déplacement
      * @var string
      * @ORM\Column(name="place", type="text")
+     * @Assert\Type(type="string")
+     * @Assert\NotBlank(message="Pas de lieu pour le déplacement")
      */
     private $place;
     
@@ -50,6 +54,8 @@ abstract class Shifting
      * @var string $reason
      *
      * @ORM\Column(name="reason", type="text")
+     * @Assert\Type(type="string")
+     * @Assert\NotBlank(message="Pas de raison pour le déplacement")
      */
     private $reason;
     
@@ -237,6 +243,16 @@ abstract class Shifting
     	return $lastDate;
     }
     
+    /**
+     * Est en cours
+     */
+    public function isInProgress()
+    {
+    	if (sizeof($this->shiftTechnicians) > 0)
+    		return true;
+    	return false;
+    }   
+     
     /**
      * Get type
      *
