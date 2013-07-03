@@ -34,7 +34,6 @@ class Contract
      * @var Trustee $trustee
      * 
      * @ORM\ManyToOne(targetEntity="Trustee")
-     * @Assert\NotNull
      * @Assert\Valid
      */
     private $trustee;
@@ -45,7 +44,6 @@ class Contract
      * 
      * @ORM\Column(name="complete", type="boolean")
      * @Assert\Choice(choices={0,1})
-     * @Assert\NotBlank
      */
     private $complete;
     
@@ -55,7 +53,6 @@ class Contract
      *
      * @ORM\Column(name="contract_option", type="boolean")
      * @Assert\Choice(choices={0,1})
-     * @Assert\NotBlank
      */
     private $option;
     
@@ -63,7 +60,6 @@ class Contract
      * @var Door $door
      * 
      * @ORM\ManyToOne(targetEntity="Door", inversedBy="contracts")
-     * @Assert\NotNull
      * @Assert\Valid
      */
     private $door;
@@ -73,7 +69,6 @@ class Contract
      *
      * @ORM\Column(name="begin", type="datetime")
      * @Assert\Date
-     * @Assert\NotNull
      */
     private $begin;
 
