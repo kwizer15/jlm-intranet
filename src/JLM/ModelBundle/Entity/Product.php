@@ -79,7 +79,6 @@ class Product
      * 
      * @ORM\Column(name="unitPrice", type="decimal" ,scale=2)
      * @Assert\NotBlank
-     * @Assert\Type(type="numeric")
      */
     private $unitPrice;
 
@@ -98,7 +97,6 @@ class Product
      * @var float $purchase
      * 
      * @ORM\Column(name="purchase",type="decimal", scale=2)
-     * @Assert\Type(type="numeric")
      * @Assert\NotBlank
      */
     private $purchase;
@@ -108,7 +106,6 @@ class Product
      * @var float $discountSupplier
      * 
      * @ORM\Column(name="discount_supplier", type="smallint")
-     * @Assert\Type(type="numeric")
      * @Assert\NotBlank
      */
     private $discountSupplier;
@@ -128,7 +125,6 @@ class Product
      * @var float $shipping
      * 
      * @ORM\Column(name="shipping", type="decimal", scale=2)
-     * @Assert\Type(type="numeric")
      * @Assert\NotBlank
      */
     private $shipping;
