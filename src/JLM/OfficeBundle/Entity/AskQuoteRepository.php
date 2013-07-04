@@ -54,6 +54,7 @@ class AskQuoteRepository extends EntityRepository
 				->select('COUNT(a)')
 				->leftJoin('a.quotes','b')
 				->where('b is null')
+				->andWhere('a.dontTreat is null')
 			;
 			$this->untreated = $qb->getQuery()->getSingleScalarResult();
 		}
@@ -72,6 +73,7 @@ class AskQuoteRepository extends EntityRepository
 			->leftJoin('a.quotes','b')
 			->leftJoin('a.intervention','c')
 			->where('b is null')
+			->andWhere('a.dontTreat is null')
 			->orderBy('c.id','asc')
 			;
 		return $qb->getQuery()->getResult();
@@ -84,6 +86,7 @@ class AskQuoteRepository extends EntityRepository
 			->leftJoin('a.quotes','b')
 			->leftJoin('a.intervention','c')
 			->where('b is not null')
+			->andWhere('a.dontTreat is not null')
 			->orderBy('c.id','asc')
 		;
 		return $qb->getQuery()->getResult();

@@ -56,6 +56,11 @@ abstract class Ask extends UploadDocument
 	 */
 	private $person;
 
+	/**
+	 * Ne pas traiter
+	 * @ORM\Column(name="dont_treat", type="text", nullable=true)
+	 */
+	private $dontTreat;
 
     /**
      * Set creation
@@ -202,5 +207,24 @@ abstract class Ask extends UploadDocument
     public function isCreationBeforeMaturity()
     {
     	return $this->creation <= $this->maturity || $this->maturity === null;
+    }
+    
+    /**
+     * Get dontTreat
+     * @return string|null
+     */
+    public function setDontTreat($dontTreat = null)
+    {
+    	$this->dontTreat = $dontTreat;
+    	return $this;
+    }
+    
+    /**
+     * Get dontTreat
+     * @return string|null
+     */
+    public function getDontTreat()
+    {
+    	return $this->dontTreat;
     }
 }

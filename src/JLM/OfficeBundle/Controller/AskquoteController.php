@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\OfficeBundle\Form\Type\AskQuoteType;
+use JLM\OfficeBundle\Form\Type\AskQuoteDontTreatType;
 
 /**
  * AskQuote controller.
@@ -61,7 +62,8 @@ class AskquoteController extends Controller
 	 */
 	public function showAction(AskQuote $entity)
 	{
-		return array('entity'=>$entity);
+		$form = $this->createForm(new AskQuoteDontTreatType,$entity);
+		return array('entity'=>$entity,'form_donttreat'=>$form->createView());
 	}
 	
 	/**
@@ -105,6 +107,40 @@ class AskquoteController extends Controller
 		}
 		
 		return array('form' => $form->createView());
+	}
+	
+	/**
+	 * @Route("/{id}/donttreat", name="askquote_donttreat")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function donttreatAction(AskQuote $entity)
+	{
+		$form = $this->createForm(new AskQuoteDontTreatType,$entity);
+		
+		if ($this->getRequest()->isMethod('POST'))
+		{
+			$form->bind($this->getRequest());
+			if ($form->isValid())
+			{
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($entity);
+				$em->flush();
+			}
+		}
+		return $this->redirect($this->generateUrl('askquote_show', array('id' => $entity->getId())));
+	}
+	
+	/**
+	 * @Route("/{id}/canceldonttreat", name="askquote_canceldonttreat")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function canceldonttreatAction(AskQuote $entity)
+	{
+		$entity->setDontTreat();
+		$em = $this->getDoctrine()->getManager();
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('askquote_show', array('id' => $entity->getId())));
 	}
 	
 	/**
