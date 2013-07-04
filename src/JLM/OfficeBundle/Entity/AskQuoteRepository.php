@@ -74,7 +74,7 @@ class AskQuoteRepository extends EntityRepository
 			->leftJoin('a.intervention','c')
 			->where('b is null')
 			->andWhere('a.dontTreat is null')
-			->orderBy('c.id','asc')
+			->orderBy('c.creation','asc')
 			;
 		return $qb->getQuery()->getResult();
 	}
@@ -87,7 +87,7 @@ class AskQuoteRepository extends EntityRepository
 			->leftJoin('a.intervention','c')
 			->where('b is not null')
 			->andWhere('a.dontTreat is not null')
-			->orderBy('c.id','asc')
+			->orderBy('c.creation','asc')
 		;
 		return $qb->getQuery()->getResult();
 	}
