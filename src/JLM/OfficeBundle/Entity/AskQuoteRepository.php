@@ -29,7 +29,8 @@ class AskQuoteRepository extends EntityRepository
 		->leftJoin('a.person','o')
 		->leftJoin('h.contracts','p')
 		->leftJoin('p.trustee','q')
-		->orderBy('h.id','asc')
+		->leftJoin('c.door','r')
+		->orderBy('r.id','asc')
 		;
 		return $qb->getQuery()->getResult();
 	}
