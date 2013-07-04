@@ -72,9 +72,10 @@ class AskQuoteRepository extends EntityRepository
 			->select('a')
 			->leftJoin('a.quotes','b')
 			->leftJoin('a.intervention','c')
+			->leftJoin('c.door','d')
 			->where('b is null')
 			->andWhere('a.dontTreat is null')
-			->orderBy('a.creation','asc')
+			->orderBy('d.id','asc')
 			;
 		return $qb->getQuery()->getResult();
 	}
@@ -85,9 +86,11 @@ class AskQuoteRepository extends EntityRepository
 			->select('a')
 			->leftJoin('a.quotes','b')
 			->leftJoin('a.intervention','c')
+			->leftJoin('c.door','d')
 			->where('b is not null')
 			->andWhere('a.dontTreat is not null')
-			->orderBy('a.creation','asc')
+			->orderBy('d.id','asc')
+			//->orderBy('a.creation','asc')
 		;
 		return $qb->getQuery()->getResult();
 	}
