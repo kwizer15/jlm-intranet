@@ -31,6 +31,8 @@
 					<li><a href="{{ path('quote_show',{'id':quote.id}) }}">{{ quote.number }}</a></li>	
 					{% endfor %}
 				</ul>
+				{% elseif entity.dontTreat %}
+				<small>{{ entity.dontTreat }}</small>
 				{% else %}
 				<span class="label label-important">Non traitée</span>
 				{% if entity.maturity %}<br><small>{{ entity.maturity | date('d/m/Y') }}</small>{% endif %}
