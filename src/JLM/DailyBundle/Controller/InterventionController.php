@@ -132,8 +132,9 @@ class InterventionController extends Controller
 		if (($ask = $entity->getAskQuote()) !== null)
 		{
 			$em = $this->getDoctrine()->getManager();
-			$em->remove($ask);
+			$ask->setIntervention();
 			$entity->setAskQuote();
+			$em->remove($ask);
 			$em->persist($entity);
 			$em->flush();
 		}
