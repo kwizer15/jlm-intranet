@@ -159,7 +159,14 @@
 							<li><a href="{{ path('quote_show',{ 'id':quote.id }) }}" tabindex="-1">{{ quote.number }} {% include 'JLMOfficeBundle:Quote:statelabel.html.twig' with {'state': quote.state} %}</a></li> 
 						{% endfor %}
 						</ul>
-
+					{% elseif entity.askQuote.dontTreat %}
+						<a href="#" class="btn{% if preferother == 0 %} btn-info{% endif %} disabled">Devis</a>
+						<a href="#" class="btn {% if preferother == 0 %} btn-info{% endif %} dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+			 			<ul class="dropdown-menu">
+			 				<li><a href="{{ path('askquote_show',{'id' : entity.askQuote.id }) }}">Voir la demande de devis</a></li>
+			    			<li class="divider"></li>
+							<li>{{ entity.askQuote.dontTreat }}</li>
+						</ul>
 			    	{% else %}
 			    		<a href="{{ path('intervention_cancelquote',{'id' : entity.id }) }}" class="btn{% if preferother == 0 %} btn-info{% endif %} active">Devis</a>
 			    		<a href="#" class="btn{% if preferother == 0 %} btn-info{% endif %} dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
