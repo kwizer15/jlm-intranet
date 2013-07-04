@@ -153,12 +153,12 @@ class WorkController extends Controller
 	public function createAction(Request $request)
 	{
 		$entity  = new Work();
+		
+		$form = $this->createForm(new WorkType(), $entity);
+		$form->bind($request);
 		$entity->setContract($entity->getDoor()->getActualContract());
 		$entity->setCreation(new \DateTime);
 		$entity->setPriority(4);
-		$form = $this->createForm(new WorkType(), $entity);
-		$form->bind($request);
-	
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 
