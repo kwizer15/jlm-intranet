@@ -142,23 +142,13 @@ class ProductController extends Controller
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function editAction($id)
+    public function editAction(Product $entity)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Product')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product entity.');
-        }
-
         $editForm = $this->createForm(new ProductType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -170,34 +160,24 @@ class ProductController extends Controller
      * @Template("JLMModelBundle:Product:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function updateAction($id)
+    public function updateAction(Product $entity)
     {
         $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Product')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product entity.');
-        }
-
         $editForm   = $this->createForm(new ProductType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
-     //   echo $this->getRequest()->getLocale(); exit;
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('product_show', array('id' => $id)));
+            return $this->redirect($this->generateUrl('product_show', array('id' => $entity->getId())));
         }
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 

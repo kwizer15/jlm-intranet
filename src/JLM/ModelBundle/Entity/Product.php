@@ -29,8 +29,6 @@ class Product
      * @var string $designation
      *
      * @ORM\Column(name="designation", type="string", length=255)
-     * @Assert\Type(type="string")
-     * @Assert\NotBlank
      */
     private $designation;
 
@@ -39,7 +37,6 @@ class Product
      * @var text $description
      * 
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Assert\Type(type="string")
      */
     private $description;
     
@@ -48,8 +45,6 @@ class Product
      * @var Supplier $supplier
      * 
      * @ORM\ManyToOne(targetEntity="Supplier")
-     * @Assert\Valid
-     * @Assert\NotNull
      */
     private $supplier;
     
@@ -58,9 +53,6 @@ class Product
      * @var string $reference
      *
      * @ORM\Column(name="reference", type="string", length=16)
-     * @Assert\Type(type="string")
-     * @Assert\Length(max=16)
-     * @Assert\NotBlank
      */
     private $reference;
 
@@ -69,7 +61,6 @@ class Product
      * @var string $barcode
      *
      * @ORM\Column(name="barcode", type="string", length=255, nullable=true)
-     * @Assert\Type(type="numeric")
      */
     private $barcode;
 
@@ -78,7 +69,6 @@ class Product
      * @var float $unitPrice
      * 
      * @ORM\Column(name="unitPrice", type="decimal" ,scale=2)
-     * @Assert\NotBlank
      */
     private $unitPrice;
 
@@ -87,8 +77,6 @@ class Product
      * @var ProductCategory $category
      * 
      * @ORM\ManyToOne(targetEntity="ProductCategory")
-     * @Assert\Valid
-     * @Assert\NotNull
      */
     private $category;
     
@@ -97,7 +85,6 @@ class Product
      * @var float $purchase
      * 
      * @ORM\Column(name="purchase",type="decimal", scale=2)
-     * @Assert\NotBlank
      */
     private $purchase;
     
@@ -106,7 +93,6 @@ class Product
      * @var float $discountSupplier
      * 
      * @ORM\Column(name="discount_supplier", type="smallint")
-     * @Assert\NotBlank
      */
     private $discountSupplier;
     
@@ -115,8 +101,6 @@ class Product
      * @var float $expenseRatio
      * 
      * @ORM\Column(name="expense_ratio", type="smallint")
-     * @Assert\Type(type="int")
-     * @Assert\NotBlank
      */
     private $expenseRatio;
     
@@ -125,7 +109,6 @@ class Product
      * @var float $shipping
      * 
      * @ORM\Column(name="shipping", type="decimal", scale=2)
-     * @Assert\NotBlank
      */
     private $shipping;
     
@@ -134,8 +117,6 @@ class Product
      * @var string $unity
      * 
      * @ORM\Column(name="unity",type="string",length=255)
-     * @Assert\Type(type="string")
-     * @Assert\NotBlank
      */
     private $unity;
     
