@@ -29,6 +29,7 @@ class DefaultController extends Controller
     	$suppliers = $em->getRepository('JLMModelBundle:Supplier')->search($query);
 //    	$productcategories = $em->getRepository('JLMModelBundle:ProductCategory')->search($query);
     	$products = $em->getRepository('JLMModelBundle:Product')->search($query);
+    	$persons = $em->getRepository('JLMModelBundle:Person')->search($query);
     	return array(
     			'query'   => $query,
     			'doors'   => $doors,
@@ -37,6 +38,7 @@ class DefaultController extends Controller
     			'suppliers'=> $suppliers,
 //    			'productcategories' => $productcategories,
     			'products' => $products,
+    			'persons' => $persons,
     			
     	);
     }

@@ -11,6 +11,10 @@
 	    
 		<h2><small>Aucun résultat</small></h2>
 	{% endif %}
+	{% if persons|length %}
+		<h2><small>Contacts</small></h2>
+		{% include 'JLMModelBundle:Person:search.html.twig' with {'persons': persons } %}
+	{% endif %}
 	{% if doors|length %}
 		<h2><small>Portes</small></h2>
 		{% include 'JLMModelBundle:Door:search.html.twig' with {'doors': doors } %}

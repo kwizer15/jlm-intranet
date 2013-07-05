@@ -1,0 +1,22 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Nom</th>
+			<th>Tél fixe</th>
+			<th>Tél portable</th>
+			<th>Fax</th>
+			<th>E-mail</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for person in persons %}
+		<tr>
+			<td>{{ person.title }} {{ person.firstName }} {{ person.lastName }}</td>
+			<td>{{ person.fixedPhone }}</td>
+			<td>{{ person.mobilePhone }}</td>
+			<td>{{ person.fax }}</td>
+			<td><a href="mailto:{{ person.email }}">{{ person.email }}</a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
