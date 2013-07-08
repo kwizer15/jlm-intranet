@@ -63,10 +63,12 @@
 			{{ interv.creation | localizeddate('full', 'none') }}
 			{% endif %}
 				</small></td>
-			<td><a href="{{ path('intervention_redirect',{'id':interv.id,'act':'show'}) }}">
+			<td>{% if interv.canceled %}<del>{% endif %}<a href="{{ path('intervention_redirect',{'id':interv.id,'act':'show'}) }}">
 			{% if interv.type == 'work' %}
 	 	{% if interv.quote %}Selon devis n°{{ interv.quote.number }}<br>{% endif %}{% endif %}
-			{{ interv.reason |nl2br }}</a></td>
+			{{ interv.reason |nl2br }}</a>
+			{% if interv.canceled %}</del>{% endif %}
+			</td>
 			<td>{{ interv.report |nl2br }}</td>
 			<td>
 				{% if interv.mustBeBilled is not null %}{% if interv.mustBeBilled %}Facturée{% else %}Non facturée{% endif %}{% endif %}
