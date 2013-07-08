@@ -73,7 +73,9 @@
 				{% if interv.otherAction %}{{ interv.otherAction.type }}{% endif %}
 			</td>
 			<td>
-				<ul>
+				{% if interv.canceled %}
+				<span class="label label-important">Annulée</span><br>
+				{% endif %}
 				{% if interv.shiftTechnicians|length %}
 					{% if interv.shiftTechnicians|length < 4%}
 						{% for shift in interv.shiftTechnicians %}
@@ -99,7 +101,7 @@
 				{% else %}
 				
 				{% endif %}
-				</ul>
+			
 			</td>
 		</tr>
 		{% endfor %}

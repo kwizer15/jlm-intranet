@@ -12,6 +12,7 @@ use JLM\DailyBundle\Entity\ShiftTechnician;
 use JLM\DailyBundle\Form\Type\AddTechnicianType;
 use JLM\DailyBundle\Form\Type\MaintenanceCloseType;
 use JLM\DailyBundle\Form\Type\ExternalBillType;
+use JLM\DailyBundle\Form\Type\InterventionCancelType;
 use JLM\ModelBundle\Entity\Door;
 
 /**
@@ -66,10 +67,12 @@ class MaintenanceController extends Controller
 		$st->setBegin(new \DateTime);
 		$form   = $this->createForm(new AddTechnicianType(), $st);
 		$form_externalbill = $this->createForm(new ExternalBillType(), $entity);
+		$form_cancel = $this->createForm(new InterventionCancelType(), $entity);
 		return array(
 				'entity' => $entity,
 				'form_newtech'   => $form->createView(),
 				'form_externalbill' => $form_externalbill->createView(),
+				'form_cancel' => $form_cancel->createView(),
 		);
 	}
 	

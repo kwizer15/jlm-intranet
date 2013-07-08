@@ -21,12 +21,16 @@
 {% endblock %}
 
 {% block actions %}
-	{% if entity.order %}<a href="{{ path('order_show',{'id': entity.order.id }) }}" class="btn btn-info">Voir la fiche matériel</a>
-	{% else %}<a href="{{ path('order_new',{'id': entity.id }) }}" class="btn btn-info">Créer la fiche matériel</a>
+	{% if not entity.canceled %}
+		{% if entity.order %}<a href="{{ path('order_show',{'id': entity.order.id }) }}" class="btn btn-info">Voir la fiche matériel</a>
+		{% else %}<a href="{{ path('order_new',{'id': entity.id }) }}" class="btn btn-info">Créer la fiche matériel</a>
+		{% endif %}
 	{% endif %}
     <a href="{{ path('work_list') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
     <a href="{{ path('work_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a> 
-	<a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-primary"><i class="icon-ok icon-white"></i> {% if not entity.closed %}Cloturer{% else %}Editer cloture{% endif %}</a>
-	{% render 'JLMDailyBundle:Work:close' with {'id':entity.id} %}
+	{% if not entity.canceled %}
+		<a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-primary"><i class="icon-ok icon-white"></i> {% if not entity.closed %}Cloturer{% else %}Editer cloture{% endif %}</a>
+		{% render 'JLMDailyBundle:Work:close' with {'id':entity.id} %}
+	{% endif %}
 	{{ parent() }}
 {% endblock %}

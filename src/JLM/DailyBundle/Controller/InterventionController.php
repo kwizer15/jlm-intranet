@@ -18,6 +18,7 @@ use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\TaskType;
 use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\DailyBundle\Form\Type\ExternalBillType;
+use JLM\DailyBundle\Form\Type\InterventionCancelType;
 
 /**
  * Fixing controller.
@@ -201,6 +202,39 @@ class InterventionController extends Controller
 		$work = $entity->getWork();
 		$entity->setWork();
 		$em->remove($work);
+		$em->persist($entity);
+		$em->flush();
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Annule l'intervention
+	 * @Route("/{id}/cancel", name="intervention_cancel")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function cancelAction(Request $request, Intervention $entity)
+	{
+		$form = $this->createForm(new InterventionCancelType(), $entity);
+		$form->bind($request);
+		if ($form->isValid())
+		{
+			$em = $this->getDoctrine()->getManager();
+			$entity->cancel();
+			$em->persist($entity);
+			$em->flush();
+		}
+		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+	}
+	
+	/**
+	 * Désannule l'intervention
+	 * @Route("/{id}/uncancel", name="intervention_uncancel")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function uncancelAction(Request $request, Intervention $entity)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$entity->uncancel();
 		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
@@ -491,33 +525,6 @@ class InterventionController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$door = $em->getRepository('JLMModelBundle:Door')->find($id);
-//		$entities = $em->getRepository('JLMDailyBundle:ShiftTechnician')
-//			->createQueryBuilder('a')
-//			->select('a,b,c')
-//			->leftJoin('a.shifting','b')
-//			->leftJoin('b.door','c')
-//			->where('c.id = ?1')
-//			->andWhere('b INSTANCE OF JLM\DailyBundle\Entity\Intervention')
-//			->orderBy('t.begin','desc')
-//			->setParameter(1,$id)
-//			->getQuery()
-//			->getResult();
-//		$i = array();
-//		foreach ($intervs as $interv)
-//		{
-//			$i[] = $interv['id'];
-//		}
-//
-//		$qb = $em->getRepository('JLMDailyBundle:ShiftTechnician')
-//			->createQueryBuilder('a');
-//		$qb->select('a,b')
-//			->leftJoin('a.shifting','b')
-//			->add('where',$qb->expr()->in('b.id',$i))
-//			->orderBy('a.begin','desc');
-//		$shifts = $qb->getQuery()
-//			->getResult();
-		
-//		$intervs = $door->getInterventions();
 		$shifts = array();
 		foreach ($door->getInterventions() as $interv)
 		{

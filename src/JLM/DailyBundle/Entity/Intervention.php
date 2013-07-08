@@ -177,6 +177,13 @@ abstract class Intervention extends Shifting
     private $contactCustomer = null;
     
     /**
+     * Annuler l'intervention
+     * @var string
+     * @ORM\Column(name="cancel",type="boolean")
+     */
+    private $cancel = false;
+    
+    /**
      * Get contract
      * @return string
      */
@@ -213,7 +220,7 @@ abstract class Intervention extends Shifting
      * Set rest
      * @return string
      */
-    public function setRest($rest)
+    public function setRest($rest = null)
     {
     	$this->rest = $rest;
     	return $this;
@@ -360,7 +367,7 @@ abstract class Intervention extends Shifting
      * @param string $report
      * @return Fixing
      */
-    public function setReport($report)
+    public function setReport($report = null)
     {
     	$this->report = $report;
     	return $this;
@@ -537,7 +544,7 @@ abstract class Intervention extends Shifting
     
     	if (!$this->hasTechnician() && !$this->getClosed())
     		return 0;
-    	if (!$this->hasTechnician() && $this->getClosed())
+    	if (!$this->hasTechnician() && $this->getClosed() && !$this->getCancel())
     		return -1;
     	if (!$this->getClosed())
     		return 1;
@@ -561,7 +568,7 @@ abstract class Intervention extends Shifting
      * @param boolean $mustBeBilled
      * @return Intervention
      */
-    public function setMustBeBilled($mustBeBilled)
+    public function setMustBeBilled($mustBeBilled = null)
     {
         $this->mustBeBilled = $mustBeBilled;
     
@@ -695,7 +702,7 @@ abstract class Intervention extends Shifting
     
     /**
      * Test pour les actions suite à reste à faire
-     * @Assert\True(message="Une action reste à faire ne peut pas être lancée si le champ reste à faire est vide")
+     * @Assert\True(message="Une action reste à faire ne peut pas exister si le champ reste à faire est vide")
      */
     public function isRestActionValid()
     {
@@ -705,5 +712,57 @@ abstract class Intervention extends Shifting
     			return false;
     	}
     	return true;
+    }
+    
+    /**
+     * Annuler une intervention
+     */
+    public function setCancel($cancel = false)
+    {
+    	$this->cancel = $cancel;
+    	return $this;
+    }
+    
+    /**
+     * Raison de l'annulation
+     */
+    public function getCancel()
+    {
+    	return $this->cancel;
+    }
+    
+    /**
+     * Intervention annulée ?
+     */
+    public function isCanceled()
+    {
+    	return $this->getCancel();
+    }
+    
+    /**
+     * Annuler l'intervention
+     */
+    public function cancel()
+    {
+    	if ($this->getReport() === null)
+    		return $this;
+    	
+    	$this->setCancel(true);
+    	$this->setMustBeBilled(false);
+    	$this->setRest();
+    	$this->setClosed(new \DateTime);
+    	return $this;
+    }
+    
+    /**
+     * Désannule l'intervention
+     */
+    public function uncancel()
+    {
+    	$this->setReport();
+    	$this->setCancel(false);
+    	$this->setMustBeBilled();
+    	$this->reOpen();
+    	return $this;
     }
 }
