@@ -303,9 +303,10 @@
 </table>
 <div class="form-actions">
 	{% block actions %}
-		{% if entity.intervention or entity.quote %}
-			{% if entity.canceled %}
-			<a href="{{ path('intervention_uncancel',{'id':entity.id}) }}" class="btn btn-inverse">Désannuler</a>
+		{% if entity.type == 'work' %}
+			{% if entity.intervention or entity.quote %}
+				{% if entity.canceled %}
+					<a href="{{ path('intervention_uncancel',{'id':entity.id}) }}" class="btn btn-inverse">Désannuler</a>
 			{% else %}
 			<a href="#modalCancel{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Annuler</a>
 			<form id="modalCancel{{ entity.id }}" action="{{ path('intervention_cancel',{'id':entity.id}) }}" method="post" {{ form_enctype(form_cancel) }} class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalCancel{{ entity.id }}Label" aria-hidden="true">
@@ -322,6 +323,7 @@
 				</div>
 			</form>
 			{% endif %}
+		{% endif %}
 		{% else %}
 			<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a>
 			{% include 'JLMDailyBundle:Intervention:delete.html.twig' with {'id':entity.id} %}
