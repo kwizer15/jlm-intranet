@@ -36,7 +36,7 @@ class Order extends FPDFext
 		$this->setFont('Arial','B',16);
 		$this->cell(0,8,'Référence',0,1);
 		$this->setFont('Arial','',16);
-		$this->multicell(0,8,$this->entity->getPlace(),0);
+		$this->multicell(0,8,$this->entity->getWork()->getPlace(),0);
 		$this->ln(12);
 	}
 	
