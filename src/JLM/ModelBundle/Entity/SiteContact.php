@@ -27,7 +27,6 @@ class SiteContact
 	 * @var $sites
 	 * 
 	 * @ORM\ManyToOne(targetEntity="Site", inversedBy="contacts")
-	 * @Assert\Valid
 	 * @Assert\NotNull
 	 */
 	private $site;
