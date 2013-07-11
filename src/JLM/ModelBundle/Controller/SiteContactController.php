@@ -77,11 +77,12 @@ class SiteContactController extends Controller
      * Creates a new SiteContact entity.
      *
      * @Route("/create", name="sitecontact_create")
+     * @Route("/create/{id}", name="sitecontact_create_id")
      * @Method("POST")
      * @Template("JLMModelBundle:SiteContact:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, Site $site = null)
     {
         $entity  = new SiteContact();
         $form = $this->createForm(new SiteContactType(), $entity);
@@ -102,6 +103,7 @@ class SiteContactController extends Controller
 
         return array(
             'entity' => $entity,
+        	'site' => $site,
             'form'   => $form->createView(),
         );
     }

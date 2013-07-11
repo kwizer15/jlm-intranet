@@ -1,0 +1,16 @@
+{# <a href="#" data-toggle="modal" data-target="#modalNewPerson" class="btn btn-success"><i class="icon-white icon-plus-sign"></i></a> #}
+<form id="modalNewPerson" action="{{ path('person_create_ajax') }}" method="post" {{ form_enctype(form) }} class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalNewPersonLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="modalNewPersonLabel">Nouvelle personne</h3>
+	</div>
+	<div class="modal-body">
+		{{ form_widget(form) }}
+		<span class="hide id">-1</span>
+		<span class="hide name"></span> 
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+		<button class="btn btn-primary" type="submit"><i class="icon-pencil icon-white"></i> Enregistrer</button>
+	</div>
+</form>

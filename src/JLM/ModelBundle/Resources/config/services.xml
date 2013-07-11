@@ -50,6 +50,14 @@
     <argument type="service" id="doctrine.orm.entity_manager"/>
     <tag name="form.type" alias="door_select" />
 </service>
+<service id="jlm_model.type.person_hidden" class="JLM\ModelBundle\Form\Type\PersonHiddenType">
+    <argument type="service" id="doctrine.orm.entity_manager"/>
+    <tag name="form.type" alias="person_hidden" />
+</service>
+<service id="jlm_model.type.person_select" class="JLM\ModelBundle\Form\Type\PersonSelectType">
+    <argument type="service" id="doctrine.orm.entity_manager"/>
+    <tag name="form.type" alias="person_select" />
+</service>
 </services>
     <!--
     <parameters>

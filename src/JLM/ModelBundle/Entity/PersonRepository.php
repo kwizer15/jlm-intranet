@@ -22,4 +22,23 @@ class PersonRepository extends EntityRepository
 		
 		return $qb->getQuery()->getResult();
 	}
+	
+	public function match($query)
+	{
+		return $this->search($query);
+	}
+	
+	public function searchResult($query, $limit = 8)
+	{
+		$res = $this->search($query);
+		$r2 = array();
+		foreach ($res as $r)
+		{
+			$r2[] = array(
+					'id'=>''.$r->getId(),
+					'label'=>''.$r,
+			);
+		}
+		return $r2;
+	}
 }

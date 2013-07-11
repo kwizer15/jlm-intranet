@@ -1,7 +1,7 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
 {% block content %}
 <h1>Nouveau contact</h1>
-<form action="{{ path('sitecontact_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form action="{{ path('sitecontact_create_id', {'id': site.id }) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 <fieldset>
 {{ form_widget(form) }}
     <div class="form-actions">
@@ -9,4 +9,72 @@
 	   <button type="submit" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer</button>
 	</div>
 </fieldset>
+</form>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+$("#jlm_modelbundle_sitecontacttype_person_selector")
+.autocomplete({
+	source: function(request,response){
+		request.repository = 'JLMModelBundle:Person';
+		return $.post(
+				this.element.attr('data-source'),
+				request,
+				function( data ) { 
+					data.push({ 'id':'-1', 'label':'+ Ajouter un contact' });
+					response( data );
+				},
+				'json'
+		);
+	},
+	select: function (event, ui)
+	{
+		// Ajouter un contact
+		if (ui.item.id == -1)
+		{
+			if ($("#modalNewPerson").length == 0)
+			{	
+				// On charge et affiche la modal
+				$.ajax({
+			        url: '{{ path('person_new_ajax') }}', 
+			        type: 'get',
+			        success: function(html) {
+			        	$("footer").after(html);
+			        	$("#modalNewPerson").on('submit',function(){
+			        		$.ajax({
+			        	        url: $(this).attr('action'), 
+			        	        type: $(this).attr('method'), 
+			        	        data: $(this).serialize(),
+			        	        success: function(html) {
+			        	        	$("#modalNewPerson .modal-body").html(html);
+				        	        if ($("#modalNewPerson .modal-body .id").html() > 0)
+				        	        {
+				        	        	$("#jlm_modelbundle_sitecontacttype_person_selector").prev().val($("#modalNewPerson .modal-body .id").html());
+						        	    $("#jlm_modelbundle_sitecontacttype_person_selector").val($("#modalNewPerson .modal-body .name").html());
+						        	    $("#modalNewPerson").modal('hide').remove();
+				        	        }
+			        	        }
+			        	    });
+			        		return false;
+			        	}).modal('show');
+			        }
+			    });
+			}
+			else
+			{
+				// On affiche juste (déjà chargée)
+				$("#modalNewPerson").modal('show');
+			}
+		}
+		else
+		{
+			$(this).prev().val(ui.item.id);
+			$(this).val(ui.item.label);
+		}
+		return false;
+	}
+});
+</script>
 {% endblock %}
