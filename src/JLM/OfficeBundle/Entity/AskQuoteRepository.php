@@ -30,7 +30,7 @@ class AskQuoteRepository extends EntityRepository
 		->leftJoin('h.contracts','p')
 		->leftJoin('p.trustee','q')
 		->leftJoin('c.door','r')
-		->orderBy('r.creation','asc')
+		->orderBy('a.creation','asc')
 		;
 		return $qb->getQuery()->getResult();
 	}
@@ -76,7 +76,7 @@ class AskQuoteRepository extends EntityRepository
 			->leftJoin('c.door','d')
 			->where('b is null')
 			->andWhere('a.dontTreat is null')
-			->orderBy('d.creation','asc')
+			->orderBy('a.creation','asc')
 			;
 		return $qb->getQuery()->getResult();
 	}
@@ -90,7 +90,7 @@ class AskQuoteRepository extends EntityRepository
 			->leftJoin('c.door','d')
 			->where('b is not null')
 			->andWhere('a.dontTreat is not null')
-			->orderBy('d.creation','asc')
+			->orderBy('a.creation','asc')
 			//->orderBy('a.creation','asc')
 		;
 		return $qb->getQuery()->getResult();
