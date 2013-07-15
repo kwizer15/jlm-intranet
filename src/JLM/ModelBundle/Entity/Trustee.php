@@ -53,7 +53,6 @@ class Trustee extends Company
      * @var Address $billingAddress
      *
      * @ORM\OneToOne(targetEntity="Address")
-     * @Assert\Valid
      */
     private $billingAddress;
     
