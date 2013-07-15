@@ -21,10 +21,10 @@ abstract class ObjectToIntTransformer implements DataTransformerInterface
 	}
 	
 	/**
-	 * Transforms an object (trustee) to a string (name).
+	 * Transforms an object to an int.
 	 *
-	 * @param  Trustee|null $entity
-	 * @return string
+	 * @param  Object|null $entity
+	 * @return int
 	 */
 	public function transform($entity)
 	{
@@ -35,11 +35,11 @@ abstract class ObjectToIntTransformer implements DataTransformerInterface
 	}
 	
 	/**
-	 * Transforms a string (number) to an object (trustee).
+	 * Transforms an int to an object.
 	 *
-	 * @param  string $number
-	 * @return Trustee|null
-	 * @throws TransformationFailedException if object (trustee) is not found.
+	 * @param  int $id
+	 * @return Object|null
+	 * @throws TransformationFailedException if object is not found.
 	 */
 	public function reverseTransform($id)
 	{
@@ -62,7 +62,7 @@ abstract class ObjectToIntTransformer implements DataTransformerInterface
 		return $entity;
 	}
 	
-	abstract protected function getClass();
+	abstract public function getClass();
 	
 	protected function getErrorMessage()
 	{

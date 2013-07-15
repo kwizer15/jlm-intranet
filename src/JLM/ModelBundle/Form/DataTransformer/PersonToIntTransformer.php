@@ -5,7 +5,7 @@ use JLM\ModelBundle\Form\DataTransformer\ObjectToIntTransformer;
 
 class PersonToIntTransformer extends ObjectToIntTransformer
 {
-	protected function getClass()
+	public function getClass()
 	{
 		return 'JLMModelBundle:Product';
 	}
