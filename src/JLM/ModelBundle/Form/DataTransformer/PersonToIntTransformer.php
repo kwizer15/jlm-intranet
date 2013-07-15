@@ -7,7 +7,7 @@ class PersonToIntTransformer extends ObjectToIntTransformer
 {
 	public function getClass()
 	{
-		return 'JLMModelBundle:Product';
+		return 'JLMModelBundle:Person';
 	}
 	
 	protected function getErrorMessage()
