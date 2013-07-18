@@ -1,7 +1,7 @@
 {% extends "JLMDailyBundle::layout.html.twig" %}
 
 {% block content %}
-<h1>Rapport installation</h1>
+<h1>Installation n°{{ entity.id }}</h1>
 {% if entity.stopped %}
 <div class="alert alert-danger">
 	<h4>Porte à l'arrêt</h4>
@@ -9,12 +9,11 @@
 {% endif %}
 <ul>
 <li>Dernier entretien : {% if entity.lastMaintenance is null %}Aucun{% else %}{{ entity.lastMaintenance | date('d/m/Y') }}{% endif %}</li>
-<li>Contrat : {{ entity.actualContract }}</li>
+<li>Contrat : {% if entity.actualContract %}{{ entity.actualContract }}{% else %}<strong>Hors contrat</strong>{% endif %}</li>
 </ul>
 {% if entity.width and entity.height %}{{ entity.width }}x{{ entity.height }}mm</small>{% endif %}</h1>
 <div class="row-fluid">
 	<div class="span6">
-		<h2><small>{{ entity.type }}</small></h2>
 		<h4>{{ entity|nl2br}}</h4>
 		<strong>Accès :</strong>
 		<br>{{ entity.street|nl2br }}

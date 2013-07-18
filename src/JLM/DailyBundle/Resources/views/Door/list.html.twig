@@ -1,6 +1,7 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
+			<th>N°</th>
 			<th>Affaire</th>
 			<th>Installation</th>
 			<th>Etat</th>
@@ -11,6 +12,7 @@
 	<tbody>
 		{% for door in doors %}
 		<tr>
+			<td><span class="label label-inverse">{{ door.id }}</span></td>
 			<td><a href="{{ path('daily_door_show',{'id': door.id}) }}"><strong>{{ door.site.address.city.name | upper }}</strong> <small>{{ door.site.address.city.zip }}</small><br>{{ door.street | nl2br }}</a></td>
 			<td>{{ door.type }}<br>{{ door.location }}</td>
 			<td>
