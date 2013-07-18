@@ -114,11 +114,12 @@ class DefaultController extends Controller
 	public function printtagAction()
 	{
 		$em = $this->getDoctrine()->getEntityManager();
-		$entity = $em->getRepository('JLMModelBundle:Door')->find(80);
+		$entitiess = $em->getRepository('JLMModelBundle:Door')->findAll();
+		$entities = array($entitiess[0],$entitiess[1],$entitiess[2],$entitiess[3]);
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename=tags.pdf');
-		$response->setContent($this->render('JLMDefaultBundle:Default:printtag.pdf.php',array('entities'=>array($entity))));
+		$response->setContent($this->render('JLMDefaultBundle:Default:printtag.pdf.php',array('entities'=>$entities)));
 		return $response;
 	}
 }
