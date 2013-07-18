@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class AskQuoteRepository extends EntityRepository
 {
-	public function getAll()
+	public function getAll($limit = 10, $offset = 0)
 	{
 		$qb = $this->createQueryBuilder('a')
 		->select('a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q')
@@ -31,6 +31,8 @@ class AskQuoteRepository extends EntityRepository
 		->leftJoin('p.trustee','q')
 		->leftJoin('c.door','r')
 		->orderBy('a.creation','asc')
+		->setFirstResult($offset)
+		->setMaxResults($limit);
 		;
 		return $qb->getQuery()->getResult();
 	}

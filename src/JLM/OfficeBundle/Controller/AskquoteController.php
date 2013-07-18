@@ -21,14 +21,29 @@ class AskquoteController extends Controller
 {
 	/**
 	 * @Route("/", name="askquote")
+	 * @Route("/page/{page}", name="askquote_page")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function indexAction()
+	public function indexAction($page = 1)
 	{
+		$limit = 10;
 		$em = $this->getDoctrine()->getEntityManager();
-		$entities = $em->getRepository('JLMOfficeBundle:AskQuote')->getAll();
-		return array('entities'=>$entities);
+		$repo = $em->getRepository('JLMOfficeBundle:AskQuote');
+		$nb = $repo->getTotal();
+		$nbPages = ceil($nb/$limit);
+		$nbPages = ($nbPages < 1) ? 1 : $nbPages;
+		$offset = ($page-1) * $limit;
+		if ($page < 1 || $page > $nbPages)
+		{
+			throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
+		}
+		$entities = $repo->getAll($limit,$offset);
+		return array(
+				'entities' => $entities,
+				'page'     => $page,
+				'nbPages'  => $nbPages,
+		);
 	}
 	
 	/**
