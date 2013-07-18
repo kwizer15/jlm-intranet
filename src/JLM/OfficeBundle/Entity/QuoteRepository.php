@@ -66,6 +66,7 @@ class QuoteRepository extends EntityRepository
 			$result = $qb->getQuery()->getResult();
 			$this->countState = array(0=>0, 1=>0, 2=>0, 3=>0, 4=>0, 5=>0);
 			$this->total = 0;
+			$this->uncanceled = 0;
 			foreach ($result as $r)
 			{
 				if (!isset($this->countState[$r->getState()]))
@@ -85,10 +86,13 @@ class QuoteRepository extends EntityRepository
 					default:
 						$this->countState[$r->getState()]++;
 				}
+				if ($r->getState() >= 0)	// On retire les devis annulés
+					$this->uncanceled++;
 				$this->total++;
 			}
 		}
-		
+		if ($state === 'uncanceled')
+			return $this->uncanceled;
 		if ($state === null)
 			return $this->total;
 		return $this->countState[$state];

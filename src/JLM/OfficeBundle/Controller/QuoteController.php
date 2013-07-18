@@ -100,7 +100,7 @@ class QuoteController extends Controller
 
     $repo = $em->getRepository('JLMOfficeBundle:Quote');
     	return array(
-    			'all' => $repo->getTotal(),
+    			'all' => $repo->getCountState('uncanceled'),
     			'input' => $repo->getCountState(0),
     			'wait' => $repo->getCountState(1),
     			'send' => $repo->getCountState(3),
