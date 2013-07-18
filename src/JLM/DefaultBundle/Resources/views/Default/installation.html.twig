@@ -1,4 +1,19 @@
-{% extends "JLMDefaultBundle::layout.html.twig" %}
-{% block content %}
-<h3>JLM Entreprise</h3>
+{%  extends "::layout.html.twig" %}
+{% block container %}
+		<div class="container">
+		{% block content %}
+			<div class="span3"></div>
+			<div class="span6">
+				<div class="page-header text-center">
+				<h3>Cette installation est maintenue par</h3>
+					<h1><img src="{{ asset('bundles/jlmuser/img/jlm-logo.png') }}"></h1>
+				</div>
+        <div class="well text-center">
+            En cas de panne, appelez le 01 64 33 77 70 et signalez le numéro d'installation
+            <h1>{{ door.id }}</h1>
+        </div>
+        </div>
+	        <div class="span3"></div>
+        </div>
+        {% endblock %}
 {% endblock %}
