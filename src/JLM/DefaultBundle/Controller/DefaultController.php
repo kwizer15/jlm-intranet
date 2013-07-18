@@ -5,6 +5,7 @@ namespace JLM\DefaultBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Door;
 
@@ -105,5 +106,19 @@ class DefaultController extends Controller
 	public function installationAction(Door $door)
 	{
 		return array('door'=>$door);
+	}
+	
+	/**
+	 * @Route("/printtag")
+	 */
+	public function printtagAction()
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$entity = $em->getRepository('JLMModelBundle:Door')->find(80);
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/pdf');
+		$response->headers->set('Content-Disposition', 'inline; filename=tags.pdf');
+		$response->setContent($this->render('JLMDefaultBundle:Default:printtag.pdf.php',array('entities'=>array($entity))));
+		return $response;
 	}
 }
