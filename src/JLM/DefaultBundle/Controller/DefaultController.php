@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use JLM\ModelBundle\Entity\Door;
 
 class DefaultController extends Controller
 {
@@ -95,5 +96,14 @@ class DefaultController extends Controller
 	public function robotAction()
 	{
 		return array();
+	}
+	
+	/**
+	 * @Route("/installation/{id}")
+	 * @Template()
+	 */
+	public function installationAction(Door $door)
+	{
+		return array('door'=>$door);
 	}
 }
