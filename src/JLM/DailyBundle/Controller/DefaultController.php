@@ -26,7 +26,8 @@ class DefaultController extends Controller
 		if ($query > 0)
 		{
 			$door = $em->getRepository('JLMModelBundle:Door')->find($query);
-			return $this->redirect($this->generateUrl('daily_door_show',array('id'=>$door->getId())));
+			if ($door !== null)
+				return $this->redirect($this->generateUrl('daily_door_show',array('id'=>$door->getId())));
 		}
 		$doors = $em->getRepository('JLMModelBundle:Door')->search($query);
 		return array(

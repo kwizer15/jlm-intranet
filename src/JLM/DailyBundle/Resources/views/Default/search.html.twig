@@ -2,11 +2,11 @@
 {% extends "JLMDailyBundle::layout.html.twig" %}
 
 {% block content %}
-<h1>Intallations correspondants à "{{ query }}"</h1>
+<h1>Installations correspondants à "{{ query }}"</h1>
 	{% if doors|length == 0  %} 
 		<h2><small>Aucun résultat</small></h2>
 	{% else %}
-		<h2><small>Intallations</small></h2>
+		<h2><small>Installations</small></h2>
 		{% include 'JLMDailyBundle:Door:list.html.twig' with {'doors': doors } %}
 	{% endif %}
 {% endblock %}
