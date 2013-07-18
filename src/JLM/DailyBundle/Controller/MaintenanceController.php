@@ -32,7 +32,7 @@ class MaintenanceController extends Controller
 	 */
 	public function listAction($page = 1)
 	{
-		
+		// @todo Trier par ville, date...
 		$limit = 15;
 		$em = $this->getDoctrine()->getEntityManager();
 		$nb = $em->getRepository('JLMDailyBundle:Maintenance')->getCountOpened();
