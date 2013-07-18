@@ -52,7 +52,7 @@ class BillController extends Controller
         	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
         }
         
-        $entities = $em->getRepository('JLMOfficeBundle:Bill')->getByState(
+        $entities = $repo->getByState(
         		$state,
         		$limit,
         		$offset
