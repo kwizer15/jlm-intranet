@@ -2,7 +2,7 @@
 
 namespace JLM\OfficeBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use JLM\DefaultBundle\Controller\PaginableController;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -17,7 +17,7 @@ use JLM\OfficeBundle\Form\Type\AskQuoteDontTreatType;
  *
  * @Route("/quote/ask")
  */
-class AskquoteController extends Controller
+class AskquoteController extends PaginableController
 {
 	/**
 	 * @Route("/", name="askquote")
@@ -170,25 +170,5 @@ class AskquoteController extends Controller
 				'untreated' => $repo->getCountUntreated(),
 				'treated' => $repo->getCountTreated(),
 		);
-	}
-	
-	/**
-	 * Pagination
-	 */
-	protected function pagination($repo, $functiondata = 'getTotal', $page = 1, $limit = 10)
-	{
-		$em = $this->getDoctrine()->getEntityManager();
-		$repo = $em->getRepository($repo);
-		$functionCount = 'getCount'.$functiondata;
-		$functionDatas = 'get'.$functiondata;
-		$nb = $repo->$functionCount();
-		$nbPages = ceil($nb/$limit);
-		$nbPages = ($nbPages < 1) ? 1 : $nbPages;
-		$offset = ($page-1) * $limit;
-		if ($page < 1 || $page > $nbPages)
-		{
-			throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
-		}
-		return array('entities'=>$repo->$functionDatas($limit,$offset),'nbPages'=>$nbPages);
 	}
 }
