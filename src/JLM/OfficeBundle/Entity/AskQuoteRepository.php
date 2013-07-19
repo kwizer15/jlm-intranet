@@ -91,7 +91,7 @@ class AskQuoteRepository extends EntityRepository
 			->leftJoin('a.intervention','c')
 			->leftJoin('c.door','d')
 			->where('b is not null')
-			->andWhere('a.dontTreat is not null')
+			->orWhere('a.dontTreat is not null')
 			->orderBy('a.creation','asc')
 			//->orderBy('a.creation','asc')
 		;
