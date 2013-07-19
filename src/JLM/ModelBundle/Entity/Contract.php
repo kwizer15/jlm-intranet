@@ -100,9 +100,9 @@ class Contract
      */
     public function __toString()
     {
-    	if ($this->getInProgress())
+//    	if ($this->getInProgress())
     		return ($this->isComplete() ? 'C'.($this->getOption()+1) : 'N'.($this->getOption()+3));
-    	return 'HC';
+//    	return 'HC';
     }
 
     /**
