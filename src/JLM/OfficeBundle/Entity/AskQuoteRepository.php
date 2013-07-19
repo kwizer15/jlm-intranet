@@ -37,7 +37,7 @@ class AskQuoteRepository extends EntityRepository
 		return $qb->getQuery()->getResult();
 	}
 	
-	public function getTotal()
+	public function getCountAll()
 	{
 		if (!isset($this->total))
 		{
@@ -47,6 +47,14 @@ class AskQuoteRepository extends EntityRepository
 			$this->total = $qb->getQuery()->getSingleScalarResult();
 		}
 		return $this->total;
+	}
+	
+	/**
+	 * @deprecated
+	 */
+	public function getTotal()
+	{
+		return $this->getCountAll();
 	}
 	
 	public function getCountUntreated()
@@ -69,7 +77,7 @@ class AskQuoteRepository extends EntityRepository
 		return $this->getTotal() - $this->getCountUntreated();
 	}
 	
-	public function getUntreated()
+	public function getUntreated($limit = 10, $offset = 0)
 	{
 		$qb = $this->createQueryBuilder('a')
 			->select('a')
@@ -79,11 +87,13 @@ class AskQuoteRepository extends EntityRepository
 			->where('b is null')
 			->andWhere('a.dontTreat is null')
 			->orderBy('a.creation','asc')
+			->setFirstResult($offset)
+			->setMaxResults($limit)
 			;
 		return $qb->getQuery()->getResult();
 	}
 	
-	public function getTreated()
+	public function getTreated($limit = 10, $offset = 0)
 	{
 		$qb = $this->createQueryBuilder('a')
 			->select('a')
@@ -93,6 +103,8 @@ class AskQuoteRepository extends EntityRepository
 			->where('b is not null')
 			->orWhere('a.dontTreat is not null')
 			->orderBy('a.creation','asc')
+			->setFirstResult($offset)
+			->setMaxResults($limit)
 			//->orderBy('a.creation','asc')
 		;
 		return $qb->getQuery()->getResult();

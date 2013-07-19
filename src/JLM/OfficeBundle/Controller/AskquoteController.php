@@ -27,47 +27,44 @@ class AskquoteController extends Controller
 	 */
 	public function indexAction($page = 1)
 	{
-		$limit = 10;
-		$em = $this->getDoctrine()->getEntityManager();
-		$repo = $em->getRepository('JLMOfficeBundle:AskQuote');
-		$nb = $repo->getTotal();
-		$nbPages = ceil($nb/$limit);
-		$nbPages = ($nbPages < 1) ? 1 : $nbPages;
-		$offset = ($page-1) * $limit;
-		if ($page < 1 || $page > $nbPages)
-		{
-			throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
-		}
-		$entities = $repo->getAll($limit,$offset);
+		$datas = $this->pagination('JLMOfficeBundle:AskQuote','All',$page,10);
 		return array(
-				'entities' => $entities,
+				'entities' => $datas['entities'],
 				'page'     => $page,
-				'nbPages'  => $nbPages,
+				'nbPages'  => $datas['nbPages'],
 		);
 	}
 	
 	/**
 	 * @Route("/treated", name="askquote_listtreated")
-	 * @Template("JLMOfficeBundle:Askquote:index.html.twig")
+	 * @Route("/treated/page/{page}", name="askquote_listtreated_page")
+	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function listtreatedAction()
+	public function listtreatedAction($page = 1)
 	{
-		$em = $this->getDoctrine()->getEntityManager();
-		$entities = $em->getRepository('JLMOfficeBundle:AskQuote')->getTreated();
-		return array('entities'=>$entities);
+		$datas = $this->pagination('JLMOfficeBundle:AskQuote','Treated',$page,10);
+		return array(
+				'entities' => $datas['entities'],
+				'page'     => $page,
+				'nbPages'  => $datas['nbPages'],
+		);
 	}
 	
 	/**
 	 * @Route("/untreated", name="askquote_listuntreated")
-	 * @Template("JLMOfficeBundle:Askquote:index.html.twig")
+	 * @Route("/untreated/page/{page}", name="askquote_listuntreated_page")
+	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function listuntreatedAction()
+	public function listuntreatedAction($page = 1)
 	{
-		$em = $this->getDoctrine()->getEntityManager();
-		$entities = $em->getRepository('JLMOfficeBundle:AskQuote')->getUntreated();
-		return array('entities'=>$entities);
+		$datas = $this->pagination('JLMOfficeBundle:AskQuote','Untreated',$page,10);
+		return array(
+				'entities' => $datas['entities'],
+				'page'     => $page,
+				'nbPages'  => $datas['nbPages'],
+		);
 	}
 	
 	/**
@@ -173,5 +170,25 @@ class AskquoteController extends Controller
 				'untreated' => $em->getRepository('JLMOfficeBundle:AskQuote')->getCountUntreated(),
 				'treated' => $em->getRepository('JLMOfficeBundle:AskQuote')->getCountTreated(),
 		);
+	}
+	
+	/**
+	 * Pagination
+	 */
+	protected function pagination($repo, $functiondata = 'getTotal', $page = 1, $limit = 10)
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$repo = $em->getRepository($repo);
+		$functionCount = 'getCount'.$functiondata;
+		$functionDatas = 'get'.$functiondata;
+		$nb = $repo->$functionCount();
+		$nbPages = ceil($nb/$limit);
+		$nbPages = ($nbPages < 1) ? 1 : $nbPages;
+		$offset = ($page-1) * $limit;
+		if ($page < 1 || $page > $nbPages)
+		{
+			throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
+		}
+		return array('entities'=>$repo->$functionDatas($limit,$offset),'nbPages'=>$nbPages);
 	}
 }
