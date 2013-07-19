@@ -23,7 +23,7 @@
 				{% elseif door.waitWork %}<span class="label label-info">En attente travaux</span><br>{% endif %}
 				{% if door.waitMaintenance %}<span class="label">Entretien à faire</span><br>{% endif %}
 			</td>
-			<td>{{ door.actualContract }}</td>
+			<td>{% if door.actualContract is null %}HC{% else %}{{ door.actualContract }}{% endif %}</td>
 			<td>{{ door.site.trustee }}</td>
 		</tr>
 		{% endfor %}

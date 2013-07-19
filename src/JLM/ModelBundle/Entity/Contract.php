@@ -301,10 +301,10 @@ class Contract
      *
      * @return bool
      */
-    public function getInProgress()
+    public function getInProgress($date = null)
     {
-    	$today = new \DateTime;
-    	return (($this->end > $today || $this->end === null) && ($this->begin <= $today));
+    	$date = ($date === null) ? new \DateTime : $date;
+    	return (($this->end > $date || $this->end === null) && ($this->begin <= $date));
     }
 
     /**

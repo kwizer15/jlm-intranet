@@ -42,7 +42,7 @@
 					{% endif %}
 				</a>
 			</td>
-			<td>{{ entity.contract }}</td>
+			<td>{% if entity.dynContract is null %}HC{% else %}{{ entity.dynContract }}{% endif %}</td>
 			<td>{{ entity.contactName }}<br>{{ entity.contactPhones | nl2br }}</td>
 			<td>{% if entity.door %}
 			{% if entity.door.stopped %}<span class="label label-important">Mise à l'arrêt</span>{% endif %}

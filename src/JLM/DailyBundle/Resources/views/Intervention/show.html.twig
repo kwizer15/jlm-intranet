@@ -26,7 +26,7 @@
 			{{ entity.reason | nl2br }}
 		</td>
 	</tr>
-	 <tr><th>Contrat</th><td>{{ entity.contract }}</td></tr>
+	 <tr><th>Contrat</th><td>{% if entity.dynContract is null %}HC{% else %}{{ entity.dynContract }}{% endif %}</td></tr>
 	 {% if entity.door %}
 	 <tr>
 	 	<th>Emetteurs</th>

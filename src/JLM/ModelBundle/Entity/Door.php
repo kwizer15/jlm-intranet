@@ -447,10 +447,20 @@ class Door
      */
     public function getActualContract()
     {
-    	$today = new \DateTime;
+    	return $this->getContract();
+    }
+    
+    /**
+     * Get contract on date
+     * 
+     * @return JLM\ModelBundle\Entity\Contract
+     */
+    public function getContract(\DateTime $date = null)
+    {
+    	$date = ($date === null) ? new \DateTime : $date;
     	foreach ($this->contracts as $contract)
     	{
-    		if ($contract->getInProgress())
+    		if ($contract->getInProgress($date))
     			return $contract;
     	}
     	return null;

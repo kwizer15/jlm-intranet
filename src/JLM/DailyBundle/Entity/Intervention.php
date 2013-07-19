@@ -193,6 +193,24 @@ abstract class Intervention extends Shifting
     }
     
     /**
+     * Get dynamic contract
+     * @return JLMModelBundle\Entity\Contract
+     */
+    public function getDynContract()
+    {
+    	$techs = $this->getShiftTechnicians();
+    	if ($techs === null)
+    		return $this->getDoor()->getContract();
+    	$firstDate = new \DateTime;
+    	foreach ($techs as $tech)
+    	{
+    		if ($tech->getBegin() < $firstDate)
+    			$firstDate = $tech->getBegin();
+    	}
+    	return $this->getDoor()->getContract($firstDate);
+    }
+    
+    /**
      * Set contract
      * @param string|Contract|null $contract
      * @return Intervention
