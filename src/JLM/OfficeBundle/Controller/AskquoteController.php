@@ -164,11 +164,11 @@ class AskquoteController extends Controller
 	public function sidebarAction()
 	{
 		$em = $this->getDoctrine()->getEntityManager();
-	
+		$repo = $em->getRepository('JLMOfficeBundle:AskQuote');
 		return array(
-				'all' => $em->getRepository('JLMOfficeBundle:AskQuote')->getTotal(),
-				'untreated' => $em->getRepository('JLMOfficeBundle:AskQuote')->getCountUntreated(),
-				'treated' => $em->getRepository('JLMOfficeBundle:AskQuote')->getCountTreated(),
+				'all' => $repo->getTotal(),
+				'untreated' => $repo->getCountUntreated(),
+				'treated' => $repo->getCountTreated(),
 		);
 	}
 	
