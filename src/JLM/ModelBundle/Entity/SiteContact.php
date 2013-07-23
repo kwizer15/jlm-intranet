@@ -122,7 +122,7 @@ class SiteContact
      */
     public function setRole($role)
     {
-        $this->getPerson()->setRole() = $role;
+        $this->getPerson()->setRole($role);
     
         return $this;
     }
