@@ -25,7 +25,7 @@ class Trustee extends Company
     private $accountNumber;
 
     /**
-     * @var Door[] $doors
+     * @var ArrayCollection $contracts
      * 
      * @ORM\OneToMany(targetEntity="Contract", mappedBy="trustee")
      */
