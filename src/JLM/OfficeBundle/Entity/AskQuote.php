@@ -39,13 +39,6 @@ class AskQuote extends Ask
 	private $door;
 	
 	/**
-	 * Résumé de la demande
-	 * @ORM\Column(name="ask",type="text")
-	 * @Assert\NotBlank()
-	 */
-	private $ask;
-	
-	/**
 	 * Devis
 	 * @ORM\OneToMany(targetEntity="Quote",mappedBy="ask")
 	 */
@@ -67,29 +60,6 @@ class AskQuote extends Ask
 	{
 		return 'uploads/documents/askquote';
 	}
-
-    /**
-     * Set ask
-     *
-     * @param string $ask
-     * @return AskQuote
-     */
-    public function setAsk($ask)
-    {
-        $this->ask = $ask;
-    
-        return $this;
-    }
-
-    /**
-     * Get ask
-     *
-     * @return string 
-     */
-    public function getAsk()
-    {
-        return $this->ask;
-    }
 
     /**
      * Set intervention

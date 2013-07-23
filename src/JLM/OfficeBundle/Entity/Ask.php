@@ -62,6 +62,13 @@ abstract class Ask extends UploadDocument
 	 */
 	private $dontTreat;
 
+	/**
+	 * Résumé de la demande
+	 * @ORM\Column(name="ask",type="text")
+	 * @Assert\NotBlank()
+	 */
+	private $ask;
+	
     /**
      * Set creation
      *
@@ -226,5 +233,28 @@ abstract class Ask extends UploadDocument
     public function getDontTreat()
     {
     	return $this->dontTreat;
+    }
+    
+    /**
+     * Set ask
+     *
+     * @param string $ask
+     * @return AskQuote
+     */
+    public function setAsk($ask)
+    {
+    	$this->ask = $ask;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get ask
+     *
+     * @return string
+     */
+    public function getAsk()
+    {
+    	return $this->ask;
     }
 }
