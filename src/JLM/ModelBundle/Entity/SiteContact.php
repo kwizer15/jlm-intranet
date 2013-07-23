@@ -43,7 +43,7 @@ class SiteContact
 	/**
 	 * @var $role
 	 * 
-	 * @ORM\Column(name="role",type="string",length=255)
+	 * @ORM\Column(name="role",type="string",length=255,nullable=true)
 	 * @Assert\Type(type="string")
 	 * @Assert\NotBlank
 	 */
@@ -118,10 +118,11 @@ class SiteContact
      *
      * @param string $role
      * @return SiteContact
+     * @deprecated
      */
     public function setRole($role)
     {
-        $this->role = $role;
+        $this->getPerson()->setRole() = $role;
     
         return $this;
     }
@@ -129,11 +130,23 @@ class SiteContact
     /**
      * Get role
      *
-     * @return string 
+     * @return string
+     * @deprecated
      */
     public function getRole()
     {
-        return $this->role;
+        return $this->getPerson()->getRole();
+    }
+    
+    /**
+     * Get old role
+     *
+     * @return string
+     * @deprecated
+     */
+    public function getOldRole()
+    {
+    	return $this->role;
     }
     
 //    /**

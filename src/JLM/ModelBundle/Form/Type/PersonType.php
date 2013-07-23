@@ -13,6 +13,7 @@ class PersonType extends AbstractType
         	->add('title','choice',array('label'=>'Titre','choices'=>array('M.'=>'M.','Mme'=>'Mme','Mlle'=>'Mlle'),'attr'=>array('class'=>'input-small')))
         	->add('lastName',null,array('label'=>'Nom'))
             ->add('firstName',null,array('label'=>'Prénom','required'=>false))
+            ->add('role',null,array('label'=>'Rôle','required'=>true))
             ->add('address','address',array('label'=>'Adresse','required'=>false))
             ->add('fixedPhone',null,array('label'=>'Téléphone fixe','required'=>false,'attr'=>array('class'=>'input-medium')))
             ->add('mobilePhone',null,array('label'=>'Téléphone mobile','required'=>false,'attr'=>array('class'=>'input-medium')))

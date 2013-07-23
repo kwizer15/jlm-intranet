@@ -98,6 +98,14 @@ class Person
     private $address;
     
     /**
+     * @var $role
+     *
+     * @ORM\Column(name="role",type="string",length=255,nullable=true)
+     * @Assert\Type(type="string")
+     */
+    private $role;
+    
+    /**
      * Set firstName
      *
      * @param string $firstName
@@ -292,6 +300,29 @@ class Person
     public function getAddress()
     {
     	return $this->address;
+    }
+    
+    /**
+     * Set role
+     *
+     * @param string $role
+     * @return SiteContact
+     */
+    public function setRole($role)
+    {
+    	$this->role = $role;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+    	return $this->role;
     }
     
     /**

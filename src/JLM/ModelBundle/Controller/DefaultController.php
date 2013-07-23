@@ -42,4 +42,26 @@ class DefaultController extends Controller
     			
     	);
     }
+    
+    /**
+     * Upgrade contacts
+     * 
+     * @Route("/upgrade", name="model_upgrade")
+     * @Secure(roles="ROLE_USER")
+     * @Template()
+     */
+    public function upgradeAction()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$repo = $em->getRepository('JLMModelBundle:SiteContact');
+    	$contacts = $repo->findAll();
+    	foreach ($contacts as $contact)
+    	{
+    		$role = $contact->getRole();
+    		$person = $contact->getPerson();
+    		$person->setRole($role);
+    		$em->persist($person);
+    	}
+    	$em->flush();
+    }
 }
