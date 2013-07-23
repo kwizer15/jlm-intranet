@@ -69,6 +69,13 @@ class Quote extends Document
 	private $contact;
 	
 	/**
+	 * @var JLM\ModelBundle\Entity\Person $contact
+	 *
+	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Person")
+	 */
+	private $contactPerson;
+	
+	/**
 	 * @var string $contactCp
 	 * 
 	 * @ORM\Column(name="contact_cp", type="string")
@@ -244,6 +251,7 @@ class Quote extends Document
      *
      * @param string $contact
      * @return Quote
+     * @deprecated
      */
     public function setContact($contact)
     {
@@ -255,10 +263,33 @@ class Quote extends Document
     /**
      *
      * @return string
+     * @deprecated
      */
     public function getContact()
     {
     	return $this->contact;
+    }
+    
+    /**
+     * Set contact
+     *
+     * @param string $contact
+     * @return Quote
+     */
+    public function setContactPerson($contact)
+    {
+    	$this->contactPerson = $contact;
+    
+    	return $this;
+    }
+    
+    /**
+     *
+     * @return string
+     */
+    public function getContactPerson()
+    {
+    	return $this->contactPerson;
     }
     
     /**

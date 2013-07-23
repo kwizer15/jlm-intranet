@@ -62,6 +62,14 @@ class DefaultController extends Controller
     		$person->setRole($role);
     		$em->persist($person);
     	}
+    	$quotes = $em->getRepository('JLMOfficeBundle:Quote')->findAll();
+    	foreach ($quotes as $quote)
+    	{
+    		$contact = $quote->getContact();
+    		if ($contact !== null)
+    			$quote->setContactPerson($contact->getPerson());
+    		$em->persist($quote);
+    	}
     	$em->flush();
     	return array();
     }
