@@ -58,7 +58,7 @@ class FixingRepository extends InterventionRepository
 		//			->orWhere('a.close is null')
 		//			->orWhere('a.report is null')
 		->orWhere('a.mustBeBilled is null and b is not null')
-		->orWhere('(l is null and k is null and a.contactCustomer is null and a.otherAction is null) and a.rest is not null and b is not null')
+		->orWhere('l is null and k is null and a.contactCustomer is null and a.rest is not null and b is not null')
 		->orderBy('a.creation','asc')
 		->setParameter(1,$todaystring)
 		;

@@ -87,26 +87,6 @@ abstract class Intervention extends Shifting
     private $close;
     
     /**
-     * Action Bureau (facturation)
-     * @var JLM\OfficeBundle\Entity\Task
-     *
-     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Task")
-     * @deprecated
-     * Remplacé par bill et mustBeBilled
-     */
-    private $officeAction;
-    
-    /**
-     * Action Bureau (autre)
-     * @var JLM\OfficeBundle\Entity\Task
-     *
-     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Task")
-     * @deprecated
-     * Remplacé par askQuote, work et contactCustomer
-     */
-    private $otherAction;
-    
-    /**
      * Reste a faire
      * @var string
      *
@@ -497,50 +477,6 @@ abstract class Intervention extends Shifting
     public function getComments()
     {
     	return $this->comments;
-    }
-    
-    /**
-     * Get Office Action
-     *
-     * @return JLM\OfficeBundle\Entity\Task
-     */
-    public function getOfficeAction()
-    {
-    	return $this->officeAction;
-    }
-    
-    /**
-     * Set OfficeAction
-     *
-     * @param JLM\OfficeBundle\Entity\Task $officeAction
-     * @return Fixing
-     */
-    public function setOfficeAction(\JLM\OfficeBundle\Entity\Task $task = null)
-    {
-    	$this->officeAction = $task;
-    	return $this;
-    }
-    
-    /**
-     * Get Office Action
-     *
-     * @return JLM\OfficeBundle\Entity\Task
-     */
-    public function getOtherAction()
-    {
-    	return $this->otherAction;
-    }
-    
-    /**
-     * Set OfficeAction
-     *
-     * @param JLM\OfficeBundle\Entity\Task $otherAction
-     * @return Fixing
-     */
-    public function setOtherAction(\JLM\OfficeBundle\Entity\Task $task = null)
-    {
-    	$this->otherAction = $task;
-    	return $this;
     }
     
     /**
