@@ -52,7 +52,6 @@ class Person
      *
      * @ORM\Column(name="lastName", type="string", length=255)
      * @Assert\Type(type="string")
-     * @Assert\NotNull
      */
     private $lastName;
     
@@ -93,7 +92,6 @@ class Person
      * @var string $address
      * 
      * @ORM\OneToOne(targetEntity="Address")
-     * @Assert\Valid
      */
     private $address;
     
