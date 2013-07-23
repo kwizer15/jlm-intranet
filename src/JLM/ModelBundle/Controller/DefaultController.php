@@ -57,11 +57,12 @@ class DefaultController extends Controller
     	$contacts = $repo->findAll();
     	foreach ($contacts as $contact)
     	{
-    		$role = $contact->getRole();
+    		$role = $contact->getOldRole();
     		$person = $contact->getPerson();
     		$person->setRole($role);
     		$em->persist($person);
     	}
     	$em->flush();
+    	return array();
     }
 }
