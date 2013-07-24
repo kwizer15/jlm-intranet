@@ -13,7 +13,7 @@
 		{% for door in doors %}
 		<tr>
 			<td><a href="{{ path('door_show',{'id': door.id}) }}" class="btn"><i class="icon-eye-open"></i></a></td>
-			<td>{{ door.site.trustee }}</td>
+			<td>{{ door.trustee }}</td>
 			<td>{{ door.site | nl2br }}</td>
 			<td>{{ door.location }}</td>
 			<td>{{ door.street | nl2br }}</td>
