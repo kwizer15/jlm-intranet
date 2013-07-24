@@ -1,1 +1,8 @@
-ALTER TABLE askquote CHANGE dont_treat dont_treat LONGTEXT DEFAULT NULL
+ALTER TABLE persons ADD role VARCHAR(255) DEFAULT NULL;
+ALTER TABLE site_contacts CHANGE role role VARCHAR(255) DEFAULT NULL
+ALTER TABLE quote ADD contactPerson_id INT DEFAULT NULL;
+ALTER TABLE quote ADD CONSTRAINT FK_6B71CBF4176FE013 FOREIGN KEY (contactPerson_id) REFERENCES persons (id);
+CREATE INDEX IDX_6B71CBF4176FE013 ON quote (contactPerson_id)
+DROP INDEX UNIQ_291B3FA2A9A54B29 ON shifting_interventions;
+DROP INDEX UNIQ_291B3FA27514471B ON shifting_interventions;
+ALTER TABLE shifting_interventions DROP officeAction_id, DROP otherAction_id
