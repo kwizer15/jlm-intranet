@@ -105,8 +105,6 @@ class Door
      * @var int largeur en mm
      * 
      * @ORM\Column(name="width", type="integer", nullable=true)
-     * @Assert\Type(type="int")
-     * @Assert\Length(min=3,max=4)
      */
     private $width;
     
@@ -114,8 +112,6 @@ class Door
      * @var int hauteur en mm
      *
      * @ORM\Column(name="height", type="integer", nullable=true)
-     * @Assert\Type(type="int")
-     * @Assert\Length(min=3,max=4)
      */
     private $height;
     
