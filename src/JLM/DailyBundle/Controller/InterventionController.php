@@ -401,13 +401,6 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		foreach ($entity->getShiftTechnicians() as $tech)
 			$em->remove($tech);
-		if ($entity instanceof Intervention)
-		{
-			if (null !== $entity->getOfficeAction())
-				$em->remove($entity->getOfficeAction());
-			if (null !== $entity->getOtherAction())
-				$em->remove($entity->getOtherAction());
-		}	
 			
 		$em->remove($entity);
 		$em->flush();
