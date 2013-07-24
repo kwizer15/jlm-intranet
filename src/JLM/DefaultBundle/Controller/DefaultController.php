@@ -66,6 +66,32 @@ class DefaultController extends Controller
 			$evolutionBase[$date1->getTimestamp()*1000] = (int)($maintenanceTotal*($i / 182));
 			$date1->add(new \DateInterval('P1D'));
 		}
+		// Nombre de contrats en cours
+		$repocon = $em->getRepository('JLMModelBundle:Contract');
+		$contracts_numbers = $repocon
+			->createQueryBuilder('a')
+			->select('COUNT(DISTINCT a.number)')
+			->where('?1 BETWEEN a.begin AND a.end')
+			->orWhere('a.end IS NULL')
+			->setParameter(1,new \DateTime)
+			->getQuery()
+			->getSingleScalarResult();
+		$contracts_doors = $repocon
+			->createQueryBuilder('a')
+			->select('COUNT(DISTINCT a.door)')
+			->where('?1 BETWEEN a.begin AND a.end')
+			->orWhere('a.end IS NULL')
+			->setParameter(1,new \DateTime)
+			->getQuery()
+			->getSingleScalarResult();
+		$contracts_complete = $repocon
+			->createQueryBuilder('a')
+			->select('COUNT(DISTINCT a.door)')
+			->where('?1 BETWEEN a.begin AND a.end AND a.complete = 1')
+			->orWhere('a.end IS NULL AND a.complete = 1')
+			->setParameter(1,new \DateTime)
+			->getQuery()
+			->getSingleScalarResult();
         return array(
         		'numbers'=>$numbers,
         		'times'=>$times,
@@ -73,6 +99,10 @@ class DefaultController extends Controller
         		'maintenanceTotal' => $maintenanceTotal,
         		'evolution' => $repo->getCountDoesByDay(false),
         		'evolutionBase' => $evolutionBase,
+        		'contracts_numbers' => $contracts_numbers,
+        		'contracts_doors' => $contracts_doors,
+        		'contracts_complete' => $contracts_complete,
+        		'contracts_normal' => ($contracts_doors - $contracts_complete),
         );
 	}
 	
