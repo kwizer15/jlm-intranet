@@ -1,5 +1,7 @@
 {% extends "JLMDailyBundle::layout.html.twig" %}
 
+{% block title %}Installation n°{{ entity.id }} / {{ entity.site|nl2br|replace({'<br />':' / '}) }} / {{ entity.location }} / {{ entity.type }} | {{ parent() }}{% endblock %}
+
 {% block content %}
 <h1>Installation n°{{ entity.id }}</h1>
 {% if entity.stopped %}
@@ -15,8 +17,8 @@
 <div class="row-fluid">
 	<div class="span6">
 		<h4>{{ entity|nl2br}}</h4>
-		<strong>Accès :</strong>
-		<br>{{ entity.street|nl2br }}
+		<strong>Affaire :</strong>
+		<br>{{ entity.site|nl2br }}
 	</div>
 	
 	{% if entity.googlemaps%}

@@ -1,5 +1,7 @@
 {% extends "JLMDailyBundle::layout.html.twig" %}
 
+{% block title %}Installations à l'arrêt | {{ parent() }}{% endblock %}
+
 {% block content %}
 <h1>Intallations à l'arrêt <small>({{ entities | length }})</small></h1>
 	{% if entities|length == 0  %} 
