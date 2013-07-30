@@ -701,7 +701,7 @@ abstract class Intervention extends Shifting
     {
     	$door = $this->getDoor();
     	if ($door === null)
-    		return self::parent();
+    		return parent::getPlace();
     	return $door->getType().' - '.$door->getLocation().chr(10).
     		$door->getAddress()->toString();
     }
