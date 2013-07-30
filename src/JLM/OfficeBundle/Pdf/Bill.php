@@ -195,11 +195,11 @@ class Bill extends FPDFext
 		$this->cell(61,6,'','T',0);
 		$x = $this->getX();
 		$this->setXY($x,$y);
-		$maturity = $this->entity->getMaturity();
-		if ($maturity == null)
+		$maturity = $this->entity->getMaturityDate();
+		if ($maturity == $this->entity->getCreation())
 			$this->cell(51,6,'A réception',1,0,'C');
 		else 
-			$this->cell(51,6,$this->entity->getMaturity()->format('d/m/Y'),1,0,'C');
+			$this->cell(51,6,$maturity->format('d/m/Y'),1,0,'C');
 		$this->cell(5,6,'',0,0);
 		$this->setFont('Arial','B',10);
 		$this->cell(35,6,'Total TVA',1,0,'R',true);

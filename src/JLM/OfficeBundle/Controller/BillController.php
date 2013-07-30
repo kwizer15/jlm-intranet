@@ -93,7 +93,6 @@ class BillController extends Controller
 		$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
 		$entity->setVat($vat);
         $entity->addLine(new BillLine);
-        $entity->setVatTransmitter($vat);
         $form   = $this->createForm(new BillType, $entity);
 
         return array(
@@ -113,11 +112,8 @@ class BillController extends Controller
     {
     	$entity = new Bill();
     	$entity->setCreation(new \DateTime);
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
     	$entity->populateFromDoor($door);
     	$entity->addLine(new BillLine);
-    	$entity->setVatTransmitter($vat);
     	$form   = $this->createForm(new BillType, $entity);
     
     	return array(
@@ -137,10 +133,7 @@ class BillController extends Controller
     {
     	$entity = new Bill();
     	$entity->setCreation(new \DateTime);
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
     	$entity->populateFromQuoteVariant($quote);
-    	$entity->setVatTransmitter($vat);
     	$form   = $this->createForm(new BillType, $entity);
     
     	return array(
@@ -160,10 +153,7 @@ class BillController extends Controller
     {
     	$entity = new Bill();
     	$entity->setCreation(new \DateTime);
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
     	$entity->populateFromIntervention($interv);
-    	$entity->setVatTransmitter($vat);
     	$form   = $this->createForm(new BillType, $entity);
     
     	return array(
@@ -183,6 +173,9 @@ class BillController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Bill();
+        $em = $this->getDoctrine()->getEntityManager();
+        $vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
+        $entity->setVatTransmitter($vat);
         $form    = $this->createForm(new BillType(), $entity);
         $form->bind($request);
 		

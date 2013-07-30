@@ -21,7 +21,7 @@
             <td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}</td>
             <td>{{ entity.trusteeName }}</td>
             <td>{{ entity.site | nl2br}}</td>
-            <td>{{ entity.maturity | date('d/m/Y') }}</td>
+            <td>{{ entity.maturityDate | date('d/m/Y') }}</td>
             <td>{{ entity.totalPrice | number_format(2,',',' ')}} €</td>
         </tr>
     {% endfor %}

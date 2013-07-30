@@ -135,10 +135,10 @@ class Bill extends Document
 	private $penalty;
 	
 	/**
-	 * Maturity
+	 * Échéance en jour
 	 * @var \DateTime
 	 * 
-	 * @ORM\Column(name="maturity",type="date",nullable=true)
+	 * @ORM\Column(name="maturity",type="integer")
 	 */
 	private $maturity;
 	
@@ -387,7 +387,7 @@ class Bill extends Document
     /**
      * Set maturity
      *
-     * @param \DateTime $maturity
+     * @param int $maturity
      * @return Bill
      */
     public function setMaturity($maturity)
@@ -400,11 +400,23 @@ class Bill extends Document
     /**
      * Get maturity
      *
-     * @return \DateTime 
+     * @return int
      */
     public function getMaturity()
     {
         return $this->maturity;
+    }
+    
+    /**
+     * Get maturity date
+     *
+     * @return \DateTime
+     */
+    public function getMaturityDate()
+    {
+    	$date = clone $this->getCreation();
+    	$date->add(new \DateInterval('P'.$this->getMaturity().'D'));
+    	return $date;
     }
 
     /**

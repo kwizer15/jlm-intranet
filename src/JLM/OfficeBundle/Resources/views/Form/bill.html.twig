@@ -74,6 +74,15 @@
 	    	</div>
 	    </div>
     </div>
+    <div class="control-group">
+{{ form_label(form.maturity) }}
+<div class="controls">
+<div class="input-append">
+{{ form_widget(form.maturity) }}
+<span class="add-on">jour(s)</span>
+</div>
+</div>
+</div>
 {{ form_rest(form) }}
 {% endblock %}
 
