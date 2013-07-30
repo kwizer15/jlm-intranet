@@ -79,6 +79,10 @@ class Day extends FPDFext
 			{
 				$datas[5] .= ($datas[5] != '') ? chr(10) : '';
 				$datas[5] .= $tech->getTechnician();
+				if ($tech->getEnd())
+				{
+					$datas[5] .= chr(10).$tech->getBegin()->format('H\hi').' - '.$tech->getEnd()->format('H\hi');
+				}
 			}
 		}
 		$this->row($datas,5,1,false);

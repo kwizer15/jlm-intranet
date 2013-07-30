@@ -60,6 +60,10 @@ class Door extends FPDFext
 				$datas[4] .= chr(10).chr(10).'Reste à faire :'.chr(10).$interv->getRest();
 		}
 		$datas[5] = $entity->getTechnician().'';
+		if ($entity->getEnd())
+		{
+			$datas[5] .= chr(10).$entity->getBegin()->format('H\hi').' - '.$entity->getEnd()->format('H\hi').chr(10).$entity->getTime()->format('%h:%I');
+		}
 		$this->row($datas,5,1,false);
 	}
 }
