@@ -586,6 +586,28 @@ class Bill extends Document
     }
     
     /**
+     * Get Total TVA par taux
+     */
+    public function getTotalVatByRate()
+    {
+    	$total = array();
+    	foreach ($this->getLines() as $line)
+    	{
+    		$index = ''.($line->getVat()*100);
+    		if (!isset($total[$index]))
+    			$total[$index] = array('vat'=>0,'base'=>0);
+    		$total[$index]['vat'] += $line->getVatValue();
+    		$total[$index]['base'] += $line->getPrice();
+    	}
+    	foreach ($total as $key=>$tot)
+    	{
+    		$total[$key]['vat'] *= (1-$this->getDiscount());
+    	}
+    		
+    	return $total;
+    }
+    
+    /**
      * Get Total TTC
      */
     public function getTotalPriceAti()

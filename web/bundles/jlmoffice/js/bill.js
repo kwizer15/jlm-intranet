@@ -283,6 +283,8 @@
 				$(line + "_quantity, "
 						+ line + "_unitPrice, "
 						+ line + "_discount").on('change',$.proxy(this.totalBill,this));
+				$(line + "_vat").on('change', $.proxy(this.vatchange,this));
+				
 				$(line + "_reference").attr('data-source',this.options.autoSource)
 				.autocomplete({
 					source: function(request,response){
@@ -382,7 +384,16 @@
 		});
 		return this;
 	}
+	, vatchange : function(e) {
+		e.stopPropagation()
+		e.preventDefault()
+		var line = "#" + this.$element.attr('id');
+		var v = parseFloat($(line + "_vat").val().replace(',','.'));
+		$(line + "_vat").val(number_format(v,1,',',' '));
+		$(line).change();
+
 	}
+}
 
 
 	/* BILLLINE PLUGIN DEFINITION
