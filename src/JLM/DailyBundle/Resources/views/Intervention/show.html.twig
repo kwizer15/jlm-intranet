@@ -21,10 +21,10 @@
 		<h4>Raison</h4>
 		<blockquote>
 	    	<p>{% block reference %}{% endblock %}
-	    	{{ entity.reason | nl2br }}</p>
+	    	{{ entity.reason | nl2br }}
 	    	<small>{{ entity.contactName }}
 			<br>{{ entity.contactPhones | nl2br }}
-			<br><a href="mailto:{{ entity.contactEmail}}">{{ entity.contactEmail}}</a></small>
+			<br><a href="mailto:{{ entity.contactEmail}}">{{ entity.contactEmail}}</a></small></p>
 			<div class="btn-toolbar">
 				{% block edit_button %}{% endblock %}
 			</div>
@@ -131,7 +131,7 @@
 			 		{% if entity.canceled %}<strong>Annulée</strong><br>{% endif %}
 			 		{{ entity.report | nl2br}}
 			 	</p>	
-				<div class="btn-toolbar">
+				
 			 	{% if entity.mustBeBilled is not null %}
 					{% if entity.mustBeBilled %}
 						{% if entity.bill %}
@@ -146,10 +146,12 @@
 						Ne pas facturer
 					{% endif %}
 					{% if entity.bill is null%}
+					<div class="btn-toolbar">
 						<a href="{{ path('intervention_cancelbill',{'id':entity.id}) }}" class="btn btn-small">Changer</a>
+					</div>
 					{% endif %}
 				{% else %}
-		
+					<div class="btn-toolbar">
 						{% set preferbill = 0 %}
 						{% block officeaction %}
 						<div class="btn-group">
@@ -168,8 +170,9 @@
 							{% endif %}
 						</div>
 						{% endblock %}
+						</div>
 					{% endif %}
-					</div>
+					
 			 	</blockquote>
 			 		 	{# Modal #}
 			 	{% if entity.mustBeBilled and entity.bill is null and entity.externalBill is null %}
