@@ -267,7 +267,7 @@ class Door
     }
     
     /**
-     * Get latitude
+     * Get Maps Url
      *
      * @return float
      */
@@ -288,6 +288,32 @@ class Door
     		$url .= '&cbll='.$arg['cbll'];
     	if (isset($arg['cbp']))
     		$url .= '&cbp='.$arg['cbp'];
+    	return $url;
+    }
+    
+    /**
+     * Get Maps Image Url
+     *
+     * @return float
+     */
+    public function getMapsImageUrl()
+    {
+    	list($url,$params) = explode('?',$this->googlemaps);
+    	$parms = explode('&',$params);
+    	foreach ($parms as $p)
+    	{
+    		list($key,$value) = explode('=',$p);
+    		$arg[$key] = $value;
+    	}
+    	$url = 'http://maps.googleapis.com/maps/api/streetview';
+    	$url .= '?size=350x300&sensor=false';
+    	if (isset($arg['ll']))
+	   		$url .= '&location='.$arg['ll'];
+    	if (isset($arg['cbp']))
+    	{
+    		$cbp = explode(',',$arg['cbp']);
+ 	  		$url .= '&heading='.$cbp[1];
+    	}
     	return $url;
     }
 

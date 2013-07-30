@@ -700,7 +700,7 @@ abstract class Intervention extends Shifting
     public function getPlace()
     {
     	$door = $this->getDoor();
-    	return $door->getType().' - '.$door->getLocation.chr(10).
+    	return $door->getType().' - '.$door->getLocation().chr(10).
     		$door->getAddress()->toString();
     }
     

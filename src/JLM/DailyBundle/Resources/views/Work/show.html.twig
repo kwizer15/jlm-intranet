@@ -11,26 +11,46 @@
 {% endblock %}
 
 {% block reference %}
+		<small>{{ entity.category }} - {{ entity.objective }}</small>
 		{% if entity.intervention %}D'après l'invervention du <a href="{{ path('intervention_redirect',{'id':entity.intervention.id ,'act':'show'}) }}">{{ entity.intervention.lastDate|date('d/m/Y') }}</a><br>{% endif %} 
 	 	{% if entity.quote %}Selon devis n°<a href="{{ path('quote_show',{'id':entity.quote.quote.id}) }}">{{ entity.quote.number }}</a><br>{% endif %}
 {% endblock %}
 
-{% block report %}
-	 <tr><th>Type</th><td>{{ entity.category }}</td><td></td></tr>
-	 <tr><th>Objectif</th><td>{{ entity.objective }}</td><td></td></tr>
+{% block edit_button %}
+<a href="{{ path('work_edit', { 'id': entity.id }) }}" class="btn btn-small"><i class="icon-pencil"></i> Editer</a>
+	{% if not entity.canceled %}
+		{% if entity.order %}<a href="{{ path('order_show',{'id': entity.order.id }) }}" class="btn btn-info btn-small">Voir la fiche matériel</a>
+		{% else %}<a href="{{ path('order_new',{'id': entity.id }) }}" class="btn btn-info btn-small">Créer la fiche matériel</a>
+		{% endif %}
+	{% endif %}
+{% endblock %}
+
+{% block close_button %}
+	<a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-small btn-primary"><i class="icon-ok icon-white"></i> {% if not entity.closed %}Cloturer{% else %}Editer{% endif %}</a>
+	{% render 'JLMDailyBundle:Work:close' with {'id':entity.id} %}
 {% endblock %}
 
 {% block actions %}
-	{% if not entity.canceled %}
-		{% if entity.order %}<a href="{{ path('order_show',{'id': entity.order.id }) }}" class="btn btn-info">Voir la fiche matériel</a>
-		{% else %}<a href="{{ path('order_new',{'id': entity.id }) }}" class="btn btn-info">Créer la fiche matériel</a>
+	{% if entity.intervention or entity.quote %}
+		{% if entity.canceled %}
+			<a href="{{ path('intervention_uncancel',{'id':entity.id}) }}" class="btn btn-inverse">Désannuler</a>
+		{% else %}
+			<a href="#modalCancel{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Annuler</a>
+			<form id="modalCancel{{ entity.id }}" action="{{ path('intervention_cancel',{'id':entity.id}) }}" method="post" {{ form_enctype(form_cancel) }} class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalCancel{{ entity.id }}Label" aria-hidden="true">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="modalCancel{{ entity.id }}Label">Annuler l'intervention</h3>
+				</div>
+				<div class="modal-body">
+					{{ form_widget(form_cancel) }}
+				</div>
+				<div class="modal-footer">
+					<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+					<button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer</a>
+				</div>
+			</form>
 		{% endif %}
+	{% else %}
+		{{ parent() }}
 	{% endif %}
-    <a href="{{ path('work_list') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
-    <a href="{{ path('work_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a> 
-	{% if not entity.canceled %}
-		<a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-primary"><i class="icon-ok icon-white"></i> {% if not entity.closed %}Cloturer{% else %}Editer cloture{% endif %}</a>
-		{% render 'JLMDailyBundle:Work:close' with {'id':entity.id} %}
-	{% endif %}
-	{{ parent() }}
 {% endblock %}

@@ -121,6 +121,22 @@ class ShiftingController extends Controller
 	}
 	
 	/**
+	 * Displays a form to edit an existing ShiftTechnician entity.
+	 *
+	 * @Route("/{id}/edittable", name="shifting_edittable")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function edittableAction(ShiftTechnician $entity)
+	{
+		$editForm = $this->get('form.factory')->createNamed('shiftTechEdit'.$entity->getId(),new ShiftingEditType(), $entity);
+		return array(
+				'entity'      => $entity,
+				'form'   => $editForm->createView(),
+		);
+	}
+	
+	/**
 	 * Edits an existing InterventionPlanned entity.
 	 *
 	 * @Route("/{id}/update", name="shifting_update")

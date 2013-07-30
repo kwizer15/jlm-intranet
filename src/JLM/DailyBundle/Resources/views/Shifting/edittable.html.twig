@@ -1,0 +1,14 @@
+<form action="{{ path('shifting_update',{'id':entity.id}) }}" method="post" {{ form_enctype(form) }} class="hide">
+<tr>
+	<td>{{ entity.technician }}</td>	
+	<td>{{ form_widget(form.begin) }}</td>
+	<td>{{ form_widget(form.end) }}</td>
+	<td></td>
+	<td>{{ form_widget(form.comment) }}</td>
+	<td>
+		{{ form_rest(form) }}
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+		<button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer</button>
+	</td>
+	</tr>
+</form>

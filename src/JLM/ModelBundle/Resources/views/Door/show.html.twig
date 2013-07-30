@@ -29,14 +29,14 @@
 		{% endif %}
 
 	</div>
-	
-	{% if entity.googlemaps%}
 	<div class="span6 well">
-		<iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{ entity.mapsUrl }}"></iframe>
-	</div>
+	{% if entity.googlemaps%}
+	<iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{ entity.mapsUrl }}"></iframe>
+		
 	{% else %}
-	<div class="span6 well">Pas de photo</div>
+	Pas de photo
 	{% endif %}
+	</div>
 </div>
 {#
 {% if entity.site.contacts|length > 0 %}
