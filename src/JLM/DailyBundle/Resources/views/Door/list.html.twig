@@ -7,6 +7,7 @@
 			<th>Etat</th>
 			<th>Ctr</th>
 			<th>Syndic</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -25,6 +26,8 @@
 			</td>
 			<td>{% if door.actualContract is null %}HC{% else %}{{ door.actualContract }}{% endif %}</td>
 			<td>{{ door.site.trustee }}</td>
+			<td><a href="#modalNewFixing{{ door.id }}" class="btn btn-warning" role="button" data-toggle="modal"><i class="icon-wrench icon-white"></i></a>
+{% render 'JLMDailyBundle:Fixing:new' with {'id':door.id} %}</td>
 		</tr>
 		{% endfor %}
 	</tbody>

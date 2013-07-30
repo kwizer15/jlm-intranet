@@ -81,8 +81,8 @@ class FixingController extends Controller
 	{
 		$entity = new Fixing();
 		$entity->setDoor($door);
-		$form   = $this->createForm(new FixingType(), $entity);
-	
+//		$form   = $this->createForm(new FixingType(), $entity);
+		$form = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(),new FixingType(), $entity);
 		return array(
 				'door' => $door,
 				'entity' => $entity,
@@ -106,7 +106,8 @@ class FixingController extends Controller
 		$entity->setContract($door->getActualContract());
 		$entity->setPlace($door.'');
 		$entity->setPriority(2);
-		$form = $this->createForm(new FixingType(), $entity);
+//		$form = $this->createForm(new FixingType(), $entity);
+		$form = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(),new FixingType(), $entity);
 		$form->bind($request);
 	
 		if ($form->isValid()) {
