@@ -5,7 +5,7 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * JLM\ModelBundle\Entity\DoorType
+ * JLM\ModelBundle\Entity\TransmitterType
  *
  * @ORM\Table(name="transmitter_types")
  * @ORM\Entity
