@@ -22,7 +22,8 @@ class FixingType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'JLM\DailyBundle\Entity\Fixing'
+            'data_class' => 'JLM\DailyBundle\Entity\Fixing',
+        	'attr' => array('class'=>  'interventionForm'),
         ));
     }
 

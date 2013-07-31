@@ -19,10 +19,12 @@
 	  constructor: Intervention
 	  
 	  , listen : function() {
-		  var id = "#" + $("#jlm_dailybundle_fixingtype," +
-					"#jlm_dailybundle_fixingedittype," +
-					"#jlm_dailybundle_worktype," +
-				  	"#jlm_dailybundle_workedittype").attr('id') + "_";
+//		  var id = "#" + $("#jlm_dailybundle_fixingtype," +
+//					"#jlm_dailybundle_fixingedittype," +
+//					"#jlm_dailybundle_worktype," +
+//				  	"#jlm_dailybundle_workedittype").attr('id') + "_";
+		  var id = "#" + this.$element.attr('id') + "_";
+		  console.log(id);
 		  $(id + "contactName").attr('data-source',this.options.autoSource)
 					          .autocomplete({
 					source: function(request,response){
