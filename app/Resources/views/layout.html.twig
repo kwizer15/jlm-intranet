@@ -111,11 +111,17 @@
 {% endblock body%}
 
 {% block javascripts %}
-    <script src="http://code.jquery.com/jquery-2.0.3.js"></script>
+	<script src="http://code.jquery.com/jquery-2.0.3.js"></script>
+        <script>window.jQuery || document.write('{% javascripts
+            	'../app/Resources/public/js/jquery-2.0.3.js'
+            	filter='yui_js' %}<script src="{{ asset_url }}"><\/script>{% endjavascripts %}')</script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script>window.jQuery.ui || document.write('{% javascripts
+            	'../app/Resources/public/js/jquery-ui-1.10.3/jquery-ui.js'
+            	filter='yui_js' %}<script src="{{ asset_url }}"><\/script>{% endjavascripts %}')</script>
     {% javascripts
     	'../app/Resources/public/js/bootstrap.js'
-    	'../app/Resources/public/js/jquery.ui.datepicker-fr.js'
+    	'../app/Resources/public/js/jquery-ui-1.10.3/i18n/jquery.ui.datepicker-fr.js'
     	'../app/Resources/public/js/number_format.js'
     	filter='yui_js' %}
     	<script src="{{ asset_url }}"></script>
