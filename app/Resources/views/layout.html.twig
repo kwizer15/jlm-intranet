@@ -108,6 +108,8 @@
           {% block footer %}
           {% endblock footer %}
       </footer>
+      {% block modals %}
+      {% endblock %}
 {% endblock body%}
 
 {% block javascripts %}
@@ -123,10 +125,12 @@
     	'../app/Resources/public/js/bootstrap.js'
     	'../app/Resources/public/js/jquery-ui-1.10.3/i18n/jquery.ui.datepicker-fr.js'
     	'../app/Resources/public/js/number_format.js'
+    	'../app/Resources/public/js/modalform.js'
     	filter='yui_js' %}
     	<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
 <script>
+{% block javascripts_script %}
 $('.autocompletion').autocomplete({
 	source : function(request,response){
 		return $.post(
@@ -157,11 +161,8 @@ $(".input-money").on('change',function(){
 	);
 	return this;
 });
-</script>
-{% endblock javascripts %}
+{% endblock %}
 
 {% block javascriptappend %}
-<script>
 $('.ui-autocomplete, .modal .datepicker').css('z-index','10000');
-</script>
 {% endblock %}

@@ -1,0 +1,37 @@
+{% extends "JLMTransmitterBundle:Ask:layout.html.twig" %}
+
+{% block content %}
+<h1>Nouvelle attribution d'émetteurs</h1>
+{% if form_errors(form) %}
+<div class="alert">{{ form_errors(form) }}</div>
+{% endif %}
+<form action="{{ path('transmitter_attribution_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	<filedset>
+    {{ form_widget(form) }}
+	    <div class="form-actions">
+	    	<button type="submit" class="btn btn-primary">Enregistrer</button>
+	    </div>
+    </filedset>
+</form>
+{% endblock %}
+
+{% block javascripts_script %}
+{{ parent() }}
+$("#jlm_transmitterbundle_attributiontype_contact")
+				.autocomplete({
+					source: function(request,response){
+						request.term = {{ entity.ask.site.doors.0.id }};
+						request.repository = 'JLMModelBundle:SiteContact';
+						return $.post(
+								'{{ path('autocomplete') }}',
+								request,
+								function( data ) { response( data ); },
+								'json'
+						);
+					}
+				, select: function (event, ui) {
+					$(this).val(ui.item.name);
+					return false;
+				}
+			});
+{% endblock %}

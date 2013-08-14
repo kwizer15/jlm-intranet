@@ -1,0 +1,120 @@
+{% extends "JLMTransmitterBundle:Ask:layout.html.twig" %}
+
+{% block content %}
+<h1>Attribution d'émetteurs</h1>
+<div class="row-fluid">
+<div class="span6">
+<dl class="dl-horizontal">
+	<dt>Date</dt>
+	<dd>{{ entity.creation|date('d/m/Y') }}</dd>
+	<dt>Contact</dt>
+    <dd>{{ entity.contact }}{% if entity.individual %} (particulier){% endif %}</dd>
+    <dt>Affaire</dt>
+    <dd>{{ entity.ask.site.address.street | nl2br }}</dd>
+    <dd><strong>{{ entity.ask.site.address.city.name | upper }}</strong> <small>{{ entity.ask.site.address.city.zip }}</small></dd>
+    <dt>Demande</dt>
+    <dd>{{ entity.ask.ask | nl2br }}</dd>
+</dl>
+</div>
+<div class="span6">
+<h4>Groupes utilisateurs</h4>
+<ul>
+	{% for userGroup in entity.ask.site.userGroups %}
+		{% include 'JLMTransmitterBundle:UserGroup:list_li.html.twig' with {'userGroup':userGroup} %}
+	{% endfor %}
+	</ul>
+	<a href="#modalNewUserGroup"  role="button" class="btn btn-success btn-small" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Ajouter un groupe utilisateur</a>
+</div>
+</div>
+<div class="form-actions">
+	<a href="{{ path('transmitter_attribution_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i> Editer</a>
+	<a href="#modalNewTransmitter" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Ajouter un émetteur</a>
+	<a href="#modalNewTransmitterSeries" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Ajouter une suite d'émetteurs</a>
+	<a href="#modalNewTransmitterReplacement" role="button" class="btn btn-primary" data-toggle="modal"><i class="icon-refresh icon-white"></i> Remplacement d'émetteurs</a>
+	<a href="{{ path('transmitter_attribution_printlist', { 'id': entity.id }) }}" role="button" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer la liste</a>
+	<a href="{{ path('transmitter_attribution_printcourrier', { 'id': entity.id }) }}" role="button" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer le courrier</a>
+	<a href="{{ path('transmitter_attribution_bill', { 'id': entity.id }) }}" role="button" class="btn btn-primary"><i class="icon-print icon-white"></i> Facturer</a>
+</div>
+{% if entity.transmitters|length > 0 %}
+<h3></h3>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>Numéro</th>
+			<th>Groupe</th>
+			<th>Type</th>
+			<th>Fin de garantie</th>
+			<th>Propriétaire</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for transmitter in entity.transmitters %}
+		{% include 'JLMTransmitterBundle:Transmitter:table_row.html.twig' with {'transmitter':transmitter} %}
+	{% endfor %}
+	</tbody>
+</table>
+{% else %}
+<h3>Pas d'émetteur attribué</h3>
+{% endif %}
+{% endblock %}
+
+{% block modals %}
+{% render 'JLMTransmitterBundle:Transmitter:new' with {'id':entity.id} %}
+{% render 'JLMTransmitterBundle:Series:new' with {'id':entity.id} %}
+{% render 'JLMTransmitterBundle:Replacement:new' with {'id':entity.id} %}
+{% render 'JLMTransmitterBundle:UserGroup:new' with {'id':entity.ask.site.id} %}
+{#
+{% for  transmitter in entity.transmitters %}
+{% render 'JLMTransmitterBundle:Transmitter:edit' with {'id':transmitter.id} %}
+{% endfor %}
+#}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('bundles/jlmtransmitter/js/transmitter.js') }}"></script>
+<script src="{{ asset('bundles/jlmtransmitter/js/transmitter_series.js') }}"></script>
+{% endblock %}
+
+{% block javascripts_script %}
+{{ parent() }}
+$("a").tooltip();
+$(".transmitter").transmitter();
+$(".transmitter_series").transmitterSeries();
+$(".usergroup").modalForm();
+$(".transmitter_replacement").modalForm();
+$(".editTransmitter").click(function(){
+	var href = $(this).attr('href');
+	var id = href.replace('#modalEditTransmitter','');
+	var linkurl = '{{ path('transmitter_edit',{'id':0}) }}';
+	linkurl = linkurl.replace('/0/','/' + id + '/');
+	$.ajax({
+		url: linkurl, 
+		type: 'get', 
+		success: function(html) {
+			$('footer').after(html);
+			$(href).find(".modal-body > div").transmitter();
+			$(href).modal({'show':true});
+		}
+	});
+	return false;
+});
+
+$(".editUserGroup").click(function(){
+	var href = $(this).attr('href');
+	var id = href.replace('#modalEditUserGroup','');
+	var linkurl = '{{ path('transmitter_usergroup_edit',{'id':0}) }}';
+	linkurl = linkurl.replace('/0/','/' + id + '/');
+	$.ajax({
+		url: linkurl, 
+		type: 'get', 
+		success: function(html) {
+			$('footer').after(html);
+			$(href).find(".modal-body > div").modalForm();
+			$(href).modal({'show':true});
+		}
+	});
+	return false;
+});
+{% endblock %}

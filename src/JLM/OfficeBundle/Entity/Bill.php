@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use JLM\ModelBundle\Entity\Door;
+use JLM\ModelBundle\Entity\Site;
+use JLM\ModelBundle\Entity\Trustee;
 use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\DailyBundle\Entity\Intervention;
 
@@ -62,7 +64,7 @@ class Bill extends Document
 	 * Details
 	 * @var string $details
 	 *
-	 * @ORM\Column(name="details",type="text")
+	 * @ORM\Column(name="details",type="text",nullable=true)
 	 */
 	private $details;
 	
@@ -675,6 +677,28 @@ class Bill extends Document
     	$this->setAccountNumber($trustee->getAccountNumber());
     	$this->setPrelabel($door->getSite()->getBillingPrelabel());
     	$this->setVat($door->getSite()->getVat()->getRate());
+    	return $this;
+    }
+    
+    /**
+     * Populate from Site
+     *
+     * @param Site $site
+     * @return Bill
+     */
+    public function populateFromSite(Site $site, Trustee $trustee = null)
+    {
+    	$this->setSite($site->toString());
+    	if ($trustee === null)
+    		$trustee = $site->getTrustee();
+    	if ($group = $site->getGroupNumber())
+    		$this->setReference('Groupe : '.$group);
+    	$this->setTrustee($trustee);
+    	$this->setTrusteeName($trustee->getName());
+    	$this->setTrusteeAddress($trustee->getAddressForBill().'');
+    	$this->setAccountNumber($trustee->getAccountNumber());
+    	$this->setPrelabel($site->getBillingPrelabel());
+    	$this->setVat($site->getVat()->getRate());
     	return $this;
     }
     

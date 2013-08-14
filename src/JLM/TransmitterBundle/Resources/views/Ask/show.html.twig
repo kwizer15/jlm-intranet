@@ -1,0 +1,52 @@
+{% extends "JLMTransmitterBundle:Ask:layout.html.twig" %}
+
+{% block content %}
+<h1>Commande d'émetteurs</h1>
+<div class="row-fluid">
+    <div class="span5">
+    	<strong>Commande {{ entity.creation | date('d/m/Y') }} par {{ entity.method }}
+    	<br>Échéance le : {{ entity.maturity | date('d/m/Y') }}
+        <br><br>{{ entity.site | nl2br }}</strong>
+    </div>
+    <div class="span5 offset2 well">
+    	<strong>{{ entity.trustee }}</strong>
+        <br>{{ entity.trustee.address | nl2br  }}
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span12 well">
+		<h4>Objet :</h4>
+		<p>{{ entity.ask }}</p>
+	</div>
+</div>
+<div class="form-actions">
+	{% if entity.webPath %}<a href="/{{ entity.webPath }}" class="btn btn-info"><i class="icon-file icon-white"></i> Fichier joint</a>
+	{% else %}<a href="#" class="btn btn-info disabled"><i class="icon-file icon-white"></i> Pas de fichier joint</a>
+	{% endif %}
+	<a href="{{ path('transmitter_attribution_new',{'id':entity.id}) }}" class="btn btn-success"><i class="icon-white icon-plus-sign"></i> Nouvelle attribution</a>
+	{% if not entity.attributions|length and entity.dontTreat is null %}
+	<a href="#modalDontTreat" data-toggle="modal" class="btn btn-danger"><i class="icon-white icon-remove"></i> Ne pas traiter</a>
+	{% elseif entity.dontTreat is not null %}
+	<a href="{{ path('transmitter_ask_canceldonttreat',{'id':entity.id}) }}" class="btn btn-danger active"><i class="icon-white icon-remove"></i> Ne pas traiter</a>
+	{% else %}
+	<a href="#" class="btn btn-danger disabled"><i class="icon-white icon-remove"></i> Ne pas traiter</a>
+	{% endif %}
+</div>
+{% if entity.attributions|length %}
+<h4>Devis</h4>
+<ul>
+	{% for attribution in entity.attributions %}
+	<li><a href="{{ path('transmitter_attribution_show',{'id':attribution.id}) }}">Attribution du {{ attribution.creation|date('d/m/Y') }}</a></li>
+	{% endfor %}
+</ul>
+{% else %}
+<h4>Non traité</h4>
+	{% if entity.dontTreat %}
+	<p>{{ entity.dontTreat | nl2br }}</p>
+	{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block modals %}
+{% include 'JLMTransmitterBundle:Ask:donttreat.html.twig' with {'form':form_donttreat} %}
+{% endblock %}

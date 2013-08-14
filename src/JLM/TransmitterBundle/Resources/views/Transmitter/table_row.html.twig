@@ -1,0 +1,21 @@
+<tr>
+	<td>
+		{% if transmitter.replacedTransmitter %}<a href="#" data-toggle="tooltip" title="Remplacé par le {{ transmitter.replacedTransmitter.number }}">{% endif %}
+			{% if not transmitter.isActive %}<del>{% endif %}
+				{{ transmitter.number }}
+			{% if not transmitter.isActive %}</del>{% endif %}
+		{% if transmitter.replacedTransmitter %}</a>{% endif %}
+		
+		{% if transmitter.replace %}
+			<i class="icon-refresh"></i>
+			<del>{{ transmitter.replace.number }}</del>
+		{% endif %}
+	</td>
+	<td>{{ transmitter.userGroup.name }}</td>
+	<td>{{ transmitter.model.text }}</td>
+	<td>{{ transmitter.endGuaranteeDate|date('t/m/Y') }}</td>
+	<td>{{ transmitter.userName }}</td>
+	<td>
+		<a href="#modalEditTransmitter{{ transmitter.id }}" role="button" class="btn btn-warning  btn-mini editTransmitter" data-toggle="modal tooltip" title="Éditer"><i class="icon-wrench icon-white"></i></a>
+	</td>
+</tr>

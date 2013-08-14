@@ -1,7 +1,12 @@
+jlm_transmitter:
+    resource: "@JLMTransmitterBundle/Controller/"
+    type:     annotation
+    prefix:   /transmitter
+
 jlm_state:
     resource: "@JLMStateBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /state
 
 jlm_default:
     resource: "@JLMDefaultBundle/Controller/"

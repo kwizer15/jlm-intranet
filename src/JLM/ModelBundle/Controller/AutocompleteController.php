@@ -19,7 +19,6 @@ class AutocompleteController extends Controller
      *
      * @Route("/autocomplete/city", name="autocomplete_city")
      * @Method("post")
-     * @Secure(roles="ROLE_USER")
      */
     public function cityAction()
     {
@@ -40,7 +39,6 @@ class AutocompleteController extends Controller
      *
      * @Route("/autocomplete/person", name="autocomplete_person")
      * @Method("post")
-     * @Secure(roles="ROLE_USER")
      */
     public function personAction()
     {
@@ -61,7 +59,6 @@ class AutocompleteController extends Controller
      *
      * @Route("/autocomplete/trustee", name="autocomplete_trustee")
      * @Method("post")
-     * @Secure(roles="ROLE_USER")
      */
     public function trusteeAction()
     {
@@ -82,7 +79,6 @@ class AutocompleteController extends Controller
      *
      * @Route("/autocomplete/site", name="autocomplete_site")
      * @Method("post")
-     * @Secure(roles="ROLE_USER")
      */
     public function siteAction()
     {
@@ -103,7 +99,6 @@ class AutocompleteController extends Controller
      *
      * @Route("/autocomplete/contract", name="autocomplete_contract")
      * @Method("post")
-     * @Secure(roles="ROLE_USER")
      */
     public function contractAction()
     {
@@ -122,7 +117,6 @@ class AutocompleteController extends Controller
     /**
      * @Route("/autocomplete", name="autocomplete")
      * @Method("post")
-     * @Secure(roles="ROLE_USER")
      */
     public function indexAction(Request $request)
     {
@@ -143,7 +137,6 @@ class AutocompleteController extends Controller
     /**
      * @Route("/autocomplete/doorsite", name="autocomplete_doorsite")
      * @Method("post")
-     * @Secure(roles="ROLE_USER")
      */
     public function doorsite(Request $request)
     {

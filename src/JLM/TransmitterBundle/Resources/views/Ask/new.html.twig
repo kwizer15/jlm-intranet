@@ -1,0 +1,17 @@
+{% extends "JLMTransmitterBundle:Ask:layout.html.twig" %}
+
+{% block content %}
+<h1>Nouvelle commande d'émetteurs</h1>
+{% if form_errors(form) %}
+<div class="alert">{{ form_errors(form) }}</div>
+{% endif %}
+<form action="{{ path('transmitter_ask_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	<filedset>
+    	{{ form_widget(form) }}
+	    <div class="form-actions">
+	    	<button type="submit" class="btn btn-primary">Enregistrer</button>
+	    </div>
+    </filedset>
+</form>
+{% endblock %}
+

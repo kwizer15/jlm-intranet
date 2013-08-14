@@ -145,7 +145,7 @@ class Bill extends FPDFext
 				$this->cell(12,5,'','RL',0);
 				$this->cell(24,5,'','RL',0);
 				$this->cell(24,5,'','RL',0);
-				$this->cell(13,5,'','RL',0);
+				$this->cell(13,5,'','RL',1);
 			//	$this->cell(22,5,'','RL',1);
 			}
 			$this->setFont('Arial','',10);

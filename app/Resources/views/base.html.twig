@@ -9,6 +9,9 @@
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+        <script>
+		{% block javascripts_script %}{% endblock %}
         {% block javascriptappend %}{% endblock %}
+        </script>
     </body>
 </html>

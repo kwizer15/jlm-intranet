@@ -1,0 +1,29 @@
+{% extends "JLMTransmitterBundle::layout.html.twig" %} 
+{% block sidebar %}
+<ul class="nav nav-list  affix">
+	<li><h4>Commandes d'émetteurs</h4></li>
+	{#
+	<li>
+		<form  action="{{ path('askquote_search') }}" method="post" class="form-search">
+			<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher un devis...">
+		</form>
+	</li>
+	#}
+	<li><a href="{{ path('transmitter_ask_new') }}"><i class="icon-plus-sign"></i> Nouvelle commandes d'émetteurs</a></li>
+	<li class="divider"></li>
+	<li class="nav-header">États</li>
+	{% render "JLMTransmitterBundle:Ask:sidebar" %}
+</ul>
+{% endblock sidebar %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset("bundles/jlmoffice/js/ask.js") }}"></script>
+{% endblock %}
+
+{% block javascripts_script %}
+{{ parent() }}
+$(".askForm").ask({
+	 autoSource:'{{ path('autocomplete') }}',
+});
+{% endblock javascripts_script %}

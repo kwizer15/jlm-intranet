@@ -1,0 +1,13 @@
+{% set id = 'modalEditUserGroup' ~ entity.id %}
+{% set action = path('transmitter_usergroup_update', { 'id': entity.id }) %}
+{% set title = 'Groupe ' ~ entity.name %}
+{% extends 'JLMDefaultBundle:Helpers:modalform.html.twig' %}
+{% block body %}
+	{% include 'JLMTransmitterBundle:UserGroup:create.html.twig' %}
+{% endblock %}
+{% block footer %}
+	{{ parent() }}
+	{% if not hasTransmitter %}
+	<a href="{{ path('transmitter_usergroup_delete',{'id':entity.id}) }}" class="btn btn-danger"><i class="icon-white icon-remove"></i> Supprimer</a>
+	{% endif %}
+{% endblock %}

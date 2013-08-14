@@ -1,0 +1,7 @@
+{% set id = 'modalNewTransmitterSeries' %}
+{% set action = path('transmitter_series_create',{'id':entity.attribution.id}) %}
+{% set title = 'Nouvel séquence d\'émetteur' %}
+{% extends 'JLMDefaultBundle:Helpers:modalform.html.twig' %}
+{% block body %}
+	{% include 'JLMTransmitterBundle:Series:create.html.twig' %}
+{% endblock %}

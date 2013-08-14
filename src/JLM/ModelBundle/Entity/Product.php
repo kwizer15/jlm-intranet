@@ -121,6 +121,15 @@ class Product
     private $unity;
     
     /**
+     * Prix quantitatifs
+     * @var ArrayCollection
+     * 
+     * @ORM\OneToMany(targetEntity="ProductPrice", mappedBy="product")
+     * @ORM\OrderBy({"quantity" = "ASC"})
+     */
+    private $unitPrices;
+    
+    /**
      * Fichiers liés (plans, docs...)
      * @var LinkedFile[] $files
      * 
@@ -267,9 +276,18 @@ class Product
      *
      * @return float 
      */
-    public function getUnitPrice()
+    public function getUnitPrice($quantity = null)
     {
-        return $this->unitPrice;
+    	if ($quantity === null || $this->unitPrices === null)
+        	return $this->unitPrice;
+    	$q = 1;
+    	$index = 0;
+    	do
+    	{
+    		$q = $this->unitPrices[$index]->getQuantity();
+    		$index++;
+    	} while ($quantity > $q && isset($this->unitPrices[$index]));
+    	return $this->unitPrices[$index-1]->getUnitPrice();
     }
 
     /**
@@ -453,5 +471,45 @@ class Product
     public function isCoefPositive()
     {
     	return $this->getCoef() > 0;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->unitPrices = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add unitPrices
+     *
+     * @param \JLM\ModelBundle\Entity\ProductPrice $unitPrices
+     * @return Product
+     */
+    public function addUnitPrice(\JLM\ModelBundle\Entity\ProductPrice $unitPrices)
+    {
+        $this->unitPrices[] = $unitPrices;
+    
+        return $this;
+    }
+
+    /**
+     * Remove unitPrices
+     *
+     * @param \JLM\ModelBundle\Entity\ProductPrice $unitPrices
+     */
+    public function removeUnitPrice(\JLM\ModelBundle\Entity\ProductPrice $unitPrices)
+    {
+        $this->unitPrices->removeElement($unitPrices);
+    }
+
+    /**
+     * Get unitPrices
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUnitPrices()
+    {
+        return $this->unitPrices;
     }
 }

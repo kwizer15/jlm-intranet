@@ -103,12 +103,21 @@ class Site
     private $observations;
     
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="JLM\TransmitterBundle\Entity\UserGroup", mappedBy="site")
+     * @ORM\OrderBy({"name" = "ASC"})
+     */
+    private $userGroups;
+    
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->doors = new \Doctrine\Common\Collections\ArrayCollection();
         $this->contacts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->userGroups = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -376,5 +385,38 @@ class Site
     		}
     	}
     	return '';
+    }
+
+    /**
+     * Add userGroups
+     *
+     * @param \JLM\TransmitterBundle\Entity\UserGroup $userGroups
+     * @return Site
+     */
+    public function addUserGroup(\JLM\TransmitterBundle\Entity\UserGroup $userGroups)
+    {
+        $this->userGroups[] = $userGroups;
+    
+        return $this;
+    }
+
+    /**
+     * Remove userGroups
+     *
+     * @param \JLM\TransmitterBundle\Entity\UserGroup $userGroups
+     */
+    public function removeUserGroup(\JLM\TransmitterBundle\Entity\UserGroup $userGroups)
+    {
+        $this->userGroups->removeElement($userGroups);
+    }
+
+    /**
+     * Get userGroups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserGroups()
+    {
+        return $this->userGroups;
     }
 }

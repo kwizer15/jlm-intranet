@@ -1,0 +1,17 @@
+<form id="{{ id|default('modal') }}" action="{{ action|default('#') }}" method="post" {{ form_enctype(form) }} class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="{{ id|default('modal') }}Label" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="{{ id|default('modal') }}Label">{{ title|default('Modale') }}</h3>
+	</div>
+	<div class="modal-body">
+	{% block body %}
+		{{ form_widget(form) }}
+	{% endblock %} 
+	</div>
+	<div class="modal-footer">
+	{% block footer %}
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+		<button class="btn btn-primary" type="submit"><i class="icon-pencil icon-white"></i> Enregistrer</button>
+	{% endblock %}
+	</div>
+</form>
