@@ -129,7 +129,8 @@
     	filter='yui_js' %}
     	<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
-<script>
+{% endblock %}
+
 {% block javascripts_script %}
 $('.autocompletion').autocomplete({
 	source : function(request,response){
