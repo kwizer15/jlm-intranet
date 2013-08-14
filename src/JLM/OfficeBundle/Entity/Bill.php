@@ -695,7 +695,7 @@ class Bill extends Document
     		$this->setReference('Groupe : '.$group);
     	$this->setTrustee($trustee);
     	$this->setTrusteeName($trustee->getName());
-    	$this->setTrusteeAddress($trustee->getAddressForBill().'');
+    	$this->setTrusteeAddress($trustee->getAddressForBill()->toString());
     	$this->setAccountNumber($trustee->getAccountNumber());
     	$this->setPrelabel($site->getBillingPrelabel());
     	$this->setVat($site->getVat()->getRate());
