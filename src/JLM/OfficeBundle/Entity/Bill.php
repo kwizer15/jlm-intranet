@@ -711,11 +711,13 @@ class Bill extends Document
     public function populateFromIntervention(Intervention $interv)
     {
     	$this->setIntervention($interv);
+    	$this->setIntro($interv->getReason());
     	if ($interv->getType() == 'work')
     	{
     		if ($interv->getQuote() !== null)
     		{
     			$this->populateFromQuoteVariant($interv->getQuote());
+    			
     			return $this;
     		}
     	}
