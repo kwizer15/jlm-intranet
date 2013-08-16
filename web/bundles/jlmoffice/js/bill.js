@@ -187,6 +187,12 @@
 		var v = parseFloat($("#bill_vat").val().replace(',','.'));
 		$("#bill_vat").val(number_format(v,1,',',' '));	
 		// boucle pour changer la tva sur toute les lignes (sauf emetteurs)
+		$("#bill_lines tr").each(function() {
+			if ($('#' + $(this).attr('id') + '_isTransmitter').val() == 0)
+				$('#' + $(this).attr('id') + '_vat').val($("#bill_vat").val());
+			else
+				$('#' + $(this).attr('id') + '_vat').val($("#bill_vatTransmitter").val());
+		});
 	}
 	, newline : function(e){
 		e.stopPropagation()
