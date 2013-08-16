@@ -135,13 +135,15 @@ class MaintenanceController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		$doors = $em->getRepository('JLMModelBundle:Door')->findAll();
 		$count = 0;
+		$removed = 0;
 		foreach ($doors as $door)
 		{
-			if ($door->getActualContract() !== null 
-					&& $door->getTrustee()->getId() != 1 
-					&& $door->getTrustee()->getId() != 2 )
+			$maint = $door->getNextMaintenance();
+			$contract = $door->getActualContract();
+			if ($contract !== null)
+			{
 				if ($door->getLastMaintenance() < $date 
-						&& $door->getNextMaintenance() === null 
+						&& $maint === null 
 						&& $door->getCountMaintenance() < 2)
 				{
 					$main = new Maintenance;
@@ -154,9 +156,23 @@ class MaintenanceController extends Controller
 					$em->persist($main);
 					$count++;
 				}
+			}
+			// On retire les entretiens plus sous contrat
+			elseif ($contract === null && $maint !== null)
+			{
+				$shifts = $maint->getShiftTechnicians();
+				if (sizeof($shifts) > 0)
+				{
+					$maint->setClosed();
+					$maint->setReport('Cloturé pour rupture de contrat');
+				}
+				else
+					$em->remove($maint);
+				$removed++;
+			}
 		}
 		$em->flush();
-		return array('count' => $count);
+		return array('count' => $count,'removed' => $removed);
 	}
 	
 	/**

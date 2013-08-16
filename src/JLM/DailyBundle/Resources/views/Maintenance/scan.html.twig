@@ -1,5 +1,10 @@
 {% if count %}
-Création de {{ count }} nouve{% if count == 1 %}el entretien{% else %}aux entretiens{% endif %}.
+Création de {{ count }} nouv{% if count == 1 %}el entretien{% else %}eaux entretiens{% endif %}.
 {% else %}
 Pas de nouvel entretien
+{% endif %}
+{% if removed %}
+Suppression de {{ removed }} entretien{% if removed > 1 %}s{% endif %}
+{% else %}
+Pas d'entretien supprimé
 {% endif %}

@@ -722,7 +722,7 @@ class Door
     /**
      * Get nextMaintenance
      *
-     * @return \DateTime | null
+     * @return Maintenance | null
      */
     public function getNextMaintenance()
     {
