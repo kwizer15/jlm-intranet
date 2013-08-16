@@ -489,6 +489,22 @@ class Door
     }
     
     /**
+     * Get last contract
+     * 
+     * @return JLM\ModelBundle\Entity\Contract
+     */
+    public function getLastContract()
+    {
+    	$date = new \DateTime;
+    	foreach ($this->contracts as $contract)
+    	{
+    		if ($contract->getBegin() > $date)
+    			return $contract;
+    	}
+    	return null;
+    }
+    
+    /**
      * Get Trustee
      *
      * @return JLM\ModelBundle\Entity\Trustee

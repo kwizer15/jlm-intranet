@@ -63,7 +63,9 @@
 						</div>
 						<div class="span4 text-right">
 						<a href="{{ path('daily_door_show',{'id':entity.door.id}) }}" class="btn btn-small"><i class="icon-eye-open"></i> Voir la fiche installation</a>
-							<h1>{% if entity.dynContract is null %}HC{% else %}{{ entity.dynContract }}{% endif %}</h1>
+							<h1>{% if entity.dynContract is null %}HC
+								{% if entity.door.lastContract %}<br><small>Débute le {{ entity.door.lastContract.begin|date('d/m/Y') }}</small>{% endif %}
+							{% else %}{{ entity.dynContract }}{% endif %}</h1>
 						</div>
 					</div>
 					<dl>
