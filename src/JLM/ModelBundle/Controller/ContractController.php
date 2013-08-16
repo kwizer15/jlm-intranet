@@ -87,7 +87,7 @@ class ContractController extends Controller
     {
         $entity  = new Contract();
         $request = $this->getRequest();
-        $form    = $this->createForm(new ContractType(), $entity);
+        $form    = $this->get('form.factory')->createNamed('contractEdit'.$entity->getId(),new ContractType(), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
@@ -114,7 +114,7 @@ class ContractController extends Controller
      */
     public function stopupdateAction(Contract $entity)
     {
-    	$editForm   = $this->createForm(new ContractStopType(), $entity);
+    	$editform   = $this->get('form.factory')->createNamed('contractStop'.$entity->getId(),new ContractStopType(), $entity);
         $request = $this->getRequest();
         $editForm->bindRequest($request);
 
@@ -142,9 +142,7 @@ class ContractController extends Controller
      */
     public function stopAction(Contract $entity)
     {
-    	
-    	$form = $this->createForm(new ContractStopType, $entity);
-    	
+    	$form = $this->get('form.factory')->createNamed('contractStop'.$entity->getId(),new ContractStopType(), $entity);
     	return array(
     			'entity'      => $entity,
     			'form'   => $form->createView(),
@@ -160,8 +158,7 @@ class ContractController extends Controller
      */
     public function editAction(Contract $entity)
     {
-        $editForm = $this->createForm(new ContractType, $entity);
-
+        $editForm    = $this->get('form.factory')->createNamed('contractEdit'.$entity->getId(),new ContractType(), $entity);
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
