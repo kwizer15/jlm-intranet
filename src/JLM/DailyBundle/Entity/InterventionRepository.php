@@ -81,12 +81,14 @@ class InterventionRepository extends EntityRepository
 	{
 		$today = new \DateTime;
 		$todaystring =  $today->format('Y-m-d');
+		$tomorrowstring = $today->add(new \DateInterval('P1D'))->format('Y-m-d');
 		// Interventions en cours
 		$qb = $this->createQueryBuilder('i')
 			->select('COUNT(i)')
 			->leftJoin('i.shiftTechnicians','t')
-			->where('t.begin = ?1')
+			->where('t.begin BETWEEN ?1 AND ?2')
 			->setParameter(1,$todaystring)
+			->setParameter(2,$tomorrowstring)
 			;
 //			$intervs = $qb->getQuery()->getResult();
 //			foreach ($intervs as $interv)
@@ -99,6 +101,7 @@ class InterventionRepository extends EntityRepository
 	{
 		$today = new \DateTime;
 		$todaystring =  $today->format('Y-m-d');
+		$tomorrowstring = $today->add(new \DateInterval('P1D'))->format('Y-m-d');
 		// Interventions en cours
 		$qb = $this->createQueryBuilder('a')
 			->select('a,b,c,d,e,g,h,i,j,k,l,m,n,z')
@@ -115,7 +118,7 @@ class InterventionRepository extends EntityRepository
 			->leftJoin('a.bill','m')
 			->leftJoin('l.order','n')
 			->leftJoin('c.interventions','z')
-			->where('b.begin = ?1')
+			->where('b.begin BETWEEN ?1 AND ?2')
 //			->orWhere('b is null')
 //			->orWhere('a.close is null')
 //			->orWhere('a.report is null')
@@ -123,6 +126,7 @@ class InterventionRepository extends EntityRepository
 			->orWhere('l is null and k is null and a.contactCustomer is null and a.rest is not null and b is not null')
 			->orderBy('a.creation','asc')
 			->setParameter(1,$todaystring)
+			->setParameter(2,$tomorrowstring)
 			;
 		return $qb->getQuery()->getResult();
 	}
