@@ -261,23 +261,21 @@ class AttributionController extends Controller
     		throw $this->createNotFoundException('Unable to find Attribution entity.');
     	}
 
-    	// TVA
-    	$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
-    	
-    	// Frais de port
-    	// @todo trouver un autre solution que le codage brut
-    	$port = $em->getRepository('JLMModelBundle:Product')->find(134);
-    	
-    	// EarlyPayment
-    	$earlyPayment = $em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1);
-    	// Penalty
-    	$penalty = $em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1);
-    	// Clause de propriété
-    	$property = $em->getRepository('JLMOfficeBundle:PropertyModel')->find(1);
-    	
 		// Création de la facture
 		if ($entity->getBill() === null)
 		{
+			// TVA
+			$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
+			// Frais de port
+			// @todo trouver un autre solution que le codage brut
+			$port = $em->getRepository('JLMModelBundle:Product')->find(134);
+			// EarlyPayment
+			$earlyPayment = $em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1);
+			// Penalty
+			$penalty = $em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1);
+			// Clause de propriété
+			$property = $em->getRepository('JLMOfficeBundle:PropertyModel')->find(1);
+			
 			$bill = new Bill;
 			// Numéro de facture
 			$number = $entity->getCreation()->format('ym');
@@ -286,30 +284,18 @@ class AttributionController extends Controller
 				$number.= '0';
 			$number.= $n;
 			$bill->setNumber($number);
-		}
-		else
-		{
-			$bill = $entity->getBill();
+			$bill = $entity->populateBill($bill,$vat,$earlyPayment,$penalty,$property,$port);
 			$billLines = $bill->getLines();
-    		foreach ($billLines as $line)
-    		{
-    			$bill->removeLine($line);
-    			$em->remove($line);
-    		}		
+			foreach ($billLines as $line)
+			{
+				$line->setBill($bill);
+				$em->persist($line);
+			}
+			$em->persist($bill);
+			$entity->setBill($bill);
+			$em->persist($entity);
+			$em->flush();
 		}
-    	$bill = $entity->populateBill($bill,$vat,$earlyPayment,$penalty,$property,$port);
-    	
-    	$billLines = $bill->getLines();
-    	foreach ($billLines as $line)
-    	{
-    		$line->setBill($bill);
-    		$em->persist($line);
-    	}
-    	$em->persist($bill);
-    	$entity->setBill($bill);
-    	$em->persist($entity);
-    	$em->flush();
-    
     	return $this->redirect($this->generateUrl('bill_edit', array('id' => $bill->getId())));
     }
 }

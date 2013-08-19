@@ -249,6 +249,24 @@ class Attribution
     public function populateBill(Bill $bill, $vat, $earlyPayment = '', $penalty = '', $property = '', Product $port = null)
     {
     	$bill->populateFromSite($this->getSite(),$this->getAsk()->getTrustee());
+    	$bill = $this->populateBillLines($bill,$vat,$port);
+    	$bill->setCreation(new \DateTime);
+    	$bill->setReference('Selon OS');
+    	$bill->setVatTransmitter($vat);
+    	$bill->setMaturity(30);
+    	$bill->setEarlyPayment($earlyPayment);
+    	$bill->setPenalty($penalty);
+    	$bill->setProperty($property);
+    	return $bill;
+    }
+    
+    /**
+     * populate BillLines from Attribution
+     *
+     * @return Bill
+     */
+    public function populateBillLines(Bill $bill, $vat, Product $port = null)
+    {
     	$transmitters = $this->getTransmitters();
     	$models = array();
     	foreach ($transmitters as $transmitter)
@@ -263,7 +281,7 @@ class Attribution
     		$models[$key]['quantity']++;
     		$models[$key]['numbers'][] = $transmitter->getNumber();
     	}
-    	
+    	 
     	$position = 0;
     	foreach ($models as $key=>$values)
     	{
@@ -275,25 +293,25 @@ class Attribution
     		$size = sizeof($values['numbers']);
     		if ($size > 1)
     		{
-	    		do {
-	    			if ($values['numbers'][$i] != $temp + 1)
-	    			{
-	    				$n2 = $temp;
-	    				if ($n1 == $n2)
-	    					$description .= 'n°'.$n1;
-	    				else
-	    					$description .= 'du n°'.$n1.' au n°'.$n2;
-	    				$description .= chr(10);
-	    				$n1 = $models[$key]['numbers'][$i];
-	    			}
-	    			$temp = $values['numbers'][$i];
-	    			$i++;
-	    		} while ($i < $size);
-	    		$description .= 'du n°'.$n1.' au n°'.$temp;
+    			do {
+    				if ($values['numbers'][$i] != $temp + 1)
+    				{
+    					$n2 = $temp;
+    					if ($n1 == $n2)
+    						$description .= 'n°'.$n1;
+    					else
+    						$description .= 'du n°'.$n1.' au n°'.$n2;
+    					$description .= chr(10);
+    					$n1 = $models[$key]['numbers'][$i];
+    				}
+    				$temp = $values['numbers'][$i];
+    				$i++;
+    			} while ($i < $size);
+    			$description .= 'du n°'.$n1.' au n°'.$temp;
     		}
-    		else 
+    		else
     			$description .= 'n°'.$n1;
-    		
+    	
     		$line = new BillLine;
     		$line->setPosition($position);
     		$line->setDesignation($values['product']->getDesignation());
@@ -324,13 +342,6 @@ class Attribution
     		$bill->addLine($line);
     		$position++;
     	}
-    	$bill->setCreation(new \DateTime);
-    	$bill->setReference('Selon OS');
-    	$bill->setVatTransmitter($vat);
-    	$bill->setMaturity(30);
-    	$bill->setEarlyPayment($earlyPayment);
-    	$bill->setPenalty($penalty);
-    	$bill->setProperty($property);
     	return $bill;
     }
 }
