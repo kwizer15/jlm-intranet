@@ -58,7 +58,7 @@ class Bill extends Document
 	 * 
 	 * @ORM\Column(name="accountNumber",type="string")
 	 */
-	private $accountNumber;
+	private $accountNumber = '411000';
 	
 	/**
 	 * Details
