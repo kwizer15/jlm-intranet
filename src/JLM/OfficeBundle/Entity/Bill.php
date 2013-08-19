@@ -674,7 +674,7 @@ class Bill extends Document
     	$this->setTrustee($trustee);
     	$this->setTrusteeName($trustee->getName());
     	$this->setTrusteeAddress($trustee->getAddressForBill().'');
-    	$accountNumber = ($trustee->getAccountNumber() === null) ? '411000' : $trustee->getAccountNumber();
+    	$accountNumber = ($trustee->getAccountNumber() == null) ? '411000' : $trustee->getAccountNumber();
     	$this->setAccountNumber($accountNumber);
     	$this->setPrelabel($door->getSite()->getBillingPrelabel());
     	$this->setVat($door->getSite()->getVat()->getRate());
