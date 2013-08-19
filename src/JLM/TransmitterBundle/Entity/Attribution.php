@@ -289,14 +289,10 @@ class Attribution
 	    			$temp = $values['numbers'][$i];
 	    			$i++;
 	    		} while ($i < $size);
+	    		$description .= 'du n°'.$n1.' au n°'.$temp;
     		}
     		else 
-    			$n2 = $n1;
-    		if ($n1 == $n2)
     			$description .= 'n°'.$n1;
-    		else
-    			$description .= 'du n°'.$n1.' au n°'.$temp;
-    		
     		
     		$line = new BillLine;
     		$line->setPosition($position);
