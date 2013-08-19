@@ -270,7 +270,7 @@ class Attribution
     		asort($values['numbers']);
     		 
     		$description = '';
-    		$n1 = $n2 = $temp = $values['numbers'][0];
+    		$n1 = $temp = $values['numbers'][0];
     		$i = 1;
     		$size = sizeof($values['numbers']);
     		if ($size > 1)
@@ -290,6 +290,8 @@ class Attribution
 	    			$i++;
 	    		} while ($i < $size);
     		}
+    		else 
+    			$n2 = $n1;
     		if ($n1 == $n2)
     			$description .= 'n°'.$n1;
     		else
