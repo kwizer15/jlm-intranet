@@ -318,6 +318,7 @@ class Attribution
     		$line = new BillLine;
     		$line->setPosition($position);
     		$line->setDesignation($port->getDesignation());
+    		$line->setIsTransmitter(true);
     		$line->setProduct($port);
     		$line->setQuantity(1);
     		$line->setReference($port->getReference());
