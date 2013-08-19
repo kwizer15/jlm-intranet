@@ -56,7 +56,7 @@ class Bill extends Document
 	 * Numéro de client
 	 * @var string
 	 * 
-	 * @ORM\Column(name="accountNumber",type="string")
+	 * @ORM\Column(name="accountNumber",type="string", nullable=true)
 	 */
 	private $accountNumber;
 	
