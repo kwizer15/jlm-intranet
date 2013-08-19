@@ -218,4 +218,80 @@ class DoorController extends Controller
             ->getForm()
         ;
     }
+    
+    /**
+     * Lists all Door entities.
+     *
+     * @Route("/geocode", name="door_geocode")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function geocodeAction()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    
+    	$entities = $em->getRepository('JLMModelBundle:Door')->findAll();
+    	$count = 0;
+    	$logs = array();
+    	foreach ($entities as $entity)
+    	{
+    		if ($entity->getLatitude() === null)
+    		{
+	    		$address = str_replace(array(' - ',' ',chr(10)),'+',$entity->getAddress()->toString());
+	    		$url = 'http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address='.$address;
+	    		$string = file_get_contents($url);
+	    		$json = json_decode($string);
+	    	//	var_dump($json); exit;
+	    	
+	    		if ($json->status == "OK")
+	    		{
+	    			if (sizeof($json->results) > 1)
+	    				$logs[] = 'multi : '.$address.'<br>';
+	
+	    			else
+	    			{
+	    				$count++;
+		    			foreach ($json->results as $result)
+		    			{
+		    				$lat = $result->geometry->location->lat;
+		    				$lng = $result->geometry->location->lng;
+		    				$entity->setLatitude($lat);
+		    				$entity->setLongitude($lng);
+		    				$em->persist($entity);
+		    			}
+	    			}
+	    		}
+	    		else 
+	    			$logs[] = $json->status.' : '.$address.'<br>';
+    		}
+		}
+    	$em->flush();
+    	return array('count' => $count,'logs' => $logs);
+    }
+    
+    /**
+     * Maps Door entities.
+     *
+     * @Route("/map", name="door_map")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function mapAction()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$entities = $em->getRepository('JLMModelBundle:Door')->findAll();
+    	$url = 'http://maps.googleapis.com/maps/api/staticmap?center=Paris&zoom=10&size=1800x1800&sensor=false';
+    	$i = 0;
+    	foreach ($entities as $entity)
+    	{
+    		if ($i > 46)
+    		return array('url'=>$url);
+    		if ($entity->getActualContract() !== null)
+    		{
+    			$url .= '&markers=color:blue%7C'.$entity->getCoordinates();
+    			$i++;
+    		}
+    	}
+    	return array('url'=>$url);
+    }
 }

@@ -89,4 +89,11 @@ class DoorRepository extends EntityRepository
 		}
 		return $r2;
 	}
+	
+	public function getTotal()
+	{
+		$qb = $this->createQueryBuilder('d')
+		->select('COUNT(d)');
+		return $qb->getQuery()->getSingleScalarResult();
+	}
 }

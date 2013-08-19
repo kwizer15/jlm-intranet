@@ -1,0 +1,52 @@
+{# JLMDailyBundle:Fixing:list.html.twig #}
+{% extends "JLMDailyBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Entretiens proche de</h1>
+<address>{{ door|nl2br }}</address>
+<table class="table">
+<thead>
+<tr>
+<th>Affaire</th>
+<th>Installation</th>
+<th>Emetteurs</th>
+<th>Distance</th>
+<th>Temps</th>
+</tr>
+</thead>
+<tbody>
+{% for entity in entities %}
+<tr>
+<td><a href="{{ path('maintenance_show',{'id':entity.destination.nextMaintenance.id}) }}">
+<strong>{{ entity.destination.site.address.city.name | upper }}</strong> <small>{{ entity.destination.site.address.city.zip }}</small><br>{{ entity.destination.street | nl2br }}
+</a></td>
+<td><strong>{{ entity.destination.type }} - {{ entity.destination.location }}</strong></td>
+<td><ul>
+{% if entity.destination.transmitters|length %}
+{% for trans in entity.destination.transmitters %}
+<li>{{ trans }}</li>
+{% endfor %}
+{% else %}
+<li>Pas à nous</li>
+{% endif %}
+</ul>
+</td>
+<td>{{ entity.distanceKm }}</td>
+<td>{{ entity.durationM }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{#}
+<div class="pagination pagination-centered">
+    <ul>
+        <li{% if page == 1 %} class="disabled"{% endif %}><a href="{{ path('maintenance_list_page',{ 'page' : page-1 }) }}">«</a></li>
+		{% for p in range(1,nbPages) %}
+		<li{% if p == page %} class="active"{% endif %}><a href="{{ path('maintenance_list_page',{ 'page' : p }) }}">{{ p }}</a></li>
+		{% endfor %}
+		<li{% if page == nbPages %} class="disabled"{% endif %}><a href="{{ path('maintenance_list_page',{ 'page' : page+1 }) }}">»</a></li>
+	</ul>
+</div>
+{#}
+
+{% endblock %}

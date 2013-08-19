@@ -66,6 +66,7 @@
 							<h1>{% if entity.dynContract is null %}HC
 								{% if entity.door.lastContract %}<br><small>Débute le {{ entity.door.lastContract.begin|date('d/m/Y') }}</small>{% endif %}
 							{% else %}{{ entity.dynContract }}{% endif %}</h1>
+						<a href="{{ path('maintenance_neighbor',{'id':entity.door.id}) }}" class="btn btn-info btn-small"><i class="icon-zoom-in"></i> Entretiens à proximité</a>
 						</div>
 					</div>
 					<dl>

@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Maintenance;
+use JLM\DailyBundle\Entity\Ride;
 use JLM\DailyBundle\Entity\ShiftTechnician;
 use JLM\DailyBundle\Form\Type\AddTechnicianType;
 use JLM\DailyBundle\Form\Type\MaintenanceCloseType;
@@ -240,5 +241,48 @@ class MaintenanceController extends Controller
 		else
 			$id = $other->getId();
 		return $this->redirect($this->generateUrl('maintenance_show', array('id' => $id)));
+	}
+	
+	/**
+	 * Cherche les entretiens les plus proche d'une adresse
+	 *
+	 * @Route("/neighbor/{id}", name="maintenance_neighbor")
+	 * @Template()
+	 */
+	public function neighborAction(Door $door)
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$repo = $em->getRepository('JLMDailyBundle:Ride');
+		$countrides = $repo->getCountRides($door);
+		$countdoors = $em->getRepository('JLMModelBundle:Door')->getTotal();
+		if ($countrides < $countdoors)
+		{
+			$doors = $em->getRepository('JLMModelBundle:Door')->findAll();
+			$baseUrl = 'http://maps.googleapis.com/maps/api/distancematrix/json?sensor=false&language=fr-FR&origins='.$door->getCoordinates().'&destinations=';
+			$i = 0;
+			$imax = 50; // Limite pour sélectionner
+			foreach ($doors as $dest)
+			{
+				if (!$repo->hasRide($door,$dest) && $i < $imax)
+				{
+					$url = $baseUrl.$dest->getCoordinates();
+					$string = file_get_contents($url);
+					$json = json_decode($string);
+					if ($json->status == 'OK' && isset($json->rows[0]->elements[0]->duration->value) && isset($json->rows[0]->elements[0]->duration->value))
+					{
+						$ride = new Ride;
+						$ride->setDeparture($door);
+						$ride->setDestination($dest);
+						$ride->setDuration($json->rows[0]->elements[0]->duration->value);
+						$ride->setDistance($json->rows[0]->elements[0]->distance->value);
+						$em->persist($ride);
+						$i++;
+					}
+				}
+			}
+			$em->flush();
+		}
+		$entities = $repo->getMaintenanceNeighbor($door,15);
+		return array('door'=>$door,'entities' => $entities);
 	}
 }
