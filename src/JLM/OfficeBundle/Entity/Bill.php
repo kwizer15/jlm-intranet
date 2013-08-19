@@ -58,7 +58,7 @@ class Bill extends Document
 	 * 
 	 * @ORM\Column(name="accountNumber",type="string")
 	 */
-	private $accountNumber = '411000';
+	private $accountNumber;
 	
 	/**
 	 * Details
@@ -674,7 +674,8 @@ class Bill extends Document
     	$this->setTrustee($trustee);
     	$this->setTrusteeName($trustee->getName());
     	$this->setTrusteeAddress($trustee->getAddressForBill().'');
-    	$this->setAccountNumber($trustee->getAccountNumber());
+    	$accountNumber = ($trustee->getAccountNumber() === null) ? '411000' : $trustee->getAccountNumber();
+    	$this->setAccountNumber($accountNumber);
     	$this->setPrelabel($door->getSite()->getBillingPrelabel());
     	$this->setVat($door->getSite()->getVat()->getRate());
     	return $this;
