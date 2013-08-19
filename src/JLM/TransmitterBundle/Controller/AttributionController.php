@@ -296,6 +296,8 @@ class AttributionController extends Controller
 			$em->persist($entity);
 			$em->flush();
 		}
+		else
+			$bill = $entity->getBill();
     	return $this->redirect($this->generateUrl('bill_edit', array('id' => $bill->getId())));
     }
 }
