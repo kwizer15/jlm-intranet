@@ -30,6 +30,7 @@ function formatTransmitterNumber(object) {
 			, listen : function() {
 				var id = "#" + this.$element.attr("id") + "_";
 				var form = $("#" + this.$element.attr("id")).parent().parent();
+				var url = this.options.urlModel;
 				$(id + "quantity," + id + "first").on("change", function(event,ui) {
 					if ($(id + "quantity").val() != '' && $(id + "first").val() != '')
 					{
@@ -46,6 +47,17 @@ function formatTransmitterNumber(object) {
 						formatTransmitterNumber($(id + "first"));
 						formatTransmitterNumber($(id + "last"));
 					}
+				});
+				$(id + "userGroup").on("change", function(){
+					var linkurl = url.replace('/0/','/' + $(this).val() + '/');
+					$.ajax({
+						url: linkurl,
+						type: 'post',
+						success: function(modelid) {
+							console.log(modelid);
+							$(id + 'model option[value="' + modelid + '"]').prop('selected', true);
+						}
+					});
 				});
 				form.submit(function(){
 					$.ajax({
@@ -84,7 +96,7 @@ function formatTransmitterNumber(object) {
 		})
 	}
 
-	$.fn.transmitterSeries.defaults = {}
+	$.fn.transmitterSeries.defaults = {urlModel : ''}
 
 	$.fn.transmitterSeries.Constructor = TransmitterSeries
 

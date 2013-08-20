@@ -28,8 +28,9 @@ class TransmitterType extends AbstractType
         			{
         				return $er->getFromSite($id);
         			},
+        			'empty_value' => 'Choisissez...',
         	))
-        	->add('model',null,array('label'=>'Type d\'émetteur'))
+        	->add('model',null,array('label'=>'Type d\'émetteur','empty_value' => 'Choisissez...',))
             ->add('number',null,array('label'=>'Numéro', 'attr'=>array('class'=>'input-small')))
             ->add('guarantee',null,array('label'=>'Garantie', 'attr'=>array('class'=>'input-mini','placeholder'=>'MMAA')))
             ->add('userName',null,array('label'=>'Utilisateur','required'=>false))

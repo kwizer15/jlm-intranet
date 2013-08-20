@@ -30,8 +30,20 @@ function formatTransmitterNumber(object) {
 			, listen : function() {
 				var id = "#" + this.$element.attr("id") + "_";
 				var form = this.$element.parent().parent();
+				var url = this.options.urlModel;
 				$(id + "number").on("change", function(event,ui) {
 					formatTransmitterNumber($(id + "number"));	
+				});
+				$(id + "userGroup").on("change", function(){
+					var linkurl = url.replace('/0/','/' + $(this).val() + '/');
+					$.ajax({
+						url: linkurl,
+						type: 'post',
+						success: function(modelid) {
+							console.log(modelid);
+							$(id + 'model option[value="' + modelid + '"]').prop('selected', true);
+						}
+					});
 				});
 				form.on('submit', function(){
 					
@@ -69,7 +81,7 @@ function formatTransmitterNumber(object) {
 		})
 	}
 
-	$.fn.transmitter.defaults = {}
+	$.fn.transmitter.defaults = {urlModel : ''}
 
 	$.fn.transmitter.Constructor = Transmitter
 

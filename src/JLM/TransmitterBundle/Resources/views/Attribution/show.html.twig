@@ -80,8 +80,8 @@
 {% block javascripts_script %}
 {{ parent() }}
 $("a").tooltip();
-$(".transmitter").transmitter();
-$(".transmitter_series").transmitterSeries();
+$(".transmitter").transmitter({urlModel:'{{ path('transmitter_usergroup_defaultmodelid', {'id':0}) }}'});
+$(".transmitter_series").transmitterSeries({urlModel:'{{ path('transmitter_usergroup_defaultmodelid', {'id':0}) }}'});
 $(".usergroup").modalForm();
 $(".transmitter_replacement").modalForm();
 $(".editTransmitter").click(function(){
@@ -94,7 +94,7 @@ $(".editTransmitter").click(function(){
 		type: 'get', 
 		success: function(html) {
 			$('footer').after(html);
-			$(href).find(".modal-body > div").transmitter();
+			$(href).find(".modal-body > div").transmitter({urlModel:'{{ path('transmitter_usergroup_defaultmodelid', {'id':0}) }}'});
 			$(href).modal({'show':true});
 		}
 	});

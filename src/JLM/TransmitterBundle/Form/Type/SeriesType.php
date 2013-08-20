@@ -28,8 +28,9 @@ class SeriesType extends AbstractType
         			{
         				return $er->getFromSite($id);
         			},
+        			'empty_value' => 'Choisissez...',
         	))
-        	->add('model','entity',array('class'=>'JLM\TransmitterBundle\Entity\Model','label'=>'Type d\'émetteurs'))
+        	->add('model','entity',array('class'=>'JLM\TransmitterBundle\Entity\Model','label'=>'Type d\'émetteurs','empty_value' => 'Choisissez...',))
         	->add('quantity',null,array('label'=>'Nombre d\'émetteurs', 'attr'=>array('class'=>'input-mini','maxlength'=>3)))
             ->add('first',null,array('label'=>'Premier numéro', 'attr'=>array('class'=>'input-small','maxlength'=>6)))
             ->add('last',null,array('label'=>'Dernier numéro', 'attr'=>array('class'=>'input-small','maxlength'=>6)))

@@ -145,4 +145,21 @@ class UserGroupController extends Controller
     	}
         return $this->redirect($request->headers->get('referer'));
     }
+    
+    /**
+     * Get Model ID UserGroup entity.
+     *
+     * @Route("/{id}/defaultmodelid", name="transmitter_usergroup_defaultmodelid")
+     * @Method("POST")
+     */
+    public function defaultmodelidAction($id)
+    {
+    	$request = $this->getRequest();
+    	$em = $this->getDoctrine()->getManager();
+    	$entity = $em->getRepository('JLMTransmitterBundle:UserGroup')->find($id);
+    	if (!$entity) {
+    		throw $this->createNotFoundException('Unable to find UserGroup entity.');
+    	}
+    	return new Response($entity->getModel()->getId());
+    }
 }
