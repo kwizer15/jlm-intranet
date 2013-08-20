@@ -280,13 +280,13 @@ class Product
     {
     	if ($quantity === null || $this->unitPrices === null)
         	return $this->unitPrice;
-    	$q = 1;
     	$index = 0;
-    	do
+    	$q = $this->unitPrices[$index]->getQuantity();
+    	while ($quantity > $q && isset($this->unitPrices[$index+1]))
     	{
-    		$q = $this->unitPrices[$index]->getQuantity();
     		$index++;
-    	} while ($quantity > $q && isset($this->unitPrices[$index]));
+    		$q = $this->unitPrices[$index]->getQuantity();
+    	} 
     	return $this->unitPrices[$index-1]->getUnitPrice();
     }
 
