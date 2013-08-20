@@ -61,6 +61,7 @@ class MaintenanceRepository extends InterventionRepository
 			->setParameter(2, $date2);
 		$results = $qb->getQuery()->getResult();
 		$previousDate = null;
+		$datas = array();
 		foreach ($results as $result)
 		{
 			$result['begin']->setTime(0,0,0);
