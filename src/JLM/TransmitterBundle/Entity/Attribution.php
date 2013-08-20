@@ -307,7 +307,10 @@ class Attribution
     				$temp = $values['numbers'][$i];
     				$i++;
     			} while ($i < $size);
-    			$description .= 'du n°'.$n1.' au n°'.$temp;
+    			if ($temp == $n1)
+    				$description .= 'n°'.$n1;
+    			else
+    				$description .= 'du n°'.$n1.' au n°'.$temp;
     		}
     		else
     			$description .= 'n°'.$n1;
