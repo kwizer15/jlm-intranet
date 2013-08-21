@@ -253,35 +253,42 @@ class MaintenanceController extends Controller
 	{
 		$em = $this->getDoctrine()->getEntityManager();
 		$repo = $em->getRepository('JLMDailyBundle:Ride');
-		$countrides = $repo->getCountRides($door);
-		$countdoors = $em->getRepository('JLMModelBundle:Door')->getTotal();
-		if ($countrides < $countdoors)
+		$countrides = $repo->getCountRides($door);	
+		// portes offset nb, limit 50 order id
+		$doors = $em->getRepository('JLMModelBundle:Door')
+					->createQueryBuilder('a')
+					->select('a')
+					->orderBy('a.id')
+					->setMaxResults(50)
+					->setFirstResult($countrides)
+					->getQuery()
+					->getResult()
+		;
+		// @todo a mettre dans le repo + optim
+		
+		// si y en a matrix
+		if (sizeof($doors))
 		{
-			$doors = $em->getRepository('JLMModelBundle:Door')->findAll();
 			$baseUrl = 'http://maps.googleapis.com/maps/api/distancematrix/json?sensor=false&language=fr-FR&origins='.$door->getCoordinates().'&destinations=';
-			$i = 0;
-			$imax = 50; // Limite pour sélectionner
 			foreach ($doors as $dest)
 			{
-				if (!$repo->hasRide($door,$dest) && $i < $imax)
+				$url = $baseUrl.$dest->getCoordinates();
+				$string = file_get_contents($url);
+				$json = json_decode($string);
+				if ($json->status == 'OK' && isset($json->rows[0]->elements[0]->duration->value) && isset($json->rows[0]->elements[0]->duration->value))
 				{
-					$url = $baseUrl.$dest->getCoordinates();
-					$string = file_get_contents($url);
-					$json = json_decode($string);
-					if ($json->status == 'OK' && isset($json->rows[0]->elements[0]->duration->value) && isset($json->rows[0]->elements[0]->duration->value))
-					{
-						$ride = new Ride;
-						$ride->setDeparture($door);
-						$ride->setDestination($dest);
-						$ride->setDuration($json->rows[0]->elements[0]->duration->value);
-						$ride->setDistance($json->rows[0]->elements[0]->distance->value);
-						$em->persist($ride);
-						$i++;
-					}
+					$ride = new Ride;
+					$ride->setDeparture($door);
+					$ride->setDestination($dest);
+					$ride->setDuration($json->rows[0]->elements[0]->duration->value);
+					$ride->setDistance($json->rows[0]->elements[0]->distance->value);
+					$em->persist($ride);
 				}
 			}
 			$em->flush();
 		}
+		// charge la page
+				
 		$entities = $repo->getMaintenanceNeighbor($door,15);
 		return array('door'=>$door,'entities' => $entities);
 	}
