@@ -259,7 +259,7 @@ class MaintenanceController extends Controller
 					->createQueryBuilder('a')
 					->select('a')
 					->orderBy('a.id')
-					->setMaxResults(400)
+					->setMaxResults(50)
 					->setFirstResult($countrides)
 					->getQuery()
 					->getResult()
