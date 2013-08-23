@@ -15,13 +15,14 @@ use JLM\DailyBundle\Form\Type\MaintenanceCloseType;
 use JLM\DailyBundle\Form\Type\ExternalBillType;
 use JLM\DailyBundle\Form\Type\InterventionCancelType;
 use JLM\ModelBundle\Entity\Door;
+use JLM\DefaultBundle\Controller\PaginableController;
 
 /**
  * Maintenance controller.
  *
  * @Route("/maintenance")
  */
-class MaintenanceController extends Controller
+class MaintenanceController extends PaginableController
 {
 	/**
 	 * Finds and displays a InterventionPlanned entity.
@@ -33,26 +34,27 @@ class MaintenanceController extends Controller
 	 */
 	public function listAction($page = 1)
 	{
+		return $this->pagination('JLMDailyBundle:Maintenance','Opened',$page,10,'maintenance_list_page');
+		
+		
 		// @todo Trier par ville, date...
 		$limit = 15;
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$nb = $em->getRepository('JLMDailyBundle:Maintenance')->getCountOpened();
 		$nbPages = ceil($nb/$limit);
 		$nbPages = ($nbPages < 1) ? 1 : $nbPages;
 		$offset = ($page-1) * $limit;
 		if ($page < 1 || $page > $nbPages)
-		{
 			throw $this->createNotFoundException('Page inexistante (page '.$page.'/'.$nbPages.')');
-		}
-		
 
-		$em = $this->getDoctrine()->getManager();
 		$entities = $em->getRepository('JLMDailyBundle:Maintenance')->getPrioritary($limit,$offset);
 		return array(
 				'entities'      => $entities,
 				'page'     => $page,
 				'nbPages'  => $nbPages,
 		);
+		
+
 	}
 	
 	/**

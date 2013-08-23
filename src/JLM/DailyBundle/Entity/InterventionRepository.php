@@ -11,6 +11,7 @@ class InterventionRepository extends EntityRepository
 {
 	public function getPrioritary($limit = null, $offset = null)
 	{
+
 		$qb = $this->createQueryBuilder('i')
 			->select('i,s,d,a,b,c')
 			->leftJoin('i.shiftTechnicians','s')
@@ -23,9 +24,9 @@ class InterventionRepository extends EntityRepository
 			->addOrderBy('s.creation','asc')
 			->addOrderBy('i.priority','desc')
 			->addOrderBy('i.creation','asc');
-		if ($offset)
+		if ($offset !== null)
 			$qb->setFirstResult( $offset );
-		if ($limit)
+		if ($limit !== null)
    			$qb->setMaxResults( $limit );
 		return $qb->getQuery()->getResult();
 	}
@@ -204,5 +205,10 @@ class InterventionRepository extends EntityRepository
 		->setParameter(1,0)
 		;
 		return $qb->getQuery()->getSingleScalarResult();
+	}
+	
+	public function getOpened($limit = null, $offset = null)
+	{
+		return $this->getPrioritary($limit, $offset);
 	}
 }

@@ -27,12 +27,7 @@ class AskquoteController extends PaginableController
 	 */
 	public function indexAction($page = 1)
 	{
-		$datas = $this->pagination('JLMOfficeBundle:AskQuote','All',$page,10);
-		return array(
-				'entities' => $datas['entities'],
-				'page'     => $page,
-				'nbPages'  => $datas['nbPages'],
-		);
+		return $this->pagination('JLMOfficeBundle:AskQuote','All',$page,10,'askquote_page');
 	}
 	
 	/**
@@ -43,12 +38,7 @@ class AskquoteController extends PaginableController
 	 */
 	public function listtreatedAction($page = 1)
 	{
-		$datas = $this->pagination('JLMOfficeBundle:AskQuote','Treated',$page,10);
-		return array(
-				'entities' => $datas['entities'],
-				'page'     => $page,
-				'nbPages'  => $datas['nbPages'],
-		);
+		return $this->pagination('JLMOfficeBundle:AskQuote','Treated',$page,10,'askquote_listtreated_page');
 	}
 	
 	/**
@@ -59,12 +49,7 @@ class AskquoteController extends PaginableController
 	 */
 	public function listuntreatedAction($page = 1)
 	{
-		$datas = $this->pagination('JLMOfficeBundle:AskQuote','Untreated',$page,10);
-		return array(
-				'entities' => $datas['entities'],
-				'page'     => $page,
-				'nbPages'  => $datas['nbPages'],
-		);
+		return $this->pagination('JLMOfficeBundle:AskQuote','Untreated',$page,10,'askquote_listuntreated_page');
 	}
 	
 	/**

@@ -42,7 +42,7 @@ class DoorController extends Controller
 	public function stoppedAction()
 	{
 		$em = $this->getDoctrine()->getManager();
-		$doors = $em->getRepository("JLMModelBundle:Door")->getStopped();
+		$doors = $em->getRepository('JLMModelBundle:Door')->getStopped();
 		return array(
 				'entities' => $doors,
 		);
@@ -58,14 +58,13 @@ class DoorController extends Controller
 	public function printstoppedAction()
 	{
 		$em = $this->getDoctrine()->getManager();
-		$doors = $em->getRepository("JLMModelBundle:Door")->getStopped();
+		$doors = $em->getRepository('JLMModelBundle:Door')->getStopped();
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename=portes-arret.pdf');
 		$response->setContent($this->render('JLMDailyBundle:Door:printstopped.pdf.php',
 				array(	'entities' => $doors,
 			)));
-		
 		return $response;
 	}
 	

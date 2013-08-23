@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * JLM\DailyBundle\Entity\Stanby
  *
  * @ORM\Table(name="technician_standby")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\StandbyRepository")
  */
 class Standby
 {

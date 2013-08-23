@@ -18,32 +18,17 @@ abstract class AskController extends PaginableController
 
 	public function indexAction($page = 1)
 	{
-		$datas = $this->pagination($this->getRepositoryName(),'All',$page,10);
-		return array(
-				'entities' => $datas['entities'],
-				'page'     => $page,
-				'nbPages'  => $datas['nbPages'],
-		);
+		return $this->pagination($this->getRepositoryName(),'All',$page,10);
 	}
 	
 	public function listtreatedAction($page = 1)
 	{
-		$datas = $this->pagination($this->getRepositoryName(),'Treated',$page,10);
-		return array(
-				'entities' => $datas['entities'],
-				'page'     => $page,
-				'nbPages'  => $datas['nbPages'],
-		);
+		return $this->pagination($this->getRepositoryName(),'Treated',$page,10);
 	}
 	
 	public function listuntreatedAction($page = 1)
 	{
-		$datas = $this->pagination($this->getRepositoryName(),'Untreated',$page,10);
-		return array(
-				'entities' => $datas['entities'],
-				'page'     => $page,
-				'nbPages'  => $datas['nbPages'],
-		);
+		return $this->pagination($this->getRepositoryName(),'Untreated',$page,10);
 	}
 
 	public function canceldonttreatAction($id)

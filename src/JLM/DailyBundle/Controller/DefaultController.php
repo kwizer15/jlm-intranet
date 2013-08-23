@@ -57,10 +57,6 @@ class DefaultController extends Controller
 	public function sidebarAction()
 	{
 		$em = $this->getDoctrine()->getEntityManager();
-		
-		$now = new \DateTime;
-		$today = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'000000');
-		$tommorow = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'235959');
 		return array(
 		    'today' => $em->getRepository('JLMDailyBundle:Intervention')->getCountToday(),
 			'stopped' => $em->getRepository('JLMModelBundle:Door')->getCountStopped(),
@@ -78,14 +74,8 @@ class DefaultController extends Controller
 	 */
 	public function datesearchAction()
 	{
-		$em = $this->getDoctrine()->getEntityManager();
-		
 		$entity = new \DateTime();
 		$form   = $this->createForm(new DatepickerType(), $entity);
-		
-		$now = new \DateTime;
-		$today = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'000000');
-		$tommorow = \DateTime::createFromFormat('YmdHis',$now->format('Ymd').'235959');
 		return array(
 				'form' => $form->createView(),
 		);

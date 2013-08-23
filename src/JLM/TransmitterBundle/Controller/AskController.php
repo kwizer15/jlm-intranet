@@ -158,7 +158,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
     public function indexAction($page = 1)
     {
     	$parms = parent::indexAction($page);
-    	$parms['pageroute'] = 'transmitter_ask_page';
+    	$parms['pageRoute'] = 'transmitter_ask_page';
     	return $parms;
     }
     
@@ -172,7 +172,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
     public function listtreatedAction($page = 1)
     {
     	$parms = parent::listtreatedAction($page);
-    	$parms['pageroute'] = 'transmitter_ask_treated_page';
+    	$parms['pageRoute'] = 'transmitter_ask_treated_page';
     	return $parms;
     }
     
@@ -186,7 +186,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
     public function listuntreatedAction($page = 1)
     {
     	$parms = parent::listuntreatedAction($page);
-    	$parms['pageroute'] = 'transmitter_ask_untreated_page';
+    	$parms['pageRoute'] = 'transmitter_ask_untreated_page';
     	return $parms;
     }
     

@@ -38,7 +38,6 @@ class EquipmentController extends Controller
 		$shifting->setReason('Récupération matériel');
 		$entity->setShifting($shifting);
 		$form   = $this->createForm(new RecuperationEquipmentType(), $entity);
-
 		return array(
 				'entity' => $entity,
 				'form'   => $form->createView(),
@@ -59,16 +58,14 @@ class EquipmentController extends Controller
 		$entity->setCreation(new \DateTime);
 		$form = $this->createForm(new RecuperationEquipmentType(), $entity);
 		$form->bind($request);
-		
-		if ($form->isValid()) {
+		if ($form->isValid())
+		{
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity->getShifting()->setCreation(new \DateTime));
 			$em->persist($entity);
 			$em->flush();
-
 			return $this->redirect($request->headers->get('referer'));
 		}
-
 		return array(
 				'entity' => $entity,
 				'form'   => $form->createView(),
@@ -122,7 +119,8 @@ class EquipmentController extends Controller
 		$editForm = $this->createForm(new EquipmentType(), $entity);
 		$editForm->bind($request);
 	
-		if ($editForm->isValid()) {
+		if ($editForm->isValid())
+		{
 			$em->persist($entity);
 			$em->flush();
 			return $this->redirect($request->headers->get('referer'));

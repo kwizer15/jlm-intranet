@@ -52,8 +52,8 @@ class InterventionController extends Controller
 	 */
 	public function tobillAction(Intervention $entity)
 	{
-		$em = $this->getDoctrine()->getManager();
 		$entity->setMustBeBilled(true);
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
@@ -67,8 +67,8 @@ class InterventionController extends Controller
 	 */
 	public function dontbillAction(Intervention $entity)
 	{
-		$em = $this->getDoctrine()->getManager();
 		$entity->setMustBeBilled(false);
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
@@ -113,9 +113,9 @@ class InterventionController extends Controller
 	 */
 	public function toquoteAction(Intervention $entity)
 	{
-		$em = $this->getDoctrine()->getManager();
 		$ask = new AskQuote;
 		$ask->populateFromIntervention($entity);
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($ask);
 		$entity->setAskQuote($ask);
 		$em->persist($entity);
@@ -132,9 +132,9 @@ class InterventionController extends Controller
 	{
 		if (($ask = $entity->getAskQuote()) !== null)
 		{
-			$em = $this->getDoctrine()->getManager();
 			$ask->setIntervention();
 			$entity->setAskQuote();
+			$em = $this->getDoctrine()->getManager();
 			$em->remove($ask);
 			$em->persist($entity);
 			$em->flush();
@@ -149,8 +149,8 @@ class InterventionController extends Controller
 	 */
 	public function tocontactAction(Intervention $entity)
 	{
-		$em = $this->getDoctrine()->getManager();
 		$entity->setContactCustomer(false);
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
@@ -163,8 +163,8 @@ class InterventionController extends Controller
 	 */
 	public function cancelcontactAction(Intervention $entity)
 	{
-		$em = $this->getDoctrine()->getManager();
 		$entity->setContactCustomer(null);
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
@@ -177,13 +177,13 @@ class InterventionController extends Controller
 	 */
 	public function toworkAction(Intervention $entity)
 	{
-		$em = $this->getDoctrine()->getManager();
 		$workCat = $em->getRepository('JLMDailyBundle:WorkCategory')->find(1);
 		$workObj = $em->getRepository('JLMDailyBundle:WorkObjective')->find(1);
 		$work = new Work;
 		$work->populateFromIntervention($entity);
 		$work->setCategory($workCat);
 		$work->setObjective($workObj);
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($work);
 		$entity->setWork($work);
 		$em->persist($entity);
@@ -198,9 +198,9 @@ class InterventionController extends Controller
 	 */
 	public function cancelworkAction(Intervention $entity)
 	{
-		$em = $this->getDoctrine()->getManager();
 		$work = $entity->getWork();
 		$entity->setWork();
+		$em = $this->getDoctrine()->getManager();
 		$em->remove($work);
 		$em->persist($entity);
 		$em->flush();
@@ -218,8 +218,8 @@ class InterventionController extends Controller
 		$form->bind($request);
 		if ($form->isValid())
 		{
-			$em = $this->getDoctrine()->getManager();
 			$entity->cancel();
+			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
 			$em->flush();
 		}
@@ -233,8 +233,8 @@ class InterventionController extends Controller
 	 */
 	public function uncancelAction(Request $request, Intervention $entity)
 	{
-		$em = $this->getDoctrine()->getManager();
 		$entity->uncancel();
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
@@ -272,19 +272,16 @@ class InterventionController extends Controller
 		$today = new \DateTime;
 		$todaystring =  $today->format('Y-m-d');
 		$em = $this->getDoctrine()->getManager();
-		$f = $em->getRepository('JLMDailyBundle:Fixing')->getToday();
-		$w = $em->getRepository('JLMDailyBundle:Work')->getToday();
-		$m = $em->getRepository('JLMDailyBundle:Maintenance')->getToday();
-		$intervs = array_merge($f,$w,$m);
-		unset($f);
-		unset($w);
-		unset($m);
-		
+		$intervs = array_merge(
+				$em->getRepository('JLMDailyBundle:Fixing')->getToday(),
+				$em->getRepository('JLMDailyBundle:Work')->getToday(),
+				$em->getRepository('JLMDailyBundle:Maintenance')->getToday()
+			);
 		$inprogress = $notclosed = $closed = array();
 		foreach ($intervs as $interv)
 		{
 			$flag = false;
-			if ($interv->getState() == 3 && !$flag)
+			if ($interv->getState() == 3)
 			{
 				$closed[] = $interv;
 				$flag = true;
@@ -303,26 +300,14 @@ class InterventionController extends Controller
 			if (!$flag)
 				$notclosed[] = $interv;
 		}
-		
-		$fixingstogive = $em->getRepository('JLMDailyBundle:Fixing')->getToGive();
-		
-		$equipment = $em->getRepository('JLMDailyBundle:Equipment')->getToday();
 
 		return array(
 				'inprogress' => $inprogress,
-				'fixing' => $fixingstogive,
-				'equipment' => $equipment,
+				'fixing' => $em->getRepository('JLMDailyBundle:Fixing')->getToGive(),
+				'equipment' => $em->getRepository('JLMDailyBundle:Equipment')->getToday(),
 				'notclosed' => $notclosed,
 				'closed' => $closed,
-		);
-		
-		// ORDRE DES INTERVS
-		// - Toutes ayant au moins un intervenant aujourd'hui
-		// - Les dépannages sans intervenant
-		// - Les travaux non cloturés
-		// - Les travaux sans intervenant
-		// - Les entretiens sans intervenant
-		
+		);	
 	}
 	
 	/**
@@ -353,20 +338,8 @@ class InterventionController extends Controller
 			\DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000'),
 			\DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000'),
 		);
-		$standby = $em->getRepository('JLMDailyBundle:Standby')
-			->createQueryBuilder('s')
-			->where('s.begin <= ?1 AND s.end >= ?1')
-			->setParameter(1,$date1)
-			->setMaxResults(1)
-			->getQuery()
-			->getResult()
-		;
-		if (empty($standby))
-			$standby = null;
-		else
-			$standby = $standby[0]->getTechnician();
 		return array(
-				'standby' => $standby,
+				'standby' => $em->getRepository('JLMDailyBundle:Standby')->getByDate($date1),
 				'd1' => $d1,
 				'd2' => ($date2 === null) ? null : $d2,
 				'entities' => array_merge($equipment,$intervs),
@@ -438,25 +411,13 @@ class InterventionController extends Controller
 		
 		$intervs = $repo->getWithDate($d1,$d2);
 		$equipment = $em->getRepository('JLMDailyBundle:Equipment')->getWithDate($d1,$d2);
-		$standby = $em->getRepository('JLMDailyBundle:Standby')
-			->createQueryBuilder('s')
-			->where('s.begin <= ?1 AND s.end >= ?1')
-			->setParameter(1,$date1)
-			->setMaxResults(1)
-			->getQuery()
-			->getResult()
-		;
-		if (empty($standby))
-			$standby = null;
-		else
-			$standby = $standby[0]->getTechnician();
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$d1->format('Y-m-d').'.pdf');
 		$response->setContent($this->render('JLMDailyBundle:Intervention:printday.pdf.php',
 				array('date' => $d1,
 						'entities' => array_merge($equipment,$intervs),
-						'standby' => $standby,
+						'standby' => $em->getRepository('JLMDailyBundle:Standby')->getByDate($date1),
 				)));
 		
 		return $response;
@@ -475,28 +436,12 @@ class InterventionController extends Controller
 		
 		do {
 			$tomorrow = \DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000');
-			
-			$results = $em->getRepository('JLMDailyBundle:Standby')
-				->createQueryBuilder('s')
-				->select('COUNT(s)')
-				->where('s.begin <= ?1')
-				->andWhere('s.end >= ?1')
-				->setParameter(1,$tomorrow->format('Y-m-d'))
-				->getQuery()
-				->getSingleScalarResult();
+			$results = $em->getRepository('JLMDailyBundle:Standby')->getCountByDate($tomorrow->format('Y-m-d'));
 		} while ($results);
 		
 		$intervs = $em->getRepository('JLMDailyBundle:Intervention')->getWithDate($tomorrow,$tomorrow);
 		$equipment = $em->getRepository('JLMDailyBundle:Equipment')->getWithDate($tomorrow,$tomorrow);
-		$fixing = $em->getRepository('JLMDailyBundle:Fixing')->createQueryBuilder('i')
-			->leftJoin('i.shiftTechnicians','t')
-			->where('t is null')
-			->andWhere('i.close is null')
-			->orderBy('i.creation','asc')
-			->getQuery()
-			->getResult();
-			;
-		
+		$fixing = $em->getRepository('JLMDailyBundle:Fixing')->getToGive();	
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$tomorrow->format('Y-m-d').'.pdf');
@@ -536,90 +481,5 @@ class InterventionController extends Controller
 				)));
 		
 		return $response;
-	}
-	
-	/**
-	 * Mise à jour des tâches facturation
-	 * (à faire évoluer pour les devis, plannification et contact)
-	 *
-	 * @Route("/upgradeoffice", name="intervention_upgradeoffice")
-	 * @Secure(roles="ROLE_USER")
-	 * @Template()
-	 */
-	public function upgradeofficeAction()
-	{
-		$em = $this->getDoctrine()->getManager();
-		$id_bill = 1;
-		$id_quote = 2;
-		$id_order = 3;
-		$id_contact = 4;
-		$id_not = 5;
-		$work_objective = $em->getRepository('JLMDailyBundle:WorkObjective')->find(1);
-		$work_category = $em->getRepository('JLMDailyBundle:WorkCategory')->find(1);
-		$intervs = $em->getRepository('JLMDailyBundle:Intervention')->findAll();
-		foreach ($intervs as $interv)
-		{
-			if ($interv->getOfficeAction() !== null)
-			{
-				$id = $interv->getOfficeAction()->getType()->getId();
-				if ($id == $id_bill)
-				{
-					$interv->setMustBeBilled(true);
-					// On ne crée pas la facture pour gérer les non facturé et les numéros plus tard
-				}
-				elseif ($id == $id_not)
-				{
-					$interv->setMustBeBilled(false);
-				}
-				
-			}
-			if ($interv->getOtherAction() !== null && $interv->getRest() !== null)
-			{
-				$id = $interv->getOtherAction()->getType()->getId();
-				if ($id == $id_quote && $interv->getAskQuote() === null)
-				{
-					$askQuote = new AskQuote;
-					$maturity = clone $interv->getOtherAction()->getOpen();
-					$maturity->add(new \DateInterval('P15D'));
-					$askQuote->setCreation($interv->getOtherAction()->getOpen());
-					$askQuote->setMaturity($maturity);
-					$askQuote->setIntervention($interv);
-					if ($interv->getRest() === null)
-					{
-						echo $interv->getId(); exit;
-					}
-					$askQuote->setAsk($interv->getRest());
-					$em->persist($askQuote);
-					$interv->setAskQuote($askQuote);
-				}
-				elseif ($id == $id_order && $interv->getWork() === null)
-				{
-					$work = new Work;
-					$work->setCreation($interv->getClose());
-					$work->setPlace($interv->getPlace());
-					$work->setReason($interv->getRest());
-					$work->setDoor($interv->getDoor());
-					$work->setContactName($interv->getContactName());
-					$work->setContactPhones($interv->getContactPhones());
-					$work->setContactEmail($interv->getContactEmail());
-					$work->setPriority(4);
-//					$work->setContact($interv->getContact());
-					$work->setObjective($work_objective);
-					$work->setCategory($work_category);
-					$work->setIntervention($interv);
-					$em->persist($work);
-					$interv->setWork($work);
-				}
-				elseif ($id == $id_contact)
-				{
-					$interv->setContactCustomer(false);
-				}
-			}
-			$em->persist($interv);
-		}
-		
-		$em->flush();
-		
-		return array();
 	}
 }

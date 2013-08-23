@@ -61,13 +61,6 @@ class FixingController extends Controller
 				'form_externalbill' => $form_externalbill->createView(),
 				'form_cancel' => $form_cancel->createView(),
 		);
-		
-		
-		
-		//////////////////////////
-		return array(
-				'entity'      => $entity,
-		);
 	}
 	
 	/**
@@ -81,7 +74,6 @@ class FixingController extends Controller
 	{
 		$entity = new Fixing();
 		$entity->setDoor($door);
-//		$form   = $this->createForm(new FixingType(), $entity);
 		$form = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(),new FixingType(), $entity);
 		return array(
 				'door' => $door,
@@ -106,14 +98,12 @@ class FixingController extends Controller
 		$entity->setContract($door->getActualContract());
 		$entity->setPlace($door.'');
 		$entity->setPriority(2);
-//		$form = $this->createForm(new FixingType(), $entity);
 		$form = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(),new FixingType(), $entity);
 		$form->bind($request);
 	
-		if ($form->isValid()) {
+		if ($form->isValid())
+		{
 			$em = $this->getDoctrine()->getManager();
-			
-	
 			$em->persist($entity);
 			$em->flush();
 	
@@ -154,13 +144,12 @@ class FixingController extends Controller
 	 */
 	public function updateAction(Request $request, Fixing $entity)
 	{
-		$em = $this->getDoctrine()->getManager();
-			
 		$editForm = $this->createForm(new FixingEditType(), $entity);
 		$editForm->bind($request);
 	
 		if ($editForm->isValid())
 		{
+			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
 			$em->flush();
 			return $this->redirect($this->generateUrl('fixing_show', array('id' => $entity->getId())));
@@ -198,9 +187,7 @@ class FixingController extends Controller
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function closeupdateAction(Request $request, Fixing $entity)
-	{
-		$em = $this->getDoctrine()->getManager();
-			
+	{	
 		$form = $this->createForm(new FixingCloseType(), $entity);
 		$form->bind($request);
 	
@@ -211,6 +198,7 @@ class FixingController extends Controller
 				$entity->getDoor()->setStopped(true);
 			
 			$entity->setClose(new \DateTime);
+			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
 			$em->flush();
 			return $this->redirect($this->generateUrl('fixing_show', array('id' => $entity->getId())));

@@ -9,9 +9,9 @@ abstract class PaginableController extends Controller
 	/**
 	 * Pagination
 	 */
-	protected function pagination($repository, $functiondata = 'All', $page = 1, $limit = 10)
+	protected function pagination($repository, $functiondata = 'All', $page = 1, $limit = 10, $route = null)
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository($repository);
 		$functionCount = 'getCount'.$functiondata;
 		$functionDatas = 'get'.$functiondata;
@@ -24,9 +24,8 @@ abstract class PaginableController extends Controller
 		$nbPages = ($nbPages < 1) ? 1 : $nbPages;
 		$offset = ($page-1) * $limit;
 		if ($page < 1 || $page > $nbPages)
-		{
 			throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
-		}
-		return array('entities'=>$repo->$functionDatas($limit,$offset),'nbPages'=>$nbPages);
+		//echo 'page = '.$page.'<br>nbPages = '.$nbPages.'<br>nbEntities = '.$limit.'<br>offset='.$offset.'<br>Fonction : '.$functionDatas; exit;
+		return array('entities'=>$repo->$functionDatas($limit,$offset),'pageTotal'=>$nbPages,'page'=>$page,'pageRoute'=>$route);
 	}
 }
