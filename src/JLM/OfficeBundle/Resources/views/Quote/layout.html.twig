@@ -1,6 +1,5 @@
 {% extends "JLMOfficeBundle::layout.html.twig" %} 
 {% block sidebar %}
-<ul class="nav nav-list">
 	<li><h4>Devis</h4></li>
 	<li>
 		<form  action="{{ path('quote_search') }}" method="post" class="form-search">
@@ -14,5 +13,4 @@
 	<li class="divider"></li>
 	<li class="nav-header">Derniers devis</li>
 	{% render "JLMOfficeBundle:Quote:last" with {'limit': 5} %}
-</ul>
 {% endblock sidebar %}

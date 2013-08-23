@@ -1,35 +1,23 @@
 {% extends "::layout.html.twig" %}
 
-{% block container %}
-    <div class="row-fluid">
-	    <div class="span2">
-		    {% block sidebar %}
-		    <ul class="nav nav-list affix">
-		    	<li>
-		    		<form  action="{{ path('model_search') }}" method="post" class="form-search">
-						<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher...">
-			    	</form>
-			    </li>
-				<li class="nav-header">Syndics</li>
-				<li><a href="{{ path('trustee') }}"><i class="icon-list"></i> Liste syndics</a></li>
-		        <li><a href="{{ path('trustee_new') }}"><i class="icon-plus-sign"></i> Nouveau syndic</a></li>
-		        <li class="nav-header">Fournisseurs</li>
-		        <li><a href="{{ path('supplier') }}"><i class="icon-list"></i> Liste fournisseurs</a></li>
-		        <li><a href="{{ path('supplier_new') }}"><i class="icon-plus-sign"></i> Nouveau fournisseur</a></li>
-		        <li class="nav-header">Familles produit</li>
-		        <li><a href="{{ path('productcategory') }}"><i class="icon-list"></i> Liste familles</a></li>
-		        <li><a href="{{ path('productcategory_new') }}"><i class="icon-plus-sign"></i> Nouvelle famille</a></li>
-		        <li class="nav-header">Produits</li>   
-		        <li><a href="{{ path('product') }}"><i class="icon-list"></i> Liste produits</a></li>
-		        <li><a href="{{ path('product_new') }}"><i class="icon-plus-sign"></i> Nouveau produit</a></li>
-		        <li class="nav-header">Types d'émetteurs</li>   
-		        <li><a href="{{ path('transmittertype') }}"><i class="icon-list"></i> Liste types d'émetteurs</a></li>
-		    </ul>
-		    {% endblock sidebar %}
-	    </div>
-	    <div class="span10">
-            {% block content %}
-            {% endblock content %}
-	    </div>
-    </div>
-{% endblock container %}
+    {% block sidebar %}
+    	<li>
+    		<form  action="{{ path('model_search') }}" method="post" class="form-search">
+				<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher...">
+    		</form>
+	    </li>
+		<li class="nav-header">Syndics</li>
+		<li><a href="{{ path('trustee') }}"><i class="icon-list"></i> Liste syndics</a></li>
+        <li><a href="{{ path('trustee_new') }}"><i class="icon-plus-sign"></i> Nouveau syndic</a></li>
+        <li class="nav-header">Fournisseurs</li>
+        <li><a href="{{ path('supplier') }}"><i class="icon-list"></i> Liste fournisseurs</a></li>
+        <li><a href="{{ path('supplier_new') }}"><i class="icon-plus-sign"></i> Nouveau fournisseur</a></li>
+        <li class="nav-header">Familles produit</li>
+        <li><a href="{{ path('productcategory') }}"><i class="icon-list"></i> Liste familles</a></li>
+        <li><a href="{{ path('productcategory_new') }}"><i class="icon-plus-sign"></i> Nouvelle famille</a></li>
+        <li class="nav-header">Produits</li>   
+        <li><a href="{{ path('product') }}"><i class="icon-list"></i> Liste produits</a></li>
+        <li><a href="{{ path('product_new') }}"><i class="icon-plus-sign"></i> Nouveau produit</a></li>
+        <li class="nav-header">Types d'émetteurs</li>   
+        <li><a href="{{ path('transmittertype') }}"><i class="icon-list"></i> Liste types d'émetteurs</a></li>
+    {% endblock %}

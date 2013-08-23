@@ -94,6 +94,7 @@
 		        </li>
 			  {% endblock navigation %}
 			</ul>
+			
 			<div class="btn-group pull-right">
 			   <a href="#" class="btn btn-info navbar-btn dropdown-toggle" data-toggle="dropdown"><i class="icon-user  icon-white"></i> {{ app.user.person.firstName }} <b class="caret"></b></a>
 			   <ul class="dropdown-menu">
@@ -111,6 +112,18 @@
       </div>   
       <div class="container-fluid">
 		  {% block container %}
+			<div class="row-fluid">
+			    <div class="span2">    
+				    <ul class="nav nav-list">
+					    {% block sidebar %}
+					  	{% endblock sidebar %}
+					</ul>
+			    </div>
+			    <div class="span10">
+		            {% block content %}
+		            {% endblock content %}
+			    </div>
+		    </div>
 		  {% endblock container %}
       </div>
       <footer>
