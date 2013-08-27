@@ -16,13 +16,13 @@
 	    <li><a href="{{ path('shifting_list', {'id':4}) }}"><i class="icon-user"></i> Oscar</a></li>
 	    <li class="nav-header">Ajouter</li>
 	    <li><a href="#modalNewShift" data-toggle="modal"><i class="icon-plus-sign"></i> Récupération matériel</a>
-		{% render 'JLMDailyBundle:Equipment:new' %}</li>
+		{{ render(controller('JLMDailyBundle:Equipment:new')) }}</li>
 	    <li><a href="#modalNewStandby" data-toggle="modal"><i class="icon-plus-sign"></i> Astreinte</a>
-		{% render 'JLMDailyBundle:Standby:new' %}</li>
+		{{ render(controller('JLMDailyBundle:Standby:new')) }}</li>
 		<li><a href="{{ path('standby') }}"><i class="icon-list"></i> Liste des astreintes</a>
 	    <li class="nav-header">Interventions</li>
-		{% render "JLMDailyBundle:Default:datesearch" %}
-		{% render "JLMDailyBundle:Default:sidebar" %}
+		{{ render(controller('JLMDailyBundle:Default:datesearch')) }}
+		{{ render(controller('JLMDailyBundle:Default:sidebar')) }}
 		<li class="nav-header">Imprimer</li>
 		<li><a href="{{ path('intervention_printtomorrow') }}"><i class="icon-print"></i> Demain</a></li>
 	{% endblock sidebar %}

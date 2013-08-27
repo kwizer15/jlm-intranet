@@ -32,7 +32,7 @@ class FeesController extends Controller
 	 */
 	public function indexAction()
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 	
 		$entities = $em->getRepository('JLMOfficeBundle:FeesFollower')->findBy(
 				array(),
@@ -74,7 +74,7 @@ class FeesController extends Controller
 		$editForm->bind($request);
 	
 		if ($editForm->isValid()) {
-			$em = $this->getDoctrine()->getEntityManager();
+			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
 			$em->flush();
 			return $this->redirect($this->generateUrl('fees', array('id' => $entity->getId())));
@@ -94,7 +94,7 @@ class FeesController extends Controller
 	 */
 	public function generateAction(Request $request,FeesFollower $entity)
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$today = new \DateTime;
 		$number = $today->format('ym');
 		$n = $em->getRepository('JLMOfficeBundle:Bill')->getLastNumber();

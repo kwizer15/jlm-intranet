@@ -27,7 +27,7 @@ class QuoteVariant
 	 * Quote
 	 * @var Quote $quote
 	 * 
-	 * @ORM\ManyToOne(targetEntity="Quote",inversedBy="quote")
+	 * @ORM\ManyToOne(targetEntity="Quote",inversedBy="variants")
 	 */
 	private $quote;
 	

@@ -29,7 +29,7 @@ class DoorController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('JLMModelBundle:Door')->findAll();
 
@@ -45,7 +45,7 @@ class DoorController extends Controller
      */
     public function showAction(Door $entity)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 		
         $contracts = $em->getRepository('JLMModelBundle:Contract')->findByDoor($entity,array('begin'=>'DESC'));
 
@@ -104,7 +104,7 @@ class DoorController extends Controller
 
         if ($form->isValid())
         {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('door_show', array('id' => $entity->getId())));
@@ -125,7 +125,7 @@ class DoorController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('JLMModelBundle:Door')->find($id);
 
@@ -153,7 +153,7 @@ class DoorController extends Controller
      */
     public function updateAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('JLMModelBundle:Door')->find($id);
 
@@ -197,7 +197,7 @@ class DoorController extends Controller
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('JLMModelBundle:Door')->find($id);
 
             if (!$entity) {
@@ -228,7 +228,7 @@ class DoorController extends Controller
      */
     public function geocodeAction()
     {
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     
     	$entities = $em->getRepository('JLMModelBundle:Door')->findAll();
     	$count = 0;
@@ -278,7 +278,7 @@ class DoorController extends Controller
      */
     public function mapAction()
     {
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$entities = $em->getRepository('JLMModelBundle:Door')->findAll();
     	$url = 'http://maps.googleapis.com/maps/api/staticmap?center=Paris&zoom=10&size=1800x1800&sensor=false';
     	$i = 0;

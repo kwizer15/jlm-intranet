@@ -30,7 +30,7 @@ class ProductHiddenType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
     	$transformer = new ProductToIntTransformer($this->om);
-    	$builder->prependClientTransformer($transformer);
+    	$builder->addModelTransformer($transformer);
     	
     }
 

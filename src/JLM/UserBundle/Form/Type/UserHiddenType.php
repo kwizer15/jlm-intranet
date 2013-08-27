@@ -30,7 +30,7 @@ class UserHiddenType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
     	$transformer = new UserToIntTransformer($this->om);
-    	$builder->prependClientTransformer($transformer);
+    	$builder->addModelTransformer($transformer);
     	
     }
 

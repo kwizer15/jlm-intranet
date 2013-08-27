@@ -29,7 +29,7 @@ class ProductController extends Controller
      */
     public function indexAction($page = 1, $limit = 15)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $nb = $em->getRepository('JLMModelBundle:Product')->getTotal();
         $nbPages = ceil($nb/$limit);
         $nbPages = ($nbPages < 1) ? 1 : $nbPages;
@@ -62,7 +62,7 @@ class ProductController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('JLMModelBundle:Product')->find($id);
 
@@ -121,7 +121,7 @@ class ProductController extends Controller
 
         if ($form->isValid())
         {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
@@ -162,7 +162,7 @@ class ProductController extends Controller
      */
     public function updateAction(Product $entity)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $editForm   = $this->createForm(new ProductType(), $entity);
 
         $request = $this->getRequest();
@@ -196,7 +196,7 @@ class ProductController extends Controller
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('JLMModelBundle:Product')->find($id);
 
             if (!$entity) {

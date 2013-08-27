@@ -30,7 +30,7 @@ class QuoteVariantHiddenType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
     	$transformer = new QuoteVariantToIntTransformer($this->om);
-    	$builder->prependClientTransformer($transformer);
+    	$builder->addModelTransformer($transformer);
     	
     }
 

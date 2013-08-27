@@ -18,7 +18,7 @@ class Work extends Intervention
 	/**
 	 * Devis source (pour "selon devis...")
 	 * 
-	 * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\QuoteVariant")
+	 * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\QuoteVariant", mappedBy="work")
 	 * @Assert\Valid
 	 */
 	private $quote;

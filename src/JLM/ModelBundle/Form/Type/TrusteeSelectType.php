@@ -30,7 +30,7 @@ class TrusteeSelectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
     	$transformer = new TrusteeToStringTransformer($this->om);
-    	$builder->prependClientTransformer($transformer);
+    	$builder->addModelTransformer($transformer);
     	
     }
 

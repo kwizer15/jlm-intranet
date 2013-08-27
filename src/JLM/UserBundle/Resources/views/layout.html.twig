@@ -7,10 +7,12 @@
 				<div class="page-header">
 					<h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="{{ asset('bundles/jlmuser/img/jlm-logo.png') }}"></h1>
 				</div>
-        {% for key, message in app.session.getFlashes() %}
-        <div class="{{ key }}">
-            {{ message|trans({}, 'FOSUserBundle') }}
-        </div>
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
         {% endfor %}
 
         <div class="well">

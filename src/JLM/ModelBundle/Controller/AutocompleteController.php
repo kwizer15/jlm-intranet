@@ -25,7 +25,7 @@ class AutocompleteController extends Controller
     	$request = $this->get('request');
     	$query = $request->request->get('term');
 
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$results = $em->getRepository('JLMModelBundle:City')->searchResult($query);
     	$json = json_encode($results);
     	$response = new Response();
@@ -45,7 +45,7 @@ class AutocompleteController extends Controller
     	$request = $this->get('request');
     	$query = $request->request->get('term');
     
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$results = $em->getRepository('JLMModelBundle:Person')->searchResult($query);
     	$json = json_encode($results);
     	$response = new Response();
@@ -64,7 +64,7 @@ class AutocompleteController extends Controller
     {
     	$request = $this->get('request');
     	$query = $request->request->get('term');
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$results = $em->getRepository('JLMModelBundle:Trustee')->searchResult($query);
     	$json = json_encode($results);
     	$response = new Response();
@@ -84,7 +84,7 @@ class AutocompleteController extends Controller
     {
     	$request = $this->get('request');
     	$query = $request->request->get('term');
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$results = $em->getRepository('JLMModelBundle:Site')->searchResult($query);
     	$json = json_encode($results);
     	$response = new Response();
@@ -104,7 +104,7 @@ class AutocompleteController extends Controller
     {
     	$request = $this->get('request');
     	$query = $request->request->get('term');
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$results = $em->getRepository('JLMModelBundle:Contract')->searchResult($query);
     	$json = json_encode($results);
     	$response = new Response();
@@ -121,7 +121,7 @@ class AutocompleteController extends Controller
     public function indexAction(Request $request)
     {
     	$query = $request->request->get('term');
-    	$em = $this->getDoctrine()->getEntityManager();  	
+    	$em = $this->getDoctrine()->getManager();  	
     	$repository = $request->request->get('repository');
     	$action = $request->request->get('action');
     	$action = empty($action) ? 'Result' : $action;
@@ -141,7 +141,7 @@ class AutocompleteController extends Controller
     public function doorsite(Request $request)
     {
     	$id = $request->request->get('id_site');
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$site = $em->getRepository('JLMModelBundle:Site')->find($id);
     	$results = $em->getRepository('JLMModelBundle:Door')->findBy(array('site'=>$site));
     	foreach($results as $result)

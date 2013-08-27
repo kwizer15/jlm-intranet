@@ -29,7 +29,7 @@ class PersonController extends Controller
 //  public function indexAction($page = 1)
 //  {
 //      $limit = 15;
-//      $em = $this->getDoctrine()->getEntityManager();
+//      $em = $this->getDoctrine()->getManager();
 //      $repo = $em->getRepository('JLMModelBundle:Person');
 //      $nb = $repo->getTotal();
 //      $nbPages = ceil($nb/$limit);
@@ -91,7 +91,7 @@ class PersonController extends Controller
      */
     public function createajaxAction()
     {
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
         $entity  = new Person();
         $request = $this->getRequest();
         $form    = $this->createForm(new PersonType(), $entity);
@@ -99,7 +99,7 @@ class PersonController extends Controller
 
         if ($form->isValid())
         {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             if ($entity->getAddress() !== null) 
            		$em->persist($entity->getAddress());
             $em->persist($entity);
@@ -142,7 +142,7 @@ class PersonController extends Controller
      */
     public function updateAction(Person $entity)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $editForm   = $this->createForm(new PersonType(), $entity);
 

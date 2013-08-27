@@ -21,7 +21,7 @@ class DefaultController extends Controller
 	 */
 	public function searchAction(Request $request)
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$query = $request->request->get('query');
 		if ($query > 0)
 		{
@@ -56,7 +56,7 @@ class DefaultController extends Controller
 	 */
 	public function sidebarAction()
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		return array(
 		    'today' => $em->getRepository('JLMDailyBundle:Intervention')->getCountToday(),
 			'stopped' => $em->getRepository('JLMModelBundle:Door')->getCountStopped(),

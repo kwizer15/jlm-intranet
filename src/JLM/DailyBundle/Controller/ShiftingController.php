@@ -31,7 +31,7 @@ class ShiftingController extends Controller
 	public function listAction(Technician $technician, $page = 1)
 	{
 		$limit = 10;
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 			
 		$nb = $em->getRepository('JLMDailyBundle:ShiftTechnician')->getCountWithoutTime($technician);
 		$nbPages = ceil($nb/$limit);

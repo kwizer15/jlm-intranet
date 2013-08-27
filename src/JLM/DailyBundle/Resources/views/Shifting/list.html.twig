@@ -18,7 +18,7 @@
 			<td>{{ shifting.shifting.place | nl2br}}</td>
 			<td>{{ shifting.shifting.reason | nl2br}}</td>
 			<td><a href="#modalEditTech{{ shifting.id }}" data-toggle="modal" role="button" class="btn btn-warning"><i class="icon-wrench icon-white"></i></a>
-				{% render 'JLMDailyBundle:Shifting:edit' with {'id':shifting.id} %}</td>
+				{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shifting.id})) }}</td>
 		</tr>
 	{% endfor %}
 	</tbody>

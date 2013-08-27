@@ -40,7 +40,7 @@ class OrderController extends Controller
 	public function indexAction($page = 1, $state = null)
 	{
 		$limit = 10;
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 			
 		$nb = $em->getRepository('JLMOfficeBundle:Order')->getCount($state);
 		$nbPages = ceil($nb/$limit);
@@ -110,7 +110,7 @@ class OrderController extends Controller
 	
 		if ($form->isValid())
 		{
-			$em = $this->getDoctrine()->getEntityManager();
+			$em = $this->getDoctrine()->getManager();
 			foreach ($entity->getLines() as $line)
 			{
 				$line->setOrder($entity);
@@ -168,7 +168,7 @@ class OrderController extends Controller
 	
 		if ($editForm->isValid())
 		{
-			$em = $this->getDoctrine()->getEntityManager();
+			$em = $this->getDoctrine()->getManager();
 			foreach ($entity->getLines() as $line)
 			{
 				$line->setOrder($entity);
@@ -215,7 +215,7 @@ class OrderController extends Controller
 		
 		if ($entity->getState() < 1)
 			$entity->setState(1);
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
@@ -234,7 +234,7 @@ class OrderController extends Controller
 	
 		if ($entity->getState() < 2)
 			$entity->setState(2);
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
@@ -248,7 +248,7 @@ class OrderController extends Controller
 	 */
 	public function sidebarAction()
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 	
 		return array(
 				'todo' => $em->getRepository('JLMDailyBundle:Work')->getCountOrderTodo(),
@@ -266,7 +266,7 @@ class OrderController extends Controller
 	 */
 	public function todoAction()
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$list = $em->getRepository('JLMDailyBundle:Work')->getOrderTodo();
 		return array('entities'=>$list);
 	}

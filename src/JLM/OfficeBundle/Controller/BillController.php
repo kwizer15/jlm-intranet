@@ -40,7 +40,7 @@ class BillController extends Controller
     public function indexAction($page = 1, $state = null)
     {
     	$limit = 10;
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('JLMOfficeBundle:Bill');
         $nb = $repo->getCount($state);
         	
@@ -89,7 +89,7 @@ class BillController extends Controller
     {
         $entity = new Bill();
         $entity->setCreation(new \DateTime);
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
 		$entity->setVat($vat);
         $entity->addLine(new BillLine);
@@ -173,7 +173,7 @@ class BillController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Bill();
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
         $entity->setVatTransmitter($vat);
         $form    = $this->createForm(new BillType(), $entity);
@@ -181,7 +181,7 @@ class BillController extends Controller
 		
         if ($form->isValid())
         {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $number = $entity->getCreation()->format('ym');
             $n = ($em->getRepository('JLMOfficeBundle:Bill')->getLastNumber() + 1);
             for ($i = strlen($n); $i < 4 ; $i++)
@@ -250,7 +250,7 @@ class BillController extends Controller
         $editForm->bind($request);
         
         if ($editForm->isValid()) {
-        	$em = $this->getDoctrine()->getEntityManager();
+        	$em = $this->getDoctrine()->getManager();
         	$em->persist($entity);
 
             foreach ($entity->getLines() as $key => $line)
@@ -309,7 +309,7 @@ class BillController extends Controller
     
     	if ($entity->getState() < 1)
     		$entity->setState(1);
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
     	$em->flush();
     	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
@@ -328,7 +328,7 @@ class BillController extends Controller
     
     	if ($entity->getState() < 1)
     		$entity->setState(1);
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
     	$em->flush();
     	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
@@ -346,7 +346,7 @@ class BillController extends Controller
     		return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     	if ($entity->getState() > -1)
     		$entity->setState(-1);
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
     	$em->flush();
     	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
@@ -364,7 +364,7 @@ class BillController extends Controller
     		return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     	if ($entity->getState() > 0)
     		$entity->setState(0);
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
     	$em->flush();
     	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
@@ -382,7 +382,7 @@ class BillController extends Controller
     		return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     	if ($entity->getState() == 1)
     		$entity->setState(2);
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
     	$em->flush();
     	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
@@ -396,7 +396,7 @@ class BillController extends Controller
      */
     public function sidebarAction()
     {
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     
     	return array(
     			'todo' => $em->getRepository('JLMDailyBundle:Intervention')->getCountToBilled(),
@@ -415,7 +415,7 @@ class BillController extends Controller
      */
     public function todoAction()
     {
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$list = $em->getRepository('JLMDailyBundle:Intervention')->getToBilled();
     	return array('entities'=>$list);
     }

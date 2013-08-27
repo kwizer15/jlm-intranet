@@ -21,7 +21,7 @@ class DefaultController extends Controller
      */
     public function searchAction(Request $request)
     {
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$query = $request->request->get('query');
     	$doors = $em->getRepository('JLMModelBundle:Door')->search($query);
     	$sites = $em->getRepository('JLMModelBundle:Site')->search($query);
@@ -52,7 +52,7 @@ class DefaultController extends Controller
      */
     public function upgradeAction()
     {
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$repo = $em->getRepository('JLMModelBundle:SiteContact');
     	$contacts = $repo->findAll();
     	foreach ($contacts as $contact)

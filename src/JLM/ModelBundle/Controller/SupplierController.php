@@ -28,7 +28,7 @@ class SupplierController extends Controller
     public function indexAction($page = 1)
     {
     	$limit = 15;
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $nb = $em->getRepository('JLMModelBundle:Supplier')->getTotal();
         $nbPages = ceil($nb/$limit);
         $nbPages = ($nbPages < 1) ? 1 : $nbPages;
@@ -61,7 +61,7 @@ class SupplierController extends Controller
      */
     public function showAction(Supplier $entity)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $products = $em->getRepository('JLMModelBundle:Product')->findBy(
         		array('supplier' => $entity),
         		array('designation'=>'asc')
@@ -107,7 +107,7 @@ class SupplierController extends Controller
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($entity->getAddress());
             $em->persist($entity);
             $em->flush();
@@ -131,7 +131,7 @@ class SupplierController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('JLMModelBundle:Supplier')->find($id);
 
@@ -159,7 +159,7 @@ class SupplierController extends Controller
      */
     public function updateAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('JLMModelBundle:Supplier')->find($id);
 
@@ -204,7 +204,7 @@ class SupplierController extends Controller
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('JLMModelBundle:Supplier')->find($id);
 
             if (!$entity) {

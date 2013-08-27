@@ -30,7 +30,7 @@ abstract class AbstractHiddenType extends AbstractType
     {
     	$cl = $this->getTransformerClass();
     	$transformer = new $cl($this->om);
-    	$builder->prependClientTransformer($transformer);
+    	$builder->addModelTransformer($transformer);
     	
     }
 

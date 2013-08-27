@@ -19,7 +19,7 @@
             <td>{% if entity.technician %}{{ entity.technician }}{% endif %}</td>
             <td>
                 <a href="#modalEditStandby{{ entity.id }}" data-toggle="modal" role="button" class="btn btn-warning"><i class="icon-white icon-pencil"></i></a>
-                {% render "JLMDailyBundle:Standby:edit" with { 'id' : entity.id } %}
+                {{ render(controller('JLMDailyBundle:Standby:edit',{ 'id' : entity.id })) }}
             </td>
         </tr>
     {% endfor %}

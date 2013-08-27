@@ -12,6 +12,6 @@
 	<li><a href="{{ path('transmitter_ask_new') }}"><i class="icon-plus-sign"></i> Nouvelle commandes d'émetteurs</a></li>
 	<li class="divider"></li>
 	<li class="nav-header">États</li>
-	{% render "JLMTransmitterBundle:Attribution:sidebar" %}
+	{{ render(controller('JLMTransmitterBundle:Attribution:sidebar')) }}
 </ul>
 {% endblock sidebar %}

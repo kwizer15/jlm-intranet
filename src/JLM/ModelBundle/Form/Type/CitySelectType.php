@@ -30,7 +30,7 @@ class CitySelectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
     	$transformer = new CityToStringTransformer($this->om);
-    	$builder->prependClientTransformer($transformer);
+    	$builder->addModelTransformer($transformer);
     	
     }
 

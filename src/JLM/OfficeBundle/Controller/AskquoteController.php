@@ -148,7 +148,7 @@ class AskquoteController extends PaginableController
 	 */
 	public function sidebarAction()
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('JLMOfficeBundle:AskQuote');
 		return array(
 				'all' => $repo->getTotal(),

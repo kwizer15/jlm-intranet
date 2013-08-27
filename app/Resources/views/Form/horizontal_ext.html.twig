@@ -1,0 +1,7 @@
+{% extends ':Form:horizontal.html.twig' %}
+
+{% block datepicker_widget %}
+{% spaceless %}
+<div class="input-prepend"><span class="add-on"><i class="icon-calendar"></i></span>{{ block('form_widget_simple') }}</div>
+{% endspaceless %}
+{% endblock datepicker_widget %}

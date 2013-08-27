@@ -6,12 +6,12 @@
     {% for entity in entities %}
 	<li>
 		<a href="#modalEdit{{ entity.id }}" role="button" data-toggle="modal">{{ entity.name }}</a>
-		{% render 'JLMModelBundle:TransmitterType:edit' with {'id':entity.id} %}
+		{{ render(controller('JLMModelBundle:TransmitterType:edit',{'id':entity.id})) }}
 	</li>
     {% endfor %}
 </ul>
 <div class="form-actions">
 <a href="#modalNew" class="btn btn-primary" role="button" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Créer un nouveau type d'emetteur</a>
-{% render 'JLMModelBundle:TransmitterType:new' %}
+{{ render(controller('JLMModelBundle:TransmitterType:new')) }}
 </div>
 {% endblock %}

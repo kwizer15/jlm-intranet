@@ -9,8 +9,8 @@
 	<li><a href="{{ path('askquote_new') }}"><i class="icon-plus-sign"></i> Nouvelle demande de devis</a></li>
 	<li class="divider"></li>
 	<li class="nav-header">États</li>
-	{% render "JLMOfficeBundle:Quote:sidebar" %}
+	{{ render(controller('JLMOfficeBundle:Quote:sidebar')) }}
 	<li class="divider"></li>
 	<li class="nav-header">Derniers devis</li>
-	{% render "JLMOfficeBundle:Quote:last" with {'limit': 5} %}
+	{{ render(controller('JLMOfficeBundle:Quote:last',{'limit': 5})) }}
 {% endblock sidebar %}

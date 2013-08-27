@@ -27,7 +27,7 @@ class ContactController extends Controller
 	 */
 	public function indexAction()
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$list = $em->getRepository('JLMDailyBundle:Intervention')->getToContact();
 		return array('entities'=>$list);
 	}
@@ -38,7 +38,7 @@ class ContactController extends Controller
 	 */
 	public function contactedAction(Intervention $entity)
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$entity->setContactCustomer(true);
 		$em->persist($entity);
 		$em->flush();

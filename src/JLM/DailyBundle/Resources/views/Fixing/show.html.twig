@@ -23,5 +23,5 @@
 
 {% block close_button %}
 	<a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-small btn-primary"><i class="icon-ok icon-white"></i> {% if not entity.closed %}Cloturer{% else %}Editer{% endif %}</a>
-	{% render 'JLMDailyBundle:Fixing:close' with {'id':entity.id} %}
+	{{ render(controller('JLMDailyBundle:Fixing:close',{'id':entity.id})) }}
 {% endblock %}

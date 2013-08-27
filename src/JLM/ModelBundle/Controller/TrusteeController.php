@@ -31,7 +31,7 @@ class TrusteeController extends Controller
     public function indexAction($page = 1)
     {
         $limit = 15;
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('JLMModelBundle:Trustee');
         $nb = $repo->getTotal();
         $nbPages = ceil($nb/$limit);
@@ -93,7 +93,7 @@ class TrusteeController extends Controller
      */
     public function createAction()
     {
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
         $entity  = new Trustee();
         $request = $this->getRequest();
         $form    = $this->createForm(new TrusteeType(), $entity);
@@ -101,7 +101,7 @@ class TrusteeController extends Controller
 
         if ($form->isValid())
         {
-            $em = $this->getDoctrine()->getEntityManager(); 
+            $em = $this->getDoctrine()->getManager(); 
             $em->persist($entity->getAddress());
             if ($entity->getBillingAddress() !== null)
           	  $em->persist($entity->getBillingAddress());
@@ -146,7 +146,7 @@ class TrusteeController extends Controller
      */
     public function updateAction(Trustee $entity)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $editForm   = $this->createForm(new TrusteeType(), $entity);
         $deleteForm = $this->createDeleteForm($entity);
@@ -187,7 +187,7 @@ class TrusteeController extends Controller
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->remove($entity);
             $em->flush();
         }
@@ -232,14 +232,14 @@ class TrusteeController extends Controller
      */
     public function contactcreateAction(Trustee $trustee)
     {
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$entity  = new Person();
     	$request = $this->getRequest();
     	$form    = $this->createForm(new PersonType(), $entity);
     	$form->bindRequest($request);
     
     	if ($form->isValid()) {
-    		$em = $this->getDoctrine()->getEntityManager();
+    		$em = $this->getDoctrine()->getManager();
     		$trustee->addContact($entity);
     		$em->persist($entity);
 			$em->persist($trustee);

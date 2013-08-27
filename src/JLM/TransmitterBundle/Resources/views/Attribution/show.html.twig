@@ -60,13 +60,13 @@
 {% endblock %}
 
 {% block modals %}
-{% render 'JLMTransmitterBundle:Transmitter:new' with {'id':entity.id} %}
-{% render 'JLMTransmitterBundle:Series:new' with {'id':entity.id} %}
-{% render 'JLMTransmitterBundle:Replacement:new' with {'id':entity.id} %}
-{% render 'JLMTransmitterBundle:UserGroup:new' with {'id':entity.ask.site.id} %}
+{{ render(controller('JLMTransmitterBundle:Transmitter:new',{'id':entity.id})) }}
+{{ render(controller('JLMTransmitterBundle:Series:new',{'id':entity.id})) }}
+{{ render(controller('JLMTransmitterBundle:Replacement:new',{'id':entity.id})) }}
+{{ render(controller('JLMTransmitterBundle:UserGroup:new',{'id':entity.ask.site.id})) }}
 {#
 {% for  transmitter in entity.transmitters %}
-{% render 'JLMTransmitterBundle:Transmitter:edit' with {'id':transmitter.id} %}
+{{ render(controller('JLMTransmitterBundle:Transmitter:edit',{'id':transmitter.id})) }}
 {% endfor %}
 #}
 {% endblock %}

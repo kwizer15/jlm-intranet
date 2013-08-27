@@ -41,7 +41,7 @@ class ContractController extends Controller
 	 */
 	public function printallAction()
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$entities = $em->getRepository('JLMModelBundle:Contract')->findAll();
 		$today = new \DateTime();
 		

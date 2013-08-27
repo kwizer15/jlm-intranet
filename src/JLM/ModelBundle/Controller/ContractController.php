@@ -29,7 +29,7 @@ class ContractController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('JLMModelBundle:Contract')->findAll();
 
@@ -91,7 +91,7 @@ class ContractController extends Controller
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
@@ -120,7 +120,7 @@ class ContractController extends Controller
 
         if ($editForm->isValid())
         {
-        	$em = $this->getDoctrine()->getEntityManager();
+        	$em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
@@ -181,7 +181,7 @@ class ContractController extends Controller
 
         if ($editForm->isValid())
         {
-        	$em = $this->getDoctrine()->getEntityManager();
+        	$em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 

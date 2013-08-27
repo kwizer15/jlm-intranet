@@ -20,3 +20,16 @@ function number_format(number, decimals, dec_point, thousands_sep) {
     }
     return s.join(dec);
 }
+
+$(".input-money").on('change',function(){
+	$(this).val(
+		number_format(
+			parseFloat(
+				$(this).val()
+				       .replace(',','.')
+				       .replace(/[\s]{1,}/g,"")
+			),2,',',' '
+		)
+	);
+	return this;
+});

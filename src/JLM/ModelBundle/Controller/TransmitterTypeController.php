@@ -26,7 +26,7 @@ class TransmitterTypeController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('JLMModelBundle:TransmitterType')->findAll();
 
@@ -67,7 +67,7 @@ class TransmitterTypeController extends Controller
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
@@ -107,7 +107,7 @@ class TransmitterTypeController extends Controller
      */
     public function updateAction(TransmitterType $entity)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $editForm   = $this->createForm(new TransmitterTypeType(), $entity);
         $request = $this->getRequest();
 

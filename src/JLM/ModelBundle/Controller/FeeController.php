@@ -26,7 +26,7 @@ class FeeController extends Controller
 	 */
 	public function indexAction()
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$entities = $em->getRepository('JLMModelBundle:Fee')->findAll();
 		return array('entities' => $entities);
 	}
@@ -81,7 +81,7 @@ class FeeController extends Controller
 		$form->bindRequest($request);
 	
 		if ($form->isValid()) {
-			$em = $this->getDoctrine()->getEntityManager();
+			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
 			$em->flush();
 	
@@ -127,7 +127,7 @@ class FeeController extends Controller
 		$editForm->bindRequest($request);
 	
 		if ($editForm->isValid()) {
-			$em = $this->getDoctrine()->getEntityManager();
+			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
 			$em->flush();
 	

@@ -27,7 +27,7 @@ class Door
      * Batiment "officiel"
      * @var Site $site
      * 
-     * @ORM\ManyToOne(targetEntity="Site")
+     * @ORM\ManyToOne(targetEntity="Site",inversedBy="doors")
      * @Assert\Valid
      */
     private $site;

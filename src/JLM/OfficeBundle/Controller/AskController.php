@@ -47,7 +47,7 @@ abstract class AskController extends PaginableController
 	 */
 	public function sidebarAction()
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository($this->getRepositoryName());
 		return array(
 				'all' => $repo->getTotal(),

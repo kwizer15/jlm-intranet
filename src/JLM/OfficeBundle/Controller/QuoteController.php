@@ -40,7 +40,7 @@ class QuoteController extends Controller
     public function indexAction($page = 1, $state = null)
     {
     	$limit = 20;
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('JLMOfficeBundle:Quote');
         if ($state === null)
         	$nb = $repo->getTotal();
@@ -75,7 +75,7 @@ class QuoteController extends Controller
      */
     public function lastAction($limit = 10)
     {
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
 
     	$entities = $em->getRepository('JLMOfficeBundle:Quote')->findBy(
     			array(),
@@ -96,9 +96,9 @@ class QuoteController extends Controller
      */
     public function sidebarAction()
     {
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
 
-    $repo = $em->getRepository('JLMOfficeBundle:Quote');
+    	$repo = $em->getRepository('JLMOfficeBundle:Quote');
     	return array(
     			'all' => $repo->getCountState('uncanceled'),
     			'input' => $repo->getCountState(0),
@@ -118,6 +118,9 @@ class QuoteController extends Controller
      */
     public function showAction(Quote $entity)
     {
+    //	$em = $this->getDoctrine()->getManager();
+    //	$repo = $em->getRepository('JLMOfficeBundle:Quote');
+    //	$entity = $repo->getById($id);
         return array('entity'=> $entity);
     }
     
@@ -134,7 +137,7 @@ class QuoteController extends Controller
     	if (!is_object($user) || !$user instanceof UserInterface) {
     		throw new AccessDeniedException('This user does not have access to this section.');
     	}
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
     	$entity = Quote::createFromAskQuote($askquote);
     	$entity->setFollowerCp($user->getPerson()->getName());
@@ -164,7 +167,7 @@ class QuoteController extends Controller
 		
         if ($form->isValid())
         {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $lastNumber = $em->getRepository('JLMOfficeBundle:Quote')->getLastNumber();
             $entity->generateNumber($lastNumber);
             $em->persist($entity);
@@ -216,7 +219,7 @@ class QuoteController extends Controller
         $editForm->bind($request);
         
         if ($editForm->isValid()) {
-        	$em = $this->getDoctrine()->getEntityManager();
+        	$em = $this->getDoctrine()->getManager();
         	$em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
@@ -264,7 +267,7 @@ class QuoteController extends Controller
      */
     public function searchAction(Request $request)
     {
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$query = $request->request->get('query');
     	$results = $em->getRepository('JLMOfficeBundle:Quote')->search($query);
     	if (sizeof($results) == 1)
@@ -375,7 +378,7 @@ class QuoteController extends Controller
 				));
     
     		$this->get('mailer')->send($message);
-    		$em = $this->getDoctrine()->getEntityManager();
+    		$em = $this->getDoctrine()->getManager();
     		$em->persist($entity);
     		$em->flush();
     	}

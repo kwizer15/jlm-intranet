@@ -13,6 +13,19 @@ use Doctrine\ORM\EntityRepository;
 class QuoteRepository extends EntityRepository
 {
 
+	public function getById($id)
+	{
+		$qb = $this->createQueryBuilder('a')
+			->select('a')
+			->leftJoin('a.variants','b')
+			->leftJoin('b.lines','c')
+			->where('a.id = ?1')
+			
+			->setParameter(1, $id);
+		
+		return $qb->getQuery()->getSingleResult();
+	}
+	
 	public function getTotal()
 	{
 		return $this->getCountState();

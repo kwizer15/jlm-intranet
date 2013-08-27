@@ -30,7 +30,7 @@
 			<td>{{ shift.comment | nl2br}}</td>
 			<td>
 				<a href="#modalEditTech{{ shift.id }}" data-toggle="modal" role="button" class="btn btn-warning"><i class="icon-wrench icon-white"></i></a>
-				{% render 'JLMDailyBundle:Shifting:edit' with {'id':shift.id} %}
+				{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }}
 				</td>
 		</tr>
 	</tbody>
@@ -53,7 +53,7 @@
 <div class="form-actions">
     <a href="{{ previous }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
 	<a href="#modalEdit{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
-	{% render 'JLMDailyBundle:Equipment:edit' with {'id':entity.id} %}
+	{{ render(controller('JLMDailyBundle:Equipment:edit',{'id':entity.id})) }}
 	<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a>
 	{% include 'JLMDailyBundle:Intervention:delete.html.twig' with {'id':entity.id} %}
 </div>

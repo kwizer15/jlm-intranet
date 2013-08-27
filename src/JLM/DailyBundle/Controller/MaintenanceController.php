@@ -135,7 +135,7 @@ class MaintenanceController extends PaginableController
 	{
 		$date = new \DateTime;
 		$date->sub(new \DateInterval('P5M'));
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$doors = $em->getRepository('JLMModelBundle:Door')->findAll();
 		$count = 0;
 		$removed = 0;
@@ -186,7 +186,7 @@ class MaintenanceController extends PaginableController
 	 */
 	public function purgerivpAction()
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$repotrustee = $em->getRepository('JLMModelBundle:Trustee');
 		$repomain = $em->getRepository('JLMDailyBundle:Maintenance');
 		$mains = $repomain->createQueryBuilder('a')
@@ -222,7 +222,7 @@ class MaintenanceController extends PaginableController
 	 */
 	public function generateAction(Door $door)
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$other = $em->getRepository('JLMDailyBundle:Maintenance')->findOneByDoor($door);
 		if ($other === null)
 		{
@@ -253,7 +253,7 @@ class MaintenanceController extends PaginableController
 	 */
 	public function neighborAction(Door $door)
 	{
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('JLMDailyBundle:Ride');
 		$countrides = $repo->getCountRides($door);	
 		// portes offset nb, limit 50 order id

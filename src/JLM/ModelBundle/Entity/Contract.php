@@ -33,7 +33,7 @@ class Contract
     /**
      * @var Trustee $trustee
      * 
-     * @ORM\ManyToOne(targetEntity="Trustee")
+     * @ORM\ManyToOne(targetEntity="Trustee", inversedBy="contracts")
      */
     private $trustee;
     

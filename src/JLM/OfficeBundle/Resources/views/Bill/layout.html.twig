@@ -11,5 +11,5 @@
     <li><a href="{{ path('bill_new') }}"><i class="icon-plus-sign"></i> Nouvelle facture</a></li>
     <li class="divider"></li>
     <li class="nav-header">Etats</li>
-    {% render "JLMOfficeBundle:Bill:sidebar" %}
+    {{ render(controller('JLMOfficeBundle:Bill:sidebar')) }}
 {% endblock sidebar %}

@@ -68,7 +68,7 @@ class VariantController extends Controller
     
     	if ($form->isValid())
     	{
-    		$em = $this->getDoctrine()->getEntityManager();
+    		$em = $this->getDoctrine()->getManager();
     		$lines = $entity->getLines();
     		foreach ($lines as $line)
     		{
@@ -129,7 +129,7 @@ class VariantController extends Controller
 		$editForm->bind($request);
 	
 		if ($editForm->isValid()) {
-			$em = $this->getDoctrine()->getEntityManager();
+			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
 			foreach ($entity->getLines() as $key => $line)
 			{
@@ -170,7 +170,7 @@ class VariantController extends Controller
 		
 		if ($entity->getState() < 1)
 			$entity->setState(1);
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
@@ -230,7 +230,7 @@ class VariantController extends Controller
 					$entity->getNumber().'.pdf','application/pdf'
 			))
 			;
-			$em = $this->getDoctrine()->getEntityManager();
+			$em = $this->getDoctrine()->getManager();
 			if ($entity->getQuote()->getVat() == $entity->getQuote()->getVatTransmitter())
 				$message->attach(\Swift_Attachment::fromPath(
 						$this->get('kernel')->getRootDir().'/../web/bundles/jlmoffice/pdf/attestation.pdf'
@@ -273,7 +273,7 @@ class VariantController extends Controller
 		if ($entity->getState() < 0)
 			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
 			
@@ -300,7 +300,7 @@ class VariantController extends Controller
 	
 		if ($entity->getState() < 5)
 			$entity->setState(0);
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
@@ -319,7 +319,7 @@ class VariantController extends Controller
 	
 		if ($entity->getState() < 3)
 			$entity->setState(3);
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
@@ -334,7 +334,7 @@ class VariantController extends Controller
 	public function cancelAction(QuoteVariant $entity)
 	{
 		$entity->setState(-1);
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
@@ -353,7 +353,7 @@ class VariantController extends Controller
 	
 		if ($entity->getState() < 4)
 			$entity->setState(4);
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
@@ -373,7 +373,7 @@ class VariantController extends Controller
 		if ($entity->getState() < 5)
 			$entity->setState(5);
 		
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		
 		
 		
@@ -407,7 +407,7 @@ class VariantController extends Controller
 		if ($entity->getState() < 5)
 			$entity->setState(5);
 		
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		if ($entity->getWork() === null)
 		{			
 			// Création de la ligne travaux pré-remplie

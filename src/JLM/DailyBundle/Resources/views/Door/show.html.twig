@@ -32,7 +32,7 @@
 
 <div class="form-actions">
 <a href="#modalNewFixing{{ entity.id }}" class="btn btn-warning" role="button" data-toggle="modal"><i class="icon-wrench icon-white"></i> Dépannage</a>
-{% render 'JLMDailyBundle:Fixing:new' with {'id':entity.id} %}
+{{ render(controller('JLMDailyBundle:Fixing:new',{'id':entity.id})) }}
 	<a href="{{ path('work_new_door',{'id': entity.id}) }}" class="btn btn-primary"><i class="icon-wrench icon-white"></i> Travaux</a>
 	{% if false %}<a href="{{ path('maintenance_generate', { 'id':entity.id } ) }}" class="btn"><i class="icon-wrench"></i> Entretien</a>{% endif %}
 	{% if entity.stopped %}<a href="{{ path('daily_door_unstop',{'id': entity.id}) }}" class="btn btn-success"><i class="icon-ok icon-white"></i> Mettre en service</a>
@@ -85,7 +85,7 @@
 					{% if interv.shiftTechnicians|length < 4%}
 						{% for shift in interv.shiftTechnicians %}
 						<a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a><br>
-						{% render 'JLMDailyBundle:Shifting:edit' with {'id':shift.id} %}
+						{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }}
 						{% endfor %}
 					{% else %}
 					<div class="btn-group">
@@ -99,7 +99,7 @@
 						{% endfor %}
 					    </ul>
 					    {% for shift in interv.shiftTechnicians %}
-					    	{% render 'JLMDailyBundle:Shifting:edit' with {'id':shift.id} %}
+					    	{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }}
 					    {% endfor %}
 					 </div>
 					{% endif %}

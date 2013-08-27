@@ -11,5 +11,5 @@
 	<li><a href="{{ path('askquote_new') }}"><i class="icon-plus-sign"></i> Nouvelle demande de devis</a></li>
 	<li class="divider"></li>
 	<li class="nav-header">États</li>
-	{% render "JLMOfficeBundle:Askquote:sidebar" %}
+	{{ render(controller('JLMOfficeBundle:Askquote:sidebar')) }}
 {% endblock sidebar %}
