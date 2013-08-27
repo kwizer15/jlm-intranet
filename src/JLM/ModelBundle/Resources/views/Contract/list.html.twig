@@ -34,13 +34,13 @@
 				{# <a href="{{ path('contract_stop',{'id' : contract.id }) }}" class="btn btn-danger">Arrêter</a> #}
 				<a href="#modalStop{{ contract.id }}" class="btn btn-danger" role="button" data-toggle="modal">Arrêter</a>
 				{% endif %}
-				{{ render(controller('JLMModelBundle:Contract:stop',{'id':contract.id})) }}
+				
 			</td>
 			<td>{{ contract.fee|number_format(2,',',' ') }} €</td>
 			{#<td><a href="{{ path('contract_edit',{'id':contract.id}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a> #}
 			{# <td><a href="#modalContractEdit" class="btn btn-warning" role="button" data-toggle="modal">Editer</a> #}
 			<td><a href="#modalEdit{{ contract.id }}" class="btn btn-warning" role="button" data-toggle="modal">Editer</a>
-			{{ render(controller('JLMModelBundle:Contract:edit',{'id':contract.id})) }}
+			
 			</td>
 		</tr>
 		{% endfor %}

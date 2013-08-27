@@ -12,6 +12,7 @@ use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Entity\Contract;
 use JLM\ModelBundle\Form\Type\DoorType;
 use JLM\ModelBundle\Form\Type\ContractType;
+use JLM\ModelBundle\Form\Type\ContractStopType;
 
 /**
  * Door controller.
@@ -55,11 +56,21 @@ class DoorController extends Controller
         $contractNew->setTrustee($entity->getSite()->getTrustee());
         $contractNew->setBegin(new \DateTime);
         $form_contractNew   = $this->createForm(new ContractType(), $contractNew);
-         
+
+        // Formulaires d'edition des contrat
+        $formContractEdits = $form_contractStops = array();
+        foreach ($contracts as $contract)
+        {
+        	$form_contractEdits[] = $this->get('form.factory')->createNamed('contractEdit'.$contract->getId(),new ContractType(), $contract)->createView();
+        	$form_contractStops[] = $this->get('form.factory')->createNamed('contractStop'.$contract->getId(),new ContractStopType(), $contract)->createView();
+        }
+        
         return array(
             'entity'      => $entity,
         	'contracts'	  => $contracts,
-        	'form_contractNew'   => $form_contractNew->createView()
+        	'form_contractNew'   => $form_contractNew->createView(),
+        	'form_contractEdits' => $form_contractEdits,
+        	'form_contractStops' => $form_contractStops,
         );
     }
 

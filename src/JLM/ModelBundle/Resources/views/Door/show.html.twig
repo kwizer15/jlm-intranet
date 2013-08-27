@@ -38,40 +38,6 @@
 	{% endif %}
 	</div>
 </div>
-{#
-{% if entity.site.contacts|length > 0 %}
-<h2><small>Interlocuteurs</small></h2>
-<table class="table table-striped">
-<thead>
-<tr>
-<th>Nom</th>
-<th>Rôle</th>
-<th>Téléphone</th>
-<th>Fax</th>
-<th>e-mail</th>
-</tr>
-</thead>
-<tbody>
-{% for contact in entity.site.contacts %}
-<tr>
-<td><a href="{{ path('sitecontact_show',{'id':contact.id}) }}">{{ contact.person.name }}</a></td>
-<td>{{ contact.role }}</td>
-<td>
-	<ul class="unstyled">
-	{% if contact.person.fixedPhone %}<li>{{ contact.person.fixedPhone }}</li>{% endif %}
-	{% if contact.person.mobilePhone %}<li>{{ contact.person.mobilePhone }}</li>{% endif %}
-	</ul>
-</td>
-<td>{{ contact.person.fax }}</td>
-<td><a href="mailto:{{ contact.person.email }}">{{ contact.person.email }}</a></td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
-{% else %}
-<h2><small>Aucun interlocuteur</small></h2>
-{% endif %}
-#}
 
 <div class="form-actions">
 	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche affaire</a>
@@ -81,6 +47,21 @@
 {% include 'JLMModelBundle:Contract:list.html.twig' with { 'contracts':contracts } %}
 <div class="form-actions">
 	<a href="#modalNew" class="btn btn-success" role="button" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Ajouter un contrat</a>
-{{ render(controller('JLMModelBundle:Contract:new',{'id':entity.id})) }}
 </div>
+{% include 'JLMModelBundle:Contract:new.html.twig' with {'entity':entity,'form':form_contractNew } %}
+{% for key,contract in contracts %}
+	{% include 'JLMModelBundle:Contract:edit.html.twig' with {'entity':contract,'edit_form':form_contractEdits[key] } %}
+	{% include 'JLMModelBundle:Contract:stop.html.twig' with {'entity':contract,'form':form_contractStops[key] } %}
+{% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{{ form_javascript(form_contractNew) }}
+{% for form in form_contractEdits %}
+{{ form_javascript(form) }}
+{% endfor %}
+{% for form in form_contractStops %}
+{{ form_javascript(form) }}
+{% endfor %}
 {% endblock %}
