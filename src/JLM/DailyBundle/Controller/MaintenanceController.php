@@ -35,27 +35,8 @@ class MaintenanceController extends AbstractInterventionController
 	 */
 	public function listAction($page = 1)
 	{
-		return $this->pagination('JLMDailyBundle:Maintenance','Opened',$page,10,'maintenance_list_page');
-		
-		
 		// @todo Trier par ville, date...
-		$limit = 15;
-		$em = $this->getDoctrine()->getManager();
-		$nb = $em->getRepository('JLMDailyBundle:Maintenance')->getCountOpened();
-		$nbPages = ceil($nb/$limit);
-		$nbPages = ($nbPages < 1) ? 1 : $nbPages;
-		$offset = ($page-1) * $limit;
-		if ($page < 1 || $page > $nbPages)
-			throw $this->createNotFoundException('Page inexistante (page '.$page.'/'.$nbPages.')');
-
-		$entities = $em->getRepository('JLMDailyBundle:Maintenance')->getPrioritary($limit,$offset);
-		return array(
-				'entities'      => $entities,
-				'page'     => $page,
-				'nbPages'  => $nbPages,
-		);
-		
-
+		return $this->pagination('JLMDailyBundle:Maintenance','Opened',$page,10,'maintenance_list_page');
 	}
 	
 	/**

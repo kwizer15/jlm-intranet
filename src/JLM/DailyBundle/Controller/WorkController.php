@@ -29,16 +29,13 @@ class WorkController extends AbstractInterventionController
 {
 	/**
 	 * @Route("/list", name="work_list")
+	 * @Route("/list/{page}", name="work_list_page")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function listAction()
+	public function listAction($page = 1)
 	{
-		$em = $this->getDoctrine()->getManager();
-		$entities = $em->getRepository('JLMDailyBundle:Work')->getPrioritary();
-		return array(
-				'entities'      => $entities,
-		);
+		return $this->pagination('JLMDailyBundle:Work','Opened',$page,10,'work_list_page');
 	}
 	
 	/**
