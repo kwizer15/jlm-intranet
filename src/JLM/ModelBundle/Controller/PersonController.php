@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -89,13 +90,12 @@ class PersonController extends Controller
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function createajaxAction()
+    public function createajaxAction(Request $request)
     {
     	$em = $this->getDoctrine()->getManager();
         $entity  = new Person();
-        $request = $this->getRequest();
         $form    = $this->createForm(new PersonType(), $entity);
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid())
         {
@@ -140,15 +140,12 @@ class PersonController extends Controller
      * @Template("JLMModelBundle:Trustee:editajax.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function updateAction(Person $entity)
+    public function updateAction(Request $request, Person $entity)
     {
         $em = $this->getDoctrine()->getManager();
 
         $editForm   = $this->createForm(new PersonType(), $entity);
-
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
         	if ($entity->getAddress() !== null)

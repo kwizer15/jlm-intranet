@@ -51,7 +51,7 @@ $("#jlm_modelbundle_sitecontacttype_person_selector")
 			        	        	$("#modalNewPerson .modal-body").html(html);
 				        	        if ($("#modalNewPerson .modal-body .id").html() > 0)
 				        	        {
-				        	        	$("#jlm_modelbundle_sitecontacttype_person_selector").prev().val($("#modalNewPerson .modal-body .id").html());
+				        	        	$("#jlm_modelbundle_sitecontacttype_person").val($("#modalNewPerson .modal-body .id").html());
 						        	    $("#jlm_modelbundle_sitecontacttype_person_selector").val($("#modalNewPerson .modal-body .name").html());
 						        	    $("#modalNewPerson").modal('hide').remove();
 				        	        }
