@@ -78,7 +78,7 @@ class FeeController extends Controller
 		$entity  = new Fee();
 		$request = $this->getRequest();
 		$form    = $this->createForm(new FeeType(), $entity);
-		$form->bindRequest($request);
+		$form->handleRequest($request);
 	
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
@@ -124,7 +124,7 @@ class FeeController extends Controller
 	{
 		$editForm   = $this->createForm(new FeeType(), $entity);	
 		$request = $this->getRequest();
-		$editForm->bindRequest($request);
+		$editForm->handleRequest($request);
 	
 		if ($editForm->isValid()) {
 			$em = $this->getDoctrine()->getManager();

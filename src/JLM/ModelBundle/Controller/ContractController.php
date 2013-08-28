@@ -88,7 +88,7 @@ class ContractController extends Controller
         $entity  = new Contract();
         $request = $this->getRequest();
         $form    = $this->get('form.factory')->createNamed('contractEdit'.$entity->getId(),new ContractType(), $entity);
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -116,7 +116,7 @@ class ContractController extends Controller
     {
     	$editform   = $this->get('form.factory')->createNamed('contractStop'.$entity->getId(),new ContractStopType(), $entity);
         $request = $this->getRequest();
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid())
         {
@@ -177,7 +177,7 @@ class ContractController extends Controller
     {
         $editForm   = $this->createForm(new ContractType(), $entity);
         $request = $this->getRequest();
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid())
         {

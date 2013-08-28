@@ -97,7 +97,7 @@ class TrusteeController extends Controller
         $entity  = new Trustee();
         $request = $this->getRequest();
         $form    = $this->createForm(new TrusteeType(), $entity);
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid())
         {
@@ -153,7 +153,7 @@ class TrusteeController extends Controller
 
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
         	$em->persist($entity->getAddress());
@@ -184,7 +184,7 @@ class TrusteeController extends Controller
         $form = $this->createDeleteForm($entity);
         $request = $this->getRequest();
 
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -236,7 +236,7 @@ class TrusteeController extends Controller
     	$entity  = new Person();
     	$request = $this->getRequest();
     	$form    = $this->createForm(new PersonType(), $entity);
-    	$form->bindRequest($request);
+    	$form->handleRequest($request);
     
     	if ($form->isValid()) {
     		$em = $this->getDoctrine()->getManager();

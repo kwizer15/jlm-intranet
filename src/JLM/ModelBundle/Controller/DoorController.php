@@ -111,7 +111,7 @@ class DoorController extends Controller
         $entity  = new Door();
         $request = $this->getRequest();
         $form    = $this->createForm(new DoorType(), $entity);
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid())
         {
@@ -177,7 +177,7 @@ class DoorController extends Controller
 
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -205,7 +205,7 @@ class DoorController extends Controller
         $form = $this->createDeleteForm($id);
         $request = $this->getRequest();
 
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();

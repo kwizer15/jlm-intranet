@@ -64,7 +64,7 @@ class TransmitterTypeController extends Controller
         $entity  = new TransmitterType();
         $request = $this->getRequest();
         $form    = $this->createForm(new TransmitterTypeType(), $entity);
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -111,7 +111,7 @@ class TransmitterTypeController extends Controller
         $editForm   = $this->createForm(new TransmitterTypeType(), $entity);
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);

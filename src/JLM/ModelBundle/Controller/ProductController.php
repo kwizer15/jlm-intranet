@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -110,14 +111,13 @@ class ProductController extends Controller
      * @Template("JLMModelBundle:Product:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $entity  = new Product();
-        $request = $this->getRequest();
  
         
         $form    = $this->createForm(new ProductType(), $entity);
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid())
         {
@@ -160,13 +160,12 @@ class ProductController extends Controller
      * @Template("JLMModelBundle:Product:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function updateAction(Product $entity)
+    public function updateAction(Request $request, Product $entity)
     {
         $em = $this->getDoctrine()->getManager();
         $editForm   = $this->createForm(new ProductType(), $entity);
 
-        $request = $this->getRequest();
-        $editForm->bindRequest($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -193,7 +192,7 @@ class ProductController extends Controller
         $form = $this->createDeleteForm($id);
         $request = $this->getRequest();
 
-        $form->bindRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
