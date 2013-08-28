@@ -12,9 +12,8 @@
 </form>
 {% endblock %}
 
-{% block javascripts %}
+{% block javascripts_script %}
 {{ parent() }}
-<script>
 $("#jlm_modelbundle_sitecontacttype_person_selector")
 .autocomplete({
 	source: function(request,response){
@@ -24,6 +23,7 @@ $("#jlm_modelbundle_sitecontacttype_person_selector")
 				request,
 				function( data ) { 
 					data.push({ 'id':'-1', 'label':'+ Ajouter un contact' });
+					console.log(data);
 					response( data );
 				},
 				'json'
@@ -76,5 +76,4 @@ $("#jlm_modelbundle_sitecontacttype_person_selector")
 		return false;
 	}
 });
-</script>
 {% endblock %}
