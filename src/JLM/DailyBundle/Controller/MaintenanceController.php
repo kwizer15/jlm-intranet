@@ -16,14 +16,14 @@ use JLM\DailyBundle\Form\Type\ExternalBillType;
 use JLM\DailyBundle\Form\Type\InterventionCancelType;
 use JLM\DailyBundle\Form\Type\ShiftingEditType;
 use JLM\ModelBundle\Entity\Door;
-use JLM\DefaultBundle\Controller\PaginableController;
+
 
 /**
  * Maintenance controller.
  *
  * @Route("/maintenance")
  */
-class MaintenanceController extends PaginableController
+class MaintenanceController extends AbstractInterventionController
 {
 	/**
 	 * Finds and displays a InterventionPlanned entity.
@@ -67,22 +67,7 @@ class MaintenanceController extends PaginableController
 	 */
 	public function showAction(Maintenance $entity)
 	{
-		$st = new ShiftTechnician();
-		$st->setBegin(new \DateTime);
-		$form   = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(),new AddTechnicianType(), $st);
-		$form_externalbill = $this->createForm(new ExternalBillType(), $entity);
-		$form_cancel = $this->createForm(new InterventionCancelType(), $entity);
-		$shiftTechs = $entity->getShiftTechnicians();
-		$formsEditTech = array();
-		foreach ($shiftTechs as $shiftTech)
-			$formsEditTech[] = $this->get('form.factory')->createNamed('shiftTechEdit'.$shiftTech->getId(),new ShiftingEditType(), $shiftTech)->createView();
-		return array(
-				'entity' => $entity,
-				'form_newtech'   => $form->createView(),
-				'form_externalbill' => $form_externalbill->createView(),
-				'form_cancel' => $form_cancel->createView(),
-				'forms_editTech' => $formsEditTech,
-		);
+		return $this->show($entity);
 	}
 	
 	/**
@@ -182,73 +167,6 @@ class MaintenanceController extends PaginableController
 		}
 		$em->flush();
 		return array('count' => $count,'removed' => $removed);
-	}
-	
-	/**
-	 * Purge entretiens RIVP
-	 *
-	 * @Route("/purgerivp", name="maintenance_purgerivp")
-	 * @Template()
-	 */
-	public function purgerivpAction()
-	{
-		$em = $this->getDoctrine()->getManager();
-		$repotrustee = $em->getRepository('JLMModelBundle:Trustee');
-		$repomain = $em->getRepository('JLMDailyBundle:Maintenance');
-		$mains = $repomain->createQueryBuilder('a')
-			->select('a,b,c')
-			->leftJoin('a.door','b')
-			->leftJoin('b.site','c')
-			->leftJoin('c.trustee','d')
-			->where('d.id = ?1')
-			->orWhere('d.id = ?2')
-			->setParameter(1, 1)
-			->setParameter(2, 2)
-			->getQuery()
-			->getResult()
-		;
-		$count = 0;
-		foreach ($mains as $main)
-		{
-			if (!$main->hasTechnician())
-			{
-				$em->remove($main);
-				$count++;
-			}
-		}
-		$em->flush();
-		return array('count' => $count);
-	}
-	
-	/**
-	 * Creation des entretiens a faire
-	 *
-	 * @Route("/generate/{id}", name="maintenance_generate")
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function generateAction(Door $door)
-	{
-		$em = $this->getDoctrine()->getManager();
-		$other = $em->getRepository('JLMDailyBundle:Maintenance')->findOneByDoor($door);
-		if ($other === null)
-		{
-			$main = new Maintenance;
-			$main->setCreation(new \DateTime);
-			$main->setPlace($door.'');
-			$main->setReason('Visite d\'entretien');
-			$main->setContract($door->getActualContract());
-			$main->setDoor($door);
-			$main->setPriority(5);
-			
-		
-			$em->persist($main);
-			$em->flush();
-			
-			$id = $main->getId();
-		}
-		else
-			$id = $other->getId();
-		return $this->redirect($this->generateUrl('maintenance_show', array('id' => $id)));
 	}
 	
 	/**

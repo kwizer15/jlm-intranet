@@ -24,7 +24,7 @@ use JLM\ModelBundle\Entity\Door;
  *
  * @Route("/fixing")
  */
-class FixingController extends Controller
+class FixingController extends AbstractInterventionController
 {
 	/**
 	 * Finds and displays a InterventionPlanned entity.
@@ -51,22 +51,7 @@ class FixingController extends Controller
 	 */
 	public function showAction(Fixing $entity)
 	{
-		$st = new ShiftTechnician();
-		$st->setBegin(new \DateTime);
-		$form   = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(),new AddTechnicianType(), $st);
-		$form_externalbill = $this->createForm(new ExternalBillType(), $entity);
-		$form_cancel = $this->createForm(new InterventionCancelType(), $entity);
-		$shiftTechs = $entity->getShiftTechnicians();
-		$formsEditTech = array();
-		foreach ($shiftTechs as $shiftTech)
-			$formsEditTech[] = $this->get('form.factory')->createNamed('shiftTechEdit'.$shiftTech->getId(),new ShiftingEditType(), $shiftTech)->createView();
-		return array(
-				'entity' => $entity,
-				'form_newtech'   => $form->createView(),
-				'form_externalbill' => $form_externalbill->createView(),
-				'form_cancel' => $form_cancel->createView(),
-				'forms_editTech' => $formsEditTech,
-		);
+		return $this->show($entity);
 	}
 	
 	/**
