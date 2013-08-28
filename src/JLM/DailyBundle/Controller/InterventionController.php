@@ -177,13 +177,13 @@ class InterventionController extends Controller
 	 */
 	public function toworkAction(Intervention $entity)
 	{
+		$em = $this->getDoctrine()->getManager();
 		$workCat = $em->getRepository('JLMDailyBundle:WorkCategory')->find(1);
 		$workObj = $em->getRepository('JLMDailyBundle:WorkObjective')->find(1);
 		$work = new Work;
 		$work->populateFromIntervention($entity);
 		$work->setCategory($workCat);
 		$work->setObjective($workObj);
-		$em = $this->getDoctrine()->getManager();
 		$em->persist($work);
 		$entity->setWork($work);
 		$em->persist($entity);
