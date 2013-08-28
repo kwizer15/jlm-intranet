@@ -69,6 +69,7 @@ class ShiftingController extends Controller
 				'shifting' => $shifting,
 				'entity' => $entity,
 				'form'   => $form->createView(),
+				'id' => $shifting->getId(),
 		);
 	}
 	

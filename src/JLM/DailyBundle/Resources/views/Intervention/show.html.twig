@@ -316,7 +316,6 @@
 						<td>{{ shift.comment | nl2br}}</td>
 						<td>
 							<a href="#modalEditTech{{ shift.id }}" data-toggle="modal" role="button" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a>
-									{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }}
 							<a href="#modalDeleteTech{{ shift.id }}" data-toggle="modal" role="button" class="btn btn-danger"><i class="icon-white icon-remove"></i></a>
 							<div id="modalDeleteTech{{ shift.id }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTech{{ shift.id }}Label" aria-hidden="true">
 								<div class="modal-header">
@@ -333,8 +332,6 @@
 							</div>
 						</td>
 					</tr>
-			
-			
 					{% endfor %}
 					</tbody>
 				<tfoot>
@@ -353,7 +350,6 @@
 			<p>Aucun</p>
 			{% endif %}
 			<a href="#modalAddTech{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-small btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter un déplacement technicien</a>
-			{{ render(controller('JLMDailyBundle:Shifting:new',{'id':entity.id})) }}
 	</div>
 </div>
     	
@@ -361,7 +357,23 @@
 <div class="form-actions">
 	{% block actions %}
 			<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a>
-			{% include 'JLMDailyBundle:Intervention:delete.html.twig' with {'id':entity.id} %}
 	{% endblock %}
 </div>
+{% endblock %}
+
+{% block modals %}
+{% include 'JLMDailyBundle:Intervention:delete.html.twig' with {'id':entity.id} %}
+{% include 'JLMDailyBundle:Shifting:new.html.twig' with {'id':entity.id, 'form':form_newtech} %}
+{% for key,shift in entity.shiftTechnicians %}
+	{% include 'JLMDailyBundle:Shifting:edit.html.twig' with {'entity':shift, 'form':forms_editTech[key]} %}
+{#}	{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }} {#}
+{% endfor %}
+{% endblock modals %}
+
+{% block javascripts %}
+{{ parent() }}
+{{ form_javascript(form_newtech) }}
+{% for form_editTech in forms_editTech %}
+	{{ form_javascript(form_editTech) }}
+{% endfor %}
 {% endblock %}
