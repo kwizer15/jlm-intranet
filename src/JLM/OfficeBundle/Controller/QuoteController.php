@@ -91,6 +91,7 @@ class QuoteController extends Controller
     /**
      * sidebar Quote entities.
      *
+     * @deprecated
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -99,13 +100,13 @@ class QuoteController extends Controller
     	$em = $this->getDoctrine()->getManager();
 
     	$repo = $em->getRepository('JLMOfficeBundle:Quote');
-    	return array(
+    	return array('count' => array(
     			'all' => $repo->getCountState('uncanceled'),
     			'input' => $repo->getCountState(0),
     			'wait' => $repo->getCountState(1),
     			'send' => $repo->getCountState(3),
     			'given' => $repo->getCountState(5),
-    	);
+    	));
     }
     
 

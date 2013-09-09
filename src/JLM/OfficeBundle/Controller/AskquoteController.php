@@ -150,10 +150,10 @@ class AskquoteController extends PaginableController
 	{
 		$em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('JLMOfficeBundle:AskQuote');
-		return array(
+		return array('count'=>array(
 				'all' => $repo->getTotal(),
 				'untreated' => $repo->getCountUntreated(),
 				'treated' => $repo->getCountTreated(),
-		);
+		));
 	}
 }

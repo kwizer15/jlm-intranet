@@ -250,13 +250,13 @@ class OrderController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 	
-		return array(
+		return array('count' => array(
 				'todo' => $em->getRepository('JLMDailyBundle:Work')->getCountOrderTodo(),
 				'all' => $em->getRepository('JLMOfficeBundle:Order')->getTotal(),
 				'input' => $em->getRepository('JLMOfficeBundle:Order')->getCount(0),
 				'ordered' => $em->getRepository('JLMOfficeBundle:Order')->getCount(1),
 				'ready' => $em->getRepository('JLMOfficeBundle:Order')->getCount(2),
-		);
+		));
 	}
 	
 	/**

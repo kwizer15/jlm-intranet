@@ -398,14 +398,14 @@ class BillController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     
-    	return array(
+    	return array('count'=>array(
     			'todo' => $em->getRepository('JLMDailyBundle:Intervention')->getCountToBilled(),
     			'all' => $em->getRepository('JLMOfficeBundle:Bill')->getTotal(),
     			'input' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(0),
     			'send' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(1),
     			'payed' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(2),
     			'canceled' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(-1),
-    	);
+    	));
     }
     
     /**
