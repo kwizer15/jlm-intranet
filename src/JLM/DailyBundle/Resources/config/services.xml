@@ -8,5 +8,9 @@
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <tag name="form.type" alias="intervention_hidden" />
         </service>
+        <service id="jlm_daily.eventlistener.action_listener" class="JLM\DailyBundle\EventListener\DateSearchListener">
+        	<argument type="service" id="form.factory"/>
+    		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
+		</service>
     </services>    
 </container>

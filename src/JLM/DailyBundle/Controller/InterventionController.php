@@ -344,6 +344,7 @@ class InterventionController extends Controller
 				'd2' => ($date2 === null) ? null : $d2,
 				'entities' => array_merge($equipment,$intervs),
 				'days' => $days,
+				'layout' => array('form_searchByDate_date' => $d1)
 		);
 	}
 	
