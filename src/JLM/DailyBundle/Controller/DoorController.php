@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Door;
+use JLM\DailyBundle\Entity\Fixing;
+use JLM\DailyBundle\Form\Type\FixingType;
 
 /**
  * Fixing controller.
@@ -43,8 +45,16 @@ class DoorController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$doors = $em->getRepository('JLMModelBundle:Door')->getStopped();
+		$fixingForms = array();
+		foreach ($doors as $door)
+		{
+			$entity = new Fixing();
+			$entity->setDoor($door);
+			$fixingForms[] = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(),new FixingType(), $entity)->createView();
+		}
 		return array(
 				'entities' => $doors,
+				'fixing_forms' => $fixingForms,
 		);
 	}
 	
