@@ -17,8 +17,15 @@ class QuoteRepository extends EntityRepository
 	{
 		$qb = $this->createQueryBuilder('a')
 			->select('a')
-			->leftJoin('a.variants','b')
-			->leftJoin('b.lines','c')
+			->leftJoin('a.door','b')
+			->leftJoin('b.site','c')
+			->leftJoin('c.address','d')
+			->leftJoin('d.city','e')
+			->leftJoin('b.type','f')
+			->leftJoin('a.contact','g')
+			->leftJoin('a.contactPerson','h')
+			->leftJoin('a.variants','i')
+			->leftJoin('i.lines','j')
 			->where('a.id = ?1')
 			
 			->setParameter(1, $id);
@@ -72,9 +79,10 @@ class QuoteRepository extends EntityRepository
 	{
 		if (!isset($this->countState))
 		{
-			$qb = $this->createQueryBuilder('q')
-				->select('q,v')
-				->leftJoin('q.variants','v')
+			$qb = $this->createQueryBuilder('a')
+				->select('a,b,c')
+				->leftJoin('a.variants','b')
+				->leftJoin('a.contactPerson','c')
 			;
 			$result = $qb->getQuery()->getResult();
 			$this->countState = array(0=>0, 1=>0, 2=>0, 3=>0, 4=>0, 5=>0);
@@ -123,12 +131,14 @@ class QuoteRepository extends EntityRepository
 		else
 			$state = array($state);
 		$qb = $this->createQueryBuilder('a')
-				->select('a,b,c,d,e,f')
+				->select('a,b,c,d,e,f,g,h')
 				->leftJoin('a.door','b')
 				->leftJoin('b.site','c')
 				->leftJoin('c.address','d')
 				->leftJoin('d.city','e')
 				->leftJoin('b.type','f')
+				->leftJoin('a.contact','g')
+				->leftJoin('a.contactPerson','h')
 				->orderBy('a.number','desc')
 		;
 		$results = $qb->getQuery()->getResult();

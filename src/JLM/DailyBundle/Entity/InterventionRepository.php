@@ -9,28 +9,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class InterventionRepository extends EntityRepository
 {
+	/**
+	 * @deprecated
+	 * @param int $limit
+	 * @param int $offset
+	 */
 	public function getPrioritary($limit = null, $offset = null)
 	{
-
-		$qb = $this->createQueryBuilder('i')
-			->select('i,s,d,a,b,c')
-			->leftJoin('i.shiftTechnicians','s')
-			->leftJoin('i.door','d')
-			->leftJoin('d.site','a')
-			->leftJoin('a.address','b')
-			->leftJoin('b.city','c')
-			->where('i.mustBeBilled IS NULL')
-			->addOrderBy('i.close','asc')
-			->addOrderBy('s.creation','asc')
-			->addOrderBy('i.priority','desc')
-			->addOrderBy('i.creation','asc');
-		if ($offset !== null)
-			$qb->setFirstResult( $offset );
-		if ($limit !== null)
-   			$qb->setMaxResults( $limit );
-		return $qb->getQuery()->getResult();
+		return $this->getOpened($limit, $offset);
+		
 	}
 	
+	/**
+	 * @return int
+	 */
 	public function getCountOpened()
 	{
 		$qb = $this->createQueryBuilder('i')
@@ -40,6 +32,12 @@ class InterventionRepository extends EntityRepository
 			->getSingleScalarResult();
 	}
 	
+	/**
+	 * 
+	 * @param \DateTime $date1
+	 * @param \DateTime $date2
+	 * @return int
+	 */
 	public function getCountWithDate(\DateTime $date1, \DateTime $date2)
 	{
 		$qb = $this->createQueryBuilder('i')
@@ -52,6 +50,12 @@ class InterventionRepository extends EntityRepository
 	
 	}
 	
+	/**
+	 * 
+	 * @param \DateTime $date1
+	 * @param \DateTime $date2
+	 * @return ArrayCollection
+	 */
 	public function getWithDate(\DateTime $date1, \DateTime $date2)
 	{
 		$qb = $this->createQueryBuilder('i')
@@ -209,6 +213,48 @@ class InterventionRepository extends EntityRepository
 	
 	public function getOpened($limit = null, $offset = null)
 	{
-		return $this->getPrioritary($limit, $offset);
+		$qb = $this->createQueryBuilder('a')
+		->select('a,b,c,d,e,f,g,h,i')
+		->leftJoin('a.shiftTechnicians','b')
+		->leftJoin('a.door','c')
+		->leftJoin('c.site','d')
+		->leftJoin('c.type','e')
+		->leftJoin('c.contracts','f')
+		->leftJoin('d.trustee','g')
+		->leftJoin('d.address','h')
+		->leftJoin('h.city','i')
+		->where('a.mustBeBilled IS NULL')
+		->addOrderBy('a.close','asc')
+		->addOrderBy('b.creation','asc')
+		->addOrderBy('a.priority','desc')
+		->addOrderBy('a.creation','asc');
+		if ($offset !== null)
+			$qb->setFirstResult( $offset );
+		if ($limit !== null)
+			$qb->setMaxResults( $limit );
+		return $qb->getQuery()->getResult();
+	}
+	
+	protected function leftJoins()
+	{
+		return $this->createQueryBuilder('a')
+		->select($this->getSelect())
+		->leftJoin('a.shiftTechnicians','b')
+		->leftJoin('a.door','c')
+		
+		
+		
+		
+		->leftJoin('c.site','d')
+		->leftJoin('c.type','e')
+		->leftJoin('c.contracts','f')
+		->leftJoin('d.trustee','g')
+		->leftJoin('d.address','h')
+		->leftJoin('h.city','i');
+	}
+	
+	protected function getSelect()
+	{
+		return 'a,b,c,d,e,f,g,h,i';
 	}
 }

@@ -7,6 +7,12 @@ namespace JLM\DailyBundle\Entity;
  */
 class WorkRepository extends InterventionRepository
 {
+	protected function leftJoins()
+	{
+		return parent::leftJoins();
+			
+	}
+	
 	public function getToday()
 	{
 		$today = new \DateTime;
