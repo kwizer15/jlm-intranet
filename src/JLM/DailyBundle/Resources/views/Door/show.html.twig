@@ -9,25 +9,113 @@
 	<h4>Porte à l'arrêt</h4>
 </div>
 {% endif %}
-<ul>
-<li>Dernier entretien : {% if entity.lastMaintenance is null %}Aucun{% else %}{{ entity.lastMaintenance | date('d/m/Y') }}{% endif %}</li>
-<li>Contrat : {% if entity.actualContract %}{{ entity.actualContract }}{% else %}<strong>Hors contrat</strong>{% endif %}</li>
-</ul>
 {% if entity.width and entity.height %}{{ entity.width }}x{{ entity.height }}mm</small>{% endif %}</h1>
 <div class="row-fluid">
-	<div class="span6">
-		<h4>{{ entity|nl2br}}</h4>
-		<strong>Affaire :</strong>
-		<br>{{ entity.site|nl2br }}
+	<div class="span5">
+		<h4>{{ entity.type }} - {{ entity.location }}</h4>
+		<em>
+			<dl>
+				<dt>Accès</dt>
+				<dd>{{ entity.street | nl2br }}</dd>
+			</dl>
+		</em>
+		<address>
+			<strong>{{ entity.site.address.city.name | upper }}</strong>
+			<small>{{ entity.site.address.city.zip }}</small><br>
+			{{ entity.site.address.street | nl2br }}
+		</address>
 	</div>
-	
-	{% if entity.googlemaps%}
-	<div class="span6 well">
-		<iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{ entity.mapsUrl }}"></iframe>
-	</div>
-	{% else %}
-	<div class="span6 well">Pas de photo</div>
-	{% endif %}
+	<div class="span7">
+		<div class="tabbable tabs-left">
+	    		<ul class="nav nav-tabs">
+	    			<li class="active"><a href="#door" data-toggle="tab">Installation</a></li>
+	    			{% if entity.googlemaps %}<li><a href="#pics" data-toggle="tab">Photo</a></li>{% endif %}
+	    			<li><a href="#others" data-toggle="tab">Autres installations</a>
+					<li><a href="#trustee" data-toggle="tab">Syndic</a></li>
+					<li><a href="#quotes" data-toggle="tab">Devis</a></li>
+	    		</ul>
+	    		<div class="tab-content">
+	    			<div class="tab-pane active" id="door">
+	    				<div class="row-fluid">
+	    					<div class="span8">
+								<dl>
+								<dt>Dernier entretien</dt>
+								<dd>{% if entity.lastMaintenance is null %}Aucun{% else %}{{ entity.lastMaintenance | date('d/m/Y') }}{% endif %}</dd>
+				 				<dt>Émetteurs</dt>
+				 				{% if entity.transmitters|length %}
+									{% for trans in entity.transmitters %}
+										<dd>{{ trans }}</dd>
+									{% endfor %}
+								{% else %}
+									<dd>Pas à nous</dd>
+								{% endif %}
+								{% if  entity.site.observations or entity.observations %}
+							 		<dt>Notes</dt>
+							 		{% if entity.site.observations %}
+							 			<dd>{{ entity.site.observations | nl2br }}</dd>
+							 		{% endif %}
+							 		{% if entity.observations %}
+										<dd>{{ entity.observations | nl2br }}</dd>
+									{% endif %}
+								{% endif %}
+								</dl>
+							</div>
+							<div class="span4 text-right">
+								<h1>
+									{{ entity.actualContract }}
+									{% if entity.lastContract %}<br><small>Débute le {{ entity.lastContract.begin|date('d/m/Y') }}</small>{% endif %}
+								</h1>
+								<a href="{{ path('maintenance_neighbor',{'id':entity.id}) }}" class="btn btn-info btn-small"><i class="icon-zoom-in icon-white"></i> Entretiens à proximité</a>
+							</div>
+						</div>	
+					</div>
+					{% if entity.googlemaps %}
+					<div class="tab-pane" id="pics">
+						<img width="350" height="300"  src="{{ entity.mapsImageUrl }}"  class="img-rounded" />
+					</div>
+					{% endif %}
+					<div class="tab-pane" id="others">
+						<ul>
+						{% for other in entity.site.doors %}
+							{% if other.id != entity.id %}
+							<li><a href="{{ path('daily_door_show',{'id':other.id}) }}">{{ other.type }} - {{ other.location }}</a></li>
+							{% endif %}
+						{% endfor %}
+						</ul>
+					</div>
+					<div class="tab-pane" id="trustee">
+						<h4>{{ entity.trustee }}</h4>
+						<dl class="dl-horizontal">
+							<dt>Adresse</dt>
+							<dd>
+							<address>{{ entity.trustee.address|nl2br }}</address>
+							</dd>
+							<dt>Téléphone</dt>
+							<dd>{{ entity.trustee.phone }}</dd>
+							<dt>Fax</dt>
+							<dd>{{ entity.trustee.fax }}</dd>
+						</dl>
+					</div>
+					<div class="tab-pane" id="quotes">
+						{% if quotes | length > 0 %}
+						<ul>
+							{% for quote in quotes %}
+							<li>
+								<a href="{{ path('quote_show',{'id':quote.id}) }}">
+									{{ quote.number }}
+									{% include 'JLMOfficeBundle:Quote:statelabel.html.twig' with {'state': quote.state} %}
+								</a>
+						{#}		du {{ quote.creation|date('d/m/Y') }} {#}
+							</li>
+							{% endfor %}
+						</ul>
+						{% else %}
+						Pas de devis
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>	
 </div>
 
 <div class="form-actions">

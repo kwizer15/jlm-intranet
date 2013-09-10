@@ -29,8 +29,10 @@ class DoorController extends Controller
 	 */
 	public function showAction(Door $door)
 	{
+		$em = $this->getDoctrine()->getManager();
 		return array(
-			'entity'      => $door,
+			'entity' => $door,
+			'quotes' => $em->getRepository('JLMOfficeBundle:Quote')->getByDoor($door),
 		);
 	}
 	

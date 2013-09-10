@@ -37,12 +37,17 @@ abstract class AbstractInterventionController extends PaginableController
 		$formsEditTech = array();
 		foreach ($shiftTechs as $shiftTech)
 			$formsEditTech[] = $this->get('form.factory')->createNamed('shiftTechEdit'.$shiftTech->getId(),new ShiftingEditType(), $shiftTech)->createView();
+		$em = $this->getDoctrine()->getManager();
 		return array(
 				'entity' => $entity,
 				'form_newtech'   => $form->createView(),
 				'form_externalbill' => $form_externalbill->createView(),
 				'form_cancel' => $form_cancel->createView(),
 				'forms_editTech' => $formsEditTech,
+				'quotes' => $em->getRepository('JLMOfficeBundle:Quote')->getByDoor($entity->getDoor()),
 		);
+		
+		
+		
 	}
 }

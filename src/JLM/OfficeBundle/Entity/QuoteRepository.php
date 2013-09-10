@@ -3,6 +3,7 @@
 namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use JLM\ModelBundle\Entity\Door;
 
 /**
  * QuoteRepository
@@ -179,6 +180,18 @@ class QuoteRepository extends EntityRepository
 			$qb->setFirstResult($offset);
 		}
 		return $qb->getQuery()->getResult();
+	}
+	
+	public function getByDoor(Door $door)
+	{
+		$qb = $this->createQueryBuilder('a')
+			->select('a')
+			->leftJoin('a.door','b')
+			->where('b.id = ?1')
+			->orderBy('a.creation','desc')
+			->setParameter(1,$door->getId());
+		return $qb->getQuery()->getResult();
+			
 	}
 
 }

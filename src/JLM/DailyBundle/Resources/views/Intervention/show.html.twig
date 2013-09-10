@@ -39,6 +39,7 @@
     			<li class="active"><a href="#door" data-toggle="tab">Installation</a></li>
     			{% if entity.door.googlemaps %}<li><a href="#pics" data-toggle="tab">Photo</a></li>{% endif %}
 				<li><a href="#trustee" data-toggle="tab">Syndic</a></li>
+				<li><a href="#quotes" data-toggle="tab">Devis</a></li>
     		</ul>
     		<div class="tab-content">
     			<div class="tab-pane active" id="door">
@@ -46,6 +47,7 @@
     					<div class="span8">
 							
 							{% if entity.door %}
+							{% if entity.door.stopped %}<span class="label label-important">Mise à l'arrêt</span>{% endif %}
 							<h4>
 								{{ entity.door.type }} - {{ entity.door.location }}</h4>
 							<dl>
@@ -111,6 +113,32 @@
 						<dt>Fax</dt>
 						<dd>{{ entity.door.trustee.fax }}</dd>
 					</dl>
+				</div>
+				<div class="tab-pane" id="others">
+					<ul>
+					{% for other in entity.door.site.doors %}
+						{% if other.id != entity.door.id %}
+						<li><a href="{{ path('daily_door_show',{'id':other.id}) }}">{{ other.type }} - {{ other.location }}</a></li>
+						{% endif %}
+					{% endfor %}
+					</ul>
+				</div>
+				<div class="tab-pane" id="quotes">
+					{% if quotes | length > 0 %}
+					<ul>
+					{% for quote in quotes %}
+					<li>
+						<a href="{{ path('quote_show',{'id':quote.id}) }}">
+							{{ quote.number }}
+							{% include 'JLMOfficeBundle:Quote:statelabel.html.twig' with {'state': quote.state} %}
+						</a>
+				{#}		du {{ quote.creation|date('d/m/Y') }} {#}
+					</li>
+					{% endfor %}
+					</ul>
+					{% else %}
+					Pas de devis
+					{% endif %}
 				</div>
 			</div>
 		</div>
