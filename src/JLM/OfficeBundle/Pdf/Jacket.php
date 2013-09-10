@@ -47,6 +47,12 @@ class Jacket extends FPDFext
 		$pdf->setXY(100,230);
 		$pdf->setFont('Arial','B',14);
 		$pdf->multicell(0,7,$entity->getDoorCp(),0);
+		$pdf->setXY(0,271);
+		$pdf->setFont('Arial','B',12);
+		$city = strtoupper($entity->getDoor()->getAddress()->getCity()->getName());
+		if (substr($city,0,5) == 'PARIS')
+			$city = trim(substr($city,0,6));
+		$pdf->cell(130,5,$entity->getTrusteeName().'    '.$city.'    '.$entity->getDoor()->getStreet(),1);
 		return $pdf->Output('','S');
 	}
 }
