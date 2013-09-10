@@ -63,6 +63,12 @@ class FixingController extends AbstractInterventionController
 	 */
 	public function newAction(Door $door)
 	{
+		/*
+		 * Voir aussi
+		* 	DoorController:stoppedAction
+		* 	DefaultController:searchAction
+		* @todo A factoriser
+		*/
 		$entity = new Fixing();
 		$entity->setDoor($door);
 		$form = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(),new FixingType(), $entity);

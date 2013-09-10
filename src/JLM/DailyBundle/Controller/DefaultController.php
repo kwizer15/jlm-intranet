@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Form\Type\DatepickerType;
+use JLM\DailyBundle\Entity\Fixing;
+use JLM\DailyBundle\Form\Type\FixingType;
 
 class DefaultController extends Controller
 {
@@ -30,9 +32,23 @@ class DefaultController extends Controller
 				return $this->redirect($this->generateUrl('daily_door_show',array('id'=>$door->getId())));
 		}
 		$doors = $em->getRepository('JLMModelBundle:Door')->search($query);
+		/*
+		 * Voir aussi
+		* 	DoorController:stoppedAction
+		* 	FixingController:newAction
+		* @todo A factoriser de là ...
+		*/
+		foreach ($doors as $door)
+		{
+			$entity = new Fixing();
+			$entity->setDoor($door);
+			$fixingForms[] = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(),new FixingType(), $entity)->createView();
+		}
+		/* à la */
 		return array(
 			'query'   => $query,
 			'doors'   => $doors,
+			'fixing_forms' => $fixingForms,
 		);
 	}
 	

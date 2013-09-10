@@ -35,6 +35,7 @@
 	{% for key,form in fixing_forms %}
 		{% include 'JLMDailyBundle:Fixing:new.html.twig' with {'form':form, 'door':doors[key]} %}
 	{% endfor %}
+	{# todo supprimer le else #}
 {% else %}
 	{% for door in doors %}
 		{{ render(controller('JLMDailyBundle:Fixing:new',{'id':door.id})) }}

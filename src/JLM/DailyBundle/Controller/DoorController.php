@@ -46,15 +46,23 @@ class DoorController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$doors = $em->getRepository('JLMModelBundle:Door')->getStopped();
 		$fixingForms = array();
+		
+		/* 
+		 * Voir aussi
+		 * 	DefaultController:searchAction
+		 * 	FixingController:newAction
+		 * @todo A factoriser de là ... 
+		 */
 		foreach ($doors as $door)
 		{
 			$entity = new Fixing();
 			$entity->setDoor($door);
 			$fixingForms[] = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(),new FixingType(), $entity)->createView();
 		}
+		/* A là */
 		return array(
 				'entities' => $doors,
-				'fixing_forms' => $fixingForms,
+				'fixing_forms' => $fixingForms, // Avec ça en plus
 		);
 	}
 	
