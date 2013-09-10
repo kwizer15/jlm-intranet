@@ -48,13 +48,21 @@ class RideRepository extends EntityRepository
 	
 	public function hasRide(Door $door, Door $dest)
 	{
-		$qb = $this->createQueryBuilder('a')
-		->select('COUNT(a)')
-		->where('a.departure = ?1')
-		->andWhere('a.destination = ?2')
-		->setParameter(1,$door)
-		->setParameter(2,$dest)
-		;
-		return $qb->getQuery()->getSingleScalarResult() > 0;
+		if (!isset($this->dests))
+			$this->dests = array();
+		if (!isset($this->dests[$door->getId()]))
+		{
+			$this->dests[$door->getId()] = array();
+			$qb = $this->createQueryBuilder('a')
+			->select('b.id')
+			->leftJoin('a.destination','b')
+			->where('a.departure = ?1')
+			->setParameter(1,$door)
+			;
+			$dests = $qb->getQuery()->getArrayResult();
+			foreach ($dests as $destid)
+				$this->dests[$door->getId()][] = $destid['id'];
+		}
+		return in_array($dest->getId(),$this->dests[$door->getId()]);
 	}
 }

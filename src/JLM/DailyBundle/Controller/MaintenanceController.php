@@ -159,25 +159,16 @@ class MaintenanceController extends AbstractInterventionController
 	public function neighborAction(Door $door)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('JLMDailyBundle:Ride');
-		$countrides = $repo->getCountRides($door);	
-		// portes offset nb, limit 50 order id
-		$doors = $em->getRepository('JLMModelBundle:Door')
-					->createQueryBuilder('a')
-					->select('a')
-					->orderBy('a.id')
-					->setMaxResults(50)
-					->setFirstResult($countrides)
-					->getQuery()
-					->getResult()
-		;
-		// @todo a mettre dans le repo + optim
 		
-		// si y en a matrix
-		if (sizeof($doors))
+		// Choper les entretiens à faire
+		$repo = $em->getRepository('JLMDailyBundle:Maintenance');
+		$maints = $repo->getOpened();
+		$repo = $em->getRepository('JLMDailyBundle:Ride');
+		$baseUrl = 'http://maps.googleapis.com/maps/api/distancematrix/json?sensor=false&language=fr-FR&origins='.$door->getCoordinates().'&destinations=';
+		foreach ($maints as $maint)
 		{
-			$baseUrl = 'http://maps.googleapis.com/maps/api/distancematrix/json?sensor=false&language=fr-FR&origins='.$door->getCoordinates().'&destinations=';
-			foreach ($doors as $dest)
+			$dest = $maint->getDoor();
+			if (!$repo->hasRide($door,$dest))
 			{
 				$url = $baseUrl.$dest->getCoordinates();
 				$string = file_get_contents($url);
@@ -192,10 +183,8 @@ class MaintenanceController extends AbstractInterventionController
 					$em->persist($ride);
 				}
 			}
-			$em->flush();
 		}
-		// charge la page
-				
+		$em->flush();
 		$entities = $repo->getMaintenanceNeighbor($door,15);
 		return array('door'=>$door,'entities' => $entities);
 	}
