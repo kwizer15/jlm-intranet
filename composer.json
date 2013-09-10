@@ -21,7 +21,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "jms/security-extra-bundle": "dev-master",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "genemu/form-bundle": "2.2.*"
+        "genemu/form-bundle": "2.2.*",
+        "itbz/fpdf": "1.7.1"
     },
     "scripts": {
         "post-install-cmd": [

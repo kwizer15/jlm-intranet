@@ -1,7 +1,7 @@
 <?php
 namespace JLM\DefaultBundle\Pdf;
 
-class FPDFext extends \FPDF {
+class FPDFext extends \fpdf\FPDF {
 
 	var $widths;
 	var $aligns;

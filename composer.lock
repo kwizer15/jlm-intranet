@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "994c58100c3182ab92df8fe3cf0f05b6",
+    "hash": "858e388f16d59cf95a11bb7e7dd34d40",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -793,6 +793,34 @@
                 "parameters management"
             ],
             "time": "2013-04-06 17:15:44"
+        },
+        {
+            "name": "itbz/fpdf",
+            "version": "1.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/iio/fpdf.git",
+                "reference": "141f491e4feacc6879c74413b7f5c6a83ffe31ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/iio/fpdf/zipball/141f491e4feacc6879c74413b7f5c6a83ffe31ca",
+                "reference": "141f491e4feacc6879c74413b7f5c6a83ffe31ca",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "fpdf": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Unofficial PSR-0 compliant version of the FPDF library",
+            "homepage": "http://www.fpdf.org/",
+            "time": "2012-05-18 00:06:51"
         },
         {
             "name": "jdorn/sql-formatter",
