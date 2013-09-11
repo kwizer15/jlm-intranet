@@ -1,6 +1,6 @@
 <?php
 
-class CodingPDF extends \FPDF
+class CodingPDF extends \fpdf\FPDF
 {
 	private $entity;
 	private $end = false;
