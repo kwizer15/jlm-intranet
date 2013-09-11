@@ -1,7 +1,5 @@
 <?php
 
-echo CodingPDF::get($entity);
-
 class CodingPDF extends \FPDF
 {
 	private $entity;
@@ -143,3 +141,5 @@ class CodingPDF extends \FPDF
 	
 	
 }
+
+echo CodingPDF::get($entity);
