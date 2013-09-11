@@ -19,12 +19,14 @@
 			<tr>
 				<td>
 					<a href="{{ path('maintenance_show',{'id':entity.destination.nextMaintenance.id}) }}">
-					<strong>{{ entity.destination.site.address.city.name | upper }}</strong> <small>{{ entity.destination.site.address.city.zip }}</small><br>{{ entity.destination.street | nl2br }}
+					<strong>{{ entity.destination.site.address.city.name | upper }}</strong> <small>{{ entity.destination.site.address.city.zip }}</small><br>{{ entity.destination.site.address.street | nl2br }}
 					</a>
 				</td>
 				<td>
+					<span class="label label-inverse">{% if entity.destination.actualContract is null %}HC{% else %}{{ entity.destination.actualContract }}{% endif %}</span>
 					{% if entity.destination.stopped %}<span class="label label-important">Mise à l'arrêt</span><br>{% endif %}
-					<strong>{{ entity.destination.type }} - {{ entity.destination.location }}</strong>
+					<strong>{{ entity.destination.type }} - {{ entity.destination.location }}</strong><br>
+					{{ entity.destination.street | nl2br }}
 				</td>
 				<td>
 					<ul>

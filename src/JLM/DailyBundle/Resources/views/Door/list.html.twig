@@ -5,7 +5,6 @@
 			<th>Affaire</th>
 			<th>Installation</th>
 			<th>Etat</th>
-			<th>Ctr</th>
 			<th>Syndic</th>
 			<th></th>
 		</tr>
@@ -14,8 +13,11 @@
 		{% for door in doors %}
 		<tr>
 			<td><span class="label label-inverse">{{ door.id }}</span></td>
-			<td><a href="{{ path('daily_door_show',{'id': door.id}) }}"><strong>{{ door.site.address.city.name | upper }}</strong> <small>{{ door.site.address.city.zip }}</small><br>{{ door.street | nl2br }}</a></td>
-			<td>{{ door.type }}<br>{{ door.location }}</td>
+			<td><a href="{{ path('daily_door_show',{'id': door.id}) }}"><strong>{{ door.site.address.city.name | upper }}</strong> <small>{{ door.site.address.city.zip }}</small><br>{{ door.site.address.street | nl2br }}</a></td>
+			<td><span class="label label-inverse">{% if door.actualContract is null %}HC{% else %}{{ door.actualContract }}{% endif %}</span><br>
+			<strong>{{ door.type }} - {{ door.location }}</strong><br>
+			{{ door.street | nl2br }}
+			</td>
 			<td>
 				{% if door.stopped %}<span class="label label-important">Mise à l'arrêt</span><br>{% endif %}
 				{% if door.fixingInProgress %}<span class="label label-warning">Dépannage en cours</span><br>
@@ -24,8 +26,7 @@
 				{% elseif door.waitWork %}<span class="label label-info">En attente travaux</span><br>{% endif %}
 				{% if door.waitMaintenance %}<span class="label">Entretien à faire</span><br>{% endif %}
 			</td>
-			<td>{% if door.actualContract is null %}HC{% else %}{{ door.actualContract }}{% endif %}</td>
-			<td>{{ door.site.trustee }}</td>
+			<td><small>{{ door.site.trustee }}</small></td>
 			<td><a href="#modalNewFixing{{ door.id }}" class="btn btn-warning" role="button" data-toggle="modal"><i class="icon-wrench icon-white"></i> Dépannage</a></td>
 		</tr>
 		{% endfor %}
