@@ -25,7 +25,7 @@ class AttributionList extends FPDFext
 	{
 		$this->aliasNbPages();
 		
-		$this->setWidths(array(55,14,31,30,30,15,15));
+		$this->setWidths(array(55,14,31,60,15,15));
 		$this->addPage('P');
 		$this->setY(55);
 		$this->setFont('Arial','B',16);
@@ -60,8 +60,7 @@ class AttributionList extends FPDFext
 				$entity->getUserGroup().'',
 				$entity->getNumber(),
 				$state,
-				'',
-				'',
+				$entity->getUserName(),
 				'',
 				'',
 		);
@@ -117,7 +116,7 @@ class AttributionList extends FPDFext
 	{
 		$this->setFont('Arial','B',11);
 		$this->setFillColor(200);
-		$this->row(array('Groupe utilisateur','Num.','Type','Prénom','Nom','Appt.','Place'),6,1,true);
+		$this->row(array('Groupe utilisateur','Num.','Type','Nom','Appt.','Place'),6,1,true);
 		
 	}
 	

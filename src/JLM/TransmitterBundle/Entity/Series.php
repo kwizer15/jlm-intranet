@@ -14,7 +14,7 @@ class Series
 	/**
 	 * Nombre d'émetteur de le serie
 	 * @var int
-	 * @Assert\Min(limit=1,message="La quantité doit être d'au moins 1 émetteur")
+	 * @Assert\GreaterThanOrEqual(value=1,message="La quantité doit être d'au moins 1 émetteur")
 	 */
 	private $quantity;
 	
