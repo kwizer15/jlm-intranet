@@ -31,6 +31,7 @@ class AskQuoteCountListener
 				'untreated' => $repo->getCountUntreated(),
 				'treated' => $repo->getCountTreated(),
 		);
+		$response['today'] = new \DateTime;
 		
 		$event->setControllerResult($response);
 	}
