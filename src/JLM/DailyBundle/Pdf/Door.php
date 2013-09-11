@@ -33,8 +33,8 @@ class Door extends FPDFext
 		$this->multicell(0,12,$door->toString(),1,1,'C',true);
 		$this->ln(5);
 		$this->setFont('Arial','B',11);
-		$this->setWidths(array(24,24,8,96,96,29));
-		$this->row(array('Date','Type','Ctr','Raison','Rapport','Technicien'),6,1,true);
+		$this->setWidths(array(24,34,24,8,79,79,29));
+		$this->row(array('Date','Contact','Type','Ctr','Raison','Rapport','Technicien'),6,1,true);
 		$this->setFont('Arial','',10);
 	}
 	
@@ -46,23 +46,27 @@ class Door extends FPDFext
 				'maintenance' => 'Entretien',
 				'work' => 'Travaux',
 		);
-		$datas[0] = $entity->getBegin()->format('d/m/Y');
-		$datas[1] = $types[$shifting->getType()];
-		$datas[2] = ($shifting->getContract() == 'Hors contrat') ? 'HC' : $shifting->getContract();
-		$datas[3] = $shifting->getReason();
+		$dayTrans = array('dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi');
+		$datas[0] = $dayTrans[$entity->getBegin()->format('w')].chr(10).$entity->getBegin()->format('d/m/Y');
+		$datas[1] = 'le '.$shifting->getCreation()->format('d/m/Y H:i').chr(10)
+			.$shifting->getContactName().chr(10)
+			.$shifting->getContactPhones();
+		$datas[2] = $types[$shifting->getType()];
+		$datas[3] = ($shifting->getContract() == 'Hors contrat') ? 'HC' : $shifting->getContract();
+		$datas[4] = $shifting->getReason();
 		if ($entity->getComment())
-			$datas[4] = 'Technicien :'.chr(10).$entity->getComment().chr(10).chr(10);
+			$datas[5] = 'Technicien :'.chr(10).$entity->getComment().chr(10).chr(10);
 		else
 		{
 			$interv = $entity->getShifting();
-			$datas[4] = 'Rapport :'.chr(10).$interv->getReport();
+			$datas[5] = 'Rapport :'.chr(10).$interv->getReport();
 			if ($interv->getRest())
-				$datas[4] .= chr(10).chr(10).'Reste à faire :'.chr(10).$interv->getRest();
+				$datas[5] .= chr(10).chr(10).'Reste à faire :'.chr(10).$interv->getRest();
 		}
-		$datas[5] = $entity->getTechnician().'';
+		$datas[6] = $entity->getTechnician().'';
 		if ($entity->getEnd())
 		{
-			$datas[5] .= chr(10).$entity->getBegin()->format('H\hi').' - '.$entity->getEnd()->format('H\hi').chr(10).$entity->getTime()->format('%h:%I');
+			$datas[6] .= chr(10).$entity->getBegin()->format('H\hi').' - '.$entity->getEnd()->format('H\hi').chr(10).$entity->getTime()->format('%h:%I');
 		}
 		$this->row($datas,5,1,false);
 	}
