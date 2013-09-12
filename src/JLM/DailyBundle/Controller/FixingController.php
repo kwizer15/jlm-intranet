@@ -71,6 +71,7 @@ class FixingController extends AbstractInterventionController
 		*/
 		$entity = new Fixing();
 		$entity->setDoor($door);
+		$entity->setAskDate(new \DateTime);
 		$form = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(),new FixingType(), $entity);
 		return array(
 				'door' => $door,
