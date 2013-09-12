@@ -41,8 +41,17 @@
 				</td>
 				<td>{{ entity.distanceKm }}</td>
 				<td>{{ entity.durationM }}</td>
+				<td><a href="#modalAddTech{{ entity.destination.nextMaintenance.id }}" class ="btn btn-small" role="button" data-toggle="modal"><i class="icon-plus-sign"></i> Ajouter</a></td>
 			</tr>
 		{% endfor %}
 		</tbody>
 	</table>
+{% endblock %}
+
+{% block modals %}
+	{{ parent() }}
+	{% for key,form in forms_addTech %}
+	{% include 'JLMDailyBundle:Shifting:new.html.twig' with {'id':entities[key].destination.nextMaintenance.id, 'form':form} %}
+	{# render(controller('JLMDailyBundle:Shifting:new',{'id':entity.destination.nextMaintenance.id})) #}
+	{% endfor %}
 {% endblock %}

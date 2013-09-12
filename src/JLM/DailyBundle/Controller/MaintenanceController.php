@@ -186,6 +186,17 @@ class MaintenanceController extends AbstractInterventionController
 		}
 		$em->flush();
 		$entities = $repo->getMaintenanceNeighbor($door,15);
-		return array('door'=>$door,'entities' => $entities);
+		$forms = array();
+		foreach ($entities as $entity)
+		{
+			$shift = new ShiftTechnician();
+			$shift->setBegin(new \DateTime);
+			$forms[] = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getDestination()->getNextMaintenance()->getId(),new AddTechnicianType(), $shift)->createView();
+		}
+		return array(
+				'door'=>$door,
+				'entities' => $entities,
+				'forms_addTech' => $forms,
+		);
 	}
 }
