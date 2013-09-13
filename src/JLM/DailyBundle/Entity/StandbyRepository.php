@@ -26,12 +26,11 @@ class StandbyRepository extends EntityRepository
 	
 	public function getCountByDate($date)
 	{
-			
 		return $this->createQueryBuilder('s')
 				->select('COUNT(s)')
 				->where('s.begin <= ?1')
 				->andWhere('s.end >= ?1')
-				->setParameter(1,$tomorrow->format('Y-m-d'))
+				->setParameter(1,$date->format('Y-m-d'))
 				->getQuery()
 				->getSingleScalarResult();
 	}
