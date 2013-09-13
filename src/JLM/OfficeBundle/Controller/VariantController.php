@@ -408,7 +408,7 @@ class VariantController extends Controller
 			$entity->setState(5);
 		
 		$em = $this->getDoctrine()->getManager();
-		if ($entity->getWork() === null && $entity->getDoor() !== null)
+		if ($entity->getWork() === null && $entity->getQuote()->getDoor() !== null)
 		{			
 			// Création de la ligne travaux pré-remplie
 			$work = Work::createFromQuoteVariant($entity);
