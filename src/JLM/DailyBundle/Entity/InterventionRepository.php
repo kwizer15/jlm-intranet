@@ -109,7 +109,7 @@ class InterventionRepository extends EntityRepository
 		$tomorrowstring = $today->add(new \DateInterval('P1D'))->format('Y-m-d');
 		// Interventions en cours
 		$qb = $this->createQueryBuilder('a')
-			->select('a,b,c,d,e,g,h,i,j,k,l,m,n,z')
+			->select('a,b,c,d,e,g,h,i,j,k,l,m,z')
 			->leftJoin('a.shiftTechnicians','b')
 			->leftJoin('a.door','c')
 			->leftJoin('c.site','d')
@@ -121,7 +121,6 @@ class InterventionRepository extends EntityRepository
 			->leftJoin('a.askQuote','k')
 			->leftJoin('a.work','l')
 			->leftJoin('a.bill','m')
-			->leftJoin('l.order','n')
 			->leftJoin('c.interventions','z')
 			->where('b.begin BETWEEN ?1 AND ?2')
 //			->orWhere('b is null')

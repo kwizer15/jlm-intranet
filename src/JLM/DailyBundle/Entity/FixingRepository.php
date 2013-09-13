@@ -37,7 +37,7 @@ class FixingRepository extends InterventionRepository
 		$todaystring =  $today->format('Y-m-d');
 		// Interventions en cours
 		$qb = $this->createQueryBuilder('a')
-		->select('a,b,c,d,e,g,h,i,j,k,l,m,n,o,p,z')
+		->select('a,b,c,d,e,g,h,i,j,k,l,m,n,o,p,q,z')
 		->leftJoin('a.shiftTechnicians','b')
 		->leftJoin('a.door','c')
 		->leftJoin('c.site','d')
@@ -50,6 +50,7 @@ class FixingRepository extends InterventionRepository
 		->leftJoin('a.work','l')
 		->leftJoin('a.bill','m')
 		->leftJoin('l.order','n')
+		->leftJoin('l.quote','q')
 		->leftJoin('a.done','o')
 		->leftJoin('a.due','p')
 		->leftJoin('c.interventions','z')
