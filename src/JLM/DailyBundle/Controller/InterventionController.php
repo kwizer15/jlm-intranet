@@ -437,7 +437,7 @@ class InterventionController extends Controller
 		
 		do {
 			$tomorrow = \DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000');
-			$results = $em->getRepository('JLMDailyBundle:Standby')->getCountByDate($tomorrow->format('Y-m-d'));
+			$results = $em->getRepository('JLMDailyBundle:Standby')->getCountByDate($tomorrow);
 		} while ($results);
 		
 		$intervs = $em->getRepository('JLMDailyBundle:Intervention')->getWithDate($tomorrow,$tomorrow);
