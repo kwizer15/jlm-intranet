@@ -12,6 +12,11 @@
 	{{ parent() }}
 {% endblock %}
 
+{% block reference %}
+{% if entity.askMethod %}{{ entity.askMethod }} : {% endif %}
+{% if entity.askDate %}le {{ entity.askDate|date('d/m/Y') }}{% endif %}
+{% endblock %}
+
 {% block report %}
 	 <small>{{ entity.due }} - {{ entity.done }}</small>
 	 {{ parent() }}
