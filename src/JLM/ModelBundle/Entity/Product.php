@@ -282,10 +282,12 @@ class Product
         	return $this->unitPrice;
     	$index = 0;
     	$q = $this->unitPrices[$index]->getQuantity();
-    	while ($quantity > $q && isset($this->unitPrices[$index+1]))
+    	while ($quantity >= $q)
     	{
-    		$index++;
-    		$q = $this->unitPrices[$index]->getQuantity();
+    		// Quand on arrive au bout du tableau
+    		if (!isset($this->unitPrices[$index+1]))
+    			return $this->unitPrices[$index]->getUnitPrice();
+    		$q = $this->unitPrices[++$index]->getQuantity();
     	} 
     	return $this->unitPrices[$index-1]->getUnitPrice();
     }
