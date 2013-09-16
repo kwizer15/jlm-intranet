@@ -43,6 +43,7 @@ class DefaultController extends Controller
 		{
 			$entity = new Fixing();
 			$entity->setDoor($door);
+			$entity->setAskDate(new \DateTime);
 			$fixingForms[] = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(),new FixingType(), $entity)->createView();
 		}
 		/* à la */
