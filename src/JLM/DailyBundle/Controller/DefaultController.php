@@ -38,6 +38,7 @@ class DefaultController extends Controller
 		* 	FixingController:newAction
 		* @todo A factoriser de là ...
 		*/
+		$fixingForms = array();
 		foreach ($doors as $door)
 		{
 			$entity = new Fixing();
