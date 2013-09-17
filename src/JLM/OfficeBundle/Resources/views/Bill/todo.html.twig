@@ -43,10 +43,31 @@
 	 	{% if entity.quote %}Selon devis n°{{ entity.quote.number }}<br>{% endif %}{% endif %}{{ entity.reason | nl2br }}</small></td>
 			
             <td>{{ entity.totalTime.format('%hh%I') }}</td>
-            <td><a href="{{ path('bill_new_intervention',{'id':entity.id}) }}" class="btn btn-primary">Facturer...</a></td>
+            <td>
+            	<a href="{{ path('bill_new_intervention',{'id':entity.id}) }}" class="btn btn-primary">Facturer...</a><br>
+            	<a href="#modalExternalBill{{ entity.id }}" data-toggle="modal" class="btn btn-small">Saisir numéro</a>
+            </td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
+{% endblock %}
+
+{% block modals %}
+{% for key,entity in entities %}
+<form id="modalExternalBill{{ entity.id }}" action="{{ path('intervention_externalbill',{'id':entity.id}) }}" method="post" {{ form_enctype(forms_externalbill[key]) }} class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalExternalBill{{ entity.id }}Label" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="modalExternalBill{{ entity.id }}Label">Numéro de facture externe</h3>
+	</div>
+	<div class="modal-body">
+		{{ form_widget(forms_externalbill[key]) }}
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+		<button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer</button>
+	</div>
+</form>
+{% endfor %}
 {% endblock %}
     

@@ -248,7 +248,8 @@ class InterventionController extends Controller
 	 */
 	public function externalbillAction(Request $request, Intervention $entity)
 	{
-		$form = $this->createForm(new ExternalBillType(), $entity);
+		//$form = $this->createForm(new ExternalBillType(), $entity);
+		$form = $this->get('form.factory')->createNamed('externalBill'.$entity->getId(),new ExternalBillType(), $entity);
 		$form->bind($request);
 		if ($form->isValid())
 		{
@@ -256,7 +257,8 @@ class InterventionController extends Controller
 			$em->persist($entity);
 			$em->flush();
 		}
-		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
+		return $this->redirect($request->headers->get('referer'));
+		//return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
 	

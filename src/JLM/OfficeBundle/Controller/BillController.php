@@ -17,6 +17,7 @@ use JLM\OfficeBundle\Form\Type\BillType;
 use JLM\OfficeBundle\Entity\BillLine;
 use JLM\ModelBundle\Entity\Door;
 use JLM\DailyBundle\Entity\Intervention;
+use JLM\DailyBundle\Form\Type\ExternalBillType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
@@ -417,6 +418,14 @@ class BillController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     	$list = $em->getRepository('JLMDailyBundle:Intervention')->getToBilled();
-    	return array('entities'=>$list);
+    	$forms_externalBill = array();
+    	foreach ($list as $interv)
+    	{
+    		$forms_externalBill[] = $this->get('form.factory')->createNamed('externalBill'.$interv->getId(),new ExternalBillType(), $interv)->createView();
+    	}
+    	return array(
+    			'entities'=>$list,
+    			'forms_externalbill' => $forms_externalBill,
+    	);
     }
 }
