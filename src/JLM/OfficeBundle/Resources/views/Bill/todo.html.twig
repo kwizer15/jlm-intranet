@@ -29,7 +29,7 @@
 			{% endif %}
 				</small>
             </td>
-            <td>{{ entity.contract }}</td>
+            <td>{{ entity.door.trustee }}</td>
             <td><a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}">
 					{% if entity.door %}
 						<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}

@@ -257,6 +257,11 @@ class InterventionController extends Controller
 			$em->persist($entity);
 			$em->flush();
 		}
+		else 
+		{
+			print_r($form->getErrorsAsString());
+			exit;
+		}
 		return $this->redirect($request->headers->get('referer'));
 		//return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}

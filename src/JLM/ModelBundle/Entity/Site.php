@@ -47,7 +47,6 @@ class Site
      * @var string $groupnumber
      * 
      * @ORM\Column(name="groupNumber", type="string", length=6, nullable=true)
-     * @Assert\Type(type="int")
      * @Assert\Length(min=4,max=6)
      */
     private $groupNumber;

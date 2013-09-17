@@ -108,7 +108,6 @@ abstract class Intervention extends Shifting
      * Numéro de bon d'intervention
      * @var string
      * @ORM\Column(name="voucher",type="string",nullable=true)
-     * @Assert\Type(type="int")
      */
     private $voucher;
     
