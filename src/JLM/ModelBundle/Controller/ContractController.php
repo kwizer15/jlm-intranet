@@ -114,7 +114,7 @@ class ContractController extends Controller
      */
     public function stopupdateAction(Contract $entity)
     {
-    	$editform   = $this->get('form.factory')->createNamed('contractStop'.$entity->getId(),new ContractStopType(), $entity);
+    	$editForm   = $this->get('form.factory')->createNamed('contractStop'.$entity->getId(),new ContractStopType(), $entity);
         $request = $this->getRequest();
         $editForm->handleRequest($request);
 
