@@ -12,4 +12,6 @@
     <li class="divider"></li>
     <li class="nav-header">Etats</li>
     {{ render(controller('JLMOfficeBundle:Bill:sidebar')) }}
+    <li class="divider"></li>
+    <li><a href="{{ path('bill_printlist') }}">Imprimer les factures à faire</a></li>
 {% endblock sidebar %}

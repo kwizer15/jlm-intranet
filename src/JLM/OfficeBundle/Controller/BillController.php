@@ -298,6 +298,25 @@ class BillController extends Controller
     }
     
     /**
+     * Imprimer la liste des factures à faire
+     *
+     * @Route("/printlist", name="bill_printlist")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function printlistAction()
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$entities = $em->getRepository('JLMDailyBundle:Intervention')->getToBilled();
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/pdf');
+    	$response->headers->set('Content-Disposition', 'inline; filename=factures-a-faire.pdf');
+    	$response->setContent($this->render('JLMOfficeBundle:Bill:printlist.pdf.php',array('entities'=>$entities)));
+    
+    	//   return array('entity'=>$entity);
+    	return $response;
+    }
+    
+    /**
      * Note Bill as ready to send.
      *
      * @Route("/{id}/ready", name="bill_ready")
@@ -427,5 +446,15 @@ class BillController extends Controller
     			'entities'=>$list,
     			'forms_externalbill' => $forms_externalBill,
     	);
+    }
+    
+    /**
+     * @Route("\toboost", name="bill_toboost")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function toboostAction()
+    {
+    	return;
     }
 }
