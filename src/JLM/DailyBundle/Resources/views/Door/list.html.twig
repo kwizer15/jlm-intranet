@@ -14,7 +14,7 @@
 		<tr>
 			<td><span class="label label-inverse">{{ door.id }}</span></td>
 			<td>
-				{% if door.blocked %}<span class="label label-danger">Facture en retard</span>{% endif %}
+				{% if door.blocked %}<span class="label label-important">Facture en retard</span><br>{% endif %}
 				<a href="{{ path('daily_door_show',{'id': door.id}) }}">
 					<strong>{{ door.site.address.city.name | upper }}</strong> <small>{{ door.site.address.city.zip }}</small><br>
 					{{ door.site.address.street | nl2br }}

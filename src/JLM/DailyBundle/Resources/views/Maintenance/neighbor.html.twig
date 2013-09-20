@@ -18,7 +18,7 @@
 		{% for entity in entities %}
 			<tr>
 				<td>
-					{% if entity.destination.site.blocked %}<span class="label label-danger">Facture en retard</span>{% endif %}
+					{% if entity.destination.site.blocked %}<span class="label label-important">Facture en retard</span><br>{% endif %}
 					<a href="{{ path('maintenance_show',{'id':entity.destination.nextMaintenance.id}) }}">
 					<strong>{{ entity.destination.site.address.city.name | upper }}</strong> <small>{{ entity.destination.site.address.city.zip }}</small><br>{{ entity.destination.site.address.street | nl2br }}
 					</a>

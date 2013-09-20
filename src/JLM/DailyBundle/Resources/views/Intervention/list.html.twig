@@ -36,7 +36,8 @@
 				<small>{% if entity.door.actualContract %}{{ entity.door.actualContract.trustee }}{% else %}{{ entity.door.site.trustee }}{% endif %}</small>
 			</td>
 			<td>
-			{% if entity.door.blocked %}<span class="label label-danger">Facture en retard</span>{% endif %}
+			{% if entity.door %}
+					{% if entity.door.blocked %}<span class="label label-important">Facture en retard</span><br>{% endif %}{% endif %}
 				<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}">
 				{% if entity.door %}
 					<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.site.address.street | nl2br }}
