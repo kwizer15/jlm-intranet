@@ -722,6 +722,7 @@ class Bill extends Document
     public function populateFromSite(Site $site, Trustee $trustee = null)
     {
     	$this->setSite($site->toString());
+    	$this->setSiteObject($site);
     	if ($trustee === null)
     		$trustee = $site->getTrustee();
     	if ($group = $site->getGroupNumber())
