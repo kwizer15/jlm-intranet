@@ -894,4 +894,15 @@ class Door
     {
     	return $this->getLatitude().','.$this->getLongitude();
     }
+    
+    /**
+     * Is blocked
+     * 
+     * @return bool
+     */
+    public function isBlocked()
+    {
+    	return $this->getSite()->isBlocked();
+    }
+    
 }

@@ -3,6 +3,7 @@
 namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use JLM\ModelBundle\Entity\Site;
 
 /**
  * BillRepository

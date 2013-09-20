@@ -110,6 +110,13 @@ class Site
     private $userGroups;
     
     /**
+     * @var ArrayColection
+     * 
+     * @ORM\OneToMany(targetEntity="JLM\OfficeBundle\Entity\Bill", mappedBy="siteObject")
+     */
+    private $bills;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -117,6 +124,7 @@ class Site
         $this->doors = new \Doctrine\Common\Collections\ArrayCollection();
         $this->contacts = new \Doctrine\Common\Collections\ArrayCollection();
         $this->userGroups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->bills = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -417,5 +425,54 @@ class Site
     public function getUserGroups()
     {
         return $this->userGroups;
+    }
+
+    /**
+     * Add bills
+     *
+     * @param \JLM\OfficeBundle\Entity\Bill $bills
+     * @return Site
+     */
+    public function addBill(\JLM\OfficeBundle\Entity\Bill $bills)
+    {
+        $this->bills[] = $bills;
+    
+        return $this;
+    }
+
+    /**
+     * Remove bills
+     *
+     * @param \JLM\OfficeBundle\Entity\Bill $bills
+     */
+    public function removeBill(\JLM\OfficeBundle\Entity\Bill $bills)
+    {
+        $this->bills->removeElement($bills);
+    }
+
+    /**
+     * Get bills
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBills()
+    {
+        return $this->bills;
+    }
+    
+    /**
+     * Blocage des nouvelles intervs pour cause de retard de paiement
+     * 
+     * @return bool
+     */
+    public function isBlocked()
+    {
+    	$bills = $this->getBills;
+    	foreach ($bills as $bill)
+    	{
+    		if ($bill->getState() == 1 && $bill->getSecondBoost() !== null)
+    			return true;
+    	}
+    	return false;
     }
 }

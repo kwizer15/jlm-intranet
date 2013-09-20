@@ -13,7 +13,13 @@
 		{% for door in doors %}
 		<tr>
 			<td><span class="label label-inverse">{{ door.id }}</span></td>
-			<td><a href="{{ path('daily_door_show',{'id': door.id}) }}"><strong>{{ door.site.address.city.name | upper }}</strong> <small>{{ door.site.address.city.zip }}</small><br>{{ door.site.address.street | nl2br }}</a></td>
+			<td>
+				{% if door.blocked %}<span class="label label-danger">Facture en retard</span>{% endif %}
+				<a href="{{ path('daily_door_show',{'id': door.id}) }}">
+					<strong>{{ door.site.address.city.name | upper }}</strong> <small>{{ door.site.address.city.zip }}</small><br>
+					{{ door.site.address.street | nl2br }}
+				</a>
+			</td>
 			<td><span class="label label-inverse">{% if door.actualContract is null %}HC{% else %}{{ door.actualContract }}{% endif %}</span><br>
 			<strong>{{ door.type }} - {{ door.location }}</strong><br>
 			{{ door.street | nl2br }}

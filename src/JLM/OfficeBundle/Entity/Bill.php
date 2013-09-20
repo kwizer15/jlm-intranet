@@ -197,7 +197,7 @@ class Bill extends Document
 	 * Affaire concernée (Objet)
 	 * @var string $site
 	 *
-	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Site")
+	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Site", inversedBy="bills")
 	 */
 	private $siteObject;
 	
