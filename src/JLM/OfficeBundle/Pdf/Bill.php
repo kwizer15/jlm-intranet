@@ -11,21 +11,21 @@ class Bill extends FPDFext
 	
 
 	
-	public static function get($entities)
+	public static function get($entities, $duplicate = false)
 	{
 		
 		$pdf = new self();
 		$pdf->_init();
 		foreach ($entities as $entity)
-			$pdf->addEntity($entity);
+			$pdf->addEntity($entity, $duplicate);
 		return $pdf->Output('','S');
 	}
 	
-	public function addEntity($entity)
+	public function addEntity($entity, $duplicate)
 	{
 		$this->entity = $entity;
 		$this->addPage();
-		$this->_header();
+		$this->_header($duplicate);
 		$this->_content();
 		$this->_footer();
 		return $this;
@@ -37,7 +37,7 @@ class Bill extends FPDFext
 		$this->setFillColor(200);
 	}
 	
-	public function _header()
+	public function _header($duplicate)
 	{
 		if ($this->entity->getState() == -1)
 		{
@@ -46,7 +46,7 @@ class Bill extends FPDFext
 			$this->rotatedText(40,90,'Annulée',-45);
 			$this->setTextColor(0);
 		}
-		elseif ($this->entity->getState() == 2)
+		elseif ($this->entity->getState() == 2 || $duplicate)
 		{
 			$this->setFont('Arial','B',120);
 			$this->setTextColor(230);

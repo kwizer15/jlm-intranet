@@ -168,6 +168,29 @@ class Bill extends Document
 	 */
 	private $intervention;
 	
+	/**
+	 * Date première relance
+	 * @var \DateTime $firstBoost
+	 * 
+	 * @ORM\Column(name="first_boost", type="datetime", nullable=true)
+	 */
+	private $firstBoost;
+	
+	/**
+	 * Date deuxième relance
+	 * @var \DateTime $secondBoost
+	 * 
+	 * @ORM\Column(name="second_boost", type="datetime", nullable=true)
+	 */
+	private $secondBoost;
+	
+	/**
+	 * Commentaire deuxième relance
+	 * @var string $secondBoostComment
+	 * 
+	 * @ORM\Column(name="second_boost_comment", type="string", nullable=true)
+	 */
+	private $secondBoostComment;
 
     /**
      * Get id
@@ -762,5 +785,74 @@ class Bill extends Document
     public function getIntervention()
     {
         return $this->intervention;
+    }
+
+    /**
+     * Set firstBoost
+     *
+     * @param \DateTime $firstBoost
+     * @return Bill
+     */
+    public function setFirstBoost($firstBoost)
+    {
+        $this->firstBoost = $firstBoost;
+    
+        return $this;
+    }
+
+    /**
+     * Get firstBoost
+     *
+     * @return \DateTime 
+     */
+    public function getFirstBoost()
+    {
+        return $this->firstBoost;
+    }
+
+    /**
+     * Set secondBoost
+     *
+     * @param \DateTime $secondBoost
+     * @return Bill
+     */
+    public function setSecondBoost($secondBoost)
+    {
+        $this->secondBoost = $secondBoost;
+    
+        return $this;
+    }
+
+    /**
+     * Get secondBoost
+     *
+     * @return \DateTime 
+     */
+    public function getSecondBoost()
+    {
+        return $this->secondBoost;
+    }
+
+    /**
+     * Set secondBoostComment
+     *
+     * @param string $secondBoostComment
+     * @return Bill
+     */
+    public function setSecondBoostComment($secondBoostComment)
+    {
+        $this->secondBoostComment = $secondBoostComment;
+    
+        return $this;
+    }
+
+    /**
+     * Get secondBoostComment
+     *
+     * @return string 
+     */
+    public function getSecondBoostComment()
+    {
+        return $this->secondBoostComment;
     }
 }

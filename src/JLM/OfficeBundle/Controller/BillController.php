@@ -291,7 +291,24 @@ class BillController extends Controller
     	$response = new Response();
     	$response->headers->set('Content-Type', 'application/pdf');
     	$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
-    	$response->setContent($this->render('JLMOfficeBundle:Bill:print.pdf.php',array('entities'=>array($entity))));
+    	$response->setContent($this->render('JLMOfficeBundle:Bill:print.pdf.php',array('entities'=>array($entity),'duplicate'=>false)));
+    
+    	//   return array('entity'=>$entity);
+    	return $response;
+    }
+    
+    /**
+     * Imprimer un duplicata de facture
+     *
+     * @Route("/{id}/printduplicate", name="bill_printduplicate")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function printduplicateAction(Bill $entity)
+    {
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/pdf');
+    	$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'-diplicata.pdf');
+    	$response->setContent($this->render('JLMOfficeBundle:Bill:print.pdf.php',array('entities'=>array($entity),'duplicate'=>true)));
     
     	//   return array('entity'=>$entity);
     	return $response;
@@ -449,12 +466,50 @@ class BillController extends Controller
     }
     
     /**
-     * @Route("\toboost", name="bill_toboost")
+     * @Route("/toboost", name="bill_toboost")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
     public function toboostAction()
     {
-    	return;
+    	$em = $this->getDoctrine()->getManager();
+    	$bills = $em->getRepository('JLMOfficeBundle:Bill')->getToBoost();
+    	
+    	return array('entities'=>$bills);
+    }
+    
+    /**
+     * Imprimer le courrier de relance 
+     *
+     * @Route("/{id}/printboost", name="bill_printboost")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function printboostAction(Bill $entity)
+    {
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/pdf');
+    	$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
+    	$response->setContent($this->render('JLMOfficeBundle:Bill:printboost.pdf.php',array('entities'=>array($entity))));
+    
+    	//   return array('entity'=>$entity);
+    	return $response;
+    }
+    
+    /**
+     * Noter relance effectuée
+     * 
+     * @Route("/{id}/boostok", name="bill_boostok")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function boostokAction(Bill $entity)
+    {
+    	if ($entity->getFirstBoost() === null)
+    		$entity->setFirstBoost(new \DateTime);
+    	else
+    		$entity->setSecondBoost(new \DateTime);
+    	$em = $this->getDoctrine()->getManager();
+    	$em->persist($entity);
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('bill_toboost'));
     }
 }

@@ -85,4 +85,15 @@ class BillRepository extends EntityRepository
 		->setMaxResults($limit);
 		return $qb->getQuery()->getResult();
 	}
+	
+	public function getToBoost()
+	{
+		return $this->createQueryBuilder('a')
+			->select('a')
+			->where('a.state = 1 AND a.firstBoost IS NULL AND DATE_ADD(a.creation, a.maturity, \'day\') < CURRENT_DATE()')
+			->orWhere('a.state = 1 AND a.firstBoost IS NOT NULL AND a.secondBoost IS NULL AND DATE_ADD(a.firstBoost,a.maturity, \'day\') < CURRENT_DATE()')
+			->orderBy('a.creation','ASC')
+			->getQuery()
+			->getResult();
+	}
 }

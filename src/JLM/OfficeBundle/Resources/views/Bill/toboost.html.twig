@@ -1,0 +1,44 @@
+{% extends "JLMOfficeBundle:Bill:layout.html.twig" %}
+{% block content %}
+<h1>Liste des relances factures à faire</h1>
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Syndic</th>
+            <th>Affaire</th>
+            <th>Echéance</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{% if entity.firstBoost is null %}<span class="label label-info">1ère relance</span>
+            	{% elseif entity.secondBoost is null %}<span class="label label-warning">2ème relance</span>
+            	{% else %}<span class="label label-danger">3ème relance</span>
+            	{% endif %}
+            	<br><a href="{{ path('bill_show', { 'id': entity.id }) }}">{{ entity.number }}</a><br>
+            	<a href="{{ path('bill_printduplicate',{'id':entity.id}) }}" class="btn btn-info btn-small"><i class="icon icon-white icon-print"></i> Imprimer duplicata</a>
+            </td>
+            <td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}</td>
+            <td>{{ entity.trusteeName }}</td>
+            <td>{{ entity.site | nl2br}}</td>
+            <td>
+            	{{ entity.maturityDate | date('d/m/Y') }}
+            	<br><a href="{{ path('bill_printboost',{'id':entity.id}) }}" class="btn btn-info btn-small"><i class="icon icon-white icon-print"></i> Imprimer courrier</a>
+            </td>
+            <td>
+            	{{ entity.totalPrice | number_format(2,',',' ')}} €
+            	<br><a href="{{ path('bill_payed',{'id':entity.id}) }}" class="btn btn-success btn-small"><i class="icon icon-white icon-ok"></i> Déjà payé</a>
+            </td>
+            <td>
+            	<a href="{{ path('bill_boostok',{'id':entity.id}) }}" class="btn btn-primary btn-small"><i class="icon icon-white icon-ok"></i> Relance effectuée</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
