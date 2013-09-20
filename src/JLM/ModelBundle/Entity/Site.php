@@ -467,7 +467,7 @@ class Site
      */
     public function isBlocked()
     {
-    	$bills = $this->getBills;
+    	$bills = $this->getBills();
     	foreach ($bills as $bill)
     	{
     		if ($bill->getState() == 1 && $bill->getSecondBoost() !== null)
