@@ -197,8 +197,11 @@ class BillController extends Controller
             }
             $em->persist($entity);
             $interv = $entity->getIntervention();
-            $interv->setBill($entity);
-            $em->persist($interv);
+            if ($interv !== null)
+            {
+            	$interv->setBill($entity);
+            	$em->persist($interv);
+            }
             $em->flush();
             return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));  
         }

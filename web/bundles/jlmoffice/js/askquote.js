@@ -28,7 +28,7 @@
 					console.log(ui.item);
 					$("#askquote_trustee").val(ui.item.trusteeName);
 					$.post( src, { id_site : ui.item.id }, function(data){
-						$("#askquote_door").empty().removeAttr('disabled').append('<option value="">Affaire complète</option>');
+						$("#askquote_door").empty().removeAttr('disabled').append('<option value="">Autre</option>');
 						$.each(data, function(key,val) {
 							$("#askquote_door").append('<option value="' + val.id + '">' + val.string + '</option>');
 						})

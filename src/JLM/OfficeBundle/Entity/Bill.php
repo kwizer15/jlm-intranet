@@ -192,6 +192,15 @@ class Bill extends Document
 	 */
 	private $secondBoostComment;
 
+	/**
+	 * 
+	 * Affaire concernée (Objet)
+	 * @var string $site
+	 *
+	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Site")
+	 */
+	private $siteObject;
+	
     /**
      * Get id
      *
@@ -854,5 +863,28 @@ class Bill extends Document
     public function getSecondBoostComment()
     {
         return $this->secondBoostComment;
+    }
+
+    /**
+     * Set siteObject
+     *
+     * @param \JLM\ModelBundle\Entity\Site $siteObject
+     * @return Bill
+     */
+    public function setSiteObject(\JLM\ModelBundle\Entity\Site $siteObject = null)
+    {
+        $this->siteObject = $siteObject;
+    
+        return $this;
+    }
+
+    /**
+     * Get siteObject
+     *
+     * @return \JLM\ModelBundle\Entity\Site 
+     */
+    public function getSiteObject()
+    {
+        return $this->siteObject;
     }
 }
