@@ -156,4 +156,23 @@ class AskquoteController extends PaginableController
 				'treated' => $repo->getCountTreated(),
 		));
 	}
+	
+	/**
+	 * Imprimer la liste des demande de devis non-traités
+	 *
+	 * @Route("/printlist", name="askquote_printlist")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function printlistAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$entities = $em->getRepository('JLMOfficeBundle:AskQuote')->getUntreated(1000);
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/pdf');
+		$response->headers->set('Content-Disposition', 'inline; filename=devis-a-faire.pdf');
+		$response->setContent($this->render('JLMOfficeBundle:Askquote:printlist.pdf.php',array('entities'=>$entities)));
+	
+		//   return array('entity'=>$entity);
+		return $response;
+	}
 }
