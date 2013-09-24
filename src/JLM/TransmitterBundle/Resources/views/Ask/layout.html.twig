@@ -1,4 +1,5 @@
-{% extends "JLMTransmitterBundle::layout.html.twig" %} 
+{% extends "JLMTransmitterBundle::layout.html.twig" %}
+{% form_theme layout.form_search with 'JLMDefaultBundle:Form:search.html.twig' %}
 {% block sidebar %}
 <ul class="nav nav-list  affix">
 	<li><h4>Commandes d'émetteurs</h4></li>
@@ -9,6 +10,11 @@
 		</form>
 	</li>
 	#}
+	<li>
+		<form  action="{{ path('transmitter_search') }}" method="post" class="form-search">
+			{{ form_widget(layout.form_search) }}
+		</form>
+	</li>
 	<li><a href="{{ path('transmitter_ask_new') }}"><i class="icon-plus-sign"></i> Nouvelle commandes d'émetteurs</a></li>
 	<li class="divider"></li>
 	<li class="nav-header">États</li>
