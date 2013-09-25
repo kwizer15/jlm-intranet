@@ -28,7 +28,6 @@ class Door
      * @var Site $site
      * 
      * @ORM\ManyToOne(targetEntity="Site",inversedBy="doors")
-     * @Assert\Valid
      */
     private $site;
     
@@ -46,7 +45,6 @@ class Door
      * @var DoorType $type
      * 
      * @ORM\ManyToOne(targetEntity="DoorType")
-     * @Assert\Valid
      */
     private $type;
     
