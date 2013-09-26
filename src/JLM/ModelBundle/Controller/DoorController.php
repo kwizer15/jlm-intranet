@@ -58,7 +58,7 @@ class DoorController extends Controller
         $form_contractNew   = $this->createForm(new ContractType(), $contractNew);
 
         // Formulaires d'edition des contrat
-        $formContractEdits = $form_contractStops = array();
+        $form_contractEdits = $form_contractStops = array();
         foreach ($contracts as $contract)
         {
         	$form_contractEdits[] = $this->get('form.factory')->createNamed('contractEdit'.$contract->getId(),new ContractType(), $contract)->createView();
