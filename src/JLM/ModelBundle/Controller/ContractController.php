@@ -87,7 +87,7 @@ class ContractController extends Controller
     {
         $entity  = new Contract();
         $request = $this->getRequest();
-        $form    = $this->get('form.factory')->createNamed('contractEdit'.$entity->getId(),new ContractType(), $entity);
+        $form    = $this->createForm(new ContractType(), $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

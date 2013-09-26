@@ -26,7 +26,6 @@ class Contract
      * @var string $number
      *
      * @ORM\Column(name="number", type="string", length=32)
-     * @Assert\Type(type="string")
      */
     private $number;
 
@@ -64,7 +63,6 @@ class Contract
      * @var datetime $begin
      *
      * @ORM\Column(name="begin", type="datetime")
-     * @Assert\Date
      */
     private $begin;
 
@@ -72,7 +70,6 @@ class Contract
      * @var datetime $endWarranty
      *
      * @ORM\Column(name="end_warranty", type="datetime", nullable=true)
-     * @Assert\Date
      */
     private $endWarranty;
 
@@ -80,7 +77,6 @@ class Contract
      * @var datetime $end
      *
      * @ORM\Column(name="end_contract", type="datetime", nullable=true)
-     * @Assert\Date
      */
     private $end;
 
