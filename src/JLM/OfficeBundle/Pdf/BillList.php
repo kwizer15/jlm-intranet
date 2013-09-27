@@ -10,11 +10,8 @@ class BillList extends FPDFext
 	private $end = false;
 	private $head = true;
 	
-
-	
 	public static function get($entities)
 	{
-		
 		$pdf = new self();
 		$pdf->_init();
 		$pdf->_header();
@@ -60,5 +57,4 @@ class BillList extends FPDFext
 			$datas[6] .= chr(10).chr(10).'Reste à faire :'.chr(10).$entity->getRest();
 		$this->row($datas,5,1,false);
 	}
-
 }
