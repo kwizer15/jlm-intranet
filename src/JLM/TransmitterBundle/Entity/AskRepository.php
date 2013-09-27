@@ -3,6 +3,7 @@
 namespace JLM\TransmitterBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use JLM\DefaultBundle\Entity\Search;
 
 /**
  * AskContractRepository
@@ -93,6 +94,32 @@ class AskRepository extends EntityRepository
 			->setMaxResults($limit)
 			//->orderBy('a.creation','asc')
 		;
+		return $qb->getQuery()->getResult();
+	}
+	
+	public function search(Search $search)
+	{
+		$qb = $this->createQueryBuilder('a')
+			->select('a')
+			->leftJoin('a.trustee','b')
+			->leftJoin('a.site','c')
+			->leftJoin('c.address','d')
+			->leftJoin('d.city','e')
+		;
+		$keywords = $search->getKeywords();
+		if (empty($keywords))
+			return array();
+		foreach ($keywords as $key=>$keyword)
+		{
+			$trusteeWhere[] = 'b.name LIKE ?'.$key;
+			$siteWhere[] = 'd.street LIKE ?'.$key;
+			$cityWhere[] = 'e.name LIKE ?'.$key;
+			$qb->setParameter($key,'%'.$keyword.'%');
+		}
+		$qb->where(implode(' AND ',$trusteeWhere))
+			->orWhere(implode(' AND ',$siteWhere))
+			->orWhere(implode(' AND ',$cityWhere));
+		
 		return $qb->getQuery()->getResult();
 	}
 }

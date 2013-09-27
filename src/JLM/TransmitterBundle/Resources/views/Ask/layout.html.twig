@@ -1,15 +1,7 @@
 {% extends "JLMTransmitterBundle::layout.html.twig" %}
-{% form_theme layout.form_search with 'JLMDefaultBundle:Form:search.html.twig' %}
 {% block sidebar %}
 <ul class="nav nav-list  affix">
 	<li><h4>Commandes d'émetteurs</h4></li>
-	{#
-	<li>
-		<form  action="{{ path('askquote_search') }}" method="post" class="form-search">
-			<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher un devis...">
-		</form>
-	</li>
-	#}
 	<li>
 		<form  action="{{ path('transmitter_search') }}" method="post" class="form-search">
 			{{ form_widget(layout.form_search) }}

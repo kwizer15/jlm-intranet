@@ -3,6 +3,7 @@
 namespace JLM\TransmitterBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use JLM\Defaultbundle\Entity\Search;
 
 /**
  * TransmitterRepository
@@ -59,5 +60,28 @@ class TransmitterRepository extends EntityRepository
 		->orderBy('a.number','asc')
 		->setParameter(1,$id);
 		return $qb;
+	}
+	
+	public function search(Search $search)
+	{
+		$qb = $this->createQueryBuilder('a')
+			->select('a')
+			->leftJoin('a.model','b')
+		;
+		$keywords = $search->getKeywords();
+		if (empty($keywords))
+			return array();
+		foreach ($keywords as $key=>$keyword)
+		{
+			$numberWhere[] = 'a.number LIKE ?'.$key;
+			$nameWhere[] = 'a.userName LIKE ?'.$key;
+			$typeWhere[] = 'b.text LIKE ?'.$key;
+			$qb->setParameter($key,'%'.$keyword.'%');
+		}
+		$qb->where(implode(' AND ',$numberWhere))
+		->orWhere(implode(' AND ',$nameWhere))
+		->orWhere(implode(' AND ',$typeWhere));
+	
+		return $qb->getQuery()->getResult();
 	}
 }

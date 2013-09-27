@@ -1,17 +1,20 @@
 <table class="table table-hover">
 	<thead>
 		<tr>
+			<th>Adresse</th>
+			<th>Date d'attribution</th>
 			<th>Numéro</th>
 			<th>Groupe</th>
 			<th>Type</th>
 			<th>Fin de garantie</th>
 			<th>Propriétaire</th>
-			<th></th>
 		</tr>
 	</thead>
 	<tbody>
 	{% for transmitter in transmitters %}
 		<tr>
+			<td>{{ transmitter.userGroup.site.address | nl2br }}</td>
+			<td><a href="{{ path('transmitter_attribution_show',{'id':transmitter.attribution.id}) }}">{{ transmitter.attribution.creation | date('d/m/Y') }}</td>
 			<td>
 				{% if transmitter.replacedTransmitter %}<a href="#" data-toggle="tooltip" title="Remplacé par le {{ transmitter.replacedTransmitter.number }}">{% endif %}
 					{% if not transmitter.isActive %}<del>{% endif %}
@@ -28,9 +31,6 @@
 			<td>{{ transmitter.model.text }}</td>
 			<td>{{ transmitter.endGuaranteeDate|date('t/m/Y') }}</td>
 			<td>{{ transmitter.userName }}</td>
-			<td>
-				<a href="#modalEditTransmitter{{ transmitter.id }}" role="button" class="btn btn-warning  btn-mini editTransmitter" data-toggle="modal tooltip" title="Éditer"><i class="icon-wrench icon-white"></i></a>
-			</td>
 		</tr>
 	{% endfor %}
 	</tbody>

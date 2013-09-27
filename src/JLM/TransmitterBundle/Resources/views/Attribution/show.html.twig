@@ -37,23 +37,7 @@
 </div>
 {% if entity.transmitters|length > 0 %}
 <h3></h3>
-<table class="table table-hover">
-	<thead>
-		<tr>
-			<th>Numéro</th>
-			<th>Groupe</th>
-			<th>Type</th>
-			<th>Fin de garantie</th>
-			<th>Propriétaire</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-	{% for transmitter in entity.transmitters %}
-		{% include 'JLMTransmitterBundle:Transmitter:table_row.html.twig' with {'transmitter':transmitter} %}
-	{% endfor %}
-	</tbody>
-</table>
+	{% include 'JLMTransmitterBundle:Transmitter:table_row.html.twig' with {'transmitters':entity.transmitters} %}
 {% else %}
 <h3>Pas d'émetteur attribué</h3>
 {% endif %}

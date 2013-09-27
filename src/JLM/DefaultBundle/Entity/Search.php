@@ -43,7 +43,7 @@ class Search
 		foreach ($words as $key => $word)
 		{
 			$word = strtolower($word);
-			if (strlen($word) < 2 || in_array($nosearchs,$word))
+			if (strlen($word) < 2 || in_array($word,$nosearchs))
 				unset($words[$key]);
 		}
 		return $words;
