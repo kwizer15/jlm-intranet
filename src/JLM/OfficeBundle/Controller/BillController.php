@@ -180,6 +180,7 @@ class BillController extends Controller
     	$entity->setPenalty($em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1).'');
     	$entity->setProperty($em->getRepository('JLMOfficeBundle:PropertyModel')->find(1).'');
     	$entity->setEarlyPayment($em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1).'');
+    	$entity->setMaturity(30);
     }
     
     /**
