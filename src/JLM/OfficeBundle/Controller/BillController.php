@@ -177,9 +177,9 @@ class BillController extends Controller
     public function finishNewBill(Bill $entity)
     {
     	$em = $this->getDoctrine()->getManager();
-    	$entity->setPenalty($em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1));
-    	$entity->setProperty($em->getRepository('JLMOfficeBundle:PropertyModel')->find(1));
-    	$entity->setEarlyPayment($em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1));
+    	$entity->setPenalty($em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1).'');
+    	$entity->setProperty($em->getRepository('JLMOfficeBundle:PropertyModel')->find(1).'');
+    	$entity->setEarlyPayment($em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1).'');
     }
     
     /**
