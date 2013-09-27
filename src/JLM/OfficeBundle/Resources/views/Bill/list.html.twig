@@ -6,7 +6,8 @@
             <th>Syndic</th>
             <th>Affaire</th>
             <th>Echéance</th>
-            <th>Total</th>
+            <th>Total HT</th>
+            <th>Total TTC</th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +21,7 @@
             <td>{{ entity.site | nl2br}}</td>
             <td>{{ entity.maturityDate | date('d/m/Y') }}</td>
             <td>{{ entity.totalPrice | number_format(2,',',' ')}} €</td>
+            <td>{{ entity.totalPriceAti | number_format(2,',',' ')}} €</td>
         </tr>
     {% endfor %}
     </tbody>
