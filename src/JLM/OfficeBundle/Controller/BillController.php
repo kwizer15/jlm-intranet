@@ -20,6 +20,9 @@ use JLM\DailyBundle\Entity\Intervention;
 use JLM\DailyBundle\Form\Type\ExternalBillType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+use JLM\DefaultBundle\Entity\Search;
+use JLM\DefaultBundle\Form\Type\SearchType;
+
 
 
 /**
@@ -514,5 +517,26 @@ class BillController extends Controller
     	$em->persist($entity);
     	$em->flush();
     	return $this->redirect($this->generateUrl('bill_toboost'));
+    }
+    
+    /**
+     * @Route("/search",name="bill_search")
+     * @Method("POST")
+     * @Template()
+     */
+    public function searchAction(Request $request)
+    {
+    	$entity = new Search;
+    	$form = $this->createForm(new SearchType(), $entity);
+    	$form->handleRequest($request);
+    	if ($form->isValid())
+    	{
+    		$em = $this->getDoctrine()->getManager();
+    		return array(
+    				'layout'=>array('form_search_query'=>$entity),
+    				'bills' => $em->getRepository('JLMOfficeBundle:Bill')->search($entity),
+    		);
+    	}
+    	return array('layout'=>array('form_search_query'=>$entity->getQuery()),);
     }
 }

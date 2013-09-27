@@ -2,12 +2,11 @@
 
 {% block sidebar %}
 	<li><h4>Factures</h4></li>
-{#	<li>
-		<form  action="{{ path('quote_search') }}" method="post" class="form-search">
-			<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher...">
-    	</form>
-    </li>
-#}
+	<li>
+		<form  action="{{ path('bill_search') }}" method="post" class="form-search">
+			{{ form_widget(layout.form_search) }}
+		</form>
+	</li>
     <li><a href="{{ path('bill_new') }}"><i class="icon-plus-sign"></i> Nouvelle facture</a></li>
     <li class="divider"></li>
     <li class="nav-header">Etats</li>

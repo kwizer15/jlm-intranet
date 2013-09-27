@@ -1,0 +1,26 @@
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Syndic</th>
+            <th>Affaire</th>
+            <th>Echéance</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{% include 'JLMOfficeBundle:Bill:statelabel.html.twig' with {'state': entity.state} %}
+            	<br><a href="{{ path('bill_show', { 'id': entity.id }) }}">{{ entity.number }}</a><br>
+            </td>
+            <td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}</td>
+            <td>{{ entity.trusteeName }}</td>
+            <td>{{ entity.site | nl2br}}</td>
+            <td>{{ entity.maturityDate | date('d/m/Y') }}</td>
+            <td>{{ entity.totalPrice | number_format(2,',',' ')}} €</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

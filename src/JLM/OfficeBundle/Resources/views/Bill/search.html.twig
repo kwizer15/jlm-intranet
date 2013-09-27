@@ -1,0 +1,9 @@
+{% extends "JLMOfficeBundle:Bill:layout.html.twig" %}
+
+{% block content %}
+	<h1>Résultats de la recherche</h1>
+	{% if bills|length %}
+		<h1><small>Factures</small></h1>
+		{% include 'JLMOfficeBundle:Bill:list.html.twig' with {'entities':bills} %}
+	{% endif %}
+{% endblock %}

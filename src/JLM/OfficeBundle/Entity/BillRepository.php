@@ -4,6 +4,7 @@ namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use JLM\ModelBundle\Entity\Site;
+use JLM\DefaultBundle\Entity\Search;
 
 /**
  * BillRepository
@@ -35,18 +36,6 @@ class BillRepository extends EntityRepository
 			return 0;
 		else
 			return $result[0]['num'];
-	}
-	
-	public function search($query)
-	{
-		$qb = $this->createQueryBuilder('q')
-				->where('q.number LIKE :query')
-				->orWhere('q.trusteeName LIKE :query')
-				->orWhere('q.trusteeAddress LIKE :query')
-				->orderBy('q.creation','DESC')
-				->setParameter('query', '%'.$query.'%');
-		
-		return $qb->getQuery()->getResult();
 	}
 	
 	public function getCount($state = null)
@@ -96,5 +85,33 @@ class BillRepository extends EntityRepository
 			->orderBy('a.creation','ASC')
 			->getQuery()
 			->getResult();
+	}
+	
+	public function search(Search $search)
+	{
+		$qb = $this->createQueryBuilder('a')
+		->select('a')
+		->leftJoin('a.trustee','b')
+		->leftJoin('a.siteObject','c')
+		->leftJoin('c.address','d')
+		->leftJoin('d.city','e')
+		;
+		$keywords = $search->getKeywords();
+		if (empty($keywords))
+			return array();
+		foreach ($keywords as $key=>$keyword)
+		{
+			$numberWhere[] = 'a.number LIKE ?'.$key;
+			$trusteeWhere[] = 'b.name LIKE ?'.$key;
+			$siteWhere[] = 'd.street LIKE ?'.$key;
+			$cityWhere[] = 'e.name LIKE ?'.$key;
+			$qb->setParameter($key,'%'.$keyword.'%');
+		}
+		$qb->where(implode(' AND ',$numberWhere))
+		->orWhere(implode(' AND ',$trusteeWhere))
+		->orWhere(implode(' AND ',$siteWhere))
+		->orWhere(implode(' AND ',$cityWhere));
+		
+		return $qb->getQuery()->getResult();
 	}
 }
