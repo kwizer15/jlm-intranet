@@ -96,6 +96,7 @@ class BillController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
 		$entity->setVat($vat);
+		$this->finishNewBill($entity);
         $entity->addLine(new BillLine);
         $form   = $this->createForm(new BillType, $entity);
 
@@ -117,6 +118,7 @@ class BillController extends Controller
     	$entity = new Bill();
     	$entity->setCreation(new \DateTime);
     	$entity->populateFromDoor($door);
+    	$this->finishNewBill($entity);
     	$entity->addLine(new BillLine);
     	$form   = $this->createForm(new BillType, $entity);
     
@@ -138,6 +140,7 @@ class BillController extends Controller
     	$entity = new Bill();
     	$entity->setCreation(new \DateTime);
     	$entity->populateFromQuoteVariant($quote);
+    	$this->finishNewBill($entity);
     	$form   = $this->createForm(new BillType, $entity);
     
     	return array(
@@ -157,13 +160,26 @@ class BillController extends Controller
     {
     	$entity = new Bill();
     	$entity->setCreation(new \DateTime);
+    	
     	$entity->populateFromIntervention($interv);
+    	$this->finishNewBill($entity);
     	$form   = $this->createForm(new BillType, $entity);
     
     	return array(
     			'entity' => $entity,
     			'form'   => $form->createView()
     	);
+    }
+    
+    /**
+     * Finish Bill
+     */
+    public function finishNewBill(Bill $entity)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$entity->setPenalty($em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1));
+    	$entity->setProperty($em->getRepository('JLMOfficeBundle:PropertyModel')->find(1));
+    	$entity->setEarlyPayment($em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1));
     }
     
     /**

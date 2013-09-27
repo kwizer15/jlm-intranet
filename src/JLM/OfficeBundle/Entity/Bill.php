@@ -677,7 +677,7 @@ class Bill extends Document
     	$this->populateFromDoor($quote->getDoor());
     	$this->setVatTransmitter($quote->getVatTransmitter());
     	$this->setDiscount($variant->getDiscount());
-    	$this->setReference('Suite à notre devis n°'.$variant->getNumber());
+    	$this->setReference('Selon votre accord de notre devis n°'.$variant->getNumber().' et notre intervention du ');
     	$lines = $variant->getLines();
     	foreach ($lines as $line)
     	{
@@ -751,6 +751,8 @@ class Bill extends Document
     		if ($interv->getQuote() !== null)
     		{
     			$this->populateFromQuoteVariant($interv->getQuote());
+    			$ref = $this->getReference();
+    			$this->setReference($ref.$interv->getClose()->format('d/m/Y'));
     			
     			return $this;
     		}
