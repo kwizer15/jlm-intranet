@@ -40,7 +40,10 @@
 			<strong>{{ entity.door.type }} - {{ entity.door.location }}</strong>{% endif %}<br>
 			<small>
 	 	{% if entity.quote %}Selon devis n°{{ entity.quote.number }}<br>{% endif %}{{ entity.reason | nl2br }}</small></td>
-            <td><a href="{{ path('order_new',{'id':entity.id}) }}" class="btn btn-primary">Créer...</a></td>
+	 		
+         <td>
+            {% if entity is defined %}<a href="{{ path('order_new',{'id':entity.id}) }}" class="btn btn-primary">Créer...</a>{% endif %}</td>
+   
         </tr>
     {% endfor %}
     </tbody>

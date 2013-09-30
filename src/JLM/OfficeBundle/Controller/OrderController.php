@@ -17,7 +17,8 @@ use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\Task;
 use JLM\DailyBundle\Entity\Work;
-
+use JLM\DefaultBundle\Entity\Search;
+use JLM\DefaultBundle\Form\Type\SearchType;
 
 
 
@@ -269,5 +270,30 @@ class OrderController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$list = $em->getRepository('JLMDailyBundle:Work')->getOrderTodo();
 		return array('entities'=>$list);
+	}
+	
+	/**
+	 * Resultats de la barre de recherche.
+	 *
+	 * @Route("/search", name="order_search")
+	 * @Method("post")
+	 * @Secure(roles="ROLE_USER")
+	 * @Template()
+	 */
+	public function searchAction(Request $request)
+	{
+		$entity = new Search;
+		$form = $this->createForm(new SearchType(), $entity);
+		$form->handleRequest($request);
+		if ($form->isValid())
+		{
+			$em = $this->getDoctrine()->getManager();
+			return array(
+					'layout'=> array('form_search_query'=>$entity),
+					'entities' => $em->getRepository('JLMOfficeBundle:Order')->search($entity),
+					'query' => $entity->getQuery(),
+			);
+		}
+		return array('layout'=>array('form_search_query'=>$entity),'query' => $entity->getQuery(),);
 	}
 }

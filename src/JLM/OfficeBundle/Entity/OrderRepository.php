@@ -2,12 +2,12 @@
 
 namespace JLM\OfficeBundle\Entity;
 
-use Doctrine\ORM\EntityRepository;
+use JLM\DefaultBundle\Entity\SearchRepository;
 
 /**
  * TaskRepository
  */
-class OrderRepository extends EntityRepository
+class OrderRepository extends SearchRepository
 {
 	public function getTotal()
 	{
@@ -50,5 +50,28 @@ class OrderRepository extends EntityRepository
 			->setFirstResult($offset)
 			->setMaxResults($limit);
 		return $qb->getQuery()->getResult();
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getSearchQb()
+	{
+		return $this->createQueryBuilder('a')
+		->select('a')
+		->leftJoin('a.work','c')
+		->leftJoin('c.door','d')
+		->leftJoin('d.site','e')
+		->leftJoin('e.address','f')
+		->leftJoin('f.city','g')
+		;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getSearchParams()
+	{
+		return array('d.street','f.street','g.name');
 	}
 }

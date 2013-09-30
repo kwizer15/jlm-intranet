@@ -1,7 +1,7 @@
 {% extends "JLMOfficeBundle:Order:layout.html.twig" %}
 
 {% block content %}
-<h1>Liste des fiches travaux{% if state is not null %}{% if state == 0 %} en saisie{% elseif state == 1 %} en préparation{% elseif state == 2 %} prêtes{% endif %}{% endif %}</h1>
+<h1>Liste des fiches travaux{% if state is defined %}{% if state == 0 %} en saisie{% elseif state == 1 %} en préparation{% elseif state == 2 %} prêtes{% endif %}{% endif %}</h1>
 
 <table class="table table-stripped">
     <thead>
@@ -35,6 +35,7 @@
     </tbody>
 </table>
 
+{% if page is defined %}
 <div class="pagination pagination-centered">
 	<ul>
 	    <li{% if page == 1 %} class="disabled"{% endif %}><a href="{% if state is null %}{{ path('order_page',{ 'page' : page-1 }) }}{% else %}{{ path('order_state',{ 'page' : page-1, 'state':state }) }}{% endif %}">«</a></li>
@@ -44,4 +45,5 @@
 		<li{% if page == nbPages %} class="disabled"{% endif %}><a href="{% if state is null %}{{ path('order_page',{ 'page' : page+1 }) }}{% else %}{{ path('order_state',{ 'page' : page+1, 'state':state }) }}{% endif %}">»</a></li>
 	</ul>
 </div>
+{% endif %}
 {% endblock %}
