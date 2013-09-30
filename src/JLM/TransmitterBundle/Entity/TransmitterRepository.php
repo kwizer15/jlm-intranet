@@ -62,26 +62,29 @@ class TransmitterRepository extends EntityRepository
 		return $qb;
 	}
 	
-	public function search(Search $search)
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getSearchQb()
 	{
-		$qb = $this->createQueryBuilder('a')
+		return $this->createQueryBuilder('a')
 			->select('a')
 			->leftJoin('a.model','b')
-		;
-		$keywords = $search->getKeywords();
-		if (empty($keywords))
-			return array();
-		foreach ($keywords as $key=>$keyword)
-		{
-			$numberWhere[] = 'a.number LIKE ?'.$key;
-			$nameWhere[] = 'a.userName LIKE ?'.$key;
-			$typeWhere[] = 'b.text LIKE ?'.$key;
-			$qb->setParameter($key,'%'.$keyword.'%');
-		}
-		$qb->where(implode(' AND ',$numberWhere))
-		->orWhere(implode(' AND ',$nameWhere))
-		->orWhere(implode(' AND ',$typeWhere));
+	}
 	
-		return $qb->getQuery()->getResult();
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getSearchParams()
+	{
+		return array('a.number','a.userName','b.text');
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getSearchOrderBy()
+	{
+		return array('a.number'=>'ASC');
 	}
 }

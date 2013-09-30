@@ -95,6 +95,14 @@ class QuoteRepository extends SearchRepository
 	{
 		return array('a.number','a.trusteeName','a.trusteeAddress','a.doorCp','a.contactCp');
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getSearchOrderBy()
+	{
+		return array('a.number'=>'DESC');
+	}
 
 	public function getCountState($state = null)
 	{

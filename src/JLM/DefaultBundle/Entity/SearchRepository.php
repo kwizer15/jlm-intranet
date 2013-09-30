@@ -31,6 +31,11 @@ class SearchRepository extends EntityRepository
 		foreach ($params as $param)
 			$qb->orWhere(implode(' AND ',$wheres[$param]));
 			
+		foreach ($orderBys as $champ=>$order)
+		{
+			/* Vérifier $order = 'asc' ou 'desc' */
+			$qb->addOrderBy($champ,$order);
+		}
 		return $qb->getQuery()->getResult();
 	}
 	
@@ -46,6 +51,14 @@ class SearchRepository extends EntityRepository
 	 * @return array
 	 */
 	protected function getSearchParams()
+	{
+		return array();
+	}
+	
+	/**
+	 * @return array
+	 */
+	protected function getSearchOrderBy()
 	{
 		return array();
 	}

@@ -116,4 +116,12 @@ class AskRepository extends SearchRepository
 	{
 		return array('b.name','d.street','e.name');
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getSearchOrderBy()
+	{
+		return array('a.creation'=>'DESC');
+	}
 }
