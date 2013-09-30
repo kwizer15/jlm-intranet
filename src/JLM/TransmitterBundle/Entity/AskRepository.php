@@ -2,13 +2,12 @@
 
 namespace JLM\TransmitterBundle\Entity;
 
-use Doctrine\ORM\EntityRepository;
-use JLM\DefaultBundle\Entity\Search;
+use JLM\DefaultBundle\Entity\SearchRepository;
 
 /**
  * AskContractRepository
  */
-class AskRepository extends EntityRepository
+class AskRepository extends SearchRepository
 {
 	public function getAll($limit = 10, $offset = 0)
 	{
@@ -97,29 +96,24 @@ class AskRepository extends EntityRepository
 		return $qb->getQuery()->getResult();
 	}
 	
-	public function search(Search $search)
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getSearchQb()
 	{
-		$qb = $this->createQueryBuilder('a')
+		return $this->createQueryBuilder('a')
 			->select('a')
 			->leftJoin('a.trustee','b')
 			->leftJoin('a.site','c')
 			->leftJoin('c.address','d')
-			->leftJoin('d.city','e')
-		;
-		$keywords = $search->getKeywords();
-		if (empty($keywords))
-			return array();
-		foreach ($keywords as $key=>$keyword)
-		{
-			$trusteeWhere[] = 'b.name LIKE ?'.$key;
-			$siteWhere[] = 'd.street LIKE ?'.$key;
-			$cityWhere[] = 'e.name LIKE ?'.$key;
-			$qb->setParameter($key,'%'.$keyword.'%');
-		}
-		$qb->where(implode(' AND ',$trusteeWhere))
-			->orWhere(implode(' AND ',$siteWhere))
-			->orWhere(implode(' AND ',$cityWhere));
-		
-		return $qb->getQuery()->getResult();
+			->leftJoin('d.city','e');
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getSearchParams()
+	{
+		return array('b.name','d.street','e.name');
 	}
 }

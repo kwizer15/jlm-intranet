@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use JLM\DefaultBundle\Entity\Search;
+use JLM\DefaultBundle\Form\Type\SearchType;
 use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
 use JLM\ModelBundle\Entity\Door;
@@ -268,15 +270,19 @@ class QuoteController extends Controller
      */
     public function searchAction(Request $request)
     {
-    	$em = $this->getDoctrine()->getManager();
-    	$query = $request->request->get('query');
-    	$results = $em->getRepository('JLMOfficeBundle:Quote')->search($query);
-    	if (sizeof($results) == 1)
-    		return $this->redirect($this->generateUrl('quote_show', array('id' => $results[0]->getId())));
-    	return array(
-    		'query'   => $query,
-    		'results' => $results,
-    	);
+    	$entity = new Search;
+    	$form = $this->createForm(new SearchType(), $entity);
+    	$form->handleRequest($request);
+    	if ($form->isValid())
+    	{
+    		$em = $this->getDoctrine()->getManager();
+    		return array(
+    				'layout'=> array('form_search_query'=>$entity),
+    				'results' => $em->getRepository('JLMOfficeBundle:Quote')->search($entity),
+    				'query' => $entity->getQuery(),
+    		);
+    	}
+    	return array('layout'=>array('form_search_query'=>$entity),'query' => $entity->getQuery(),);
     }
     
     /**

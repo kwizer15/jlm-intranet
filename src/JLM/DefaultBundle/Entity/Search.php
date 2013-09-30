@@ -35,7 +35,7 @@ class Search
 	 */
 	public function getKeywords()
 	{
-		$words = str_replace(array(' ',',','.','\'','"'),'+',$this->getQuery());
+		$words = str_replace(array(' ',',','.','\'','"','-'),'+',$this->getQuery());
 		$words = stripslashes(trim($words));
 		$words = explode('+',$words);
 		

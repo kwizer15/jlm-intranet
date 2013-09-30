@@ -3,7 +3,7 @@
 	<li><h4>Devis</h4></li>
 	<li>
 		<form  action="{{ path('quote_search') }}" method="post" class="form-search">
-			<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher un devis...">
+			{{ form_widget(layout.form_search) }}
 		</form>
 	</li>
 	<li><a href="{{ path('askquote_new') }}"><i class="icon-plus-sign"></i> Nouvelle demande de devis</a></li>

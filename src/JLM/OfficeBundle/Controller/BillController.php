@@ -554,6 +554,6 @@ class BillController extends Controller
     				'bills' => $em->getRepository('JLMOfficeBundle:Bill')->search($entity),
     		);
     	}
-    	return array('layout'=>array('form_search_query'=>$entity->getQuery()),);
+    	return array('layout'=>array('form_search_query'=>$entity),);
     }
 }
