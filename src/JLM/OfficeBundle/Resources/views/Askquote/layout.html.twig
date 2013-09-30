@@ -1,13 +1,11 @@
 {% extends "JLMOfficeBundle::layout.html.twig" %} 
 {% block sidebar %}
 	<li><h4>Demandes de devis</h4></li>
-	{#
 	<li>
 		<form  action="{{ path('askquote_search') }}" method="post" class="form-search">
-			<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher un devis...">
+			{{ form_widget(layout.form_search) }}
 		</form>
 	</li>
-	#}
 	<li><a href="{{ path('askquote_new') }}"><i class="icon-plus-sign"></i> Nouvelle demande de devis</a></li>
 	<li class="divider"></li>
 	<li class="nav-header">États</li>

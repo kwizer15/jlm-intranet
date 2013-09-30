@@ -2,12 +2,12 @@
 
 namespace JLM\OfficeBundle\Entity;
 
-use Doctrine\ORM\EntityRepository;
+use JLM\DefaultBundle\Entity\SearchRepository;
 
 /**
  * AskQuoteRepository
  */
-class AskQuoteRepository extends EntityRepository
+class AskQuoteRepository extends SearchRepository
 {
 	public function getAll($limit = 10, $offset = 0)
 	{
@@ -109,4 +109,37 @@ class AskQuoteRepository extends EntityRepository
 		;
 		return $qb->getQuery()->getResult();
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getSearchQb()
+	{
+		return $this->createQueryBuilder('a')
+			->select('a')
+			->leftJoin('a.quotes','b')
+			->leftJoin('a.intervention','c')
+			->leftJoin('c.door','d')
+			->leftJoin('d.site','e')
+			->leftJoin('e.address','f')
+			->leftJoin('f.city','g')
+		;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getSearchParams()
+	{
+		return array('d.street','f.street','g.name');
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getSearchOrderBy()
+	{
+		return array('a.creation'=>'asc');
+	}
+	
 }

@@ -3,6 +3,7 @@
 namespace JLM\OfficeBundle\Controller;
 
 use JLM\DefaultBundle\Controller\PaginableController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -11,6 +12,8 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\OfficeBundle\Form\Type\AskQuoteType;
 use JLM\OfficeBundle\Form\Type\AskQuoteDontTreatType;
+use JLM\DefaultBundle\Entity\Search;
+use JLM\DefaultBundle\Form\Type\SearchType;
 
 /**
  * AskQuote controller.
@@ -174,5 +177,30 @@ class AskquoteController extends PaginableController
 	
 		//   return array('entity'=>$entity);
 		return $response;
+	}
+	
+	/**
+	 * Resultats de la barre de recherche.
+	 *
+	 * @Route("/search", name="askquote_search")
+	 * @Method("post")
+	 * @Secure(roles="ROLE_USER")
+	 * @Template()
+	 */
+	public function searchAction(Request $request)
+	{
+		$entity = new Search;
+		$form = $this->createForm(new SearchType(), $entity);
+		$form->handleRequest($request);
+		if ($form->isValid())
+		{
+			$em = $this->getDoctrine()->getManager();
+			return array(
+					'layout'=> array('form_search_query'=>$entity),
+					'entities' => $em->getRepository('JLMOfficeBundle:AskQuote')->search($entity),
+					'query' => $entity->getQuery(),
+			);
+		}
+		return array('layout'=>array('form_search_query'=>$entity),'query' => $entity->getQuery(),);
 	}
 }
