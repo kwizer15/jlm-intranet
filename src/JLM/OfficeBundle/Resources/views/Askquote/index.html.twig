@@ -20,7 +20,10 @@
 		<tr{% if entity.dontTreat or entity.quotes | length %} class="success"{% elseif entity.maturity < today %} class="error"{% endif %}>
 			<td>{{ entity.creation | date('d/m/Y') }}</td>
 			<td>{{ entity.trustee }}</td>
-			<td>{% if entity.door %}{{ entity.door.type }} - {{ entity.door.location }}<br>{% endif %}
+			<td>
+			{% if entity.door %}
+			{% if entity.door.stopped %}<span class="label label-important">Mise à l'arrêt</span><br>{% endif %}
+			{{ entity.door.type }} - {{ entity.door.location }}<br>{% endif %}
 			{% if entity.site %}
 			{% include "JLMModelBundle:Helpers:address.html.twig" with {'address' : entity.site.address } %}
 			{% endif %}</td>
