@@ -16,9 +16,12 @@ class SearchRepository extends EntityRepository
 	{
 		if ($search instanceof Search)
 			$keywords = $search->getKeywords();
-		/* Rétro compatibilité */
-		else
-			$keywords = $search;
+		{
+			$s = new Search;
+			$s->setQuery($search);
+			$keywords = $s->getKeywords();
+		}
+		
 		if (empty($keywords))
 			return array();
 		$qb = $this->getSearchQb();
