@@ -12,9 +12,13 @@ class SearchRepository extends EntityRepository
 	 * @param Search $search
 	 * @return array|null
 	 */
-	public function search(Search $search)
+	public function search($search)
 	{
-		$keywords = $search->getKeywords();
+		if ($search instanceof Search)
+			$keywords = $search->getKeywords();
+		/* Rétro compatibilité */
+		else
+			$keywords = $search;
 		if (empty($keywords))
 			return array();
 		$qb = $this->getSearchQb();
