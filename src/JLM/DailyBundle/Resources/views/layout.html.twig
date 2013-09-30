@@ -7,7 +7,7 @@
     	<li><h4>Journal de bord</h4></li>
     	<li>
     		<form  action="{{ path('daily_search') }}" method="post" class="form-search">
-				<input type="text" class="search-query input-medium" name="query" placeholder="Rechercher...">
+				{{ form_widget(layout.form_search) }}
     		</form>
     	</li>
 	    <li class="nav-header">Techniciens</li>

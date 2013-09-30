@@ -11,6 +11,8 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Form\Type\DatepickerType;
 use JLM\DailyBundle\Entity\Fixing;
 use JLM\DailyBundle\Form\Type\FixingType;
+use JLM\DefaultBundle\Entity\Search;
+use JLM\DefaultBundle\Form\Type\SearchType;
 
 class DefaultController extends Controller
 {
@@ -23,35 +25,36 @@ class DefaultController extends Controller
 	 */
 	public function searchAction(Request $request)
 	{
-		$em = $this->getDoctrine()->getManager();
-		$query = $request->request->get('query');
-		if ($query > 0)
+		$entity = new Search;
+		$form = $this->createForm(new SearchType(), $entity);
+		$form->handleRequest($request);
+		if ($form->isValid())
 		{
-			$door = $em->getRepository('JLMModelBundle:Door')->find($query);
-			if ($door !== null)
-				return $this->redirect($this->generateUrl('daily_door_show',array('id'=>$door->getId())));
+			$em = $this->getDoctrine()->getManager();
+			$doors = $em->getRepository('JLMModelBundle:Door')->search($entity);
+			/*
+			 * Voir aussi
+			* 	DoorController:stoppedAction
+			* 	FixingController:newAction
+			* @todo A factoriser de là ...
+			*/
+			$fixingForms = array();
+			foreach ($doors as $door)
+			{
+				$form = new Fixing();
+				$form->setDoor($door);
+				$form->setAskDate(new \DateTime);
+				$fixingForms[] = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(),new FixingType(), $form)->createView();
+			}
+			/* à la */
+			return array(
+					'layout'=>array('form_search_query'=>$entity),
+					'query'   => $entity->getQuery(),
+					'doors'   => $doors,
+					'fixing_forms' => $fixingForms,
+			);
 		}
-		$doors = $em->getRepository('JLMModelBundle:Door')->search($query);
-		/*
-		 * Voir aussi
-		* 	DoorController:stoppedAction
-		* 	FixingController:newAction
-		* @todo A factoriser de là ...
-		*/
-		$fixingForms = array();
-		foreach ($doors as $door)
-		{
-			$entity = new Fixing();
-			$entity->setDoor($door);
-			$entity->setAskDate(new \DateTime);
-			$fixingForms[] = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(),new FixingType(), $entity)->createView();
-		}
-		/* à la */
-		return array(
-			'query'   => $query,
-			'doors'   => $doors,
-			'fixing_forms' => $fixingForms,
-		);
+		return array('layout'=>array('form_search_query'=>$entity->getQuery()),'query'   => $query,);
 	}
 	
 	/**

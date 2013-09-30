@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use JLM\DefaultBundle\Entity\Search;
+use JLM\DefaultBundle\Form\Type\SearchType;
 
 class DefaultController extends Controller
 {
@@ -21,25 +23,26 @@ class DefaultController extends Controller
      */
     public function searchAction(Request $request)
     {
-    	$em = $this->getDoctrine()->getManager();
-    	$query = $request->request->get('query');
-    	$doors = $em->getRepository('JLMModelBundle:Door')->search($query);
-    	$sites = $em->getRepository('JLMModelBundle:Site')->search($query);
-    	$trustees = $em->getRepository('JLMModelBundle:Trustee')->search($query);
-    	$suppliers = $em->getRepository('JLMModelBundle:Supplier')->search($query);
-//    	$productcategories = $em->getRepository('JLMModelBundle:ProductCategory')->search($query);
-    	$products = $em->getRepository('JLMModelBundle:Product')->search($query);
-    	$persons = $em->getRepository('JLMModelBundle:Person')->search($query);
+    	$entity = new Search;
+    	$form = $this->createForm(new SearchType(), $entity);
+    	$form->handleRequest($request);
+    	if ($form->isValid())
+    	{
+    		$em = $this->getDoctrine()->getManager();
+    		return array(
+    				'layout'=>array('form_search_query'=>$entity),
+    				'query'   => $entity->getQuery(),
+    				'doors'   => $em->getRepository('JLMModelBundle:Door')->search($entity),
+    				'sites'   => $em->getRepository('JLMModelBundle:Site')->search($entity),
+    				'trustees'=> $em->getRepository('JLMModelBundle:Trustee')->search($entity),
+    				'suppliers'=> $em->getRepository('JLMModelBundle:Supplier')->search($entity),
+    				'products' => $em->getRepository('JLMModelBundle:Product')->search($entity),
+    				'persons' => $em->getRepository('JLMModelBundle:Person')->search($entity),
+    		);
+    	}
     	return array(
-    			'query'   => $query,
-    			'doors'   => $doors,
-    			'sites'   => $sites,
-    			'trustees'=> $trustees,
-    			'suppliers'=> $suppliers,
-//    			'productcategories' => $productcategories,
-    			'products' => $products,
-    			'persons' => $persons,
-    			
+    			'layout'=>array('form_search_query'=>$entity->getQuery()),
+    			'query' => $entity->getQuery(),
     	);
     }
     

@@ -30,7 +30,7 @@ class SearchRepository extends EntityRepository
 		}
 		foreach ($params as $param)
 			$qb->orWhere(implode(' AND ',$wheres[$param]));
-			
+		$orderBys = $this->getSearchOrderBy();
 		foreach ($orderBys as $champ=>$order)
 		{
 			/* Vérifier $order = 'asc' ou 'desc' */
