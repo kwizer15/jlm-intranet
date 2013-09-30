@@ -69,7 +69,7 @@ class TransmitterRepository extends EntityRepository
 	{
 		return $this->createQueryBuilder('a')
 			->select('a')
-			->leftJoin('a.model','b')
+			->leftJoin('a.model','b');
 	}
 	
 	/**
