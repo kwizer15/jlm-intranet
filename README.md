@@ -25,6 +25,7 @@ Mise à jour du code
 	git pull
 	
 On met à jour le cache
+
 	sudo chmod 777 -R app/cache
 	php app/console cache:clear
 	sudo chmod 777 -R app/cache
