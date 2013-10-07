@@ -9,6 +9,7 @@ Dans votre dossier projet
 	git clone git@gitlab.kw12er.com:kwizer/jlm-intranet.git
 	cd jlm-intranet.git
 	sudo chmod 777 -R app/cache
+	sudo chmod 777 -R app/logs
 
 Procédure de mise à jour
 ------------------------
