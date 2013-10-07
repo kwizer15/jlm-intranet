@@ -98,9 +98,11 @@
 		        </li>
 			  {% endblock navigation %}
 			</ul>
-			
+			<ul class="nav navbar-nav pull-right">
+				<li><a href="http://gitlab.kw12er.com/kwizer/jlm-intranet/issues">Signaler un bug</a></li>
+			</ul>
 			<div class="btn-group pull-right">
-			   <a href="http://gitlab.kw12er.com/kwizer/jlm-intranet/issues">Signaler Bug</a>
+			   
 			   <a href="#" class="btn btn-info navbar-btn dropdown-toggle" data-toggle="dropdown"><i class="icon-user  icon-white"></i> {{ app.user.person.firstName }} <b class="caret"></b></a>
 			   <ul class="dropdown-menu">
 			   		<li><a href="{{ path('fos_user_security_logout') }}"><i class="icon-remove-sign"></i> Déconnexion</a></li>
