@@ -5,7 +5,7 @@ http://jlm-entreprise.fr
 Rapatrier le code pour le développement
 ---------------------------------------
 Dans votre dossier projet
-	git clone git@kw12er.com:kwizer/jlm-intranet.git
+	git clone git@gitlab.kw12er.com:kwizer/jlm-intranet.git
 	cd jlm-intranet.git
 	sudo chmod 777 -R app/cache
 
