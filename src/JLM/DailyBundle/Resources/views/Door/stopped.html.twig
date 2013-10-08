@@ -52,27 +52,20 @@
 			<td>Depuis le {{ door.lastStop.begin|date('d/m/Y') }}<br>{{ door.lastStop.reason | nl2br }}</td>
 			<td>{{ door.lastStop.state | nl2br }}</td>
 			{% else %}<td></td><td></td>{% endif %}
-			<td><a href="#" class="btn btn-warning"><i class="icon-white icon-pencil"></i>Editer</a></td>
+			<td><a href="#modalDoorStopEdit{{ door.lastStop.id }}" data-toggle="modal" class="btn btn-warning"><i class="icon-white icon-pencil"></i>Editer</a></td>
 		</tr>
 		{% endfor %}
 	</tbody>
 </table>
-{% if fixing_forms is defined %}
-	{% for key,form in fixing_forms %}
-		{% include 'JLMDailyBundle:Fixing:new.html.twig' with {'form':form, 'door':entities[key]} %}
-	{% endfor %}
-	{# todo supprimer le else #}
-{% else %}
-	{% for door in entities %}
-		{{ render(controller('JLMDailyBundle:Fixing:new',{'id':door.id})) }}
-	{% endfor %}
 {% endif %}
-		
-		
-		
-		
-	{% endif %}
 	<div class="form-actions">
 <a href="{{ path('daily_door_printstopped') }}" class="btn btn-info"><i class="icon-white icon-print"></i> Imprimer</a>
 </div>
+{% endblock %}
+
+{% block modals %}
+{{ parent() }}
+{% for key,door in entities %}
+{% include 'JLMModelBundle:DoorStop:edit.html.twig' with {'entity':door.lastStop, 'form':stopForms[key]} %}
+{% endfor %}
 {% endblock %}

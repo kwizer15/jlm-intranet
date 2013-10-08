@@ -13,6 +13,7 @@ use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Entity\DoorStop;
 use JLM\DailyBundle\Entity\Fixing;
 use JLM\DailyBundle\Form\Type\FixingType;
+use JLM\ModelBundle\Form\Type\DoorStopEditType;
 
 /**
  * Fixing controller.
@@ -48,25 +49,39 @@ class DoorController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$doors = $em->getRepository('JLMModelBundle:Door')->getStopped();
-		$fixingForms = array();
+		$stopForms = array();
 		
-		/* 
-		 * Voir aussi
-		 * 	DefaultController:searchAction
-		 * 	FixingController:newAction
-		 * @todo A factoriser de là ... 
-		 */
 		foreach ($doors as $door)
-		{
-			$entity = new Fixing();
-			$entity->setDoor($door);
-			$fixingForms[] = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(),new FixingType(), $entity)->createView();
-		}
-		/* A là */
+			$stopForms[] = $this->get('form.factory')->createNamed('doorStopEdit'.$door->getLastStop()->getId(),new DoorStopEditType(), $door->getLastStop())->createView();
+		
 		return array(
 				'entities' => $doors,
-				'fixing_forms' => $fixingForms, // Avec ça en plus
+				'stopForms' => $stopForms,
 		);
+	}
+	
+	/**
+	 * Displays Doors stopped
+	 *
+	 * @Route("/stop/update/{id}", name="daily_door_stopupdate")
+	 * @Template("JLMDailyBundle:Door:stopped.html.twig")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function stopupdateAction(Request $request, DoorStop $entity)
+	{
+		$form = $this->get('form.factory')->createNamed('doorStopEdit'.$entity->getId(),new DoorStopEditType(), $entity);
+		$form->handleRequest($request);
+
+        if ($form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+            return $this->stoppedAction();
+        }
+		
+		return $this->stoppedAction();
+		
 	}
 	
 	/**
