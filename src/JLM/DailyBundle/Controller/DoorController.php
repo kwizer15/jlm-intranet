@@ -101,12 +101,12 @@ class DoorController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$stop = new DoorStop;
 		$stop->setBegin(new \DateTime);
+		$stop->setReason('À définir');
+		$stop->setState('Non traitée');
 		$entity->addStop($stop);
 		$em->persist($stop);
 		$em->flush();
-		return array(
-				'entity' => $entity,
-		);
+		return $this->showAction($entity);
 	}
 	
 	/**
@@ -123,8 +123,6 @@ class DoorController extends Controller
 		$stop->setEnd(new \DateTime);
 		$em->persist($stop);
 		$em->flush();
-		return array(
-				'entity' => $entity,
-		);
+		return $this->showAction($entity);
 	}
 }

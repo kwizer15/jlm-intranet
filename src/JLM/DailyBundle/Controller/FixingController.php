@@ -199,6 +199,7 @@ class FixingController extends AbstractInterventionController
 				$stop = new \DoorStop;
 				$stop->setBegin(new \DateTime);
 				$stop->setReason($entity->getReport());
+				$stop->setState('Non traitée');
 				$entity->getDoor()->addStop($stop);
 				$em->persist($stop);
 			}
