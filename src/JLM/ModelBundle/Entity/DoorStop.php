@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DoorStop
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\DoorStopRepository")
+ * @ORM\Table(name="door_stops")
+ * @ORM\Entity
  */
 class DoorStop
 {
