@@ -41,6 +41,13 @@ class DoorStop
      * @ORM\Column(name="reason", type="string", length=255)
      */
     private $reason;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="state", type="string", length=255)
+     */
+    private $state;
 
     /**
      * @var Door
@@ -149,5 +156,28 @@ class DoorStop
     public function getDoor()
     {
         return $this->door;
+    }
+
+    /**
+     * Set state
+     *
+     * @param string $state
+     * @return DoorStop
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+    
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return string 
+     */
+    public function getState()
+    {
+        return $this->state;
     }
 }
