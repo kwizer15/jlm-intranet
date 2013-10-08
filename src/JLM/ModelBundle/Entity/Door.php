@@ -657,12 +657,26 @@ class Door
      */
     public function getWaitMaintenance()
     {
-    	foreach($this->interventions as $interv)
-    		if ($interv instanceof \JLM\DailyBundle\Entity\Maintenance)
-    			if (!$interv->getClosed())
-       				if (!sizeof($interv->getShiftTechnicians()))
-    					return true;
-		return false;
+		return ($this->getNextMaintenance() !== null);
+    }
+    
+    /**
+     * Get numberWaitMaintenance
+     *
+     * @return int|null
+     */
+    public function getNumberWaitMaintenance()
+    {
+    	if (!$this->getWaitMaintenance())
+    		return null;
+    	if ($this->getLastMaintenance() === null)
+    		return 1;
+    	$yearLast = $this->getLastMaintenance()->format('Y');
+    	$today = new \DateTime;
+    	$year = $today->format('Y');
+    	if ($yearLast == $year)
+    		return 2;
+    	return 1;
     }
     
     /**
