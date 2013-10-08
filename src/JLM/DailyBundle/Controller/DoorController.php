@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Door;
+use JLM\ModelBundle\Entity\DoorStop;
 use JLM\DailyBundle\Entity\Fixing;
 use JLM\DailyBundle\Form\Type\FixingType;
 
@@ -98,8 +99,10 @@ class DoorController extends Controller
 	public function stopAction(Door $entity)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$entity->setStopped(true);
-		$em->persist($entity);
+		$stop = new DoorStop;
+		$stop->setBegin(new \DateTime);
+		$entity->addStop($stop);
+		$em->persist($stop);
 		$em->flush();
 		return array(
 				'entity' => $entity,
@@ -116,8 +119,9 @@ class DoorController extends Controller
 	public function unstopAction(Door $entity)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$entity->setStopped(false);
-		$em->persist($entity);
+		$stop = $entity->getLastStop();
+		$stop->setEnd(new \DateTime);
+		$em->persist($stop);
 		$em->flush();
 		return array(
 				'entity' => $entity,

@@ -18,6 +18,7 @@ use JLM\DailyBundle\Form\Type\FixingCloseType;
 use JLM\DailyBundle\Form\Type\ExternalBillType;
 use JLM\DailyBundle\Form\Type\InterventionCancelType;
 use JLM\ModelBundle\Entity\Door;
+use JLM\ModelBundle\Entity\DoorStop;
 
 /**
  * Fixing controller.
@@ -191,12 +192,18 @@ class FixingController extends AbstractInterventionController
 	
 		if ($form->isValid())
 		{
+			$em = $this->getDoctrine()->getManager();
 			// Mise à l'arrêt
 			if ($entity->getDone()->getId() == 3)
-				$entity->getDoor()->setStopped(true);
+			{
+				$stop = new \DoorStop;
+				$stop->setBegin(new \DateTime);
+				$stop->setReason($entity->getReport());
+				$entity->getDoor()->addStop($stop);
+				$em->persist($stop);
+			}
 			
 			$entity->setClose(new \DateTime);
-			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
 			$em->flush();
 			return $this->redirect($this->generateUrl('fixing_show', array('id' => $entity->getId())));

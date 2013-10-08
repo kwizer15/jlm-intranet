@@ -635,14 +635,7 @@ class Door
      */
     public function getStopped()
     {
-    	return $this->stopped;
-    	$stops = $this->getStops();
-    	foreach ($stops as $stop)
-    	{
-    		if ($stop->getEnd() === null)
-    			return true;
-    	}
-    	return false;
+    	return $this->getLastStop() != null;
     }
     
     /**
@@ -936,24 +929,26 @@ class Door
     /**
      * Add stops
      *
-     * @param \JLM\ModelBundle\Entity\StoppedDoor $stops
+     * @param \JLM\ModelBundle\Entity\DoorStop $stops
      * @return Door
      */
-    public function addStop(\JLM\ModelBundle\Entity\StoppedDoor $stops)
+    public function addStop(\JLM\ModelBundle\Entity\DoorStop $stops)
     {
+    	$stops->setDoor($this);
         $this->stops[] = $stops;
-    
         return $this;
     }
 
     /**
      * Remove stops
      *
-     * @param \JLM\ModelBundle\Entity\StoppedDoor $stops
+     * @param \JLM\ModelBundle\Entity\DoorStop $stops
      */
-    public function removeStop(\JLM\ModelBundle\Entity\StoppedDoor $stops)
+    public function removeStop(\JLM\ModelBundle\Entity\DoorStop $stops)
     {
+    	$stops->setDoor();
         $this->stops->removeElement($stops);
+        return $this;
     }
 
     /**
@@ -964,5 +959,21 @@ class Door
     public function getStops()
     {
         return $this->stops;
+    }
+    
+    /**
+     * Get Last Stop
+     * 
+     * @return \JLM\ModelBundle\Entity\DoorStop
+     */
+    public function getLastStop()
+    {
+    	$stops = $this->getStops();
+    	foreach ($stops as $stop)
+    	{
+    		if ($stop->getEnd() === null)
+    			return $stop;
+    	}
+    	return null;
     }
 }
