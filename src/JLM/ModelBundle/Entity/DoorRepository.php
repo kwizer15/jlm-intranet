@@ -36,9 +36,10 @@ class DoorRepository extends SearchRepository
 	
 	public function getCountStopped()
 	{
-		$qb = $this->createQueryBuilder('d')
-			->select('COUNT(d)')
-			->where('d.stopped = 1');
+		$qb = $this->createQueryBuilder('a')
+			->select('COUNT(a)')
+			->leftJoin('a.stops','j')
+			->where('j.end is null');
 		return $qb->getQuery()->getSingleScalarResult();
 	}
 	
