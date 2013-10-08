@@ -79,9 +79,7 @@ class DoorController extends Controller
             $em->flush();
             return $this->stoppedAction();
         }
-		
 		return $this->stoppedAction();
-		
 	}
 	
 	/**
