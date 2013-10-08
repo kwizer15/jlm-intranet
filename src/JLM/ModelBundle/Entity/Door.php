@@ -117,10 +117,19 @@ class Door
      * Porte à l'arrêt
      * @var bool $stoped
      * 
+     * @deprecated
      * @ORM\Column(name="stopped", type="boolean")
      * @Assert\Type(type="bool")
      */
     private $stopped = false;
+    
+    /**
+     * Liste des mises à l'arrêt
+     * @var ArrayCollection
+     * 
+     * @ORM\OneToMany(targetEntity="DoorStop", mappedBy="door")
+     */
+    private $stops;
     
     /**
      * Prélibellé de factration
@@ -627,6 +636,13 @@ class Door
     public function getStopped()
     {
     	return $this->stopped;
+    	$stops = $this->getStops();
+    	foreach ($stops as $stop)
+    	{
+    		if ($stop->getEnd() === null)
+    			return true;
+    	}
+    	return false;
     }
     
     /**
@@ -916,5 +932,37 @@ class Door
     {
     	return $this->getSite()->isBlocked();
     }
+
+    /**
+     * Add stops
+     *
+     * @param \JLM\ModelBundle\Entity\StoppedDoor $stops
+     * @return Door
+     */
+    public function addStop(\JLM\ModelBundle\Entity\StoppedDoor $stops)
+    {
+        $this->stops[] = $stops;
     
+        return $this;
+    }
+
+    /**
+     * Remove stops
+     *
+     * @param \JLM\ModelBundle\Entity\StoppedDoor $stops
+     */
+    public function removeStop(\JLM\ModelBundle\Entity\StoppedDoor $stops)
+    {
+        $this->stops->removeElement($stops);
+    }
+
+    /**
+     * Get stops
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStops()
+    {
+        return $this->stops;
+    }
 }
