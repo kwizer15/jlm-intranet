@@ -128,6 +128,7 @@ class Door
      * @var ArrayCollection
      * 
      * @ORM\OneToMany(targetEntity="DoorStop", mappedBy="door")
+     * @ORM\OrderBy({"begin" = "DESC"})
      */
     private $stops;
     
