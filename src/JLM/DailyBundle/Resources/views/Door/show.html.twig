@@ -38,6 +38,7 @@
 	    			<div class="tab-pane active" id="door">
 	    				<div class="row-fluid">
 	    					<div class="span8">
+	    					{% if entity.underWarranty %}<span class="label label-success">Sous garantie jusqu'au {{ entity.endWarranty | date('d/m/Y') }}</span>{% endif %}
 								<dl>
 								<dt>Dernier entretien</dt>
 								<dd>{% if entity.lastMaintenance is null %}Aucun{% else %}{{ entity.lastMaintenance | date('d/m/Y') }}{% endif %}</dd>

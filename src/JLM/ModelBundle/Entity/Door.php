@@ -917,4 +917,32 @@ class Door
     	return $this->getSite()->isBlocked();
     }
     
+    /**
+     * Is Under Warranty
+     * 
+     * @return bool
+     */
+    public function isUnderWarranty()
+    {
+    	$guarantee = $this->getEndWarranty();
+    	if ($guarantee === null)
+    		return false;
+    	$today = new \DateTime;
+    	if ($guarantee < $today)
+    		return false;
+    	return true;
+    }
+    
+    /**
+     * Get Warranty
+     * 
+     * @return DateTime|null
+     */
+    public function getEndWarranty()
+    {
+    	$contract = $this->getActualContract();
+    	if ($contract === null)
+    		return null;
+    	return $contract->getEndWarranty();
+    }
 }
