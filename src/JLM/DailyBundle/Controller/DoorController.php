@@ -112,7 +112,7 @@ class DoorController extends Controller
 	public function stopAction(Door $entity)
 	{
 		$em = $this->getDoctrine()->getManager();
-		if ($entity->getLastStop() !== null)
+		if ($entity->getLastStop() === null)
 		{
 			$stop = new DoorStop;
 			$stop->setBegin(new \DateTime);
