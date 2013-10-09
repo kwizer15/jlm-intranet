@@ -226,7 +226,7 @@
 			</thead>
 			<tbody>
 				{% for stop in entity.stops %}
-				<tr{% if stop.end is null %} class="error">
+				<tr{% if stop.end is null %} class="error"{% endif %}>
 					<td>{{ stop.begin | date('d/m/y') }}</td>
 					<td>{{ stop.reason | nl2br }}</td>
 					<td>
