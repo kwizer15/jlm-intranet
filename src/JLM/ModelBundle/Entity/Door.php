@@ -117,10 +117,20 @@ class Door
      * Porte à l'arrêt
      * @var bool $stoped
      * 
+     * @deprecated
      * @ORM\Column(name="stopped", type="boolean")
      * @Assert\Type(type="bool")
      */
     private $stopped = false;
+    
+    /**
+     * Liste des mises à l'arrêt
+     * @var ArrayCollection
+     * 
+     * @ORM\OneToMany(targetEntity="DoorStop", mappedBy="door")
+     * @ORM\OrderBy({"begin" = "DESC"})
+     */
+    private $stops;
     
     /**
      * Prélibellé de factration
@@ -626,7 +636,7 @@ class Door
      */
     public function getStopped()
     {
-    	return $this->stopped;
+    	return $this->getLastStop() != null;
     }
     
     /**
@@ -916,6 +926,41 @@ class Door
     {
     	return $this->getSite()->isBlocked();
     }
+
+    /**
+     * Add stops
+     *
+     * @param \JLM\ModelBundle\Entity\DoorStop $stops
+     * @return Door
+     */
+    public function addStop(\JLM\ModelBundle\Entity\DoorStop $stops)
+    {
+    	$stops->setDoor($this);
+        $this->stops[] = $stops;
+        return $this;
+    }
+
+    /**
+     * Remove stops
+     *
+     * @param \JLM\ModelBundle\Entity\DoorStop $stops
+     */
+    public function removeStop(\JLM\ModelBundle\Entity\DoorStop $stops)
+    {
+    	$stops->setDoor();
+        $this->stops->removeElement($stops);
+        return $this;
+    }
+
+    /**
+     * Get stops
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStops()
+    {
+        return $this->stops;
+    }
     
     /**
      * Is Under Warranty
@@ -944,5 +989,21 @@ class Door
     	if ($contract === null)
     		return null;
     	return $contract->getEndWarranty();
+    }
+    
+	/**
+     * Get Last Stop
+     * 
+     * @return \JLM\ModelBundle\Entity\DoorStop
+     */
+    public function getLastStop()
+    {
+    	$stops = $this->getStops();
+    	foreach ($stops as $stop)
+    	{
+    		if ($stop->getEnd() === null)
+    			return $stop;
+    	}
+    	return null;
     }
 }

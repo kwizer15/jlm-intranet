@@ -238,17 +238,21 @@ class WorkController extends AbstractInterventionController
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function closeupdateAction(Request $request, Work $entity)
-	{
-		$em = $this->getDoctrine()->getManager();
-			
+	{	
 		$form = $this->createForm(new WorkCloseType(), $entity);
 		$form->bind($request);
 	
 		if ($form->isValid())
 		{
+			$em = $this->getDoctrine()->getManager();
 			if ($entity->getObjective()->getId() == 1)  // Mise en service
 			{
-				$entity->getDoor()->setStopped(false);
+				$stop = $entity->getDoor()->getLastStop();
+				if ($stop !== null)
+				{
+					$stop->setEnd(new \DateTime);
+					$em->persist($stop);
+				}
 				$em->persist($entity->getDoor());
 			}
 			$entity->setClose(new \DateTime);

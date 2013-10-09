@@ -16,7 +16,7 @@ class DoorRepository extends SearchRepository
 	public function getStopped($limit = null, $offset = null)
 	{
 		$qb = $this->createQueryBuilder('a')
-			->select('a,b,c,d,e,f,g,h,i')
+			->select('a,b,c,d,e,f,g,h,i,j')
 			->leftJoin('a.site','b')
 			->leftJoin('b.address','c')
 			->leftJoin('c.city','d')
@@ -25,7 +25,9 @@ class DoorRepository extends SearchRepository
 			->leftJoin('a.contracts','g')
 			->leftJoin('g.trustee','h')
 			->leftJoin('a.type','i')
-			->where('a.stopped = 1');
+			->leftJoin('a.stops','j')
+			->where('j.end is null')
+			->andWhere('j.begin is not null');
 		if ($limit !== null)
 			$qb->setMaxResults($limit);
 		if ($offset !== null)
@@ -35,9 +37,11 @@ class DoorRepository extends SearchRepository
 	
 	public function getCountStopped()
 	{
-		$qb = $this->createQueryBuilder('d')
-			->select('COUNT(d)')
-			->where('d.stopped = 1');
+		$qb = $this->createQueryBuilder('a')
+			->select('COUNT(a)')
+			->leftJoin('a.stops','j')
+			->where('j.end is null')
+			->andWhere('j.begin is not null');
 		return $qb->getQuery()->getSingleScalarResult();
 	}
 	

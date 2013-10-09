@@ -10,8 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Door;
+use JLM\ModelBundle\Entity\DoorStop;
 use JLM\DailyBundle\Entity\Fixing;
 use JLM\DailyBundle\Form\Type\FixingType;
+use JLM\ModelBundle\Form\Type\DoorStopEditType;
 
 /**
  * Fixing controller.
@@ -47,25 +49,37 @@ class DoorController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$doors = $em->getRepository('JLMModelBundle:Door')->getStopped();
-		$fixingForms = array();
+		$stopForms = array();
 		
-		/* 
-		 * Voir aussi
-		 * 	DefaultController:searchAction
-		 * 	FixingController:newAction
-		 * @todo A factoriser de là ... 
-		 */
 		foreach ($doors as $door)
-		{
-			$entity = new Fixing();
-			$entity->setDoor($door);
-			$fixingForms[] = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(),new FixingType(), $entity)->createView();
-		}
-		/* A là */
+			$stopForms[] = $this->get('form.factory')->createNamed('doorStopEdit'.$door->getLastStop()->getId(),new DoorStopEditType(), $door->getLastStop())->createView();
+		
 		return array(
 				'entities' => $doors,
-				'fixing_forms' => $fixingForms, // Avec ça en plus
+				'stopForms' => $stopForms,
 		);
+	}
+	
+	/**
+	 * Displays Doors stopped
+	 *
+	 * @Route("/stop/update/{id}", name="daily_door_stopupdate")
+	 * @Template("JLMDailyBundle:Door:stopped.html.twig")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function stopupdateAction(Request $request, DoorStop $entity)
+	{
+		$form = $this->get('form.factory')->createNamed('doorStopEdit'.$entity->getId(),new DoorStopEditType(), $entity);
+		$form->handleRequest($request);
+
+        if ($form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+            return $this->stoppedAction();
+        }
+		return $this->stoppedAction();
 	}
 	
 	/**
@@ -98,12 +112,17 @@ class DoorController extends Controller
 	public function stopAction(Door $entity)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$entity->setStopped(true);
-		$em->persist($entity);
-		$em->flush();
-		return array(
-				'entity' => $entity,
-		);
+		if ($entity->getLastStop() === null)
+		{
+			$stop = new DoorStop;
+			$stop->setBegin(new \DateTime);
+			$stop->setReason('À définir');
+			$stop->setState('Non traitée');
+			$entity->addStop($stop);
+			$em->persist($stop);
+			$em->flush();
+		}
+		return $this->showAction($entity);
 	}
 	
 	/**
@@ -116,11 +135,12 @@ class DoorController extends Controller
 	public function unstopAction(Door $entity)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$entity->setStopped(false);
-		$em->persist($entity);
+		$stop = $entity->getLastStop();
+		if ($stop === null)
+			return $this->showAction($entity);
+		$stop->setEnd(new \DateTime);
+		$em->persist($stop);
 		$em->flush();
-		return array(
-				'entity' => $entity,
-		);
+		return $this->showAction($entity);
 	}
 }
