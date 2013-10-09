@@ -126,81 +126,122 @@
 	{% if entity.stopped %}<a href="{{ path('daily_door_unstop',{'id': entity.id}) }}" class="btn btn-success"><i class="icon-ok icon-white"></i> Mettre en service</a>
 	{% else %}<a href="{{ path('daily_door_stop',{'id': entity.id}) }}" class="btn btn-danger"><i class="icon-remove icon-white"></i> Mettre à l'arrêt</a>{% endif %}
 </div>
-{% if entity.interventions | length %}
-<a href="{{ path('intervention_printdoor',{'id':entity.id}) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer les rapports d'intervention</a>
-<table class="table table-striped">
-	<thead>
-		<tr>
-		<th>Date</th>
-		<th>Raison</th>
-		<th>Rapport</th>
-		<th>Actions</th>
-		<th>Techniciens</th>
-	</thead>
-	<tbody>
-		{% for interv in entity.interventions %}
-		<tr{% if interv.state %} class="{% if interv.state == 1 %}warning{% elseif interv.state == 2 %}info{% elseif interv.state == 3 %}success{% else %}error{% endif %}"{% endif %}>
-			<td>
-			{% include "JLMDailyBundle:Intervention:labeltype.html.twig" with {'type' : interv.type} %}<br>
-				<small>
-		{% if interv.firstDate %}
-			{% if interv.lastDate != interv.firstDate %}du {{ interv.firstDate | localizeddate('full', 'none') }}
-			                                        <br>au {{ interv.lastDate | localizeddate('full', 'none') }}
-			{% else %}{{ interv.firstDate | localizeddate('full', 'none') }}
-			{% endif %}
-		{% else %}
-			{{ interv.creation | localizeddate('full', 'none') }}
-			{% endif %}
-				</small></td>
-			<td>{% if interv.canceled %}<del>{% endif %}<a href="{{ path('intervention_redirect',{'id':interv.id,'act':'show'}) }}">
-			{% if interv.type == 'work' %}
-	 	{% if interv.quote %}Selon devis n°{{ interv.quote.number }}<br>{% endif %}{% endif %}
-			{{ interv.reason |nl2br }}</a>
-			{% if interv.canceled %}</del>{% endif %}
-			</td>
-			<td>{{ interv.report |nl2br }}</td>
-			<td>
-				{% if interv.mustBeBilled is not null %}{% if interv.mustBeBilled %}Facturée{% else %}Non facturée{% endif %}{% endif %}
-				{% if interv.askQuote %}<br><a href="{{ path('askquote_show',{'id':interv.askQuote.id}) }}">Devis</a>{% endif %}
-				{% if interv.work %}<br><a href="{{ path('work_show',{'id':interv.work.id}) }}">Planifier intervention</a>{% endif %}
-				{% if interv.contactCustomer is not null %}<br>Contacter client{% endif %}
-			</td>
-			<td>
-				{% if interv.canceled %}
-				<span class="label label-important">Annulée</span><br>
-				{% endif %}
-				{% if interv.shiftTechnicians|length %}
-					{% if interv.shiftTechnicians|length < 4%}
-						{% for shift in interv.shiftTechnicians %}
-						<a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a><br>
-						{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }}
-						{% endfor %}
-					{% else %}
-					<div class="btn-group">
-					    <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
-					    	{{ interv.shiftTechnicians|length }} déplacements
-					    	<span class="caret"></span>
-					    </a>
-					    <ul class="dropdown-menu">
-					    {% for shift in interv.shiftTechnicians %}
-								<li><a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a></li>
-						{% endfor %}
-					    </ul>
-					    {% for shift in interv.shiftTechnicians %}
-					    	{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }}
-					    {% endfor %}
-					 </div>
+
+
+
+<ul class="nav nav-tabs" id="myTab">
+	<li class="active"><a href="#interventions" data-toggle="tab">Interventions</a></li>
+	<li><a href="#stops" data-toggle="tab">Mises à l'arrêt</a></li>
+</ul>
+ 
+<div class="tab-content">
+	<div class="tab-pane active" id="interventions">
+		{% if entity.interventions | length %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>Raison</th>
+					<th>Rapport</th>
+					<th>Actions</th>
+					<th>Techniciens</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for interv in entity.interventions %}
+				<tr{% if interv.state %} class="{% if interv.state == 1 %}warning{% elseif interv.state == 2 %}info{% elseif interv.state == 3 %}success{% else %}error{% endif %}"{% endif %}>
+					<td>
+					{% include "JLMDailyBundle:Intervention:labeltype.html.twig" with {'type' : interv.type} %}<br>
+						<small>
+				{% if interv.firstDate %}
+					{% if interv.lastDate != interv.firstDate %}du {{ interv.firstDate | localizeddate('full', 'none') }}
+					                                        <br>au {{ interv.lastDate | localizeddate('full', 'none') }}
+					{% else %}{{ interv.firstDate | localizeddate('full', 'none') }}
 					{% endif %}
 				{% else %}
-				
-				{% endif %}
-			
-			</td>
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
-{% else %}
-<h4>Pas d'intervention</h4>
-{% endif %}
+					{{ interv.creation | localizeddate('full', 'none') }}
+					{% endif %}
+						</small></td>
+					<td>{% if interv.canceled %}<del>{% endif %}<a href="{{ path('intervention_redirect',{'id':interv.id,'act':'show'}) }}">
+					{% if interv.type == 'work' %}
+			 	{% if interv.quote %}Selon devis n°{{ interv.quote.number }}<br>{% endif %}{% endif %}
+					{{ interv.reason |nl2br }}</a>
+					{% if interv.canceled %}</del>{% endif %}
+					</td>
+					<td>{{ interv.report |nl2br }}</td>
+					<td>
+						{% if interv.mustBeBilled is not null %}{% if interv.mustBeBilled %}Facturée{% else %}Non facturée{% endif %}{% endif %}
+						{% if interv.askQuote %}<br><a href="{{ path('askquote_show',{'id':interv.askQuote.id}) }}">Devis</a>{% endif %}
+						{% if interv.work %}<br><a href="{{ path('work_show',{'id':interv.work.id}) }}">Planifier intervention</a>{% endif %}
+						{% if interv.contactCustomer is not null %}<br>Contacter client{% endif %}
+					</td>
+					<td>
+						{% if interv.canceled %}
+						<span class="label label-important">Annulée</span><br>
+						{% endif %}
+						{% if interv.shiftTechnicians|length %}
+							{% if interv.shiftTechnicians|length < 4%}
+								{% for shift in interv.shiftTechnicians %}
+								<a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a><br>
+								{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }}
+								{% endfor %}
+							{% else %}
+							<div class="btn-group">
+							    <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+							    	{{ interv.shiftTechnicians|length }} déplacements
+							    	<span class="caret"></span>
+							    </a>
+							    <ul class="dropdown-menu">
+							    {% for shift in interv.shiftTechnicians %}
+										<li><a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a></li>
+								{% endfor %}
+							    </ul>
+							    {% for shift in interv.shiftTechnicians %}
+							    	{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }}
+							    {% endfor %}
+							 </div>
+							{% endif %}
+						{% else %}
+						
+						{% endif %}
+					
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<a href="{{ path('intervention_printdoor',{'id':entity.id}) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer les rapports d'intervention</a>
+		{% else %}
+		<h4>Pas d'intervention</h4>
+		{% endif %}
+	</div>
+	<div class="tab-pane" id="stops">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Mise à l'arrêt</th>
+					<th>Raison</th>
+					<th>Remise en service</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for stop in entity.stops %}
+				<tr>
+					<td>{{ stop.begin | date('d/m/y') }}</td>
+					<td>{{ stop.reason | nl2br }}</td>
+					<td>
+						{% if stop.end is null %}
+						{{ stop.state | nl2br }}
+						{% else %}
+						{{ stop.end | date('d/m/Y') }}
+						{% endif %}
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
 {% endblock %}
