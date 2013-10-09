@@ -133,6 +133,8 @@ class DoorController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$stop = $entity->getLastStop();
+		if ($stop === null)
+			return $this->showAction($entity);
 		$stop->setEnd(new \DateTime);
 		$em->persist($stop);
 		$em->flush();
