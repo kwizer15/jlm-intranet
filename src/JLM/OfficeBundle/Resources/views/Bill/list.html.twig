@@ -19,7 +19,17 @@
             <td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}</td>
             <td>{{ entity.trusteeName }}</td>
             <td>{{ entity.site | nl2br}}</td>
-            <td>{{ entity.maturityDate | date('d/m/Y') }}</td>
+            <td>
+            	{% if entity.toBoost %}
+            		<span class="label label-info">À relancer</span><br>
+            	{% elseif entity.state == 1 %}
+	            	{% if entity.secondBoost is not null %}<span class="label label-important">2ème relance effectuée</span><br>
+	            	{% elseif entity.firstBoost is not null %}<span class="label label-warning">1ère relance effectuée</span><br>
+	            	{% endif %}
+            	{% endif %}
+            	{{ entity.maturityDate | date('d/m/Y') }}
+            	
+            </td>
             <td>{{ entity.totalPrice | number_format(2,',',' ')}} €</td>
             <td>{{ entity.totalPriceAti | number_format(2,',',' ')}} €</td>
         </tr>

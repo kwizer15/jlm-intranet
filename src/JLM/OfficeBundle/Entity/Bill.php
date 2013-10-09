@@ -890,4 +890,27 @@ class Bill extends Document
     {
         return $this->siteObject;
     }
+    
+    /**
+     * Is to boost
+     * 
+     * @return bool
+     */
+    public function isToBoost()
+    {
+    	$today = new \DateTime;
+    	if ($this->getState() == 1)
+    	{
+    		if ($this->getMaturityDate() < $today && $this->getFirstBoost() === null)
+    			return true;
+    		if ($this->getFirstBoost() !== null)
+    		{
+	    		$date = clone $this->getFirstBoost();
+	    		$date->add(new \DateInterval('P'.$this->getMaturity().'D'));
+	    		if ($date < $today && $this->getSecondBoost() === null)
+	    			return true;
+    		}
+    	}
+    	return false;
+    }
 }
