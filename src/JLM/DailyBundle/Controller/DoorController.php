@@ -112,13 +112,16 @@ class DoorController extends Controller
 	public function stopAction(Door $entity)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$stop = new DoorStop;
-		$stop->setBegin(new \DateTime);
-		$stop->setReason('À définir');
-		$stop->setState('Non traitée');
-		$entity->addStop($stop);
-		$em->persist($stop);
-		$em->flush();
+		if ($entity->getLastStop() !== null)
+		{
+			$stop = new DoorStop;
+			$stop->setBegin(new \DateTime);
+			$stop->setReason('À définir');
+			$stop->setState('Non traitée');
+			$entity->addStop($stop);
+			$em->persist($stop);
+			$em->flush();
+		}
 		return $this->showAction($entity);
 	}
 	
