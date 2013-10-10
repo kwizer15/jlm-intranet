@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\OfficeBundle\Entity\Ask
  *
  * @ORM\Table(name="calendar")
- * @ORM\Entity
  */
 class Calendar
 {
