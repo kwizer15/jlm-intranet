@@ -116,8 +116,8 @@ class Door
     /**
      * Porte à l'arrêt
      * @var bool $stoped
-     * 
      * @deprecated
+     * 
      * @ORM\Column(name="stopped", type="boolean")
      * @Assert\Type(type="bool")
      */
@@ -651,7 +651,7 @@ class Door
     
     /**
      * Set stopped
-     * 
+     * @deprecated
      * @param bool $stopped
      */
     public function setStopped($stopped = true)

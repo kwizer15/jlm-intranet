@@ -72,10 +72,9 @@ class DoorStop
      * @param \DateTime $begin
      * @return DoorStop
      */
-    public function setBegin($begin)
+    public function setBegin(\DateTime $begin = null)
     {
         $this->begin = $begin;
-    
         return $this;
     }
 
@@ -95,10 +94,9 @@ class DoorStop
      * @param \DateTime $end
      * @return DoorStop
      */
-    public function setEnd($end)
+    public function setEnd(\DateTime $end = null)
     {
         $this->end = $end;
-    
         return $this;
     }
 

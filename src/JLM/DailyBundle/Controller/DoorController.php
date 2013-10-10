@@ -52,7 +52,20 @@ class DoorController extends Controller
 		$stopForms = array();
 		
 		foreach ($doors as $door)
+		{
+			if ($door->getLastStop() === null)
+			{
+				$stop = new DoorStop;
+				$stop->setBegin(new \DateTime);
+				$stop->setReason('À définir');
+				$stop->setState('À définir');
+				$door->addStop($stop);
+				$em->persist($door);
+				$em->persist($stop);
+				$em->flush();
+			}
 			$stopForms[] = $this->get('form.factory')->createNamed('doorStopEdit'.$door->getLastStop()->getId(),new DoorStopEditType(), $door->getLastStop())->createView();
+		}
 		
 		return array(
 				'entities' => $doors,
