@@ -6,20 +6,33 @@ Petit mode d'emploi de GitLab
 -----------------------------
 GitLab permet de suivre le fil du développement d'un (ou plusieurs) projet(s)
 Vous pouvez :
+
   * Signaler des bugs (issues)
+
   * Suggérer des outils à développer
+
   * Commenter, apporter des informations
+
   * Suivre le cours du développement du projet
 
-###Signaler un bug ou un outil à développer
+### Signaler un bug ou un outil à développer
+
   * Aller dans la section "Issues" (barre de navigation en haut)
+
   * Vérifier rapidement que rien de similaire n'a été signalé
+
   * Cliquer sur le bouton vert "New Issues" en haut à droite
+
   * Subject : sujet (décrire rapidement le bug)
+
   * Assign to : mettre Emmanuel Bernaszuk
+
   * Milestone : si le bug est en rapport avec un des "Milestone", le séléctionner
+
   * Label : me permet de classer les issues par thème
+
   * Description : si y en a plus à dire...
+
   * On valide avec le bouton "Submit new issue"
   
 
