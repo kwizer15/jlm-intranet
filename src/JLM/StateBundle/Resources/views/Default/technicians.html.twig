@@ -18,25 +18,25 @@
 				</tr>
 			</thead>
 			<tbody>
-			{% for type, datas in numbers if type != 'total' %}
+			{% for tech, datas in numbers if tech != 'total' %}
 				<tr>
-					<th>{{ type }}</th>
-					<td>{{ datas.fixing }}</td>
-					<td>{{ datas.work }}</td>
-					<td>{{ datas.maintenance }}</td>
-					<td>{{ datas.equipment }}</td>
-					<td>{{ datas.total }}</td>
+					<th>{{ tech }}</th>
+					<td><div class="text-right">{{ datas.fixing }}</div></td>
+					<td><div class="text-right">{{ datas.work }}</div></td>
+					<td><div class="text-right">{{ datas.maintenance }}</div></td>
+					<td><div class="text-right">{{ datas.equipment }}</div></td>
+					<td><div class="text-right">{{ datas.total }}</div></td>
 				</tr>
 			{% endfor %}
 			</tbody>
 			<tfoot>
 				<tr>
 					<th>Total</th>
-					<th>{{ numbers.total.fixing }}</th>
-					<th>{{ numbers.total.work }}</th>
-					<th>{{ numbers.total.maintenance }}</th>
-					<th>{{ numbers.total.equipment }}</th>
-					<th>{{ numbers.total.total }}</th>
+					<th><div class="text-right">{{ numbers.total.fixing }}</div></th>
+					<th><div class="text-right">{{ numbers.total.work }}</div></th>
+					<th><div class="text-right">{{ numbers.total.maintenance }}</div></th>
+					<th><div class="text-right">{{ numbers.total.equipment }}</div></th>
+					<th><div class="text-right">{{ numbers.total.total }}</div></th>
 				</tr>
 			</tfoot>
 		</table>
@@ -53,25 +53,25 @@
 				</tr>
 			</thead>
 			<tbody>
-			{% for type, datas in times if type != 'total' %}
+			{% for tech, datas in times if tech != 'total' %}
 				<tr>
-					<th>{{ type }}</th>
-					<td>{{ datas.fixing.format('%hh%I') }}</td>
-					<td>{{ datas.work.format('%hh%I') }}</td>
-					<td>{{ datas.maintenance.format('%hh%I') }}</td>
-					<td>{{ datas.equipment.format('%hh%I') }}</td>
-					<td>{{ datas.total.format('%hh%I') }}</td>
+					<th>{{ tech }}</th>
+					<td><div class="text-right">{{ datas.fixing.format('%hh%I') }}</div></td>
+					<td><div class="text-right">{{ datas.work.format('%hh%I') }}</div></td>
+					<td><div class="text-right">{{ datas.maintenance.format('%hh%I') }}</div></td>
+					<td><div class="text-right">{{ datas.equipment.format('%hh%I') }}</div></td>
+					<td><div class="text-right">{{ datas.total.format('%hh%I') }}</div></td>
 				</tr>
 			{% endfor %}
 			</tbody>
 			<tfoot>
 				<tr>
 					<th>Total</th>
-					<th>{{ times.total.fixing.format('%hh%I') }}</th>
-					<th>{{ times.total.work.format('%hh%I') }}</th>
-					<th>{{ times.total.maintenance.format('%hh%I') }}</th>
-					<th>{{ times.total.equipment.format('%hh%I') }}</th>
-					<th>{{ times.total.total.format('%hh%I') }}</th>
+					<th><div class="text-right">{{ times.total.fixing.format('%hh%I') }}</div></th>
+					<th><div class="text-right">{{ times.total.work.format('%hh%I') }}</div></th>
+					<th><div class="text-right">{{ times.total.maintenance.format('%hh%I') }}</div></th>
+					<th><div class="text-right">{{ times.total.equipment.format('%hh%I') }}</div></th>
+					<th><div class="text-right">{{ times.total.total.format('%hh%I') }}</div></th>
 				</tr>
 			</tfoot>
 		</table>
