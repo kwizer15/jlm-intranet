@@ -2,22 +2,22 @@
 
 {% block content %}
 <h1>Stats techniciens</h1>
-<div class="row">
-	<div class="span6">
-		<ul class="nav nav-pills">
-	    	<li class="active"><a href="#quantity" data-toggle="tab">Quantité</a></li>
-	    	<li><a href="#time" data-toggle="tab">Temps</a></li>
+<ul class="nav nav-pills">
+	<li class="active"><a href="#quantity" data-toggle="tab">Quantité</a></li>
+	<li><a href="#time" data-toggle="tab">Temps</a></li>
+</ul>
+<div class="tab-content">
+	<div class="tab-pane active" id="quantity">
+		<ul class="nav nav-tabs">
+		{% for key, datas in numbers %}
+    		<li{% if loop.first %} class="active"{% endif %}><a href="#quantity-{{ key|lower }}" data-toggle="tab">{{ key | trans }}</a></li>
+    	{% endfor %}
     	</ul>
     	<div class="tab-content">
-			<div class="tab-pane active" id="quantity">
-				<ul class="nav nav-tabs">
-					{% for key, datas in numbers %}
-		    		<li{% if loop.first %} class="active"{% endif %}><a href="#quantity-{{ key|lower }}" data-toggle="tab">{{ key | trans }}</a></li>
-		    		{% endfor %}
-	    		</ul>
-	    		<div class="tab-content">
-	    		{% for key, onumbers in numbers %}
-					<div class="tab-pane{% if loop.first %} active{% endif %}" id="quantity-{{ key|lower }}">
+    	{% for key, onumbers in numbers %}
+			<div class="tab-pane{% if loop.first %} active{% endif %}" id="quantity-{{ key|lower }}">
+				<div class="row">
+					<div class="span6">
 						<table class="table table-bordered">
 							<thead>
 								<tr>
@@ -53,18 +53,22 @@
 							</tfoot>
 						</table>
 					</div>
-				{% endfor %}
+				</div>
+			</div>
+			{% endfor %}
 				</div>
 			</div>
 			<div class="tab-pane" id="time">
 				<ul class="nav nav-tabs">
 					{% for key, datas in times %}
-		    		<li{% if loop.first %} class="active"{% endif %}><a href="#times-{{ key|lower }}" data-toggle="tab">{{ key | trans }}</a></li>
-		    		{% endfor %}
-	    		</ul>
-	    		<div class="tab-content">
-	    		{% for key, otimes in times %}
-					<div class="tab-pane{% if loop.first %} active{% endif %}" id="times-{{ key|lower }}">
+			    		<li{% if loop.first %} class="active"{% endif %}><a href="#times-{{ key|lower }}" data-toggle="tab">{{ key | trans }}</a></li>
+			    		{% endfor %}
+			    		</ul>
+			    		<div class="tab-content">
+			    		{% for key, otimes in times %}
+			<div class="tab-pane{% if loop.first %} active{% endif %}" id="times-{{ key|lower }}">
+				<div class="row">
+					<div class="span6">
 						<table class="table table-bordered">
 							<thead>
 								<tr>
@@ -99,11 +103,11 @@
 								</tr>
 							</tfoot>
 						</table>
-						<div id="graphTech-{{ key|lower }}"></div>
 					</div>
-					{% endfor %}
+					<div id="graphTech-{{ key|lower }}" class="span6"></div>
 				</div>
 			</div>
+			{% endfor %}
 		</div>
 	</div>
 </div>
