@@ -27,7 +27,7 @@ class DoorRepository extends SearchRepository
 			->leftJoin('a.type','i')
 			->leftJoin('a.stops','j')
 			->where('j.end is null AND j.begin is not null')
-			->orWhere('a.stopped = 1');
+			;
 		if ($limit !== null)
 			$qb->setMaxResults($limit);
 		if ($offset !== null)
@@ -41,7 +41,7 @@ class DoorRepository extends SearchRepository
 			->select('COUNT(a)')
 			->leftJoin('a.stops','j')
 			->where('j.end is null AND j.begin is not null')
-			->orWhere('a.stopped = 1');
+			;
 		return $qb->getQuery()->getSingleScalarResult();
 	}
 	
