@@ -5,6 +5,7 @@ namespace JLM\DailyBundle\Entity;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityRepository;
 use JLM\ModelBundle\Entity\Technician;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * ShiftTechnicianRepository
@@ -65,4 +66,33 @@ class ShiftTechnicianRepository extends EntityRepository
 			->setParameter('id',$id);
 		return $qb->getQuery()->getSingleResult();
 	} */
+	
+	public function getStatsByYear($year = null)
+	{
+		if ($year === null)
+		{
+			$today = new \DateTime;
+			$year = $today->format('Y');
+		} 
+		$em = $this->getEntityManager();
+		$rsm = new ResultSetMapping();
+		$rsm->addScalarResult('name', 'name');
+		$rsm->addScalarResult('actionType', 'type');
+		$rsm->addScalarResult('ttime', 'time');
+		$rsm->addScalarResult('number', 'number');
+		$query = $em->createNativeQuery('
+				SELECT b.firstName AS name,
+				       d.actionType AS actionType,
+				       SUM( TIMESTAMPDIFF(MINUTE,  a.begin, a.end ) ) AS ttime,
+				       COUNT(d.actionType) as number
+				FROM shift_technician a
+				LEFT JOIN persons b ON a.technician_id = b.id
+				LEFT JOIN shifting d ON a.shifting_id = d.id
+				WHERE YEAR(a.begin) = ?'.
+			//	AND a.end IS NOT NULL
+				' GROUP BY d.actionType, b.firstName'
+			, $rsm);
+		$query->setParameter(1,$year);
+		return $query->getResult();
+	}
 }

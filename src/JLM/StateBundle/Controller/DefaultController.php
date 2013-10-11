@@ -22,7 +22,7 @@ class DefaultController extends Controller
     public function techniciansAction()
     {
     	$em =$this->getDoctrine()->getManager();
-    	$shifts = $em->getRepository('JLMDailyBundle:ShiftTechnician')->getAll();
+    	$stats = $em->getRepository('JLMDailyBundle:ShiftTechnician')->getStatsByYear();
     	$base = array(
     			'fixing'=> 0,
     			'work'=> 0,
@@ -31,25 +31,21 @@ class DefaultController extends Controller
     			'total'=> 0,
     	);
     	$numbers = $times = array('total'=>$base);
-    	foreach ($shifts as $shiftTech)
+    	foreach ($stats as $stat)
     	{
-    		$type = $shiftTech->getTechnician().'';
-    		$tech = $shiftTech->getShifting()->getType();
-    		$time = $shiftTech->getTime();
-    		if (!isset($numbers[$type]))
+    		if (!isset($numbers[$stat['name']]))
     		{
-    			$numbers[$type] = $base;
-    			$times[$type] = $base;
+    			$numbers[$stat['name']] = $base;
+    			$times[$stat['name']] = $base;
     		}
-    		$numbers[$type][$tech]++;
-    		$numbers[$type]['total']++;
-    		$numbers['total'][$tech]++;
-    		$numbers['total']['total']++;
-    		$t = ($time === null) ? 0 : $time->format('%h')*60+$time->format('%i');
-    		$times[$type][$tech] += $t;
-    		$times[$type]['total'] += $t;
-    		$times['total'][$tech] += $t;
-    		$times['total']['total'] += $t;
+    		$numbers[$stat['name']][$stat['type']] = $stat['number'];
+    		$numbers[$stat['name']]['total'] += $stat['number'];
+    		$numbers['total'][$stat['type']] += $stat['number'];
+    		$numbers['total']['total'] += $stat['number'];
+    		$times[$stat['name']][$stat['type']] = $stat['time'];
+    		$times[$stat['name']]['total'] += $stat['time'];
+    		$times['total'][$stat['type']] += $stat['time'];
+    		$times['total']['total'] += $stat['time'];
     	}
     	foreach ($times as $key => $tech)
     	{
