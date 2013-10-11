@@ -4,79 +4,107 @@
 <h1>Stats techniciens</h1>
 <div class="row">
 	<div class="span6">
-		<h2>Quantité</h2>
-		
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th></th>
-					<th>Dépannages</th>
-					<th>Travaux</th>
-					<th>Entretiens</th>
-					<th>Atl / Frn</th>
-					<th>Total</th>
-				</tr>
-			</thead>
-			<tbody>
-			{% for tech, datas in numbers if tech != 'total' %}
-				<tr>
-					<th>{{ tech }}</th>
-					<td><div class="text-right">{{ datas.fixing }}</div></td>
-					<td><div class="text-right">{{ datas.work }}</div></td>
-					<td><div class="text-right">{{ datas.maintenance }}</div></td>
-					<td><div class="text-right">{{ datas.equipment }}</div></td>
-					<td><div class="text-right">{{ datas.total }}</div></td>
-				</tr>
-			{% endfor %}
-			</tbody>
-			<tfoot>
-				<tr>
-					<th>Total</th>
-					<th><div class="text-right">{{ numbers.total.fixing }}</div></th>
-					<th><div class="text-right">{{ numbers.total.work }}</div></th>
-					<th><div class="text-right">{{ numbers.total.maintenance }}</div></th>
-					<th><div class="text-right">{{ numbers.total.equipment }}</div></th>
-					<th><div class="text-right">{{ numbers.total.total }}</div></th>
-				</tr>
-			</tfoot>
-		</table>
-		<h2>Temps</h2>
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th></th>
-					<th>Dépannages</th>
-					<th>Travaux</th>
-					<th>Entretiens</th>
-					<th>Atl / Frn</th>
-					<th>Total</th>
-				</tr>
-			</thead>
-			<tbody>
-			{% for tech, datas in times if tech != 'total' %}
-				<tr>
-					<th>{{ tech }}</th>
-					<td><div class="text-right">{{ datas.fixing.format('%hh%I') }}</div></td>
-					<td><div class="text-right">{{ datas.work.format('%hh%I') }}</div></td>
-					<td><div class="text-right">{{ datas.maintenance.format('%hh%I') }}</div></td>
-					<td><div class="text-right">{{ datas.equipment.format('%hh%I') }}</div></td>
-					<td><div class="text-right">{{ datas.total.format('%hh%I') }}</div></td>
-				</tr>
-			{% endfor %}
-			</tbody>
-			<tfoot>
-				<tr>
-					<th>Total</th>
-					<th><div class="text-right">{{ times.total.fixing.format('%hh%I') }}</div></th>
-					<th><div class="text-right">{{ times.total.work.format('%hh%I') }}</div></th>
-					<th><div class="text-right">{{ times.total.maintenance.format('%hh%I') }}</div></th>
-					<th><div class="text-right">{{ times.total.equipment.format('%hh%I') }}</div></th>
-					<th><div class="text-right">{{ times.total.total.format('%hh%I') }}</div></th>
-				</tr>
-			</tfoot>
-		</table>
-	</div>
-	<div class="span5 well" id="graphTech">
+		<ul class="nav nav-pills">
+	    	<li class="active"><a href="#quantity" data-toggle="tab">Quantité</a></li>
+	    	<li><a href="#time" data-toggle="tab">Temps</a></li>
+    	</ul>
+    	<div class="tab-content">
+			<div class="tab-pane active" id="quantity">
+				<ul class="nav nav-tabs">
+					{% for key, datas in numbers %}
+		    		<li{% if loop.first %} class="active"{% endif %}><a href="#quantity-{{ key|lower }}" data-toggle="tab">{{ key | trans }}</a></li>
+		    		{% endfor %}
+	    		</ul>
+	    		<div class="tab-content">
+	    		{% for key, onumbers in numbers %}
+					<div class="tab-pane{% if loop.first %} active{% endif %}" id="quantity-{{ key|lower }}">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th></th>
+									<th>Dépannages</th>
+									<th>Travaux</th>
+									<th>Entretiens</th>
+									<th>Atl / Frn</th>
+									<th>Total</th>
+								</tr>
+							</thead>
+							<tbody>
+							{% for tech, datas in onumbers if tech != 'total' %}
+								<tr>
+									<th>{{ tech }}</th>
+									<td><div class="text-right">{{ datas.fixing }}</div></td>
+									<td><div class="text-right">{{ datas.work }}</div></td>
+									<td><div class="text-right">{{ datas.maintenance }}</div></td>
+									<td><div class="text-right">{{ datas.equipment }}</div></td>
+									<td><div class="text-right">{{ datas.total }}</div></td>
+								</tr>
+							{% endfor %}
+							</tbody>
+							<tfoot>
+								<tr>
+									<th>Total</th>
+									<th><div class="text-right">{{ onumbers.total.fixing }}</div></th>
+									<th><div class="text-right">{{ onumbers.total.work }}</div></th>
+									<th><div class="text-right">{{ onumbers.total.maintenance }}</div></th>
+									<th><div class="text-right">{{ onumbers.total.equipment }}</div></th>
+									<th><div class="text-right">{{ onumbers.total.total }}</div></th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				{% endfor %}
+				</div>
+			</div>
+			<div class="tab-pane" id="time">
+				<ul class="nav nav-tabs">
+					{% for key, datas in times %}
+		    		<li{% if loop.first %} class="active"{% endif %}><a href="#times-{{ key|lower }}" data-toggle="tab">{{ key | trans }}</a></li>
+		    		{% endfor %}
+	    		</ul>
+	    		<div class="tab-content">
+	    		{% for key, otimes in times %}
+					<div class="tab-pane{% if loop.first %} active{% endif %}" id="times-{{ key|lower }}">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th></th>
+									<th>Dépannages</th>
+									<th>Travaux</th>
+									<th>Entretiens</th>
+									<th>Atl / Frn</th>
+									<th>Total</th>
+								</tr>
+							</thead>
+							<tbody>
+							{% for tech, datas in otimes if tech != 'total' %}
+								<tr>
+									<th>{{ tech }}</th>
+									<td><div class="text-right">{{ datas.fixing.format('%hh%I') }}</div></td>
+									<td><div class="text-right">{{ datas.work.format('%hh%I') }}</div></td>
+									<td><div class="text-right">{{ datas.maintenance.format('%hh%I') }}</div></td>
+									<td><div class="text-right">{{ datas.equipment.format('%hh%I') }}</div></td>
+									<td><div class="text-right">{{ datas.total.format('%hh%I') }}</div></td>
+								</tr>
+							{% endfor %}
+							</tbody>
+							<tfoot>
+								<tr>
+									<th>Total</th>
+									<th><div class="text-right">{{ otimes.total.fixing.format('%hh%I') }}</div></th>
+									<th><div class="text-right">{{ otimes.total.work.format('%hh%I') }}</div></th>
+									<th><div class="text-right">{{ otimes.total.maintenance.format('%hh%I') }}</div></th>
+									<th><div class="text-right">{{ otimes.total.equipment.format('%hh%I') }}</div></th>
+									<th><div class="text-right">{{ otimes.total.total.format('%hh%I') }}</div></th>
+								</tr>
+							</tfoot>
+						</table>
+						<div id="graphTech-{{ key|lower }}"></div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 {% endblock %}
@@ -116,7 +144,8 @@ $(function () {
 	});
 	
 	// Build the chart
-    $('#graphTech').highcharts({
+	{% for period, otimes in times %}
+    $('#graphTech-{{ period|lower }}').highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
@@ -127,7 +156,7 @@ $(function () {
         },
         tooltip: {
         	formatter : function(){
-                return this.point.name + ': <b>' + Math.round(this.point.y/60) + 'h' + this.point.y%60 + '</b>';
+                return this.point.name + ': <b>' + Math.floor(this.point.y/60) + 'h' + this.point.y%60 + '</b>';
             }  
         },
         plotOptions: {
@@ -151,26 +180,27 @@ $(function () {
                 {
                     name : 'Dépannages',
                     color : '#f89406', 
-                    y : {{ times.total.fixing.format('%h')*60+times.total.fixing.format('%i') }}
+                    y : {{ otimes.total.fixing.format('%h')*60+times.Year.total.fixing.format('%i') }}
                 },
                 {
                     name : 'Travaux',
 					color : '#3a87ad',
-                    y : {{ times.total.work.format('%h')*60+times.total.work.format('%i') }}
+                    y : {{ otimes.total.work.format('%h')*60+times.Year.total.work.format('%i') }}
                 },
                 {
                     name : 'Entretiens',
                     color : '#999999',
-                    y : {{ times.total.maintenance.format('%h')*60+times.total.maintenance.format('%i') }}
+                    y : {{ otimes.total.maintenance.format('%h')*60+times.Year.total.maintenance.format('%i') }}
                 },
                 {
                 	name : 'Ateliers / Fournisseurs',
                 	color : '#333333',
-                	y : {{ times.total.equipment.format('%h')*60+times.total.equipment.format('%i') }}
+                	y : {{ otimes.total.equipment.format('%h')*60+times.Year.total.equipment.format('%i') }}
                 }
             ]
         }]
     });
+    {% endfor %}
 });
 </script>
 {% endblock %}

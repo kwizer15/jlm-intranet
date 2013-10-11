@@ -109,12 +109,13 @@ class ShiftTechnicianRepository extends EntityRepository
 		$rsm->addScalarResult('actionType', 'type');
 		$rsm->addScalarResult('ttime', 'time');
 		$rsm->addScalarResult('number', 'number');
+		$rsm->addScalarResult('month', 'month');
 		$query = $em->createNativeQuery('
 				SELECT b.firstName AS name,
 				       d.actionType AS actionType,
 				       SUM( TIMESTAMPDIFF(MINUTE,  a.begin, a.end ) ) AS ttime,
 				       COUNT(d.actionType) as number,
-					   MONTH(a.begin) as mois
+					   MONTH(a.begin) as month
 				FROM shift_technician a
 				LEFT JOIN persons b ON a.technician_id = b.id
 				LEFT JOIN shifting d ON a.shifting_id = d.id

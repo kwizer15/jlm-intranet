@@ -21,8 +21,7 @@ class DefaultController extends Controller
      */
     public function techniciansAction()
     {
-    	$em =$this->getDoctrine()->getManager();
-    	$stats = $em->getRepository('JLMDailyBundle:ShiftTechnician')->getStatsByYear();
+		// Initialisation des tableaux
     	$base = array(
     			'fixing'=> 0,
     			'work'=> 0,
@@ -30,30 +29,42 @@ class DefaultController extends Controller
     			'equipment'=> 0,
     			'total'=> 0,
     	);
-    	$numbers = $times = array('total'=>$base);
+    	$em =$this->getDoctrine()->getManager();
+    	$stats = array_merge(
+    			$em->getRepository('JLMDailyBundle:ShiftTechnician')->getStatsByYear(),
+    			$em->getRepository('JLMDailyBundle:ShiftTechnician')->getStatsByMonths()
+    	);
     	foreach ($stats as $stat)
     	{
-    		if (!isset($numbers[$stat['name']]))
+    		$period = 'Year';
+    		if (isset($stat['month']))
     		{
-    			$numbers[$stat['name']] = $base;
-    			$times[$stat['name']] = $base;
+    			$d = new \DateTime('2013-'.$stat['month'].'-01 00:00:00');
+    			$period = $d->format('F');
     		}
-    		$numbers[$stat['name']][$stat['type']] = $stat['number'];
-    		$numbers[$stat['name']]['total'] += $stat['number'];
-    		$numbers['total'][$stat['type']] += $stat['number'];
-    		$numbers['total']['total'] += $stat['number'];
-    		$times[$stat['name']][$stat['type']] = $stat['time'];
-    		$times[$stat['name']]['total'] += $stat['time'];
-    		$times['total'][$stat['type']] += $stat['time'];
-    		$times['total']['total'] += $stat['time'];
-    	}
-    	foreach ($times as $key => $tech)
-    	{
-    		foreach($tech as $key2 => $type)
+    		if (!isset($numbers[$period]))
     		{
-    			$times[$key][$key2] = new \DateInterval('PT'.round($type/60,0,PHP_ROUND_HALF_ODD).'H'.($type%60).'M');
+    			$numbers[$period] = $times[$period] = array('total'=>$base);
     		}
+    		if (!isset($numbers[$period][$stat['name']]))
+    		{
+    			$numbers[$period][$stat['name']] = $base;
+    			$times[$period][$stat['name']] = $base;
+    		}
+    		$numbers[$period][$stat['name']][$stat['type']] = $stat['number'];
+    		$numbers[$period][$stat['name']]['total'] += $stat['number'];
+    		$numbers[$period]['total'][$stat['type']] += $stat['number'];
+    		$numbers[$period]['total']['total'] += $stat['number'];
+    		$times[$period][$stat['name']][$stat['type']] = $stat['time'];
+    		$times[$period][$stat['name']]['total'] += $stat['time'];
+    		$times[$period]['total'][$stat['type']] += $stat['time'];
+    		$times[$period]['total']['total'] += $stat['time'];
     	}
+    	foreach ($times as $period => $datas)
+	    	foreach ($datas as $key => $tech)
+	    		foreach($tech as $key2 => $type)
+	    			$times[$period][$key][$key2] = new \DateInterval('PT'.round($type/60,0,PHP_ROUND_HALF_ODD).'H'.($type%60).'M');
+
     	return array(
     			'numbers'=>$numbers,
     			'times'=>$times,
