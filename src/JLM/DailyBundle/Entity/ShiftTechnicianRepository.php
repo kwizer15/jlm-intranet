@@ -95,4 +95,34 @@ class ShiftTechnicianRepository extends EntityRepository
 		$query->setParameter(1,$year);
 		return $query->getResult();
 	}
+	
+	public function getStatsByMonths($year = null)
+	{
+		if ($year === null)
+		{
+			$today = new \DateTime;
+			$year = $today->format('Y');
+		}
+		$em = $this->getEntityManager();
+		$rsm = new ResultSetMapping();
+		$rsm->addScalarResult('name', 'name');
+		$rsm->addScalarResult('actionType', 'type');
+		$rsm->addScalarResult('ttime', 'time');
+		$rsm->addScalarResult('number', 'number');
+		$query = $em->createNativeQuery('
+				SELECT b.firstName AS name,
+				       d.actionType AS actionType,
+				       SUM( TIMESTAMPDIFF(MINUTE,  a.begin, a.end ) ) AS ttime,
+				       COUNT(d.actionType) as number,
+					   MONTH(a.begin) as mois
+				FROM shift_technician a
+				LEFT JOIN persons b ON a.technician_id = b.id
+				LEFT JOIN shifting d ON a.shifting_id = d.id
+				WHERE YEAR(a.begin) = ?'.
+				//	AND a.end IS NOT NULL
+				' GROUP BY d.actionType, b.firstName, MONTH(a.begin)'
+				, $rsm);
+		$query->setParameter(1,$year);
+		return $query->getResult();
+	}
 }
