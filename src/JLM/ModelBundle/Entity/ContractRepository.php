@@ -3,6 +3,8 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use JLM\StateBundle\Entity\Calendar;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * CityRepository
@@ -25,5 +27,24 @@ class ContractRepository extends EntityRepository
 			$r2[] = $r->getNumber().' / '.$r->getDoor()->getLocation().' / '.$r->getDoor()->getType();
 		}
 		return $r2;
+	}
+	
+	public function getStatsByDates()
+	{
+		$today = new \DateTime;
+		$em = $this->getEntityManager();
+		$rsm = new ResultSetMapping();
+		$rsm->addScalarResult('dt', 'date');
+		$rsm->addScalarResult('number', 'number');
+		$query = $em->createNativeQuery('
+			SELECT b.dt, COUNT(a.id) as number
+			FROM calendar b
+			LEFT JOIN contracts a ON b.dt > a.begin AND (b.dt < a.end_contract OR a.end_contract IS NULL)
+			WHERE b.dt < ?
+			GROUP BY b.dt
+		', $rsm);
+		$query->setParameter(1,$today->format('Y-m-d H:i:s'));
+		return $query->getResult();
+		
 	}
 }

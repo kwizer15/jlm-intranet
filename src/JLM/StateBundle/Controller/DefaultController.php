@@ -9,8 +9,6 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * Default controller.
- *
- * @Route("/state")
  */
 class DefaultController extends Controller
 {
@@ -103,7 +101,7 @@ class DefaultController extends Controller
      */
     public function topAction()
     {
-    	$em =$this->getDoctrine()->getManager();
+    	$em = $this->getDoctrine()->getManager();
     	$repo = $em->getRepository('JLMDailyBundle:Fixing');
     	$result = $repo->createQueryBuilder('a')
     		->select('b.id, f.name as type, b.location, d.street, e.name as city, e.zip, g.begin,  COUNT(g) as nb')
@@ -123,5 +121,21 @@ class DefaultController extends Controller
     		->getResult();
     	;
     	return array('results' => $result);
+    }
+    
+    /**
+     * @Route("/contracts", name="state_contracts")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function contractsAction()
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$results = $em->getRepository('JLMModelBundle:Contract')->getStatsByDates();
+    	foreach ($results as $result)
+    	{
+    		$stats[$result['date']] = $result['number']; 
+    	}
+    	return array('stats'=>$stats);
     }
 }
