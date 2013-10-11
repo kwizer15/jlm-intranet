@@ -19,43 +19,39 @@ class DefaultController extends Controller
     public function indexAction()
     {
     	// Stats Techs
-		$em =$this->getDoctrine()->getManager();
-		$shifts = $em->getRepository('JLMDailyBundle:ShiftTechnician')->getAll();
-		$base = array(
-				'fixing'=> 0,
-				'work'=> 0,
-				'maintenance'=> 0,
-				'equipment'=> 0,
-				'total'=> 0,
-		);
-		$numbers = $times = array('total'=>$base);
-		foreach ($shifts as $shiftTech)
-		{
-			$type = $shiftTech->getTechnician().'';
-			$tech = $shiftTech->getShifting()->getType();
-			$time = $shiftTech->getTime();
-			if (!isset($numbers[$type]))
-			{
-				$numbers[$type] = $base;
-				$times[$type] = $base;
-			}
-			$numbers[$type][$tech]++;
-			$numbers[$type]['total']++;
-			$numbers['total'][$tech]++;
-			$numbers['total']['total']++;
-			$t = ($time === null) ? 0 : $time->format('%h')*60+$time->format('%i');
-			$times[$type][$tech] += $t;
-			$times[$type]['total'] += $t;
-			$times['total'][$tech] += $t;
-			$times['total']['total'] += $t;
-		}
-		foreach ($times as $key => $tech)
-		{
-			foreach($tech as $key2 => $type)
-			{
-				$times[$key][$key2] = new \DateInterval('PT'.round($type/60,0,PHP_ROUND_HALF_ODD).'H'.($type%60).'M');
-			}
-		}
+    $em =$this->getDoctrine()->getManager();
+    	$stats = $em->getRepository('JLMDailyBundle:ShiftTechnician')->getStatsByYear();
+    	$base = array(
+    			'fixing'=> 0,
+    			'work'=> 0,
+    			'maintenance'=> 0,
+    			'equipment'=> 0,
+    			'total'=> 0,
+    	);
+    	$numbers = $times = array('total'=>$base);
+    	foreach ($stats as $stat)
+    	{
+    		if (!isset($numbers[$stat['name']]))
+    		{
+    			$numbers[$stat['name']] = $base;
+    			$times[$stat['name']] = $base;
+    		}
+    		$numbers[$stat['name']][$stat['type']] = $stat['number'];
+    		$numbers[$stat['name']]['total'] += $stat['number'];
+    		$numbers['total'][$stat['type']] += $stat['number'];
+    		$numbers['total']['total'] += $stat['number'];
+    		$times[$stat['name']][$stat['type']] = $stat['time'];
+    		$times[$stat['name']]['total'] += $stat['time'];
+    		$times['total'][$stat['type']] += $stat['time'];
+    		$times['total']['total'] += $stat['time'];
+    	}
+    	foreach ($times as $key => $tech)
+    	{
+    		foreach($tech as $key2 => $type)
+    		{
+    			$times[$key][$key2] = new \DateInterval('PT'.round($type/60,0,PHP_ROUND_HALF_ODD).'H'.($type%60).'M');
+    		}
+    	}
 		$repo = $em->getRepository('JLMDailyBundle:Maintenance');
 		$maintenanceTotal = $repo->getCountTotal(false);
 		$evolutionBaseDay = $maintenanceTotal / 182;
