@@ -36,13 +36,16 @@ class ContractRepository extends EntityRepository
 		$rsm = new ResultSetMapping();
 		$rsm->addScalarResult('dt', 'date');
 		$rsm->addScalarResult('number', 'number');
-		$query = $em->createNativeQuery('
-			SELECT b.dt, COUNT(a.id) as number
+		$rsm->addScalarResult('acc', 'accession');
+		$rsm->addScalarResult('comp', 'complete');
+		$q = '
+			SELECT b.dt, COUNT(a.id) as number,d.accession as acc,a.complete as comp
 			FROM calendar b
 			LEFT JOIN contracts a ON b.dt > a.begin AND (b.dt < a.end_contract OR a.end_contract IS NULL)
-			WHERE b.dt < ?
-			GROUP BY b.dt
-		', $rsm);
+			LEFT JOIN doors c ON a.door_id = c.id
+			LEFT JOIN sites d ON c.site_id = d.id
+			WHERE b.dt < ?  GROUP BY b.dt,d.accession,a.complete';
+		$query = $em->createNativeQuery($q, $rsm);
 		$query->setParameter(1,$today->format('Y-m-d H:i:s'));
 		return $query->getResult();
 		

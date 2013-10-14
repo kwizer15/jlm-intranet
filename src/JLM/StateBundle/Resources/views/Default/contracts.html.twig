@@ -2,8 +2,64 @@
 
 {% block content %}
 <h1>Stats Contrats</h1>
+<div id="graphContracts">
+	</div>
 {% endblock %}
 
 {% block javascripts %}
 {{ parent() }}
+<script>
+$(function () {
+    $('#graphContracts').highcharts('StockChart', {
+    	rangeSelector : {
+			selected : 1
+		},
+
+		title : {
+			text : 'Evolution des contrats'
+		},
+        tooltip: {
+            shared: true,
+            valueSuffix: ' contrats'
+        },
+        plotOptions: {
+            area: {
+                stacking: 'normal',
+                lineColor: '#666666',
+                lineWidth: 1,
+                marker: {
+                    lineWidth: 1,
+                    lineColor: '#666666'
+                }
+            }
+        },
+		series : [
+		{
+			name : 'Contrats social normal',
+			data : [{% for d,data in stats %}{% if not loop.first %},{% endif %}{x:{{ d }},y:{{ data.social.normal }}}{% endfor %} ],
+			type : 'area',
+			step : true,
+		},
+		{
+			name : 'Contrats social complet',
+			data : [{% for d,data in stats %}{% if not loop.first %},{% endif %}{x:{{ d }},y:{{ data.social.complete }}}{% endfor %} ],
+			type : 'area',
+			step : true,
+		},
+		{
+			name : 'Contrats accession normal',
+			data : [{% for d,data in stats %}{% if not loop.first %},{% endif %}{x:{{ d }},y:{{ data.accession.normal }}}{% endfor %} ],
+			type : 'area',
+			step : true,
+		},
+		{
+			name : 'Contrats accession complet',
+			data : [{% for d,data in stats %}{% if not loop.first %},{% endif %}{x:{{ d }},y:{{ data.accession.complete }}}{% endfor %} ],
+			type : 'area',
+			step : true
+		}
+		]
+    });
+});
+</script>
 {% endblock %}

@@ -130,12 +130,32 @@ class DefaultController extends Controller
      */
     public function contractsAction()
     {
+    	
     	$em = $this->getDoctrine()->getManager();
     	$results = $em->getRepository('JLMModelBundle:Contract')->getStatsByDates();
-    	foreach ($results as $result)
-    	{
-    		$stats[$result['date']] = $result['number']; 
-    	}
-    	return array('stats'=>$stats);
+	   	$stats = array();
+	   	foreach ($results as $result)
+	   	{
+	   		$d = new \DateTime($result['date']);
+	   		if ($result['accession'] == 1)
+	   		{
+	   			if ($result['complete'] == 1)
+	   				$stats[$d->format('U')*1000]['accession']['complete'] = $result['number'];
+	   			else 
+	   				$stats[$d->format('U')*1000]['accession']['normal'] = $result['number'];
+	   		}
+	   		else
+	   		{
+	   			if ($result['complete'] == 1)
+	   				$stats[$d->format('U')*1000]['social']['complete'] = $result['number'];
+	   			else 
+	   				$stats[$d->format('U')*1000]['social']['normal'] = $result['number'];
+	   		}
+	   	}
+	   	
+    	return array(
+    			'stats'=> $stats,
+    			
+    	);
     }
 }
