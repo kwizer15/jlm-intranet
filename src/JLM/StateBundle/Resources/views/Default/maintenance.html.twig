@@ -75,13 +75,11 @@ $(function () {
 			data : [{% for d,data in evolution %}{% if not loop.first %},{% endif %}{ x:{{ d }},y:{{ data }} }{% endfor %} ],
 			type : 'area',
 			step : true,
-			threshold : null
 		},
 		{
 			name : 'Objectifs d\'entretiens',
 			data : [{% for d,data in evolutionBase %}{% if not loop.first %},{% endif %}{ x:{{ d }},y:{{ data }} }{% endfor %} ],
 			type : 'line',
-			threshold : null
 			
 		},
 		]

@@ -81,7 +81,7 @@ class DefaultController extends Controller
     	$maintenanceTotal = $repo->getCountTotal(false);
     	$date1 = \DateTime::createFromFormat('Y-m-d H:i:s','2013-01-01 00:00:00');
     	$now = new \DateTime;
-    	for ($i = 1; $i <= 182 && $date1 < $now  ; $i++)
+    	for ($i = 1; $i <= 365 && $date1 < $now  ; $i++)
     	{
 	    	$evolutionBase[$date1->getTimestamp()*1000] = (int)($maintenanceTotal*($i/182));
 	    	$date1->add(new \DateInterval('P1D'));
@@ -157,5 +157,34 @@ class DefaultController extends Controller
     			'stats'=> $stats,
     			
     	);
+    }
+    
+    /**
+     * @Route("/quote", name="state_quote")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function quoteAction()
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$repo = $em->getRepository('JLMOfficeBundle:QuoteVariant');
+    	$res = $repo->createQueryBuilder('a')
+    		->where('a.state = 5')
+    		->getQuery()->getResult();
+    	$total = 0;
+    	foreach($res as $r)
+    	{
+    		$total += $r->getTotalPrice();
+    	}
+    	echo $total.'<br>';
+    	$res = $repo->createQueryBuilder('a')
+    	->where('a.state > 2')
+    	->getQuery()->getResult();
+    	$total = 0;
+    	foreach($res as $r)
+    	{
+    		$total += $r->getTotalPrice();
+    	}
+    	echo $total; exit;
     }
 }
