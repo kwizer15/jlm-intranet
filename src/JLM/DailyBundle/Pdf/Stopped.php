@@ -42,7 +42,9 @@ class Stopped extends FPDFext
 				$entity->getAddress()->toString(),
 				$entity->getType().' - '.$entity->getLocation(),
 				$entity->getActualContract().'',
-				'',
+				'Depuis le '.$entity->getLastStop()->getBegin()->format('d/m/Y').chr(10)
+					.$entity->getLastStop()->getReason().chr(10).chr(10)
+					.$entity->getLastStop()->getState(),
 			);
 		$this->row($datas,5,1,false);
 	}
