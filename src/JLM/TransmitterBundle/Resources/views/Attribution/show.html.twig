@@ -12,6 +12,7 @@
     <dt>Affaire</dt>
     <dd>{{ entity.ask.site.address.street | nl2br }}</dd>
     <dd><strong>{{ entity.ask.site.address.city.name | upper }}</strong> <small>{{ entity.ask.site.address.city.zip }}</small></dd>
+    <dd><a href="{{ path('transmitter_site_printlist',{'id':entity.ask.site.id}) }}" class="btn btn-info btn-mini"><i class="icon-white icon-print"></i> Imprimer la liste complète</a>
     <dt>Demande</dt>
     <dd>{{ entity.ask.ask | nl2br }}</dd>
 </dl>
