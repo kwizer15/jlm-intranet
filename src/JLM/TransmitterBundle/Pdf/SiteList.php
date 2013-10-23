@@ -26,7 +26,7 @@ class SiteList extends FPDFext
 	{
 		$this->aliasNbPages();
 		
-		$this->setWidths(array(55,14,31,60,15,15));
+		$this->setWidths(array(21,44,14,31,50,15,15));
 		$this->addPage('P');
 		$this->setY(55);
 		$this->setFont('Arial','B',16);
@@ -58,6 +58,7 @@ class SiteList extends FPDFext
 		if ($entity->getReplacedTransmitter() !== null)
 			$state = 'Remplacé par le '.$entity->getReplacedTransmitter()->getNumber();
 		$datas = array(
+				$entity->getAttribution()->getCreation()->format('d/m/Y'),
 				$entity->getUserGroup().'',
 				$entity->getNumber(),
 				$state,
@@ -117,7 +118,7 @@ class SiteList extends FPDFext
 	{
 		$this->setFont('Arial','B',11);
 		$this->setFillColor(200);
-		$this->row(array('Groupe utilisateur','Num.','Type','Nom','Appt.','Place'),6,1,true);
+		$this->row(array('Date','Groupe utilisateur','Num.','Type','Nom','Appt.','Place'),6,1,true);
 		
 	}
 	
