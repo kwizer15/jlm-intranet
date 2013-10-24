@@ -1036,4 +1036,26 @@ class Door
     	return $this;
     }
     
+    /**
+     * Fait évoluer le top50 (jour normal)
+     * @return self
+     */
+    public function top50evol()
+    {
+    	if ($this->top50 > 0)
+    		$this->top50--;
+    	return $this;
+    }
+    
+    /**
+     * Ajout X pts au top 50 (dépannage...)
+     * 
+     * @param int $x
+     * @return self
+     */
+    public function top50add($x)
+    {
+    	$this->top50 += $x;
+    	return $this;
+    }
 }

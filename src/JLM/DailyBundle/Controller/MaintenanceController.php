@@ -145,6 +145,8 @@ class MaintenanceController extends AbstractInterventionController
 					$em->remove($maint);
 				$removed++;
 			}
+			$door->top50evol();
+			$em->persist($door);
 		}
 		$em->flush();
 		return array('count' => $count,'removed' => $removed);
