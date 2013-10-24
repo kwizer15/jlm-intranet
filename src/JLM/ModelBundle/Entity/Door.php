@@ -177,6 +177,14 @@ class Door
     private $longitude;
     
     /**
+     * Points de top 50
+     * @var int
+     * 
+     * @ORM\Column(name="top50", type="integer")
+     */
+    private $top50 = 0;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -1006,4 +1014,26 @@ class Door
     	}
     	return null;
     }
+    
+    /**
+     * Get top50
+     * 
+     * @return integer
+     */
+    public function getTop50()
+    {
+    	return $this->top50;
+    }
+    
+    /**
+     * Set top50
+     * 
+     * @return self
+     */
+    public function setTop50($pts)
+    {
+    	$this->top50 = $pts;
+    	return $this;
+    }
+    
 }
