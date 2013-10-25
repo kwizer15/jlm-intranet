@@ -131,7 +131,9 @@ class DefaultController extends Controller
 	 */
 	public function installationAction(Door $door)
 	{
-		return array('door'=>$door);
+		if ($door->getActualContract() !== null)
+			return array('door'=>$door);
+		else return array();
 	}
 	
 	/**
