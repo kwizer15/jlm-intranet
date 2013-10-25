@@ -103,6 +103,10 @@ class FixingController extends AbstractInterventionController
 		if ($form->isValid())
 		{
 			$em = $this->getDoctrine()->getManager();
+			// Calculer X (nombre de jour contrat total/nombre de pannes)
+			// si nb panne = 0 alors x = 365
+			$x = 365;
+			$door->top50add($x);
 			$em->persist($entity);
 			$em->flush();
 	
