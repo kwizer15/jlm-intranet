@@ -3,6 +3,7 @@
 namespace JLM\TransmitterBundle\Entity;
 
 use JLM\DefaultBundle\Entity\SearchRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * TransmitterRepository
@@ -85,5 +86,23 @@ class TransmitterRepository extends SearchRepository
 	protected function getSearchOrderBy()
 	{
 		return array('a.number'=>'ASC');
+	}
+	
+	public function getStatsByMonth()
+	{
+		$rsm = new ResultSetMapping();
+		$rsm->addScalarResult('m', 'month');
+		$rsm->addScalarResult('y', 'year');
+		$rsm->addScalarResult('n', 'number');
+		$em = $this->getEntityManager();
+		$query = $em->createNativeQuery('
+    				SELECT MONTH( calendar.dt ) AS m , YEAR( calendar.dt ) AS y, COUNT( transmitters_transmitters.id ) AS n
+					FROM transmitters_transmitters
+					LEFT JOIN transmitters_attributions ON transmitters_attributions.id = transmitters_transmitters.attribution_id
+					LEFT JOIN calendar ON calendar.dt = transmitters_attributions.creation
+					GROUP BY MONTH( calendar.dt ),YEAR(calendar.dt)
+					ORDER BY m,y
+    		', $rsm);
+		return $query->getResult();
 	}
 }

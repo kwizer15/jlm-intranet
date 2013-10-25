@@ -187,4 +187,23 @@ class DefaultController extends Controller
     	}
     	echo $total; exit;
     }
+    
+    /**
+     * @Route("/transmitters", name="state_transmitters")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function transmittersAction()
+    {
+    	$base = array(1=>0,0,0,0,0,0,0,0,0,0,0,0);
+    	$em = $this->getDoctrine()->getManager();
+    	$stats = $em->getRepository('JLMTransmitterBundle:Transmitter')->getStatsByMonth();
+    	foreach ($stats as $stat)
+    	{
+    		if (!isset($datas[$stat['year']]))
+    			$datas[$stat['year']] = $base;
+    		$datas[$stat['year']][$stat['month']] = $stat['number'];
+    	}
+    	return array('stats'=>$datas);
+    }
 }

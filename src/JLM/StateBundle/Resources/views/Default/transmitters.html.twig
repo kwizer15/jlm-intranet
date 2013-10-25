@@ -1,0 +1,63 @@
+{% extends "JLMStateBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Stats Emetteurs</h1>
+<div id="graphTransmitters">
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+$(function () {
+    $('#graphTransmitters').highcharts({
+    	chart: {
+	        alignTicks: false
+	    },
+    	rangeSelector : {
+			selected : 1
+		},
+		xAxis: {
+            categories: [
+                'Jan',
+                'Fev',
+                'Mar',
+                'Avr',
+                'Mai',
+                'Juin',
+                'Juil',
+                'Aoû',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec'
+            ]
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Rainfall (mm)'
+            }
+        },
+		title : {
+			text : 'Nombre d\'émetteurs vendus au mois'
+		},
+        tooltip: {
+            shared: true,
+            valueSuffix: ' émetteurs'
+        },
+        
+		series : [
+		{% for year,datas in stats %}
+		{
+			name : 'Nombre d\'émetteurs en {{ year }}',
+			data : [{% for month,number in datas %}{{ number }}{% if not loop.last %},{% endif %}{% endfor %} ],
+			type : 'column'
+		}
+		{% if not loop.last %},{% endif %}
+		{% endfor %}
+		]
+    });
+});
+</script>
+{% endblock %}
