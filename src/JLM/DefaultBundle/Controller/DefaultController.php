@@ -138,12 +138,24 @@ class DefaultController extends Controller
 	
 	/**
 	 * @Route("/printtag")
+	 * @Route("/printtag/{id}")
 	 */
-	public function printtagAction()
+	public function printtagAction($id = null)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$entitiess = $em->getRepository('JLMModelBundle:Door')->findAll();
-		$entities = array($entitiess[0],$entitiess[1],$entitiess[2],$entitiess[3]);
+		if ($id === null)
+		{
+			$entities = $em->getRepository('JLMModelBundle:Door')->findAll();
+			foreach ($entities as $key => $entity)
+			{
+				if ($entity->getActualContract() === null)
+					unset($entities[$key]);
+			}
+		}
+		else 
+			$entities = array($em->getRepository('JLMModelBundle:Door')->find($id));
+		
+		
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename=tags.pdf');
