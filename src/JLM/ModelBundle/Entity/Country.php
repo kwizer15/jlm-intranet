@@ -32,17 +32,9 @@ class Country extends StringModel
      */
     public function setCode($code)
     {
-    	$code = str_replace(array('0','1','2','3','4','5','6','7','8','9'),'',$code);
-    	$code = substr($code,0,2);
-    	if (strlen($code) < 2)
-    	{
-    		$this->code = null;
-    		return $this;
-    	}
-    	
-    	$code = strtoupper($code);
-        $this->code = $code;
-        return $this;
+    	$code = strtoupper(substr($code,0,2));
+    	$this->code = (preg_match('#^[A-Z]{2}$#',$code)) ? $code : null;
+    	return $this;
     }
 
     /**
