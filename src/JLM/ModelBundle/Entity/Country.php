@@ -5,6 +5,8 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use JLM\ModelBundle\Entity\CountryException;
+
 /**
  * JLM\ModelBundle\Entity\Country
  *
@@ -33,7 +35,9 @@ class Country extends StringModel
     public function setCode($code)
     {
     	$code = strtoupper(substr($code,0,2));
-    	$this->code = (preg_match('#^[A-Z]{2}$#',$code)) ? $code : null;
+    	if (!preg_match('#^[A-Z]{2}$#',$code))
+    		throw new CountryException('Code pays incorrect');
+    	$this->code = $code;
     	return $this;
     }
 

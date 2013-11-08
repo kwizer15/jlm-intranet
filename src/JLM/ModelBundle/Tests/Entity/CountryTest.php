@@ -15,6 +15,8 @@ class CountryTest extends \PHPUnit_Framework_TestCase
 		$tests = array('france'=>'FR','bElGiQuE'=>'BE','LU'=>'LU','2'=>null,'M'=>null);
 		foreach ($tests as $in => $out)
 		{
+			if ($out === null)
+				$this->setExpectedException('JLM\ModelBundle\Entity\CountryException', 'Code pays incorrect');
 			$this->assertEquals($entity,$entity->setCode($in));
 			$this->assertEquals($out,$entity->getCode());
 			if (($entity->getCode() !== null))
