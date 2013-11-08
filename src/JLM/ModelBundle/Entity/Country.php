@@ -24,7 +24,7 @@ class Country extends StringModel
      * @Assert\NotBlank
      */
     private $code;
-
+    
     /**
      * Set code
      *
@@ -32,7 +32,17 @@ class Country extends StringModel
      */
     public function setCode($code)
     {
+    	$code = str_replace(array('0','1','2','3','4','5','6','7','8','9'),'',$code);
+    	$code = substr($code,0,2);
+    	if (strlen($code) < 2)
+    	{
+    		$this->code = null;
+    		return $this;
+    	}
+    	
+    	$code = strtoupper($code);
         $this->code = $code;
+        return $this;
     }
 
     /**
@@ -43,5 +53,15 @@ class Country extends StringModel
     public function getCode()
     {
         return $this->code;
+    }
+    
+    /**
+     * @return self
+     */
+    public function setName($name)
+    {
+    	$name = str_replace(array('0','1','2','3','4','5','6','7','8','9'),'',$name);
+    	$name = ucwords(strtolower($name));
+    	return parent::setName($name);
     }
 }

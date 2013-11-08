@@ -19,7 +19,7 @@ abstract class StringModel
 	 * @Assert\Type(type="string")
 	 * @Assert\NotBlank
 	 */
-	private $name;
+	private $name = '';
 	
 	/**
 	 * Set text
@@ -29,6 +29,7 @@ abstract class StringModel
 	public function setName($name)
 	{
 		$this->name = $name;
+		return $this;
 	}
 
 	/**
