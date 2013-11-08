@@ -31,10 +31,13 @@ class Country extends StringModel
      * Set code
      *
      * @param string $code
+     * @throws CountryException
+     * @return self
      */
     public function setCode($code)
     {
-    	$code = strtoupper(substr($code,0,2));
+    	// Filtrage
+    	$code = strtoupper(substr(trim($code),0,2));
     	if (!preg_match('#^[A-Z]{2}$#',$code))
     		throw new CountryException('Code pays incorrect');
     	$this->code = $code;
