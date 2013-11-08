@@ -116,7 +116,12 @@ class City extends StringModel
      */
     public function __toString()
     {
-    	return $this->getZip().' - '.$this->getName();
+    	$out =  '';
+    	if ($this->getZip() != '')
+    		$out = $this->getZip().' - ';
+    	$out .= $this->getName();
+    	
+    	return $out;
     }
     
     public function toString()

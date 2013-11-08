@@ -65,5 +65,18 @@ class CityTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($entity,$entity->setCountry());
 		$this->assertNull($entity->getCountry());
 	}
+	
+	/**
+	 * @test
+	 */
+	public function test__toString()
+	{
+		$entity = new City;
+		$this->assertInternalType('string',$entity->__toString());
+		$this->assertEquals('',$entity->__toString());
+		$entity->setZip(77280)->setName('OTHIS');
+		$this->assertInternalType('string',$entity->__toString());
+		$this->assertEquals('77280 - Othis',$entity->__toString());
+	}
 
 }
