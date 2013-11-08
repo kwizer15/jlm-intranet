@@ -5,6 +5,8 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use JLM\ModelBundle\Entity\City;
+
 /**
  * JLM\ModelBundle\Entity\Address
  *
@@ -28,7 +30,7 @@ class Address
      * @ORM\Column(name="street", type="text", nullable=true)
      * @Assert\Type(type="string")
      */
-    private $street;
+    private $street = '';
     
     /**
      * @var string $city
@@ -56,7 +58,8 @@ class Address
      */
     public function setStreet($street)
     {
-        $this->street = $street;
+        $this->street = (string)$street;
+        return $this;
     }
 
     /**
@@ -72,17 +75,18 @@ class Address
     /**
      * Set city
      *
-     * @param string $city
+     * @param City $city
      */
-    public function setCity($city)
+    public function setCity(City $city = null)
     {
         $this->city = $city;
+        return $this;
     }
 
     /**
      * Get city
      *
-     * @return string 
+     * @return City
      */
     public function getCity()
     {
@@ -94,7 +98,7 @@ class Address
      */
     public function __toString()
     {
-    	return $this->getStreet().chr(10).$this->getCity();
+    	return ($this->getStreet() == '') ? (string)$this->getCity() : $this->getStreet().chr(10).$this->getCity();
     }
     
     /**
