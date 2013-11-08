@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use JLM\ModelBundle\Entity\Country;
 /**
  * JLM\ModelBundle\Entity\City
  *
@@ -31,7 +32,7 @@ class City extends StringModel
      * @Assert\Length(min=4,max=20)
      * @Assert\NotNull
      */
-    private $zip;
+    private $zip = '';
     
     /**
      * @var Country $country
@@ -52,6 +53,20 @@ class City extends StringModel
     {
         return $this->id;
     }
+    
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return self
+     */
+    public function setName($name)
+    {
+    	$name = str_replace('-','- ',$name);
+    	$name = ucwords(strtolower($name));
+    	$name = str_replace('- ','-',$name);
+    	return parent::setName($name);
+    }
 
     /**
      * Set zip
@@ -60,7 +75,9 @@ class City extends StringModel
      */
     public function setZip($zip)
     {
-        $this->zip = $zip;
+    	$zip = strtoupper($zip);
+    	$this->zip = (preg_match('#[0-9A-Z\-]#',$zip)) ? $zip : '';
+        return $this;
     }
 
     /**
@@ -78,9 +95,10 @@ class City extends StringModel
      *
      * @param JLM\ModelBundle\Entity\Country $country
      */
-    public function setCountry(\JLM\ModelBundle\Entity\Country $country)
+    public function setCountry(Country $country = null)
     {
         $this->country = $country;
+        return $this;
     }
 
     /**
