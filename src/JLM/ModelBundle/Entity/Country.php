@@ -48,6 +48,9 @@ class Country extends StringModel
     }
     
     /**
+     * Set name
+     * 
+     * @param string $name
      * @return self
      */
     public function setName($name)
