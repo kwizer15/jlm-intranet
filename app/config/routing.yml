@@ -1,3 +1,8 @@
+jlm_contact:
+    resource: "@JLMContactBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 jlm_transmitter:
     resource: "@JLMTransmitterBundle/Controller/"
     type:     annotation
