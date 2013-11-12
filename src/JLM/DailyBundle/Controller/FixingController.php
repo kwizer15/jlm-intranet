@@ -196,10 +196,14 @@ class FixingController extends AbstractInterventionController
 			// Mise à l'arrêt
 			if ($entity->getDone()->getId() == 3)
 			{
-				$stop = new DoorStop;
-				$stop->setBegin(new \DateTime);
+				$stop = $entity->getDoor()->getLastStop();
+				if ($stop === null)
+				{
+					$stop = new DoorStop;	
+					$stop->setBegin(new \DateTime);
+					$stop->setState('Non traitée');
+				}
 				$stop->setReason($entity->getReport());
-				$stop->setState('Non traitée');
 				$entity->getDoor()->addStop($stop);
 				$em->persist($stop);
 			}
