@@ -77,7 +77,6 @@ class DoorController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-            return $this->stoppedAction();
         }
 		return $this->stoppedAction();
 	}
