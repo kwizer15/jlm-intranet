@@ -14,7 +14,7 @@ use JLM\ContactBundle\Entity\Country;
  * @ORM\Table(name="cities")
  * @ORM\Entity(repositoryClass="JLM\ContactBundle\Entity\CityRepository", readOnly=true)
  */
-class City extends JLM\DefaultBundle\Entity\AbstractNamed
+class City extends \JLM\DefaultBundle\Entity\AbstractNamed
 {
     /**
      * @var integer $id

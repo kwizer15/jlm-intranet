@@ -47,7 +47,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertNull($entity->getCity());
 		$this->assertEquals($entity,$entity->setCity($city));
-		$this->assertInstanceOf('JLM\ModelBundle\Entity\City',$entity->getCity());
+		$this->assertInstanceOf('JLM\ContactBundle\Entity\City',$entity->getCity());
 	}
 	
 	/**
@@ -63,7 +63,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 	
 		$this->assertNull($entity->getCity());
 		$this->assertEquals($entity,$entity->setCity($city));
-		$this->assertInstanceOf('JLM\ModelBundle\Entity\City',$entity->getCity());
+		$this->assertInstanceOf('JLM\ContactBundle\Entity\City',$entity->getCity());
 	}
 
 }

@@ -14,7 +14,7 @@ use JLM\ContactBundle\Entity\CountryException;
  * @ORM\Entity(readOnly=true)
  * @UniqueEntity("code")
  */
-class Country extends JLM\DefaultBundle\Entity\AbstractNamed
+class Country extends \JLM\DefaultBundle\Entity\AbstractNamed
 {
     /**
      * @var string $code

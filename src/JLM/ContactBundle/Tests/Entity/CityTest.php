@@ -60,7 +60,7 @@ class CityTest extends \PHPUnit_Framework_TestCase
 		
 		$this->assertEquals($entity,$entity->setCountry($country));
 		$this->assertEquals($country,$entity->getCountry());
-		$this->assertInstanceOf('JLM\ModelBundle\Entity\Country',$entity->getCountry());
+		$this->assertInstanceOf('JLM\ContactBundle\Entity\Country',$entity->getCountry());
 		
 		$this->assertEquals($entity,$entity->setCountry());
 		$this->assertNull($entity->getCountry());
