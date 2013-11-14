@@ -19,6 +19,9 @@
 
 {% block report %}
 	 <small>{{ entity.due }} - {{ entity.done }}</small>
+	 <h5>Constat</h5>
+	 {{ entity.observation | nl2br }}
+	 <h5>Action menée</h5>
 	 {{ parent() }}
 {% endblock %}
 

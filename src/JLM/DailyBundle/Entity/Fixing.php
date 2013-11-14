@@ -44,6 +44,14 @@ class Fixing extends Intervention
 	private $done;
 	
 	/**
+	 * Constat
+	 * @var string $observation
+	 *
+	 * @ORM\Column(name="observation", type="text", nullable=true)
+	 */
+	private $observation;
+	
+	/**
 	 * Get Type
 	 * @see Shifting
 	 * @return string
@@ -138,6 +146,26 @@ class Fixing extends Intervention
 	public function setDone(FixingDone $done = null)
 	{
 		$this->done = $done;
+		return $this;
+	}
+	
+	/**
+	 * Get observation
+	 */
+	public function getObservation()
+	{
+		return $this->observation;
+	}
+	
+	/**
+	 * Set observation
+	 * 
+	 * @param string $observation
+	 * @return self
+	 */
+	public function setObservation($observation)
+	{
+		$this->observation = (string)$observation;
 		return $this;
 	}
 }
