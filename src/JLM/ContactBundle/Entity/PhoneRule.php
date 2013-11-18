@@ -172,7 +172,10 @@ class PhoneRule
     	$format = str_replace('-','-?',$format);
     	$format = str_replace('N','[0-9]',$format);
     	$format = str_replace('L','[A-Z]',$format);
-    	$format = str_replace('I','('.$this->getLocalCode().'|00'.$this->getCode().'|\+'.$this->getCode().')',$format);
+    	if ($this->getLocalCode() === null)
+    		$format = str_replace('I','(00'.$this->getCode().'|\+'.$this->getCode().')?',$format);
+    	else
+    		$format = str_replace('I','('.$this->getLocalCode().'|00'.$this->getCode().'|\+'.$this->getCode().')',$format);
     	return '#^'.$format.'$#';
     }
 

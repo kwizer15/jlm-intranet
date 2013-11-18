@@ -147,15 +147,23 @@ class PhoneRuleTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @test
 	 */
-	public function testGetRedex()
+	public function testGetRegex()
 	{
 		$entity = new PhoneRule;
 		$this->assertEquals('',$entity->getFormat());
-		$this->assertInternalType('string',$entity->getFormat());
-		
+		$this->assertInternalType('string',$entity->getFormat());	
+		$tests = array(
+				array('IN NN NN NN NN','#^(000|\+0)?[0-9] ?[0-9][0-9] ?[0-9][0-9] ?[0-9][0-9] ?[0-9][0-9]$#'),
+				array('0 123-456 789-ILN','#^0 ?123-?456 ?789-?(000|\+0)?[A-Z][0-9]$#'),
+		);
+		foreach ($tests as $test)
+		{
+			$this->assertEquals($entity,$entity->setFormat($test[0]));
+			$this->assertEquals($test[1],$entity->getRegex());
+			$this->assertInternalType('string',$entity->getRegex());
+		}
 		$entity->setLocalCode(0);	// Pour la lettre I
 		$entity->setCode(33);
-		
 		$tests = array(
 				array('IN NN NN NN NN','#^(0|0033|\+33)[0-9] ?[0-9][0-9] ?[0-9][0-9] ?[0-9][0-9] ?[0-9][0-9]$#'),
 				array('0 123-456 789-ILN','#^0 ?123-?456 ?789-?(0|0033|\+33)[A-Z][0-9]$#'),
