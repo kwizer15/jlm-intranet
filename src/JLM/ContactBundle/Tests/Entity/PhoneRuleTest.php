@@ -115,8 +115,7 @@ class PhoneRuleTest extends \PHPUnit_Framework_TestCase
 	public function testFormat()
 	{
 		$entity = new PhoneRule;
-		$this->assertEquals('',$entity->getFormat());
-		$this->assertInternalType('string',$entity->getFormat());
+		$this->assertNull($entity->getFormat());
 		
 		$tests = array(
 				array('IN NN NN NN NN','IN NN NN NN NN'),
@@ -150,8 +149,6 @@ class PhoneRuleTest extends \PHPUnit_Framework_TestCase
 	public function testGetRegex()
 	{
 		$entity = new PhoneRule;
-		$this->assertEquals('',$entity->getFormat());
-		$this->assertInternalType('string',$entity->getFormat());	
 		$tests = array(
 				array('IN NN NN NN NN','#^(000|\+0)?[0-9] ?[0-9][0-9] ?[0-9][0-9] ?[0-9][0-9] ?[0-9][0-9]$#'),
 				array('0 123-456 789-ILN','#^0 ?123-?456 ?789-?(000|\+0)?[A-Z][0-9]$#'),

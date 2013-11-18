@@ -49,7 +49,7 @@ class PhoneRule
      *
      * @ORM\Column(name="format", type="string", length=255)
      */
-    private $format = '';
+    private $format = null;
 
     /**
      * Get id
