@@ -161,7 +161,7 @@ class Phone
     		switch ($format[$i])
     		{
     			case 'I':
-    				$out .= ($internationnal) ? '+'.$this->getRule()->getCode().' ' : $this->getRule()->getLocalCode();
+    				$out .= ($internationnal) ? '+'.$this->getRule()->getCode() : $this->getRule()->getLocalCode();
     				break;
     			case 'N':
     			case 'L':
@@ -173,5 +173,10 @@ class Phone
     	}
     	
         return $out;
+    }
+    
+    public function __toString()
+    {
+    	return $this->getNumber();
     }
 }

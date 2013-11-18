@@ -141,15 +141,7 @@ class PhoneTest extends \PHPUnit_Framework_TestCase
 		}
 		$this->assertEquals('01 64 33 77 70',$entity->getNumber());
 		$this->assertInternalType('string',$entity->getNumber());
-		$this->assertEquals('+33 1 64 33 77 70',$entity->getNumber(true));
+		$this->assertEquals('+331 64 33 77 70',$entity->getNumber(true));
 		$this->assertInternalType('string',$entity->getNumber(true));
-	}
-	
-	/**
-	 * @test
-	 */
-	public function test__toString()
-	{
-		
 	}
 }
