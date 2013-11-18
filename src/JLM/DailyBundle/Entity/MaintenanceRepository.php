@@ -64,10 +64,13 @@ class MaintenanceRepository extends InterventionRepository
 		$datas = array();
 		foreach ($results as $result)
 		{
-			$result['begin']->setTime(0,0,0);
-			$ts = $result['begin']->getTimestamp()*1000;
-			$datas[$ts] = ($previousDate === null) ? 1 : $datas[$previousDate] + 1;
-			$previousDate = $ts;
+			if ($result['begin'] instanceof \DateTime)
+			{
+				$result['begin']->setTime(0,0,0);
+				$ts = $result['begin']->getTimestamp()*1000;
+				$datas[$ts] = ($previousDate === null) ? 1 : $datas[$previousDate] + 1;
+				$previousDate = $ts;
+			}
 		}
 		return $datas;
 	}
