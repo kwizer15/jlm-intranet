@@ -126,7 +126,9 @@ class PhoneRule
     	if (!is_string($format))
     		throw new PhoneRuleException('Phone format invalid');
     	$format = strtoupper(trim($format));
-    	if (!preg_match('#^[ \-ILN0-9]+$#',$format))
+    	while (substr_count($format,'  '))
+			$format = str_replace('  ',' ',$format);
+    	if (!preg_match('#^I[ \-LN]+$#',$format))
     		throw new PhoneRuleException('Phone format invalid');
     	$countI = 0;
     	$countLN = 0;
@@ -168,15 +170,25 @@ class PhoneRule
     public function getRegex()
     {
     	$format = $this->getFormat();
-    	$format = str_replace(' ',' ?',$format);
-    	$format = str_replace('-','-?',$format);
-    	$format = str_replace('N','[0-9]',$format);
-    	$format = str_replace('L','[A-Z]',$format);
-    	if ($this->getLocalCode() === null)
-    		$format = str_replace('I','(00'.$this->getCode().'|\+'.$this->getCode().')?',$format);
-    	else
-    		$format = str_replace('I','('.$this->getLocalCode().'|00'.$this->getCode().'|\+'.$this->getCode().')',$format);
-    	return '#^'.$format.'$#';
+    	$regex = '';
+    	for ($i = 0; $i < strlen($format); $i++)
+    	{
+    		switch ($format[$i])
+    		{
+    			case 'N' :
+    				$regex .= '[ \-\.,]?[0-9]';
+    				break;
+    			case 'L' :
+    				$regex .= '[ \-\.,]?[A-Z]';
+    				break;
+    			case 'I' :
+    				$regex .= ($this->getLocalCode() === null)
+    						? '(00'.$this->getCode().'|\+'.$this->getCode().')?'
+    						: '('.$this->getLocalCode().'|00'.$this->getCode().'|\+'.$this->getCode().')'; 
+    				break;
+    		}
+    	}
+    	return '#^'.$regex.'$#';
     }
 
     /**

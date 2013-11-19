@@ -120,10 +120,13 @@ class PhoneRuleTest extends \PHPUnit_Framework_TestCase
 		$tests = array(
 				array('IN NN NN NN NN','IN NN NN NN NN'),
 				array('NN 0F GH CC LL',null),
-				array('0 123-456 789-ILN','0 123-456 789-ILN'),
+				array('0 123-456 789-ILN',null),
 				array('0 123-456 789-LN',null),
 				array('0 123-456 789-IILN',null),
 				array('0 123-456 789-II',null),
+				array('INLN LNLN-LNL N','INLN LNLN-LNL N'),
+				array('   i  NlN    LnL n-LN   L N','I NLN LNL N-LN L N'),
+				array('INNN1LLL',null),
 				array('014',null),
 				array(new PhoneRule,null),
 		);
@@ -150,8 +153,8 @@ class PhoneRuleTest extends \PHPUnit_Framework_TestCase
 	{
 		$entity = new PhoneRule;
 		$tests = array(
-				array('IN NN NN NN NN','#^(000|\+0)?[0-9] ?[0-9][0-9] ?[0-9][0-9] ?[0-9][0-9] ?[0-9][0-9]$#'),
-				array('0 123-456 789-ILN','#^0 ?123-?456 ?789-?(000|\+0)?[A-Z][0-9]$#'),
+				array('IN NN NN NN NN','#^(000|\+0)?[ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9]$#'),
+				array('I LN L NNNN LL','#^(000|\+0)?[ \-\.,]?[A-Z][ \-\.,]?[0-9][ \-\.,]?[A-Z][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[A-Z][ \-\.,]?[A-Z]$#'),
 		);
 		foreach ($tests as $test)
 		{
@@ -162,8 +165,8 @@ class PhoneRuleTest extends \PHPUnit_Framework_TestCase
 		$entity->setLocalCode(0);	// Pour la lettre I
 		$entity->setCode(33);
 		$tests = array(
-				array('IN NN NN NN NN','#^(0|0033|\+33)[0-9] ?[0-9][0-9] ?[0-9][0-9] ?[0-9][0-9] ?[0-9][0-9]$#'),
-				array('0 123-456 789-ILN','#^0 ?123-?456 ?789-?(0|0033|\+33)[A-Z][0-9]$#'),
+				array('IN NN NN NN NN','#^(0|0033|\+33)[ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9]$#'),
+				array('I LN L NNNN LL','#^(0|0033|\+33)[ \-\.,]?[A-Z][ \-\.,]?[0-9][ \-\.,]?[A-Z][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[A-Z][ \-\.,]?[A-Z]$#'),
 		);
 		foreach ($tests as $test)
 		{
