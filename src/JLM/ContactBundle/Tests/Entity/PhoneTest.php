@@ -135,13 +135,34 @@ class PhoneTest extends \PHPUnit_Framework_TestCase
 		$entity->getRule()->setCode(33);
 		$entity->getRule()->setLocalCode(0);
 		try {
-			$this->assertEquals($entity,$entity->setNumber('0164337770'));
+			$this->assertEquals($entity,$entity->setNumber('016433777'));
 		} catch (PhoneException $e) {
-			$this->fail('Une exception non attendue a été levée');
+			// Format non respecté
+			$exception = true;
 		}
-		$this->assertEquals('01 64 33 77 70',$entity->getNumber());
-		$this->assertInternalType('string',$entity->getNumber());
-		$this->assertEquals('+331 64 33 77 70',$entity->getNumber(true));
-		$this->assertInternalType('string',$entity->getNumber(true));
+		if (!$exception)
+			$this->fail('Une exception attendue n\'a pas été levée');
+
+		$tests = array(
+			'0164337770'=>'1 64 33 77 70',
+			'  0.164.33-7/7 70'=>'1 64 33 77 70',
+			'  0,,,.16 ..    4.3 3,-,,////,7/7   7,,,0   '=>'1 64 33 77 70'
+		);
+		
+		foreach ($tests as $in => $out)
+		{
+			try {
+				$this->assertEquals($entity,$entity->setNumber('0164337770'));
+			} catch (PhoneException $e) {
+				$this->fail('Une exception non attendue a été levée');
+			}
+			$this->assertEquals('0'.$out,$entity->getNumber());
+			$this->assertInternalType('string',$entity->getNumber());
+			$this->assertEquals('+33'.$out,$entity->getNumber(true));
+			$this->assertInternalType('string',$entity->getNumber(true));
+		}
+		$entity->getRule()->setFormat('IN.NN.NN.NN.NN');
+		$this->assertEquals('01.64.33.77.70',$entity->getNumber());
+		
 	}
 }

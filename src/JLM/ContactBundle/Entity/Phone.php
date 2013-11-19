@@ -120,7 +120,7 @@ class Phone
     	if (!preg_match($this->getRule()->getRegex(),$number))
     		throw new PhoneException('Number format not compatible with PhoneRule');
     	// Mise au format
-    	$number = str_replace(array(' ',',','.','-'),'',$number);
+    	$number = str_replace(array(' ',',','.','-','/'),'',$number);
     	$format = $this->getRule()->getFormat();
     	$j = strlen($number - 1);
     	$formatted = '';
