@@ -30,7 +30,6 @@ class ContactAddressTest extends \PHPUnit_Framework_TestCase
 			'LIVRAISON' => 'Livraison',
 			'fAcTuRaTiOn' => 'Facturation',
 			'2ème agence' => '2ème agence',
-			200 => '200',
 		);
 
 		foreach ($tests as $in => $out)

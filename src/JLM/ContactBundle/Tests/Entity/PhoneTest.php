@@ -24,22 +24,22 @@ class PhoneTest extends \PHPUnit_Framework_TestCase
 				array('  n\'importe-quoi  encore  ','N\'importe-quoi encore'),
 				array('une chaine de caractère super longue qui doit faire au moins 255 caractères pour que ca bug au niveau de la base de données une chaine de caractère super longue qui doit faire au moins 255 caractères pour que ca bug au niveau de la base de données ggggggg',
 					  'Une chaine de caractère super longue qui doit faire au moins 255 caractères pour que ca bug au niveau de la base de données une chaine de caractère super longue qui doit faire au moins 255 caractères pour que ca bug au niveau de la base de données g'),
-				array('',null),
-				array(12,null),
-				array(true,null),
-				array(false,null),
+				array(''),
+				array(12),
+				array(true),
+				array(false),
 				
 		);
 		foreach ($tests as $test)
 		{
 			try {
 				$this->assertEquals($entity,$entity->setAlias($test[0]));
-			} catch (PhoneException $e) {
-				if ($test[1] !== null)
+			} catch (\Exception $e) {
+				if (isset($test[1]))
 					$this->fail('Une exception non attendue a été levée');
 				continue;
 			}
-			if ($test[1] === null)
+			if (!isset($test[1]))
 			{
 				$this->fail('Une exception attendue n\'a pas été levée');
 				continue;
@@ -61,9 +61,9 @@ class PhoneTest extends \PHPUnit_Framework_TestCase
 		
 		$tests = array(
 			array($rule,$rule),
-			array(true,null),
-			array('INNNNN',null),
-			array(1,null),
+			array(true),
+			array('INNNNN'),
+			array(1),
 		);
 		
 		foreach ($tests as $test)
@@ -71,11 +71,11 @@ class PhoneTest extends \PHPUnit_Framework_TestCase
 			try {
 				$this->assertEquals($entity,$entity->setRule($test[0]));
 			} catch (\Exception $e) {
-				if ($test[1] !== null)
+				if (isset($test[1]))
 					$this->fail('Une exception non attendue a été levée.');
 				continue;
 			}
-			if ($test[1] === null)
+			if (!isset($test[1]))
 			{
 				$this->fail('Une exception attendue n\'a pas été levée.');
 				continue;

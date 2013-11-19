@@ -11,21 +11,14 @@ use JLM\ContactBundle\Entity\Contact;
  * @ORM\Table(name="contact_addresses")
  * @ORM\Entity
  */
-class ContactAddress extends Address
+class ContactAddress extends ContactData
 {
 	/**
-	 * @var Contact
+	 * @var Address
 	 * 
-	 * @ORM\ManyToOne(targetEntity="Contact", inversedBy="addresses")
+	 * @ORM\ManyToOne(targetEntity="Address")
 	 */
-	private $contact = null;
-	
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="alias", type="string", length=255)
-     */
-    private $alias = '';
+	private $address = null;
     
     /**
      * @var forBilling
@@ -47,29 +40,6 @@ class ContactAddress extends Address
      * @ORM\Column(name="main", type="boolean")
      */
     private $main = false;
-    
-    /**
-     * Set alias
-     *
-     * @param string $alias
-     * @return ContactAddress
-     */
-    public function setAlias($alias)
-    {
-    	$alias = ucfirst(strtolower(trim($alias)));
-        $this->alias = $alias;
-        return $this;
-    }
-
-    /**
-     * Get alias
-     *
-     * @return string 
-     */
-    public function getAlias()
-    {
-        return $this->alias;
-    }
 
     /**
      * Set forBilling
@@ -92,6 +62,16 @@ class ContactAddress extends Address
     public function getForBilling()
     {
         return $this->forBilling;
+    }
+    
+    /**
+     * Is forBilling
+     *
+     * @return boolean
+     */
+    public function isForBilling()
+    {
+    	return $this->getForBilling();
     }
 
     /**
@@ -116,6 +96,16 @@ class ContactAddress extends Address
     {
         return $this->forDelivery;
     }
+    
+    /**
+     * is forDelivery
+     *
+     * @return boolean
+     */
+    public function isForDelivery()
+    {
+    	return $this->getForDelivery();
+    }
 
     /**
      * Set main
@@ -139,27 +129,24 @@ class ContactAddress extends Address
     {
         return $this->main;
     }
-
-    /**
-     * Set contact
-     *
-     * @param \JLM\ContactBundle\Entity\Contact $contact
-     * @return ContactAddress
-     */
-    public function setContact(\JLM\ContactBundle\Entity\Contact $contact = null)
-    {
-        $this->contact = $contact;
     
-        return $this;
-    }
-
     /**
-     * Get contact
+     * Is main
      *
-     * @return \JLM\ContactBundle\Entity\Contact 
+     * @return boolean
      */
-    public function getContact()
+    public function isMain()
     {
-        return $this->contact;
+    	return $this->getMain();
+    }
+    
+    /**
+     * To string
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+    	return (string)$this->getAddress();
     }
 }

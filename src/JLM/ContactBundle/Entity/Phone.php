@@ -11,31 +11,8 @@ use JLM\ContactBundle\Entity\PhoneRule;
  * @ORM\Table()
  * @ORM\Entity
  */
-class Phone
+class Phone extends ContactData
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="alias", type="string", length=255)
-     */
-    private $alias = '';
-
-    /**
-     * @var Contact
-     *
-     * @ORM\ManyToOne(targetEntity="Contact", inversedBy="phones")
-     */
-    private $contact = null;
-    
     /**
      * @var PhoneRule
      *
@@ -49,68 +26,6 @@ class Phone
      * @ORM\Column(name="number", type="string", length=20)
      */
     private $number = null;
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set alias
-     *
-     * @param string $alias
-     * @return Phone
-     */
-    public function setAlias($alias)
-    {
-    	if (!is_string($alias))
-    		throw new PhoneException('alias parameter must be a string');
-    	$alias = substr(ucfirst(strtolower(str_replace('  ',' ',trim($alias)))),0,255);
-    	if (empty($alias))
-    		throw new PhoneException('alias parameter must contain more 1 character');
-        $this->alias = $alias;
-    	
-        return $this;
-    }
-
-    /**
-     * Get alias
-     *
-     * @return string 
-     */
-    public function getAlias()
-    {
-        return $this->alias;
-    }
-
-    /**
-     * Set contact
-     *
-     * @param \JLM\ContactBundle\Entity\Contact $contact
-     * @return ContactAddress
-     */
-    public function setContact(\JLM\ContactBundle\Entity\Contact $contact = null)
-    {
-    	$this->contact = $contact;
-    
-    	return $this;
-    }
-    
-    /**
-     * Get contact
-     *
-     * @return \JLM\ContactBundle\Entity\Contact
-     */
-    public function getContact()
-    {
-    	return $this->contact;
-    }
     
     /**
      * Set rule
