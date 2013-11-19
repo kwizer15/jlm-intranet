@@ -30,16 +30,16 @@ abstract class Contact
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\OneToMany(targetEntity="Email", mappedBy="contact")
      */
-    private $email;
+    private $emails;
 
     /**
      * @var string
      * 
      * @ORM\OneToMany(targetEntity="ContactAddress", mappedBy="contact")
      */
-    private $address;
+    private $addresses;
     
     /**
      * @var string
@@ -59,25 +59,117 @@ abstract class Contact
     }
 
     /**
-     * Set email
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->emails = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->address = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->phones = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add emails
      *
-     * @param string $email
+     * @param \JLM\ContactBundle\Entity\Email $emails
      * @return Contact
      */
-    public function setEmail($email)
+    public function addEmail(\JLM\ContactBundle\Entity\Email $email)
     {
-        $this->email = $email;
+    	$email->setContact($this);
+        $this->emails[] = $email;
     
         return $this;
     }
 
     /**
-     * Get email
+     * Remove emails
      *
-     * @return string 
+     * @param \JLM\ContactBundle\Entity\Email $email
      */
-    public function getEmail()
+    public function removeEmail(\JLM\ContactBundle\Entity\Email $email)
     {
-        return $this->email;
+    	$email->setContact();
+        $this->emails->removeElement($email);
+    }
+
+    /**
+     * Get emails
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEmails()
+    {
+        return $this->emails;
+    }
+
+    /**
+     * Add phones
+     *
+     * @param \JLM\ContactBundle\Entity\Phone $phone
+     * @return Contact
+     */
+    public function addPhone(\JLM\ContactBundle\Entity\Phone $phone)
+    {
+    	$phone->setContact($this);
+        $this->phones[] = $phone;
+    
+        return $this;
+    }
+
+    /**
+     * Remove phones
+     *
+     * @param \JLM\ContactBundle\Entity\Phone $phone
+     */
+    public function removePhone(\JLM\ContactBundle\Entity\Phone $phone)
+    {
+    	$phone->setContact();
+        $this->phones->removeElement($phone);
+    }
+
+    /**
+     * Get phones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPhones()
+    {
+        return $this->phones;
+    }
+
+    /**
+     * Add addresses
+     *
+     * @param \JLM\ContactBundle\Entity\ContactAddress $address
+     * @return Contact
+     */
+    public function addAddress(\JLM\ContactBundle\Entity\ContactAddress $address)
+    {
+    	$address->setContact($this);
+        $this->addresses[] = $address;
+    
+        return $this;
+    }
+
+    /**
+     * Remove addresses
+     *
+     * @param \JLM\ContactBundle\Entity\ContactAddress $address
+     */
+    public function removeAddress(\JLM\ContactBundle\Entity\ContactAddress $address)
+    {
+    	$address->setContact();
+        $this->addresses->removeElement($address);
+    }
+
+    /**
+     * Get addresses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
     }
 }

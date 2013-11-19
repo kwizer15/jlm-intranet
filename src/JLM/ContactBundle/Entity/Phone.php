@@ -30,6 +30,13 @@ class Phone
     private $alias = '';
 
     /**
+     * @var Contact
+     *
+     * @ORM\ManyToOne(targetEntity="Contact", inversedBy="phones")
+     */
+    private $contact = null;
+    
+    /**
      * @var PhoneRule
      *
      * @ORM\ManyToOne(targetEntity="PhoneRule")
@@ -82,6 +89,29 @@ class Phone
         return $this->alias;
     }
 
+    /**
+     * Set contact
+     *
+     * @param \JLM\ContactBundle\Entity\Contact $contact
+     * @return ContactAddress
+     */
+    public function setContact(\JLM\ContactBundle\Entity\Contact $contact = null)
+    {
+    	$this->contact = $contact;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get contact
+     *
+     * @return \JLM\ContactBundle\Entity\Contact
+     */
+    public function getContact()
+    {
+    	return $this->contact;
+    }
+    
     /**
      * Set rule
      *
