@@ -128,7 +128,7 @@ class PhoneRule
     	$format = strtoupper(trim($format));
     	while (substr_count($format,'  '))
 			$format = str_replace('  ',' ',$format);
-    	if (!preg_match('#^I[ \-LN]+$#',$format))
+    	if (!preg_match('#^I[ \-\./,LN]+$#',$format))
     		throw new PhoneRuleException('Phone format invalid');
     	$countI = 0;
     	$countLN = 0;
