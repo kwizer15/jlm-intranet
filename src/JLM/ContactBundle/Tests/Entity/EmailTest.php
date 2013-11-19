@@ -11,6 +11,8 @@ class EmailTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testEmail()
 	{
+		$entity = new Email;
+		
 		$tests = array(
 			array('salut'),
 			array('kwiZer15@WANADOO.fr','kwizer15@wanadoo.fr'),
@@ -26,7 +28,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
 		foreach ($tests as $test)
 		{
 			try {
-				$entity = new Email($test[0]);
+				$this->assertEquals($entity,$entity->setAddress($test[0]));
 			} catch (EmailException $e) {
 				if (isset($test[1]))
 					$this->fail('Une exception non attendue a été levée : '.$test[0]);
@@ -35,7 +37,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
 			if (!isset($test[1]))
 				$this->fail('Une exception attendue n\'a pas été levée : '.$test[0]);
 			else
-				$this->assertEquals($test[1],(string)$entity);
+				$this->assertEquals($test[1],$entity->getAddress());
 		}
 	}
 }
