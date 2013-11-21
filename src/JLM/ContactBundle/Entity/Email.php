@@ -11,7 +11,7 @@ use JLM\ContactBundle\Entity\EmailException;
  * @ORM\Table()
  * @ORM\Entity
  */
-class Email extends ContactData
+class Email
 {
     /**
      * @var string

@@ -30,7 +30,7 @@ abstract class Contact
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="Email", mappedBy="contact")
+     * @ORM\OneToMany(targetEntity="ContactEmail", mappedBy="contact")
      */
     private $emails;
 
@@ -44,7 +44,7 @@ abstract class Contact
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="Phone", mappedBy="contact")
+     * @ORM\OneToMany(targetEntity="ContactPhone", mappedBy="contact")
      */
     private $phones;
 

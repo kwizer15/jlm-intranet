@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JLM\ContactBundle\Entity\Contact;
 
 /**
- * @ORM/MappedSuperclass
+ * @ORM\MappedSuperclass
  */
 abstract class ContactData
 {

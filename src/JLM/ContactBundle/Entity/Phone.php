@@ -11,7 +11,7 @@ use JLM\ContactBundle\Entity\PhoneRule;
  * @ORM\Table()
  * @ORM\Entity
  */
-class Phone extends ContactData
+class Phone
 {
     /**
      * @var PhoneRule
