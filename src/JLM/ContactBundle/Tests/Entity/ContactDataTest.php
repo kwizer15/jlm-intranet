@@ -1,6 +1,8 @@
 <?php
 namespace JLM\ContactBundle\Tests\Entity;
 
+use JLM\ContactBundle\Entity\ContactDataException;
+
 class ContactDataTest extends \PHPUnit_Framework_TestCase
 {
 	/**
@@ -29,7 +31,7 @@ class ContactDataTest extends \PHPUnit_Framework_TestCase
 		{
 			try {
 				$this->assertEquals($entity,$entity->setAlias($test[0]));
-			} catch (\Exception $e) {
+			} catch (ContactDataException $e) {
 				if (isset($test[1]))
 					$this->fail('Une exception non attendue a été levée');
 				continue;
