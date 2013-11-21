@@ -17,32 +17,6 @@ class ContactAddressTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @test
 	 */
-	public function testAlias()
-	{
-		$entity = new ContactAddress;
-		
-		$this->assertEquals('',$entity->getAlias());
-		$this->assertInternalType('string', $entity->getAlias());
-		
-		$tests = array(
-			'Principale' => 'Principale',
-			'bureau' => 'Bureau',
-			'LIVRAISON' => 'Livraison',
-			'fAcTuRaTiOn' => 'Facturation',
-			'2ème agence' => '2ème agence',
-		);
-
-		foreach ($tests as $in => $out)
-		{
-			$this->assertEquals($entity,$entity->setAlias($in));
-			$this->assertEquals($out,$entity->getAlias());
-			$this->assertInternalType('string', $entity->getAlias());
-		}
-	}
-	
-	/**
-	 * @test
-	 */
 	public function testForBilling()
 	{
 		$entity = new ContactAddress;
