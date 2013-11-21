@@ -4,11 +4,15 @@ namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use JLM\ContactBundle\Entity\ContactAddress;
+use JLM\ContactBundle\Entity\ContactPhone;
+use JLM\ContactBundle\Entity\ContactEmail;
+
 /**
  * Contact
  *
  * @ORM\Table(name="contacts")
- * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\ContactRepository")
+ * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * ORM\DiscriminatorMap({
@@ -71,10 +75,10 @@ abstract class Contact
     /**
      * Add emails
      *
-     * @param \JLM\ContactBundle\Entity\Email $emails
+     * @param ContactEmail $emails
      * @return Contact
      */
-    public function addEmail(\JLM\ContactBundle\Entity\Email $email)
+    public function addEmail(ContactEmail $email)
     {
     	$email->setContact($this);
         $this->emails[] = $email;
@@ -85,10 +89,10 @@ abstract class Contact
     /**
      * Remove emails
      *
-     * @param \JLM\ContactBundle\Entity\Email $email
+     * @param ContactEmail $email
      * @return self
      */
-    public function removeEmail(\JLM\ContactBundle\Entity\Email $email)
+    public function removeEmail(ContactEmail $email)
     {
     	$email->setContact();
         $this->emails->removeElement($email);
@@ -109,10 +113,10 @@ abstract class Contact
     /**
      * Add phones
      *
-     * @param \JLM\ContactBundle\Entity\Phone $phone
+     * @param ContactPhone $phone
      * @return Contact
      */
-    public function addPhone(\JLM\ContactBundle\Entity\Phone $phone)
+    public function addPhone(ContactPhone $phone)
     {
     	$phone->setContact($this);
         $this->phones[] = $phone;
@@ -123,10 +127,10 @@ abstract class Contact
     /**
      * Remove phones
      *
-     * @param \JLM\ContactBundle\Entity\Phone $phone
+     * @param ContactPhone $phone
      * @return self
      */
-    public function removePhone(\JLM\ContactBundle\Entity\Phone $phone)
+    public function removePhone(ContactPhone $phone)
     {
     	$phone->setContact();
         $this->phones->removeElement($phone);
@@ -147,10 +151,10 @@ abstract class Contact
     /**
      * Add addresses
      *
-     * @param \JLM\ContactBundle\Entity\ContactAddress $address
+     * @param ContactAddress $address
      * @return Contact
      */
-    public function addAddress(\JLM\ContactBundle\Entity\ContactAddress $address)
+    public function addAddress(ContactAddress $address)
     {
     	$address->setContact($this);
         $this->addresses[] = $address;
@@ -161,10 +165,10 @@ abstract class Contact
     /**
      * Remove addresses
      *
-     * @param \JLM\ContactBundle\Entity\ContactAddress $address
+     * @param ContactAddress $address
      * @return self
      */
-    public function removeAddress(\JLM\ContactBundle\Entity\ContactAddress $address)
+    public function removeAddress(ContactAddress $address)
     {
     	$address->setContact();
         $this->addresses->removeElement($address);
