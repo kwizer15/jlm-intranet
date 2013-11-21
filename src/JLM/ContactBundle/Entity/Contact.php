@@ -64,7 +64,7 @@ abstract class Contact
     public function __construct()
     {
         $this->emails = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->address = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
         $this->phones = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
@@ -86,11 +86,14 @@ abstract class Contact
      * Remove emails
      *
      * @param \JLM\ContactBundle\Entity\Email $email
+     * @return self
      */
     public function removeEmail(\JLM\ContactBundle\Entity\Email $email)
     {
     	$email->setContact();
         $this->emails->removeElement($email);
+        
+        return $this;
     }
 
     /**
@@ -121,11 +124,14 @@ abstract class Contact
      * Remove phones
      *
      * @param \JLM\ContactBundle\Entity\Phone $phone
+     * @return self
      */
     public function removePhone(\JLM\ContactBundle\Entity\Phone $phone)
     {
     	$phone->setContact();
         $this->phones->removeElement($phone);
+        
+        return $this;
     }
 
     /**
@@ -156,11 +162,14 @@ abstract class Contact
      * Remove addresses
      *
      * @param \JLM\ContactBundle\Entity\ContactAddress $address
+     * @return self
      */
     public function removeAddress(\JLM\ContactBundle\Entity\ContactAddress $address)
     {
     	$address->setContact();
         $this->addresses->removeElement($address);
+        
+        return $this;
     }
 
     /**
