@@ -53,7 +53,7 @@ class Phone extends ContactData
      * Set number
      *
      * @param string $number
-     * @return Phone
+     * @return self
      */
     public function setNumber($number)
     {
@@ -120,6 +120,11 @@ class Phone extends ContactData
         return $out;
     }
     
+    /**
+     * To string
+     *
+     * @return string
+     */
     public function __toString()
     {
     	return $this->getNumber();

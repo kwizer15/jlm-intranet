@@ -65,7 +65,7 @@ class PhoneRule
      * Set code
      *
      * @param int $code
-     * @return PhoneRule
+     * @return self
      */
     public function setCode($code)
     {
@@ -92,7 +92,7 @@ class PhoneRule
      * Set localCode
      *
      * @param int $localCode
-     * @return PhoneRule
+     * @return self
      */
     public function setLocalCode($localCode)
     {
@@ -119,7 +119,7 @@ class PhoneRule
      * Set format
      *
      * @param string $format
-     * @return PhoneRule
+     * @return self
      */
     public function setFormat($format)
     {
@@ -195,7 +195,7 @@ class PhoneRule
      * Set country
      *
      * @param Country $country
-     * @return PhoneRule
+     * @return self
      */
     public function setCountry(Country $country = null)
     {

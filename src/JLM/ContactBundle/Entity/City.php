@@ -94,7 +94,8 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed
     /**
      * Set country
      *
-     * @param JLM\ContactBundle\Entity\Country $country
+     * @param Country $country
+     * @return self
      */
     public function setCountry(Country $country = null)
     {
@@ -105,7 +106,7 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed
     /**
      * Get country
      *
-     * @return JLM\ContactBundle\Entity\Country 
+     * @return Country 
      */
     public function getCountry()
     {
@@ -125,6 +126,10 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed
     	return $out;
     }
     
+    /**
+     * To string upper
+     * @return string
+     */
     public function toString()
     {
 	  	$name = $this->getName();

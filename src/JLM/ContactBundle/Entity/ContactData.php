@@ -22,7 +22,7 @@ abstract class ContactData
 	/**
 	 * @var Contact
 	 *
-	 * @ORM\ManyToOne(targetEntity="Contact", inversedBy="addresses")
+	 * @ORM\ManyToOne(targetEntity="Contact")
 	 */
 	private $contact = null;
 	

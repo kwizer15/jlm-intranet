@@ -55,6 +55,7 @@ class Address
      * Set street
      *
      * @param string $street
+     * @return self
      */
     public function setStreet($street)
     {
@@ -76,6 +77,7 @@ class Address
      * Set city
      *
      * @param City $city
+     * @return self
      */
     public function setCity(City $city = null)
     {
@@ -95,6 +97,7 @@ class Address
     
     /**
      * To String
+     * @return string
      */
     public function __toString()
     {

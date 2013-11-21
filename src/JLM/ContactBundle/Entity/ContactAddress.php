@@ -45,7 +45,7 @@ class ContactAddress extends ContactData
      * Set forBilling
      *
      * @param boolean $forBilling
-     * @return ContactAddress
+     * @return self
      */
     public function setForBilling($forBilling = true)
     {
@@ -78,7 +78,7 @@ class ContactAddress extends ContactData
      * Set forDelivery
      *
      * @param boolean $forDelivery
-     * @return ContactAddress
+     * @return self
      */
     public function setForDelivery($forDelivery = true)
     {
@@ -111,7 +111,7 @@ class ContactAddress extends ContactData
      * Set main
      *
      * @param boolean $main
-     * @return ContactAddress
+     * @return self
      */
     public function setMain($main = true)
     {

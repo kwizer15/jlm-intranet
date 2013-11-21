@@ -15,11 +15,17 @@ class Email extends ContactData
 {
     /**
      * @var string
-     *
+     * 
      * @ORM\Column(name="address", type="string", length=255)
      */
     private $address;
     
+    /**
+     * Set address
+     * @param string $address
+     * @throws EmailException
+     * @return self
+     */
     public function setAddress($address)
     {
     	$address = strtolower(trim($address));
@@ -29,18 +35,23 @@ class Email extends ContactData
     	return $this;
     }
     
+    /**
+     * Get address
+     * 
+     * @return string
+     */
     public function getAddress()
     {
     	return $this->address;
     }
     
     /**
-     * Get address
+     * To string
      *
      * @return string 
      */
     public function __toString()
     {
-        return $this->address;
+        return $this->getAddress();
     }
 }
