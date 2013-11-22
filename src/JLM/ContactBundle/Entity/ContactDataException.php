@@ -2,6 +2,4 @@
 
 namespace JLM\ContactBundle\Entity;
 
-class ContactDataException extends \Exception
-{
-}
+class ContactDataException extends \Exception {}

@@ -3,7 +3,7 @@
 namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JLM\ContactBundle\Entity\Contact;
+
 
 /**
  * @ORM\MappedSuperclass
@@ -51,6 +51,8 @@ abstract class ContactData
      */
     public function setAlias($alias)
     {
+    	if (is_array($alias))
+    		throw new ContactDataException('alias parameter must be a string');
     	try{
     		$alias = (string)$alias;
     	}
