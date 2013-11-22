@@ -8,153 +8,91 @@ class ContactAddressTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @test
 	 */
-	public function testId()
+	public function testInitialId()
 	{
 		$entity = new ContactAddress;
 		$this->assertNull($entity->getId());
 	}
 	
-	/**
-	 * @test
-	 */
-	public function testForBilling()
-	{
-		$entity = new ContactAddress;
-		
-		$this->assertEquals(false,$entity->getForBilling());
-		$this->assertInternalType('bool', $entity->getForBilling());
 	
-		$this->assertEquals($entity,$entity->setForBilling(true));
-		$this->assertEquals(true,$entity->getForBilling());
-		$this->assertInternalType('bool', $entity->getForBilling());
-		
-		$this->assertEquals($entity,$entity->setForBilling(false));
-		$this->assertEquals(false,$entity->getForBilling());
-		$this->assertInternalType('bool', $entity->getForBilling());
-		
-		$this->assertEquals($entity,$entity->setForBilling(null));
-		$this->assertEquals(false,$entity->getForBilling());
-		$this->assertInternalType('bool', $entity->getForBilling());
-		
-		$this->assertEquals($entity,$entity->setForBilling(1));
-		$this->assertEquals(true,$entity->getForBilling());
-		$this->assertInternalType('bool', $entity->getForBilling());
-		
-		$this->assertEquals($entity,$entity->setForBilling(0));
-		$this->assertEquals(false,$entity->getForBilling());
-		$this->assertInternalType('bool', $entity->getForBilling());
-		
-		$this->assertEquals($entity,$entity->setForBilling('1'));
-		$this->assertEquals(true,$entity->getForBilling());
-		$this->assertInternalType('bool', $entity->getForBilling());
-		
-		$this->assertEquals($entity,$entity->setForBilling('0'));
-		$this->assertEquals(false,$entity->getForBilling());
-		$this->assertInternalType('bool', $entity->getForBilling());
-		
-		$this->assertEquals($entity,$entity->setForBilling('yes'));
-		$this->assertEquals(true,$entity->getForBilling());
-		$this->assertInternalType('bool', $entity->getForBilling());
-		
-		$this->assertEquals($entity,$entity->setForBilling('no'));
-		$this->assertEquals(true,$entity->getForBilling());
-		$this->assertInternalType('bool', $entity->getForBilling());
-
+	public function booleans()
+	{
+		return array(
+			array(false,false),
+			array(true,true),
+			array(null,false),
+			array(1,true),
+			array(0,false),
+			array('1',true),
+			array('0',false),
+			array('foo',true),
+		);
 	}
 	
 	/**
 	 * @test
 	 */
-	public function testForDelivery()
+	public function testInitialForBilling()
 	{
 		$entity = new ContactAddress;
-	
-		$this->assertEquals(false,$entity->getForDelivery());
-		$this->assertInternalType('bool', $entity->getForDelivery());
-	
-		$this->assertEquals($entity,$entity->setForDelivery(true));
-		$this->assertEquals(true,$entity->getForDelivery());
-		$this->assertInternalType('bool', $entity->getForDelivery());
-	
-		$this->assertEquals($entity,$entity->setForDelivery(false));
-		$this->assertEquals(false,$entity->getForDelivery());
-		$this->assertInternalType('bool', $entity->getForDelivery());
-	
-		$this->assertEquals($entity,$entity->setForDelivery(null));
-		$this->assertEquals(false,$entity->getForDelivery());
-		$this->assertInternalType('bool', $entity->getForDelivery());
-	
-		$this->assertEquals($entity,$entity->setForDelivery(1));
-		$this->assertEquals(true,$entity->getForDelivery());
-		$this->assertInternalType('bool', $entity->getForDelivery());
-	
-		$this->assertEquals($entity,$entity->setForDelivery(0));
-		$this->assertEquals(false,$entity->getForDelivery());
-		$this->assertInternalType('bool', $entity->getForDelivery());
-	
-		$this->assertEquals($entity,$entity->setForDelivery('1'));
-		$this->assertEquals(true,$entity->getForDelivery());
-		$this->assertInternalType('bool', $entity->getForDelivery());
-	
-		$this->assertEquals($entity,$entity->setForDelivery('0'));
-		$this->assertEquals(false,$entity->getForDelivery());
-		$this->assertInternalType('bool', $entity->getForDelivery());
-	
-		$this->assertEquals($entity,$entity->setForDelivery('yes'));
-		$this->assertEquals(true,$entity->getForDelivery());
-		$this->assertInternalType('bool', $entity->getForDelivery());
-	
-		$this->assertEquals($entity,$entity->setForDelivery('no'));
-		$this->assertEquals(true,$entity->getForDelivery());
-		$this->assertInternalType('bool', $entity->getForDelivery());
-	
+		$this->assertSame(false,$entity->getForBilling());
 	}
 	
 	/**
 	 * @test
 	 */
-	public function testMain()
+	public function testInitialForDelivery()
+	{
+		$entity = new ContactAddress;
+		$this->assertSame(false,$entity->getForDelivery());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testInitialMain()
+	{
+		$entity = new ContactAddress;
+		$this->assertSame(false,$entity->getMain());
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider booleans
+	 */
+	public function testForBilling($in,$out)
+	{
+		$entity = new ContactAddress;
+		
+		$this->assertEquals($entity,$entity->setForBilling($in));
+		$this->assertSame($out,$entity->getForBilling());
+		$this->assertSame($out,$entity->isForBilling());
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider booleans
+	 */
+	public function testForDelivery($in,$out)
 	{
 		$entity = new ContactAddress;
 	
-		$this->assertEquals(false,$entity->getMain());
-		$this->assertInternalType('bool', $entity->getMain());
+		$this->assertEquals($entity,$entity->setForDelivery($in));
+		$this->assertSame($out,$entity->getForDelivery());
+		$this->assertSame($out,$entity->isForDelivery());
 	
-		$this->assertEquals($entity,$entity->setMain(true));
-		$this->assertEquals(true,$entity->getMain());
-		$this->assertInternalType('bool', $entity->getMain());
+	}
 	
-		$this->assertEquals($entity,$entity->setMain(false));
-		$this->assertEquals(false,$entity->getMain());
-		$this->assertInternalType('bool', $entity->getMain());
+	/**
+	 * @test
+	 * @dataProvider booleans
+	 */
+	public function testMain($in,$out)
+	{
+		$entity = new ContactAddress;
 	
-		$this->assertEquals($entity,$entity->setMain(null));
-		$this->assertEquals(false,$entity->getMain());
-		$this->assertInternalType('bool', $entity->getMain());
-	
-		$this->assertEquals($entity,$entity->setMain(1));
-		$this->assertEquals(true,$entity->getMain());
-		$this->assertInternalType('bool', $entity->getMain());
-	
-		$this->assertEquals($entity,$entity->setMain(0));
-		$this->assertEquals(false,$entity->getMain());
-		$this->assertInternalType('bool', $entity->getMain());
-	
-		$this->assertEquals($entity,$entity->setMain('1'));
-		$this->assertEquals(true,$entity->getMain());
-		$this->assertInternalType('bool', $entity->getMain());
-	
-		$this->assertEquals($entity,$entity->setMain('0'));
-		$this->assertEquals(false,$entity->getMain());
-		$this->assertInternalType('bool', $entity->getMain());
-	
-		$this->assertEquals($entity,$entity->setMain('yes'));
-		$this->assertEquals(true,$entity->getMain());
-		$this->assertInternalType('bool', $entity->getMain());
-	
-		$this->assertEquals($entity,$entity->setMain('no'));
-		$this->assertEquals(true,$entity->getMain());
-		$this->assertInternalType('bool', $entity->getMain());
-	
+		$this->assertEquals($entity,$entity->setMain($in));
+		$this->assertSame($out,$entity->getMain());
+		$this->assertSame($out,$entity->isMain());
 	}
 }
