@@ -12,6 +12,15 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @test
 	 */
+	public function testId()
+	{
+		$entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\Contact');
+		$this->assertNull($entity->getId());
+	}
+	
+	/**
+	 * @test
+	 */
 	public function testAddresses()
 	{
 		$entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\Contact');
