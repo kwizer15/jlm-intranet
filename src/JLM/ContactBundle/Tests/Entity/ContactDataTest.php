@@ -28,8 +28,7 @@ class ContactDataTest extends \PHPUnit_Framework_TestCase
 	public function testInitialAlias()
 	{
 		$entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\ContactData');
-		$this->assertEquals('',$entity->getAlias());
-		$this->assertInternalType('string',$entity->getAlias());
+		$this->assertSame('',$entity->getAlias());
 	} 
 	
 	/**

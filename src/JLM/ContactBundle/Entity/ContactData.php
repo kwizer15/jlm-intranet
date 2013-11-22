@@ -47,7 +47,7 @@ abstract class ContactData
      * Set alias
      *
      * @param string $alias
-     * @return Phone
+     * @return self
      */
     public function setAlias($alias)
     {
@@ -84,7 +84,7 @@ abstract class ContactData
 	 * Set contact
 	 *
 	 * @param \JLM\ContactBundle\Entity\Contact $contact
-	 * @return ContactAddress
+	 * @return self
 	 */
 	public function setContact(\JLM\ContactBundle\Entity\Contact $contact = null)
 	{
@@ -96,7 +96,7 @@ abstract class ContactData
 	/**
 	 * Get contact
 	 *
-	 * @return \JLM\ContactBundle\Entity\Contact
+	 * @return Contact
 	 */
 	public function getContact()
 	{
