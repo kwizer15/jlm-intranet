@@ -141,6 +141,12 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed
 	    $replace = array('à'=>'À','é'=>'É','è'=>'È','ê'=>'Ê','ô'=>'Ô','û'=>'Û');
 	    foreach ($replace as $before => $after)
 	    	$name = str_replace($before,$after,$name);
-	    return $zip.' - '.$name;
+	    $out =  '';
+	    if ($zip != '')
+	    	$out = $zip.' - ';
+	    $out .= $name;
+	     
+	    return $out;
+
     }
 }
