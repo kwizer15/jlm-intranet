@@ -46,6 +46,30 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed
     private $country;
     
     /**
+     * Constructor
+     * @param string|null $name
+     * @param string|null $zip
+     */
+    public function __construct( $name = null, $zip = null )
+    {
+    	if ($name !== null)
+    	{
+    		if (preg_match('#^[A-z]#',$name))
+    			$this->setName($name);
+    		if (preg_match('#^[0-9]#',$name))
+    			$this->setZip($name);
+    	}
+    	if ($zip !== null)
+    	{
+    		if (preg_match('#^[A-z]#',$zip))
+    			$this->setName($zip);
+    		if (preg_match('#^[0-9]#',$zip))
+    			$this->setZip($zip);
+    	}
+    	$this->setCountry(new Country);
+    }
+    
+    /**
      * Get id
      *
      * @return integer 

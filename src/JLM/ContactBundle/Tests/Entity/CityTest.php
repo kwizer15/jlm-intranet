@@ -15,38 +15,100 @@ class CityTest extends \PHPUnit_Framework_TestCase
 		$this->assertNull($entity->getId());
 	}
 	
-	public function testName()
+	/**
+	 * @test
+	 */
+	public function testConstructWithoutParam()
 	{
 		$entity = new City;
-		$this->assertEquals('',$entity->getName());
-		$this->assertInternalType('string',$entity->getName());
-	
-		$tests = array('paris'=>'Paris','MONTPELLIER'=>'Montpellier','bouLOgNe-biLLancOuRt'=>'Boulogne-Billancourt','Paris 13 Buttes-Chaumonts'=>'Paris 13 Buttes-Chaumonts');
-		foreach ($tests as $in => $out)
-		{
-			$this->assertEquals($entity,$entity->setName($in));
-			$this->assertEquals($out,$entity->getName());
-			$this->assertInternalType('string',$entity->getName());
-		}
+		$this->assertSame('',$entity->getName());
+		$this->assertSame('',$entity->getZip());
+		$this->assertInstanceOf('JLM\ContactBundle\Entity\Country', $entity->getCountry());
+		return $entity;
 	}
 	
 	/**
 	 * @test
 	 */
-	public function testZip()
+	public function testConstructWithName()
 	{
-		$entity = new City;
-		$this->assertInternalType('string',$entity->getZip());
-		$this->assertEquals('',$entity->getZip());
-		
-		$tests = array('77280'=>'77280','2B280'=>'2B280', '2a280'=>'2A280', 'dCg-Pt3'=>'DCG-PT3', 52364 => '52364','?'=>'');
-		
-		foreach ($tests as $in => $out)
-		{
-			$this->assertEquals($entity,$entity->setZip($in));
-			$this->assertEquals($out,$entity->getZip());
-			$this->assertInternalType('string',$entity->getZip());
-		}
+		$entity = new City('Othis');
+		$this->assertSame('Othis',$entity->getName());
+		$this->assertSame('',$entity->getZip());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testConstructWithZip()
+	{
+		$entity = new City('77280');
+		$this->assertSame('',$entity->getName());
+		$this->assertSame('77280',$entity->getZip());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testConstructWithNameAndZip()
+	{
+		$entity = new City('Othis','77280');
+		$this->assertSame('Othis',$entity->getName());
+		$this->assertSame('77280',$entity->getZip());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testConstructWithNameAndZipInversed()
+	{
+		$entity = new City('77280','Othis');
+		$this->assertSame('Othis',$entity->getName());
+		$this->assertSame('77280',$entity->getZip());
+	}
+	
+	public function providerName()
+	{
+		return array(
+			array('paris','Paris'),
+			array('MONTPELLIER','Montpellier'),
+			array('bouLOgNe-biLLancOuRt','Boulogne-Billancourt'),
+			array('Paris 13 Buttes-Chaumonts','Paris 13 Buttes-Chaumonts'),
+		);
+	}
+	
+	/**
+	 * @test
+	 * @depends testConstructWithoutParam
+	 * @dataProvider providerName
+	 */
+	public function testName($in, $out, City $entity)
+	{
+		$this->assertSame($entity,$entity->setName($in));
+		$this->assertSame($out,$entity->getName());
+	}
+	
+	public function providerZip()
+	{
+		return array(
+				array('77280','77280'),
+				array('2B280','2B280'),
+				array('2a280','2A280'),
+				array('dCg-Pt3','DCG-PT3'),
+				array(52364,'52364'),
+				array('?',''),
+		);
+	}
+	
+	/**
+	 * @test
+	 * @depends testConstructWithoutParam
+	 * @dataProvider providerZip
+	 */
+	public function testZip($in, $out, City $entity)
+	{
+		$this->assertSame($entity,$entity->setZip($in));
+		$this->assertSame($out,$entity->getZip());
 	}
 	
 	/**
@@ -56,7 +118,6 @@ class CityTest extends \PHPUnit_Framework_TestCase
 	{
 		$entity = new City;
 		$country = new Country;
-		$this->assertNull($entity->getCountry());
 		
 		$this->assertEquals($entity,$entity->setCountry($country));
 		$this->assertEquals($country,$entity->getCountry());
