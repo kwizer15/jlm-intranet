@@ -16,7 +16,7 @@ class CityTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @test
 	 */
-	public function testId()
+	public function testInitialGetId()
 	{
 		$this->assertNull($this->entity->getId());
 	}
