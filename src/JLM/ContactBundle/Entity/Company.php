@@ -12,7 +12,7 @@ class CompanyException extends \Exception {}
  * @ORM\Table()
  * @ORM\Entity
  */
-class Company extends \JLM\DefaultBundle\Entity\AbstractNamed
+class Company extends Contact
 {
     /**
      * @var integer
@@ -23,8 +23,25 @@ class Company extends \JLM\DefaultBundle\Entity\AbstractNamed
      */
     private $id;
     
+    /**
+     * @var string
+     * 
+     * @ORM\Column(name="name", type="integer")
+     */
+    private $name;
+    
+    /**
+     * @var int
+     * 
+     * @ORM\Column(name="siren", type="integer")
+     */
     private $siren;
     
+    /**
+     * @var int
+     * 
+     * @ORM\Column(name="nic", type="integer")
+     */
     private $nic;
 
 
@@ -36,6 +53,26 @@ class Company extends \JLM\DefaultBundle\Entity\AbstractNamed
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Set name
+     * @param string
+     * @return self
+     */
+    public function setName($name)
+    {
+    	$this->name = $name;
+    	return $this;
+    }
+    
+    /**
+     * Get name
+     * @return string
+     */
+    public function getName()
+    {
+    	return $this->name;
     }
     
     /**
