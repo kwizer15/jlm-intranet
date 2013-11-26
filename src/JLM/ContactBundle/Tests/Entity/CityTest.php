@@ -6,86 +6,50 @@ use JLM\ContactBundle\Entity\Country;
 
 class CityTest extends \PHPUnit_Framework_TestCase
 {
+	protected $entity;
+	
+	public function setUp()
+	{
+		$this->entity = new City;
+	}
+
 	/**
 	 * @test
 	 */
 	public function testId()
 	{
-		$entity = new City;
-		$this->assertNull($entity->getId());
+		$this->assertNull($this->entity->getId());
 	}
 	
-	/**
-	 * @test
-	 */
-	public function testConstructWithoutParam()
-	{
-		$entity = new City;
-		$this->assertSame('',$entity->getName());
-		$this->assertSame('',$entity->getZip());
-		$this->assertInstanceOf('JLM\ContactBundle\Entity\Country', $entity->getCountry());
-		return $entity;
-	}
-	
-	/**
-	 * @test
-	 */
-	public function testConstructWithName()
-	{
-		$entity = new City('Othis');
-		$this->assertSame('Othis',$entity->getName());
-		$this->assertSame('',$entity->getZip());
-	}
-	
-	/**
-	 * @test
-	 */
-	public function testConstructWithZip()
-	{
-		$entity = new City('77280');
-		$this->assertSame('',$entity->getName());
-		$this->assertSame('77280',$entity->getZip());
-	}
-	
-	/**
-	 * @test
-	 */
-	public function testConstructWithNameAndZip()
-	{
-		$entity = new City('Othis','77280');
-		$this->assertSame('Othis',$entity->getName());
-		$this->assertSame('77280',$entity->getZip());
-	}
-	
-	/**
-	 * @test
-	 */
-	public function testConstructWithNameAndZipInversed()
-	{
-		$entity = new City('77280','Othis');
-		$this->assertSame('Othis',$entity->getName());
-		$this->assertSame('77280',$entity->getZip());
-	}
-	
+
 	public function providerName()
 	{
 		return array(
-			array('paris','Paris'),
-			array('MONTPELLIER','Montpellier'),
-			array('bouLOgNe-biLLancOuRt','Boulogne-Billancourt'),
-			array('Paris 13 Buttes-Chaumonts','Paris 13 Buttes-Chaumonts'),
+				array('paris','Paris'),
+				array('MONTPELLIER','Montpellier'),
+				array('bouLOgNe-biLLancOuRt','Boulogne-Billancourt'),
+				array('Paris 13 Buttes-Chaumonts','Paris 13 Buttes-Chaumonts'),
 		);
 	}
 	
 	/**
 	 * @test
-	 * @depends testConstructWithoutParam
 	 * @dataProvider providerName
 	 */
-	public function testName($in, $out, City $entity)
+	public function testSetName($in, $out)
 	{
-		$this->assertSame($entity,$entity->setName($in));
-		$this->assertSame($out,$entity->getName());
+		$this->assertSame($this->entity,$this->entity->setName($in));
+	}
+	
+	/**
+	 * @test
+	 * @depends testSetName
+	 * @dataProvider providerName
+	 */
+	public function testGetName($in, $out)
+	{
+		$this->entity->setName($in);
+		$this->assertSame($out,$this->entity->getName());
 	}
 	
 	public function providerZip()
@@ -102,55 +66,111 @@ class CityTest extends \PHPUnit_Framework_TestCase
 	
 	/**
 	 * @test
-	 * @depends testConstructWithoutParam
 	 * @dataProvider providerZip
 	 */
-	public function testZip($in, $out, City $entity)
+	public function testSetZip($in, $out)
 	{
-		$this->assertSame($entity,$entity->setZip($in));
-		$this->assertSame($out,$entity->getZip());
+		$this->assertSame($this->entity,$this->entity->setZip($in));
 	}
 	
 	/**
 	 * @test
+	 * @dataProvider providerZip
+	 * @depends testSetZip
 	 */
-	public function testCountry()
+	public function testGetZip($in, $out)
 	{
-		$entity = new City;
-		$country = new Country;
-		
-		$this->assertEquals($entity,$entity->setCountry($country));
-		$this->assertEquals($country,$entity->getCountry());
-		$this->assertInstanceOf('JLM\ContactBundle\Entity\Country',$entity->getCountry());
-		
-		$this->assertEquals($entity,$entity->setCountry());
-		$this->assertNull($entity->getCountry());
+		$this->entity->setZip($in);
+		$this->assertSame($out,$this->entity->getZip());
+	}
+	
+	public function providerCountry()
+	{
+		return array(
+				array(new Country,false),
+				array('foo',true),
+				array(0,true),
+				array(array(),true),
+				array(new \stdClass,true),
+		);
 	}
 	
 	/**
 	 * @test
+	 * @dataProvider providerCountry
 	 */
-	public function test__toString()
+	public function testSetCountry($data, $exception)
 	{
-		$entity = new City;
-		$this->assertInternalType('string',$entity->__toString());
-		$this->assertEquals('',$entity->__toString());
-		$entity->setZip(77280)->setName('OTHIS');
-		$this->assertInternalType('string',$entity->__toString());
-		$this->assertEquals('77280 - Othis',$entity->__toString());
+		try {
+			$this->assertSame($this->entity,$this->entity->setCountry($data));
+			if ($exception)
+				$this->fail('Exception non levée');
+		} catch (\Exception $e) {
+			if (!$exception)
+				$this->fail('Exception levée : '.$e);
+		}
 	}
 	
 	/**
 	 * @test
+	 * @dataProvider providerCountry
+	 * @depends testSetCountry
 	 */
-	public function testtoString()
+	public function testGetCountry($data, $exception)
 	{
-		$entity = new City;
-		$this->assertInternalType('string',$entity->toString());
-		$this->assertEquals('',$entity->toString());
-		$entity->setZip(77280)->setName('Othis');
-		$this->assertInternalType('string',$entity->toString());
-		$this->assertEquals('77280 - OTHIS',$entity->toString());
+		if (!$exception)
+		{
+			$this->entity->setCountry($data);
+			$this->assertEquals($data,$this->entity->getCountry());
+		}
+	}
+	
+	public function provider__toString()
+	{
+		return array(
+			array('','',''),
+			array('Othis','','Othis'),
+			array('','77280','77280'),
+			array('Othis','77280','77280 - Othis'),
+			
+		);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider provider__toString
+	 * @depends testSetName
+	 * @depends testSetZip
+	 */
+	public function test__toString($city,$zip,$out)
+	{
+		$this->entity->setName($city);
+		$this->entity->setZip($zip);
+		$this->assertSame($out,$this->entity->__toString());
+	}
+	
+	public function providerToString()
+	{
+		return array(
+				array('','',''),
+				array('Othis','','OTHIS'),
+				array('','77280','77280'),
+				array('Othis','77280','77280 - OTHIS'),
+					
+		);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerToString
+	 * @depends testSetName
+	 * @depends testSetZip
+	 */
+	public function testToString($city, $zip, $out)
+	{
+		$this->entity->setName($city);
+		$this->entity->setZip($zip);
+		$this->assertSame($out,$this->entity->toString());
 	}
 
 }

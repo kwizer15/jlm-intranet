@@ -143,8 +143,9 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed
     public function __toString()
     {
     	$out =  '';
-    	if ($this->getZip() != '')
-    		$out = $this->getZip().' - ';
+    		$out .= $this->getZip();
+    	if ($this->getZip() && $this->getName())
+    		$out .= ' - ';
     	$out .= $this->getName();
     	
     	return $out;
@@ -165,9 +166,9 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed
 	    $replace = array('à'=>'À','é'=>'É','è'=>'È','ê'=>'Ê','ô'=>'Ô','û'=>'Û');
 	    foreach ($replace as $before => $after)
 	    	$name = str_replace($before,$after,$name);
-	    $out =  '';
-	    if ($zip != '')
-	    	$out = $zip.' - ';
+	    $out =  $zip;
+	    if ($zip && $name)
+	    	$out .= ' - ';
 	    $out .= $name;
 	     
 	    return $out;
