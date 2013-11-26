@@ -6,112 +6,146 @@ use JLM\ContactBundle\Entity\PersonException;
 
 class PersonTest extends \PHPUnit_Framework_TestCase
 {
-	/**
-	 * @test
-	 */
-	public function testTitle()
+	public function setUp()
 	{
-		$entity = new Person;
-		$this->assertEmpty($entity->getTitle());
-		
-		$this->assertEquals($entity,$entity->setTitle('M.'));
-		$this->assertEquals('M.',$entity->getTitle());
-		$this->assertEquals($entity,$entity->setTitle('Mme'));
-		$this->assertEquals('Mme',$entity->getTitle());
-		$this->assertEquals($entity,$entity->setTitle('Mlle'));
-		$this->assertEquals('Mlle',$entity->getTitle());
-		$this->assertEquals($entity,$entity->setTitle(''));
-		$this->assertEmpty($entity->getTitle());
-		
-		// Filtre
-		$this->assertEquals($entity,$entity->setTitle('m.'));
-		$this->assertEquals('M.',$entity->getTitle());
-		$this->assertEquals($entity,$entity->setTitle('MME'));
-		$this->assertEquals('Mme',$entity->getTitle());
-		$this->assertEquals($entity,$entity->setTitle('mLLe'));
-		$this->assertEquals('Mlle',$entity->getTitle());
-		
-		// Exceptions
-		try { $this->assertEquals($entity,$entity->setTitle('monsieur')); }
-		catch (PersonException $e) { $exception = true; }
-		if (!$exception) { $this->fail('Une exception attendue n\'a pas été levée'); }
-		
-		try { $this->assertEquals($entity,$entity->setTitle('m')); }
-		catch (PersonException $e) { $exception = true; }
-		if (!$exception) { $this->fail('Une exception attendue n\'a pas été levée'); }
-		
-		try { $this->assertEquals($entity,$entity->setTitle('n\'importe quoi d\'autre')); }
-		catch (PersonException $e) { $exception = true; }
-		if (!$exception) { $this->fail('Une exception attendue n\'a pas été levée'); }
+		$this->entity = new Person;
+	}
+	
+	public function providerTitle()
+	{
+		return array(
+				array('M.','M.'),
+				array('Mlle','Mlle'),
+				array('Mme','Mme'),
+				array('m.','M.'),
+				array('MLLE','Mlle'),
+				array('mMe','Mme'),
+				
+		);
 	}
 	
 	/**
 	 * @test
+	 * @dataProvider providerTitle
 	 */
-	public function testFirstName()
+	public function testSetTitle($in)
 	{
-		$entity = new Person;
-		$this->assertEmpty($entity->getFirstName());
-		
-		$this->assertEquals($entity,$entity->setFirstName('A'));
-		$this->assertEquals('A',$entity->getFirstName());
-		$this->assertEquals($entity,$entity->setFirstName('e'));
-		$this->assertEquals('E',$entity->getFirstName());
-		$this->assertEquals($entity,$entity->setFirstName('   Martinez '));
-		$this->assertEquals('Martinez',$entity->getFirstName());
-		$this->assertEquals($entity,$entity->setFirstName('de   la     motte'));
-		$this->assertEquals('De La Motte',$entity->getFirstName());
-		$this->assertEquals($entity,$entity->setFirstName('jeAN-lOuIs'));
-		$this->assertEquals('Jean-Louis',$entity->getFirstName());
-		$this->assertEquals($entity,$entity->setFirstName('frANçoiS   -  piERRe'));
-		$this->assertEquals('François-Pierre',$entity->getFirstName());
-		$this->assertEquals($entity,$entity->setFirstName(''));
-		$this->assertEmpty($entity->getFirstName());
-			
-		try { $this->assertEquals($entity,$entity->setFirstName('R2D2')); }
-		catch (PersonException $e) { $exception = true; }
-		if (!$exception) { $this->fail('Une exception attendue n\'a pas été levée'); }
-		
+		$this->assertEquals($this->entity,$this->entity->setTitle($in));
 	}
 	
 	/**
 	 * @test
+	 * @expectedException JLM\ContactBundle\Entity\PersonException
 	 */
-	public function testLastName()
+	public function testSetTitleBadValue()
 	{
-		$entity = new Person;
-		$this->assertEmpty($entity->getLastName());
-		
-		$this->assertEquals($entity,$entity->setLastName('A'));
-		$this->assertEquals('A',$entity->getLastName());
-		$this->assertEquals($entity,$entity->setLastName('e'));
-		$this->assertEquals('E',$entity->getLastName());
-		$this->assertEquals($entity,$entity->setLastName('  Martinez   '));
-		$this->assertEquals('Martinez',$entity->getLastName());
-		$this->assertEquals($entity,$entity->setLastName('de   la    motte'));
-		$this->assertEquals('De La Motte',$entity->getLastName());
-		$this->assertEquals($entity,$entity->setLastName('jeAN  -   lOuIs'));
-		$this->assertEquals('Jean-Louis',$entity->getLastName());
-		$this->assertEquals($entity,$entity->setLastName('frANçoiS-piERRe'));
-		$this->assertEquals('François-Pierre',$entity->getLastName());
-		$this->assertEquals($entity,$entity->setLastName(''));
-		$this->assertEmpty($entity->getLastName());
-		
-		try { $this->assertEquals($entity,$entity->setLastName('R2D2')); }
-		catch (PersonException $e) { $exception = true; }
-		if (!$exception) { $this->fail('Une exception attendue n\'a pas été levée'); }
+		$this->entity->setTitle('foo');
 	}
 	
 	/**
 	 * @test
+	 * @dataProvider providerTitle
+	 * @depends testSetTitle
 	 */
-	public function test__toString()
+	public function testGetTitle($in,$out)
 	{
-		$entity = new Person;
-		
-		$entity->setTitle('M.');
-		$entity->setFirstName('Jean-Louis');
-		$entity->setLastName('Martinez');
-		$this->assertEquals('M. Jean-Louis MARTINEZ',(string)$entity);
+		$this->entity->setTitle($in);
+		$this->assertEquals($out,$this->entity->getTitle($in));
+	}
+	
+	public function providerNames()
+	{
+		return array(
+				array('A','A'),
+				array('e','E'),
+				array('   Martinez ','Martinez'),
+				array('de   la     motte','De La Motte'),
+				array('jeAN-lOuIs','Jean-Louis'),
+				array('frANçoiS   -  piERRe','François-Pierre'),
+				array('','')
+				
+		);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerNames
+	 */
+	public function testSetFirstName($in)
+	{
+		$this->assertSame($this->entity,$this->entity->setFirstName($in));
+	}
+	
+	/**
+	 * @test
+	 * @depends testSetFirstName
+	 * @dataProvider providerNames
+	 */
+	public function testGetFirstName($in,$out)
+	{
+		$this->entity->setFirstName($in);
+		$this->assertSame($out,$this->entity->getFirstName());
+	}
+	
+	/**
+	 * @test
+	 * @expectedException JLM\ContactBundle\Entity\PersonException
+	 */
+	public function testSetFirstNameException()
+	{
+		$this->entity->setFirstName('R2D2');	
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerNames
+	 */
+	public function testSetLastName($in)
+	{
+		$this->assertSame($this->entity,$this->entity->setLastName($in));
+	}
+	
+	/**
+	 * @test
+	 * @depends testSetLastName
+	 * @dataProvider providerNames
+	 */
+	public function testGetLastName($in,$out)
+	{
+		$this->entity->setLastName($in);
+		$this->assertSame($out,$this->entity->getLastName());
+	}
+	
+	/**
+	 * @test
+	 * @expectedException JLM\ContactBundle\Entity\PersonException
+	 */
+	public function testSetLastNameException()
+	{
+		$this->entity->setLastName('R2D2');	
+	}
+	
+	public function provider__toString()
+	{
+		return array(
+				array('M.','Jean-Louis','Martinez','M. Jean-Louis MARTINEZ'),
+				array('Mme','nadine','martinez','Mme Nadine MARTINEZ'),
+				array('mlle','AURÉLIE','COSTALAT','Mlle Aurélie COSTALAT'),
+		);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider provider__toString
+	 * @depends testSetTitle
+	 * @depends testSetFirstName
+	 * @depends testSetLastName
+	 */
+	public function test__toString($title, $firstName, $lastName, $out)
+	{	
+		$this->entity->setTitle($title);
+		$this->entity->setFirstName($firstName);
+		$this->entity->setLastName($lastName);
+		$this->assertSame($out,$this->entity->__toString());
 	}
 }

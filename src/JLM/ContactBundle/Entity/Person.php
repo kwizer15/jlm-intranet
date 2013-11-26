@@ -4,13 +4,15 @@ namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use JLM\ContactBundle\Entity\Contact;
+
 /**
  * Person
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class Person
+class Person extends Contact
 {
     /**
      * @var integer
@@ -79,6 +81,44 @@ class Person
         return $this->title;
     }
 
+
+    /**
+     * Filtre pour nom et prénom
+     * @param string $name
+     * @throws PersonException
+     * @return string
+     */
+    private function filterName($name)
+    {
+    	$name = trim($name);
+    	$name = str_replace('-','- ',$name);
+    	$name = strtolower($name);
+    	$specialchars = array(
+    		'À'=>'à',
+    		'Â'=>'â',
+    		'Ç'=>'ç',
+    		'É'=>'é',
+    		'È'=>'è',
+    		'Ê'=>'ê',
+    		'Î'=>'î',
+    		'Ô'=>'ô',
+    		'Û'=>'û',
+    		'Ù'=>'ù',
+    	);
+    	foreach ($specialchars as $maj=>$min)
+    		$name = str_replace($maj,$min,$name);
+    	$name = str_replace('- ','-',ucwords($name));
+    	while (substr_count($name,'  '))
+    		$name = str_replace('  ',' ',$name);
+    	while (substr_count($name,'- '))
+    		$name = str_replace('- ','-',$name);
+    	while (substr_count($name,' -'))
+    		$name = str_replace(' -','-',$name);
+    	if (!preg_match('#^[ A-zàâçéèêîôûùÂÀÇÉÈÊÎÔÛÙ\-]*$#',$name))
+    		throw new PersonException('invalid name');
+    	return $name;
+    }
+    
     /**
      * Set firstName
      *
@@ -88,20 +128,14 @@ class Person
      */
     public function setFirstName($firstName)
     {
-    	$firstName = str_replace('- ','-',ucwords(strtolower(str_replace('-','- ',trim($firstName)))));
-    	while (substr_count($firstName,'  '))
-    		$firstName = str_replace('  ',' ',$firstName);
-    	while (substr_count($firstName,'- '))
-    		$firstName = str_replace('- ','-',$firstName);
-    	while (substr_count($firstName,' -'))
-    		$firstName = str_replace(' -','-',$firstName);
-    	if (!preg_match('#^[ A-zéèçàÉÈÇÀâêîôûÂÊÎÔÛ\-]*$#',$firstName))
+    	try {
+    		$this->firstName = $this->filterName($firstName);
+    	} catch (PersonException $e) {
     		throw new PersonException('invalid firstName');
-        $this->firstName = $firstName;
-    
+    	}
         return $this;
     }
-
+    
     /**
      * Get firstName
      *
@@ -121,17 +155,11 @@ class Person
      */
     public function setLastName($lastName)
     {
-    	$lastName = str_replace('- ','-',ucwords(strtolower(str_replace('-','- ',trim($lastName)))));
-    	while (substr_count($lastName,'  '))
-    		$lastName = str_replace('  ',' ',$lastName);
-    	while (substr_count($lastName,'- '))
-    		$lastName = str_replace('- ','-',$lastName);
-    	while (substr_count($lastName,' -'))
-    		$lastName = str_replace(' -','-',$lastName);
-    	if (!preg_match('#^[ A-zéèçàÉÈÇÀâêîôûÂÊÎÔÛ\-]*$#',$lastName))
+    	try {
+    		$this->lastName = $this->filterName($lastName);
+    	} catch (PersonException $e) {
     		throw new PersonException('invalid lastName');
-        $this->lastName = $lastName;
-    
+    	}
         return $this;
     }
 
