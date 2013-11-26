@@ -42,6 +42,17 @@ class Address
     private $city;
     
     /**
+     * Constructor
+     * @param string $street
+     * @param City|string $city
+     * @param string $zip
+     */
+    public function __construct()
+    {
+    	$this->city = new City;
+    }
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -79,9 +90,12 @@ class Address
      * @param City $city
      * @return self
      */
-    public function setCity(City $city = null)
+    public function setCity($city,$zip = null)
     {
-        $this->city = $city;
+    	if ($city instanceof City)
+        	$this->city = $city;
+    	else
+    		$this->city = new City($city,$zip);
         return $this;
     }
 
@@ -93,6 +107,25 @@ class Address
     public function getCity()
     {
         return $this->city;
+    }
+    
+    /**
+     * Get City zip
+     * 
+     * @return string
+     */
+    public function getZip()
+    {
+    	return $this->getCity()->getZip();
+    }
+    
+    /**
+     * set City Zip
+     */
+    public function setZip($zip)
+    {
+    	$this->getCity()->setZip($zip);
+    	return $this;
     }
     
     /**

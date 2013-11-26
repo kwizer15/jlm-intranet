@@ -6,64 +6,147 @@ use JLM\ContactBundle\Entity\City;
 
 class AddressTest extends \PHPUnit_Framework_TestCase
 {
-	/**
-	 * @test
-	 */
-	public function testId()
+	protected $entity;
+	
+	public function setUp()
 	{
-		$entity = new Address;
-		$this->assertNull($entity->getId());
+		$this->entity = new Address;
 	}
 	
 	/**
 	 * @test
 	 */
-	public function testStreet()
+	public function testInitialGetId()
 	{
-		$entity = new Address;
-		
-		$this->assertEquals('',$entity->getStreet());
-		
-		// setter
-		$this->assertEquals($entity,$entity->setStreet('1, rue Bidule Machin Truc'));
-		
-		// getter
-		$this->assertEquals('1, rue Bidule Machin Truc',$entity->getStreet());
-		$this->assertInternalType('string', $entity->getStreet());
-		
-		$this->assertEquals($entity,$entity->setStreet(153));
-		$this->assertInternalType('string', $entity->getStreet());
-		$this->assertEquals('153',$entity->getStreet());
-		
+		$this->assertNull($this->entity->getId());
+	}
+	
+	public function providerStreet()
+	{
+		return array(
+				array('',''),
+				array('1, rue Bidule Machin Truc','1, rue Bidule Machin Truc'),
+				array(153,'153'),
+		);
 	}
 	
 	/**
 	 * @test
+	 * @dataProvider providerStreet
 	 */
-	public function testCity()
+	public function testSetStreet($in,$out)
 	{
-		$entity = new Address;
+		$this->assertSame($this->entity,$this->entity->setStreet($in));
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerStreet
+	 * @depends testSetStreet
+	 */
+	public function testGetStreet($in,$out)
+	{
+		$this->entity->setStreet($in);
+		$this->assertEquals($out,$this->entity->getStreet());
+	}
+	
+	public function providerCity()
+	{
+		return array(
+			array(new City,false),
+		);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerCity
+	 */
+	public function testSetCity($data,$exception)
+	{
+		try {
+			$this->assertSame($this->entity,$this->entity->setCity($data));
+			if ($exception)
+				$this->fail('Eception non levée');
+		} catch (\Exception $e) {
+			if (!$exception)
+			$this->fail('Exception levée : '.$e);
+		}
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerCity
+	 * @depends testSetCity
+	 */
+	public function testGetCity($data,$exception)
+	{
+		if (!$exception)
+		{
+			$this->entity->setCity($data);
+			$this->assertSame($data,$this->entity->getCity());
+		}
+	}
+	
+	public function providerZip()
+	{
+		return array(
+				array('25301'),
+				array('77280'),
+				array('52130')
+		);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerZip
+	 */
+	public function testSetZip($in)
+	{
+		$this->assertSame($this->entity,$this->entity->setZip($in));
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerZip
+	 * @depends testSetZip
+	 */
+	public function testGetZip($in)
+	{
+		$this->entity->setZip($in);
+		$this->assertSame($this->entity->getCity()->getZip(),$this->entity->getZip());
+	}
+	
+	public function provider__toString()
+	{
+		return array(
+				array(
+						'1, boulevard Michelet',
+						'77280',
+						'Othis',
+						'1, boulevard Michelet'.chr(10).'77280 - Othis'
+				),
+				array(
+						'33, rue Saint-Exupéry',
+						'75001',
+						'Paris',
+						'33, rue Saint-Exupéry'.chr(10).'75001 - Paris'
+				),
+		);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider provider__toString
+	 * @depends testSetStreet
+	 * @depends testSetCity
+	 */
+	public function test__toString($street,$zip,$cityName,$out)
+	{	
 		$city = new City;
-
-		$this->assertNull($entity->getCity());
-		$this->assertEquals($entity,$entity->setCity($city));
-		$this->assertInstanceOf('JLM\ContactBundle\Entity\City',$entity->getCity());
-	}
-	
-	/**
-	 * @test
-	 */
-	public function test__toString()
-	{
-		$entity = new Address;
-		$city = new City;
-		
-		$this->assertInternalType('string',$entity->__toString());
-		$this->assertEquals('',$entity->__toString());
-	
-		$this->assertNull($entity->getCity());
-		$this->assertEquals($entity,$entity->setCity($city));
-		$this->assertInstanceOf('JLM\ContactBundle\Entity\City',$entity->getCity());
+		$city->setName($cityName)->setZip($zip);
+		$this->entity->setStreet($street);
+		$this->entity->setCity($city);
+		$this->assertSame($out,$this->entity->__toString());
 	}
 
 }
