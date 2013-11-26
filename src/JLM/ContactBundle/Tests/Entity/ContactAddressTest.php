@@ -2,16 +2,21 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\ContactAddress;
+use JLM\ContactBundle\Entity\Address;
 
 class ContactAddressTest extends \PHPUnit_Framework_TestCase
 {
+	public function setUp()
+	{
+		$this->entity = new ContactAddress;
+	}
+	
 	/**
 	 * @test
 	 */
-	public function testInitialId()
+	public function testInitialGetId()
 	{
-		$entity = new ContactAddress;
-		$this->assertNull($entity->getId());
+		$this->assertNull($this->entity->getId());
 	}
 	
 	
@@ -31,55 +36,20 @@ class ContactAddressTest extends \PHPUnit_Framework_TestCase
 	
 	/**
 	 * @test
+	 * @dataProvider booleans
 	 */
-	public function testInitialForBilling()
+	public function testSetForBilling($in, $out)
 	{
-		$entity = new ContactAddress;
-		$this->assertSame(false,$entity->getForBilling());
-	}
-	
-	/**
-	 * @test
-	 */
-	public function testInitialForDelivery()
-	{
-		$entity = new ContactAddress;
-		$this->assertSame(false,$entity->getForDelivery());
-	}
-	
-	/**
-	 * @test
-	 */
-	public function testInitialMain()
-	{
-		$entity = new ContactAddress;
-		$this->assertSame(false,$entity->getMain());
+		$this->assertSame($this->entity,$this->entity->setForBilling($in));
 	}
 	
 	/**
 	 * @test
 	 * @dataProvider booleans
 	 */
-	public function testForBilling($in,$out)
+	public function testSetForDelivery($in, $out)
 	{
-		$entity = new ContactAddress;
-		
-		$this->assertEquals($entity,$entity->setForBilling($in));
-		$this->assertSame($out,$entity->getForBilling());
-		$this->assertSame($out,$entity->isForBilling());
-	}
-	
-	/**
-	 * @test
-	 * @dataProvider booleans
-	 */
-	public function testForDelivery($in,$out)
-	{
-		$entity = new ContactAddress;
-	
-		$this->assertEquals($entity,$entity->setForDelivery($in));
-		$this->assertSame($out,$entity->getForDelivery());
-		$this->assertSame($out,$entity->isForDelivery());
+		$this->assertSame($this->entity,$this->entity->setForDelivery($in));
 	
 	}
 	
@@ -87,12 +57,109 @@ class ContactAddressTest extends \PHPUnit_Framework_TestCase
 	 * @test
 	 * @dataProvider booleans
 	 */
-	public function testMain($in,$out)
+	public function testSetMain($in, $out)
 	{
-		$entity = new ContactAddress;
+		$this->assertSame($this->entity,$this->entity->setMain($in));
+	}
 	
-		$this->assertEquals($entity,$entity->setMain($in));
-		$this->assertSame($out,$entity->getMain());
-		$this->assertSame($out,$entity->isMain());
+	/**
+	 * @test
+	 * @depends testSetForBilling
+	 * @dataProvider booleans
+	 */
+	public function testGetForBilling($in, $out)
+	{
+		$this->entity->setForBilling($in);
+		$this->assertSame($out,$this->entity->getForBilling());
+	}
+	
+	/**
+	 * @test
+	 * @depends testSetForDelivery
+	 * @dataProvider booleans
+	 */
+	public function testGetForDelivery($in, $out)
+	{
+		$this->entity->setForDelivery($in);
+		$this->assertSame($out,$this->entity->getForDelivery());
+	}
+	
+	/**
+	 * @test
+	 * @depends testSetMain
+	 * @dataProvider booleans
+	 */
+	public function testGetMain($in, $out)
+	{
+		$this->entity->setMain($in);
+		$this->assertSame($out,$this->entity->getMain());
+	}
+
+	public function providerAddress()
+	{
+		return array(
+				array(new Address,false),
+				array('foo',true),
+				array(1,true),
+				array(null,true),
+				array(true,true),
+				array(array(),true),
+				array(new \stdClass,true),
+		);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerAddress
+	 */
+	public function testSetAddress($data, $exception)
+	{
+		try {
+			$this->assertSame($this->entity,$this->entity->setAddress($data));
+			if ($exception)
+				$this->fail('Exception non levée');
+		} catch (\Exception $e) {
+			if (!$exception)
+				$this->fail('Exception levée : '.$e);
+		}
+	}
+
+	
+	/**
+	 * @test
+	 * @dataProvider providerAddress
+	 * @depends testSetAddress
+	 */
+	public function testGetAddress($data, $exception)
+	{
+		if (!$exception)
+		{
+			$this->entity->setAddress($data);
+			$this->assertSame($data, $this->entity->getAddress());
+		}
+	}
+	
+	public function provider__toString()
+	{
+		return array(
+			
+				array('1, rue bidule-Truc',
+						'75020',
+						'Paris 20',
+						'1, rue bidule-Truc'.chr(10).'75020 - Paris 20'),
+		);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider provider__toString
+	 * @depends testSetAddress
+	 */
+	public function test__toString($street,$zip,$cityName,$out)
+	{
+		$this->entity->getAddress()->setStreet($street);
+		$this->entity->getAddress()->setZip($zip);
+		$this->entity->getAddress()->setCityName($cityName);
+		$this->assertSame($out,$this->entity->__toString());
 	}
 }

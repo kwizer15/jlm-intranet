@@ -120,6 +120,27 @@ class Address
     }
     
     /**
+     * Set cityName
+     * 
+     * @return self
+     */
+    public function setCityName($name)
+    {
+    	$this->getCity()->setName($name);
+    	return $this;
+    }
+    
+    /**
+     * get cityName
+     * 
+     * @return string
+     */
+    public function getCityName()
+    {
+    	return $this->getCity()->getName();
+    }
+    
+    /**
      * set City Zip
      */
     public function setZip($zip)

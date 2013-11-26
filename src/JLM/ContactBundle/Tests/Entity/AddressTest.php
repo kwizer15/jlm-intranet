@@ -87,6 +87,37 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 		}
 	}
 	
+	public function providerCityName()
+	{
+		return array(
+				array('Othis', 'Othis'),
+				array('Paris 15', 'Paris 15'),
+				array('Boulogne-billancourt', 'Boulogne-Billancourt'),
+		);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerCityName
+	 */
+	public function testSetCityName($in,$out)
+	{
+		$this->assertSame($this->entity,$this->entity->setCityName($in));
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerCityName
+	 * @depends testSetCityName
+	 */
+	public function testGetCityName($in,$out)
+	{
+		$this->entity->setCityName($in);
+		$this->assertSame($out,$this->entity->getCityName());
+		
+	}
+	
+	
 	public function providerZip()
 	{
 		return array(

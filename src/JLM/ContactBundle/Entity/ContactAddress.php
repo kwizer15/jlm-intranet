@@ -19,7 +19,7 @@ class ContactAddress extends ContactData
 	 * 
 	 * @ORM\ManyToOne(targetEntity="Address")
 	 */
-	private $address = null;
+	private $address;
     
     /**
      * @var forBilling
@@ -42,6 +42,14 @@ class ContactAddress extends ContactData
      */
     private $main = false;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+    	$this->address = new Address;
+    }
+    
     /**
      * Set forBilling
      *
@@ -148,6 +156,28 @@ class ContactAddress extends ContactData
      */
     public function __toString()
     {
-    	return (string)$this->getAddress();
+    	return $this->getAddress()->__toString();
+    }
+    
+    /**
+     * get Address
+     * 
+     * @return Address
+     */
+    public function getAddress()
+    {
+    	return $this->address;
+    }
+    
+    /**
+     * set Address
+     * 
+     * @param Address $address
+     * @return self
+     */
+    public function setAddress(Address $address)
+    {
+    	$this->address = $address;
+    	return $this;
     }
 }
