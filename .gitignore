@@ -5,3 +5,6 @@
 /log
 /vendor
 /report
+/.settings
+/.buildpath
+
