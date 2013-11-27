@@ -17,7 +17,6 @@ use JLM\ContactBundle\Entity\ContactEmail;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * ORM\DiscriminatorMap({
  * 		"person" = "Person",
- *      "technician" = "Technician",
  *      "company" = "Company"
  */
 abstract class Contact
