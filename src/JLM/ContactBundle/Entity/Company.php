@@ -44,7 +44,13 @@ class Company extends Contact
      */
     private $nic;
 
-
+	/**
+	 * @var ArrayCollection
+	 * 
+	 * @ORM\ManyToMany(targetEntity="Person")
+	 */
+    private $contacts;
+    
     /**
      * Get id
      *
@@ -147,5 +153,45 @@ class Company extends Contact
     public function getNic()
     {
     	return $this->nic;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->contacts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add contacts
+     *
+     * @param \JLM\ContactBundle\Entity\Person $contacts
+     * @return Company
+     */
+    public function addContact(\JLM\ContactBundle\Entity\Person $contacts)
+    {
+        $this->contacts[] = $contacts;
+    
+        return $this;
+    }
+
+    /**
+     * Remove contacts
+     *
+     * @param \JLM\ContactBundle\Entity\Person $contacts
+     */
+    public function removeContact(\JLM\ContactBundle\Entity\Person $contacts)
+    {
+        $this->contacts->removeElement($contacts);
+    }
+
+    /**
+     * Get contacts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getContacts()
+    {
+        return $this->contacts;
     }
 }

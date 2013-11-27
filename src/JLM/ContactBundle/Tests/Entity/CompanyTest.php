@@ -2,6 +2,7 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\Company;
+use JLM\ContactBundle\Entity\Person;
 
 class CompanyTest extends \PHPUnit_Framework_TestCase
 {
@@ -195,5 +196,32 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
 	public function testSetNicException($in)
 	{
 		$this->entity->setNic($in);
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testAddContact()
+	{
+		$this->assertSame($this->entity, $this->entity->addContact(new Person));
+	}
+	
+	/**
+	 * @test
+	 * @expectedException \Exception
+	 */
+	public function testAddContactException()
+	{
+		$this->entity->addContact(new \stdClass);
+	}
+	
+	/**
+	 * @test
+	 * @depends testAddContact
+	 */
+	public function testGetContacts()
+	{
+		$this->entity->addContact(new Person);
+		$this->assertCount(1,$this->entity->getContacts());
 	}
 }
