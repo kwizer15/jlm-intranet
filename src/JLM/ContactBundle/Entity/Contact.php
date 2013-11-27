@@ -184,4 +184,33 @@ abstract class Contact
     {
         return $this->addresses;
     }
+    
+    /**
+     * Get billing address
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBillingAddress()
+    {
+    	$addresses = $this->getAddresses();
+    	foreach ($addresses as $address)
+    		if ($address->isForBilling())
+    			return $address;
+    	return null;
+    }
+    
+    /**
+     * Add addresses
+     *
+     * @param ContactAddress $address
+     * @return Contact
+     */
+    public function addBillingAddress(ContactAddress $newAddress)
+    {
+    	$addresses = $this->getAddresses();
+    	foreach ($addresses as $address)
+    		$address->setForBilling(false);
+    	$newAddress->setForBilling(true);
+    	return $this->addAddress($newAddress);
+    }
 }

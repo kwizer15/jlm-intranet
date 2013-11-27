@@ -9,122 +9,198 @@ use JLM\ContactBundle\Entity\ContactEmail;
 
 class ContactTest extends \PHPUnit_Framework_TestCase
 {
+	public function setUp()
+	{
+		$this->entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\Contact');
+	}
+	
 	/**
 	 * @test
 	 */
 	public function testId()
 	{
-		$entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\Contact');
-		$this->assertNull($entity->getId());
+		$this->assertNull($this->entity->getId());
 	}
 	
 	/**
 	 * @test
 	 */
-	public function testAddresses()
+	public function testAddAddress()
 	{
-		$entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\Contact');
-		$address1 = new ContactAddress;
-		$address2 = new ContactAddress;
-		$address3 = new ContactAddress;
-		
-		$this->assertCount(0,$entity->getAddresses());
-		$this->assertEquals($entity,$entity->addAddress($address1));
-		$this->assertCount(1,$entity->getAddresses());
-		$this->assertEquals($entity,$entity->addAddress($address2));
-		$this->assertCount(2,$entity->getAddresses());
-		$this->assertEquals($entity,$entity->addAddress($address3));
-		$this->assertCount(3,$entity->getAddresses());
-		$this->assertEquals($entity,$entity->removeAddress($address1));
-		$this->assertCount(2,$entity->getAddresses());
-		$this->assertEquals($entity,$entity->removeAddress($address1));	// On retire un élement non présent
-		$this->assertCount(2,$entity->getAddresses());
-		$this->assertEquals($entity,$entity->addAddress($address3));
-		$this->assertCount(3,$entity->getAddresses());
-		$this->assertEquals($entity,$entity->removeAddress($address3));
-		$this->assertCount(2,$entity->getAddresses());
-		$exception = false;
-		try {
-			$this->assertEquals($entity,$entity->addAddress('salut'));
-		} catch (\Exception $e) {
-			$exception = true;
-		}
-		if (!$exception)
-			$this->fail('Une exception attendue n\'a pas été levée');
-		$this->assertCount(2,$entity->getAddresses());
+		$this->assertSame($this->entity, $this->entity->addAddress(new ContactAddress));
 	}
 	
 	/**
 	 * @test
 	 */
-	public function testPhones()
+	public function testAddBillingAddress()
 	{
-		$entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\Contact');
-		
-		$phone1 = new ContactPhone;
-		$phone2 = new ContactPhone;
-		$phone3 = new ContactPhone;
-		
-		$this->assertCount(0,$entity->getPhones());
-		$this->assertEquals($entity,$entity->addPhone($phone1));
-		$this->assertCount(1,$entity->getPhones());
-		$this->assertEquals($entity,$entity->addPhone($phone2));
-		$this->assertCount(2,$entity->getPhones());
-		$this->assertEquals($entity,$entity->addPhone($phone3));
-		$this->assertCount(3,$entity->getPhones());
-		$this->assertEquals($entity,$entity->removePhone($phone1));
-		$this->assertCount(2,$entity->getPhones());
-		$this->assertEquals($entity,$entity->removePhone($phone1));	// On retire un élement non présent
-		$this->assertCount(2,$entity->getPhones());
-		$this->assertEquals($entity,$entity->addPhone($phone3));
-		$this->assertCount(3,$entity->getPhones());
-		$this->assertEquals($entity,$entity->removePhone($phone3));
-		$this->assertCount(2,$entity->getPhones());
-		$exception = false;
-		try {
-			$this->assertEquals($entity,$entity->addPhone('salut'));
-		} catch (\Exception $e) {
-			$exception = true;
-		}
-		if (!$exception)
-			$this->fail('Une exception attendue n\'a pas été levée');
-		$this->assertCount(2,$entity->getPhones());
+		$this->assertSame($this->entity, $this->entity->addBillingAddress(new ContactAddress));
+	}
+	
+	/**
+	 * @test
+	 * @depends testAddBillingAddress
+	 */
+	public function testGetBillingAddress()
+	{
+		$data = new ContactAddress;
+		$this->entity->addBillingAddress($data);
+		$this->assertSame($data, $this->entity->getBillingAddress());
+	}
+	
+	/**
+	 * @test
+	 * @depends testGetBillingAddress
+	 */
+	public function testNoBillingAddress()
+	{
+		$this->assertNull($this->entity->getBillingAddress());
+	}
+	
+
+	/**
+	 * @test
+	 * @depends testAddAddress
+	 * @expectedException \Exception
+	 */
+	public function testAddAddressException()
+	{
+		$this->entity->addAddress('foo');
+	}
+	
+	/**
+	 * @test
+	 * @depends testAddAddress
+	 */
+	public function testGetAddresses()
+	{
+		$this->entity->addAddress(new ContactAddress);
+		$this->entity->addAddress(new ContactAddress);
+		$this->entity->addAddress(new ContactAddress);
+		$this->assertCount(3, $this->entity->getAddresses());
+		return $this->entity;
+	}
+
+	/**
+	 * @test
+	 * @depends testAddAddress
+	 */
+	public function testRemoveAddress()
+	{
+		$this->entity->addAddress(new ContactAddress);
+		$this->assertSame($this->entity, $this->entity->removeAddress(new ContactAddress));
+	}
+	
+	/**
+	 * @test
+	 * @depends testAddAddress
+	 * @expectedException \Exception
+	 */
+	public function testRemoveAddressException()
+	{
+		$this->entity->removeAddress('foo');
 	}
 	
 	/**
 	 * @test
 	 */
-	public function testEmails()
+	public function testAddPhone()
 	{
-		$entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\Contact');
-		
-		$email1 = new ContactEmail;
-		$email2 = new ContactEmail;
-		$email3 = new ContactEmail;
-		
-		$this->assertCount(0,$entity->getEmails());
-		$this->assertEquals($entity,$entity->addEmail($email1));
-		$this->assertCount(1,$entity->getEmails());
-		$this->assertEquals($entity,$entity->addEmail($email2));
-		$this->assertCount(2,$entity->getEmails());
-		$this->assertEquals($entity,$entity->addEmail($email3));
-		$this->assertCount(3,$entity->getEmails());
-		$this->assertEquals($entity,$entity->removeEmail($email1));
-		$this->assertCount(2,$entity->getEmails());
-		$this->assertEquals($entity,$entity->removeEmail($email1));	// On retire un élement non présent
-		$this->assertCount(2,$entity->getEmails());
-		$this->assertEquals($entity,$entity->addEmail($email3));
-		$this->assertCount(3,$entity->getEmails());
-		$this->assertEquals($entity,$entity->removeEmail($email3));
-		$this->assertCount(2,$entity->getEmails());
-		$exception = false;
-		try {
-			$this->assertEquals($entity,$entity->addEmail('salut'));
-		} catch (\Exception $e) {
-			$exception = true;
-		}
-		if (!$exception)
-			$this->fail('Une exception attendue n\'a pas été levée');
-		$this->assertCount(2,$entity->getEmails());
+		$this->assertSame($this->entity, $this->entity->addPhone(new ContactPhone));
 	}
+	
+	/**
+	 * @test
+	 * @depends testAddPhone
+	 * @expectedException \Exception
+	 */
+	public function testAddPhoneException()
+	{
+		$this->entity->addPhone('foo');
+	}
+	
+	/**
+	 * @test
+	 * @depends testAddPhone
+	 */
+	public function testGetPhones()
+	{
+		$this->entity->addPhone(new ContactPhone);
+		$this->entity->addPhone(new ContactPhone);
+		$this->entity->addPhone(new ContactPhone);
+		$this->assertCount(3, $this->entity->getPhones());
+		return $this->entity;
+	}
+	
+	/**
+	 * @test
+	 * @depends testAddPhone
+	 */
+	public function testRemovePhone()
+	{
+		$this->entity->addPhone(new ContactPhone);
+		$this->assertSame($this->entity, $this->entity->removePhone(new ContactPhone));
+	}
+	
+	/**
+	 * @test
+	 * @depends testAddPhone
+	 * @expectedException \Exception
+	 */
+	public function testRemovePhoneException()
+	{
+		$this->entity->removePhone('foo');
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testAddEmail()
+	{
+		$this->assertSame($this->entity, $this->entity->addEmail(new ContactEmail));
+	}
+	
+	/**
+	 * @test
+	 * @depends testAddEmail
+	 * @expectedException \Exception
+	 */
+	public function testAddEmailException()
+	{
+		$this->entity->addEmail('foo');
+	}
+	
+	/**
+	 * @test
+	 * @depends testAddEmail
+	 */
+	public function testGetEmails()
+	{
+		$this->entity->addEmail(new ContactEmail);
+		$this->entity->addEmail(new ContactEmail);
+		$this->entity->addEmail(new ContactEmail);
+		$this->assertCount(3, $this->entity->getEmails());
+		return $this->entity;
+	}
+	
+	/**
+	 * @test
+	 * @depends testAddEmail
+	 */
+	public function testRemoveEmail()
+	{
+		$this->entity->addEmail(new ContactEmail);
+		$this->assertSame($this->entity, $this->entity->removeEmail(new ContactEmail));
+	}
+	
+	/**
+	 * @test
+	 * @depends testAddPhone
+	 * @expectedException \Exception
+	 */
+	public function testRemoveEmailException()
+	{
+		$this->entity->removeEmail('foo');
+	}	
 }
