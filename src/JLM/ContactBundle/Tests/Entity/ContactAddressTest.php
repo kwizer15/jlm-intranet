@@ -162,4 +162,34 @@ class ContactAddressTest extends \PHPUnit_Framework_TestCase
 		$this->entity->getAddress()->setCityName($cityName);
 		$this->assertSame($out,$this->entity->__toString());
 	}
+	
+	public function providerLabel()
+	{
+		return array(
+				array('JC Decaux','JC Decaux'),
+				array('Loiselet-et-Daigremont','Loiselet-et-Daigremont'),
+				array('1and1','1and1'),
+				array('',null),
+		);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerLabel
+	 */
+	public function testSetLabel($in)
+	{
+		$this->assertSame($this->entity, $this->entity->setLabel($in));
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerLabel
+	 * @depends testSetLabel
+	 */
+	public function testGetLabel($in,$out)
+	{
+		$this->entity->setLabel($in);
+		$this->assertSame($out, $this->entity->getLabel());
+	}
 }

@@ -43,6 +43,13 @@ class ContactAddress extends ContactData
     private $main = false;
 
     /**
+     * @var label
+     * 
+     * @ORM\Column(name="label", type="string", nullable=true)
+     */
+    private $label;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -179,5 +186,30 @@ class ContactAddress extends ContactData
     {
     	$this->address = $address;
     	return $this;
+    }
+
+    /**
+     * Set label
+     *
+     * @param string $label
+     * @return ContactAddress
+     */
+    public function setLabel($label)
+    {
+    	if (empty($label))
+    		$label = null;
+        $this->label = $label;
+    
+        return $this;
+    }
+
+    /**
+     * Get label
+     *
+     * @return string|null 
+     */
+    public function getLabel()
+    {
+        return $this->label;
     }
 }
