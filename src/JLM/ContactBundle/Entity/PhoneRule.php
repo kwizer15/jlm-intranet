@@ -3,8 +3,8 @@
 namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JLM\ContactBundle\Entity\Country;
-use JLM\ContactBundle\Entity\PhoneRuleException;
+
+class PhoneRuleException extends \Exception {}
 
 /**
  * PhoneRule
@@ -12,7 +12,7 @@ use JLM\ContactBundle\Entity\PhoneRuleException;
  * @ORM\Table(name="phone_rules")
  * @ORM\Entity
  */
-class PhoneRule
+class PhoneRule implements PhoneRuleInterface
 {
     /**
      * @var integer
@@ -52,6 +52,17 @@ class PhoneRule
     private $format = null;
 
     /**
+     * {@inheritdoc}
+     */
+    public function __construct($format, $code, $localCode = null, CountryInterface $country = null)
+    {
+    	$this->setFormat($format);
+    	$this->setCode($code);
+    	$this->setLocalCode($localCode);
+    	$this->setCountry($country);
+    }
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -79,9 +90,7 @@ class PhoneRule
     }
 
     /**
-     * Get code
-     *
-     * @return string 
+     * {@inheritdoc}
      */
     public function getCode()
     {
@@ -106,9 +115,7 @@ class PhoneRule
     }
 
     /**
-     * Get localCode
-     *
-     * @return integer 
+     * {@inheritdoc}
      */
     public function getLocalCode()
     {
@@ -153,9 +160,7 @@ class PhoneRule
     }
 
     /**
-     * Get format
-     *
-     * @return string 
+     * {@inheritdoc}
      */
     public function getFormat()
     {
@@ -176,10 +181,10 @@ class PhoneRule
     		switch ($format[$i])
     		{
     			case 'N' :
-    				$regex .= '[ \-\.,]?[0-9]';
+    				$regex .= '[ \-\.,/]?[0-9]';
     				break;
     			case 'L' :
-    				$regex .= '[ \-\.,]?[A-Z]';
+    				$regex .= '[ \-\.,/]?[A-Z]';
     				break;
     			case 'I' :
     				$regex .= ($this->getLocalCode() === null)
@@ -197,7 +202,7 @@ class PhoneRule
      * @param Country $country
      * @return self
      */
-    public function setCountry(Country $country = null)
+    public function setCountry(CountryInterface $country = null)
     {
         $this->country = $country;
     
@@ -205,12 +210,18 @@ class PhoneRule
     }
 
     /**
-     * Get country
-     *
-     * @return Country 
+     * {@inheritdoc}
      */
     public function getCountry()
     {
         return $this->country;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function isValid($number)
+    {
+    	return (bool)preg_match($this->getRegEx(),$number);
     }
 }

@@ -2,178 +2,216 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\PhoneRule;
-use JLM\ContactBundle\Entity\PhoneRuleException;
-use JLM\ContactBundle\Entity\Country;
 
 class PhoneRuleTest extends \PHPUnit_Framework_TestCase
 {
-	/**
-	 * @test
-	 */
-	public function testId()
+	public function setUp()
 	{
-		$entity = new PhoneRule;
-		$this->assertNull($entity->getId());
+		$this->country = $this->getMock('JLM\ContactBundle\Entity\CountryInterface');
+		$this->entity = new PhoneRule('IN NN NN NN NN', 33, 0, $this->country);		
 	}
 	
-	/**
-	 * @test
-	 */
-	public function testCountry()
+	public function assertPreConditions()
 	{
-		$entity = new PhoneRule;
-		$country = new Country;
-		
-		$this->assertNull($entity->getCountry());
-
-		$this->assertEquals($entity,$entity->setCountry($country));
-		$this->assertEquals($country,$entity->getCountry());
-		$this->assertInstanceOf('\JLM\ContactBundle\Entity\Country', $entity->getCountry());
-		
-		$this->assertEquals($entity,$entity->setCountry());
-		$this->assertNull($entity->getCountry());
+		$this->assertNull($this->entity->getId());
+		$this->assertSame($this->country,$this->entity->getCountry());
+		$this->assertSame(33,$this->entity->getCode());
+		$this->assertSame(0,$this->entity->getLocalCode());
+		$this->assertSame('IN NN NN NN NN',$this->entity->getFormat());
 	}
 	
-	/**
-	 * @test
-	 */
-	public function testCode()
+	public function providerCode()
 	{
-		$entity = new PhoneRule;
-		$this->assertEquals(0,$entity->getCode());
-		$this->assertInternalType('int',$entity->getCode());
-		
-		$tests = array(
+		return array(
 				array(0,0),
 				array(1,1),
-				array(-1,null),
 				array(9999,9999),
-				array(10000,null),
-				array('salut',null),
-				array(array('youpi'),null),
-				array(new PhoneRule,null),
 		);
-		foreach ($tests as $test)
-		{
-			try {
-				$this->assertEquals($entity,$entity->setCode($test[0]));
-			} catch (PhoneRuleException $e) {
-				if ($test[1] !== null)
-					$this->fail('Une exception non attendue a été levée : '.$test[0]);
-				continue;
-			}
-			if ($test[1] === null)
-				$this->fail('Une exception attendue n\'a pas été levée : '.$test[0]);
-			else {
-				$this->assertEquals($test[1],$entity->getCode());
-				$this->assertInternalType('int',$entity->getCode());
-			}
-		}
+	}
+	
+	public function providerCodeException()
+	{
+		return array(
+				array(-1),
+				array(10000),
+				array('salut'),
+				array(array()),
+				array(new \stdClass),
+		);
 	}
 	
 	/**
 	 * @test
+	 * @dataProvider providerCode
 	 */
-	public function testLocalCode()
+	public function testSetCode($in)
 	{
-		$entity = new PhoneRule;
-		$this->assertNull($entity->getLocalCode());
-		
-		$tests = array(
+		$this->assertSame($this->entity,$this->entity->setCode($in));
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerCodeException
+	 * @expectedException JLM\ContactBundle\Entity\PhoneRuleException
+	 */
+	public function testSetCodeException($in)
+	{
+		$this->entity->setCode($in);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerCode
+	 */
+	public function testGetCode($in,$out)
+	{
+		$this->entity->setCode($in);
+		$this->assertSame($out,$this->entity->getCode());
+	}
+	
+	public function providerLocalCode()
+	{
+		return array(
 				array(0,0),
 				array(1,1),
-				array(-1,null),
 				array(9999,9999),
-				array(10000,null),
-				array('salut',null),
-				array(new PhoneRule,null),
 		);
-		foreach ($tests as $test)
-		{
-			try
-			{
-				$this->assertEquals($entity,$entity->setLocalCode($test[0]));
-			}
-			catch (PhoneRuleException $e)
-			{
-				if ($test[1] !== null)
-					$this->fail('Une exception non attendue a été levée : '.$test[0]);
-				continue;
-			}
-			if ($test[1] === null)
-				$this->fail('Une exception attendue n\'a pas été levée : '.$test[0]);
-			else {
-				$this->assertEquals($test[1],$entity->getLocalCode());
-				$this->assertInternalType('int',$entity->getLocalCode());
-			}
-		}
+	}
+	
+	public function providerLocalCodeException()
+	{
+		return array(
+				array(-1),
+				array(10000),
+				array('salut'),
+				array(array()),
+				array(new \stdClass),
+		);
 	}
 	
 	/**
 	 * @test
+	 * @dataProvider providerLocalCode
 	 */
-	public function testFormat()
+	public function testSetLocalCode($in)
 	{
-		$entity = new PhoneRule;
-		$this->assertNull($entity->getFormat());
-		
-		$tests = array(
-				array('IN NN NN NN NN','IN NN NN NN NN'),
-				array('NN 0F GH CC LL',null),
-				array('0 123-456 789-ILN',null),
-				array('0 123-456 789-LN',null),
-				array('0 123-456 789-IILN',null),
-				array('0 123-456 789-II',null),
-				array('INLN LNLN-LNL N','INLN LNLN-LNL N'),
-				array('   i  NlN    LnL n-LN   L N','I NLN LNL N-LN L N'),
-				array('INNN1LLL',null),
-				array('014',null),
-				array(new PhoneRule,null),
-		);
-		foreach ($tests as $test)
-		{
-			try {
-				$this->assertEquals($entity,$entity->setFormat($test[0]));
-			} catch (PhoneRuleException $e) {
-				if ($test[1] !== null)
-					$this->fail('Une exception non attendue a été levée : '.$test[0]);
-				continue;
-			}
-			if ($test[1] === null)
-				$this->fail('Une exception attendue n\'a pas été levée : '.$test[0]);
-			$this->assertEquals($test[1],$entity->getFormat());
-			$this->assertInternalType('string',$entity->getFormat());
-		}
+		$this->assertSame($this->entity,$this->entity->setLocalCode($in));
 	}
 	
 	/**
 	 * @test
+	 * @dataProvider providerLocalCodeException
+	 * @expectedException JLM\ContactBundle\Entity\PhoneRuleException
 	 */
-	public function testGetRegex()
+	public function testSetLocalCodeException($in)
 	{
-		$entity = new PhoneRule;
-		$tests = array(
-				array('IN NN NN NN NN','#^(000|\+0)?[ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9]$#'),
-				array('I LN L NNNN LL','#^(000|\+0)?[ \-\.,]?[A-Z][ \-\.,]?[0-9][ \-\.,]?[A-Z][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[A-Z][ \-\.,]?[A-Z]$#'),
-		);
-		foreach ($tests as $test)
-		{
-			$this->assertEquals($entity,$entity->setFormat($test[0]));
-			$this->assertEquals($test[1],$entity->getRegex());
-			$this->assertInternalType('string',$entity->getRegex());
-		}
-		$entity->setLocalCode(0);	// Pour la lettre I
-		$entity->setCode(33);
-		$tests = array(
-				array('IN NN NN NN NN','#^(0|0033|\+33)[ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9]$#'),
-				array('I LN L NNNN LL','#^(0|0033|\+33)[ \-\.,]?[A-Z][ \-\.,]?[0-9][ \-\.,]?[A-Z][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[0-9][ \-\.,]?[A-Z][ \-\.,]?[A-Z]$#'),
-		);
-		foreach ($tests as $test)
-		{
-			$this->assertEquals($entity,$entity->setFormat($test[0]));
-			$this->assertEquals($test[1],$entity->getRegex());
-			$this->assertInternalType('string',$entity->getRegex());
-		}
+		$this->entity->setLocalCode($in);
 	}
-
+	
+	/**
+	 * @test
+	 * @dataProvider providerLocalCode
+	 */
+	public function testGetLocalCode($in,$out)
+	{
+		$this->entity->setLocalCode($in);
+		$this->assertSame($out,$this->entity->getLocalCode());
+	}
+	
+	public function providerFormat()
+	{
+		return array(
+				array('IN NN NN NN NN','IN NN NN NN NN','#^(0|0033|\+33)[ \-\.,/]?[0-9][ \-\.,/]?[0-9][ \-\.,/]?[0-9][ \-\.,/]?[0-9][ \-\.,/]?[0-9][ \-\.,/]?[0-9][ \-\.,/]?[0-9][ \-\.,/]?[0-9][ \-\.,/]?[0-9]$#'),
+				array('INLN LNLN-LNL N','INLN LNLN-LNL N','#^(0|0033|\+33)[ \-\.,/]?[0-9][ \-\.,/]?[A-Z][ \-\.,/]?[0-9][ \-\.,/]?[A-Z][ \-\.,/]?[0-9][ \-\.,/]?[A-Z][ \-\.,/]?[0-9][ \-\.,/]?[A-Z][ \-\.,/]?[0-9][ \-\.,/]?[A-Z][ \-\.,/]?[0-9]$#'),
+				array('   i  NlN    LnL n-LN   L N','I NLN LNL N-LN L N','#^(0|0033|\+33)[ \-\.,/]?[0-9][ \-\.,/]?[A-Z][ \-\.,/]?[0-9][ \-\.,/]?[A-Z][ \-\.,/]?[0-9][ \-\.,/]?[A-Z][ \-\.,/]?[0-9][ \-\.,/]?[A-Z][ \-\.,/]?[0-9][ \-\.,/]?[A-Z][ \-\.,/]?[0-9]$#'),
+		);
+	}
+	
+	public function providerFormatException()
+	{
+		return array(
+				array('NN 0F GH CC LL'),
+				array('0 123-456 789-ILN'),
+				array('INNN1LLL'),
+				array('014'),
+				array(new \stdClass),
+		);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerFormat
+	 */
+	public function testSetFormat($in)
+	{
+		$this->assertSame($this->entity,$this->entity->setFormat($in));
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerFormatException
+	 * @expectedException JLM\ContactBundle\Entity\PhoneRuleException
+	 */
+	public function testSetFormatException($in)
+	{
+		$this->entity->setFormat($in);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerFormat
+	 */
+	public function testGetFormat($in,$out)
+	{
+		$this->entity->setFormat($in);
+		$this->assertSame($out,$this->entity->getFormat());
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerFormat
+	 */
+	public function testGetRegex($in,$out,$regex)
+	{
+		$this->entity->setFormat($in);
+		$this->assertSame($regex,$this->entity->getRegex());
+	}
+	
+	public function providerIsValid()
+	{
+		return array(
+				array('IN NN NN NN NN','01 64 33 77 70'),
+				array('IN NN NN NN NN','+33164337770'),
+				array('IN NN NN NN NN','00331/64/33/77/70'),
+		);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerIsValid
+	 */
+	public function testIsValid($format,$number)
+	{
+		$this->entity->setFormat($format);
+		$this->assertTrue($this->entity->isValid($number));
+	}
+	
+	public function providerIsNotValid()
+	{
+		return array(
+				array('IN NN NN NN NN','01 64 33 77 710'),
+				array('IN NN NN NN NN','+3316433777'),
+				array('IN NN NN NN NN','0033A/64/33/77/70'),
+		);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerIsNotValid
+	 */
+	public function testIsNotValid($format,$number)
+	{
+		$this->entity->setFormat($format);
+		$this->assertFalse($this->entity->isValid($number));
+	}
 }
