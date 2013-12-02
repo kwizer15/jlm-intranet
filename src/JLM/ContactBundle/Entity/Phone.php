@@ -3,7 +3,6 @@
 namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JLM\ContactBundle\Entity\PhoneRule;
 
 class PhoneException extends \Exception {};
 
@@ -18,7 +17,7 @@ class Phone implements PhoneInterface
     /**
      * @var PhoneRule
      *
-     * @ORM\ManyToOne(targetEntity="PhoneRule")
+     * @ORM\ManyToOne(targetEntity="PhoneRuleInterface")
      */
     private $rule;
 
@@ -43,7 +42,7 @@ class Phone implements PhoneInterface
      * @param PhoneRule $rule
      * @return Phone
      */
-    public function setRule(PhoneRule $rule)
+    public function setRule(PhoneRuleInterface $rule)
     {
         $this->rule = $rule;
         return $this;

@@ -26,7 +26,7 @@ class PhoneRule implements PhoneRuleInterface
     /**
      * @var Country
      * 
-     * @ORM\OneToOne(targetEntity="Country")
+     * @ORM\OneToOne(targetEntity="CountryInterface")
      */
     private $country = null;
 

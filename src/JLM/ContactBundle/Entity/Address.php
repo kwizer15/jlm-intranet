@@ -30,12 +30,12 @@ class Address implements AddressInterface
      * @ORM\Column(name="street", type="text", nullable=true)
      * @Assert\Type(type="string")
      */
-    private $street = '';
+    private $street;
     
     /**
      * @var string $city
      *
-     * @ORM\ManyToOne(targetEntity="City")
+     * @ORM\ManyToOne(targetEntity="CityInterface")
      * @Assert\NotNull
      * @Assert\Valid
      */
