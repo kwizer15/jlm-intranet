@@ -2,23 +2,47 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\Address;
-use JLM\ContactBundle\Entity\City;
+use JLM\ContactBundle\Entity\CityInterface;
 
 class AddressTest extends \PHPUnit_Framework_TestCase
 {
 	protected $entity;
 	
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setUp()
 	{
-		$this->entity = new Address;
+		$this->city = $this->getMock('JLM\ContactBundle\Entity\CityInterface');
+		
+		$this->city->expects($this->any())
+				   ->method('getName')
+				   ->will($this->returnValue('Saint-Soupplets'));
+		
+		$this->city->expects($this->any())
+				   ->method('getZip')
+				   ->will($this->returnValue('77165'));
+		
+		$this->city->expects($this->any())
+				   ->method('getCountry')
+				   ->will($this->returnValue('France'));
+		
+		$this->city->expects($this->any())
+				   ->method('__toString')
+				   ->will($this->returnValue('77165 - Saint-Soupplets'));
+		
+		$this->entity = new Address('17, avenue de Montboulon',$this->city);
 	}
 	
 	/**
-	 * @test
+	 * {@inheritdoc}
 	 */
-	public function testInitialGetId()
+	public function assertPreConditions()
 	{
 		$this->assertNull($this->entity->getId());
+		$this->assertSame('Saint-Soupplets',$this->entity->getCity());
+		$this->assertSame('77165',$this->entity->getZip());
+		$this->assertSame('France',$this->entity->getCountry());
 	}
 	
 	public function providerStreet()
@@ -34,7 +58,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 	 * @test
 	 * @dataProvider providerStreet
 	 */
-	public function testSetStreet($in,$out)
+	public function testSetStreet($in)
 	{
 		$this->assertSame($this->entity,$this->entity->setStreet($in));
 	}
@@ -47,13 +71,23 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 	public function testGetStreet($in,$out)
 	{
 		$this->entity->setStreet($in);
-		$this->assertEquals($out,$this->entity->getStreet());
+		$this->assertSame($out,$this->entity->getStreet());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testSetCity()
+	{
+		$this->assertSame($this->entity,$this->entity->setCity($this->getMock('JLM\ContactBundle\Entity\CityInterface')));
 	}
 	
 	public function providerCity()
 	{
 		return array(
-			array(new City,false),
+				array('Othis'),
+				array('Dammartin'),
+				array('Paris 16')
 		);
 	}
 	
@@ -61,62 +95,13 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 	 * @test
 	 * @dataProvider providerCity
 	 */
-	public function testSetCity($data,$exception)
+	public function testGetCity($in)
 	{
-		try {
-			$this->assertSame($this->entity,$this->entity->setCity($data));
-			if ($exception)
-				$this->fail('Eception non levée');
-		} catch (\Exception $e) {
-			if (!$exception)
-			$this->fail('Exception levée : '.$e);
-		}
+		$city = $this->getMock('JLM\ContactBundle\Entity\CityInterface');
+		$city->expects($this->once())->method('getName')->will($this->returnValue($in));
+		$this->entity->setCity($city);
+		$this->assertSame($in,$this->entity->getCity());
 	}
-	
-	/**
-	 * @test
-	 * @dataProvider providerCity
-	 * @depends testSetCity
-	 */
-	public function testGetCity($data,$exception)
-	{
-		if (!$exception)
-		{
-			$this->entity->setCity($data);
-			$this->assertSame($data,$this->entity->getCity());
-		}
-	}
-	
-	public function providerCityName()
-	{
-		return array(
-				array('Othis', 'Othis'),
-				array('Paris 15', 'Paris 15'),
-				array('Boulogne-billancourt', 'Boulogne-Billancourt'),
-		);
-	}
-	
-	/**
-	 * @test
-	 * @dataProvider providerCityName
-	 */
-	public function testSetCityName($in,$out)
-	{
-		$this->assertSame($this->entity,$this->entity->setCityName($in));
-	}
-	
-	/**
-	 * @test
-	 * @dataProvider providerCityName
-	 * @depends testSetCityName
-	 */
-	public function testGetCityName($in,$out)
-	{
-		$this->entity->setCityName($in);
-		$this->assertSame($out,$this->entity->getCityName());
-		
-	}
-	
 	
 	public function providerZip()
 	{
@@ -131,53 +116,20 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 	 * @test
 	 * @dataProvider providerZip
 	 */
-	public function testSetZip($in)
-	{
-		$this->assertSame($this->entity,$this->entity->setZip($in));
-	}
-	
-	/**
-	 * @test
-	 * @dataProvider providerZip
-	 * @depends testSetZip
-	 */
 	public function testGetZip($in)
 	{
-		$this->entity->setZip($in);
-		$this->assertSame($this->entity->getCity()->getZip(),$this->entity->getZip());
-	}
-	
-	public function provider__toString()
-	{
-		return array(
-				array(
-						'1, boulevard Michelet',
-						'77280',
-						'Othis',
-						'1, boulevard Michelet'.chr(10).'77280 - Othis'
-				),
-				array(
-						'33, rue Saint-Exupéry',
-						'75001',
-						'Paris',
-						'33, rue Saint-Exupéry'.chr(10).'75001 - Paris'
-				),
-		);
+		$city = $this->getMock('JLM\ContactBundle\Entity\CityInterface');
+		$city->expects($this->once())->method('getZip')->will($this->returnValue($in));
+		$this->entity->setCity($city);	
+		$this->assertSame($in,$this->entity->getZip());
 	}
 	
 	/**
 	 * @test
-	 * @dataProvider provider__toString
-	 * @depends testSetStreet
-	 * @depends testSetCity
 	 */
-	public function test__toString($street,$zip,$cityName,$out)
+	public function test__toString()
 	{	
-		$city = new City;
-		$city->setName($cityName)->setZip($zip);
-		$this->entity->setStreet($street);
-		$this->entity->setCity($city);
-		$this->assertSame($out,$this->entity->__toString());
+		$this->assertSame('17, avenue de Montboulon'.chr(10).'77165 - Saint-Soupplets',$this->entity->__toString());
 	}
 
 }

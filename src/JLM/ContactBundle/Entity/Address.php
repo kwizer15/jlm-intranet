@@ -13,7 +13,7 @@ use JLM\ContactBundle\Entity\City;
  * @ORM\Table(name="addresses")
  * @ORM\Entity
  */
-class Address
+class Address implements AddressInterface
 {
     /**
      * @var integer $id
@@ -47,9 +47,10 @@ class Address
      * @param City|string $city
      * @param string $zip
      */
-    public function __construct()
+    public function __construct($street = null, CityInterface $city = null)
     {
-    	$this->city = new City;
+    	$this->setStreet($street);
+    	$this->setCity($city);
     }
     
     /**
@@ -87,66 +88,37 @@ class Address
     /**
      * Set city
      *
-     * @param City $city
+     * @param CityInterface $city
      * @return self
      */
-    public function setCity($city,$zip = null)
+    public function setCity(CityInterface $city = null)
     {
-    	if ($city instanceof City)
-        	$this->city = $city;
-    	else
-    		$this->city = new City($city,$zip);
-        return $this;
+        $this->city = $city;
+    	return $this;
     }
-
+    
     /**
-     * Get city
-     *
-     * @return City
+     * {@inheritdoc}
      */
     public function getCity()
     {
-        return $this->city;
+    	return (string)$this->city->getName();
     }
     
     /**
-     * Get City zip
-     * 
-     * @return string
+     * {@inheritdoc}
      */
     public function getZip()
     {
-    	return $this->getCity()->getZip();
+    	return (string)$this->city->getZip();
     }
     
     /**
-     * Set cityName
-     * 
-     * @return self
+     * {@inheritdoc}
      */
-    public function setCityName($name)
+    public function getCountry()
     {
-    	$this->getCity()->setName($name);
-    	return $this;
-    }
-    
-    /**
-     * get cityName
-     * 
-     * @return string
-     */
-    public function getCityName()
-    {
-    	return $this->getCity()->getName();
-    }
-    
-    /**
-     * set City Zip
-     */
-    public function setZip($zip)
-    {
-    	$this->getCity()->setZip($zip);
-    	return $this;
+    	return (string)$this->city->getCountry();
     }
     
     /**
@@ -155,6 +127,6 @@ class Address
      */
     public function __toString()
     {
-    	return ($this->getStreet() == '') ? (string)$this->getCity() : $this->getStreet().chr(10).$this->getCity();
+    	return ($this->getStreet() == '') ? (string)$this->city : $this->getStreet().chr(10).$this->city;
     }
 }
