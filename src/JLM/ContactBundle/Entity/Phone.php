@@ -18,7 +18,7 @@ class Phone
      *
      * @ORM\ManyToOne(targetEntity="PhoneRule")
      */
-    private $rule = null;
+    private $rule;
 
     /**
      * @var string
@@ -26,6 +26,14 @@ class Phone
      * @ORM\Column(name="number", type="string", length=20)
      */
     private $number = null;
+    
+    /**
+     * Construct
+     */
+    public function __construct(PhoneRuleInterface $rule)
+    {
+    	$this->rule = $rule;
+    }
     
     /**
      * Set rule
@@ -58,16 +66,12 @@ class Phone
     public function setNumber($number)
     {
     	$number = strtoupper(trim($number));
-    	if ($this->getRule() === null)
-    		throw new PhoneException('No PhoneRule defined');
-    	if ($this->getRule()->getFormat() === null)
-    		throw new PhoneException('No PhoneRule format defined');
-    	if (!preg_match($this->getRule()->getRegex(),$number))
+    	if (!$this->getRule()->isValid($number))
     		throw new PhoneException('Number format not compatible with PhoneRule');
     	// Mise au format
     	$number = str_replace(array(' ',',','.','-','/'),'',$number);
     	$format = $this->getRule()->getFormat();
-    	$j = strlen($number - 1);
+    	$j = strlen($number) - 1;
     	$formatted = '';
     	for ($i = strlen($format) - 1 ; $i > 0 ; $i--)
     	{
@@ -92,13 +96,10 @@ class Phone
      *
      * @return string 
      */
-    public function getNumber($internationnal = false)
+    public function getNumber($local = true)
     {
-    	if ($this->getRule() === null)
-    		return null;
+    	if ($this->number === null) return null;
     	$format = $this->getRule()->getFormat();
-    	if ($format === null)
-    		return null;
     	$j = 0;
     	$out = '';
     	for ($i = 0; $i < strlen($format); $i++)
@@ -106,7 +107,7 @@ class Phone
     		switch ($format[$i])
     		{
     			case 'I':
-    				$out .= ($internationnal) ? '+'.$this->getRule()->getCode() : $this->getRule()->getLocalCode();
+    				$out .= (!$local) ? '+'.$this->getRule()->getCode() : $this->getRule()->getLocalCode();
     				break;
     			case 'N':
     			case 'L':
