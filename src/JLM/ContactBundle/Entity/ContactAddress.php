@@ -17,7 +17,7 @@ class ContactAddress extends ContactData
 	/**
 	 * @var Address
 	 * 
-	 * @ORM\ManyToOne(targetEntity="Address")
+	 * @ORM\ManyToOne(targetEntity="AddressInterface")
 	 */
 	private $address;
     
@@ -26,14 +26,16 @@ class ContactAddress extends ContactData
      * 
      * @ORM\Column(name="for_billing", type="boolean")
      */
-    private $forBilling = false;
+    // private $forBilling = false;
+    // Pour Customer
     
     /**
      * @var forDelivery
      *
      * @ORM\Column(name="for_delivery", type="boolean")
      */
-    private $forDelivery = false;
+    // private $forDelivery = false;
+    // Pour Customer
     
     /**
      * @var main
@@ -52,76 +54,77 @@ class ContactAddress extends ContactData
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(AddressInterface $address)
     {
-    	$this->address = new Address;
-    }
-    
-    /**
-     * Set forBilling
-     *
-     * @param boolean $forBilling
-     * @return self
-     */
-    public function setForBilling($forBilling = true)
-    {
-        $this->forBilling = (bool)$forBilling;
-    
-        return $this;
+    	$this->setAddress($address);
     }
 
-    /**
-     * Get forBilling
-     *
-     * @return boolean 
-     */
-    public function getForBilling()
-    {
-        return $this->forBilling;
-    }
-    
-    /**
-     * Is forBilling
-     *
-     * @return boolean
-     */
-    public function isForBilling()
-    {
-    	return $this->getForBilling();
-    }
-
-    /**
-     * Set forDelivery
-     *
-     * @param boolean $forDelivery
-     * @return self
-     */
-    public function setForDelivery($forDelivery = true)
-    {
-        $this->forDelivery = (bool)$forDelivery;
-    
-        return $this;
-    }
-
-    /**
-     * Get forDelivery
-     *
-     * @return boolean 
-     */
-    public function getForDelivery()
-    {
-        return $this->forDelivery;
-    }
-    
-    /**
-     * is forDelivery
-     *
-     * @return boolean
-     */
-    public function isForDelivery()
-    {
-    	return $this->getForDelivery();
-    }
+    // Pour customer
+//   /**
+//    * Set forBilling
+//    *
+//    * @param boolean $forBilling
+//    * @return self
+//    */
+//   public function setForBilling($forBilling = true)
+//   {
+//       $this->forBilling = (bool)$forBilling;
+//   
+//       return $this;
+//   }
+//
+//   /**
+//    * Get forBilling
+//    *
+//    * @return boolean 
+//    */
+//   public function getForBilling()
+//   {
+//       return $this->forBilling;
+//   }
+//   
+//   /**
+//    * Is forBilling
+//    *
+//    * @return boolean
+//    */
+//   public function isForBilling()
+//   {
+//   	return $this->getForBilling();
+//   }
+//
+//   /**
+//    * Set forDelivery
+//    *
+//    * @param boolean $forDelivery
+//    * @return self
+//    */
+//   public function setForDelivery($forDelivery = true)
+//   {
+//       $this->forDelivery = (bool)$forDelivery;
+//   
+//       return $this;
+//   }
+//
+//   /**
+//    * Get forDelivery
+//    *
+//    * @return boolean 
+//    */
+//   public function getForDelivery()
+//   {
+//       return $this->forDelivery;
+//   }
+//   
+//   /**
+//    * is forDelivery
+//    *
+//    * @return boolean
+//    */
+//   public function isForDelivery()
+//   {
+//   	return $this->getForDelivery();
+//   }
 
     /**
      * Set main
@@ -182,7 +185,7 @@ class ContactAddress extends ContactData
      * @param Address $address
      * @return self
      */
-    public function setAddress(Address $address)
+    public function setAddress(AddressInterface $address)
     {
     	$this->address = $address;
     	return $this;
