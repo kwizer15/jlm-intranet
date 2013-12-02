@@ -5,6 +5,8 @@ namespace JLM\ContactBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JLM\ContactBundle\Entity\EmailException;
 
+class EmailException extends \Exception {}
+
 /**
  * Email
  *

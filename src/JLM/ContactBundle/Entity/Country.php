@@ -5,7 +5,8 @@ namespace JLM\ContactBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use JLM\ContactBundle\Entity\CountryException;
+
+class CountryException extends \Exception {}
 
 /**
  * JLM\ContactBundle\Entity\Country

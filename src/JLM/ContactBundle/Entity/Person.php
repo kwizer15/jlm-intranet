@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 use JLM\ContactBundle\Entity\Contact;
 
+class PersonException extends \Exception {}
+
 /**
  * Person
  *
