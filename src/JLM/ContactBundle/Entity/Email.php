@@ -13,7 +13,7 @@ class EmailException extends \Exception {}
  * @ORM\Table()
  * @ORM\Entity
  */
-class Email
+class Email implements EmailInterface
 {
     /**
      * @var string
@@ -23,6 +23,14 @@ class Email
     private $address;
     
     /**
+     * {@inheritdoc}
+     */
+    public function __construct($address = null)
+    {
+    	$this->setAddress($address);
+    }
+    
+    /**
      * Set address
      * @param string $address
      * @throws EmailException
@@ -30,9 +38,13 @@ class Email
      */
     public function setAddress($address)
     {
-    	$address = strtolower(trim($address));
-    	if (!filter_var($address, FILTER_VALIDATE_EMAIL))
-    		throw new EmailException('e-mail address invalid');
+    	if ($address !== null)
+    	{
+    		$address = strtolower(trim($address));
+    		if (!filter_var($address, FILTER_VALIDATE_EMAIL))
+    			throw new EmailException('e-mail address invalid');
+    	}
+    	
     	$this->address = $address;
     	return $this;
     }
@@ -48,9 +60,7 @@ class Email
     }
     
     /**
-     * To string
-     *
-     * @return string 
+     * {@inheritdoc}
      */
     public function __toString()
     {
