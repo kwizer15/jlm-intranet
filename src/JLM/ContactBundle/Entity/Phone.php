@@ -13,7 +13,7 @@ class PhoneException extends \Exception {};
  * @ORM\Table()
  * @ORM\Entity
  */
-class Phone
+class Phone implements PhoneInterface
 {
     /**
      * @var PhoneRule
