@@ -2,77 +2,124 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\Country;
-use JLM\ContactBundle\Entity\CountryException;
 
 class CountryTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * @test
+	 * {@inheritdoc}
 	 */
-	public function testCode()
+	public function setUp()
 	{
-		$entity = new Country;
-		$this->assertNull($entity->getCode());
-		$tests = array(
-				' france'=>'FR',
-				'bElGiQuE'=>'BE',
-				'LU'=>'LU',
-				'2  '=>null,
-				'M'=>null,
-				'an?g4ds52'=>'AN',
-				'n*ull'=>null,
-				'    12er1qs   '=>null,
-				'e2e'=>null,
+		$this->entity = new Country('FR','France');
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function assertPreConditions()
+	{
+		$this->assertSame('FR',$this->entity->getCode());
+		$this->assertSame('France',$this->entity->getName());
+	}
+	
+	public function providerCode()
+	{
+		return array(
+			array(' france','FR'),
+			array('bElGiQuE','BE'),
+			array('LU','LU'),
+			array('an?g4ds52','AN'),
 		);
-		foreach ($tests as $in => $out)
-		{
-			try {
-				$this->assertEquals($entity,$entity->setCode($in));	
-			}
-			catch (CountryException $e)
-			{
-				if ($out !== null)
-					$this->fail('Une exception non attendue a été levée.');
-				continue;
-			}
-					
-			if ($out === null)
-				$this->fail('Une exception attendue n\'a pas été levée : '.$in);
-			else {
-				$this->assertEquals($out,$entity->getCode());
-				$this->assertInternalType('string',$entity->getCode());
-			}
-				
-		}
-		
-		// Test avec un objet
-		try {
-			$this->assertEquals($entity,$entity->setCode($entity));
-		}
-		catch (CountryException $e)
-		{
-			if ($out !== null)
-				$this->fail('Une exception non attendue a été levée.');
-		}
+	}
+	
+	public function providerCodeException()
+	{
+		return array(
+				array('2  '),
+				array('M'),
+				array('n*ull'),
+				array('    12er1qs   '),
+				array('e2e'),
+		);
 	}
 	
 	/**
 	 * @test
+	 * @dataProvider providerCode
 	 */
-	public function testName()
+	public function testSetCode($in)
 	{
-		$entity = new Country;
-		$this->assertEquals('',$entity->getName());
-		$this->assertInternalType('string',$entity->getName());
-		
-		$tests = array('france'=>'France','bElGiQuE'=>'Belgique','LU'=>'Lu','2'=>'','M'=>'M','n'=>'N');
-		foreach ($tests as $in => $out)
-		{
-			$this->assertEquals($entity,$entity->setName($in));
-			$this->assertEquals($out,$entity->getName());
-			$this->assertInternalType('string',$entity->getName());
-		}
+		$this->assertSame($this->entity, $this->entity->setCode($in));
 	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerCodeException
+	 * @expectedException JLM\ContactBundle\Entity\CountryException
+	 */
+	public function testSetCodeException($in)
+	{
+		$this->entity->setCode($in);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerCode
+	 */
+	public function testGetCode($in,$out)
+	{
+		$this->entity->setCode($in);
+		$this->assertSame($out, $this->entity->getCode());
+	}
+	
+	public function providerName()
+	{
+		return array(
+				array('france','France'),
+				array('bElGiQuE','Belgique'),
+				array('LU','Lu'),
+				array('M','M'),
+				array('n','N')
+		);
+	}
+	
+	public function providerNameException()
+	{
+		return array(
+				array('2'),
+		);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerName
+	 */
+	public function testSetName($in)
+	{
+		$this->assertSame($this->entity,$this->entity->setName($in));
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerNameException
+	 * @expectedException JLM\ContactBundle\Entity\CountryException
+	 */
+	public function testSetNameException($in)
+	{
+		$this->entity->setName($in);
+	}
+	
+	/**
+	 * @test
+	 * @dataProvider providerName
+	 * @depends testSetName
+	 */
+	public function testGetName($in,$out)
+	{
+		$this->entity->setName($in);
+		$this->assertSame($out,$this->entity->getName());
+	}
+
 
 
 

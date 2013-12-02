@@ -14,7 +14,7 @@ use JLM\ContactBundle\Entity\CountryException;
  * @ORM\Entity(readOnly=true)
  * @UniqueEntity("code")
  */
-class Country extends \JLM\DefaultBundle\Entity\AbstractNamed
+class Country implements CountryInterface
 {
     /**
      * @var string $code
@@ -28,11 +28,24 @@ class Country extends \JLM\DefaultBundle\Entity\AbstractNamed
     private $code;
     
     /**
-     * Set code
-     *
-     * @param string $code
+     * @var string $name
+     * 
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct($code, $name)
+    {
+    	$this->setCode($code);
+    	$this->setName($name);
+    }
+    
+    /**
+     * {@inheritdoc}
      * @throws CountryException
-     * @return self
      */
     public function setCode($code)
     {
@@ -45,9 +58,7 @@ class Country extends \JLM\DefaultBundle\Entity\AbstractNamed
     }
 
     /**
-     * Get code
-     *
-     * @return string 
+	 * {@inheritdoc}
      */
     public function getCode()
     {
@@ -55,15 +66,30 @@ class Country extends \JLM\DefaultBundle\Entity\AbstractNamed
     }
     
     /**
-     * Set name
-     * 
-     * @param string $name
-     * @return self
+	 * {@inheritdoc}
      */
     public function setName($name)
     {
-    	$name = str_replace(array('0','1','2','3','4','5','6','7','8','9'),'',$name);
-    	$name = ucwords(strtolower($name));
-    	return parent::setName($name);
+    	$name = ucwords(strtolower(trim($name)));
+    	if (!preg_match('#^[ \-A-z]+$#',$name))
+    		throw new CountryException('Country name invalid');
+    	$this->name = $name;
+    	return $this;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+    	return $this->name;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+     public function __toString()
+     {
+     	return $this->getName();
+     }
 }
