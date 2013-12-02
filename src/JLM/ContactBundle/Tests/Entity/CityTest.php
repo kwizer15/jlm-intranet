@@ -2,7 +2,7 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\City;
-use JLM\ContactBundle\Entity\Country;
+use JLM\ContactBundle\Entity\CountryInterface;
 
 class CityTest extends \PHPUnit_Framework_TestCase
 {
@@ -10,17 +10,18 @@ class CityTest extends \PHPUnit_Framework_TestCase
 	
 	public function setUp()
 	{
-		$this->entity = new City;
-	}
-
-	/**
-	 * @test
-	 */
-	public function testInitialGetId()
-	{
-		$this->assertNull($this->entity->getId());
+		$this->country = $this->getMock('JLM\ContactBundle\Entity\CountryInterface');
+		$this->entity = new City('Othis',77280,$this->country);
+		
 	}
 	
+	public function assertPreConditions()
+	{
+		$this->assertSame('Othis',$this->entity->getName());
+		$this->assertSame('77280',$this->entity->getZip());
+		$this->assertSame($this->country,$this->entity->getCountry());
+		$this->assertNull($this->entity->getId());
+	}
 
 	public function providerName()
 	{
@@ -84,45 +85,22 @@ class CityTest extends \PHPUnit_Framework_TestCase
 		$this->assertSame($out,$this->entity->getZip());
 	}
 	
-	public function providerCountry()
-	{
-		return array(
-				array(new Country,false),
-				array('foo',true),
-				array(0,true),
-				array(array(),true),
-				array(new \stdClass,true),
-		);
-	}
-	
 	/**
 	 * @test
-	 * @dataProvider providerCountry
 	 */
-	public function testSetCountry($data, $exception)
+	public function testSetCountry()
 	{
-		try {
-			$this->assertSame($this->entity,$this->entity->setCountry($data));
-			if ($exception)
-				$this->fail('Exception non levée');
-		} catch (\Exception $e) {
-			if (!$exception)
-				$this->fail('Exception levée : '.$e);
-		}
+		$this->assertSame($this->entity,$this->entity->setCountry($this->country));
 	}
 	
 	/**
 	 * @test
-	 * @dataProvider providerCountry
 	 * @depends testSetCountry
 	 */
-	public function testGetCountry($data, $exception)
+	public function testGetCountry()
 	{
-		if (!$exception)
-		{
-			$this->entity->setCountry($data);
-			$this->assertEquals($data,$this->entity->getCountry());
-		}
+		$this->entity->setCountry($this->country);
+		$this->assertEquals($this->country,$this->entity->getCountry());
 	}
 	
 	public function provider__toString()

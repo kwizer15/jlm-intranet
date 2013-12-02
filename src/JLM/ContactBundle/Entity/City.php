@@ -14,7 +14,7 @@ use JLM\ContactBundle\Entity\Country;
  * @ORM\Table(name="cities")
  * @ORM\Entity(repositoryClass="JLM\ContactBundle\Entity\CityRepository", readOnly=true)
  */
-class City extends \JLM\DefaultBundle\Entity\AbstractNamed
+class City extends \JLM\DefaultBundle\Entity\AbstractNamed implements CityInterface
 {
     /**
      * @var integer $id
@@ -38,7 +38,7 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed
     /**
      * @var Country $country
      * 
-     * @ORM\ManyToOne(targetEntity="Country")
+     * @ORM\ManyToOne(targetEntity="CountryInterface")
      * @ORM\JoinColumn(name="country_code", referencedColumnName="code")
      * @Assert\NotNull
      * @Assert\Valid
@@ -50,23 +50,11 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed
      * @param string|null $name
      * @param string|null $zip
      */
-    public function __construct( $name = null, $zip = null )
+    public function __construct( $name = null, $zip = null, CountryInterface $country = null )
     {
-    	if ($name !== null)
-    	{
-    		if (preg_match('#^[A-z]#',$name))
-    			$this->setName($name);
-    		if (preg_match('#^[0-9]#',$name))
-    			$this->setZip($name);
-    	}
-    	if ($zip !== null)
-    	{
-    		if (preg_match('#^[A-z]#',$zip))
-    			$this->setName($zip);
-    		if (preg_match('#^[0-9]#',$zip))
-    			$this->setZip($zip);
-    	}
-    	$this->setCountry(new Country);
+    	$this->setName($name);
+    	$this->setZip($zip);
+    	$this->setCountry($country);
     }
     
     /**
@@ -121,7 +109,7 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed
      * @param Country $country
      * @return self
      */
-    public function setCountry(Country $country = null)
+    public function setCountry(CountryInterface $country = null)
     {
         $this->country = $country;
         return $this;
