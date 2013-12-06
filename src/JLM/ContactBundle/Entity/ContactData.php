@@ -9,7 +9,7 @@ class ContactDataException extends \Exception {}
 /**
  * @ORM\MappedSuperclass
  */
-abstract class ContactData
+abstract class ContactData implements ContactDataInterface
 {
 	/**
 	 * @var integer
@@ -87,7 +87,7 @@ abstract class ContactData
 	 * @param \JLM\ContactBundle\Entity\Contact $contact
 	 * @return self
 	 */
-	public function setContact(\JLM\ContactBundle\Entity\Contact $contact = null)
+	public function setContact(ContactInterface $contact = null)
 	{
 		$this->contact = $contact;
 	

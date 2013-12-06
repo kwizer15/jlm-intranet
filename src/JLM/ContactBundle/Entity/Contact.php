@@ -19,7 +19,7 @@ use JLM\ContactBundle\Entity\ContactEmail;
  * 		"person" = "Person",
  *      "company" = "Company"
  */
-abstract class Contact
+abstract class Contact implements ContactInterface
 {
     /**
      * @var integer
@@ -72,12 +72,9 @@ abstract class Contact
     }
     
     /**
-     * Add emails
-     *
-     * @param ContactEmail $emails
-     * @return Contact
+     * {@inheritdoc}
      */
-    public function addEmail(ContactEmail $email)
+    public function addEmail(ContactEmailInterface $email)
     {
     	$email->setContact($this);
         $this->emails[] = $email;
@@ -86,12 +83,9 @@ abstract class Contact
     }
 
     /**
-     * Remove emails
-     *
-     * @param ContactEmail $email
-     * @return self
+     * {@inheritdoc}
      */
-    public function removeEmail(ContactEmail $email)
+    public function removeEmail(ContactEmailInterface $email)
     {
     	$email->setContact();
         $this->emails->removeElement($email);
@@ -100,9 +94,7 @@ abstract class Contact
     }
 
     /**
-     * Get emails
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * {@inheritdoc}
      */
     public function getEmails()
     {
@@ -110,12 +102,9 @@ abstract class Contact
     }
 
     /**
-     * Add phones
-     *
-     * @param ContactPhone $phone
-     * @return Contact
+     * {@inheritdoc}
      */
-    public function addPhone(ContactPhone $phone)
+    public function addPhone(ContactPhoneInterface $phone)
     {
     	$phone->setContact($this);
         $this->phones[] = $phone;
@@ -124,12 +113,9 @@ abstract class Contact
     }
 
     /**
-     * Remove phones
-     *
-     * @param ContactPhone $phone
-     * @return self
+     * {@inheritdoc}
      */
-    public function removePhone(ContactPhone $phone)
+    public function removePhone(ContactPhoneInterface $phone)
     {
     	$phone->setContact();
         $this->phones->removeElement($phone);
@@ -138,9 +124,7 @@ abstract class Contact
     }
 
     /**
-     * Get phones
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * {@inheritdoc}
      */
     public function getPhones()
     {
@@ -148,12 +132,9 @@ abstract class Contact
     }
 
     /**
-     * Add addresses
-     *
-     * @param ContactAddress $address
-     * @return Contact
+     * {@inheritdoc}
      */
-    public function addAddress(ContactAddress $address)
+    public function addAddress(ContactAddressInterface $address)
     {
     	$address->setContact($this);
         $this->addresses[] = $address;
@@ -162,12 +143,9 @@ abstract class Contact
     }
 
     /**
-     * Remove addresses
-     *
-     * @param ContactAddress $address
-     * @return self
+     * {@inheritdoc}
      */
-    public function removeAddress(ContactAddress $address)
+    public function removeAddress(ContactAddressInterface $address)
     {
     	$address->setContact();
         $this->addresses->removeElement($address);
@@ -176,9 +154,7 @@ abstract class Contact
     }
 
     /**
-     * Get addresses
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * {@inheritdoc}
      */
     public function getAddresses()
     {

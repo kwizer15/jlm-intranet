@@ -12,6 +12,9 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		$this->entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\Contact');
+		$this->address = $this->getMock('JLM\ContactBundle\Entity\ContactAddressInterface');
+		$this->phone = $this->getMock('JLM\ContactBundle\Entity\ContactPhoneInterface');
+		$this->email = $this->getMock('JLM\ContactBundle\Entity\ContactEmailInterface');
 	}
 	
 	/**
@@ -27,7 +30,7 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testAddAddress()
 	{
-		$this->assertSame($this->entity, $this->entity->addAddress(new ContactAddress));
+		$this->assertSame($this->entity, $this->entity->addAddress($this->address));
 	}
 	
 	/**
@@ -35,7 +38,7 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testAddBillingAddress()
 	{
-		$this->assertSame($this->entity, $this->entity->addBillingAddress(new ContactAddress));
+		$this->assertSame($this->entity, $this->entity->addBillingAddress($this->address));
 	}
 	
 	/**
@@ -44,9 +47,8 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetBillingAddress()
 	{
-		$data = new ContactAddress;
-		$this->entity->addBillingAddress($data);
-		$this->assertSame($data, $this->entity->getBillingAddress());
+		$this->entity->addBillingAddress($this->address);
+		$this->assertSame($this->address, $this->entity->getBillingAddress());
 	}
 	
 	/**
@@ -75,9 +77,9 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetAddresses()
 	{
-		$this->entity->addAddress(new ContactAddress);
-		$this->entity->addAddress(new ContactAddress);
-		$this->entity->addAddress(new ContactAddress);
+		$this->entity->addAddress($this->getMock('JLM\ContactBundle\Entity\ContactAddressInterface'));
+		$this->entity->addAddress($this->getMock('JLM\ContactBundle\Entity\ContactAddressInterface'));
+		$this->entity->addAddress($this->getMock('JLM\ContactBundle\Entity\ContactAddressInterface'));
 		$this->assertCount(3, $this->entity->getAddresses());
 		return $this->entity;
 	}
@@ -88,8 +90,7 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testRemoveAddress()
 	{
-		$this->entity->addAddress(new ContactAddress);
-		$this->assertSame($this->entity, $this->entity->removeAddress(new ContactAddress));
+		$this->assertSame($this->entity, $this->entity->removeAddress($this->address));
 	}
 	
 	/**
@@ -107,7 +108,7 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testAddPhone()
 	{
-		$this->assertSame($this->entity, $this->entity->addPhone(new ContactPhone));
+		$this->assertSame($this->entity, $this->entity->addPhone($this->phone));
 	}
 	
 	/**
@@ -126,9 +127,9 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetPhones()
 	{
-		$this->entity->addPhone(new ContactPhone);
-		$this->entity->addPhone(new ContactPhone);
-		$this->entity->addPhone(new ContactPhone);
+		$this->entity->addPhone($this->getMock('JLM\ContactBundle\Entity\ContactPhoneInterface'));
+		$this->entity->addPhone($this->getMock('JLM\ContactBundle\Entity\ContactPhoneInterface'));
+		$this->entity->addPhone($this->getMock('JLM\ContactBundle\Entity\ContactPhoneInterface'));
 		$this->assertCount(3, $this->entity->getPhones());
 		return $this->entity;
 	}
@@ -139,8 +140,7 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testRemovePhone()
 	{
-		$this->entity->addPhone(new ContactPhone);
-		$this->assertSame($this->entity, $this->entity->removePhone(new ContactPhone));
+		$this->assertSame($this->entity, $this->entity->removePhone($this->phone));
 	}
 	
 	/**
@@ -158,7 +158,7 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testAddEmail()
 	{
-		$this->assertSame($this->entity, $this->entity->addEmail(new ContactEmail));
+		$this->assertSame($this->entity, $this->entity->addEmail($this->email));
 	}
 	
 	/**
@@ -177,9 +177,9 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetEmails()
 	{
-		$this->entity->addEmail(new ContactEmail);
-		$this->entity->addEmail(new ContactEmail);
-		$this->entity->addEmail(new ContactEmail);
+		$this->entity->addEmail($this->email);
+		$this->entity->addEmail($this->email);
+		$this->entity->addEmail($this->email);
 		$this->assertCount(3, $this->entity->getEmails());
 		return $this->entity;
 	}
@@ -190,8 +190,7 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testRemoveEmail()
 	{
-		$this->entity->addEmail(new ContactEmail);
-		$this->assertSame($this->entity, $this->entity->removeEmail(new ContactEmail));
+		$this->assertSame($this->entity, $this->entity->removeEmail($this->email));
 	}
 	
 	/**
