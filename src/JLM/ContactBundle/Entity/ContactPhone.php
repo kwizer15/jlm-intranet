@@ -3,8 +3,8 @@
 namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JLM\ContactBundle\Entity\Phone;
 use JLM\ContactBundle\Entity\ContactData;
+use JLM\ContactBundle\Model\PhoneInterface;
 
 /**
  * ContactPhone
@@ -12,7 +12,7 @@ use JLM\ContactBundle\Entity\ContactData;
  * @ORM\Table()
  * @ORM\Entity
  */
-class ContactPhone extends ContactData
+class ContactPhone extends ContactData implements ContactPhoneInterface
 {
     /**
      * @var Phone
@@ -37,7 +37,7 @@ class ContactPhone extends ContactData
      * @param \JLM\ContactBundle\Entity\Phone $phone
      * @return ContactPhone
      */
-    public function setPhone(\JLM\ContactBundle\Entity\Phone $phone = null)
+    public function setPhone(PhoneInterface $phone = null)
     {
         $this->phone = $phone;
     

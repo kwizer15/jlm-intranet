@@ -3,8 +3,8 @@
 namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JLM\ContactBundle\Entity\Email;
 use JLM\ContactBundle\Entity\ContactData;
+use JLM\ContactBundle\Model\EmailInterface;
 
 /**
  * ContactEmail
@@ -12,7 +12,7 @@ use JLM\ContactBundle\Entity\ContactData;
  * @ORM\Table()
  * @ORM\Entity
  */
-class ContactEmail extends ContactData
+class ContactEmail extends ContactData implements ContactEmailInterface
 {
     /**
      * @var Email
@@ -34,10 +34,10 @@ class ContactEmail extends ContactData
     /**
      * Set email
      *
-     * @param \JLM\ContactBundle\Entity\Email $email
+     * @param EmailInterface $email
      * @return ContactEmail
      */
-    public function setEmail(\JLM\ContactBundle\Entity\Email $email = null)
+    public function setEmail(EmailInterface $email = null)
     {
         $this->email = $email;
     

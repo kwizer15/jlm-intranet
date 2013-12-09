@@ -46,9 +46,7 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed implements CityInterf
     private $country;
     
     /**
-     * Constructor
-     * @param string|null $name
-     * @param string|null $zip
+     * {@inheritdoc}
      */
     public function __construct($name, $zip, CountryInterface $country)
     {
@@ -68,10 +66,7 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed implements CityInterf
     }
     
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return self
+     * {@inheritdoc}
      */
     public function setName($name)
     {
@@ -82,9 +77,7 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed implements CityInterf
     }
 
     /**
-     * Set zip
-     *
-     * @param string $zip
+     * {@inheritdoc}
      */
     public function setZip($zip)
     {
@@ -94,9 +87,7 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed implements CityInterf
     }
 
     /**
-     * Get zip
-     *
-     * @return string 
+     * {@inheritdoc}
      */
     public function getZip()
     {
@@ -104,10 +95,7 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed implements CityInterf
     }
 
     /**
-     * Set country
-     *
-     * @param Country $country
-     * @return self
+     * {@inheritdoc}
      */
     public function setCountry(CountryInterface $country = null)
     {
@@ -116,9 +104,7 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed implements CityInterf
     }
 
     /**
-     * Get country
-     *
-     * @return Country 
+     * {@inheritdoc}
      */
     public function getCountry()
     {
@@ -126,7 +112,7 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed implements CityInterf
     }
     
     /**
-     * To String
+     * {@inheritdoc}
      */
     public function __toString()
     {

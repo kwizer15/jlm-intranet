@@ -45,7 +45,7 @@ class Address implements AddressInterface
     /**
      * Constructor
      * @param string $street
-     * @param City|string $city
+     * @param CityInterface|string $city
      * @param string $zip
      */
     public function __construct($street = null, CityInterface $city = null)
@@ -77,9 +77,7 @@ class Address implements AddressInterface
     }
 
     /**
-     * Get street
-     *
-     * @return string 
+     * {@inheritdoc}
      */
     public function getStreet()
     {
@@ -123,8 +121,7 @@ class Address implements AddressInterface
     }
     
     /**
-     * To String
-     * @return string
+     * {@inheritdoc}
      */
     public function __toString()
     {

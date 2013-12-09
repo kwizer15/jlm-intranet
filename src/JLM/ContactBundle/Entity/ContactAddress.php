@@ -4,7 +4,7 @@ namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use JLM\ContactBundle\Model\ContactDataInterface;
+use JLM\ContactBundle\Model\ContactAddressInterface;
 use JLM\ContactBundle\Model\AddressInterface;
 
 /**
@@ -13,7 +13,7 @@ use JLM\ContactBundle\Model\AddressInterface;
  * @ORM\Table(name="contact_addresses")
  * @ORM\Entity
  */
-class ContactAddress extends ContactData
+class ContactAddress extends ContactData implements ContactAddressInterface
 {
 	/**
 	 * @var Address
@@ -21,22 +21,6 @@ class ContactAddress extends ContactData
 	 * @ORM\ManyToOne(targetEntity="AddressInterface")
 	 */
 	private $address;
-    
-    /**
-     * @var forBilling
-     * 
-     * @ORM\Column(name="for_billing", type="boolean")
-     */
-    // private $forBilling = false;
-    // Pour Customer
-    
-    /**
-     * @var forDelivery
-     *
-     * @ORM\Column(name="for_delivery", type="boolean")
-     */
-    // private $forDelivery = false;
-    // Pour Customer
     
     /**
      * @var main
@@ -59,73 +43,6 @@ class ContactAddress extends ContactData
     {
     	$this->setAddress($address);
     }
-
-    // Pour customer
-//   /**
-//    * Set forBilling
-//    *
-//    * @param boolean $forBilling
-//    * @return self
-//    */
-//   public function setForBilling($forBilling = true)
-//   {
-//       $this->forBilling = (bool)$forBilling;
-//   
-//       return $this;
-//   }
-//
-//   /**
-//    * Get forBilling
-//    *
-//    * @return boolean 
-//    */
-//   public function getForBilling()
-//   {
-//       return $this->forBilling;
-//   }
-//   
-//   /**
-//    * Is forBilling
-//    *
-//    * @return boolean
-//    */
-//   public function isForBilling()
-//   {
-//   	return $this->getForBilling();
-//   }
-//
-//   /**
-//    * Set forDelivery
-//    *
-//    * @param boolean $forDelivery
-//    * @return self
-//    */
-//   public function setForDelivery($forDelivery = true)
-//   {
-//       $this->forDelivery = (bool)$forDelivery;
-//   
-//       return $this;
-//   }
-//
-//   /**
-//    * Get forDelivery
-//    *
-//    * @return boolean 
-//    */
-//   public function getForDelivery()
-//   {
-//       return $this->forDelivery;
-//   }
-//   
-//   /**
-//    * is forDelivery
-//    *
-//    * @return boolean
-//    */
-//   public function isForDelivery()
-//   {
-//   	return $this->getForDelivery();
-//   }
 
     /**
      * Set main
@@ -215,5 +132,37 @@ class ContactAddress extends ContactData
     public function getLabel()
     {
         return $this->label;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getStreet()
+    {
+    	return $this->getAddress()->getStreet();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getCity()
+    {
+    	return $this->getAddress()->getCity();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getZip()
+    {
+    	return $this->getAddress()->getZip();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getCountry()
+    {
+    	return $this->getAddress()->getCountry();
     }
 }
