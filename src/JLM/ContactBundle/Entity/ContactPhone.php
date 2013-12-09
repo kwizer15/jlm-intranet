@@ -4,6 +4,7 @@ namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JLM\ContactBundle\Entity\ContactData;
+use JLM\ContactBundle\Model\ContactPhoneInterface;
 use JLM\ContactBundle\Model\PhoneInterface;
 
 /**
