@@ -14,7 +14,7 @@ use JLM\ContactBundle\Model\CountryInterface;
  * @ORM\Table(name="cities")
  * @ORM\Entity(repositoryClass="JLM\ContactBundle\Entity\CityRepository", readOnly=true)
  */
-class City extends \JLM\DefaultBundle\Entity\AbstractNamed implements CityInterface
+class City implements CityInterface
 {
     /**
      * @var integer $id
@@ -46,6 +46,13 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed implements CityInterf
     private $country;
     
     /**
+     * @var string $name
+     * 
+     * @ORM\Column(name="name", type="string")
+     */
+    private $name;
+    
+    /**
      * {@inheritdoc}
      */
     public function __construct($name, $zip, CountryInterface $country)
@@ -73,7 +80,16 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed implements CityInterf
     	$name = str_replace('-','- ',$name);
     	$name = ucwords(strtolower($name));
     	$name = str_replace('- ','-',$name);
-    	return parent::setName($name);
+    	$this->name = $name;
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+    	return $this->name;
     }
 
     /**
