@@ -182,6 +182,11 @@ class Person extends Contact
      */
     public function __toString()
     {
+    	return $this->getName();
+    }
+    
+    public function getName()
+    {
     	$out = '';
     	if ($this->getTitle() != '')
     		$out .= $this->getTitle().' ';

@@ -6,9 +6,18 @@ use JLM\ContactBundle\Entity\Person;
 
 class CompanyTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setUp()
 	{
+		$this->person = $this->getMock('JLM\ContactBundle\Model\PersonInterface');
 		$this->entity = new Company;
+	}
+	
+	public function assertPreConditions()
+	{
+		$this->assertCount(0,$this->entity->getContacts());
 	}
 	
 	public function providerName()
@@ -203,7 +212,7 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testAddContact()
 	{
-		$this->assertSame($this->entity, $this->entity->addContact($this->getMock('JLM\ContactBundle\Model\PersonInterface')));
+		$this->assertSame($this->entity, $this->entity->addContact($this->person));
 	}
 	
 	/**
@@ -221,7 +230,7 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetContacts()
 	{
-		$this->entity->addContact($this->getMock('JLM\ContactBundle\Model\PersonInterface'));
+		$this->entity->addContact($this->person);
 		$this->assertCount(1,$this->entity->getContacts());
 	}
 }

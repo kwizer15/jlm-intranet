@@ -4,6 +4,12 @@ namespace JLM\ContactBundle\Model;
 interface ContactInterface
 {
 	/**
+	 * Get name
+	 * @return string
+	 */
+	public function getName();
+	
+	/**
 	 * Add an Email
 	 * @param EmailInterface $email
 	 * @return self

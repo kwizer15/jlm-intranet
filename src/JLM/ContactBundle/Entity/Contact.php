@@ -161,4 +161,6 @@ abstract class Contact implements ContactInterface
     {
         return $this->addresses;
     }
+    
+    
 }

@@ -12,9 +12,16 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		$this->entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\Contact');
+		$this->entity->expects($this->any())->method('getName')->will($this->returnValue('JLM Entreprise'));
+		
 		$this->address = $this->getMock('JLM\ContactBundle\Model\ContactAddressInterface');
 		$this->phone = $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface');
 		$this->email = $this->getMock('JLM\ContactBundle\Model\ContactEmailInterface');
+	}
+	
+	public function assertPreConditions()
+	{
+		$this->assertSame('JLM Entreprise',$this->entity->getName());
 	}
 	
 	/**
@@ -173,5 +180,5 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	public function testRemoveEmailException()
 	{
 		$this->entity->removeEmail('foo');
-	}	
+	}
 }
