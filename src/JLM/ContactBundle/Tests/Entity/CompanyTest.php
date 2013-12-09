@@ -18,6 +18,7 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
 	public function assertPreConditions()
 	{
 		$this->assertCount(0,$this->entity->getContacts());
+		$this->assertNull($this->entity->getId());
 	}
 	
 	public function providerName()
@@ -232,5 +233,15 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->entity->addContact($this->person);
 		$this->assertCount(1,$this->entity->getContacts());
+	}
+	
+	/**
+	 * @test
+	 * @depends testAddContact
+	 */
+	public function testRemoveContact()
+	{
+		$this->entity->addContact($this->person);
+		$this->assertSame($this->entity,$this->entity->removeContact($this->person));
 	}
 }

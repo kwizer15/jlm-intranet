@@ -15,6 +15,18 @@ class ContactAddressTest extends \PHPUnit_Framework_TestCase
 		$this->address->expects($this->any())
 			    ->method('__toString')
 			    ->will($this->returnValue('17, avenue de Montboulon'.chr(10).'77165 - Saint-Soupplets'));
+		$this->address->expects($this->any())
+						->method('getStreet')
+						->will($this->returnValue('17, avenue de Montboulon'));
+		$this->address->expects($this->any())
+						->method('getCity')
+						->will($this->returnValue('Saint-Soupplets'));
+		$this->address->expects($this->any())
+						->method('getZip')
+						->will($this->returnValue('77165'));
+		$this->address->expects($this->any())
+					  ->method('getCountry')
+					  ->will($this->returnValue('France'));
 		$this->entity = new ContactAddress($this->address);
 	}
 	
@@ -54,10 +66,10 @@ class ContactAddressTest extends \PHPUnit_Framework_TestCase
 	 * @depends testSetMain
 	 * @dataProvider booleans
 	 */
-	public function testGetMain($in, $out)
+	public function testIsMain($in, $out)
 	{
 		$this->entity->setMain($in);
-		$this->assertSame($out,$this->entity->getMain());
+		$this->assertSame($out,$this->entity->isMain());
 	}
 	
 	/**
@@ -115,5 +127,37 @@ class ContactAddressTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->entity->setLabel($in);
 		$this->assertSame($out, $this->entity->getLabel());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testGetStreet()
+	{
+		$this->assertSame('17, avenue de Montboulon',$this->entity->getStreet());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testGetZip()
+	{
+		$this->assertSame('77165',$this->entity->getZip());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testGetCity()
+	{
+		$this->assertSame('Saint-Soupplets',$this->entity->getCity());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testGetCountry()
+	{
+		$this->assertSame('France',$this->entity->getCountry());
 	}
 }

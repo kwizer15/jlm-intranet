@@ -56,16 +56,6 @@ class ContactAddress extends ContactData implements ContactAddressInterface
     
         return $this;
     }
-
-    /**
-     * Get main
-     *
-     * @return boolean 
-     */
-    public function getMain()
-    {
-        return $this->main;
-    }
     
     /**
      * Is main
@@ -74,7 +64,7 @@ class ContactAddress extends ContactData implements ContactAddressInterface
      */
     public function isMain()
     {
-    	return $this->getMain();
+    	return $this->main;
     }
     
     /**
