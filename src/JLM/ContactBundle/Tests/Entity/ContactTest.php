@@ -32,34 +32,6 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->assertSame($this->entity, $this->entity->addAddress($this->address));
 	}
-	
-	/**
-	 * @test
-	 */
-	public function testAddBillingAddress()
-	{
-		$this->assertSame($this->entity, $this->entity->addBillingAddress($this->address));
-	}
-	
-	/**
-	 * @test
-	 * @depends testAddBillingAddress
-	 */
-	public function testGetBillingAddress()
-	{
-		$this->entity->addBillingAddress($this->address);
-		$this->assertSame($this->address, $this->entity->getBillingAddress());
-	}
-	
-	/**
-	 * @test
-	 * @depends testGetBillingAddress
-	 */
-	public function testNoBillingAddress()
-	{
-		$this->assertNull($this->entity->getBillingAddress());
-	}
-	
 
 	/**
 	 * @test
