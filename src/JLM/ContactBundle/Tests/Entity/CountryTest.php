@@ -120,7 +120,16 @@ class CountryTest extends \PHPUnit_Framework_TestCase
 		$this->assertSame($out,$this->entity->getName());
 	}
 
-
+	/**
+	 * @test
+	 * @dataProvider providerName
+	 * @depends testSetName
+	 */
+	public function test__toString($in,$out)
+	{
+		$this->entity->setName($in);
+		$this->assertSame($out,(string)$this->entity);
+	}
 
 
 }
