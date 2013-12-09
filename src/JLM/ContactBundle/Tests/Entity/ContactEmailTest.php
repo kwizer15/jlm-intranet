@@ -2,16 +2,26 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\ContactEmail;
-use JLM\ContactBundle\Entity\Email;
 
 class ContactEmailTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * @test
+	 * {@inheritdoc}
 	 */
-	public function testEmail()
+	public function setUp()
 	{
+		$this->entity = new ContactEmail();
+		$this->email = $this->getMock('JLM\ContactBundle\Model\EmailInterface');
+		$this->email->expects($this->any())->method('__toString')->will($this->returnValue('emmanuel.bernaszuk@jlm-entreprise.fr'));
+		$this->entity->setEmail($this->email);
+	}
 	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function assertPreConditions()
+	{
+		$this->assertSame($this->email,$this->entity->getEmail());
 	}
 	
 	/**
@@ -19,6 +29,6 @@ class ContactEmailTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test__toString()
 	{
-	
+		$this->assertSame($this->email->__toString(), $this->entity->__toString());
 	}
 }

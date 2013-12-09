@@ -3,7 +3,7 @@
 namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JLM\ContactBundle\Entity\ContactData;
+use JLM\ContactBundle\Model\ContactEmailInterface;
 use JLM\ContactBundle\Model\EmailInterface;
 
 /**
