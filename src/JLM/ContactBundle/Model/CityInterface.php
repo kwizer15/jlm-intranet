@@ -1,5 +1,5 @@
 <?php
-namespace JLM\ContactBundle\Entity;
+namespace JLM\ContactBundle\Model;
 
 /**
  * Interface pour City

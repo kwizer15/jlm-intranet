@@ -2,10 +2,11 @@
 
 namespace JLM\ContactBundle\Entity;
 
+use JLM\ContactBundle\Model\AddressInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use JLM\ContactBundle\Entity\City;
+use JLM\ContactBundle\Model\CityInterface;
 
 /**
  * JLM\ContactBundle\Entity\Address

@@ -1,5 +1,5 @@
 <?php
-namespace JLM\ContactBundle\Entity;
+namespace JLM\ContactBundle\Model;
 
 interface ContactAddressInterface extends ContactDataInterface, AddressInterface
 {

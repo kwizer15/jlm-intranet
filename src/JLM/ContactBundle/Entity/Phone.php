@@ -4,6 +4,9 @@ namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use JLM\ContactBundle\Model\PhoneInterface;
+use JLM\ContactBundle\Model\PhoneRuleInterface;
+
 class PhoneException extends \Exception {};
 
 /**

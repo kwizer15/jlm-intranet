@@ -12,7 +12,7 @@ class PhoneTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->rule = $this->getMock('JLM\ContactBundle\Entity\PhoneRuleInterface');
+		$this->rule = $this->getMock('JLM\ContactBundle\Model\PhoneRuleInterface');
 		
 		
 		$this->rule->expects($this->any())

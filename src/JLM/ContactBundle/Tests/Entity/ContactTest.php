@@ -12,9 +12,9 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		$this->entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\Contact');
-		$this->address = $this->getMock('JLM\ContactBundle\Entity\ContactAddressInterface');
-		$this->phone = $this->getMock('JLM\ContactBundle\Entity\ContactPhoneInterface');
-		$this->email = $this->getMock('JLM\ContactBundle\Entity\ContactEmailInterface');
+		$this->address = $this->getMock('JLM\ContactBundle\Model\ContactAddressInterface');
+		$this->phone = $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface');
+		$this->email = $this->getMock('JLM\ContactBundle\Model\ContactEmailInterface');
 	}
 	
 	/**
@@ -49,9 +49,9 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetAddresses()
 	{
-		$this->entity->addAddress($this->getMock('JLM\ContactBundle\Entity\ContactAddressInterface'));
-		$this->entity->addAddress($this->getMock('JLM\ContactBundle\Entity\ContactAddressInterface'));
-		$this->entity->addAddress($this->getMock('JLM\ContactBundle\Entity\ContactAddressInterface'));
+		$this->entity->addAddress($this->getMock('JLM\ContactBundle\Model\ContactAddressInterface'));
+		$this->entity->addAddress($this->getMock('JLM\ContactBundle\Model\ContactAddressInterface'));
+		$this->entity->addAddress($this->getMock('JLM\ContactBundle\Model\ContactAddressInterface'));
 		$this->assertCount(3, $this->entity->getAddresses());
 		return $this->entity;
 	}
@@ -99,9 +99,9 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetPhones()
 	{
-		$this->entity->addPhone($this->getMock('JLM\ContactBundle\Entity\ContactPhoneInterface'));
-		$this->entity->addPhone($this->getMock('JLM\ContactBundle\Entity\ContactPhoneInterface'));
-		$this->entity->addPhone($this->getMock('JLM\ContactBundle\Entity\ContactPhoneInterface'));
+		$this->entity->addPhone($this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface'));
+		$this->entity->addPhone($this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface'));
+		$this->entity->addPhone($this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface'));
 		$this->assertCount(3, $this->entity->getPhones());
 		return $this->entity;
 	}

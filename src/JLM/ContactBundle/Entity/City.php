@@ -2,11 +2,11 @@
 
 namespace JLM\ContactBundle\Entity;
 
+use JLM\ContactBundle\Model\CityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
-
-use JLM\ContactBundle\Entity\Country;
+use JLM\ContactBundle\Model\CountryInterface;
 
 /**
  * JLM\ContactBundle\Entity\City
@@ -36,7 +36,7 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed implements CityInterf
     private $zip = '';
     
     /**
-     * @var Country $country
+     * @var CountryInterface $country
      * 
      * @ORM\ManyToOne(targetEntity="CountryInterface")
      * @ORM\JoinColumn(name="country_code", referencedColumnName="code")
@@ -50,7 +50,7 @@ class City extends \JLM\DefaultBundle\Entity\AbstractNamed implements CityInterf
      * @param string|null $name
      * @param string|null $zip
      */
-    public function __construct( $name = null, $zip = null, CountryInterface $country = null )
+    public function __construct($name, $zip, CountryInterface $country)
     {
     	$this->setName($name);
     	$this->setZip($zip);

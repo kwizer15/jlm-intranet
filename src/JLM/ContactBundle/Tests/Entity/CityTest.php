@@ -10,7 +10,7 @@ class CityTest extends \PHPUnit_Framework_TestCase
 	
 	public function setUp()
 	{
-		$this->country = $this->getMock('JLM\ContactBundle\Entity\CountryInterface');
+		$this->country = $this->getMock('JLM\ContactBundle\Model\CountryInterface');
 		$this->entity = new City('Othis',77280,$this->country);
 		
 	}

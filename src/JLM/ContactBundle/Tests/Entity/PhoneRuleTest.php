@@ -7,7 +7,7 @@ class PhoneRuleTest extends \PHPUnit_Framework_TestCase
 {
 	public function setUp()
 	{
-		$this->country = $this->getMock('JLM\ContactBundle\Entity\CountryInterface');
+		$this->country = $this->getMock('JLM\ContactBundle\Model\CountryInterface');
 		$this->entity = new PhoneRule('IN NN NN NN NN', 33, 0, $this->country);		
 	}
 	

@@ -2,7 +2,6 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\Address;
-use JLM\ContactBundle\Entity\CityInterface;
 
 class AddressTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,7 +12,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->city = $this->getMock('JLM\ContactBundle\Entity\CityInterface');
+		$this->city = $this->getMock('JLM\ContactBundle\Model\CityInterface');
 		
 		$this->city->expects($this->any())
 				   ->method('getName')
@@ -79,7 +78,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testSetCity()
 	{
-		$this->assertSame($this->entity,$this->entity->setCity($this->getMock('JLM\ContactBundle\Entity\CityInterface')));
+		$this->assertSame($this->entity,$this->entity->setCity($this->getMock('JLM\ContactBundle\Model\CityInterface')));
 	}
 	
 	public function providerCity()
@@ -97,7 +96,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetCity($in)
 	{
-		$city = $this->getMock('JLM\ContactBundle\Entity\CityInterface');
+		$city = $this->getMock('JLM\ContactBundle\Model\CityInterface');
 		$city->expects($this->once())->method('getName')->will($this->returnValue($in));
 		$this->entity->setCity($city);
 		$this->assertSame($in,$this->entity->getCity());
@@ -118,7 +117,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetZip($in)
 	{
-		$city = $this->getMock('JLM\ContactBundle\Entity\CityInterface');
+		$city = $this->getMock('JLM\ContactBundle\Model\CityInterface');
 		$city->expects($this->once())->method('getZip')->will($this->returnValue($in));
 		$this->entity->setCity($city);	
 		$this->assertSame($in,$this->entity->getZip());

@@ -3,7 +3,8 @@
 namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JLM\ContactBundle\Entity\EmailException;
+
+use JLM\ContactBundle\Model\EmailInterface;
 
 class EmailException extends \Exception {}
 

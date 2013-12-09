@@ -4,6 +4,9 @@ namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use JLM\ContactBundle\Model\ContactDataInterface;
+use JLM\ContactBundle\Model\ContactInterface;
+
 class ContactDataException extends \Exception {}
 
 /**

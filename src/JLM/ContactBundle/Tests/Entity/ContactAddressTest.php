@@ -11,7 +11,7 @@ class ContactAddressTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->address = $address = $this->getMock('JLM\ContactBundle\Entity\AddressInterface');
+		$this->address = $address = $this->getMock('JLM\ContactBundle\Model\AddressInterface');
 		$this->address->expects($this->any())
 			    ->method('__toString')
 			    ->will($this->returnValue('17, avenue de Montboulon'.chr(10).'77165 - Saint-Soupplets'));

@@ -203,7 +203,7 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testAddContact()
 	{
-		$this->assertSame($this->entity, $this->entity->addContact(new Person));
+		$this->assertSame($this->entity, $this->entity->addContact($this->getMock('JLM\ContactBundle\Model\PersonInterface')));
 	}
 	
 	/**
@@ -221,7 +221,7 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetContacts()
 	{
-		$this->entity->addContact(new Person);
+		$this->entity->addContact($this->getMock('JLM\ContactBundle\Model\PersonInterface'));
 		$this->assertCount(1,$this->entity->getContacts());
 	}
 }
