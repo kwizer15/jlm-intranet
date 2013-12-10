@@ -9,6 +9,8 @@ class ContactDataTest extends \PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		$this->entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\ContactData');
+		
+		$this->contact = $this->getMock('JLM\ContactBundle\Model\ContactInterface');
 	}
 	
 	public function providerAlias()
@@ -73,5 +75,22 @@ class ContactDataTest extends \PHPUnit_Framework_TestCase
 		$this->assertSame($out,$this->entity->getAlias());
 	}
 	
+	/**
+	 * @test
+	 */
+	public function testSetContact()
+	{
+		$this->assertSame($this->entity, $this->entity->setContact($this->contact));
+	}
+	
+	/**
+	 * @test
+	 * @depends testSetContact
+	 */
+	public function testGetContact()
+	{
+		$this->entity->setContact($this->contact);
+		$this->assertSame($this->contact, $this->entity->getContact());
+	}
 	
 }
