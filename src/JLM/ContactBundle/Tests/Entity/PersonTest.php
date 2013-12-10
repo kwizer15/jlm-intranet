@@ -6,9 +6,20 @@ use JLM\ContactBundle\Entity\PersonException;
 
 class PersonTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setUp()
 	{
 		$this->entity = new Person;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function assertPreConditions()
+	{
+		$this->assertNull($this->entity->getId());
 	}
 	
 	public function providerTitle()
