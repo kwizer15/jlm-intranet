@@ -50,6 +50,12 @@ class PhoneTest extends \PHPUnit_Framework_TestCase
 		);
 	}
 	
+	public function testSetRule()
+	{
+		$rule = $this->getMock('JLM\ContactBundle\Model\PhoneRuleInterface');
+		$this->entity->setRule($rule);
+	}
+	
 	/**
 	 * @test
 	 * @dataProvider providerNumber
