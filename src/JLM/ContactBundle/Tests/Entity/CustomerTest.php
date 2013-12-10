@@ -6,10 +6,21 @@ use JLM\ContactBundle\Entity\Contact;
 
 class CustomerTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setUp()
 	{
 		$this->entity = new Customer;
 		$this->contact = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\Contact');
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function assertPreConditions()
+	{
+		$this->assertNull($this->entity->getId());
 	}
 	
 	/**
@@ -48,7 +59,7 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
 				array('',null),
 		);
 	}
-	
+
 	public function providerAccountNumberException()
 	{
 		return array(
