@@ -5,6 +5,7 @@ namespace JLM\ContactBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JLM\ContactBundle\Model\AddressInterface;
 use JLM\ContactBundle\Model\ContactInterface;
+use JLM\BillBundle\Model\BillableContact;
 
 class CustomerException extends \Exception {}
 
@@ -14,7 +15,7 @@ class CustomerException extends \Exception {}
  * @ORM\Table()
  * @ORM\Entity
  */
-class Customer
+class Customer implements BillableContact
 {
     /**
      * @var integer
