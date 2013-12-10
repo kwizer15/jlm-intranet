@@ -28,7 +28,7 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
 		$this->assertNull($this->entity->getId());
 		$this->assertSame('M. Emmanuel Bernaszuk',$this->entity->getName());
 		$this->assertSame('M. Emmanuel Bernaszuk',$this->entity->getBillingName());
-		$this->assertSame($this->address,$this->entity->getBillingAddress());
+		$this->assertSame((string)$this->address,$this->entity->getBillingAddress());
 	}
 	
 	public function providerAccountNumber()
@@ -128,6 +128,6 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
 	{
 		$address = $this->getMock('JLM\ContactBundle\Model\AddressInterface');
 		$this->entity->setBillingAddress($address);
-		$this->assertSame($address, $this->entity->getBillingAddress());
+		$this->assertSame((string)$address, $this->entity->getBillingAddress());
 	}
 }

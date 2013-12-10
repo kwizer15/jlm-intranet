@@ -5,6 +5,9 @@ namespace JLM\ContactBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JLM\ContactBundle\Model\AddressInterface;
 use JLM\ContactBundle\Model\ContactInterface;
+use JLM\ContactBundle\Model\ContactAddressInterface;
+use JLM\ContactBundle\Model\ContactEmailInterface;
+use JLM\ContactBundle\Model\ContactPhoneInterface;
 use JLM\ContactBundle\Model\BillableContact;
 
 class CustomerException extends \Exception {}
@@ -15,7 +18,7 @@ class CustomerException extends \Exception {}
  * @ORM\Table()
  * @ORM\Entity
  */
-class Customer implements BillableContact
+class Customer implements ContactInterface, BillableContact
 {
     /**
      * @var integer
@@ -98,14 +101,6 @@ class Customer implements BillableContact
     }
     
     /**
-     * Get name
-     */
-    public function getName()
-    {
-    	return $this->contact->getName();
-    }
-    
-    /**
      * Set billing name
      * @param string $name
      */
@@ -116,7 +111,7 @@ class Customer implements BillableContact
     }
     
     /**
-     * Get billing name
+     * {@inheritdoc}
      */
     public function getBillingName()
     {
@@ -135,20 +130,104 @@ class Customer implements BillableContact
     }
     
     /**
-     * Get billing address
-     * @return AddressInterface
+     * {@inheritdoc}
      */
     public function getBillingAddress()
     {
-    	return ($this->billingAddress === null) ? $this->getMainAddress() : $this->billingAddress;
+    	return ($this->billingAddress === null) ? (string)$this->getMainAddress() : (string)$this->billingAddress;
     }
     
     /**
-     * Get Main address
-     * @return AddressInterface
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+    	return $this->contact->getName();
+    }
+    
+    /**
+     * {@inheritdoc}
      */
     public function getMainAddress()
     {
     	return $this->contact->getMainAddress();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function addEmail(ContactEmailInterface $email)
+    {
+    	$this->contact->addEmail($email);
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function removeEmail(ContactEmailInterface $email)
+    {
+    	$this->contact->removeEmail($email);
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getEmails()
+    {
+    	return $this->contact->getEmails();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function addAddress(ContactAddressInterface $address)
+    {
+    	$this->contact->addAddress($address);
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function removeAddress(ContactAddressInterface $address)
+    {
+    	$this->contact->removeAddress($address);
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getAddresses()
+    {
+    	return $this->contact->getAddresses();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function addPhone(ContactPhoneInterface $phone)
+    {
+    	$this->contact->addPhone($phone);
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function removePhone(ContactPhoneInterface $phone)
+    {
+    	$this->contact->removePhone($phone);
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getPhones()
+    {
+    	return $this->contact->getPhones();
     }
 }
