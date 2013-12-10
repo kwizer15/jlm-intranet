@@ -10,6 +10,9 @@ class CityRepositoryFunctionalTest extends WebTestCase
 	 */
 	private $em;
 	
+	/**
+	 * @{inheritdoc}
+	 */
 	public function setUp()
 	{
 		static::$kernel = static::createKernel();
@@ -17,11 +20,27 @@ class CityRepositoryFunctionalTest extends WebTestCase
 		$this->em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 	}
 	
-	public function testSearch()
+	/**
+	 * @test
+	 */
+	public function testSearchByCityName()
 	{
 		$cities = $this->em
 			->getRepository('JLMContactBundle:City')
 			->searchResult('othis')
+		;
+	
+		$this->assertCount(1, $cities);
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testSearchByCityZip()
+	{
+		$cities = $this->em
+		->getRepository('JLMContactBundle:City')
+		->searchResult('77280')
 		;
 	
 		$this->assertCount(1, $cities);
