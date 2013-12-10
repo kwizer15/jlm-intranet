@@ -50,6 +50,12 @@ interface ContactInterface
 	public function getAddresses();
 	
 	/**
+	 * Get Main Address
+	 * @return AddressInterface
+	 */
+	public function getMainAddress();
+	
+	/**
 	 * Add a Phone
 	 * @param PhoneInterface $phone
 	 * @return self

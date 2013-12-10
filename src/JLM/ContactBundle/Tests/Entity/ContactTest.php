@@ -85,6 +85,19 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @test
 	 */
+	public function testgetMainAddress()
+	{
+		$mainAddress = $this->getMock('JLM\ContactBundle\Model\ContactAddressInterface');
+		$mainAddress->expects($this->once())->method('isMain')->will($this->returnValue(true));
+		$this->entity->addAddress($this->address);
+		$this->entity->addAddress($mainAddress);
+		$this->assertSame($mainAddress, $this->entity->getMainAddress());
+	}
+	
+	
+	/**
+	 * @test
+	 */
 	public function testAddPhone()
 	{
 		$this->assertSame($this->entity, $this->entity->addPhone($this->phone));

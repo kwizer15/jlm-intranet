@@ -162,5 +162,12 @@ abstract class Contact implements ContactInterface
         return $this->addresses;
     }
     
+    public function getMainAddress()
+    {
+    	foreach ($this->addresses as $address)
+    		if ($address->isMain())
+    			return $address;
+    	return null;
+    }
     
 }

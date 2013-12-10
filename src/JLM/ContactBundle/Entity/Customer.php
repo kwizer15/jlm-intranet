@@ -3,6 +3,8 @@
 namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JLM\ContactBundle\Model\AddressInterface;
+use JLM\ContactBundle\Model\ContactInterface;
 
 class CustomerException extends \Exception {}
 
@@ -38,6 +40,29 @@ class Customer
     private $contact;
 
     /**
+     * @var string|null
+     * 
+     * @ORM\Column(name="billing_name", type="string", nullable=true)
+     */
+    private $billingName;
+    
+    /**
+     * @var AddressInterface
+     *
+     * @ORM\Column(targetEntity="JLM\ContactBundle\Model\AddressInterface")
+     */
+    private $billingAddress;
+    
+    /**
+     * Constructor
+     * @param ContactInterface $contact
+     */
+    public function __construct(ContactInterface $contact)
+    {
+    	$this->contact = $contact;
+    }
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -70,27 +95,59 @@ class Customer
     {
         return $this->accountNumber;
     }
-
-    /**
-     * Set contact
-     *
-     * @param \JLM\ContactBundle\Entity\Contact $contact
-     * @return Customer
-     */
-    public function setContact(\JLM\ContactBundle\Entity\Contact $contact = null)
-    {
-        $this->contact = $contact;
     
-        return $this;
-    }
-
     /**
-     * Get contact
-     *
-     * @return \JLM\ContactBundle\Entity\Contact 
+     * Get name
      */
-    public function getContact()
+    public function getName()
     {
-        return $this->contact;
+    	return $this->contact->getName();
+    }
+    
+    /**
+     * Set billing name
+     * @param string $name
+     */
+    public function setBillingName($name = null)
+    {
+    	$this->billingName = $name;
+    	return $this;
+    }
+    
+    /**
+     * Get billing name
+     */
+    public function getBillingName()
+    {
+    	return ($this->billingName === null) ? $this->getName() : $this->billingName;
+    }
+    
+    /**
+     * Set billing address
+     * @param AddressInterface|null $address
+     * @return self
+     */
+    public function setBillingAddress(AddressInterface $address = null)
+    {
+    	$this->billingAddress = $address;
+    	return $this;
+    }
+    
+    /**
+     * Get billing address
+     * @return AddressInterface
+     */
+    public function getBillingAddress()
+    {
+    	return ($this->billingAddress === null) ? $this->getMainAddress() : $this->billingAddress;
+    }
+    
+    /**
+     * Get Main address
+     * @return AddressInterface
+     */
+    public function getMainAddress()
+    {
+    	return $this->contact->getMainAddress();
     }
 }

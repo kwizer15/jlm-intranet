@@ -11,8 +11,13 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->entity = new Customer;
-		$this->contact = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\Contact');
+		$this->address = $this->getMock('JLM\ContactBundle\Model\AddressInterface');
+		
+		
+		$this->contact = $this->getMockForAbstractClass('JLM\ContactBundle\Model\ContactInterface');
+		$this->contact->expects($this->any())->method('getName')->will($this->returnValue('M. Emmanuel Bernaszuk'));
+		$this->contact->expects($this->any())->method('getMainAddress')->will($this->returnValue($this->address));
+		$this->entity = new Customer($this->contact);
 	}
 	
 	/**
@@ -21,33 +26,9 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
 	public function assertPreConditions()
 	{
 		$this->assertNull($this->entity->getId());
-	}
-	
-	/**
-	 * @test
-	 */
-	public function testSetContact()
-	{
-		$this->assertSame($this->entity, $this->entity->setContact($this->contact));
-	}
-	
-	/**
-	 * @test
-	 * @expectedException \Exception
-	 */
-	public function testSetContactException()
-	{
-		$this->entity->setContact('foo');
-	}
-	
-	/**
-	 * @test
-	 * @depends testSetContact
-	 */
-	public function testGetContact()
-	{
-		$this->entity->setContact($this->contact);
-		$this->assertSame($this->contact,$this->entity->getContact());
+		$this->assertSame('M. Emmanuel Bernaszuk',$this->entity->getName());
+		$this->assertSame('M. Emmanuel Bernaszuk',$this->entity->getBillingName());
+		$this->assertSame($this->address,$this->entity->getBillingAddress());
 	}
 	
 	public function providerAccountNumber()
@@ -95,5 +76,58 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->entity->setAccountNumber($in);
 		$this->assertSame($out,$this->entity->getAccountNumber());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testGetName()
+	{
+		$this->assertSame('M. Emmanuel Bernaszuk',$this->entity->getName());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testSetBillingName()
+	{
+		$this->assertSame($this->entity, $this->entity->setBillingName('Manu'));
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testGetBillingName()
+	{
+		$this->entity->setBillingName('Manu');
+		$this->assertSame('Manu',$this->entity->getBillingName());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testRemoveBillingName()
+	{
+		$this->entity->setBillingName('Manu');
+		$this->entity->setBillingName();
+		$this->assertSame('M. Emmanuel Bernaszuk',$this->entity->getBillingName());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testSetBillingAddress()
+	{
+		$this->assertSame($this->entity, $this->entity->setBillingAddress($this->getMock('JLM\ContactBundle\Model\AddressInterface')));
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testGetBillingAddress()
+	{
+		$address = $this->getMock('JLM\ContactBundle\Model\AddressInterface');
+		$this->entity->setBillingAddress($address);
+		$this->assertSame($address, $this->entity->getBillingAddress());
 	}
 }

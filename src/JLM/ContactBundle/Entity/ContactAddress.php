@@ -57,11 +57,9 @@ class ContactAddress extends ContactData implements ContactAddressInterface
         return $this;
     }
     
-    /**
-     * Is main
-     *
-     * @return boolean
-     */
+	/**
+	 * {@inheritdoc}
+	 */
     public function isMain()
     {
     	return $this->main;

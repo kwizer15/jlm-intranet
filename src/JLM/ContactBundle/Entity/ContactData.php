@@ -107,6 +107,9 @@ abstract class ContactData implements ContactDataInterface
 		return $this->contact;
 	}
 	
+	/**
+	 * {@inheritdoc}
+	 */
 	abstract public function __toString();
 	
 }
