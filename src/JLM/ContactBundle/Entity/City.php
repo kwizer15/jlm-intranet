@@ -38,7 +38,7 @@ class City implements CityInterface
     /**
      * @var CountryInterface $country
      * 
-     * @ORM\ManyToOne(targetEntity="CountryInterface")
+     * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\CountryInterface")
      * @ORM\JoinColumn(name="country_code", referencedColumnName="code")
      * @Assert\NotNull
      * @Assert\Valid
