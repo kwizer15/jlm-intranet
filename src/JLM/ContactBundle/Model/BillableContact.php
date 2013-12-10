@@ -1,5 +1,5 @@
 <?php
-namespace JLM\BillBundle\Model;
+namespace JLM\ContactBundle\Model;
 
 interface BillableContact
 {
