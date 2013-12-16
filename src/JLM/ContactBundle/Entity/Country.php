@@ -40,10 +40,12 @@ class Country implements CountryInterface
     /**
      * {@inheritdoc}
      */
-    public function __construct($code, $name)
+    public function __construct($code = null, $name = null)
     {
-    	$this->setCode($code);
-    	$this->setName($name);
+    	if ($code !== null)
+    		$this->setCode($code);
+    	if ($name !== null)
+    		$this->setName($name);
     }
     
     /**
