@@ -10,19 +10,28 @@ use JLM\ContactBundle\Entity\Address;
 
 class AddressType extends AbstractType
 {
+	/**
+	 * {@inheritdoc}
+	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-		->add('street',null,array('label'=>'Adresse','attr'=>array('class'=>'input-xlarge')))
-		->add('city',null,array('label'=>'Ville','attr'=>array('class'=>'input-xlarge')))
+				->add('street',null,array('label'=>'Adresse','attr'=>array('class'=>'input-xlarge')))
+				->add('city',null,array('label'=>'Ville','attr'=>array('class'=>'input-xlarge')))
 		;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getName()
 	{
 		return 'jlm_contactbundle_addresstype';
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
 	{
 		$resolver->setDefaults(array(
