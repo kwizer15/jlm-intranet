@@ -97,12 +97,4 @@ class Country implements CountryInterface
      {
      	return $this->getName();
      }
-     
-     /**
-      * @Assert\True
-      */
-     public function isValid()
-     {
-     	return $this->getCode() !== null && $this->getName() !== null;
-     }
 }
