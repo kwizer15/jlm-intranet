@@ -16,10 +16,11 @@ class CountryTypeTest extends TypeTestCase
 	public function validData()
 	{
 		return array(
-			array('FR','France'),
+				array('FR','France'),
+				array('GBT','Great Britain'),
 		);
 	}
-
+	
 	/**
 	 * @dataProvider validData
 	 */
@@ -36,8 +37,6 @@ class CountryTypeTest extends TypeTestCase
 		$this->form->submit($formData);
 		
 		$this->assertTrue($this->form->isSynchronized());
-		var_dump($this->form->getData());
-		var_dump($object);
 		$this->assertEquals($object, $this->form->getData());
 		
 		
@@ -48,5 +47,4 @@ class CountryTypeTest extends TypeTestCase
 			$this->assertArrayHasKey($key, $children);
 		}
 	}
-	
 }

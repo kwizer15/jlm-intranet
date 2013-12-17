@@ -27,10 +27,7 @@ class CountryType extends AbstractType
     {
         $resolver->setDefaults(array(
 				'data_class' => 'JLM\ContactBundle\Entity\Country',
-				'empty_data' => function (FormInterface $form) {
-					$datas = $form->getData();
-					return new Country($datas['code'],$datas['name']);
-				},
+				
 		));
 	}
 }
