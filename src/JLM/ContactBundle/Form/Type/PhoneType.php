@@ -12,11 +12,15 @@ use JLM\ContactBundle\Model\PhoneRuleInterface;
 class PhoneType extends AbstractType
 {
 	/**
-	 * 
+	 * Rule
 	 * @var PhoneRuleInterface
 	 */
 	private $rule;
 	
+	/**
+	 * Constructor
+	 * @param PhoneRuleInterface $rule
+	 */
 	public function __construct(PhoneRuleInterface $rule)
 	{
 		$this->rule = $rule;
