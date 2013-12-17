@@ -109,7 +109,7 @@ class PhoneRule implements PhoneRuleInterface
     public function setLocalCode($localCode)
     {
     	if (!is_integer($localCode))
-    		throw new PhoneRuleException('Telephone international code invalid');
+    		throw new PhoneRuleException('Telephone local code invalid');
     	if ($localCode < 0 || $localCode > 9999)
     		throw new PhoneRuleException('Telephone local code "'.$localCode.'" invalid');
         $this->localCode = (int)$localCode;
