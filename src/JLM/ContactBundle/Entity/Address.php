@@ -101,6 +101,8 @@ class Address implements AddressInterface
      */
     public function getCity()
     {
+    	if ($this->city === null)
+    		return '';
     	return (string)$this->city->getName();
     }
     
@@ -109,6 +111,8 @@ class Address implements AddressInterface
      */
     public function getZip()
     {
+    //	if ($this->city === null)
+    //		return '';
     	return (string)$this->city->getZip();
     }
     
@@ -117,6 +121,8 @@ class Address implements AddressInterface
      */
     public function getCountry()
     {
+    //	if ($this->city === null)
+    //		return '';
     	return (string)$this->city->getCountry();
     }
     
