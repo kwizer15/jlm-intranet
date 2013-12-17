@@ -32,7 +32,7 @@ class CountryTest extends \PHPUnit_Framework_TestCase
 		);
 	}
 	
-	public function providerCodeException()
+	public function providerBadCode()
 	{
 		return array(
 				array('2  '),
@@ -54,12 +54,12 @@ class CountryTest extends \PHPUnit_Framework_TestCase
 	
 	/**
 	 * @test
-	 * @dataProvider providerCodeException
-	 * @expectedException JLM\ContactBundle\Entity\CountryException
+	 * @dataProvider providerBadCode
 	 */
-	public function testSetCodeException($in)
+	public function testSetCodeWithBadParameter($in)
 	{
 		$this->entity->setCode($in);
+		$this->assertNull($this->entity->getCode());
 	}
 	
 	/**
@@ -83,7 +83,7 @@ class CountryTest extends \PHPUnit_Framework_TestCase
 		);
 	}
 	
-	public function providerNameException()
+	public function providerBadName()
 	{
 		return array(
 				array('2'),
@@ -101,12 +101,12 @@ class CountryTest extends \PHPUnit_Framework_TestCase
 	
 	/**
 	 * @test
-	 * @dataProvider providerNameException
-	 * @expectedException JLM\ContactBundle\Entity\CountryException
+	 * @dataProvider providerBadName
 	 */
-	public function testSetNameException($in)
+	public function testSetNameWithBadParameter($in)
 	{
 		$this->entity->setName($in);
+		$this->assertNull($this->entity->getName());
 	}
 	
 	/**

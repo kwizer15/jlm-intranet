@@ -24,9 +24,10 @@ class Country implements CountryInterface
      *
      * @ORM\Column(name="code", type="string", length=2)
      * @ORM\Id
+     * 
      * @Assert\Type(type="string")
      * @Assert\Length(min=2,max=2)
-     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $code;
     
@@ -34,6 +35,10 @@ class Country implements CountryInterface
      * @var string $name
      * 
      * @ORM\Column(name="name", type="string", length=255)
+     * 
+     * @Assert\Type(type="string")
+     * @Assert\Length(min=1)
+     * @Assert\NotNull
      */
     private $name;
     
@@ -50,15 +55,12 @@ class Country implements CountryInterface
     
     /**
      * {@inheritdoc}
-     * @throws CountryException
      */
     public function setCode($code)
     {
     	// Filtrage
     	$code = strtoupper(substr(trim($code),0,2));
-    	if (!preg_match('#^[A-Z]{2}$#',$code))
-    		throw new CountryException('Code pays incorrect');
-    	$this->code = $code;
+    	$this->code = (preg_match('#^[A-Z]{2}$#',$code)) ? $code : null;
     	return $this;
     }
 
@@ -76,9 +78,7 @@ class Country implements CountryInterface
     public function setName($name)
     {
     	$name = ucwords(strtolower(trim($name)));
-    	if (!preg_match('#^[ \-A-z]+$#',$name))
-    		throw new CountryException('Country name invalid');
-    	$this->name = $name;
+    	$this->name = (preg_match('#^[ \-A-z]+$#',$name)) ? $name : null;
     	return $this;
     }
     
@@ -96,5 +96,13 @@ class Country implements CountryInterface
      public function __toString()
      {
      	return $this->getName();
+     }
+     
+     /**
+      * @Assert\True
+      */
+     public function isValid()
+     {
+     	return $this->getCode() !== null && $this->getName() !== null;
      }
 }
