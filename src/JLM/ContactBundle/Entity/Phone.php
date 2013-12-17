@@ -34,9 +34,10 @@ class Phone implements PhoneInterface
     /**
      * Construct
      */
-    public function __construct(PhoneRuleInterface $rule)
+    public function __construct(PhoneRuleInterface $rule, $number = null)
     {
-    	$this->rule = $rule;
+    	$this->setRule($rule);
+    	$this->setNumber($number);
     }
     
     /**
@@ -69,6 +70,11 @@ class Phone implements PhoneInterface
      */
     public function setNumber($number)
     {
+    	if ($number === null)
+    	{
+    		$this->number = null;
+    		return $this;
+    	}
     	$number = strtoupper(trim($number));
     	if (!$this->getRule()->isValid($number))
     		throw new PhoneException('Number format not compatible with PhoneRule');
