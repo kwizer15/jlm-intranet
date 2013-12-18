@@ -203,12 +203,8 @@ class BillController extends Controller
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
-            $number = $entity->getCreation()->format('ym');
-            $n = ($em->getRepository('JLMOfficeBundle:Bill')->getLastNumber() + 1);
-            for ($i = strlen($n); $i < 4 ; $i++)
-            	$number.= '0';
-            $number.= $n;
-            $entity->setNumber($number);
+            
+            // On sauve les lignes
             $lines = $entity->getLines();
             foreach ($lines as $line)
             {
