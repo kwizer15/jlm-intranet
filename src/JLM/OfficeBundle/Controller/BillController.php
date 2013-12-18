@@ -203,14 +203,6 @@ class BillController extends Controller
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
-            
-            // On sauve les lignes
-            $lines = $entity->getLines();
-            foreach ($lines as $line)
-            {
-            	$line->setBill($entity);
-            	$em->persist($line);
-            }
             $em->persist($entity);
             $interv = $entity->getIntervention();
             if ($interv !== null)
@@ -269,26 +261,23 @@ class BillController extends Controller
         $editForm = $this->createForm(new BillType(), $entity);
         $editForm->bind($request);
         
-        if ($editForm->isValid()) {
+        if ($editForm->isValid())
+        {
         	$em = $this->getDoctrine()->getManager();
-        	$em->persist($entity);
+        	$lines = $entity->getLines();
+        	foreach ($lines as $key => $line)
+        	{
+        		$line->setBill($entity);
+        		$em->persist($line);
+        		// On vire les anciennes lignes
+        		foreach ($originalLines as $key => $toDel)
+        			if ($toDel->getId() === $line->getId())
+        				unset($originalLines[$key]);
+        	}
+        	foreach ($originalLines as $line)
+        		$em->remove($line);
 
-            foreach ($entity->getLines() as $key => $line)
-            {
-            
-            	// Nouvelles lignes
-            	$line->setBill($entity);
-            	$em->persist($line);
-            
-            	// On vire les anciennes
-            	foreach ($originalLines as $key => $toDel)
-            	if ($toDel->getId() === $line->getId())
-            		unset($originalLines[$key]);
-            }
-            foreach ($originalLines as $line)
-            {
-            	$em->remove($line);
-            }
+        	$em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
         }
