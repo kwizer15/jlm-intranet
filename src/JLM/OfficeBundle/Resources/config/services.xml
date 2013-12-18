@@ -5,6 +5,9 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     
     <services>
+    	<service id="jlm_office.listener.billnumbergenerator_listener" class="JLM\OfficeBundle\EventListener\BillNumberGenerator">
+            <tag name="doctrine.event_listener" event="prePersist" />
+        </service>
     	<service id="jlm_office.eventlistener.billcount_listener" class="JLM\OfficeBundle\EventListener\BillCountListener">
         	<argument type="service" id="doctrine.orm.entity_manager"/>
     		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
