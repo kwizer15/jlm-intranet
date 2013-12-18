@@ -204,12 +204,6 @@ class BillController extends Controller
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
-            $interv = $entity->getIntervention();
-            if ($interv !== null)
-            {
-            	$interv->setBill($entity);
-            	$em->persist($interv);
-            }
             $em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));  
