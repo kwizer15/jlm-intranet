@@ -6,6 +6,10 @@ use JLM\OfficeBundle\Entity\Bill;
 
 class BillNumberGenerator
 {
+	/**
+	 * PrePersist
+	 * @param LifecycleEventArgs $args
+	 */
 	public function prePersist(LifecycleEventArgs $args)
 	{
 		$entity = $args->getEntity();
