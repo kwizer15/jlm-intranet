@@ -1,8 +1,16 @@
 <?php
-namespace JLM\ModelBundle\Entity;
+namespace JLM\FeeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
+use JLM\ModelBundle\Entity\VAT;
+use JLM\ModelBundle\Entity\Contract;
+use JLM\ModelBundle\Entity\Trustee;
+use JLM\ModelBundle\Entity\Product;
+
+use JLM\OfficeBundle\Entity\Bill;
+use JLM\OfficeBundle\Entity\BillLine;
 
 /**
  * 
@@ -182,7 +190,7 @@ class Fee
      * @param JLM\ModelBundle\Entity\Contract $contracts
      * @return Fee
      */
-    public function addContract(\JLM\ModelBundle\Entity\Contract $contracts)
+    public function addContract(Contract $contracts)
     {
         $this->contracts[] = $contracts;
     
@@ -194,7 +202,7 @@ class Fee
      *
      * @param JLM\ModelBundle\Entity\Contract $contracts
      */
-    public function removeContract(\JLM\ModelBundle\Entity\Contract $contracts)
+    public function removeContract(Contract $contracts)
     {
         $this->contracts->removeElement($contracts);
     }
@@ -215,7 +223,7 @@ class Fee
      * @param JLM\ModelBundle\Entity\Trustee $trustee
      * @return Fee
      */
-    public function setTrustee(\JLM\ModelBundle\Entity\Trustee $trustee = null)
+    public function setTrustee(Trustee $trustee = null)
     {
         $this->trustee = $trustee;
     
@@ -312,13 +320,12 @@ class Fee
     	return $group;
     }
     
-    public function getBill($number, Product $product,\JLM\OfficeBundle\Entity\FeesFollower $follower)
+    public function getBill(Product $product, FeesFollower $follower)
     {
-    	$bill = new \JLM\OfficeBundle\Entity\Bill;
+    	$bill = new Bill;
     	$bill->setFee($this);
     	$bill->setFeesFollower($follower);
     	$bill->setCreation(new \DateTime);
-    	$bill->setNumber($number);
     	$bill->setTrustee($this->getTrustee());
     	$bill->setTrusteeName($this->getTrustee()->getName());
     	$bill->setTrusteeAddress($this->getBillingAddress());
@@ -352,7 +359,7 @@ class Fee
     		$periods = array('1'=>'P1Y','2'=>'P6M','4'=>'P3M');
     		$end->add(new \DateInterval($periods[$this->getFrequence()]));
     		$end->sub(new \DateInterval('P1D'));
-    		$line = new \JLM\OfficeBundle\Entity\BillLine();
+    		$line = new BillLine();
     		$line->setBill($bill);
     		$line->setPosition($key);
     		$line->setReference($product->getReference());

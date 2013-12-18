@@ -1,5 +1,5 @@
 <?php
-namespace JLM\ModelBundle\Form\Type;
+namespace JLM\FeeBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,7 +27,7 @@ class FeeType extends AbstractType
 	public function getDefaultOptions(array $options)
 	{
 		return array(
-				'data_class' => 'JLM\ModelBundle\Entity\Fee',
+				'data_class' => 'JLM\FeeBundle\Entity\Fee',
 		);
 	}
 }

@@ -1,5 +1,5 @@
 <?php
-namespace JLM\OfficeBundle\Controller;
+namespace JLM\FeeBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -73,7 +73,8 @@ class FeesController extends Controller
 		$editForm = $this->createForm(new FeesFollowerType(), $entity);
 		$editForm->bind($request);
 	
-		if ($editForm->isValid()) {
+		if ($editForm->isValid())
+		{
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
 			$em->flush();
@@ -92,36 +93,24 @@ class FeesController extends Controller
 	 * @Route("/{id}/generate", name="fees_generate")
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function generateAction(Request $request,FeesFollower $entity)
+	public function generateAction(FeesFollower $entity)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$today = new \DateTime;
-		$number = $today->format('ym');
-		$n = $em->getRepository('JLMOfficeBundle:Bill')->getLastNumber();
 		$vattrans = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
 		$product = $em->getRepository('JLMModelBundle:Product')->find(2); // Produit redevance
-		$frequences = array();
-		if ($entity->getFrequence1() !== null)
-			$frequences[] = 1;
-		if ($entity->getFrequence2() !== null)
-			$frequences[] = 2;
-		if ($entity->getFrequence4() !== null)
-			$frequences[] = 4;
-		foreach ($frequences as $frequence)
+		foreach (array(1,2,4) as $frequence)
 		{
 			$gf = 'getFrequence'.$frequence;
-			$fees = $em->getRepository('JLMModelBundle:Fee')->findBy(array('frequence'=>$frequence));	
-			foreach ($fees as $fee)
+			if ($entity->$gf() !== null)
 			{
-				$n++;
-				for ($i = strlen($n); $i < 4 ; $i++)
-					$number.= '0';
-				$number.= $n;
-				$bill = $fee->getBill($number,$product,$entity);
-				$bill->setVatTransmitter($vattrans);
-				$em->persist($bill);
-				foreach ($bill->getLines() as $line)
-					$em->persist($line);
+				$fees = $em->getRepository('JLMModelBundle:Fee')->findBy(array('frequence'=>$frequence));	
+				foreach ($fees as $fee)
+				{
+					$bill = $fee->getBill($product,$entity);
+					$bill->setVatTransmitter($vattrans);
+					$em->persist($bill);
+				}
 			}
 		}
 		$em->flush();
