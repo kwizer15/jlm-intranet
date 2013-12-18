@@ -32,6 +32,13 @@ class BillNumberGenerator
 				$line->setBill($entity);
 				$em->persist($line);
 			}
+			
+			$interv = $entity->getIntervention();
+			if ($interv !== null)
+			{
+				$interv->setBill($entity);
+				$em->persist($interv);
+			}
 		}
 	}
 }
