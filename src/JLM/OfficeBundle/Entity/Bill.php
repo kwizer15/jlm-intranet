@@ -556,12 +556,13 @@ class Bill extends Document implements BillInterface
     /**
      * Add lines
      *
-     * @param JLM\OfficeBundle\Entity\BillLine $lines
+     * @param JLM\OfficeBundle\Entity\BillLine $line
      * @return Bill
      */
-    public function addLine(\JLM\OfficeBundle\Entity\BillLine $lines)
+    public function addLine(\JLM\OfficeBundle\Entity\BillLine $line)
     {
-        $this->lines[] = $lines;
+    	$line->setBill($this);
+        $this->lines[] = $line;
     
         return $this;
     }
@@ -569,11 +570,13 @@ class Bill extends Document implements BillInterface
     /**
      * Remove lines
      *
-     * @param JLM\OfficeBundle\Entity\BillLine $lines
+     * @param JLM\OfficeBundle\Entity\BillLine $line
      */
-    public function removeLine(\JLM\OfficeBundle\Entity\BillLine $lines)
+    public function removeLine(\JLM\OfficeBundle\Entity\BillLine $line)
     {
-        $this->lines->removeElement($lines);
+    	$line->setBill(null);
+        $this->lines->removeElement($line);
+        return $this;
     }
 
     /**
