@@ -11,13 +11,15 @@ use JLM\ModelBundle\Entity\Trustee;
 use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\DailyBundle\Entity\Intervention;
 
+use JLM\BillBundle\Model\BillInterface;
+
 /**
  * JLM\OfficeBundle\Entity\Bill
  *
  * @ORM\Table(name="bill")
  * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\BillRepository")
  */
-class Bill extends Document
+class Bill extends Document implements BillInterface
 {
 	/**
 	 * @var int $id
