@@ -24,6 +24,14 @@ class BillNumberGenerator
 				$number.= '0';
 			$number.= $n;
 			$entity->setNumber($number);
+			
+			$lines = $entity->getLines();
+			
+			foreach ($lines as $line)
+			{
+				$line->setBill($entity);
+				$em->persist($line);
+			}
 		}
 	}
 }
