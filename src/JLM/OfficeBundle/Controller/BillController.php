@@ -96,7 +96,7 @@ class BillController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
 		$entity->setVat($vat);
-		$this->finishNewBill($entity);
+		$entity = $this->finishNewBill($entity);
         $entity->addLine(new BillLine);
         $form   = $this->createForm(new BillType, $entity);
 
@@ -118,7 +118,7 @@ class BillController extends Controller
     	$entity = new Bill();
     	$entity->setCreation(new \DateTime);
     	$entity->populateFromDoor($door);
-    	$this->finishNewBill($entity);
+    	$entity = $this->finishNewBill($entity);
     	$entity->addLine(new BillLine);
     	$form   = $this->createForm(new BillType, $entity);
     
@@ -140,7 +140,7 @@ class BillController extends Controller
     	$entity = new Bill();
     	$entity->setCreation(new \DateTime);
     	$entity->populateFromQuoteVariant($quote);
-    	$this->finishNewBill($entity);
+    	$entity = $this->finishNewBill($entity);
     	$form   = $this->createForm(new BillType, $entity);
     
     	return array(
@@ -162,7 +162,7 @@ class BillController extends Controller
     	$entity->setCreation(new \DateTime);
     	
     	$entity->populateFromIntervention($interv);
-    	$this->finishNewBill($entity);
+    	$entity = $this->finishNewBill($entity);
     	$form   = $this->createForm(new BillType, $entity);
     
     	return array(
@@ -181,6 +181,7 @@ class BillController extends Controller
     	$entity->setProperty($em->getRepository('JLMOfficeBundle:PropertyModel')->find(1).'');
     	$entity->setEarlyPayment($em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1).'');
     	$entity->setMaturity(30);
+    	return $entity;
     }
     
     /**
@@ -203,13 +204,13 @@ class BillController extends Controller
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
             $interv = $entity->getIntervention();
             if ($interv !== null)
             {
             	$interv->setBill($entity);
             	$em->persist($interv);
             }
+            $em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));  
         }
@@ -259,23 +260,22 @@ class BillController extends Controller
     	foreach ($entity->getLines() as $line)
     		$originalLines[] = $line;
         $editForm = $this->createForm(new BillType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
         
         if ($editForm->isValid())
         {
         	$em = $this->getDoctrine()->getManager();
-        	$lines = $entity->getLines();
-        	foreach ($lines as $key => $line)
-        	{
-        		$line->setBill($entity);
-        		$em->persist($line);
-        		// On vire les anciennes lignes
-        		foreach ($originalLines as $key => $toDel)
-        			if ($toDel->getId() === $line->getId())
-        				unset($originalLines[$key]);
-        	}
-        	foreach ($originalLines as $line)
-        		$em->remove($line);
+	       	$lines = $entity->getLines();
+	       	foreach ($lines as $key => $line)
+	       	{
+	       		$line->setBill($entity);
+	       		$em->persist($line);
+	       		foreach ($originalLines as $key => $toDel)
+	       			if ($toDel->getId() === $line->getId())
+	       				unset($originalLines[$key]);
+	       	}
+	       	foreach ($originalLines as $line)
+	       		$em->remove($line);
 
         	$em->persist($entity);
             $em->flush();
