@@ -311,7 +311,7 @@ class Bill extends FPDFext
 		// Police Arial italique 8
 		$this->setFont('Arial','',12);
 		// Numéro de page
-		$this->cell(0,10,$this->PageNo().'/{nb}',0,0,'R');
+		//$this->cell(0,10,$this->PageNo().'/{nb}',0,0,'R');
 	}
 
 }
