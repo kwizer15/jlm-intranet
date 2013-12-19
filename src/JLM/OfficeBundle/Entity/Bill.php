@@ -82,7 +82,7 @@ class Bill extends Document implements BillInterface
 	 * Redevance
 	 * @var Fee
 	 * 
-	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Fee")
+	 * @ORM\ManyToOne(targetEntity="JLM\FeeBundle\Entity\Fee")
 	 */
 	private $fee;
 	
@@ -90,7 +90,7 @@ class Bill extends Document implements BillInterface
 	 * Suivi de redevance
 	 * @var FeesFollower
 	 * 
-	 * @ORM\ManyToOne(targetEntity="FeesFollower")
+	 * @ORM\ManyToOne(targetEntity="JLM\FeeBundle\Entity\FeesFollower")
 	 */
 	private $feesFollower;
 	
@@ -461,7 +461,7 @@ class Bill extends Document implements BillInterface
      * @param JLM\ModelBundle\Entity\Fee $fee
      * @return Bill
      */
-    public function setFee(\JLM\ModelBundle\Entity\Fee $fee = null)
+    public function setFee(\JLM\FeeBundle\Entity\Fee $fee = null)
     {
         $this->fee = $fee;
     
@@ -484,7 +484,7 @@ class Bill extends Document implements BillInterface
      * @param JLM\OfficeBundle\Entity\FeesFollower $feesFollower
      * @return Bill
      */
-    public function setFeesFollower(\JLM\OfficeBundle\Entity\FeesFollower $feesFollower = null)
+    public function setFeesFollower(\JLM\FeeBundle\Entity\FeesFollower $feesFollower = null)
     {
         $this->feesFollower = $feesFollower;
     
