@@ -19,7 +19,7 @@
 <td>{% if entity.frequence1 is not null  %}oui{% if entity.frequence1 > 0 %} +{{ entity.frequence1*100 | number_format(1,',',' ') }}%{% endif %}{% endif %}</td>
 <td>{% if entity.frequence2 is not null %}oui{% if entity.frequence2 > 0 %} +{{ entity.frequence2*100 | number_format(1,',',' ') }}%{% endif %}{% endif %}</td>
 <td>{% if entity.frequence4 is not null %}oui{% if entity.frequence4 > 0 %} +{{ entity.frequence4*100 | number_format(1,',',' ') }}%{% endif %}{% endif %}</td>
-<td>{% if entity.generation %}{{  entity.generation | date('d/m/Y') }}{% elseif entity.active %}<a href="" class="btn">Générer</a>{% endif %}</td>
+<td>{% if entity.generation %}{{  entity.generation | date('d/m/Y') }}{% elseif entity.active %}<a href="{{ path('fees_generate', {'id' : entity.id }) }}" class="btn">Générer</a>{% endif %}</td>
 </tr>
 {% endfor %}
 </tbody>

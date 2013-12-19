@@ -31,7 +31,7 @@ class Fee
 	
 	/**
 	 * @var ArrayCollection $contracts
-	 * @ORM\ManyToMany(targetEntity="Contract")
+	 * @ORM\ManyToMany(targetEntity="JLM\ModelBundle\Entity\Contract")
 	 * @ORM\JoinTable(name="fees_contracts",
 	 * 				  joinColumns={@ORM\JoinColumn(name="fee_id", referencedColumnName="id")},
 	 * 				  inverseJoinColumns={@ORM\JoinColumn(name="contract_id", referencedColumnName="id")}
@@ -42,7 +42,7 @@ class Fee
 	
 	/**
 	 * @var Trustee $trustee
-	 * @ORM\ManyToOne(targetEntity="Trustee")
+	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Trustee")
 	 * @Assert\Valid
 	 */
 	private $trustee;
@@ -72,7 +72,7 @@ class Fee
 	
 	/**
 	 * @var Vat $vat
-	 * @ORM\ManyToOne(targetEntity="VAT")
+	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\VAT")
 	 * @Assert\Valid
 	 */
 	private $vat;
@@ -320,9 +320,10 @@ class Fee
     	return $group;
     }
     
-    public function getBill(Product $product, FeesFollower $follower)
+    public function getBill(Product $product, FeesFollower $follower, $number)
     {
     	$bill = new Bill;
+    	$bill->setNumber($number);
     	$bill->setFee($this);
     	$bill->setFeesFollower($follower);
     	$bill->setCreation(new \DateTime);
@@ -373,7 +374,7 @@ class Fee
     		$bill->addLine($line);
     	}
     	$bill->setEarlyPayment('0,00% pour paiement anticipé');
-    	$bill->setMaturity(null);
+    	$bill->setMaturity(30);
     	$bill->setPenalty('de 1,50% par mois pour paiement différé');
     	return $bill;
     }

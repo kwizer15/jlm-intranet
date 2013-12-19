@@ -70,7 +70,7 @@ class FeesFollower implements FeesFollowerInterface
      * @param \DateTime $activation
      * @return FeesFollower
      */
-    public function setActivation($activation)
+    public function setActivation(\DateTime $activation = null)
     {
         $this->activation = $activation;
     

@@ -18,12 +18,15 @@ class BillNumberGenerator
 		{
 			$em = $args->getEntityManager();
 			
-			$number = $entity->getCreation()->format('ym');
-			$n = ($em->getRepository('JLMOfficeBundle:Bill')->getLastNumber() + 1);
-			for ($i = strlen($n); $i < 4 ; $i++)
-				$number.= '0';
-			$number.= $n;
-			$entity->setNumber($number);
+			if ($entity->getNumber() === null)
+			{
+				$number = $entity->getCreation()->format('ym');
+				$n = ($em->getRepository('JLMOfficeBundle:Bill')->getLastNumber() + 1);
+				for ($i = strlen($n); $i < 4 ; $i++)
+					$number.= '0';
+				$number.= $n;
+				$entity->setNumber($number);
+			}
 			
 			$lines = $entity->getLines();
 			
