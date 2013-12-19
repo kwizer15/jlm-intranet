@@ -1,7 +1,7 @@
 jlm_fee:
     resource: "@JLMFeeBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /fee
 
 jlm_transmitter:
     resource: "@JLMTransmitterBundle/Controller/"
