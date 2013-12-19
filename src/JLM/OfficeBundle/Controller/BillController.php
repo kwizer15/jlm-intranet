@@ -87,42 +87,6 @@ class BillController extends PaginableController
 	{
 		return $this->pagination('JLMOfficeBundle:Bill','Canceled',$page,10,'bill_listcanceled_page');
 	}
-	
-    /**
-     * Lists all Bill entities.
-     *
-     * @Route("/page/{page}/state/{state}", name="bill_state")
-     * @Template()
-     * @Secure(roles="ROLE_USER")
-     */
-    public function stateAction($page = 1, $state = null)
-    {
-    	$limit = 10;
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('JLMOfficeBundle:Bill');
-        $nb = $repo->getCount($state);
-        	
-        $nbPages = ceil($nb/$limit);
-        $nbPages = ($nbPages < 1) ? 1 : $nbPages;
-        $offset = ($page-1) * $limit;
-        if ($page < 1 || $page > $nbPages)
-        {
-        	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
-        }
-        
-        $entities = $repo->getByState(
-        		$state,
-        		$limit,
-        		$offset
-        );
-        
-        return array(
-        		'entities' => $entities,
-        		'page'     => $page,
-        		'nbPages'  => $nbPages,
-        		'state' => $state,
-        );
-    }
     
     /**
      * Finds and displays a Bill entity.
