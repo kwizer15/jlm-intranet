@@ -115,8 +115,26 @@ class FeesFollowerController extends Controller
 				}
 			}
 		}
+		$entity->setGeneration(new \DateTime);
+		$em->persist($entity);
 		$em->flush();
 		
 		return $this->redirect($this->generateUrl('fees', array('id' => $entity->getId())));
+	}
+	
+	/**
+	 * Print bills
+	 * @Route("/{id}/print", name="fees_print")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function printAction(FeesFollower $follower)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$entities = $em->getRepository('JLMOfficeBundle:Bill')->findBy(array('feesFollower'=>$follower),array('number'=>'ASC'));
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/pdf');
+		$response->headers->set('Content-Disposition', 'inline; filename=redevances-'.$follower->getActivation()->format('m-Y').'.pdf');
+		$response->setContent($this->render('JLMOfficeBundle:Bill:print.pdf.php',array('entities'=>$entities,'duplicate'=>false)));
+		return $response;
 	}
 }
