@@ -69,7 +69,7 @@ class BillRepository extends SearchRepository
 			->setParameter(1,$state)
 			;
 		}
-		$qb->orderBy('t.creation','desc')
+		$qb->orderBy('t.number','desc')
 		->setFirstResult($offset)
 		->setMaxResults($limit);
 		return $qb->getQuery()->getResult();
