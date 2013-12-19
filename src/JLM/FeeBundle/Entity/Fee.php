@@ -166,6 +166,30 @@ class Fee
     }
     
     /**
+     * Get frequence string
+     *
+     * @return string
+     */
+    public function getFrequence()
+    {
+    	switch ($this->getFrequence())
+    	{
+    		case 1:
+    			return 'annuelle';
+    			break;
+    		case 2:
+    			return 'semestrielle';
+    			break;
+    		case 4:
+    			return 'trimestrielle';
+    			break;
+    		default:
+    			return '';
+    	}
+    	return '';
+    }
+    
+    /**
      * Set Vat
      * @return Fee
      */
@@ -279,7 +303,7 @@ class Fee
     	$address = $this->getTrustee()->getAddress();
 		$billingaddress = $this->getTrustee()->getBillingAddress();
 		if ($billingaddress)
-			if ($billingaddress->getStreet())
+			if ($billingaddress->getStreet() && $billingaddress->getCity() !== null)
 				return $billingaddress;
 		return $address;
     }
@@ -326,21 +350,23 @@ class Fee
     	$bill->setNumber($number);
     	$bill->setFee($this);
     	$bill->setFeesFollower($follower);
-    	$bill->setCreation(new \DateTime);
+    	$creation = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
+    	$creation->add(new \DateInterval('P1M'));
+    	$bill->setCreation($creation);
     	$bill->setTrustee($this->getTrustee());
     	$bill->setTrusteeName($this->getTrustee()->getName());
-    	$bill->setTrusteeAddress($this->getBillingAddress());
+    	$bill->setTrusteeAddress($this->getBillingAddress()->toString());
     	$bill->setAccountNumber($this->getTrustee()->getAccountNumber());
     	$bill->setPrelabel($this->getPrelabel());
     	$bill->setVat($this->getVat()->getRate());
     	$ref = '';
     	if ($this->getGroup() != '')
     		$ref .= 'Groupe : '.$this->getGroup().chr(10);
-    	$ref .= 'Contrat : ';
+    	$ref .= 'Contrat'.(count($this->getContractNumbers()) == 1) ?: 's'.' n°';
     	foreach ($this->getContractNumbers() as $key=>$n)
     	{
     		if ($key > 0)
-    			$ref .= ', ';
+    			$ref .= ', n°';
     		$ref .= $n;
     	}
     	$bill->setReference($ref);
@@ -364,7 +390,7 @@ class Fee
     		$line->setBill($bill);
     		$line->setPosition($key);
     		$line->setReference($product->getReference());
-    		$line->setDesignation($product->getDesignation().' du '.$begin->format('d/m/Y').' au '.$end->format('d/m/Y'));
+    		$line->setDesignation($product->getDesignation().' '.$this->getFrequenceString().' du '.$begin->format('d/m/Y').' au '.$end->format('d/m/Y'));
     		
     		$line->setShowDescription(true);
     		$line->setDescription($contract->getDoor()->getType().' / '.$contract->getDoor()->getLocation());
