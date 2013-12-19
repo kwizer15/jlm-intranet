@@ -2,7 +2,4 @@
 {% block content %}
 <h1>Liste des factures {{ bill_title|default('') }}</h1>
 {% include 'JLMOfficeBundle:Bill:list.html.twig' with {'entities':entities} %}
-<div class="form-actions">
-<a href="{{ path('bill_new') }}" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer une nouvelle facture</a>
-</div>
 {% endblock %}
