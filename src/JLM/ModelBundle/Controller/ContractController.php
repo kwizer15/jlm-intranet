@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -170,13 +171,12 @@ class ContractController extends Controller
      *
      * @Route("/{id}/update", name="contract_update")
      * @Method("post")
-     * @Template("JLMModelBundle:Contract:edit.html.twig")
+     * @Template("JLMModelBundle:Contract:edit.old.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function updateAction(Contract $entity)
+    public function updateAction(Request $request, Contract $entity)
     {
-        $editForm   = $this->createForm(new ContractType(), $entity);
-        $request = $this->getRequest();
+        $editForm   = $this->get('form.factory')->createNamed('contractEdit'.$entity->getId(),new ContractType(), $entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid())
