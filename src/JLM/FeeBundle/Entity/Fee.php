@@ -170,7 +170,7 @@ class Fee
      *
      * @return string
      */
-    public function getFrequence()
+    public function getFrequenceString()
     {
     	switch ($this->getFrequence())
     	{
