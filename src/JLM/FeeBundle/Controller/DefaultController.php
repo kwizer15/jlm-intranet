@@ -45,10 +45,7 @@ class DefaultController extends Controller
     			$fee = new Fee();
     			$fee->addContract($contract);
     			$fee->setTrustee($contract->getTrustee());
-    			$address = $contract->getTrustee()->getBillingAddress();
-    			if ($address === null)
-    				$address = $contract->getTrustee()->getAddress();
-    			$fee->setAddress($address->__toString());
+    			$fee->setAddress($contract->getDoor()->getSite()->getAddress()->toString());
     			$fee->setPrelabel($contract->getDoor()->getSite()->getBillingPrelabel());
     			$fee->setVat($contract->getDoor()->getSite()->getVat());
     			$em->persist($fee);
