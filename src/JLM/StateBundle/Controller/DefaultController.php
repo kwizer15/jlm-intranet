@@ -198,6 +198,7 @@ class DefaultController extends Controller
     	$base = array(1=>0,0,0,0,0,0,0,0,0,0,0,0);
     	$em = $this->getDoctrine()->getManager();
     	$stats = $em->getRepository('JLMTransmitterBundle:Transmitter')->getStatsByMonth();
+    	$datas = array();
     	foreach ($stats as $stat)
     	{
     		if (!isset($datas[$stat['year']]))
