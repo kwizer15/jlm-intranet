@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use JLM\DefaultBundle\Controller\PaginableController;
 use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
 use JLM\OfficeBundle\Entity\Bill;
@@ -30,18 +31,71 @@ use JLM\DefaultBundle\Form\Type\SearchType;
  *
  * @Route("/bill")
  */
-class BillController extends Controller
+class BillController extends PaginableController
 {
+	/**
+	 * @Route("/", name="bill")
+	 * @Route("/page/{page}", name="bill_page")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function indexAction($page = 1)
+	{
+		return $this->pagination('JLMOfficeBundle:Bill','All',$page,10,'bill_page');
+	}
+	
+	/**
+	 * @Route("/inseizure", name="bill_listinseizure")
+	 * @Route("/inseizure/page/{page}", name="bill_listinseizure_page")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function listinseizureAction($page = 1)
+	{
+		return $this->pagination('JLMOfficeBundle:Bill','InSeizure',$page,10,'bill_listinseizure_page');
+	}
+	
+	/**
+	 * @Route("/sended", name="bill_listsended")
+	 * @Route("/sended/page/{page}", name="bill_listsended_page")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function listsendedAction($page = 1)
+	{
+		return $this->pagination('JLMOfficeBundle:Bill','Sended',$page,10,'bill_listsended_page');
+	}
+	
+	/**
+	 * @Route("/payed", name="bill_listpayed")
+	 * @Route("/payed/page/{page}", name="bill_listpayed_page")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function listpayedAction($page = 1)
+	{
+		return $this->pagination('JLMOfficeBundle:Bill','Payed',$page,10,'bill_listpayed_page');
+	}
+	
+	/**
+	 * @Route("/canceled", name="bill_listcanceled")
+	 * @Route("/canceled/page/{page}", name="bill_listcanceled_page")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function listcanceledAction($page = 1)
+	{
+		return $this->pagination('JLMOfficeBundle:Bill','Canceled',$page,10,'bill_listcanceled_page');
+	}
+	
     /**
      * Lists all Bill entities.
      *
-     * @Route("/", name="bill")
-     * @Route("/page/{page}", name="bill_page")
      * @Route("/page/{page}/state/{state}", name="bill_state")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function indexAction($page = 1, $state = null)
+    public function stateAction($page = 1, $state = null)
     {
     	$limit = 10;
         $em = $this->getDoctrine()->getManager();
@@ -351,7 +405,8 @@ class BillController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
     	$em->flush();
-    	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    	return $this->redirect($this->getRequest()->headers->get('referer'));
+    	//return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     }
     
     /**
@@ -370,7 +425,8 @@ class BillController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
     	$em->flush();
-    	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    	return $this->redirect($this->getRequest()->headers->get('referer'));
+    	//return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     }
     
     /**
@@ -388,7 +444,8 @@ class BillController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
     	$em->flush();
-    	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    	return $this->redirect($this->getRequest()->headers->get('referer'));
+    	//return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     }
     
     /**
@@ -406,7 +463,8 @@ class BillController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
     	$em->flush();
-    	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    	return $this->redirect($this->getRequest()->headers->get('referer'));
+    	//return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     }
     
     /**
@@ -424,7 +482,8 @@ class BillController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
     	$em->flush();
-    	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    	return $this->redirect($this->getRequest()->headers->get('referer'));
+    	//return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     }
     
     /**

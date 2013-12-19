@@ -75,6 +75,56 @@ class BillRepository extends SearchRepository
 		return $qb->getQuery()->getResult();
 	}
 	
+	public function getAll($limit = 10, $offset = 0)
+	{
+		return $this->getByState(null,$limit,$offset);
+	}
+	
+	public function getCountAll()
+	{
+		return $this->getCount();
+	}
+	
+	public function getInSeizure($limit = 10, $offset = 0)
+	{
+		return $this->getByState(0,$limit,$offset);
+	}
+	
+	public function getCountInSeizure()
+	{
+		return $this->getCount(0);
+	}
+	
+	public function getSended($limit = 10, $offset = 0)
+	{
+		return $this->getByState(1,$limit,$offset);
+	}
+	
+	public function getCountSended()
+	{
+		return $this->getCount(1);
+	}
+	
+	public function getPayed($limit = 10, $offset = 0)
+	{
+		return $this->getByState(2,$limit,$offset);
+	}
+	
+	public function getCountPayed()
+	{
+		return $this->getCount(2);
+	}
+	
+	public function getCanceled($limit = 10, $offset = 0)
+	{
+		return $this->getByState(-1,$limit,$offset);
+	}
+	
+	public function getCountCanceled()
+	{
+		return $this->getCount(-1);
+	}
+	
 	public function getToBoost()
 	{
 		return $this->createQueryBuilder('a')

@@ -1,6 +1,6 @@
 <li><a href="{{ path('bill_todo') }}"><span class="badge badge-warning">{{ count.todo }}</span> A faire</a></li>
 <li><a href="{{ path('bill') }}"><span class="badge badge-inverse">{{ count.all }}</span> Toutes</a></li>
-<li><a href="{{ path('bill_state', {'page':1, 'state':0 }) }}"><span class="badge">{{ count.input }}</span> En saisie</a></li>
-<li><a href="{{ path('bill_state', {'page':1, 'state':1 }) }}"><span class="badge badge-info">{{ count.send }}</span> Envoyée</a></li>
-<li><a href="{{ path('bill_state', {'page':1, 'state':2 }) }}"><span class="badge badge-success">{{ count.payed }}</span> Réglées</a></li>
-<li><a href="{{ path('bill_state', {'page':1, 'state':-1 }) }}"><span class="badge badge-important">{{ count.canceled }}</span> Annulées</a></li>
+<li><a href="{{ path('bill_listinseizure', {'page':1 }) }}"><span class="badge">{{ count.input }}</span> En saisie</a></li>
+<li><a href="{{ path('bill_listsended', {'page':1 }) }}"><span class="badge badge-info">{{ count.send }}</span> Envoyée</a></li>
+<li><a href="{{ path('bill_listpayed', {'page':1 }) }}"><span class="badge badge-success">{{ count.payed }}</span> Réglées</a></li>
+<li><a href="{{ path('bill_listcanceled', {'page':1 }) }}"><span class="badge badge-important">{{ count.canceled }}</span> Annulées</a></li>
