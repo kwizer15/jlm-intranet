@@ -4,6 +4,7 @@ namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JLM\ContactBundle\Model\ContactEmailInterface;
+use JLM\ContactBundle\Model\ContactInterface;
 use JLM\ContactBundle\Model\EmailInterface;
 
 /**
@@ -20,6 +21,13 @@ class ContactEmail extends ContactData implements ContactEmailInterface
      * @ORM\ManyToOne(targetEntity="Email")
      */
     private $email;
+    
+    public function __construct(ContactInterface $contact, $alias, EmailInterface $email)
+    {
+    	$this->setContact($contact);
+    	$this->setAlias($alias);
+    	$this->setEmail($email);
+    }
     
     /**
      * To string

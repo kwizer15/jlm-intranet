@@ -10,9 +10,15 @@ class ContactEmailTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->entity = new ContactEmail();
 		$this->email = $this->getMock('JLM\ContactBundle\Model\EmailInterface');
 		$this->email->expects($this->any())->method('__toString')->will($this->returnValue('emmanuel.bernaszuk@jlm-entreprise.fr'));
+		
+		$this->contact = $this->getMock('JLM\ContactBundle\Model\ContactInterface');
+		$this->contact->expects($this->any())
+		->method('getName')
+		->will($this->returnValue('JLM Entreprise'));
+		
+		$this->entity = new ContactEmail($this->contact,'Bureau',$this->email);
 		$this->entity->setEmail($this->email);
 	}
 	
@@ -21,6 +27,9 @@ class ContactEmailTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function assertPreConditions()
 	{
+		$this->assertNull($this->entity->getId());
+		$this->assertSame($this->contact,$this->entity->getContact());
+		$this->assertSame('Bureau',$this->entity->getAlias());
 		$this->assertSame($this->email,$this->entity->getEmail());
 	}
 	
