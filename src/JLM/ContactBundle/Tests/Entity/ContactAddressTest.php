@@ -41,6 +41,11 @@ class ContactAddressTest extends \PHPUnit_Framework_TestCase
 	public function assertPreConditions()
 	{
 		$this->assertNull($this->entity->getId());
+		$this->assertSame($this->contact,$this->entity->getContact());
+		$this->assertSame('Bureau',$this->entity->getAlias());
+		$this->assertSame($this->address,$this->entity->getAddress());
+		$this->assertSame(false,$this->entity->isMain());
+		$this->assertSame('JLM Entreprise',$this->entity->getLabel());
 	}
 	
 	public function booleans()
@@ -132,14 +137,6 @@ class ContactAddressTest extends \PHPUnit_Framework_TestCase
 		$this->entity->setLabel($in);
 		$this->assertSame($out, $this->entity->getLabel());
 	}
-	
-	/**
-	 * @test
-	 */
-	public function testGetLabelEmpty()
-	{
-		$this->assertSame($this->contact->getName(),$this->entity->getLabel());
-	}  
 	
 	/**
 	 * @test
