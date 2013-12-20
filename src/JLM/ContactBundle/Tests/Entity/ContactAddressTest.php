@@ -27,7 +27,12 @@ class ContactAddressTest extends \PHPUnit_Framework_TestCase
 		$this->address->expects($this->any())
 					  ->method('getCountry')
 					  ->will($this->returnValue('France'));
-		$this->entity = new ContactAddress($this->address);
+		$this->contact = $this->getMock('JLM\ContactBundle\Model\ContactInterface');
+		$this->contact->expects($this->any())
+			->method('getName')
+			->will($this->returnValue('JLM Entreprise'));
+		
+		$this->entity = new ContactAddress($this->contact,'Bureau',$this->address);
 	}
 	
 	/**
@@ -105,7 +110,6 @@ class ContactAddressTest extends \PHPUnit_Framework_TestCase
 				array('JC Decaux','JC Decaux'),
 				array('Loiselet-et-Daigremont','Loiselet-et-Daigremont'),
 				array('1and1','1and1'),
-				array('',null),
 		);
 	}
 	
@@ -128,6 +132,14 @@ class ContactAddressTest extends \PHPUnit_Framework_TestCase
 		$this->entity->setLabel($in);
 		$this->assertSame($out, $this->entity->getLabel());
 	}
+	
+	/**
+	 * @test
+	 */
+	public function testGetLabelEmpty()
+	{
+		$this->assertSame($this->contact->getName(),$this->entity->getLabel());
+	}  
 	
 	/**
 	 * @test

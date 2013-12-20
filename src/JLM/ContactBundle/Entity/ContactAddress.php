@@ -5,6 +5,8 @@ namespace JLM\ContactBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use JLM\ContactBundle\Model\ContactAddressInterface;
+
+use JLM\ContactBundle\Model\ContactInterface;
 use JLM\ContactBundle\Model\AddressInterface;
 
 /**
@@ -38,9 +40,12 @@ class ContactAddress extends ContactData implements ContactAddressInterface
     
     /**
      * Constructor
+     * @
      */
-    public function __construct(AddressInterface $address)
+    public function __construct(ContactInterface $contact, $alias, AddressInterface $address)
     {
+    	$this->setContact($contact);
+    	$this->setAlias($alias);
     	$this->setAddress($address);
     }
 
@@ -103,7 +108,7 @@ class ContactAddress extends ContactData implements ContactAddressInterface
      * @param string $label
      * @return ContactAddress
      */
-    public function setLabel($label)
+    public function setLabel($label = null)
     {
     	if (empty($label))
     		$label = null;
@@ -119,6 +124,8 @@ class ContactAddress extends ContactData implements ContactAddressInterface
      */
     public function getLabel()
     {
+    	if ($this->label === null)
+    		return $this->getContact()->getName();
         return $this->label;
     }
     
