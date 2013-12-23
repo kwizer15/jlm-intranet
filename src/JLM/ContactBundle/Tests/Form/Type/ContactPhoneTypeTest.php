@@ -106,7 +106,6 @@ class ContactPhoneTypeTest extends TypeTestCase
 	{
 		$phone = new Phone($this->rule,$data['phone']['number']);
 		$object = new ContactPhone($data['contact'],$data['alias'],$phone);
-		var_dump($object->getAlias());
 		// submit the data to the form directly
 		$this->form->submit($data);
 		
