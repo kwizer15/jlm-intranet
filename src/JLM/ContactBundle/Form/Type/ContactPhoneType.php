@@ -32,8 +32,7 @@ class ContactPhoneType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-				->add('contact','hiddencontacttype',array('required'=>true))
-				->add('alias',null,array('label'=>'Nom de l\'adresse','required'=>true,'attr'=>array('class'=>'input-xlarge')))
+				->add('contactdata', new ContactDataType(), array('data_class' => 'JLM\ContactBundle\Entity\ContactPhone'))
 				->add('phone',new PhoneType($this->rule),array('label'=>'Téléphone','required'=>true,'attr'=>array('class'=>'input-xlarge')))
 		;
 	}
@@ -54,8 +53,8 @@ class ContactPhoneType extends AbstractType
 		$resolver->setDefaults(array(
 				'data_class' => 'JLM\ContactBundle\Entity\ContactEmail',
 				'empty_data' => function (FormInterface $form) {
-					$datas = $form->getData();
-					return new ContactPhone($form->get('contact')->getData(), $form->get('alias')->getData(), $form->get('phone')->getData());
+					$datas = $form->get('contactdata');
+					return new ContactPhone($datas->get('contact')->getData(), $datas->get('alias')->getData(), $form->get('phone')->getData());
 				}
 		));
 	}

@@ -17,8 +17,7 @@ class ContactAddressType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-				->add('contact','hiddencontacttype',array('required'=>true))
-				->add('alias',null,array('label'=>'Nom de l\'adresse','required'=>true,'attr'=>array('class'=>'input-xlarge')))
+				->add('contactdata', new ContactDataType(), array('data_class' => 'JLM\ContactBundle\Entity\ContactAddress'))
 				->add('label',null,array('label'=>'Destinataire','attr'=>array('class'=>'input-xlarge')))
 				->add('address',new AddressType(),array('label'=>'Adresse','required'=>true,'attr'=>array('class'=>'input-xlarge')))
 				->add('main',null,array('label'=>'Adresse principale'));
@@ -41,8 +40,8 @@ class ContactAddressType extends AbstractType
 		$resolver->setDefaults(array(
 				'data_class' => 'JLM\ContactBundle\Entity\ContactAddress',
 				'empty_data' => function (FormInterface $form) {
-					$datas = $form->getData();
-					return new ContactAddress($form->get('contact')->getData(), $form->get('alias')->getData(), $form->get('address')->getData());
+					$datas = $form->get('contactdata');
+					return new ContactAddress($datas->get('contact')->getData(), $datas->get('alias')->getData(), $form->get('address')->getData());
 				}
 		));
 	}

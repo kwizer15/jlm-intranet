@@ -88,8 +88,9 @@ class ContactPhoneTypeTest extends TypeTestCase
 		return array(
 			array(
 				array(
+						'contactdata'=>array(
 					'contact' => $this->getContact(),
-					'alias'   => 'SAV',
+					'alias'   => 'SAV',),
 					'phone' => array(
 						'number'=>'0160030687',
 					),
@@ -105,7 +106,7 @@ class ContactPhoneTypeTest extends TypeTestCase
 	public function testSubmitValidData($data)
 	{
 		$phone = new Phone($this->rule,$data['phone']['number']);
-		$object = new ContactPhone($data['contact'],$data['alias'],$phone);
+		$object = new ContactPhone($data['contactdata']['contact'],$data['contactdata']['alias'],$phone);
 		// submit the data to the form directly
 		$this->form->submit($data);
 		

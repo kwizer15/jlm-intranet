@@ -16,8 +16,7 @@ class ContactEmailType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-				->add('contact','hiddencontacttype',array('required'=>true))
-				->add('alias',null,array('label'=>'Nom de l\'adresse','required'=>true,'attr'=>array('class'=>'input-xlarge')))
+				->add('contactdata', new ContactDataType(), array('data_class' => 'JLM\ContactBundle\Entity\ContactEmail'))
 				->add('email',new EmailType(),array('label'=>'Adresse','required'=>true,'attr'=>array('class'=>'input-xlarge')))
 		;
 	}
@@ -38,8 +37,8 @@ class ContactEmailType extends AbstractType
 		$resolver->setDefaults(array(
 				'data_class' => 'JLM\ContactBundle\Entity\ContactEmail',
 				'empty_data' => function (FormInterface $form) {
-					$datas = $form->getData();
-					return new ContactEmail($form->get('contact')->getData(), $form->get('alias')->getData(), $form->get('email')->getData());
+					$datas = $form->get('contactdata');
+					return new ContactEmail($datas->get('contact')->getData(), $datas->get('alias')->getData(), $form->get('email')->getData());
 				}
 		));
 	}

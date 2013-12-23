@@ -70,8 +70,9 @@ class ContactEmailTypeTest extends TypeTestCase
 		return array(
 			array(
 				array(
+						'contactdata'=>array(
 					'contact' => $this->getContact(),
-					'alias'   => 'SAV',
+					'alias'   => 'SAV',),
 					'email' => array(
 						'address'=>'sav@jlm-entreprise.fr',
 					),
@@ -88,7 +89,7 @@ class ContactEmailTypeTest extends TypeTestCase
 	{
 		$email = new Email($data['email']['address']);
 		
-		$object = new ContactEmail($data['contact'],$data['alias'],$email);
+		$object = new ContactEmail($data['contactdata']['contact'],$data['contactdata']['alias'],$email);
 		
 		// submit the data to the form directly
 		$this->form->submit($data);

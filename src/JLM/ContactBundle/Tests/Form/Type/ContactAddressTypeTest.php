@@ -78,8 +78,9 @@ class ContactAddressTypeTest extends TypeTestCase
 		return array(
 			array(
 				array(
+						'contactdata'=>array(
 					'contact' => $this->getContact(),
-					'alias'   => 'Bureau',
+					'alias'   => 'Bureau',),
 					'label'   => null,
 					'address' => array(
 						'street'=>'17, avenue de Montboulon',
@@ -97,24 +98,14 @@ class ContactAddressTypeTest extends TypeTestCase
 	 */
 	public function testSubmitValidData($data)
 	{
-		$formData = array(
-				'contact' => $data['contact'],
-				'alias'	=> $data['alias'],
-				'label'	=> $data['label'],
-				'address' => $data['address'],
-				'main' => $data['main'],
-		);
-	
 		$address = new Address($data['address']['street'],$data['address']['city']);
-	//	$address->expects($this->any())->method('getStreet')->will($this->returnValue($street));
-	//	$address->expects($this->any())->method('getCity')->will($this->returnValue($city));
 		
-		$object = new ContactAddress($data['contact'],$data['alias'],$address);
+		$object = new ContactAddress($data['contactdata']['contact'],$data['contactdata']['alias'],$address);
 		$object->setLabel($data['label']);
 		$object->setMain($data['main']);
 		
 		// submit the data to the form directly
-		$this->form->submit($formData);
+		$this->form->submit($data);
 		
 		$this->assertTrue($this->form->isSynchronized());
 		$this->assertEquals($object, $this->form->getData());
@@ -123,7 +114,7 @@ class ContactAddressTypeTest extends TypeTestCase
 		$view = $this->form->createView();
 		$children = $view->children;
 		
-		foreach (array_keys($formData) as $key) {
+		foreach (array_keys($data) as $key) {
 			$this->assertArrayHasKey($key, $children);
 		}
 	}
