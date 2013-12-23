@@ -11,10 +11,11 @@ class ContactPhoneTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->entity = new ContactPhone();
+		$this->contact = $this->getMock('JLM\ContactBundle\Model\ContactInterface');
+		$this->alias = 'Bureau';
 		$this->phone = $this->getMock('JLM\ContactBundle\Model\PhoneInterface');
 		$this->phone->expects($this->any())->method('__toString')->will($this->returnValue('01 64 33 77 70'));
-		$this->entity->setPhone($this->phone);
+		$this->entity = new ContactPhone($this->contact, $this->alias, $this->phone);
 	}
 	
 	/**

@@ -4,6 +4,7 @@ namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JLM\ContactBundle\Entity\ContactData;
+use JLM\ContactBundle\Model\ContactInterface;
 use JLM\ContactBundle\Model\ContactPhoneInterface;
 use JLM\ContactBundle\Model\PhoneInterface;
 
@@ -21,6 +22,19 @@ class ContactPhone extends ContactData implements ContactPhoneInterface
      * @ORM\ManyToOne(targetEntity="Phone")
      */
     private $phone;
+    
+    /**
+     * Constructor
+     * @param ContactInterface $contact
+     * @param string $alias
+     * @param PhoneInterface $phone
+     */
+    public function __construct(ContactInterface $contact, $alias, PhoneInterface $phone)
+    {
+    	$this->setContact($contact);
+    	$this->setAlias($alias);
+    	$this->setPhone($phone);
+    }
     
     /**
      * To string
