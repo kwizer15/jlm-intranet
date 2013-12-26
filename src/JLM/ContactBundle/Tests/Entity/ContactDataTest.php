@@ -6,6 +6,9 @@ use JLM\ContactBundle\Entity\ContactDataException;
 
 class ContactDataTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setUp()
 	{
 		$this->entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\ContactData');

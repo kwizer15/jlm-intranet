@@ -8,6 +8,9 @@ class CityTest extends \PHPUnit_Framework_TestCase
 {
 	protected $entity;
 	
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setUp()
 	{
 		$this->country = $this->getMock('JLM\ContactBundle\Model\CountryInterface');
@@ -15,6 +18,9 @@ class CityTest extends \PHPUnit_Framework_TestCase
 		
 	}
 	
+	/**
+	 * {@inheritdoc}
+	 */
 	public function assertPreConditions()
 	{
 		$this->assertSame('Othis',$this->entity->getName());

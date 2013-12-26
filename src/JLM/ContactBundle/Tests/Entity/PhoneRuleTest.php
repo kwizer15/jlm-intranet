@@ -5,12 +5,18 @@ use JLM\ContactBundle\Entity\PhoneRule;
 
 class PhoneRuleTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setUp()
 	{
 		$this->country = $this->getMock('JLM\ContactBundle\Model\CountryInterface');
 		$this->entity = new PhoneRule('IN NN NN NN NN', 33, 0, $this->country);		
 	}
 	
+	/**
+	 * {@inheritdoc}
+	 */
 	public function assertPreConditions()
 	{
 		$this->assertNull($this->entity->getId());

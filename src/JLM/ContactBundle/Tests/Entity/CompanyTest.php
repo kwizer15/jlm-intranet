@@ -15,6 +15,9 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
 		$this->entity = new Company;
 	}
 	
+	/**
+	 * {@inheritdoc}
+	 */
 	public function assertPreConditions()
 	{
 		$this->assertCount(0,$this->entity->getContacts());

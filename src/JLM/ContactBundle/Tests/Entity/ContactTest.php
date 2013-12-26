@@ -9,6 +9,9 @@ use JLM\ContactBundle\Entity\ContactEmail;
 
 class ContactTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setUp()
 	{
 		$this->entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\Contact');
@@ -19,6 +22,9 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 		$this->email = $this->getMock('JLM\ContactBundle\Model\ContactEmailInterface');
 	}
 	
+	/**
+	 * {@inheritdoc}
+	 */
 	public function assertPreConditions()
 	{
 		$this->assertSame('JLM Entreprise',$this->entity->getName());

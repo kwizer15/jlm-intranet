@@ -6,6 +6,9 @@ use JLM\ContactBundle\Entity\EmailException;
 
 class EmailTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * {@inheritdoc}
+	 */
 	public function setUp()
 	{
 		$this->entity = new Email;
