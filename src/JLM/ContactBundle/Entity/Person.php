@@ -46,6 +46,12 @@ class Person extends Contact
      */
     private $lastName = '';
 
+    public function __construct($title, $firstName, $lastName)
+    {
+    	$this->setTitle($title);
+    	$this->setFirstName($firstName);
+    	$this->setLastName($lastName);
+    }
 
     /**
      * Get id

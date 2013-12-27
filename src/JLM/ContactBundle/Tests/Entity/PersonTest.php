@@ -11,7 +11,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->entity = new Person;
+		$this->entity = new Person('M.','Emmanuel','Bernaszuk');
 	}
 	
 	/**
@@ -20,6 +20,11 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 	public function assertPreConditions()
 	{
 		$this->assertNull($this->entity->getId());
+		$this->assertSame('M.',$this->entity->getTitle());
+		$this->assertSame('Emmanuel',$this->entity->getFirstName());
+		$this->assertSame('Bernaszuk',$this->entity->getLastName());
+		$this->assertSame('M. Emmanuel BERNASZUK',$this->entity->getName());
+		$this->assertSame('M. Emmanuel BERNASZUK',$this->entity->__toString());
 	}
 	
 	public function providerTitle()
