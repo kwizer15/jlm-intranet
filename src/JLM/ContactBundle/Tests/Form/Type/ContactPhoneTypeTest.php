@@ -89,10 +89,10 @@ class ContactPhoneTypeTest extends TypeTestCase
 			array(
 				array(
 						'contactdata'=>array(
-					'contact' => $this->getContact(),
-					'alias'   => 'SAV',),
-					'phone' => array(
-						'number'=>'0160030687',
+							'contact' => $this->getContact(),
+							'alias'   => 'SAV',),
+						'phone' => array(
+							'number'=>'0160030687',
 					),
 				),
 			),
