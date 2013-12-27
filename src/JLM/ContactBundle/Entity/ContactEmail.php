@@ -18,7 +18,7 @@ class ContactEmail extends ContactData implements ContactEmailInterface
     /**
      * @var Email
      * 
-     * @ORM\ManyToOne(targetEntity="Email")
+     * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\EmailInterface", inversedBy="emails")
      */
     private $email;
     

@@ -5,6 +5,7 @@ namespace JLM\ContactBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use JLM\ContactBundle\Model\ContactInterface;
+use JLM\ContactBundle\Model\ContactDataInterface;
 use JLM\ContactBundle\Model\ContactAddressInterface;
 use JLM\ContactBundle\Model\ContactPhoneInterface;
 use JLM\ContactBundle\Model\ContactEmailInterface;
@@ -32,26 +33,12 @@ abstract class Contact implements ContactInterface
     private $id;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\OneToMany(targetEntity="ContactEmail", mappedBy="contact")
+     * @ORM\OneToMany(targetEntity="JLM\ContactBundle\Model\ContactDataInterface", mappedBy="contact")
      */
-    private $emails;
-
-    /**
-     * @var string
-     * 
-     * @ORM\OneToMany(targetEntity="ContactAddress", mappedBy="contact")
-     */
-    private $addresses;
+    private $datas;
     
-    /**
-     * @var string
-     *
-     * @ORM\OneToMany(targetEntity="ContactPhone", mappedBy="contact")
-     */
-    private $phones;
-
     /**
      * Get id
      *
@@ -67,9 +54,46 @@ abstract class Contact implements ContactInterface
      */
     public function __construct()
     {
-        $this->emails = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->phones = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->datas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add a contactData
+     * @param ContactDataInterface $data
+     * @return self
+     */
+    private function addContactData(ContactDataInterface $data)
+    {
+    	$data->setContact($this);
+    	$this->datas[] = $data;
+    	
+    	return $this;
+    }
+    
+    /**
+     * Remove a contactData
+     * @param ContactDataInterface $data
+     * @return self
+     */
+    private function removeContactData(ContactDataInterface $data)
+    {
+    	$data->setContact();
+    	$this->datas->removeElement($data);
+    	
+    	return $this;
+    }
+    
+    private function getDatas($type)
+    {
+    	$datas = array();
+    	foreach ($this->datas as $data)
+    	{
+    		if ($data instanceof $type)
+    		{
+    			$datas[] = $data;
+    		}
+    	}
+    	return $datas;
     }
     
     /**
@@ -77,10 +101,7 @@ abstract class Contact implements ContactInterface
      */
     public function addEmail(ContactEmailInterface $email)
     {
-    	$email->setContact($this);
-        $this->emails[] = $email;
-    
-        return $this;
+        return $this->addContactData($email);
     }
 
     /**
@@ -88,18 +109,15 @@ abstract class Contact implements ContactInterface
      */
     public function removeEmail(ContactEmailInterface $email)
     {
-    	$email->setContact();
-        $this->emails->removeElement($email);
-        
-        return $this;
+    	return $this->removeContactData($email);
     }
-
+    
     /**
      * {@inheritdoc}
      */
     public function getEmails()
     {
-        return $this->emails;
+        return $this->getDatas('JLM\ContactBundle\Model\ContactEmailInterface');
     }
 
     /**
@@ -107,10 +125,7 @@ abstract class Contact implements ContactInterface
      */
     public function addPhone(ContactPhoneInterface $phone)
     {
-    	$phone->setContact($this);
-        $this->phones[] = $phone;
-    
-        return $this;
+    	return $this->addContactData($phone);
     }
 
     /**
@@ -118,10 +133,7 @@ abstract class Contact implements ContactInterface
      */
     public function removePhone(ContactPhoneInterface $phone)
     {
-    	$phone->setContact();
-        $this->phones->removeElement($phone);
-        
-        return $this;
+    	return $this->removeContactData($phone);
     }
 
     /**
@@ -129,7 +141,7 @@ abstract class Contact implements ContactInterface
      */
     public function getPhones()
     {
-        return $this->phones;
+        return $this->getDatas('JLM\ContactBundle\Model\ContactPhoneInterface');
     }
 
     /**
@@ -137,10 +149,7 @@ abstract class Contact implements ContactInterface
      */
     public function addAddress(ContactAddressInterface $address)
     {
-    	$address->setContact($this);
-        $this->addresses[] = $address;
-    
-        return $this;
+    	return $this->addContactData($address);
     }
 
     /**
@@ -148,10 +157,7 @@ abstract class Contact implements ContactInterface
      */
     public function removeAddress(ContactAddressInterface $address)
     {
-    	$address->setContact();
-        $this->addresses->removeElement($address);
-        
-        return $this;
+    	return $this->removeContactData($address);
     }
 
     /**
@@ -159,12 +165,13 @@ abstract class Contact implements ContactInterface
      */
     public function getAddresses()
     {
-        return $this->addresses;
+        return $this->getDatas('JLM\ContactBundle\Model\ContactAddressInterface');
     }
     
     public function getMainAddress()
     {
-    	foreach ($this->addresses as $address)
+    	$addresses = $this->getAddresses();
+    	foreach ($addresses as $address)
     		if ($address->isMain())
     			return $address;
     	return null;

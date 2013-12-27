@@ -20,7 +20,7 @@ class ContactAddress extends ContactData implements ContactAddressInterface
 	/**
 	 * @var Address
 	 * 
-	 * @ORM\ManyToOne(targetEntity="AddressInterface")
+	 * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
 	 */
 	private $address;
     

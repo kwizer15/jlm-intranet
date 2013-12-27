@@ -19,7 +19,7 @@ class ContactPhone extends ContactData implements ContactPhoneInterface
     /**
      * @var Phone
      * 
-     * @ORM\ManyToOne(targetEntity="Phone")
+     * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\PhoneInterface")
      */
     private $phone;
     
