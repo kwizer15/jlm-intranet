@@ -29,7 +29,7 @@ class Phone implements PhoneInterface
     /**
      * @var PhoneRule
      *
-     * @ORM\ManyToOne(targetEntity="PhoneRuleInterface")
+     * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\PhoneRuleInterface")
      */
     private $rule;
 
