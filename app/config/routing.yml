@@ -1,7 +1,7 @@
 jlm_contact:
     resource: "@JLMContactBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /contact
 
 jlm_transmitter:
     resource: "@JLMTransmitterBundle/Controller/"
