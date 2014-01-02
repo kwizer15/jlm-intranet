@@ -68,12 +68,17 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
         resolve_target_entities:
-            JLM\ContactBundle\Model\AddressInterface: JLM\ContactBundle\Entity\Address
-            JLM\ContactBundle\Model\CityInterface: JLM\ContactBundle\Entity\City
-            JLM\ContactBundle\Model\CountryInterface: JLM\ContactBundle\Entity\Country
-            JLM\ContactBundle\Model\EmailInterface: JLM\ContactBundle\Entity\Email
-            JLM\ContactBundle\Model\PhoneInterface: JLM\ContactBundle\Entity\Phone
-            JLM\ContactBundle\Model\PhoneRuleInterface: JLM\ContactBundle\Entity\PhoneRule
+            JLM\ContactBundle\Model\AddressInterface:        JLM\ContactBundle\Entity\Address
+            JLM\ContactBundle\Model\CityInterface:           JLM\ContactBundle\Entity\City
+            JLM\ContactBundle\Model\CountryInterface:        JLM\ContactBundle\Entity\Country
+            JLM\ContactBundle\Model\EmailInterface:          JLM\ContactBundle\Entity\Email
+            JLM\ContactBundle\Model\PhoneInterface:          JLM\ContactBundle\Entity\Phone
+            JLM\ContactBundle\Model\PhoneRuleInterface:      JLM\ContactBundle\Entity\PhoneRule
+            JLM\ContactBundle\Model\ContactInterface:        JLM\ContactBundle\Entity\Contact
+            JLM\ContactBundle\Model\ContactDataInterface:    JLM\ContactBundle\Entity\ContactData
+            JLM\ContactBundle\Model\ContactAddressInterface: JLM\ContactBundle\Entity\ContactAddress
+            JLM\ContactBundle\Model\ContactEmailInterface:   JLM\ContactBundle\Entity\ContactEmail
+            JLM\ContactBundle\Model\ContactPhoneInterface:   JLM\ContactBundle\Entity\ContactPhone
 
 # Swiftmailer Configuration
 swiftmailer:
