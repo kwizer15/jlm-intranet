@@ -39,6 +39,7 @@ class PhoneTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->assertSame($this->rule,$this->entity->getRule());
 		$this->assertNull($this->entity->getNumber());
+		$this->assertNull($this->entity->getId());
 	}
 	
 	public function providerNumber()

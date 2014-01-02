@@ -16,6 +16,15 @@ class EmailException extends \Exception {}
  */
 class Email implements EmailInterface
 {
+	/**
+	 * @var integer $id
+	 *
+	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $id;
+	
     /**
      * @var string
      * 
@@ -29,6 +38,16 @@ class Email implements EmailInterface
     public function __construct($address = null)
     {
     	$this->setAddress($address);
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+    	return $this->id;
     }
     
     /**

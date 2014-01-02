@@ -3,6 +3,7 @@ namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\Email;
 use JLM\ContactBundle\Entity\EmailException;
+use Genemu\Bundle\FormBundle\Form\JQuery\DataTransformer\ArrayToStringTransformer;
 
 class EmailTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,6 +15,18 @@ class EmailTest extends \PHPUnit_Framework_TestCase
 		$this->entity = new Email;
 	}
 	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function assertPreConditions()
+	{
+		$this->assertNull($this->entity->getId());
+	}
+	
+	/**
+	 * 
+	 * @return array
+	 */
 	public function providerAddress()
 	{
 		return array(
