@@ -36,7 +36,7 @@ class Address implements AddressInterface
     /**
      * @var string $city
      *
-     * @ORM\ManyToOne(targetEntity="CityInterface")
+     * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\CityInterface")
      * @Assert\NotNull
      * @Assert\Valid
      */

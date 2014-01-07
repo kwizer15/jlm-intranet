@@ -29,7 +29,7 @@ class PhoneRule implements PhoneRuleInterface
     /**
      * @var Country
      * 
-     * @ORM\OneToOne(targetEntity="CountryInterface")
+     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\CountryInterface")
      */
     private $country = null;
 

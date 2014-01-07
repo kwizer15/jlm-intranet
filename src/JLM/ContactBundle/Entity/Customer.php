@@ -35,7 +35,7 @@ class Customer extends ContactExtension implements ContactInterface, BillableCon
     /**
      * @var AddressInterface
      *
-     * @ORM\Column(targetEntity="JLM\ContactBundle\Model\AddressInterface")
+     * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
      */
     private $billingAddress;
 
