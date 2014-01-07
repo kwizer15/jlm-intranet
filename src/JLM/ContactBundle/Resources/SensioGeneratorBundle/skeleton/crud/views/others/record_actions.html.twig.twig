@@ -1,0 +1,9 @@
+<div class="form-actions">
+	<a href="{{ "{{ path('" ~ route_name_prefix ~ "') }}" }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+{% if ('edit' in actions) and (not hide_edit) %}
+    <a href="{{ "{{ path('" ~ route_name_prefix ~ "_edit', { 'id': entity.id }) }}" }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+{% endif %}
+{% if ('delete' in actions) and (not hide_delete) %}
+	<a href="#modalDelete{{ "{{ entity.id }}" }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a>
+{% endif %}
+</div>
