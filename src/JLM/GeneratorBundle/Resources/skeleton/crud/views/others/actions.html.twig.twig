@@ -1,5 +1,0 @@
-				<div class="form-actions">
-                {%- for action in record_actions %}
-                        <a href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': entity.id }) }}" }}" class="btn">{{ action }}</a>
-                {%- endfor %}
-				</div>
