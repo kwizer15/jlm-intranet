@@ -362,7 +362,10 @@ class Fee
     	$ref = '';
     	if ($this->getGroup() != '')
     		$ref .= 'Groupe : '.$this->getGroup().chr(10);
-    	$ref .= 'Contrat'.(count($this->getContractNumbers()) == 1) ?: 's'.' n°';
+    	$ref .= 'Contrat';
+    	if (count($this->getContractNumbers()) > 1)
+    		$ref .= 's';
+    	$ref .= ' n°';
     	foreach ($this->getContractNumbers() as $key=>$n)
     	{
     		if ($key > 0)

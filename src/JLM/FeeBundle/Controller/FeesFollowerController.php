@@ -98,16 +98,45 @@ class FeesFollowerController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$today = new \DateTime;
 		$vattrans = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
-		$product = $em->getRepository('JLMModelBundle:Product')->find(2); // Produit redevance
+		$product = $em->getRepository('JLMModelBundle:Product')->find(284); // Produit redevance
 		foreach (array(1,2,4) as $frequence)
 		{
 			$gf = 'getFrequence'.$frequence;
 			if ($entity->$gf() !== null)
 			{
-				$fees = $em->getRepository('JLMFeeBundle:Fee')->findBy(array('frequence'=>$frequence));
+				$fees = $em->getRepository('JLMFeeBundle:Fee')
+					->createQueryBuilder('a')
+					->select('a')
+					->leftJoin('a.contracts','b')
+					->leftJoin('b.door','c')
+					->leftJoin('c.site','d')
+					->leftJoin('d.address','e')
+					->leftJoin('e.city','f')
+					->where('a.frequence = :frequence')
+					->orderBy('f.name','asc')
+					->setParameter('frequence',$frequence)
+					->getQuery()
+					->getResult();
+				
+				
+				//$fees = $em->getRepository('JLMFeeBundle:Fee')->findBy(array('frequence'=>$frequence));
 				$number = null;
+				// Ajouter pas de facture si sous garantie
 				foreach ($fees as $fee)
 				{
+					$majoration = $entity->$gf();
+					if ($majoration > 0)
+					{
+						$contracts = $fee->getContracts();
+						foreach ($contracts as $contract)
+						{
+							$amount = $contract->getFee();
+							$amount *= (1 + $majoration);
+							$contract->setFee($amount);
+							$em->persist($contract);
+						}
+					}
+					
 					$bill = $fee->getBill($product,$entity,$number);
 					$bill->setVatTransmitter($vattrans);
 					$em->persist($bill);
