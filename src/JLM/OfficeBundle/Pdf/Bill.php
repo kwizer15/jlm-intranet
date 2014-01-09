@@ -55,14 +55,14 @@ class Bill extends FPDFext
 		}
 		
 		// Repères
-		$this->setFont('Arial','',8);
-		$this->cell(0,4,'Fee :'.$this->entity->getFee()->getId(),0,1);
-		$txt = 'Contracts :';
-		foreach ($this->entity->getFee()->getContracts() as $c)
-		{
-			$txt .= $c->getId().' ';
-		}
-		$this->cell(0,4,$txt,0,1);
+		//$this->setFont('Arial','',8);
+		//$this->cell(0,4,'Fee :'.$this->entity->getFee()->getId(),0,1);
+		//$txt = 'Contracts :';
+		//foreach ($this->entity->getFee()->getContracts() as $c)
+		//{
+		//	$txt .= $c->getId().' ';
+		//}
+		//$this->cell(0,4,$txt,0,1);
 		
 		
 		$this->setFont('Arial','BU',11);
