@@ -350,8 +350,9 @@ class Fee
     	$bill->setNumber($number);
     	$bill->setFee($this);
     	$bill->setFeesFollower($follower);
-    	$creation = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
-    	$creation->add(new \DateInterval('P1M'));
+    	// $creation = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
+    	// $creation->add(new \DateInterval('P1M'));
+    	$creation = new \DateTime;
     	$bill->setCreation($creation);
     	$bill->setTrustee($this->getTrustee());
     	$bill->setTrusteeName($this->getTrustee()->getBillingLabel());
