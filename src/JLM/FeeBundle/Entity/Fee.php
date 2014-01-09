@@ -354,7 +354,7 @@ class Fee
     	$creation->add(new \DateInterval('P1M'));
     	$bill->setCreation($creation);
     	$bill->setTrustee($this->getTrustee());
-    	$bill->setTrusteeName($this->getTrustee()->getName());
+    	$bill->setTrusteeName($this->getTrustee()->getBillingLabel());
     	$bill->setTrusteeAddress($this->getBillingAddress()->toString());
     	$bill->setAccountNumber($this->getTrustee()->getAccountNumber());
     	$bill->setPrelabel($this->getPrelabel());
