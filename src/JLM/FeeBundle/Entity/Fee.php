@@ -399,7 +399,7 @@ class Fee
     				$end = $endContract;
     			} 	
     		}
-    		$rapport = ($end->diff($begin)->format('%a') + 1) / ($end->format('L') == 1 ? 366 : 365);
+    		$rapport = ($end->diff($begin)->format('%m') + 1) / 12;
     		$fee = $contract->getFee() * $rapport;
     		$line = new BillLine();
     		$line->setBill($bill);
