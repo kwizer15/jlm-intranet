@@ -158,7 +158,7 @@ class QuotePDF extends FPDFext
 		$this->setFont('Arial','B',10);
 		$cs = $this->colsize[0]+$this->colsize[1]+$this->colsize[2]+$this->colsize[4];
 		if ($this->entity->getQuote()->getVat() > 0.1)
-			$this->cell($cs,6,'Si T.V.A. à 7,0 %, merci de nous fournir l\'attestation',1,0);
+			$this->cell($cs,6,'Si T.V.A. à 10 %, merci de nous fournir l\'attestation',1,0);
 		else $this->cell($cs,6,'',1,0);
 		
 		
