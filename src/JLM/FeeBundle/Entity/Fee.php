@@ -383,13 +383,24 @@ class Fee
     		$dd .= $desc;
     	}
     	$bill->setDetails($dd);
+    	$periods = array('1'=>'P1Y','2'=>'P6M','4'=>'P3M');
     	foreach ($this->getContracts() as $key=>$contract)
     	{
     		$begin = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
+    		$endContract = $contract->getEndContract();
     		$end = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
-    		$periods = array('1'=>'P1Y','2'=>'P6M','4'=>'P3M');
     		$end->add(new \DateInterval($periods[$this->getFrequence()]));
     		$end->sub(new \DateInterval('P1D'));
+    		
+    		if ($endContract !== null)
+    		{
+    			if ($endContract < $end)
+    			{
+    				$end = $endContract;
+    			} 	
+    		}
+    		$rapport = ($end->diff($begin)->format('%a') + 1) / ($end->format('L') == 1 ? 366 : 365);
+    		$fee = $contract->getFee() * $rapport;
     		$line = new BillLine();
     		$line->setBill($bill);
     		$line->setPosition($key);
@@ -398,7 +409,7 @@ class Fee
     		
     		$line->setShowDescription(true);
     		$line->setDescription($contract->getDoor()->getType().' / '.$contract->getDoor()->getLocation());
-    		$line->setUnitPrice($contract->getFee() / $this->getFrequence());
+    		$line->setUnitPrice($fee);
     		$line->setQuantity(1);
     		$line->setVat($this->getVat()->getRate());
     		$bill->addLine($line);
