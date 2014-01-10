@@ -391,12 +391,13 @@ class Fee
     		$end = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
     		$end->add(new \DateInterval($periods[$this->getFrequence()]));
     		$end->sub(new \DateInterval('P1D'));
-    		
+    		$frequenceString = ' '.$this->getFrequenceString();
     		if ($endContract !== null)
     		{
     			if ($endContract < $end)
     			{
     				$end = $endContract;
+    				$frequenceString = '';
     			} 	
     		}
     		$rapport = ($end->diff($begin)->format('%m') + 1) / 12;
@@ -405,7 +406,7 @@ class Fee
     		$line->setBill($bill);
     		$line->setPosition($key);
     		$line->setReference($product->getReference());
-    		$line->setDesignation($product->getDesignation().' '.$this->getFrequenceString().' du '.$begin->format('d/m/Y').' au '.$end->format('d/m/Y'));
+    		$line->setDesignation($product->getDesignation().$frequenceString.' du '.$begin->format('d/m/Y').' au '.$end->format('d/m/Y'));
     		
     		$line->setShowDescription(true);
     		$line->setDescription($contract->getDoor()->getType().' / '.$contract->getDoor()->getLocation());
