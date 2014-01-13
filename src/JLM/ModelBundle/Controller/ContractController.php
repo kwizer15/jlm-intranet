@@ -94,6 +94,21 @@ class ContractController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
+            
+            // Temporaire : se fera jour par jour
+            // ***********************************
+            if ($contract->getInProgress())
+            {
+            	$fee = new Fee();
+            	$fee->addContract($contract);
+            	$fee->setTrustee($contract->getTrustee());
+            	$fee->setAddress($contract->getDoor()->getSite()->getAddress()->toString());
+            	$fee->setPrelabel($contract->getDoor()->getSite()->getBillingPrelabel());
+            	$fee->setVat($contract->getDoor()->getSite()->getVat());
+            	$em->persist($fee);
+            }
+            //***************************************
+            
             $em->flush();
 
             return $this->redirect($this->generateUrl('door_show', array('id' => $entity->getDoor()->getId())));
