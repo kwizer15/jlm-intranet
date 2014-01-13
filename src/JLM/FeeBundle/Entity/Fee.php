@@ -387,7 +387,7 @@ class Fee
     	foreach ($this->getContracts() as $key=>$contract)
     	{
     		$begin = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
-    		$endContract = $contract->getEndContract();
+    		$endContract = $contract->getEnd();
     		$end = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
     		$end->add(new \DateInterval($periods[$this->getFrequence()]));
     		$end->sub(new \DateInterval('P1D'));
