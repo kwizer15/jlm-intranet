@@ -108,10 +108,15 @@ class QuoteRepository extends SearchRepository
 	{
 		if (!isset($this->countState))
 		{
+			
+			$date = new \DateTime;
 			$qb = $this->createQueryBuilder('a')
 				->select('a,b,c')
 				->leftJoin('a.variants','b')
 				->leftJoin('a.contactPerson','c')
+				->where('a.creation BETWEEN :fd AND :ld')
+				->setParameter('fd',$date->format('Y').'-01-01')
+				->setParameter('ld',$date->format('Y').'-12-31')
 			;
 			$result = $qb->getQuery()->getResult();
 			$this->countState = array(0=>0, 1=>0, 2=>0, 3=>0, 4=>0, 5=>0);
