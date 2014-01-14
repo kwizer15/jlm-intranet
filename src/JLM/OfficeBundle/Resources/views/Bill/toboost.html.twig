@@ -28,14 +28,14 @@
             <td>{{ entity.site | nl2br}}</td>
             <td>
             	{{ entity.maturityDate | date('d/m/Y') }}
-            	<br><a href="{{ path('bill_printboost',{'id':entity.id}) }}" class="btn btn-info btn-small"><i class="icon icon-white icon-print"></i> Imprimer courrier</a>
+            	{% if entity.secondBoost is null %}<br><a href="{{ path('bill_printboost',{'id':entity.id}) }}" class="btn btn-info btn-small"><i class="icon icon-white icon-print"></i> Imprimer courrier</a>{% endif %}
             </td>
             <td>
             	{{ entity.totalPrice | number_format(2,',',' ')}} €
             	<br><a href="{{ path('bill_payed',{'id':entity.id}) }}" class="btn btn-success btn-small"><i class="icon icon-white icon-ok"></i> Déjà payé</a>
             </td>
             <td>
-            	<a href="{{ path('bill_boostok',{'id':entity.id}) }}" class="btn btn-primary btn-small"><i class="icon icon-white icon-ok"></i> Relance effectuée</a>
+            	{% if entity.secondBoost is null %}<a href="{{ path('bill_boostok',{'id':entity.id}) }}" class="btn btn-primary btn-small"><i class="icon icon-white icon-ok"></i> Relance effectuée</a>{% endif %}
             </td>
         </tr>
     {% endfor %}
