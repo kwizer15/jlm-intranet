@@ -46,9 +46,6 @@ class BillRepository extends SearchRepository
 				->select('a.state, COUNT(a) as c')
 				->orderBy('a.state','ASC')
 				->groupBy('a.state')
-				->where('a.creation BETWEEN :fd AND :ld')
-				->setParameter('fd',$date->format('Y').'-01-01')
-				->setParameter('ld',$date->format('Y').'-12-31')
 			;
 			$results = $qb->getQuery()->getResult();
 			$this->count = array(-1=>0,0,0,0,0,0);

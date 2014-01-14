@@ -25,13 +25,15 @@ class QuoteCountListener
 		if (!isset($response['layout']))
 			$response['layout'] = array();
 
+		$date = new \DateTime;
+		$year = $date->format('Y');
 		$repo = $this->em->getRepository('JLMOfficeBundle:Quote');
 		$response['layout']['quoteCount'] = array(
-				'all' => $repo->getCountState('uncanceled'),
-				'input' => $repo->getCountState(0),
-				'wait' => $repo->getCountState(1),
-				'send' => $repo->getCountState(3),
-				'given' => $repo->getCountState(5),
+				'all' => $repo->getCountState('uncanceled', $year),
+				'input' => $repo->getCountState(0, $year),
+				'wait' => $repo->getCountState(1, $year),
+				'send' => $repo->getCountState(3, $year),
+				'given' => $repo->getCountState(5, $year),
 		);
 		
 		$event->setControllerResult($response);
