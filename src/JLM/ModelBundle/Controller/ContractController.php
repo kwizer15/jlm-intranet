@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Contract;
 use JLM\ModelBundle\Entity\Door;
+use JLM\FeeBundle\Entity\Fee;
 use JLM\ModelBundle\Form\Type\ContractType;
 use JLM\ModelBundle\Form\Type\ContractStopType;
 
