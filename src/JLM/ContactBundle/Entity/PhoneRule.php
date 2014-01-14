@@ -30,6 +30,7 @@ class PhoneRule implements PhoneRuleInterface
      * @var Country
      * 
      * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\CountryInterface")
+     * @ORM\JoinColumn(name="country_code", referencedColumnName="code")
      */
     private $country = null;
 
