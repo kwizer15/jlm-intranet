@@ -12,7 +12,7 @@ use JLM\ContactBundle\Model\AddressInterface;
 /**
  * ContactAddress
  *
- * @ORM\Table(name="name="jlm_contact_contact_address"")
+ * @ORM\Table(name="jlm_contact_contact_address")
  * @ORM\Entity
  */
 class ContactAddress extends ContactData implements ContactAddressInterface
