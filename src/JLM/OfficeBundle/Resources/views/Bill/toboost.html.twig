@@ -18,7 +18,7 @@
         <tr>
             <td>{% if entity.firstBoost is null %}<span class="label label-info">1ère relance</span>
             	{% elseif entity.secondBoost is null %}<span class="label label-warning">2ème relance</span>
-            	{% else %}<span class="label label-danger">3ème relance</span>
+            	{% else %}<span class="label label-inverse">3ème relance</span>
             	{% endif %}
             	<br><a href="{{ path('bill_show', { 'id': entity.id }) }}">{{ entity.number }}</a><br>
             	<a href="{{ path('bill_printduplicate',{'id':entity.id}) }}" class="btn btn-info btn-small"><i class="icon icon-white icon-print"></i> Imprimer duplicata</a>

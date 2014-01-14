@@ -41,10 +41,14 @@ class BillRepository extends SearchRepository
 	{
 		if (!isset($this->count))
 		{
+			$date = new \DateTime;
 			$qb = $this->createQueryBuilder('a')
 				->select('a.state, COUNT(a) as c')
 				->orderBy('a.state','ASC')
 				->groupBy('a.state')
+				->where('a.creation BETWEEN :fd AND :ld')
+				->setParameter('fd',$date->format('Y').'-01-01')
+				->setParameter('ld',$date->format('Y').'-12-31')
 			;
 			$results = $qb->getQuery()->getResult();
 			$this->count = array(-1=>0,0,0,0,0,0);
@@ -131,6 +135,7 @@ class BillRepository extends SearchRepository
 			->select('a')
 			->where('a.state = 1 AND a.firstBoost IS NULL AND DATE_ADD(a.creation, a.maturity, \'day\') < CURRENT_DATE()')
 			->orWhere('a.state = 1 AND a.firstBoost IS NOT NULL AND a.secondBoost IS NULL AND DATE_ADD(a.firstBoost,a.maturity, \'day\') < CURRENT_DATE()')
+			->orWhere('a.state = 1 AND a.firstBoost IS NOT NULL AND a.secondBoost IS NOT NULL AND DATE_ADD(a.secondBoost,a.maturity, \'day\') < CURRENT_DATE()')
 			->orderBy('a.creation','ASC')
 			->getQuery()
 			->getResult();
