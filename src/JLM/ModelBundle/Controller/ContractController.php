@@ -97,7 +97,7 @@ class ContractController extends Controller
             
             // Temporaire : se fera jour par jour
             // ***********************************
-            if ($contract->getInProgress())
+            if ($entity->getInProgress())
             {
             	$fee = new Fee();
             	$fee->addContract($entity);
