@@ -100,11 +100,11 @@ class ContractController extends Controller
             if ($contract->getInProgress())
             {
             	$fee = new Fee();
-            	$fee->addContract($contract);
-            	$fee->setTrustee($contract->getTrustee());
-            	$fee->setAddress($contract->getDoor()->getSite()->getAddress()->toString());
-            	$fee->setPrelabel($contract->getDoor()->getSite()->getBillingPrelabel());
-            	$fee->setVat($contract->getDoor()->getSite()->getVat());
+            	$fee->addContract($entity);
+            	$fee->setTrustee($entity->getTrustee());
+            	$fee->setAddress($entity->getDoor()->getSite()->getAddress()->toString());
+            	$fee->setPrelabel($entity->getDoor()->getSite()->getBillingPrelabel());
+            	$fee->setVat($entity->getDoor()->getSite()->getVat());
             	$em->persist($fee);
             }
             //***************************************
