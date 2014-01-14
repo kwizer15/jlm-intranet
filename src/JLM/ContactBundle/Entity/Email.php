@@ -11,7 +11,7 @@ class EmailException extends \Exception {}
 /**
  * Email
  *
- * @ORM\Table()
+ * @ORM\Table(name="jlm_contact_email")
  * @ORM\Entity
  */
 class Email implements EmailInterface

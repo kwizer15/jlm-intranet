@@ -11,7 +11,7 @@ class CompanyException extends \Exception {}
 /**
  * Company
  *
- * @ORM\Table()
+ * @ORM\Table(name="jlm_contact_company")
  * @ORM\Entity
  */
 class Company extends Contact

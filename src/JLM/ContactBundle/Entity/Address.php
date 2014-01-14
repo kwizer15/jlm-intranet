@@ -11,7 +11,7 @@ use JLM\ContactBundle\Model\CityInterface;
 /**
  * JLM\ContactBundle\Entity\Address
  *
- * @ORM\Table(name="addresses")
+ * @ORM\Table(name="jlm_contact_address")
  * @ORM\Entity
  */
 class Address implements AddressInterface

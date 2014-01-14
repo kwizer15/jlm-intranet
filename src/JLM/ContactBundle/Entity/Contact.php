@@ -13,7 +13,7 @@ use JLM\ContactBundle\Model\ContactEmailInterface;
 /**
  * Contact
  *
- * @ORM\Table(name="contacts")
+ * @ORM\Table(name="jlm_contact_contact")
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")

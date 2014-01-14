@@ -11,7 +11,7 @@ class PersonException extends \Exception {}
 /**
  * Person
  *
- * @ORM\Table()
+ * @ORM\Table(name="jlm_contact_person")
  * @ORM\Entity
  */
 class Person extends Contact

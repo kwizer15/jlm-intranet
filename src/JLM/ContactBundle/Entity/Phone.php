@@ -12,7 +12,7 @@ class PhoneException extends \Exception {};
 /**
  * Phone
  *
- * @ORM\Table()
+ * @ORM\Table(name="jlm_contact_phone")
  * @ORM\Entity
  */
 class Phone implements PhoneInterface

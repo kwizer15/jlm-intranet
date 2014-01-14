@@ -10,7 +10,7 @@ use JLM\ContactBundle\Model\EmailInterface;
 /**
  * ContactEmail
  *
- * @ORM\Table()
+ * @ORM\Table(name="jlm_contact_contact_email")
  * @ORM\Entity
  */
 class ContactEmail extends ContactData implements ContactEmailInterface

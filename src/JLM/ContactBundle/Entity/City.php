@@ -11,7 +11,7 @@ use JLM\ContactBundle\Model\CountryInterface;
 /**
  * JLM\ContactBundle\Entity\City
  *
- * @ORM\Table(name="cities")
+ * @ORM\Table(name="jlm_contact_city")
  * @ORM\Entity(repositoryClass="JLM\ContactBundle\Entity\CityRepository", readOnly=true)
  */
 class City implements CityInterface

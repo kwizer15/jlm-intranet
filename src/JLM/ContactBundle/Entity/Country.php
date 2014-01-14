@@ -13,7 +13,7 @@ class CountryException extends \Exception {}
 /**
  * JLM\ContactBundle\Entity\Country
  *
- * @ORM\Table(name="countries")
+ * @ORM\Table(name="name="jlm_contact_country")
  * @ORM\Entity(readOnly=true)
  * @UniqueEntity("code")
  */

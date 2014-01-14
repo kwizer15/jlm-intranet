@@ -12,7 +12,7 @@ class PhoneRuleException extends \Exception {}
 /**
  * PhoneRule
  *
- * @ORM\Table(name="phone_rules")
+ * @ORM\Table(name="jlm_contact_phone_rule")
  * @ORM\Entity
  */
 class PhoneRule implements PhoneRuleInterface

@@ -11,7 +11,7 @@ use JLM\ContactBundle\Model\PhoneInterface;
 /**
  * ContactPhone
  *
- * @ORM\Table()
+ * @ORM\Table(name="jlm_contact_contact_phone")
  * @ORM\Entity
  */
 class ContactPhone extends ContactData implements ContactPhoneInterface
