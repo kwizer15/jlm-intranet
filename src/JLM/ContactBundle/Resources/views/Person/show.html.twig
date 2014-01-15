@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends 'JLMContactBundle::layout.html.twig' %}
 
 {% block content %}
     <h1>Person</h1>
@@ -12,8 +12,8 @@
     </table>
 
         <div class="form-actions">
-	<a href="{{ path('person') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
-    <a href="{{ path('person_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+	<a href="{{ path('jlm_contact_person') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+    <a href="{{ path('jlm_contact_person_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 	<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a>
 </div>
 {% endblock content %}

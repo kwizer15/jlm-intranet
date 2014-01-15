@@ -16,14 +16,7 @@ class PersonException extends \Exception {}
  */
 class Person extends Contact
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+
 
     /**
      * @var string
@@ -53,15 +46,6 @@ class Person extends Contact
     	$this->setLastName($lastName);
     }
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set title

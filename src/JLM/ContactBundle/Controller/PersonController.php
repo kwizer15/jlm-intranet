@@ -30,7 +30,7 @@ class PersonController extends Controller
     /**
      * Lists all Person entities.
      *
-     * @Route("/", name="person")
+     * @Route("/", name="jlm_contact_person")
      * @Method("GET")
      * @Template()
      */
@@ -47,7 +47,7 @@ class PersonController extends Controller
     /**
      * Creates a new Person entity.
      *
-     * @Route("/", name="person_create")
+     * @Route("/", name="jlm_contact_person_create")
      * @Method("POST")
      * @Template("JLMContactBundle:Person:new.html.twig")
      */
@@ -59,10 +59,11 @@ class PersonController extends Controller
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($form->getData());
+            $entity = $form->getData();
+            $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('person_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('jlm_contact_person_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -81,7 +82,7 @@ class PersonController extends Controller
     private function createCreateForm(Person $entity = null)
     {
         $form = $this->createForm(new PersonType(), $entity, array(
-            'action' => $this->generateUrl('person_create'),
+            'action' => $this->generateUrl('jlm_contact_person_create'),
             'method' => 'POST',
         ));
 
@@ -93,7 +94,7 @@ class PersonController extends Controller
     /**
      * Displays a form to create a new Person entity.
      *
-     * @Route("/new", name="person_new")
+     * @Route("/new", name="jlm_contact_person_new")
      * @Method("GET")
      * @Template()
      */
@@ -110,7 +111,7 @@ class PersonController extends Controller
     /**
      * Finds and displays a Person entity.
      *
-     * @Route("/{id}", name="person_show")
+     * @Route("/{id}", name="jlm_contact_person_show")
      * @Method("GET")
      * @Template()
      */
@@ -136,7 +137,7 @@ class PersonController extends Controller
     /**
      * Displays a form to edit an existing Person entity.
      *
-     * @Route("/{id}/edit", name="person_edit")
+     * @Route("/{id}/edit", name="jlm_contact_person_edit")
      * @Method("GET")
      * @Template()
      */
@@ -171,7 +172,7 @@ class PersonController extends Controller
     private function createEditForm(Person $entity)
     {
         $form = $this->createForm(new PersonType(), $entity, array(
-            'action' => $this->generateUrl('person_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('jlm_contact_person_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -182,7 +183,7 @@ class PersonController extends Controller
     /**
      * Edits an existing Person entity.
      *
-     * @Route("/{id}", name="person_update")
+     * @Route("/{id}", name="jlm_contact_person_update")
      * @Method("PUT")
      * @Template("JLMContactBundle:Person:edit.html.twig")
      */
@@ -205,7 +206,7 @@ class PersonController extends Controller
         {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('person_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('jlm_contact_person_edit', array('id' => $id)));
         }
 
         return array(
@@ -217,7 +218,7 @@ class PersonController extends Controller
     /**
      * Deletes a Person entity.
      *
-     * @Route("/{id}", name="person_delete")
+     * @Route("/{id}", name="jlm_contact_person_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -238,7 +239,7 @@ class PersonController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('person'));
+        return $this->redirect($this->generateUrl('jlm_contact_person'));
     }
 
     /**
@@ -251,7 +252,7 @@ class PersonController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('person_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('jlm_contact_person_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Supprimer'))
             ->getForm()

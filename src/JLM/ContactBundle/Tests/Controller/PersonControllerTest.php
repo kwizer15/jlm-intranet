@@ -18,7 +18,7 @@ class PersonControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Nouvelle personne')->link());
 
         // Fill in the form and submit it
-        $form = $crawler->selectButton('Create')->form(array(
+        $form = $crawler->selectButton('Enregistrer')->form(array(
             'jlm_contactbundle_persontype[firstName]'  => 'Test',
         	'jlm_contactbundle_persontype[lastName]'  => 'Test',
         	'jlm_contactbundle_persontype[title]'  => 'M.',
@@ -31,25 +31,26 @@ class PersonControllerTest extends WebTestCase
         $this->assertGreaterThan(0, $crawler->filter('td:contains("Test")')->count(), 'Missing element td:contains("Test")');
 
         // Edit the entity
-        $crawler = $client->click($crawler->selectLink('Edit')->link());
+        $crawler = $client->click($crawler->selectLink('Editer')->link());
 
-        $form = $crawler->selectButton('Edit')->form(array(
-            'jlm_contactbundle_persontype[field_name]'  => 'Foo',
-            // ... other fields to fill
+        $form = $crawler->selectButton('Enregistrer')->form(array(
+            'jlm_contactbundle_persontype[firstName]'  => 'Emmanuel',
+        	'jlm_contactbundle_persontype[lastName]'  => 'Bernaszuk',
+        	'jlm_contactbundle_persontype[title]'  => 'M.',
         ));
 
         $client->submit($form);
         $crawler = $client->followRedirect();
 
         // Check the element contains an attribute with value equals "Foo"
-        $this->assertGreaterThan(0, $crawler->filter('[value="Foo"]')->count(), 'Missing element [value="Foo"]');
+        $this->assertGreaterThan(0, $crawler->filter('[value="Emmanuel"]')->count(), 'Missing element [value="Emmanuel"]');
 
         // Delete the entity
-        $client->submit($crawler->selectButton('Delete')->form());
-        $crawler = $client->followRedirect();
+    //    $client->submit($crawler->selectButton('Supprimer')->form());
+    //    $crawler = $client->followRedirect();
 
         // Check the entity has been delete on the list
-        $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
+    //    $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
     }
 
     
