@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\ContactBundle\Entity\Person;
 use JLM\ContactBundle\Form\Type\PersonType;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Person controller.
@@ -117,14 +118,7 @@ class PersonController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMContactBundle:Person')->find($id);
-
-        if (!$entity)
-        {
-            throw $this->createNotFoundException('Unable to find Person entity.');
-        }
+        $entity = $this->getEntity($id);
 
         $deleteForm = $this->createDeleteForm($id);
 
@@ -143,14 +137,7 @@ class PersonController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMContactBundle:Person')->find($id);
-
-        if (!$entity)
-        {
-            throw $this->createNotFoundException('Unable to find Person entity.');
-        }
+        $entity = $this->getEntity($id);
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
@@ -191,12 +178,7 @@ class PersonController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('JLMContactBundle:Person')->find($id);
-
-        if (!$entity)
-        {
-            throw $this->createNotFoundException('Unable to find Person entity.');
-        }
+        $entity = $this->getEntity($id, $em);
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
@@ -229,11 +211,7 @@ class PersonController extends Controller
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('JLMContactBundle:Person')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Person entity.');
-            }
+            $entity = $this->getEntity($id, $em);
 
             $em->remove($entity);
             $em->flush();
@@ -257,5 +235,26 @@ class PersonController extends Controller
             ->add('submit', 'submit', array('label' => 'Supprimer'))
             ->getForm()
         ;
+    }
+    
+    /**
+     * Get entity with id
+     * @param int $id
+     * @return Person
+     */
+    private function getEntity($id, EntityManager $em = null)
+    {
+    	if (null === $em)
+    	{
+    		$em = $this->getDoctrine()->getManager();
+    	}
+    	
+    	$entity = $em->getRepository('JLMContactBundle:Person')->find($id);
+    	if (!$entity)
+    	{
+    		throw $this->createNotFoundException('Unable to find Person entity.');
+    	}
+    	
+    	return $entity;
     }
 }
