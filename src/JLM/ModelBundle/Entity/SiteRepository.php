@@ -69,7 +69,7 @@ class SiteRepository extends SearchRepository
 					'siteCp'=>''.$r->toString(),
 					'trustee'=>''.$r->getTrustee()->getId(),
 					'trusteeName'=>''.$r->getTrustee()->getName(),
-					'trusteeBillingLabel'   => ''.$trustee->getBillingLabel(),
+					'trusteeBillingLabel'   => ''.$r->getTrustee()->getBillingLabel(),
 					'trusteeAddress'=>''.$r->getTrustee()->getAddress()->toString(),
 					'trusteeBillingAddress'=>''.$r->getTrustee()->getAddressForBill()->toString(),
 					'accountNumber'=>$r->getTrustee()->getAccountNumber(),
