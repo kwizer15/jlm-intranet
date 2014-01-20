@@ -104,48 +104,57 @@ class QuoteRepository extends SearchRepository
 		return array('a.number'=>'DESC');
 	}
 
-	public function getCountState($state = null)
+	public function getCountState($state = null, $year = null)
 	{
-		if (!isset($this->countState))
+		if (!isset($this->countState[$year]))
 		{
+			$year = ($year === null) ? 'total' : $year;
 			$qb = $this->createQueryBuilder('a')
 				->select('a,b,c')
 				->leftJoin('a.variants','b')
 				->leftJoin('a.contactPerson','c')
-			;
+				;
+			if ($year !== 'total')
+			{
+				$qb->where('a.creation BETWEEN :fd AND :ld')
+					->setParameter('fd', $year.'-01-01')
+					->setParameter('ld', $year.'-12-31')
+				;
+			}
+
 			$result = $qb->getQuery()->getResult();
-			$this->countState = array(0=>0, 1=>0, 2=>0, 3=>0, 4=>0, 5=>0);
-			$this->total = 0;
-			$this->uncanceled = 0;
+			$this->countState[$year] = array(0=>0, 1=>0, 2=>0, 3=>0, 4=>0, 5=>0);
+			$this->total[$year] = 0;
+			$this->uncanceled[$year] = 0;
 			foreach ($result as $r)
 			{
-				if (!isset($this->countState[$r->getState()]))
-					$this->countState[$r->getState()] = 0;
+				if (!isset($this->countState[$year][$r->getState()]))
+					$this->countState[$year][$r->getState()] = 0;
 				switch ($r->getState())
 				{
 					case 1:
 					case 2:
-						$this->countState[1]++;
-						$this->countState[2]++;
+						$this->countState[$year][1]++;
+						$this->countState[$year][2]++;
 						break;
 					case 3:
 					case 4:
-						$this->countState[3]++;
-						$this->countState[4]++;
+						$this->countState[$year][3]++;
+						$this->countState[$year][4]++;
 						break;
 					default:
-						$this->countState[$r->getState()]++;
+						$this->countState[$year][$r->getState()]++;
 				}
 				if ($r->getState() >= 0)	// On retire les devis annulés
-					$this->uncanceled++;
-				$this->total++;
+					$this->uncanceled[$year]++;
+				$this->total[$year]++;
 			}
 		}
 		if ($state === 'uncanceled')
-			return $this->uncanceled;
+			return $this->uncanceled[$year];
 		if ($state === null)
-			return $this->total;
-		return $this->countState[$state];
+			return $this->total[$year];
+		return $this->countState[$year][$state];
 	}
 	
 	public function getByState($state,$limit,$offset)

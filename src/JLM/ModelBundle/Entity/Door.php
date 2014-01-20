@@ -815,7 +815,7 @@ class Door
     				foreach ($shifts as $shift)
     				{
     					$dateShift = ($shift->getEnd() === null) ? $shift->getBegin() : $shift->getEnd();
-    					if ($dateShift->format('Y') == $year && $flag === false)
+    					if ($dateShift->format('Y') == $year && !$flag)
     					{
     						$count++;
     						$flag = true;

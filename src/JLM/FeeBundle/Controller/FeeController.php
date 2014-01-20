@@ -1,5 +1,5 @@
 <?php
-namespace JLM\ModelBundle\Controller;
+namespace JLM\FeeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -7,8 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\ModelBundle\Entity\Fee;
-use JLM\ModelBundle\Form\Type\FeeType;
+use JLM\FeeBundle\Entity\Fee;
+use JLM\FeeBundle\Form\Type\FeeType;
 
 /**
  * Contract controller.
@@ -27,7 +27,7 @@ class FeeController extends Controller
 	public function indexAction()
 	{
 		$em = $this->getDoctrine()->getManager();
-		$entities = $em->getRepository('JLMModelBundle:Fee')->findAll();
+		$entities = $em->getRepository('JLMFeeBundle:Fee')->findAll();
 		return array('entities' => $entities);
 	}
 	

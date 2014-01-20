@@ -11,13 +11,15 @@ use JLM\ModelBundle\Entity\Trustee;
 use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\DailyBundle\Entity\Intervention;
 
+use JLM\BillBundle\Model\BillInterface;
+
 /**
  * JLM\OfficeBundle\Entity\Bill
  *
  * @ORM\Table(name="bill")
  * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\BillRepository")
  */
-class Bill extends Document
+class Bill extends Document implements BillInterface
 {
 	/**
 	 * @var int $id
@@ -80,7 +82,7 @@ class Bill extends Document
 	 * Redevance
 	 * @var Fee
 	 * 
-	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Fee")
+	 * @ORM\ManyToOne(targetEntity="JLM\FeeBundle\Entity\Fee")
 	 */
 	private $fee;
 	
@@ -88,7 +90,7 @@ class Bill extends Document
 	 * Suivi de redevance
 	 * @var FeesFollower
 	 * 
-	 * @ORM\ManyToOne(targetEntity="FeesFollower")
+	 * @ORM\ManyToOne(targetEntity="JLM\FeeBundle\Entity\FeesFollower")
 	 */
 	private $feesFollower;
 	
@@ -459,7 +461,7 @@ class Bill extends Document
      * @param JLM\ModelBundle\Entity\Fee $fee
      * @return Bill
      */
-    public function setFee(\JLM\ModelBundle\Entity\Fee $fee = null)
+    public function setFee(\JLM\FeeBundle\Entity\Fee $fee = null)
     {
         $this->fee = $fee;
     
@@ -482,7 +484,7 @@ class Bill extends Document
      * @param JLM\OfficeBundle\Entity\FeesFollower $feesFollower
      * @return Bill
      */
-    public function setFeesFollower(\JLM\OfficeBundle\Entity\FeesFollower $feesFollower = null)
+    public function setFeesFollower(\JLM\FeeBundle\Entity\FeesFollower $feesFollower = null)
     {
         $this->feesFollower = $feesFollower;
     
@@ -554,12 +556,13 @@ class Bill extends Document
     /**
      * Add lines
      *
-     * @param JLM\OfficeBundle\Entity\BillLine $lines
+     * @param JLM\OfficeBundle\Entity\BillLine $line
      * @return Bill
      */
-    public function addLine(\JLM\OfficeBundle\Entity\BillLine $lines)
+    public function addLine(\JLM\OfficeBundle\Entity\BillLine $line)
     {
-        $this->lines[] = $lines;
+    	$line->setBill($this);
+        $this->lines[] = $line;
     
         return $this;
     }
@@ -567,11 +570,13 @@ class Bill extends Document
     /**
      * Remove lines
      *
-     * @param JLM\OfficeBundle\Entity\BillLine $lines
+     * @param JLM\OfficeBundle\Entity\BillLine $line
      */
-    public function removeLine(\JLM\OfficeBundle\Entity\BillLine $lines)
+    public function removeLine(\JLM\OfficeBundle\Entity\BillLine $line)
     {
-        $this->lines->removeElement($lines);
+    	$line->setBill(null);
+        $this->lines->removeElement($line);
+        return $this;
     }
 
     /**

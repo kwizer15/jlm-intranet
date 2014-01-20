@@ -85,6 +85,7 @@ class DoorRepository extends SearchRepository
 						'vat'			=> $r->getSite()->getVat()->getRate(),
 						'trustee'       => ''.$trustee->getId(),
 						'trusteeName'   => ''.$trustee,
+						'trusteeBillingLabel'   => ''.$trustee->getBillingLabel(),
 						'trusteeAddress'=> ''.$trustee->getAddress()->toString(),
 						'trusteeBillingAddress'=> ''.$trustee->getAddressForBill()->toString(),
 						'accountNumber'=> $trustee->getAccountNumber(),

@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use JLM\DefaultBundle\Controller\PaginableController;
 use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
 use JLM\OfficeBundle\Entity\Bill;
@@ -30,45 +31,62 @@ use JLM\DefaultBundle\Form\Type\SearchType;
  *
  * @Route("/bill")
  */
-class BillController extends Controller
+class BillController extends PaginableController
 {
-    /**
-     * Lists all Bill entities.
-     *
-     * @Route("/", name="bill")
-     * @Route("/page/{page}", name="bill_page")
-     * @Route("/page/{page}/state/{state}", name="bill_state")
-     * @Template()
-     * @Secure(roles="ROLE_USER")
-     */
-    public function indexAction($page = 1, $state = null)
-    {
-    	$limit = 10;
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('JLMOfficeBundle:Bill');
-        $nb = $repo->getCount($state);
-        	
-        $nbPages = ceil($nb/$limit);
-        $nbPages = ($nbPages < 1) ? 1 : $nbPages;
-        $offset = ($page-1) * $limit;
-        if ($page < 1 || $page > $nbPages)
-        {
-        	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
-        }
-        
-        $entities = $repo->getByState(
-        		$state,
-        		$limit,
-        		$offset
-        );
-        
-        return array(
-        		'entities' => $entities,
-        		'page'     => $page,
-        		'nbPages'  => $nbPages,
-        		'state' => $state,
-        );
-    }
+	/**
+	 * @Route("/", name="bill")
+	 * @Route("/page/{page}", name="bill_page")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function indexAction($page = 1)
+	{
+		return $this->pagination('JLMOfficeBundle:Bill','All',$page,10,'bill_page');
+	}
+	
+	/**
+	 * @Route("/inseizure", name="bill_listinseizure")
+	 * @Route("/inseizure/page/{page}", name="bill_listinseizure_page")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function listinseizureAction($page = 1)
+	{
+		return $this->pagination('JLMOfficeBundle:Bill','InSeizure',$page,10,'bill_listinseizure_page');
+	}
+	
+	/**
+	 * @Route("/sended", name="bill_listsended")
+	 * @Route("/sended/page/{page}", name="bill_listsended_page")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function listsendedAction($page = 1)
+	{
+		return $this->pagination('JLMOfficeBundle:Bill','Sended',$page,10,'bill_listsended_page');
+	}
+	
+	/**
+	 * @Route("/payed", name="bill_listpayed")
+	 * @Route("/payed/page/{page}", name="bill_listpayed_page")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function listpayedAction($page = 1)
+	{
+		return $this->pagination('JLMOfficeBundle:Bill','Payed',$page,10,'bill_listpayed_page');
+	}
+	
+	/**
+	 * @Route("/canceled", name="bill_listcanceled")
+	 * @Route("/canceled/page/{page}", name="bill_listcanceled_page")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function listcanceledAction($page = 1)
+	{
+		return $this->pagination('JLMOfficeBundle:Bill','Canceled',$page,10,'bill_listcanceled_page');
+	}
     
     /**
      * Finds and displays a Bill entity.
@@ -96,7 +114,7 @@ class BillController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
 		$entity->setVat($vat);
-		$this->finishNewBill($entity);
+		$entity = $this->finishNewBill($entity);
         $entity->addLine(new BillLine);
         $form   = $this->createForm(new BillType, $entity);
 
@@ -118,7 +136,7 @@ class BillController extends Controller
     	$entity = new Bill();
     	$entity->setCreation(new \DateTime);
     	$entity->populateFromDoor($door);
-    	$this->finishNewBill($entity);
+    	$entity = $this->finishNewBill($entity);
     	$entity->addLine(new BillLine);
     	$form   = $this->createForm(new BillType, $entity);
     
@@ -140,7 +158,7 @@ class BillController extends Controller
     	$entity = new Bill();
     	$entity->setCreation(new \DateTime);
     	$entity->populateFromQuoteVariant($quote);
-    	$this->finishNewBill($entity);
+    	$entity = $this->finishNewBill($entity);
     	$form   = $this->createForm(new BillType, $entity);
     
     	return array(
@@ -162,7 +180,7 @@ class BillController extends Controller
     	$entity->setCreation(new \DateTime);
     	
     	$entity->populateFromIntervention($interv);
-    	$this->finishNewBill($entity);
+    	$entity = $this->finishNewBill($entity);
     	$form   = $this->createForm(new BillType, $entity);
     
     	return array(
@@ -181,6 +199,7 @@ class BillController extends Controller
     	$entity->setProperty($em->getRepository('JLMOfficeBundle:PropertyModel')->find(1).'');
     	$entity->setEarlyPayment($em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1).'');
     	$entity->setMaturity(30);
+    	return $entity;
     }
     
     /**
@@ -203,25 +222,7 @@ class BillController extends Controller
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
-            $number = $entity->getCreation()->format('ym');
-            $n = ($em->getRepository('JLMOfficeBundle:Bill')->getLastNumber() + 1);
-            for ($i = strlen($n); $i < 4 ; $i++)
-            	$number.= '0';
-            $number.= $n;
-            $entity->setNumber($number);
-            $lines = $entity->getLines();
-            foreach ($lines as $line)
-            {
-            	$line->setBill($entity);
-            	$em->persist($line);
-            }
             $em->persist($entity);
-            $interv = $entity->getIntervention();
-            if ($interv !== null)
-            {
-            	$interv->setBill($entity);
-            	$em->persist($interv);
-            }
             $em->flush();
             return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));  
         }
@@ -271,28 +272,24 @@ class BillController extends Controller
     	foreach ($entity->getLines() as $line)
     		$originalLines[] = $line;
         $editForm = $this->createForm(new BillType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
         
-        if ($editForm->isValid()) {
+        if ($editForm->isValid())
+        {
         	$em = $this->getDoctrine()->getManager();
-        	$em->persist($entity);
+	       	$lines = $entity->getLines();
+	       	foreach ($lines as $key => $line)
+	       	{
+	       		$line->setBill($entity);
+	       		$em->persist($line);
+	       		foreach ($originalLines as $key => $toDel)
+	       			if ($toDel->getId() === $line->getId())
+	       				unset($originalLines[$key]);
+	       	}
+	       	foreach ($originalLines as $line)
+	       		$em->remove($line);
 
-            foreach ($entity->getLines() as $key => $line)
-            {
-            
-            	// Nouvelles lignes
-            	$line->setBill($entity);
-            	$em->persist($line);
-            
-            	// On vire les anciennes
-            	foreach ($originalLines as $key => $toDel)
-            	if ($toDel->getId() === $line->getId())
-            		unset($originalLines[$key]);
-            }
-            foreach ($originalLines as $line)
-            {
-            	$em->remove($line);
-            }
+        	$em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
         }
@@ -372,7 +369,8 @@ class BillController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
     	$em->flush();
-    	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    	return $this->redirect($this->getRequest()->headers->get('referer'));
+    	//return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     }
     
     /**
@@ -391,7 +389,8 @@ class BillController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
     	$em->flush();
-    	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    	return $this->redirect($this->getRequest()->headers->get('referer'));
+    	//return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     }
     
     /**
@@ -409,7 +408,8 @@ class BillController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
     	$em->flush();
-    	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    	return $this->redirect($this->getRequest()->headers->get('referer'));
+    	//return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     }
     
     /**
@@ -427,7 +427,8 @@ class BillController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
     	$em->flush();
-    	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    	return $this->redirect($this->getRequest()->headers->get('referer'));
+    	//return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     }
     
     /**
@@ -445,7 +446,8 @@ class BillController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
     	$em->flush();
-    	return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+    	return $this->redirect($this->getRequest()->headers->get('referer'));
+    	//return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     }
     
     /**

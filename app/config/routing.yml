@@ -3,6 +3,11 @@ jlm_contact:
     type:     annotation
     prefix:   /contact
 
+jlm_fee:
+    resource: "@JLMFeeBundle/Controller/"
+    type:     annotation
+    prefix:   /fee
+
 jlm_transmitter:
     resource: "@JLMTransmitterBundle/Controller/"
     type:     annotation

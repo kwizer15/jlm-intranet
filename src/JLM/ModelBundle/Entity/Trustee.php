@@ -288,6 +288,8 @@ class Trustee extends Company
      */
     public function getBillingLabel()
     {
+    	if ($this->billingLabel === null)
+    		return $this->getName();
     	return $this->billingLabel;
     }
     

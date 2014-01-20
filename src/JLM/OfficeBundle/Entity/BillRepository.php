@@ -41,6 +41,7 @@ class BillRepository extends SearchRepository
 	{
 		if (!isset($this->count))
 		{
+			$date = new \DateTime;
 			$qb = $this->createQueryBuilder('a')
 				->select('a.state, COUNT(a) as c')
 				->orderBy('a.state','ASC')
@@ -69,10 +70,60 @@ class BillRepository extends SearchRepository
 			->setParameter(1,$state)
 			;
 		}
-		$qb->orderBy('t.creation','desc')
+		$qb->orderBy('t.number','desc')
 		->setFirstResult($offset)
 		->setMaxResults($limit);
 		return $qb->getQuery()->getResult();
+	}
+	
+	public function getAll($limit = 10, $offset = 0)
+	{
+		return $this->getByState(null,$limit,$offset);
+	}
+	
+	public function getCountAll()
+	{
+		return $this->getCount();
+	}
+	
+	public function getInSeizure($limit = 10, $offset = 0)
+	{
+		return $this->getByState(0,$limit,$offset);
+	}
+	
+	public function getCountInSeizure()
+	{
+		return $this->getCount(0);
+	}
+	
+	public function getSended($limit = 10, $offset = 0)
+	{
+		return $this->getByState(1,$limit,$offset);
+	}
+	
+	public function getCountSended()
+	{
+		return $this->getCount(1);
+	}
+	
+	public function getPayed($limit = 10, $offset = 0)
+	{
+		return $this->getByState(2,$limit,$offset);
+	}
+	
+	public function getCountPayed()
+	{
+		return $this->getCount(2);
+	}
+	
+	public function getCanceled($limit = 10, $offset = 0)
+	{
+		return $this->getByState(-1,$limit,$offset);
+	}
+	
+	public function getCountCanceled()
+	{
+		return $this->getCount(-1);
 	}
 	
 	public function getToBoost()
@@ -81,6 +132,7 @@ class BillRepository extends SearchRepository
 			->select('a')
 			->where('a.state = 1 AND a.firstBoost IS NULL AND DATE_ADD(a.creation, a.maturity, \'day\') < CURRENT_DATE()')
 			->orWhere('a.state = 1 AND a.firstBoost IS NOT NULL AND a.secondBoost IS NULL AND DATE_ADD(a.firstBoost,a.maturity, \'day\') < CURRENT_DATE()')
+			->orWhere('a.state = 1 AND a.firstBoost IS NOT NULL AND a.secondBoost IS NOT NULL AND DATE_ADD(a.secondBoost,a.maturity, \'day\') < CURRENT_DATE()')
 			->orderBy('a.creation','ASC')
 			->getQuery()
 			->getResult();

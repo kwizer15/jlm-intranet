@@ -38,7 +38,7 @@
 					$("#bill_vat").val(number_format(ui.item.vat*100,1,',',' ')).change();
 					$("#bill_trustee").val(ui.item.trustee);
 					$("#bill_prelabel").val(ui.item.prelabel);
-					$("#bill_trusteeName").val(ui.item.trusteeName);
+					$("#bill_trusteeName").val(ui.item.trusteeBillingLabel);
 					$("#bill_trusteeAddress").val(ui.item.trusteeBillingAddress);
 					$("#bill_accountNumber").val(ui.item.accountNumber);
 					$("#bill_reference").val(ui.item.reference);
@@ -65,7 +65,7 @@
 					$("#bill_vat").val(number_format(ui.item.vat*100,1,',',' ')).change();
 					$("#bill_trustee").val(ui.item.trustee);
 					$("#bill_prelabel").val(ui.item.prelabel);
-					$("#bill_trusteeName").val(ui.item.trusteeName);
+					$("#bill_trusteeName").val(ui.item.trusteeBillingLabel);
 					$("#bill_trusteeAddress").val(ui.item.trusteeBillingAddress);
 					$("#bill_accountNumber").val(ui.item.accountNumber);
 					$("#bill_reference").val(ui.item.reference);
@@ -88,7 +88,7 @@
 					}
 				, select: function (event, ui) {
 					$("#bill_trustee").val(ui.item.trustee);
-					$("#bill_trusteeName").val(ui.item.label);
+					$("#bill_trusteeName").val(ui.item.trusteeBillingLabel);
 					$("#bill_trusteeAddress").val(ui.item.trusteeBillingAddress);
 					$("#bill_accountNumber").val(ui.item.accountNumber);
 					return false;

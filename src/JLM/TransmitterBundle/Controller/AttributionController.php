@@ -278,12 +278,6 @@ class AttributionController extends Controller
 			
 			$bill = new Bill;
 			// Numéro de facture
-			$number = $entity->getCreation()->format('ym');
-			$n = ($em->getRepository('JLMOfficeBundle:Bill')->getLastNumber() + 1);
-			for ($i = strlen($n); $i < 4 ; $i++)
-				$number.= '0';
-			$number.= $n;
-			$bill->setNumber($number);
 			$bill = $entity->populateBill($bill,$vat,$earlyPayment,$penalty,$property,$port);
 			$billLines = $bill->getLines();
 			foreach ($billLines as $line)

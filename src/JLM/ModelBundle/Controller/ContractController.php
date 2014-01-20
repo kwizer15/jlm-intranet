@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -10,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Contract;
 use JLM\ModelBundle\Entity\Door;
+use JLM\FeeBundle\Entity\Fee;
 use JLM\ModelBundle\Form\Type\ContractType;
 use JLM\ModelBundle\Form\Type\ContractStopType;
 
@@ -93,6 +95,21 @@ class ContractController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
+            
+            // Temporaire : se fera jour par jour
+            // ***********************************
+            if ($entity->getInProgress())
+            {
+            	$fee = new Fee();
+            	$fee->addContract($entity);
+            	$fee->setTrustee($entity->getTrustee());
+            	$fee->setAddress($entity->getDoor()->getSite()->getAddress()->toString());
+            	$fee->setPrelabel($entity->getDoor()->getSite()->getBillingPrelabel());
+            	$fee->setVat($entity->getDoor()->getSite()->getVat());
+            	$em->persist($fee);
+            }
+            //***************************************
+            
             $em->flush();
 
             return $this->redirect($this->generateUrl('door_show', array('id' => $entity->getDoor()->getId())));
@@ -170,13 +187,12 @@ class ContractController extends Controller
      *
      * @Route("/{id}/update", name="contract_update")
      * @Method("post")
-     * @Template("JLMModelBundle:Contract:edit.html.twig")
+     * @Template("JLMModelBundle:Contract:edit.old.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function updateAction(Contract $entity)
+    public function updateAction(Request $request, Contract $entity)
     {
-        $editForm   = $this->createForm(new ContractType(), $entity);
-        $request = $this->getRequest();
+        $editForm   = $this->get('form.factory')->createNamed('contractEdit'.$entity->getId(),new ContractType(), $entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid())
