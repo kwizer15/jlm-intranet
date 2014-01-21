@@ -1,7 +1,12 @@
 {% extends "JLMStateBundle::layout.html.twig" %}
 
+{% block sidebar %}
+<li><a href="{{ path('state_technicians_year',{'year':2013}) }}">2013</a></li>
+<li><a href="{{ path('state_technicians_year',{'year':2014}) }}">2014</a></li>
+{% endblock %}
+
 {% block content %}
-<h1>Stats techniciens</h1>
+<h1>Stats techniciens {{ year }}</h1>
 <ul class="nav nav-pills">
 	<li class="active"><a href="#quantity" data-toggle="tab">Quantité</a></li>
 	<li><a href="#time" data-toggle="tab">Temps</a></li>
@@ -184,7 +189,7 @@ $(function () {
             x: -20 //center
         },
         subtitle: {
-            text: 'Année 2013',
+            text: 'Année {{ year }}',
             x: -20
         },
         tooltip: {
@@ -250,7 +255,7 @@ $(function () {
             x: -20 //center
         },
         subtitle: {
-            text: 'Année 2013',
+            text: 'Année {{ year }}',
             x: -20
         },
         xAxis: {

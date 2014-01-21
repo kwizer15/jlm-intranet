@@ -13,13 +13,16 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/technicians", name="state_technicians")
+     * @Route("/technicians/", name="state_technicians")
+     * @Route("/technicians/{year}", name="state_technicians_year")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function techniciansAction()
+    public function techniciansAction($year = null)
     {
 		// Initialisation des tableaux
+		$date = new \DateTime;
+		$year = ($year === null) ? $date->format('Y') : $year;
     	$base = array(
     			'fixing'=> 0,
     			'work'=> 0,
@@ -29,15 +32,16 @@ class DefaultController extends Controller
     	);
     	$em =$this->getDoctrine()->getManager();
     	$stats = array_merge(
-    			$em->getRepository('JLMDailyBundle:ShiftTechnician')->getStatsByYear(),
-    			$em->getRepository('JLMDailyBundle:ShiftTechnician')->getStatsByMonths()
+    			$em->getRepository('JLMDailyBundle:ShiftTechnician')->getStatsByYear($year),
+    			$em->getRepository('JLMDailyBundle:ShiftTechnician')->getStatsByMonths($year)
     	);
+    	$times = $numbers = array();
     	foreach ($stats as $stat)
     	{
     		$period = 'Year';
     		if (isset($stat['month']))
     		{
-    			$d = new \DateTime('2013-'.$stat['month'].'-01 00:00:00');
+    			$d = new \DateTime($year.'-'.$stat['month'].'-01 00:00:00');
     			$period = $d->format('F');
     		}
     		if (!isset($numbers[$period]))
@@ -64,8 +68,9 @@ class DefaultController extends Controller
 	    			$times[$period][$key][$key2] = new \DateInterval('PT'.round($type/60,0,PHP_ROUND_HALF_ODD).'H'.($type%60).'M');
 
     	return array(
-    			'numbers'=>$numbers,
-    			'times'=>$times,
+    			'year' => $year,
+    			'numbers' => $numbers,
+    			'times' => $times,
     	);
     }
     
