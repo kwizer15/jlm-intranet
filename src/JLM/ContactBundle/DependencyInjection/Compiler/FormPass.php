@@ -28,6 +28,7 @@ class FormPass implements CompilerPassInterface
     {
         $resources = $container->getParameter('twig.form.resources');
 		$resources[] = 'JLMContactBundle:Form:modal_layout.html.twig';
+		$resources[] = 'JLMContactBundle:Form:jquery_layout.html.twig';
         $container->setParameter('twig.form.resources', $resources);
     }
 }
