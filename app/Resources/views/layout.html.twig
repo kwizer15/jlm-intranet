@@ -165,6 +165,8 @@
           {% endblock footer %}
       </footer>
       {% block modals %}
+      {% if form is defined %}{{ form_modal(form) }}{% endif %}
+	  {% if edit_form is defined %}{{ form_modal(edit_form) }}{% endif %}
       {% endblock modals %}
 {% endblock body%}
 
