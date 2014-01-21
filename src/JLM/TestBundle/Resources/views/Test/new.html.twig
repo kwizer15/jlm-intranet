@@ -13,3 +13,8 @@
     </li>
 </ul>
 {% endblock %}
+
+{% block modals %}
+{{ parent() }}
+{{ form_modal(form) }}
+{% endblock %}
