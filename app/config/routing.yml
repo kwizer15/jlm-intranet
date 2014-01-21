@@ -1,3 +1,8 @@
+jlm_test:
+    resource: "@JLMTestBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 jlm_contact:
     resource: "@JLMContactBundle/Controller/"
     type:     annotation
