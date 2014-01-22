@@ -68,6 +68,7 @@ class TrusteeRepository extends SearchRepository
 					'trustee'       => ''.$r->getId(),
 					'label'         => ''.$r,
 					'trusteeBillingLabel'   => ''.$r->getBillingLabel(),
+					'trusteeBillingAddress'   => ''.$r->getAddressForBill()->toString(),
 					'trusteeAddress'=> ''.$r->getAddress(),
 					'accountNumber' => $r->getAccountNumber(),
 			);

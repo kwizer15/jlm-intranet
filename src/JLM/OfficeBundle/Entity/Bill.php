@@ -709,8 +709,8 @@ class Bill extends Document implements BillInterface
     	if ($group = $door->getSite()->getGroupNumber())
     		$this->setReference('Groupe : '.$group);
     	$this->setTrustee($trustee);
-    	$this->setTrusteeName($trustee->getName());
-    	$this->setTrusteeAddress($trustee->getAddressForBill().'');
+    	$this->setTrusteeName($trustee->getBillingLabel());
+    	$this->setTrusteeAddress($trustee->getAddressForBill()->toString());
     	$accountNumber = ($trustee->getAccountNumber() == null) ? '411000' : $trustee->getAccountNumber();
     	$this->setAccountNumber($accountNumber);
     	$this->setPrelabel($door->getSite()->getBillingPrelabel());
@@ -733,7 +733,7 @@ class Bill extends Document implements BillInterface
     	if ($group = $site->getGroupNumber())
     		$this->setReference('Groupe : '.$group);
     	$this->setTrustee($trustee);
-    	$this->setTrusteeName($trustee->getName());
+    	$this->setTrusteeName($trustee->getBillingLabel());
     	$this->setTrusteeAddress($trustee->getAddressForBill()->toString());
     	$this->setAccountNumber($trustee->getAccountNumber());
     	$this->setPrelabel($site->getBillingPrelabel());
