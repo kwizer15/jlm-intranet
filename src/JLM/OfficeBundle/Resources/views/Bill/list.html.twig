@@ -8,6 +8,7 @@
             <th>Echéance</th>
             <th>Total HT</th>
             <th>Total TTC</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -37,6 +38,8 @@
             	<a href="{{ path('bill_send',{'id':entity.id}) }}" class="btn btn-primary btn-small">Envoyer</a>
             {% elseif entity.state == 1 %}
             	<a href="{{ path('bill_payed',{'id':entity.id}) }}" class="btn btn-success btn-small">Régler</a>
+            {% elseif entity.state == 2 %}
+            	<a href="{{ path('bill_send',{'id':entity.id}) }}" class="btn btn-danger btn-small">Annuler réglé</a>
             {% endif %}
             </td>
         </tr>

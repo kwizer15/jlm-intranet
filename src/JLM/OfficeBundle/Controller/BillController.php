@@ -381,10 +381,7 @@ class BillController extends PaginableController
      */
     public function sendAction(Bill $entity)
     {
-    	if ($entity->getState() > 1)
-    		return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
-    
-    	if ($entity->getState() < 1)
+    	if ($entity->getState() != 1)
     		$entity->setState(1);
     	$em = $this->getDoctrine()->getManager();
     	$em->persist($entity);
