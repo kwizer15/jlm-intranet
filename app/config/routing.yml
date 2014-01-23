@@ -1,8 +1,3 @@
-kwizer_modal:
-    resource: "@KwizerModalBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 jlm_test:
     resource: "@JLMTestBundle/Controller/"
     type:     annotation

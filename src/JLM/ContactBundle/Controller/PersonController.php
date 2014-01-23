@@ -85,6 +85,7 @@ class PersonController extends Controller
         $form = $this->createForm(new PersonType(), $entity, array(
             'action' => $this->generateUrl('jlm_contact_person_create'),
             'method' => 'POST',
+        	'attr' => array('main_title' => 'Nouvelle personne')
         ));
 
         $form->add('submit', 'submit', array('label' => 'Enregistrer'));
@@ -103,9 +104,16 @@ class PersonController extends Controller
     {
         $form   = $this->createCreateForm();
 
+        if($this->getRequest()->isXmlHttpRequest())
+        {
+        	return $this->render('JLMContactBundle:Person:modal.html.twig',array(
+        			'entity' => $form->getData(),
+        			'form'   => $form->createView(),
+        	));
+        }
         return array(
-            'entity' => $form->getData(),
-            'form'   => $form->createView(),
+        		'entity' => $form->getData(),
+        		'form'   => $form->createView(),
         );
     }
 

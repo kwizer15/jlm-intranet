@@ -12,6 +12,9 @@
 
 {% block selectcontacttype_modal %}
 {% spaceless %}
-    <div id="{{ id }}_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="{{ id }}_modal_label" aria-hidden="true"></div>
-    {% endspaceless %}
+    <div id="{{ id }}_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="{{ id }}_modal_label" aria-hidden="true">
+    	<div class="modal-dialog">
+    	</div>
+    </div>
+{% endspaceless %}
 {% endblock selectcontacttype_modal %}

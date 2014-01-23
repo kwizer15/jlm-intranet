@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\ContactBundle\Twig\Extension;
+namespace Kwizer\ModalBundle\Twig\Extension;
 
 use Symfony\Component\Form\FormView;
 use Symfony\Bridge\Twig\Form\TwigRendererInterface;
@@ -36,6 +36,6 @@ class FormExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'jlm.conctactbundle.twig.extension.form';
+        return 'kwizer.modalbundle.twig.extension.form';
     }
 }

@@ -36,7 +36,7 @@ class SelectContactType extends AbstractType
 
     public function getParent()
     {
-    	return 'genemu_jqueryselect2_entity';
+    	return 'kwizer_select2modal';
     }
     
     public function getName()

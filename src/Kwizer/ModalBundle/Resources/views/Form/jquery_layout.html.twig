@@ -1,0 +1,36 @@
+{% block selectcontacttype_javascript %}
+{{ form_javascript(form) }}
+<script type="text/javascript">
+        jQuery(document).ready(function($) {
+            function modalSuccess($dialog,data){
+            	$dialog.html(data);
+            	$form = $dialog.find('form'); 
+            	$.ajax({
+					type: $form.val('method'),
+					url: $form.val('action'),
+					dataType: "html",
+					success: function(data2){
+						$form.on('submit',function(){
+             	    	   modalSuccess($dialog,data2); 
+							   return false;
+             	    	});
+					}
+				});
+            }
+            var $field = $('#{{ id }}_modal');
+            $field.on('show',function(){
+            	var $dialog = $(this).find('.modal-dialog'); 
+            	$.ajax({
+            	       type: "GET",
+            	       url: "{{ path('jlm_contact_person_new') }}",
+            	       dataType: "html",
+            	       success: function(data){
+                	    	   modalSuccess($dialog,data);
+                	    	   return false; 
+                	    		}
+            				});   
+            	       
+            	 });
+        });
+</script>
+{% endblock selectcontacttype_javascript %}

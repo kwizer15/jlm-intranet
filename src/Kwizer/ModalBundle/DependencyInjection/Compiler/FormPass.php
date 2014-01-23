@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\ContactBundle\DependencyInjection\Compiler;
+namespace Kwizer\ModalBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -27,8 +27,9 @@ class FormPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $resources = $container->getParameter('twig.form.resources');
-		$resources[] = 'JLMContactBundle:Form:modal_layout.html.twig';
-		$resources[] = 'JLMContactBundle:Form:jquery_layout.html.twig';
+		$resources[] = 'KwizerModalBundle:Form:modal_layout.html.twig';
+		$resources[] = 'KwizerModalBundle:Form:jquery_layout.html.twig';
+		$resources[] = 'KwizerModalBundle:Form:form_layout.html.twig';
         $container->setParameter('twig.form.resources', $resources);
     }
 }

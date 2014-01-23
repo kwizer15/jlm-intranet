@@ -3,18 +3,9 @@
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-    <!--
-    <parameters>
-        <parameter key="kwizer_modal.example.class">Kwizer\ModalBundle\Example</parameter>
-    </parameters>
-
     <services>
-        <service id="kwizer_modal.example" class="%kwizer_modal.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
-        </service>
+        <service id="kwizer_modal.type.select2modaltype" class="Kwizer\ModalBundle\Form\Type\Select2ModalType">
+   			<tag name="form.type" alias="kwizer_select2modal" />
+		</service>
     </services>
-    -->
 </container>
