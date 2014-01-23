@@ -1,0 +1,11 @@
+{% block selectcontacttype_modalbutton %}
+{% spaceless %}
+    	<div class="btn-group">
+		    <a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white icon-plus-sign"></i> Ajouter <span class="caret"></span></a>
+		    <ul class="dropdown-menu">
+		    	<li><a href="#{{ id }}_modal" class="modal-caller" data-toggle="modal" route="{{ path('jlm_contact_person_new') }}">Personne</a></li>
+		    	<li><a href="#{{ id }}_modal" class="modal-caller" data-toggle="modal" route="{{ path('jlm_contact_person_new') }}">Entreprise</a></li>
+		    </ul>
+	    </div>
+    {% endspaceless %}
+{% endblock selectcontacttype_modalbutton %}

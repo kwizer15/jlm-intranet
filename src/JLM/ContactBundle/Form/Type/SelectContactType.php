@@ -46,10 +46,15 @@ class SelectContactType extends AbstractType
     
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+    	parent::setDefaultOptions($resolver);
         $resolver->setDefaults(array(
+        	
             'invalid_message' => 'The selected contact does not exist',
         	'class' => 'JLM\ContactBundle\Entity\Contact',
-        	'attr' => array('class'=>'input-xlarge'),
+        	'attr' => array(
+        			'class'=>'input-xlarge',
+        			'new_route' => 'jlm_contact_person_new',
+        	),
         	'empty_value' => '',
         	'configs' => array(
         			'placeholder' => 'Sélectionner un contact...',

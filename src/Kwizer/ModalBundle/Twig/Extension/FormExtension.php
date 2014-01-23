@@ -28,6 +28,7 @@ class FormExtension extends \Twig_Extension
     {
         return array(
             'form_modal' => new \Twig_Function_Node('Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', array('is_safe' => array('html'))),
+        	'form_modalbutton' => new \Twig_Function_Node('Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', array('is_safe' => array('html'))),
         );
     }
 

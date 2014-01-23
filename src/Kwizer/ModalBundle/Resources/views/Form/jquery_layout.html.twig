@@ -1,36 +1,40 @@
-{% block selectcontacttype_javascript %}
-{{ form_javascript(form) }}
-<script type="text/javascript">
-        jQuery(document).ready(function($) {
-            function modalSuccess($dialog,data){
-            	$dialog.html(data);
-            	$form = $dialog.find('form'); 
-            	$.ajax({
-					type: $form.val('method'),
-					url: $form.val('action'),
-					dataType: "html",
-					success: function(data2){
-						$form.on('submit',function(){
-             	    	   modalSuccess($dialog,data2); 
-							   return false;
-             	    	});
-					}
-				});
-            }
-            var $field = $('#{{ id }}_modal');
-            $field.on('show',function(){
-            	var $dialog = $(this).find('.modal-dialog'); 
-            	$.ajax({
-            	       type: "GET",
-            	       url: "{{ path('jlm_contact_person_new') }}",
-            	       dataType: "html",
-            	       success: function(data){
-                	    	   modalSuccess($dialog,data);
-                	    	   return false; 
-                	    		}
-            				});   
-            	       
-            	 });
-        });
-</script>
-{% endblock selectcontacttype_javascript %}
+{% block kwizer_select2modal_javascript %}
+	{{ form_javascript(form) }}
+	<script type="text/javascript">
+	function loadKwizerModal($dialog,data){
+		$dialog.html(data);
+	    $form = $dialog.find('form');
+	    $form.on('submit',function(){ 
+		    $.ajax({
+				type: $form.attr('method'),
+				url: $form.attr('action'),
+				dataType: "html",
+				data: $form.serialize(),
+				success: function(data2){
+					loadKwizerModal($dialog,data2); 
+				}
+			});
+			return false;
+	    });
+	}
+	jQuery(document).ready(function($) {
+		var $url;
+		$(".modal-caller").on('click',function(){
+			$url = $(this).attr('route');
+			console.log($url);
+		});
+		var $field = $('#{{ id }}_modal');
+		$field.on('show',function(){
+			var $dialog = $(this).find('.modal-dialog'); 
+			$.ajax({
+				type: "GET",
+				url: $url,
+				dataType: "html",
+				success: function(data){
+					loadKwizerModal($dialog,data);
+				}
+			});   	       
+		});
+	});
+	</script>
+{% endblock kwizer_select2modal_javascript %}

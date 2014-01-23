@@ -56,7 +56,8 @@ class PersonController extends Controller
     {
         $form = $this->createCreateForm();
         $form->handleRequest($request);
-
+        $template = ($request->isXmlHttpRequest()) ? 'JLMContactBundle:Person:modal_new.html.twig' : 'JLMContactBundle:Person:new.html.twig';
+        
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
@@ -64,13 +65,18 @@ class PersonController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            if ($request->isXmlHttpRequest())
+            {
+            	return $this->render('JLMContactBundle:Person:modal_show.html.twig',array('entity' => $form->getData()));
+            } 
+            
             return $this->redirect($this->generateUrl('jlm_contact_person_show', array('id' => $entity->getId())));
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return $this->render($template,array(
+        		'entity' => $form->getData(),
+        		'form'   => $form->createView(),
+        ));
     }
 
     /**
@@ -98,23 +104,17 @@ class PersonController extends Controller
      *
      * @Route("/new", name="jlm_contact_person_new")
      * @Method("GET")
-     * @Template()
      */
     public function newAction()
     {
         $form   = $this->createCreateForm();
+	
+        $template = ($this->getRequest()->isXmlHttpRequest()) ? 'JLMContactBundle:Person:modal_new.html.twig' : 'JLMContactBundle:Person:new.html.twig';
 
-        if($this->getRequest()->isXmlHttpRequest())
-        {
-        	return $this->render('JLMContactBundle:Person:modal.html.twig',array(
-        			'entity' => $form->getData(),
-        			'form'   => $form->createView(),
-        	));
-        }
-        return array(
+        return $this->render($template,array(
         		'entity' => $form->getData(),
         		'form'   => $form->createView(),
-        );
+        	));
     }
 
     /**

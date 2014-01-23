@@ -1,6 +1,11 @@
 {% block kwizer_select2modal_widget %}
     {% spaceless %}
     	{{ form_widget(form) }}
-    	&nbsp;<a href="#{{ id }}_modal" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-white icon-plus-sign"></i></a>
+    	&nbsp;
+    	{{ form_modalbutton(form) }}
     {% endspaceless %}
 {% endblock kwizer_select2modal_widget %}
+
+{% block kwizer_select2modal_modalbutton %}
+<a class="btn btn-success modal_caller" href="#{{ id }}_modal" data-toggle="modal" route="{{ path('form.vars.attr.route') }}"><i class="icon-white icon-plus-sign"></i> Ajouter</a>
+{% endblock kwizer_select2modal_modalbutton %}
