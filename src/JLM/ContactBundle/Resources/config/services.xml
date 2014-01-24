@@ -11,7 +11,7 @@
 		</service>
 		<service id="jlm_contact.type.selectcontacttype" class="JLM\ContactBundle\Form\Type\SelectContactType">
 			<argument type="service" id="doctrine.orm.entity_manager"/>
-   			<tag name="form.type" alias="selectcontacttype" />
+   			<tag name="form.type" alias="jlm_contact_selectcontacttype" />
 		</service>
 	</services>
 </container>

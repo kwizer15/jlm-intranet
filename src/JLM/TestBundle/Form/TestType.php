@@ -15,7 +15,7 @@ class TestType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contact','selectcontacttype')
+            ->add('contact','jlm_contact_selectcontacttype',array('required'=>false))
         ;
     }
     

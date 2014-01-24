@@ -1,6 +1,7 @@
-{% block selectcontacttype_modalbutton %}
+{% block jlm_contact_selectcontacttype_modalbutton %}
 {% spaceless %}
-    	<div class="btn-group">
+    	<a href="#{{ id }}_modal" class="modal-caller btn btn-warning select2-select" data-toggle="modal" route="{{ path('jlm_contact_contact_edit', {'id':0})|replace('0','$') }}"><i class="icon-white icon-pencil"></i> Editer</a>
+    	&nbsp;<div class="btn-group">
 		    <a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white icon-plus-sign"></i> Ajouter <span class="caret"></span></a>
 		    <ul class="dropdown-menu">
 		    	<li><a href="#{{ id }}_modal" class="modal-caller" data-toggle="modal" route="{{ path('jlm_contact_person_new') }}">Personne</a></li>
@@ -8,4 +9,4 @@
 		    </ul>
 	    </div>
     {% endspaceless %}
-{% endblock selectcontacttype_modalbutton %}
+{% endblock jlm_contact_selectcontacttype_modalbutton %}

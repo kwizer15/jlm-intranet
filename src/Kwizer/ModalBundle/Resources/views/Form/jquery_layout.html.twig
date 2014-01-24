@@ -19,11 +19,22 @@
 	}
 	jQuery(document).ready(function($) {
 		var $url;
+		var $select = $('#{{ id }}');
+		var $field = $('#{{ id }}_modal');
+		var $toggleButtons = function(object){
+			if (object.val().length == 0) {
+				$('[href=#{{ id }}_modal].select2-select').hide();
+			} else {
+				$('[href=#{{ id }}_modal].select2-select').show();
+			}
+		};
+		$toggleButtons($select);
+		
 		$(".modal-caller").on('click',function(){
 			$url = $(this).attr('route');
-			console.log($url);
+			$url = $url.replace('$',$('#{{ id }}').val());
 		});
-		var $field = $('#{{ id }}_modal');
+		$select.on('change', function(){$toggleButtons($(this))});
 		$field.on('show',function(){
 			var $dialog = $(this).find('.modal-dialog'); 
 			$.ajax({

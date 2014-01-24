@@ -141,7 +141,6 @@ class PersonController extends Controller
      *
      * @Route("/{id}/edit", name="jlm_contact_person_edit")
      * @Method("GET")
-     * @Template()
      */
     public function editAction($id)
     {
@@ -150,6 +149,13 @@ class PersonController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
+        $template = ($this->getRequest()->isXmlHttpRequest()) ? 'JLMContactBundle:Person:modal_edit.html.twig' : 'JLMContactBundle:Person:edit.html.twig';
+        
+        return $this->render($template,array(
+        		'edit_form'   => $editForm->createView(),
+            	'delete_form' => $deleteForm->createView(),
+        ));
+        
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),

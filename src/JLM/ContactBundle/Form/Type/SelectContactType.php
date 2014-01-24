@@ -10,30 +10,6 @@ use JLM\ContactBundle\Form\DataTransformer\ContactToIntTransformer;
 
 class SelectContactType extends AbstractType
 {
-	/**
-	 * @var ObjectManager
-	 */
-	private $om;
-	
-	/**
-	 * @param ObjectManager $om
-	 */
-	public function __construct(ObjectManager $om)
-	{
-		$this->om = $om;
-	}
-	
-	/**
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-    	$transformer = new ContactToIntTransformer($this->om);
-    	$builder->addModelTransformer($transformer);
-    	
-    }
-
     public function getParent()
     {
     	return 'kwizer_select2modal';
@@ -41,24 +17,23 @@ class SelectContactType extends AbstractType
     
     public function getName()
     {
-        return 'selectcontacttype';
+        return 'jlm_contact_selectcontacttype';
     }
     
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
     	parent::setDefaultOptions($resolver);
         $resolver->setDefaults(array(
-        	
             'invalid_message' => 'The selected contact does not exist',
-        	'class' => 'JLM\ContactBundle\Entity\Contact',
+        	'class' => 'JLMContactBundle:Contact',
         	'attr' => array(
         			'class'=>'input-xlarge',
-        			'new_route' => 'jlm_contact_person_new',
-        	),
-        	'empty_value' => '',
-        	'configs' => array(
-        			'placeholder' => 'Sélectionner un contact...',
         		),
-        ));
-    }
+        	'empty_value_in_choices' => true,
+        	'configs' => array(
+        			'placeholder' => 'Sélectionnez un contact...',
+        		),
+        	)
+        );
+    } 
 }
