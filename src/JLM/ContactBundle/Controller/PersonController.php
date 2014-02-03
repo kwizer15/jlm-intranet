@@ -152,6 +152,7 @@ class PersonController extends Controller
         $template = ($this->getRequest()->isXmlHttpRequest()) ? 'JLMContactBundle:Person:modal_edit.html.twig' : 'JLMContactBundle:Person:edit.html.twig';
         
         return $this->render($template,array(
+        		'entity'      => $entity,
         		'edit_form'   => $editForm->createView(),
             	'delete_form' => $deleteForm->createView(),
         ));

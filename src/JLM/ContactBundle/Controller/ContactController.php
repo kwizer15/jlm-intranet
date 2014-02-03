@@ -45,6 +45,10 @@ class ContactController extends Controller
     }
     
     /**
+     * Returns
+     */
+    
+    /**
      * Get entity with id
      * @param int $id
      * @return Contact

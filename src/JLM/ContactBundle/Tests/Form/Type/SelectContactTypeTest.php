@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension;
 use Symfony\Component\Form\FormBuilder;
 
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;
+use Kwizer\ModalBundle\Form\Type\Select2ModalType;
 use JLM\ContactBundle\Form\Type\SelectContactType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
@@ -41,7 +42,7 @@ class SelectContactTypeTest extends TypeTestCase
 		$this->builder = new FormBuilder(null, null, $this->dispatcher, $this->factory);
 	
 		$om = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
-		$this->form = $this->factory->create(new SelectContactType($om));
+		$this->form = $this->factory->create(new SelectContactType);
 	}
 	
 	protected function getContact()
@@ -55,6 +56,7 @@ class SelectContactTypeTest extends TypeTestCase
 	protected function getExtensions()
 	{
 		$select2Type = new Select2Type('entity');
+		$select2ModalType = new Select2ModalType();
 		
 		$mockEntityType = $this->getMockBuilder('Symfony\Bridge\Doctrine\Form\Type\EntityType')
 		->disableOriginalConstructor()
@@ -65,6 +67,7 @@ class SelectContactTypeTest extends TypeTestCase
 		
 		return array(new PreloadedExtension(array(
 				$select2Type->getName() => $select2Type,
+				$select2ModalType->getName() => $select2ModalType,
 				$mockEntityType->getName() => $mockEntityType,
 		), array()));
 	}

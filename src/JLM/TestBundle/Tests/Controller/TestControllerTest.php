@@ -6,6 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TestControllerTest extends WebTestCase
 {
+	public function testALaCon()
+	{
+		$this->assertTrue(true);
+	}
     /*
     public function testCompleteScenario()
     {

@@ -98,7 +98,7 @@ class ContactAddressTypeTest extends TypeTestCase
 	 */
 	public function testSubmitValidData($data)
 	{
-		$address = new Address($data['address']['street'],$data['address']['city']);
+		$address = new Address($data['address']['street'], $data['address']['city']);
 		
 		$object = new ContactAddress($data['contactdata']['contact'],$data['contactdata']['alias'],$address);
 		$object->setLabel($data['label']);
