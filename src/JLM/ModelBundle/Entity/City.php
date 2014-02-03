@@ -6,14 +6,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use JLM\ModelBundle\Entity\Country;
+use JLM\ContactBundle\Model\CityInterface;
+use JLM\ContactBundle\Model\CountryInterface;
 /**
  * JLM\ModelBundle\Entity\City
  *
  * @ORM\Table(name="cities")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\CityRepository", readOnly=true)
  */
-class City extends StringModel
+class City extends StringModel implements CityInterface
 {
     /**
      * @var integer $id
@@ -37,7 +38,7 @@ class City extends StringModel
     /**
      * @var Country $country
      * 
-     * @ORM\ManyToOne(targetEntity="Country")
+     * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\CountryInterface")
      * @ORM\JoinColumn(name="country_code", referencedColumnName="code")
      * @Assert\NotNull
      * @Assert\Valid
@@ -93,9 +94,9 @@ class City extends StringModel
     /**
      * Set country
      *
-     * @param JLM\ModelBundle\Entity\Country $country
+     * @param JLM\ContactBundle\Model\AddressInterface $country
      */
-    public function setCountry(Country $country = null)
+    public function setCountry(CountryInterface $country = null)
     {
         $this->country = $country;
         return $this;
@@ -104,7 +105,7 @@ class City extends StringModel
     /**
      * Get country
      *
-     * @return JLM\ModelBundle\Entity\Country 
+     * @return JLM\ContactBundle\Model\AddressInterface
      */
     public function getCountry()
     {

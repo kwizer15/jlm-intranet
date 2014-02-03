@@ -8,14 +8,6 @@ namespace JLM\ContactBundle\Model;
 interface CityInterface
 {
 	/**
-	 * Contructor
-	 * @param string $name
-	 * @param string $zip
-	 * @param CountryInterface $country
-	 */
-	public function __construct($name, $zip, CountryInterface $country);
-	
-	/**
 	 * Set name
 	 * @param string $name
 	 * @return self

@@ -68,9 +68,9 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
         resolve_target_entities:
-            JLM\ContactBundle\Model\AddressInterface:        JLM\ContactBundle\Entity\Address
-            JLM\ContactBundle\Model\CityInterface:           JLM\ContactBundle\Entity\City
-            JLM\ContactBundle\Model\CountryInterface:        JLM\ContactBundle\Entity\Country
+            JLM\ContactBundle\Model\AddressInterface:        JLM\ModelBundle\Entity\Address
+            JLM\ContactBundle\Model\CityInterface:           JLM\ModelBundle\Entity\City
+            JLM\ContactBundle\Model\CountryInterface:        JLM\ModelBundle\Entity\Country
             JLM\ContactBundle\Model\EmailInterface:          JLM\ContactBundle\Entity\Email
             JLM\ContactBundle\Model\PhoneInterface:          JLM\ContactBundle\Entity\Phone
             JLM\ContactBundle\Model\PhoneRuleInterface:      JLM\ContactBundle\Entity\PhoneRule

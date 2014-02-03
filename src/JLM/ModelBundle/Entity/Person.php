@@ -5,6 +5,7 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\ContactBundle\Model\AddressInterface;
 
 /**
  * JLM\ModelBundle\Entity\Person
@@ -91,7 +92,7 @@ class Person
     /**
      * @var string $address
      * 
-     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
      */
     private $address;
     
@@ -285,7 +286,7 @@ class Person
      *
      * @param string $address
      */
-    public function setAddress($address)
+    public function setAddress(AddressInterface $address)
     {
     	$this->address = $address;
     }

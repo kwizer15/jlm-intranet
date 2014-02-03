@@ -24,7 +24,7 @@ abstract class ContactExtension implements ContactInterface
 	/**
 	 * @var Contact
 	 *
-	 * @ORM\OneToOne(targetEntity="Contact")
+	 * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\ContactInterface")
 	 */
 	private $contact;
 	

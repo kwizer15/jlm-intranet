@@ -9,13 +9,6 @@ namespace JLM\ContactBundle\Model;
 interface CountryInterface
 {
 	/**
-	 * Constructor
-	 * @param string $code
-	 * @param string $name
-	 */
-	public function __construct($code,$name);
-	
-	/**
 	 * Set code
 	 * @param string $code
 	 * @return self

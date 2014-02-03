@@ -5,7 +5,8 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use JLM\ModelBundle\Entity\City;
+use JLM\ContactBundle\Model\AddressInterface;
+use JLM\ContactBundle\Model\CityInterface;
 
 /**
  * JLM\ModelBundle\Entity\Address
@@ -13,7 +14,7 @@ use JLM\ModelBundle\Entity\City;
  * @ORM\Table(name="addresses")
  * @ORM\Entity
  */
-class Address
+class Address implements AddressInterface
 {
     /**
      * @var integer $id
@@ -33,9 +34,9 @@ class Address
     private $street = '';
     
     /**
-     * @var string $city
+     * @var JLM\ContactBundle\Model\CityInterface $city
      *
-     * @ORM\ManyToOne(targetEntity="City")
+     * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\CityInterface")
      * @Assert\NotNull
      * @Assert\Valid
      */
@@ -63,9 +64,7 @@ class Address
     }
 
     /**
-     * Get street
-     *
-     * @return string 
+     * {@inheritdoc}
      */
     public function getStreet()
     {
@@ -75,18 +74,16 @@ class Address
     /**
      * Set city
      *
-     * @param City $city
+     * @param JLM\ContactBundle\Model\CityInterface $city
      */
-    public function setCity(City $city = null)
+    public function setCity(CityInterface $city = null)
     {
         $this->city = $city;
         return $this;
     }
 
     /**
-     * Get city
-     *
-     * @return City
+     * {@inheritdoc}
      */
     public function getCity()
     {
@@ -94,7 +91,23 @@ class Address
     }
     
     /**
-     * To String
+     * {@inheritdoc}
+     */
+    public function getZip()
+    {
+    	return $this->city->getZip();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getCountry()
+    {
+    	return $this->city->getCountry();
+    }
+    
+    /**
+     * {@inheritdoc}
      */
     public function __toString()
     {
