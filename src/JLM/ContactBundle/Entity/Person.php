@@ -5,6 +5,7 @@ namespace JLM\ContactBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use JLM\ContactBundle\Entity\Contact;
+use JLM\ContactBundle\Model\PersonInterface;
 
 class PersonException extends \Exception {}
 
@@ -14,7 +15,7 @@ class PersonException extends \Exception {}
  * @ORM\Table(name="jlm_contact_person")
  * @ORM\Entity
  */
-class Person extends Contact
+class Person extends Contact implements PersonInterface
 {
 
 
@@ -129,9 +130,7 @@ class Person extends Contact
     }
     
     /**
-     * Get firstName
-     *
-     * @return string 
+     * {@inherirdoc}
      */
     public function getFirstName()
     {
@@ -156,9 +155,7 @@ class Person extends Contact
     }
 
     /**
-     * Get lastName
-     *
-     * @return string 
+     * {@inherirdoc}
      */
     public function getLastName()
     {
@@ -166,9 +163,7 @@ class Person extends Contact
     }
     
     /**
-     * To string
-     * 
-     * @return string
+     * {@inherirdoc}
      */
     public function __toString()
     {

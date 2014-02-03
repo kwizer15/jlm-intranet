@@ -140,4 +140,12 @@ abstract class ContactExtension implements ContactInterface
 	{
 		return $this->contact->getPhones();
 	}
+	
+	/**
+	 * {@inherirdoc}
+	 */
+	public function __toString()
+	{
+		return $this->contact->__toString();
+	}
 }

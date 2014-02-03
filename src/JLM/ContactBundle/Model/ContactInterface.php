@@ -10,6 +10,12 @@ interface ContactInterface
 	public function getName();
 	
 	/**
+	 * Get name
+	 * @return string
+	 */
+	public function __toString();
+	
+	/**
 	 * Add an Email
 	 * @param EmailInterface $email
 	 * @return self

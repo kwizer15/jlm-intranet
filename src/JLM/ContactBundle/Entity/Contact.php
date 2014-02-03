@@ -177,4 +177,11 @@ abstract class Contact implements ContactInterface
     	return null;
     }
     
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+    	return $this->getName();
+    }
 }
