@@ -13,7 +13,7 @@ class PurchaserException extends \Exception {}
  * @ORM\Table()
  * @ORM\Entity
  */
-class Purchaser extends ContactExtension implements ContactInterface
+class Purchaser extends ContactDecorator implements ContactInterface
 {
 
 }

@@ -10,7 +10,7 @@ use JLM\ContactBundle\Model\ContactPhoneInterface;
 /**
  * @ORM\MappedSuperclass
  */
-abstract class ContactExtension implements ContactInterface
+abstract class ContactDecorator implements ContactInterface
 {
 	/**
 	 * @var integer
