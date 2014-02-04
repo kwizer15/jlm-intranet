@@ -7,7 +7,7 @@ use JLM\ContactBundle\Entity\ContactAddress;
 use JLM\ContactBundle\Entity\ContactPhone;
 use JLM\ContactBundle\Entity\ContactEmail;
 
-class ContactExtensionTest extends \PHPUnit_Framework_TestCase
+class ContactDecoratorTest extends \PHPUnit_Framework_TestCase
 {
 	/**
 	 * {@inheritdoc}
@@ -16,7 +16,7 @@ class ContactExtensionTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->contact = $this->getMock('JLM\ContactBundle\Model\ContactInterface');
 		$this->contact->expects($this->any())->method('getName')->will($this->returnValue('JLM Entreprise'));
-		$this->entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\ContactExtension', array($this->contact));
+		$this->entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\ContactDecorator', array($this->contact));
 		
 		
 		$this->address = $this->getMock('JLM\ContactBundle\Model\ContactAddressInterface');
