@@ -1,3 +1,8 @@
+jlm_product:
+    resource: "@JLMProductBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 jlm_test:
     resource: "@JLMTestBundle/Controller/"
     type:     annotation
