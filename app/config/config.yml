@@ -79,6 +79,7 @@ doctrine:
             JLM\ContactBundle\Model\ContactAddressInterface: JLM\ContactBundle\Entity\ContactAddress
             JLM\ContactBundle\Model\ContactEmailInterface:   JLM\ContactBundle\Entity\ContactEmail
             JLM\ContactBundle\Model\ContactPhoneInterface:   JLM\ContactBundle\Entity\ContactPhone
+            JLM\ContactBundle\Model\PersonInterface:         JLM\ModelBundle\Entity\Person
 
 # Swiftmailer Configuration
 swiftmailer:
