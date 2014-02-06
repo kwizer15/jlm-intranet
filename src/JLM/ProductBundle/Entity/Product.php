@@ -3,7 +3,11 @@ namespace JLM\ProductBundle\Entity;
 
 use JLM\ProductBundle\Model\ProductInterface;
 
-class Product implements ProductInterface
+/**
+ * @author kwizer
+ *
+ */
+abstract class Product implements ProductInterface
 {
 	/**
 	 * 

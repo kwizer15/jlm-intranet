@@ -1,8 +1,6 @@
 <?php
 namespace JLM\ProductBundle\Tests\Entity;
 
-use JLM\ProductBundle\Entity\Product;
-
 class ProductTest extends \PHPUnit_Framework_TestCase
 {
 	protected $entity;
@@ -12,7 +10,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->entity = new Product;
+		$this->entity = $this->getMockForAbstractClass('JLM\ProductBundle\Entity\Product');
 	}
 	
 	/**
