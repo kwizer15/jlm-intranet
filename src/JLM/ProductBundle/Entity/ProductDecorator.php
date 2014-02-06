@@ -7,16 +7,26 @@ abstract class ProductDecorator implements ProductInterface
 {
 	/**
 	 * 
-	 * @var string
+	 * @var ProductInterface
 	 */
 	private $product;
 	
 	/**
 	 * Constructor
+	 * 
+	 * @param ProductInterface $product
 	 */
 	public function __construct(ProductInterface $product)
 	{
 		$this->product = $product;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setReference($reference)
+	{
+		return $this->product->setReference($reference);
 	}
 	
 	/**
@@ -26,6 +36,14 @@ abstract class ProductDecorator implements ProductInterface
 	{
 		return $this->product->getReference();
 	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setDesignation($designation)
+	{
+		return $this->product->setDesignation($designation);
+	}
 	
 	/**
 	 * {@inheritdoc}
@@ -33,6 +51,14 @@ abstract class ProductDecorator implements ProductInterface
 	public function getDesignation()
 	{
 		return $this->product->getDesignation();
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setDescription($description)
+	{
+		return $this->product->setDescription($description);
 	}
 	
 	/**
