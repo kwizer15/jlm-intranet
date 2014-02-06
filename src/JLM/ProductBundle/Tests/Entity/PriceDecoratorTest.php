@@ -1,28 +1,22 @@
 <?php
 namespace JLM\ProductBundle\Tests\Entity;
 
-use JLM\ProductBundle\Entity\PriceDecorator;
-
-class PriceDecoratorTest extends \PHPUnit_Framework_TestCase
+class PriceDecoratorTest extends \Kwizer\DesignPatternBundle\Test\DecoratorTestCase
 {
-	protected $entity;
-	
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setUp()
+	protected function getInterfaceName()
 	{
-		$this->price = $this->getMock('JLM\ProductBundle\Model\PriceInterface');
-		$this->entity = $this->getMockForAbstractClass('JLM\ProductBundle\Entity\PriceDecorator',array($this->price));
-		
+		return 'JLM\ProductBundle\Model\PriceInterface';
 	}
 	
 	/**
 	 * {@inheritdoc}
 	 */
-	public function assertPreConditions()
+	protected function getDecoratorName()
 	{
-		$this->assertInstanceOf('JLM\ProductBundle\Model\PriceInterface', $this->entity);
+		return 'JLM\ProductBundle\Entity\PriceDecorator';
 	}
 	
 	/**
@@ -30,12 +24,7 @@ class PriceDecoratorTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetValue()
 	{
-		$value = 52.30;
-		$this->price->expects($this->once())
-					->method('getValue')
-					->will($this->returnValue($value));
-		
-		$this->assertSame($value, $this->entity->getValue());
+		$this->assertDecoratorMethod('getValue', 52.30);
 	}
 	
 	/**
@@ -43,12 +32,7 @@ class PriceDecoratorTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetCurrency()
 	{
-		$value = '$';
-		$this->price->expects($this->once())
-		->method('getCurrency')
-		->will($this->returnValue($value));
-	
-		$this->assertSame($value, $this->entity->getCurrency());
+		$this->assertDecoratorMethod('getCurrency', '$');
 	}
 	
 	/**
@@ -56,11 +40,6 @@ class PriceDecoratorTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test__toString()
 	{
-		$value = '52.30 $';
-		$this->price->expects($this->once())
-		->method('__toString')
-		->will($this->returnValue($value));
-	
-		$this->assertSame($value, $this->entity->__toString());
+		$this->assertDecoratorMethod('__toString', '52.30 $');
 	}
 }
