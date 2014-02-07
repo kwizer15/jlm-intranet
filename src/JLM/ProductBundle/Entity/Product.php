@@ -10,18 +10,21 @@ use JLM\ProductBundle\Model\ProductInterface;
 abstract class Product implements ProductInterface
 {
 	/**
+	 * Product reference
 	 * 
 	 * @var string
 	 */
 	private $reference;
 	
 	/**
+	 * Product designation
 	 * 
 	 * @var string
 	 */
 	private $designation;
 	
 	/**
+	 * Product description
 	 * 
 	 * @var string
 	 */
@@ -36,10 +39,7 @@ abstract class Product implements ProductInterface
 	}
 	
 	/**
-	 * Set the reference
-	 * 
-	 * @param string $reference The reference
-	 * @return self
+	 * {@inheritdoc}
 	 */
 	public function setReference($reference)
 	{
@@ -56,10 +56,7 @@ abstract class Product implements ProductInterface
 	}
 	
 	/**
-	 * Set the designation
-	 *
-	 * @param string $designation The designation
-	 * @return self
+	 * {@inheritdoc}
 	 */
 	public function setDesignation($designation)
 	{
@@ -76,10 +73,7 @@ abstract class Product implements ProductInterface
 	}
 	
 	/**
-	 * Set the description
-	 *
-	 * @param string $description The description
-	 * @return self
+	 * {@inheritdoc}
 	 */
 	public function setDescription($description)
 	{
