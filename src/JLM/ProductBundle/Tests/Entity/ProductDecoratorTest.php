@@ -48,6 +48,36 @@ class ProductDecoratorTest extends \Kwizer\DesignPatternBundle\Test\DecoratorTes
 	/**
 	 * @test
 	 */
+	public function testSetReference()
+	{
+		$this->interface->expects($this->once())
+					->method('setReference');
+		$this->entity->setReference('REFERENCE');
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testSetDesignation()
+	{
+		$this->interface->expects($this->once())
+					->method('setDesignation');
+		$this->entity->setDesignation('Designation');
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testSetDescription()
+	{
+		$this->interface->expects($this->once())
+					->method('setDescription');
+		$this->entity->setDescription('Description');
+	}
+	
+	/**
+	 * @test
+	 */
 	public function test__toString()
 	{
 		$this->assertDecoratorMethod('__toString', 'Autre nom de produit');
