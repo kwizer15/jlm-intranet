@@ -9,6 +9,7 @@ use JLM\ContactBundle\Entity\ContactEmail;
 
 class ContactDecoratorTest extends \PHPUnit_Framework_TestCase
 {
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -65,6 +66,7 @@ class ContactDecoratorTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetAddresses()
 	{
+		
 		$this->contact->expects($this->once())->method('getAddresses');
 		$this->entity->getAddresses();
 		return $this->entity;
