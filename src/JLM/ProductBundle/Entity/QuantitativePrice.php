@@ -5,35 +5,18 @@ use JLM\ProductBundle\Model\QuantitativePriceInterface;
 use JLM\ProductBundle\Model\PriceInterface;
 use JLM\ProductBundle\Factory\PriceFactory;
 
-class QuantitativePrice implements QuantitativePriceInterface
+class QuantitativePrice extends PriceDecorator implements QuantitativePriceInterface
 {
-	private $prices;
+	private $quantity;
 	
-	public function __construct(PriceInterface $price)
+	public function __construct(PriceInterface $price, $quantity)
 	{
-		$this->prices = PriceFactory::createPriceArray();
-		$this->addPrice(1, $price);
+		parent::__construct($price);
+		$this->quantity = $quantity;
 	}
 	
-	public function addPrice($quantity, PriceInterface $price)
+	public function getQuantity()
 	{
-		 return $this;
-	}
-	
-	public function removePrice($quantity)
-	{
-		if ($quantity != 1)
-		{
-			
-		}
-		return $this;
-	}
-	
-	public function getPrice($quantity)
-	{
-		foreach ($this->prices as $price)
-		{
-			
-		}
+		return $this->quantity;
 	}
 }

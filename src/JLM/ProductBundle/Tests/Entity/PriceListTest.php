@@ -12,11 +12,11 @@ class PriceListTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->markTestIncomplete();
-		$this->public = $this->getMock('JLM\ProductBundle\Model\PriceInterface');
-		$this->entity = new PriceList($this->public);
+		//$this->markTestIncomplete();
+		$this->public = 229.5;
+		$this->entity = new PriceList(229.5);
 		
-		$this->price = $this->getMock('JLM\ProductBundle\Model\PriceInterface');
+		$this->price = 152;
 
 	}
 	
@@ -52,17 +52,18 @@ class PriceListTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGet()
 	{
-		$this->entity->add(8, $this->getMock('JLM\ProductBundle\Model\PriceInterface'));
+		$this->entity->add(8, 52.4);
 		$this->entity->add(5, $this->price);
 		$this->assertSame($this->price, $this->entity->get(7));
+		
 	}
 	
 	/**
 	 * @test
 	 */
-	public function testGetPublic()
+	public function testGetValue()
 	{
-		$this->assertSame($this->public, $this->entity->getPublic());
+		$this->assertSame($this->public, $this->entity->getValue());
 	}
 	
 	/**

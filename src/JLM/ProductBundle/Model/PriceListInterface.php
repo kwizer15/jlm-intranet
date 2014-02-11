@@ -1,16 +1,16 @@
 <?php
 namespace JLM\ProductBundle\Model;
 
-interface PriceListInterface extends \IteratorAggregate
+interface PriceListInterface extends PriceInterface, \Iterator
 {
 	/**
 	 * Add a price from quantity
 	 *
 	 * @param decimal $quantity
-	 * @param PriceInterface $price The price
+	 * @param decimal $price The price
 	 * @return self
 	 */
-	public function add($quantity, PriceInterface $price);
+	public function add($quantity, $price);
 	
 	/**
 	 * Remove a price
@@ -24,14 +24,7 @@ interface PriceListInterface extends \IteratorAggregate
 	 * Get price for quantity
 	 * 
 	 * @param decimal $quantity
-	 * @return PriceInterface
+	 * @return decimal
 	 */
 	public function get($quantity = 0);
-	
-	/**
-	 * Get public price
-	 * 
-	 * @return PriceInterface
-	 */
-	public function getPublic();
 }
