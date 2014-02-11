@@ -34,10 +34,10 @@
         $configs = $.extend($configs, {
         	minimumInputLength: 1,
         	formatResult: function(state) {
-            	return "<p>" + state.text.replace('\n','<br>') + "</p>";
+            	return "<p>" + state.text.replace(new RegExp('\n','g'),'<br>') + "</p>";
             },
             formatSelection: function(state) {
-            	return state.text.replace('\n',' / ');
+            	return state.text.replace(new RegExp('\n','g'),' / ');
             },
         });
         // end of custom configs
