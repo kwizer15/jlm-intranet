@@ -47,6 +47,9 @@ class Jacket extends FPDFext
 		$pdf->setXY(100,230);
 		$pdf->setFont('Arial','B',14);
 		$pdf->multicell(0,7,$entity->getDoorCp(),0);
+		$pdf->setXY(0,263);
+		$pdf->setFont('Arial','B',16);
+		$pdf->cell(0,7,$entity->getNumber(),0);
 		$pdf->setXY(0,271);
 		$pdf->setFont('Arial','B',12);
 		if ($entity->getDoor() !== null)
