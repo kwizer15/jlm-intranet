@@ -2,6 +2,7 @@
 namespace JLM\ProductBundle\Entity;
 
 use JLM\ProductBundle\Model\PurchasableInterface;
+use JLM\ProductBundle\Model\SupplierInterface;
 
 use JLM\ProductBundle\Factory\PriceFactory;
 
@@ -28,9 +29,10 @@ class PurchasableProduct extends ProductDecorator implements PurchasableInterfac
 	/**
 	 * Constructor
 	 */
-	public function __construct()
+	public function __construct(ProductInterface $product, $publicPrice)
 	{
-		$this->purchasePrices = PriceListFactory::createPurchasableList();
+		parent::__construct($product);
+		$this->purchasePrices = PriceFactory::createPriceList($publicPrice);
 	}
 	
 	/**
@@ -39,6 +41,16 @@ class PurchasableProduct extends ProductDecorator implements PurchasableInterfac
 	public function getSupplier()
 	{
 		return $this->supplier;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setSupplier(SupplierInterface $supplier)
+	{
+		$this->supplier = $supplier;
+		
+		return $this;
 	}
 
 	/**

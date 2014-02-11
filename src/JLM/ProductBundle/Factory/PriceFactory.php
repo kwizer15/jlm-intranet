@@ -21,6 +21,11 @@ class PriceFactory
 		return new QuantitativePrice(new PriceEuro($price), $quantity);
 	}
 	
+	public static function createPriceList($price)
+	{
+		return new PriceList(new PriceEuro($price));
+	}
+	
 	private function __construct()
 	{
 		

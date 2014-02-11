@@ -6,7 +6,7 @@ interface PurchasableInterface
 	/**
 	 * Get supplier
 	 * 
-	 * @return Supplier
+	 * @return SupplierInterface
 	 */
 	public function getSupplier();
 	
