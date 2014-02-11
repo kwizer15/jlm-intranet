@@ -22,3 +22,27 @@
 </fieldset>
 {{ form_rest(form) }}
 {% endblock %}
+
+{% block genemu_jqueryselect2_javascript %}
+
+    <script type="text/javascript">
+        $field = $('#{{ id }}');
+
+        var $configs = {{ configs|json_encode|raw }};
+
+        // custom configs
+        $configs = $.extend($configs, {
+        	minimumInputLength: 1,
+        	formatResult: function(state) {
+            	return "<p>" + state.text.replace('\n','<br>') + "</p>";
+            },
+            formatSelection: function(state) {
+            	return state.text.replace('\n',' / ');
+            },
+        });
+        // end of custom configs
+
+        $field.select2($configs);
+    </script>
+
+{% endblock %}

@@ -10,7 +10,7 @@ class DoorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('site','site_select',array('label'=>'Affaire','attr'=>array('class'=>'input-xxlarge')))
+        	->add('site','genemu_jqueryselect2_entity',array('label'=>'Affaire','class'=>'JLM\ModelBundle\Entity\Site','attr'=>array('class'=>'input-xxlarge')))
         	->add('location',null,array('label'=>'Localisation'))
         	->add('street',null,array('label'=>'Adresses d\'accès','required'=>false))
 			->add('billingPrelabel',null,array('label'=>'Libélé de facturation', 'required'=>false))

@@ -6,6 +6,7 @@
 	{% stylesheets
 		'bundles/jlmdefault/css/bootstrap.css'
 		'bundles/jlmdefault/css/bootstrap-responsive.css'
+		'bundles/jlmdefault/js/select2-3.4.5/select2.css'
 		filter='cssrewrite'
 		 %}
     <link rel="stylesheet" href="{{ asset_url }}" />
@@ -177,6 +178,7 @@
     	'../app/Resources/public/js/modalform.js'
     	'@JLMDefaultBundle/Resources/public/js/highstock.js'
     	'../app/Resources/public/js/highcharts_init.js'
+    	'@JLMDefaultBundle/Resources/public/js/select2-3.4.5/select2.js'
     	filter='yui_js' %}
     	<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}

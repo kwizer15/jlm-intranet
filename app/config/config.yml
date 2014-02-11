@@ -89,4 +89,6 @@ services:
             
 genemu_form:
     date: ~
+    select2: ~
+    
             

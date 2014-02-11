@@ -93,8 +93,9 @@ class DoorController extends Controller
         $form   = $this->createForm(new DoorType(), $entity);
 
         return array(
+        	'site' => $site,
             'entity' => $entity,
-            'form'   => $form->createView()
+            'form'   => $form->createView(),
         );
     }
 
