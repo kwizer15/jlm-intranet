@@ -30,10 +30,7 @@ class PriceEuro implements PriceInterface
 	}
 
 	/**
-	 * Set the value
-	 * 
-	 * @param decimal $value
-	 * @return self
+	 * {@inheritdoc}
 	 */
 	public function setValue($value)
 	{

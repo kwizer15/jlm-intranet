@@ -11,6 +11,14 @@ interface PriceInterface
 	public function getValue();
 	
 	/**
+	 * Set value
+	 *
+	 * @param decimal
+	 * @return PriceInterface
+	 */
+	public function setValue($price);
+	
+	/**
 	 * Get currency
 	 * 
 	 * @return string

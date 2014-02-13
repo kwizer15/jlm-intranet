@@ -18,7 +18,11 @@ class PriceList implements PriceListInterface
 	public function __construct($public)
 	{
 		$this->prices = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->add(0, $public);
+		if ($public instanceof PriceInterface)
+		{
+			$public =  $public->getValue();
+		}
+		$this->setValue($public);
 	}
 	
 	/**
@@ -36,24 +40,30 @@ class PriceList implements PriceListInterface
 				return $price;
 			}
 		}
+		
 		return null;
 	}
 	
-	//------------------------
+	//----------------------------
 	// PriceListInterface methods
-	//------------------------
+	//----------------------------
 	
 	/**
 	 * {@inheritdoc}
 	 */
 	public function add($quantity, $price)
 	{
-		$p = PriceFactory::createPrice($price, $quantity);
-		if (!$p instanceof QuantitativePriceInterface)
+		$quantity = abs($quantity);
+		$p = $this->_getExact($quantity);
+		if ($p instanceof PriceInterface)
 		{
-			throw new \LogicException('Created Price doesn\'t implements QuantitativePriceInterface');
+			$p->setValue($price);
 		}
-		$this->prices->add($p);
+		else 
+		{
+			$p = PriceFactory::createPrice($price, $quantity);
+			$this->prices->add($p);
+		}
 		
 		return $this;
 	}
@@ -63,6 +73,11 @@ class PriceList implements PriceListInterface
 	 */
 	public function remove($quantity)
 	{
+		$quantity = abs($quantity);
+		if ($quantity == 0)
+		{
+			return $this;
+		}
 		$price = $this->_getExact($quantity);
 		$this->prices->removeElement($price);
 			
@@ -101,6 +116,14 @@ class PriceList implements PriceListInterface
 	public function getValue()
 	{
 		return $this->get();
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setValue($price)
+	{
+		return $this->add(0, $price);
 	}
 	
 	/**

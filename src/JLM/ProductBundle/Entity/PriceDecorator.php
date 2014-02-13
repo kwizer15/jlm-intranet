@@ -28,6 +28,14 @@ abstract class PriceDecorator implements PriceInterface
 	{
 		return $this->price->getValue();
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setValue($price)
+	{
+		return $this->price->setValue($price);
+	}
 
 	/**
 	 * {@inheritdoc}
