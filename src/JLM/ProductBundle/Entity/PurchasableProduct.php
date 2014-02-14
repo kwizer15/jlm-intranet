@@ -1,6 +1,7 @@
 <?php
 namespace JLM\ProductBundle\Entity;
 
+use JLM\ProductBundle\Model\ProductInterface;
 use JLM\ProductBundle\Model\PurchasableInterface;
 use JLM\ProductBundle\Model\SupplierInterface;
 
@@ -28,10 +29,16 @@ class PurchasableProduct extends ProductDecorator implements PurchasableInterfac
 	
 	/**
 	 * Constructor
+	 * 
+	 * @param ProductInterface $product
+	 * @param SupplierInterface $supplier
+	 * @param decimal $publicPrice
 	 */
-	public function __construct(ProductInterface $product, $publicPrice)
+	public function __construct(ProductInterface $product, SupplierInterface $supplier, $publicPrice, $unity = null)
 	{
 		parent::__construct($product);
+		$this->setSupplier($supplier);
+		$this->setPurchaseUnity($unity);
 		$this->purchasePrices = PriceFactory::createPriceList($publicPrice);
 	}
 	
@@ -58,12 +65,12 @@ class PurchasableProduct extends ProductDecorator implements PurchasableInterfac
 	 */
 	public function getPublicPrice()
 	{
-		return $this->purchasePrices->getPublicPrice()->getValue();
+		return $this->purchasePrices->getValue();
 	}
 
 	public function setPublicPrice($price)
 	{
-		$this->addPurchasePrices(0,$price);
+		$this->purchasePrices->setValue($price);
 		
 		return $this;
 	}
@@ -71,7 +78,7 @@ class PurchasableProduct extends ProductDecorator implements PurchasableInterfac
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getPuchaseUnitPrice($quantity = 1)
+	public function getPurchaseUnitPrice($quantity = 1)
 	{
 		return $this->purchasePrices->get($quantity);
 	}
@@ -81,7 +88,7 @@ class PurchasableProduct extends ProductDecorator implements PurchasableInterfac
 	 */
 	public function addPurchaseUnitPrice($quantity, $price)
 	{
-		$this->purchasePrices->add($quantity, PriceFactory::create($price));
+		$this->purchasePrices->add($quantity, $price);
 		
 		return $this;
 	}
@@ -102,5 +109,14 @@ class PurchasableProduct extends ProductDecorator implements PurchasableInterfac
 	public function getPurchaseUnity()
 	{
 		return $this->purchaseUnity;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setPurchaseUnity($unity)
+	{
+		$this->purchaseUnity = $unity;
+		return $this;
 	}
 }

@@ -36,7 +36,7 @@ interface PurchasableInterface
 	 * 
 	 * @return decimal
 	 */
-	public function getPuchaseUnitPrice($quantity = 1);
+	public function getPurchaseUnitPrice($quantity = 1);
 	
 	/**
 	 * Add purchase unit price
@@ -61,4 +61,12 @@ interface PurchasableInterface
 	 * @return string
 	 */
 	public function getPurchaseUnity();
+	
+	/**
+	 * Set purchase unity
+	 *
+	 * @param string $unity
+	 * @return self
+	 */
+	public function setPurchaseUnity($unity);
 }

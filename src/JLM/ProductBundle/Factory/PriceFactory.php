@@ -2,6 +2,7 @@
 namespace JLM\ProductBundle\Factory;
 
 use JLM\ProductBundle\Entity\PriceEuro;
+use JLM\ProductBundle\Entity\PriceList;
 use JLM\ProductBundle\Entity\QuantitativePrice;
 use JLM\ProductBundle\Model\PriceInterface;
 
