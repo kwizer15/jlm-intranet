@@ -17,7 +17,7 @@ interface SalableInterface
 	 * @param decimal $quantity
 	 * @return self
 	 */
-	public function addSellUnitPrice($price, $quantity = 1);
+	public function addSellUnitPrice($quantity, $price);
 	
 	/**
 	 * Remove sell unit price
@@ -25,7 +25,7 @@ interface SalableInterface
 	 * @param decimal $quantity
 	 * @return self
 	*/
-	public function removeSellPrice($quantity);
+	public function removeSellUnitPrice($quantity);
 	
 	/**
 	 * Get unity
@@ -33,4 +33,12 @@ interface SalableInterface
 	 * @return string
 	 */
 	public function getSellUnity();
+	
+	/**
+	 * Set unity
+	 *
+	 * @param string $unity
+	 * @return self
+	 */
+	public function setSellUnity($unity);
 }

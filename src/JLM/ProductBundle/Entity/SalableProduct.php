@@ -10,7 +10,7 @@ class SalableProduct extends ProductDecorator implements SalableInterface
 {
 	/**
 	 * 
-	 * @var array
+	 * @var PriceListInterface
 	 */
 	private $sellPrices;
 	
@@ -23,17 +23,19 @@ class SalableProduct extends ProductDecorator implements SalableInterface
 	/**
 	 * Constructor
 	 */
-	public function __construct()
+	public function __construct(ProductInterface $product, $price, $unity = null)
 	{
-		$this->sellPrices = PriceListFactory::createPriceList(); 
+		parent::__construct($product);
+		$this->setSellUnity($unity);
+		$this->sellPrices = PriceFactory::createPriceList($price); 
 	}
 	
 	/**
 	 * {@inheritdoc}
 	 */
-	public function addSellUnitPrice($price, $quantity = 1)
+	public function addSellUnitPrice($quantity, $price)
 	{
-		$this->sellPrices->add(PriceFactory::create($price, $quantity));
+		$this->sellPrices->add($quantity, $price);
 		
 		return $this;
 	}
@@ -41,30 +43,11 @@ class SalableProduct extends ProductDecorator implements SalableInterface
 	/**
 	 * {@inheritdoc}
 	 */
-	public function removeSellPrice($quantity)
+	public function removeSellUnitPrice($quantity)
 	{
-		$price = $this->_getSellPrice($quantity);
-		$this->sellPrices->remove($price);
+		$this->sellPrices->remove($quantity);
 		
 		return $this;
-	}
-	
-	/**
-	 * 
-	 * @param decimal $quantity
-	 * @return QuantitativePriceInterface|NULL
-	 */
-	private function _getSellPrice($quantity)
-	{
-		foreach ($this->sellPrices as $price)
-		{
-			if ($quantity == $price->getQuantity())
-			{
-				return $price;
-			}
-		}
-		
-		return null;
 	}
 	
 	/**
@@ -72,17 +55,7 @@ class SalableProduct extends ProductDecorator implements SalableInterface
 	 */
 	public function getSellUnitPrice($quantity = 1)
 	{			
-    	$index = 0;
-    	$q = $this->sellPrices[$index]->getQuantity();
-    	while ($quantity >= $q)
-    	{
-    		// Quand on arrive au bout du tableau
-    		if (!isset($this->sellPrices[$index+1]))
-    			return $this->sellPrices[$index]->getValue();
-    		$q = $this->sellPrices[++$index]->getQuantity();
-    	} 
-    	
-    	return $this->sellPrices[$index-1]->getValue();
+    	return $this->sellPrices->get($quantity);
 	}
 	
 	/**
@@ -91,5 +64,14 @@ class SalableProduct extends ProductDecorator implements SalableInterface
 	public function getSellUnity()
 	{
 		return $this->sellUnity;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setSellUnity($unity)
+	{
+		$this->sellUnity = $unity;
+		return $this;
 	}
 }
