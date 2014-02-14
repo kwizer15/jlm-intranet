@@ -200,4 +200,12 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->entity->removeEmail('foo');
 	}
+	
+	/**
+	 * @test
+	 */
+	public function test__toString()
+	{
+		$this->assertSame('JLM Entreprise', $this->entity->__toString());
+	}
 }

@@ -18,7 +18,7 @@ abstract class PersonDecorator extends ContactDecorator implements PersonInterfa
 	 */
 	public function __construct(PersonInterface $person)
 	{
-		parent::__construct($contact);
+		parent::__construct($person);
 	}
 	
 	/**
@@ -26,7 +26,7 @@ abstract class PersonDecorator extends ContactDecorator implements PersonInterfa
 	 */
 	public function getFirstName()
 	{
-		return $this->person->getFirstName();
+		return $this->getContact()->getFirstName();
 	}
 	
 	/**
@@ -34,6 +34,6 @@ abstract class PersonDecorator extends ContactDecorator implements PersonInterfa
 	 */
 	public function getLastName()
 	{
-		return $this->person->getLastName();
+		return $this->getContact()->getLastName();
 	}
 }

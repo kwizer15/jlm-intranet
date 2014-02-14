@@ -201,4 +201,21 @@ class ContactDecoratorTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->entity->removeEmail('foo');
 	}
+	
+	/**
+	 * @test
+	 */
+	public function test__toString()
+	{
+		$this->contact->expects($this->once())->method('__toString')->will($this->returnValue('JLM Entreprise'));
+		$this->assertSame('JLM Entreprise', $this->entity->__toString());
+	}
+
+	/**
+	 * @test
+	 */
+	public function testGetContact()
+	{
+		$this->assertSame($this->contact, $this->entity->getContact());
+	}
 }

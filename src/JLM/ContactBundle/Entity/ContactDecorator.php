@@ -142,10 +142,20 @@ abstract class ContactDecorator implements ContactInterface
 	}
 	
 	/**
-	 * {@inherirdoc}
+	 * {@inheritdoc}
 	 */
 	public function __toString()
 	{
 		return $this->contact->__toString();
+	}
+
+	/**
+	 * Get the contact
+	 *
+	 * @return ContactInterface
+	 */
+	public function getContact()
+	{
+		return $this->contact;
 	}
 }
