@@ -88,10 +88,6 @@
            "type": "component",
            "homepage": "http://ivaynberg.github.io/select2/",
            "license": "Apache-2.0",
-           "require": {
-             "robloach/component-installer": "*",
-             "components/jquery": ">=1.7.1"
-           },
            "extra": {
              "component": {
                "scripts": [
