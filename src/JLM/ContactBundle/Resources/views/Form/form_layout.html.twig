@@ -10,3 +10,20 @@
 	    </div>
     {% endspaceless %}
 {% endblock jlm_contact_selectcontacttype_modalbutton %}
+
+{% block jlm_contactbundle_persontype_widget %}
+<div class="modal-body" {{ block('widget_container_attributes') }}>
+{% if form.parent is empty %}
+        	{% if form_errors(form) %}
+            <div class="alert">{{ form_errors(form) }}</div>
+            {% endif %}
+        {% endif %}
+{{ form_label(form.lastName) }}
+{{ form_widget(form.title) }}
+{{ form_widget(form.firstName) }}
+{{ form_widget(form.lastName) }}
+</div>
+    <div class="modal-footer">
+    	{{ form_rest(form) }}
+    </div>
+{% endblock jlm_contactbundle_persontype_widget %}

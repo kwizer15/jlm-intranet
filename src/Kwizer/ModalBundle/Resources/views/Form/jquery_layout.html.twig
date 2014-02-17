@@ -32,7 +32,7 @@
 		
 		$(".modal-caller").on('click',function(){
 			$url = $(this).attr('route');
-			$url = $url.replace('$',$('#{{ id }}').val());
+			$url = $url.replace('$',$select.val());
 		});
 		$select.on('change', function(){$toggleButtons($(this))});
 		$field.on('show',function(){
@@ -47,6 +47,7 @@
 			});   	       
 		});
 		$field.on('hide',function(){
+			
 			// Recharger les données
 			// Selectionner la bonne entrée
 				// Récuperer la bonne entrée

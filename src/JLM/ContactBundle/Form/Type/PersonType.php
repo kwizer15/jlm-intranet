@@ -16,7 +16,7 @@ class PersonType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-				->add('title',null,array('label'=>'Titre','attr'=>array('class'=>'input-mini')))
+				->add('title','choice',array('choices'=>array('M.', 'Mme', 'Mlle'),'label'=>'Titre','attr'=>array('class'=>'input-mini')))
 				->add('firstName',null,array('label'=>'Prénom','attr'=>array('class'=>'input-xlarge')))
 				->add('lastName',null,array('label'=>'Nom','attr'=>array('class'=>'input-xlarge')))
 		;
