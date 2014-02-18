@@ -49,7 +49,7 @@ class Company extends Contact
 	/**
 	 * @var ArrayCollection
 	 * 
-	 * @ORM\ManyToMany(targetEntity="Person")
+	 * @ORM\ManyToMany(targetEntity="JLM\ContactBundle\Model\CompanyPersonInterface", mappedBy="company")
 	 */
     private $contacts;
     
