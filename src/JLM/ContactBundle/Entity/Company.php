@@ -5,6 +5,7 @@ namespace JLM\ContactBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use JLM\ContactBundle\Model\PersonInterface;
+use JLM\ContactBundle\Model\CompanyInterface;
 
 class CompanyException extends \Exception {}
 
@@ -14,7 +15,7 @@ class CompanyException extends \Exception {}
  * @ORM\Table(name="jlm_contact_company")
  * @ORM\Entity
  */
-class Company extends Contact
+class Company extends Contact implements CompanyInterface
 {
     /**
      * @var integer
@@ -54,6 +55,14 @@ class Company extends Contact
     private $contacts;
     
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+    	$this->contacts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -64,9 +73,7 @@ class Company extends Contact
     }
     
     /**
-     * Set name
-     * @param string
-     * @return self
+     * {@inheritdoc}
      */
     public function setName($name)
     {
@@ -75,8 +82,7 @@ class Company extends Contact
     }
     
     /**
-     * Get name
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -84,9 +90,7 @@ class Company extends Contact
     }
     
     /**
-     * Set siret
-     * @param string
-     * @return self
+     * {@inheritdoc}
      */
     public function setSiret($siret)
     {
@@ -101,8 +105,7 @@ class Company extends Contact
     }
     
     /**
-     * Get siret
-     * @return string
+     * {@inheritdoc}
      */
     public function getSiret()
     {
@@ -110,10 +113,7 @@ class Company extends Contact
     }
     
     /**
-     * Set siren
-     * @param string $siren
-     * @throws CompanyException
-     * @return self
+     * {@inheritdoc}
      */
     public function setSiren($siren)
     {
@@ -125,8 +125,7 @@ class Company extends Contact
     }
     
     /**
-     * Get siret
-     * @return string
+     * {@inheritdoc}
      */
     public function getSiren()
     {
@@ -134,10 +133,7 @@ class Company extends Contact
     }
     
     /**
-     * Set nic
-     * @param string $nic
-     * @throws CompanyException
-     * @return self
+     * {@inheritdoc}
      */
     public function setNic($nic)
     {
@@ -149,26 +145,15 @@ class Company extends Contact
     }
     
     /**
-     * Get nic
-     * @return string
+     * {@inheritdoc}
      */
     public function getNic()
     {
     	return $this->nic;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->contacts = new \Doctrine\Common\Collections\ArrayCollection();
-    }
     
     /**
-     * Add contacts
-     *
-     * @param PersonInterface $contacts
-     * @return self
+     * {@inheritdoc}
      */
     public function addContact(PersonInterface $contacts)
     {
@@ -178,10 +163,7 @@ class Company extends Contact
     }
 
     /**
-     * Remove contacts
-     *
-     * @param PersonInterface $contacts
-     * @return self
+     * {@inheritdoc}
      */
     public function removeContact(PersonInterface $contacts)
     {
@@ -190,9 +172,7 @@ class Company extends Contact
     }
 
     /**
-     * Get contacts
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * {@inheritdoc}
      */
     public function getContacts()
     {
