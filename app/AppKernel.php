@@ -33,6 +33,7 @@ class AppKernel extends Kernel
             new JLM\TestBundle\JLMTestBundle(),
             new Kwizer\ModalBundle\KwizerModalBundle(),
             new JLM\ProductBundle\JLMProductBundle(),
+            new JLM\CollectiveHousingBundle\JLMCollectiveHousingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
