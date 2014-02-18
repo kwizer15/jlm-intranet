@@ -54,18 +54,18 @@ interface CompanyInterface extends ContactInterface
 	/**
 	 * Add contacts
 	 *
-	 * @param PersonInterface $contacts
+	 * @param CompanyPersonInterface $contacts
 	 * @return self
 	 */
-	public function addContact(PersonInterface $contacts);
+	public function addContact(CompanyPersonInterface $contacts);
 	
 	/**
 	 * Remove contacts
 	 *
-	 * @param PersonInterface $contacts
+	 * @param CompanyPersonInterface $contacts
 	 * @return self
 	 */
-	public function removeContact(PersonInterface $contacts);
+	public function removeContact(CompanyPersonInterface $contacts);
 	
 	/**
 	 * Get contacts

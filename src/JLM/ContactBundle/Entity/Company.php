@@ -4,7 +4,7 @@ namespace JLM\ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use JLM\ContactBundle\Model\PersonInterface;
+use JLM\ContactBundle\Model\CompanyPersonInterface;
 use JLM\ContactBundle\Model\CompanyInterface;
 
 class CompanyException extends \Exception {}
@@ -155,7 +155,7 @@ class Company extends Contact implements CompanyInterface
     /**
      * {@inheritdoc}
      */
-    public function addContact(PersonInterface $contacts)
+    public function addContact(CompanyPersonInterface $contacts)
     {
         $this->contacts[] = $contacts;
     
@@ -165,7 +165,7 @@ class Company extends Contact implements CompanyInterface
     /**
      * {@inheritdoc}
      */
-    public function removeContact(PersonInterface $contacts)
+    public function removeContact(CompanyPersonInterface $contacts)
     {
         $this->contacts->removeElement($contacts);
         return $this;

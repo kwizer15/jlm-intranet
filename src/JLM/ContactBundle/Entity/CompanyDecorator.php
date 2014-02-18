@@ -5,7 +5,7 @@ namespace JLM\ContactBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use JLM\ContactBundle\Model\CompanyInterface;
-use JLM\ContactBundle\Model\PersonInterface;
+use JLM\ContactBundle\Model\CompanyPersonInterface;
 
 /**
  * CompanyDecorator
@@ -99,7 +99,7 @@ abstract class CompanyDecorator extends ContactDecorator implements CompanyInter
     /**
      * {@inheritdoc}
      */
-    public function addContact(PersonInterface $contacts)
+    public function addContact(CompanyPersonInterface $contacts)
     {
         $this->getContact()->addContact($contacts);
     
@@ -109,7 +109,7 @@ abstract class CompanyDecorator extends ContactDecorator implements CompanyInter
     /**
      * {@inheritdoc}
      */
-    public function removeContact(PersonInterface $contacts)
+    public function removeContact(CompanyPersonInterface $contacts)
     {
     	$this->getContact()->removeContact($contacts);
     	

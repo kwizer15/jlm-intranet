@@ -11,7 +11,7 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->person = $this->getMock('JLM\ContactBundle\Model\PersonInterface');
+		$this->person = $this->getMock('JLM\ContactBundle\Model\CompanyPersonInterface');
 		$this->entity = new Company;
 	}
 	

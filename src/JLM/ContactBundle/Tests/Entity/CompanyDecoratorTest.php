@@ -101,7 +101,7 @@ class CompanyDecoratorTest extends \PHPUnit_Framework_TestCase
 	public function testAddContact()
 	{
 		$this->company->expects($this->once())->method('addContact');
-		$this->entity->addContact($this->getMock('JLM\ContactBundle\Model\PersonInterface'));
+		$this->entity->addContact($this->getMock('JLM\ContactBundle\Model\CompanyPersonInterface'));
 	}
 	
 	/**
@@ -110,7 +110,7 @@ class CompanyDecoratorTest extends \PHPUnit_Framework_TestCase
 	public function testRemoveContact()
 	{
 		$this->company->expects($this->once())->method('removeContact');
-		$this->entity->removeContact($this->getMock('JLM\ContactBundle\Model\PersonInterface'));
+		$this->entity->removeContact($this->getMock('JLM\ContactBundle\Model\CompanyPersonInterface'));
 	}
 	
 	/**
