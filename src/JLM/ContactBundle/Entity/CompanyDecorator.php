@@ -15,20 +15,13 @@ use JLM\ContactBundle\Model\PersonInterface;
 abstract class CompanyDecorator extends ContactDecorator implements CompanyInterface
 {
     /**
-     * @var CompanyInterface
-     *
-     * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\CompanyInterface")
-     */
-    private $company;
-    
-    /**
      * Constructor
      * 
      * @param CompanyInterface $company
      */
     public function __construct(CompanyInterface $company)
     {
-    	$this->company = $company;
+    	parent::__construct($company);
     }
     
     /**
@@ -36,7 +29,7 @@ abstract class CompanyDecorator extends ContactDecorator implements CompanyInter
      */
     public function setName($name)
     {
-    	$this->company->setName($name);
+    	$this->getContact()->setName($name);
     	
     	return $this;
     }
@@ -46,7 +39,7 @@ abstract class CompanyDecorator extends ContactDecorator implements CompanyInter
      */
     public function getName()
     {
-    	return $this->company->getName();
+    	return $this->getContact()->getName();
     }
     
     /**
@@ -54,7 +47,7 @@ abstract class CompanyDecorator extends ContactDecorator implements CompanyInter
      */
     public function setSiret($siret)
     {
-    	$this->company->setSiret($siret);
+    	$this->getContact()->setSiret($siret);
     	
     	return $this;
     }
@@ -64,7 +57,7 @@ abstract class CompanyDecorator extends ContactDecorator implements CompanyInter
      */
     public function getSiret()
     {
-    	return $this->company->getSiret();
+    	return $this->getContact()->getSiret();
     }
     
     /**
@@ -72,7 +65,7 @@ abstract class CompanyDecorator extends ContactDecorator implements CompanyInter
      */
     public function setSiren($siren)
     {
-    	$this->company->setSiren($siren);
+    	$this->getContact()->setSiren($siren);
 
     	return $this;
     }
@@ -82,7 +75,7 @@ abstract class CompanyDecorator extends ContactDecorator implements CompanyInter
      */
     public function getSiren()
     {
-    	return $this->company->getSiren();
+    	return $this->getContact()->getSiren();
     }
     
     /**
@@ -90,7 +83,7 @@ abstract class CompanyDecorator extends ContactDecorator implements CompanyInter
      */
     public function setNic($nic)
     {
-    	$this->company->setNic($nic);
+    	$this->getContact()->setNic($nic);
     	
     	return $this;
     }
@@ -100,7 +93,7 @@ abstract class CompanyDecorator extends ContactDecorator implements CompanyInter
      */
     public function getNic()
     {
-    	return $this->company->getNic();
+    	return $this->getContact()->getNic();
     }
     
     /**
@@ -108,7 +101,7 @@ abstract class CompanyDecorator extends ContactDecorator implements CompanyInter
      */
     public function addContact(PersonInterface $contacts)
     {
-        $this->company->addContact($contacts);
+        $this->getContact()->addContact($contacts);
     
         return $this;
     }
@@ -118,7 +111,7 @@ abstract class CompanyDecorator extends ContactDecorator implements CompanyInter
      */
     public function removeContact(PersonInterface $contacts)
     {
-    	$this->company->removeContact($contacts);
+    	$this->getContact()->removeContact($contacts);
     	
         return $this;
     }
@@ -128,6 +121,6 @@ abstract class CompanyDecorator extends ContactDecorator implements CompanyInter
      */
     public function getContacts()
     {
-        return $this->company->getContacts();
+        return $this->getContact()->getContacts();
     }
 }

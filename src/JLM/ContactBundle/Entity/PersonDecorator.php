@@ -8,6 +8,8 @@ use JLM\ContactBundle\Model\ContactEmailInterface;
 use JLM\ContactBundle\Model\ContactPhoneInterface;
 
 /**
+ * PersonDecorator
+ * 
  * @ORM\MappedSuperclass
  */
 abstract class PersonDecorator extends ContactDecorator implements PersonInterface
