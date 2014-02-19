@@ -1,3 +1,7 @@
+jlm_intervention:
+    resource: "@JLMInterventionBundle/Resources/config/routing.yml"
+    prefix:   /
+
 jlm_collective_housing:
     resource: "@JLMCollectiveHousingBundle/Resources/config/routing.yml"
     prefix:   /

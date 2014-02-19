@@ -1,0 +1,7 @@
+parameters:
+#    jlm_intervention.example.class: JLM\InterventionBundle\Example
+
+services:
+#    jlm_intervention.example:
+#        class: %jlm_intervention.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
