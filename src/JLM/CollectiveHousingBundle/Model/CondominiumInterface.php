@@ -9,6 +9,6 @@ interface CondominiumInterface extends CollectiveHousingInterface
 	 */
 	public function getName();
 	
-
+	
 	
 }
