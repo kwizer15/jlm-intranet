@@ -44,7 +44,7 @@ class Company extends StringModel
 	 * 
 	 * @ORM\Column(name="phone",type="string",length=20)
 	 * @Assert\NotNull
-	 * @Assert\Regex(pattern="/^0[1-5689]\d{8}$/",message="Ce n'est pas un numéro de téléphone fixe valide")
+	 * @Assert\Regex(pattern="/^0[1-9]\d{8}$/",message="Ce n'est pas un numéro de téléphone fixe valide")
 	 */
 	private $phone;
 	
