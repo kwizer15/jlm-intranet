@@ -12,7 +12,16 @@ abstract class InterventionReport extends FPDFext
 	
 	protected function _show(Intervention $entity)
 	{
-		$this->cellintro('Nous vous transmettons le rapport de l\'intervention de notre technicien du '
+		$trustee = $entity->getDoor()->getTrustee();
+		$this->setX(120);
+		$this->setFont('Arial','B',11);
+		$this->cell(0,5,$trustee->getName(),0,2);
+		$this->setX(120);
+		$this->setFont('Arial','',11);
+		$this->multiCell(0,5,$trustee->getAddress());
+		$this->ln(10);
+		$this->cellTitle($this->_getTitle());
+		$this->cellIntro('Nous vous transmettons le rapport de l\'intervention de notre technicien du '
 				.$entity->getLastDate()->format('d/m/Y')
 				.' qui fait suite à votre demande du '
 				.$entity->getAskDate()->format('d/m/Y')
@@ -20,7 +29,7 @@ abstract class InterventionReport extends FPDFext
 				.$entity->getAskMethod().' :');
 		$this->ln(10);
 		$this->cellH1($entity->getDoor()->getSite().'');
-		$this->cellH2($entity->getDoor()->getType().' '.$entity->getDoor()->getLocation());
+		$this->cellH2($entity->getDoor()->getType().' - '.$entity->getDoor()->getLocation());
 	}
 	
 	public static function get(Intervention $entity)
@@ -93,13 +102,23 @@ abstract class InterventionReport extends FPDFext
 		$this->multiCell(0, 5, $txt, 0, 'L', false);
 	}
 	
+	private function _formatLi($txt)
+	{
+		$txt = '*'.$txt;
+		$txt = str_replace(chr(10), chr(10).'*', $txt);
+		$txt = str_replace('*- ', '', $txt);
+		$txt = str_replace('*', '', $txt);
+		$txt = '    - '.$txt;
+		$txt = str_replace(chr(10), chr(10).'    - ', $txt);
+		
+		return $txt;
+	}
+	
 	protected function cellLi($txt)
 	{
 		$this->setTextColor(0, 0, 0);
 		$this->setFont($this->getStandardFontName(), '', 10);
-		$txt = '    - '.$txt;
-		$txt = str_replace(chr(10), chr(10).'    - ', $txt);
-		$this->multiCell(0, 5, $txt, 0, 'L', false);
+		$this->multiCell(0, 5, $this->_formatLi($txt), 0, 'L', false);
 	}
 	
 	protected function cellStrong($txt)
@@ -113,9 +132,7 @@ abstract class InterventionReport extends FPDFext
 	{
 		$this->setTextColor(0, 0, 0);
 		$this->setFont($this->getStandardFontName(), 'B', 10);
-		$txt = '    - '.$txt;
-		$txt = str_replace(chr(10), chr(10).'    - ', $txt);
-		$this->multiCell(0, 5, $txt, 0, 'L', false);
+		$this->multiCell(0, 5, $this->_formatLi($txt), 0, 'L', false);
 	}
 	
 	private function _init()
@@ -130,7 +147,7 @@ abstract class InterventionReport extends FPDFext
 		$this->setFont('Arial','B',24);
 		$this->ln(50);
 		
-		$this->cellTitle($this->_getTitle());
+		
 	}
 	
 	public function footer()
