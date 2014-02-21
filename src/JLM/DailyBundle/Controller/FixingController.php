@@ -3,6 +3,7 @@
 namespace JLM\DailyBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -218,5 +219,24 @@ class FixingController extends AbstractInterventionController
 				'entity'      => $entity,
 				'form'   => $form->createView(),
 		);
+	}
+	
+	/**
+	 * Imprime le rapport d'intervention
+	 *
+	 * @Route("{id}/printreport", name="fixing_printreport")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function printdayAction(Fixing $entity)
+	{
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/pdf');
+		$response->headers->set('Content-Disposition', 'inline; filename=report-'.$entity->getId().'.pdf');
+		$response->setContent($this->render('JLMDailyBundle:Fixing:printreport.pdf.php',
+				array('entity' => $entity)
+			)
+		);
+	
+		return $response;
 	}
 }
