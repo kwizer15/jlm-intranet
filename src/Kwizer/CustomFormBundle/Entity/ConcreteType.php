@@ -4,13 +4,11 @@ namespace Kwizer\CustomFormBundle\Entity;
 use Kwizer\CustomFormBundle\Model\FieldListInterface;
 use Kwizer\CustomFormBundle\Model\FieldInterface;
 
-class ConcreteType
+class ConcreteType extends CustomizableType
 {
 	private $id;
 	
 	private $name;
-	
-	private $fields;
 	
 	public function getId()
 	{
@@ -20,11 +18,6 @@ class ConcreteType
 	public function getName()
 	{
 		return $this->name;
-	}
-	
-	public function getFields()
-	{
-		return $this->fields;
 	}
 	
 	public function __construct($id, $name, $fields = array())
@@ -39,14 +32,7 @@ class ConcreteType
 			}
 		}
 	}
-	
-	public function addField(ConcreteField $field)
-	{
-		$this->fields[] = $field;
-		
-		return $this;
-	}
-	
+
 	public function setName($name)
 	{
 		$this->name = $name;

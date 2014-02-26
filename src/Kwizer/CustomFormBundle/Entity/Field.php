@@ -9,7 +9,7 @@ use Kwizer\CustomFormBundle\Model\FieldTypeInterface;
  * @author kwizer
  *
  */
-class Field implements FieldInterface
+abstract class Field implements FieldInterface
 {
 	/**
 	 * The title
@@ -24,13 +24,13 @@ class Field implements FieldInterface
 	private $fieldType;
 	
 	/**
-	 *
+	 * The options of the field 
 	 * @var array
 	 */
 	private $options;
 	
 	/**
-	 * 
+	 * Default value
 	 * @var mixed
 	 */
 	private $defaultValue;
@@ -49,9 +49,7 @@ class Field implements FieldInterface
 	}
 	
 	/**
-	 * Get the name
-	 * 
-	 * @return string
+	 * {@inheritdoc}
 	 */
 	public function getTitle()
 	{
@@ -59,9 +57,7 @@ class Field implements FieldInterface
 	}
 	
 	/**
-	 * Get the field type
-	 * 
-	 * @return FieldTypeInterface
+	 * {@inheritdoc}
 	 */
 	public function getFieldType()
 	{
@@ -69,9 +65,7 @@ class Field implements FieldInterface
 	}
 	
 	/**
-	 * Get the field type
-	 *
-	 * @return array
+	 * {@inheritdoc}
 	 */
 	public function getOptions()
 	{

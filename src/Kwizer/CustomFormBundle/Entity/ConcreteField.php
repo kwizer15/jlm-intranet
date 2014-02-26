@@ -1,6 +1,11 @@
 <?php
 namespace Kwizer\CustomFormBundle\Entity;
 
+/**
+ * 
+ * @author kwizer
+ *
+ */
 class ConcreteField extends Field
 {
 	private $concreteType;
