@@ -27,4 +27,24 @@ class CityRepository extends EntityRepository
 		}
 		return $r2;
 	}
+	
+	public function getArray($query, $limit = 8)
+	{
+		$qb = $this->createQueryBuilder('c')
+		->where('c.zip LIKE :query')
+		->orWhere('c.name LIKE :query')
+		->setParameter('query', $query.'%')
+		;
+		$res = $qb->getQuery()->getResult();
+		$r2 = array();
+		foreach ($res as $r)
+		{
+			$r2[] = array(
+				'id' => $r->getId(),
+				'name' => $r->getName(),
+				'zip' => $r->getZip(),
+			);
+		}
+		return $r2;
+	}
 }

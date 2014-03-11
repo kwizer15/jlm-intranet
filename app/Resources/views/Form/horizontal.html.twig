@@ -99,13 +99,55 @@
 {% endblock email_widget %}
 
 {# Personal Types #}
-{% block city_select_widget %}
+{# {% block city_select_widget %}
 {% spaceless %}
 {% set attr = attr|merge({'data-source':  path('autocomplete_city') }) %}
 {% set attr = attr|merge({'class': attr.class|default('') ~ ' autocompletion' }) %}
 {{ block('form_widget_simple') }}
 {% endspaceless %}
 {% endblock city_select_widget %}
+#}
+{% block city_select_javascript %}
+
+    <script type="text/javascript">
+        $field = $('#{{ id }}');
+
+        var $configs = {{ configs|json_encode|raw }};
+
+        $configs = $.extend($configs, {
+        	minimumInputLength: 1,
+        	ajax: {
+        		url: "{{ path('jlm_model_city_json') }}",
+        		dataType: "json",
+        		data: function (term, page) {
+        			return {
+        				q: term,
+        				page_limit: 10,
+        			};
+        		},
+        		results: function (data, page) {
+        			console.log("hello");
+    	        	console.log(data);
+    	        	return {
+    	           		results: data.cities
+    	           	};
+    	        }
+        	},
+	        
+	        formatResult: function (item) {
+	        	return item.zip + " - " + item.name;
+	            },
+	
+	        formatSelection: function (item) {
+				return item.zip + " - " + item.name;
+	            },
+	        formatSearching: function() { return "Recherche..."; }
+        });
+
+        $field.select2($configs);
+    </script>
+
+{% endblock %}
 
 {% block trustee_select_widget %}
 {% spaceless %}
