@@ -152,6 +152,8 @@
 	        formatSelection: function (item) {
 				return item.zip + " - " + item.name;
 	        },
+	        formatNoMatches: function(term) { return "Pas de résultat pour \"" + term + "\""; },
+	        
 	        formatSearching: function() { return "Recherche..."; }
         });
 
