@@ -1,3 +1,7 @@
+jlm_pdf:
+    resource: "@JLMPdfBundle/Resources/config/routing.yml"
+    prefix:   /
+
 jlm_fee:
     resource: "@JLMFeeBundle/Controller/"
     type:     annotation
