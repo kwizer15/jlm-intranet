@@ -6,13 +6,15 @@ use Doctrine\ORM\Mapping as ORM;
 use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\BillLine;
 use JLM\ModelBundle\Entity\Product;
+use JLM\TransmitterBundle\Model\AttributionInterface;
+use JLM\TransmitterBundle\Model\TransmitterInterface;
 /**
  * Attribution
  *
  * @ORM\Table(name="transmitters_attributions")
  * @ORM\Entity(repositoryClass="JLM\TransmitterBundle\Entity\AttributionRepository")
  */
-class Attribution
+class Attribution implements AttributionInterface
 {
     /**
      * @var integer
@@ -158,7 +160,7 @@ class Attribution
      * @param \JLM\TransmitterBundle\Entity\Transmitter $transmitters
      * @return Attribution
      */
-    public function addTransmitter(\JLM\TransmitterBundle\Entity\Transmitter $transmitters)
+    public function addTransmitter(TransmitterInterface $transmitters)
     {
         $this->transmitters[] = $transmitters;
     
@@ -170,7 +172,7 @@ class Attribution
      *
      * @param \JLM\TransmitterBundle\Entity\Transmitter $transmitters
      */
-    public function removeTransmitter(\JLM\TransmitterBundle\Entity\Transmitter $transmitters)
+    public function removeTransmitter(TransmitterInterface $transmitters)
     {
         $this->transmitters->removeElement($transmitters);
     }

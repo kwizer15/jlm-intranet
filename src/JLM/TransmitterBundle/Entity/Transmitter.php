@@ -4,6 +4,8 @@ namespace JLM\TransmitterBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JLM\TransmitterBundle\Model\TransmitterInterface;
+use JLM\TransmitterBundle\Model\AttributionInterface;
 
 /**
  * Transmitter
@@ -11,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="transmitters_transmitters")
  * @ORM\Entity(repositoryClass="JLM\TransmitterBundle\Entity\TransmitterRepository")
  */
-class Transmitter
+class Transmitter implements TransmitterInterface
 {
     /**
      * @var integer
@@ -114,9 +116,7 @@ class Transmitter
     }
 
     /**
-     * Get number
-     *
-     * @return integer 
+     * {@inheritdoc}
      */
     public function getNumber()
     {
@@ -139,9 +139,7 @@ class Transmitter
     }
 
     /**
-     * Get guarantee
-     *
-     * @return integer 
+     * {@inheritdoc} 
      */
     public function getGuarantee()
     {
@@ -149,9 +147,7 @@ class Transmitter
     }
     
     /**
-     * Get guaranteeDate
-     *
-     * @return DateTime
+     * {@inheritdoc}
      */
     public function getGuaranteeDate()
     {
@@ -159,9 +155,7 @@ class Transmitter
     }
     
     /**
-     * Get end guarantee
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getEndGuarantee()
     {
@@ -172,9 +166,7 @@ class Transmitter
     }
 
     /**
-     * Get guaranteeDate
-     *
-     * @return DateTime
+     * {@inheritdoc}
      */
     public function getEndGuaranteeDate()
     {
@@ -195,9 +187,7 @@ class Transmitter
     }
 
     /**
-     * Get suffix
-     *
-     * @return integer 
+     * {@inheritdoc}
      */
     public function getSuffix()
     {
@@ -218,9 +208,7 @@ class Transmitter
     }
 
     /**
-     * Get userName
-     *
-     * @return string 
+     * {@inheritdoc}
      */
     public function getUserName()
     {
@@ -241,9 +229,7 @@ class Transmitter
     }
 
     /**
-     * Get isActive
-     *
-     * @return boolean 
+     * {@inheritdoc}
      */
     public function getIsActive()
     {
@@ -253,10 +239,10 @@ class Transmitter
     /**
      * Set attribution
      *
-     * @param \JLM\TransmitterBundle\Entity\Attribution $attribution
+     * @param AttributionInterface $attribution
      * @return Transmitter
      */
-    public function setAttribution(\JLM\TransmitterBundle\Entity\Attribution $attribution = null)
+    public function setAttribution(AttributionInterface $attribution = null)
     {
         $this->attribution = $attribution;
     
@@ -264,9 +250,7 @@ class Transmitter
     }
 
     /**
-     * Get attribution
-     *
-     * @return \JLM\TransmitterBundle\Entity\Attribution
+     * {@inheritdoc}
      */
     public function getAttribution()
     {
@@ -287,9 +271,7 @@ class Transmitter
     }
 
     /**
-     * Get userGroup
-     *
-     * @return \JLM\TransmitterBundle\Entity\UserGroup 
+     * {@inheritdoc}
      */
     public function getUserGroup()
     {
@@ -310,9 +292,7 @@ class Transmitter
     }
     
     /**
-     * Get model
-     *
-     * @return \JLM\TransmitterBundle\Entity\Model
+     * {@inheritdoc}
      */
     public function getModel()
     {
@@ -320,8 +300,7 @@ class Transmitter
     }
     
     /**
-     * Vérifie la date de garantie
-     * @return bool
+     * {@inheritdoc}
      * @Assert\True(message="La date de début de garantie doit se situer AVANT ou PENDANT le mois en cours")
      */
     public function isGuaranteeValid()
@@ -334,7 +313,7 @@ class Transmitter
     }
     
     /**
-     * To String
+     * {@inheritdoc}
      */
     public function __toString()
     {
@@ -347,7 +326,7 @@ class Transmitter
      * @param \JLM\TransmitterBundle\Entity\Transmitter $replacedTransmitter
      * @return Transmitter
      */
-    public function setReplacedTransmitter(\JLM\TransmitterBundle\Entity\Transmitter $replacedTransmitter = null)
+    public function setReplacedTransmitter(TransmitterInterface $replacedTransmitter = null)
     {
         $this->replacedTransmitter = $replacedTransmitter;
         $this->replacedTransmitter->setReplace($this);
@@ -355,9 +334,7 @@ class Transmitter
     }
 
     /**
-     * Get replacedTransmitter
-     *
-     * @return \JLM\TransmitterBundle\Entity\Transmitter 
+     * {@inheritdoc}
      */
     public function getReplacedTransmitter()
     {
@@ -370,7 +347,7 @@ class Transmitter
      * @param \JLM\TransmitterBundle\Entity\Transmitter $replace
      * @return Transmitter
      */
-    public function setReplace(\JLM\TransmitterBundle\Entity\Transmitter $replace = null)
+    public function setReplace(TransmitterInterface $replace = null)
     {
         $this->replace = $replace;
     
@@ -378,9 +355,7 @@ class Transmitter
     }
 
     /**
-     * Get replace
-     *
-     * @return \JLM\TransmitterBundle\Entity\Transmitter 
+     * {@inheritdoc}
      */
     public function getReplace()
     {
