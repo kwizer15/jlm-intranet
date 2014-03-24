@@ -22,16 +22,8 @@ abstract class PdfBuilder implements PdfBuilderInterface
 	/**
 	 * {@inheritdoc}
 	 */
-	public function buildHeader()
+	public function getPdf()
 	{
-		$this->_pdf->image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-header-comp.jpg',10,4,190);
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function buildFooter()
-	{
-		$this->_pdf->image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-footer.jpg',50,280,110);
+		return $this->_pdf->output('','S');
 	}
 }
