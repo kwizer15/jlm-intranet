@@ -126,40 +126,57 @@ class DefaultController extends Controller
 	}
 	
 	/**
-	 * @Route("/installation/{id}")
+	 * @Route("/installation/{code}")
 	 * @Template()
 	 */
-	public function installationAction(Door $door)
+	public function installationAction($code)
 	{
-		if ($door->getActualContract() !== null)
-			return array('door'=>$door);
-		else return array();
+		$em = $this->getDoctrine()->getManager();
+		
+		$entity = $em->getRepository('JLMModelBundle:Door')->getByCode($code);
+		if ($entity === null)
+		{
+			throw $this->createNotFoundException('Cette installation n\'existe pas');
+		}
+		
+		return array('door'=>$entity);
 	}
 	
 	/**
-	 * @Route("/printtag")
-	 * @Route("/printtag/{id}")
+	 * @Route("/printtags")
+	 * @Route("/printtag/{code}")
 	 */
-	public function printtagAction($id = null)
+	public function printtagAction($code = null)
 	{
 		$em = $this->getDoctrine()->getManager();
-		if ($id === null)
+		$repo = $em->getRepository('JLMModelBundle:Door');
+		if ($code === null)
 		{
-			$entities = $em->getRepository('JLMModelBundle:Door')->findAll();
-			foreach ($entities as $key => $entity)
+			$nb = 0;
+			while ($nb < 100)
 			{
-				if ($entity->getActualContract() === null)
-					unset($entities[$key]);
+				// On genèree un code aléatoire
+				$newCode = '123A456';	// @todo algo de generation aléatoire
+				// On vérifie s'il n'existe pas en BDD
+				$door = $repo->getByCode($newCode);
+				if ($door === null)
+				{
+					$codes[] = $newCode;
+					$nb++;
+				}
 			}
+			
 		}
-		else 
-			$entities = array($em->getRepository('JLMModelBundle:Door')->find($id));
+		else
+		{
+			$codes = array($code);
+		}
 		
 		
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename=tags.pdf');
-		$response->setContent($this->render('JLMDefaultBundle:Default:printtag.pdf.php',array('entities'=>$entities)));
+		$response->setContent($this->render('JLMDefaultBundle:Default:printtag.pdf.php',array('codes'=>$codes)));
 		return $response;
 	}
 }

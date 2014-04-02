@@ -177,6 +177,14 @@ class Door
     private $longitude;
     
     /**
+     * Code installation
+     * @var string
+     * 
+     * @ORM\Column(name="code", type="string", length=10, nullable=true)
+     */
+    private $code;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -1009,5 +1017,38 @@ class Door
     			return $stop;
     	}
     	return null;
+    }
+    
+    /**
+     * Get Code installation
+     * 
+     * @return string
+     */
+    public function getCode()
+    {
+    	return $this->code;
+    }
+    
+    /**
+     * Has Code installation
+     *
+     * @return string
+     */
+    public function hasCode()
+    {
+    	return $this->getCode() !== null;
+    }
+    
+    /**
+     * Set code
+     * 
+     * @param string $code
+     * @return this
+     */
+    public function setCode($code)
+    {
+    	$this->code = strtoupper($code);
+    	
+    	return $this;
     }
 }

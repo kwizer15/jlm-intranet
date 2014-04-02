@@ -8,16 +8,16 @@ class Tag extends FPDFext
 	private $entity;
 	private $count = 0;
 
-	public static function get($entities)
+	public static function get($codes)
 	{
 		$pdf = new self();
 		$pdf->_init();
-		foreach ($entities as $entity)
-			$pdf->addEntity($entity);
+		foreach ($codes as $code)
+			$pdf->addEntity(strtoupper($code));
 		return $pdf->Output('','S');
 	}
 	
-	public function addEntity($entity)
+	public function addEntity($code)
 	{
 		switch ($this->count)
 		{
@@ -43,8 +43,7 @@ class Tag extends FPDFext
 				break;
 		}
 		$this->image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-logo-comp.jpg',$origX+50,$origY+10,80);
-		$id = $entity->getId();
-		$url = 'http://chart.apis.google.com/chart?chs=180x180&choe=UTF-8&cht=qr&chl=http://www.jlm-entreprise.fr/installation/'.$id;
+		$url = 'http://chart.apis.google.com/chart?chs=180x180&choe=UTF-8&cht=qr&chl=http://www.jlm-entreprise.fr/installation/'.$code;
 		$this->image($url,$origX+8,$origY+8,40,40,'png');
 		$this->setXY($origX+10,$origY+50);
 		$this->setFont('Arial','B',15);
@@ -52,12 +51,7 @@ class Tag extends FPDFext
 		$this->setXY($origX+98,$origY+70);
 		// Numéro d'install
 		$this->setFont('Arial','B',22);
-		$this->cell(12,10,substr($entity->getSite()->getAddress()->getCity()->getZip(),0,2),true,0,'C');
-		$idstr = $id;
-		while (strlen($idstr) < 4)
-			$idstr = '0'.$idstr;
-		$this->cell(20,10,$idstr,true,0,'C');
-		$this->cell(8,10,substr($entity->getActualContract(),0,1),true,0,'C');
+		$this->cell(20,10,$code,true,0,'C');
 		$this->count = ($this->count == 3) ? 0 : $this->count + 1;
 		
 		return $this;
