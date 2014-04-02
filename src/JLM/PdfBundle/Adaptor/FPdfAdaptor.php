@@ -1,7 +1,7 @@
 <?php
-namespace JLM\PdfBundle\Model\Adaptor;
+namespace JLM\PdfBundle\Adaptor;
 
-use JLM\PdfBundle\Model\Pdf\PdfInterface;
+use JLM\PdfBundle\Builder\PdfInterface;
 
 class FPdfAdaptor implements PdfInterface
 {

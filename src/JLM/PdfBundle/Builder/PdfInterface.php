@@ -1,9 +1,11 @@
 <?php
 
-namespace JLM\PdfBundle\Model\Pdf;
+namespace JLM\PdfBundle\Builder\Pdf;
 
 interface PdfInterface
 {
+	public function output();
+	/*
 	public function setMargins($left, $top, $right = null);
 	public function setLeftMargin($margin);
 	public function setTopMargin($margin);
@@ -50,5 +52,6 @@ interface PdfInterface
 	public function setY($y);
 	public function setXY($x, $y);
 	public function output($name = '', $dest = '');
+	*/
 }
 						

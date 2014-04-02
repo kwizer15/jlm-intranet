@@ -4,13 +4,6 @@ namespace JLM\PdfBundle\Builder;
 interface PdfBuilderInterface
 {
 	/**
-	 * Return Pdf as string
-	 * 
-	 * @return string
-	 */
-	public function getPdf();
-	
-	/**
 	 * Create the empty Pdf
 	 */
 	public function create();
@@ -19,4 +12,11 @@ interface PdfBuilderInterface
 	 * Build the content
 	 */
 	public function buildContent();
+	
+	/**
+	 * Return Pdf as string
+	 *
+	 * @return string
+	 */
+	public function getPdf();
 }
