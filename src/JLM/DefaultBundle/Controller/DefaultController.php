@@ -159,7 +159,6 @@ class DefaultController extends Controller
 			{
 				// On genèree un code aléatoire
 				$newCode = rand(100,999).$lettres[rand(0,24)].rand(0,999);
-		//		$newCode = '123A456';	// @todo algo de generation aléatoire
 				// On vérifie s'il n'existe pas en BDD
 				$door = $repo->getByCode($newCode);
 				if ($door === null && !in_array($newCode,$codes))
@@ -180,5 +179,6 @@ class DefaultController extends Controller
 		$response->setContent($out);
 		
 		return $response;
+
 	}
 }
