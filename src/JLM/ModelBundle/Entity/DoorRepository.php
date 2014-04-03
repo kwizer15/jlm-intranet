@@ -68,7 +68,13 @@ class DoorRepository extends SearchRepository
 			->where('a.code = ?1')
 			->setParameter(1,strtoupper($code))
 		;
-		return $qb->getQuery()->getSingleResult();
+		
+		try {
+			return $qb->getQuery()->getSingleResult();
+		} catch (\Exception $e) {}
+		
+		return null;
+		 
 	}
 	
 	/**

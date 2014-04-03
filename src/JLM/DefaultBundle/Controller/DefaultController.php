@@ -165,18 +165,17 @@ class DefaultController extends Controller
 					$nb++;
 				}
 			}
-			
 		}
 		else
 		{
 			$codes = array($code);
 		}
-		
-		
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename=tags.pdf');
-		$response->setContent($this->render('JLMDefaultBundle:Default:printtag.pdf.php',array('codes'=>$codes)));
+		$out = \JLM\DefaultBundle\Pdf\Tag::get($codes);
+		$response->setContent($out);
+		
 		return $response;
 	}
 }
