@@ -153,13 +153,16 @@ class DefaultController extends Controller
 		if ($code === null)
 		{
 			$nb = 0;
+			$codes = array();
+			$lettres = 'ABCDEFGHIJKLMNPQRSTUVWXYZ';
 			while ($nb < 100)
 			{
 				// On genèree un code aléatoire
-				$newCode = '123A456';	// @todo algo de generation aléatoire
+				$newCode = rand(100,999).$lettres[rand(0,24)].rand(0,999);
+		//		$newCode = '123A456';	// @todo algo de generation aléatoire
 				// On vérifie s'il n'existe pas en BDD
 				$door = $repo->getByCode($newCode);
-				if ($door === null)
+				if ($door === null && !in_array($newCode,$codes))
 				{
 					$codes[] = $newCode;
 					$nb++;
