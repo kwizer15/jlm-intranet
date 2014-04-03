@@ -51,7 +51,7 @@ class Tag extends FPDFext
 		$this->setXY($origX+98,$origY+70);
 		// Numéro d'install
 		$this->setFont('Arial','B',22);
-		$this->cell(20,10,$code,true,0,'C');
+		$this->cell(35,10,$code,true,0,'C');
 		$this->count = ($this->count == 3) ? 0 : $this->count + 1;
 		
 		return $this;
