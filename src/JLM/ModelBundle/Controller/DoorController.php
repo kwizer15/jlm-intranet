@@ -154,6 +154,8 @@ class DoorController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+    
+    
 
     /**
      * Edits an existing Door entity.
@@ -193,7 +195,41 @@ class DoorController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+    
+    /**
+     * Edits an existing Door entity.
+     *
+     * @Route("/{id}/updatecode", name="model_door_update_code")
+     * @Method("PUT")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function updateCodeAction(Door $entity)
+    {
+        $em = $this->getDoctrine()->getManager();
+    
+        $codeForm   = $this->_createCodeForm($entity);
+    
+        $codeForm->handleRequest($this->getRequest());
+    
+        if ($codeForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+    
+            
+        }
+    
+        return $this->redirect($this->getRequest()->headers->get('referer'));
+    }
 
+    private function _createCodeForm(Door $door)
+	{
+		$form = $this->createForm(new \JLM\ModelBundle\Form\Type\DoorTagType(), $door,
+		array('action'=>$this->generateUrl('model_door_update_code',array('id'=>$door->getId())),
+		    'method'=>'PUT'));
+                    
+		return $form;
+	}
+    
     /**
      * Deletes a Door entity.
      *
