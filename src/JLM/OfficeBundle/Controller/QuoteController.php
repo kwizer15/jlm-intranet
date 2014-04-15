@@ -30,6 +30,8 @@ use FOS\UserBundle\Model\UserInterface;
  */
 class QuoteController extends Controller
 {
+    private $response;
+    
     /**
      * Lists all Quote entities.
      *
@@ -41,9 +43,16 @@ class QuoteController extends Controller
      */
     public function indexAction($page = 1, $state = null)
     {
-    	$limit = 20;
+    	
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('JLMOfficeBundle:Quote');
+        list($return, $response) = $this->_cacheLastModified($repo);
+        if ($return)
+        {
+            return $response;
+        }
+        
+        $limit = 20;
         if ($state === null)
         	$nb = $repo->getTotal();
         else
@@ -61,56 +70,73 @@ class QuoteController extends Controller
         else
         	$entities = $repo->getByState($state,$limit,$offset);
         
-        return array(
+        return $this->render('JLMOfficeBundle:Quote:index.html.twig',array(
         		'entities' => $entities,
         		'page'     => $page,
         		'nbPages'  => $nbPages,
         		'state'	   => $state,
-        );
+        ),$response);
+    }
+    
+    private function _cacheLastModified($repo)
+    {
+        // Vérification du cache
+        $lastModified = $repo->getLastModified();
+        $response = new Response;
+        $response->setLastModified($lastModified);
+        $response->setPublic();
+        return array($response->isNotModified($this->getRequest()),$response);
     }
     
     /**
      * Lists lasts Quote entities.
-     *
-     * @Template()
      * @Secure(roles="ROLE_USER")
      */
     public function lastAction($limit = 10)
     {
-    	$em = $this->getDoctrine()->getManager();
-
-    	$entities = $em->getRepository('JLMOfficeBundle:Quote')->findBy(
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('JLMOfficeBundle:Quote');
+    	list($return, $response) = $this->_cacheLastModified($repo);
+    	if ($return)
+    	{
+    	    return $response;
+    	}
+    	
+    	$entities = $repo->findBy(
     			array(),
     			array('number'=>'desc'),
     			$limit
     	);
     
-    	return array(
-    			'entities' => $entities,
-    	);
+    	return $this->render('JLMOfficeBundle:Quote:last.html.twig',array('entities' => $entities), $response);
     }
     
     /**
      * sidebar Quote entities.
-     *
-     * @deprecated
-     * @Template()
      * @Secure(roles="ROLE_USER")
      */
     public function sidebarAction()
     {
+        
     	$em = $this->getDoctrine()->getManager();
-
     	$repo = $em->getRepository('JLMOfficeBundle:Quote');
+    	
+        list($return, $response) = $this->_cacheLastModified($repo);
+    	if ($return)
+    	{
+    	    return $response;
+    	}
+    	
+    	// Calcul
     	$date = new \DateTime;
     	$year = $date->format('Y');
-    	return array('count' => array(
+    	return $this->render('JLMOfficeBundle:Quote:sidebar.html.twig',array('count' => array(
     			'all' => $repo->getCountState('uncanceled', $year),
     			'input' => $repo->getCountState(0, $year),
     			'wait' => $repo->getCountState(1, $year),
     			'send' => $repo->getCountState(3, $year),
     			'given' => $repo->getCountState(5, $year),
-    	));
+    	)),$response);
     }
     
 
@@ -123,9 +149,6 @@ class QuoteController extends Controller
      */
     public function showAction(Quote $entity)
     {
-    //	$em = $this->getDoctrine()->getManager();
-    //	$repo = $em->getRepository('JLMOfficeBundle:Quote');
-    //	$entity = $repo->getById($id);
         return array('entity'=> $entity);
     }
     

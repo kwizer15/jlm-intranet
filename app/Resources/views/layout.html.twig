@@ -47,11 +47,12 @@
 		        					<ul class="dropdown-menu">
 		        						<li><a href="{{ path('askquote_new') }}"><i class="icon-plus-sign"></i> Nouvelle demande de devis</a></li>
 		        						<li class="divider"></li>
-		        						{% include 'JLMOfficeBundle:Askquote:sidebar.html.twig' with {'count':layout.askQuoteCount} %}
+			                             {{ render_esi(controller('JLMOfficeBundle:Askquote:sidebar')) }}
 		        					</ul>
 		        				</li>
 		        				<li class="divider"></li>
-		        				{% include 'JLMOfficeBundle:Quote:sidebar.html.twig' with {'count':layout.quoteCount} %}
+		        				{{ render_esi(controller('JLMOfficeBundle:Quote:sidebar')) }}
+		        			
 		        			</ul>
 		        		</li>
 		        		<li class="dropdown-submenu">
@@ -59,8 +60,7 @@
 		        			<ul class="dropdown-menu">
 		        			{#	<li><a href="{{ path('order_new') }}"><i class="icon-plus-sign"></i> Nouvelle fiche</a></li>
 								<li class="divider"></li> #}
-								{% include 'JLMOfficeBundle:Order:sidebar.html.twig' with {'count':layout.orderCount} %}
-								{#{{ render(controller('JLMOfficeBundle:Order:sidebar')) }}#} 
+								{{ render_esi(controller('JLMOfficeBundle:Order:sidebar')) }}
 		        			</ul>
 		        		</li>
                         <li class="dropdown-submenu">
@@ -68,8 +68,7 @@
 		        			<ul class="dropdown-menu">
 				        		<li><a href="{{ path('bill_new') }}"><i class="icon-plus-sign"></i> Nouvelle facture</a></li>
 				        		<li class="divider"></li>
-				        		{% include 'JLMOfficeBundle:Bill:sidebar.html.twig' with {'count':layout.billCount} %}
-				        		{#{{ render(controller('JLMOfficeBundle:Bill:sidebar')) }}#}
+				        		{{ render_esi(controller('JLMOfficeBundle:Bill:sidebar')) }}
 		        			</ul>
 		        		</li>
                         <li class="dropdown-submenu">
@@ -101,9 +100,7 @@
 		        </li>
 			  {% endblock navigation %}
 			</ul>
-			<ul class="nav navbar-nav pull-right">
-				<li><a href="http://gitlab.kw12er.com/kwizer/jlm-intranet/issues">Signaler un bug</a></li>
-			</ul>
+			{{ render_esi(controller('JLMDefaultBundle:Default:bugreport')) }}
 			<div class="btn-group pull-right">
 			   
 			   <a href="#" class="btn btn-info navbar-btn dropdown-toggle" data-toggle="dropdown"><i class="icon-user  icon-white"></i> {{ app.user.person.firstName }} <b class="caret"></b></a>

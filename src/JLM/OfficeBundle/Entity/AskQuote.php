@@ -44,6 +44,7 @@ class AskQuote extends Ask
 	 */
 	private $quotes;
 	
+	
 	/**
 	 * Get Id
 	 * @return int

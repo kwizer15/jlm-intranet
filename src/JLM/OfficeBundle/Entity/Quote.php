@@ -99,6 +99,7 @@ class Quote extends Document
 	 */
 	private $ask;
 	
+	
 	/**
 	 * Construteur
 	 *
@@ -377,6 +378,23 @@ class Quote extends Document
     public function getAsk()
     {
         return $this->ask;
+    }
+    
+    /**
+     * Get last modified
+     *
+     * @return \DateTime
+     */
+    public function getLastModified()
+    {  
+        $variants = $this->getVariants();
+        $lastModified = parent::getLastModified();
+        foreach ($variants as $variant)
+        {
+            if ($lastModified < $variant->getLastModified())
+                $lastModified = $variant->getLastModified();
+        }
+        return $lastModified;
     }
     
     /**

@@ -14,6 +14,14 @@ class OrderRepository extends SearchRepository
 		return $this->getCount();
 	}
 	
+	public function getLastModified()
+	{
+	    $qb = $this->createQueryBuilder('a')
+	    ->select('MAX(a.lastModified)');
+	    return new  \DateTime($qb->getQuery()->getSingleScalarResult());
+	
+	}
+	
 	public function getCount($state = null)
 	{
 		if (!isset($this->count))

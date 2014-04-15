@@ -11,6 +11,7 @@ use JLM\DailyBundle\Entity\Work;
  *
  * @ORM\Table(name="quote_variant")
  * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\QuoteVariantRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class QuoteVariant
 {
@@ -109,12 +110,29 @@ class QuoteVariant
 	private $work;
 	
 	/**
+	 * @var datetime $creation
+	 *
+	 * @ORM\Column(name="lastModified", type="datetime")
+	 */
+	private $lastModified;
+	
+	/**
 	 * Construteur
 	 *
 	 */
 	public function __construct()
 	{
 		$this->lines = new ArrayCollection;
+	}
+	
+	/**
+	 * Get last modified
+	 *
+	 * @return \DateTime
+	 */
+	public function getLastModified()
+	{
+	    return $this->lastModified;
 	}
 	
 	/**
@@ -430,5 +448,14 @@ class QuoteVariant
     public function getWork()
     {
         return $this->work;
+    }
+    
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function upload()
+    {
+        $this->lastModified = new \DateTime;
     }
 }

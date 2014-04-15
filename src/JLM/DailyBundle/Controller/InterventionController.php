@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Intervention;
 use JLM\DailyBundle\Entity\Work;
@@ -266,6 +267,20 @@ class InterventionController extends Controller
 		//return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
+	/**
+	 * Liste des interventions par date(s)
+	 *
+	 * @Route("/listline/{id}/{type}", name="intervention_listline")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function listlineAction($id,$type)
+	{
+	   $em = $this->getDoctrine()->getManager();
+	   $entity = $em->getRepository('JLMDailyBundle:'.$type)->find($id);
+	   
+	   return array('entity'=>$entity);
+	}
 	
 	/**
 	 * Liste des interventions par date(s)

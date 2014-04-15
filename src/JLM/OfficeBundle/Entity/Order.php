@@ -11,6 +11,7 @@ use JLM\DailyBundle\Entity\Work;
  *
  * @ORM\Table(name="orders")
  * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\OrderRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Order
 {
@@ -32,6 +33,13 @@ class Order
 	 * @ORM\Column(name="creation",type="datetime") 
 	 */
 	private $creation;
+	
+	/**
+	 * @var datetime $lastModified
+	 *
+	 * @ORM\Column(name="lastModified", type="datetime")
+	 */
+	private $lastModified;
 	
 	/**
 	 * Lignes
@@ -213,5 +221,14 @@ class Order
     	$order = new Order;
     	$order->populateFromWork($work);
     	return $order;
+    }
+    
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function update()
+    {
+        $this->lastModified = new \DateTime;
     }
 }

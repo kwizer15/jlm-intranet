@@ -26,6 +26,6 @@ abstract class PaginableController extends Controller
 		if ($page < 1 || $page > $nbPages)
 			throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
 		//echo 'page = '.$page.'<br>nbPages = '.$nbPages.'<br>nbEntities = '.$limit.'<br>offset='.$offset.'<br>Fonction : '.$functionDatas; exit;
-		return array('entities'=>$repo->$functionDatas($limit,$offset),'pageTotal'=>$nbPages,'page'=>$page,'pageRoute'=>$route);
+		return array('entities'=>$repo->$functionDatas($limit,$offset),'pageTotal'=>$nbPages,'page'=>$page,'pageRoute'=>$route,'today'=>new \DateTime);
 	}
 }

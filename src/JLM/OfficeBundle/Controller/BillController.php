@@ -449,22 +449,31 @@ class BillController extends PaginableController
     
     /**
      * Sidebar
-     * @Route("/sidebar", name="bill_sidebar")
-     * @Template()
      * @Secure(roles="ROLE_USER")
      */
     public function sidebarAction()
     {
     	$em = $this->getDoctrine()->getManager();
-    
-    	return array('count'=>array(
+    	$repo = $em->getRepository('JLMOfficeBundle:Bill');
+    	 
+    	// Vérification du cache
+    	$lastModified = $repo->getLastModified();
+    	$response = new Response;
+    	$response->setLastModified($lastModified);
+    	$response->setPublic();
+    	if ($response->isNotModified($this->getRequest()))
+    	{
+    	    return $response;
+    	}
+    	
+    	return $this->render('JLMOfficeBundle:Bill:sidebar.html.twig',array('count'=>array(
     			'todo' => $em->getRepository('JLMDailyBundle:Intervention')->getCountToBilled(),
-    			'all' => $em->getRepository('JLMOfficeBundle:Bill')->getTotal(),
-    			'input' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(0),
-    			'send' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(1),
-    			'payed' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(2),
-    			'canceled' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(-1),
-    	));
+    			'all' => $repo->getTotal(),
+    			'input' => $repo->getCount(0),
+    			'send' => $repo->getCount(1),
+    			'payed' => $repo->getCount(2),
+    			'canceled' => $repo->getCount(-1),
+    	)),$response);
     }
     
     /**

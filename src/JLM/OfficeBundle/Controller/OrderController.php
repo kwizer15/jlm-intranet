@@ -243,21 +243,29 @@ class OrderController extends Controller
 	
 	/**
 	 * Sidebar
-	 * @Route("/sidebar", name="order_sidebar")
-	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function sidebarAction()
 	{
 		$em = $this->getDoctrine()->getManager();
-	
-		return array('count' => array(
+		$repo = $em->getRepository('JLMOfficeBundle:Order');
+		 
+		// Vérification du cache
+		$lastModified = $repo->getLastModified();
+		$response = new Response;
+		$response->setLastModified($lastModified);
+		$response->setPublic();
+		if ($response->isNotModified($this->getRequest()))
+		{
+		    return $response;
+		}
+		return $this->render('JLMOfficeBundle:Order:sidebar.html.twig',array('count' => array(
 				'todo' => $em->getRepository('JLMDailyBundle:Work')->getCountOrderTodo(),
-				'all' => $em->getRepository('JLMOfficeBundle:Order')->getTotal(),
-				'input' => $em->getRepository('JLMOfficeBundle:Order')->getCount(0),
-				'ordered' => $em->getRepository('JLMOfficeBundle:Order')->getCount(1),
-				'ready' => $em->getRepository('JLMOfficeBundle:Order')->getCount(2),
-		));
+				'all' => $repo->getTotal(),
+				'input' => $repo->getCount(0),
+				'ordered' => $repo->getCount(1),
+				'ready' => $repo->getCount(2),
+		)),$response);
 	}
 	
 	/**

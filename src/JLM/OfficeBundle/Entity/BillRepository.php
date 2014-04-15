@@ -19,6 +19,14 @@ class BillRepository extends SearchRepository
 		return $this->getCount();
 	}
 	
+	public function getLastModified()
+	{
+	    $qb = $this->createQueryBuilder('a')
+	    ->select('MAX(a.lastModified)');
+	    return new  \DateTime($qb->getQuery()->getSingleScalarResult());
+	
+	}
+	
 	public function getLastNumber()
 	{
 		$date = new \DateTime;

@@ -4,10 +4,10 @@
 	<li><h4>Fiches travaux</h4></li>
 	<li>
 		<form  action="{{ path('order_search') }}" method="post" class="form-search">
-			{{ form_widget(layout.form_search) }}
+{{ render_esi(controller('JLMDefaultBundle:Default:searchForm')) }}
 		</form>
 	</li>
 	<li class="divider"></li>
 	<li class="nav-header">Etats</li>
-	{{ render(controller('JLMOfficeBundle:Order:sidebar')) }}
+	{{ render_esi(controller('JLMOfficeBundle:Order:sidebar')) }}
 {% endblock sidebar %}

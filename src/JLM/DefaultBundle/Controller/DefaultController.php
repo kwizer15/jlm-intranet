@@ -8,9 +8,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Door;
+use JLM\DefaultBundle\Entity\Search;
+use JLM\DefaultBundle\Form\Type\SearchType;
 
 class DefaultController extends Controller
 {
+    public function searchFormAction()
+    {
+        $lm = new \DateTime('2014-04-15 00:00:00');
+        $response = new Response;
+        $response->setLastModified();
+        $response->setPublic();
+        if ($response->isNotModified($this->getRequest()))
+        {
+            return $response;
+        }
+        
+        $form = $this->createForm(new SearchType, new Search);
+        return $this->render('JLMDefaultBundle:Default:searchForm.html.twig',array('form' => $form->createView()),$response);
+    }
+    
     /**
      * @Route("/",name="default")
      * @Template()
@@ -113,6 +130,16 @@ class DefaultController extends Controller
 		phpinfo();exit;
 	
 		return array();
+	}
+	
+	/**
+	 * @Route("/bugreport")
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function bugreportAction()
+	{
+	    return array();
 	}
 	
 	/**

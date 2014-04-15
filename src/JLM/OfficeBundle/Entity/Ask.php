@@ -13,6 +13,7 @@ use JLM\OfficeBundle\Entity\AskMethod;
  * JLM\OfficeBundle\Entity\Ask
  *
  * @ORM\MappedSuperclass
+ * @ORM\HasLifecycleCallbacks
  */
 abstract class Ask extends UploadDocument
 {
@@ -41,6 +42,13 @@ abstract class Ask extends UploadDocument
 	 * @Assert\NotNull()
 	 */
 	private $creation;
+	
+	/**
+	 * @var datetime $lastModified
+	 *
+	 * @ORM\Column(name="lastModified", type="datetime")
+	 */
+	private $lastModified;
 	
 	/**
 	 * Date d'échéance
@@ -256,5 +264,14 @@ abstract class Ask extends UploadDocument
     public function getAsk()
     {
     	return $this->ask;
+    }
+    
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function update()
+    {
+        $this->lastModified = new \DateTime;
     }
 }

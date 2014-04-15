@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * JLM\OfficeBundle\Entity\Document
  *
  * @ORM\MappedSuperclass
+ * @ORM\HasLifecycleCallbacks
  */
 abstract class Document
 {
@@ -17,6 +18,13 @@ abstract class Document
 	 * @ORM\Column(name="creation", type="datetime")
 	 */
 	private $creation;
+	
+	/**
+	 * @var datetime $creation
+	 *
+	 * @ORM\Column(name="lastModified", type="datetime")
+	 */
+	private $lastModified;
 	
     /**
      * Client
@@ -78,6 +86,16 @@ abstract class Document
     public function getCreation()
     {
         return $this->creation;
+    }
+    
+    /**
+     * Get last modified
+     *
+     * @return \DateTime
+     */
+    public function getLastModified()
+    {
+        return $this->lastModified;
     }
 
     /**
@@ -194,5 +212,14 @@ abstract class Document
     public function getVatTransmitter()
     {
     	return $this->vatTransmitter;
+    }
+    
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function update()
+    {
+        $this->lastModified = new \DateTime;
     }
 }

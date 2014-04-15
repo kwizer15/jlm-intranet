@@ -72,14 +72,14 @@ class DefaultController extends Controller
 	/**
 	 * Sidebar
 	 * @Route("/sidebar", name="daily_sidebar")
-     * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_USER")
 	 * @Template()
 	 */
 	public function sidebarAction()
 	{
 		$em = $this->getDoctrine()->getManager();
 		return array(
-		    'today' => $em->getRepository('JLMDailyBundle:Intervention')->getCountToday(),
+		    'todayy' => $em->getRepository('JLMDailyBundle:Intervention')->getCountToday(),
 			'stopped' => $em->getRepository('JLMModelBundle:Door')->getCountStopped(),
 			'fixing' => $em->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),
 			'work'   => $em->getRepository('JLMDailyBundle:Work')->getCountOpened(),

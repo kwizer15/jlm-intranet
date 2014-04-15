@@ -13,7 +13,15 @@ use JLM\DefaultBundle\Entity\SearchRepository;
  */
 class QuoteRepository extends SearchRepository
 {
-
+    public function getLastModified()
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('MAX(b.lastModified)')
+               ->leftJoin('a.variants','b');
+        return new  \DateTime($qb->getQuery()->getSingleScalarResult());
+        
+    }
+    
 	public function getById($id)
 	{
 		$qb = $this->createQueryBuilder('a')

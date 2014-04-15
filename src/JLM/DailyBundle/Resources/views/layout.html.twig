@@ -16,14 +16,14 @@
 	    <li><a href="{{ path('shifting_list', {'id':4}) }}"><i class="icon-user"></i> Oscar</a></li>
 	    <li class="nav-header">Ajouter</li>
 	    <li><a href="#modalNewShift" data-toggle="modal"><i class="icon-plus-sign"></i> Récupération matériel</a>
-		{{ render(controller('JLMDailyBundle:Equipment:new')) }}</li>
+		{{ render_esi(controller('JLMDailyBundle:Equipment:new')) }}</li>
 	    <li><a href="#modalNewStandby" data-toggle="modal"><i class="icon-plus-sign"></i> Astreinte</a>
-		{{ render(controller('JLMDailyBundle:Standby:new')) }}</li>
+		{{ render_esi(controller('JLMDailyBundle:Standby:new')) }}</li>
 		<li><a href="{{ path('standby') }}"><i class="icon-list"></i> Liste des astreintes</a>
 	    <li class="nav-header">Interventions</li>
 		{# render(controller('JLMDailyBundle:Default:datesearch')) #}
 		{% include 'JLMDailyBundle:Default:datesearch.html.twig' with {'form':layout.form_searchByDate} %}
-		{{ render(controller('JLMDailyBundle:Default:sidebar')) }}
+		{{ render_esi(controller('JLMDailyBundle:Default:sidebar')) }}
 		<li class="nav-header">Imprimer</li>
 		<li><a href="{{ path('intervention_printtomorrow') }}"><i class="icon-print"></i> Demain</a></li>
 	{% endblock sidebar %}

@@ -37,6 +37,14 @@ class AskQuoteRepository extends SearchRepository
 		return $qb->getQuery()->getResult();
 	}
 	
+	public function getLastModified()
+	{
+	    $qb = $this->createQueryBuilder('a')
+	    ->select('MAX(a.lastModified)');
+	    return new  \DateTime($qb->getQuery()->getSingleScalarResult());
+	
+	}
+	
 	public function getCountAll()
 	{
 		if (!isset($this->total))

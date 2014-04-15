@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -60,9 +61,13 @@ class TrusteeController extends Controller
      */
     public function showAction(Trustee $entity)
     {
-        return array(
+        $date = new \DateTime();
+        $date->modify('+60 seconds');
+        $response = new Response;
+        $response->setExpires($date);
+        return $this->render('JLMModelBundle:Trustee:show.html.twig', array(
             'entity'      => $entity,
-        );
+        ), $response);
     }
 
     /**
