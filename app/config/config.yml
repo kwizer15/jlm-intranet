@@ -14,12 +14,12 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig','php']
-        hinclude_default_template: ::hinclude.html.twig
+        #hinclude_default_template: ::hinclude.html.twig
         #assets_version: SomeVersionScheme
     default_locale:  %locale%
     #trust_proxy_headers: ~ # Whether or not the Request object should trust proxy headers (X_FORWARDED_FOR/HTTP_CLIENT_IP)
     session:         ~
-    fragments:       ~
+    fragments: { path: /_fragment }
     http_method_override: true
 
 # Twig Configuration

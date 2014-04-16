@@ -20,6 +20,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * 		"work" = "Work",
  * 		"maintenance" = "Maintenance",
  * })
+ * @ORM\HasLifecycleCallbacks
  */
 abstract class Shifting
 {
@@ -40,6 +41,13 @@ abstract class Shifting
      * @Assert\NotNull(message="Pas de date de création du déplacement")
      */
     private $creation;
+    
+    /**
+     * @var datetime $lastModified
+     *
+     * @ORM\Column(name="lastModified", type="datetime")
+     */
+    private $lastModified;
     
     /**
      * Lieu du déplacement
@@ -253,6 +261,15 @@ abstract class Shifting
     	return false;
     }   
      
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function update()
+    {
+        $this->lastModified = new \DateTime;
+    }
+    
     /**
      * Get type
      *

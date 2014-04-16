@@ -277,9 +277,18 @@ class InterventionController extends Controller
 	public function listlineAction($id,$type)
 	{
 	   $em = $this->getDoctrine()->getManager();
+	   $lastModified = $em->getRepository('JLMDailyBundle:'.$type)->getLastModified($id);
+	   $response = new Response;
+	   $response->setLastModified($lastModified);
+	   $response->setPublic();
+	   if ($response->isNotModified($this->getRequest()))
+	   {
+	       var_dump($lastModified);
+	       return $response;
+	   }
 	   $entity = $em->getRepository('JLMDailyBundle:'.$type)->find($id);
 	   
-	   return array('entity'=>$entity);
+	   return $this->render('JLMDailyBundle:Intervention:listline.html.twig',array('entity'=>$entity),$response);
 	}
 	
 	/**

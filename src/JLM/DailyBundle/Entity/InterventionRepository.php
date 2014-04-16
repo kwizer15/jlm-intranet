@@ -9,6 +9,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class InterventionRepository extends EntityRepository
 {
+    public function getLastModified($id)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a.lastModified')
+            ->where('a.id = ?1')
+            ->setParameter(1, $id)
+            ->getQuery()->getSingleScalarResult();
+        
+        return new \DateTime($qb);
+    } 
+    
 	/**
 	 * @deprecated
 	 * @param int $limit

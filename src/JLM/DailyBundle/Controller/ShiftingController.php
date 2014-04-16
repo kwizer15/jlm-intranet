@@ -2,6 +2,7 @@
 namespace JLM\DailyBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -56,22 +57,29 @@ class ShiftingController extends Controller
 	/**
 	 * Ajoute un technicien sur une intervention
 	 * @Route("/new/{id}", name="shifting_new")
-	 * @Secure(roles="ROLE_USER")
 	 * @Template()
 	 */
 	public function newAction(Shifting $shifting)
 	{
+	    $response = new Response;
+	    $date = new \DateTime;
+	    $date->setTime(23, 59, 59);
+	    $maxage = $date->diff(new \DateTime);
+	    $mx = $maxage->format('%s')+($maxage->format('%i')+$maxage->format('%h')*60)*60;
+//	    $response->setSharedMaxAge($mx);
+	    $response->setMaxAge($mx);
+	    $response->setPublic();
 		$entity = new ShiftTechnician();
 		
-		$entity->setBegin(new \DateTime);
+		$entity->setBegin($date);
 		$form = $this->get('form.factory')->createNamed('shiftTechNew'.$shifting->getId(),new AddTechnicianType(), $entity);
 				
-		return array(
+		return $this->render('JLMDailyBundle:Shifting:new.html.twig',array(
 				'shifting' => $shifting,
 				'entity' => $entity,
 				'form'   => $form->createView(),
 				'id' => $shifting->getId(),
-		);
+		),$response);
 	}
 	
 	/**
