@@ -5,6 +5,7 @@ namespace JLM\DefaultBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Door;
@@ -13,18 +14,25 @@ use JLM\DefaultBundle\Form\Type\SearchType;
 
 class DefaultController extends Controller
 {
-    public function searchFormAction()
+    /**
+     * @Route("/",name="default")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     * @Method("GET")
+     */
+    public function searchFormAction($q = '')
     {
-        $lm = new \DateTime('2014-04-15 00:00:00');
+        $lm = new \DateTime('2014-04-16 00:00:00');
         $response = new Response;
-        $response->setLastModified();
+        $response->setLastModified($lm);
         $response->setPublic();
         if ($response->isNotModified($this->getRequest()))
         {
             return $response;
         }
-        
-        $form = $this->createForm(new SearchType, new Search);
+        $search = new Search();
+        $search->setQuery($s);
+        $form = $this->createForm(new SearchType, $search);
         return $this->render('JLMDefaultBundle:Default:searchForm.html.twig',array('form' => $form->createView()),$response);
     }
     
