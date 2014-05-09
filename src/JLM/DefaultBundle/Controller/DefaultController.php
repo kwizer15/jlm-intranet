@@ -22,16 +22,15 @@ class DefaultController extends Controller
      */
     public function searchFormAction($q = '')
     {
-        $lm = new \DateTime('2014-04-16 00:00:00');
+        $lm = new \DateTime('2014-04-17 00:00:00');
         $response = new Response;
-        $response->setLastModified($lm);
         $response->setPublic();
         if ($response->isNotModified($this->getRequest()))
         {
             return $response;
         }
         $search = new Search();
-        $search->setQuery($s);
+        $search->setQuery($q);
         $form = $this->createForm(new SearchType, $search);
         return $this->render('JLMDefaultBundle:Default:searchForm.html.twig',array('form' => $form->createView()),$response);
     }

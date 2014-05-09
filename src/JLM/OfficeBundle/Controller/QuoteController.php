@@ -47,6 +47,10 @@ class QuoteController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('JLMOfficeBundle:Quote');
         list($return, $response) = $this->_cacheLastModified($repo);
+        $c = $this->getRequest()->cookies->all();
+        var_dump($c);
+        // $i = $this->get('session')->all();
+        // var_dump(unserialize($i['_security_main'])); exit;
         if ($return)
         {
             return $response;
