@@ -1,5 +1,5 @@
 {% extends "::layout.html.twig" %}
-
+{% set section = 'model' %}
     {% block sidebar %}
     	<li>
     		<form  action="{{ path('model_search') }}" method="post" class="form-search">

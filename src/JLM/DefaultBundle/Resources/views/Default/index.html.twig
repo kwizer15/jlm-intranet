@@ -3,14 +3,16 @@
 {% block content %}
 <h1>Tableau de bord (beta)</h1>
 <div class="row">
+<div class="col-lg-12">
 <h2>Contrats</h2>
 {{ contracts_numbers }} contrats en cours sur {{ contracts_doors }} installations.<br>
 {{ contracts_complete }} installations en contrats complet<br>
 {{ contracts_normal }} installations en contrats normal<br>
 
 </div>
+</div>
 <div class="row">
-	<div class="span6">
+	<div class="col-lg-6">
 		<h2>Quantité</h2>
 		
 		<table class="table table-bordered">
@@ -83,15 +85,15 @@
 			</tfoot>
 		</table>
 	</div>
-	<div class="span5 well" id="graphTech">
+	<div class="col-lg-5 well" id="graphTech">
 	</div>
 </div>
 <div class="row">
-<div class="span6">
+<div class="col-lg-6">
 	<h2>Entretiens</h2>
 	<div id="graphEvolution"></div>
 	</div>
-	<div class="span5 well" id="graphMaintenance">
+	<div class="col-lg-5 well" id="graphMaintenance">
 	</div>
 </div>
 {% endblock %}
