@@ -4,15 +4,45 @@
 {% block title %}Aujourd'hui | {{ parent() }}{% endblock %}
 
 {% block content %}
-<h1>Aujourd'hui</h1>
-<h2><small>En cours</small></h2>
-{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : inprogress} %}
-<h2><small>Dépannages à donner</small></h2>
-{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : fixing} %}
-<h2><small>Autres déplacements</small></h2>
-{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : equipment} %}
-<h2><small>À cloturer</small></h2>
-{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : notclosed} %}
-<h2><small>Terminé aujourd'hui</small></h2>
-{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : closed} %}
+<div class="page-header"><h1>Aujourd'hui</h1></div>
+<div class="panel panel-info">
+  <div class="panel-heading"><span class="badge pull-right">{{ inprogress|length }}</span>En cours</div>
+  <div class="panel-body">
+    <div class="panel-group" id="inprogress">
+      {% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : inprogress } %}
+    </div>
+  </div>
+</div>
+<div class="panel panel-warning">
+  <div class="panel-heading"><span class="badge pull-right">{{ fixing|length }}</span>Dépannages à donner</div>
+  <div class="panel-body">
+    <div class="panel-group" id="fixing">
+    {% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : fixing } %}
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading"><span class="badge pull-right">{{ equipment|length }}</span>Autres déplacements</div>
+  <div class="panel-body">
+    <div class="panel-group" id="equipment">
+    {% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : equipment } %}
+    </div>
+  </div>
+</div>
+<div class="panel panel-danger">
+  <div class="panel-heading"><span class="badge pull-right">{{ notclosed|length }}</span>À cloturer</div>
+  <div class="panel-body">
+    <div class="panel-group" id="notclosed">
+    {% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : notclosed } %}
+    </div>
+  </div>
+</div>
+<div class="panel panel-success">
+  <div class="panel-heading"><span class="badge pull-right">{{ closed|length }}</span>Terminé aujourd'hui</div>
+  <div class="panel-body">
+    <div class="panel-group" id="closed">
+    {% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : closed } %}
+    </div>
+  </div>
+</div>
 {% endblock %}
