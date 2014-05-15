@@ -1,13 +1,13 @@
-<form id="modalEditTech{{ entity.id }}" action="{{ path('shifting_update',{'id':entity.id}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalEditTech{{ entity.id }}Label" aria-hidden="true">
+<form action="{{ path('shifting_update',{'id':entity.id}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h3 id="modalEditTech{{ entity.id }}Label">Déplacement de {{ entity.technician }}</h3>
+		<h3 id="editTechnicianModalLabel">Déplacement de {{ entity.technician }}</h3>
 	</div>
 	<div class="modal-body">
 		{{ form_widget(form) }}
 	</div>
 	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
-		<button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer</button>
+		<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Fermer</button>
+		<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Enregistrer</button>
 	</div>
 </form>

@@ -3,6 +3,22 @@
 
 {% block title %}Aujourd'hui | {{ parent() }}{% endblock %}
 
+{% block modals %}
+{{ parent() }}
+<div class="modal fade" id="addTechnicianModal" tabindex="-1" role="dialog" aria-labelledby="addTechniciansModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="editTechnicianModal" tabindex="-1" role="dialog" aria-labelledby="editTechniciansModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+{% endblock modals %}
+
 {% block content %}
 <div class="page-header"><h1>Aujourd'hui</h1></div>
 <div class="panel panel-info">
