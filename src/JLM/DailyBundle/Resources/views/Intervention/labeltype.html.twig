@@ -1,8 +1,8 @@
 {# JLMDailyBundle:Intervention:labeltype.html.twig #}
-<span class="label{% if type == 'fixing' %} label-warning">Dépannage
-{% elseif type == 'work' %} label-info">Travaux
-{% elseif type == 'maintenance' %}">Entretien
+<span class="label label-{% if type == 'fixing' %}warning">Dépannage
+{% elseif type == 'work' %}primary">Travaux
+{% elseif type == 'maintenance' %}default">Entretien
 {% elseif type == 'receiver' %}">Récépteur
-{% elseif type == 'equipment' %} label-inverse">Matériel
+{% elseif type == 'equipment' %}info">Matériel
 {% else %}">Intervention
 {% endif %}</span>
