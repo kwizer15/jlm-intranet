@@ -5,28 +5,38 @@
 {% block title %}Journal de bord | {{ parent() }}{% endblock %}
 
     {% block sidebar %}
-    	<li><h4>Journal de bord</h4></li>
-    	<li>
+    </ul>
+    	<h4>Journal de bord</h4></li>
+    	
     		<form  action="{{ path('daily_search') }}" method="post" class="form-search">
 				{{ form_widget(layout.form_search) }}
     		</form>
-    	</li>
-	    <li class="nav-header">Techniciens</li>
-	    <li><a href="{{ path('shifting_list', {'id':6}) }}"><i class="icon-user"></i> Cyrille</a></li>
-	    <li><a href="{{ path('shifting_list', {'id':5}) }}"><i class="icon-user"></i> Christophe</a></li>
-	    <li><a href="{{ path('shifting_list', {'id':4}) }}"><i class="icon-user"></i> Oscar</a></li>
-	    <li class="nav-header">Ajouter</li>
-	    <li><a href="#modalNewShift" data-toggle="modal"><i class="icon-plus-sign"></i> Récupération matériel</a>
+    	<ul class="nav nav-pills nav-stacked">
+    	<li class="dropdown">
+    	  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+    	    <span class="glyphicon glyphicon-user"></span> Horaires techniciens <span class="caret"></span>
+    	  </a>
+    	    <ul class="dropdown-menu">
+              <li><a href="{{ path('shifting_list', {'id':6}) }}">Cyrille</a></li>
+		      <li><a href="{{ path('shifting_list', {'id':5}) }}">Christophe</a></li>
+		      <li><a href="{{ path('shifting_list', {'id':4}) }}">Oscar</a></li>
+		    </ul>
+		  </li>
+	    
+	    <li><a href="#modalNewShift" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i> Récupération matériel</a>
 		{{ render(controller('JLMDailyBundle:Equipment:new')) }}</li>
-	    <li><a href="#modalNewStandby" data-toggle="modal"><i class="icon-plus-sign"></i> Astreinte</a>
+	    <li><a href="#modalNewStandby" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i> Astreinte</a>
 		{{ render(controller('JLMDailyBundle:Standby:new')) }}</li>
-		<li><a href="{{ path('standby') }}"><i class="icon-list"></i> Liste des astreintes</a>
-	    <li class="nav-header">Interventions</li>
+		<li><a href="{{ path('standby') }}"><i class="glyphicon glyphicon-list"></i> Liste des astreintes</a>
+		<li><a href="{{ path('intervention_printtomorrow') }}"><i class="glyphicon glyphicon-print"></i> Demain</a></li>
+		</ul>
+	    <h5>Interventions</h5>
+	    <ul class="nav nav-pills nav-stacked">
 		{# render(controller('JLMDailyBundle:Default:datesearch')) #}
 		{% include 'JLMDailyBundle:Default:datesearch.html.twig' with {'form':layout.form_searchByDate} %}
 		{{ render(controller('JLMDailyBundle:Default:sidebar')) }}
-		<li class="nav-header">Imprimer</li>
-		<li><a href="{{ path('intervention_printtomorrow') }}"><i class="icon-print"></i> Demain</a></li>
+		</ul>
+		
 	{% endblock sidebar %}
 
 {% block javascripts %}
