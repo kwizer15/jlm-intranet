@@ -28,7 +28,7 @@ twig:
     strict_variables: %kernel.debug%
     form:
         resources:
-            - ':Form:horizontal_ext.html.twig'
+            - ':Form:basic.html.twig'
 
 # Assetic Configuration
 assetic:

@@ -38,6 +38,8 @@
 			{% block navigation %}
 			{% set section = section|default('main') %}
 			<ul class="nav navbar-nav">
+			{% block nav_search_bar %}
+			{% endblock nav_search_bar %}
 				<li{% if section == 'daily' %} class="active"{% endif %}><a href="{{ path('intervention_today') }}">Journal de bord</a></li>
 				<li class="dropdown{% if section == 'quote' %} active{% endif %}">
 					<a data-toggle="dropdown" href="{{ path('quote') }}">Devis <b class="caret"></b></a>
@@ -85,6 +87,7 @@
 				<li{% if section == 'model' %} class="active"{% endif %}><a href="{{ path('trustee') }}">Saisie</a></li>
 			{% endblock navigation %}
 			</ul>
+			
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown" role="menu">
 					<a role="menuitem" href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{ app.user.person.firstName }} <b class="caret"></b></a>
@@ -97,6 +100,7 @@
 					</ul>
 				</li>
 			</ul>
+			
 		{% endif %}
 	{% endblock header %}
 		</div>

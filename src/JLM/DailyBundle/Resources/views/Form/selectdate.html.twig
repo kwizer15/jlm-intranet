@@ -1,5 +1,15 @@
 {% block datepicker_widget %}
 {% spaceless %}
-<div class="input-prepend input-append"><span class="add-on"><i class="icon-calendar"></i></span>{{ block('form_widget_simple') }}<button class="btn" type="submit"><i class="icon-eye-open"></i></button></div>
+<div class="input-group">
+  <span class="input-group-addon">
+    <span class="glyphicon glyphicon-calendar"></span>
+  </span>
+  {{ block('form_widget_simple') }}
+  <span class="input-group-btn">
+    <button class="btn btn-default" type="submit">    
+      <span class="glyphicon glyphicon-search"></span>
+    </button>
+  </span>
+</div>
 {% endspaceless %}
 {% endblock datepicker_widget %}

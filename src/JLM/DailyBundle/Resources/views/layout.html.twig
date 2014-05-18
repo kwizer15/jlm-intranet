@@ -2,17 +2,32 @@
 {% set section = 'daily' %}
 {% extends "::layout.html.twig" %}
 
+{% form_theme layout.form_search _self %}
+{% block submit_widget %}
+{% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn btn-default')|trim}) %}
+<button type="{{ type|default('submit') }}" {{ block('button_attributes') }}><span class="glyphicon glyphicon-search"></span></button>
+{% endblock %}
+
 {% block title %}Journal de bord | {{ parent() }}{% endblock %}
+
+{% block nav_search_bar %}
+<form role="search" action="{{ path('daily_search') }}" method="post" class="navbar-form navbar-left">
+    		  <div class="input-group">
+				{{ form_widget(layout.form_search.query) }}
+				<span class="input-group-btn">
+                  {{ form_widget(layout.form_search.submit) }}
+                </span>
+			  </div>
+			  {{ form_rest(layout.form_search) }}
+    		</form>
+{% endblock nav_search_bar %}
 
     {% block sidebar %}
     </ul>
-    	<h4>Journal de bord</h4></li>
-    	
-    		<form  action="{{ path('daily_search') }}" method="post" class="form-search">
-				{{ form_widget(layout.form_search) }}
-    		</form>
-    	<ul class="nav nav-pills nav-stacked">
-    	<li class="dropdown">
+    <div class="panel panel-default">
+      <div class="panel-heading">Journal de bord</div>
+      <ul class="list-group">
+    	<li class="list-group-item dropdown">
     	  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
     	    <span class="glyphicon glyphicon-user"></span> Horaires techniciens <span class="caret"></span>
     	  </a>
@@ -23,20 +38,21 @@
 		    </ul>
 		  </li>
 	    
-	    <li><a href="#modalNewShift" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i> Récupération matériel</a>
+	    <li class="list-group-item"><a href="#modalNewShift" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i> Récupération matériel</a>
 		{{ render(controller('JLMDailyBundle:Equipment:new')) }}</li>
-	    <li><a href="#modalNewStandby" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i> Astreinte</a>
+	    <li class="list-group-item"><a href="#modalNewStandby" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i> Astreinte</a>
 		{{ render(controller('JLMDailyBundle:Standby:new')) }}</li>
-		<li><a href="{{ path('standby') }}"><i class="glyphicon glyphicon-list"></i> Liste des astreintes</a>
-		<li><a href="{{ path('intervention_printtomorrow') }}"><i class="glyphicon glyphicon-print"></i> Demain</a></li>
+		<li class="list-group-item"><a href="{{ path('standby') }}"><i class="glyphicon glyphicon-list"></i> Liste des astreintes</a>
+		<li class="list-group-item"><a href="{{ path('intervention_printtomorrow') }}"><i class="glyphicon glyphicon-print"></i> Demain</a></li>
 		</ul>
-	    <h5>Interventions</h5>
-	    <ul class="nav nav-pills nav-stacked">
-		{# render(controller('JLMDailyBundle:Default:datesearch')) #}
-		{% include 'JLMDailyBundle:Default:datesearch.html.twig' with {'form':layout.form_searchByDate} %}
-		{{ render(controller('JLMDailyBundle:Default:sidebar')) }}
+	  </div>
+	  <div class="panel panel-default">
+        <div class="panel-heading">Interventions</div>
+	    <ul class="list-group">
+		  <li class="list-group-item">{% include 'JLMDailyBundle:Default:datesearch.html.twig' with {'form':layout.form_searchByDate} %}</li>
+		  {{ render(controller('JLMDailyBundle:Default:sidebar')) }}
 		</ul>
-		
+	  </div>	
 	{% endblock sidebar %}
 
 {% block javascripts %}
