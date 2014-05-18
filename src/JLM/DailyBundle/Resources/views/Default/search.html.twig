@@ -1,12 +1,22 @@
 {# JLMDailyBundle:Default:search.html.twig #}
 {% extends "JLMDailyBundle::layout.html.twig" %}
 
+{% block modals %}
+{{ parent() }}
+<div class="modal fade" id="addFixingModal" tabindex="-1" role="dialog" aria-labelledby="addFixingModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+{% endblock modals %}
+
+
 {% block content %}
-<h1>Installations correspondants à "{{ query }}"</h1>
+<div class="page-header"><h1>Installations correspondants à "{{ query }}"</h1></div>
 	{% if doors|length == 0  %} 
 		<h2><small>Aucun résultat</small></h2>
 	{% else %}
-		<h2><small>Installations</small></h2>
 		{% include 'JLMDailyBundle:Door:list.html.twig' with {'doors': doors } %}
 	{% endif %}
 {% endblock %}

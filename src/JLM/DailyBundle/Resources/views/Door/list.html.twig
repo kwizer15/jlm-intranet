@@ -12,39 +12,29 @@
 	<tbody>
 		{% for door in doors %}
 		<tr>
-			<td><span class="label label-inverse">{{ door.id }}</span></td>
+			<td><span class="label label-primary">{{ door.id }}</span></td>
 			<td>
-				{% if door.blocked %}<span class="label label-important">Facture en retard</span><br>{% endif %}
+				{% if door.blocked %}<span class="label label-danger">Facture en retard</span><br>{% endif %}
 				<a href="{{ path('daily_door_show',{'id': door.id}) }}">
 					<strong>{{ door.site.address.city.name | upper }}</strong> <small>{{ door.site.address.city.zip }}</small><br>
 					{{ door.site.address.street | nl2br }}
 				</a>
 			</td>
-			<td><span class="label label-inverse">{% if door.actualContract is null %}HC{% else %}{{ door.actualContract }}{% endif %}</span><br>
+			<td><span class="label label-primary">{% if door.actualContract is null %}HC{% else %}{{ door.actualContract }}{% endif %}</span><br>
 			<strong>{{ door.type }} - {{ door.location }}</strong><br>
 			{{ door.street | nl2br }}
 			</td>
 			<td>
-				{% if door.stopped %}<span class="label label-important">Mise à l'arrêt</span><br>{% endif %}
+				{% if door.stopped %}<span class="label label-danger">Mise à l'arrêt</span><br>{% endif %}
 				{% if door.fixingInProgress %}<span class="label label-warning">Dépannage en cours</span><br>
 				{% elseif door.waitFixing %}<span class="label label-warning">En attente dépannage</span><br>{% endif %}
-				{% if door.workInProgress %}<span class="label label-info">Travaux en cours</span><br>
-				{% elseif door.waitWork %}<span class="label label-info">En attente travaux</span><br>{% endif %}
-				{% if door.waitMaintenance %}<span class="label">{% if door.numberWaitMaintenance == 1 %}1er{% else %}2ème{% endif %} entretien à faire</span><br>{% endif %}
+				{% if door.workInProgress %}<span class="label label-primary">Travaux en cours</span><br>
+				{% elseif door.waitWork %}<span class="label label-primary">En attente travaux</span><br>{% endif %}
+				{% if door.waitMaintenance %}<span class="label label-default">{% if door.numberWaitMaintenance == 1 %}1er{% else %}2ème{% endif %} entretien à faire</span><br>{% endif %}
 			</td>
 			<td><small>{{ door.site.trustee }}</small></td>
-			<td><a href="#modalNewFixing{{ door.id }}" class="btn btn-warning" role="button" data-toggle="modal"><i class="icon-wrench icon-white"></i> Dépannage</a></td>
+			<td><a href="{{ path('fixing_new', { 'id':door.id }) }}" class="btn btn-warning" role="button" data-toggle="modal" data-target="#addFixingModal"><span class="glyphicon glyphicon-wrench"></span> Dépannage</a></td>
 		</tr>
 		{% endfor %}
 	</tbody>
 </table>
-{% if fixing_forms is defined %}
-	{% for key,form in fixing_forms %}
-		{% include 'JLMDailyBundle:Fixing:new.html.twig' with {'form':form, 'door':doors[key]} %}
-	{% endfor %}
-	{# todo supprimer le else #}
-{% else %}
-	{% for door in doors %}
-		{{ render(controller('JLMDailyBundle:Fixing:new',{'id':door.id})) }}
-	{% endfor %}
-{% endif %}
