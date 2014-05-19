@@ -1,10 +1,21 @@
+# Perso
 log/*
+report/*
+
+# Bootstrap
+app/bootstrap*
+
+# Symfony directories
+vendor/*
 */logs/*
 */cache/*
-vendor/*
-report/*
 web/uploads/*
 web/bundles/*
+
+# Configuration files
 app/config/parameters.ini
 app/config/parameters.yml
+
+# Composer
 composer.phar
+
