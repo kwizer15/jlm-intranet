@@ -30,6 +30,8 @@ composer.phar
 composer.lock
 
 # SQL
-*.sql
+structure.sql
+dbfinal.sql
 out.txt
 csv2php.php
+
