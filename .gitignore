@@ -1,3 +1,11 @@
+# Eclipse
+.project
+.buildpath
+.settings
+
+# Apache
+apache.conf
+
 # Perso
 log/*
 report/*
@@ -18,4 +26,9 @@ app/config/parameters.yml
 
 # Composer
 composer.phar
+composer.lock
 
+# SQL
+*.sql
+out.txt
+csv2php.php
