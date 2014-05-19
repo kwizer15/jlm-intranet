@@ -1,7 +1,10 @@
-/log/*
-/app/logs/*
-/app/cache/*
-/vendor/*
-/log
-/vendor
-/report
+log/*
+*/logs/*
+*/cache/*
+vendor/*
+report/*
+web/uploads/*
+web/bundles/*
+app/config/parameters.ini
+app/config/parameters.yml
+composer.phar
