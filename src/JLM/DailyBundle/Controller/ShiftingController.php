@@ -58,13 +58,21 @@ class ShiftingController extends Controller
 	 * @Secure(roles="ROLE_USER")
 	 * @Template()
 	 */
-	public function newAction(Shifting $shifting)
+	public function newAction(Request $request, Shifting $shifting)
 	{
 		$entity = new ShiftTechnician();
-		
+		$entity->setShifting($shifting);
+		$entity->setCreation(new \DateTime);
 		$entity->setBegin(new \DateTime);
 		$form = $this->get('form.factory')->createNamed('shiftTechNew'.$shifting->getId(),new AddTechnicianType(), $entity);
-				
+		$form->handleRequest($request);
+		if ($form->isValid()) {
+		    $em = $this->getDoctrine()->getManager();
+		    $em->persist($shifting);
+		    $em->persist($entity);
+		    $em->flush();
+		    return $this->redirect($request->headers->get('referer'));
+		}
 		return array(
 				'shifting' => $shifting,
 				'entity' => $entity,
@@ -75,7 +83,7 @@ class ShiftingController extends Controller
 	
 	/**
 	 * Creates a new ShiftTechnician entity.
-	 *
+	 * @deprecated
 	 * @Route("/create/{id}", name="shifting_create")
 	 * @Template()
 	 * @Method("POST")
@@ -111,9 +119,26 @@ class ShiftingController extends Controller
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function editAction(ShiftTechnician $entity)
+	public function editAction(Request $request, ShiftTechnician $entity)
 	{
+	    $em = $this->getDoctrine()->getManager();
 		$editForm = $this->get('form.factory')->createNamed('shiftTechEdit'.$entity->getId(),new ShiftingEditType(), $entity);
+		$editForm->handleRequest($request);
+		
+		if ($editForm->isValid()) {
+		    $begin = $entity->getBegin();
+		    $end = $entity->getEnd();
+		    if ($end->format('Hi') != '0000')
+		    {
+		        $end->setDate($begin->format('Y'),$begin->format('m'),$begin->format('d'));
+		        $entity->setEnd($end);
+		    }
+		    else
+		        $entity->setEnd();
+		    $em->persist($entity);
+		    $em->flush();
+		    return $this->redirect($request->headers->get('referer'));
+		}
 		return array(
 				'entity'      => $entity,
 				'form'   => $editForm->createView(),
@@ -122,7 +147,7 @@ class ShiftingController extends Controller
 	
 	/**
 	 * Displays a form to edit an existing ShiftTechnician entity.
-	 *
+	 * @deprecated
 	 * @Route("/{id}/edittable", name="shifting_edittable")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
@@ -138,7 +163,7 @@ class ShiftingController extends Controller
 	
 	/**
 	 * Edits an existing InterventionPlanned entity.
-	 *
+	 * @deprecated
 	 * @Route("/{id}/update", name="shifting_update")
 	 * @Method("POST")
 	 * @Template()
