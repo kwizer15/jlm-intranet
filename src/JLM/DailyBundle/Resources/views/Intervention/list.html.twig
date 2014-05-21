@@ -118,7 +118,7 @@
             {% endif %}
             {% for shift in entity.shiftTechnicians %}
               {% if entity.shiftTechnicians|length >= 4 %}<li>{% endif %}
-              <a data-toggle="modal" href="{{ path('shifting_edit',{'id':shift.id}) }}" data-target="#editTechnicianModal">
+              <a data-toggle="modal" href="{{ path('shifting_edit',{'id':shift.id}) }}" data-target="#editTechnicianModal{{ shift.id }}">
                 <small>{{ shift.begin | date('d/m')}}
                   <strong>{{ shift.technician }}</strong>
                   {% if shift.end %}
@@ -130,7 +130,7 @@
             {% endfor %}
             {% if entity.shiftTechnicians|length >= 4 %}</ul></div>{% endif %}
           {% else %}
-            <a href="{{ path('shifting_new',{'id':entity.id}) }}" role="button" data-toggle="modal" data-target="#addTechnicianModal" class="btn btn-small btn-default">
+            <a href="{{ path('shifting_new',{'id':entity.id}) }}" role="button" data-toggle="modal" data-target="#addTechnicianModal{{ entity.id }}" class="btn btn-small btn-default">
               <span class="glyphicon glyphicon-plus-sign"></span> Ajouter
             </a>
         {% endif %}
@@ -177,7 +177,7 @@
         <div class="col-lg-1">
           {% if entity.shiftTechnicians|length %}
             {% for shift in entity.shiftTechnicians %}
-              <a href="#modalEditTech{{ shift.id }}" data-toggle="modal">
+              <a data-toggle="modal" href="{{ path('shifting_edit',{'id':shift.id}) }}" data-target="#editTechnicianModal{{ shift.id }}">
                 <small>
                   {{ shift.begin | date('d/m')}}
                   <strong>{{ shift.technician }}</strong>
@@ -190,7 +190,7 @@
               {#{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }#}
             {% endfor %}
           {% else %}
-            <a href="#modalAddTech{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-small btn-default">
+            <a href="{{ path('shifting_new',{'id':entity.id}) }}" role="button" data-toggle="modal" data-target="#addTechnicianModal{{ entity.id }}" class="btn btn-small btn-default">
               <span class="glyphicon glyphicon-plus-sign"></span>
               Ajouter
             </a>

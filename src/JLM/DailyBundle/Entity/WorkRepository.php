@@ -19,7 +19,7 @@ class WorkRepository extends InterventionRepository
 		$todaystring =  $today->format('Y-m-d');
 		// Interventions en cours
 		$qb = $this->createQueryBuilder('a')
-			->select('a,b,c,d,e,g,h,i,j,k,l,n,o,p,x,w,y,z')
+			->select('a,b,c,d,e,g,h,i,j,k,l,n,o,p,x,w,z')
 			->leftJoin('a.shiftTechnicians','b')
 			->leftJoin('a.door','c')
 			->leftJoin('c.site','d')
@@ -34,7 +34,6 @@ class WorkRepository extends InterventionRepository
 			->leftJoin('a.quote','o')
 			->leftJoin('a.order','p')
 			->leftJoin('c.interventions','z')
-			->leftJoin('z.shiftTechnicians','y')
 			->leftJoin('c.stops','w')
 			->leftJoin('d.bills','x')
 			->where('b.begin = ?1')

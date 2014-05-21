@@ -87,15 +87,15 @@ class ShiftingController extends Controller
 		$entity->setShifting($shifting);
 		$entity->setCreation(new \DateTime);
 		$form = $this->get('form.factory')->createNamed('shiftTechNew'.$shifting->getId(),new AddTechnicianType(), $entity);
-		$form->bind($request);
+		$form->handleRequest($request);
 
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($shifting);
 			$em->persist($entity);
 			$em->flush();
-	
-			return $this->redirect($request->headers->get('referer'));
+	echo $request->headers->get('referer');
+			//return $this->redirect($request->headers->get('referer'));
 		}
 	
 		return array(
