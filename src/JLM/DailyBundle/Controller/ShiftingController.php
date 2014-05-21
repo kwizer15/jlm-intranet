@@ -149,7 +149,7 @@ class ShiftingController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$editForm = $this->get('form.factory')->createNamed('shiftTechEdit'.$entity->getId(),new ShiftingEditType(), $entity);
-		$editForm->bind($request);
+		$editForm->handleRequest($request);
 	
 		if ($editForm->isValid()) {
 			$begin = $entity->getBegin();
