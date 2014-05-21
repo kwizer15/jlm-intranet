@@ -94,8 +94,7 @@ class ShiftingController extends Controller
 			$em->persist($shifting);
 			$em->persist($entity);
 			$em->flush();
-	echo $request->headers->get('referer');
-			//return $this->redirect($request->headers->get('referer'));
+			return $this->redirect($request->headers->get('referer'));
 		}
 	
 		return array(
