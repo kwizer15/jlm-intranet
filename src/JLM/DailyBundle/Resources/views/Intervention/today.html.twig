@@ -5,18 +5,24 @@
 
 {% block modals %}
 {{ parent() }}
-<div class="modal fade" id="addTechnicianModal" tabindex="-1" role="dialog" aria-labelledby="addTechniciansModalLabel" aria-hidden="true">
+{% for entity in fixing %}
+<div class="modal fade" id="addTechnicianModal{{ entity.id }}" tabindex="-1" role="dialog" aria-labelledby="addTechniciansModal{{ entity.id }}Label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
     </div>
   </div>
 </div>
-<div class="modal fade" id="editTechnicianModal" tabindex="-1" role="dialog" aria-labelledby="editTechniciansModalLabel" aria-hidden="true">
+{% endfor %}
+{% for entity in inprogress|merge(equipment)|merge(notclosed)|merge(closed) %}
+{% for tech in entity.shiftTechnicians %}
+<div class="modal fade" id="editTechnicianModal{{ tech.id }}" tabindex="-1" role="dialog" aria-labelledby="editTechniciansModal{{ tech.id }}Label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
     </div>
   </div>
 </div>
+{% endfor %}
+{% endfor %}
 {% endblock modals %}
 
 {% block content %}

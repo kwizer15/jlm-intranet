@@ -1,0 +1,56 @@
+<div class="panel panel-success">
+      <div class="panel-header row">
+        <div class="col-lg-1">
+          {% include "JLMDailyBundle:Intervention:labeltype.html.twig" with {'type' : entity.type} %}<br>
+		  <small>
+		    {% if entity.firstDate %}
+              {% if entity.lastDate != entity.firstDate %}
+                du {{ entity.firstDate | localizeddate('full', 'none') }}
+                <br>
+                au {{ entity.lastDate | localizeddate('full', 'none') }}
+              {% else %}
+                {{ entity.firstDate | localizeddate('full', 'none') }}
+              {% endif %}
+            {% else %}
+              {{ entity.creation | localizeddate('full', 'none') }}
+            {% endif %}
+          </small>
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-3">
+          {#}<a href="{{ path('equipment_show',{ 'id' : entity.id }) }}">{#}
+            {{ entity.place }}
+          {#}</a>{#}
+        </div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-2">
+          <small>
+            {{ entity.reason | nl2br }}
+          </small>
+        </div>
+        <div class="col-lg-1">
+          {% if entity.shiftTechnicians|length %}
+            {% for shift in entity.shiftTechnicians %}
+              <a data-toggle="modal" href="{{ path('shifting_edit',{'id':shift.id}) }}" data-target="#editTechnicianModal{{ shift.id }}">
+                <small>
+                  {{ shift.begin | date('d/m')}}
+                  <strong>{{ shift.technician }}</strong>
+                  {% if shift.end %}
+                    {{ shift.time.format('%hh%I') }}
+                  {% endif %}
+                </small>
+              </a>
+              <br>
+              {#{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }#}
+            {% endfor %}
+          {% else %}
+            <a href="{{ path('shifting_new',{'id':entity.id}) }}" role="button" data-toggle="modal" data-target="#addTechnicianModal{{ entity.id }}" class="btn btn-small btn-default">
+              <span class="glyphicon glyphicon-plus-sign"></span>
+              Ajouter
+            </a>
+            {#{ render(controller('JLMDailyBundle:Shifting:new',{'id':entity.id})) }#}
+          {% endif %}
+        </div>
+      </div>
+    </div>

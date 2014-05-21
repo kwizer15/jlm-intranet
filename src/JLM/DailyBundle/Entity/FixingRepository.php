@@ -13,7 +13,7 @@ class FixingRepository extends InterventionRepository
 		$todaystring =  $today->format('Y-m-d');
 		// Interventions en cours
 		$qb = $this->createQueryBuilder('a')
-			->select('a,b,c,d,e,g,h,i,j,w,x,y,z')
+			->select('a,b,c,d,e,g,h,i,j,w,x,z')
 			->leftJoin('a.shiftTechnicians','b')
 			->leftJoin('a.door','c')
 			->leftJoin('c.site','d')
@@ -23,7 +23,6 @@ class FixingRepository extends InterventionRepository
 			->leftJoin('d.address','i')
 			->leftJoin('i.city','j')
 			->leftJoin('c.interventions','z')
-			->leftJoin('z.shiftTechnicians','y')
 			->leftJoin('c.stops','w')
 			->leftJoin('d.bills','x')
 			->where('b is null')
@@ -38,7 +37,7 @@ class FixingRepository extends InterventionRepository
 		$todaystring =  $today->format('Y-m-d');
 		// Interventions en cours
 		$qb = $this->createQueryBuilder('a')
-		->select('a,b,c,d,e,g,h,i,j,k,l,n,q,w,x,y,z')
+		->select('a,b,c,d,e,g,h,i,j,k,l,n,q,w,x,z')
 		->leftJoin('a.shiftTechnicians','b')
 		->leftJoin('a.door','c')
 		->leftJoin('c.site','d')
@@ -52,7 +51,6 @@ class FixingRepository extends InterventionRepository
 		->leftJoin('l.order','n')
 		->leftJoin('l.quote','q')
 		->leftJoin('c.interventions','z')
-		->leftJoin('z.shiftTechnicians','y')
 		->leftJoin('c.stops','w')
 		->leftJoin('d.bills','x')
 		->where('b.begin = ?1')
