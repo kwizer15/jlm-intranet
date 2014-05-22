@@ -24,7 +24,7 @@
         "genemu/form-bundle": "2.2.*",
         "itbz/fpdf": "1.7.1",
         "twbs/bootstrap": "3.1.*",
-        "components/jquery": "2.1.*"
+        "jquery/jquery": "2.1.1"
     },
     "scripts": {
         "post-install-cmd": [
@@ -54,5 +54,22 @@
         "branch-alias": {
             "dev-master": "2.4-dev"
         }
-    }
+    },
+    "repositories": [
+    {
+		"type": "package",
+		"package": {
+			"name": "jquery/jquery",
+			"version": "2.1.1",
+			"dist": {
+				"url": "http://code.jquery.com/jquery-2.1.1.js",
+				"type": "file"
+			},
+			"source": {
+			"url": "https://github.com/jquery/jquery.git",
+	 		"type": "git",
+			"reference": "1.9-stable"
+	 		}
+		}
+	} ]
 }
