@@ -24,7 +24,8 @@
         "genemu/form-bundle": "2.2.*",
         "itbz/fpdf": "1.7.1",
         "twbs/bootstrap": "3.1.*",
-        "jquery/jquery": "2.1.1"
+        "jquery/jquery": "2.1.1",
+        "ivaynberg/select2": "3.4.8"
     },
     "scripts": {
         "post-install-cmd": [
@@ -43,7 +44,9 @@
         ]
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "component-dir": "vendor/components",
+        "component-baseurl": "web"
     },
     "extra": {
         "symfony-app-dir": "app",
@@ -71,5 +74,6 @@
 			"reference": "1.9-stable"
 	 		}
 		}
-	} ]
+	}
+	 ]
 }

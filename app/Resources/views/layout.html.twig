@@ -5,8 +5,7 @@
 {% block stylesheets %}
 	{% stylesheets
 		'@bootstrap_css'
-		
-		'bundles/jlmdefault/js/select2-3.4.5/select2.css'
+		'@select2_css'
 		filter='cssrewrite' %}
 		<link rel="stylesheet" href="{{ asset_url }}" />
 	{% endstylesheets %}
@@ -152,13 +151,13 @@
 {% javascripts
 	'@jquery'
 	'../app/Resources/public/js/jquery-ui-1.10.3/jquery-ui.js'
-	'@bootstrap_js'
 	'../app/Resources/public/js/jquery-ui-1.10.3/i18n/jquery.ui.datepicker-fr.js'
+	'@bootstrap_js'
+	'@select2_js'
 	'../app/Resources/public/js/number_format.js'
 	'../app/Resources/public/js/modalform.js'
 	'@JLMDefaultBundle/Resources/public/js/highstock.js'
 	'../app/Resources/public/js/highcharts_init.js'
-	'@JLMDefaultBundle/Resources/public/js/select2-3.4.5/select2.js'
 	filter='yui_js' %}
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
