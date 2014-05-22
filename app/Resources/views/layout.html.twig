@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
 	{% stylesheets
-		'bundles/jlmdefault/css/bootstrap.css'
+		'@bootstrap_css'
 		
 		'bundles/jlmdefault/js/select2-3.4.5/select2.css'
 		filter='cssrewrite' %}
@@ -150,9 +150,9 @@
 {% endblock body %}
 {% block javascripts %}
 {% javascripts
-	'@JLMDefaultBundle/Resources/public/js/jquery-2.1.1.js'
+	'@jquery'
 	'../app/Resources/public/js/jquery-ui-1.10.3/jquery-ui.js'
-	'@JLMDefaultBundle/Resources/public/js/bootstrap.js'
+	'@bootstrap_js'
 	'../app/Resources/public/js/jquery-ui-1.10.3/i18n/jquery.ui.datepicker-fr.js'
 	'../app/Resources/public/js/number_format.js'
 	'../app/Resources/public/js/modalform.js'
