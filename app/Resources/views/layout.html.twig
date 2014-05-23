@@ -6,13 +6,11 @@
 	{% stylesheets
 		'@bootstrap_css'
 		'@select2_css'
+		'@JLMDefaultBundle/Resources/public/css/style.css'
 		filter='cssrewrite' %}
 		<link rel="stylesheet" href="{{ asset_url }}" />
 	{% endstylesheets %}
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css">
-	{% stylesheets '@JLMDefaultBundle/Resources/public/css/style.css' filter='cssrewrite' %}
-		<link rel="stylesheet" href="{{ asset_url }}" />
-	{% endstylesheets %}
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" type="text/css">
 	{% if form is defined %}{{ form_stylesheet(form) }}{% endif %}
 	{% if edit_form is defined %}{{ form_stylesheet(edit_form) }}{% endif %}
 {% endblock %}
@@ -150,7 +148,7 @@
 {% block javascripts %}
 {% javascripts
 	'@jquery'
-	'../app/Resources/public/js/jquery-ui-1.10.3/jquery-ui.js'
+	'@jqueryui'
 	'../app/Resources/public/js/jquery-ui-1.10.3/i18n/jquery.ui.datepicker-fr.js'
 	'@bootstrap_js'
 	'@select2_js'

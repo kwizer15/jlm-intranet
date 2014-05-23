@@ -24,7 +24,8 @@
         "genemu/form-bundle": "2.2.*",
         "itbz/fpdf": "1.7.1",
         "twbs/bootstrap": "3.1.*",
-        "jquery/jquery": "2.1.1",
+        "kwizer15/jquery": "*",
+        "jquery/jquery-ui": "1.10.4",
         "ivaynberg/select2": "3.4.8"
     },
     "scripts": {
@@ -59,21 +60,23 @@
         }
     },
     "repositories": [
-    {
+	{
 		"type": "package",
 		"package": {
-			"name": "jquery/jquery",
-			"version": "2.1.1",
+			"name": "jquery/jquery-ui",
+			"version": "1.10.4",
 			"dist": {
-				"url": "http://code.jquery.com/jquery-2.1.1.js",
+				"url": "http://code.jquery.com/ui/1.10.4/jquery-ui.js",
 				"type": "file"
 			},
 			"source": {
-			"url": "https://github.com/jquery/jquery.git",
+			"url": "https://github.com/jquery/jquery-ui.git",
 	 		"type": "git",
-			"reference": "1.9-stable"
+			"reference": "1.10.4"
 	 		}
 		}
 	}
+	
+	
 	 ]
 }

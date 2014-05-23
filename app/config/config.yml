@@ -54,8 +54,12 @@ assetic:
     assets:
         jquery:
             inputs:
-                - %kernel.root_dir%/../vendor/jquery/jquery/jquery-2.1.1.js
+                - %kernel.root_dir%/../vendor/kwizer15/jquery/jquery.js
             output: js/jquery.js
+        jqueryui:
+            inputs:
+                - %kernel.root_dir%/../vendor/jquery/jquery-ui/jquery-ui.js
+            output: js/jquery-ui.js
         bootstrap_js:
             inputs:
                 - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/js/bootstrap.js
@@ -102,6 +106,10 @@ assetic:
             inputs:
                 - %kernel.root_dir%/../vendor/components/select2/select2x2.png
             output: css/select2x2.png
+        highstock_js:
+            inputs:
+                - %kernel.root_dir%/../vendor/highslide-software/highcharts.com/js/highstock.src.js
+            output: js/highstock.js
             
 
 # Doctrine Configuration
