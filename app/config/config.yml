@@ -89,19 +89,19 @@ assetic:
             inputs:
                 - %kernel.root_dir%/../vendor/components/select2/select2.js
                 - %kernel.root_dir%/../vendor/components/select2/select2_locale_fr.js
-            output: js/select2/select2.js
+            output: js/select2.js
         select2spinner_gif:
             inputs:
                 - %kernel.root_dir%/../vendor/components/select2/select2-spinner.gif
-            output: js/select2/select2-spinner.gif
+            output: css/select2-spinner.gif
         select2_png:
             inputs:
                 - %kernel.root_dir%/../vendor/components/select2/select2.png
-            output: js/select2/select2.png
+            output: css/select2.png
         select2x2_png:
             inputs:
                 - %kernel.root_dir%/../vendor/components/select2/select2x2.png
-            output: js/select2/select2x2.png
+            output: css/select2x2.png
             
 
 # Doctrine Configuration
