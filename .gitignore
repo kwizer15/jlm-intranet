@@ -19,6 +19,9 @@ vendor/*
 */cache/*
 web/uploads/*
 web/bundles/*
+web/css/*
+web/js/*
+web/fonts/*
 bin/*
 
 # Configuration files
