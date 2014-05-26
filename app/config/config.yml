@@ -52,14 +52,85 @@ assetic:
             apply_to: "\.png$"
             level: 3
     assets:
-        jquery:
+        jquery_js:
             inputs:
                 - %kernel.root_dir%/../vendor/kwizer15/jquery/jquery.js
             output: js/jquery.js
-        jqueryui:
+        jqueryui_js:
             inputs:
-                - %kernel.root_dir%/../vendor/jquery/jquery-ui/jquery-ui.js
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.core.js
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.widget.js
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.mouse.js
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.position.js
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.sortable.js
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.autocomplete.js
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.datepicker.js
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.menu.js
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/i18n/jquery.ui.datepicker-fr.js
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.effect.js
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.effect-fade.js
             output: js/jquery-ui.js
+        jqueryui_css:
+            inputs:
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/jquery-ui.css
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/jquery.ui.theme.css
+            output: css/jquery-ui.css
+        jqueryui_png1:
+            inputs:
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/images/animated-overlay.gif
+            output: css/images/animated-overlay.gif
+        jqueryui_png2:
+            inputs:
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/images/ui-bg_flat_0_aaaaaa_40x100.png
+            output: css/images/ui-bg_flat_0_aaaaaa_40x100.png
+        jqueryui_png3:
+            inputs:
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/images/ui-bg_flat_75_ffffff_40x100.png
+            output: css/images/ui-bg_flat_75_ffffff_40x100.png
+        jqueryui_png4:
+            inputs:
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/images/ui-bg_glass_55_fbf9ee_1x400.png
+            output: css/images/ui-bg_glass_55_fbf9ee_1x400.png
+        jqueryui_png5:
+            inputs:
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/images/ui-bg_glass_65_ffffff_1x400.png
+            output: css/images/ui-bg_glass_65_ffffff_1x400.png
+        jqueryui_png6:
+            inputs:
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/images/ui-bg_glass_75_dadada_1x400.png
+            output: css/images/ui-bg_glass_75_dadada_1x400.png
+        jqueryui_png7:
+            inputs:
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png
+            output: css/images/ui-bg_glass_75_e6e6e6_1x400.png
+        jqueryui_png8:
+            inputs:
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/images/ui-bg_glass_95_fef1ec_1x400.png
+            output: css/images/ui-bg_glass_95_fef1ec_1x400.png
+        jqueryui_png9:
+            inputs:
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png
+            output: css/images/ui-bg_highlight-soft_75_cccccc_1x100.png
+        jqueryui_png10:
+            inputs:
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/images/ui-icons_222222_256x240.png
+            output: css/images/ui-icons_222222_256x240.png
+        jqueryui_png11:
+            inputs:
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/images/ui-icons_2e83ff_256x240.png
+            output: css/images/ui-icons_2e83ff_256x240.png
+        jqueryui_png12:
+            inputs:
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/images/ui-icons_454545_256x240.png
+            output: css/images/ui-icons_454545_256x240.png
+        jqueryui_png13:
+            inputs:
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/images/ui-icons_888888_256x240.png
+            output: css/images/ui-icons_888888_256x240.png
+        jqueryui_png14:
+            inputs:
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/images/ui-icons_cd0a0a_256x240.png
+            output: css/images/ui-icons_cd0a0a_256x240.png
         bootstrap_js:
             inputs:
                 - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/js/bootstrap.js
@@ -106,10 +177,10 @@ assetic:
             inputs:
                 - %kernel.root_dir%/../vendor/components/select2/select2x2.png
             output: css/select2x2.png
-        highstock_js:
-            inputs:
-                - %kernel.root_dir%/../vendor/highslide-software/highcharts.com/js/highstock.src.js
-            output: js/highstock.js
+#        highstock_js:
+#            inputs:
+#                - %kernel.root_dir%/../vendor/highslide-software/highcharts.com/js/highstock.src.js
+#            output: js/highstock.js
             
 
 # Doctrine Configuration

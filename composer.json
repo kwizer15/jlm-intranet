@@ -25,6 +25,7 @@
         "itbz/fpdf": "1.7.1",
         "twbs/bootstrap": "3.1.*",
         "kwizer15/jquery": "*",
+        "kwizer15/jquery-ui": "*",
         "jquery/jquery-ui": "1.10.4",
         "ivaynberg/select2": "3.4.8"
     },
@@ -58,25 +59,5 @@
         "branch-alias": {
             "dev-master": "2.4-dev"
         }
-    },
-    "repositories": [
-	{
-		"type": "package",
-		"package": {
-			"name": "jquery/jquery-ui",
-			"version": "1.10.4",
-			"dist": {
-				"url": "http://code.jquery.com/ui/1.10.4/jquery-ui.js",
-				"type": "file"
-			},
-			"source": {
-			"url": "https://github.com/jquery/jquery-ui.git",
-	 		"type": "git",
-			"reference": "1.10.4"
-	 		}
-		}
-	}
-	
-	
-	 ]
+    }
 }
