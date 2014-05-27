@@ -24,10 +24,10 @@
         "genemu/form-bundle": "2.2.*",
         "itbz/fpdf": "1.7.1",
         "twbs/bootstrap": "3.1.*",
-        "kwizer15/jquery": "*",
-        "kwizer15/jquery-ui": "*",
-        "jquery/jquery-ui": "1.10.4",
-        "ivaynberg/select2": "3.4.8"
+        "kwizer15/jquery": "2.1.*",
+        "kwizer15/jquery-ui": "1.10.*",
+        "kwizer15/highcharts": "4.0.*",
+        "kwizer15/select2": "3.4.8"
     },
     "scripts": {
         "post-install-cmd": [
@@ -46,9 +46,7 @@
         ]
     },
     "config": {
-        "bin-dir": "bin",
-        "component-dir": "vendor/components",
-        "component-baseurl": "web"
+        "bin-dir": "bin"
     },
     "extra": {
         "symfony-app-dir": "app",
