@@ -1,5 +1,11 @@
 {% extends "::base.html.twig" %}
 
+{% form_theme layout.form_search _self %}
+{% block submit_widget %}
+{% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn btn-default')|trim}) %}
+<button type="{{ type|default('submit') }}" {{ block('button_attributes') }}><span class="glyphicon glyphicon-search"></span></button>
+{% endblock %}
+
 {% block title %}JLM{% endblock %}
 
 {% block stylesheets %}
@@ -36,6 +42,15 @@
 			{% set section = section|default('main') %}
 			<ul class="nav navbar-nav">
 			{% block nav_search_bar %}
+			<form role="search" action="{{ path(search_route|default('daily_search')) }}" method="post" class="navbar-form navbar-left">
+    		  <div class="input-group">
+				{{ form_widget(layout.form_search.query) }}
+				<span class="input-group-btn">
+                  {{ form_widget(layout.form_search.submit) }}
+                </span>
+			  </div>
+			  {{ form_rest(layout.form_search) }}
+    		</form>
 			{% endblock nav_search_bar %}
 				<li{% if section == 'daily' %} class="active"{% endif %}><a href="{{ path('intervention_today') }}">Journal de bord</a></li>
 				<li class="dropdown{% if section == 'quote' %} active{% endif %}">
@@ -45,7 +60,7 @@
 						<li role="presentation" class="divider">
 						{% include	'JLMOfficeBundle:Askquote:sidebar.html.twig' with {'count':layout.askQuoteCount} %}
 						<li role="presentation" class="divider">
-						{% include	'JLMOfficeBundle:Quote:sidebar.html.twig' with	{'count':layout.quoteCount} %}
+						{% include	'JLMOfficeBundle:Quote:menu.html.twig' with	{'count':layout.quoteCount} %}
 					</ul>
 				</li>
 				<li class="dropdown{% if section == 'order' %} active{% endif %}" role="menu">
@@ -107,9 +122,7 @@
 	{% block container %}
 	<div class="row">
 		<div class="col-lg-2">
-			<ul class="nav nav-pills nav-stacked">
-			{% block sidebar %}{% endblock sidebar %}
-			</ul>
+		  {% block sidebar %}{% endblock sidebar %}
 		</div>
 		<div class="col-lg-10">
 		{% block content %}{% endblock content %}

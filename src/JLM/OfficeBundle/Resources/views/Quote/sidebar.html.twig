@@ -1,5 +1,5 @@
-<li role="presentation"><a role="menuitem" href="{{ path('quote_page', {'page' : 1 }) }}"><span class="badge pull-right">{{ count.all }}</span>Tout les devis</a></li>
-<li role="presentation"><a role="menuitem" href="{{ path('quote_state', {'page' : 1, 'state' : 0 }) }}"><span class="badge pull-right">{{ count.input }}</span>En saisie</a></li>
-<li role="presentation"><a role="menuitem" href="{{ path('quote_state', {'page' : 1, 'state' : 1 }) }}"><span class="badge pull-right">{{ count.wait }}</span>En attente</a></li>
-<li role="presentation"><a role="menuitem" href="{{ path('quote_state', {'page' : 1, 'state' : 3 }) }}"><span class="badge pull-right">{{ count.send }}</span>Envoyés</a></li>
-<li role="presentation"><a role="menuitem" href="{{ path('quote_state', {'page' : 1, 'state' : 5 }) }}"><span class="badge pull-right">{{ count.given }}</span>Accordés</a></li>
+<li role="presentation" class="list-group-item list-group-item-success"><a role="menuitem" href="{{ path('quote_page', {'page' : 1 }) }}"><span class="badge pull-right">{{ count.all }}</span>Tout les devis</a></li>
+<li role="presentation" class="list-group-item list-group-item-danger"><a role="menuitem" href="{{ path('quote_state', {'page' : 1, 'state' : 0 }) }}"><span class="badge pull-right">{{ count.input }}</span>En saisie</a></li>
+<li role="presentation" class="list-group-item list-group-item-warning"><a role="menuitem" href="{{ path('quote_state', {'page' : 1, 'state' : 1 }) }}"><span class="badge pull-right">{{ count.wait }}</span>En attente</a></li>
+<li role="presentation" class="list-group-item list-group-item-info"><a role="menuitem" href="{{ path('quote_state', {'page' : 1, 'state' : 3 }) }}"><span class="badge pull-right">{{ count.send }}</span>Envoyés</a></li>
+<li role="presentation" class="list-group-item"><a role="menuitem" href="{{ path('quote_state', {'page' : 1, 'state' : 5 }) }}"><span class="badge pull-right">{{ count.given }}</span>Accordés</a></li>
