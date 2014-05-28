@@ -16,7 +16,7 @@ class DatepickerType extends AbstractType
 				'widget' => 'single_text',
 				'format'=>'dd/MM/yyyy',
 				'years'  => range(date('Y') - 5, date('Y') + 5),
-				'attr'=>array('class'=>'input-small datepicker')
+				'attr'=>array('class'=>'datepicker')
 		));
 	}
 

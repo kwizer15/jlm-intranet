@@ -11,7 +11,7 @@ class AskQuoteType extends AbstractType
 	{
 		$builder
 			->add('creation','datepicker',array('label'=>'Date de la demande'))
-			->add('trustee','trustee_select',array('label'=>'Syndic','attr'=>array('class'=>'input-xlarge')))
+			->add('trustee','trustee_select',array('label'=>'Syndic'))
 			->add('site','site_select',array('label'=>'Affaire','attr'=>array('class'=>'input-xxlarge','rows'=>5)))
 			->add('door','entity',array('class'=>'JLM\ModelBundle\Entity\Door','empty_value' => 'Affaire complète','label'=>'Installation','attr'=>array('class'=>'input-xxlarge'),'required'=>false))
 			->add('method',null,array('label'=>'Arrivée par','attr'=>array('class'=>'input-medium')))

@@ -1,7 +1,21 @@
 {% extends "JLMOfficeBundle:Askquote:layout.html.twig" %}
 
+{% form_theme form _self %}
+{% block _askquote_creation_row %}
+<div class="row">
+<div class="col-lg-2">
+{{ block('form_label') }}
+</div>
+<div class="col-lg-1">
+{{ block('form_widget') }}
+</div>
+</div>
+{% endblock %}
+
 {% block content %}
-<h1>Nouvelle demande de devis</h1>
+<div class="page-header">
+  <h1>Nouvelle demande de devis</h1>
+</div>
 {% if form_errors(form) %}
 <div class="alert">{{ form_errors(form) }}</div>
 {% endif %}
