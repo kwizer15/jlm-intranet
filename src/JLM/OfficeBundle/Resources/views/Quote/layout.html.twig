@@ -10,6 +10,8 @@
       <div class="panel-heading">Demandes de devis</div>
       <ul class="list-group">
         <li class="list-group-item"><a href="{{ path('askquote_new') }}"><span class="glyphicon glyphicon-plus-sign"></span> Nouvelle demande de devis</a></li>
+        {{ render(controller('JLMOfficeBundle:Askquote:sidebar')) }}
+        <li class="list-group-item"><a href="{{ path('askquote_printlist') }}"><span class="glyphicon glyphicon-print"></span> Imprimer les devis à faire</a>
       </ul>
     </div>
     <div class="panel panel-default">
