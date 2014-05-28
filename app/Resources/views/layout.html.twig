@@ -1,10 +1,13 @@
 {% extends "::base.html.twig" %}
 
-{% form_theme layout.form_search _self %}
-{% block submit_widget %}
-{% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn btn-default')|trim}) %}
-<button type="{{ type|default('submit') }}" {{ block('button_attributes') }}><span class="glyphicon glyphicon-search"></span></button>
-{% endblock %}
+{% if layout is defined %}
+  {% form_theme layout.form_search _self %}
+  {% block submit_widget %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn btn-default')|trim}) %}
+    <button type="{{ type|default('submit') }}" {{ block('button_attributes') }}><span class="glyphicon glyphicon-search"></span></button>
+  {% endblock %}
+{% endif %}
+
 
 {% block title %}JLM{% endblock %}
 
