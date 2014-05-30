@@ -1,13 +1,13 @@
-<form id="modalNewShift" action="{{ path('equipment_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalNewShiftLabel" aria-hidden="true">
+<form action="{{ path('equipment_create') }}" method="post" {{ form_enctype(form) }}>
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h3 id="modalNewShiftLabel">Nouveau déplacement</h3>
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title" id="newShiftModalLabel">Nouveau déplacement</h3>
 	</div>
 	<div class="modal-body">
 		{{ form_widget(form) }}
 	</div>
 	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
-		<button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer</button>
+		<button class="btn btn-default" data-dismiss="modal">Fermer</button>
+		<button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-pencil"></span> Enregistrer</button>
 	</div>
 </form>
