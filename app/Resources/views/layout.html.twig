@@ -124,17 +124,16 @@
 <div class="container-fluid">
 	{% block container %}
 	<div class="row">
-		<div class="col-lg-2">
+		<div class="col-lg-2 col-md-3">
 		  {% block sidebar %}{% endblock sidebar %}
 		</div>
-		<div class="col-lg-10">
+		<div class="col-lg-10 col-md-9">
 		{% block content %}{% endblock content %}
 		{% block pagination %}
 		{% if page is defined and pageTotal is defined and pageRoute is defined %}
 			{% set flag = true %}
-			<div class="pagination pagination-centered">
-				<ul>
-					<li {% if page == 1 %} class="disabled" {% endif %}><a href="{{ path(pageRoute,{ 'page' : page-1 }) }}">«</a></li>
+				<ul class="pagination pagination-centered">
+					<li {% if page == 1 %} class="disabled" {% endif %}><a href="{{ path(pageRoute,{ 'page' : page-1 }) }}">&laquo;</a></li>
 						{% for 	p in range(1,pageTotal) %}
 						  {% if (p > page - 3 and p < page + 3) or p == 1 or p == pageTotal or (p < 6 and page < 6) %}
 					<li {% if p == page %} class="active" {% endif %}><a href="{{ path(pageRoute,{ 'page' : p }) }}">{{ p }}</a></li>
@@ -147,9 +146,8 @@
 					{% set flag = false %}
 					{% endif %}
 					{% endfor %}
-					<li {% if page == pageTotal %} class="disabled" {% endif %}><a href="{{ path(pageRoute,{ 'page' : page+1 }) }}">»</a></li>
+					<li {% if page == pageTotal %} class="disabled" {% endif %}><a href="{{ path(pageRoute,{ 'page' : page+1 }) }}">&raquo;</a></li>
 				</ul>
-			</div>
 			{% endif %}
 		{% endblock pagination %}
 		</div>

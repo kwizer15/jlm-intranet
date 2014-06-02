@@ -64,7 +64,8 @@ class QuoteController extends Controller
         return array(
         		'entities' => $entities,
         		'page'     => $page,
-        		'nbPages'  => $nbPages,
+        		'pageTotal'  => $nbPages,
+        		'pageRoute'  => 'quote_page',
         		'state'	   => $state,
         );
     }

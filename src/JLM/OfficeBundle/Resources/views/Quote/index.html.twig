@@ -39,13 +39,4 @@
     {% endfor %}
     </tbody>
 </table>
-<div class="pagination pagination-centered">
-	<ul>
-	    <li{% if page == 1 %} class="disabled"{% endif %}><a href="{% if state is null %}{{ path('quote_page',{ 'page' : page-1 }) }}{% else %}{{ path('quote_state',{ 'page' : page-1 , 'state' : state }) }}{% endif %}">«</a></li>
-		{% for p in range(1,nbPages) %}
-		<li{% if p == page %} class="active"{% endif %}><a href="{% if state is null %}{{ path('quote_page',{ 'page' : p }) }}{% else %}{{ path('quote_state',{ 'page' : p , 'state' : state }) }}{% endif %}">{{ p }}</a></li>
-		{% endfor %}
-		<li{% if page == nbPages %} class="disabled"{% endif %}><a href="{% if state is null %}{{ path('quote_page',{ 'page' : page+1 }) }}{% else %}{{ path('quote_state',{ 'page' : page+1 , 'state' : state }) }}{% endif %}">»</a></li>
-	</ul>
-</div>
 {% endblock %}
