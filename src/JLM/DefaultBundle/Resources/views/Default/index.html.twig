@@ -1,100 +1,102 @@
 {% extends "JLMDefaultBundle::layout.html.twig" %}
 
-{% block content %}
-<h1>Tableau de bord (beta)</h1>
-<div class="row">
-<div class="col-lg-12">
-<h2>Contrats</h2>
-{{ contracts_numbers }} contrats en cours sur {{ contracts_doors }} installations.<br>
-{{ contracts_complete }} installations en contrats complet<br>
-{{ contracts_normal }} installations en contrats normal<br>
-
-</div>
+{% block container %}
+<div class="page-header">
+  <h1>Tableau de bord (beta)</h1>
 </div>
 <div class="row">
-	<div class="col-lg-6">
-		<h2>Quantité</h2>
-		
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th></th>
-					<th>Dépannages</th>
-					<th>Travaux</th>
-					<th>Entretiens</th>
-					<th>Atl / Frn</th>
-					<th>Total</th>
-				</tr>
-			</thead>
-			<tbody>
-			{% for tech, datas in numbers if tech != 'total' %}
-				<tr>
-					<th>{{ tech }}</th>
-					<td><div class="text-right">{{ datas.fixing }}</div></td>
-					<td><div class="text-right">{{ datas.work }}</div></td>
-					<td><div class="text-right">{{ datas.maintenance }}</div></td>
-					<td><div class="text-right">{{ datas.equipment }}</div></td>
-					<td><div class="text-right">{{ datas.total }}</div></td>
-				</tr>
-			{% endfor %}
-			</tbody>
-			<tfoot>
-				<tr>
-					<th>Total</th>
-					<th><div class="text-right">{{ numbers.total.fixing }}</div></th>
-					<th><div class="text-right">{{ numbers.total.work }}</div></th>
-					<th><div class="text-right">{{ numbers.total.maintenance }}</div></th>
-					<th><div class="text-right">{{ numbers.total.equipment }}</div></th>
-					<th><div class="text-right">{{ numbers.total.total }}</div></th>
-				</tr>
-			</tfoot>
-		</table>
-		<h2>Temps</h2>
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th></th>
-					<th>Dépannages</th>
-					<th>Travaux</th>
-					<th>Entretiens</th>
-					<th>Atl / Frn</th>
-					<th>Total</th>
-				</tr>
-			</thead>
-			<tbody>
-			{% for tech, datas in times if tech != 'total' %}
-				<tr>
-					<th>{{ tech }}</th>
-					<td><div class="text-right">{{ datas.fixing.format('%hh%I') }}</div></td>
-					<td><div class="text-right">{{ datas.work.format('%hh%I') }}</div></td>
-					<td><div class="text-right">{{ datas.maintenance.format('%hh%I') }}</div></td>
-					<td><div class="text-right">{{ datas.equipment.format('%hh%I') }}</div></td>
-					<td><div class="text-right">{{ datas.total.format('%hh%I') }}</div></td>
-				</tr>
-			{% endfor %}
-			</tbody>
-			<tfoot>
-				<tr>
-					<th>Total</th>
-					<th><div class="text-right">{{ times.total.fixing.format('%hh%I') }}</div></th>
-					<th><div class="text-right">{{ times.total.work.format('%hh%I') }}</div></th>
-					<th><div class="text-right">{{ times.total.maintenance.format('%hh%I') }}</div></th>
-					<th><div class="text-right">{{ times.total.equipment.format('%hh%I') }}</div></th>
-					<th><div class="text-right">{{ times.total.total.format('%hh%I') }}</div></th>
-				</tr>
-			</tfoot>
-		</table>
-	</div>
-	<div class="col-lg-5 well" id="graphTech">
-	</div>
+  <div class="col-md-6">
+    <h2>Contrats</h2>
+    <blockquote>
+      {{ contracts_numbers }} contrats en cours sur {{ contracts_doors }} installations.<br>
+      {{ contracts_complete }} installations en contrats complet<br>
+      {{ contracts_normal }} installations en contrats normal
+    </blockquote>
+  
+	<h2>Quantité</h2>	
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Dépannages</th>
+          <th>Travaux</th>
+          <th>Entretiens</th>
+          <th>Atl / Frn</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for tech, datas in numbers if tech != 'total' %}
+        <tr>
+          <th>{{ tech }}</th>
+          <td class="text-right">{{ datas.fixing }}</td>
+          <td class="text-right">{{ datas.work }}</td>
+          <td class="text-right">{{ datas.maintenance }}</td>
+          <td class="text-right">{{ datas.equipment }}</td>
+          <td class="text-right">{{ datas.total }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Total</th>
+          <th class="text-right">{{ numbers.total.fixing }}</th>
+          <th class="text-right">{{ numbers.total.work }}</th>
+          <th class="text-right">{{ numbers.total.maintenance }}</th>
+          <th class="text-right">{{ numbers.total.equipment }}</th>
+          <th class="text-right">{{ numbers.total.total }}</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <h2>Temps</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Dépannages</th>
+          <th>Travaux</th>
+          <th>Entretiens</th>
+          <th>Atl / Frn</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for tech, datas in times if tech != 'total' %}
+        <tr>
+          <th>{{ tech }}</th>
+          <td class="text-right">{{ datas.fixing.format('%hh%I') }}</td>
+          <td class="text-right">{{ datas.work.format('%hh%I') }}</td>
+          <td class="text-right">{{ datas.maintenance.format('%hh%I') }}</td>
+          <td class="text-right">{{ datas.equipment.format('%hh%I') }}</td>
+          <td class="text-right">{{ datas.total.format('%hh%I') }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Total</th>
+          <th class="text-right">{{ times.total.fixing.format('%hh%I') }}</th>
+          <th class="text-right">{{ times.total.work.format('%hh%I') }}</th>
+          <th class="text-right">{{ times.total.maintenance.format('%hh%I') }}</th>
+          <th class="text-right">{{ times.total.equipment.format('%hh%I') }}</th>
+          <th class="text-right">{{ times.total.total.format('%hh%I') }}</th>
+        </tr>
+      </tfoot>
+    </table>
+    <div id="graphTech"></div>
+  </div>
 </div>
 <div class="row">
-<div class="col-lg-6">
-	<h2>Entretiens</h2>
-	<div id="graphEvolution"></div>
-	</div>
-	<div class="col-lg-5 well" id="graphMaintenance">
-	</div>
+  <div class="col-md-6">
+    <h2>Entretiens</h2>
+    <div id="graphEvolution"></div>
+  </div>
+  <div class="col-md-6">
+     <h2>Taux d'entretiens</h2>
+     <div id="graphMaintenance"></div>
+  </div>
 </div>
 {% endblock %}
 
