@@ -1,11 +1,21 @@
-
-	{% include 'JLMOfficeBundle:Quote:stateheader.html.twig' with {'state': variant.state} %}
-	<strong>Créé le {{ variant.creation|date('d/m/Y') }}</strong>
-    <p>{{ variant.intro | nl2br }}</p>
+<div class="row">
+<div class="col-md-12">
+    <blockquote>
+      <footer>Créé le {{ variant.creation|date('d/m/Y') }}</footer>
+      <p>{{ variant.intro | nl2br }}</p>
+    </blockquote>
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
   	<ul class="nav nav-pills">
 	  <li class="active tab-quote"><a href="#">Devis</a></li>
 	  <li class="tab-coding"><a href="#">Chiffrage</a></li>
 	</ul>
+	</div>
+</div>
+<div class="row">
+<div class="col-md-12">
     <table class="table table-bordered">
     <thead>
         <tr>
@@ -45,9 +55,10 @@
     {% endfor %}
     </tbody>
 </table>
-
-<div class="row-fluid">
-	<div class="span8">
+</div>
+</div>
+<div class="row">
+	<div class="col-md-8">
 		<dl>
 			<dt>Règlement</dt>
 			<dd>{{ variant.paymentRules }}</dd>
@@ -55,7 +66,7 @@
 			<dd>{{ variant.deliveryRules }}</dd>
 		</dl>
 	</div>
-   <div class="span4">
+   <div class="col-md-4">
     <table class="table table-bordered">
     	<tbody>
     		<tr>

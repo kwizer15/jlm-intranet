@@ -1,15 +1,29 @@
-<div class="row-fluid">
-    <div class="span5">
-    	<strong>Créé le {{ quote.creation|date('d/m/Y') }}
-    	<br>par {{ quote.followerCp }}</strong>
-        <br><br>{{ quote.doorCp | nl2br }}
-
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h2 class="panel-title">Affaire</h2>
+      </div>
+      <div class="panel-body">
+        {{ quote.doorCp | nl2br }}
+      </div>
+      <div class="panel-footer">
+        Créé le {{ quote.creation|date('d/m/Y') }} par {{ quote.followerCp }}
+      </div>
     </div>
-    <div class="span5 offset2 well">
-    	<strong>Facturation</strong>
-        <br>{{ quote.trusteeName }}
-        <br>{{ quote.trusteeAddress | nl2br  }}
-        <br>
-        <br>à l'attention de {{ quote.contactCp }}
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h2 class="panel-title">Destinataire</h2>
+      </div>
+      <div class="panel-body">
+        <strong>{{ quote.trusteeName }}</strong><br>
+        {{ quote.trusteeAddress | nl2br  }}
+      </div>
+      <div class="panel-footer">
+        à l'attention de {{ quote.contactCp }}
+      </div>
     </div>
+  </div>
 </div>

@@ -1,27 +1,49 @@
 {% extends "JLMOfficeBundle:Quote:layout.html.twig" %}
-
+{%- block title -%}n°{{ entity.number }} | {{ parent() }}{%- endblock title -%}
 {% block content %}
-<h1>Devis <small>{{ entity.number }}</small></h1>
-{% include 'JLMOfficeBundle:Quote:stateheader.html.twig' with {'state': entity.state} %}
-{% include 'JLMOfficeBundle:Quote:showheader.html.twig' with {'quote': entity} %}
-<div class="form-actions">
-{% if entity.ask %}
-	<a href="{{ path('askquote_show',{'id':entity.ask.id}) }}" class="btn"><i class="icon-arrow-left"></i> Voir la demande</a>
-{% endif %}
-	<a href="{{ path('quote_jacket',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer la chemise</a>
-{% if entity.variants|length > 0 %}	
-	<a href="{{ path('quote_print',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-white icon-print"></i> Imprimer tout</a>	
-{% endif %}
-{% if entity.state == 0 %}
-	<a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
-{% else %}
-<a href="{{ path('quote_mail',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-white icon-envelope"></i> Envoyer tout par mail</a>
-{% endif %}
-
-	<a href="{{ path('variant_new',{ 'id' : entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter une variante</a>
+<div class="page-header">
+<div class="pull-right">
+  {% if entity.ask %}
+	<a href="{{ path('askquote_show',{'id':entity.ask.id}) }}" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Voir la demande</a>
+  {% endif %}
+<a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editer</a>
+<div class="btn-group">
+  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+    <span class="glyphicon glyphicon-print"></span> Imprimer <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a href="{{ path('quote_jacket',{ 'id' : entity.id }) }}">Chemise</a></li>
+    {% if entity.variants|length > 0 -%}	
+      <li><a href="{{ path('quote_print',{ 'id' : entity.id }) }}">Tout les devis</a></li>
+      <li class="divider"></li>
+        {% for variant in entity.variants %}
+          <li><a href="{{ path('variant_print', { 'id': variant.id }) }}">{{ variant.number }}</a></li>
+        {% endfor %}
+    {%- endif %}
+  </ul>
 </div>
+{% if entity.state > 0 %}
+<div class="btn-group">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    <span class="glyphicon glyphicon-envelope"></span> e-mail <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a href="{{ path('quote_mail',{ 'id' : entity.id }) }}">Tout</a>
+    <li class="divider"></li>
+    {% for variant in entity.variants %}
+      <li><a href="{{ path('variant_mail', { 'id': variant.id }) }}">{{ variant.number }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+  </div>
+  <h1>Devis <small>{{ entity.number }}</small></h1>
+  
+</div>
+{# include 'JLMOfficeBundle:Quote:stateheader.html.twig' with {'state': entity.state} #}
+{% include 'JLMOfficeBundle:Quote:showheader.html.twig' with {'quote': entity} %}
 
-
+<div class="pull-right"><a href="{{ path('variant_new',{ 'id' : entity.id }) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter une variante</a></div>
 <ul id="variants" class="nav nav-tabs">
 	{% for variant in entity.variants %}
     <li{% if loop.first %} class="active"{% endif %}>
@@ -34,7 +56,7 @@
 {%  if entity.variants | length %}
 <div id="variantsContent" class="tab-content">
 {% for variant in entity.variants %}
-    <div class="tab-pane fade{% if loop.first %} active in{% endif %}" id="variant-{{ variant.number }}">
+    <div class="tab-pane fade in{% if loop.first %} active{% endif %}" id="variant-{{ variant.number }}">
 		{% include 'JLMOfficeBundle:Variant:show.html.twig' with {'variant': variant} %}
 	</div>
 {% endfor %}
