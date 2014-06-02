@@ -142,7 +142,7 @@
 					<li><a href="{{ path(pageRoute,{ 'page' : p }) }}">{{ p }}</a></li>
 					{% set flag = true %}
 					{% elseif flag %}
-					<li><a href="#">...</a></li>
+					<li class="disabled"><a href="#">...</a></li>
 					{% set flag = false %}
 					{% endif %}
 					{% endfor %}
