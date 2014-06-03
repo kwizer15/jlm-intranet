@@ -130,7 +130,7 @@ class QuoteController extends Controller
     /**
      * Nouveau devis depuis un demande de devis
      * 
-     * @Route("/new/fromask/{id}", name="quote_newfromask")
+     * @Route("/ask/{id}/newquote", name="quote_newfromask")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -146,7 +146,8 @@ class QuoteController extends Controller
     	$entity->setFollowerCp($user->getPerson()->getName());
     	$entity->setVatTransmitter($vat);
     	
-    	$form = $this->createFormBuilder(new QuoteType(), $entity)
+    	$form = $this->createForm(new QuoteType(), $entity, array(
+                            'action' => $this->generateUrl('quote_newfromask',array('id' => $askquote->getId()))))
     	             ->add('submit','submit',array('label'=>'Enregistrer'));
     
     	$form->handleRequest($request);
