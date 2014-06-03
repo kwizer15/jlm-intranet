@@ -31,11 +31,18 @@
   </div>
 {% endspaceless %}
 {% endblock percent_widget %}
-
+	
 {% block button_widget %}
 {% spaceless %}
-	{% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn')|trim}) %}
-    {{ parent() }}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn')|trim}) %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>
+    {%- if icon is not empty -%}
+      <span class="glyphicon glyphicon-{{ icon }}"></span>
+    {% endif -%}
+    {{ label|trans({}, translation_domain) }}</button>
 {% endspaceless %}
 {% endblock button_widget %}
 
@@ -49,13 +56,14 @@
 
 {% block reset_widget %}
 {% spaceless %}
-    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn-default')|trim}) %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn-danger')|trim}) %}
     {% set type = type|default('reset') %}
     {{ block('button_widget') }}
 {% endspaceless %}
 {% endblock reset_widget %}
 
 {# Label #}
+
 
 {# Rows #}
 
@@ -108,7 +116,7 @@
 {% block form %}
 {% spaceless %}
     {{ form_start(form) }}
-        {{ form_widget(form) }}
+    {{ form_widget(form) }}
     {{ form_end(form) }}
 {% endspaceless %}
 {% endblock form %}

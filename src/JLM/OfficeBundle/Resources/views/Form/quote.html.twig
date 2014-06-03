@@ -1,57 +1,92 @@
+{% block _quote_vat_label %}
+{% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' col-md-2 control-label')|trim}) %}
+{{ block('form_label') }}
+{% endblock %}
+
+{% block _quote_submit_widget %}
+{% set icon = 'save' %}
+{{ block('submit_widget') }}
+{% endblock %}
+
 {% block quote_widget %}
-<div class="row_fluid clearfix">
-	<div class="span6 well">
-    	{{ form_row(form.follower) }}
-    	{{ form_row(form.followerCp) }}
-    	{{ form_row(form.door) }}
-    	{{ form_row(form.doorCp) }}
-    	{{ form_row(form.vat) }}
-    	{{ form_row(form.vatTransmitter) }}
+<div class="row clearfix">
+	<div class="col-md-6">
+	  <div class="panel panel-info">
+	    <div class="panel-heading">
+	      <h2 class="panel-title">Affaire</h2>
+	    </div>
+	    <div class="panel-body">
+    	  {{ form_widget(form.doorCp) }}
+    	</div>
+    	<div class="panel-footer form-inline">
+    	  Créé le {{ form_widget(form.creation) }} par {{ form_widget(form.followerCp) }}
+    	</div>
+      </div>
     </div>
-    <div class="span6">
-    	{{ form_row(form.creation) }}
-    	{{ form_row(form.trustee) }}
-    	{{ form_row(form.trusteeName) }}
-    	{{ form_row(form.trusteeAddress) }}
-    	{{ form_row(form.contact) }}
-    	{{ form_row(form.contactCp) }}
+    <div class="col-md-6">
+      <div class="panel panel-warning">
+	    <div class="panel-heading">
+	      <h2 class="panel-title">Destinataire</h2>
+	    </div>
+	    <div class="panel-body">
+    	  {{ form_widget(form.trusteeName) }}
+    	  {{ form_widget(form.trusteeAddress) }}
+    	</div>
+    	<div class="panel-footer form-inline">
+    	  {{ form_widget(form.contactCp) }}
+    	</div>
+      </div>
     </div>
+</div>
+<div class="form-horizontal">
+  <div class="form-group">
+    {{ form_label(form.vat) }}
+    <div class="col-md-2 offset-col-md-8">
+      {{ form_widget(form.vat) }}
+    </div>
+  </div>  
 </div>
 {{ form_rest(form) }}
 {% endblock %}
 
 {% block quote_variant_widget %}
 {{ form_row(form.creation) }}
-<div class="row_fluid">
+<div class="row">
+  <div class="col-md-12">
     {{ form_widget(form.intro) }}
-    </div><br>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
     <ul class="nav nav-pills">
-  <li class="tab-quote active"><a href="#">Devis</a></li>
-  <li class="tab-coding"><a href="#">Chiffrage</a></li>
-</ul>
-    <table class="table table-bordered">
-    <thead>
+      <li class="tab-quote active"><a href="#">Devis</a></li>
+      <li class="tab-coding"><a href="#">Chiffrage</a></li>
+    </ul>
+  </div>
+</div>
+<table class="table table-bordered">
+  <thead>
     <tr>
-    <th class="col-quote">Référence</th>
-    <th>Designation</th>
-    <th>Qté</th>
-    <th class="col-coding">PA HT</th>
-    <th class="col-coding">Remise</th>
-    <th class="col-coding">Frais</th>
-    <th class="col-coding">Port</th>
-    <th class="col-coding">Coef.</th>
-    <th class="col-quote">PU HT</th>
-    <th class="col-quote">Remise</th>
-    <th class="col-quote">TVA</th>
-    <th>PT HT</th>
-    <th class="span1"><a href="#" class="btn btn-success newline"><i class="icon-plus-sign icon-white"></i></a></th>
+      <th class="col-quote">Référence</th>
+      <th>Designation</th>
+      <th>Qté</th>
+      <th class="col-coding">PA HT</th>
+      <th class="col-coding">Remise</th>
+      <th class="col-coding">Frais</th>
+      <th class="col-coding">Port</th>
+      <th class="col-coding">Coef.</th>
+      <th class="col-quote">PU HT</th>
+      <th class="col-quote">Remise</th>
+      <th class="col-quote">TVA</th>
+      <th>PT HT</th>
+      <th class="span1"><a href="#" class="btn btn-success newline"><i class="icon-plus-sign icon-white"></i></a></th>
     </tr>
-    </thead>
-    {{ form_widget(form.lines) }}
-    </table>
-    <div class="row_fluid">
-	    <div class="span6">
-	    <div class="control-group">
+  </thead>
+  {{ form_widget(form.lines) }}
+</table>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="control-group">
 	    		<label class="control-label">Total HT avant remise</label>
 	    		<div class="controls">
 	    			<div class="input-append"><span class="input-small uneditable-input" id="quote_variant_total_htbd">0,00</span><span class="add-on">€</span></div>
