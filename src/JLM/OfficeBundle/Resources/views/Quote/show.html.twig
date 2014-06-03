@@ -6,7 +6,9 @@
   {% if entity.ask %}
 	<a href="{{ path('askquote_show',{'id':entity.ask.id}) }}" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Voir la demande</a>
   {% endif %}
+  {% if entity.state == 0%}
 <a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editer</a>
+{% endif %}
 <div class="btn-group">
   <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
     <span class="glyphicon glyphicon-print"></span> Imprimer <span class="caret"></span>
