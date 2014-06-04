@@ -35,7 +35,7 @@ class VariantController extends Controller
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function newAction(Quote $quote)
+    public function newAction(Request $request, Quote $quote)
     {
         $entity = new QuoteVariant();
         $entity->setQuote($quote);
@@ -44,48 +44,33 @@ class VariantController extends Controller
         $l = new QuoteLine;
         $l->setVat($quote->getVat());
         $entity->addLine($l);
-        $form   = $this->createForm(new QuoteVariantType(), $entity);
+        $form   = $this->createForm(new QuoteVariantType(), $entity,
+        		array('action'=>$this->generateUrl('variant_new',array('id'=>$quote->getId()))))
+                ->add('submit','submit',array('label'=>'Enregistrer'));
 
+        $form->handleRequest($request);
+        
+        if ($form->isValid())
+        {
+        	$em = $this->getDoctrine()->getManager();
+        	$lines = $entity->getLines();
+        	foreach ($lines as $line)
+        	{
+        		$line->setVariant($entity);
+        		$em->persist($line);
+        	}
+        	$number = $em->getRepository('JLMOfficeBundle:QuoteVariant')->getCount($entity->getQuote())+1;
+        	$entity->setVariantNumber($number);
+        	$em->persist($entity);
+        	$em->flush();
+        	
+        	return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+        }
+        
         return array(
             'entity' => $entity,
             'form'   => $form->createView()
         );
-    }
-    
-    /**
-     * Creates a new Variant entity.
-     *
-     * @Route("/create", name="variant_create")
-     * @Method("post")
-     * @Template("JLMOfficeBundle:Variant:new.html.twig")
-     * @Secure(roles="ROLE_USER")
-     */
-    public function createAction(Request $request)
-    {
-    	$entity  = new QuoteVariant();
-    	$form    = $this->createForm(new QuoteVariantType(), $entity);
-    	$form->bind($request);
-    
-    	if ($form->isValid())
-    	{
-    		$em = $this->getDoctrine()->getManager();
-    		$lines = $entity->getLines();
-    		foreach ($lines as $line)
-    		{
-    			$line->setVariant($entity);
-    			$em->persist($line);
-    		}
-			$number = $em->getRepository('JLMOfficeBundle:QuoteVariant')->getCount($entity->getQuote())+1;
-			$entity->setVariantNumber($number);
-    		$em->persist($entity);
-    		$em->flush();
-    		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-    	}
-    
-    	return array(
-	    	'entity' => $entity,
-	    	'form'   => $form->createView()
-    	);
     }
     
 	/**

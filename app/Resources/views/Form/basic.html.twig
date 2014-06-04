@@ -35,6 +35,7 @@
 {% block button_widget %}
 {% spaceless %}
     {% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn')|trim}) %}
+    {% set icon = icon|default('')|trim %}
     {% if label is empty %}
         {% set label = name|humanize %}
     {% endif %}

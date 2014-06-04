@@ -49,91 +49,133 @@
 {{ form_rest(form) }}
 {% endblock %}
 
+{% block _quote_variant_creation_label %}
+{% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' col-md-2 control-label')|trim}) %}
+{{ block('form_label') }}
+{% endblock %}
+
+{% block _quote_variant_discount_label %}
+{% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' col-md-6 control-label')|trim}) %}
+{{ block('form_label') }}
+{% endblock %}
+
 {% block quote_variant_widget %}
-{{ form_row(form.creation) }}
-<div class="row">
-  <div class="col-md-12">
-    {{ form_widget(form.intro) }}
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
-    <ul class="nav nav-pills">
-      <li class="tab-quote active"><a href="#">Devis</a></li>
-      <li class="tab-coding"><a href="#">Chiffrage</a></li>
-    </ul>
-  </div>
-</div>
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th class="col-quote">Référence</th>
-      <th>Designation</th>
-      <th>Qté</th>
-      <th class="col-coding">PA HT</th>
-      <th class="col-coding">Remise</th>
-      <th class="col-coding">Frais</th>
-      <th class="col-coding">Port</th>
-      <th class="col-coding">Coef.</th>
-      <th class="col-quote">PU HT</th>
-      <th class="col-quote">Remise</th>
-      <th class="col-quote">TVA</th>
-      <th>PT HT</th>
-      <th class="span1"><a href="#" class="btn btn-success newline"><i class="icon-plus-sign icon-white"></i></a></th>
-    </tr>
-  </thead>
-  {{ form_widget(form.lines) }}
-</table>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="control-group">
-	    		<label class="control-label">Total HT avant remise</label>
-	    		<div class="controls">
-	    			<div class="input-append"><span class="input-small uneditable-input" id="quote_variant_total_htbd">0,00</span><span class="add-on">€</span></div>
-	    		</div>
-	    	</div>
-	    	{{ form_row(form.discount) }}
-	    	<div class="control-group">
-	    		<label class="control-label">Montant remise</label>
-	    		<div class="controls">
-	    			<div class="input-append"><span class="input-small uneditable-input" id="quote_variant_total_discount">0,00</span><span class="add-on">€</span></div>
-	    		</div>
-	    	</div>
-	    </div>
-	    <div class="span6 well">
-	        <div class="control-group col-coding">
-	    		<label class="control-label">Total achat</label>
-	    		<div class="controls">
-	    			<div class="input-append"><span class="input-small uneditable-input" id="quote_variant_total_purchase">0,00</span><span class="add-on">€</span></div>
-	    		</div>
-	    	</div>
-	    	<div class="control-group">
-	    		<label class="control-label">Total HT</label>
-	    		<div class="controls">
-	    			<div class="input-append"><span class="input-small uneditable-input" id="quote_variant_total_ht">0,00</span><span class="add-on">€</span></div>
-	    		</div>
-	    	</div>
-	    	 <div class="control-group col-coding">
-	    		<label class="control-label">Marge</label>
-	    		<div class="controls">
-	    			<div class="input-append"><span class="input-small uneditable-input" id="quote_variant_total_margin">0,00</span><span class="add-on">€</span></div>
-	    		</div>
-	    	</div>
-	    	<div class="control-group col-quote">
-	    		<label class="control-label">Total TVA</label>
-	    		<div class="controls">
-	    			<div class="input-append"><span class="input-small uneditable-input" id="quote_variant_total_tva">0,00</span><span class="add-on">€</span></div>
-	    		</div>
-	    	</div>
-	    	<div class="control-group col-quote">
-	    		<label class="control-label">Total TTC</label>
-	    		<div class="controls">
-	    			<div class="input-append"><span class="input-small uneditable-input" id="quote_variant_total_ttc">0,00</span><span class="add-on">€</span></div>
-	    		</div>
-	    	</div>
-	    </div>
+<div class="form-horizontal">
+  <div class="form-group">
+    {{ form_label(form.creation) }}
+    <div class="col-md-2 offset-col-md-8">
+      {{ form_widget(form.creation) }}
     </div>
-{{ form_rest(form) }}
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        {{ form_widget(form.intro) }}
+      </div>
+      <ul class="nav nav-tabs">
+        <li class="tab-quote active"><a href="#">Devis</a></li>
+        <li class="tab-coding"><a href="#">Chiffrage</a></li>
+      </ul>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th class="col-quote">Référence</th>
+            <th>Designation</th>
+            <th>Qté</th>
+            <th class="col-coding">PA HT</th>
+            <th class="col-coding">Remise</th>
+            <th class="col-coding">Frais</th>
+            <th class="col-coding">Port</th>
+            <th class="col-coding">Coef.</th>
+            <th class="col-quote">PU HT</th>
+            <th class="col-quote">Remise</th>
+            <th class="col-quote">TVA</th>
+            <th>PT HT</th>
+            <th class="span1">
+              <a href="#" class="btn btn-success newline">
+                <span class="glyphicon glyphicon-plus-sign"></span>
+              </a>
+            </th>
+          </tr>
+        </thead>
+        {{ form_widget(form.lines) }}
+      </table>
+      <div class="panel-footer">
+        <div class="row">
+          <div class="col-md-6 form-horizontal">
+            <div class="form-group">
+	          <label class="col-md-6 control-label">Total HT avant remise</label>
+	          <div class="col-md-6">
+	            <p class="form-control-static">
+	              <span id="quote_variant_total_htbd">0,00</span> €
+	            </p>
+	          </div>
+	        </div>
+	        <div class="form-group">
+	          {{ form_label(form.discount) }}
+    	      <div class="col-md-3 offset-col-md-3">
+	            {{ form_widget(form.discount) }}
+	          </div>
+    	    </div>
+	        <div class="form-group">
+	          <label class="col-md-6 control-label">Montant remise</label>
+    	      <div class="col-md-6">
+	            <p class="form-control-static">
+	              <span id="quote_variant_total_discount">0,00</span> €
+	            </p>
+    	      </div>
+	        </div>
+	      </div>
+	      <div class="col-md-6 form-horizontal">
+	        <div class="form-group col-coding">
+	          <label class="col-md-6 control-label">Total achat</label>
+	          <div class="col-md-6">
+	            <p class="form-control-static">
+	              <span id="quote_variant_total_purchase">0,00</span> €
+	            </p>
+	          </div>
+	        </div>
+	        <div class="form-group">
+	          <label class="col-md-6 control-label">Total HT</label>
+	          <div class="col-md-6">
+	            <p class="form-control-static">
+	              <span id="quote_variant_total_ht">0,00</span> €
+	            </p>
+	          </div>
+    	    </div>
+	        <div class="form-group col-coding">
+	          <label class="col-md-6 control-label">Marge</label>
+    	      <div class="col-md-6">
+	            <p class="form-control-static">
+	              <span id="quote_variant_total_margin">0,00</span> €
+	            </p>
+    	      </div>
+	        </div>
+	        <div class="form-group col-quote">
+    	      <label class="col-md-6 control-label">Total TVA</label>
+    	      <div class="col-md-6">
+	            <p class="form-control-static">
+	              <span id="quote_variant_total_tva">0,00</span> €
+	            </p>
+    	      </div>
+	        </div>
+	        <div class="form-group col-quote">
+    	      <label class="col-md-6 control-label">Total TTC</label>
+	          <div class="col-md-6">
+	            <p class="form-control-static">
+	              <span id="quote_variant_total_ttc">0,00</span> €
+    	        </p>
+	          </div>
+	        </div>
+    	  </div>
+        </div>
+      </div>
+    </div>
+    {{ form_rest(form) }}
+  </div>
+</div>
 {% endblock %}
 
 {% block quote_line_row %}
@@ -144,9 +186,15 @@
         {{ form_widget(form.isTransmitter) }}
         {{ form_widget(form.reference) }}
     </td>
-    <td><div class="input-append">{{ form_widget(form.designation) }}<a class="add-on show-description" href="#"><i class="icon-plus-sign"></i></a></div>
-	<br>{{ form_widget(form.showDescription) }}    
-	{{ form_widget(form.description) }}
+    <td>
+      <div class="input-group">
+        {{ form_widget(form.designation) }}
+        <a class="input-group-addon show-description" href="#">
+          <span class="glyphicon glyphicon-plus-sign"></span>
+        </a>
+      </div>
+	  <br>{{ form_widget(form.showDescription) }}    
+	  {{ form_widget(form.description) }}
     </td>
     <td>{{ form_widget(form.quantity) }}</td>
     <td class="col-coding">{{ form_widget(form.purchasePrice) }}</td>
@@ -154,15 +202,21 @@
     <td class="col-coding">{{ form_widget(form.expenseRatio) }}</td>
     <td class="col-coding">{{ form_widget(form.shipping) }}</td>
     <td class="col-coding">
-    	<div class="input-append">
-			<input id="{{ id }}_coef" class="input-mini" type="text">
-			<span class="add-on">%</span>
-		</div>
+      <div class="input-group">
+		<input id="{{ id }}_coef" type="text" class="form-control">
+		<span class="input-group-addon">%</span>
+	  </div>
 	</td>
     <td class="col-quote">{{ form_widget(form.unitPrice) }}</td>
     <td class="col-quote">{{ form_widget(form.discount) }}</td>
     <td class="col-quote">{{ form_widget(form.vat) }}</td>
-    <td><div class="input-append"><span class="input-mini uneditable-input" id="{{ id }}_total">0,00</span><span class="add-on">€</span></div></td>
-    <td><a href="#" class="btn btn-danger remove-line"><i class="icon-minus-sign icon-white"></i></a></td>
+    <td>
+      <p class="form-control-static"><span id="{{ id }}_total">0,00</span> €</p>
+    </td>
+    <td>
+      <button class="btn btn-danger remove-line">
+        <span class="glyphicon glyphicon-minus-sign"></span>
+      </button>
+    </td>
 </tr>
 {% endblock quote_line_row %}
