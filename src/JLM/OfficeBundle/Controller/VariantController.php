@@ -63,7 +63,7 @@ class VariantController extends Controller
         	$entity->setVariantNumber($number);
         	$em->persist($entity);
         	$em->flush();
-        	
+        	$this->get('session')->getFlashBag()->add('notice', 'Nouveau devis <strong>n°'.$entity->getNumber().'</strong> enregistré');
         	return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
         }
         
@@ -117,6 +117,7 @@ class VariantController extends Controller
 		        $em->remove($line);
 		    }
 		    $em->flush();
+		    $this->get('session')->getFlashBag()->add('notice', 'Mofications du devis <strong>n°'.$entity->getNumber().'</strong> enregistrées');
 		    return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 		}
 		
@@ -142,6 +143,7 @@ class VariantController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
+		$this->get('session')->getFlashBag()->add('notice', 'Devis <strong>n°'.$entity->getNumber().'</strong> prêt à être envoyé');
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	}
 	
@@ -151,7 +153,7 @@ class VariantController extends Controller
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function mailAction(QuoteVariant $entity)
+	public function mailAction(Request $request, QuoteVariant $entity)
 	{
 		if ($entity->getState() < 1)
 			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
@@ -164,8 +166,40 @@ class VariantController extends Controller
 			if ($entity->getQuote()->getContact()->getPerson())
 			if ($entity->getQuote()->getContact()->getPerson()->getEmail())
 			$mail->setTo($entity->getQuote()->getContact()->getPerson()->getEmail());
-		$form   = $this->createForm(new MailType(), $mail);
-	
+		$form   = $this->createForm(new MailType(), $mail, array('action'=>$this->generateUrl('variant_mail',array('id' => $entity->getId()))))
+                ->add('submit','submit',array('label'=>'Envoyer'));
+	    
+		$form->handleRequest($request);
+	    
+		if ($form->isValid()) {
+		    $mail->setBcc('commerce@jlm-entreprise.fr');
+		    	
+		    $message = $mail->getSwift();
+		    $message->setReadReceiptTo('commerce@jlm-entreprise.fr');
+		    $message->attach(\Swift_Attachment::newInstance(
+		        $this->render('JLMOfficeBundle:Quote:quote.pdf.php',array('entities'=>array($entity))),
+		        $entity->getNumber().'.pdf','application/pdf'
+		    ))
+		    ;
+		    $em = $this->getDoctrine()->getManager();
+		    if ($entity->getQuote()->getVat() == $entity->getQuote()->getVatTransmitter())
+		    {
+		        $message->attach(
+		            \Swift_Attachment::fromPath($this->get('kernel')->getRootDir().'/../web/bundles/jlmoffice/pdf/attestation.pdf')
+		        );
+		    }
+		
+		    $this->get('mailer')->send($message);
+		    if ($entity->getState() < 3)
+		    {
+		        $entity->setState(3);
+		        $em->persist($entity);
+		        $em->flush();
+		    }
+		    $this->get('session')->getFlashBag()->add('notice', 'Devis <strong>n°'.$entity->getNumber().'</strong> bien envoyé par e-mail');
+		    return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+		}
+	    
 		return array(
 				'entity' => $entity,
 				'form'   => $form->createView()
@@ -212,6 +246,8 @@ class VariantController extends Controller
 			
 			$em->persist($entity);
 			$em->flush();
+			
+			
 		}
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	}
@@ -272,6 +308,7 @@ class VariantController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
+		$this->get('session')->getFlashBag()->add('notice', 'Devis <strong>n°'.$entity->getNumber().'</strong> en mode saisie');
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	}
 	
@@ -306,6 +343,7 @@ class VariantController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
+		$this->get('session')->getFlashBag()->add('notice', 'Devis <strong>n°'.$entity->getNumber().'</strong> enregistré');
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	}
 	
@@ -324,39 +362,6 @@ class VariantController extends Controller
 			$entity->setState(4);
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
-		$em->flush();
-		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-	}
-	
-	/**
-	 * Note QuoteVariant as given.
-	 *
-	 * @Route("/{id}/oldgiven", name="variant_oldgiven")
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function oldgivenAction(QuoteVariant $entity)
-	{
-		if ($entity->getState() < 4)
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-	
-		if ($entity->getState() < 5)
-			$entity->setState(5);
-		
-		$em = $this->getDoctrine()->getManager();
-		
-		
-		
-		
-		$task = new Task();
-		$task->setDoor($entity->getQuote()->getDoor());
-		$task->setPlace($entity->getQuote()->getDoorCp());
-		$task->setTodo('Accord du devis n°'.$entity->getNumber());
-		$task->setType($em->getRepository('JLMOfficeBundle:TaskType')->find(3));
-		$task->setUrlSource($this->generateUrl('variant_print', array('id' => $entity->getId())));
-		$task->setUrlAction($this->generateUrl('order_new_quotevariant', array('id' => $entity->getId())));
-		
-		$em->persist($entity);
-		$em->persist($task);
 		$em->flush();
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	}
@@ -397,6 +402,7 @@ class VariantController extends Controller
 		}
 		$em->persist($entity);
 		$em->flush();
+		$this->get('session')->getFlashBag()->add('notice', 'Devis <strong>n°'.$entity->getNumber().'</strong> accordé');
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	}
 }
