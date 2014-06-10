@@ -1,5 +1,8 @@
 <div class="page-header">
   <div class="pull-right">
+    {% if variant.state > 0 and variant.state < 5 %}
+	  <a href="{{ path('variant_unvalid', { 'id': variant.id }) }}" class="btn btn-default"><span class="glyphicon glyphicon-fast-backward"></span> Revenir à la saisie</a>
+	{% endif %}
     {% if variant.state == 0 %}
       <a href="{{ path('variant_edit', { 'id': variant.id }) }}" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Editer</a>
       <a href="{{ path('variant_ready', { 'id': variant.id }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span> Prêt à evoyer</a>
@@ -7,24 +10,12 @@
     {% if variant.state == 3 %}
 	  <a href="{{ path('variant_receipt', { 'id': variant.id }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span> Accusé reçu</a>
 	{% endif %}
-    {% if variant.state == 4 %}
-	  <a href="{{ path('variant_given', { 'id': variant.id }) }}" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span> Accorder</a>
+	{% if variant.state == 4 %}
+	  <a href="{{ path('variant_given', { 'id': variant.id }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Accorder</a>
 	{% endif %}
-    {% if variant.state < 5 %}
-	  <a href="{{ path('variant_unvalid', { 'id': variant.id }) }}" class="btn btn-default"><span class="glyphicon glyphicon-fast-backward"></span> Revenir à la saisie</a>
-	{% endif %}
+    {% if variant.state > 0 %}
       <div class="btn-group">
-        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-          <span class="glyphicon glyphicon-print"></span> Imprimer <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="{{ path('variant_print', { 'id': variant.id }) }}">Devis</a></li>
-          <li><a href="{{ path('variant_printcoding', { 'id': variant.id }) }}">Chiffrage</a>
-        </ul>
-      </div>
-      {% if variant.state > 1 %}
-      <div class="btn-group">
-        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+        <button type="button" class="btn btn-{%- if variant.state == 1 %}primary{%- else %}info{%- endif %} dropdown-toggle" data-toggle="dropdown">
           <span class="glyphicon glyphicon-envelope"></span> Envoyer <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -34,6 +25,20 @@
 	      </li>
 	    </ul>
 	  </div>
+	{% endif %}
+    
+    
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+          <span class="glyphicon glyphicon-print"></span> Imprimer <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="{{ path('variant_print', { 'id': variant.id }) }}">Devis</a></li>
+          <li><a href="{{ path('variant_printcoding', { 'id': variant.id }) }}">Chiffrage</a>
+        </ul>
+      </div>
+      {% if variant.state > 0 %}
 	  <a href="{{ path('variant_cancel', { 'id': variant.id }) }}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Annuler</a>
 	  {% endif %}
     </div>
