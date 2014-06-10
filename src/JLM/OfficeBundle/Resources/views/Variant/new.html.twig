@@ -10,11 +10,17 @@
 </div>
 {% include 'JLMOfficeBundle:Quote:showheader.html.twig' with {'quote': entity.quote} %}
 {{ form(form) }}
+<input type="hidden" value="{{ (entity.quote.vat*100) | number_format(1,',',' ') }}" id="quote_vat">
+<input type="hidden" value="{{ (entity.quote.vatTransmitter*100) | number_format(1,',',' ') }}" id="quote_vatTransmitter">
 {% endblock %}
 
 {% block javascripts %}
 {{ parent() }}
-<script src="{{ asset("bundles/jlmoffice/js/quote.js") }}"></script>
+{% javascripts
+	'@JLMOfficeBundle/Resources/public/js/quote.js'
+	filter='yui_js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
 <script>
 $("body").quotevariant({
 	 autoSource:'{{ path('autocomplete') }}',

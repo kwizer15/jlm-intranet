@@ -12,23 +12,29 @@
 <div class="alert">{{ form_errors(edit_form) }}</div>
 {% endif %}
 {% include 'JLMOfficeBundle:Quote:showheader.html.twig' with {'quote': entity.quote} %}
-<form action="{{ path('variant_update', { 'id' : entity.id}) }}" method="post" {{ form_enctype(edit_form) }}>
+{#}<form action="{{ path('variant_update', { 'id' : entity.id}) }}" method="post" {{ form_enctype(edit_form) }}>
   <div class="row">
     <div class="col-md-12">
-  <input type="hidden" value="{{ (entity.quote.vat*100) | number_format(1,',',' ') }}" id="quote_vat">
-  <input type="hidden" value="{{ (entity.quote.vatTransmitter*100) | number_format(1,',',' ') }}" id="quote_vatTransmitter">
-    {{ form_widget(edit_form) }}
-	<div class="form-actions">
+  
+{#}    {{ form(edit_form) }}
+{#}	<div class="form-actions">
 	  <a href="{{ path('quote_show', { 'id' : entity.quote.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour au devis</a>
 	  <button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer les modifications</button>
 	</div>
   </fieldset>
 </form>
+{#}
+<input type="hidden" value="{{ (entity.quote.vat*100) | number_format(1,',',' ') }}" id="quote_vat">
+<input type="hidden" value="{{ (entity.quote.vatTransmitter*100) | number_format(1,',',' ') }}" id="quote_vatTransmitter">
 {% endblock %}
 
 {% block javascripts %}
 {{ parent() }}
-<script src="{{ asset("bundles/jlmoffice/js/quote.js") }}"></script>
+{% javascripts
+	'@JLMOfficeBundle/Resources/public/js/quote.js'
+	filter='yui_js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
 <script>
 $("body").quotevariant({
 	 autoSource:'{{ path('autocomplete') }}',

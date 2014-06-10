@@ -178,6 +178,19 @@
 </div>
 {% endblock %}
 
+{% block _quote_variant_lines_widget %}
+{% if prototype is defined %}
+        {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
+    {% endif %}
+<tbody {{ block('widget_container_attributes') }}>
+        {% if form.parent is empty %}
+            {{ form_errors(form) }}
+        {% endif %}
+        {{ block('form_rows') }}
+        {{ form_rest(form) }}
+</tbody>
+{% endblock _quote_variant_lines_widget %}
+
 {% block quote_line_row %}
 <tr {{ block('widget_container_attributes') }}>
     <td class="col-quote">

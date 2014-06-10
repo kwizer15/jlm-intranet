@@ -80,62 +80,46 @@ class VariantController extends Controller
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function editAction(QuoteVariant $entity)
+	public function editAction(Request $request, QuoteVariant $entity)
 	{
 		// Si le devis est déjà validé, on empèche quelconque modification
 		if ($entity->getState())
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		$editForm = $this->createForm(new QuoteVariantType(), $entity);
-		return array(
-				'entity'      => $entity,
-				'edit_form'   => $editForm->createView(),
-		);
-	}
-	
-	/**
-	 * Edits an existing QuoteVariant entity.
-	 *
-	 * @Route("/{id}/update", name="variant_update")
-	 * @Method("post")
-	 * @Template("JLMOfficeBundle:Variant:edit.html.twig")
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function updateAction(Request $request, QuoteVariant $entity)
-	{
-		 
-		// Si le devis est déjà validé, on empèche quelconque odification
-		if ($entity->getState())
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-	
-		$originalLines = array();
-		foreach ($entity->getLines() as $line)
-			$originalLines[] = $line;
-		$editForm = $this->createForm(new QuoteVariantType(), $entity);
-		$editForm->bind($request);
-	
-		if ($editForm->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($entity);
-			foreach ($entity->getLines() as $key => $line)
-			{
-	
-				// Nouvelles lignes
-				$line->setVariant($entity);
-				$em->persist($line);
-	
-				// On vire les anciennes
-				foreach ($originalLines as $key => $toDel)
-					if ($toDel->getId() === $line->getId())
-					unset($originalLines[$key]);
-			}
-			foreach ($originalLines as $line)
-			{
-				$em->remove($line);
-			}
-			$em->flush();
+		{
 			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 		}
-	
+		
+		$originalLines = array();
+		foreach ($entity->getLines() as $line)
+		    $originalLines[] = $line;
+		$editForm = $this->createForm(new QuoteVariantType(), $entity,
+        		array('action'=>$this->generateUrl('variant_edit',array('id' => $entity->getId()))))
+                ->add('submit','submit',array('label'=>'Enregistrer'));
+		
+		$editForm->handleRequest($request);
+		
+		if ($editForm->isValid()) {
+		    $em = $this->getDoctrine()->getManager();
+		    $em->persist($entity);
+		    foreach ($entity->getLines() as $key => $line)
+		    {
+		
+		        // Nouvelles lignes
+		        $line->setVariant($entity);
+		        $em->persist($line);
+		
+		        // On vire les anciennes
+		        foreach ($originalLines as $key => $toDel)
+		        if ($toDel->getId() === $line->getId())
+		            unset($originalLines[$key]);
+		    }
+		    foreach ($originalLines as $line)
+		    {
+		        $em->remove($line);
+		    }
+		    $em->flush();
+		    return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+		}
+		
 		return array(
 				'entity'      => $entity,
 				'edit_form'   => $editForm->createView(),

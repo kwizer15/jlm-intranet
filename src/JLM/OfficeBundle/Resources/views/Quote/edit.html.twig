@@ -13,7 +13,11 @@
 
 {% block javascripts %}
 {{ parent() }}
-<script src="{{ asset("bundles/jlmoffice/js/quote.js") }}"></script>
+{% javascripts
+	'@JLMOfficeBundle/Resources/public/js/quote.js'
+	filter='yui_js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
 <script>
 $("body").quote({
 	 autoSource:'{{ path('autocomplete') }}'
