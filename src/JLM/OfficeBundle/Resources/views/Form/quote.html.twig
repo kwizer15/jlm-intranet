@@ -81,19 +81,19 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th class="col-quote">Référence</th>
+            <th width="130px" class="visible-lg">Référence</th>
             <th>Designation</th>
-            <th>Qté</th>
-            <th class="col-coding">PA HT</th>
-            <th class="col-coding">Remise</th>
-            <th class="col-coding">Frais</th>
-            <th class="col-coding">Port</th>
-            <th class="col-coding">Coef.</th>
-            <th class="col-quote">PU HT</th>
-            <th class="col-quote">Remise</th>
-            <th class="col-quote">TVA</th>
-            <th>PT HT</th>
-            <th class="span1">
+            <th width="80px">Qté</th>
+            <th width="135px" class="col-coding">PA HT</th>
+            <th width="100px" class="col-coding">Remise</th>
+            <th width="100px" class="col-coding">Frais</th>
+            <th width="125px" class="col-coding">Port</th>
+            <th width="135px" class="col-coding">Coef.</th>
+            <th width="135px" class="col-quote">PU HT</th>
+            <th width="100px" class="col-quote">Remise</th>
+            <th width="110px" class="col-quote">TVA</th>
+            <th width="100px">PT HT</th>
+            <th width="60px">
               <a href="#" class="btn btn-success newline">
                 <span class="glyphicon glyphicon-plus-sign"></span>
               </a>
@@ -101,7 +101,33 @@
           </tr>
         </thead>
         {{ form_widget(form.lines) }}
-      </table>
+      </table>      
+
+
+{#} Grid format
+<div class="panel-body">
+<div class="row">
+  <div class="col-md-2 col-quote">Référence</div>
+  <div class="col-md-3">Désignation</div>
+  <div class="col-md-1">Qté</div>
+  <div class="col-md-2 col-coding">PA HT</div>
+  <div class="col-md-1 col-coding">Remise</div>
+  <div class="col-md-1 col-coding">Frais</div>
+  <div class="col-md-1 col-coding">Port</div>
+  <div class="col-md-1 col-coding">Coef.</div>
+  <div class="col-md-2 col-quote">PU HT</div>
+  <div class="col-md-1 col-quote">Remise</div>
+  <div class="col-md-1 col-quote">TVA</div>
+  <div class="col-md-1">PT HT</div>
+  <div class="col-md-1">
+    <a href="#" class="btn btn-success newline">
+      <span class="glyphicon glyphicon-plus-sign"></span>
+    </a>
+  </div>
+</div>
+{{ form_widget(form.lines) }}
+</div>
+{# end Grid format #}
       <div class="panel-footer">
         <div class="row">
           <div class="col-md-6 form-horizontal">
@@ -193,7 +219,7 @@
 
 {% block quote_line_row %}
 <tr {{ block('widget_container_attributes') }}>
-    <td class="col-quote">
+    <td class="visible-lg">
         {{ form_widget(form.position) }}
         {{ form_widget(form.product) }}
         {{ form_widget(form.isTransmitter) }}
@@ -206,7 +232,7 @@
           <span class="glyphicon glyphicon-plus-sign"></span>
         </a>
       </div>
-	  <br>{{ form_widget(form.showDescription) }}    
+	  {{ form_widget(form.showDescription) }}    
 	  {{ form_widget(form.description) }}
     </td>
     <td>{{ form_widget(form.quantity) }}</td>
@@ -233,3 +259,47 @@
     </td>
 </tr>
 {% endblock quote_line_row %}
+{#}
+{% block quote_line_row %}
+<div {{ block('widget_container_attributes') }} class="row">
+  <div class="col-md-2 col-quote">
+        {{ form_widget(form.position) }}
+        {{ form_widget(form.product) }}
+        {{ form_widget(form.isTransmitter) }}
+        {{ form_widget(form.reference) }}
+  </div>
+  <div class="col-md-3">
+      <div class="input-group">
+        {{ form_widget(form.designation) }}
+        <a class="input-group-addon show-description" href="#">
+          <span class="glyphicon glyphicon-plus-sign"></span>
+        </a>
+      </div>
+	  {{ form_widget(form.showDescription) }}    
+	  {{ form_widget(form.description) }}
+    </div>
+    <div class="col-md-1">{{ form_widget(form.quantity) }}</div>
+    <div class="col-md-2 col-coding">{{ form_widget(form.purchasePrice) }}</div>
+    <div class="col-md-1 col-coding">{{ form_widget(form.discountSupplier) }}</div>
+    <div class="col-md-1 col-coding">{{ form_widget(form.expenseRatio) }}</div>
+    <div class="col-md-1 col-coding">{{ form_widget(form.shipping) }}</div>
+    <div class="col-md-1 col-coding">
+      <div class="input-group">
+		<input id="{{ id }}_coef" type="text" class="form-control">
+		<span class="input-group-addon">%</span>
+	  </div>
+	</div>
+    <div class="col-md-2 col-quote">{{ form_widget(form.unitPrice) }}</div>
+    <div class="col-md-1 col-quote">{{ form_widget(form.discount) }}</div>
+    <div class="col-md-1 col-quote">{{ form_widget(form.vat) }}</div>
+    <div class="col-md-1">
+      <p class="form-control-static"><span id="{{ id }}_total">0,00</span> €</p>
+    </div>
+    <div class="col-md-1">
+      <button class="btn btn-danger remove-line">
+        <span class="glyphicon glyphicon-minus-sign"></span>
+      </button>
+    </div>
+</div>
+{% endblock quote_line_row %}
+{#}

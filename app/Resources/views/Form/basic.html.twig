@@ -18,7 +18,10 @@
 
 {% block money_widget %}
 {% spaceless %}
-    {{ money_pattern|replace({ '{{ widget }}': block('form_widget_simple') })|raw }}
+<div class="input-group">
+    {{ block('form_widget_simple') }}
+    <span class="input-group-addon">&euro;</span>
+  </div>
 {% endspaceless %}
 {% endblock money_widget %}
 
