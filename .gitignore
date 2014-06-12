@@ -22,7 +22,9 @@ web/bundles/*
 web/css/*
 web/js/*
 web/fonts/*
+web/images/*
 bin/*
+components/*
 
 # Configuration files
 app/config/parameters.ini

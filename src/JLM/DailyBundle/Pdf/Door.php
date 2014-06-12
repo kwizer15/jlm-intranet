@@ -4,6 +4,7 @@ namespace JLM\DailyBundle\Pdf;
 use \JLM\DefaultBundle\Pdf\FPDFext;
 use \JLM\ModelBundle\Entity\Door as ModelDoor;
 use \JLM\DailyBundle\Entity\ShiftTechnician;
+use JLM;
 
 class Door extends FPDFext
 {
@@ -54,12 +55,19 @@ class Door extends FPDFext
 		$datas[2] = $types[$shifting->getType()];
 		$datas[3] = ($shifting->getContract() == 'Hors contrat') ? 'HC' : $shifting->getContract();
 		$datas[4] = $shifting->getReason();
+		$datas[5] = '';
 		if ($entity->getComment())
+		{
 			$datas[5] = 'Technicien :'.chr(10).$entity->getComment().chr(10).chr(10);
+		}
 		else
 		{
+		    if ($interv instanceof JLM\DailyBundle\Entity\Fixing)
+		    {
+		        $datas[5] = 'Constat :'.chr(10).$interv->getObservation();
+		    }
 			$interv = $entity->getShifting();
-			$datas[5] = 'Rapport :'.chr(10).$interv->getReport();
+			$datas[5] .= 'Rapport :'.chr(10).$interv->getReport();
 			if ($interv->getRest())
 				$datas[5] .= chr(10).chr(10).'Reste à faire :'.chr(10).$interv->getRest();
 		}
