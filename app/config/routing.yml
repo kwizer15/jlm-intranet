@@ -1,3 +1,7 @@
+jlm_installation:
+    resource: "@JLMInstallationBundle/Resources/config/routing.yml"
+    prefix:   /
+
 jlm_intervention:
     resource: "@JLMInterventionBundle/Controller/"
     type:     annotation
