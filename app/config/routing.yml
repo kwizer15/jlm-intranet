@@ -1,3 +1,8 @@
+jlm_intervention:
+    resource: "@JLMInterventionBundle/Controller/"
+    type:     annotation
+    prefix:   /intervention
+
 jlm_fee:
     resource: "@JLMFeeBundle/Controller/"
     type:     annotation
