@@ -14,7 +14,7 @@ namespace JLM\InstallationBundle\Tests\Entity;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class PartTest extends \PHPUnit_Framework_TestCase
+class PartTypeTest extends \PHPUnit_Framework_TestCase
 {
     private $entity;
     
@@ -24,7 +24,7 @@ class PartTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->category = $this->getMock('JLM\InstallationBundle\Model\PartCategoryInterface');
-        $this->entity = new \JLM\InstallationBundle\Entity\Part('foo', $this->category, array(
+        $this->entity = new \JLM\InstallationBundle\Entity\PartType('foo', $this->category, array(
             $this->getMock('JLM\InstallationBundle\Model\PartStateInterface'),
             $this->getMock('JLM\InstallationBundle\Model\PartStateInterface'),
         ));
@@ -35,7 +35,7 @@ class PartTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\InstallationBundle\Model\PartInterface', $this->entity);
+        $this->assertInstanceOf('JLM\InstallationBundle\Model\PartTypeInterface', $this->entity);
     }
     
     public function testGetName()

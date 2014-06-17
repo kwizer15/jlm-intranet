@@ -11,13 +11,13 @@
 
 namespace JLM\InstallationBundle\Entity;
 
-use JLM\InstallationBundle\Model\PartInterface;
+use JLM\InstallationBundle\Model\PartTypeInterface;
 use JLM\InstallationBundle\Model\PartCategoryInterface;
 use JLM\InstallationBundle\Model\PartStateInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Part implements PartInterface
+class PartType implements PartTypeInterface
 {
     /**
      * Nom de la pièce
