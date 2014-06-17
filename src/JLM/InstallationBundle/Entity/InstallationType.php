@@ -42,11 +42,18 @@ class InstallationType implements InstallationTypeInterface
     }
     
     /**
-     * 
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

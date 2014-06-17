@@ -16,4 +16,13 @@ namespace JLM\InstallationBundle\Model;
  */
 interface InstallationTypeInterface
 {
+    /**
+     * @return string
+     */
+    public function getName(); 
+    
+    /**
+     * @return string
+     */
+    public function __toString();
 }
