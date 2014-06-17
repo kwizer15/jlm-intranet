@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the  package.
+ * This file is part of the installation-bundle package.
  *
  * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *
@@ -35,7 +35,7 @@ class PartTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\InstallationBundle\Model\PartTypeInterface', $this->entity);
+        $this->assertInstanceOf('JLM\InstallationBundle\Model\PartInterface', $this->entity);
     }
     
     public function testGetName()
