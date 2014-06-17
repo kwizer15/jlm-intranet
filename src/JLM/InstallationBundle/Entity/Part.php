@@ -107,4 +107,12 @@ class Part implements PartInterface
     {
         return $this->installation;
     }
+    
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getType()->getName().' ('.$this->getLocation().')';
+    }
 }

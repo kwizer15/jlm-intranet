@@ -53,4 +53,11 @@ class PartTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame('foo', $this->entity->getLocation());
     }
+    
+    public function testGetName()
+    {
+        $this->partType->expects($this->once())->method('getName')->will($this->returnValue('bar'));
+        $this->assertSame('bar (foo)', $this->entity->getName());
+        
+    }
 }
