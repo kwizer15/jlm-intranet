@@ -17,8 +17,16 @@ use JLM\InstallationBundle\Model\PartStateInterface;
  */
 class PartState implements PartStateInterface
 {
+    /**
+     * 
+     * @var string
+     */
     private $name;
     
+    /**
+     * 
+     * @param string $name
+     */
     public function __construct($name)
     {
         $this->setName($name);
@@ -32,10 +40,23 @@ class PartState implements PartStateInterface
         return $this->name;
     }
     
+    /**
+     * 
+     * @param unknown $name
+     * @return \JLM\InstallationBundle\Entity\PartState
+     */
     public function setName($name)
     {
         $this->name = $name;
         
         return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

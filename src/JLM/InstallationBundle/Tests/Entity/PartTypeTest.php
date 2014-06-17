@@ -23,8 +23,7 @@ class PartTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->category = $this->getMock('JLM\InstallationBundle\Model\PartCategoryInterface');
-        $this->entity = new \JLM\InstallationBundle\Entity\PartType('foo', $this->category, array(
+        $this->entity = new \JLM\InstallationBundle\Entity\PartType('foo', array(
             $this->getMock('JLM\InstallationBundle\Model\PartStateInterface'),
             $this->getMock('JLM\InstallationBundle\Model\PartStateInterface'),
         ));
@@ -43,13 +42,13 @@ class PartTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('foo',$this->entity->getName());
     }
     
-    public function testGetCategory()
-    {
-        $this->assertSame($this->category, $this->entity->getCategory());
-    }
-    
     public function testGetStates()
     {
         $this->assertCount(2, $this->entity->getStates());
+    }
+    
+    public function test__toString()
+    {
+        $this->assertSame('foo', (string)$this->entity);
     }
 }

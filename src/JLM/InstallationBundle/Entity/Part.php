@@ -27,16 +27,16 @@ class Part implements PartInterface
     private $location;
     
     /**
-     * Installation
-     * @var InstallationInterface
-     */
-    private $installation;
-    
-    /**
      * Type de la pièce
      * @var PartTypeInterface
      */
     private $type;
+    
+    /**
+     * Pièce parente
+     * @var PartInterface
+     */
+    private $parent = null;
     
     /**
      * 
@@ -44,11 +44,11 @@ class Part implements PartInterface
      * @param PartCategoryInterface $category
      * @param array|Traversable $states
      */
-    public function __construct(InstallationInterface $installation, PartTypeInterface $type, $location)
+    public function __construct(PartTypeInterface $type, $location, PartInterface $parent = null)
     {
-        $this->setInstallation($installation);
         $this->setType($type);
         $this->setLocation($location);
+        $this->setParent($parent);
     }
     
     /**
@@ -90,29 +90,37 @@ class Part implements PartInterface
     }
     
     /**
-     * @param InstallationInterface $installation
+     * @param PartInterface $parent
      * @return self
      */
-    public function setInstallation(InstallationInterface $installation)
+    public function setParent(PartInterface $parent)
     {
-        $this->installation = $installation;
+        $this->parent = $parent;
     
         return $this;
     }
     
     /**
-     * @return InstallationInterface
+     * @return PartInterface
      */
-    public function getInstallation()
+    public function getParent()
     {
-        return $this->installation;
+        return $this->parent;
     }
     
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {
         return $this->getType()->getName().' ('.$this->getLocation().')';
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

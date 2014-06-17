@@ -22,7 +22,7 @@ interface PartTypeInterface
     public function getName();
     
     /**
-     * @return PartCategoryInterface
+     * @return string
      */
-    public function getCategory();
+    public function __toString();
 }

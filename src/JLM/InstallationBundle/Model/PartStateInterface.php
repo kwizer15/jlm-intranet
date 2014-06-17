@@ -20,4 +20,9 @@ interface PartStateInterface
      * @return string
      */
     public function getName();
+    
+    /**
+     * @return string
+     */
+    public function __toString();
 }

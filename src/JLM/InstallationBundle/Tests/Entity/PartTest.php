@@ -24,8 +24,8 @@ class PartTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->partType = $this->getMock('JLM\InstallationBundle\Model\PartTypeInterface');
-        $this->installation = $this->getMock('JLM\InstallationBundle\Model\InstallationInterface');
-        $this->entity = new \JLM\InstallationBundle\Entity\Part($this->installation, $this->partType, 'foo');
+        $this->parent = $this->getMock('JLM\InstallationBundle\Model\PartInterface');
+        $this->entity = new \JLM\InstallationBundle\Entity\Part($this->partType, 'foo', $this->parent);
     }
 
     /**
@@ -35,7 +35,7 @@ class PartTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('JLM\InstallationBundle\Model\PartInterface', $this->entity);
         $this->assertSame($this->partType, $this->entity->getType());
-        $this->assertSame($this->installation, $this->entity->getInstallation());
+        $this->assertSame($this->parent, $this->entity->getParent());
         $this->assertSame('foo', $this->entity->getLocation());
     }
 
@@ -44,9 +44,9 @@ class PartTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->partType, $this->entity->getType());
     }
 
-    public function testGetInstallation()
+    public function testGetParent()
     {
-        $this->assertSame($this->installation, $this->entity->getInstallation());
+        $this->assertSame($this->parent, $this->entity->getParent());
     }
     
     public function testGetLocation()
@@ -59,5 +59,12 @@ class PartTest extends \PHPUnit_Framework_TestCase
         $this->partType->expects($this->once())->method('getName')->will($this->returnValue('bar'));
         $this->assertSame('bar (foo)', $this->entity->getName());
         
+    }
+    
+    public function test__toString()
+    {
+        $this->partType->expects($this->once())->method('getName')->will($this->returnValue('bar'));
+        $this->assertSame('bar (foo)', (string)$this->entity);
+    
     }
 }

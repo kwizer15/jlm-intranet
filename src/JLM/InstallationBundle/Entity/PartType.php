@@ -43,10 +43,9 @@ class PartType implements PartTypeInterface
      * @param PartCategoryInterface $category
      * @param array|Traversable $states
      */
-    public function __construct($name, PartCategoryInterface $category, $states = array())
+    public function __construct($name, $states = array())
     {
         $this->setName($name);
-        $this->setCategory($category);
         $this->setStates($states);
     }
     
@@ -60,15 +59,6 @@ class PartType implements PartTypeInterface
     }
     
     /**
-     * 
-     * {@inheritdoc}
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-    
-    /**
      * @param string $name
      * @return self
      */
@@ -76,17 +66,6 @@ class PartType implements PartTypeInterface
     {
         $this->name = $name;
         
-        return $this;
-    }
-    
-    /**
-     * @param PartCategoryInterface $category
-     * @return self
-     */
-    public function setCategory(PartCategoryInterface $category)
-    {
-        $this->category = $category;
-    
         return $this;
     }
     
@@ -119,5 +98,13 @@ class PartType implements PartTypeInterface
         }
         
         return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

@@ -38,4 +38,10 @@ class PartStateTest extends \PHPUnit_Framework_TestCase
         $entity = new PartState('foo');
         $this->assertSame('foo', $entity->getName());
     }
+    
+    public function test__toString()
+    {
+        $entity = new PartState('foo');
+        $this->assertSame('foo', (string)$entity);
+    }
 }

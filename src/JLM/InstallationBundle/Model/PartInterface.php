@@ -16,4 +16,18 @@ namespace JLM\InstallationBundle\Model;
  */
 interface PartInterface
 {
+    /**
+     * @return string
+     */
+    public function getName();
+    
+    /**
+     * @return PartInterface
+     */
+    public function getParent();
+    
+    /**
+     * @return string
+     */
+    public function __toString();
 }
