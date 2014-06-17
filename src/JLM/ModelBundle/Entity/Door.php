@@ -5,6 +5,7 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\InstallationBundle\Model\InstallationInterface;
 
 /**
  * JLM\ModelBundle\Entity\Door
@@ -12,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="doors")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\DoorRepository")
  */
-class Door
+class Door implements InstallationInterface
 {
     /**
      * @var integer $id
