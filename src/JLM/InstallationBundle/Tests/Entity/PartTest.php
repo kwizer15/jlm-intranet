@@ -25,7 +25,7 @@ class PartTest extends \PHPUnit_Framework_TestCase
     {
         $this->partType = $this->getMock('JLM\InstallationBundle\Model\PartTypeInterface');
         $this->parent = $this->getMock('JLM\InstallationBundle\Model\PartInterface');
-        $this->entity = new \JLM\InstallationBundle\Entity\Part($this->partType, 'foo', $this->parent);
+        $this->entity = new \JLM\InstallationBundle\Entity\Part($this->partType, $this->parent, 'foo');
     }
 
     /**

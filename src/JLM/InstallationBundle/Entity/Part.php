@@ -44,7 +44,7 @@ class Part implements PartInterface
      * @param PartCategoryInterface $category
      * @param array|Traversable $states
      */
-    public function __construct(PartTypeInterface $type, $location, PartInterface $parent = null)
+    public function __construct(PartTypeInterface $type, PartInterface $parent = null, $location = null)
     {
         $this->setType($type);
         $this->setLocation($location);
