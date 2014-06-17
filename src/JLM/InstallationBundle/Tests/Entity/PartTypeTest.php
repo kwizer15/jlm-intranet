@@ -35,7 +35,7 @@ class PartTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\InstallationBundle\Model\PartInterface', $this->entity);
+        $this->assertInstanceOf('JLM\InstallationBundle\Model\PartTypeInterface', $this->entity);
     }
     
     public function testGetName()
