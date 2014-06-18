@@ -1,0 +1,7 @@
+parameters:
+#    jlm_collective_housing.example.class: JLM\CollectiveHousingBundle\Example
+
+services:
+#    jlm_collective_housing.example:
+#        class: %jlm_collective_housing.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

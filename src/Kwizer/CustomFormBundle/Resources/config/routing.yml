@@ -1,0 +1,3 @@
+kwizer_custom_form_homepage:
+    pattern:  /default/test
+    defaults: { _controller: KwizerCustomFormBundle:Default:index }

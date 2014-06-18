@@ -9,6 +9,8 @@ use JLM\CollectiveHousingBundle\Model\BuildingInterface;
 use JLM;
 use JLM\InstallationBundle\Model\BayInterface;
 
+use JLM\ContactBundle\Model\AddressInterface;
+
 /**
  * JLM\ModelBundle\Entity\Site
  *
@@ -40,7 +42,7 @@ class Site implements BuildingInterface
     /**
      * @var Address $address
      * 
-     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
      * @Assert\Valid
      * @Assert\NotNull
      */
@@ -91,7 +93,7 @@ class Site implements BuildingInterface
     /**
      * @var Address $lodge
      *
-     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
      * @Assert\Valid
      */
     private $lodge;
@@ -167,10 +169,10 @@ class Site implements BuildingInterface
     /**
      * Set address
      *
-     * @param JLM\ModelBundle\Entity\Address $address
+     * @param JLM\ContactBundle\Model\AddressInterface $address
      * @return Site
      */
-    public function setAddress(\JLM\ModelBundle\Entity\Address $address = null)
+    public function setAddress(AddressInterface $address = null)
     {
         $this->address = $address;
     
@@ -180,7 +182,7 @@ class Site implements BuildingInterface
     /**
      * Get address
      *
-     * @return JLM\ModelBundle\Entity\Address 
+     * @return JLM\ContactBundle\Model\AddressInterface
      */
     public function getAddress()
     {
@@ -190,10 +192,10 @@ class Site implements BuildingInterface
     /**
      * Set lodge
      *
-     * @param JLM\ModelBundle\Entity\Address $lodge
+     * @param JLM\ContactBundle\Model\AddressInterface $lodge
      * @return Site
      */
-    public function setLodge(\JLM\ModelBundle\Entity\Address $lodge = null)
+    public function setLodge(AddressInterface $lodge = null)
     {
     	$this->lodge = $lodge;
     
@@ -203,7 +205,7 @@ class Site implements BuildingInterface
     /**
      * Get lodge
      *
-     * @return JLM\ModelBundle\Entity\Address
+     * @return JLM\ContactBundle\Model\AddressInterface
      */
     public function getLodge()
     {

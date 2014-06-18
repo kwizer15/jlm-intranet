@@ -1,0 +1,11 @@
+{% extends 'JLMContactBundle::layout.html.twig' %}
+
+{% block content %}
+    <h1>Nouveau Person</h1>
+
+    {{ form(form) }}
+
+        <div class="form-actions">
+	<a href="{{ path('jlm_contact_person') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+</div>
+{% endblock content %}

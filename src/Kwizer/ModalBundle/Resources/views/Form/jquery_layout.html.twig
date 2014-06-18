@@ -1,0 +1,57 @@
+{% block kwizer_select2modal_javascript %}
+	{{ form_javascript(form) }}
+	<script type="text/javascript">
+	function loadKwizerModal($dialog,data){
+		$dialog.html(data);
+	    $form = $dialog.find('form');
+	    $form.on('submit',function(){ 
+		    $.ajax({
+				type: $form.attr('method'),
+				url: $form.attr('action'),
+				dataType: "html",
+				data: $form.serialize(),
+				success: function(data2){
+					loadKwizerModal($dialog,data2); 
+				}
+			});
+			return false;
+	    });
+	}
+	jQuery(document).ready(function($) {
+		var $url;
+		var $select = $('#{{ id }}');
+		var $field = $('#{{ id }}_modal');
+		var $toggleButtons = function(object){
+			if (object.val().length == 0) {
+				$('[href=#{{ id }}_modal].select2-select').hide();
+			} else {
+				$('[href=#{{ id }}_modal].select2-select').show();
+			}
+		};
+		$toggleButtons($select);
+		
+		$(".modal-caller").on('click',function(){
+			$url = $(this).attr('route');
+			$url = $url.replace('$',$select.val());
+		});
+		$select.on('change', function(){$toggleButtons($(this))});
+		$field.on('show',function(){
+			var $dialog = $(this).find('.modal-dialog'); 
+			$.ajax({
+				type: "GET",
+				url: $url,
+				dataType: "html",
+				success: function(data){
+					loadKwizerModal($dialog,data);
+				}
+			});   	       
+		});
+		$field.on('hide',function(){
+			
+			// Recharger les données
+			// Selectionner la bonne entrée
+				// Récuperer la bonne entrée
+		});
+	});
+	</script>
+{% endblock kwizer_select2modal_javascript %}

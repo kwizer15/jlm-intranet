@@ -5,6 +5,10 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\ContactBundle\Model\PersonInterface;
+use JLM\ContactBundle\Model\ContactEmailInterface;
+use JLM\ContactBundle\Model\ContactAddressInterface;
+use JLM\ContactBundle\Model\ContactPhoneInterface;
 
 /**
  * JLM\ModelBundle\Entity\SiteContact
@@ -12,7 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="site_contacts")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SiteContactRepository")
  */
-class SiteContact
+class SiteContact implements PersonInterface
 {
 	/**
      * @var integer $id
@@ -34,7 +38,7 @@ class SiteContact
 	/**
 	 * @var $person
 	 *
-	 * @ORM\ManyToOne(targetEntity="Person")
+	 * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\PersonInterface")
 	 * @Assert\Valid
 	 * @Assert\NotNull
 	 */
@@ -95,7 +99,7 @@ class SiteContact
      * @param JLM\ModelBundle\Entity\Person $person
      * @return SiteContact
      */
-    public function setPerson(\JLM\ModelBundle\Entity\Person $person = null)
+    public function setPerson(PersonInterface $person = null)
     {
         $this->person = $person;
     
@@ -121,7 +125,7 @@ class SiteContact
      */
     public function setRole($role)
     {
-        $this->getPerson()->setRole($role);
+        $this->person->setRole($role);
     
         return $this;
     }
@@ -134,7 +138,7 @@ class SiteContact
      */
     public function getRole()
     {
-        return $this->getPerson()->getRole();
+        return $this->person->getRole();
     }
     
     /**
@@ -167,4 +171,128 @@ class SiteContact
 //    {
 //    	return $this->professionnalPhone;
 //    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFirstName()
+    {
+    	return $this->person->getFirstName();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getLastName()
+    {
+    	return $this->person->getLastName();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+    	return $this->person->getName();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+    	return $this->person->__toString();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function addEmail(ContactEmailInterface $email)
+    {
+    	$this->person->addEmail($email);
+    	
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function removeEmail(ContactEmailInterface $email)
+    {
+    	$this->person->removeEmail($email);
+    	 
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getEmails()
+    {
+    	return $this->person->getEmails();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function addAddress(ContactAddressInterface $address)
+    {
+    	$this->person->addAddress($address);
+    	 
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function removeAddress(ContactAddressInterface $address)
+    {
+    	$this->person->removeAddress($address);
+    
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getAddresses()
+    {
+    	return $this->person->getAddresses();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getMainAddress()
+    {
+    	return $this->person->getMainAddress();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function addPhone(ContactPhoneInterface $phone)
+    {
+    	$this->person->addPhone($phone);
+    
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function removePhone(ContactPhoneInterface $phone)
+    {
+    	$this->person->removePhone($phone);
+    
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getPhones()
+    {
+    	return $this->person->getPhones();
+    }
 }

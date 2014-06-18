@@ -1,0 +1,12 @@
+{% extends 'JLMContactBundle::layout.html.twig' %}
+
+{% block content %}
+    <h1>Edition d'un Person</h1>
+
+    {{ form(edit_form) }}
+
+        <div class="form-actions">
+	<a href="{{ path('jlm_contact_person') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a>
+</div>
+{% endblock content %}

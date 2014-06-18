@@ -2,10 +2,33 @@ jlm_installation:
     resource: "@JLMInstallationBundle/Resources/config/routing.yml"
     prefix:   /
 
+kwizer_custom_form:
+    resource: "@KwizerCustomFormBundle/Resources/config/routing.yml"
+    prefix:   /
+
 jlm_intervention:
-    resource: "@JLMInterventionBundle/Controller/"
+    resource: "@JLMInterventionBundle/Resources/config/routing.yml"
+    prefix:   /
+
+jlm_collective_housing:
+    resource: "@JLMCollectiveHousingBundle/Resources/config/routing.yml"
+    prefix:   /
+
+jlm_product:
+    resource: "@JLMProductBundle/Controller/"
     type:     annotation
-    prefix:   /intervention
+    prefix:   /
+
+jlm_test:
+    resource: "@JLMTestBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+jlm_contact:
+    resource: "@JLMContactBundle/Controller/"
+    type:     annotation
+    prefix:   /contact
+>>>>>>> refs/heads/KwizerModalTemps
 
 jlm_fee:
     resource: "@JLMFeeBundle/Controller/"

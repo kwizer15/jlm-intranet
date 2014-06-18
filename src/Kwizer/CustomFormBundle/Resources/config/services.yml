@@ -1,0 +1,7 @@
+parameters:
+#    kwizer_custom_form.example.class: Kwizer\CustomFormBundle\Example
+
+services:
+#    kwizer_custom_form.example:
+#        class: %kwizer_custom_form.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

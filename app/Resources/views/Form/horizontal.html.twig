@@ -70,6 +70,21 @@
 {% endspaceless %}
 {% endblock choice_widget_expanded %}
 
+{% block choice_widget_options %}
+{% spaceless %}
+    {% for group_label, choice in options %}
+        {% if choice is iterable %}
+            <optgroup label="{{ group_label|trans({}, translation_domain) }}">
+                {% set options = choice %}
+                {{ block('choice_widget_options') }}
+            </optgroup>
+        {% else %}
+            <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|trans({}, translation_domain) }}</option>
+        {% endif %}
+    {% endfor %}
+{% endspaceless %}
+{% endblock choice_widget_options %}
+
 {% block money_widget %}
 {% spaceless %}
 	{% set attr = attr|merge({'class': attr.class|default('') ~ ' input-money' }) %}
@@ -97,6 +112,13 @@
 <span class="add-on"><i class="icon-envelope"></i></span>{{ block('form_widget_simple') }}</div>
 {% endspaceless %}
 {% endblock email_widget %}
+
+{% block button_attributes %}
+{% spaceless %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' btn' }) %}
+{{ parent() }}
+{% endspaceless %}
+{% endblock button_attributes %}
 
 {# Personal Types #}
 {# {% block city_select_widget %}

@@ -34,7 +34,6 @@ class DateSearchListener
 			unset($response['layout']['form_searchByDate_date']);
 		}
 		$form   = $this->formService->create(new DatepickerType(), $entity);
-		//echo get_class($this->form); exit;
 		$response['layout']['form_searchByDate'] = $form->createView();
 		
 		$event->setControllerResult($response);

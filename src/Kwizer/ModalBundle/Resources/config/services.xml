@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="kwizer_modal.type.select2modaltype" class="Kwizer\ModalBundle\Form\Type\Select2ModalType">
+   			<tag name="form.type" alias="kwizer_select2modal" />
+		</service>
+    </services>
+</container>

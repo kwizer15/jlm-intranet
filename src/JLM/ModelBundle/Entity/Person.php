@@ -5,6 +5,11 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\ContactBundle\Model\AddressInterface;
+use JLM\ContactBundle\Model\PersonInterface;
+use JLM\ContactBundle\Model\ContactEmailInterface;
+use JLM\ContactBundle\Model\ContactAddressInterface;
+use JLM\ContactBundle\Model\ContactPhoneInterface;
 
 /**
  * JLM\ModelBundle\Entity\Person
@@ -18,7 +23,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *      "technician" = "Technician",
  * })
  */
-class Person 
+class Person implements PersonInterface
 {
 	/**
      * @var integer $id
@@ -91,7 +96,7 @@ class Person
     /**
      * @var string $address
      * 
-     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
      */
     private $address;
     
@@ -199,6 +204,58 @@ class Person
     }
     
     /**
+     * {@inheritdoc}
+     */
+    public function getPhones()
+    {
+    	return array($this->fixedPhone, $this->mobilePhone, $this->fax);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function addPhone(ContactPhoneInterface $phone)
+    {
+    	$method = 'set' . $this->_getPhoneMethod($phone);
+    	$this->$method($phone->__toString());
+    	
+    	return $this;
+    }
+    
+    private function _getPhoneMethod(ContactPhoneInterface $phone)
+    {
+    	switch ($phone->getAlias())
+    	{
+    		case 'fixed':
+    			$method = 'FixedPhone';
+    			break;
+    		case 'mobile':
+    			$method = 'MobilePhone';
+    			break;
+    		default:
+    			$method = 'Fax';
+    	}
+    	
+    	return $method;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function removePhone(ContactPhoneInterface $phone)
+    {
+    	$method = $this->_getPhoneMethod($phone);
+    	$getMethod = 'get' . $method;
+    	if ($this->$getMethod() == $phone->__toString())
+    	{
+    		$setMethod = 'set' . $method;
+    		$this->$setMethod(null);
+    	}
+    	
+    	return $this;
+    }
+    
+    /**
      * Set fixedPhone
      *
      * @param string $fixedPhone
@@ -271,6 +328,35 @@ class Person
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function addEmail(ContactEmailInterface $email)
+    {
+    	$this->setEmail($email->__toString());
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function removeEmail(ContactEmailInterface $email)
+    {
+    	if ($email->__toString() === $this->getEmail())
+    	{
+    		$this->setEmail('');
+    	}
+    	
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getEmails()
+    {
+    	return array($this->email);
+    }
+    
+    /**
      * Get email
      *
      * @return string 
@@ -281,13 +367,47 @@ class Person
     }
     
     /**
+     * {@inheritdoc}
+     */
+    public function addAddress(ContactAddressInterface $address)
+    {
+    	$this->setAddress($address);
+    	
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function removeAddress(ContactAddressInterface $address)
+    {
+    	if ($address === $this->address)
+    	{
+    		$this->address = null;
+    	}
+    	
+    	return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getAddresses()
+    {
+    	return array($this->getAddress());
+    }
+    
+    /**
      * Set address
      *
      * @param string $address
+     * @return self
      */
-    public function setAddress($address)
+    public function setAddress(AddressInterface $address)
     {
     	$this->address = $address;
+    	
+    	return $this;
     }
     
     /**
@@ -298,6 +418,14 @@ class Person
     public function getAddress()
     {
     	return $this->address;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getMainAddress()
+    {
+    	return $this->getAddress();
     }
     
     /**

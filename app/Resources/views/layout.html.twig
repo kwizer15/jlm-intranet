@@ -4,15 +4,12 @@
 
 {% block stylesheets %}
 	{% stylesheets
-		'bundles/jlmdefault/css/bootstrap.css'
-		'bundles/jlmdefault/css/bootstrap-responsive.css'
-		'bundles/jlmdefault/js/select2-3.4.5/select2.css'
+		'@bootstrap_css'
+		'@jqueryui_css'
+		'@select2_css'
+		'@JLMDefaultBundle/Resources/public/css/style.css'
 		filter='cssrewrite'
 		 %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-	{% endstylesheets %}
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css">
-	{% stylesheets '@JLMDefaultBundle/Resources/public/css/style.css' filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
 	{% endstylesheets %}
 	{% if form is defined %}{{ form_stylesheet(form) }}{% endif %}
@@ -164,19 +161,20 @@
           {% endblock footer %}
       </footer>
       {% block modals %}
+      {% if form is defined %}{{ form_modal(form) }}{% endif %}
+	  {% if edit_form is defined %}{{ form_modal(edit_form) }}{% endif %}
       {% endblock modals %}
 {% endblock body%}
 
 {% block javascripts %}
     {% javascripts
-    	'../app/Resources/public/js/jquery-2.0.3.js'
-    	'../app/Resources/public/js/jquery-ui-1.10.3/jquery-ui.js'
-    	'../app/Resources/public/js/hinclude.js'
-    	'../app/Resources/public/js/bootstrap.js'
-    	'../app/Resources/public/js/jquery-ui-1.10.3/i18n/jquery.ui.datepicker-fr.js'
+    	'@jquery_js'
+    	'@jqueryui_js'
+    	'@bootstrap_js'
+    	'@select2_js'
+		'@highstock_js'
     	'../app/Resources/public/js/number_format.js'
     	'../app/Resources/public/js/modalform.js'
-    	'@JLMDefaultBundle/Resources/public/js/highstock.js'
     	'../app/Resources/public/js/highcharts_init.js'
     	'@JLMDefaultBundle/Resources/public/js/select2-3.4.5/select2.js'
     	filter='yui_js' %}

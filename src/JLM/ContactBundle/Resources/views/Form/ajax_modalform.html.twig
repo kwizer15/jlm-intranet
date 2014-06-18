@@ -1,0 +1,81 @@
+{% extends ':Form:horizontal.html.twig' %}
+
+{% block form_start %}
+{% spaceless %}
+    {% set method = method|upper %}
+    {% if method in ["GET", "POST"] %}
+        {% set form_method = method %}
+    {% else %}
+        {% set form_method = "POST" %}
+    {% endif %}
+    <form class="modal-content" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %}{%if attrname != 'main_title'%} {{ attrname }}="{{ attrvalue }}"{% endif %}{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+    {% if form_method != method %}
+        <input type="hidden" name="_method" value="{{ method }}" />
+    {% endif %}
+{% endspaceless %}
+{% endblock form_start %}
+
+{% block form_end %}
+{% spaceless %}
+    {% if not render_rest is defined or render_rest %}
+        {{ form_rest(form) }}
+    {% endif %}
+    </form>
+{% endspaceless %}
+{% endblock form_end %}
+
+{% block button_widget %}
+{% spaceless %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    <button type="{{ type|default('button') }}" class="btn btn-primary" {{ block('button_attributes') }}>{{ label|trans({}, translation_domain) }}</button>
+{% endspaceless %}
+{% endblock button_widget %}
+
+{% block submit_widget %}
+{% spaceless %}
+    {% set type = type|default('submit') %}
+    	<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+    	{{ block('button_widget') }}
+{% endspaceless %}
+{% endblock submit_widget %}
+
+{% block form %}
+{% spaceless %}
+    {{ form_start(form) }}
+    <div class="modal-header">
+    		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    		<h3 id="modal-label">{{ attr.main_title|default('Modale') }}</h3>
+    </div>
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endspaceless %}
+{% endblock form %}
+
+{% block form_rows %}
+{% spaceless %}
+    {% for child in form %}
+    {% if child.vars.name != 'submit' %}
+        {{ form_row(child) }}
+    {% endif %}
+
+    {% endfor %}
+{% endspaceless %}
+{% endblock form_rows %}
+
+{% block form_widget_compound %}
+{% spaceless %}
+    <div class="modal-body" {{ block('widget_container_attributes') }}>
+        {% if form.parent is empty %}
+        	{% if form_errors(form) %}
+            <div class="alert">{{ form_errors(form) }}</div>
+            {% endif %}
+        {% endif %}
+        {{ block('form_rows') }}
+    </div>
+    <div class="modal-footer">
+    	{{ form_rest(form) }}
+    </div>
+{% endspaceless %}
+{% endblock form_widget_compound %}

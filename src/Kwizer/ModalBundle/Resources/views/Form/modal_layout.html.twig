@@ -1,0 +1,22 @@
+{% block form_modal %}
+{% spaceless %}
+    {% for child in form %}
+        {{ form_modal(child) }}
+    {% endfor %}
+{% endspaceless %}
+{% endblock form_modal %}
+
+{% block field_modal "" %}
+
+{% block button_modal "" %}
+
+{# Squelette d'une modal quelconque #}
+{# format bootstrap 3.0.3 compatible 2.3.2 #}
+{% block kwizer_select2modal_modal %}
+{% spaceless %}
+    <div id="{{ id }}_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="{{ id }}_modal_label" aria-hidden="true">
+    	<div class="modal-dialog">
+    	</div>
+    </div>
+{% endspaceless %}
+{% endblock kwizer_select2modal_modal %}

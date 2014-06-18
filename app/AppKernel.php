@@ -28,9 +28,12 @@ class AppKernel extends Kernel
             new JLM\DefaultBundle\JLMDefaultBundle(),
             new JLM\StateBundle\JLMStateBundle(),
             new JLM\TransmitterBundle\JLMTransmitterBundle(),
+            new JLM\ContactBundle\JLMContactBundle(),
             new JLM\FeeBundle\JLMFeeBundle(),
-            new JLM\InterventionBundle\JLMInterventionBundle(),
             new JLM\InstallationBundle\JLMInstallationBundle(),
+            new JLM\ProductBundle\JLMProductBundle(),
+            new JLM\CollectiveHousingBundle\JLMCollectiveHousingBundle(),
+            new JLM\InterventionBundle\JLMInterventionBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -5,7 +5,10 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use JLM\ModelBundle\Entity\CountryException;
+
+use JLM\ContactBundle\Model\CountryInterface;
+
+class CountryException extends \Exception {}
 
 /**
  * JLM\ModelBundle\Entity\Country
@@ -14,7 +17,7 @@ use JLM\ModelBundle\Entity\CountryException;
  * @ORM\Entity(readOnly=true)
  * @UniqueEntity("code")
  */
-class Country extends StringModel
+class Country extends StringModel implements CountryInterface
 {
     /**
      * @var string $code
