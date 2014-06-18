@@ -31,7 +31,7 @@ class Door implements BayInterface, PartInterface
      * Batiment "officiel"
      * @var BuildingInterface $site
      * 
-     * @ORM\ManyToOne(targetEntity="JLM\CollectiveHousingBundle\Model\PropertyInterface")
+     * @ORM\ManyToOne(targetEntity="JLM\CollectiveHousingBundle\Model\PropertyInterface", inversedBy="doors")
      */
     private $site;
     
