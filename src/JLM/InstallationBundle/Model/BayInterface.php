@@ -22,7 +22,7 @@ interface BayInterface
     public function getPart();
     
     /**
-     * @return JLM\CollectiveHousing\Model\BuldingInterface
+     * @return JLM\CollectiveHousing\Model\PropertyInterface
      */
-    public function getBuilding();
+    public function getProperty();
 }

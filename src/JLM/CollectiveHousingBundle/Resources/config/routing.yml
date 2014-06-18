@@ -1,3 +1,0 @@
-jlm_collective_housing_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: JLMCollectiveHousingBundle:Default:index }

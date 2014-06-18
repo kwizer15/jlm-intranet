@@ -21,9 +21,9 @@ class BayTest extends \PHPUnit_Framework_TestCase
     
     protected function setUp()
     {
-        $this->building = $this->getMock('JLM\CollectiveHousingBundle\Model\BuildingInterface');
+        $this->property = $this->getMock('JLM\CollectiveHousingBundle\Model\PropertyInterface');
         $this->part = $this->getMock('JLM\InstallationBundle\Model\PartInterface');
-        $this->entity = new Bay($this->building, $this->part);
+        $this->entity = new Bay($this->property, $this->part);
     }
     
     protected function assertPreConditions()
@@ -34,5 +34,10 @@ class BayTest extends \PHPUnit_Framework_TestCase
     public function testGetPart()
     {
         $this->assertSame($this->part, $this->entity->getPart());
+    }
+    
+    public function testGetProperty()
+    {
+        $this->assertSame($this->property, $this->entity->getProperty());
     }
 }

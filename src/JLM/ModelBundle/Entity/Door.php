@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\InstallationBundle\Model\BayInterface;
-use JLM\CollectiveHousingBundle\Model\BuildingInterface;
+use JLM\CollectiveHousingBundle\Model\PropertyInterface;
 use JLM\InstallationBundle\Model\PartTypeInterface;
 use JLM\InstallationBundle\Model\PartInterface;
 
@@ -31,7 +31,7 @@ class Door implements BayInterface, PartInterface
      * Batiment "officiel"
      * @var BuildingInterface $site
      * 
-     * @ORM\ManyToOne(targetEntity="JLM\CollectiveHousingBundle\Model\BuildingInterface")
+     * @ORM\ManyToOne(targetEntity="JLM\CollectiveHousingBundle\Model\PropertyInterface")
      */
     private $site;
     
@@ -48,7 +48,7 @@ class Door implements BayInterface, PartInterface
      * Type de porte
      * @var DoorType $type
      * 
-     * @ORM\ManyToOne(targetEntity="JLM\InstallationBundle\Model\PartType")
+     * @ORM\ManyToOne(targetEntity="JLM\InstallationBundle\Model\PartTypeInterface")
      */
     private $type;
     
@@ -211,10 +211,15 @@ class Door implements BayInterface, PartInterface
         return $this->id;
     }
 
+    public function getName()
+    {
+        return $this->toString();
+    }
+    
     /**
      * {@inheritdoc}
      */
-    public function getBuilding()
+    public function getProperty()
     {
         return $this->site;
     }
@@ -225,6 +230,14 @@ class Door implements BayInterface, PartInterface
     public function getPart()
     {
         return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getParent()
+    {
+        return null;
     }
     
     /**
@@ -373,10 +386,10 @@ class Door implements BayInterface, PartInterface
     /**
      * Set site
      *
-     * @param JLM\CollectiveHousing\Model\BuildingInterface $site
+     * @param JLM\CollectiveHousing\Model\PropertyInterface $site
      * @return self
      */
-    public function setSite(BuildingInterface $site = null)
+    public function setSite(PropertyInterface $site = null)
     {
         $this->site = $site;
     
@@ -583,7 +596,7 @@ class Door implements BayInterface, PartInterface
     {
     	$address = new Address;
     	$address->setStreet($this->getStreet());
-    	$address->setCity($this->getSite()->getAddress()->getCity());
+    	$address->setCity($this->getProperty()->getAddress()->getCity());
     	return $address;
     }
     
@@ -961,7 +974,7 @@ class Door implements BayInterface, PartInterface
      */
     public function isBlocked()
     {
-    	return $this->getBuilding()->isBlocked();
+    	return $this->getProperty()->isBlocked();
     }
 
     /**

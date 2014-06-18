@@ -21,6 +21,7 @@ class AppKernel extends Kernel
         	new JMS\DiExtraBundle\JMSDiExtraBundle($this),
         	new FOS\UserBundle\FOSUserBundle(),
         	new Genemu\Bundle\FormBundle\GenemuFormBundle(),
+            new Kwizer\ModalBundle\KwizerModalBundle(),
         	new JLM\UserBundle\JLMUserBundle(),
         	new JLM\ModelBundle\JLMModelBundle(),
         	new JLM\OfficeBundle\JLMOfficeBundle(),

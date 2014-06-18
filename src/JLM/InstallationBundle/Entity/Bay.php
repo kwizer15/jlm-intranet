@@ -13,7 +13,7 @@ namespace JLM\InstallationBundle\Entity;
 
 use JLM\InstallationBundle\Model\BayInterface;
 use JLM\InstallationBundle\Model\PartInterface;
-use JLM\CollectiveHousingBundle\Model\BuildingInterface;
+use JLM\CollectiveHousingBundle\Model\PropertyInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -25,18 +25,18 @@ class Bay implements BayInterface
     private $part;
     
     /**
-     * @var BuildingInterface
+     * @var PropertyInterface
      */
-    private $building;
+    private $property;
     
     /**
      * 
-     * @param BuildingInterface $building
+     * @param PropertyInterface $property
      * @param PartInterface $part
      */
-    public function __construct(BuildingInterface $building, PartInterface $part = null)
+    public function __construct(PropertyInterface $property, PartInterface $part = null)
     {
-        $this->setBuilding($building);
+        $this->setProperty($property);
         $this->setPart($part);
     }
     
@@ -51,9 +51,9 @@ class Bay implements BayInterface
     /**
      * {@inheritdoc}
      */
-    public function getBuilding()
+    public function getProperty()
     {
-        return $this->building;
+        return $this->property;
     }
     
     /**
@@ -70,12 +70,12 @@ class Bay implements BayInterface
     
     /**
      * 
-     * @param BuildingInterface $building
+     * @param PropertyInterface $property
      * @return \JLM\InstallationBundle\Entity\Bay
      */
-    public function setBuilding(BuildingInterface $building)
+    public function setProperty(PropertyInterface $property)
     {
-        $this->building = $building;
+        $this->property = $property;
         
         return $this;
     }

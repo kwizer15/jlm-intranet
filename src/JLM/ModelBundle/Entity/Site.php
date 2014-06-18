@@ -5,10 +5,8 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-use JLM\CollectiveHousingBundle\Model\BuildingInterface;
-use JLM;
+use JLM\CollectiveHousingBundle\Model\PropertyInterface;
 use JLM\InstallationBundle\Model\BayInterface;
-
 use JLM\ContactBundle\Model\AddressInterface;
 
 /**
@@ -17,7 +15,7 @@ use JLM\ContactBundle\Model\AddressInterface;
  * @ORM\Table(name="sites")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SiteRepository")
  */
-class Site implements BuildingInterface
+class Site implements PropertyInterface
 {
     /**
      * @var integer $id

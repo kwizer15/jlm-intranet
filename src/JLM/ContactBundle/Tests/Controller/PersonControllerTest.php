@@ -14,7 +14,7 @@ class PersonControllerTest extends WebTestCase
 
         // Create a new entry in the database
         $crawler = $client->request('GET', 'contact/person/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /person/");
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /contact/person/");
         $crawler = $client->click($crawler->selectLink('Nouvelle personne')->link());
 
         // Fill in the form and submit it

@@ -139,7 +139,7 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
         resolve_target_entities:
-            JLM\CollectiveHousingBundle\Model\BuildingInterface : JLM\ModelBundle\Entity\Site
+            JLM\CollectiveHousingBundle\Model\PropertyInterface : JLM\ModelBundle\Entity\Site
             JLM\InstallationBundle\Model\BayInterface : JLM\ModelBundle\Entity\Door
             JLM\InstallationBundle\Model\PartTypeInterface : JLM\ModelBundle\Entity\DoorType
             JLM\ContactBundle\Model\AddressInterface:        JLM\ModelBundle\Entity\Address

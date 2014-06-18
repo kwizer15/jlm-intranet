@@ -12,4 +12,9 @@ interface PropertyInterface
 	 * Get the address
 	 */
 	public function getAddress();
+	
+	/**
+	 * @return bool
+	 */
+	public function isBlocked(); 
 }
