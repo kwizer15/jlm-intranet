@@ -404,7 +404,7 @@ class Door implements BayInterface, PartInterface
      */
     public function getSite()
     {
-        return $this->getBuilding();
+        return $this->getProperty();
     }
 
     /**

@@ -45,4 +45,14 @@ class DoorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->entity->isBlocked());
     }
     
+    /**
+     * @deprecated
+     */
+    public function testGetSite()
+    {
+        $site = $this->getMock('JLM\CollectiveHousingBundle\Model\PropertyInterface');
+        $this->entity->setSite($site);
+        $this->assertSame($site,$this->entity->getSite());
+    }
+    
 }
