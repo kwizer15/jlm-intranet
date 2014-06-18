@@ -5,7 +5,10 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-use JLM\InstallationBundle\Model\InstallationInterface;
+use JLM\InstallationBundle\Model\BayInterface;
+use JLM\CollectiveHousingBundle\Model\BuildingInterface;
+use JLM\InstallationBundle\Model\PartTypeInterface;
+use JLM\InstallationBundle\Model\PartInterface;
 
 /**
  * JLM\ModelBundle\Entity\Door
@@ -13,7 +16,7 @@ use JLM\InstallationBundle\Model\InstallationInterface;
  * @ORM\Table(name="doors")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\DoorRepository")
  */
-class Door implements InstallationInterface
+class Door implements BayInterface, PartInterface
 {
     /**
      * @var integer $id
@@ -26,9 +29,9 @@ class Door implements InstallationInterface
     
     /**
      * Batiment "officiel"
-     * @var Site $site
+     * @var BuildingInterface $site
      * 
-     * @ORM\ManyToOne(targetEntity="Site",inversedBy="doors")
+     * @ORM\ManyToOne(targetEntity="JLM\CollectiveHousingBundle\Model\BuildingInterface")
      */
     private $site;
     
@@ -45,7 +48,7 @@ class Door implements InstallationInterface
      * Type de porte
      * @var DoorType $type
      * 
-     * @ORM\ManyToOne(targetEntity="DoorType")
+     * @ORM\ManyToOne(targetEntity="JLM\InstallationBundle\Model\PartType")
      */
     private $type;
     
@@ -209,6 +212,22 @@ class Door implements InstallationInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getBuilding()
+    {
+        return $this->site;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getPart()
+    {
+        return $this;
+    }
+    
+    /**
      * Set street
      *
      * @param string $street
@@ -354,10 +373,10 @@ class Door implements InstallationInterface
     /**
      * Set site
      *
-     * @param JLM\ModelBundle\Entity\Site $site
-     * @return Door
+     * @param JLM\CollectiveHousing\Model\BuildingInterface $site
+     * @return self
      */
-    public function setSite(\JLM\ModelBundle\Entity\Site $site = null)
+    public function setSite(BuildingInterface $site = null)
     {
         $this->site = $site;
     
@@ -367,20 +386,21 @@ class Door implements InstallationInterface
     /**
      * Get site
      *
-     * @return JLM\ModelBundle\Entity\Site 
+     * @return JLM\ModelBundle\Entity\Site
+     * @deprecated
      */
     public function getSite()
     {
-        return $this->site;
+        return $this->getBuilding();
     }
 
     /**
      * Set type
      *
-     * @param JLM\ModelBundle\Entity\DoorType $type
+     * @param PartTypeInterface $type
      * @return Door
      */
-    public function setType(\JLM\ModelBundle\Entity\DoorType $type = null)
+    public function setType(PartTypeInterface $type = null)
     {
         $this->type = $type;
     
@@ -390,7 +410,7 @@ class Door implements InstallationInterface
     /**
      * Get type
      *
-     * @return JLM\ModelBundle\Entity\DoorType 
+     * @return PartTypeInterface
      */
     public function getType()
     {
@@ -401,9 +421,9 @@ class Door implements InstallationInterface
      * Add parts
      *
      * @param JLM\ModelBundle\Entity\Product $parts
-     * @return Door
+     * @return self
      */
-    public function addPart(\JLM\ModelBundle\Entity\Product $parts)
+    public function addPart(PartInterface $parts)
     {
         $this->parts[] = $parts;
     
@@ -413,11 +433,14 @@ class Door implements InstallationInterface
     /**
      * Remove parts
      *
-     * @param JLM\ModelBundle\Entity\Product $parts
+     * @param PartInterface $parts
+     * @return self
      */
-    public function removePart(\JLM\ModelBundle\Entity\Product $parts)
+    public function removePart(PartInterface $parts)
     {
         $this->parts->removeElement($parts);
+        
+        return $this;
     }
 
     /**
@@ -864,7 +887,7 @@ class Door implements InstallationInterface
      */
     public function __toString()
     {
-    	return $this->getType().' - '.$this->getLocation().chr(10).$this->getSite();
+    	return $this->getType().' - '.$this->getLocation().chr(10).$this->getBuilding();
     }
     
     /**
@@ -872,7 +895,7 @@ class Door implements InstallationInterface
      */
     public function toString()
     {
-    	return $this->getType().' - '.$this->getLocation().chr(10).$this->getSite()->toString();
+    	return $this->getType().' - '.$this->getLocation().chr(10).$this->getBuilding()->toString();
     }
 
     /**
@@ -938,7 +961,7 @@ class Door implements InstallationInterface
      */
     public function isBlocked()
     {
-    	return $this->getSite()->isBlocked();
+    	return $this->getBuilding()->isBlocked();
     }
 
     /**

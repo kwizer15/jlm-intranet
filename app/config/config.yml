@@ -67,6 +67,10 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        resolve_target_entities:
+            JLM\CollectiveHousingBundle\Model\BuildingInterface : JLM\ModelBundle\Entity\Site
+            JLM\InstallationBundle\Model\BayInterface : JLM\ModelBundle\Entity\Door
+            JLM\InstallationBundle\Model\PartTypeInterface : JLM\ModelBundle\Entity\DoorType
 
 # Swiftmailer Configuration
 swiftmailer:

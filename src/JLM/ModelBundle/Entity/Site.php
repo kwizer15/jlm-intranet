@@ -5,6 +5,9 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\CollectiveHousingBundle\Model\BuildingInterface;
+use JLM;
+use JLM\InstallationBundle\Model\BayInterface;
 
 /**
  * JLM\ModelBundle\Entity\Site
@@ -12,7 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="sites")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SiteRepository")
  */
-class Site
+class Site implements BuildingInterface
 {
     /**
      * @var integer $id
@@ -252,10 +255,10 @@ class Site
     /**
      * Add doors
      *
-     * @param JLM\ModelBundle\Entity\Door $doors
+     * @param BayInterface $doors
      * @return Site
      */
-    public function addDoor(\JLM\ModelBundle\Entity\Door $doors)
+    public function addDoor(BayInterface $doors)
     {
         $this->doors[] = $doors;
     

@@ -4,7 +4,7 @@ namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use JLM\InstallationBundle\Model\InstallationTypeInterface;
+use JLM\InstallationBundle\Model\PartTypeInterface;
 
 /**
  * JLM\ModelBundle\Entity\DoorType
@@ -12,7 +12,7 @@ use JLM\InstallationBundle\Model\InstallationTypeInterface;
  * @ORM\Table(name="door_types")
  * @ORM\Entity
  */
-class DoorType extends StringModel implements InstallationTypeInterface
+class DoorType extends StringModel implements PartTypeInterface
 {
     /**
      * @var integer $id
