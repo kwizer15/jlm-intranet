@@ -33,8 +33,6 @@ class City implements CityInterface
     
     /**
      * @var string $name
-     * 
-     * @ORM\Column(name="name", type="string")
      */
     private $name;
     

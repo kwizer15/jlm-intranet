@@ -11,46 +11,31 @@ class CompanyException extends \Exception {}
 
 /**
  * Company
- *
- * @ORM\Table(name="jlm_contact_company")
- * @ORM\Entity
  */
 class Company extends Contact implements CompanyInterface
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
      * @var string
-     * 
-     * @ORM\Column(name="name", type="integer")
      */
     private $name;
     
     /**
      * @var int
-     * 
-     * @ORM\Column(name="siren", type="integer")
      */
     private $siren;
     
     /**
      * @var int
-     * 
-     * @ORM\Column(name="nic", type="integer")
      */
     private $nic;
 
 	/**
 	 * @var ArrayCollection
-	 * 
-	 * @ORM\ManyToMany(targetEntity="JLM\ContactBundle\Model\CompanyPersonInterface", mappedBy="company")
 	 */
     private $contacts;
     
