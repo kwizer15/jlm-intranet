@@ -1,0 +1,10 @@
+JLM\ContactBundle\Entity\CompanyPerson:
+    type: entity
+    table: jlm_contact_company_person
+    fields:
+        role:
+            type: string
+    manyToMany:
+        company:
+            targetEntity: JLM\ContactBundle\Model\CompanyInterface
+            inversedBy: contacts
