@@ -12,7 +12,7 @@ JLM\ContactBundle\Entity\Contact:
         id:
             type: integer
             id: true
-            generated:
+            generator:
                 strategy: AUTO
     oneToMany:
         datas:

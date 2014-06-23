@@ -13,7 +13,7 @@ JLM\ContactBundle\Entity\ContactData:
         id:
             type: integer
             id: true
-            generated:
+            generator:
                 strategy: AUTO
         alias:
             type: string
