@@ -1,0 +1,18 @@
+JLM\ContactBundle\Entity\Address:
+    type: entity
+    table: jlm_contact_address
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        street:
+            type: text
+            nullable: true
+    manyToOne:
+        city:
+            targetEntity: JLM\ContactBundle\Model\CityInterface
+            
+            
+            

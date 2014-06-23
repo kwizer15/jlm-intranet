@@ -3,32 +3,21 @@
 namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\CityInterface;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use JLM\ContactBundle\Model\CountryInterface;
 
 /**
  * JLM\ContactBundle\Entity\City
- *
- * @ORM\Table(name="jlm_contact_city")
- * @ORM\Entity(repositoryClass="JLM\ContactBundle\Entity\CityRepository", readOnly=true)
  */
 class City implements CityInterface
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string $zips
-     * 
-     * @ORM\Column(name="zip",type="string",length=20)
      * @Assert\Type(type="string")
      * @Assert\Length(min=4,max=20)
      * @Assert\NotNull
@@ -37,9 +26,6 @@ class City implements CityInterface
     
     /**
      * @var CountryInterface $country
-     * 
-     * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\CountryInterface")
-     * @ORM\JoinColumn(name="country_code", referencedColumnName="code")
      * @Assert\NotNull
      * @Assert\Valid
      */

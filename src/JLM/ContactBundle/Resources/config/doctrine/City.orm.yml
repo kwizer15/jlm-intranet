@@ -1,0 +1,22 @@
+JLM\ContactBundle\Entity\City:
+    type: entity
+    table: jlm_contact_city
+    repositoryClass: JLM\ContactBundle\Entity\CityRepository
+    readOnly: true
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+        zip:
+            type: string
+            length: 20
+    manyToOne:
+        country:
+            targetEntity: JLM\ContactBundle\Model\CountryInterface
+            joinColumn:
+                name: country_code
+                referencedColumnName: code

@@ -10,25 +10,17 @@ use JLM\ContactBundle\Model\CityInterface;
 
 /**
  * JLM\ContactBundle\Entity\Address
- *
- * @ORM\Table(name="jlm_contact_address")
- * @ORM\Entity
  */
 class Address implements AddressInterface
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
      * @var string $street
      *
-     * @ORM\Column(name="street", type="text", nullable=true)
      * @Assert\Type(type="string")
      */
     private $street;
@@ -36,7 +28,6 @@ class Address implements AddressInterface
     /**
      * @var string $city
      *
-     * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\CityInterface")
      * @Assert\NotNull
      * @Assert\Valid
      */
