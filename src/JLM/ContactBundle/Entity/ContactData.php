@@ -2,47 +2,25 @@
 
 namespace JLM\ContactBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use JLM\ContactBundle\Model\ContactDataInterface;
 use JLM\ContactBundle\Model\ContactInterface;
 
 class ContactDataException extends \Exception {}
 
-/**
- * @ORM\Entity
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap(
- * 		{
- * 			"address" = "JLM\ContactBundle\Entity\ContactAddress",
- * 			"email"   = "JLM\ContactBundle\Entity\ContactEmail",
- * 			"phone"   = "JLM\ContactBundle\Entity\ContactPhone",
- * 		}
- * 	)
- */
 abstract class ContactData implements ContactDataInterface
 {
 	/**
 	 * @var integer
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	private $id;
 	
 	/**
 	 * @var Contact
-	 *
-	 * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\ContactInterface", inversedBy="datas")
 	 */
 	private $contact = null;
 	
 	/**
 	 * @var string
-	 *
-	 * @ORM\Column(name="alias", type="string", length=255)
 	 */
 	private $alias = '';
 	

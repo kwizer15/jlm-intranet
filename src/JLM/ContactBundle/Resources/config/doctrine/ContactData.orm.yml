@@ -1,0 +1,23 @@
+JLM\ContactBundle\Entity\ContactData:
+    type: entity
+    table: jlm_contact_contact_data
+    inheritanceType: JOINED
+    discriminatorColumn:
+        name: discr
+        type: string
+    discriminatorMap:
+        address: ContactAddress
+        email: ContactEmail
+        phone: ContactPhone
+    fields:
+        id:
+            type: integer
+            id: true
+            generated:
+                strategy: AUTO
+        alias:
+            type: string
+    manyToOne:
+        contact:
+            targetEntity: JLM\ContactBundle\Model\ContactInterface
+            inversedBy: datas
