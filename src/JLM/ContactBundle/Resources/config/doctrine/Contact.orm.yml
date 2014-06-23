@@ -1,0 +1,21 @@
+JLM\ContactBundle\Entity\Contact:
+    type: entity
+    table: jlm_contact_contact
+    inheritanceType: JOINED
+    discriminatorColumn:
+        name: discr
+        type: string
+    discriminatorMap:
+        person: Person
+        company: Company
+    fields:
+        id:
+            type: integer
+            id: true
+            generated:
+                strategy: AUTO
+    oneToMany:
+        datas:
+            targetEntity: JLM\ContactBundle\Model\ContactDataInterface
+            mappedBy: contact
+                

@@ -12,30 +12,16 @@ use JLM\ContactBundle\Model\ContactEmailInterface;
 
 /**
  * Contact
- *
- * @ORM\Table(name="jlm_contact_contact")
- * @ORM\Entity
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
- * ORM\DiscriminatorMap({
- * 		"person" = "Person",
- *      "company" = "Company"
  */
 abstract class Contact implements ContactInterface
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var array
-     *
-     * @ORM\OneToMany(targetEntity="JLM\ContactBundle\Model\ContactDataInterface", mappedBy="contact")
      */
     private $datas;
     

@@ -2,8 +2,6 @@
 
 namespace JLM\ContactBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use JLM\ContactBundle\Entity\Contact;
 use JLM\ContactBundle\Model\PersonInterface;
 
@@ -11,32 +9,21 @@ class PersonException extends \Exception {}
 
 /**
  * Person
- *
- * @ORM\Table(name="jlm_contact_person")
- * @ORM\Entity
  */
 class Person extends Contact implements PersonInterface
 {
-
-
     /**
      * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=4)
      */
     private $title = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="firstName", type="string", length=255)
      */
     private $firstName = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="lastName", type="string", length=255)
      */
     private $lastName = '';
 

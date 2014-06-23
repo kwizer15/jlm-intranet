@@ -1,0 +1,12 @@
+JLM\ContactBundle\Entity\Person:
+    type: entity
+    table: jlm_contact_person
+    fields:
+        title:
+            type: string
+            length: 4
+        firstName:
+            type: string
+        lastName:
+            type: string
+            
