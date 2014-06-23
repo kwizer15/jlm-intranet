@@ -15,7 +15,7 @@ class CustomerException extends \Exception {}
  * @ORM\Table()
  * @ORM\Entity
  */
-class Customer extends ContactDecorator implements ContactInterface, BillableContact
+class Customer extends ContactDecorator implements ContactInterface
 {
     
     /**
