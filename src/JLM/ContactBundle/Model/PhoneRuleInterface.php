@@ -4,11 +4,6 @@ namespace JLM\ContactBundle\Model;
 interface PhoneRuleInterface
 {
 	/**
-	 * Constructor
-	 */
-	public function __construct($format, $code, $localCode = null, CountryInterface $country = null);
-	
-	/**
 	 * Get code
 	 *
 	 * @return string
