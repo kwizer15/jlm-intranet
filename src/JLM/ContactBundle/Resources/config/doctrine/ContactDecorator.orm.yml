@@ -1,0 +1,12 @@
+JLM\ContactBundle\Entity\ContactDecorator:
+    type: mappedSuperClass
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    oneToOne:
+        contact:
+            targetEntity: JLM\ContactBundle\Model\ContactInterface
+        

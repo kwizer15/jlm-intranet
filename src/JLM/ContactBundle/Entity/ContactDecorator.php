@@ -7,24 +7,15 @@ use JLM\ContactBundle\Model\ContactAddressInterface;
 use JLM\ContactBundle\Model\ContactEmailInterface;
 use JLM\ContactBundle\Model\ContactPhoneInterface;
 
-/**
- * @ORM\MappedSuperclass
- */
 abstract class ContactDecorator implements ContactInterface
 {
 	/**
 	 * @var integer
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	private $id;
 	
 	/**
 	 * @var Contact
-	 *
-	 * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\ContactInterface")
 	 */
 	private $contact;
 	
@@ -69,6 +60,7 @@ abstract class ContactDecorator implements ContactInterface
 	public function addEmail(ContactEmailInterface $email)
 	{
 		$this->contact->addEmail($email);
+		
 		return $this;
 	}
 	
@@ -78,6 +70,7 @@ abstract class ContactDecorator implements ContactInterface
 	public function removeEmail(ContactEmailInterface $email)
 	{
 		$this->contact->removeEmail($email);
+		
 		return $this;
 	}
 	
@@ -95,6 +88,7 @@ abstract class ContactDecorator implements ContactInterface
 	public function addAddress(ContactAddressInterface $address)
 	{
 		$this->contact->addAddress($address);
+		
 		return $this;
 	}
 	
@@ -104,6 +98,7 @@ abstract class ContactDecorator implements ContactInterface
 	public function removeAddress(ContactAddressInterface $address)
 	{
 		$this->contact->removeAddress($address);
+		
 		return $this;
 	}
 	
@@ -121,6 +116,7 @@ abstract class ContactDecorator implements ContactInterface
 	public function addPhone(ContactPhoneInterface $phone)
 	{
 		$this->contact->addPhone($phone);
+		
 		return $this;
 	}
 	
@@ -130,6 +126,7 @@ abstract class ContactDecorator implements ContactInterface
 	public function removePhone(ContactPhoneInterface $phone)
 	{
 		$this->contact->removePhone($phone);
+		
 		return $this;
 	}
 	
