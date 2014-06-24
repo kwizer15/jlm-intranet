@@ -1,0 +1,11 @@
+JLM\ContactBundle\Entity\Email:
+    type: entity
+    table: jlm_contact_email
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        address:
+            type: string

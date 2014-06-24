@@ -2,33 +2,22 @@
 
 namespace JLM\ContactBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use JLM\ContactBundle\Model\EmailInterface;
 
 class EmailException extends \Exception {}
 
 /**
  * Email
- *
- * @ORM\Table(name="jlm_contact_email")
- * @ORM\Entity
  */
 class Email implements EmailInterface
 {
 	/**
 	 * @var integer $id
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	private $id;
 	
     /**
      * @var string
-     * 
-     * @ORM\Column(name="address", type="string", length=255)
      */
     private $address;
     
