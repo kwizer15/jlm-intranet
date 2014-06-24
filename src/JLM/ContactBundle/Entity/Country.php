@@ -12,18 +12,11 @@ class CountryException extends \Exception {}
 
 /**
  * JLM\ContactBundle\Entity\Country
- *
- * @ORM\Table(name="jlm_contact_country")
- * @ORM\Entity(readOnly=true)
- * @UniqueEntity("code")
  */
 class Country implements CountryInterface
 {
     /**
      * @var string $code
-     *
-     * @ORM\Column(name="code", type="string", length=2)
-     * @ORM\Id
      * 
      * @Assert\Type(type="string")
      * @Assert\Length(min=2,max=2)
@@ -33,8 +26,6 @@ class Country implements CountryInterface
     
     /**
      * @var string $name
-     * 
-     * @ORM\Column(name="name", type="string", length=255)
      * 
      * @Assert\Type(type="string")
      * @Assert\Length(min=1)

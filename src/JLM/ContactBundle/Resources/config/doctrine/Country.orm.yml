@@ -1,0 +1,13 @@
+JLM\ContactBundle\Entity\Country:
+    type: entity
+    table: jlm_contact_country
+    readOnly: true
+    uniqueEntity: code
+    fields:
+        code:
+            id: true
+            type: string
+            length: 2
+        name:
+            type: string
+        
