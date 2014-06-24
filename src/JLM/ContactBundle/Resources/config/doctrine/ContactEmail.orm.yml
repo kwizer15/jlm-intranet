@@ -1,0 +1,9 @@
+JLM\ContactBundle\Entity\ContactEmail:
+    type: entity
+    table: jlm_contact_contact_email
+    fields:
+        
+    manyToOne:
+        email:
+            targetEntity: JLM\ContactBundle\Model\EmailInterface
+            inversedBy: emails

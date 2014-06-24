@@ -2,23 +2,17 @@
 
 namespace JLM\ContactBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use JLM\ContactBundle\Model\ContactEmailInterface;
 use JLM\ContactBundle\Model\ContactInterface;
 use JLM\ContactBundle\Model\EmailInterface;
 
 /**
  * ContactEmail
- *
- * @ORM\Table(name="jlm_contact_contact_email")
- * @ORM\Entity
  */
 class ContactEmail extends ContactData implements ContactEmailInterface
 {
     /**
      * @var Email
-     * 
-     * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\EmailInterface", inversedBy="emails")
      */
     private $email;
     
