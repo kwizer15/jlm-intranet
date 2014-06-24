@@ -2,45 +2,32 @@
 
 namespace JLM\ContactBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use JLM\ContactBundle\Model\ContactAddressInterface;
-
 use JLM\ContactBundle\Model\ContactInterface;
 use JLM\ContactBundle\Model\AddressInterface;
 
 /**
  * ContactAddress
- *
- * @ORM\Table(name="jlm_contact_contact_address")
- * @ORM\Entity
  */
 class ContactAddress extends ContactData implements ContactAddressInterface
 {
 	/**
 	 * @var Address
-	 * 
-	 * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
 	 */
 	private $address;
     
     /**
      * @var main
-     *
-     * @ORM\Column(name="main", type="boolean")
      */
     private $main = false;
 
     /**
      * @var label
-     * 
-     * @ORM\Column(name="label", type="string", nullable=true)
      */
     private $label;
     
     /**
      * Constructor
-     * @
      */
     public function __construct(ContactInterface $contact, $alias, AddressInterface $address)
     {

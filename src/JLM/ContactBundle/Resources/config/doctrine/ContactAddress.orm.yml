@@ -1,0 +1,12 @@
+JLM\ContactBundle\Entity\ContactAddress:
+    type: entity
+    table: jlm_contact_contact_address
+    fields:
+        main:
+            type: boolean
+        label:
+            type: string
+            nullable: true
+    manyToOne:
+        address:
+            targetEntity: JLM\ContactBundle\Model\AddressInterface
