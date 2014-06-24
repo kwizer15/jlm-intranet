@@ -1,0 +1,22 @@
+JLM\ContactBundle\Entity\PhoneRule:
+    type: entity
+    table: jlm_contact_phone_rule
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        code:
+            type: integer
+        localCode:
+            type: integer
+            nullable: true
+        format:
+            type: string
+    oneToOne:
+        country:
+            targetEntity: JLM\ContactBundle\Model\CountryInterface
+            joinColumn:
+                name: country_code
+                referencedColumnName: code

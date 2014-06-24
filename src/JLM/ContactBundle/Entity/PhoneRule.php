@@ -2,8 +2,6 @@
 
 namespace JLM\ContactBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use JLM\ContactBundle\Model\PhoneRuleInterface;
 use JLM\ContactBundle\Model\CountryInterface;
 
@@ -11,47 +9,31 @@ class PhoneRuleException extends \Exception {}
 
 /**
  * PhoneRule
- *
- * @ORM\Table(name="jlm_contact_phone_rule")
- * @ORM\Entity
  */
 class PhoneRule implements PhoneRuleInterface
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
      * @var Country
-     * 
-     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\CountryInterface")
-     * @ORM\JoinColumn(name="country_code", referencedColumnName="code")
      */
     private $country = null;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="code", type="integer")
      */
     private $code = 0;
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="local_code", type="integer", nullable=true)
      */
     private $localCode = null;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="format", type="string", length=255)
      */
     private $format = null;
 
