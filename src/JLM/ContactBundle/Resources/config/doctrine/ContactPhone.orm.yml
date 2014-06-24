@@ -1,0 +1,6 @@
+JLM\ContactBundle\Entity\ContactPhone:
+    type: entity
+    table: jlm_contact_contact_phone
+    manyToOne:
+        phone:
+            targetEntity: JLM\ContactBundle\Model\PhoneInterface
