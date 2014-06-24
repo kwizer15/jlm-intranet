@@ -1,0 +1,15 @@
+JLM\ContactBundle\Entity\Phone:
+    type: entity
+    table: jlm_contact_phone
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        number:
+            type: string
+            length: 20
+    manyToOne:
+        phoneRule:
+            targetEntity: JLM\ContactBundle\Model\PhoneRuleInterface
