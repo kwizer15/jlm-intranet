@@ -1,0 +1,2 @@
+JLM\ContactBundle\Entity\CompanyDecorator:
+    type: mappedSuperClass

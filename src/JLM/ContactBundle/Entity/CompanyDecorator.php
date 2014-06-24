@@ -2,15 +2,11 @@
 
 namespace JLM\ContactBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use JLM\ContactBundle\Model\CompanyInterface;
 use JLM\ContactBundle\Model\CompanyPersonInterface;
 
 /**
  * CompanyDecorator
- *
- * @ORM\MappedSuperclass
  */
 abstract class CompanyDecorator extends ContactDecorator implements CompanyInterface
 {
