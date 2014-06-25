@@ -9,4 +9,7 @@ JLM\ContactBundle\Entity\Person:
             type: string
         lastName:
             type: string
+    lifecycleCallbacks:
+        prePersist: [ updateName ]
+        preUpdate: [ updateName ]
             

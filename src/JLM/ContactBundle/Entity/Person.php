@@ -113,6 +113,7 @@ class Person extends Contact implements PersonInterface
     	} catch (PersonException $e) {
     		throw new PersonException('invalid firstName');
     	}
+    	
         return $this;
     }
     
@@ -138,6 +139,7 @@ class Person extends Contact implements PersonInterface
     	} catch (PersonException $e) {
     		throw new PersonException('invalid lastName');
     	}
+    	
         return $this;
     }
 
@@ -154,11 +156,6 @@ class Person extends Contact implements PersonInterface
      */
     public function __toString()
     {
-    	return $this->getName();
-    }
-    
-    public function getName()
-    {
     	$out = '';
     	if ($this->getTitle() != '')
     		$out .= $this->getTitle().' ';
@@ -166,6 +163,23 @@ class Person extends Contact implements PersonInterface
     		$out .= $this->getFirstName().' ';
     	if ($this->getLastName() != '')
     		$out .= strtoupper($this->getLastName());
+    	
     	return $out;
+    }
+    
+    public function getName()
+    {
+        return $this->getLastName().' '.$this->getFirstName();
+    }
+    
+    /**
+     * 
+     * @return \JLM\ContactBundle\Entity\Person
+     */
+    public function updateName()
+    {
+        $this->name = $this->getName();
+        
+        return $this;
     }
 }

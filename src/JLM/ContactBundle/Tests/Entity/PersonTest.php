@@ -23,7 +23,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
 		$this->assertSame('M.',$this->entity->getTitle());
 		$this->assertSame('Emmanuel',$this->entity->getFirstName());
 		$this->assertSame('Bernaszuk',$this->entity->getLastName());
-		$this->assertSame('M. Emmanuel BERNASZUK',$this->entity->getName());
+		$this->assertSame('Bernaszuk Emmanuel',$this->entity->getName());
 		$this->assertSame('M. Emmanuel BERNASZUK',$this->entity->__toString());
 	}
 	

@@ -1,5 +1,5 @@
 JLM\ContactBundle\Entity\ContactDecorator:
-    type: mappedSuperClass
+    type: mappedSuperclass
     fields:
         id:
             type: integer

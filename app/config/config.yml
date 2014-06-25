@@ -153,6 +153,8 @@ doctrine:
             JLM\ContactBundle\Model\ContactAddressInterface: JLM\ContactBundle\Entity\ContactAddress
             JLM\ContactBundle\Model\ContactEmailInterface:   JLM\ContactBundle\Entity\ContactEmail
             JLM\ContactBundle\Model\ContactPhoneInterface:   JLM\ContactBundle\Entity\ContactPhone
+            JLM\ContactBundle\Model\CompanyInterface:        JLM\ContactBundle\Entity\Company
+            JLM\ContactBundle\Model\CompanyPersonInterface:  JLM\ContactBundle\Entity\CompanyPerson
             JLM\ContactBundle\Model\PersonInterface:         JLM\ModelBundle\Entity\Person
 
 # Swiftmailer Configuration

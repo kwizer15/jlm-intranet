@@ -19,6 +19,12 @@ abstract class Contact implements ContactInterface
     private $id;
 
     /**
+     * Name for order
+     * @var string
+     */
+    protected $name;
+    
+    /**
      * @var array
      */
     private $datas;
@@ -36,8 +42,9 @@ abstract class Contact implements ContactInterface
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($name)
     {
+        $this->name = $name;
         $this->datas = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
@@ -159,6 +166,14 @@ abstract class Contact implements ContactInterface
     		if ($address->isMain())
     			return $address;
     	return null;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->name;
     }
     
     /**

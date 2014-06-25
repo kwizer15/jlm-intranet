@@ -11,5 +11,5 @@ JLM\ContactBundle\Entity\Phone:
             type: string
             length: 20
     manyToOne:
-        phoneRule:
+        rule:
             targetEntity: JLM\ContactBundle\Model\PhoneRuleInterface

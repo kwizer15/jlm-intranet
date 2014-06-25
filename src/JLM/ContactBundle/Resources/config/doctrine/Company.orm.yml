@@ -2,12 +2,11 @@ JLM\ContactBundle\Entity\Company:
     type: entity
     table: jlm_contact_company
     fields:
-        name:
-            type: string
         siren:
             type: string
         nic:
             type: string
     manyToMany:
-        targetEntity: JLM\ContactBundle\Model\CompanyPersonInterface
-        mappedBy: company
+        contacts:
+            targetEntity: JLM\ContactBundle\Model\CompanyPersonInterface
+            mappedBy: company

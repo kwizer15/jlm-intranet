@@ -20,11 +20,6 @@ class Company extends Contact implements CompanyInterface
     private $id;
     
     /**
-     * @var string
-     */
-    private $name;
-    
-    /**
      * @var int
      */
     private $siren;
@@ -63,15 +58,8 @@ class Company extends Contact implements CompanyInterface
     public function setName($name)
     {
     	$this->name = $name;
+    	
     	return $this;
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-    	return $this->name;
     }
     
     /**

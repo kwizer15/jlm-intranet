@@ -25,6 +25,20 @@ use Doctrine\ORM\EntityManager;
  */
 class ContactController extends Controller
 {
+    
+    /**
+     * Carnet d'adresse
+     * @Route("/{id}/edit", name="jlm_contact_contact_edit")
+     * @Method("GET")
+     * @Template()
+     */
+    public function indexAction()
+    {
+        $entities = $this->getDoctrine()->getRepository('JLMContactBundle:ContactInterface')->find(null, array('name' => 'ASC'));
+        
+        return array('entities' => $entities);
+    }
+    
     /**
      * Redirect to the Contact edit controller
      *

@@ -14,6 +14,8 @@ JLM\ContactBundle\Entity\Contact:
             id: true
             generator:
                 strategy: AUTO
+        name:
+            type: string
     oneToMany:
         datas:
             targetEntity: JLM\ContactBundle\Model\ContactDataInterface

@@ -14,8 +14,7 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\Contact');
-		$this->entity->expects($this->any())->method('getName')->will($this->returnValue('JLM Entreprise'));
+		$this->entity = $this->getMockForAbstractClass('JLM\ContactBundle\Entity\Contact',array('JLM Entreprise'));
 		
 		$this->address = $this->getMock('JLM\ContactBundle\Model\ContactAddressInterface');
 		$this->phone = $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface');
@@ -27,7 +26,7 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function assertPreConditions()
 	{
-		$this->assertSame('JLM Entreprise',$this->entity->getName());
+		$this->assertSame('JLM Entreprise', $this->entity->getName());
 	}
 	
 	/**
@@ -36,6 +35,14 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 	public function testId()
 	{
 		$this->assertNull($this->entity->getId());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function testGetName()
+	{
+	    $this->assertSame('JLM Entreprise', $this->entity->getName());
 	}
 	
 	/**
