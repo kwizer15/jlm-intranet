@@ -1,0 +1,29 @@
+{% extends 'JLMContactBundle::layout.html.twig' %}
+
+{% block content %}
+<h1>Carnet d'adresse</h1>
+<div class="tabbable tabs-left">
+  <ul class="nav nav-tabs">
+{% for lettre in 'A'..'Z' %}
+    <li{%- if loop.index == 1 %} class="active"{%- endif -%}>
+      <a href="#lettre{{ lettre }}"  data-toggle="tab">{{ lettre }}</a>
+    </li>
+{% endfor %}
+  </ul>
+   <div class="tab-content">
+   {% for lettre, entities in ordered %}
+     <div class="tab-pane{%- if loop.index == 1 %} active{%- endif -%}" id="lettre{{ lettre }}">
+       <h2>{{ lettre }}</h2>
+         <table class="table table-hover">
+         {% for entity in entities %}
+           <tr>
+             <td>{{ entity.name }}</td>
+             <td></td>
+           </tr>
+         {% endfor %}
+         </table>
+     </div>
+   {% endfor %}
+  </div>
+</div>
+{% endblock content %}

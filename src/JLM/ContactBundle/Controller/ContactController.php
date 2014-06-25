@@ -19,7 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Doctrine\ORM\EntityManager;
 
 /**
- * Person controller.
+ * Contact controller.
  *
  * @Route("/contact")
  */
@@ -28,15 +28,23 @@ class ContactController extends Controller
     
     /**
      * Carnet d'adresse
-     * @Route("/{id}/edit", name="jlm_contact_contact_edit")
+     * @Route("/", name="jlm_contact_contact_index")
      * @Method("GET")
      * @Template()
      */
     public function indexAction()
     {
-        $entities = $this->getDoctrine()->getRepository('JLMContactBundle:ContactInterface')->find(null, array('name' => 'ASC'));
-        
-        return array('entities' => $entities);
+        $entities = $this->getDoctrine()->getRepository('JLMContactBundle:Contact')->findBy(array(), array('name' => 'ASC'));
+        $ordered = array();
+        for ($i = 0; $i < 26; $i++)
+        {
+            $ordered[chr(65+$i)] = array(); 
+        }
+        foreach ($entities as $entity)
+        {
+            $ordered[strtoupper(substr($entity->getName(),0,1))][] = $entity;
+        }
+        return array('ordered' => $ordered);
     }
     
     /**
