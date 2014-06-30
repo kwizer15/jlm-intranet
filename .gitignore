@@ -17,6 +17,7 @@ app/bootstrap*
 vendor/*
 */logs/*
 */cache/*
+web/assetic/*
 web/uploads/*
 web/bundles/*
 web/css/*
