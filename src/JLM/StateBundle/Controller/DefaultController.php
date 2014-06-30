@@ -35,7 +35,18 @@ class DefaultController extends Controller
     			$em->getRepository('JLMDailyBundle:ShiftTechnician')->getStatsByYear($year),
     			$em->getRepository('JLMDailyBundle:ShiftTechnician')->getStatsByMonths($year)
     	);
-    	$times = $numbers = array();
+    	$numbers = array();
+    	for ($i = 1; $i <= 12; $i++)
+    	{
+    	    while (strlen($i) < 2)
+    	    {
+    	        $i = '0'.$i;
+    	    }
+    	    $d = new \DateTime('2013-'.$i.'-01 00:00:00');
+    	    $numbers[$d->format('F')] = $times[$d->format('F')] = array('total'=>$base);
+    	}
+    	$numbers['Year'] = array('total'=>$base);
+    	$times = $numbers;
     	foreach ($stats as $stat)
     	{
     		$period = 'Year';
@@ -43,10 +54,6 @@ class DefaultController extends Controller
     		{
     			$d = new \DateTime($year.'-'.$stat['month'].'-01 00:00:00');
     			$period = $d->format('F');
-    		}
-    		if (!isset($numbers[$period]))
-    		{
-    			$numbers[$period] = $times[$period] = array('total'=>$base);
     		}
     		if (!isset($numbers[$period][$stat['name']]))
     		{
