@@ -413,6 +413,7 @@ class VariantController extends Controller
 		{			
 			// Création de la ligne travaux pré-remplie
 			$work = Work::createFromQuoteVariant($entity);
+			$work->setMustBeBilled(true);
 			$work->setCategory($em->getRepository('JLMDailyBundle:WorkCategory')->find(1));
 			$work->setObjective($em->getRepository('JLMDailyBundle:WorkObjective')->find(1));
 			$order = Order::createFromWork($work);

@@ -128,6 +128,7 @@ class MaintenanceController extends AbstractInterventionController
 					$main->setContract($door->getActualContract());
 					$main->setDoor($door);
 					$main->setPriority(5);
+					$main->setMustBeBilled(false);
 					$em->persist($main);
 					$count++;
 				}
