@@ -93,7 +93,7 @@ class DoorController extends Controller
         $form   = $this->createForm(new DoorType(), $entity);
 
         return array(
-        	'site' => $site,
+        	'site'   => $site,
             'entity' => $entity,
             'form'   => $form->createView(),
         );
@@ -135,15 +135,9 @@ class DoorController extends Controller
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function editAction($id)
+    public function editAction(Door $entity)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Door')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Door entity.');
-        }
 
         $editForm = $this->createForm(new DoorType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
@@ -154,6 +148,8 @@ class DoorController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+    
+    
 
     /**
      * Edits an existing Door entity.
@@ -163,16 +159,10 @@ class DoorController extends Controller
      * @Template("JLMModelBundle:Door:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function updateAction($id)
+    public function updateAction(Door $entity)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Door')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Door entity.');
-        }
-
+        
         $editForm   = $this->createForm(new DoorType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -193,7 +183,41 @@ class DoorController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+    
+    /**
+     * Edits an existing Door entity.
+     *
+     * @Route("/{id}/updatecode", name="model_door_update_code")
+     * @Method("PUT")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function updateCodeAction(Door $entity)
+    {
+        $em = $this->getDoctrine()->getManager();
+    
+        $codeForm   = $this->_createCodeForm($entity);
+    
+        $codeForm->handleRequest($this->getRequest());
+    
+        if ($codeForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+    
+            
+        }
+    
+        return $this->redirect($this->getRequest()->headers->get('referer'));
+    }
 
+    private function _createCodeForm(Door $door)
+	{
+		$form = $this->createForm(new \JLM\ModelBundle\Form\Type\DoorTagType(), $door,
+		array('action'=>$this->generateUrl('model_door_update_code',array('id'=>$door->getId())),
+		    'method'=>'PUT'));
+                    
+		return $form;
+	}
+    
     /**
      * Deletes a Door entity.
      *

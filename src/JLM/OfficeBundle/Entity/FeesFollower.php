@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * 
  * @author kwizer
- * @ORM\Table(name="fees_follower")
+ * @ORM\Table(name="fees_follower2")
  * @ORM\Entity
  */
 class FeesFollower

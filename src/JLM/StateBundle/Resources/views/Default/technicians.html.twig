@@ -231,22 +231,22 @@ $(function () {
         	name : 'Ateliers / Fournisseurs',
         	color : '#333333',
         	type : 'area',
-            data: [{% for period, onumbers in numbers %}{% if not loop.first %}{{ onumbers.total.equipment }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}]
+            data: [{% for period, onumbers in numbers %}{% if period != 'Year' %}{{ onumbers.total.equipment }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}]
         }, {
         	name : 'Travaux',
         	color : '#3a87ad',
         	type : 'area',
-            data: [{% for period, onumbers in numbers %}{% if not loop.first %}{{ onumbers.total.work }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}]
+            data: [{% for period, onumbers in numbers %}{% if period != 'Year' %}{{ onumbers.total.work }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}]
         }, {
         	name : 'Entretiens',
         	color : '#999999',
         	type : 'area',
-            data: [{% for period, onumbers in numbers %}{% if not loop.first %}{{ onumbers.total.maintenance }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}]
+            data: [{% for period, onumbers in numbers %}{% if period != 'Year' %}{{ onumbers.total.maintenance }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}]
         },{
         	name : 'Dépannages',
         	color : '#f89406',
         	type : 'area',
-            data: [{% for period, onumbers in numbers %}{% if not loop.first %}{{ onumbers.total.fixing }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}],
+            data: [{% for period, onumbers in numbers %}{% if period != 'Year' %}{{ onumbers.total.fixing }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}],
         }]
     });
     $('#evoltimetype').highcharts({
@@ -297,22 +297,22 @@ $(function () {
         	name : 'Ateliers / Fournisseurs',
         	color : '#333333',
         	type : 'area',
-            data: [{% for period, otimes in times %}{% if not loop.first %}{{ otimes.total.equipment.format('%h')*60+otimes.total.equipment.format('%i') }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}]
+            data: [{% for period, otimes in times %}{% if period != 'Year' %}{{ otimes.total.equipment.format('%h')*60+otimes.total.equipment.format('%i') }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}]
         }, {
         	name : 'Travaux',
         	color : '#3a87ad',
         	type : 'area',
-            data: [{% for period, otimes in times %}{% if not loop.first %}{{ otimes.total.work.format('%h')*60+otimes.total.work.format('%i') }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}]
+            data: [{% for period, otimes in times %}{% if period != 'Year' %}{{ otimes.total.work.format('%h')*60+otimes.total.work.format('%i') }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}]
         }, {
         	name : 'Entretiens',
         	color : '#999999',
         	type : 'area',
-            data: [{% for period, otimes in times %}{% if not loop.first %}{{ otimes.total.maintenance.format('%h')*60+otimes.total.maintenance.format('%i') }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}]
+            data: [{% for period, otimes in times %}{% if period != 'Year' %}{{ otimes.total.maintenance.format('%h')*60+otimes.total.maintenance.format('%i') }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}]
         }, {
         	name : 'Dépannages',
         	color : '#f89406', 
         	type : 'area',
-            data: [{% for period, otimes in times %}{% if not loop.first %}{{ otimes.total.fixing.format('%h')*60+otimes.total.fixing.format('%i') }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}],
+            data: [{% for period, otimes in times %}{% if period != 'Year' %}{{ otimes.total.fixing.format('%h')*60+otimes.total.fixing.format('%i') }}{% if not loop.last %},{% endif %}{% endif %}{% endfor %}],
         }]
     });
 });

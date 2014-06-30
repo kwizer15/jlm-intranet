@@ -40,6 +40,7 @@
 	    					<div class="span8">
 	    					{% if entity.underWarranty %}<span class="label label-success">Sous garantie jusqu'au {{ entity.endWarranty | date('d/m/Y') }}</span>{% endif %}
 								<dl>
+								<dt>{% if entity.code %}Code étiquette</dt><dd>{{ entity.code }}</dd>{% else %}{{ form(codeForm) }}</dt>{% endif %}
 								<dt>Dernier entretien</dt>
 								<dd>{% if entity.lastMaintenance is null %}Aucun{% else %}{{ entity.lastMaintenance | date('d/m/Y') }}{% endif %}</dd>
 				 				<dt>Émetteurs</dt>

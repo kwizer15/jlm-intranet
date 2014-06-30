@@ -217,7 +217,7 @@ class BillController extends PaginableController
         $vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
         $entity->setVatTransmitter($vat);
         $form    = $this->createForm(new BillType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 		
         if ($form->isValid())
         {
@@ -277,6 +277,7 @@ class BillController extends PaginableController
         if ($editForm->isValid())
         {
         	$em = $this->getDoctrine()->getManager();
+        	$em->persist($entity);
 	       	$lines = $entity->getLines();
 	       	foreach ($lines as $key => $line)
 	       	{
@@ -289,7 +290,7 @@ class BillController extends PaginableController
 	       	foreach ($originalLines as $line)
 	       		$em->remove($line);
 
-        	$em->persist($entity);
+        	
             $em->flush();
             return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
         }

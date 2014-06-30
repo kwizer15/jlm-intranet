@@ -75,5 +75,38 @@ class MaintenanceRepository extends InterventionRepository
 		return $datas;
 	}
 	
-
+	public function getToday()
+	{
+	    $today = new \DateTime;
+		$todaystring =  $today->format('Y-m-d');
+		$tomorrowstring = $today->add(new \DateInterval('P1D'))->format('Y-m-d');
+		// Interventions en cours
+		$qb = $this->createQueryBuilder('a')
+			->select('a,b,k,l,c,e,f,g,h,i,j,m,n')
+			->leftJoin('a.shiftTechnicians','b')
+			->leftJoin('a.askQuote','k')
+			->leftJoin('a.work','l')
+			->leftJoin('a.door','c')
+			//->leftJoin('c.interventions','d')
+			->leftJoin('c.site','e')
+			->leftJoin('e.address','f')
+			->leftJoin('f.city','g')
+			->leftJoin('e.bills','h')
+			->leftJoin('c.stops','i')
+			->leftJoin('c.contracts','j')
+			->leftJoin('j.trustee','m')
+			->leftJoin('c.type','n')
+			//->leftJoin('d.shiftTechnicians','o')
+			->where('b.begin BETWEEN ?1 AND ?2')
+//			->orWhere('b is null')
+//			->orWhere('a.close is null')
+//			->orWhere('a.report is null')
+			->orWhere('a.mustBeBilled is null and b is not null')
+			->orWhere('l is null and k is null and a.contactCustomer is null and a.rest is not null and b is not null')
+			->orderBy('a.creation','asc')
+			->setParameter(1,$todaystring)
+			->setParameter(2,$tomorrowstring)
+			;
+		return $qb->getQuery()->getResult();
+	}
 }

@@ -4,6 +4,7 @@ namespace JLM\ModelBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TrusteeType extends AbstractType
 {
@@ -31,10 +32,11 @@ class TrusteeType extends AbstractType
         return 'jlm_modelbundle_trusteetype';
     }
     
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-    	return array(
+    	$resolver
+    	->setDefaults(array(
     			'data_class' => 'JLM\ModelBundle\Entity\Trustee',
-    	);
+    	));
     }
 }

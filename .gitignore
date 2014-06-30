@@ -1,7 +1,43 @@
-/log/*
-/app/logs/*
-/app/cache/*
-/vendor/*
-/log
-/vendor
-/report
+# Eclipse
+.project
+.buildpath
+.settings/*
+
+# Apache
+apache.conf
+
+# Perso
+log/*
+report/*
+
+# Bootstrap
+app/bootstrap*
+
+# Symfony directories
+vendor/*
+components/*
+*/logs/*
+*/cache/*
+web/assetic/*
+web/uploads/*
+web/bundles/*
+web/css/*
+web/fonts/*
+web/images/*
+web/js/*
+bin/*
+
+# Configuration files
+app/config/parameters.ini
+app/config/parameters.yml
+
+# Composer
+composer.phar
+composer.lock
+
+# SQL
+structure.sql
+dbfinal.sql
+out.txt
+csv2php.php
+

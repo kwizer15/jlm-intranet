@@ -32,10 +32,23 @@ class DoorController extends Controller
 	public function showAction(Door $door)
 	{
 		$em = $this->getDoctrine()->getManager();
+		
+		$codeForm = $this->_createCodeForm($door);
+		
 		return array(
 			'entity' => $door,
 			'quotes' => $em->getRepository('JLMOfficeBundle:Quote')->getByDoor($door),
+		    'codeForm' => $codeForm->createView(),
 		);
+	}
+	
+	private function _createCodeForm(Door $door)
+	{
+		$form = $this->createForm(new \JLM\ModelBundle\Form\Type\DoorTagType(), $door,
+		array('action'=>$this->generateUrl('model_door_update_code',array('id'=>$door->getId())),
+		    'method'=>'PUT'));
+                    
+		return $form;
 	}
 	
 	/**

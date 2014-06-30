@@ -141,6 +141,7 @@
 				$('#' + $(this).attr('id') + '_vat').val($("#bill_vat").val());
 			else
 				$('#' + $(this).attr('id') + '_vat').val($("#bill_vatTransmitter").val());
+			$('#' + $(this).attr('id')).change();
 		});
 	}
 	, newline : function(e){
