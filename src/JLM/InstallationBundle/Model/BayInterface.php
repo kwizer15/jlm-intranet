@@ -25,4 +25,9 @@ interface BayInterface
      * @return JLM\CollectiveHousing\Model\PropertyInterface
      */
     public function getProperty();
+    
+    /**
+     * @return AddressInterface
+     */
+    public function getAddress();
 }

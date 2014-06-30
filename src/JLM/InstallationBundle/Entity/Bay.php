@@ -14,6 +14,7 @@ namespace JLM\InstallationBundle\Entity;
 use JLM\InstallationBundle\Model\BayInterface;
 use JLM\InstallationBundle\Model\PartInterface;
 use JLM\CollectiveHousingBundle\Model\PropertyInterface;
+use JLM\ContactBundle\Model\AddressInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -30,14 +31,20 @@ class Bay implements BayInterface
     private $property;
     
     /**
+     * @var AddressInterface
+     */
+    private $address;
+    
+    /**
      * 
      * @param PropertyInterface $property
      * @param PartInterface $part
      */
-    public function __construct(PropertyInterface $property, PartInterface $part = null)
+    public function __construct(PropertyInterface $property, PartInterface $part = null, AddressInterface $address)
     {
         $this->setProperty($property);
         $this->setPart($part);
+        $this->setAddress($address);
     }
     
     /**
@@ -77,6 +84,26 @@ class Bay implements BayInterface
     {
         $this->property = $property;
         
+        return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getAddress()
+    {
+        return $this->address === null ? $this->getProperty()->getAddress() : $this->address;
+    }
+    
+    /**
+     *
+     * @param PropertyInterface $property
+     * @return \JLM\InstallationBundle\Entity\Bay
+     */
+    public function setAddress(AddressInterface $address = null)
+    {
+        $this->address = $address;
+    
         return $this;
     }
 }
