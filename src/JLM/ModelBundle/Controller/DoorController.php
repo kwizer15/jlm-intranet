@@ -93,7 +93,7 @@ class DoorController extends Controller
         $form   = $this->createForm(new DoorType(), $entity);
 
         return array(
-        	'site' => $site,
+        	'site'   => $site,
             'entity' => $entity,
             'form'   => $form->createView(),
         );
@@ -135,15 +135,9 @@ class DoorController extends Controller
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function editAction($id)
+    public function editAction(Door $entity)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Door')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Door entity.');
-        }
 
         $editForm = $this->createForm(new DoorType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
@@ -165,16 +159,10 @@ class DoorController extends Controller
      * @Template("JLMModelBundle:Door:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function updateAction($id)
+    public function updateAction(Door $entity)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Door')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Door entity.');
-        }
-
+        
         $editForm   = $this->createForm(new DoorType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
