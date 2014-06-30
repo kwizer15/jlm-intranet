@@ -3,42 +3,13 @@ namespace JLM\OfficeBundle\Pdf;
 
 use \JLM\DefaultBundle\Pdf\FPDFext;
 
-class Bill extends FPDFext
-{
-	private $entity;
-	private $end = false;
-	private $head = true;
-	private $variantpage;
-	private $colsize = array(117, 12, 24, 24, 13);
+class Bill extends Document
+{ 
 	
-
-	
-	public static function get($entities, $duplicate = false)
-	{
-		
-		$pdf = new self();
-		$pdf->_init();
-		foreach ($entities as $entity)
-			$pdf->addEntity($entity, $duplicate);
-		return $pdf->Output('','S');
-	}
-	
-	public function addEntity($entity, $duplicate)
-	{
-		$this->entity = $entity;
-        $this->variantpage = $this->pageNo() + 1;
-		$this->addPage();
-		$this->_header($duplicate);
-		$this->_content();
-		$this->_footer();
-		return $this;
-	}
-	
-	public function _init()
-	{
-		$this->aliasNbPages();
-		$this->setFillColor(200);
-	}
+    protected function getColsize()
+    {
+        return array(117, 12, 24, 24, 13);
+    }
 	
 	public function _header($duplicate)
 	{
@@ -116,19 +87,7 @@ class Bill extends FPDFext
 		}
 	}
 	
-	public function _content()
-	{
-		// En tête lignes
-		$this->tabHeader();
-		$this->setFont('Arial','',10);
-		$lines = $this->entity->getLines();
-		foreach ($lines as $line)
-		{
-			$this->_line($line);
-		}	
-	}
-	
-	private function tabHeader()
+	public function tabHeader()
 	{
 	    $this->setFont('Arial','B',10);
 	    $this->cell($this->colsize[0],6,'Désignation',1,0,'C',true);
@@ -252,56 +211,8 @@ class Bill extends FPDFext
 		
 	}
 	
-	public function header()
+	public function getDocumentName()
 	{
-		if ($this->pageNo() == $this->variantpage )
-		{
-			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-header-comp.jpg',10,4,190);
-			$this->setFont('Arial','B',24);
-			$this->cell(60,35,'FACTURE',0,1,'C');
-			$this->ln(5);
-		}
-		else
-		{
-			
-			// Création
-			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-logo-comp.jpg',90,4,30);
-			$this->setFont('Arial','B',20);
-			$this->cell(60,12,'FACTURE',0,0,'L');
-			$this->cell(89,6);
-			$this->setFont('Arial','B',10);
-			$this->cell(22,6,'Date','LRT',0,'C',true);
-			$this->cell(19,6,'Facture n°','LRT',1,'C',true);
-			$this->setFont('Arial','',10);
-			$this->cell(149,6);
-			$this->cell(22,6,$this->entity->getCreation()->format('d/m/Y'),'LRB',0,'C');
-			$this->cell(19,6,$this->entity->getNumber(),'LRB',1,'C');
-			$this->ln(6);
-			$this->tabHeader();
-			$this->setFont('Arial','',10);
-		}
+	    return 'Facture';
 	}
-	
-	public function footer()
-	{
-		$this->ln(0);
-		if (!$this->end)
-		{
-			$y = $this->getY();
-			$h = 278 - $y;
-			$this->cell($this->colsize[0],$h,'','RLB',0);
-			$this->cell($this->colsize[1],$h,'','RLB',0);
-			$this->cell($this->colsize[2],$h,'','RLB',0);
-			$this->cell($this->colsize[3],$h,'','RLB',0);
-			$this->cell($this->colsize[4],$h,'','RLB',0);
-		}
-	
-		$this->image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-footer.jpg',50,280,110);
-		$this->setY(-15);
-		// Police Arial italique 8
-		$this->setFont('Arial','',12);
-		// Numéro de page
-		//$this->cell(0,10,$this->PageNo().'/{nb}',0,0,'R');
-	}
-
 }
