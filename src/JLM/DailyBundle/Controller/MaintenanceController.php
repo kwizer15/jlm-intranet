@@ -106,7 +106,7 @@ class MaintenanceController extends AbstractInterventionController
 	public function scanAction()
 	{
 		$date = new \DateTime;
-		$date->sub(new \DateInterval('P5M'));
+		$date->sub(new \DateInterval('P6M'));
 		$em = $this->getDoctrine()->getManager();
 		$doors = $em->getRepository('JLMModelBundle:Door')->findAll();
 		$count = 0;
