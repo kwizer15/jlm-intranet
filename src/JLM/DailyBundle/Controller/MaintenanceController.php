@@ -81,7 +81,7 @@ class MaintenanceController extends AbstractInterventionController
 		$em = $this->getDoctrine()->getManager();
 			
 		$form = $this->createForm(new MaintenanceCloseType(), $entity);
-		$form->bind($request);
+		$form->handleRequest($request);
 	
 		if ($form->isValid())
 		{
@@ -106,7 +106,7 @@ class MaintenanceController extends AbstractInterventionController
 	public function scanAction()
 	{
 		$date = new \DateTime;
-		$date->sub(new \DateInterval('P5M'));
+		$date->sub(new \DateInterval('P4M'));
 		$em = $this->getDoctrine()->getManager();
 		$doors = $em->getRepository('JLMModelBundle:Door')->findAll();
 		$count = 0;
