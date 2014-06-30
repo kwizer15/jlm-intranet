@@ -15,6 +15,7 @@ app/bootstrap*
 
 # Symfony directories
 vendor/*
+components/*
 */logs/*
 */cache/*
 web/assetic/*
