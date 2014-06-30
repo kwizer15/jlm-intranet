@@ -8,7 +8,7 @@ class Bill extends FPDFext
 	private $entity;
 	private $end = false;
 	private $head = true;
-	
+	private $variantpage;
 	private $colsize = array(117, 12, 24, 24, 13);
 	
 
@@ -26,6 +26,7 @@ class Bill extends FPDFext
 	public function addEntity($entity, $duplicate)
 	{
 		$this->entity = $entity;
+        $this->variantpage = $this->pageNo() + 1;
 		$this->addPage();
 		$this->_header($duplicate);
 		$this->_content();
@@ -134,7 +135,7 @@ class Bill extends FPDFext
 	    $this->cell($this->colsize[1],6,'Qté',1,0,'C',true);
 	    $this->cell($this->colsize[2],6,'Prix U.H.T',1,0,'C',true);
 	    $this->cell($this->colsize[3],6,'Prix H.T',1,0,'C',true);
-	    $this->cell($this->colsize[4],6,'TVA',1,0,'C',true);
+	    $this->cell($this->colsize[4],6,'TVA',1,1,'C',true);
 	}
 	
 	public function _line($line)
@@ -253,7 +254,7 @@ class Bill extends FPDFext
 	
 	public function header()
 	{
-		if (true) //$this->pageNo() == $this->variantpage )
+		if ($this->pageNo() == $this->variantpage )
 		{
 			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-header-comp.jpg',10,4,190);
 			$this->setFont('Arial','B',24);
