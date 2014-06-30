@@ -168,7 +168,7 @@ class QuoteController extends Controller
     {
         $entity  = new Quote();
         $form    = $this->createForm(new QuoteType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 		
         if ($form->isValid())
         {
@@ -221,7 +221,7 @@ class QuoteController extends Controller
     		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
     	 
         $editForm = $this->createForm(new QuoteType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
         
         if ($editForm->isValid()) {
         	$em = $this->getDoctrine()->getManager();
@@ -246,7 +246,7 @@ class QuoteController extends Controller
     public function deleteAction(Request $request, Quote $quote)
     {
         $form = $this->createDeleteForm($quote->getId());
-        $form->bind($request);
+        $form->handleRequest($request);
         if ($form->isValid()) {
             $em->remove($entity);
             $em->flush();
