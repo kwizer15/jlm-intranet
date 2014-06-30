@@ -157,6 +157,6 @@ class BillRepository extends SearchRepository
 	 */
 	protected function getSearchParams()
 	{
-		return array('a.number','b.name','d.street','e.name');
+		return array('a.number','b.name','d.street','e.name','a.trusteeName','a.reference','a.site','a.prelabel');
 	}
 }
