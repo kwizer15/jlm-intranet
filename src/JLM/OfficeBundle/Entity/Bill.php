@@ -151,6 +151,7 @@ class Bill extends Document implements BillInterface
 	 * @var ArrayCollection
 	 * 
 	 * @ORM\OneToMany(targetEntity="BillLine", mappedBy="bill")
+	 * @ORM\OrderBy({"position" = "ASC"})
 	 */
 	private $lines;
 
