@@ -155,6 +155,7 @@ class DefaultController extends Controller
 			$nb = 0;
 			$codes = array();
 			$lettres = 'AZERTY';
+
 			while ($nb < 500)
 			{
 				// On genèree un code aléatoire
@@ -164,6 +165,7 @@ class DefaultController extends Controller
 				    $number = '0'.$number;
 				}
 				$newCode = $lettres[rand(0,5)].$number;
+
 				// On vérifie s'il n'existe pas en BDD
 				$door = $repo->getByCode($newCode);
 				if ($door === null && !in_array($newCode,$codes))

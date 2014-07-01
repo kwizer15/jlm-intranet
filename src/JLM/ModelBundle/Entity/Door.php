@@ -185,7 +185,7 @@ class Door implements BayInterface, PartInterface
      * @var string
      * 
      * @ORM\Column(name="code", type="string", length=10, nullable=true)
-     * @Assert\Regex(pattern="#[1-9][A-NP-Z][0-9]#")
+     * @Assert\Regex(pattern="#[AZERTY][0-9]{4}#")
      */
     private $code;
     

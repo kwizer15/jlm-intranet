@@ -1,7 +1,60 @@
-# Eclipse
-.project
+*.pydevproject
+.metadata
+.gradle
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
 .buildpath
-.settings/*
+
+# sbteclipse plugin
+.target
+
+# TeXlipse plugin
+.texlipse
+
+
+.project
+# Cache and logs
+/app/cache/*
+/app/logs/*
+!app/cache/.gitkeep
+!app/logs/.gitkeep
+
+# Parameters
+/app/config/parameters.yml
+/app/config/parameters.ini
+
+# Managed by Composer
+/app/bootstrap.php.cache
+/bin/
+/vendor/
+
+# Assets and user uploads
+/web/bundles/
+/web/uploads/
+
+# PHPUnit
+/app/phpunit.xml
+
+# Composer PHAR
+/composer.phar
 
 # Apache
 apache.conf
@@ -10,30 +63,13 @@ apache.conf
 log/*
 report/*
 
-# Bootstrap
-app/bootstrap*
-
 # Symfony directories
-vendor/*
 components/*
-*/logs/*
-*/cache/*
-web/uploads/*
-web/bundles/*
+web/assetic/*
 web/css/*
 web/fonts/*
 web/images/*
 web/js/*
-web/assetic/*
-bin/*
-
-# Configuration files
-app/config/parameters.ini
-app/config/parameters.yml
-
-# Composer
-composer.phar
-composer.lock
 
 # SQL
 structure.sql

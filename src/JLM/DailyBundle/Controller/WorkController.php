@@ -148,7 +148,7 @@ class WorkController extends AbstractInterventionController
 		$form = $this->createForm(new WorkType(), $entity);
 		$entity->setCreation(new \DateTime);
 		$entity->setPriority(4);
-		$form->bind($request);
+		$form->handleRequest($request);
 		$entity->setContract($entity->getDoor()->getActualContract());
 
 		if ($form->isValid()) {
@@ -197,7 +197,7 @@ class WorkController extends AbstractInterventionController
 		$em = $this->getDoctrine()->getManager();
 			
 		$editForm = $this->createForm(new WorkEditType(), $entity);
-		$editForm->bind($request);
+		$editForm->handleRequest($request);
 	
 		if ($editForm->isValid())
 		{
@@ -240,7 +240,7 @@ class WorkController extends AbstractInterventionController
 	public function closeupdateAction(Request $request, Work $entity)
 	{	
 		$form = $this->createForm(new WorkCloseType(), $entity);
-		$form->bind($request);
+		$form->handleRequest($request);
 	
 		if ($form->isValid())
 		{
@@ -256,6 +256,7 @@ class WorkController extends AbstractInterventionController
 				$em->persist($entity->getDoor());
 			}
 			$entity->setClose(new \DateTime);
+			$entity->setMustBeBilled($entity->getQuote() !== null);
 			$em->persist($entity);
 			$em->flush();
 			return $this->redirect($this->generateUrl('work_show', array('id' => $entity->getId())));

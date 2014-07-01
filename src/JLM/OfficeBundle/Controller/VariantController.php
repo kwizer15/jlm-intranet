@@ -64,7 +64,7 @@ class VariantController extends Controller
     {
     	$entity  = new QuoteVariant();
     	$form    = $this->createForm(new QuoteVariantType(), $entity);
-    	$form->bind($request);
+    	$form->handleRequest($request);
     
     	if ($form->isValid())
     	{
@@ -126,12 +126,13 @@ class VariantController extends Controller
 		foreach ($entity->getLines() as $line)
 			$originalLines[] = $line;
 		$editForm = $this->createForm(new QuoteVariantType(), $entity);
-		$editForm->bind($request);
+		$editForm->handleRequest($request);
 	
 		if ($editForm->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
-			foreach ($entity->getLines() as $key => $line)
+			$lines = $entity->getLines();
+			foreach ($lines as $key => $line)
 			{
 	
 				// Nouvelles lignes
@@ -412,6 +413,7 @@ class VariantController extends Controller
 		{			
 			// Création de la ligne travaux pré-remplie
 			$work = Work::createFromQuoteVariant($entity);
+			//$work->setMustBeBilled(true);
 			$work->setCategory($em->getRepository('JLMDailyBundle:WorkCategory')->find(1));
 			$work->setObjective($em->getRepository('JLMDailyBundle:WorkObjective')->find(1));
 			$order = Order::createFromWork($work);

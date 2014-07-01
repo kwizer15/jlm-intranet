@@ -3,6 +3,7 @@
 namespace JLM\OfficeBundle\Pdf;
 
 use \JLM\DefaultBundle\Pdf\FPDFext;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class Order extends FPDFext
 {
@@ -33,10 +34,21 @@ class Order extends FPDFext
 	
 	public function _header()
 	{
+	    $date = new \DateTime;
 		$this->setFont('Arial','B',16);
 		$this->cell(0,8,'Référence',0,1);
 		$this->setFont('Arial','',16);
 		$this->multicell(0,8,$this->entity->getWork()->getPlace(),0);
+		$this->cell(0,8,'Imprimé le '.$date->format('d/m/Y'),0,1,'R');
+		$quote = $this->entity->getWork()->getQuote();
+		if ($quote === null)
+		{
+		    $this->cell(0,8,'Complet',0,1,'R');
+		}
+		else
+		{
+		    $this->cell(0,8,'Devis n°'.$quote->getNumber(),0,1,'R');
+		}
 		$this->ln(12);
 	}
 	
