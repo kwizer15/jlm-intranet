@@ -145,7 +145,7 @@ class FixingController extends AbstractInterventionController
 	public function updateAction(Request $request, Fixing $entity)
 	{
 		$editForm = $this->createForm(new FixingEditType(), $entity);
-		$editForm->bind($request);
+		$editForm->handleRequest($request);
 	
 		if ($editForm->isValid())
 		{
@@ -189,7 +189,7 @@ class FixingController extends AbstractInterventionController
 	public function closeupdateAction(Request $request, Fixing $entity)
 	{	
 		$form = $this->createForm(new FixingCloseType(), $entity);
-		$form->bind($request);
+		$form->handleRequest($request);
 	
 		if ($form->isValid())
 		{

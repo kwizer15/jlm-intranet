@@ -81,11 +81,12 @@ class MaintenanceController extends AbstractInterventionController
 		$em = $this->getDoctrine()->getManager();
 			
 		$form = $this->createForm(new MaintenanceCloseType(), $entity);
-		$form->bind($request);
+		$form->handleRequest($request);
 	
 		if ($form->isValid())
 		{
 			$entity->setClose(new \DateTime);
+			$entity->setMustBeBilled(false);
 			$em->persist($entity);
 			$em->flush();
 			return $this->redirect($this->generateUrl('maintenance_show', array('id' => $entity->getId())));
@@ -106,7 +107,7 @@ class MaintenanceController extends AbstractInterventionController
 	public function scanAction()
 	{
 		$date = new \DateTime;
-		$date->sub(new \DateInterval('P5M'));
+		$date->sub(new \DateInterval('P4M'));
 		$em = $this->getDoctrine()->getManager();
 		$doors = $em->getRepository('JLMModelBundle:Door')->findAll();
 		$count = 0;
@@ -128,6 +129,7 @@ class MaintenanceController extends AbstractInterventionController
 					$main->setContract($door->getActualContract());
 					$main->setDoor($door);
 					$main->setPriority(5);
+					//$main->setMustBeBilled(false);
 					$em->persist($main);
 					$count++;
 				}

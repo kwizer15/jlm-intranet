@@ -209,7 +209,7 @@ class QuoteController extends Controller
     public function deleteAction(Request $request, Quote $quote)
     {
         $form = $this->createDeleteForm($quote->getId());
-        $form->bind($request);
+        $form->handleRequest($request);
         if ($form->isValid()) {
             $em->remove($entity);
             $em->flush();

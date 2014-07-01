@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -93,7 +94,7 @@ class DoorController extends Controller
         $form   = $this->createForm(new DoorType(), $entity);
 
         return array(
-        	'site' => $site,
+        	'site'   => $site,
             'entity' => $entity,
             'form'   => $form->createView(),
         );
@@ -107,10 +108,9 @@ class DoorController extends Controller
      * @Template("JLMModelBundle:Door:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $entity  = new Door();
-        $request = $this->getRequest();
         $form    = $this->createForm(new DoorType(), $entity);
         $form->handleRequest($request);
 
@@ -135,18 +135,11 @@ class DoorController extends Controller
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function editAction($id)
+    public function editAction(Door $entity)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Door')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Door entity.');
-        }
-
         $editForm = $this->createForm(new DoorType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         return array(
             'entity'      => $entity,
@@ -165,28 +158,20 @@ class DoorController extends Controller
      * @Template("JLMModelBundle:Door:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function updateAction($id)
+    public function updateAction(Request $request, Door $entity)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMModelBundle:Door')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Door entity.');
-        }
-
+        
         $editForm   = $this->createForm(new DoorType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
+        $deleteForm = $this->createDeleteForm($entity->getId());
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isValid())
+        {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('door_show', array('id' => $id)));
+            return $this->redirect($this->generateUrl('door_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -203,19 +188,17 @@ class DoorController extends Controller
      * @Method("PUT")
      * @Secure(roles="ROLE_USER")
      */
-    public function updateCodeAction(Door $entity)
+    public function updateCodeAction(Request $request, Door $entity)
     {
         $em = $this->getDoctrine()->getManager();
+        
+        $codeForm = $this->_createCodeForm($entity);
+        $codeForm->handleRequest($request);
     
-        $codeForm   = $this->_createCodeForm($entity);
-    
-        $codeForm->handleRequest($this->getRequest());
-    
-        if ($codeForm->isValid()) {
+        if ($codeForm->isValid())
+        {
             $em->persist($entity);
             $em->flush();
-    
-            
         }
     
         return $this->redirect($this->getRequest()->headers->get('referer'));
@@ -237,21 +220,15 @@ class DoorController extends Controller
      * @Method("post")
      * @Secure(roles="ROLE_USER")
      */
-    public function deleteAction($id)
+    public function deleteAction(Door $entity)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($entity->getId());
         $request = $this->getRequest();
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('JLMModelBundle:Door')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Door entity.');
-            }
-
+        if ($form->isValid())
+        {
             $em->remove($entity);
             $em->flush();
         }

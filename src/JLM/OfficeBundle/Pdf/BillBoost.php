@@ -75,7 +75,12 @@ class BillBoost extends FPDFext
 		{
 			// Texte 2ème Rappel
 			$this->cell(0,5,'Notre dernier courrier étant resté sans effet, nous vous signalons qu\'à ce jour, sauf erreur ou omission',0,1,'FJ');
-			$this->cell(0,5,'de notre part, la facture ci-jointe pour un montant de '.number_format($entity->getTotalPriceAti(),2,',',' ').' € n\'est pas encore réglée.',0,1);
+			$this->cell(0,5,'de notre part, la facture n°'.$entity->getNumber().' ci-jointe pour un montant de '.number_format($entity->getTotalPriceAti(),2,',',' ').' € n\'est pas encore réglée.',0,1);
+			$this->ln(5);
+			$this->setFont($this->police,'BU',13);
+			$this->cell(0,5,'Affaire',0,1,'C');
+			$this->setFont($this->police,'',13);
+			$this->multiCell(0,5,$entity->getSite(),0,'C');
 			$this->ln(5);
 			$this->cell(0,5,'Nous vous remercions de bien vouloir régulariser votre situation dans les meilleurs délais.',0,1);
 			$this->ln(5);
