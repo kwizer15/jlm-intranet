@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -107,10 +108,9 @@ class DoorController extends Controller
      * @Template("JLMModelBundle:Door:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $entity  = new Door();
-        $request = $this->getRequest();
         $form    = $this->createForm(new DoorType(), $entity);
         $form->handleRequest($request);
 
@@ -159,18 +159,16 @@ class DoorController extends Controller
      * @Template("JLMModelBundle:Door:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function updateAction(Door $entity)
+    public function updateAction(Request $request, Door $entity)
     {
         $em = $this->getDoctrine()->getManager();
         
         $editForm   = $this->createForm(new DoorType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isValid())
+        {
             $em->persist($entity);
             $em->flush();
 
@@ -191,19 +189,17 @@ class DoorController extends Controller
      * @Method("PUT")
      * @Secure(roles="ROLE_USER")
      */
-    public function updateCodeAction(Door $entity)
+    public function updateCodeAction(Request $request, Door $entity)
     {
         $em = $this->getDoctrine()->getManager();
+        
+        $codeForm = $this->_createCodeForm($entity);
+        $codeForm->handleRequest($request);
     
-        $codeForm   = $this->_createCodeForm($entity);
-    
-        $codeForm->handleRequest($this->getRequest());
-    
-        if ($codeForm->isValid()) {
+        if ($codeForm->isValid())
+        {
             $em->persist($entity);
             $em->flush();
-    
-            
         }
     
         return $this->redirect($this->getRequest()->headers->get('referer'));
