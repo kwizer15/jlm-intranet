@@ -101,7 +101,7 @@ class MaintenanceRepository extends InterventionRepository
 //			->orWhere('b is null')
 //			->orWhere('a.close is null')
 //			->orWhere('a.report is null')
-			->orWhere('b is not null')
+			->orWhere('a;mustBebBiller is null and b is not null')
 			->orWhere('l is null and k is null and a.contactCustomer is null and a.rest is not null and b is not null')
 			->orderBy('a.creation','asc')
 			->setParameter(1,$todaystring)
