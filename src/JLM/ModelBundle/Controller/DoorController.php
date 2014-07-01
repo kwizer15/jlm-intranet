@@ -164,7 +164,7 @@ class DoorController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         $editForm   = $this->createForm(new DoorType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
         $editForm->handleRequest($request);
 
         if ($editForm->isValid())
@@ -172,7 +172,7 @@ class DoorController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('door_show', array('id' => $id)));
+            return $this->redirect($this->generateUrl('door_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -221,21 +221,15 @@ class DoorController extends Controller
      * @Method("post")
      * @Secure(roles="ROLE_USER")
      */
-    public function deleteAction($id)
+    public function deleteAction(Door $entity)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($entity->getId());
         $request = $this->getRequest();
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('JLMModelBundle:Door')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Door entity.');
-            }
-
+        if ($form->isValid())
+        {
             $em->remove($entity);
             $em->flush();
         }
