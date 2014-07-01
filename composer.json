@@ -23,11 +23,11 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "genemu/form-bundle": "2.2.*",
         "itbz/fpdf": "1.7.1",
-        "twbs/bootstrap": "3.1.*",
+        "twbs/bootstrap": "3.2.*",
         "kwizer15/jquery": "2.1.*",
-        "kwizer15/jquery-ui": "1.10.*",
+        "kwizer15/jquery-ui": "1.11.*",
         "kwizer15/highcharts": "4.0.*",
-        "kwizer15/select2": "3.4.8"
+        "kwizer15/select2": "3.5.*"
     },
     "scripts": {
         "post-install-cmd": [
