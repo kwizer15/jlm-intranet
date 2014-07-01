@@ -86,6 +86,7 @@ class MaintenanceController extends AbstractInterventionController
 		if ($form->isValid())
 		{
 			$entity->setClose(new \DateTime);
+			$main->setMustBeBilled(false);
 			$em->persist($entity);
 			$em->flush();
 			return $this->redirect($this->generateUrl('maintenance_show', array('id' => $entity->getId())));
@@ -128,7 +129,7 @@ class MaintenanceController extends AbstractInterventionController
 					$main->setContract($door->getActualContract());
 					$main->setDoor($door);
 					$main->setPriority(5);
-					$main->setMustBeBilled(false);
+					//$main->setMustBeBilled(false);
 					$em->persist($main);
 					$count++;
 				}
