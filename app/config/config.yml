@@ -58,22 +58,22 @@ assetic:
             output: js/jquery.js
         jqueryui_js:
             inputs:
-                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.core.js
-                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.widget.js
-                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.mouse.js
-                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.position.js
-                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.sortable.js
-                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.autocomplete.js
-                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.datepicker.js
-                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.menu.js
-                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/i18n/jquery.ui.datepicker-fr.js
-                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.effect.js
-                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.effect-fade.js
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/jquery-ui.js
+#                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.widget.js
+#                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.mouse.js
+#                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.position.js
+#                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.sortable.js
+#                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.autocomplete.js
+#                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.datepicker.js
+#                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.menu.js
+#                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/i18n/jquery.ui.datepicker-fr.js
+#                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.effect.js
+#                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/dist/development-bundle/ui/jquery.ui.effect-fade.js
             output: js/jquery-ui.js
         jqueryui_css:
             inputs:
                 - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/jquery-ui.css
-                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/jquery.ui.theme.css
+                - %kernel.root_dir%/../vendor/kwizer15/jquery-ui/themes/themes/smoothness/theme.css
             output: css/jquery-ui.css
         jqueryui_png1:
             inputs:

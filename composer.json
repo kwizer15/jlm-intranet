@@ -27,7 +27,7 @@
         "kwizer15/jquery": "2.1.*",
         "kwizer15/jquery-ui": "1.11.*",
         "kwizer15/highcharts": "4.0.*",
-        "kwizer15/select2": "3.5.*"
+        "kwizer15/select2": "3.5.0"
     },
     "scripts": {
         "post-install-cmd": [
