@@ -86,7 +86,7 @@ class MaintenanceController extends AbstractInterventionController
 		if ($form->isValid())
 		{
 			$entity->setClose(new \DateTime);
-			$main->setMustBeBilled(false);
+			$entity->setMustBeBilled(false);
 			$em->persist($entity);
 			$em->flush();
 			return $this->redirect($this->generateUrl('maintenance_show', array('id' => $entity->getId())));
