@@ -20,6 +20,8 @@
 {% endblock %}
 
 {% block body %}
+      {% block modals %}
+      {% endblock modals %}
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
 	        <div class="container">
@@ -163,8 +165,6 @@
           {% block footer %}
           {% endblock footer %}
       </footer>
-      {% block modals %}
-      {% endblock modals %}
 {% endblock body%}
 
 {% block javascripts %}
@@ -202,5 +202,5 @@ $('.autocompletion').autocomplete({
 
 {% block javascriptappend %}
 {# z-index pour appartition dans une modal #}
-$('.ui-autocomplete, .modal .datepicker').css('z-index','10000');
+$('.ui-autocomplete, .modal .datepicker, .select2-input').css('z-index','15000');
 {% endblock %}

@@ -48,12 +48,15 @@
 <div class="form-actions">
 	<a href="#modalNew" class="btn btn-success" role="button" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Ajouter un contrat</a>
 </div>
+{% endblock %}
+
+{% block modals%}
 {% include 'JLMModelBundle:Contract:new.html.twig' with {'entity':entity,'form':form_contractNew } %}
 {% for key,contract in contracts %}
 	{% include 'JLMModelBundle:Contract:edit.html.twig' with {'entity':contract,'edit_form':form_contractEdits[key] } %}
 	{% include 'JLMModelBundle:Contract:stop.html.twig' with {'entity':contract,'form':form_contractStops[key] } %}
 {% endfor %}
-{% endblock %}
+{% endblock modals%}
 
 {% block javascripts %}
 {{ parent() }}
