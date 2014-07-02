@@ -131,7 +131,7 @@
     	           	};
     	        }
         	},
-        	{% if value is not none %}
+        	{% if value is not empty %}
         	initSelection: function(element, callback) {
         		var id=$(element).val();
         		if (id!=="") {
