@@ -109,7 +109,7 @@ abstract class Document extends FPDFext
             $nb = sizeof($this->colsize) - 1;
             foreach ($this->colsize as $key => $size)
             {
-                $this->cell($this->colsize[0],$h,'','RLB',($key == $nb));
+                $this->cell($size,$h,'','RLB',($key == $nb));
             }
         }
     
