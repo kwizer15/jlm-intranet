@@ -39,10 +39,9 @@ class CityController extends Controller
 	public function jsonAction(Request $request)
 	{
 		$id = $request->get('id');
-		
 		$em = $this->getDoctrine()->getManager();
-		
 		$city = $em->getRepository('JLMModelBundle:City')->getByIdToArray($id);
+		
 		return new JsonResponse($city);
 	}
 }

@@ -131,14 +131,13 @@
     	           	};
     	        }
         	},
-        	// value : 
-        	{% if value is not empty %}
+        	{% if value is not none %}
         	initSelection: function(element, callback) {
         		var id=$(element).val();
         		if (id!=="") {
         			$.ajax("{{ path('jlm_model_city_json') }}", {
         				data: {
-        					id: '{{ value.id }}'
+        					id: {{ value }}
         				},
         				dataType: "json"
         			}).done(function(data) { callback(data); });
@@ -159,7 +158,6 @@
 
         $field.select2($configs);
     </script>
-
 {% endblock %}
 
 {% block trustee_select_widget %}
