@@ -62,12 +62,12 @@ class Door extends FPDFext
 		}
 		else
 		{
-		    $interv = $shifting->getIntervention();
+		    $interv = $entity->getShifting();
 		    if ($interv instanceof JLM\DailyBundle\Entity\Fixing)
 		    {
 		        $datas[5] = 'Constat :'.chr(10).$interv->getObservation();
 		    }
-			$interv = $entity->getShifting();
+			
 			$datas[5] .= 'Rapport :'.chr(10).$interv->getReport();
 			if ($interv->getRest())
 				$datas[5] .= chr(10).chr(10).'Reste à faire :'.chr(10).$interv->getRest();
