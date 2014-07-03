@@ -67,6 +67,9 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        resolve_target_entities:
+            JLM\TransmitterBundle\Model\AttributionInterface: JLM\TransmitterBundle\Entity\Attribution
+            JLM\TransmitterBundle\Model\TransmitterInterface: JLM\TransmitterBundle\Entity\Transmitter
 
 # Swiftmailer Configuration
 swiftmailer:

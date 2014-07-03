@@ -6,13 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\BillLine;
 use JLM\ModelBundle\Entity\Product;
+use JLM\TransmitterBundle\Model\AttributionInterface;
 /**
  * Attribution
  *
  * @ORM\Table(name="transmitters_attributions")
  * @ORM\Entity(repositoryClass="JLM\TransmitterBundle\Entity\AttributionRepository")
  */
-class Attribution
+class Attribution implements AttributionInterface
 {
     /**
      * @var integer

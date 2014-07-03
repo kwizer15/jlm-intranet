@@ -251,15 +251,9 @@ class AttributionController extends Controller
      *
      * @Route("/{id}/bill", name="transmitter_attribution_bill")
      */
-    public function billAction($id)
+    public function billAction(Attribution $entity)
     {
     	$em = $this->getDoctrine()->getManager();
-    
-    	$entity = $em->getRepository('JLMTransmitterBundle:Attribution')->find($id);
-    
-    	if (!$entity) {
-    		throw $this->createNotFoundException('Unable to find Attribution entity.');
-    	}
 
 		// Création de la facture
 		if ($entity->getBill() === null)

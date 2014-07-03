@@ -9,22 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\OfficeBundle\Builder;
+namespace JLM\BillBundle\Builder;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-abstract class BillBuilderAbstract implements BillBuilderInterface
+interface BillLineFactory
 {
-    private $bill;
     
-    public function getBill()
+    public static function create(BillLineBuilderInterface $builder)
     {
-        return $this->bill;
-    }
+        $builder->create();
+        $builder->buildReference();
+        $builder->buildProduct();
+        $builder->buildQuantity();
+        $builder->buildPrice();
     
-    public function create()
-    {
-        $this->bill = new Bill;
+        return $builder->getLine();
     }
 }
