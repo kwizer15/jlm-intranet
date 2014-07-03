@@ -158,7 +158,7 @@ class DefaultController extends Controller
 			while ($nb < 100)
 			{
 				// On genèree un code aléatoire
-				$nb = rand(0,999);
+				$nb = rand(0,9999);
 				while (strlen($nb) < 4)
 				{
 				    $nb = '0'.$nb;

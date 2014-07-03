@@ -23,7 +23,7 @@ class Tag extends FPDFext
 		$this->addPage('L',array(105,148.5));
 		$this->setMargins(0,0);
 		$this->setAutoPageBreak(0);
-		$this->image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-logo-comp.jpg',50,10,80);
+		$this->image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmdefault/img/jlm-logo.png',50,10,80);
 		$url = 'http://chart.apis.google.com/chart?chs=180x180&choe=UTF-8&cht=qr&chl=http://www.jlm-entreprise.fr/installation/'.$code;
 		$this->image($url,8,8,40,40,'png');
 		$this->setXY(10,55);
@@ -38,7 +38,9 @@ class Tag extends FPDFext
 
 		$this->setXY(10,80);
 		$this->setFont('Arial','B',15);
+		$this->setTextColor(0,0,170);
 		$this->multiCell(90,7,'Numéro à communiquer en cas de demande d\'intervention',false,'C');
+		$this->setTextColor(0,0,0);
 		
 		return $this;
 	}
