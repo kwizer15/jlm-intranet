@@ -703,19 +703,11 @@ class Bill extends Document implements BillInterface
      */
     public function populateFromDoor(Door $door)
     {
-    	$this->setSite($door->getSite()->toString());
+        $contract = $door->getActualContract();
+        $trustee = (empty($contract)) ? $door->getSite()->getTrustee() : $contract->getTrustee();
+    	$this->populateFromSite($door->getSite(),$trustee);
     	$this->setDetails($door->getType().' - '.$door->getLocation());
-    	$contract = $door->getActualContract();
-    	$trustee = (empty($contract)) ? $door->getSite()->getTrustee() : $contract->getTrustee();
-    	if ($group = $door->getSite()->getGroupNumber())
-    		$this->setReference('Groupe : '.$group);
-    	$this->setTrustee($trustee);
-    	$this->setTrusteeName($trustee->getBillingLabel());
-    	$this->setTrusteeAddress($trustee->getAddressForBill()->toString());
-    	$accountNumber = ($trustee->getAccountNumber() == null) ? '411000' : $trustee->getAccountNumber();
-    	$this->setAccountNumber($accountNumber);
-    	$this->setPrelabel($door->getSite()->getBillingPrelabel());
-    	$this->setVat($door->getSite()->getVat()->getRate());
+    	
     	return $this;
     }
     
@@ -736,7 +728,8 @@ class Bill extends Document implements BillInterface
     	$this->setTrustee($trustee);
     	$this->setTrusteeName($trustee->getBillingLabel());
     	$this->setTrusteeAddress($trustee->getAddressForBill()->toString());
-    	$this->setAccountNumber($trustee->getAccountNumber());
+    	$accountNumber = ($trustee->getAccountNumber() == null) ? '411000' : $trustee->getAccountNumber();
+    	$this->setAccountNumber($accountNumber);
     	$this->setPrelabel($site->getBillingPrelabel());
     	$this->setVat($site->getVat()->getRate());
     	return $this;
