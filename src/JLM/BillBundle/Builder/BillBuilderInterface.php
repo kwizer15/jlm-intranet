@@ -21,6 +21,8 @@ interface BillBuilderInterface
      */
     public function getBill();
 
+    public function buildCreation();
+    
     public function buildLines();
     
     public function buildCustomer();
@@ -32,4 +34,6 @@ interface BillBuilderInterface
     public function buildIntro();
     
     public function buildDetails();
+    
+    public function buildConditions();
 }

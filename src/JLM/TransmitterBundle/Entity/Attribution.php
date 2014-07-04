@@ -249,10 +249,10 @@ class Attribution implements AttributionInterface
      */
     public function populateBill(Bill $bill, $vat, $earlyPayment = '', $penalty = '', $property = '', Product $port = null)
     {
-    	$bill->populateFromSite($this->getSite(),$this->getAsk()->getTrustee());
+    	$bill->populateFromSite($this->getSite(),$this->getAsk()->getTrustee());   // OK
     	$bill = $this->populateBillLines($bill,$vat,$port);
-    	$bill->setCreation(new \DateTime);
-    	$bill->setReference('Selon OS');
+    	$bill->setCreation(new \DateTime);     // OK
+    	$bill->setReference('Selon OS');       // OK
     	$bill->setVatTransmitter($vat);
     	$bill->setMaturity(30);
     	$bill->setEarlyPayment($earlyPayment);

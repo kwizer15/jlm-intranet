@@ -25,6 +25,7 @@ class BillFactory
     public static function create(BillBuilderInterface $builder)
     {
         $builder->create();
+        $builder->buildCreation();
         $builder->buildLines();
         $builder->buildCustomer();
         $builder->buildBusiness();

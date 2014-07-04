@@ -28,6 +28,11 @@ abstract class BillBuilderAbstract implements BillBuilderInterface
         $this->bill = new Bill;
     }
     
+    public function buildCreation()
+    {
+        $this->bill->setCreation(new \DateTime);
+    }
+    
     public function buildIntro() {}
     
     public function buildDetails() {}

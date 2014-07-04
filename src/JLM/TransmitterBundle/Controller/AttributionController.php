@@ -14,6 +14,8 @@ use JLM\TransmitterBundle\Entity\Ask;
 use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\BillLine;
 use JLM\TransmitterBundle\Form\Type\AttributionType;
+use JLM\BillBundle\Builder\BillFactory;
+use JLM\TransmitterBundle\Builder\AttributionBillBuilder;
 
 /**
  * Attribution controller.
@@ -90,7 +92,7 @@ class AttributionController extends Controller
     {
         $entity  = new Attribution();
         $form = $this->createForm(new AttributionType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -148,7 +150,7 @@ class AttributionController extends Controller
         }
 
         $editForm = $this->createForm(new AttributionType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -286,6 +288,29 @@ class AttributionController extends Controller
 		}
 		else
 			$bill = $entity->getBill();
+    	return $this->redirect($this->generateUrl('bill_edit', array('id' => $bill->getId())));
+    	
+    	/***************** via builder *****************/
+    	$em = $this->getDoctrine()->getManager();
+    	
+    	if ($entity->getBill() !== null)
+    	{
+    	   return $this->redirect($this->generateUrl('bill_edit', array('id' => $entity->getBill()->getId())));
+    	}
+    	// @todo trouver un autre solution que le codage brut
+    	$options = array(
+    	    'vat'          => $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate(),
+    	    'port'         => $em->getRepository('JLMModelBundle:Product')->find(134),
+    	    'earlyPayment' => $em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1),
+    	    'penalty'      => $em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1),
+    	    'property'     => $em->getRepository('JLMOfficeBundle:PropertyModel')->find(1),
+    	);
+    	$bill = BillFactory::create(new AttributionBillBuilder($entity, $options));
+    	$em->persist($bill);
+    	$entity->setBill($bill);
+    	$em->persist($entity);
+    	$em->flush();
+    	
     	return $this->redirect($this->generateUrl('bill_edit', array('id' => $bill->getId())));
     }
 }
