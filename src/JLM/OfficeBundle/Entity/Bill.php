@@ -562,6 +562,7 @@ class Bill extends Document implements BillInterface
      */
     public function addLine(\JLM\OfficeBundle\Entity\BillLine $line)
     {
+    	$line->setPosition(sizeof($this->lines));
     	$line->setBill($this);
         $this->lines[] = $line;
     
