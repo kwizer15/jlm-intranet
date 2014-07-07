@@ -50,12 +50,6 @@ class AttributionBillBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('JLM\OfficeBundle\Entity\Bill', $this->builder->getBill());
     }
     
-    public function testBuildCreation()
-    {
-        $this->builder->buildCreation();
-        $this->assertInstanceOf('DateTime', $this->builder->getBill()->getCreation());
-    }
-    
     public function testBuildLines()
     {
         $category = $this->getMock('JLM\ModelBundle\Entity\ProductCategory');
