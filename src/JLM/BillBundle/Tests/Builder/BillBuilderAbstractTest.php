@@ -16,6 +16,8 @@ namespace JLM\BillBundle\Tests\Builder;
  */
 class BillBuilderAbstractTest extends \PHPUnit_Framework_TestCase
 {
+    private $builder;
+    
     /**
      * {@inheritdoc}
      */
