@@ -60,7 +60,6 @@ class BillLineFactoryTest extends \PHPUnit_Framework_TestCase
     {
         return array(
         	array('create'),
-            array('buildReference'),
             array('buildProduct'),
             array('buildQuantity'),
             array('buildPrice'),

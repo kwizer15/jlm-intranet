@@ -20,7 +20,6 @@ class BillLineFactory
     public static function create(BillLineBuilderInterface $builder)
     {
         $builder->create();
-        $builder->buildReference();
         $builder->buildProduct();
         $builder->buildQuantity();
         $builder->buildPrice();

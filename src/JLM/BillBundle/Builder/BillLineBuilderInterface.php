@@ -18,8 +18,6 @@ interface BillLineBuilderInterface
 {
     public function create();
     
-    public function buildReference();
-    
     public function buildProduct();
     
     public function buildQuantity();
