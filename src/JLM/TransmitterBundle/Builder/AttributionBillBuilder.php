@@ -14,6 +14,7 @@ namespace JLM\TransmitterBundle\Builder;
 use JLM\BillBundle\Builder\BillBuilderAbstract;
 use JLM\TransmitterBundle\Model\AttributionInterface;
 use JLM\ModelBundle\Builder\ProductBillLineBuilder;
+use JLM\BillBundle\Builder\BillLineFactory;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -24,6 +25,12 @@ class AttributionBillBuilder extends BillBuilderAbstract
      * @var AttributionInterface
      */
     private $attribution;
+    
+    /**
+     * 
+     * @var unknown
+     */
+    private $vat;
     
     /**
      * 
@@ -93,16 +100,16 @@ class AttributionBillBuilder extends BillBuilderAbstract
                 $description .= 'n°'.$n1;
             }
             
-            $line = BillLineFactory::create(ProductBillLineBuilder($value['product'], $this->vat, $value['quantity'],array('description' => $description)));
-            $bill->addLine($line);
+            $line = BillLineFactory::create(new ProductBillLineBuilder($values['product'], $this->vat, $values['quantity'],array('description' => $description)));
+            $this->getBill()->addLine($line);
         }
         
         $port = (isset($this->options['port'])) ? $this->options['port'] : null; // Modif
         if ($port !== null)
         {
-            $line = BillLineFactory::create(ProductBillLineBuilder($port, $this->vat, sizeof($transmitters)));
+            $line = BillLineFactory::create(new ProductBillLineBuilder($port, $this->vat, sizeof($transmitters)));
             $line->setQuantity(1);
-            $bill->addLine($line);
+            $this->getBill()->addLine($line);
         }
     }
     
@@ -128,7 +135,7 @@ class AttributionBillBuilder extends BillBuilderAbstract
         $this->getBill()->setSiteObject($site);
         $this->getBill()->setSite($site->toString());
         $this->getBill()->setPrelabel($site->getBillingPrelabel());
-        $this->setVat($site->getVat()->getRate());
+        $this->getBill()->setVat($site->getVat()->getRate());
     }
     
     /**
@@ -144,7 +151,7 @@ class AttributionBillBuilder extends BillBuilderAbstract
      */
     public function buildConditions()
     {
-        foreach ($options as $key => $value)
+        foreach ($this->options as $key => $value)
         {
             switch ($key)
             {
@@ -159,6 +166,7 @@ class AttributionBillBuilder extends BillBuilderAbstract
             	    break;
             }
         }
+        $this->getBill()->setMaturity(30);
         $this->getBill()->setVatTransmitter($this->vat);
     }
     

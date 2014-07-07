@@ -16,5 +16,7 @@ namespace JLM\TransmitterBundle\Model;
  */
 interface TransmitterInterface
 {
+   public function getModel();
    
+   public function getNumber();
 }

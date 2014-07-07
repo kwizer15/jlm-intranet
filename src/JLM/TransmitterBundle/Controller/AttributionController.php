@@ -255,42 +255,42 @@ class AttributionController extends Controller
      */
     public function billAction(Attribution $entity)
     {
-    	$em = $this->getDoctrine()->getManager();
-
-		// Création de la facture
-		if ($entity->getBill() === null)
-		{
-			// TVA
-			$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
-			// Frais de port
-			// @todo trouver un autre solution que le codage brut
-			$port = $em->getRepository('JLMModelBundle:Product')->find(134);
-			// EarlyPayment
-			$earlyPayment = $em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1);
-			// Penalty
-			$penalty = $em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1);
-			// Clause de propriété
-			$property = $em->getRepository('JLMOfficeBundle:PropertyModel')->find(1);
-			
-			$bill = new Bill;
-			// Numéro de facture
-			$bill = $entity->populateBill($bill,$vat,$earlyPayment,$penalty,$property,$port);
-			$billLines = $bill->getLines();
-			foreach ($billLines as $line)
-			{
-				$line->setBill($bill);
-				$em->persist($line);
-			}
-			$em->persist($bill);
-			$entity->setBill($bill);
-			$em->persist($entity);
-			$em->flush();
-		}
-		else
-			$bill = $entity->getBill();
-    	return $this->redirect($this->generateUrl('bill_edit', array('id' => $bill->getId())));
-    	
-    	/***************** via builder *****************/
+//    	$em = $this->getDoctrine()->getManager();
+//
+//		// Création de la facture
+//		if ($entity->getBill() === null)
+//		{
+//			// TVA
+//			$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
+//			// Frais de port
+//			// @todo trouver un autre solution que le codage brut
+//			$port = $em->getRepository('JLMModelBundle:Product')->find(134);
+//			// EarlyPayment
+//			$earlyPayment = $em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1);
+//			// Penalty
+//			$penalty = $em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1);
+//			// Clause de propriété
+//			$property = $em->getRepository('JLMOfficeBundle:PropertyModel')->find(1);
+//			
+//			$bill = new Bill;
+//			// Numéro de facture
+//			$bill = $entity->populateBill($bill,$vat,$earlyPayment,$penalty,$property,$port);
+//			$billLines = $bill->getLines();
+//			foreach ($billLines as $line)
+//			{
+//				$line->setBill($bill);
+//				$em->persist($line);
+//			}
+//			$em->persist($bill);
+//			$entity->setBill($bill);
+//			$em->persist($entity);
+//			$em->flush();
+//		}
+//		else
+//			$bill = $entity->getBill();
+//    	return $this->redirect($this->generateUrl('bill_edit', array('id' => $bill->getId())));
+//    	
+//    	/***************** via builder *****************/
     	$em = $this->getDoctrine()->getManager();
     	
     	if ($entity->getBill() !== null)
@@ -299,16 +299,17 @@ class AttributionController extends Controller
     	}
     	// @todo trouver un autre solution que le codage brut
     	$options = array(
-    	    'vat'          => $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate(),
     	    'port'         => $em->getRepository('JLMModelBundle:Product')->find(134),
-    	    'earlyPayment' => $em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1),
-    	    'penalty'      => $em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1),
-    	    'property'     => $em->getRepository('JLMOfficeBundle:PropertyModel')->find(1),
+    	    'earlyPayment' => (string)$em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1),
+    	    'penalty'      => (string)$em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1),
+    	    'property'     => (string)$em->getRepository('JLMOfficeBundle:PropertyModel')->find(1),
     	);
-    	$bill = BillFactory::create(new AttributionBillBuilder($entity, $options));
+    	$bill = BillFactory::create(new AttributionBillBuilder($entity, $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate(), $options));
     	$em->persist($bill);
     	$entity->setBill($bill);
     	$em->persist($entity);
+    	
+    	
     	$em->flush();
     	
     	return $this->redirect($this->generateUrl('bill_edit', array('id' => $bill->getId())));
