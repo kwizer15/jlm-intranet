@@ -32,6 +32,7 @@ class BillFactory
         $builder->buildReference();
         $builder->buildIntro();
         $builder->buildDetails();
+        $builder->buildConditions();
         
         return $builder->getBill();
     }
