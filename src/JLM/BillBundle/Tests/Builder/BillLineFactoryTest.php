@@ -11,24 +11,24 @@
 
 namespace JLM\BillBundle\Tests\Builder;
 
-use JLM\BillBundle\Builder\BillFactory;
+use JLM\BillBundle\Builder\BillLineFactory;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class BillFactoryTest extends \PHPUnit_Framework_TestCase
+class BillLineFactoryTest extends \PHPUnit_Framework_TestCase
 {
     private $builder;
     
-    private $bill;
+    private $line;
     
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->builder = $this->getMock('JLM\BillBundle\Builder\BillBuilderInterface');
+        $this->builder = $this->getMock('JLM\BillBundle\Builder\BillLineBuilderInterface');
         
-        $this->bill = null;
+        $this->line = null;
     }
 
     /**
@@ -36,7 +36,7 @@ class BillFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function assertPreConditions()
     {
-        $this->builder->expects($this->once())->method('getBill')->will($this->returnValue($this->getMock('JLM\BillBundle\Model\BillInterface')));
+        $this->builder->expects($this->once())->method('getLine')->will($this->returnValue($this->getMock('JLM\BillBundle\Model\BillLineInterface')));
     }
     
     /**
@@ -44,7 +44,7 @@ class BillFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function assertPostConditions()
     {
-        $this->assertInstanceOf('JLM\BillBundle\Model\BillInterface', $this->bill);
+        $this->assertInstanceOf('JLM\BillBundle\Model\BillLineInterface', $this->line);
     }
 
     /**
@@ -53,22 +53,17 @@ class BillFactoryTest extends \PHPUnit_Framework_TestCase
     public function testBuilders($method)
     {
         $this->builder->expects($this->once())->method($method);
-        $this->bill = BillFactory::create($this->builder);
+        $this->line = BillLineFactory::create($this->builder);
     }
     
     public function builders()
     {
         return array(
         	array('create'),
-            array('buildCreation'),
-            array('buildCustomer'),
-            array('buildBusiness'),
             array('buildReference'),
-            array('buildIntro'),
-            array('buildDetails'),
-            array('buildConditions'),
-            array('buildLines'),
-            
+            array('buildProduct'),
+            array('buildQuantity'),
+            array('buildPrice'),
         );
     }
 }

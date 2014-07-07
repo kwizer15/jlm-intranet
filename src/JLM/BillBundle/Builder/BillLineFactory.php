@@ -14,7 +14,7 @@ namespace JLM\BillBundle\Builder;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-interface BillLineFactory
+class BillLineFactory
 {
     
     public static function create(BillLineBuilderInterface $builder)
