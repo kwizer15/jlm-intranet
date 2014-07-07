@@ -28,6 +28,7 @@ class ProductBillLineBuilder extends BillLineBuilderAbstract
 		$this->product = $product;
 		$this->quantity = $quantity;
 		$this->options = $options;
+		$this->vat = $vat;
 	}
 	
 	/**
@@ -35,20 +36,20 @@ class ProductBillLineBuilder extends BillLineBuilderAbstract
 	 */
 	public function buildPrice()
 	{
-		$price = isset($options['price']) ? $options['price'] : $this->product->getUnitPrice($this->quantity);
+		$price = isset($this->options['price']) ? $this->options['price'] : $this->product->getUnitPrice($this->quantity);
 		$this->getLine()->setUnitPrice($price);
-		$this->getLine()->setVat($vat);
+		$this->getLine()->setVat($this->vat);
 	}
 
 	public function buildProduct()
 	{
 		$this->getLine()->setProduct($this->product);
-		$this->getLine()->setReference($product->getReference());
+		$this->getLine()->setReference($this->product->getReference());
 		$this->getLine()->setIsTransmitter($this->product->getCategory()->getId() == 1);
-		$this->getLine()->setDesignation($product->getDesignation());
-		$descr = isset($this->options['description']) ? $this->options['description'] : $product->getDescription();
+		$this->getLine()->setDesignation($this->product->getDesignation());
+		$descr = isset($this->options['description']) ? $this->options['description'] : $this->product->getDescription();
 		$this->getLine()->setDescription($descr);
-		$this->getLine()->setShowDescription(!isEmpty($descr));
+		$this->getLine()->setShowDescription(!empty($descr));
 	}
 	
 	public function buildQuantity()
