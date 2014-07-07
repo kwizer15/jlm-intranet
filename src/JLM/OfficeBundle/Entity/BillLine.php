@@ -2,6 +2,7 @@
 namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JLM\BillBundle\Model\BillLineInterface;
 
 /**
  * JLM\OfficeBundle\Entity\BillLine
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="bill_lines")
  * @ORM\Entity
  */
-class BillLine extends DocumentLine
+class BillLine extends DocumentLine implements BillLineInterface
 {
 	/**
 	 * @var integer $id
