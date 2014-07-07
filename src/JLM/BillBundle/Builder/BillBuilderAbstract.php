@@ -23,6 +23,11 @@ abstract class BillBuilderAbstract implements BillBuilderInterface
     private $bill;
     
     /**
+     * @var array
+     */
+    private $options;
+    
+    /**
      * {@inheritdoc}
      */
     public function getBill()
@@ -55,4 +60,53 @@ abstract class BillBuilderAbstract implements BillBuilderInterface
      * {@inheritdoc}
      */
     public function buildDetails() {}
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function buildConditions()
+    {
+        if (!isset($this->options['maturity']))
+        {
+            $this->options['maturity'] = 30;
+        }
+        
+        foreach ($this->options as $key => $value)
+        {
+            switch ($key)
+            {
+            	case 'earlyPayment':
+            	    $this->getBill()->setEarlyPayment($value);
+            	    break;
+            	case 'penalty':
+            	    $this->getBill()->setPenalty($value);
+            	    break;
+            	case 'property':
+            	    $this->getBill()->setProperty($value);
+            	    break;
+            	case 'maturity':
+            	    $this->getBill()->setMaturity($value);
+            }
+        }
+    }
+    
+    protected function setOptions($options = array())
+    {
+        $this->options = $options;
+    }
+    
+    protected function getOptions()
+    {
+        return $this->options;
+    }
+    
+    protected function getOption($key)
+    {
+        if (isset($this->options[$key]))
+        {
+            return $this->options[$key];
+        }
+        
+        return null;
+    }
 }

@@ -47,8 +47,7 @@ class AttributionBillBuilder extends BillBuilderAbstract
     {
         $this->attribution = $attribution;
         $this->vat = $vat;
-        $this->options = $options;
-        
+        $this->setOptions($options);
     }
     
     /**
@@ -151,22 +150,7 @@ class AttributionBillBuilder extends BillBuilderAbstract
      */
     public function buildConditions()
     {
-        foreach ($this->options as $key => $value)
-        {
-            switch ($key)
-            {
-            	case 'earlyPayment':
-            	    $this->getBill()->setEarlyPayment($value);
-            	    break;
-            	case 'penalty':
-            	    $this->getBill()->setPenalty($value);
-            	    break;
-            	case 'property':
-            	    $this->getBill()->setProperty($value);
-            	    break;
-            }
-        }
-        $this->getBill()->setMaturity(30);
+        parent::buildConditions();
         $this->getBill()->setVatTransmitter($this->vat);
     }
     
