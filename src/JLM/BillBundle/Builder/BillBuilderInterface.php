@@ -21,6 +21,8 @@ interface BillBuilderInterface
      */
     public function getBill();
 
+    public function create();
+    
     public function buildCreation();
     
     public function buildLines();
