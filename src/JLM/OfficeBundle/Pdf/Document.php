@@ -114,12 +114,17 @@ abstract class Document extends FPDFext
         }
     
         $this->image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-footer.jpg',50,280,110);
+        $this->showPage();
+    }
+    
+    protected function showPage()
+    {
         $this->setY(-15);
         // Police Arial italique 8
         $this->setFont('Arial','',12);
         // Numéro de page
         $this->cell(0,10,$this->PageNo().'/{nb}',0,0,'R');
-    }
+    } 
     
     abstract public function getDocumentName();
     abstract protected function getColsize();

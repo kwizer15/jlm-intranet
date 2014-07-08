@@ -13,6 +13,8 @@ use JLM\FeeBundle\Entity\FeesFollower;
 use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\BillLine;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use JLM\BillBundle\Builder\BillFactory;
+use JLM\FeeBundle\Builder\FeeBillBuilder;
 
 
 
@@ -34,7 +36,7 @@ class FeesFollowerController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 	
-		$entities = $em->getRepository('JLMOfficeBundle:FeesFollower')->findBy(
+		$entities = $em->getRepository('JLMFeeBundle:FeesFollower')->findBy(
 				array(),
 				array('activation'=>'desc')
 		);
@@ -71,7 +73,7 @@ class FeesFollowerController extends Controller
 	public function updateAction(Request $request,FeesFollower $entity)
 	{
 		$editForm = $this->createForm(new FeesFollowerType(), $entity);
-		$editForm->bind($request);
+		$editForm->handleRequest($request);
 	
 		if ($editForm->isValid())
 		{
@@ -97,10 +99,6 @@ class FeesFollowerController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$today = new \DateTime;
-		$vattrans = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
-		$product = $em->getRepository('JLMModelBundle:Product')->find(284); // Produit redevance
-//		foreach (array(1,2,4) as $frequence)
-//		{
 
 		$fees = $em->getRepository('JLMFeeBundle:Fee')
 			->createQueryBuilder('a')
@@ -113,40 +111,41 @@ class FeesFollowerController extends Controller
 			->orderBy('f.name','asc')
 			->getQuery()
 			->getResult();
-		
-			
-				
-				
-				
-				//$fees = $em->getRepository('JLMFeeBundle:Fee')->findBy(array('frequence'=>$frequence));
-				$number = null;
-				// Ajouter pas de facture si sous garantie
-				foreach ($fees as $fee)
+
+		$number = null;
+		// @todo Ajouter pas de facture si sous garantie
+		foreach ($fees as $fee)
+		{
+			$gf = 'getFrequence'.$fee->getFrequence();
+			if ($entity->$gf() !== null)
+			{
+			    // On fait l'aumentation dans le contrat
+				$majoration = $entity->$gf();
+				if ($majoration > 0)
 				{
-					$gf = 'getFrequence'.$fee->getFrequence();
-					if ($entity->$gf() !== null)
+					$contracts = $fee->getContracts();
+					foreach ($contracts as $contract)
 					{
-						$majoration = $entity->$gf();
-						if ($majoration > 0)
-						{
-							$contracts = $fee->getContracts();
-							foreach ($contracts as $contract)
-							{
-								$amount = $contract->getFee();
-								$amount *= (1 + $majoration);
-								$contract->setFee($amount);
-								$em->persist($contract);
-							}
-						}
-						
-						$bill = $fee->getBill($product,$entity,$number);
-						$bill->setVatTransmitter($vattrans);
-						$em->persist($bill);
-						$number = $bill->getNumber() + 1;
+						$amount = $contract->getFee();
+						$amount *= (1 + $majoration);
+						$contract->setFee($amount);
+						$em->persist($contract);
 					}
 				}
-//			}
-//		}
+				
+				$builder = new FeeBillBuilder($fee, $entity, array(
+				    'number' => $number,
+				    'product' => $em->getRepository('JLMModelBundle:Product')->find(284),
+				    'penalty' => (string)$em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1),
+                    'earlyPayment' => (string)$em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1),
+				    'vatTransmitter' => $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate(),
+				));
+				$bill = BillFactory::create($builder);
+				$em->persist($bill);
+				$number = $bill->getNumber() + 1;
+			}
+		}
+
 		$entity->setGeneration(new \DateTime);
 		$em->persist($entity);
 		$em->flush();
