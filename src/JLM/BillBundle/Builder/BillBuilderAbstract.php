@@ -86,6 +86,13 @@ abstract class BillBuilderAbstract implements BillBuilderInterface
             	    break;
             	case 'maturity':
             	    $this->getBill()->setMaturity($value);
+            	    break;
+            	case 'vatTransmitter':
+            	    $this->getBill()->setVatTransmitter($value);
+            	    break;
+            	case 'vat':
+            	    $this->getBill()->setVat($value);
+            	    break;
             }
         }
     }
