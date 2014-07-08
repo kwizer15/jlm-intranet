@@ -46,7 +46,8 @@ class ProductBillLineBuilder extends BillLineBuilderAbstract
 		$this->getLine()->setProduct($this->product);
 		$this->getLine()->setReference($this->product->getReference());
 		$this->getLine()->setIsTransmitter($this->product->getCategory()->getId() == 1);
-		$this->getLine()->setDesignation($this->product->getDesignation());
+		$desig = isset($this->options['designation']) ? $this->options['designation'] : $this->product->getDesignation();
+		$this->getLine()->setDesignation($desig);
 		$descr = isset($this->options['description']) ? $this->options['description'] : $this->product->getDescription();
 		$this->getLine()->setDescription($descr);
 		$this->getLine()->setShowDescription(!empty($descr));
