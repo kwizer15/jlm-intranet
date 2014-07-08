@@ -47,7 +47,7 @@ class AttributionBillBuilder extends BillBuilderAbstract
     {
         $this->attribution = $attribution;
         $this->vat = $vat;
-        $this->setOptions($options);
+        parent::__construct($options);
     }
     
     /**

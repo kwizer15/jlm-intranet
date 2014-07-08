@@ -26,6 +26,8 @@ use JLM\DefaultBundle\Form\Type\SearchType;
 use JLM\BillBundle\Builder\BillFactory;
 use JLM\OfficeBundle\Builder\VariantBillBuilder;
 use JLM\DailyBundle\Entity\Work;
+use JLM\DailyBundle\Builder\InterventionBillBuilder;
+use JLM\DailyBundle\Builder\WorkBillBuilder;
 
 
 
@@ -133,6 +135,7 @@ class BillController extends PaginableController
      * @Route("/new/door/{id}", name="bill_new_door")
      * @Template("JLMOfficeBundle:Bill:new.html.twig")
      * @Secure(roles="ROLE_USER")
+     * @deprecated
      */
     public function newdoorAction(Door $door)
     {
@@ -155,6 +158,7 @@ class BillController extends PaginableController
      * @Route("/new/quote/{id}", name="bill_new_quotevariant")
      * @Template("JLMOfficeBundle:Bill:new.html.twig")
      * @Secure(roles="ROLE_USER")
+     * @deprecated
      */
     public function newquoteAction(QuoteVariant $quote)
     {
@@ -176,18 +180,16 @@ class BillController extends PaginableController
      */
     public function newinterventionAction(Intervention $interv)
     {
-        if ($interv instanceof Work)
-        {
-        	$entity = BillFactory::create(new VariantBillBuilder($interv->getQuote()));
-        }
-        else
-        {
-        	$entity = new Bill();
-        	$entity->setCreation(new \DateTime);
-        	
-        	$entity->populateFromIntervention($interv);
-        	$entity = $this->finishNewBill($entity);
-        }
+        $em = $this->getDoctrine()->getManager();
+        $options = array(
+            'penalty' => (string)$em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1),
+            'property' => (string)$em->getRepository('JLMOfficeBundle:PropertyModel')->find(1),
+            'earlyPayment' => (string)$em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1),
+        );
+        $builder = ($interv instanceof Work) ? (($interv->getQuote() !== null) ? new WorkBillBuilder($interv, $options) : null) : null;
+        $builder = ($builder === null) ? new InterventionBillBuilder($interv, $options) : $builder;
+        $entity = BillFactory::create($builder);
+
     	$form   = $this->createForm(new BillType, $entity);
     
     	return array(

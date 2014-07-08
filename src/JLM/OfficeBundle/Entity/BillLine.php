@@ -65,6 +65,7 @@ class BillLine extends DocumentLine implements BillLineInterface
     
     /**
      * Populate from QuoteLine
+     * @deprecated
      */
     public function populateFromQuoteLine(QuoteLine $line)
     {

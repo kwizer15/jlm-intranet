@@ -677,6 +677,7 @@ class Bill extends Document implements BillInterface
      * 
      * @param QuoteVariant $variant
      * @return Bill
+     * @deprecated
      */
     public function populateFromQuoteVariant(QuoteVariant $variant)
     {
@@ -701,6 +702,7 @@ class Bill extends Document implements BillInterface
      *
      * @param Door $door
      * @return Bill
+     * @deprecated
      */
     public function populateFromDoor(Door $door)
     {
@@ -717,6 +719,7 @@ class Bill extends Document implements BillInterface
      *
      * @param Site $site
      * @return Bill
+     * @deprecated
      */
     public function populateFromSite(Site $site, Trustee $trustee = null)
     {
@@ -741,6 +744,7 @@ class Bill extends Document implements BillInterface
      *
      * @param Intervention $interv
      * @return Bill
+     * @deprecated
      */
     public function populateFromIntervention(Intervention $interv)
     {

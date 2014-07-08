@@ -90,7 +90,7 @@ abstract class BillBuilderAbstract implements BillBuilderInterface
         }
     }
     
-    protected function setOptions($options = array())
+    public function __construct($options = array())
     {
         $this->options = $options;
     }
