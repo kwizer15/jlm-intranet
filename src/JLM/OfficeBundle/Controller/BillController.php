@@ -23,6 +23,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use JLM\DefaultBundle\Entity\Search;
 use JLM\DefaultBundle\Form\Type\SearchType;
+use JLM\BillBundle\Builder\BillFactory;
+use JLM\OfficeBundle\Builder\VariantBillBuilder;
 
 
 
@@ -155,10 +157,7 @@ class BillController extends PaginableController
      */
     public function newquoteAction(QuoteVariant $quote)
     {
-    	$entity = new Bill();
-    	$entity->setCreation(new \DateTime);
-    	$entity->populateFromQuoteVariant($quote);
-    	$entity = $this->finishNewBill($entity);
+        $entity = BillFactory::create(new VariantBillBuilder($quote));
     	$form   = $this->createForm(new BillType, $entity);
     
     	return array(
