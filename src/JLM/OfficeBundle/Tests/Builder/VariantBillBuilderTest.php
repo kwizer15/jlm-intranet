@@ -26,8 +26,27 @@ class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        $contract = $this->getMock('JLM\ModelBundle\Entity\Contract');
+        $door = $this->getMock('JLM\ModelBundle\Entity\Door');
+        $vat = $this->getMock('JLM\ModelBundle\Entity\VAT');
+        $address = $this->getMock('JLM\ModelBundle\Entity\Address');
+        $trustee = $this->getMock('JLM\ModelBundle\Entity\Trustee');
+        $trustee->expects($this->any())->method('getAddressForBill')->will($this->returnValue($address));
+        $site = $this->getMock('JLM\ModelBundle\Entity\Site');
+        $site->expects($this->any())->method('getTrustee')->will($this->returnValue($trustee));
+        $site->expects($this->any())->method('getVat')->will($this->returnValue($vat));
+        $door->expects($this->any())->method('getSite')->will($this->returnValue($site));
+        $ask = $this->getMock('JLM\OfficeBundle\Entity\AskQuote');
+        $ask->expects($this->any())->method('getSite')->will($this->returnValue($site));
+        $ask->expects($this->any())->method('getDoor')->will($this->returnValue($door));
+        $quote = $this->getMock('JLM\OfficeBundle\Entity\Quote');
+        $quote->expects($this->any())->method('getAsk')->will($this->returnValue($ask));
+        $quote->expects($this->any())->method('getDoor')->will($this->returnValue($door));
+        
         $this->variant = $this->getMock('JLM\OfficeBundle\Entity\QuoteVariant');
         $this->variant->expects($this->any())->method('getNumber')->will($this->returnValue('14120001-1'));
+        $this->variant->expects($this->any())->method('getQuote')->will($this->returnValue($quote));
+        $this->variant->expects($this->any())->method('getLines')->will($this->returnValue(array()));
         $this->builder = new VariantBillBuilder($this->variant);
     }
     
@@ -76,6 +95,8 @@ class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
     
     public function testBuildDetails()
     {
+        $door = $this->getMock('JLM\ModelBundle\Entity\Door');
+        $this->variant->expects($this->any())->method('getDoor')->will($this->returnValue($door));
         $this->builder->buildDetails();
     }
 }
