@@ -4,6 +4,7 @@ namespace JLM\TransmitterBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JLM\TransmitterBundle\Model\TransmitterInterface;
 
 /**
  * Transmitter
@@ -11,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="transmitters_transmitters")
  * @ORM\Entity(repositoryClass="JLM\TransmitterBundle\Entity\TransmitterRepository")
  */
-class Transmitter
+class Transmitter implements TransmitterInterface
 {
     /**
      * @var integer

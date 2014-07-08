@@ -6,13 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\BillLine;
 use JLM\ModelBundle\Entity\Product;
+use JLM\TransmitterBundle\Model\AttributionInterface;
 /**
  * Attribution
  *
  * @ORM\Table(name="transmitters_attributions")
  * @ORM\Entity(repositoryClass="JLM\TransmitterBundle\Entity\AttributionRepository")
  */
-class Attribution
+class Attribution implements AttributionInterface
 {
     /**
      * @var integer
@@ -248,10 +249,10 @@ class Attribution
      */
     public function populateBill(Bill $bill, $vat, $earlyPayment = '', $penalty = '', $property = '', Product $port = null)
     {
-    	$bill->populateFromSite($this->getSite(),$this->getAsk()->getTrustee());
+    	$bill->populateFromSite($this->getSite(),$this->getAsk()->getTrustee());   // OK
     	$bill = $this->populateBillLines($bill,$vat,$port);
-    	$bill->setCreation(new \DateTime);
-    	$bill->setReference('Selon OS');
+    	$bill->setCreation(new \DateTime);     // OK
+    	$bill->setReference('Selon OS');       // OK
     	$bill->setVatTransmitter($vat);
     	$bill->setMaturity(30);
     	$bill->setEarlyPayment($earlyPayment);

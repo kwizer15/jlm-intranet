@@ -17,6 +17,10 @@
 {% endblock %}
 
 {% block body %}
+      {% block modals %}
+      {% if form is defined %}{{ form_modal(form) }}{% endif %}
+	  {% if edit_form is defined %}{{ form_modal(edit_form) }}{% endif %}
+      {% endblock modals %}
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
 	        <div class="container">
@@ -160,10 +164,6 @@
           {% block footer %}
           {% endblock footer %}
       </footer>
-      {% block modals %}
-      {% if form is defined %}{{ form_modal(form) }}{% endif %}
-	  {% if edit_form is defined %}{{ form_modal(edit_form) }}{% endif %}
-      {% endblock modals %}
 {% endblock body%}
 
 {% block javascripts %}
@@ -200,5 +200,5 @@ $('.autocompletion').autocomplete({
 
 {% block javascriptappend %}
 {# z-index pour appartition dans une modal #}
-$('.ui-autocomplete, .modal .datepicker').css('z-index','10000');
+$('.ui-autocomplete, .modal .datepicker, .select2-input').css('z-index','15000');
 {% endblock %}

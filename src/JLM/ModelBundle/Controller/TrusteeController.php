@@ -3,6 +3,8 @@
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -254,5 +256,39 @@ class TrusteeController extends Controller
     			'entity' => $entity,
     			'form'   => $form->createView()
     	);
+    }
+    
+    /**
+     * City json
+     *
+     * @Route("/trustees.json", name="jlm_model_trusteesearch_json")
+     * @Method("get")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function searchAction(Request $request)
+    {
+        $term = $request->get('q');
+        $page_limit = $request->get('page_limit');
+    
+        $em = $this->getDoctrine()->getManager();
+    
+        $entities = $em->getRepository('JLMModelBundle:Trustee')->getArray($term, $page_limit);
+        return new JsonResponse(array('entities' => $entities));
+    }
+    
+    /**
+     * City json
+     *
+     * @Route("/trustee.json", name="jlm_model_trustee_json")
+     * @Method("get")
+     * @Secure(roles="ROLE_USER")
+     */
+    public function jsonAction(Request $request)
+    {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('JLMModelBundle:Trustee')->getByIdToArray($id);
+    
+        return new JsonResponse($entity);
     }
 }

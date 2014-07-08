@@ -156,6 +156,8 @@ doctrine:
             JLM\ContactBundle\Model\CompanyInterface:        JLM\ContactBundle\Entity\Company
             JLM\ContactBundle\Model\CompanyPersonInterface:  JLM\ContactBundle\Entity\CompanyPerson
             JLM\ContactBundle\Model\PersonInterface:         JLM\ModelBundle\Entity\Person
+            JLM\TransmitterBundle\Model\AttributionInterface: JLM\TransmitterBundle\Entity\Attribution
+            JLM\TransmitterBundle\Model\TransmitterInterface: JLM\TransmitterBundle\Entity\Transmitter
 
 # Swiftmailer Configuration
 swiftmailer:

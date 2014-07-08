@@ -215,4 +215,8 @@ class Bill extends Document
 	{
 	    return 'Facture';
 	}
+	
+	protected function showPage()
+	{
+	}
 }

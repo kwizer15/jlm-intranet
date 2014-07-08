@@ -21,11 +21,9 @@ abstract class InterventionReport extends FPDFext
 		$this->multiCell(0,5,$trustee->getAddress());
 		$this->ln(10);
 		$this->cellTitle($this->_getTitle());
-		$this->cellIntro('Nous vous transmettons le rapport de l\'intervention de notre technicien du '
+		$this->cellIntro('Nous vous transmettons le rapport d\'intervention du '
 				.$entity->getLastDate()->format('d/m/Y')
-				.' qui fait suite à votre demande du '
-				.$entity->getAskDate()->format('d/m/Y')
-				.' par '
+				.' qui fait suite à votre demande par '
 				.$entity->getAskMethod().' :');
 		$this->ln(10);
 		$this->cellH1($entity->getDoor()->getSite().'');

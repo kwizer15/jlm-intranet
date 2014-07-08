@@ -84,4 +84,31 @@ class TrusteeRepository extends SearchRepository
 		return (int) $qb->getQuery()
 		->getSingleScalarResult();
 	}
+	
+	public function getArray($query, $limit = 8)
+	{
+	    $qb = $this->createQueryBuilder('c')
+	    ->where('c.name LIKE :query')
+	    ->setParameter('query', '%'.$query.'%')
+	    ;
+	    $res = $qb->getQuery()->getArrayResult();
+	
+	    return $res;
+	}
+	
+	public function getByIdToArray($id)
+	{
+	    $qb = $this->createQueryBuilder('c')
+	    ->where('c.id = :id')
+	    ->setParameter('id', $id)
+	    ;
+	    $res = $qb->getQuery()->getArrayResult();
+	
+	    if (isset($res[0]))
+	    {
+	        return $res[0];
+	    }
+	
+	    return null;
+	}
 }

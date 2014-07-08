@@ -11,9 +11,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\TransmitterBundle\Entity\Attribution;
 use JLM\TransmitterBundle\Entity\Ask;
-use JLM\OfficeBundle\Entity\Bill;
-use JLM\OfficeBundle\Entity\BillLine;
 use JLM\TransmitterBundle\Form\Type\AttributionType;
+use JLM\BillBundle\Builder\BillFactory;
+use JLM\TransmitterBundle\Builder\AttributionBillBuilder;
 
 /**
  * Attribution controller.
@@ -45,16 +45,8 @@ class AttributionController extends Controller
      * @Route("/{id}/show", name="transmitter_attribution_show")
      * @Template()
      */
-    public function showAction($id)
+    public function showAction(Attribution $entity)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        //$entity = $em->getRepository('JLMTransmitterBundle:Attribution')->find($id);
-        $entity = $em->getRepository('JLMTransmitterBundle:Attribution')->getById($id);
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Attribution entity.');
-        }
-
         return array(
             'entity'      => $entity,
         );
@@ -90,9 +82,10 @@ class AttributionController extends Controller
     {
         $entity  = new Attribution();
         $form = $this->createForm(new AttributionType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -112,16 +105,8 @@ class AttributionController extends Controller
      * @Route("/{id}/edit", name="transmitter_attribution_edit")
      * @Template()
      */
-    public function editAction($id)
+    public function editAction(Attribution $entity)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMTransmitterBundle:Attribution')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Attribution entity.');
-        }
-
         $editForm = $this->createForm(new AttributionType(), $entity);
 
         return array(
@@ -137,24 +122,18 @@ class AttributionController extends Controller
      * @Method("POST")
      * @Template("JLMTransmitterBundle:Attribution:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, Attribution $entity)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('JLMTransmitterBundle:Attribution')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Attribution entity.');
-        }
-
         $editForm = $this->createForm(new AttributionType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('transmitter_attribution_show', array('id' => $id)));
+            return $this->redirect($this->generateUrl('transmitter_attribution_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -180,16 +159,8 @@ class AttributionController extends Controller
      * @Route("/{id}/printlist", name="transmitter_attribution_printlist")
      * @Secure(roles="ROLE_USER")
      */
-    public function printlistAction($id)
-    {
-    	$em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMTransmitterBundle:Attribution')->find($id);
-        //$entity = $em->getRepository('JLMTransmitterBundle:Attribution')->getById($id);
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Attribution entity.');
-        }
-    
+    public function printlistAction(Attribution $entity)
+    {   
         // Retrier les bips par Groupe puis par numéro
         $transmitters = $entity->getTransmitters();
         $resort = array();
@@ -225,16 +196,8 @@ class AttributionController extends Controller
      * @Route("/{id}/printcourrier", name="transmitter_attribution_printcourrier")
      * @Secure(roles="ROLE_USER")
      */
-    public function printcourrierAction($id)
+    public function printcourrierAction(Attribution $entity)
     {
-    	$em = $this->getDoctrine()->getManager();
-    
-    	$entity = $em->getRepository('JLMTransmitterBundle:Attribution')->find($id);
-    	//$entity = $em->getRepository('JLMTransmitterBundle:Attribution')->getById($id);
-    	if (!$entity) {
-    		throw $this->createNotFoundException('Unable to find Attribution entity.');
-    	}
-    
     	$response = new Response();
     	$response->headers->set('Content-Type', 'application/pdf');
     	$response->headers->set('Content-Disposition', 'inline; filename=attribution-courrier-'.$entity->getId().'.pdf');
@@ -251,47 +214,27 @@ class AttributionController extends Controller
      *
      * @Route("/{id}/bill", name="transmitter_attribution_bill")
      */
-    public function billAction($id)
+    public function billAction(Attribution $entity)
     {
     	$em = $this->getDoctrine()->getManager();
-    
-    	$entity = $em->getRepository('JLMTransmitterBundle:Attribution')->find($id);
-    
-    	if (!$entity) {
-    		throw $this->createNotFoundException('Unable to find Attribution entity.');
+    	
+    	if ($entity->getBill() !== null)
+    	{
+    	   return $this->redirect($this->generateUrl('bill_edit', array('id' => $entity->getBill()->getId())));
     	}
-
-		// Création de la facture
-		if ($entity->getBill() === null)
-		{
-			// TVA
-			$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
-			// Frais de port
-			// @todo trouver un autre solution que le codage brut
-			$port = $em->getRepository('JLMModelBundle:Product')->find(134);
-			// EarlyPayment
-			$earlyPayment = $em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1);
-			// Penalty
-			$penalty = $em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1);
-			// Clause de propriété
-			$property = $em->getRepository('JLMOfficeBundle:PropertyModel')->find(1);
-			
-			$bill = new Bill;
-			// Numéro de facture
-			$bill = $entity->populateBill($bill,$vat,$earlyPayment,$penalty,$property,$port);
-			$billLines = $bill->getLines();
-			foreach ($billLines as $line)
-			{
-				$line->setBill($bill);
-				$em->persist($line);
-			}
-			$em->persist($bill);
-			$entity->setBill($bill);
-			$em->persist($entity);
-			$em->flush();
-		}
-		else
-			$bill = $entity->getBill();
+    	// @todo trouver un autre solution que le codage brut
+    	$options = array(
+    	    'port'         => $em->getRepository('JLMModelBundle:Product')->find(134),
+    	    'earlyPayment' => (string)$em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1),
+    	    'penalty'      => (string)$em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1),
+    	    'property'     => (string)$em->getRepository('JLMOfficeBundle:PropertyModel')->find(1),
+    	);
+    	$bill = BillFactory::create(new AttributionBillBuilder($entity, $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate(), $options));
+    	$em->persist($bill);
+    	$entity->setBill($bill);
+    	$em->persist($entity);
+    	$em->flush();
+    	
     	return $this->redirect($this->generateUrl('bill_edit', array('id' => $bill->getId())));
     }
 }

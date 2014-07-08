@@ -4,12 +4,25 @@ namespace JLM\ModelBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use JLM\ModelBundle\Form\DataTransformer\CityToStringTransformer;
+use JLM\ModelBundle\Form\DataTransformer\CityToIntTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CitySelectType extends AbstractType
 {
+    /**
+     * @var ObjectManager
+     */
+    private $om;
+    
+    /**
+     * @param ObjectManager $om
+     */
+    public function __construct(ObjectManager $om)
+    {
+        $this->om = $om;
+    }
+    
     public function getParent()
     {
     	return 'genemu_jqueryselect2_hidden';
@@ -23,7 +36,7 @@ class CitySelectType extends AbstractType
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-			'data_class' => 'JLM\ModelBundle\Entity\City'
+            'transformer' => new CityToIntTransformer($this->om),
         ));
     }
 }
