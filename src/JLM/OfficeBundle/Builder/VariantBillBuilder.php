@@ -35,9 +35,9 @@ class VariantBillBuilder extends BillBuilderAbstract
         foreach ($lines as $line)
         {
             $l = BillLineFactory::create(new VariantBillLineBuilder($line));
-            $l->setBill($this);
+            $l->setBill($this->getBill());
             $l->setPosition($line->getPosition());
-            $this->addLine($l);
+            $this->getBill()->addLine($l);
         }
     }
     

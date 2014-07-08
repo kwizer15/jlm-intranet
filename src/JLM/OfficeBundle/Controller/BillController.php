@@ -25,6 +25,7 @@ use JLM\DefaultBundle\Entity\Search;
 use JLM\DefaultBundle\Form\Type\SearchType;
 use JLM\BillBundle\Builder\BillFactory;
 use JLM\OfficeBundle\Builder\VariantBillBuilder;
+use JLM\DailyBundle\Entity\Work;
 
 
 
@@ -175,11 +176,18 @@ class BillController extends PaginableController
      */
     public function newinterventionAction(Intervention $interv)
     {
-    	$entity = new Bill();
-    	$entity->setCreation(new \DateTime);
-    	
-    	$entity->populateFromIntervention($interv);
-    	$entity = $this->finishNewBill($entity);
+        if ($interv instanceof Work)
+        {
+        	$entity = BillFactory::create(new VariantBillBuilder($interv->getQuote()));
+        }
+        else
+        {
+        	$entity = new Bill();
+        	$entity->setCreation(new \DateTime);
+        	
+        	$entity->populateFromIntervention($interv);
+        	$entity = $this->finishNewBill($entity);
+        }
     	$form   = $this->createForm(new BillType, $entity);
     
     	return array(

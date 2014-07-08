@@ -23,7 +23,7 @@ class VariantBillLineBuilder extends BillLineBuilderAbstract
     
     public function __construct(QuoteLine $line)
     {
-        $this->line = $line;
+        $this->l = $line;
     }
     
     /**
