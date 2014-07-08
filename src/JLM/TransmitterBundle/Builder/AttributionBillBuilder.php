@@ -28,7 +28,7 @@ class AttributionBillBuilder extends BillBuilderAbstract
     
     /**
      * 
-     * @var unknown
+     * @var float
      */
     private $vat;
     
