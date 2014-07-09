@@ -34,18 +34,18 @@ class FixingReport extends InterventionReport
 			$this->ln(15);
 			if ($entity->getAskQuote())
 			{
-				$this->cellStrong('Nous vous enverrons dans les meilleurs délais, un devis de remise en état concernant les travaux de réparation nécessaire à savoir :');
+				$this->cellStrong('Nous vous enverrons dans les meilleurs délais, un devis de remise en état concernant les travaux de réparation nécessaire'); // à savoir :');
 			}
 			elseif ($entity->getWork())
 			{
-				$this->cellStrong('Nous nous engageons pour le remplacement des pièces nécessaires le plus rapidement possible selon la disponibilité de notre fabriquant à savoir :');
+				$this->cellStrong('Nous nous engageons pour le remplacement des pièces nécessaires le plus rapidement possible selon la disponibilité de notre fabriquant');// à savoir :');
 			}
 			else 
 			{
 				$this->cellStrong('Reste à faire :');
 			}
-			$this->ln(3);
-			$this->cellLiStrong($entity->getRest());
+	//		$this->ln(3);
+	//		$this->cellLiStrong($entity->getRest());
 		}
 		
 	}
