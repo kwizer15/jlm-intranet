@@ -34,12 +34,6 @@ class AttributionBillBuilder extends BillBuilderAbstract
     
     /**
      * 
-     * @var array
-     */    
-    private $options;
-    
-    /**
-     * 
      * @param AttributionInterface $attribution
      * @param array $options
      */
@@ -103,10 +97,9 @@ class AttributionBillBuilder extends BillBuilderAbstract
             $this->getBill()->addLine($line);
         }
         
-        $port = (isset($this->options['port'])) ? $this->options['port'] : null; // Modif
-        if ($port !== null)
+        if (null !== $this->getOptions('port'))
         {
-            $line = BillLineFactory::create(new ProductBillLineBuilder($port, $this->vat, sizeof($transmitters)));
+            $line = BillLineFactory::create(new ProductBillLineBuilder($this->getOptions('port'), $this->vat, sizeof($transmitters)));
             $line->setQuantity(1);
             $this->getBill()->addLine($line);
         }
