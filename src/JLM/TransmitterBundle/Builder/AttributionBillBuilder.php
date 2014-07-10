@@ -97,9 +97,9 @@ class AttributionBillBuilder extends BillBuilderAbstract
             $this->getBill()->addLine($line);
         }
         
-        if (null !== $this->getOptions('port'))
+        if (null !== $this->getOption('port'))
         {
-            $line = BillLineFactory::create(new ProductBillLineBuilder($this->getOptions('port'), $this->vat, sizeof($transmitters)));
+            $line = BillLineFactory::create(new ProductBillLineBuilder($this->getOption('port'), $this->vat, sizeof($transmitters)));
             $line->setQuantity(1);
             $this->getBill()->addLine($line);
         }
