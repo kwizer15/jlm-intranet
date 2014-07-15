@@ -46,7 +46,7 @@ class DoorController extends Controller
 	{
 		$form = $this->createForm(new \JLM\ModelBundle\Form\Type\DoorTagType(), $door,
 		array('action'=>$this->generateUrl('model_door_update_code',array('id'=>$door->getId())),
-		    'method'=>'PUT'));
+		    'method'=>'POST'));
                     
 		return $form;
 	}

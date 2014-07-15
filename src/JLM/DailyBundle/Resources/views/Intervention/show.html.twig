@@ -49,8 +49,8 @@
 							{% if entity.door %}
 							{% if entity.door.stopped %}<span class="label label-important">Mise à l'arrêt</span>{% endif %}
 							{% if entity.door.underWarranty %}<span class="label label-success">Sous garantie jusqu'au {{ entity.door.endWarranty | date('d/m/Y') }}</span>{% endif %}
-							<h4>
-								{{ entity.door.type }} - {{ entity.door.location }}</h4>
+							<h3>{{ entity.door.code }}</h3>
+							<h4>{{ entity.door.type }} - {{ entity.door.location }}</h4>
 							<dl>
 							<em>
 							<dt>Accès</dt>
