@@ -185,7 +185,7 @@ class DoorController extends Controller
      * Edits an existing Door entity.
      *
      * @Route("/{id}/updatecode", name="model_door_update_code")
-     * @Method("PUT")
+     * @Method("POST")
      * @Secure(roles="ROLE_USER")
      */
     public function updateCodeAction(Request $request, Door $entity)
