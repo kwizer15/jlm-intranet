@@ -190,13 +190,19 @@ class DoorController extends Controller
      */
     public function updateCodeAction(Request $request, Door $entity)
     {
-        $em = $this->getDoctrine()->getManager();
-        
+ 
         $codeForm = $this->_createCodeForm($entity);
         $codeForm->handleRequest($request);
     
         if ($codeForm->isValid())
         {
+            $em = $this->getDoctrine()->getManager();
+            $code = $entity->getCode();
+            $doublon = $em->getRepository('JLMModelBundle:Door')->findByCode($code);
+            if (sizeof($doublon) > 0)
+            {
+                return $this->redirect($this->getRequest()->headers->get('referer'));
+            }
             $em->persist($entity);
             $em->flush();
         }
