@@ -53,7 +53,8 @@ class DoorRepository extends SearchRepository
 		return $this->createQueryBuilder('a')
 		->leftJoin('a.site','b')
 		->leftJoin('b.address','c')
-		->leftJoin('c.city','d');
+		->leftJoin('c.city','d')
+		;
 	}
 	
 	/**
@@ -82,7 +83,7 @@ class DoorRepository extends SearchRepository
 	 */
 	protected function getSearchParams()
 	{
-		return array('c.street','a.street','d.name');
+		return array('c.street','a.street','d.name','a.code');
 	}
 	
 	public function searchResult($query, $limit = 8)
