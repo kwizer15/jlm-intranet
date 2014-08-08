@@ -44,6 +44,7 @@ class WorkBillBuilder extends VariantBillBuilder
         parent::buildReference();
         $ref = $this->getBill()->getReference();
         $this->getBill()->setReference($ref.' et notre intervention du '.$this->intervention->getLastDate()->format('d/m/Y'));
+	$this->getBill()->setIntervention($this->intervention);
     }
     
     /**
