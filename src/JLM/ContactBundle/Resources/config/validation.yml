@@ -1,0 +1,9 @@
+JLM\ContactBundle\Entity\Country:
+    properties:
+        code:
+            - Type: { type: string }
+            - Length: { min: 2, max: 2 }
+            - NotBlank: ~
+
+
+                
