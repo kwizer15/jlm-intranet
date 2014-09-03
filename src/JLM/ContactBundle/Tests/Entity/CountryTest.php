@@ -27,6 +27,7 @@ class CountryTest extends \PHPUnit_Framework_TestCase
     
     protected function assertPreConditions()
     {
+        $this->assertInstanceOf('JLM\ContactBundle\Model\CountryInterface', $this->entity);
         $this->assertNull($this->entity->getCode());
         $this->assertSame('', $this->entity->getName());
     }
