@@ -1,3 +1,7 @@
+jlm_contact:
+    resource: "@JLMContactBundle/Resources/config/routing.yml"
+    prefix:   /
+
 jlm_fee:
     resource: "@JLMFeeBundle/Controller/"
     type:     annotation
