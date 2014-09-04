@@ -12,8 +12,10 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\City;
-use JLM\ContactBundle\Model\CountryInterface;
 
+/**
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ */
 class CityTest extends \PHPUnit_Framework_TestCase
 {
     /**
