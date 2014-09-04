@@ -1,0 +1,6 @@
+jlm_contact_rest_city_search:
+    path:   /cities.json
+    defaults:  { _controller: "JLMContactBundle:City:search" }
+jlm_contact_rest_city_get:
+    path:   /city.json
+    defaults:  { _controller: "JLMContactBundle:City:json" }
