@@ -1,7 +1,5 @@
-parameters:
-#    jlm_contact.example.class: JLM\ContactBundle\Example
-
 services:
-#    jlm_contact.example:
-#        class: %jlm_contact.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    jlm_contact.type.city_select:
+        class: JLM\ContactBundle\Form\Type\CitySelectType
+        tags:
+            - { name: form.type, alias: jlm_contact_city_select }
