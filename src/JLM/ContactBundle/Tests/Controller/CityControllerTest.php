@@ -19,11 +19,32 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CityControllerTest extends WebTestCase
 {
+    /**
+     * @var Symfony\Bundle\FrameworkBundle\Client
+     */
+    private $client;
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp()
+    {
+        $this->client = static::createClient();
+    } 
+    
     public function testGet()
     {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/contact/city.json?id=1');
-echo $crawler->html();
+        $this->client->request(
+            'GET',
+            '/contact/city.json',
+            array('id' => 1),
+            array(),
+            array(
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            )
+        );
+        $content = $this->client->getResponse()->getContent();
+        $this->assertSame('{"id":1,"name":"P\u00e9rigueux","zip":"24000"}', $content);
     }
 }
