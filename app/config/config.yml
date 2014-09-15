@@ -69,6 +69,8 @@ doctrine:
         auto_mapping: true
         resolve_target_entities:
             JLM\ContactBundle\Model\CountryInterface: JLM\ContactBundle\Entity\Country
+            JLM\ContactBundle\Model\CityInterface: JLM\ContactBundle\Entity\City
+            JLM\ContactBundle\Model\AddressInterface: JLM\ContactBundle\Entity\Address
             JLM\TransmitterBundle\Model\AttributionInterface: JLM\TransmitterBundle\Entity\Attribution
             JLM\TransmitterBundle\Model\TransmitterInterface: JLM\TransmitterBundle\Entity\Transmitter
 
