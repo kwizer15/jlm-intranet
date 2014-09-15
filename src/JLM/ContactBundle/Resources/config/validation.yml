@@ -16,3 +16,11 @@ JLM\ContactBundle\Entity\City:
         country:
             - NotNull: ~
             - Valid: ~
+            
+JLM\ContactBundle\Entity\Address:
+    properties:
+        street:
+            - Type: { type: string }
+        city:
+            - NotNull: ~
+            - Valid: ~
