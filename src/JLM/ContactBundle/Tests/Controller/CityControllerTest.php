@@ -47,4 +47,36 @@ class CityControllerTest extends WebTestCase
         $content = $this->client->getResponse()->getContent();
         $this->assertSame('{"id":1,"name":"P\u00e9rigueux","zip":"24000"}', $content);
     }
+    
+    public function testGetBadId()
+    {
+        $this->client->request(
+            'GET',
+            '/contact/city.json',
+            array('id' => 'foo'),
+            array(),
+            array(
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            )
+        );
+        $content = $this->client->getResponse()->getContent();
+        $this->assertSame('{}', $content);
+    }
+    
+    public function testSearch()
+    {
+        $this->client->request(
+            'GET',
+            '/contact/cities.json',
+            array('q' => 'Othis'),
+            array(),
+            array(
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_X-Requested-With' => 'XMLHttpRequest',
+            )
+        );
+        $content = $this->client->getResponse()->getContent();
+        $this->assertSame('{"cities":[{"id":20834,"name":"Othis","zip":"77280"}]}', $content);
+    }
 }
