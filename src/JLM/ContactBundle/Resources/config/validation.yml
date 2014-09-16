@@ -51,5 +51,25 @@ JLM\ContactBundle\Entity\Person:
     role:
       - Type: { type: string }
 
-
+JLM\ContactBundle\Entity\Company:
+  properties:
+    name:
+      - NotNull: ~
+      - Type: { type: string }
+      - NotBlank: ~
+    address:
+      - NotNull: ~
+      - Valid: ~
+    phone: 
+      - pattern: /^0[1-589]\d{8}$/
+      - message: "Ce n'est pas un numéro de téléphone fixe valide"
+    fax:
+      - Regex:
+        - pattern: /^0[1-589]\d{8}$/
+        - message: "Ce n'est pas un numéro de fax valide"
+    email:
+      - Email: ~
+    contacts:
+      - Valid:
+        - traverse: true
         

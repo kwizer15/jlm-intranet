@@ -11,7 +11,6 @@
 
 namespace JLM\ContactBundle\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\ContactBundle\Model\CompanyInterface;
 use JLM\ContactBundle\Model\AddressInterface;
@@ -30,40 +29,26 @@ class Company implements CompanyInterface
 	
     /**
      * @var string
-     *
-     * @Assert\NotNull
-     * @Assert\Type(type="string")
-     * @Assert\NotBlank
      */
     private $name = '';
     
 	/**
 	 * @var Address $address
-	 * 
-	 * @Assert\NotNull
-	 * @Assert\Valid
 	 */
 	private $address;
 	
 	/**
 	 * @var string $phone
-	 * 
-	 * @Assert\NotNull
-	 * @Assert\Regex(pattern="/^0[1-9]\d{8}$/",message="Ce n'est pas un numéro de téléphone fixe valide")
 	 */
 	private $phone;
 	
 	/**
 	 * @var string $fax
-	 *
-	 * @Assert\Regex(pattern="/^0[1-589]\d{8}$/",message="Ce n'est pas un numéro de fax valide")
 	 */
 	private $fax;
 	
 	/**
 	 * @var email $email
-	 *
-	 * @Assert\Email
 	 */
 	private $email;
 	
@@ -71,8 +56,7 @@ class Company implements CompanyInterface
 	/**
 	 * @var Person[] $contacts
 	 *
-	 * @Assert\Valid(traverse="true")
-	 */
+     */
 	private $contacts;
 	
 	/**
