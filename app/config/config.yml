@@ -72,6 +72,7 @@ doctrine:
             JLM\ContactBundle\Model\CityInterface: JLM\ContactBundle\Entity\City
             JLM\ContactBundle\Model\AddressInterface: JLM\ContactBundle\Entity\Address
             JLM\ContactBundle\Model\PersonInterface: JLM\ContactBundle\Entity\Person
+            JLM\ContactBundle\Model\CompanyInterface: JLM\ContactBundle\Entity\Company
             JLM\TransmitterBundle\Model\AttributionInterface: JLM\TransmitterBundle\Entity\Attribution
             JLM\TransmitterBundle\Model\TransmitterInterface: JLM\TransmitterBundle\Entity\Transmitter
 
