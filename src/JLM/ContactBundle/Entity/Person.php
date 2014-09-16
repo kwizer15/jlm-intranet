@@ -12,104 +12,61 @@
 namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\PersonInterface;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- *
- * @ORM\Table(name="persons")
- * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\PersonRepository")
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({
- * 		"person" = "Person",
- *      "technician" = "Technician",
- * })
  */
 class Person implements PersonInterface
 {
 	/**
      * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
 	/**
 	 * M. Mme Mlle
 	 * @var string $title
-	 * 
-	 * @ORM\Column(name="title", type="string", length=4)
-	 * @Assert\Choice(choices={"M.","Mme","Mlle"})
-	 * @Assert\NotNull
 	 */
 	private $title;
 	
     /**
      * @var string $firstName
-     *
-     * @ORM\Column(name="firstName", type="string", length=255, nullable=true)
-     * @Assert\Type(type="string")
      */
     private $firstName;
 
     /**
      * @var string $lastName
-     *
-     * @ORM\Column(name="lastName", type="string", length=255)
-     * @Assert\Type(type="string")
      */
     private $lastName;
     
     /**
      * @var string $fixedPhone
-     * 
-     * @ORM\Column(name="fixedPhone",type="string", length=20, nullable=true)
-     * @Assert\Regex(pattern="/^0[1-589]\d{8}$/",message="Ce n'est pas un numéro de téléphone fixe valide")
      */
     private $fixedPhone;
     
     /**
      * @var string $mobilePhone
-     *
-     * @ORM\Column(name="mobilePhone",type="string", length=20, nullable=true)
-     * @Assert\Regex(pattern="/^0[67]\d{8}$/",message="Ce n'est pas un numéro de téléphone portable valide")
      */
     private $mobilePhone;
 
     
     /**
      * @var string $fax
-     *
-     * @ORM\Column(name="fax",type="string", length=20, nullable=true)
-     * @Assert\Regex(pattern="/^0[1-589]\d{8}$/",message="Ce n'est pas un numéro de fax valide")
      */
     private $fax;
     
     /**
      * @var string $email
-     *
-     * @ORM\Column(name="email",type="string", length=255, nullable=true)
-     * @Assert\Email
      */
     private $email;
     
     /**
      * @var string $address
-     * 
-     * @ORM\OneToOne(targetEntity="Address")
      */
     private $address;
     
     /**
      * @var $role
-     *
-     * @ORM\Column(name="role",type="string",length=255,nullable=true)
-     * @Assert\Type(type="string")
      */
     private $role;
     
