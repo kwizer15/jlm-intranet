@@ -24,7 +24,7 @@ use JLM\ContactBundle\Model\PersonInterface;
  * 		"company" = "Company"
  *      })
  */
-class Company extends StringModel implements CompanyInterface
+class Company implements CompanyInterface
 {
 	/**
      * @var integer $id
@@ -81,6 +81,45 @@ class Company extends StringModel implements CompanyInterface
 	 * @Assert\Valid(traverse="true")
 	 */
 	private $contacts;
+	
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="name")
+	 * @Assert\NotNull
+	 * @Assert\Type(type="string")
+	 * @Assert\NotBlank
+	 */
+	private $name = '';
+	
+	/**
+	 * Set text
+	 *
+	 * @param string $text
+	 */
+	public function setName($name)
+	{
+	    $this->name = $name;
+	    return $this;
+	}
+	
+	/**
+	 * Get text
+	 *
+	 * @return string
+	 */
+	public function getName()
+	{
+	    return $this->name;
+	}
+	
+	/**
+	 * To String
+	 */
+	public function __toString()
+	{
+	    return $this->getName();
+	}
 	
 	/**
 	 * Constructor

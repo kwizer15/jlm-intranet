@@ -57,6 +57,7 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame($this->entity, $this->entity->setName($in));
         $this->assertSame($out, $this->entity->getName());
+        $this->assertSame($out, $this->entity->__toString());
     }
     
     public function getValidPhones()
