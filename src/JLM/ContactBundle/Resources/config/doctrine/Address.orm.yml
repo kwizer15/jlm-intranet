@@ -12,5 +12,5 @@ JLM\ContactBundle\Entity\Address:
       nullable: true
   manyToOne:
     city:
-      targetEntity: JLM\ContactBundle\Entity\City
+      targetEntity: JLM\ContactBundle\Model\CityInterface
     

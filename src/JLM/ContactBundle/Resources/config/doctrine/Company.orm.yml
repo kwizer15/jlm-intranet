@@ -29,7 +29,7 @@ JLM\ContactBundle\Entity\Company:
       nullable: true
   oneToOne:
     address:
-      targetEntity: JLM\ContactBundle\Entity\Address
+      targetEntity: JLM\ContactBundle\Model\AddressInterface
   manyToMany:
     targetEntity: JLM\ContactBundle\Entity\Person
     cascade: ["all"]

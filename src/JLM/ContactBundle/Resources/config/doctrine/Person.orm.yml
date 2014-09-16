@@ -43,5 +43,5 @@ JLM\ContactBundle\Entity\Person:
       nullable: true
   oneToOne:
     address:
-      targetEntity: JLM\ContactBundle\Entity\Address
+      targetEntity: JLM\ContactBundle\Model\AddressInterface
     
