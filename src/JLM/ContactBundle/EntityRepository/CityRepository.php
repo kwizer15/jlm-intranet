@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\ContactBundle\Entity;
+namespace JLM\ContactBundle\EntityRepository;
 
 use Doctrine\ORM\EntityRepository;
 
