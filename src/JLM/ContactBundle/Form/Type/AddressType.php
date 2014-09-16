@@ -36,7 +36,7 @@ class AddressType extends AbstractType
      */
     public function getName()
     {
-        return 'address';
+        return 'jlm_contact_address';
     }
     
     /**

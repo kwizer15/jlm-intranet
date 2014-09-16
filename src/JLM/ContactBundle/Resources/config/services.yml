@@ -3,3 +3,7 @@ services:
         class: JLM\ContactBundle\Form\Type\CitySelectType
         tags:
             - { name: form.type, alias: jlm_contact_city_select }
+    jlm_contact.type.address:
+        class: JLM\ContactBundle\Form\Type\AddressType
+        tags:
+            - { name: form.type, alias: jlm_contact_address }
