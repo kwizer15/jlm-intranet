@@ -1,44 +1,45 @@
 <?php
 
+/*
+ * This file is part of the JLMContactBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\ContactBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-use JLM\ModelBundle\Entity\StringModel;
 use JLM\ContactBundle\Model\CompanyInterface;
 use JLM\ContactBundle\Model\AddressInterface;
 use JLM\ContactBundle\Model\PersonInterface;
 
 
 /**
- * JLM\ModelBundle\Entity\Company
- *
- * @ORM\Table(name="companies")
- * @ORM\Entity
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({
- * 		"trustee" = "Trustee",
- * 		"supplier" = "Supplier",
- * 		"company" = "Company"
- *      })
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class Company implements CompanyInterface
 {
 	/**
      * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 	
+    /**
+     * @var string
+     *
+     * @Assert\NotNull
+     * @Assert\Type(type="string")
+     * @Assert\NotBlank
+     */
+    private $name = '';
+    
 	/**
 	 * @var Address $address
 	 * 
-	 * @ORM\OneToOne(targetEntity="Address")
 	 * @Assert\NotNull
 	 * @Assert\Valid
 	 */
@@ -47,7 +48,6 @@ class Company implements CompanyInterface
 	/**
 	 * @var string $phone
 	 * 
-	 * @ORM\Column(name="phone",type="string",length=20)
 	 * @Assert\NotNull
 	 * @Assert\Regex(pattern="/^0[1-9]\d{8}$/",message="Ce n'est pas un numéro de téléphone fixe valide")
 	 */
@@ -56,7 +56,6 @@ class Company implements CompanyInterface
 	/**
 	 * @var string $fax
 	 *
-	 * @ORM\Column(name="fax",type="string",length=20, nullable=true)
 	 * @Assert\Regex(pattern="/^0[1-589]\d{8}$/",message="Ce n'est pas un numéro de fax valide")
 	 */
 	private $fax;
@@ -64,7 +63,6 @@ class Company implements CompanyInterface
 	/**
 	 * @var email $email
 	 *
-	 * @ORM\Column(name="email",type="string",length=255, nullable=true)
 	 * @Assert\Email
 	 */
 	private $email;
@@ -73,24 +71,9 @@ class Company implements CompanyInterface
 	/**
 	 * @var Person[] $contacts
 	 *
-	 * @ORM\ManyToMany(targetEntity="Person",cascade={"all"})
-	 * @ORM\JoinTable(name="companies_contacts",
-	 *      joinColumns={@ORM\JoinColumn(name="company_id", referencedColumnName="id")},
-	 *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id", unique=true)}
-	 *      )
 	 * @Assert\Valid(traverse="true")
 	 */
 	private $contacts;
-	
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="name")
-	 * @Assert\NotNull
-	 * @Assert\Type(type="string")
-	 * @Assert\NotBlank
-	 */
-	private $name = '';
 	
 	/**
 	 * Set text

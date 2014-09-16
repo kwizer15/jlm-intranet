@@ -1,0 +1,45 @@
+JLM\ContactBundle\Entity\Company:
+  type: entity
+  table: companies
+  inheritanceType: JOINED
+  discriminatorColumn:
+    name: discr
+    type: string
+  discriminatorMap:
+    trustee: Trustee
+    supplier: Supplier
+    company: Company
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+    phone:
+      type: string
+      length: 20
+    fax:
+      type: string
+      length: 20
+      nullable: true
+    email:
+      type: string
+      nullable: true
+  oneToOne:
+    address:
+      targetEntity: JLM\ContactBundle\Entity\Address
+  manyToMany:
+    targetEntity: JLM\ContactBundle\Entity\Person
+    cascade: ["all"]
+    joinTable:
+        name: companies_contacts
+        joinColumns:
+          company_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          person_id:
+            referencedColumnName: id
+            unique: true
+    
