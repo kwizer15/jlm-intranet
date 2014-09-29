@@ -51,7 +51,7 @@ abstract class ObjectToIntTransformer implements DataTransformerInterface
 			return null;
 		}
 		$entity = $this->om
-		  ->getRepository($this->getClass())
+		  ->getRepository($this->_getClass())
 		  ->find($id)
 		;
 		if (null === $entity)

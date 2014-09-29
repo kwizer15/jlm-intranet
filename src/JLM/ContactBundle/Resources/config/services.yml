@@ -1,8 +1,10 @@
 services:
     jlm_contact.type.city_select:
         class: JLM\ContactBundle\Form\Type\CitySelectType
+        arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: jlm_contact_city_select }
+        
     jlm_contact.type.address:
         class: JLM\ContactBundle\Form\Type\AddressType
         tags:

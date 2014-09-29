@@ -1,0 +1,7 @@
+{% set id = 'modalNewPerson' %}
+{% set action = path('jlm_contact_ajax_person_create') %}
+{% set title = 'Nouvelle personne' %}
+{% extends 'JLMDefaultBundle:Helpers:modalform.html.twig' %}
+{% block body %}
+	{% include 'JLMContactBundle:Person:createajax.html.twig' %}
+{% endblock %}

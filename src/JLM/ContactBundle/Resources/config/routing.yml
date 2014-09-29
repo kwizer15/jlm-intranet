@@ -1,6 +1,19 @@
 jlm_contact_rest_city_search:
     path:   /cities.json
     defaults:  { _controller: "JLMContactBundle:City:search" }
+    
 jlm_contact_rest_city_get:
     path:   /city.json
     defaults:  { _controller: "JLMContactBundle:City:json" }
+    
+jlm_contact_ajax_person_show:
+    path: /person/ajax/{id}/show
+    defaults:  { _controller: "JLMContactBundle:Person:showajax" }
+   
+jlm_contact_ajax_person_new:
+    path: /person/ajax/new
+    defaults:  { _controller: "JLMContactBundle:Person:newajax" }
+    
+jlm_contact_ajax_person_create:
+    path: /person/ajax/create
+    defaults:  { _controller: "JLMContactBundle:Person:createajax" }

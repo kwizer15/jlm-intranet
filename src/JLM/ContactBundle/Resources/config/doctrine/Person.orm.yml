@@ -8,7 +8,7 @@ JLM\ContactBundle\Entity\Person:
     type: string
   discriminatorMap:
     person: Person
-    technician: Technician
+    technician: JLM\ModelBundle\Entity\Technician
   id:
     id:
       type: integer
