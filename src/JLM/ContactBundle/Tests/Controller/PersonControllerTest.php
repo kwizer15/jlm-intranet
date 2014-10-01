@@ -37,10 +37,9 @@ class PersonControllerTest extends WebTestCase
         $this->client->followRedirects();
         
         $crawler = $this->client->request('GET', '/contact/person/ajax/new');
-        
         // Page d'identification (a supprimer plus tard)
         $crawler = $this->login($crawler);
-        
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
         $form = $crawler->selectButton('submit')->form();
         $form['jlm_contact_person[lastName]'] = 'Foo';
         $form['jlm_contact_person[firstName]'] = 'Bar';
@@ -52,7 +51,7 @@ class PersonControllerTest extends WebTestCase
         $form['jlm_contact_person[email]'] = 'machin@truc.com';
 
         $this->client->submit($form);
-        $this->assertRegExp('/Bar Foo/', $this->client->getResponse()->getContent());
+        $this->assertRegExp('/Bar Foo/', $this->client->getResponse()->getContent());       
     }
     
     /**
