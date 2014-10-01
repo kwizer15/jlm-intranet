@@ -73,14 +73,17 @@ class PersonController extends Controller
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
-            if ($entity->getAddress() !== null) 
+            if ($entity->getAddress() !== null)
+            {
            		$em->persist($entity->getAddress());
+            }
             $em->persist($entity);
             $em->flush();
 
             return $this->redirect($this->generateUrl('jlm_contact_ajax_person_show', array('id' => $entity->getId())));
             
         }
+        
         return array(
             'entity' => $entity,
             'form'   => $form->createView()
