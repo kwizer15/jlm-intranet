@@ -198,7 +198,6 @@ class Company implements CompanyInterface
         return $this->address;
     }
 
-    
     /**
      * Add contacts
      *
