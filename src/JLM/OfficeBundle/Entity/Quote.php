@@ -5,6 +5,7 @@ namespace JLM\OfficeBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\DailyBundle\Entity\Work;
+use JLM\ContactBundle\Model\PersonInterface;
 
 /**
  * JLM\OfficeBundle\Entity\Quote
@@ -69,9 +70,9 @@ class Quote extends Document
 	private $contact;
 	
 	/**
-	 * @var JLM\ModelBundle\Entity\Person $contact
+	 * @var JLM\ContactBundle\Model\PersonInterface $contactPerson
 	 *
-	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Person")
+	 * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\PersonInterface")
 	 */
 	private $contactPerson;
 	
@@ -276,7 +277,7 @@ class Quote extends Document
      * @param string $contact
      * @return Quote
      */
-    public function setContactPerson($contact)
+    public function setContactPerson(PersonInterface $contact)
     {
     	$this->contactPerson = $contact;
     
@@ -285,7 +286,7 @@ class Quote extends Document
     
     /**
      *
-     * @return string
+     * @return PersonInterface
      */
     public function getContactPerson()
     {

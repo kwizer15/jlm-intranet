@@ -1,9 +1,9 @@
 <?php
 namespace JLM\UserBundle\Entity;
 
-use FOS\UserBundle\Entity\User as BaseUser;
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use JLM\ModelBundle\Entity\Person;
+use JLM\ContactBundle\Model\PersonInterface;
 
 /**
  * @ORM\Entity
@@ -19,7 +19,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\JLM\ModelBundle\Entity\Person")
+     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\PersonInterface")
      */
     private $person;
     
@@ -31,10 +31,10 @@ class User extends BaseUser
     /**
      * Set person
      *
-     * @param Person $person
+     * @param PersonInterface $person
      * @return User
      */
-    public function setPerson(\JLM\ModelBundle\Entity\Person $person = null)
+    public function setPerson(PersonInterface $person = null)
     {
         $this->person = $person;
     
@@ -44,7 +44,7 @@ class User extends BaseUser
     /**
      * Get person
      *
-     * @return JLM\UserBundle\Entity\JLMModelBundle:Person 
+     * @return PersonInterface
      */
     public function getPerson()
     {

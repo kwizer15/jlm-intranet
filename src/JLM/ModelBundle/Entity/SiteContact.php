@@ -5,6 +5,7 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\ContactBundle\Model\PersonInterface;
 
 /**
  * JLM\ModelBundle\Entity\SiteContact
@@ -34,7 +35,7 @@ class SiteContact
 	/**
 	 * @var $person
 	 *
-	 * @ORM\ManyToOne(targetEntity="Person")
+	 * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\PersonInterface")
 	 * @Assert\Valid
 	 * @Assert\NotNull
 	 */
@@ -92,10 +93,10 @@ class SiteContact
     /**
      * Set person
      *
-     * @param JLM\ModelBundle\Entity\Person $person
+     * @param PersonInterface $person
      * @return SiteContact
      */
-    public function setPerson(\JLM\ModelBundle\Entity\Person $person = null)
+    public function setPerson(PersonInterface $person = null)
     {
         $this->person = $person;
     
@@ -105,7 +106,7 @@ class SiteContact
     /**
      * Get person
      *
-     * @return JLM\ModelBundle\Entity\Person 
+     * @return PersonInterface
      */
     public function getPerson()
     {

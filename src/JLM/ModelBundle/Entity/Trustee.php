@@ -5,6 +5,8 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\ContactBundle\Entity\Company;
+use JLM\ContactBundle\Model\AddressInterface;
 
 /**
  * JLM\ModelBundle\Entity\Trustee
@@ -50,9 +52,9 @@ class Trustee extends Company
     
     /**
      * Adresse de facturation (si differente)
-     * @var Address $billingAddress
+     * @var AddressInterface $billingAddress
      *
-     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
      */
     private $billingAddress;
     
@@ -252,10 +254,10 @@ class Trustee extends Company
     /**
      * Set billingAddress
      *
-     * @param JLM\ModelBundle\Entity\Address $billingAddress
+     * @param AddressInterface $billingAddress
      * @return Trustee
      */
-    public function setBillingAddress(\JLM\ModelBundle\Entity\Address $billingAddress = null)
+    public function setBillingAddress(AddressInterface $billingAddress = null)
     {
         $this->billingAddress = $billingAddress;
     
@@ -265,7 +267,7 @@ class Trustee extends Company
     /**
      * Get billingAddress
      *
-     * @return JLM\ModelBundle\Entity\Address 
+     * @return AddressInterface
      */
     public function getBillingAddress()
     {
@@ -273,11 +275,19 @@ class Trustee extends Company
         
     }
     
+    /**
+     * 
+     * @return AddressInterface
+     */
     public function getAddressForBill()
     {
     	if ($this->billingAddress)
+    	{
     		if ($this->billingAddress->getStreet())
+    		{
     			return $this->billingAddress;
+    		}
+    	}
     	return $this->getAddress();
     }
     

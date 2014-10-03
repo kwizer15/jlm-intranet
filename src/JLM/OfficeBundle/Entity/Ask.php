@@ -8,6 +8,7 @@ use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\Person;
 use JLM\OfficeBundle\Entity\AskMethod;
+use JLM\ContactBundle\Model\PersonInterface;
 
 /**
  * JLM\OfficeBundle\Entity\Ask
@@ -51,7 +52,7 @@ abstract class Ask extends UploadDocument
 	
 	/**
 	 * Contact
-	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Person")
+	 * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\PersonInterface")
 	 * @Assert\Valid
 	 */
 	private $person;
@@ -187,10 +188,10 @@ abstract class Ask extends UploadDocument
     /**
      * Set person
      *
-     * @param \JLM\ModelBundle\Entity\Person $person
+     * @param PersonInterface $person
      * @return Ask
      */
-    public function setPerson(\JLM\ModelBundle\Entity\Person $person = null)
+    public function setPerson(PersonInterface $person = null)
     {
         $this->person = $person;
     
@@ -200,7 +201,7 @@ abstract class Ask extends UploadDocument
     /**
      * Get person
      *
-     * @return \JLM\ModelBundle\Entity\Person 
+     * @return PersonInterface
      */
     public function getPerson()
     {
