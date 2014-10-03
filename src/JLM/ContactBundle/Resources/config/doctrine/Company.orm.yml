@@ -6,8 +6,8 @@ JLM\ContactBundle\Entity\Company:
     name: discr
     type: string
   discriminatorMap:
-    trustee: Trustee
-    supplier: Supplier
+    trustee: JLM\ModelBundle\Entity\Trustee
+    supplier: JLM\ModelBundle\Entity\Supplier
     company: Company
   id:
     id:
@@ -31,9 +31,10 @@ JLM\ContactBundle\Entity\Company:
     address:
       targetEntity: JLM\ContactBundle\Model\AddressInterface
   manyToMany:
-    targetEntity: JLM\ContactBundle\Entity\Person
-    cascade: ["all"]
-    joinTable:
+    contacts:
+      targetEntity: JLM\ContactBundle\Entity\Person
+      cascade: ["all"]
+      joinTable:
         name: companies_contacts
         joinColumns:
           company_id:
