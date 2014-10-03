@@ -14,7 +14,20 @@ namespace JLM\ContactBundle\Model;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-interface CompanyInterface extends CorporationInterface
+interface CorporationInterface
 {
+    /**
+     * Get first name
+     *
+     * @return string
+     */
+    public function getName();
+    
+    /**
+     * To String
+     * 
+     * @return string
+     */
+    public function __toString();
     
 }
