@@ -86,7 +86,7 @@ class SiteContactController extends Controller
     {
         $entity  = new SiteContact();
         $form = $this->createForm(new SiteContactType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid())
         {
@@ -155,7 +155,7 @@ class SiteContactController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new SiteContactType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
         	if ($entity->getPerson()->getAddress() !== null)
@@ -185,7 +185,7 @@ class SiteContactController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();

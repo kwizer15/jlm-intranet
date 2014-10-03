@@ -290,9 +290,9 @@ class Site
      * @param JLM\ModelBundle\Entity\Person $contacts
      * @return Site
      */
-    public function addContact(\JLM\ModelBundle\Entity\Person $contacts)
+    public function addContact(SiteContact $contacts)
     {
-        $this->contacts[] = $contacts;
+        return $this->contacts->add($contacts);
     
         return $this;
     }
@@ -302,9 +302,9 @@ class Site
      *
      * @param JLM\ModelBundle\Entity\Person $contacts
      */
-    public function removeContact(\JLM\ModelBundle\Entity\Person $contacts)
+    public function removeContact(SiteContact $contacts)
     {
-        $this->contacts->removeElement($contacts);
+        return $this->contacts->removeElement($contacts);
     }
 
     /**

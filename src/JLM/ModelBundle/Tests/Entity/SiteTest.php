@@ -52,4 +52,13 @@ class SiteTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->entity, $this->entity->setLodge($address));
         $this->assertSame($address, $this->entity->getLodge());
     }
+    
+    public function testAddContact()
+    {
+        $person = $this->getMock('JLM\ModelBundle\Entity\SiteContact');
+        $this->assertTrue($this->entity->addContact($person));
+        $this->assertCount(1, $this->entity->getContacts());
+        $this->assertTrue($this->entity->removeContact($person));
+        $this->assertCount(0, $this->entity->getContacts());
+    }
 }
