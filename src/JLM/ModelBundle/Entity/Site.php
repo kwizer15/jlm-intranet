@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use JLM\ContactBundle\Model\AddressInterface;
+
 /**
  * JLM\ModelBundle\Entity\Site
  *
@@ -37,7 +39,7 @@ class Site
     /**
      * @var Address $address
      * 
-     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
      * @Assert\Valid
      * @Assert\NotNull
      */
@@ -88,7 +90,7 @@ class Site
     /**
      * @var Address $lodge
      *
-     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
      * @Assert\Valid
      */
     private $lodge;
@@ -164,10 +166,10 @@ class Site
     /**
      * Set address
      *
-     * @param JLM\ModelBundle\Entity\Address $address
+     * @param AddressInterface $address
      * @return Site
      */
-    public function setAddress(\JLM\ModelBundle\Entity\Address $address = null)
+    public function setAddress(AddressInterface $address = null)
     {
         $this->address = $address;
     
@@ -177,7 +179,7 @@ class Site
     /**
      * Get address
      *
-     * @return JLM\ModelBundle\Entity\Address 
+     * @return AddressInterface
      */
     public function getAddress()
     {
@@ -187,10 +189,10 @@ class Site
     /**
      * Set lodge
      *
-     * @param JLM\ModelBundle\Entity\Address $lodge
+     * @param AddresInterface $lodge
      * @return Site
      */
-    public function setLodge(\JLM\ModelBundle\Entity\Address $lodge = null)
+    public function setLodge(AddressInterface $lodge = null)
     {
     	$this->lodge = $lodge;
     
@@ -200,7 +202,7 @@ class Site
     /**
      * Get lodge
      *
-     * @return JLM\ModelBundle\Entity\Address
+     * @return AddresInterface
      */
     public function getLodge()
     {
