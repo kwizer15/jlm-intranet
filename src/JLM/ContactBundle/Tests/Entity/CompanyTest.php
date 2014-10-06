@@ -127,7 +127,7 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
     
     public function testAddContact()
     {
-        $contact = $this->getMock('JLM\ContactBundle\Model\PersonInterface');
+        $contact = $this->getMock('JLM\ContactBundle\Model\CorporationContactInterface');
         $this->assertTrue($this->entity->addContact($contact));
         $this->assertCount(1, $this->entity->getContacts());
     }

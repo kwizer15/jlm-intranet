@@ -22,19 +22,4 @@ interface CorporationInterface extends ContactInterface
      * @return string
      */
     public function getPhone();
-
-    /**
-     * Get first name
-     *
-     * @return string
-     */
-    public function getName();
-    
-    /**
-     * To String
-     * 
-     * @return string
-     */
-    public function __toString();
-    
 }

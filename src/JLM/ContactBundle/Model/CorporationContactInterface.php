@@ -46,11 +46,4 @@ interface CorporationContactInterface extends PersonInterface
      */
     public function hasManager();
     
-    /**
-     * To String
-     * 
-     * @return string
-     */
-    public function __toString();
-    
 }

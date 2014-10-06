@@ -21,10 +21,16 @@ use JLM\ContactBundle\Model\AddressInterface;
 abstract class Contact implements ContactInterface
 {
     /**
+     * @var int
+     * Ehancement
+     */
+//    private $id;
+    
+    /**
      * @var string
      * Ehancement
      */
-    //private $name = '';
+//    private $name = '';
     
 	/**
 	 * @var Address $address
@@ -40,6 +46,16 @@ abstract class Contact implements ContactInterface
 	 * @var email $email
 	 */
 	private $email;
+	
+	/**
+	 * Get id
+	 * @return int
+	 * Ehancement
+	 */
+//	public function getId()
+//	{
+//	    return $this->id;
+//	}
 	
 	/**
 	 * Set text

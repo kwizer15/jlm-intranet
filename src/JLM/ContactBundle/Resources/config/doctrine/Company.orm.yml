@@ -14,23 +14,4 @@ JLM\ContactBundle\Entity\Company:
       type: integer
       generator:
         strategy: AUTO
-  fields:
-    name:
-      type: string
-    phone:
-      type: string
-      length: 20
-  manyToMany:
-    contacts:
-      targetEntity: JLM\ContactBundle\Entity\Person
-      cascade: ["all"]
-      joinTable:
-        name: companies_contacts
-        joinColumns:
-          company_id:
-            referencedColumnName: id
-        inverseJoinColumns:
-          person_id:
-            referencedColumnName: id
-            unique: true
     

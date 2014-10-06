@@ -20,6 +20,7 @@ class Person extends Contact implements PersonInterface
 {
 	/**
      * @var integer $id
+     * @deprecated
      */
     private $id;
     
@@ -68,9 +69,7 @@ class Person extends Contact implements PersonInterface
     }
 
     /**
-     * Get firstName
-     *
-     * @return string 
+     * {@inheritdoc}
      */
     public function getFirstName()
     {
@@ -91,9 +90,7 @@ class Person extends Contact implements PersonInterface
     }
 
     /**
-     * Get lastName
-     *
-     * @return string 
+     * {@inheritdoc}
      */
     public function getLastName()
     {
@@ -101,9 +98,7 @@ class Person extends Contact implements PersonInterface
     }
     
     /**
-     * Get name
-     * 
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -112,7 +107,7 @@ class Person extends Contact implements PersonInterface
 
     /**
      * Get id
-     *
+     * @deprecated
      * @return integer 
      */
     public function getId()
@@ -134,9 +129,7 @@ class Person extends Contact implements PersonInterface
     }
 
     /**
-     * Get title
-     *
-     * @return string 
+     * {@inheritdoc}
      */
     public function getTitle()
     {
@@ -176,9 +169,7 @@ class Person extends Contact implements PersonInterface
     }
 
     /**
-     * Get fixedPhone
-     *
-     * @return string 
+     * {@inheritdoc}
      */
     public function getFixedPhone()
     {
@@ -199,9 +190,7 @@ class Person extends Contact implements PersonInterface
     }
 
     /**
-     * Get mobilePhone
-     *
-     * @return string 
+     * {@inheritdoc}
      */
     public function getMobilePhone()
     {
@@ -225,6 +214,7 @@ class Person extends Contact implements PersonInterface
      * Get role
      *
      * @return string
+     * @deprecated
      */
     public function getRole()
     {

@@ -17,6 +17,13 @@ namespace JLM\ContactBundle\Model;
 interface PersonInterface extends ContactInterface
 {
     /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle();
+    
+    /**
      * Get first name
      *
      * @return string
@@ -31,10 +38,17 @@ interface PersonInterface extends ContactInterface
     public function getLastName();
     
     /**
-     * To String
-     * 
+     * Get fixedPhone
+     *
+     * @return string 
+     */
+    public function getFixedPhone();
+    
+    /**
+     * Get mobilePhone
+     *
      * @return string
      */
-    public function __toString();
+    public function getMobilePhone();
     
 }

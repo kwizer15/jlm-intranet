@@ -71,7 +71,9 @@ doctrine:
             JLM\ContactBundle\Model\CountryInterface: JLM\ContactBundle\Entity\Country
             JLM\ContactBundle\Model\CityInterface: JLM\ContactBundle\Entity\City
             JLM\ContactBundle\Model\AddressInterface: JLM\ContactBundle\Entity\Address
+            JLM\ContactBundle\Model\CorporationContactInterface: JLM\ContactBundle\Entity\CorporationContact
             JLM\ContactBundle\Model\PersonInterface: JLM\ContactBundle\Entity\Person
+            JLM\ContactBundle\Model\CorporationInterface: JLM\ContactBundle\Entity\Company
             JLM\ContactBundle\Model\CompanyInterface: JLM\ContactBundle\Entity\Company
             JLM\TransmitterBundle\Model\AttributionInterface: JLM\TransmitterBundle\Entity\Attribution
             JLM\TransmitterBundle\Model\TransmitterInterface: JLM\TransmitterBundle\Entity\Transmitter

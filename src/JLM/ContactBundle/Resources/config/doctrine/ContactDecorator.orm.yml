@@ -1,0 +1,6 @@
+JLM\ContactBundle\Entity\ContactDecorator:
+  type: mappedSuperclass
+  oneToOne:
+    contact:
+      targetEntity: JLM\ContactBundle\Model\PersonInterface  # Changer pour ContactInterface
+    
