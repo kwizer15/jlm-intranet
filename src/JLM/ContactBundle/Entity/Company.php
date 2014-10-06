@@ -20,7 +20,7 @@ use JLM\ContactBundle\Model\PersonInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Company implements CompanyInterface
+class Company extends Contact implements CompanyInterface
 {
 	/**
      * @var integer $id
@@ -31,12 +31,13 @@ class Company implements CompanyInterface
      * @var string
      */
     private $name = '';
-    
-	/**
-	 * @var Address $address
-	 */
-	private $address;
 	
+	/**
+	 * @var Person[] $contacts
+	 *
+     */
+	private $contacts;
+
 	/**
 	 * @var string $phone
 	 */
@@ -48,17 +49,28 @@ class Company implements CompanyInterface
 	private $fax;
 	
 	/**
-	 * @var email $email
+	 * Set phone
+	 *
+	 * @param string $phone
+	 * @return self
 	 */
-	private $email;
+	public function setPhone($phone)
+	{
+	    $this->phone = $phone;
 	
+	    return $this;
+	}
 	
 	/**
-	 * @var Person[] $contacts
+	 * Get phone
 	 *
-     */
-	private $contacts;
-	
+	 * @return string
+	 */
+	public function getPhone()
+	{
+	    return $this->phone;
+	}
+
 	/**
 	 * Set text
 	 *
@@ -81,14 +93,6 @@ class Company implements CompanyInterface
 	}
 	
 	/**
-	 * To String
-	 */
-	public function __toString()
-	{
-	    return $this->getName();
-	}
-	
-	/**
 	 * Constructor
 	 */
 	public function __construct()
@@ -104,98 +108,6 @@ class Company implements CompanyInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set phone
-     *
-     * @param string $phone
-     * @return self
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-        
-        return $this;
-    }
-
-    /**
-     * Get phone
-     *
-     * @return string 
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
-     * Set fax
-     *
-     * @param string $fax
-     * @return self
-     */
-    public function setFax($fax)
-    {
-        $this->fax = $fax;
-        
-        return $this;
-    }
-
-    /**
-     * Get fax
-     *
-     * @return string 
-     */
-    public function getFax()
-    {
-        return $this->fax;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     * @return self
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-        
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string 
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set address
-     *
-     * @param AddressInterface $address
-     * @return self
-     */
-    public function setAddress(AddressInterface $address)
-    {
-        $this->address = $address;
-        
-        return $this;
-    }
-
-    /**
-     * Get address
-     *
-     * @return AddressInterface
-     */
-    public function getAddress()
-    {
-        return $this->address;
     }
 
     /**

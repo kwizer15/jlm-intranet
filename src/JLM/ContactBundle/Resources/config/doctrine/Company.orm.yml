@@ -20,16 +20,6 @@ JLM\ContactBundle\Entity\Company:
     phone:
       type: string
       length: 20
-    fax:
-      type: string
-      length: 20
-      nullable: true
-    email:
-      type: string
-      nullable: true
-  oneToOne:
-    address:
-      targetEntity: JLM\ContactBundle\Model\AddressInterface
   manyToMany:
     contacts:
       targetEntity: JLM\ContactBundle\Entity\Person

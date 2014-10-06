@@ -25,6 +25,16 @@ JLM\ContactBundle\Entity\Address:
       - NotNull: ~
       - Valid: ~
 
+JLM\ContactBundle\Entity\Contact:
+  properties:
+    fax:
+      - Regex: { pattern: "/^0[1-589]\d{8}$/",message: "Ce n'est pas un numéro de fax valide" }
+    email:
+      - Email: ~
+    address:
+      - NotNull: ~
+      - Valid: ~
+      
 JLM\ContactBundle\Entity\Person:
   properties:
     title:
@@ -38,10 +48,6 @@ JLM\ContactBundle\Entity\Person:
       - Regex: { pattern: "/^0[1-589]\d{8}$/", message: "Ce n'est pas un numéro de téléphone fixe valide" }
     mobilePhone:
       - Regex: { pattern: "/^0[67]\d{8}$/", message: "Ce n'est pas un numéro de téléphone mobile valide" }
-    fax:
-      - Regex: { pattern: "/^0[1-589]\d{8}$/", message: "Ce n'est pas un numéro de fax valide" }
-    email:
-      - Email: ~
     role:
       - Type: { type: string }
 
@@ -51,18 +57,10 @@ JLM\ContactBundle\Entity\Company:
       - NotNull: ~
       - Type: { type: string }
       - NotBlank: ~
-    address:
-      - NotNull: ~
-      - Valid: ~
     phone: 
-      - pattern: /^0[1-589]\d{8}$/
-      - message: "Ce n'est pas un numéro de téléphone fixe valide"
-    fax:
       - Regex:
         - pattern: /^0[1-589]\d{8}$/
-        - message: "Ce n'est pas un numéro de fax valide"
-    email:
-      - Email: ~
+        - message: "Ce n'est pas un numéro de téléphone fixe valide"
     contacts:
       - Valid:
         - traverse: true

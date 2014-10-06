@@ -14,27 +14,26 @@ namespace JLM\ContactBundle\Model;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-interface PersonInterface extends ContactInterface
-{
+interface ContactInterface
+{   
     /**
-     * Get first name
+     * Get fax
      *
      * @return string
      */
-    public function getFirstName();
+    public function getFax();
     
     /**
-     * Get last name
+     * Get email
      *
      * @return string
      */
-    public function getLastName();
+    public function getEmail();
     
     /**
-     * To String
-     * 
-     * @return string
+     * Get address
+     *
+     * @return AddressInterface
      */
-    public function __toString();
-    
+    public function getAddress();
 }

@@ -31,17 +31,7 @@ JLM\ContactBundle\Entity\Person:
       type: string
       length: 20
       nullable: true
-    fax:
-      type: string
-      length: 20
-      nullable: true
-    email:
-      type: string
-      nullable: true
     role:
       type: string
       nullable: true
-  oneToOne:
-    address:
-      targetEntity: JLM\ContactBundle\Model\AddressInterface
     

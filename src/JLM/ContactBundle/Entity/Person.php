@@ -16,7 +16,7 @@ use JLM\ContactBundle\Model\PersonInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Person implements PersonInterface
+class Person extends Contact implements PersonInterface
 {
 	/**
      * @var integer $id
@@ -48,22 +48,6 @@ class Person implements PersonInterface
      * @var string $mobilePhone
      */
     private $mobilePhone;
-
-    
-    /**
-     * @var string $fax
-     */
-    private $fax;
-    
-    /**
-     * @var string $email
-     */
-    private $email;
-    
-    /**
-     * @var string $address
-     */
-    private $address;
     
     /**
      * @var $role
@@ -170,8 +154,10 @@ class Person implements PersonInterface
     	$this->fixedPhone = str_replace(array('-','/','.',','),'',$this->fixedPhone);
     	$this->mobilePhone = str_replace('+33','0',$this->mobilePhone);
     	$this->mobilePhone = str_replace(array('-','/','.',','),'',$this->mobilePhone);
-    	$this->fax = str_replace('+33','0',$this->fax);
-    	$this->fax = str_replace(array('-','/','.',','),'',$this->fax);
+    	$fax = $this->getFax();
+    	$fax = str_replace('+33','0',$fax);
+    	$fax = str_replace(array('-','/','.',','),'',$fax);
+    	$this->setFax($fax);
     	
     	return $this;
     }
@@ -222,77 +208,6 @@ class Person implements PersonInterface
         return $this->mobilePhone;
     }
 
-   
-
-    /**
-     * Set fax
-     *
-     * @param string $fax
-     * @return self
-     */
-    public function setFax($fax)
-    {
-        $this->fax = $fax;
-        
-        return $this;
-    }
-
-    /**
-     * Get fax
-     *
-     * @return string 
-     */
-    public function getFax()
-    {
-        return $this->fax;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     * @return self
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-        
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string 
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-    
-    /**
-     * Set address
-     *
-     * @param string $address
-     * @return self
-     */
-    public function setAddress($address)
-    {
-    	$this->address = $address;
-    	
-    	return $this;
-    }
-    
-    /**
-     * Get address
-     *
-     * @return string
-     */
-    public function getAddress()
-    {
-    	return $this->address;
-    }
-    
     /**
      * Set role
      *
@@ -314,15 +229,5 @@ class Person implements PersonInterface
     public function getRole()
     {
     	return $this->role;
-    }
-    
-    /**
-     * To String
-     * 
-     * @return string
-     */
-    public function __toString()
-    {
-    	return $this->getName();
     }
 }
