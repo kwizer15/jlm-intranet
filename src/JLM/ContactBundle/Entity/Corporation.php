@@ -22,6 +22,12 @@ use JLM\ContactBundle\Model\CorporationContactInterface;
 abstract class Corporation extends Contact implements CorporationInterface
 {
     /**
+     * @var integer $id
+     * @deprecated
+     */
+    private $id;
+    
+    /**
      * @var string
      */
     private $name = '';
@@ -36,6 +42,16 @@ abstract class Corporation extends Contact implements CorporationInterface
 	 * @var string $phone
 	 */
 	private $phone;
+	
+	/**
+	 * Get id
+	 * @deprecated
+	 * @return integer
+	 */
+	public function getId()
+	{
+	    return $this->id;
+	}
 	
 	/**
 	 * Set phone

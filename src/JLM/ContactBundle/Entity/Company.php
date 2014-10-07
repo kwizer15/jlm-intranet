@@ -18,19 +18,5 @@ use JLM\ContactBundle\Model\CompanyInterface;
  */
 class Company extends Corporation implements CompanyInterface
 {
-	/**
-     * @var integer $id
-     * @deprecated
-     */
-    private $id;
-
-    /**
-     * Get id
-     * @deprecated
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	
 }

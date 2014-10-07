@@ -34,13 +34,31 @@ class InterventionControllerTest extends WebTestCase
     
     public function testNew()
     {
-//        $this->client->followRedirects();
-//        
-//        $crawler = $this->client->request('GET', '/daily/intervention/today');
-//        // Page d'identification (a supprimer plus tard)
-//        $crawler = $this->login($crawler);
-//        $this->assertTrue($this->client->getResponse()->isSuccessful());
-             
+        $this->client->enableProfiler();
+        $this->client->followRedirects();
+        
+        $crawler = $this->client->request('GET', '/daily/intervention/today');
+        // Page d'identification (a supprimer plus tard)
+        $crawler = $this->login($crawler);
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
+    }
+    
+    public function testEntitiesAreValid()
+    {
+        $this->client->enableProfiler();
+        $this->client->followRedirects();
+        
+        $crawler = $this->client->request('GET', '/daily/intervention/today');
+        // Page d'identification (a supprimer plus tard)
+        $crawler = $this->login($crawler);
+        if ($profile = $this->client->getProfile())
+        {
+            $this->assertEquals(0, $profile->getCollector('db')->getInvalidEntityCount());
+        }
+        else
+        {
+            $this->markTestSkipped('Profiler is not activated');
+        }
     }
     
     /**

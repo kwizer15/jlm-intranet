@@ -9,9 +9,5 @@ JLM\ContactBundle\Entity\Company:
     trustee: JLM\ModelBundle\Entity\Trustee
     supplier: JLM\ModelBundle\Entity\Supplier
     company: Company
-  id:
-    id:
-      type: integer
-      generator:
-        strategy: AUTO
+  
     
