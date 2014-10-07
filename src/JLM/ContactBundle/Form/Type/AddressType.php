@@ -27,7 +27,7 @@ class AddressType extends AbstractType
     {
         $builder
             ->add('street',null,array('label'=>'Adresse','attr'=>array('placeholder'=>'Adresse')))
-            ->add('city','jlm_contact_city_select' ,array('label'=>'Ville','attr'=>array('placeholder'=>'Ville'))); 
+            ->add('city','jlm_contact_city_select' ,array('label'=>'Ville','attr'=>array('placeholder'=>'Ville','class'=>'input-large'))); 
         ;
     }
 
