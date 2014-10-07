@@ -1,3 +1,7 @@
+jlm_installation:
+    resource: "@JLMInstallationBundle/Resources/config/routing.yml"
+    prefix:   /
+
 jlm_condominium:
     resource: "@JLMCondominiumBundle/Resources/config/routing.yml"
     prefix:   /

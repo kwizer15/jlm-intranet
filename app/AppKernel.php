@@ -31,6 +31,7 @@ class AppKernel extends Kernel
             new JLM\FeeBundle\JLMFeeBundle(),
             new JLM\ContactBundle\JLMContactBundle(),
             new JLM\CondominiumBundle\JLMCondominiumBundle(),
+            new JLM\InstallationBundle\JLMInstallationBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
