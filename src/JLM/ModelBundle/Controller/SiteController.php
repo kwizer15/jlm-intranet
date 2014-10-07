@@ -75,7 +75,9 @@ class SiteController extends Controller
     	
         $entity = new Site();
         if ($trustee)
-        	$entity->setTrustee($trustee);
+        {
+        	$entity->setManager($trustee);
+        }
         $form   = $this->createForm(new SiteType(), $entity);
 
         return array(
@@ -96,9 +98,10 @@ class SiteController extends Controller
     {
         $entity  = new Site();
         $form = $this->createForm(new SiteType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity->getAddress());
             $em->persist($entity);
@@ -141,7 +144,7 @@ class SiteController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $editForm = $this->createForm(new SiteType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid())
         {
@@ -167,9 +170,10 @@ class SiteController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('JLMModelBundle:Site')->find($id);
 

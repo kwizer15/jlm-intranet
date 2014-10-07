@@ -63,7 +63,7 @@ class SiteContactController extends Controller
     {
         $entity = new SiteContact();
         if ($site)
-        	$entity->setSite($site);
+        	$entity->setUnionCouncil($site);
         $form   = $this->createForm(new SiteContactType(), $entity);
 
         return array(
@@ -92,7 +92,9 @@ class SiteContactController extends Controller
         {
             $em = $this->getDoctrine()->getManager();
             if ($entity->getPerson()->getAddress() !== null)
+            {
             	$em->persist($entity->getPerson()->getAddress());
+            }
             $entity->getPerson()->formatPhones();
             $em->persist($entity->getPerson());
             $em->persist($entity);
@@ -157,9 +159,12 @@ class SiteContactController extends Controller
         $editForm = $this->createForm(new SiteContactType(), $entity);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isValid())
+        {
         	if ($entity->getPerson()->getAddress() !== null)
+        	{
         		$em->persist($entity->getPerson()->getAddress());
+        	}
         	$entity->getPerson()->formatPhones();
         	$em->persist($entity->getPerson());
             $em->persist($entity);
@@ -187,11 +192,13 @@ class SiteContactController extends Controller
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('JLMModelBundle:SiteContact')->find($id);
 
-            if (!$entity) {
+            if (!$entity)
+            {
                 throw $this->createNotFoundException('Unable to find SiteContact entity.');
             }
 

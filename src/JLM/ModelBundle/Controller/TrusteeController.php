@@ -106,7 +106,9 @@ class TrusteeController extends Controller
             $em = $this->getDoctrine()->getManager(); 
             $em->persist($entity->getAddress());
             if ($entity->getBillingAddress() !== null)
-          	  $em->persist($entity->getBillingAddress());
+            {
+          	    $em->persist($entity->getBillingAddress());
+            }
             $em->persist($entity);
             $em->flush();
 
@@ -160,7 +162,9 @@ class TrusteeController extends Controller
         if ($editForm->isValid()) {
         	$em->persist($entity->getAddress());
         	if ($entity->getBillingAddress() !== null)
+        	{
         		$em->persist($entity->getBillingAddress());
+        	}
             $em->persist($entity);
             $em->flush();
 
@@ -188,7 +192,8 @@ class TrusteeController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($entity);
             $em->flush();
@@ -240,7 +245,8 @@ class TrusteeController extends Controller
     	$form    = $this->createForm(new PersonType(), $entity);
     	$form->handleRequest($request);
     
-    	if ($form->isValid()) {
+    	if ($form->isValid())
+    	{
     		$em = $this->getDoctrine()->getManager();
     		$trustee->addContact($entity);
     		$em->persist($entity);
@@ -273,6 +279,7 @@ class TrusteeController extends Controller
         $em = $this->getDoctrine()->getManager();
     
         $entities = $em->getRepository('JLMModelBundle:Trustee')->getArray($term, $page_limit);
+        
         return new JsonResponse(array('entities' => $entities));
     }
     
