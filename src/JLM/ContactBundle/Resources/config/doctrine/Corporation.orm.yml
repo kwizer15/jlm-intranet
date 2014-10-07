@@ -16,7 +16,7 @@ JLM\ContactBundle\Entity\Corporation:
       targetEntity: JLM\ContactBundle\Entity\CorporationContact
       cascade: ["all"]
       joinTable:
-        name: corporation_contacts
+        name: jlm_contact_corporation_corporationcontact
         joinColumns:
           company_id:
             referencedColumnName: id
