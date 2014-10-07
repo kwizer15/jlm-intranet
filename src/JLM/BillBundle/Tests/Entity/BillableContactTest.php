@@ -51,7 +51,6 @@ class BillableContactTest extends \PHPUnit_Framework_TestCase
         return array(
             array('getName', 'Foo'),
             array('getAddress', 'Foo'),
-            array('getFax', 'Foo'),
             array('getEmail', 'Foo'),
             array('__toString', 'Foo'),
         );
