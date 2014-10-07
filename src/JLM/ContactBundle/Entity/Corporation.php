@@ -84,6 +84,7 @@ abstract class Corporation extends Contact implements CorporationInterface
 	public function setName($name)
 	{
 	    $this->name = $name;
+	    
 	    return $this;
 	}
 	
@@ -113,7 +114,7 @@ abstract class Corporation extends Contact implements CorporationInterface
      */
     public function addContact(CorporationContactInterface $contacts)
     {
-    	$this->contacts[] = $contacts;
+    	$this->contacts->add($contacts);
     	
     	return true;
     }

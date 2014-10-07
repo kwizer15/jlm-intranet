@@ -51,17 +51,15 @@ JLM\ContactBundle\Entity\Person:
     role:
       - Type: { type: string }
 
-JLM\ContactBundle\Entity\Company:
+JLM\ContactBundle\Entity\Corporation:
   properties:
     name:
       - NotNull: ~
       - Type: { type: string }
       - NotBlank: ~
     phone: 
-      - Regex:
-        - pattern: /^0[1-589]\d{8}$/
-        - message: "Ce n'est pas un numéro de téléphone fixe valide"
-    contacts:
-      - Valid:
-        - traverse: true
+      - Regex: { pattern: "/^0[1-589]\d{8}$/", message: "Ce n'est pas un numéro de téléphone fixe valide" }
+#    contacts:
+#      - Valid:
+#        - traverse: true
         
