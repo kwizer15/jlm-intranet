@@ -29,6 +29,8 @@ twig:
     form:
         resources:
             - ':Form:horizontal_ext.html.twig'
+            - 'JLMContactBundle:Form:fields.html.twig'
+            - 'JLMContactBundle:Form:javascript_layout.html.twig'
 
 # Assetic Configuration
 assetic:
