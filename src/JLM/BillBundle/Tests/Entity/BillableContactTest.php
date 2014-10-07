@@ -34,16 +34,16 @@ class BillableContactTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('JLM\BillBundle\Model\BillableContactInterface', $this->entity);
     }
     
-    public function testBoostContacts()
+    public function testBillingBoostContacts()
     {
         $contact = $this->getMock('JLM\BillBundle\Model\BoostContactInterface');
-        $this->assertCount(0, $this->entity->getBoostContacts());
-        $this->assertFalse($this->entity->removeBoostContact($contact));
-        $this->assertCount(0, $this->entity->getBoostContacts());
-        $this->assertTrue($this->entity->addBoostContact($contact));
-        $this->assertCount(1, $this->entity->getBoostContacts());
-        $this->assertTrue($this->entity->removeBoostContact($contact));
-        $this->assertCount(0, $this->entity->getBoostContacts());
+        $this->assertCount(0, $this->entity->getBillingBoostContacts());
+        $this->assertFalse($this->entity->removeBillingBoostContact($contact));
+        $this->assertCount(0, $this->entity->getBillingBoostContacts());
+        $this->assertTrue($this->entity->addBillingBoostContact($contact));
+        $this->assertCount(1, $this->entity->getBillingBoostContacts());
+        $this->assertTrue($this->entity->removeBillingBoostContact($contact));
+        $this->assertCount(0, $this->entity->getBillingBoostContacts());
     }
     
     public function getDecoFunctions()

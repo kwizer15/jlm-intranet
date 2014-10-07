@@ -1,3 +1,7 @@
+jlm_condominium:
+    resource: "@JLMCondominiumBundle/Resources/config/routing.yml"
+    prefix:   /
+
 jlm_contact:
     resource: "@JLMContactBundle/Resources/config/routing.yml"
     prefix:   /contact

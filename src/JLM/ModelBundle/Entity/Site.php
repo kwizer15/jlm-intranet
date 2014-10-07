@@ -7,6 +7,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use JLM\ContactBundle\Model\AddressInterface;
+use JLM\CondominiumBundle\Model\ManagerInterface;
+use JLM\CondominiumBundle\Model\CondominiumInterface;
+use JLM\CondominiumBundle\Model\UnionCouncilMemberInterface;
+use JLM\CondominiumBundle\Model\UnionCouncilInterface;
 
 /**
  * JLM\ModelBundle\Entity\Site
@@ -14,7 +18,7 @@ use JLM\ContactBundle\Model\AddressInterface;
  * @ORM\Table(name="sites")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SiteRepository")
  */
-class Site
+class Site implements CondominiumInterface, UnionCouncilInterface
 {
     /**
      * @var integer $id
@@ -70,7 +74,7 @@ class Site
     private $contacts;
     
     /**
-     * @var Trustee $trustee
+     * @var ManagerInterface $trustee
      * 
      * @ORM\ManyToOne(targetEntity="Trustee",inversedBy="sites")
      * @Assert\Valid
@@ -286,58 +290,54 @@ class Site
 
     /**
      * Add contacts
-     *
+     * @deprecated
      * @param JLM\ModelBundle\Entity\Person $contacts
      * @return Site
      */
-    public function addContact(SiteContact $contacts)
+    public function addContact(UnionCouncilMemberInterface $member)
     {
-        return $this->contacts->add($contacts);
-    
-        return $this;
+        return $this->addUnionCouncilMember($member);
     }
 
     /**
      * Remove contacts
-     *
-     * @param JLM\ModelBundle\Entity\Person $contacts
+     * @deprecated
+     * @param JUnionCouncilMemberInterface $member $contacts
      */
-    public function removeContact(SiteContact $contacts)
+    public function removeContact(UnionCouncilMemberInterface $member)
     {
-        return $this->contacts->removeElement($contacts);
+        return $this->removeUnionCouncilMember($member);
     }
 
     /**
      * Get contacts
-     *
+     * @deprecated
      * @return Doctrine\Common\Collections\Collection 
      */
     public function getContacts()
     {
-        return $this->contacts;
+        return $this->getUnionCouncilMembers();
     }
 
     /**
      * Set trustee
-     *
+     * @deprecated
      * @param JLM\ModelBundle\Entity\Trustee $trustee
      * @return Site
      */
-    public function setTrustee(\JLM\ModelBundle\Entity\Trustee $trustee = null)
+    public function setTrustee(ManagerInterface $manager = null)
     {
-        $this->trustee = $trustee;
-    
-        return $this;
+        return $this->setManager($manager);
     }
-
+    
     /**
      * Get trustee
-     *
+     * @deprecated
      * @return JLM\ModelBundle\Entity\Trustee 
      */
     public function getTrustee()
     {
-        return $this->trustee;
+        return $this->getManager();
     }
 
     /**
@@ -368,7 +368,7 @@ class Site
      */
     public function __toString()
     {
-    	return $this->getAddress().'';
+    	return $this->getName();
     }
     
     /**
@@ -476,5 +476,106 @@ class Site
     			return true;
     	}
     	return false;
+    }
+    
+    
+    // New
+    
+    /**
+     * Set the manager
+     * @param ManagerInterface $manager
+     * @return self
+     */
+    public function setManager(ManagerInterface $manager = null)
+    {
+        $this->trustee = $manager;
+    
+        return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getManager()
+    {
+        return $this->trustee;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getGuards()
+    {
+        return new ArrayCollection();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getUnionCouncil()
+    {
+        return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getUnionCouncilChairman()
+    {
+        return null;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getUnionCouncilMembers()
+    {
+        return $this->contacts;
+    }
+    
+    /**
+     * Add contacts
+     *
+     * @param JLM\ModelBundle\Entity\Person $contacts
+     * @return boolean
+     */
+    public function addUnionCouncilMember(UnionCouncilMemberInterface $member)
+    {
+        return $this->contacts->add($member);
+    }
+    
+    /**
+     * Remove contacts
+     *
+     * @param JLM\ModelBundle\Entity\Person $contacts
+     * @return boolean
+     */
+    public function removeUnionCouncilMember(UnionCouncilMemberInterface $member)
+    {
+        return $this->contacts->removeElement($member);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getCondominium()
+    {
+        return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->getAddress()->__toString();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getOwner()
+    {
+        return $this->getUnionCouncil();
     }
 }

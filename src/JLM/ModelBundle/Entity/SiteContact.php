@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\ContactBundle\Model\PersonInterface;
+use JLM\CondominiumBundle\Model\UnionCouncilMemberInterface;
+use JLM\CondominiumBundle\Model\UnionCouncilInterface;
 
 /**
  * JLM\ModelBundle\Entity\SiteContact
@@ -13,7 +15,7 @@ use JLM\ContactBundle\Model\PersonInterface;
  * @ORM\Table(name="site_contacts")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SiteContactRepository")
  */
-class SiteContact
+class SiteContact implements UnionCouncilMemberInterface
 {
 	/**
      * @var integer $id
@@ -69,27 +71,46 @@ class SiteContact
 	
     /**
      * Set site
-     *
-     * @param JLM\ModelBundle\Entity\Site $site
-     * @return SiteContact
+     * @deprecated
+     * @param UnionCouncilInterface $site
+     * @return self
      */
-    public function setSite(\JLM\ModelBundle\Entity\Site $site = null)
+    public function setSite(UnionCouncilInterface $site = null)
     {
-        $this->site = $site;
-    
-        return $this;
+        return $this->setUnionCouncil($site);
     }
 
     /**
      * Get site
-     *
+     * @deprecated
      * @return JLM\ModelBundle\Entity\Site 
      */
     public function getSite()
     {
+        return $this->getUnionCouncil();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getUnionCouncil()
+    {
         return $this->site;
     }
 
+    /**
+     * Set union council
+     *
+     * @param UnionCouncilInterface $unioncouncil
+     * @return SiteContact
+     */
+    public function setUnionCouncil(UnionCouncilInterface $unioncouncil = null)
+    {
+        $this->site = $unioncouncil;
+    
+        return $this;
+    }
+    
     /**
      * Set person
      *
@@ -168,4 +189,86 @@ class SiteContact
 //    {
 //    	return $this->professionnalPhone;
 //    }
+
+    // Person Decorators
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getTitle()
+    {
+        return $this->getPerson()->getTitle();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getFirstName()
+    {
+        return $this->getPerson()->getFirstName();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getLastName()
+    {
+        return $this->getPerson()->getLastName();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getFixedPhone()
+    {
+        return $this->getPerson()->getFixedPhone();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getMobilePhone()
+    {
+        return $this->getPerson()->getMobilePhone();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getFax()
+    {
+        return $this->getPerson()->getFax();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getEmail()
+    {
+        return $this->getPerson()->getEmail();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getAddress()
+    {
+        return $this->getPerson()->getAddress();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->getPerson()->getName();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return $this->getPerson()->__toString();
+    }
 }

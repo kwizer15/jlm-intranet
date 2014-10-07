@@ -30,12 +30,12 @@ class BillableContact extends ContactDecorator implements BillableContactInterfa
      * Contacts de relance
      * @var BoostContacts
      */
-    private $boostContacts;
+    private $billingBoostContacts;
     
     public function __construct(ContactInterface $contact)
     {
         parent::__construct($contact);
-        $this->boostContacts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->billingBoostContacts = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -61,9 +61,9 @@ class BillableContact extends ContactDecorator implements BillableContactInterfa
     /**
      * {@inheritdoc}
      */
-    public function getBoostContacts()
+    public function getBillingBoostContacts()
     {
-        return $this->boostContacts;
+        return $this->billingBoostContacts;
     }
     
     /**
@@ -71,9 +71,9 @@ class BillableContact extends ContactDecorator implements BillableContactInterfa
      * @param BoostContactInterface $contact
      * @return boolean
      */
-    public function addBoostContact(BoostContactInterface $contact)
+    public function addBillingBoostContact(BoostContactInterface $contact)
     {
-        $this->boostContacts->add($contact);
+        $this->billingBoostContacts->add($contact);
         
         return true;
     }
@@ -83,8 +83,24 @@ class BillableContact extends ContactDecorator implements BillableContactInterfa
      * @param BoostContactInterface $contact
      * @return boolean
      */
-    public function removeBoostContact(BoostContactInterface $contact)
+    public function removeBillingBoostContact(BoostContactInterface $contact)
     {
-        return $this->boostContacts->removeElement($contact);
+        return $this->billingBoostContacts->removeElement($contact);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getBillingAddress()
+    {
+        return $this->getAddress();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getBillingName()
+    {
+        return $this->getName();
     }
 }

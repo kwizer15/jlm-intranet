@@ -7,6 +7,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\ContactBundle\Entity\Company;
 use JLM\ContactBundle\Model\AddressInterface;
+use JLM\CondominiumBundle\Model\ManagerInterface;
+use JLM\BillBundle\Model\BillableContactInterface;
 
 /**
  * JLM\ModelBundle\Entity\Trustee
@@ -14,7 +16,7 @@ use JLM\ContactBundle\Model\AddressInterface;
  * @ORM\Table(name="trustees")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\TrusteeRepository")
  */
-class Trustee extends Company
+class Trustee extends Company implements ManagerInterface, BillableContactInterface
 {
 
 
@@ -271,12 +273,16 @@ class Trustee extends Company
      */
     public function getBillingAddress()
     {
-    	return $this->billingAddress;
+        if ($this->billingAddress === null)
+        {
+            return $this->getAddress();
+        }
         
+    	return $this->billingAddress;
     }
     
     /**
-     * 
+     * @deprecated
      * @return AddressInterface
      */
     public function getAddressForBill()
@@ -293,7 +299,7 @@ class Trustee extends Company
     
     /**
      * Get BillingLabel
-     * 
+     * @deprecated
      * @return string
      */
     public function getBillingLabel()
@@ -328,5 +334,21 @@ class Trustee extends Company
     			$sum += $contract->getFee();
     	}
     	return $sum;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getBillingName()
+    {
+        return $this->getBillingLabel();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getBillingBoostContacts()
+    {
+        return new ArrayCollection();
     }
 }

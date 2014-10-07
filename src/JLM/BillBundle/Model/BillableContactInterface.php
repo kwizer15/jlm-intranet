@@ -19,7 +19,7 @@ interface BillableContactInterface
     /**
      * @return string
      */
-    public function getName();
+    public function getBillingName();
     
     /**
      * @return string
@@ -29,10 +29,10 @@ interface BillableContactInterface
     /**
      * @return JLM\ContactBundle\Model\AddressInterface
      */
-    public function getAddress();
+    public function getBillingAddress();
     
     /**
      * @return BoostContactInterface[]
      */
-    public function getBoostContacts();
+    public function getBillingBoostContacts();
 }
