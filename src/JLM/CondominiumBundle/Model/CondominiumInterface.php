@@ -15,13 +15,7 @@ namespace JLM\CondominiumBundle\Model;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 interface CondominiumInterface
-{
-    /**
-     * Get the manager
-     * @return ManagerInterface
-     */
-    public function getManager();
-    
+{    
     /**
      * Get the name
      * @return string

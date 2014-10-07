@@ -27,4 +27,10 @@ interface PropertyInterface
      * @return OwnerInterface
      */
     public function getOwner();
+    
+    /**
+     * Get the manager
+     * @return ManagerInterface
+     */
+    public function getManager();
 }

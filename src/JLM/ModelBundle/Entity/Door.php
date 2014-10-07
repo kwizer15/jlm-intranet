@@ -5,6 +5,10 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\InstallationBundle\Model\BayInterface;
+use JLM\InstallationBundle\Model\InstallationInterface;
+use JLM\ContactBundle\Model\AddressInterface;
+use JLM\CondominiumBundle\Model\PropertyInterface;
 
 /**
  * JLM\ModelBundle\Entity\Door
@@ -12,7 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="doors")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\DoorRepository")
  */
-class Door
+class Door implements BayInterface, InstallationInterface
 {
     /**
      * @var integer $id
@@ -209,7 +213,7 @@ class Door
 
     /**
      * Set street
-     *
+     * 
      * @param string $street
      * @return Door
      */
@@ -222,7 +226,7 @@ class Door
 
     /**
      * Get street
-     *
+     * 
      * @return string 
      */
     public function getStreet()
@@ -230,6 +234,30 @@ class Door
         return $this->street;
     }
 
+    /**
+     * Set the address
+     * @param AddressInterface $address
+     * @return self
+     */
+    public function setAddress(AddressInterface $address)
+    {
+        $this->street = $address->getStreet();
+        
+        return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getAddress()
+    {
+        $address = new Address();
+        $address->setStreet($this->getStreet());
+        $address->setCity($this->getProperty()->getAddress()->getCity());
+        
+        return $address;
+    }
+    
     /**
      * Set location
      *
@@ -353,10 +381,10 @@ class Door
     /**
      * Set site
      *
-     * @param JLM\ModelBundle\Entity\Site $site
-     * @return Door
+     * @param PropertyInterface $site
+     * @return self
      */
-    public function setSite(\JLM\ModelBundle\Entity\Site $site = null)
+    public function setSite(PropertyInterface $site = null)
     {
         $this->site = $site;
     
@@ -365,14 +393,35 @@ class Door
 
     /**
      * Get site
-     *
-     * @return JLM\ModelBundle\Entity\Site 
+     * @deprecated
+     * @return PropertyInterface 
      */
     public function getSite()
     {
         return $this->site;
     }
 
+    /**
+     * Set property
+     *
+     * @param PropertyInterface $site
+     * @return self
+     */
+    public function setProperty(PropertyInterface $property = null)
+    {
+        $this->site = $property;
+    
+        return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getProperty()
+    {
+        return $this->site;
+    }
+    
     /**
      * Set type
      *
@@ -429,6 +478,14 @@ class Door
         return $this->parts;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getInstallation()
+    {
+        return $this;
+    }
+    
     /**
      * Add contract
      *
@@ -496,9 +553,7 @@ class Door
     }
     
     /**
-     * Get actual(s) contracts
-     * 
-     * @return JLM\ModelBundle\Entity\Contract
+     * {@inheritdoc}
      */
     public function getActualContract()
     {
@@ -539,28 +594,28 @@ class Door
     
     /**
      * Get Trustee
-     *
-     * @return JLM\ModelBundle\Entity\Trustee
+     * @deprecated
+     * @return ManagerInterface
      */
     public function getTrustee()
     {
-    	$contract = $this->getActualContract();
-    	if ($contract === null)
-    		return $this->getSite()->getTrustee();
-    	return $contract->getTrustee();
+    	return $this->getPropertyManager();
     }
     
     /**
-     * Get Address
+     * Get Manager
      *
-     * @return JLM\ModelBundle\Entity\Address
+     * @return ManagerInterface
      */
-    public function getAddress()
+    public function getPropertyManager()
     {
-    	$address = new Address;
-    	$address->setStreet($this->getStreet());
-    	$address->setCity($this->getSite()->getAddress()->getCity());
-    	return $address;
+        $contract = $this->getActualContract();
+        if ($contract === null)
+        {
+            return $this->getProperty()->getManager();
+        }
+        
+        return $contract->getTrustee();
     }
     
     /**
@@ -655,7 +710,7 @@ class Door
      */
     public function isStopped()
     {
-    	return $ths->getStopped();
+    	return $this->getStopped();
     }
     
     /**
@@ -704,10 +759,19 @@ class Door
     public function getWorkInProgress()
     {
     	foreach($this->interventions as $interv)
+    	{
     		if ($interv instanceof \JLM\DailyBundle\Entity\Work)
+    		{
     			if (!$interv->getClosed())
+    			{
     				if (sizeof($interv->getShiftTechnicians()))
+    				{
     					return true;
+    				}
+    			}
+    		}
+    	}
+    	
     	return false;
     }
     
@@ -717,10 +781,18 @@ class Door
     public function getWaitWork()
     {
     	foreach($this->interventions as $interv)
+    	{
     		if ($interv instanceof \JLM\DailyBundle\Entity\Work)
+    		{
     			if (!$interv->getClosed())
+    			{
     				if (!sizeof($interv->getShiftTechnicians()))
+    				{
     					return true;
+    				}
+    			}
+    		}
+    	}
     	return false;
     }
     
@@ -730,10 +802,19 @@ class Door
     public function getFixingInProgress()
     {
     	foreach($this->interventions as $interv)
+    	{
     		if ($interv instanceof \JLM\DailyBundle\Entity\Fixing)
+    		{
     			if (!$interv->getClosed())
+    			{
     				if (sizeof($interv->getShiftTechnicians()))
+    				{
     					return true;
+    				}
+    			}
+    		}
+    	}
+    	
     	return false;
     }
     
@@ -743,10 +824,19 @@ class Door
     public function getWaitFixing()
     {
     	foreach($this->interventions as $interv)
+    	{
     		if ($interv instanceof \JLM\DailyBundle\Entity\Fixing)
+    		{
     			if (!$interv->getClosed())
+    			{
     				if (!sizeof($interv->getShiftTechnicians()))
+    				{
     					return true;
+    				}
+    			}
+    		}
+    	}
+    	
     	return false;
     }
     
@@ -860,18 +950,25 @@ class Door
     
     /**
      * To String
+     * @return string
      */
     public function __toString()
     {
-    	return $this->getType().' - '.$this->getLocation().chr(10).$this->getSite();
+    	return $this->getType().' - '.$this->getLocation().chr(10).$this->getProperty();
     }
     
     /**
      * To String
+     * @return string
      */
     public function toString()
-    {
-    	return $this->getType().' - '.$this->getLocation().chr(10).$this->getSite()->toString();
+    { 
+        if (!$this->getProperty() instanceof Site)
+        {
+            return $this->__toString();
+        }
+        
+        return $this->getType().' - '.$this->getLocation().chr(10).$this->getProperty()->__toString();
     }
 
     /**
@@ -950,6 +1047,7 @@ class Door
     {
     	$stops->setDoor($this);
         $this->stops[] = $stops;
+        
         return $this;
     }
 
@@ -962,6 +1060,7 @@ class Door
     {
     	$stops->setDoor();
         $this->stops->removeElement($stops);
+        
         return $this;
     }
 
@@ -976,31 +1075,30 @@ class Door
     }
     
     /**
-     * Is Under Warranty
-     * 
-     * @return bool
+     * {@inheritdoc}
      */
     public function isUnderWarranty()
     {
     	$guarantee = $this->getEndWarranty();
     	if ($guarantee === null)
+    	{
     		return false;
+    	}
     	$today = new \DateTime;
-    	if ($guarantee < $today)
-    		return false;
-    	return true;
+
+    	return ($guarantee >= $today);
     }
     
     /**
-     * Get Warranty
-     * 
-     * @return DateTime|null
+     * {@inheritdoc}
      */
     public function getEndWarranty()
     {
     	$contract = $this->getActualContract();
     	if ($contract === null)
+    	{
     		return null;
+    	}
     	return $contract->getEndWarranty();
     }
     
@@ -1015,15 +1113,15 @@ class Door
     	foreach ($stops as $stop)
     	{
     		if ($stop->getEnd() === null)
+    		{
     			return $stop;
+    		}
     	}
     	return null;
     }
     
     /**
-     * Get Code installation
-     * 
-     * @return string
+     * {@inheritdoc}
      */
     public function getCode()
     {
@@ -1031,9 +1129,7 @@ class Door
     }
     
     /**
-     * Has Code installation
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function hasCode()
     {
