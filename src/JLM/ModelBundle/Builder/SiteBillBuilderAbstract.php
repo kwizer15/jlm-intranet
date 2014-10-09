@@ -12,6 +12,7 @@
 namespace JLM\ModelBundle\Builder;
 
 use JLM\BillBundle\Builder\BillBuilderAbstract;
+use JLM\ModelBundle\Entity\Site;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -30,10 +31,17 @@ abstract class SiteBillBuilderAbstract extends BillBuilderAbstract
     public function buildBusiness()
     {
         $site = $this->_getSite();
-        $this->getBill()->setSite($site->toString());
-        $this->getBill()->setSiteObject($site);
-        $this->getBill()->setPrelabel($site->getBillingPrelabel());
-        $this->getBill()->setVat($site->getVat()->getRate());
+        if ($site instanceof Site)
+        {
+            $this->getBill()->setSite($site->toString());
+            $this->getBill()->setSiteObject($site);
+            $this->getBill()->setPrelabel($site->getBillingPrelabel());
+            $this->getBill()->setVat($site->getVat()->getRate());
+        }
+        else
+        {
+            $this->getBill()->setSite('');
+        }
     }
     
     /**
