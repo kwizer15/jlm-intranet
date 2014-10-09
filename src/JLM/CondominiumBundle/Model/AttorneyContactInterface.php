@@ -14,11 +14,17 @@ namespace JLM\CondominiumBundle\Model;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-interface UnionCouncilInterface extends PropertyInterface
-{   
+interface AttoneyContactInterface
+{
     /**
-     * Get the condominium
-     * @return Condominium
+     * Get the attorney
+     * @return Attorney
      */
-    public function getCondominium();
+    public function getAttorney();
+    
+    /**
+     * Get position
+     * @return string
+     */
+    public function getPosition();
 }

@@ -18,31 +18,15 @@ interface CondominiumInterface
 {    
     /**
      * Get the name
+     * ex : Résidence de la Dhuys
      * @return string
      */
     public function getName();
     
     /**
-     * Get the union council
-     * @return UnionCouncil
+     * Get the administrator
+     * ex : SDC Résidence de la Dhuys
+     * @return AdministratorInterface
      */
-    public function getUnionCouncil();
-    
-    /**
-     * Get the union council members
-     * @return UnionCouncilMemberInterface[]
-     */
-    public function getUnionCouncilMembers();
-    
-    /**
-     * Get the union council chairman
-     * @return UnionCouncilMemberInterface
-     */
-    public function getUnionCouncilChairman();
-    
-    /**
-     * Get the guards
-     * @return Guard[]
-     */
-    public function getGuards();
+    public function getAdministrator();
 }

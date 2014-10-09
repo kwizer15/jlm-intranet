@@ -26,13 +26,13 @@ interface BayInterface
      * The property of the bay
      * @return PropertyInterface
      */
-    public function getProperty();
+    public function getProperties();
     
     /**
-     * Get the property manager
+     * Get the bay manager
      * @return ManagerInterface
      */
-    public function getPropertyManager();
+    public function getManager();
     
     /**
      * The location of the bay (help to find)
@@ -41,7 +41,7 @@ interface BayInterface
     public function getLocation();
     
     /**
-     * The installation in the bay
+     * The installation on the bay
      * @return InstallationInteface
      */
     public function getInstallation();
@@ -51,16 +51,4 @@ interface BayInterface
      * @return string
      */
     public function getObservations();
-    
-    /**
-     * Width
-     * @return int
-     */
-    public function getWidth();
-    
-    /**
-     * Height
-     * @return int
-     */
-    public function getHeight();
 }

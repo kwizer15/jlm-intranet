@@ -11,15 +11,14 @@
 
 namespace JLM\CondominiumBundle\Model;
 
-use JLM\ContactBundle\Model\PersonInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-interface UnionCouncilMemberInterface extends PersonInterface
+interface AdministratorMemberInterface
 {
     /**
-     * Get the union council
-     * @return UnionCouncilInterface
+     * Get the administrator
+     * @return AdministratorInterface
      */
-    public function getUnionCouncil();
+    public function getAdministrator();
 }

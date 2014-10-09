@@ -14,17 +14,23 @@ namespace JLM\CondominiumBundle\Model;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-interface PropertyInterface
+interface AdministratorInterface
 {
     /**
-     * Get the address
-     * @return AddressInterface
+     * Get the name
+     * @return string
      */
-    public function getAddress();
+    public function getName();
     
     /**
-     * Get the manager
-     * @return AdministratorInterface
+     * Get the attorney
+     * @return AttorneyInterface
      */
-    public function getAdministrator();
+    public function getAttorney();
+    
+    /**
+     * Get the members
+     * @return AdministratorMembre[]
+     */
+    public function getMembers();
 }
