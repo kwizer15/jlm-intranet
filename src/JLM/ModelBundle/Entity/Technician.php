@@ -4,7 +4,7 @@ namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use JLM\ContactBundle\Entity\Person as BasePerson;
 
 /**
  * JLM\ModelBundle\Entity\Technician
@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="technicians")
  * @ORM\Entity
  */
-class Technician extends \JLM\ContactBundle\Entity\Person
+class Technician extends BasePerson
 {
 	/**
 	 * @var string $internalPhone

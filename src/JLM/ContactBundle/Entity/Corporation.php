@@ -15,7 +15,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use JLM\ContactBundle\Model\CorporationInterface;
 use JLM\ContactBundle\Model\CorporationContactInterface;
 
-
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -25,23 +24,23 @@ abstract class Corporation extends Contact implements CorporationInterface
      * @var integer $id
      * @deprecated
      */
-    private $id;
+    protected $id;
     
     /**
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 	
 	/**
 	 * @var PersonInterface[] $contacts
 	 *
      */
-	private $contacts;
+	protected $contacts;
 
 	/**
 	 * @var string $phone
 	 */
-	private $phone;
+	protected $phone;
 	
 	/**
 	 * Get id

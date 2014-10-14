@@ -9,6 +9,7 @@ use JLM\InstallationBundle\Model\BayInterface;
 use JLM\InstallationBundle\Model\InstallationInterface;
 use JLM\ContactBundle\Model\AddressInterface;
 use JLM\CondominiumBundle\Model\PropertyInterface;
+use JLM\CondominiumBundle\Model\AdministratorInterface;
 
 /**
  * JLM\ModelBundle\Entity\Door
@@ -384,11 +385,9 @@ class Door implements BayInterface, InstallationInterface
      * @param PropertyInterface $site
      * @return self
      */
-    public function setSite(PropertyInterface $site = null)
+    public function setSite(AdministratorInterface $site = null)
     {
-        $this->site = $site;
-    
-        return $this;
+        return $this->setAdministrator($site);
     }
 
     /**
@@ -407,7 +406,7 @@ class Door implements BayInterface, InstallationInterface
      * @param PropertyInterface $site
      * @return self
      */
-    public function setProperty(PropertyInterface $property = null)
+    public function setAdministrator(AdministratorInterface $property = null)
     {
         $this->site = $property;
     
@@ -417,7 +416,7 @@ class Door implements BayInterface, InstallationInterface
     /**
      * {@inheritdoc}
      */
-    public function getProperty()
+    public function getAdministrator()
     {
         return $this->site;
     }
@@ -599,7 +598,7 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getTrustee()
     {
-    	return $this->getPropertyManager();
+    	return $this->getManager();
     }
     
     /**
@@ -607,7 +606,7 @@ class Door implements BayInterface, InstallationInterface
      *
      * @return ManagerInterface
      */
-    public function getPropertyManager()
+    public function getManager()
     {
         $contract = $this->getActualContract();
         if ($contract === null)

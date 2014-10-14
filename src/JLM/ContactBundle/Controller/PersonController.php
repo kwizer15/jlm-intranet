@@ -18,8 +18,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\ContactBundle\Entity\Person;
+use JLM\ContactBundle\Manager\ContactManager;
 use JLM\ContactBundle\Form\Type\PersonType;
+use JLM\ContactBundle\Entity\Person;
 
 /**
  * Person controller.
@@ -47,7 +48,7 @@ class PersonController extends Controller
      */
     public function newajaxAction()
     {
-        $entity = new Person();
+        $entity = ContactManager::create('Person');
         $form   = $this->createForm(new PersonType(), $entity);
 
         return array(
@@ -66,7 +67,7 @@ class PersonController extends Controller
     public function createajaxAction(Request $request)
     {
     	$em = $this->getDoctrine()->getManager();
-        $entity  = new Person();
+        $entity  = ContactManager::create('Person');
         $form    = $this->createForm(new PersonType(), $entity);
         $form->handleRequest($request);
 

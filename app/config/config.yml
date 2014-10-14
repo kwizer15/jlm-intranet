@@ -80,9 +80,9 @@ doctrine:
             JLM\ContactBundle\Model\CompanyInterface: JLM\ContactBundle\Entity\Company
             
             JLM\CondominiumBundle\Model\ManagerInterface: JLM\ModelBundle\Entity\Trustee
-            JLM\CondominiumBundle\Model\UnionCouncilInterface: JLM\ModelBundle\Entity\Site
-            JLM\CondominiumBundle\Model\CondominiumInterface: JLM\ModelBundle\Entity\Site
-            JLM\CondominiumBundle\Model\UnionCouncilMemberInterface: JLM\ModelBundle\Entity\SiteContact
+            JLM\InstallationBundle\Model\BayInterface: JLM\ModelBundle\Entity\Site
+            JLM\CondominiumBundle\Model\AdministratorInterface: JLM\ModelBundle\Entity\Site
+            JLM\CondominiumBundle\Model\AdministratorMemberInterface: JLM\ModelBundle\Entity\SiteContact
             JLM\BillBundle\Model\BillableContactInterface: JLM\ModelBundle\Entity\Trustee
             
             JLM\TransmitterBundle\Model\AttributionInterface: JLM\TransmitterBundle\Entity\Attribution

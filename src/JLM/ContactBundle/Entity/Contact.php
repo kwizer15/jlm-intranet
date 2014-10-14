@@ -24,28 +24,28 @@ abstract class Contact implements ContactInterface
      * @var int
      * Ehancement
      */
-//    private $id;
+//    protected $id;
     
     /**
      * @var string
      * Ehancement
      */
-//    private $name = '';
+//    protected $name = '';
     
 	/**
 	 * @var Address $address
 	 */
-	private $address;
+	protected $address;
 	
 	/**
 	 * @var string $fax
 	 */
-	private $fax;
+	protected $fax;
 	
 	/**
 	 * @var email $email
 	 */
-	private $email;
+	protected $email;
 	
 	/**
 	 * Get id

@@ -11,6 +11,8 @@ use JLM\CondominiumBundle\Model\ManagerInterface;
 use JLM\CondominiumBundle\Model\CondominiumInterface;
 use JLM\CondominiumBundle\Model\UnionCouncilMemberInterface;
 use JLM\CondominiumBundle\Model\UnionCouncilInterface;
+use JLM\CondominiumBundle\Model\AdministratorInterface;
+use JLM\CondominiumBundle\Model\AdministratorMemberInterface;
 
 /**
  * JLM\ModelBundle\Entity\Site
@@ -18,7 +20,7 @@ use JLM\CondominiumBundle\Model\UnionCouncilInterface;
  * @ORM\Table(name="sites")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SiteRepository")
  */
-class Site implements CondominiumInterface, UnionCouncilInterface
+class Site implements AdministratorInterface
 {
     /**
      * @var integer $id
@@ -291,22 +293,22 @@ class Site implements CondominiumInterface, UnionCouncilInterface
     /**
      * Add contacts
      * @deprecated
-     * @param JLM\ModelBundle\Entity\Person $contacts
+     * @param AdministratorMemberInterface $member
      * @return Site
      */
-    public function addContact(UnionCouncilMemberInterface $member)
+    public function addContact(AdministratorMemberInterface $member)
     {
-        return $this->addUnionCouncilMember($member);
+        return $this->addMember($member);
     }
 
     /**
      * Remove contacts
      * @deprecated
-     * @param JUnionCouncilMemberInterface $member $contacts
+     * @param AdministratorMemberInterface $member
      */
-    public function removeContact(UnionCouncilMemberInterface $member)
+    public function removeContact(AdministratorMemberInterface $member)
     {
-        return $this->removeUnionCouncilMember($member);
+        return $this->removeMember($member);
     }
 
     /**
@@ -316,7 +318,7 @@ class Site implements CondominiumInterface, UnionCouncilInterface
      */
     public function getContacts()
     {
-        return $this->getUnionCouncilMembers();
+        return $this->getMembers();
     }
 
     /**
@@ -504,31 +506,7 @@ class Site implements CondominiumInterface, UnionCouncilInterface
     /**
      * {@inheritdoc}
      */
-    public function getGuards()
-    {
-        return new ArrayCollection();
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getUnionCouncil()
-    {
-        return $this;
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getUnionCouncilChairman()
-    {
-        return null;
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getUnionCouncilMembers()
+    public function getMembers()
     {
         return $this->contacts;
     }
@@ -539,7 +517,7 @@ class Site implements CondominiumInterface, UnionCouncilInterface
      * @param JLM\ModelBundle\Entity\Person $contacts
      * @return boolean
      */
-    public function addUnionCouncilMember(UnionCouncilMemberInterface $member)
+    public function addMember(AdministratorMemberInterface $member)
     {
         return $this->contacts->add($member);
     }
@@ -550,17 +528,9 @@ class Site implements CondominiumInterface, UnionCouncilInterface
      * @param JLM\ModelBundle\Entity\Person $contacts
      * @return boolean
      */
-    public function removeUnionCouncilMember(UnionCouncilMemberInterface $member)
+    public function removeMember(AdministratorMemberInterface $member)
     {
         return $this->contacts->removeElement($member);
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getCondominium()
-    {
-        return $this;
     }
     
     /**
@@ -569,13 +539,5 @@ class Site implements CondominiumInterface, UnionCouncilInterface
     public function getName()
     {
         return $this->getAddress()->__toString();
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getOwner()
-    {
-        return $this->getUnionCouncil();
     }
 }

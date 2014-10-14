@@ -9,13 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\ContactBundle\Entity;
+namespace JLM\ContactBundle\Manager;
 
-use JLM\ContactBundle\Model\CompanyInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Company extends Corporation implements CompanyInterface
+class ContactManager
 {
-	
+    protected function __construct()
+    {
+        
+    }
+    
+    public static function create($class)
+    {
+        $class = '\JLM\ContactBundle\Entity\\' . $class;
+        
+        return new $class;
+    }
 }

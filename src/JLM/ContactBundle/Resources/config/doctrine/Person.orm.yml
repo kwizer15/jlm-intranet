@@ -1,7 +1,7 @@
 JLM\ContactBundle\Entity\Person:
   type: entity
   table: persons
-  repositoryClass: JLM\ContactBundle\EntityRepository\PersonRepository
+  repositoryClass: JLM\ContactBundle\Repository\PersonRepository
   inheritanceType: JOINED
   discriminatorColumn:
     name: discr

@@ -12,7 +12,6 @@
 namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\CountryInterface;
-
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -21,12 +20,12 @@ class Country implements CountryInterface
     /**
      * @var string
      */
-    private $code;
+    protected $code;
     
     /**
      * @var string
      */
-    private $name = '';
+    protected $name = '';
     
     /**
      * Set code

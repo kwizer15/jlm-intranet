@@ -63,7 +63,7 @@ class SiteContactController extends Controller
     {
         $entity = new SiteContact();
         if ($site)
-        	$entity->setUnionCouncil($site);
+        	$entity->setAdministrator($site);
         $form   = $this->createForm(new SiteContactType(), $entity);
 
         return array(

@@ -6,8 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\ContactBundle\Model\PersonInterface;
-use JLM\CondominiumBundle\Model\UnionCouncilMemberInterface;
-use JLM\CondominiumBundle\Model\UnionCouncilInterface;
+use JLM\CondominiumBundle\Model\AdministratorMemberInterface;
+use JLM\CondominiumBundle\Model\AdministratorInterface;
 
 /**
  * JLM\ModelBundle\Entity\SiteContact
@@ -15,7 +15,7 @@ use JLM\CondominiumBundle\Model\UnionCouncilInterface;
  * @ORM\Table(name="site_contacts")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SiteContactRepository")
  */
-class SiteContact implements UnionCouncilMemberInterface
+class SiteContact implements AdministratorMemberInterface, PersonInterface
 {
 	/**
      * @var integer $id
@@ -75,9 +75,9 @@ class SiteContact implements UnionCouncilMemberInterface
      * @param UnionCouncilInterface $site
      * @return self
      */
-    public function setSite(UnionCouncilInterface $site = null)
+    public function setSite(AdministratorInterface $site = null)
     {
-        return $this->setUnionCouncil($site);
+        return $this->setAdministrator($site);
     }
 
     /**
@@ -87,13 +87,13 @@ class SiteContact implements UnionCouncilMemberInterface
      */
     public function getSite()
     {
-        return $this->getUnionCouncil();
+        return $this->getAdministrator();
     }
     
     /**
      * {@inheritdoc}
      */
-    public function getUnionCouncil()
+    public function getAdministrator()
     {
         return $this->site;
     }
@@ -104,7 +104,7 @@ class SiteContact implements UnionCouncilMemberInterface
      * @param UnionCouncilInterface $unioncouncil
      * @return SiteContact
      */
-    public function setUnionCouncil(UnionCouncilInterface $unioncouncil = null)
+    public function setAdministrator(AdministratorInterface $unioncouncil = null)
     {
         $this->site = $unioncouncil;
     

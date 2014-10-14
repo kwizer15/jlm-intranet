@@ -12,7 +12,6 @@
 namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\ContactInterface;
-
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -21,7 +20,7 @@ abstract class ContactDecorator implements ContactInterface
     /**
      * @var ContactInterface $person
      */
-    private $contact;
+    protected $contact;
     
     /**
      * Constructor

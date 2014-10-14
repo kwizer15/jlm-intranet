@@ -23,10 +23,10 @@ interface AdministratorInterface
     public function getName();
     
     /**
-     * Get the attorney
-     * @return AttorneyInterface
+     * Get manager
+     * @return ManagerInterface
      */
-    public function getAttorney();
+    public function getManager();
     
     /**
      * Get the members

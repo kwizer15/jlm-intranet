@@ -12,7 +12,6 @@
 namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\PersonInterface;
-
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -22,38 +21,38 @@ class Person extends Contact implements PersonInterface
      * @var integer $id
      * @deprecated
      */
-    private $id;
+    protected $id;
     
 	/**
 	 * M. Mme Mlle
 	 * @var string $title
 	 */
-	private $title;
+	protected $title;
 	
     /**
      * @var string $firstName
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @var string $lastName
      */
-    private $lastName;
+    protected $lastName;
     
     /**
      * @var string $fixedPhone
      */
-    private $fixedPhone;
+    protected $fixedPhone;
     
     /**
      * @var string $mobilePhone
      */
-    private $mobilePhone;
+    protected $mobilePhone;
     
     /**
      * @var $role
      */
-    private $role;
+    protected $role;
     
     /**
      * Set firstName

@@ -23,10 +23,10 @@ interface BayInterface
     public function getAddress();
     
     /**
-     * The property of the bay
-     * @return PropertyInterface
+     * The administrator of the bay
+     * @return AdministratorInterface
      */
-    public function getProperties();
+    public function getAdministrator();
     
     /**
      * Get the bay manager

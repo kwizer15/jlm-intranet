@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\ContactBundle\EntityRepository;
+namespace JLM\ContactBundle\Repository;
 
 use JLM\DefaultBundle\Entity\SearchRepository;
 

@@ -13,7 +13,6 @@ namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\CorporationContactInterface;
 use JLM\ContactBundle\Model\CorporationInterface;
-
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -23,24 +22,24 @@ class CorporationContact extends PersonDecorator implements CorporationContactIn
      * @var int
      * @deprecated
      */
-    private $id;
+    protected $id;
     
     /**
      * @var CorporationInterface
      */
-    private $corporation;
+    protected $corporation;
     
     /**
      * Position
      * @var string
      */
-    private $position;
+    protected $position;
 
     /**
      * Manager
      * @var CorporationContactInterface
      */
-    private $manager;
+    protected $manager;
     
     /**
      * @deprecated

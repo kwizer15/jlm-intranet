@@ -13,7 +13,6 @@ namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\CityInterface;
 use JLM\ContactBundle\Model\CountryInterface;
-
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -22,22 +21,22 @@ class City implements CityInterface
     /**
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $name = '';
+    protected $name = '';
     
     /**
      * @var string
      */
-    private $zip = '';
+    protected $zip = '';
     
     /**
      * @var CountryInterface
      */
-    private $country;
+    protected $country;
     
     /**
      * Get id
