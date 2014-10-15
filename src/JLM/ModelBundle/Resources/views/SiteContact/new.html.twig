@@ -17,7 +17,7 @@
 $("#jlm_modelbundle_sitecontacttype_person_selector")
 .autocomplete({
 	source: function(request,response){
-		request.repository = 'JLMModelBundle:Person';
+		request.repository = 'JLMContactBundle:Person';
 		return $.post(
 				this.element.attr('data-source'),
 				request,

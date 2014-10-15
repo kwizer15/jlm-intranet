@@ -12,8 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Form\Type\TrusteeType;
-use JLM\ModelBundle\Entity\Person;
-use JLM\ModelBundle\Form\Type\PersonType;
+use JLM\ContactBundle\Form\Type\PersonType;
+use JLM\ContactBundle\Manager\ContactManager;
 
 /**
  * Trustee controller.
@@ -219,7 +219,7 @@ class TrusteeController extends Controller
      */
     public function contactnewAction(Trustee $trustee)
     {
-    	$entity = new Person();
+    	$entity = ContactManager::create('Person');
     	$form   = $this->createForm(new PersonType(), $entity);
     	
     	return array(
@@ -240,7 +240,7 @@ class TrusteeController extends Controller
     public function contactcreateAction(Trustee $trustee)
     {
     	$em = $this->getDoctrine()->getManager();
-    	$entity  = new Person();
+    	$entity  = ContactManager::create('Person');
     	$request = $this->getRequest();
     	$form    = $this->createForm(new PersonType(), $entity);
     	$form->handleRequest($request);

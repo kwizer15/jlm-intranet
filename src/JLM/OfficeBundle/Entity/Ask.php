@@ -6,7 +6,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JLM\ModelBundle\Entity\UploadDocument;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Entity\Site;
-use JLM\ModelBundle\Entity\Person;
 use JLM\OfficeBundle\Entity\AskMethod;
 use JLM\ContactBundle\Model\PersonInterface;
 

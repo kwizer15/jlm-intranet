@@ -13,7 +13,7 @@
 	{% endif %}
 	{% if persons|length %}
 		<h2><small>Contacts</small></h2>
-		{% include 'JLMModelBundle:Person:search.html.twig' with {'persons': persons } %}
+		{% include 'JLMContactBundle:Person:search.html.twig' with {'persons': persons } %}
 	{% endif %}
 	{% if doors|length %}
 		<h2><small>Portes</small></h2>

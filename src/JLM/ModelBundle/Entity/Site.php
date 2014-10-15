@@ -196,7 +196,7 @@ class Site implements AdministratorInterface
      * Set lodge
      *
      * @param AddresInterface $lodge
-     * @return Site
+     * @return self
      */
     public function setLodge(AddressInterface $lodge = null)
     {
@@ -219,7 +219,7 @@ class Site implements AdministratorInterface
      * Set observations
      *
      * @param string $observations
-     * @return Door
+     * @return self
      */
     public function setObservations($observations)
     {
@@ -240,17 +240,19 @@ class Site implements AdministratorInterface
     
     /**
      * Set groupnumber
-     * 
+     * @param string
+     * @return self
      */
     public function setGroupNumber($groupNumber)
     {
     	$this->groupNumber = $groupNumber;
+    	
     	return $this;
     }
     
     /**
      * Get groupnumber
-     *
+     * @return string
      */
     public function getGroupNumber()
     {
@@ -260,24 +262,23 @@ class Site implements AdministratorInterface
     /**
      * Add doors
      *
-     * @param JLM\ModelBundle\Entity\Door $doors
-     * @return Site
+     * @param Door $doors
+     * @return boolean
      */
     public function addDoor(\JLM\ModelBundle\Entity\Door $doors)
     {
-        $this->doors[] = $doors;
-    
-        return $this;
+        return $this->doors->add($doors);
     }
 
     /**
      * Remove doors
      *
-     * @param JLM\ModelBundle\Entity\Door $doors
+     * @param Door $doors
+     * @return boolean
      */
     public function removeDoor(\JLM\ModelBundle\Entity\Door $doors)
     {
-        $this->doors->removeElement($doors);
+        return $this->doors->removeElement($doors);
     }
 
     /**
@@ -514,7 +515,7 @@ class Site implements AdministratorInterface
     /**
      * Add contacts
      *
-     * @param JLM\ModelBundle\Entity\Person $contacts
+     * @param AdministratorMemberInterface $contacts
      * @return boolean
      */
     public function addMember(AdministratorMemberInterface $member)
@@ -525,7 +526,7 @@ class Site implements AdministratorInterface
     /**
      * Remove contacts
      *
-     * @param JLM\ModelBundle\Entity\Person $contacts
+     * @param AdministratorMemberInterface $contacts
      * @return boolean
      */
     public function removeMember(AdministratorMemberInterface $member)

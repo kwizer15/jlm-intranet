@@ -9,8 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\ModelBundle\Entity\Address;
-use JLM\ModelBundle\Form\Type\AddressType;
+use JLM\ContactBundle\Entity\Address;
+use JLM\ContactBundle\Form\Type\AddressType;
 
 class AutocompleteController extends Controller
 {
@@ -26,7 +26,7 @@ class AutocompleteController extends Controller
     	$query = $request->request->get('term');
 
     	$em = $this->getDoctrine()->getManager();
-    	$results = $em->getRepository('JLMModelBundle:City')->searchResult($query);
+    	$results = $em->getRepository('JLMContactBundle:City')->searchResult($query);
     	$json = json_encode($results);
     	$response = new Response();
     	$response->headers->set('Content-Type', 'application/json');
