@@ -19,7 +19,7 @@ class DocumentLine
 	private $position = 0;
 	
 	/**
-	 * @var JLM\ModelBundle\Entity\Product
+	 * @var ProductInterface
 	 * @ORM\ManyToOne(targetEntity="JLM\ProductBundle\Model\ProductInterface")
 	 */
 	private $product;

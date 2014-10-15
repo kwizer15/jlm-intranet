@@ -5,7 +5,7 @@ namespace JLM\TransmitterBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\BillLine;
-use JLM\ModelBundle\Entity\Product;
+use JLM\ProductBundle\Model\ProductInterface;
 use JLM\TransmitterBundle\Model\AttributionInterface;
 /**
  * Attribution
@@ -247,7 +247,7 @@ class Attribution implements AttributionInterface
      * 
      * @return Bill
      */
-    public function populateBill(Bill $bill, $vat, $earlyPayment = '', $penalty = '', $property = '', Product $port = null)
+    public function populateBill(Bill $bill, $vat, $earlyPayment = '', $penalty = '', $property = '', ProductInterface $port = null)
     {
     	$bill->populateFromSite($this->getSite(),$this->getAsk()->getTrustee());   // OK
     	$bill = $this->populateBillLines($bill,$vat,$port);
@@ -266,7 +266,7 @@ class Attribution implements AttributionInterface
      *
      * @return Bill
      */
-    public function populateBillLines(Bill $bill, $vat, Product $port = null)
+    public function populateBillLines(Bill $bill, $vat, ProductInterface $port = null)
     {
     	$transmitters = $this->getTransmitters();
     	$models = array();

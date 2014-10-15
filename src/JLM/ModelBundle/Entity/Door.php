@@ -10,6 +10,7 @@ use JLM\InstallationBundle\Model\InstallationInterface;
 use JLM\ContactBundle\Model\AddressInterface;
 use JLM\CondominiumBundle\Model\PropertyInterface;
 use JLM\CondominiumBundle\Model\AdministratorInterface;
+use JLM\ProductBundle\Model\ProductInterface;
 
 /**
  * JLM\ModelBundle\Entity\Door
@@ -447,24 +448,22 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Add parts
      *
-     * @param JLM\ModelBundle\Entity\Product $parts
+     * @param ProductInterface $parts
      * @return Door
      */
-    public function addPart(\JLM\ModelBundle\Entity\Product $parts)
+    public function addPart(ProductInterface $parts)
     {
-        $this->parts[] = $parts;
-    
-        return $this;
+        return $this->parts->add($parts);
     }
 
     /**
      * Remove parts
      *
-     * @param JLM\ModelBundle\Entity\Product $parts
+     * @param ProductInterface $parts
      */
-    public function removePart(\JLM\ModelBundle\Entity\Product $parts)
+    public function removePart(ProductInterface $parts)
     {
-        $this->parts->removeElement($parts);
+        return $this->parts->removeElement($parts);
     }
 
     /**

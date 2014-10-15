@@ -45,4 +45,14 @@ class DoorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->entity, $this->entity->setAdministrator($admin));
         $this->assertSame($admin, $this->entity->getAdministrator());
     }
+    
+    public function testParts()
+    {
+    	$product = $this->getMock('JLM\ProductBundle\Model\ProductInterface');
+    	$this->assertCount(0, $this->entity->getParts());
+    	$this->assertTrue($this->entity->addPart($product));
+    	$this->assertCount(1, $this->entity->getParts());
+    	$this->assertTrue($this->entity->removePart($product));
+    	$this->assertCount(0, $this->entity->getParts());
+    }
 }

@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Transmitter;
-use JLM\ModelBundle\Entity\Product;
+use JLM\ProductBundle\Entity\Product;
 use JLM\ModelBundle\Form\Type\ProductType;
 
 /**
@@ -31,7 +31,8 @@ class ProductController extends Controller
     public function indexAction($page = 1, $limit = 15)
     {
         $em = $this->getDoctrine()->getManager();
-        $nb = $em->getRepository('JLMModelBundle:Product')->getTotal();
+        $repo = $em->getRepository('JLMProductBundle:Product');
+        $nb = $repo->getTotal();
         $nbPages = ceil($nb/$limit);
         $nbPages = ($nbPages < 1) ? 1 : $nbPages;
         $offset = ($page-1) * $limit;
@@ -40,7 +41,7 @@ class ProductController extends Controller
         	throw $this->createNotFoundException('Page inexistante (page '.$page.'/'.$nbPages.')');
         }
 
-        $entities = $em->getRepository('JLMModelBundle:Product')->findBy(
+        $entities = $repo->findBy(
         		array(),
         		array('reference' => 'asc'),
         		$limit,
@@ -65,7 +66,7 @@ class ProductController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('JLMModelBundle:Product')->find($id);
+        $entity = $em->getRepository('JLMProductBundle:Product')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Product entity.');
@@ -196,7 +197,7 @@ class ProductController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('JLMModelBundle:Product')->find($id);
+            $entity = $em->getRepository('JLMProductBundle:Product')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Product entity.');
