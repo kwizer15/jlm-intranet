@@ -62,7 +62,7 @@ class SupplierController extends Controller
     public function showAction(Supplier $entity)
     {
         $em = $this->getDoctrine()->getManager();
-        $products = $em->getRepository('JLMModelBundle:Product')->findBy(
+        $products = $em->getRepository('JLMProductBundle:Product')->findBy(
         		array('supplier' => $entity),
         		array('designation'=>'asc')
         );

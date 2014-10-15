@@ -36,7 +36,7 @@ class DefaultController extends Controller
     				'sites'   => $em->getRepository('JLMModelBundle:Site')->search($entity),
     				'trustees'=> $em->getRepository('JLMModelBundle:Trustee')->search($entity),
     				'suppliers'=> $em->getRepository('JLMModelBundle:Supplier')->search($entity),
-    				'products' => $em->getRepository('JLMModelBundle:Product')->search($entity),
+    				'products' => $em->getRepository('JLMProductBundle:Product')->search($entity),
     				'persons' => $em->getRepository('JLMModelBundle:Person')->search($entity),
     		);
     	}

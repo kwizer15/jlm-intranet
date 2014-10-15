@@ -49,7 +49,7 @@ class ProductToIntTransformer implements DataTransformerInterface
 	
 		
 			$entity = $this->om
-				->getRepository('JLMModelBundle:Product')
+				->getRepository('JLMProductBundle:Product')
 				->find($string)
 			;
 		if (null === $entity) {

@@ -34,6 +34,6 @@
 	
 	{% if products|length %}
 		<h2><small>Produits</small></h2>
-		{% include 'JLMModelBundle:Product:search.html.twig' with {'products': products } %}
+		{% include 'JLMProductBundle:Product:search.html.twig' with {'products': products } %}
 	{% endif %}
 {% endblock %}
