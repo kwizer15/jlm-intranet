@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\ModelBundle\Entity\ProductCategory;
+use JLM\ProductBundle\Entity\ProductCategory;
 use JLM\ModelBundle\Form\Type\ProductCategoryType;
 
 /**
@@ -28,7 +28,7 @@ class ProductCategoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('JLMModelBundle:ProductCategory')->findAll();
+        $entities = $em->getRepository('JLMProductBundle:ProductCategory')->findAll();
 
         return array('entities' => $entities);
     }
@@ -44,7 +44,7 @@ class ProductCategoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('JLMModelBundle:ProductCategory')->find($id);
+        $entity = $em->getRepository('JLMProductBundle:ProductCategory')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find ProductCategory entity.');
@@ -116,7 +116,7 @@ class ProductCategoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('JLMModelBundle:ProductCategory')->find($id);
+        $entity = $em->getRepository('JLMProductBundle:ProductCategory')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find ProductCategory entity.');
@@ -144,7 +144,7 @@ class ProductCategoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('JLMModelBundle:ProductCategory')->find($id);
+        $entity = $em->getRepository('JLMProductBundle:ProductCategory')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find ProductCategory entity.');
@@ -187,7 +187,7 @@ class ProductCategoryController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('JLMModelBundle:ProductCategory')->find($id);
+            $entity = $em->getRepository('JLMProductBundle:ProductCategory')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find ProductCategory entity.');

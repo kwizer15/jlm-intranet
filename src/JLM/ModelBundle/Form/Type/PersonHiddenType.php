@@ -9,7 +9,7 @@ class PersonHiddenType extends AbstractHiddenType
 { 
     protected function getTransformerClass()
     {
-    	return 'JLM\ModelBundle\Form\DataTransformer\PersonToIntTransformer';
+    	return 'JLM\ContactBundle\Form\DataTransformer\PersonToIntTransformer';
     }
     
     protected function getTypeName()
