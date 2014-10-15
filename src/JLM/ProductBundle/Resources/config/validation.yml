@@ -2,3 +2,13 @@ JLM\ProductBundle\Entity\Product:
   getters:
     coefPositive:
       - "True" : ~
+      
+JLM\ProductBundle\Entity\ProductCategory:
+  parent:
+    - Valid: ~
+  children:
+    - Valid: { traverse: true }
+  name:
+    - NotNull: ~
+    - NotBlank: ~
+    - Type: { type: string }

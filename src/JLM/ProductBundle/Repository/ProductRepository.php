@@ -3,6 +3,7 @@
 namespace JLM\ProductBundle\Repository;
 
 use JLM\DefaultBundle\Entity\SearchRepository;
+// @todo Voir pour un autre système
 
 /**
  * ProductRepository
