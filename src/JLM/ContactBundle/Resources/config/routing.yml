@@ -17,3 +17,8 @@ jlm_contact_ajax_person_new:
 jlm_contact_ajax_person_create:
     path: /person/ajax/create
     defaults:  { _controller: "JLMContactBundle:Person:createajax" }
+    
+jlm_contact_ajax_person_autocomplete:
+    path: /person/ajax/autocomplete
+    defaults: { _controller: "JLMContactBundle:Person:autocomplete" }
+

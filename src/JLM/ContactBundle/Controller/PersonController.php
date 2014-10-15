@@ -13,6 +13,7 @@ namespace JLM\ContactBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -89,5 +90,24 @@ class PersonController extends Controller
             'entity' => $entity,
             'form'   => $form->createView()
         );
+    }
+    
+    /**
+     * Return JSON list of Person entity.
+     *
+     * @Method("post")
+     */
+    public function autocompleteAction()
+    {
+        $request = $this->get('request');
+        $query = $request->request->get('term');
+    
+        $em = $this->getDoctrine()->getManager();
+        $results = $em->getRepository('JLMContactBundle:Person')->searchResult($query);
+        $json = json_encode($results);
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($json);
+        return $response;
     }
 }

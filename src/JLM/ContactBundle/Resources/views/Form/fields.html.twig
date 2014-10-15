@@ -6,3 +6,11 @@
       {{ form_errors(form.city) }}
 {% endspaceless %}
 {% endblock jlm_contact_address_widget %}
+
+{% block jlm_contact_person_select_widget %}
+{% spaceless %}
+{% set type = 'hidden' %}
+{{ block('form_widget_simple') }}
+<input type="text" id="{{ id }}_selector" class="autocompletion" data-source="{{ path('jlm_contact_ajax_person_autocomplete') }}">
+{% endspaceless %}
+{% endblock jlm_contact_person_select_widget %}

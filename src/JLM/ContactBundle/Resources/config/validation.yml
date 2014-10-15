@@ -31,9 +31,6 @@ JLM\ContactBundle\Entity\Contact:
       - Regex: { pattern: "/^0[1-589]\d{8}$/",message: "Ce n'est pas un numéro de fax valide" }
     email:
       - Email: ~
-    address:
-      - NotNull: ~
-      - Valid: ~
       
 JLM\ContactBundle\Entity\Person:
   properties:

@@ -15,3 +15,4 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: jlm_contact_person_select }
+            
