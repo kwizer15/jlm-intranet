@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JLM\ProductBundle\Model\ProductInterface;
 
 /**
  * ProductPrice
@@ -38,7 +39,7 @@ class ProductPrice
     /**
      * @var Product
      * 
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="unitPrices")
+     * @ORM\ManyToOne(targetEntity="JLM\ProductBundle\Entity\Product", inversedBy="unitPrices")
      */
     private $product;
 
@@ -101,10 +102,10 @@ class ProductPrice
     /**
      * Set product
      *
-     * @param \JLM\ModelBundle\Entity\Product $product
+     * @param ProductInterface $product
      * @return ProductPrice
      */
-    public function setProduct(\JLM\ModelBundle\Entity\Product $product = null)
+    public function setProduct(ProductInterface $product = null)
     {
         $this->product = $product;
     
@@ -114,7 +115,7 @@ class ProductPrice
     /**
      * Get product
      *
-     * @return \JLM\ModelBundle\Entity\Product 
+     * @return ProductInterface
      */
     public function getProduct()
     {

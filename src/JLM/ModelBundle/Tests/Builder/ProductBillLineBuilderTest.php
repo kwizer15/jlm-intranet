@@ -30,11 +30,10 @@ class ProductBillLineBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->product = $this->getMock('JLM\ModelBundle\Entity\Product');
+        $this->product = $this->getMock('JLM\ProductBundle\Model\ProductInterface');
         
-        $this->categoryId = 1;
-        $category = $this->getMock('JLM\ModelBundle\Entity\ProductCategory');
-        $category->expects($this->any())->method('getId')->will($this->returnValue($this->categoryId));
+        $category = $this->getMock('JLM\ProductBundle\Model\ProductCategoryInterface');
+        $category->expects($this->any())->method('isSmallSupply')->will($this->returnValue(true));
         $this->product->expects($this->any())->method('getCategory')->will($this->returnValue($category));
         $this->vat = 0.2;
         $this->builder = new ProductBillLineBuilder($this->product, $this->vat);

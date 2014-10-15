@@ -5,6 +5,7 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JLM\ContactBundle\Entity\Company;
+use JLM\ProductBundle\Model\SupplierInterface;
 
 /**
  * JLM\ModelBundle\Entity\Supplier
@@ -12,7 +13,7 @@ use JLM\ContactBundle\Entity\Company;
  * @ORM\Table(name="suppliers")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SupplierRepository")
  */
-class Supplier extends Company
+class Supplier extends Company implements SupplierInterface
 {
 	/**
 	 * @var string $website

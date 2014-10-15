@@ -5,6 +5,7 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\ProductBundle\Model\ProductCategoryInterface;
 
 /**
  * JLM\ModelBundle\Entity\ProductCategory
@@ -12,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="product_category")
  * @ORM\Entity
  */
-class ProductCategory extends StringModel
+class ProductCategory extends StringModel implements ProductCategoryInterface
 {
     /**
      * @var integer $id
@@ -56,13 +57,29 @@ class ProductCategory extends StringModel
     {
         return $this->id;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function isSmallSupply()
+    {
+        return $this->getId() === 1;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function isService()
+    {
+        return $this->getId() === 2;
+    }
 
     /**
      * Set parent
      *
-     * @param JLM\ModelBundle\Entity\ProductCategory $parent
+     * @param ProductCategoryInterface $parent
      */
-    public function setParent($parent)
+    public function setParent(ProductCategoryInterface $parent = null)
     {
         $this->parent = $parent;
     }
@@ -70,7 +87,7 @@ class ProductCategory extends StringModel
     /**
      * Get parent
      *
-     * @return JLM\ModelBundle\Entity\ProductCategory 
+     * @return ProductCategoryInterface 
      */
     public function getParent()
     {
@@ -80,11 +97,11 @@ class ProductCategory extends StringModel
     /**
      * Add children
      *
-     * @param JLM\ModelBundle\Entity\ProductCategory $children
+     * @param ProductCategoryInterface $children
      */
-    public function addProductCategory($children)
+    public function addProductCategory(ProductCategoryInterface $children)
     {
-        $this->children[] = $children;
+        $this->children->add($children);
     }
 
     /**

@@ -12,7 +12,7 @@
 namespace JLM\ModelBundle\Builder;
 
 use JLM\BillBundle\Builder\BillLineBuilderAbstract;
-use JLM\ModelBundle\Entity\Product;
+use JLM\ProductBundle\Model\ProductInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -23,7 +23,7 @@ class ProductBillLineBuilder extends BillLineBuilderAbstract
 	private $quantity;
 	private $options = array();
 	
-	public function __construct(Product $product, $vat, $quantity = 1, $options = array())
+	public function __construct(ProductInterface $product, $vat, $quantity = 1, $options = array())
 	{
 		$this->product = $product;
 		$this->quantity = $quantity;
@@ -45,7 +45,7 @@ class ProductBillLineBuilder extends BillLineBuilderAbstract
 	{
 		$this->getLine()->setProduct($this->product);
 		$this->getLine()->setReference($this->product->getReference());
-		$this->getLine()->setIsTransmitter($this->product->getCategory()->getId() == 1);
+		$this->getLine()->setIsTransmitter($this->product->getCategory()->isSmallSupply());
 		$desig = isset($this->options['designation']) ? $this->options['designation'] : $this->product->getDesignation();
 		$this->getLine()->setDesignation($desig);
 		$descr = isset($this->options['description']) ? $this->options['description'] : $this->product->getDescription();

@@ -66,7 +66,7 @@ class Door implements BayInterface, InstallationInterface
      * Pièces de la porte (cellules, bp...)
      * @var Product[] $parts
      * 
-     * @ORM\ManyToMany(targetEntity="Product")
+     * @ORM\ManyToMany(targetEntity="JLM\ProductBundle\Entity\Product")
      * @ORM\JoinTable(name="doors_parts",
      *      joinColumns={@ORM\JoinColumn(name="door_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="part_id", referencedColumnName="id")}

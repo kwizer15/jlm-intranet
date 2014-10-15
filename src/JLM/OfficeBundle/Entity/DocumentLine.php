@@ -2,6 +2,7 @@
 namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JLM\ProductBundle\Model\ProductInterface;
 
 /**
  * JLM\OfficeBundle\Entity\DocumentLine
@@ -19,7 +20,7 @@ class DocumentLine
 	
 	/**
 	 * @var JLM\ModelBundle\Entity\Product
-	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Product")
+	 * @ORM\ManyToOne(targetEntity="JLM\ProductBundle\Model\ProductInterface")
 	 */
 	private $product;
 	
@@ -312,10 +313,10 @@ class DocumentLine
 	/**
 	 * Set product
 	 *
-	 * @param JLM\ModelBundle\Entity\Product $product
+	 * @param ProductInterface $product
 	 * @return QuoteLine
 	 */
-	public function setProduct(\JLM\ModelBundle\Entity\Product $product = null)
+	public function setProduct(ProductInterface $product = null)
 	{
 		$this->product = $product;
 	
@@ -325,7 +326,7 @@ class DocumentLine
 	/**
 	 * Get product
 	 *
-	 * @return JLM\ModelBundle\Entity\Product
+	 * @return ProductInterface
 	 */
 	public function getProduct()
 	{
@@ -390,7 +391,9 @@ class DocumentLine
 	public function isService()
 	{
 		if ($this->getProduct() === null)
+		{
 			return false;
-		return ($this->getProduct()->getCategory()->getId() == 2);
+		}
+		return $this->getProduct()->getCategory()->isService();
 	}
 }

@@ -83,6 +83,10 @@ doctrine:
             JLM\CondominiumBundle\Model\AdministratorMemberInterface: JLM\ModelBundle\Entity\SiteContact
             JLM\BillBundle\Model\BillableContactInterface: JLM\ModelBundle\Entity\Trustee
             
+            JLM\ProductBundle\Model\ProductInterface: JLM\ProductBundle\Entity\Product
+            JLM\ProductBundle\Model\SupplierInterface: JLM\ModelBundle\Entity\Supplier
+            JLM\ProductBundle\Model\ProductCategoryInterface: JLM\ModelBundle\Entity\ProductCategory
+            
             JLM\TransmitterBundle\Model\AttributionInterface: JLM\TransmitterBundle\Entity\Attribution
             JLM\TransmitterBundle\Model\TransmitterInterface: JLM\TransmitterBundle\Entity\Transmitter
 

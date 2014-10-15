@@ -3,7 +3,7 @@
 namespace JLM\TransmitterBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JLM\ModelBundle\Entity\Product;
+use JLM\ProductBundle\Model\ProductInterface;
 
 /**
  * Model
@@ -25,7 +25,7 @@ class Model extends \JLM\OfficeBundle\Entity\TextModel
     /**
      * @var Product
      * 
-     * @ORM\OneToOne(targetEntity="JLM\ModelBundle\Entity\Product")
+     * @ORM\OneToOne(targetEntity="JLM\ProductBundle\Model\ProductInterface")
      */
     private $product;
 
@@ -42,10 +42,10 @@ class Model extends \JLM\OfficeBundle\Entity\TextModel
     /**
      * Set product
      *
-     * @param Product $product
+     * @param ProductInterface $product
      * @return Model
      */
-    public function setProduct(Product $product = null)
+    public function setProduct(ProductInterface $product = null)
     {
         $this->product = $product;
     
@@ -55,7 +55,7 @@ class Model extends \JLM\OfficeBundle\Entity\TextModel
     /**
      * Get product
      *
-     * @return Product 
+     * @return ProductInterface 
      */
     public function getProduct()
     {

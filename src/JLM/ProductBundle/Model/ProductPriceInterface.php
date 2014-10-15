@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the  package.
+ * This file is part of the JLMProductBundle package.
  *
  * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *
@@ -9,17 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\ModelBundle\Entity;
+namespace JLM\ProductBundle\Model;
 
-use JLM\ProductBundle\Entity\Product;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Product extends Product
+interface ProductPriceInterface
 {
-    public function __construct()
-    {
-        parent::__construct();
-        echo "JLMModelBundle:Product DEPRECATED";
-    }
+    
 }

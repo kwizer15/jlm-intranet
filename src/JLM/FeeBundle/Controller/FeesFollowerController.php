@@ -135,7 +135,7 @@ class FeesFollowerController extends Controller
 				
 				$builder = new FeeBillBuilder($fee, $entity, array(
 				    'number' => $number,
-				    'product' => $em->getRepository('JLMModelBundle:Product')->find(284),
+				    'product' => $em->getRepository('JLMProductBundle:Product')->find(284),
 				    'penalty' => (string)$em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1),
                     'earlyPayment' => (string)$em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1),
 				    'vatTransmitter' => $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate(),

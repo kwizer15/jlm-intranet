@@ -52,10 +52,10 @@ class AttributionBillBuilderTest extends \PHPUnit_Framework_TestCase
     
     public function testBuildLines()
     {
-        $category = $this->getMock('JLM\ModelBundle\Entity\ProductCategory');
-        $category->expects($this->any())->method('getId')->will($this->returnValue(1));
+        $category = $this->getMock('JLM\ProductBundle\Model\ProductCategoryInterface');
+        $category->expects($this->any())->method('isSmallSupply')->will($this->returnValue(1));
         
-        $product = $this->getMock('JLM\ModelBundle\Entity\Product');
+        $product = $this->getMock('JLM\ProductBundle\Model\ProductInterface');
         $product->expects($this->any())->method('getCategory')->will($this->returnValue($category));
         
         $model = $this->getMock('JLM\TransmitterBundle\Entity\Model');

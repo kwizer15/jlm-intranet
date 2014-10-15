@@ -1,0 +1,4 @@
+JLM\ProductBundle\Entity\Product:
+  getters:
+    coefPositive:
+      - "True" : ~
