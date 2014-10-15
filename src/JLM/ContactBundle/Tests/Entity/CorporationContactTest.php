@@ -12,6 +12,7 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\CorporationContact;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

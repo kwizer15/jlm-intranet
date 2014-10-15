@@ -16,11 +16,20 @@ namespace JLM\ContactBundle\Manager;
  */
 class ContactManager
 {
+    /**
+     * Constructor
+     * Singleton pattern
+     */
     protected function __construct()
     {
         
     }
     
+    /**
+     * Create a Contact class
+     * @param string $class
+     * @return ContactInterface
+     */
     public static function create($class)
     {
         $class = '\JLM\ContactBundle\Entity\\' . $class;

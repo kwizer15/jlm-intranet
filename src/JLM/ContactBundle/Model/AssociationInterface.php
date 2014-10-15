@@ -9,14 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\ContactBundle\Entity;
-
-use JLM\ContactBundle\Model\CompanyInterface;
+namespace JLM\ContactBundle\Model;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Company extends Corporation implements CompanyInterface
+interface AssociationInterface extends CorporationInterface
 {
-	
+    
 }

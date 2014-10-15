@@ -11,12 +11,12 @@
 
 namespace JLM\ContactBundle\Entity;
 
-use JLM\ContactBundle\Model\CompanyInterface;
+use JLM\ContactBundle\Model\AssociationInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Company extends Corporation implements CompanyInterface
+class Association extends Corporation implements AssociationInterfaceInterface
 {
 	
 }

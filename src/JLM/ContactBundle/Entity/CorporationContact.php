@@ -13,6 +13,7 @@ namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\CorporationContactInterface;
 use JLM\ContactBundle\Model\CorporationInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

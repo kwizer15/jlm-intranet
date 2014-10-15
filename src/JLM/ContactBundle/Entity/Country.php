@@ -12,6 +12,7 @@
 namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\CountryInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

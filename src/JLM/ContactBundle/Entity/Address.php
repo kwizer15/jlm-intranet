@@ -13,6 +13,7 @@ namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\AddressInterface;
 use JLM\ContactBundle\Model\CityInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

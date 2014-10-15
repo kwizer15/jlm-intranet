@@ -12,6 +12,7 @@
 namespace JLM\ContactBundle\Tests\DependencyInjection;
 
 use JLM\ContactBundle\DependencyInjection\JLMContactExtension;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

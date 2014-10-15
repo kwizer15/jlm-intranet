@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the JLMContactBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\ContactBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -7,6 +16,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ */
 abstract class AbstractHiddenType extends AbstractType
 {
 	/**
@@ -34,16 +46,25 @@ abstract class AbstractHiddenType extends AbstractType
     	
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParent()
     {
     	return 'hidden';
     }
     
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return $this->getTypeName().'_hidden';
     }
     
+    /**
+     * {@inheritdoc}
+     */
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -51,7 +72,17 @@ abstract class AbstractHiddenType extends AbstractType
         ));
     }
     
+    /**
+     * Get the transformer class
+     * 
+     * @return string
+     */
     abstract protected function getTransformerClass();
     
+    /**
+     * Get the type name
+     * 
+     * @return string
+     */
     abstract protected function getTypeName();
 }

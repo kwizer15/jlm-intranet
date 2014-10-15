@@ -11,12 +11,11 @@
 
 namespace JLM\ContactBundle\Tests\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
 class CityControllerTest extends WebTestCase
 {
     /**

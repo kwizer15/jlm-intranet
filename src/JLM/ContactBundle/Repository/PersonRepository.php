@@ -34,11 +34,22 @@ class PersonRepository extends SearchRepository
 		return array('a.firstName','a.lastName');
 	}
 	
+	/**
+	 * @deprecated
+	 * @param unknown $query
+	 * @return Ambigous <multitype:, NULL, \Doctrine\ORM\mixed, \Doctrine\ORM\Internal\Hydration\mixed, \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+	 */
 	public function match($query)
 	{
 		return $this->search($query);
 	}
 	
+	/**
+	 * @deprecated
+	 * @param unknown $query
+	 * @param number $limit
+	 * @return multitype:multitype:string
+	 */
 	public function searchResult($query, $limit = 8)
 	{
 		$res = $this->search($query);
