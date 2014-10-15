@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the GenemuFormBundle package.
+ * This file is part of the JLMContactBundle package.
  *
- * (c) Olivier Chauvel <olivier@generation-multiple.com>
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * Add a new twig.form.resources
  *
- * @author Olivier Chauvel <olivier@generation-multiple.com>
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class FormPass implements CompilerPassInterface
 {
