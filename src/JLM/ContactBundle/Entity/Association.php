@@ -16,7 +16,7 @@ use JLM\ContactBundle\Model\AssociationInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Association extends Corporation implements AssociationInterfaceInterface
+class Association extends Corporation implements AssociationInterface
 {
 	
 }
