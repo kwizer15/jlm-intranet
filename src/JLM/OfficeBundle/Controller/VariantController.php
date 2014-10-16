@@ -219,7 +219,7 @@ class VariantController extends Controller
 		// Message
 		$mail = new Mail;
 		$form = $this->createForm(new MailType(), $mail);
-		$form->bind($request);
+		$form->handleRequest($request);
 		 
 		if ($form->isValid()) {
 			$mail->setBcc('commerce@jlm-entreprise.fr');
