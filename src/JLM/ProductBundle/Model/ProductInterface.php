@@ -50,4 +50,16 @@ interface ProductInterface
      * @return text
      */
     public function getDescription();
+    
+    /**
+     * Get is small supplies
+     * @return boolean
+     */
+    public function isSmallSupply();
+    
+    /**
+     * Get if is service
+     * @return boolean
+    */
+    public function isService();
 }

@@ -132,6 +132,16 @@ class Product implements ProductInterface
         return $this->id;
     }
 
+    public function isSmallSupply()
+    {
+        return $this->getCategory()->isSmallSupply();
+    }
+    
+    public function isService()
+    {
+        return $this->getCategory()->isService();
+    }
+    
     /**
      * Set designation
      *

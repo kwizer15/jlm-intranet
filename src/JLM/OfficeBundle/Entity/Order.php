@@ -193,7 +193,7 @@ class Order
     			$flag = true;
     			if ($product = $vline->getProduct())
     			if ($category = $product->getCategory())
-    			if ($category->getId() == 2)
+    			if ($category->isService())
     				$flag = false;
     			if ($flag)
     			{
