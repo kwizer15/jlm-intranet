@@ -12,8 +12,16 @@ interface FeesFollowerInterface
 	public function isActive();
 	
 	/**
-	 * Défini la date d'activation
-	 * @param \DateTime $date
-	 */
+     * Set activation
+     *
+     * @param \DateTime $activation
+     * @return FeesFollower
+     */
 	public function setActivation(\DateTime $date);
+	
+	/**
+	 * Get activation date
+	 * @return \DateTime
+	 */
+	public function getActivation();
 }

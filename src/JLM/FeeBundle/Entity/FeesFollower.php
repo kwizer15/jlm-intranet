@@ -65,10 +65,7 @@ class FeesFollower implements FeesFollowerInterface
 	}
 
     /**
-     * Set activation
-     *
-     * @param \DateTime $activation
-     * @return FeesFollower
+     * {@inheritdoc}
      */
     public function setActivation(\DateTime $activation = null)
     {
@@ -78,9 +75,7 @@ class FeesFollower implements FeesFollowerInterface
     }
 
     /**
-     * Get activation
-     *
-     * @return \DateTime 
+     * {@inheritdoc}
      */
     public function getActivation()
     {

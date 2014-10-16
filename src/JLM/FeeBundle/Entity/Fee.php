@@ -7,10 +7,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JLM\ModelBundle\Entity\VAT;
 use JLM\ModelBundle\Entity\Contract;
 use JLM\ModelBundle\Entity\Trustee;
-use JLM\ProductBundle\Entity\ProductInterface;
+use JLM\ProductBundle\Model\ProductInterface;
 
 use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\BillLine;
+use JLM\FeeBundle\Model\FeesFollowerInterface;
 
 /**
  * 
@@ -352,7 +353,7 @@ class Fee
      * @return \JLM\OfficeBundle\Entity\Bill
      * @deprecated
      */
-    public function getBill(ProductInterface $product, FeesFollower $follower, $number)
+    public function getBill(ProductInterface $product, FeesFollowerInterface $follower, $number)
     {
       	$bill = new Bill;
       	$bill->setNumber($number);

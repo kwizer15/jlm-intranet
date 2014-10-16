@@ -12,6 +12,7 @@ use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\DailyBundle\Entity\Intervention;
 
 use JLM\BillBundle\Model\BillInterface;
+use JLM\FeeBundle\Model\FeesFollowerInterface;
 
 /**
  * JLM\OfficeBundle\Entity\Bill
@@ -485,7 +486,7 @@ class Bill extends Document implements BillInterface
      * @param JLM\OfficeBundle\Entity\FeesFollower $feesFollower
      * @return Bill
      */
-    public function setFeesFollower(\JLM\FeeBundle\Entity\FeesFollower $feesFollower = null)
+    public function setFeesFollower(FeesFollowerInterface $feesFollower = null)
     {
         $this->feesFollower = $feesFollower;
     
