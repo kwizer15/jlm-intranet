@@ -61,5 +61,40 @@ class ProductCategoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame($this->entity, $this->entity->setName('Foo'));
         $this->assertSame('Foo', $this->entity->getName());
+        $this->assertSame('Foo', $this->entity->__toString());
+    }
+    
+    public function testSmallSupply()
+    {
+        $entity = $this->getMockForAbstractClass('JLM\ProductBundle\Entity\ProductCategory');
+        $entity->expects($this->any())->method('getId');
+        $entity->isSmallSupply();
+    }
+
+    public function testService()
+    {
+        $entity = $this->getMockForAbstractClass('JLM\ProductBundle\Entity\ProductCategory');
+        $entity->expects($this->any())->method('getId');
+        $entity->isService();
+    }
+    
+    /**
+     * @deprecated
+     */
+    public function testAddProductCategory()
+    {
+        $entity = $this->getMockForAbstractClass('JLM\ProductBundle\Entity\ProductCategory');
+        $entity->expects($this->any())->method('addChild');
+        $this->assertTrue($entity->addProductCategory($this->entity));
+    }
+    
+    /**
+     * @deprecated
+     */
+    public function testRemoveProductCategory()
+    {
+        $entity = $this->getMockForAbstractClass('JLM\ProductBundle\Entity\ProductCategory');
+        $entity->expects($this->any())->method('removeChild');
+        $this->assertFalse($entity->removeProductCategory($this->entity));
     }
 }
