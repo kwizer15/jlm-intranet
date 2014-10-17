@@ -46,7 +46,7 @@ JLM\ProductBundle\Entity\Product:
 #      inversedBy: children
   oneToMany:
     unitPrices:
-      targetEntity: JLM\ModelBundle\Entity\ProductPrice
+      targetEntity: JLM\ProductBundle\Entity\ProductPrice
       mappedBy: product
       orderBy: { quantity : ASC }
 #    children:
