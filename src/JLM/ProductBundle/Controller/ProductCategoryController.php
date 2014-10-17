@@ -20,7 +20,7 @@ class ProductCategoryController extends Controller
     /**
      * Lists all ProductCategory entities.
      *
-     * @Route("/", name="productcategory")
+     * @Route("/", name="jlm_product_productcategory")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -36,7 +36,7 @@ class ProductCategoryController extends Controller
     /**
      * Finds and displays a ProductCategory entity.
      *
-     * @Route("/{id}/show", name="productcategory_show")
+     * @Route("/{id}/show", name="jlm_product_productcategory_show")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -60,7 +60,7 @@ class ProductCategoryController extends Controller
     /**
      * Displays a form to create a new ProductCategory entity.
      *
-     * @Route("/new", name="productcategory_new")
+     * @Route("/new", name="jlm_product_productcategory_new")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -78,9 +78,9 @@ class ProductCategoryController extends Controller
     /**
      * Creates a new ProductCategory entity.
      *
-     * @Route("/create", name="productcategory_create")
+     * @Route("/create", name="jlm_product_productcategory_create")
      * @Method("post")
-     * @Template("JLMModelBundle:ProductCategory:new.html.twig")
+     * @Template("JLMProductBundle:ProductCategory:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function createAction()
@@ -95,7 +95,7 @@ class ProductCategoryController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('productcategory_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('jlm_product_productcategory_show', array('id' => $entity->getId())));
             
         }
 
@@ -108,7 +108,7 @@ class ProductCategoryController extends Controller
     /**
      * Displays a form to edit an existing ProductCategory entity.
      *
-     * @Route("/{id}/edit", name="productcategory_edit")
+     * @Route("/{id}/edit", name="jlm_product_productcategory_edit")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -135,9 +135,9 @@ class ProductCategoryController extends Controller
     /**
      * Edits an existing ProductCategory entity.
      *
-     * @Route("/{id}/update", name="productcategory_update")
+     * @Route("/{id}/update", name="jlm_product_productcategory_update")
      * @Method("post")
-     * @Template("JLMModelBundle:ProductCategory:edit.html.twig")
+     * @Template("JLMProductBundle:ProductCategory:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function updateAction($id)
@@ -161,7 +161,7 @@ class ProductCategoryController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('productcategory_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('jlm_product_productcategory_edit', array('id' => $id)));
         }
 
         return array(
@@ -174,7 +174,7 @@ class ProductCategoryController extends Controller
     /**
      * Deletes a ProductCategory entity.
      *
-     * @Route("/{id}/delete", name="productcategory_delete")
+     * @Route("/{id}/delete", name="jlm_product_productcategory_delete")
      * @Method("post")
      * @Secure(roles="ROLE_USER")
      */
@@ -197,7 +197,7 @@ class ProductCategoryController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('productcategory'));
+        return $this->redirect($this->generateUrl('jlm_product_productcategory'));
     }
 
     private function createDeleteForm($id)
