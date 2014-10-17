@@ -102,6 +102,8 @@ class ProductCategory implements ProductCategoryInterface
     public function setParent(ProductCategoryInterface $parent = null)
     {
         $this->parent = $parent;
+        
+        return $this;
     }
 
     /**
@@ -115,27 +117,51 @@ class ProductCategory implements ProductCategoryInterface
     }
 
     /**
-     * Add children
+     * Add child
      *
-     * @param ProductCategoryInterface $children
+     * @param ProductCategoryInterface $child
      * @return boolean
+     * @deprecated
      */
-    public function addProductCategory(ProductCategoryInterface $children)
+    public function addProductCategory(ProductCategoryInterface $child)
     {
-        return $this->children->add($children);
+        return $this->addChild($child);
     }
     
     /**
-     * Remove children
+     * Add child
      *
-     * @param ProductCategoryInterface $children
+     * @param ProductCategoryInterface $child
      * @return boolean
      */
-    public function removeProductCategory(ProductCategoryInterface $children)
+    public function addChild(ProductCategoryInterface $child)
     {
-    	return $this->children->removeElement($children);
+        return $this->children->add($child);
+    }
+    
+    /**
+     * Remove child
+     *
+     * @param ProductCategoryInterface $child
+     * @return boolean
+     * @deprecated
+     */
+    public function removeProductCategory(ProductCategoryInterface $child)
+    {
+    	return $this->removeChild($child);
     }
 
+    /**
+     * Remove child
+     *
+     * @param ProductCategoryInterface $child
+     * @return boolean
+     */
+    public function removeChild(ProductCategoryInterface $child)
+    {
+        return $this->children->removeElement($child);
+    }
+    
     /**
      * Get children
      *
