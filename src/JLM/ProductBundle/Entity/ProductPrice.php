@@ -63,9 +63,7 @@ class ProductPrice implements ProductPriceInterface
     }
 
     /**
-     * Get quantity
-     *
-     * @return integer 
+     * {@inheritdoc}
      */
     public function getQuantity()
     {
@@ -86,9 +84,7 @@ class ProductPrice implements ProductPriceInterface
     }
 
     /**
-     * Get unitPrice
-     *
-     * @return float 
+     * {@inheritdoc}
      */
     public function getUnitPrice()
     {

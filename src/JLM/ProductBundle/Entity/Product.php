@@ -498,9 +498,7 @@ class Product implements ProductInterface
      */
     public function addUnitPrice(ProductPriceInterface $unitPrices)
     {
-        $this->unitPrices->add($unitPrices);
-    
-        return $this;
+        return $this->unitPrices->add($unitPrices);
     }
 
     /**

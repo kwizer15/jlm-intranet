@@ -80,4 +80,46 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         $this->entity->setCategory($category);
         $this->assertSame(true, $this->entity->isService());
     }
+    
+    public function testOneUnitPrice()
+    {
+        $this->assertSame($this->entity, $this->entity->setUnitPrice(12.34));
+        $this->assertSame(12.34, $this->entity->getUnitPrice());
+    }
+    
+    /**
+     * @return array
+     */
+    public function getUnitPrices()
+    {
+        return array(
+        	array(array(1, 25.0), array(5,22.0), 6, 22.0),
+            array(array(1, 25.0), array(5,22.0), 5, 22.0),
+            array(array(5, 25.0), array(10,22.0), 6, 25.0),
+            array(array(5, 25.0), array(10,22.0), 11, 22.0),
+            array(array(1, 25.0), array(5,22.0), 1, 25.0),
+        );
+    }
+    
+    /**
+     * @dataProvider getUnitPrices
+     * @param array $p1
+     * @param array $p2
+     * @param int $qty
+     * @param float $price
+     */
+    public function testMultiUnitPrice($p1, $p2, $qty, $price)
+    {
+        $price1 = $this->getMock('JLM\ProductBundle\Model\ProductPriceInterface');
+        $price1->expects($this->any())->method('getQuantity')->will($this->returnValue($p1[0]));
+        $price1->expects($this->any())->method('getUnitPrice')->will($this->returnValue($p1[1]));
+        
+        $price2 = $this->getMock('JLM\ProductBundle\Model\ProductPriceInterface');
+        $price2->expects($this->any())->method('getQuantity')->will($this->returnValue($p2[0]));
+        $price2->expects($this->any())->method('getUnitPrice')->will($this->returnValue($p2[1]));
+        
+        $this->assertTrue($this->entity->addUnitPrice($price1));
+        $this->assertTrue($this->entity->addUnitPrice($price2));
+        $this->assertSame($price, $this->entity->getUnitPrice($qty));
+    }
 }
