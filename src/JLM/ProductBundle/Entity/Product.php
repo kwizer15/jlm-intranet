@@ -477,7 +477,7 @@ class Product implements ProductInterface
      */
     public function isCoefPositive()
     {
-    	return $this->getCoef() > 0;
+    	return $this->getCoef() >= 0;
     }
     
     /**

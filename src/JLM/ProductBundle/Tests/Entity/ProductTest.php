@@ -50,6 +50,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame($this->entity, $this->entity->setDesignation('Foo'));
         $this->assertSame('Foo', $this->entity->getDesignation());
+        $this->assertSame('Foo', $this->entity->__toString());
     }
     
     public function testDescription()
@@ -79,6 +80,19 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         $category->expects($this->once())->method('isService')->will($this->returnValue(true));
         $this->entity->setCategory($category);
         $this->assertSame(true, $this->entity->isService());
+    }
+    
+    public function testUnitPrices()
+    {
+        $price = $this->getMock('JLM\ProductBundle\Model\ProductPriceInterface');
+        $this->assertCount(0, $this->entity->getUnitPrices());
+        $this->assertFalse($this->entity->removeUnitPrice($price));
+        $this->assertCount(0, $this->entity->getUnitPrices());
+        $this->assertTrue($this->entity->addUnitPrice($price));
+        $this->assertCount(1, $this->entity->getUnitPrices());
+        $this->assertTrue($this->entity->removeUnitPrice($price));
+        $this->assertCount(0, $this->entity->getUnitPrices());
+        
     }
     
     public function testOneUnitPrice()
@@ -122,4 +136,87 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->entity->addUnitPrice($price2));
         $this->assertSame($price, $this->entity->getUnitPrice($qty));
     }
+    
+    public function testBarcode()
+    {
+        $barcode = '123456789';
+        $this->assertSame($this->entity, $this->entity->setBarcode($barcode));
+        $this->assertSame($barcode, $this->entity->getBarcode());
+    }
+    
+    public function testPurchase()
+    {
+        $price = 12.34;
+        $this->assertSame($this->entity, $this->entity->setPurchase($price));
+        $this->assertSame($price, $this->entity->getPurchase());
+    }
+    
+    public function testDiscountSupplier()
+    {
+        $discount = 12.34;
+        $this->assertSame($this->entity, $this->entity->setDiscountSupplier($discount));
+        $this->assertSame($discount, $this->entity->getDiscountSupplier());
+    }
+    
+    public function testExpenseRatio()
+    {
+        $ratio = 12.34;
+        $this->assertSame($this->entity, $this->entity->setExpenseRatio($ratio));
+        $this->assertSame($ratio, $this->entity->getExpenseRatio());
+    }
+    
+    public function testShipping()
+    {
+        $shipping = 12.34;
+        $this->assertSame($this->entity, $this->entity->setShipping($shipping));
+        $this->assertSame($shipping, $this->entity->getShipping());
+    }
+    
+    public function testUnity()
+    {
+        $unity = 'pièce';
+        $this->assertSame($this->entity, $this->entity->setUnity($unity));
+        $this->assertSame($unity, $this->entity->getUnity());
+    }
+    
+    /**
+     * @return array
+     */
+    public function getPurchases()
+    {
+        return array(
+        	array(100, 20, 10, 2, 90, 99, 9, 225/22),
+            array(  0, 20, 10, 2,  2, 99, 97, 0),
+        );
+    }
+    
+    /**
+     * @dataProvider getPurchases
+     * @param float $p
+     * @param float $ds
+     * @param float $er
+     * @param float $s
+     * @param float $res
+     */
+    public function testCalcs($p, $ds, $er, $s, $pp, $up, $m, $c)
+    {
+        $this->entity->setPurchase($p);
+        $this->entity->setDiscountSupplier($ds);
+        $this->entity->setExpenseRatio($er);
+        $this->entity->setShipping($s);
+        $this->assertEquals($pp, $this->entity->getPurchasePrice());
+        
+        $this->entity->setUnitPrice($up);
+        $this->assertEquals($m, $this->entity->getMargin());
+        $this->assertEquals($c, $this->entity->getCoef());
+        $this->assertTrue($this->entity->isCoefPositive());
+    }
+    
+    public function testSupplier()
+    {
+        $supplier = $this->getMock('JLM\ProductBundle\model\SupplierInterface');
+        $this->assertSame($this->entity, $this->entity->setSupplier($supplier));
+        $this->assertSame($supplier, $this->entity->getSupplier());
+    }
+
 }
