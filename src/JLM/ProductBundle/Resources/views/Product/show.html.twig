@@ -1,0 +1,66 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+{% block content %}
+<h1><small>{{ entity.reference }}</small></h1>
+<h2>{{ entity.designation }}</h2>
+<p>{{ entity.description|nl2br }}</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Prix d'achat HT</th>
+            <th>Prix de vente HT</th>
+            <th>Marge</th>
+        </tr>
+    </thead>
+    <tbody>
+    	<tr>
+    		<td>{{ entity.purchasePrice|number_format(2, ',', ' ') }} €</td>
+    		<td>{{ entity.unitPrice|number_format(2, ',', ' ') }} €</td>
+    		<td>{{ entity.margin|number_format(2, ',', ' ') }} €</td>
+    	</tr>
+    </tbody>
+</table>
+<table class="table table-bordered table-striped">
+    <tbody>
+    	<tr>
+            <th>Famille</th>
+            <td>{% if entity.category %}<a href="{{ path('productcategory_show',{ 'id' : entity.category.id }) }}">{{ entity.category }}</a>{% endif %}</td>
+        </tr>
+    	<tr>
+            <th>Fournisseur</th>
+            <td>{% if entity.supplier %}<a href="{{ path('supplier_show',{ 'id' : entity.supplier.id }) }}">{{ entity.supplier }}</a>{% endif %}</td>
+        </tr>
+    	<tr>
+            <th>Unité</th>
+            <td>{{ entity.unity }}</td>
+        </tr>
+        <tr>
+            <th>Code barre</th>
+            <td>{{ entity.barcode }}</td>
+        </tr>
+        <tr>
+            <th>Prix catalogue HT</th>
+            <td>{{ entity.purchase|number_format(2, ',', ' ') }} €</td>
+        </tr>
+        <tr>
+            <th>Remise fournisseur</th>
+            <td>{{ entity.discountSupplier }} %</td>
+        </tr>
+        <tr>
+            <th>Frais</th>
+            <td>{{ entity.expenseRatio }} %</td>
+        </tr>
+        <tr>
+            <th>Port</th>
+            <td>{{ entity.shipping|number_format(2, ',', ' ') }} €</td>
+        </tr>
+        <tr>
+            <th>Coef.</th>
+            <td>{{ entity.coef|number_format(2, ',', ' ') }} %</td>
+        </tr>
+    </tbody>
+</table>
+<div class="form-actions">
+	<a href="{{ path('product') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	<a href="{{ path('product_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+</div>
+{% endblock %}
