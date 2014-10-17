@@ -1,0 +1,34 @@
+{% block jlm_product_product_widget %}
+{{ form_row(form.reference) }}
+{# form_row(form.barcode) #}
+{{ form_row(form.category) }}
+{{ form_row(form.designation) }}
+{{ form_row(form.description) }}
+{{ form_row(form.supplier) }}
+{{ form_row(form.unity) }}
+<table class="table">
+	<thead>
+		<tr>
+			<th>{{ form.purchase.vars.label }}</th>
+			<th>{{ form.discountSupplier.vars.label }}</th>
+			<th>{{ form.expenseRatio.vars.label }}</th>
+			<th>{{ form.shipping.vars.label }}</th>
+			<th>Coef.</th>
+			<th>{{ form.unitPrice.vars.label }}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>{{ form_widget(form.purchase) }}</td>
+			<td>{{ form_widget(form.discountSupplier) }}</td>
+			<td>{{ form_widget(form.expenseRatio) }}</td>
+			<td>{{ form_widget(form.shipping) }}</td>
+			<td>
+	    		<div class="input-append"><input type="text" class="input-mini" id="product_margin" value="40,00"><span class="add-on">%</span></div>
+	    	</td>
+			<td>{{ form_widget(form.unitPrice) }}</td>
+		</tr>
+	</tbody>
+</table>
+{{ form_rest(form) }}
+{% endblock jlm_product_product_widget %}
