@@ -1,30 +1,22 @@
 <?php
 
-namespace JLM\ModelBundle\Controller;
+namespace JLM\ProductBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\ModelBundle\Entity\Transmitter;
 use JLM\ProductBundle\Entity\Product;
-use JLM\ModelBundle\Form\Type\ProductType;
+use JLM\ProductBundle\Form\Type\ProductType;
 
 /**
  * Product controller.
- *
- * @Route("/product")
  */
 class ProductController extends Controller
 {
     /**
      * Lists all Product entities.
      *
-     * @Route("/", name="product")
-     * @Route("/page/{page}", name="product_page")
-     * @Route("/page/{page}/{limit}", name="product_page_limit")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -58,7 +50,6 @@ class ProductController extends Controller
     /**
      * Finds and displays a Product entity.
      *
-     * @Route("/{id}/show", name="product_show")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -82,7 +73,6 @@ class ProductController extends Controller
     /**
      * Displays a form to create a new Product entity.
      *
-     * @Route("/new", name="product_new")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -107,8 +97,6 @@ class ProductController extends Controller
     /**
      * Creates a new Product entity.
      *
-     * @Route("/create", name="product_create")
-     * @Method("post")
      * @Template("JLMModelBundle:Product:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -139,7 +127,6 @@ class ProductController extends Controller
     /**
      * Displays a form to edit an existing Product entity.
      *
-     * @Route("/{id}/edit", name="product_edit")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -156,8 +143,6 @@ class ProductController extends Controller
     /**
      * Edits an existing Product entity.
      *
-     * @Route("/{id}/update", name="product_update")
-     * @Method("post")
      * @Template("JLMModelBundle:Product:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -184,8 +169,6 @@ class ProductController extends Controller
     /**
      * Deletes a Product entity.
      *
-     * @Route("/{id}/delete", name="product_delete")
-     * @Method("post")
      * @Secure(roles="ROLE_USER")
      */
     public function deleteAction($id)

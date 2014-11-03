@@ -4,6 +4,7 @@ namespace JLM\ProductBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use JLM\ProductBundle\DependencyInjection\Compiler\FormPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class JLMProductBundle extends Bundle
 {

@@ -3,24 +3,19 @@
 namespace JLM\ProductBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ProductBundle\Entity\ProductCategory;
-use JLM\ModelBundle\Form\Type\ProductCategoryType;
+use JLM\ProductBundle\Form\Type\ProductCategoryType;
 
 /**
  * ProductCategory controller.
- *
- * @Route("/productcategory")
  */
 class ProductCategoryController extends Controller
 {
     /**
      * Lists all ProductCategory entities.
-     *
-     * @Route("/", name="jlm_product_productcategory")
+     * 
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -36,7 +31,6 @@ class ProductCategoryController extends Controller
     /**
      * Finds and displays a ProductCategory entity.
      *
-     * @Route("/{id}/show", name="jlm_product_productcategory_show")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -60,7 +54,6 @@ class ProductCategoryController extends Controller
     /**
      * Displays a form to create a new ProductCategory entity.
      *
-     * @Route("/new", name="jlm_product_productcategory_new")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -78,8 +71,6 @@ class ProductCategoryController extends Controller
     /**
      * Creates a new ProductCategory entity.
      *
-     * @Route("/create", name="jlm_product_productcategory_create")
-     * @Method("post")
      * @Template("JLMProductBundle:ProductCategory:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -108,7 +99,6 @@ class ProductCategoryController extends Controller
     /**
      * Displays a form to edit an existing ProductCategory entity.
      *
-     * @Route("/{id}/edit", name="jlm_product_productcategory_edit")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -135,8 +125,6 @@ class ProductCategoryController extends Controller
     /**
      * Edits an existing ProductCategory entity.
      *
-     * @Route("/{id}/update", name="jlm_product_productcategory_update")
-     * @Method("post")
      * @Template("JLMProductBundle:ProductCategory:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -174,8 +162,6 @@ class ProductCategoryController extends Controller
     /**
      * Deletes a ProductCategory entity.
      *
-     * @Route("/{id}/delete", name="jlm_product_productcategory_delete")
-     * @Method("post")
      * @Secure(roles="ROLE_USER")
      */
     public function deleteAction($id)

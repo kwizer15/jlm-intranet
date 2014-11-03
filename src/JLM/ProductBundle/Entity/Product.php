@@ -473,7 +473,7 @@ class Product implements ProductInterface
     
     /**
      * Vérifie coeficient
-     * @retur boolean
+     * @return boolean
      */
     public function isCoefPositive()
     {

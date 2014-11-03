@@ -13,6 +13,7 @@ namespace JLM\ProductBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>

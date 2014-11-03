@@ -5,14 +5,14 @@
   <tbody>
     <tr>
       <th>Famille parente</th>
-      <td>{% if entity.parent %}<a href="{{ path('productcategory_show', { 'id': entity.parent.id }) }}">{{ entity.parent }}</a>{% endif %}</td>
+      <td>{% if entity.parent %}<a href="{{ path('jlm_product_productcategory_show', { 'id': entity.parent.id }) }}">{{ entity.parent }}</a>{% endif %}</td>
     </tr>
     <tr>
       <th>Familles filles</th>
       <td>
         <ul>
         {% for child in entity.children %}
-          <li><a href="{{ path('productcategory_show', { 'id': child.id }) }}">{{ child }}</a></li>
+          <li><a href="{{ path('jlm_product_productcategory_show', { 'id': child.id }) }}">{{ child }}</a></li>
         {% endfor %}
         </ul>
       </td>
@@ -20,7 +20,7 @@
   </tbody>
 </table>
 <div class="form-actions">
-	<a href="{{ path('productcategory') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
-	<a href="{{ path('productcategory_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+	<a href="{{ path('jlm_product_productcategory') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	<a href="{{ path('jlm_product_productcategory_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
 </div>
 {% endblock %}

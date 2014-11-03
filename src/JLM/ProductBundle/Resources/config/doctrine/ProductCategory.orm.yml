@@ -1,6 +1,6 @@
 JLM\ProductBundle\Entity\ProductCategory:
   type: entity
-  table: products_category
+  table: product_category
   id:
     id:
       type: integer
