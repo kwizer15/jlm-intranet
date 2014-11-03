@@ -36,7 +36,7 @@ class DefaultController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     	
-    	$contracts = $em->getRepository('JLMModelBundle:Contract')->findAll();
+    	$contracts = $em->getRepository('JLMContractBundle:Contract')->findAll();
     	
     	foreach ($contracts as $contract)
     	{

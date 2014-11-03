@@ -11,6 +11,7 @@ use JLM\ContactBundle\Model\AddressInterface;
 use JLM\CondominiumBundle\Model\PropertyInterface;
 use JLM\CondominiumBundle\Model\AdministratorInterface;
 use JLM\ProductBundle\Model\ProductInterface;
+use JLM\ContractBundle\Model\ContractInterface;
 
 /**
  * JLM\ModelBundle\Entity\Door
@@ -151,7 +152,7 @@ class Door implements BayInterface, InstallationInterface
      * Contrats
      * @var Contract $contracts
      * 
-     * @ORM\OneToMany(targetEntity="Contract",mappedBy="door")
+     * @ORM\OneToMany(targetEntity="JLM\ContractBundle\Entity\Contract",mappedBy="door")
      *
      */
     private $contracts;
@@ -487,10 +488,10 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Add contract
      *
-     * @param JLM\ModelBundle\Entity\Contract $contract
+     * @param ContractInterface $contract
      * @return Door
      */
-    public function addContract(\JLM\ModelBundle\Entity\Contract $contract)
+    public function addContract(ContractInterface $contract)
     {
     	$this->contracts[] = $contract;
     	
@@ -500,9 +501,9 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Remove contract
      *
-     * @param JLM\ModelBundle\Entity\Contract $contract
+     * @param ContractInterface $contract
      */
-    public function removeContract(\JLM\ModelBundle\Entity\Contract $contract)
+    public function removeContract(ContractInterface $contract)
     {
     	$this->contracts->removeElement($contract);
     }
@@ -561,7 +562,7 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Get contract on date
      * 
-     * @return JLM\ModelBundle\Entity\Contract
+     * @return ContractInterface
      */
     public function getContract(\DateTime $date = null)
     {
@@ -577,7 +578,7 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Get last contract
      * 
-     * @return JLM\ModelBundle\Entity\Contract
+     * @return ContractInterface
      */
     public function getLastContract()
     {

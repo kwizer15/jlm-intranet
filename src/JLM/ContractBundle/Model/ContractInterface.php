@@ -16,5 +16,30 @@ namespace JLM\ContractBundle\Model;
  */
 interface ContractInterface
 {
-
+	/**
+	 * Get number
+	 *
+	 * @return string
+	 */
+	public function getNumber();
+	
+	/**
+	 * Get door
+	 *
+	 * @return JLM\ModelBundle\Entity\Door
+	 */
+	public function getDoor();
+	
+	/**
+	 * Get fee
+	 *
+	 * @return float
+	 */
+	public function getFee();
+	
+	/**
+	 * To String
+	 * @return string
+	 */
+	public function __toString();
 }

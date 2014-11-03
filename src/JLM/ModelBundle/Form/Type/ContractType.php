@@ -30,7 +30,7 @@ class ContractType extends AbstractType
     public function getDefaultOptions(array $options)
     {
     	return array(
-    			'data_class' => 'JLM\ModelBundle\Entity\Contract',
+    			'data_class' => 'JLM\ContractBundle\Entity\Contract',
     	);
     }
 }

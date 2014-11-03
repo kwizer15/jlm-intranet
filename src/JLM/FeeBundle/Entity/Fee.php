@@ -5,13 +5,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use JLM\ModelBundle\Entity\VAT;
-use JLM\ModelBundle\Entity\Contract;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ProductBundle\Model\ProductInterface;
 
 use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\BillLine;
 use JLM\FeeBundle\Model\FeesFollowerInterface;
+use JLM\ContractBundle\Model\ContractInterface;
 
 /**
  * 
@@ -32,7 +32,7 @@ class Fee
 	
 	/**
 	 * @var ArrayCollection $contracts
-	 * @ORM\ManyToMany(targetEntity="JLM\ModelBundle\Entity\Contract")
+	 * @ORM\ManyToMany(targetEntity="JLM\ContractBundle\Model\ContractInterface")
 	 * @ORM\JoinTable(name="fees_contracts",
 	 * 				  joinColumns={@ORM\JoinColumn(name="fee_id", referencedColumnName="id")},
 	 * 				  inverseJoinColumns={@ORM\JoinColumn(name="contract_id", referencedColumnName="id")}
@@ -210,26 +210,26 @@ class Fee
     }
     
     /**
-     * Add contracts
+     * Add contract
      *
-     * @param JLM\ModelBundle\Entity\Contract $contracts
+     * @param ContractInterface $contract
      * @return Fee
      */
-    public function addContract(Contract $contracts)
+    public function addContract(ContractInterface $contract)
     {
-        $this->contracts[] = $contracts;
+        $this->contracts[] = $contract;
     
         return $this;
     }
 
     /**
-     * Remove contracts
+     * Remove contract
      *
-     * @param JLM\ModelBundle\Entity\Contract $contracts
+     * @param ContractInterface $contract
      */
-    public function removeContract(Contract $contracts)
+    public function removeContract(ContractInterface $contract)
     {
-        $this->contracts->removeElement($contracts);
+        $this->contracts->removeElement($contract);
     }
 
     /**
@@ -347,9 +347,9 @@ class Fee
     
     /**
      * 
-     * @param Product $product
-     * @param FeesFollower $follower
-     * @param unknown $number
+     * @param ProductInterface $product
+     * @param FeesFollowerInterface $follower
+     * @param string $number
      * @return \JLM\OfficeBundle\Entity\Bill
      * @deprecated
      */
@@ -427,6 +427,7 @@ class Fee
       	$bill->setEarlyPayment('0,00% pour paiement anticipé');
       	$bill->setMaturity(30);
       	$bill->setPenalty('de 1,50% par mois pour paiement différé');
+      	
       	return $bill;
     }
     

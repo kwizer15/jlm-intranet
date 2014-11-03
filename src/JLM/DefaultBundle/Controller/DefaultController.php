@@ -63,7 +63,7 @@ class DefaultController extends Controller
 			$date1->add(new \DateInterval('P1D'));
 		}
 		// Nombre de contrats en cours
-		$repocon = $em->getRepository('JLMModelBundle:Contract');
+		$repocon = $em->getRepository('JLMContractBundle:Contract');
 		$contracts_numbers = $repocon
 			->createQueryBuilder('a')
 			->select('COUNT(DISTINCT a.number)')

@@ -85,7 +85,7 @@ class AutocompleteController extends Controller
     	$request = $this->get('request');
     	$query = $request->request->get('term');
     	$em = $this->getDoctrine()->getManager();
-    	$results = $em->getRepository('JLMModelBundle:Contract')->searchResult($query);
+    	$results = $em->getRepository('JLMContractBundle:Contract')->searchResult($query);
     	$json = json_encode($results);
     	$response = new Response();
     	$response->headers->set('Content-Type', 'application/json');

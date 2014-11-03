@@ -26,7 +26,7 @@ class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $contract = $this->getMock('JLM\ModelBundle\Entity\Contract');
+        $contract = $this->getMock('JLM\ContractBundle\Entity\ContractInterface');
         $door = $this->getMock('JLM\ModelBundle\Entity\Door');
         $vat = $this->getMock('JLM\ModelBundle\Entity\VAT');
         $address = $this->getMock('JLM\ContactBundle\Model\AddressInterface');

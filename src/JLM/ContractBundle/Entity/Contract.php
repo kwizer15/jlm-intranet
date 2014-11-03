@@ -1,11 +1,20 @@
 <?php
 
-namespace JLM\ModelBundle\Entity;
+/*
+ * This file is part of the JLMContractBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace JLM\ContractBundle\Entity;
 
 use JLM\ContractBundle\Model\ContractInterface;
 
 /**
- * JLM\ModelBundle\Entity\Contract
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class Contract implements ContractInterface
 {
@@ -63,7 +72,7 @@ class Contract implements ContractInterface
     private $fee;
     
     /**
-     * To String
+     * {@inheritdoc}
      */
     public function __toString()
     {
@@ -96,9 +105,7 @@ class Contract implements ContractInterface
     }
 
     /**
-     * Get number
-     *
-     * @return string 
+     * {@inheritdoc}
      */
     public function getNumber()
     {
@@ -289,9 +296,7 @@ class Contract implements ContractInterface
     }
 
     /**
-     * Get fee
-     *
-     * @return float 
+     * {@inheritdoc}
      */
     public function getFee()
     {
@@ -312,9 +317,7 @@ class Contract implements ContractInterface
     }
 
     /**
-     * Get door
-     *
-     * @return JLM\ModelBundle\Entity\Door 
+     * {@inheritdoc}
      */
     public function getDoor()
     {

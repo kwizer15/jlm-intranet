@@ -112,7 +112,7 @@
 			  $("input"+line).attr('data-source',this.options.autoSource)
 					 .autocomplete({
 						source: function(request,response){
-							request.repository = 'JLMModelBundle:Contract';
+							request.repository = 'JLMContractBundle:Contract';
 							return $.post(
 								this.element.attr('data-source'),
 								request,

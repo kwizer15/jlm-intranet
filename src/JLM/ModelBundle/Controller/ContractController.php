@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\ModelBundle\Entity\Contract;
+use JLM\ContractBundle\Entity\Contract;
 use JLM\ModelBundle\Entity\Door;
 use JLM\FeeBundle\Entity\Fee;
 use JLM\ModelBundle\Form\Type\ContractType;
@@ -33,7 +33,7 @@ class ContractController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('JLMModelBundle:Contract')->findAll();
+        $entities = $em->getRepository('JLMContractBundle:Contract')->findAll();
 
         return array('entities' => $entities);
     }

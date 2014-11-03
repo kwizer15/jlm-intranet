@@ -144,7 +144,7 @@ class DefaultController extends Controller
     {
     	
     	$em = $this->getDoctrine()->getManager();
-    	$results = $em->getRepository('JLMModelBundle:Contract')->getStatsByDates();
+    	$results = $em->getRepository('JLMContractBundle:Contract')->getStatsByDates();
 	   	$stats = array();
 	   	foreach ($results as $result)
 	   	{

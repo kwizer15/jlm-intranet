@@ -9,6 +9,7 @@ use JLM\ContactBundle\Entity\Company;
 use JLM\ContactBundle\Model\AddressInterface;
 use JLM\CondominiumBundle\Model\ManagerInterface;
 use JLM\BillBundle\Model\BillableContactInterface;
+use JLM\ContractBundle\Model\ContractInterface;
 
 /**
  * JLM\ModelBundle\Entity\Trustee
@@ -31,7 +32,7 @@ class Trustee extends Company implements ManagerInterface, BillableContactInterf
     /**
      * @var ArrayCollection $contracts
      * 
-     * @ORM\OneToMany(targetEntity="Contract", mappedBy="trustee")
+     * @ORM\OneToMany(targetEntity="JLM\ContractBundle\Entity\Contract", mappedBy="trustee")
      */
     private $contracts;
 
@@ -190,10 +191,10 @@ class Trustee extends Company implements ManagerInterface, BillableContactInterf
     /**
      * Add contracts
      *
-     * @param JLM\ModelBundle\Entity\Contract $contracts
+     * @param ContractInterface $contracts
      * @return Trustee
      */
-    public function addContract(\JLM\ModelBundle\Entity\Contract $contracts)
+    public function addContract(ContractInterface $contracts)
     {
         $this->contracts[] = $contracts;
     
@@ -203,9 +204,9 @@ class Trustee extends Company implements ManagerInterface, BillableContactInterf
     /**
      * Remove contracts
      *
-     * @param JLM\ModelBundle\Entity\Contract $contracts
+     * @param ContractInterface $contracts
      */
-    public function removeContract(\JLM\ModelBundle\Entity\Contract $contracts)
+    public function removeContract(ContractInterface $contracts)
     {
         $this->contracts->removeElement($contracts);
     }

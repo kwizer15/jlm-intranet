@@ -4,7 +4,7 @@ namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use JLM\ModelBundle\Entity\Contract;
+use JLM\ContractBundle\Model\ContractInterface;
 use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\AskQuote;
 
@@ -173,7 +173,7 @@ abstract class Intervention extends Shifting
     
     /**
      * Get dynamic contract
-     * @return JLMModelBundle\Entity\Contract
+     * @return ContractInterface
      */
     public function getDynContract()
     {
@@ -191,12 +191,12 @@ abstract class Intervention extends Shifting
     
     /**
      * Set contract
-     * @param string|Contract|null $contract
+     * @param string|ContractInterface|null $contract
      * @return Intervention
      */
     public function setContract($contract)
     {
-    	if ($contract instanceof \JLM\ModelBundle\Entity\Contract)
+    	if ($contract instanceof ContractInterface)
     		$this->contract = $contract.'';
     	elseif ($contract === null)
     		$this->contract = 'Hors contrat';
