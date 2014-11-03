@@ -1,0 +1,38 @@
+JLM\ContractBundle\Entity\Contract:
+  type: entity
+  table: contracts
+  repositoryClass: JLM\ContractBundle\Repository\ContractRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    number:
+      type: string
+      lenght: 32
+    complete:
+      type: boolean
+    option:
+      column: contract_option
+      type: boolean
+    begin:
+      type: datetime
+    endWarranty:
+      column: end_warranty
+      type: boolean
+      nullable: true
+    end:
+      column: end_contract
+      type: boolean
+      nullable: true
+    fee:
+      type: decimal
+      scale: 2
+  manyToOne:
+    trustee:
+      targetEntity: JLM\ModelBundle\Entity\Trustee
+      inversedBy: contracts
+    door:
+      targetEntity: JLM\ModelBundle\Entity\Door
+      inversedBy: contracts
