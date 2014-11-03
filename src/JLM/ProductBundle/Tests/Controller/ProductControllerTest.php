@@ -32,31 +32,26 @@ class ProductControllerTest extends WebTestCase
         $this->client->followRedirects();
     } 
     
-    public function testIndex()
+    private function getUrls()
     {
-        $crawler = $this->client->request(
-            'GET',
-            '/product'
+        return array(
+        	array('GET', '/product'),
+            array('GET', '/product/1/show'),
+            array('GET', '/product/1/edit'),
+            array('GET', '/product/new'),
         );
-        $crawler = $this->login($crawler);
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
     
-    public function testShow()
+    /**
+     * @dataProvider getUrls
+     * @param string $method
+     * @param string $url
+     */
+    public function testUrlIsSuccessful($method, $url)
     {
         $crawler = $this->client->request(
-            'GET',
-            '/product/1/show'
-        );
-        $crawler = $this->login($crawler);
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
-    }
-    
-    public function testEdit()
-    {
-        $crawler = $this->client->request(
-            'GET',
-            '/product/1/edit'
+            $method,
+            $url
         );
         $crawler = $this->login($crawler);
         $this->assertTrue($this->client->getResponse()->isSuccessful());
