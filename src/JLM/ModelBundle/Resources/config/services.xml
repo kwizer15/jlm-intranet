@@ -40,10 +40,10 @@
 	    <argument type="service" id="doctrine.orm.entity_manager"/>
 	    <tag name="form.type" alias="sitecontact_hidden" />
 	</service>
-	<service id="jlm_model.type.product_hidden" class="JLM\ModelBundle\Form\Type\ProductHiddenType">
+<!--	<service id="jlm_model.type.product_hidden" class="JLM\ModelBundle\Form\Type\ProductHiddenType">
 	    <argument type="service" id="doctrine.orm.entity_manager"/>
 	    <tag name="form.type" alias="product_hidden" />
-	</service>
+	</service> -->
 	<service id="jlm_model.type.trustee_hidden" class="JLM\ModelBundle\Form\Type\TrusteeHiddenType">
 	    <argument type="service" id="doctrine.orm.entity_manager"/>
 	    <tag name="form.type" alias="trustee_hidden" />
