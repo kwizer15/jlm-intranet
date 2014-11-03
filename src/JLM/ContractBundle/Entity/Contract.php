@@ -12,6 +12,8 @@
 namespace JLM\ContractBundle\Entity;
 
 use JLM\ContractBundle\Model\ContractInterface;
+use JLM\ModelBundle\Entity\Door as ContractableInterface;
+use JLM\ModelBundle\Entity\Trustee as ThirdPartyInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -41,7 +43,7 @@ class Contract implements ContractInterface
     
     /**
      * Contract C1 C2...
-     * @var smallint $option
+     * @var bool $option
      */
     private $option;
     
@@ -51,18 +53,18 @@ class Contract implements ContractInterface
     private $door;
     
     /**
-     * @var datetime $begin
+     * @var \DateTime $begin
      */
     private $begin;
 
     /**
-     * @var datetime $endWarranty
+     * @var \DateTime $endWarranty
      * @deprecated
      */
     private $endWarranty;
 
     /**
-     * @var datetime $end
+     * @var \DateTime $end
      */
     private $end;
 
@@ -279,6 +281,7 @@ class Contract implements ContractInterface
     public function getInProgress($date = null)
     {
     	$date = ($date === null) ? new \DateTime : $date;
+    	
     	return (($this->end > $date || $this->end === null) && ($this->begin <= $date));
     }
 
@@ -306,10 +309,10 @@ class Contract implements ContractInterface
     /**
      * Set door
      *
-     * @param JLM\ModelBundle\Entity\Door $door
+     * @param Door $door
      * @return self
      */
-    public function setDoor(\JLM\ModelBundle\Entity\Door $door = null)
+    public function setDoor(ContractableInterface $door = null)
     {
         $this->door = $door;
     
@@ -327,10 +330,10 @@ class Contract implements ContractInterface
     /**
      * Set trustee
      *
-     * @param JLM\ModelBundle\Entity\Trustee $trustee
+     * @param Trustee $trustee
      * @return self
      */
-    public function setTrustee(\JLM\ModelBundle\Entity\Trustee $trustee = null)
+    public function setTrustee(ThirdPartyInterface $trustee = null)
     {
         $this->trustee = $trustee;
     
@@ -353,9 +356,7 @@ class Contract implements ContractInterface
      */
     public function isEndAfterBegin()
     {
-    	if ($this->end === null)
-    		return true;
-    	return $this->end > $this->begin;
+    	return $this->end === null || $this->end > $this->begin;
     }
     
     /**
@@ -365,8 +366,6 @@ class Contract implements ContractInterface
      */
     public function isEndWarrantyAfterBegin()
     {
-    	if ($this->endWarranty === null)
-    		return true;
-    	return $this->endWarranty > $this->begin;
+    	return $this->endWarranty === null || $this->endWarranty > $this->begin;
     }
 }
