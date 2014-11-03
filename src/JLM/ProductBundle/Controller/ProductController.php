@@ -92,7 +92,7 @@ class ProductController extends Controller
     /**
      * Creates a new Product entity.
      *
-     * @Template("JLMModelBundle:Product:new.html.twig")
+     * @Template("JLMProductBundle:Product:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function createAction(Request $request)
@@ -138,7 +138,7 @@ class ProductController extends Controller
     /**
      * Edits an existing Product entity.
      *
-     * @Template("JLMModelBundle:Product:edit.html.twig")
+     * @Template("JLMProductBundle:Product:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function updateAction(Request $request, $id)
