@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ProductBundle\Entity\Product;
 use JLM\ProductBundle\Form\Type\ProductType;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Product controller.
@@ -55,14 +56,8 @@ class ProductController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMProductBundle:Product')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product entity.');
-        }
-
+        $entity = $this->getEntity($id);
+        
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -85,7 +80,7 @@ class ProductController extends Controller
         $entity->setShipping(0);
         $entity->setUnitPrice(0);
         
-        $form   = $this->createForm(new ProductType(), $entity);
+        $form   = $this->createNewForm($entity);
         	
         	
         return array(
@@ -103,9 +98,8 @@ class ProductController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Product();
- 
-        
-        $form    = $this->createForm(new ProductType(), $entity);
+
+        $form    = $this->createNewForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid())
@@ -130,9 +124,10 @@ class ProductController extends Controller
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function editAction(Product $entity)
+    public function editAction($id)
     {
-        $editForm = $this->createForm(new ProductType(), $entity);
+        $entity = $this->getEntity($id);
+        $editForm = $this->createEditForm($entity);
 
         return array(
             'entity'      => $entity,
@@ -146,14 +141,15 @@ class ProductController extends Controller
      * @Template("JLMModelBundle:Product:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function updateAction(Request $request, Product $entity)
+    public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $editForm   = $this->createForm(new ProductType(), $entity);
+        $entity = $this->getEntity($id);
+        $editForm   = $this->createEditForm($entity);
 
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
@@ -180,11 +176,7 @@ class ProductController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('JLMProductBundle:Product')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Product entity.');
-            }
+            $entity = $this->getEntity($id);
 
             $em->remove($entity);
             $em->flush();
@@ -192,12 +184,55 @@ class ProductController extends Controller
 
         return $this->redirect($this->generateUrl('product'));
     }
-
+    
+    /**
+     * Get the entity from id
+     * @param int $id
+     * @return ProductCategory
+     */
+    private function getEntity($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+    
+        $entity = $em->getRepository('JLMProductBundle:Product')->find($id);
+    
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Product entity.');
+        }
+    
+        return $entity;
+    }
+    
+    /**
+     * Get the delete form
+     * @param int $id
+     * @return \Symfony\Component\Form\Form
+     */
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+        ->add('id', 'hidden')
+        ->getForm()
         ;
+    }
+    
+    /**
+     * Get the edit form
+     * @param ProductCategory $entity
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createEditForm(Product $entity)
+    {
+        return $this->createForm(new ProductType(), $entity);
+    }
+    
+    /**
+     * Get the new form
+     * @param ProductCategory $entity
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createNewForm(Product $entity)
+    {
+        return $this->createForm(new ProductType(), $entity);
     }
 }

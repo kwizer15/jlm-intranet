@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ProductBundle\Entity\ProductCategory;
 use JLM\ProductBundle\Form\Type\ProductCategoryType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * ProductCategory controller.
@@ -36,13 +37,7 @@ class ProductCategoryController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JLMProductBundle:ProductCategory')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find ProductCategory entity.');
-        }
+        $entity = $this->getEntity($id);
 
         $deleteForm = $this->createDeleteForm($id);
 
@@ -60,7 +55,7 @@ class ProductCategoryController extends Controller
     public function newAction()
     {
         $entity = new ProductCategory();
-        $form   = $this->createForm(new ProductCategoryType(), $entity);
+        $form   = $this->createNewForm($entity);
 
         return array(
             'entity' => $entity,
@@ -74,20 +69,19 @@ class ProductCategoryController extends Controller
      * @Template("JLMProductBundle:ProductCategory:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $entity  = new ProductCategory();
-        $request = $this->getRequest();
-        $form    = $this->createForm(new ProductCategoryType(), $entity);
+        $form    = $this->createNewForm($entity);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
             return $this->redirect($this->generateUrl('jlm_product_productcategory_show', array('id' => $entity->getId())));
-            
         }
 
         return array(
@@ -104,15 +98,9 @@ class ProductCategoryController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $entity = $this->getEntity($id);
 
-        $entity = $em->getRepository('JLMProductBundle:ProductCategory')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find ProductCategory entity.');
-        }
-
-        $editForm = $this->createForm(new ProductCategoryType(), $entity);
+        $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -128,24 +116,18 @@ class ProductCategoryController extends Controller
      * @Template("JLMProductBundle:ProductCategory:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
-    public function updateAction($id)
+    public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $entity = $this->getEntity($id);
 
-        $entity = $em->getRepository('JLMProductBundle:ProductCategory')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find ProductCategory entity.');
-        }
-
-        $editForm   = $this->createForm(new ProductCategoryType(), $entity);
+        $editForm   = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
 
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
@@ -164,33 +146,70 @@ class ProductCategoryController extends Controller
      *
      * @Secure(roles="ROLE_USER")
      */
-    public function deleteAction($id)
+    public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {    
+            $entity = $this->getEntity($id);
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('JLMProductBundle:ProductCategory')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find ProductCategory entity.');
-            }
-
             $em->remove($entity);
             $em->flush();
         }
 
         return $this->redirect($this->generateUrl('jlm_product_productcategory'));
     }
-
+    
+    /**
+     * Get the entity from id
+     * @param int $id
+     * @return ProductCategory
+     */
+    private function getEntity($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+    
+        $entity = $em->getRepository('JLMProductBundle:ProductCategory')->find($id);
+    
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find ProductCategory entity.');
+        }
+    
+        return $entity;
+    }
+    
+    /**
+     * Get the delete form
+     * @param int $id
+     * @return \Symfony\Component\Form\Form
+     */
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+        ->add('id', 'hidden')
+        ->getForm()
         ;
+    }
+    
+    /**
+     * Get the edit form
+     * @param ProductCategory $entity
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createEditForm(ProductCategory $entity)
+    {
+        return $this->createForm(new ProductCategoryType(), $entity);
+    }
+    
+    /**
+     * Get the new form
+     * @param ProductCategory $entity
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createNewForm(ProductCategory $entity)
+    {
+        return $this->createForm(new ProductCategoryType(), $entity);
     }
 }

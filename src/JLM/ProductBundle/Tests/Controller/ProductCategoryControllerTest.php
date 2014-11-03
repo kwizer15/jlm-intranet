@@ -32,7 +32,7 @@ class ProductCategoryControllerTest extends WebTestCase
         $this->client->followRedirects();
     } 
     
-    private function getUrls()
+    public function getUrls()
     {
         return array(
             array('GET', '/productcategory'),
