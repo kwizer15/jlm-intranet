@@ -14,10 +14,7 @@ namespace JLM\ContactBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ContactBundle\Manager\ContactManager;
 use JLM\ContactBundle\Form\Type\PersonType;
@@ -60,8 +57,6 @@ class PersonController extends Controller
 
     /**
      * Creates a new Person entity.
-     *
-     * @Method("post")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -94,8 +89,6 @@ class PersonController extends Controller
     
     /**
      * Return JSON list of Person entity.
-     *
-     * @Method("post")
      */
     public function autocompleteAction()
     {

@@ -14,9 +14,6 @@ namespace JLM\ContactBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -25,8 +22,6 @@ class CityController extends Controller
 {
 	/**
 	 * City json
-	 *
-	 * @Method("get")
 	 */
 	public function searchAction(Request $request)
 	{
@@ -41,8 +36,6 @@ class CityController extends Controller
 	
 	/**
 	 * City json
-	 *
-	 * @Method("get")
 	 */
 	public function jsonAction(Request $request)
 	{
