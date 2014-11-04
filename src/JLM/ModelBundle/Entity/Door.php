@@ -612,7 +612,7 @@ class Door implements BayInterface, InstallationInterface
         $contract = $this->getActualContract();
         if ($contract === null)
         {
-            return $this->getProperty()->getManager();
+            return $this->getAdministrator()->getManager();
         }
         
         return $contract->getTrustee();
