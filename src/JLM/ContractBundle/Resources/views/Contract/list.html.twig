@@ -1,0 +1,48 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Etat</th>
+			<th>Numéro</th>
+			<th>Syndic</th>
+			<th>Type</th>
+			<th>Début</th>
+			<th>Fin de garantie</th>
+			<th>Fin</th>
+			<th>Dernière redevance</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for contract in contracts %}
+		<tr>
+			<td>
+				{% if contract.inProgress %}
+				<span class="label label-success">en cours</span>
+				{% else %}
+				<span class="label label-inverse">terminé</span>
+				{% endif %}
+			</td>
+			<td>{{ contract.number }}</td>
+			<td>{{ contract.trustee }}</td>
+			<td>{{ contract }}</td>
+			<td>{{ contract.begin|date('d/m/Y') }}</td>
+			<td>{% if contract.endWarranty %}{{ contract.endWarranty|date('d/m/Y') }}{% endif %}</td>
+			<td>
+				{% if contract.end %}
+				<a href="#modalStop{{ contract.id }}" data-toggle="modal">{{ contract.end|date('d/m/Y') }}</a>
+				{% else %}
+				{# <a href="{{ path('jlm_contract_contract_stop',{'id' : contract.id }) }}" class="btn btn-danger">Arrêter</a> #}
+				<a href="#modalStop{{ contract.id }}" class="btn btn-danger" role="button" data-toggle="modal">Arrêter</a>
+				{% endif %}
+				
+			</td>
+			<td>{{ contract.fee|number_format(2,',',' ') }} €</td>
+			{#<td><a href="{{ path('jlm_contract_contract_edit',{'id':contract.id}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a> #}
+			{# <td><a href="#modalContractEdit" class="btn btn-warning" role="button" data-toggle="modal">Editer</a> #}
+			<td><a href="#modalEdit{{ contract.id }}" class="btn btn-warning" role="button" data-toggle="modal">Editer</a>
+			
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>

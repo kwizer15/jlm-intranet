@@ -1,7 +1,1 @@
-parameters:
-#    jlm_product.example.class: JLM\ProductBundle\Example
 
-services:
-#    jlm_product.example:
-#        class: %jlm_product.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

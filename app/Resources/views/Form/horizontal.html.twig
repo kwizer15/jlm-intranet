@@ -221,6 +221,7 @@
 {% endspaceless %}
 {% endblock site_select_widget %}
 
+{#
 {% block contract_select_widget %}
 {% spaceless %}
 {% set attr = attr|merge({'data-source':  path('autocomplete_contract') }) %}
@@ -229,7 +230,7 @@
 {% endspaceless %}
 {% endblock contract_select_widget %}
 
-{#
+
 {% block person_select_widget %}
 {% spaceless %}
 {% set type = 'hidden' %}

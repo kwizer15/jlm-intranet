@@ -44,17 +44,17 @@
 	<a href="{{ path('door_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>	
 </div>
 <h2><small>Contrats</small></h2>
-{% include 'JLMModelBundle:Contract:list.html.twig' with { 'contracts':contracts } %}
+{% include 'JLMContractBundle:Contract:list.html.twig' with { 'contracts':contracts } %}
 <div class="form-actions">
 	<a href="#modalNew" class="btn btn-success" role="button" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Ajouter un contrat</a>
 </div>
 {% endblock %}
 
 {% block modals%}
-{% include 'JLMModelBundle:Contract:new.html.twig' with {'entity':entity,'form':form_contractNew } %}
+{% include 'JLMContractBundle:Contract:new.html.twig' with {'entity':entity,'form':form_contractNew } %}
 {% for key,contract in contracts %}
-	{% include 'JLMModelBundle:Contract:edit.html.twig' with {'entity':contract,'edit_form':form_contractEdits[key] } %}
-	{% include 'JLMModelBundle:Contract:stop.html.twig' with {'entity':contract,'form':form_contractStops[key] } %}
+	{% include 'JLMContractBundle:Contract:edit.html.twig' with {'entity':contract,'edit_form':form_contractEdits[key] } %}
+	{% include 'JLMContractBundle:Contract:stop.html.twig' with {'entity':contract,'form':form_contractStops[key] } %}
 {% endfor %}
 {% endblock modals%}
 

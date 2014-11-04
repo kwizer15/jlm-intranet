@@ -11,15 +11,6 @@
 	<service id="jlm_model.type.datepicker" class="JLM\ModelBundle\Form\Type\DatepickerType">
  	   <tag name="form.type" alias="datepicker" />
 	</service>
-<!--	
-    <service id="jlm_model.type.address" class="JLM\ModelBundle\Form\Type\AddressType">
-	    <tag name="form.type" alias="address" />
-	</service>
-	<service id="jlm_model.type.city_select" class="JLM\ModelBundle\Form\Type\CitySelectType">
-	   	<argument type="service" id="doctrine.orm.entity_manager"/> 
-	   	<tag name="form.type" alias="city_select" />
-	</service>
--->
 	<service id="jlm_model.type.trustee_select" class="JLM\ModelBundle\Form\Type\TrusteeSelectType">
     	<argument type="service" id="doctrine.orm.entity_manager"/>
     	<tag name="form.type" alias="trustee_select" />
@@ -27,10 +18,6 @@
 	<service id="jlm_model.type.site_select" class="JLM\ModelBundle\Form\Type\SiteSelectType">
     	<argument type="service" id="doctrine.orm.entity_manager"/>
     	<tag name="form.type" alias="site_select" />
-	</service>
-	<service id="jlm_model.type.contract_select" class="JLM\ModelBundle\Form\Type\ContractSelectType">
-    	<argument type="service" id="doctrine.orm.entity_manager"/>
-    	<tag name="form.type" alias="contract_select" />
 	</service>
 	<service id="jlm_model.type.door_hidden" class="JLM\ModelBundle\Form\Type\DoorHiddenType">
     	<argument type="service" id="doctrine.orm.entity_manager"/>
@@ -40,10 +27,6 @@
 	    <argument type="service" id="doctrine.orm.entity_manager"/>
 	    <tag name="form.type" alias="sitecontact_hidden" />
 	</service>
-<!--	<service id="jlm_model.type.product_hidden" class="JLM\ModelBundle\Form\Type\ProductHiddenType">
-	    <argument type="service" id="doctrine.orm.entity_manager"/>
-	    <tag name="form.type" alias="product_hidden" />
-	</service> -->
 	<service id="jlm_model.type.trustee_hidden" class="JLM\ModelBundle\Form\Type\TrusteeHiddenType">
 	    <argument type="service" id="doctrine.orm.entity_manager"/>
 	    <tag name="form.type" alias="trustee_hidden" />
@@ -52,7 +35,27 @@
 	    <argument type="service" id="doctrine.orm.entity_manager"/>
 	    <tag name="form.type" alias="door_select" />
 	</service>
+	<service id="jlm_model.type.site_hidden" class="JLM\ModelBundle\Form\Type\SiteHiddenType">
+	    <argument type="service" id="doctrine.orm.entity_manager"/>
+	    <tag name="form.type" alias="site_hidden" />
+	</service>
+	
 <!--
+    <service id="jlm_model.type.address" class="JLM\ModelBundle\Form\Type\AddressType">
+	    <tag name="form.type" alias="address" />
+	</service>
+	<service id="jlm_model.type.city_select" class="JLM\ModelBundle\Form\Type\CitySelectType">
+	   	<argument type="service" id="doctrine.orm.entity_manager"/> 
+	   	<tag name="form.type" alias="city_select" />
+	</service>
+    <service id="jlm_model.type.contract_select" class="JLM\ModelBundle\Form\Type\ContractSelectType">
+    	<argument type="service" id="doctrine.orm.entity_manager"/>
+    	<tag name="form.type" alias="contract_select" />
+	</service>
+    <service id="jlm_model.type.product_hidden" class="JLM\ModelBundle\Form\Type\ProductHiddenType">
+	    <argument type="service" id="doctrine.orm.entity_manager"/>
+	    <tag name="form.type" alias="product_hidden" />
+	</service>
 	<service id="jlm_model.type.city_select" class="JLM\ModelBundle\Form\Type\CitySelectType">
 	    <argument type="service" id="doctrine.orm.entity_manager"/>
 	    <tag name="form.type" alias="city_select" />
@@ -66,22 +69,6 @@
 	    <tag name="form.type" alias="person_select" />
 	</service>
 -->
-	<service id="jlm_model.type.site_hidden" class="JLM\ModelBundle\Form\Type\SiteHiddenType">
-	    <argument type="service" id="doctrine.orm.entity_manager"/>
-	    <tag name="form.type" alias="site_hidden" />
-	</service>
-</services>
-    <!--
-    <parameters>
-        <parameter key="jlm_model.example.class">JLM\ModelBundle\Example</parameter>
-    </parameters>
-
-    <services>
-        <service id="jlm_model.example" class="%jlm_model.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
-        
-    </services>
-    -->
+	
+  </services>
 </container>

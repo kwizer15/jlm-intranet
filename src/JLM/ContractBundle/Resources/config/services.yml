@@ -1,7 +1,9 @@
-parameters:
-#    jlm_contract.example.class: JLM\ContractBundle\Example
-
 services:
-#    jlm_contract.example:
-#        class: %jlm_contract.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    jlm_contract.type.contract_select:
+        class: JLM\ContractBundle\Form\Type\ContractSelectType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: jlm_contract_contract_select }
+
+
+

@@ -30,6 +30,7 @@ class ContractController extends Controller
      * Lists all Contract entities.
      *
      * @Template()
+     * @deprecated not used
      * @Secure(roles="ROLE_USER")
      */
     public function indexAction()
@@ -81,7 +82,7 @@ class ContractController extends Controller
     /**
      * Creates a new Contract entity.
      *
-     * @Template("JLMModelBundle:Contract:new.html.twig")
+     * @Template("JLMContractBundle:Contract:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function createAction(Request $request)
@@ -124,7 +125,7 @@ class ContractController extends Controller
     /**
      * Stop a contract
      * 
-     * @Template("JLMModelBundle:Contract:stop.html.twig")
+     * @Template("JLMContractBundle:Contract:stop.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function stopupdateAction(Contract $entity)
@@ -183,7 +184,7 @@ class ContractController extends Controller
     /**
      * Edits an existing Contract entity.
      *
-     * @Template("JLMModelBundle:Contract:edit.old.html.twig")
+     * @Template("JLMContractBundle:Contract:edit.old.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function updateAction(Request $request, Contract $entity)
