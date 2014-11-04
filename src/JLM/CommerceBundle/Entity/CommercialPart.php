@@ -11,7 +11,6 @@
 
 namespace JLM\CommerceBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use JLM\CommerceBundle\Model\CommercialPartInterface;
 use JLM\ModelBundle\Entity\Trustee as CustomerInterface;
 
