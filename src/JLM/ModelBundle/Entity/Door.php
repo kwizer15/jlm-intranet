@@ -798,6 +798,7 @@ class Door implements BayInterface, InstallationInterface
     
     /**
      * Get FixingInProgress
+     * @deprecated Not here
      */
     public function getFixingInProgress()
     {
@@ -820,6 +821,7 @@ class Door implements BayInterface, InstallationInterface
     
     /**
      * Get waitFixing
+     * @deprecated Not here
      */
     public function getWaitFixing()
     {
@@ -842,7 +844,7 @@ class Door implements BayInterface, InstallationInterface
     
     /**
      * Get lastMaintenance
-     *
+     * @deprecated Not here
      * @return \DateTime | null
      */
     public function getLastMaintenance()
@@ -874,7 +876,7 @@ class Door implements BayInterface, InstallationInterface
     
     /**
      * Get nextMaintenance
-     *
+     * @deprecated Not here
      * @return Maintenance | null
      */
     public function getNextMaintenance()
@@ -893,6 +895,11 @@ class Door implements BayInterface, InstallationInterface
     	return null;
     }
     
+    /**
+     * @deprecated Not here
+     * @param string $year
+     * @return number
+     */
     public function getCountMaintenance($year = null)
     {
     	if ($year === null)
