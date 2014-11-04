@@ -122,7 +122,7 @@ class Contract implements ContractInterface
      */
     public function setComplete($complete = true)
     {
-        $this->complete = $complete;
+        $this->complete = (bool)$complete;
     
         return $this;
     }
@@ -183,12 +183,12 @@ class Contract implements ContractInterface
     /**
      * Set option
      *
-     * @param integer $option
+     * @param boolean $option
      * @return Contract
      */
     public function setOption($option)
     {
-        $this->option = $option;
+        $this->option = (bool)$option;
     
         return $this;
     }
@@ -209,7 +209,7 @@ class Contract implements ContractInterface
      * @param \DateTime $begin
      * @return Contract
      */
-    public function setBegin($begin)
+    public function setBegin(\DateTime $begin)
     {
         $this->begin = $begin;
     
@@ -233,7 +233,7 @@ class Contract implements ContractInterface
      * @param \DateTime $endWarranty
      * @return Contract
      */
-    public function setEndWarranty($endWarranty)
+    public function setEndWarranty(\DateTime $endWarranty = null)
     {
         $this->endWarranty = $endWarranty;
     
@@ -243,7 +243,7 @@ class Contract implements ContractInterface
     /**
      * Get endWarranty
      * @deprecated
-     * @return \DateTime 
+     * @return \DateTime|null
      */
     public function getEndWarranty()
     {
@@ -256,7 +256,7 @@ class Contract implements ContractInterface
      * @param \DateTime $end
      * @return Contract
      */
-    public function setEnd($end)
+    public function setEnd(\DateTime $end = null)
     {
         $this->end = $end;
     
@@ -266,7 +266,7 @@ class Contract implements ContractInterface
     /**
      * Get end
      *
-     * @return \DateTime 
+     * @return \DateTime|null 
      */
     public function getEnd()
     {
