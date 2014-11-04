@@ -1,3 +1,7 @@
+jlm_commerce:
+    resource: "@JLMCommerceBundle/Resources/config/routing.yml"
+    prefix:   /
+
 jlm_contract:
     resource: "@JLMContractBundle/Resources/config/routing.yml"
     prefix:   /
