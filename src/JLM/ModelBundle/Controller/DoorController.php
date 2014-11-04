@@ -12,8 +12,8 @@ use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\Door;
 use JLM\ContractBundle\Entity\Contract;
 use JLM\ModelBundle\Form\Type\DoorType;
-use JLM\ModelBundle\Form\Type\ContractType;
-use JLM\ModelBundle\Form\Type\ContractStopType;
+use JLM\ContractBundle\Form\Type\ContractType;
+use JLM\ContractBundle\Form\Type\ContractStopType;
 
 /**
  * Door controller.

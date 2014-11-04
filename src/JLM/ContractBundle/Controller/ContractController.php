@@ -18,8 +18,8 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ContractBundle\Entity\Contract;
 use JLM\ModelBundle\Entity\Door;
 use JLM\FeeBundle\Entity\Fee;
-use JLM\ModelBundle\Form\Type\ContractType;
-use JLM\ModelBundle\Form\Type\ContractStopType;
+use JLM\ContractBundle\Form\Type\ContractType;
+use JLM\ContractBundle\Form\Type\ContractStopType;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
