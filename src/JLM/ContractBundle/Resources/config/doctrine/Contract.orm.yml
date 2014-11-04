@@ -20,11 +20,11 @@ JLM\ContractBundle\Entity\Contract:
       type: datetime
     endWarranty:
       column: end_warranty
-      type: boolean
+      type: datetime
       nullable: true
     end:
       column: end_contract
-      type: boolean
+      type: datetime
       nullable: true
     fee:
       type: decimal
