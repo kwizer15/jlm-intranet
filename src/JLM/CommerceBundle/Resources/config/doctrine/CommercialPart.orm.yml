@@ -1,0 +1,22 @@
+JLM\CommerceBundle\Entity\CommercialPart:
+  type: mappedSuperclass
+  fields:
+    creation:
+      type: datetime
+    trusteeName:
+      column: trustee_name
+      type: string
+    trusteeAddress:
+      column: trustee_address
+      type: text
+    vat:
+      type: decimal
+      precision: 3
+      scale: 3
+    vatTransmitter:
+      type: decimal
+      precision: 3
+      scale: 3
+  manyToOne:
+    trustee:
+      targetEntity: JLM\ModelBundle\Entity\Trustee
