@@ -384,7 +384,8 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Set site
      *
-     * @param PropertyInterface $site
+     * @param AdministratorInterface $site
+     * @deprecated Use setAdministrator(AdministratorInterface $administrator)
      * @return self
      */
     public function setSite(AdministratorInterface $site = null)
@@ -394,8 +395,8 @@ class Door implements BayInterface, InstallationInterface
 
     /**
      * Get site
-     * @deprecated
-     * @return PropertyInterface 
+     * @deprecated Use getAdministrator()
+     * @return AdministratorInterface 
      */
     public function getSite()
     {
