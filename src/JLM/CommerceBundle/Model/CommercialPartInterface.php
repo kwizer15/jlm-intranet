@@ -9,13 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\CommerceBundle;
-
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+namespace JLM\CommerceBundle\Model;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class JLMCommerceBundle extends Bundle
+interface CommercialPartInterface
 {
+    
 }
