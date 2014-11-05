@@ -13,6 +13,7 @@ use JLM\DailyBundle\Entity\Intervention;
 
 use JLM\BillBundle\Model\BillInterface;
 use JLM\FeeBundle\Model\FeesFollowerInterface;
+use JLM\CommerceBundle\Entity\CommercialPart;
 
 /**
  * JLM\OfficeBundle\Entity\Bill
@@ -20,7 +21,7 @@ use JLM\FeeBundle\Model\FeesFollowerInterface;
  * @ORM\Table(name="bill")
  * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\BillRepository")
  */
-class Bill extends Document implements BillInterface
+class Bill extends CommercialPart implements BillInterface
 {
 	/**
 	 * @var int $id
@@ -30,14 +31,6 @@ class Bill extends Document implements BillInterface
      * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	private $id;
-	
-	/**
-	 * Numéro de la facture
-	 * @var int
-	 * 
-	 * @ORM\Column(name="number", type="integer")
-	 */
-	private $number;
 	
 	/**
 	 * Pré label
@@ -213,29 +206,6 @@ class Bill extends Document implements BillInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set number
-     *
-     * @param integer $number
-     * @return Bill
-     */
-    public function setNumber($number)
-    {
-        $this->number = $number;
-    
-        return $this;
-    }
-
-    /**
-     * Get number
-     *
-     * @return integer 
-     */
-    public function getNumber()
-    {
-        return $this->number;
     }
 
     /**

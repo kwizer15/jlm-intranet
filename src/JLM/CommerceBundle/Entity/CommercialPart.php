@@ -24,6 +24,12 @@ abstract class CommercialPart implements CommercialPartInterface
 	 */
 	private $creation;
 	
+	/**
+	 * Numéro du devis
+	 * @var int
+	 */
+	private $number;
+	
     /**
      * Client
      * @var CustomerInterface $trustee
@@ -75,6 +81,29 @@ abstract class CommercialPart implements CommercialPartInterface
         return $this->creation;
     }
 
+    /**
+     * Set number
+     *
+     * @param integer $number
+     * @return self
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+    
+        return $this;
+    }
+    
+    /**
+     * Get number
+     *
+     * @return integer
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+    
     /**
      * Set trusteeName
      * @deprecated Use getCustomerName($name)

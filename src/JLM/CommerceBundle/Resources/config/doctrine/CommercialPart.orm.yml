@@ -3,6 +3,8 @@ JLM\CommerceBundle\Entity\CommercialPart:
   fields:
     creation:
       type: datetime
+    number:
+      type: integer
     trusteeName:
       column: trustee_name
       type: string

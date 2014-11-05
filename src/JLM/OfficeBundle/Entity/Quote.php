@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\DailyBundle\Entity\Work;
 use JLM\ContactBundle\Model\PersonInterface;
+use JLM\CommerceBundle\Entity\CommercialPart;
 
 /**
  * JLM\OfficeBundle\Entity\Quote
@@ -13,7 +14,7 @@ use JLM\ContactBundle\Model\PersonInterface;
  * @ORM\Table(name="quote")
  * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\QuoteRepository")
  */
-class Quote extends Document
+class Quote extends CommercialPart
 {
 	/**
 	 * @var int $id
@@ -23,12 +24,6 @@ class Quote extends Document
      * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	private $id;
-	
-	/**
-	 * Numéro du devis
-	 * @ORM\Column(name="number", type="integer")
-	 */
-	private $number;
 	
 	/**
 	 * Suiveur (pour le suivi)
@@ -117,28 +112,6 @@ class Quote extends Document
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set number
-     * 
-     * @param string $number
-     * @return Quote
-     */
-    public function setNumber($number)
-    {
-    	$this->number = $number;
-    	return $this;
-    }
-    
-    /**
-     * Get number
-     *
-     * @return string
-     */
-    public function getNumber()
-    {
-    	return $this->number;
     }
     
     /**
