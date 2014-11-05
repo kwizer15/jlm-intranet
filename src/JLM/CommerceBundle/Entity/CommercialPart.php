@@ -41,7 +41,6 @@ abstract class CommercialPart implements CommercialPartInterface
      * @var string $trusteeAddress
      */
     private $trusteeAddress;
-
     
     /**
      * @var float $vat
@@ -78,73 +77,135 @@ abstract class CommercialPart implements CommercialPartInterface
 
     /**
      * Set trusteeName
-     *
+     * @deprecated Use getCustomerName($name)
      * @param string $trusteeName
      * @return self
      */
     public function setTrusteeName($trusteeName)
     {
-        $this->trusteeName = $trusteeName;
-    
-        return $this;
+        return $this->setCustomerName($trusteeName);
     }
 
     /**
      * Get trusteeName
-     *
+     * @deprecated Use getCustomerName()
      * @return string 
      */
     public function getTrusteeName()
     {
-        return $this->trusteeName;
+        return $this->getCustomerName();
     }
 
     /**
-     * Set trusteeAddress
+     * Set customerName
      *
+     * @param string $name
+     * @return self
+     */
+    public function setCustomerName($name)
+    {
+        $this->trusteeName = $name;
+    
+        return $this;
+    }
+    
+    /**
+     * Get customerName
+     *
+     * @return string
+     */
+    public function getCustomerName()
+    {
+        return $this->trusteeName;
+    }
+    
+    /**
+     * Set trusteeAddress
+     * @deprecated Use setCustomerAddress($address)
      * @param string $trusteeAddress
      * @return self
      */
     public function setTrusteeAddress($trusteeAddress)
     {
-        $this->trusteeAddress = $trusteeAddress;
-    
-        return $this;
+        return $this->setCustomerAddress($trusteeAddress);
     }
 
     /**
      * Get trusteeAddress
-     *
+     * @deprecated Use getCustomerAddress()
      * @return string 
      */
     public function getTrusteeAddress()
+    {
+        return $this->getCustomerAddress();
+    }
+    
+    /**
+     * Set customerAddress
+     *
+     * @param string $customerAddress
+     * @return self
+     */
+    public function setCustomerAddress($address)
+    {
+        $this->trusteeAddress = $address;
+    
+        return $this;
+    }
+    
+    /**
+     * Get customerAddress
+     *
+     * @return string
+     */
+    public function getCustomerAddress()
     {
         return $this->trusteeAddress;
     }
 
     /**
      * Set trustee
-     *
+     * @deprecated Use setCustomer($customer)
      * @param CustomerInterface $trustee
      * @return self
      */
     public function setTrustee(CustomerInterface $trustee = null)
     {
-        $this->trustee = $trustee;
-    
-        return $this;
+        return $this->setCustomer($tructee);
     }
 
     /**
      * Get trustee
-     *
+     * @deprecated Use getCustomer()
      * @return CustomerInterface 
      */
     public function getTrustee()
     {
+        return $this->getCustomer();
+    }
+    
+    /**
+     * Get customer
+     *
+     * @return CustomerInterface
+     */
+    public function getCustomer()
+    {
         return $this->trustee;
     }
     
+    /**
+     * Set customer
+     *
+     * @param CustomerInterface|null $customer
+     * @return self
+     */
+    public function setCustomer(CustomerInterface $customer = null)
+    {
+        $this->trustee = $customer;
+        
+        return $this;
+    }
     
     /**
      * Set vat
@@ -171,7 +232,7 @@ abstract class CommercialPart implements CommercialPartInterface
     
     /**
      * Set vatTransmitter
-     *
+     * @deprecated Must fond another method
      * @param float $vatTransmitter
      * @return self
      */
@@ -184,7 +245,7 @@ abstract class CommercialPart implements CommercialPartInterface
     
     /**
      * Get vatTransmitter
-     *
+     * @deprecated Must fond another method
      * @return float
      */
     public function getVatTransmitter()
