@@ -200,7 +200,7 @@ abstract class CommercialPart implements CommercialPartInterface
      */
     public function setTrustee(CustomerInterface $trustee = null)
     {
-        return $this->setCustomer($tructee);
+        return $this->setCustomer($trustee);
     }
 
     /**
