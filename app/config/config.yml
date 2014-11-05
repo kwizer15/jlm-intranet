@@ -84,7 +84,7 @@ doctrine:
             JLM\BillBundle\Model\BillableContactInterface: JLM\ModelBundle\Entity\Trustee
             
             JLM\ProductBundle\Model\ProductInterface: JLM\ProductBundle\Entity\Product
-            JLM\ProductBundle\Model\SupplierInterface: JLM\ModelBundle\Entity\Supplier
+            JLM\ProductBundle\Model\SupplierInterface: JLM\ProductBundle\Entity\Supplier
             JLM\ProductBundle\Model\ProductCategoryInterface: JLM\ProductBundle\Entity\ProductCategory
             JLM\ProductBundle\Model\ProductPriceInterface: JLM\ProductBundle\Entity\ProductPrice
             

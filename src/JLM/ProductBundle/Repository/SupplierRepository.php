@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\ProductBundle\Entity;
+namespace JLM\ProductBundle\Repository;
 
 use JLM\DefaultBundle\Entity\SearchRepository;
 

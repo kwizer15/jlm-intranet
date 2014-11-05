@@ -82,3 +82,39 @@ jlm_product_product_delete:
     path:   /product/{id}/delete
     defaults:  { _controller: "JLMProductBundle:Product:delete" }
     methods: [POST]
+    
+
+# Supplier
+supplier:
+    path: /supplier
+    defaults: { _controller: "JLMProductBundle:Supplier:index" }
+    methods: [GET]
+supplier_page:
+    path: /supplier/page/{page}
+    defaults: { _controller: "JLMProductBundle:Supplier:index" }
+    methods: [GET]
+supplier_show:
+    path: /supplier/{id}/show
+    defaults: { _controller: "JLMProductBundle:Supplier:show" }
+    methods: [GET]
+supplier_new:
+    path: /supplier/new
+    defaults: { _controller: "JLMProductBundle:Supplier:new" }
+    methods: [GET]
+supplier_create:
+    path: /supplier/create
+    defaults: { _controller: "JLMProductBundle:Supplier:create" }
+    methods: [POST]
+supplier_edit:
+    path: /supplier/{id}/edit
+    defaults: { _controller: "JLMProductBundle:Supplier:edit" }
+    methods: [GET]
+supplier_update:
+    path: /supplier/{id}/update
+    defaults: { _controller: "JLMProductBundle:Supplier:update" }
+    methods: [POST]
+supplier_delete:
+    path: /supplier/{id}/delete
+    defaults: { _controller: "JLMProductBundle:Supplier:delete" }
+    methods: [POST]
+

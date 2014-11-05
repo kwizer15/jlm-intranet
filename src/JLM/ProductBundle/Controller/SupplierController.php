@@ -12,8 +12,6 @@
 namespace JLM\ProductBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ProductBundle\Entity\Supplier;
@@ -23,15 +21,12 @@ use JLM\ProductBundle\Form\Type\SupplierType;
  * Supplier controller.
  *
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- * @Route("/supplier")
  */
 class SupplierController extends Controller
 {
     /**
      * Lists all Supplier entities.
      *
-     * @Route("/", name="supplier")
-     * @Route("/page/{page}", name="supplier_page")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -65,7 +60,6 @@ class SupplierController extends Controller
     /**
      * Finds and displays a Supplier entity.
      *
-     * @Route("/{id}/show", name="supplier_show")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -86,7 +80,6 @@ class SupplierController extends Controller
     /**
      * Displays a form to create a new Supplier entity.
      *
-     * @Route("/new", name="supplier_new")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -104,8 +97,6 @@ class SupplierController extends Controller
     /**
      * Creates a new Supplier entity.
      *
-     * @Route("/create", name="supplier_create")
-     * @Method("post")
      * @Template("JLMProductBundle:Supplier:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -136,7 +127,6 @@ class SupplierController extends Controller
     /**
      * Displays a form to edit an existing Supplier entity.
      *
-     * @Route("/{id}/edit", name="supplier_edit")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -157,8 +147,6 @@ class SupplierController extends Controller
     /**
      * Edits an existing Supplier entity.
      *
-     * @Route("/{id}/update", name="supplier_update")
-     * @Method("post")
      * @Template("JLMProductBundle:Supplier:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -193,8 +181,6 @@ class SupplierController extends Controller
     /**
      * Deletes a Supplier entity.
      *
-     * @Route("/{id}/delete", name="supplier_delete")
-     * @Method("post")
      * @Secure(roles="ROLE_USER")
      */
     public function deleteAction($id)

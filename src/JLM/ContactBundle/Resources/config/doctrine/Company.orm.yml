@@ -7,7 +7,7 @@ JLM\ContactBundle\Entity\Company:
     type: string
   discriminatorMap:
     trustee: JLM\ModelBundle\Entity\Trustee
-    supplier: JLM\ModelBundle\Entity\Supplier
+    supplier: JLM\ProductBundle\Entity\Supplier
     company: Company
   
     

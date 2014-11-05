@@ -41,7 +41,7 @@ class Product implements ProductInterface
     
     /**
      * Fournisseur principal
-     * @var Supplier $supplier
+     * @var SupplierInterface $supplier
      */
     private $supplier;
     
@@ -423,7 +423,8 @@ class Product implements ProductInterface
     /**
      * Set supplier
      *
-     * @param JLM\ModelBundle\Entity\Supplier $supplier
+     * @param SupplierInterface $supplier
+     * @return self
      */
     public function setSupplier(SupplierInterface $supplier)
     {
@@ -435,7 +436,7 @@ class Product implements ProductInterface
     /**
      * Get supplier
      *
-     * @return JLM\ModelBundle\Entity\Supplier 
+     * @return SupplierInterface 
      */
     public function getSupplier()
     {
@@ -445,7 +446,7 @@ class Product implements ProductInterface
     /**
      * Set category
      *
-     * @param JLM\ModelBundle\Entity\ProductCategory $category
+     * @param ProductCategoryInterface $category
      */
     public function setCategory(ProductCategoryInterface $category)
     {
