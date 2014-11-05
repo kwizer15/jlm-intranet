@@ -2,6 +2,7 @@
 namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JLM\CommerceBundle\Entity\CommercialPartLineProduct;
 
 /**
  * JLM\OfficeBundle\Entity\QuoteLine
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="quote_lines")
  * @ORM\Entity
  */
-class QuoteLine extends DocumentLine
+class QuoteLine extends CommercialPartLineProduct
 {
 	/**
 	 * @var integer $id

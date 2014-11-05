@@ -1,0 +1,37 @@
+JLM\CommerceBundle\Entity\CommercialPartLineProduct:
+  type: mappedSuperclass
+  fields:
+    position:
+      type: smallint
+      nullable: true
+    reference:
+      nullable: true
+    designation: ~
+    description:
+      type: text
+      nullable: true
+    showDescription:
+      column: show_description
+      type: boolean
+      nullable: true
+    isTransmitter:
+      column: is_transmitter
+      type: boolean
+      nullable: true
+    quantity:
+      type: integer
+    unitPrice:
+      column: unit_price
+      type: decimal
+      scale: 2
+    discount:
+      type: decimal
+      scale: 7
+    vat:
+      type: decimal
+      precision: 3
+      scale: 3
+  manyToOne:
+    product:
+      targetEntity: JLM\ProductBundle\Model\ProductInterface
+      

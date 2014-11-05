@@ -3,6 +3,8 @@ namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JLM\BillBundle\Model\BillLineInterface;
+use JLM\CommerceBundle\Entity\CommercialPartLineProduct;
+use JLM\BillBundle\Model\BillInterface;
 
 /**
  * JLM\OfficeBundle\Entity\BillLine
@@ -10,7 +12,7 @@ use JLM\BillBundle\Model\BillLineInterface;
  * @ORM\Table(name="bill_lines")
  * @ORM\Entity
  */
-class BillLine extends DocumentLine implements BillLineInterface
+class BillLine extends CommercialPartLineProduct implements BillLineInterface
 {
 	/**
 	 * @var integer $id
@@ -24,11 +26,9 @@ class BillLine extends DocumentLine implements BillLineInterface
 	/**
 	 * @var Bill $bill
 	 * 
-	 * @ORM\ManyToOne(targetEntity="Bill",inversedBy="lines")
+	 * @ORM\ManyToOne(targetEntity="JLM\BillBundle\Model\BillInterface",inversedBy="lines")
 	 */
 	private $bill;
-	
-	
 
     /**
      * Get id
@@ -43,10 +43,10 @@ class BillLine extends DocumentLine implements BillLineInterface
     /**
      * Set bill
      *
-     * @param JLM\OfficeBundle\Entity\Bill $variant
-     * @return QuoteLine
+     * @param BillInterface $variant
+     * @return self
      */
-    public function setBill(\JLM\OfficeBundle\Entity\Bill $bill = null)
+    public function setBill(BillInterface $bill = null)
     {
         $this->bill = $bill;
     
@@ -56,7 +56,7 @@ class BillLine extends DocumentLine implements BillLineInterface
     /**
      * Get bill
      *
-     * @return JLM\OfficeBundle\Entity\Bill
+     * @return BillInterface
      */
     public function getBill()
     {
@@ -80,7 +80,7 @@ class BillLine extends DocumentLine implements BillLineInterface
     	$this->setUnitPrice($line->getUnitPrice());
     	$this->setDiscount($line->getDiscount());
     	$this->setVat($line->getVat());
-    	return $this;
     	
+    	return $this;
     }
 }

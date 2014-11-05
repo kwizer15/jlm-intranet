@@ -77,16 +77,19 @@ doctrine:
             JLM\ContactBundle\Model\CorporationInterface: JLM\ContactBundle\Entity\Company
             JLM\ContactBundle\Model\CompanyInterface: JLM\ContactBundle\Entity\Company
             
-            JLM\CondominiumBundle\Model\ManagerInterface: JLM\ModelBundle\Entity\Trustee
-            JLM\InstallationBundle\Model\BayInterface: JLM\ModelBundle\Entity\Site
+            JLM\CondominiumBundle\Model\ManagerInterface: JLM\ModelBundle\Entity\Trustee            
             JLM\CondominiumBundle\Model\AdministratorInterface: JLM\ModelBundle\Entity\Site
             JLM\CondominiumBundle\Model\AdministratorMemberInterface: JLM\ModelBundle\Entity\SiteContact
+            
             JLM\BillBundle\Model\BillableContactInterface: JLM\ModelBundle\Entity\Trustee
+            JLM\BillBundle\Model\BillInterface: JLM\OfficeBundle\Entity\Bill
             
             JLM\ProductBundle\Model\ProductInterface: JLM\ProductBundle\Entity\Product
             JLM\ProductBundle\Model\SupplierInterface: JLM\ProductBundle\Entity\Supplier
             JLM\ProductBundle\Model\ProductCategoryInterface: JLM\ProductBundle\Entity\ProductCategory
             JLM\ProductBundle\Model\ProductPriceInterface: JLM\ProductBundle\Entity\ProductPrice
+            
+            JLM\InstallationBundle\Model\BayInterface: JLM\ModelBundle\Entity\Site
             
             JLM\ContractBundle\Model\ContractInterface: JLM\ContractBundle\Entity\Contract
             
