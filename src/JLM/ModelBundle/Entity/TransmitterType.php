@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="transmitter_types")
  * @ORM\Entity
  */
-class TransmitterType extends StringModel
+class TransmitterType
 {
     /**
      * @var integer $id
@@ -22,12 +22,51 @@ class TransmitterType extends StringModel
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="name")
+     * @Assert\NotNull
+     * @Assert\Type(type="string")
+     * @Assert\NotBlank
+     */
+    private $name = '';
+    
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Set text
+     *
+     * @param string $text
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+    
+    /**
+     * Get text
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }
