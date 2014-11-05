@@ -3,6 +3,7 @@ namespace JLM\BillBundle\Model;
 
 use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\Trustee;
+use JLM\CommerceBundle\Model\CustomerInterface;
 
 interface BillInterface
 {
@@ -10,7 +11,7 @@ interface BillInterface
     
     public function setSite($site);
     
-    public function setTrustee(Trustee $trustee = null);
+    public function setTrustee(CustomerInterface $customer = null);
     public function setTrusteeName($name);
     public function setTrusteeAddress($address);
     
