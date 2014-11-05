@@ -90,6 +90,8 @@ doctrine:
             
             JLM\ContractBundle\Model\ContractInterface: JLM\ContractBundle\Entity\Contract
             
+            JLM\CommerceBundle\Model\CustomerInterface: JLM\ModelBundle\Entity\Trustee
+            
             JLM\TransmitterBundle\Model\AttributionInterface: JLM\TransmitterBundle\Entity\Attribution
             JLM\TransmitterBundle\Model\TransmitterInterface: JLM\TransmitterBundle\Entity\Transmitter
 

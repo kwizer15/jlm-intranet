@@ -12,7 +12,7 @@
 namespace JLM\CommerceBundle\Entity;
 
 use JLM\CommerceBundle\Model\CommercialPartInterface;
-use JLM\ModelBundle\Entity\Trustee as CustomerInterface;
+use JLM\CommerceBundle\Model\CustomerInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -232,7 +232,7 @@ abstract class CommercialPart implements CommercialPartInterface
     
     /**
      * Set vatTransmitter
-     * @deprecated Must fond another method
+     * @deprecated Must found another method
      * @param float $vatTransmitter
      * @return self
      */
@@ -245,7 +245,7 @@ abstract class CommercialPart implements CommercialPartInterface
     
     /**
      * Get vatTransmitter
-     * @deprecated Must fond another method
+     * @deprecated Must found another method
      * @return float
      */
     public function getVatTransmitter()

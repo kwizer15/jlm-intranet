@@ -10,6 +10,7 @@ use JLM\ContactBundle\Model\AddressInterface;
 use JLM\CondominiumBundle\Model\ManagerInterface;
 use JLM\BillBundle\Model\BillableContactInterface;
 use JLM\ContractBundle\Model\ContractInterface;
+use JLM\CommerceBundle\Model\CustomerInterface;
 
 /**
  * JLM\ModelBundle\Entity\Trustee
@@ -17,7 +18,7 @@ use JLM\ContractBundle\Model\ContractInterface;
  * @ORM\Table(name="trustees")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\TrusteeRepository")
  */
-class Trustee extends Company implements ManagerInterface, BillableContactInterface
+class Trustee extends Company implements ManagerInterface, BillableContactInterface, CustomerInterface
 {
 
 
