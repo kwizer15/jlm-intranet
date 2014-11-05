@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the JLMContactBundle package.
+ * This file is part of the JLMProductBundle package.
  *
  * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *

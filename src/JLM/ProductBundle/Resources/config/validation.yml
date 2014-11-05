@@ -12,3 +12,8 @@ JLM\ProductBundle\Entity\ProductCategory:
     - NotNull: ~
     - NotBlank: ~
     - Type: { type: string }
+    
+JLM\ProductBundle\Entity\Supplier:
+  website:
+    - Url: ~
+    

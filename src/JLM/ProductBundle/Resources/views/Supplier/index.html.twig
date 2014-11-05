@@ -1,0 +1,41 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+{% block content %}
+<h1>Liste des fournisseurs</h1>
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Téléphone</th>
+            <th>Fax</th>
+            <th>E-mail</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('supplier_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+            <td>{{ entity.phone }}</td>
+            <td>{{ entity.fax }}</td>
+            <td><a href="mailto:{{ entity.email }}">{{ entity.email }}</a></td>
+            <td>
+                <a href="{{ path('supplier_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
+                <a href="{{ path('supplier_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i></a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="pagination pagination-centered">
+    <ul>
+        <li{% if page == 1 %} class="disabled"{% endif %}><a href="{{ path('supplier_page',{ 'page' : page-1 }) }}">«</a></li>
+		{% for p in range(1,nbPages) %}
+		<li{% if p == page %} class="active"{% endif %}><a href="{{ path('supplier_page',{ 'page' : p }) }}">{{ p }}</a></li>
+		{% endfor %}
+		<li{% if page == nbPages %} class="disabled"{% endif %}><a href="{{ path('supplier_page',{ 'page' : page+1 }) }}">»</a></li>
+	</ul>
+</div>
+<div class="form-actions">
+<a href="{{ path('supplier_new') }}" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Créer un nouveau fournisseur</a>
+</div>
+{% endblock %}

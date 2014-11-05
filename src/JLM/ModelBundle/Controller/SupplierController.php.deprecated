@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the JLMProductBundle package.
+*
+* (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
+*/
+
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -7,12 +16,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\ModelBundle\Entity\Supplier;
-use JLM\ModelBundle\Form\Type\SupplierType;
+use JLM\ProductBundle\Entity\Supplier;
+use JLM\ProductBundle\Form\Type\SupplierType;
 
 /**
  * Supplier controller.
  *
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  * @Route("/supplier")
  */
 class SupplierController extends Controller
@@ -29,7 +39,7 @@ class SupplierController extends Controller
     {
     	$limit = 15;
         $em = $this->getDoctrine()->getManager();
-        $nb = $em->getRepository('JLMModelBundle:Supplier')->getTotal();
+        $nb = $em->getRepository('JLMProductBundle:Supplier')->getTotal();
         $nbPages = ceil($nb/$limit);
         $nbPages = ($nbPages < 1) ? 1 : $nbPages;
         $offset = ($page-1) * $limit;
@@ -38,7 +48,7 @@ class SupplierController extends Controller
         	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
         }
 
-        $entities = $em->getRepository('JLMModelBundle:Supplier')->findBy(
+        $entities = $em->getRepository('JLMProductBundle:Supplier')->findBy(
         		array(),
         		array('name' => 'asc'),
         		$limit,
@@ -83,7 +93,7 @@ class SupplierController extends Controller
     public function newAction()
     {
         $entity = new Supplier();
-        $form   = $this->createForm(new SupplierType(), $entity);
+        $form   = $this->createNewForm($entity);
 
         return array(
             'entity' => $entity,
@@ -103,10 +113,11 @@ class SupplierController extends Controller
     {
         $entity  = new Supplier();
         $request = $this->getRequest();
-        $form    = $this->createForm(new SupplierType(), $entity);
+        $form    = $this->createNewForm($entity);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity->getAddress());
             $em->persist($entity);
@@ -131,15 +142,9 @@ class SupplierController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $entity = $entity = $this->getEntity($id);
 
-        $entity = $em->getRepository('JLMModelBundle:Supplier')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Supplier entity.');
-        }
-
-        $editForm = $this->createForm(new SupplierType(), $entity);
+        $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -159,22 +164,18 @@ class SupplierController extends Controller
      */
     public function updateAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $entity = $this->getEntity($id);
 
-        $entity = $em->getRepository('JLMModelBundle:Supplier')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Supplier entity.');
-        }
-
-        $editForm   = $this->createForm(new SupplierType(), $entity);
+        $editForm   = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
 
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
         	$em->persist($entity->getAddress());
             $em->persist($entity);
             $em->flush();
@@ -205,11 +206,7 @@ class SupplierController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('JLMModelBundle:Supplier')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Supplier entity.');
-            }
+            $entity = $this->getEntity($id);
 
             $em->remove($entity);
             $em->flush();
@@ -218,11 +215,53 @@ class SupplierController extends Controller
         return $this->redirect($this->generateUrl('supplier'));
     }
 
+    /**
+     * Create a delete form
+     * @param integer $id
+     * @return \Symfony\Component\Form\Form
+     */
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+    
+    /**
+     * Get the entity from id
+     * @param integer $id
+     * @return Supplier
+     */
+    private function getEntity($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('JLMProductBundle:Supplier')->find($id);
+        
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Supplier entity.');
+        }
+        
+        return $entity;
+    }
+    
+    /**
+     * Create a new form
+     * @param Supplier $entity
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createNewForm(Supplier $entity)
+    {
+        return $this->createForm(new SupplierType(), $entity);
+    }
+    
+    /**
+     * Create an edit form
+     * @param Supplier $entity
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createEditForm(Supplier $entity)
+    {
+        return $this->createForm(new SupplierType(), $entity);
     }
 }
