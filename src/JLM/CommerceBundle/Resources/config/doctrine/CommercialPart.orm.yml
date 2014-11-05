@@ -16,6 +16,7 @@ JLM\CommerceBundle\Entity\CommercialPart:
       precision: 3
       scale: 3
     vatTransmitter:
+      column: vat_transmitter
       type: decimal
       precision: 3
       scale: 3
