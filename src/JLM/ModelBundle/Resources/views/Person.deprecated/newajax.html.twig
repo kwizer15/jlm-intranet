@@ -1,7 +1,0 @@
-{% set id = 'modalNewPerson' %}
-{% set action = path('person_create_ajax') %}
-{% set title = 'Nouvelle personne' %}
-{% extends 'JLMDefaultBundle:Helpers:modalform.html.twig' %}
-{% block body %}
-	{% include 'JLMModelBundle:Person:createajax.html.twig' %}
-{% endblock %}
