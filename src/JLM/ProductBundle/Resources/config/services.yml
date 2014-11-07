@@ -1,1 +1,6 @@
-
+services:
+    jlm_product.type.product_hidden:
+        class: JLM\ProductBundle\Form\Type\ProductHiddenType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: jlm_product_product_hidden }

@@ -2,33 +2,29 @@
 
 namespace JLM\OfficeBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\DefaultBundle\Controller\PaginableController;
-use JLM\ModelBundle\Entity\Mail;
-use JLM\ModelBundle\Form\Type\MailType;
-use JLM\OfficeBundle\Entity\Bill;
-use JLM\OfficeBundle\Entity\QuoteVariant;
-use JLM\OfficeBundle\Form\Type\BillType;
-use JLM\OfficeBundle\Entity\BillLine;
-use JLM\ModelBundle\Entity\Door;
-use JLM\DailyBundle\Entity\Intervention;
-use JLM\DailyBundle\Form\Type\ExternalBillType;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
+use JLM\BillBundle\Builder\BillFactory;
+use JLM\CommerceBundle\Entity\Bill;
+use JLM\DailyBundle\Entity\Intervention;
+use JLM\DailyBundle\Builder\WorkBillBuilder;
+use JLM\DailyBundle\Builder\InterventionBillBuilder;
+use JLM\DailyBundle\Entity\Work;
+use JLM\DefaultBundle\Controller\PaginableController;
 use JLM\DefaultBundle\Entity\Search;
 use JLM\DefaultBundle\Form\Type\SearchType;
-use JLM\BillBundle\Builder\BillFactory;
+use JLM\OfficeBundle\Entity\BillLine;
+use JLM\OfficeBundle\Form\Type\BillType;
+use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\OfficeBundle\Builder\VariantBillBuilder;
-use JLM\DailyBundle\Entity\Work;
-use JLM\DailyBundle\Builder\InterventionBillBuilder;
-use JLM\DailyBundle\Builder\WorkBillBuilder;
-
+use JLM\ModelBundle\Entity\Door;
+use JLM\ModelBundle\Builder\DoorBillBuilder;
 
 
 /**
@@ -120,8 +116,8 @@ class BillController extends PaginableController
 		$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
 		$entity->setVat($vat);
 		$entity = $this->finishNewBill($entity);
-        $entity->addLine(new BillLine);
-        $form   = $this->createForm(new BillType, $entity);
+        $entity->addLine(new BillLine());
+        $form   = $this->createForm(new BillType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -135,16 +131,12 @@ class BillController extends PaginableController
      * @Route("/new/door/{id}", name="bill_new_door")
      * @Template("JLMOfficeBundle:Bill:new.html.twig")
      * @Secure(roles="ROLE_USER")
-     * @deprecated
+     * @deprecated No used
      */
     public function newdoorAction(Door $door)
     {
-    	$entity = new Bill();
-    	$entity->setCreation(new \DateTime);
-    	$entity->populateFromDoor($door);
-    	$entity = $this->finishNewBill($entity);
-    	$entity->addLine(new BillLine);
-    	$form   = $this->createForm(new BillType, $entity);
+    	$entity = BillFactory::create(new DoorBillBuilder($door));
+    	$form   = $this->createForm(new BillType(), $entity);
     
     	return array(
     			'entity' => $entity,
@@ -163,7 +155,7 @@ class BillController extends PaginableController
     public function newquoteAction(QuoteVariant $quote)
     {
         $entity = BillFactory::create(new VariantBillBuilder($quote));
-    	$form   = $this->createForm(new BillType, $entity);
+    	$form   = $this->createForm(new BillType(), $entity);
     
     	return array(
     			'entity' => $entity,
@@ -190,7 +182,7 @@ class BillController extends PaginableController
         $builder = ($builder === null) ? new InterventionBillBuilder($interv, $options) : $builder;
         $entity = BillFactory::create($builder);
 
-    	$form   = $this->createForm(new BillType, $entity);
+    	$form   = $this->createForm(new BillType(), $entity);
     
     	return array(
     			'entity' => $entity,
@@ -552,7 +544,7 @@ class BillController extends PaginableController
      */
     public function searchAction(Request $request)
     {
-    	$entity = new Search;
+    	$entity = new Search();
     	$form = $this->createForm(new SearchType(), $entity);
     	$form->handleRequest($request);
     	if ($form->isValid())

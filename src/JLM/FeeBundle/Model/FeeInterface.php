@@ -1,8 +1,8 @@
 <?php
 namespace JLM\FeeBundle\Model;
 
-use JLM\ModelBundle\Model\ContractInterface;
-use JLM\BillBundle\Model\BillInterface;
+use JLM\ContractBundle\Model\ContractInterface;
+use JLM\CommerceBundle\Model\BillInterface;
 
 interface FeeInterface
 {	

@@ -12,7 +12,7 @@ class BillLineType extends AbstractType
     {
         $builder
         	->add('position','hidden')
-        	->add('product','product_hidden',array('required'=>false))
+        	->add('product','jlm_product_product_hidden',array('required'=>false))
         	->add('reference',null,array('required'=>false,'attr'=>array('class'=>'input-mini')))
         	->add('designation',null,array('attr'=>array('class'=>'input-xlarge')))
         	->add('description',null,array('required'=>false,'attr'=>array('class'=>'input-xlarge')))

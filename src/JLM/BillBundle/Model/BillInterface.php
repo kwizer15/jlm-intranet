@@ -1,18 +1,9 @@
 <?php
 namespace JLM\BillBundle\Model;
 
-use JLM\ModelBundle\Entity\Site;
-use JLM\ModelBundle\Entity\Trustee;
-use JLM\CommerceBundle\Model\CustomerInterface;
+use JLM\CommerceBundle\Model\BillInterface as BaseBillInterface;
 
-interface BillInterface
+interface BillInterface extends BaseBillInterface
 {
-    public function setSiteObject(Site $siteObject = null);
-    
-    public function setSite($site);
-    
-    public function setTrustee(CustomerInterface $customer = null);
-    public function setTrusteeName($name);
-    public function setTrusteeAddress($address);
-    
+
 }
