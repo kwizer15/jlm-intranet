@@ -1,0 +1,14 @@
+JLM\CommerceBundle\Entity\Bill:
+  type: entity
+  table: bill_lines
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  manyToOne:
+    bill:
+      targetEntity: JLM\CommerceBundle\Entity\Bill
+      inversedBy: lines
+
+    

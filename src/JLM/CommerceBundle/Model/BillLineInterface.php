@@ -9,14 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\BillBundle\Model;
+namespace JLM\CommerceBundle\Model;
 
-use JLM\CommerceBundle\Model\BillLineInterface as BaseBillLineInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 
-interface BillLineInterface extends BaseBillLineInterface
+interface BillLineInterface
 {
-
+    public function getQuantity();
+    
+    public function getUnitPrice();
 } 
