@@ -36,7 +36,7 @@ class BillLineFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function assertPreConditions()
     {
-        $this->builder->expects($this->once())->method('getLine')->will($this->returnValue($this->getMock('JLM\BillBundle\Model\BillLineInterface')));
+        $this->builder->expects($this->once())->method('getLine')->will($this->returnValue($this->getMock('JLM\CommerceBundle\Model\BillLineInterface')));
     }
     
     /**
@@ -44,7 +44,7 @@ class BillLineFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function assertPostConditions()
     {
-        $this->assertInstanceOf('JLM\BillBundle\Model\BillLineInterface', $this->line);
+        $this->assertInstanceOf('JLM\CommerceBundle\Model\BillLineInterface', $this->line);
     }
 
     /**

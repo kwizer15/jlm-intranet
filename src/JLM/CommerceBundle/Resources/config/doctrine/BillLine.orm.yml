@@ -1,4 +1,4 @@
-JLM\CommerceBundle\Entity\Bill:
+JLM\CommerceBundle\Entity\BillLine:
   type: entity
   table: bill_lines
   id:

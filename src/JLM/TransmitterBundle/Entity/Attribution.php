@@ -3,10 +3,11 @@
 namespace JLM\TransmitterBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JLM\OfficeBundle\Entity\Bill;
-use JLM\OfficeBundle\Entity\BillLine;
+use JLM\CommerceBundle\Model\BillInterface;
+use JLM\CommerceBundle\Model\BillLineInterface;
 use JLM\ProductBundle\Model\ProductInterface;
 use JLM\TransmitterBundle\Model\AttributionInterface;
+use JLM\TransmitterBundle\Model\TransmitterInterface;
 /**
  * Attribution
  *
@@ -63,7 +64,7 @@ class Attribution implements AttributionInterface
     /**
      * @var Bill
      *
-     * @ORM\ManyToOne(targetEntity="\JLM\OfficeBundle\Entity\Bill")
+     * @ORM\ManyToOne(targetEntity="\JLM\CommerceBundle\Model\BillInterface")
      */
     private $bill;
     
@@ -159,7 +160,7 @@ class Attribution implements AttributionInterface
      * @param \JLM\TransmitterBundle\Entity\Transmitter $transmitters
      * @return Attribution
      */
-    public function addTransmitter(\JLM\TransmitterBundle\Entity\Transmitter $transmitters)
+    public function addTransmitter(TransmitterInterface $transmitters)
     {
         $this->transmitters[] = $transmitters;
     
@@ -169,9 +170,9 @@ class Attribution implements AttributionInterface
     /**
      * Remove transmitters
      *
-     * @param \JLM\TransmitterBundle\Entity\Transmitter $transmitters
+     * @param TransmitterInterface $transmitters
      */
-    public function removeTransmitter(\JLM\TransmitterBundle\Entity\Transmitter $transmitters)
+    public function removeTransmitter(TransmitterInterface $transmitters)
     {
         $this->transmitters->removeElement($transmitters);
     }
@@ -189,10 +190,10 @@ class Attribution implements AttributionInterface
     /**
      * Set ask
      *
-     * @param \JLM\OTransmitterBundle\Entity\Ask $ask
+     * @param Ask $ask
      * @return TransmitterAttribution
      */
-    public function setAsk(\JLM\TransmitterBundle\Entity\Ask $ask = null)
+    public function setAsk(Ask $ask = null)
     {
         $this->ask = $ask;
     
@@ -202,7 +203,7 @@ class Attribution implements AttributionInterface
     /**
      * Get ask
      *
-     * @return \JLM\OfficeBundle\Entity\Ask
+     * @return Ask
      */
     public function getAsk()
     {
@@ -212,10 +213,10 @@ class Attribution implements AttributionInterface
     /**
      * Set bill
      *
-     * @param \JLM\OfficeBundle\Entity\Bill $bill
+     * @param BillInterface $bill
      * @return Attribution
      */
-    public function setBill(\JLM\OfficeBundle\Entity\Bill $bill = null)
+    public function setBill(BillInterface $bill = null)
     {
         $this->bill = $bill;
     
@@ -225,7 +226,7 @@ class Attribution implements AttributionInterface
     /**
      * Get bill
      *
-     * @return \JLM\OfficeBundle\Entity\Bill 
+     * @return BillInterface 
      */
     public function getBill()
     {

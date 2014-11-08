@@ -2,7 +2,7 @@
 namespace JLM\OfficeBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use JLM\OfficeBundle\Entity\Bill;
+use JLM\CommerceBundle\Entity\Bill;
 
 class BillNumberGenerator
 {
@@ -21,7 +21,7 @@ class BillNumberGenerator
 			if ($entity->getNumber() === null)
 			{
 				$number = $entity->getCreation()->format('ym');
-				$n = ($em->getRepository('JLMOfficeBundle:Bill')->getLastNumber() + 1);
+				$n = ($em->getRepository('JLMCommerceBundle:Bill')->getLastNumber() + 1);
 				for ($i = strlen($n); $i < 4 ; $i++)
 					$number.= '0';
 				$number.= $n;

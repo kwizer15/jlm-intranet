@@ -5,8 +5,8 @@ namespace JLM\DailyBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JLM\ContractBundle\Model\ContractInterface;
-use JLM\OfficeBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\AskQuote;
+use JLM\CommerceBundle\Model\BillInterface;
 
 /**
  * Plannification d'intervention
@@ -113,8 +113,8 @@ abstract class Intervention extends Shifting
     
     /**
      * Facture
-     * @var JLM\OfficeBundle\Entity\Bill
-     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Bill", inversedBy="intervention")
+     * @var BillInterface
+     * @ORM\OneToOne(targetEntity="JLM\CommerceBundle\Entity\Bill", inversedBy="intervention")
      * @Assert\Valid
      */
     private $bill;
@@ -541,10 +541,10 @@ abstract class Intervention extends Shifting
     /**
      * Set bill
      *
-     * @param \JLM\OfficeBundle\Entity\Bill $bill
+     * @param Bill $bill
      * @return Intervention
      */
-    public function setBill(\JLM\OfficeBundle\Entity\Bill $bill = null)
+    public function setBill(BillInterface $bill = null)
     {
         $this->bill = $bill;
     	
@@ -554,7 +554,7 @@ abstract class Intervention extends Shifting
     /**
      * Get bill
      *
-     * @return \JLM\OfficeBundle\Entity\Bill 
+     * @return Bill 
      */
     public function getBill()
     {

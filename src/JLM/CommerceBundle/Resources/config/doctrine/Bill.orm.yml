@@ -55,7 +55,7 @@ JLM\CommerceBundle\Entity\Bill:
       inversedBy: bills
   oneToMany:
     lines:
-      targetEntity: JLM\OfficeBundle\Entity\BillLine
+      targetEntity: JLM\CommerceBundle\Entity\BillLine
       mappedBy: bill
       orderBy: { position: ASC }
   oneToOne:

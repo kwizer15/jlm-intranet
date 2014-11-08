@@ -40,7 +40,7 @@ class BillBuilderAbstractTest extends \PHPUnit_Framework_TestCase
      */
     public function assertPostConditions()
     {
-        $this->assertInstanceOf('JLM\BillBundle\Model\BillInterface', $this->builder->getBill());
+        $this->assertInstanceOf('JLM\CommerceBundle\Model\BillInterface', $this->builder->getBill());
     }
     
     public function testBuildCreation()

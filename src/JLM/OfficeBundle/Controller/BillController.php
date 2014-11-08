@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use JLM\BillBundle\Builder\BillFactory;
 use JLM\CommerceBundle\Entity\Bill;
+use JLM\CommerceBundle\Entity\BillLine;
 use JLM\DailyBundle\Entity\Intervention;
 use JLM\DailyBundle\Builder\WorkBillBuilder;
 use JLM\DailyBundle\Builder\InterventionBillBuilder;
@@ -19,12 +20,12 @@ use JLM\DailyBundle\Entity\Work;
 use JLM\DefaultBundle\Controller\PaginableController;
 use JLM\DefaultBundle\Entity\Search;
 use JLM\DefaultBundle\Form\Type\SearchType;
-use JLM\OfficeBundle\Entity\BillLine;
 use JLM\OfficeBundle\Form\Type\BillType;
 use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\OfficeBundle\Builder\VariantBillBuilder;
 use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Builder\DoorBillBuilder;
+use JLM\DailyBundle\Form\Type\ExternalBillType;
 
 
 /**
@@ -42,7 +43,7 @@ class BillController extends PaginableController
 	 */
 	public function indexAction($page = 1)
 	{
-		return $this->pagination('JLMOfficeBundle:Bill','All',$page,10,'bill_page');
+		return $this->pagination('JLMCommerceBundle:Bill','All',$page,10,'bill_page');
 	}
 	
 	/**
@@ -53,7 +54,7 @@ class BillController extends PaginableController
 	 */
 	public function listinseizureAction($page = 1)
 	{
-		return $this->pagination('JLMOfficeBundle:Bill','InSeizure',$page,10,'bill_listinseizure_page');
+		return $this->pagination('JLMCommerceBundle:Bill','InSeizure',$page,10,'bill_listinseizure_page');
 	}
 	
 	/**
@@ -64,7 +65,7 @@ class BillController extends PaginableController
 	 */
 	public function listsendedAction($page = 1)
 	{
-		return $this->pagination('JLMOfficeBundle:Bill','Sended',$page,10,'bill_listsended_page');
+		return $this->pagination('JLMCommerceBundle:Bill','Sended',$page,10,'bill_listsended_page');
 	}
 	
 	/**
@@ -75,7 +76,7 @@ class BillController extends PaginableController
 	 */
 	public function listpayedAction($page = 1)
 	{
-		return $this->pagination('JLMOfficeBundle:Bill','Payed',$page,10,'bill_listpayed_page');
+		return $this->pagination('JLMCommerceBundle:Bill','Payed',$page,10,'bill_listpayed_page');
 	}
 	
 	/**
@@ -86,7 +87,7 @@ class BillController extends PaginableController
 	 */
 	public function listcanceledAction($page = 1)
 	{
-		return $this->pagination('JLMOfficeBundle:Bill','Canceled',$page,10,'bill_listcanceled_page');
+		return $this->pagination('JLMCommerceBundle:Bill','Canceled',$page,10,'bill_listcanceled_page');
 	}
     
     /**
@@ -461,11 +462,11 @@ class BillController extends PaginableController
     
     	return array('count'=>array(
     			'todo' => $em->getRepository('JLMDailyBundle:Intervention')->getCountToBilled(),
-    			'all' => $em->getRepository('JLMOfficeBundle:Bill')->getTotal(),
-    			'input' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(0),
-    			'send' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(1),
-    			'payed' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(2),
-    			'canceled' => $em->getRepository('JLMOfficeBundle:Bill')->getCount(-1),
+    			'all' => $em->getRepository('JLMCommerceBundle:Bill')->getTotal(),
+    			'input' => $em->getRepository('JLMCommerceBundle:Bill')->getCount(0),
+    			'send' => $em->getRepository('JLMCommerceBundle:Bill')->getCount(1),
+    			'payed' => $em->getRepository('JLMCommerceBundle:Bill')->getCount(2),
+    			'canceled' => $em->getRepository('JLMCommerceBundle:Bill')->getCount(-1),
     	));
     }
     
@@ -497,7 +498,7 @@ class BillController extends PaginableController
     public function toboostAction()
     {
     	$em = $this->getDoctrine()->getManager();
-    	$bills = $em->getRepository('JLMOfficeBundle:Bill')->getToBoost();
+    	$bills = $em->getRepository('JLMCommerceBundle:Bill')->getToBoost();
     	
     	return array('entities'=>$bills);
     }
@@ -552,7 +553,7 @@ class BillController extends PaginableController
     		$em = $this->getDoctrine()->getManager();
     		return array(
     				'layout'=>array('form_search_query'=>$entity),
-    				'bills' => $em->getRepository('JLMOfficeBundle:Bill')->search($entity),
+    				'bills' => $em->getRepository('JLMCommerceBundle:Bill')->search($entity),
     		);
     	}
     	return array('layout'=>array('form_search_query'=>$entity),);

@@ -8,8 +8,6 @@ use JLM\ModelBundle\Entity\VAT;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ProductBundle\Model\ProductInterface;
 
-use JLM\OfficeBundle\Entity\Bill;
-use JLM\OfficeBundle\Entity\BillLine;
 use JLM\FeeBundle\Model\FeesFollowerInterface;
 use JLM\ContractBundle\Model\ContractInterface;
 
@@ -350,9 +348,9 @@ class Fee
      * @param ProductInterface $product
      * @param FeesFollowerInterface $follower
      * @param string $number
-     * @return \JLM\OfficeBundle\Entity\Bill
+     * @return Bill
      * @deprecated
-     */
+     *
     public function getBill(ProductInterface $product, FeesFollowerInterface $follower, $number)
     {
       	$bill = new Bill;
@@ -430,5 +428,5 @@ class Fee
       	
       	return $bill;
     }
-    
+    */
 }

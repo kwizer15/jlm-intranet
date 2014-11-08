@@ -14,7 +14,7 @@ use JLM\DailyBundle\Entity\Shifting;
 use JLM\ModelBundle\Form\Type\DatepickerType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\Task;
-use JLM\OfficeBundle\Entity\Bill;
+use JLM\CommerceBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\TaskType;
 use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\DailyBundle\Form\Type\ExternalBillType;

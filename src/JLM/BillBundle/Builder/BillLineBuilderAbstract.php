@@ -11,7 +11,7 @@
 
 namespace JLM\BillBundle\Builder;
 
-use JLM\OfficeBundle\Entity\BillLine;
+use JLM\CommerceBundle\Entity\BillLine;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

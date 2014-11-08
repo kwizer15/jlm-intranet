@@ -51,7 +51,7 @@ class ProductBillLineBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function assertPostConditions()
     {
-        $this->assertInstanceOf('JLM\OfficeBundle\Entity\BillLine', $this->builder->getLine());
+        $this->assertInstanceOf('JLM\CommerceBundle\Model\BillLineInterface', $this->builder->getLine());
     }
     
     public function testBuildQuantity()

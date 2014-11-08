@@ -64,7 +64,7 @@ class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function assertPostConditions()
     {
-        $this->assertInstanceOf('JLM\OfficeBundle\Entity\Bill', $this->builder->getBill());
+        $this->assertInstanceOf('JLM\CommerceBundle\Model\BillInterface', $this->builder->getBill());
     }
     
     public function testBuildLines()

@@ -2,7 +2,7 @@
 namespace JLM\OfficeBundle\Pdf;
 
 use \JLM\DefaultBundle\Pdf\FPDFext;
-use \JLM\OfficeBundle\Entity\Bill;
+use \JLM\CommerceBundle\Model\BillInterface;
 
 class BillBoost extends FPDFext
 {
@@ -19,7 +19,7 @@ class BillBoost extends FPDFext
 		return $pdf->Output('','S');
 	}
 	
-	private function _init(Bill $entity)
+	private function _init(BillInterface $entity)
 	{
 		$this->police = 'Times';
 		$this->addPage('P');
@@ -45,7 +45,7 @@ class BillBoost extends FPDFext
 	}
 	
 	
-	private function _show(Bill $entity)
+	private function _show(BillInterface $entity)
 	{
 		$this->setFont($this->police,'',13);
 		$this->cell(0,5,'Madame, Monsieur,',0,1);

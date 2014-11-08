@@ -36,7 +36,7 @@ class BillFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function assertPreConditions()
     {
-        $this->builder->expects($this->once())->method('getBill')->will($this->returnValue($this->getMock('JLM\BillBundle\Model\BillInterface')));
+        $this->builder->expects($this->once())->method('getBill')->will($this->returnValue($this->getMock('JLM\CommerceBundle\Model\BillInterface')));
     }
     
     /**
@@ -44,7 +44,7 @@ class BillFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function assertPostConditions()
     {
-        $this->assertInstanceOf('JLM\BillBundle\Model\BillInterface', $this->bill);
+        $this->assertInstanceOf('JLM\CommerceBundle\Model\BillInterface', $this->bill);
     }
 
     /**

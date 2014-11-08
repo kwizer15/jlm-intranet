@@ -41,7 +41,7 @@ class BillType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
     	$resolver->setDefaults(array(
-    			'data_class' => 'JLM\OfficeBundle\Entity\Bill'
+    			'data_class' => 'JLM\CommerceBundle\Entity\Bill'
     	));
     }
     

@@ -29,7 +29,7 @@ class BillLineType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
     	$resolver->setDefaults(array(
-    			'data_class' => 'JLM\OfficeBundle\Entity\BillLine'
+    			'data_class' => 'JLM\CommerceBundle\Entity\BillLine'
     	));
     }
     

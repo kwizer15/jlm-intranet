@@ -25,7 +25,7 @@ class BillCountListener
 		if (!isset($response['layout']))
 			$response['layout'] = array();
 
-		$repo = $this->em->getRepository('JLMOfficeBundle:Bill');
+		$repo = $this->em->getRepository('JLMCommerceBundle:Bill');
 		$response['layout']['billCount'] = array(
     			'todo' => $this->em->getRepository('JLMDailyBundle:Intervention')->getCountToBilled(),
     			'all' => $repo->getTotal(),

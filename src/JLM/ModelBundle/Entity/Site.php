@@ -13,6 +13,8 @@ use JLM\CondominiumBundle\Model\UnionCouncilMemberInterface;
 use JLM\CondominiumBundle\Model\UnionCouncilInterface;
 use JLM\CondominiumBundle\Model\AdministratorInterface;
 use JLM\CondominiumBundle\Model\AdministratorMemberInterface;
+use JLM\TransmitterBundle\Entity\UserGroup;
+use JLM\CommerceBundle\Model\BillInterface;
 
 /**
  * JLM\ModelBundle\Entity\Site
@@ -120,7 +122,7 @@ class Site implements AdministratorInterface
     /**
      * @var ArrayColection
      * 
-     * @ORM\OneToMany(targetEntity="JLM\OfficeBundle\Entity\Bill", mappedBy="siteObject")
+     * @ORM\OneToMany(targetEntity="JLM\CommerceBundle\Entity\Bill", mappedBy="siteObject")
      */
     private $bills;
     
@@ -265,7 +267,7 @@ class Site implements AdministratorInterface
      * @param Door $doors
      * @return boolean
      */
-    public function addDoor(\JLM\ModelBundle\Entity\Door $doors)
+    public function addDoor(Door $doors)
     {
         return $this->doors->add($doors);
     }
@@ -276,7 +278,7 @@ class Site implements AdministratorInterface
      * @param Door $doors
      * @return boolean
      */
-    public function removeDoor(\JLM\ModelBundle\Entity\Door $doors)
+    public function removeDoor(Door $doors)
     {
         return $this->doors->removeElement($doors);
     }
@@ -349,7 +351,7 @@ class Site implements AdministratorInterface
      * @param JLM\ModelBundle\Entity\VAT $vat
      * @return Site
      */
-    public function setVat(\JLM\ModelBundle\Entity\VAT $vat = null)
+    public function setVat(VAT $vat = null)
     {
         $this->vat = $vat;
     
@@ -405,7 +407,7 @@ class Site implements AdministratorInterface
      * @param \JLM\TransmitterBundle\Entity\UserGroup $userGroups
      * @return Site
      */
-    public function addUserGroup(\JLM\TransmitterBundle\Entity\UserGroup $userGroups)
+    public function addUserGroup(UserGroup $userGroups)
     {
         $this->userGroups[] = $userGroups;
     
@@ -417,7 +419,7 @@ class Site implements AdministratorInterface
      *
      * @param \JLM\TransmitterBundle\Entity\UserGroup $userGroups
      */
-    public function removeUserGroup(\JLM\TransmitterBundle\Entity\UserGroup $userGroups)
+    public function removeUserGroup(UserGroup $userGroups)
     {
         $this->userGroups->removeElement($userGroups);
     }
@@ -435,10 +437,10 @@ class Site implements AdministratorInterface
     /**
      * Add bills
      *
-     * @param \JLM\OfficeBundle\Entity\Bill $bills
+     * @param BillInterface $bills
      * @return Site
      */
-    public function addBill(\JLM\OfficeBundle\Entity\Bill $bills)
+    public function addBill(BillInterface $bills)
     {
         $this->bills[] = $bills;
     
@@ -448,9 +450,9 @@ class Site implements AdministratorInterface
     /**
      * Remove bills
      *
-     * @param \JLM\OfficeBundle\Entity\Bill $bills
+     * @param BillInterface $bills
      */
-    public function removeBill(\JLM\OfficeBundle\Entity\Bill $bills)
+    public function removeBill(BillInterface $bills)
     {
         $this->bills->removeElement($bills);
     }
