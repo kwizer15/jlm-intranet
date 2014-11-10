@@ -84,6 +84,9 @@ doctrine:
             JLM\BillBundle\Model\BillableContactInterface: JLM\ModelBundle\Entity\Trustee
             JLM\CommerceBundle\Model\BillInterface: JLM\CommerceBundle\Entity\Bill
             JLM\CommerceBundle\Model\BillLineInterface: JLM\CommerceBundle\Entity\BillLine
+            JLM\CommerceBundle\Model\QuoteInterface: JLM\CommerceBundle\Entity\Quote
+            JLM\CommerceBundle\Model\QuoteVariantInterface: JLM\CommerceBundle\Entity\QuoteVariant
+            JLM\CommerceBundle\Model\QuoteLineInterface: JLM\CommerceBundle\Entity\QuoteLine
             JLM\CommerceBundle\Model\CustomerInterface: JLM\ModelBundle\Entity\Trustee
 
             

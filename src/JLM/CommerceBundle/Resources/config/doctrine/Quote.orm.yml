@@ -1,0 +1,35 @@
+JLM\CommerceBundle\Entity\Quote:
+  type: entity
+  table: quote
+  repositoryClass: JLM\CommerceBundle\Repository\QuoteRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    follower:
+      nullable: true
+    followerCp:
+      column: follower_cp
+    doorCp:
+      column: door_cp
+      type: text
+    contactCp:
+      column: contact_cp
+  manyToOne:
+    door:
+      targetEntity: JLM\ModelBundle\Entity\Door
+    contact:
+      targetEntity: JLM\ModelBundle\Entity\SiteContact
+    contactPerson:
+      targetEntity: JLM\ContactBundle\Model\PersonInterface
+    ask:
+      targetEntity: JLM\OfficeBundle\Entity\AskQuote
+      inversedBy: quotes
+  oneToMany:
+    variants:
+      targetEntity: JLM\OfficeBundle\Entity\QuoteVariant
+      mappedBy: quote
+      
+      

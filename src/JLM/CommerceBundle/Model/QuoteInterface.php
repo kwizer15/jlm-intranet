@@ -14,10 +14,10 @@ namespace JLM\CommerceBundle\Model;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-
-interface BillLineInterface
+interface QuoteInterface
 {
-    public function getQuantity();
-    
-    public function getUnitPrice();
-} 
+	/**
+	 * @return int
+	 */
+	public function getNumber();
+}
