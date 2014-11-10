@@ -1,0 +1,159 @@
+bill:
+    path:   /bill
+    defaults:  { _controller: "JLMCommerceBundle:Bill:index" }
+    methods: [GET]
+    
+bill_page:
+    path:   /bill/page/{page}
+    defaults:  { _controller: "JLMCommerceBundle:Bill:index" }
+    methods: [GET]
+    
+bill_listinseizure:
+    path:   /bill/inseizure
+    defaults:  { _controller: "JLMCommerceBundle:Bill:listinseizure" }
+    methods: [GET]
+    
+bill_listinseizure_page:
+    path:   /bill/inseizure/page/{page}
+    defaults:  { _controller: "JLMCommerceBundle:Bill:listinseizure" }
+    methods: [GET]
+    
+bill_listinsended:
+    path:   /bill/insended
+    defaults:  { _controller: "JLMCommerceBundle:Bill:listinsended" }
+    methods: [GET]
+    
+bill_listinsended_page:
+    path:   /bill/insended/page/{page}
+    defaults:  { _controller: "JLMCommerceBundle:Bill:listinsended" }
+    methods: [GET]
+    
+bill_listpayed:
+    path:   /bill/payed
+    defaults:  { _controller: "JLMCommerceBundle:Bill:listpayed" }
+    methods: [GET]
+    
+bill_listpayed_page:
+    path:   /bill/payed/page/{page}
+    defaults:  { _controller: "JLMCommerceBundle:Bill:listpayed" }
+    methods: [GET]
+    
+bill_listcanceled:
+    path:   /bill/canceled
+    defaults:  { _controller: "JLMCommerceBundle:Bill:listcanceled" }
+    methods: [GET]
+    
+bill_listcanceled_page:
+    path:   /bill/canceled/page/{page}
+    defaults:  { _controller: "JLMCommerceBundle:Bill:listcanceled" }
+    methods: [GET]
+
+bill_show:
+    path:   /bill/{id}/show
+    defaults:  { _controller: "JLMCommerceBundle:Bill:show" }
+    methods: [GET]
+    
+bill_new:
+    path:   /bill/new
+    defaults:  { _controller: "JLMCommerceBundle:Bill:new" }
+    methods: [GET]
+    
+bill_new_door:
+    path:   /bill/new/door/{id}
+    defaults:  { _controller: "JLMCommerceBundle:Bill:newdoor" }
+    methods: [GET]
+    
+bill_new_quotevariant:
+    path:   /bill/new/quote/{id}
+    defaults:  { _controller: "JLMCommerceBundle:Bill:newquote" }
+    methods: [GET]
+    
+bill_new_intervention:
+    path:   /bill/new/intervention/{id}
+    defaults:  { _controller: "JLMCommerceBundle:Bill:newintervention" }
+    methods: [GET]
+    
+bill_create:
+    path:   /bill/create
+    defaults:  { _controller: "JLMCommerceBundle:Bill:create" }
+    methods: [POST]
+    
+bill_edit:
+    path:   /bill/{id}/edit
+    defaults:  { _controller: "JLMCommerceBundle:Bill:edit" }
+    methods: [GET]
+    
+bill_update:
+    path:   /bill/{id}/update
+    defaults:  { _controller: "JLMCommerceBundle:Bill:update" }
+    methods: [POST]
+    
+bill_print:
+    path:   /bill/{id}/print
+    defaults:  { _controller: "JLMCommerceBundle:Bill:print" }
+    methods: [GET]
+    
+bill_printduplicate:
+    path:   /bill/{id}/printduplicate
+    defaults:  { _controller: "JLMCommerceBundle:Bill:printduplicate" }
+    methods: [GET]
+    
+bill_printlist:
+    path:   /bill/printlist
+    defaults:  { _controller: "JLMCommerceBundle:Bill:printlist" }
+    methods: [GET]
+    
+bill_printboost:
+    path:   /bill/{id}/printboost
+    defaults:  { _controller: "JLMCommerceBundle:Bill:printboost" }
+    methods: [GET]
+    
+bill_ready:
+    path:   /bill/{id}/ready
+    defaults:  { _controller: "JLMCommerceBundle:Bill:ready" }
+    methods: [GET]
+    
+bill_send:
+    path:   /bill/{id}/send
+    defaults:  { _controller: "JLMCommerceBundle:Bill:send" }
+    methods: [GET]
+    
+bill_cancel:
+    path:   /bill/{id}/cancel
+    defaults:  { _controller: "JLMCommerceBundle:Bill:cancel" }
+    methods: [GET]
+    
+bill_back:
+    path:   /bill/{id}/back
+    defaults:  { _controller: "JLMCommerceBundle:Bill:back" }
+    methods: [GET]
+    
+bill_payed:
+    path:   /bill/{id}/payed
+    defaults:  { _controller: "JLMCommerceBundle:Bill:payed" }
+    methods: [GET]
+    
+bill_sidebar:
+    path:   /bill/sidebar
+    defaults:  { _controller: "JLMCommerceBundle:Bill:sidebar" }
+    methods: [GET]
+    
+bill_todo:
+    path:   /bill/todo
+    defaults:  { _controller: "JLMCommerceBundle:Bill:todo" }
+    methods: [GET]
+    
+bill_toboost:
+    path:   /bill/toboost
+    defaults:  { _controller: "JLMCommerceBundle:Bill:toboost" }
+    methods: [GET]
+    
+bill_boostok:
+    path:   /bill/{id}/boostok
+    defaults:  { _controller: "JLMCommerceBundle:Bill:boostok" }
+    methods: [GET]
+    
+bill_search:
+    path:   /bill/search
+    defaults:  { _controller: "JLMCommerceBundle:Bill:search" }
+    methods: [POST]
