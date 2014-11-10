@@ -1,4 +1,4 @@
-{% block bill_widget %}
+{% block jlm_commerce_bill_widget %}
 <div class="row_fluid clearfix">
 	<div class="span6 well">
 		
@@ -86,7 +86,7 @@
 {{ form_rest(form) }}
 {% endblock %}
 
-{% block bill_line_row %}
+{% block jlm_commerce_bill_line_row %}
 <tr {{ block('widget_container_attributes') }}>
     <td>
         {{ form_widget(form.position) }}
@@ -105,4 +105,4 @@
     <td><div class="input-append"><span class="input-mini uneditable-input" id="{{ id }}_total">0,00</span><span class="add-on">€</span></div></td>
     <td><a href="#" class="btn btn-danger remove-line"><i class="icon-minus-sign icon-white"></i></a></td>
 </tr>
-{% endblock bill_line_row %}
+{% endblock jlm_commerce_bill_line_row %}

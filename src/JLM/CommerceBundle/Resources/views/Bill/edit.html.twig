@@ -1,5 +1,4 @@
 {% extends "JLMCommerceBundle:Bill:layout.html.twig" %}
-{% form_theme edit_form with 'JLMOfficeBundle:Form:bill.html.twig' %}
 {% block content %}
 <h1>Facture <small>{{ entity.number }}</small></h1>
 {% if form_errors(edit_form) %}
