@@ -1,0 +1,11 @@
+{% if state == 0 %}
+	<span class="label">En saisie</span>
+{% elseif state == 1 %}
+	<span class="label label-info">Envoyée</span>
+{% elseif state == 2 %}
+	<span class="label label-success">Réglée</span>
+{% elseif state == -1 %}
+	<span class="label label-important">Annulée</span>
+{% else %}
+	<span class="label">Etat incorrect</span>
+{% endif %}

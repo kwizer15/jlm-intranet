@@ -1,0 +1,116 @@
+{% extends "JLMCommerceBundle:Bill:layout.html.twig" %}
+{% block content %}
+<h1>Facture <small>{{ entity.number }}</small></h1>
+{% include 'JLMCommerceBundle:Bill:stateheader.html.twig' with {'state': entity.state} %}
+<div class="row-fluid">
+    <div class="span5">
+    	<strong>{{ entity.reference | nl2br }}</strong>
+        <br><strong>Affaire :</strong><br>{{ entity.site | nl2br }}
+        <br><em>{{ entity.details | nl2br }}</em>
+		<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>N° Client</th>
+			<th>Date</th>
+			<th>N° Facture</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>{{ entity.accountNumber }}</td>
+			<td>{{ entity.creation|date('d/m/Y') }}</td>
+			<td>{{ entity.number }}</td>
+		</tr>
+	</tbody>
+</table>
+    </div>
+    <div class="span5 offset2 well">
+    	<small>{{ entity.prelabel | nl2br }}</small>
+        <br><strong>{{ entity.trusteeName }}</strong>
+        <br>{{ entity.trusteeAddress | nl2br  }}
+    </div>
+</div>
+
+
+<p>{{ entity.intro | nl2br }} {% if entity.intervention %}<br><a href="{{ path('intervention_redirect',{'id':entity.intervention.id,'act':'show'}) }}">Voir intervention</a>{% endif %}</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Réf.</th>
+            <th>Designation</th>
+            <th>Qté</th>
+            <th>Prix U.H.T</th>
+            <th>Remise</th>
+            <th>Prix H.T</th>
+            <th>T.V.A</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for line in entity.lines %}
+         <tr>
+            <td>{{ line.reference }}</td>
+            <td>
+                {{ line.designation }}
+                {% if line.showDescription %}
+                <br><em>{{ line.description|nl2br }}</em>
+                {% endif %}
+            </td>
+            <td>{{ line.quantity }}</td>
+            <td>{{ line.unitPrice|number_format(2,',',' ') }} €</td>
+            <td>{{ (line.discount*100)|number_format(0,',',' ') }} %</td>
+            <td>{{ line.price|number_format(2,',',' ') }} €</td>
+            <td>{{ (line.vat*100)|number_format(1,',',' ') }} %</td>
+       </tr>  
+    {% endfor %}
+    </tbody>
+</table>
+<div class="row-fluid">
+	<div class="span8">
+		<dl>
+			<dt>Echéance</dt>
+			<dd>{{ entity.maturityDate | date('d/m/Y') }}
+		{% if entity.property %}
+			<dt>Clause de propriété</dt>
+			<dd>{{ entity.property }}</dd>
+		{% endif %}
+			<dt>Escompte</dt>
+			<dd>{{ entity.earlyPayment }}</dd>
+			<dt>Pénalités</dt>
+			<dd>{{ entity.penalty }}</dd>
+		</dl>
+	</div>
+   <div class="span4">
+    <table class="table table-bordered">
+    	<tbody>
+    		<tr>
+    			<th>Remise</th>
+    			<td>{{ entity.discount*100|number_format(2,',',' ') }} %</td>
+    		</tr>
+    		<tr class="info">
+    			<th>Total H.T.</th>
+    			<td>{{ entity.totalPrice|number_format(2,',',' ') }} €</td>
+    		</tr>
+     		<tr>
+    			<th>Total TVA</th>
+    			<td>{{ entity.totalVat|number_format(2,',',' ') }} €</td>
+    		</tr>
+    		<tr>
+    			<th>Total à régler</th>
+    			<td>{{ entity.totalPriceAti|number_format(2,',',' ') }} €</td>
+    		</tr>
+    	</tbody>
+    </table>
+    </div>
+</div>
+<div class="form-actions">
+	<a href="{{ path('bill_print',{'id':entity.id}) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer</a>
+	{% if entity.state == 0 %}
+	<a href="{{ path('bill_edit',{'id':entity.id}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+	<a href="{{ path('bill_send',{'id':entity.id}) }}" class="btn btn-primary"><i class="icon-ok icon-white"></i> Envoyée</a>
+	{% elseif entity.state == 1 %}
+	<a href="{{ path('bill_back',{'id':entity.id}) }}" class="btn btn-inverse"><i class="icon-fast-backward icon-white"></i> Revenir à la saisie</a>
+	<a href="{{ path('bill_payed',{'id':entity.id}) }}" class="btn btn-primary"><i class="icon-share icon-white"></i> Réglée</a>
+	<a href="{{ path('bill_cancel',{'id':entity.id}) }}" class="btn btn-danger"><i class="icon-white icon-remove"></i> Annuler</a>
+	{% endif %}
+</div>
+{% endblock %}

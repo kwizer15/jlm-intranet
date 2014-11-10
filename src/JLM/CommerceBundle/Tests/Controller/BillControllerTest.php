@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\OfficeBundle\Tests\Controller;
+namespace JLM\CommerceBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -35,19 +35,19 @@ class BillControllerTest extends WebTestCase
     public function getUrls()
     {
         return array(
-        	array('GET', '/office/bill'),
-            array('GET', '/office/bill/inseizure'),
-            array('GET', '/office/bill/sended'),
-            array('GET', '/office/bill/payed'),
-            array('GET', '/office/bill/canceled'),
-            array('GET', '/office/bill/1/show'),
-            array('GET', '/office/bill/new'),
-            array('GET', '/office/bill/new/door/1'),
-            array('GET', '/office/bill/new/quote/1'),
-            array('GET', '/office/bill/new/intervention/1'),
-            array('GET', '/office/bill/1/edit'),
-            array('GET', '/office/bill/todo'),
-            array('GET', '/office/bill/toboost'),
+        	array('GET', '/bill'),
+            array('GET', '/bill/inseizure'),
+            array('GET', '/bill/sended'),
+            array('GET', '/bill/payed'),
+            array('GET', '/bill/canceled'),
+            array('GET', '/bill/1/show'),
+            array('GET', '/bill/new'),
+            array('GET', '/bill/new/door/1'),
+            array('GET', '/bill/new/quote/1'),
+            array('GET', '/bill/new/intervention/1'),
+            array('GET', '/bill/1/edit'),
+            array('GET', '/bill/todo'),
+            array('GET', '/bill/toboost'),
         );
     }
     

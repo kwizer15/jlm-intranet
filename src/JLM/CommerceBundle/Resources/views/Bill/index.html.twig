@@ -1,0 +1,5 @@
+{% extends "JLMCommerceBundle:Bill:layout.html.twig" %}
+{% block content %}
+<h1>Liste des factures {{ bill_title|default('') }}</h1>
+{% include 'JLMCommerceBundle:Bill:list.html.twig' with {'entities':entities} %}
+{% endblock %}

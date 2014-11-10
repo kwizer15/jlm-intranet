@@ -1,0 +1,17 @@
+services:
+    jlm_commerce.type.bill_line:
+        class: JLM\CommerceBundle\Form\Type\BillLineType
+        tags:
+            - { name: form.type, alias: jlm_commerce_bill_line }
+    
+    jlm_commerce.listener.billnumbergenerator_listener:
+        class: JLM\CommerceBundle\EventListener\BillNumberGenerator
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+    
+    jlm_commerce.eventlistener.billcount_listener:
+        class: JLM\CommerceBundle\EventListener\BillCountListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.view, method: onKernelResponse }
+            

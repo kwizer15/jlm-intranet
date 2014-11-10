@@ -70,7 +70,7 @@
 		        			<ul class="dropdown-menu">
 				        		<li><a href="{{ path('bill_new') }}"><i class="icon-plus-sign"></i> Nouvelle facture</a></li>
 				        		<li class="divider"></li>
-				        		{% include 'JLMOfficeBundle:Bill:sidebar.html.twig' with {'count':layout.billCount} %}
+				        		{% include 'JLMCommerceBundle:Bill:sidebar.html.twig' with {'count':layout.billCount} %}
 				        		{#{{ render(controller('JLMOfficeBundle:Bill:sidebar')) }}#}
 		        			</ul>
 		        		</li>

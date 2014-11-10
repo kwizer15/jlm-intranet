@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use JLM\BillBundle\Builder\BillFactory;
 use JLM\CommerceBundle\Entity\Bill;
 use JLM\CommerceBundle\Entity\BillLine;
+use JLM\CommerceBundle\Form\Type\BillType;
 use JLM\DailyBundle\Entity\Intervention;
 use JLM\DailyBundle\Builder\WorkBillBuilder;
 use JLM\DailyBundle\Builder\InterventionBillBuilder;
@@ -26,12 +27,12 @@ use JLM\DailyBundle\Entity\Work;
 use JLM\DefaultBundle\Controller\PaginableController;
 use JLM\DefaultBundle\Entity\Search;
 use JLM\DefaultBundle\Form\Type\SearchType;
-use JLM\CommerceBundle\Form\Type\BillType;
 use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\OfficeBundle\Builder\VariantBillBuilder;
 use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Builder\DoorBillBuilder;
 use JLM\DailyBundle\Form\Type\ExternalBillType;
+use JLM\CommerceBundle\Model\BillInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -120,7 +121,7 @@ class BillController extends PaginableController
     /**
      * Displays a form to create a new Bill entity.
      *
-     * @Template("JLMOfficeBundle:Bill:new.html.twig")
+     * @Template("JLMCommerceBundle:Bill:new.html.twig")
      * @Secure(roles="ROLE_USER")
      * @deprecated No used
      */
@@ -138,7 +139,7 @@ class BillController extends PaginableController
     /**
      * Displays a form to create a new Bill entity.
      * 
-     * @Template("JLMOfficeBundle:Bill:new.html.twig")
+     * @Template("JLMCommerceBundle:Bill:new.html.twig")
      * @Secure(roles="ROLE_USER")
      * @deprecated
      */
@@ -156,7 +157,7 @@ class BillController extends PaginableController
     /**
      * Displays a form to create a new Bill entity.
      *
-     * @Template("JLMOfficeBundle:Bill:new.html.twig")
+     * @Template("JLMCommerceBundle:Bill:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function newinterventionAction(Intervention $interv)
@@ -195,7 +196,7 @@ class BillController extends PaginableController
     /**
      * Creates a new Bill entity.
      *
-     * @Template("JLMOfficeBundle:Bill:new.html.twig")
+     * @Template("JLMCommerceBundle:Bill:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function createAction(Request $request)
@@ -246,7 +247,7 @@ class BillController extends PaginableController
     /**
      * Edits an existing Bill entity.
      *
-     * @Template("JLMOfficeBundle:Bill:edit.html.twig")
+     * @Template("JLMCommerceBundle:Bill:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
     public function updateAction(Request $request, Bill $entity)
@@ -330,7 +331,7 @@ class BillController extends PaginableController
         $response = new Response();
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', 'inline; filename='.$filename);
-        $response->setContent($this->render('JLMOfficeBundle:Bill:print.pdf.php',array('entities'=>array($entity),'duplicate'=>$duplicate)));
+        $response->setContent($this->render('JLMCommerceBundle:Bill:print.pdf.php',array('entities'=>array($entity),'duplicate'=>$duplicate)));
         
         return $response;
     }
@@ -347,7 +348,7 @@ class BillController extends PaginableController
     	$response = new Response();
     	$response->headers->set('Content-Type', 'application/pdf');
     	$response->headers->set('Content-Disposition', 'inline; filename=factures-a-faire.pdf');
-    	$response->setContent($this->render('JLMOfficeBundle:Bill:printlist.pdf.php',array('entities'=>$entities)));
+    	$response->setContent($this->render('JLMCommerceBundle:Bill:printlist.pdf.php',array('entities'=>$entities)));
     
     	//   return array('entity'=>$entity);
     	return $response;
@@ -505,7 +506,7 @@ class BillController extends PaginableController
     	$response = new Response();
     	$response->headers->set('Content-Type', 'application/pdf');
     	$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
-    	$response->setContent($this->render('JLMOfficeBundle:Bill:printboost.pdf.php',array('entities'=>array($entity))));
+    	$response->setContent($this->render('JLMCommerceBundle:Bill:printboost.pdf.php',array('entities'=>array($entity))));
     
     	//   return array('entity'=>$entity);
     	return $response;
