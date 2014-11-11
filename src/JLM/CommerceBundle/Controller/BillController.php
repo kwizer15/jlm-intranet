@@ -361,7 +361,7 @@ class BillController extends PaginableController
      */
     public function readyAction(Bill $entity)
     {
-    	return $this->stateChange(1);
+    	return $this->stateChange($entity, 1);
     }
     
     /**
@@ -389,7 +389,7 @@ class BillController extends PaginableController
      */
     public function cancelAction(Bill $entity)
     {
-    	return $this->stateChange(-1);
+    	return $this->stateChange($entity, -1);
     }
     
     /**
@@ -399,7 +399,7 @@ class BillController extends PaginableController
      */
     public function backAction(Bill $entity)
     {
-    	return $this->stateChange(0);
+    	return $this->stateChange($entity, 0);
     }
     
     /**
@@ -409,10 +409,10 @@ class BillController extends PaginableController
      */
     public function payedAction(Bill $entity)
     {
-    	return $this->stateChange(2);
+    	return $this->stateChange($entity, 2);
     }
     
-    private function stateChange($newState)
+    private function stateChange(Bill $entity, $newState)
     {
         switch ($newState)
         {

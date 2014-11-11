@@ -1,0 +1,117 @@
+
+	{% include 'JLMCommerceBundle:Quote:stateheader.html.twig' with {'state': variant.state} %}
+	<strong>Créé le {{ variant.creation|date('d/m/Y') }}</strong>
+    <p>{{ variant.intro | nl2br }}</p>
+  	<ul class="nav nav-pills">
+	  <li class="active tab-quote"><a href="#">Devis</a></li>
+	  <li class="tab-coding"><a href="#">Chiffrage</a></li>
+	</ul>
+    <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th class="col-quote">Réf.</th>
+            <th>Designation</th>
+            <th>Qté</th>
+            <th class="col-coding">PA HT</th>
+   			<th class="col-coding">Remise</th>
+    		<th class="col-coding">Frais</th>
+    		<th class="col-coding">Port</th>
+            <th class="col-quote">Prix U.H.T</th>
+            <th class="col-quote">Remise</th>
+            <th>Prix H.T</th>
+            <th class="col-quote">T.V.A</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for line in variant.lines %}
+         <tr>
+            <td class="col-quote">{{ line.reference }}</td>
+            <td>
+                {{ line.designation }}
+                {% if line.showDescription %}
+                <br><em>{{ line.description|nl2br }}</em>
+                {% endif %}
+            </td>
+            <td>{{ line.quantity }}</td>
+            <td class="col-coding">{{ line.purchasePrice|number_format(2,',',' ') }} €</th>
+   			<td class="col-coding">{{ line.discountSupplier*100|number_format(0,',',' ') }} %</th>
+    		<td class="col-coding">{{ line.expenseRatio*100|number_format(0,',',' ') }} %</th>
+    		<td class="col-coding">{{ line.shipping|number_format(2,',',' ') }} €</th>
+            <td class="col-quote">{{ line.unitPrice|number_format(2,',',' ') }} €</td>
+            <td class="col-quote">{{ (line.discount*100)|number_format(0,',',' ') }} %</td>
+            <td>{{ line.price|number_format(2,',',' ') }} €</td>
+            <td class="col-quote">{{ (line.vat*100)|number_format(1,',',' ') }} %</td>
+       </tr>  
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="row-fluid">
+	<div class="span8">
+		<dl>
+			<dt>Règlement</dt>
+			<dd>{{ variant.paymentRules }}</dd>
+			<dt>Délais</dt>
+			<dd>{{ variant.deliveryRules }}</dd>
+		</dl>
+	</div>
+   <div class="span4">
+    <table class="table table-bordered">
+    	<tbody>
+    		<tr>
+    			<th>Remise</th>
+    			<td>{{ variant.discount*100|number_format(2,',',' ') }} %</td>
+    		</tr>
+    		<tr class="info">
+    			<th>Total H.T.</th>
+    			<td>{{ variant.totalPrice|number_format(2,',',' ') }} €</td>
+    		</tr>
+    		<tr class="col-coding">
+    			<th>Total achat</th>
+    			<td>{{ variant.totalPurchase|number_format(2,',',' ') }} €</td>
+    		</tr>
+    		<tr class="col-coding{% if variant.totalMargin < 0 %} error{% endif %}">
+    			<th>Total marge</th>
+    			<td>{{ variant.totalMargin|number_format(2,',',' ') }} €</td>
+    		</tr>
+     		<tr class="col-quote">
+    			<th>Total TVA</th>
+    			<td>{{ variant.totalVat|number_format(2,',',' ') }} €</td>
+    		</tr>
+    		<tr class="col-quote">
+    			<th>Total à régler</th>
+    			<td>{{ variant.totalPriceAti|number_format(2,',',' ') }} €</td>
+    		</tr>
+    	</tbody>
+    </table>
+    </div>
+</div> 
+<div class="form-actions">
+	{% if variant.state == 0 %}
+		<a href="{{ path('variant_edit', { 'id': variant.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+		<a href="{{ path('variant_ready', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-thumbs-up icon-white"></i> Prêt à evoyer</a>
+		<a href="{{ path('variant_print', { 'id': variant.id }) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer devis</a>
+		<a href="{{ path('variant_printcoding', { 'id': variant.id }) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer chiffrage</a>
+		<a href="{{ path('variant_cancel', { 'id': variant.id }) }}" class="btn btn-danger"><i class="icon-remove icon-white"></i> Annuler</a>
+	{% elseif variant.state >= 1 %}
+		{% if variant.state == 3 %}
+			<a href="{{ path('variant_receipt', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-thumbs-up icon-white"></i> Accusé reçu</a>
+		{% endif %}
+		{% if variant.state == 1 or variant.state == 1 %}
+			<a href="{{ path('variant_fax', { 'id': variant.id }) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Envoyer par fax</a>
+		{% endif %}
+		{% if variant.state == 4 %}
+			<a href="{{ path('variant_given', { 'id': variant.id }) }}" class="btn btn-success"><i class="icon-thumbs-up icon-white"></i> Accorder</a>
+		{% endif %}
+		<a href="{{ path('variant_mail', { 'id': variant.id }) }}" class="btn btn-info"><i class="icon-envelope icon-white"></i> Envoyer par e-mail</a>
+		<a href="{{ path('variant_print', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer</a>
+		<a href="{{ path('variant_printcoding', { 'id': variant.id }) }}" class="btn btn-primary"><i class="icon-print icon-white"></i> Imprimer chiffrage</a>
+		{% if variant.state < 5 %}
+			<a href="{{ path('variant_unvalid', { 'id': variant.id }) }}" class="btn btn-inverse"><i class="icon-fast-backward icon-white"></i> Revenir à la saisie</a>
+			
+			
+		{% endif %}
+		{% if variant.state > -1 %}<a href="{{ path('variant_cancel', { 'id': variant.id }) }}" class="btn btn-danger"><i class="icon-remove icon-white"></i> Annuler</a>{% endif %}
+	{% endif %}
+</div>
+

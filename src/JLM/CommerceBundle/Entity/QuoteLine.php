@@ -11,7 +11,6 @@
 
 namespace JLM\OfficeBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use JLM\CommerceBundle\Entity\CommercialPartLineProduct;
 use JLM\CommerceBundle\Model\QuoteLineInterface;
 use JLM\CommerceBundle\Model\QuoteVariantInterface;
