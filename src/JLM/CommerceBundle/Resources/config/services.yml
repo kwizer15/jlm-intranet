@@ -19,4 +19,15 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_listener, event: kernel.view, method: onKernelResponse }
+    
+    jlm_commerce.eventlistener.quotecount_listener:
+        class: JLM\CommerceBundle\EventListener\QuoteCountListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.view, method: onKernelResponse }
             
+    jlm_commerce.eventlistener.quotelast_listener:
+        class: JLM\CommerceBundle\EventListener\QuoteLastListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.view, method: onKernelResponse }   
