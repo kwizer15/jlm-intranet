@@ -1,66 +1,56 @@
 <?php
+
+/*
+ * This file is part of the JLMCommerceBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JLM\CommerceBundle\Entity\CommercialPartLineProduct;
 use JLM\CommerceBundle\Model\QuoteLineInterface;
+use JLM\CommerceBundle\Model\QuoteVariantInterface;
 
 /**
- * JLM\OfficeBundle\Entity\QuoteLine
- *
- * @ORM\Table(name="quote_lines")
- * @ORM\Entity
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
 {
 	/**
 	 * @var integer $id
-	 * 
-	 * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO") 
 	 */
 	private $id;
 	
 	/**
-	 * @var QuoteVariant $variant
-	 * 
-	 * @ORM\ManyToOne(targetEntity="QuoteVariant",inversedBy="lines")
+	 * @var QuoteVariantInterface $variant
 	 */
 	private $variant;
 	
-	
-	
-	// Chiffrage ********************************************
-	
 	/**
 	 * @var float $purchasePrice
-	 *
-	 * @ORM\Column(name="purchasePrice", type="decimal",scale=2)
 	 */
 	private $purchasePrice = 0;
 	
 	/**
 	 * Remise Fournisseur (%)
 	 * @var float $discountSupplier
-	 * 
-	 * @ORM\Column(name="discount_supplier", type="decimal", scale=7)
 	 */
 	private $discountSupplier = 0;
 	
 	/**
 	 * Frais (%)
 	 * @var float $expenseRatio
-	 *
-	 * @ORM\Column(name="expense_ratio", type="decimal", scale=7)
 	 */
 	private $expenseRatio = .1;
 	
 	/**
 	 * Frais de port (€)
 	 * @var float $shipping
-	 *
-	 * @ORM\Column(name="shipping", type="decimal", scale=2)
 	 */
 	private $shipping = 0;
 	
@@ -74,13 +64,11 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
         return $this->id;
     }
 
-    
-    
     /**
      * Set discountSupplier
      *
      * @param float $discountSupplier
-     * @return QuoteLine
+     * @return self
      */
     public function setDiscountSupplier($discountSupplier)
     {
@@ -99,15 +87,10 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
     	return $this->discountSupplier;
     }
 
-    
-
     /**
-     * Set variant
-     *
-     * @param JLM\ModelBundle\Entity\QuoteVariant $variant
-     * @return QuoteLine
+     * {@inheritdoc}
      */
-    public function setVariant(\JLM\OfficeBundle\Entity\QuoteVariant $variant = null)
+    public function setVariant(QuoteVariantInterface $variant = null)
     {
         $this->variant = $variant;
     
@@ -117,7 +100,7 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
     /**
      * Get variant
      *
-     * @return JLM\OfficeBundle\Entity\QuoteVariant 
+     * @return QuoteVariantInterface 
      */
     public function getVariant()
     {
@@ -130,11 +113,12 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
      * Set purchasePrice
      *
      * @param float $price
-     * @return QuoteLine
+     * @return self
      */
     public function setPurchasePrice($price)
     {
     	 $this->purchasePrice = $price;
+    	 
     	 return $this;
     }
     
@@ -152,7 +136,7 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
      * Set expenseRatio
      * 
      * @param float $ratio
-     * @return QuoteLine
+     * @return self
      */
     public function setExpenseRatio($ratio)
     {
@@ -179,6 +163,7 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
     public function setShipping($shipping)
     {
     	$this->shipping = $shipping;
+    	
     	return $this;
     }
     
@@ -243,6 +228,4 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
     {
     	return $this->getMargin()*$this->getQuantity();
     }
-    
-    
 }
