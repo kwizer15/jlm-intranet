@@ -11,6 +11,8 @@
 
 namespace JLM\CommerceBundle\Model;
 
+use JLM\ModelBundle\Entity\Door;
+use JLM\ModelBundle\Entity\Site;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -32,4 +34,19 @@ interface QuoteVariantInterface
 	 * @return self
 	 */
 	public function setVariantNumber($number);
+	
+	/**
+	 * @return array
+	 */
+	public function getLines();
+	
+	/**
+	 * @return Door
+	 */
+	public function getDoor();
+	
+	/**
+	 * @return Site
+	 */
+	public function getSite();
 }

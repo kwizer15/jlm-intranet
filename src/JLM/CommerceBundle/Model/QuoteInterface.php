@@ -20,4 +20,9 @@ interface QuoteInterface
 	 * @return int
 	 */
 	public function getNumber();
+	
+	/**
+	 * @return Door
+	 */
+	public function getDoor();
 }

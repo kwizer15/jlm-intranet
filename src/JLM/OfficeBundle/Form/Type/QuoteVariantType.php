@@ -24,7 +24,7 @@ class QuoteVariantType extends AbstractType
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
 	{
 		$resolver->setDefaults(array(
-				'data_class' => 'JLM\OfficeBundle\Entity\QuoteVariant'
+				'data_class' => 'JLM\CommerceBundle\Entity\QuoteVariant'
 		));
 	}
 

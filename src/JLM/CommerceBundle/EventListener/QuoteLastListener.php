@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\OfficeBundle\EventListener;
+namespace JLM\CommerceBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
@@ -47,7 +47,7 @@ class QuoteLastListener
 		if (!isset($response['layout']))
 			$response['layout'] = array();
 
-		$repo = $this->em->getRepository('JLMOfficeBundle:Quote');
+		$repo = $this->em->getRepository('JLMCommerceBundle:Quote');
 		$response['layout']['quoteLast'] = $repo->findBy(
 				array(),
 				array('number'=>'desc'),

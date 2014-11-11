@@ -12,8 +12,9 @@
 namespace JLM\OfficeBundle\Builder;
 
 use JLM\ModelBundle\Builder\DoorBillBuilderAbstract;
-use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\BillBundle\Builder\BillLineFactory;
+use JLM\CommerceBundle\Model\QuoteVariantInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -21,7 +22,7 @@ class VariantBillBuilder extends DoorBillBuilderAbstract
 {
     private $variant;
     
-    public function __construct(QuoteVariant $variant, $options = array())
+    public function __construct(QuoteVariantInterface $variant, $options = array())
     {
         $this->variant = $variant;
         parent::__construct($options);
@@ -55,6 +56,14 @@ class VariantBillBuilder extends DoorBillBuilderAbstract
      */
     protected function _getDoor()
     {
-        return $this->variant->getQuote()->getDoor();
+        return $this->variant->getDoor();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function _getSite()
+    {
+    	return $this->variant->getSite();
     }
 }

@@ -12,7 +12,7 @@ class QuoteLineType extends AbstractType
     {
         $builder
         	->add('position','hidden')
-        	->add('product','product_hidden',array('required'=>false))
+        	->add('product','jlm_product_product_hidden',array('required'=>false))
         	->add('reference',null,array('required'=>false,'attr'=>array('class'=>'input-mini')))
         	->add('designation',null,array('attr'=>array('class'=>'input-xlarge')))
         	->add('description',null,array('required'=>false,'attr'=>array('class'=>'input-xlarge')))
@@ -33,7 +33,7 @@ class QuoteLineType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
     	$resolver->setDefaults(array(
-    			'data_class' => 'JLM\OfficeBundle\Entity\QuoteLine'
+    			'data_class' => 'JLM\CommerceBundle\Entity\QuoteLine'
     	));
     }
     

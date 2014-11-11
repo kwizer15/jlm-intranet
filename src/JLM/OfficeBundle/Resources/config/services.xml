@@ -13,16 +13,7 @@
         	<argument type="service" id="doctrine.orm.entity_manager"/>
     		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
 		</service>
--->
-    	<service id="jlm_office.eventlistener.askquotecount_listener" class="JLM\OfficeBundle\EventListener\AskQuoteCountListener">
-        	<argument type="service" id="doctrine.orm.entity_manager"/>
-    		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
-		</service>
-        <service id="jlm_office.eventlistener.quotecount_listener" class="JLM\OfficeBundle\EventListener\QuoteCountListener">
-        	<argument type="service" id="doctrine.orm.entity_manager"/>
-    		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
-		</service>
-		<service id="jlm_office.eventlistener.ordercount_listener" class="JLM\OfficeBundle\EventListener\OrderCountListener">
+		 <service id="jlm_office.eventlistener.quotecount_listener" class="JLM\OfficeBundle\EventListener\QuoteCountListener">
         	<argument type="service" id="doctrine.orm.entity_manager"/>
     		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
 		</service>
@@ -30,6 +21,17 @@
         	<argument type="service" id="doctrine.orm.entity_manager"/>
     		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
 		</service>
+-->
+    	<service id="jlm_office.eventlistener.askquotecount_listener" class="JLM\OfficeBundle\EventListener\AskQuoteCountListener">
+        	<argument type="service" id="doctrine.orm.entity_manager"/>
+    		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
+		</service>
+       
+		<service id="jlm_office.eventlistener.ordercount_listener" class="JLM\OfficeBundle\EventListener\OrderCountListener">
+        	<argument type="service" id="doctrine.orm.entity_manager"/>
+    		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
+		</service>
+		
     	<service id="jlm_office.type.quote_line" class="JLM\OfficeBundle\Form\Type\QuoteLineType">
    			<tag name="form.type" alias="quote_line" />
 		</service>

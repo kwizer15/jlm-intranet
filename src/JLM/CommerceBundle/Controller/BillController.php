@@ -20,6 +20,9 @@ use JLM\BillBundle\Builder\BillFactory;
 use JLM\CommerceBundle\Entity\Bill;
 use JLM\CommerceBundle\Entity\BillLine;
 use JLM\CommerceBundle\Form\Type\BillType;
+use JLM\CommerceBundle\Model\BillInterface;
+use JLM\CommerceBundle\Entity\QuoteVariant;
+use JLM\OfficeBundle\Builder\VariantBillBuilder;
 use JLM\DailyBundle\Entity\Intervention;
 use JLM\DailyBundle\Builder\WorkBillBuilder;
 use JLM\DailyBundle\Builder\InterventionBillBuilder;
@@ -27,12 +30,10 @@ use JLM\DailyBundle\Entity\Work;
 use JLM\DefaultBundle\Controller\PaginableController;
 use JLM\DefaultBundle\Entity\Search;
 use JLM\DefaultBundle\Form\Type\SearchType;
-use JLM\OfficeBundle\Entity\QuoteVariant;
-use JLM\OfficeBundle\Builder\VariantBillBuilder;
 use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Builder\DoorBillBuilder;
 use JLM\DailyBundle\Form\Type\ExternalBillType;
-use JLM\CommerceBundle\Model\BillInterface;
+
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>

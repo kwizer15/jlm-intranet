@@ -11,11 +11,15 @@
 
 namespace JLM\ModelBundle\Builder;
 
+use JLM\ModelBundle\Entity\Door;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 abstract class DoorBillBuilderAbstract extends SiteBillBuilderAbstract
 {
+	/**
+	 * @return Door
+	 */
     abstract protected function _getDoor();
     
     /**

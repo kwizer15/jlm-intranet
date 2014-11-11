@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class BillControllerTest extends WebTestCase
+class QuoteControllerTest extends WebTestCase
 {
     /**
      * @var Symfony\Bundle\FrameworkBundle\Client
@@ -35,19 +35,10 @@ class BillControllerTest extends WebTestCase
     public function getUrls()
     {
         return array(
-        	array('GET', '/bill'),
-            array('GET', '/bill/inseizure'),
-            array('GET', '/bill/sended'),
-            array('GET', '/bill/payed'),
-            array('GET', '/bill/canceled'),
-            array('GET', '/bill/1/show'),
-            array('GET', '/bill/new'),
-            array('GET', '/bill/new/door/1'),
-            array('GET', '/bill/new/quote/1'),
-            array('GET', '/bill/new/intervention/1'),
-            array('GET', '/bill/1/edit'),
-            array('GET', '/bill/todo'),
-            array('GET', '/bill/toboost'),
+        	array('GET', '/quote'),
+            array('GET', '/quote/new/1'),
+            array('GET', '/quote/edit/1'),
+            array('GET', '/quote/show/1'),
         );
     }
     

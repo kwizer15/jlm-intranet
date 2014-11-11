@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\OfficeBundle\EventListener;
+namespace JLM\CommerceBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\HttpKernel;

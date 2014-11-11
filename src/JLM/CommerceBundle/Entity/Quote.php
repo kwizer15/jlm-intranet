@@ -14,7 +14,6 @@ namespace JLM\CommerceBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\ContactBundle\Model\PersonInterface;
 use JLM\ModelBundle\Entity\Door;
-use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\CommerceBundle\Model\QuoteInterface;
 use JLM\CommerceBundle\Model\QuoteVariantInterface;

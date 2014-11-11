@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use JLM\ModelBundle\Entity\Door;
-use JLM\OfficeBundle\Entity\Quote;
+use JLM\CommerceBundle\Model\QuoteInterface;
 use JLM\DailyBundle\Entity\Intervention;
 
 /**
@@ -40,7 +40,8 @@ class AskQuote extends Ask
 	
 	/**
 	 * Devis
-	 * @ORM\OneToMany(targetEntity="Quote",mappedBy="ask")
+	 * @var QuoteInterface
+	 * @ORM\OneToMany(targetEntity="JLM\CommerceBundle\Entity\Quote", mappedBy="ask")
 	 */
 	private $quotes;
 	
@@ -150,24 +151,25 @@ class AskQuote extends Ask
     /**
      * Add quotes
      *
-     * @param \JLM\OfficeBundle\Entity\Quote $quotes
-     * @return AskQuote
+     * @param QuoteInterface $quotes
+     * @return bool
      */
-    public function addQuote(\JLM\OfficeBundle\Entity\Quote $quotes)
+    public function addQuote(QuoteInterface $quotes)
     {
         $this->quotes[] = $quotes;
     
-        return $this;
+        return true;
     }
 
     /**
      * Remove quotes
      *
-     * @param \JLM\OfficeBundle\Entity\Quote $quotes
+     * @param QuoteInterface $quotes
+     * @return bool
      */
-    public function removeQuote(\JLM\OfficeBundle\Entity\Quote $quotes)
+    public function removeQuote(QuoteInterface $quotes)
     {
-        $this->quotes->removeElement($quotes);
+        return $this->quotes->removeElement($quotes);
     }
 
     /**

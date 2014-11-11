@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\OfficeBundle\Tests\Entity;
+namespace JLM\CommerceBundle\Tests\Entity;
 
-use JLM\OfficeBundle\Entity\Quote;
+use JLM\CommerceBundle\Entity\Quote;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>

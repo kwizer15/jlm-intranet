@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Devis <small>{{ entity.number }}</small></h1>
-{% include 'JLMOCommerceBundle:Quote:stateheader.html.twig' with {'state': entity.state} %}
+{% include 'JLMCommerceBundle:Quote:stateheader.html.twig' with {'state': entity.state} %}
 {% include 'JLMCommerceBundle:Quote:showheader.html.twig' with {'quote': entity} %}
 <div class="form-actions">
 {% if entity.ask %}

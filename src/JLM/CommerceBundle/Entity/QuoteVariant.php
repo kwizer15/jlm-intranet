@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\OfficeBundle\Entity;
+namespace JLM\CommerceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -117,7 +117,7 @@ class QuoteVariant implements QuoteVariantInterface
 	 *
 	 * @return self
 	 */
-	public function setQuote(QuoteInterface $quote)
+	public function setQuote(QuoteInterface $quote = null)
 	{
 		$this->quote = $quote;
 		
@@ -436,5 +436,21 @@ class QuoteVariant implements QuoteVariantInterface
     public function getWork()
     {
         return $this->work;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getDoor()
+    {
+    	return $this->getQuote()->getDoor();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getSite()
+    {
+    	return $this->getDoor()->getSite();
     }
 }

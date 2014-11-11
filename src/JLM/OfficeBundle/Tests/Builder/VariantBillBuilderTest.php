@@ -43,7 +43,7 @@ class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
         $quote->expects($this->any())->method('getAsk')->will($this->returnValue($ask));
         $quote->expects($this->any())->method('getDoor')->will($this->returnValue($door));
         
-        $this->variant = $this->getMock('JLM\OfficeBundle\Entity\QuoteVariant');
+        $this->variant = $this->getMock('JLM\CommerceBundle\Model\QuoteVariantInterface');
         $this->variant->expects($this->any())->method('getNumber')->will($this->returnValue('14120001-1'));
         $this->variant->expects($this->any())->method('getQuote')->will($this->returnValue($quote));
         $this->variant->expects($this->any())->method('getLines')->will($this->returnValue(array()));

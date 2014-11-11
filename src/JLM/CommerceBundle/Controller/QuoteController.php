@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\OfficeBundle\Controller;
+namespace JLM\CommerceBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -46,7 +46,7 @@ class QuoteController extends Controller
     {
     	$limit = 20;
         $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('JLMCommerceOfficeBundle:Quote');
+        $repo = $em->getRepository('JLMCommerceBundle:Quote');
         $nb = ($state === null) ? $repo->getTotal() : $repo->getCountState($state);
         $nbPages = ceil($nb/$limit);
         $nbPages = ($nbPages < 1) ? 1 : $nbPages;
@@ -274,7 +274,7 @@ class QuoteController extends Controller
     		$em = $this->getDoctrine()->getManager();
     		return array(
     				'layout'=> array('form_search_query'=>$entity),
-    				'results' => $em->getRepository('JLMOfficeBundle:Quote')->search($entity),
+    				'results' => $em->getRepository('JLMCommerceBundle:Quote')->search($entity),
     				'query' => $entity->getQuery(),
     		);
     	}
@@ -291,7 +291,7 @@ class QuoteController extends Controller
     	$response = new Response();
     	$response->headers->set('Content-Type', 'application/pdf');
     	$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
-    	$response->setContent($this->render('JLMOfficeBundle:Quote:quote.pdf.php',array('entities'=>$entity->getVariants())));
+    	$response->setContent($this->render('JLMCommerceBundle:Quote:quote.pdf.php',array('entities'=>$entity->getVariants())));
     		
     	//   return array('entity'=>$entity);
     	return $response;
@@ -307,7 +307,7 @@ class QuoteController extends Controller
     	$response = new Response();
     	$response->headers->set('Content-Type', 'application/pdf');
     	$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
-    	$response->setContent($this->render('JLMOfficeBundle:Quote:jacket.pdf.php',array('entity'=>$entity)));
+    	$response->setContent($this->render('JLMCommerceBundle:Quote:jacket.pdf.php',array('entity'=>$entity)));
     
     	//   return array('entity'=>$entity);
     	return $response;
@@ -326,8 +326,8 @@ class QuoteController extends Controller
     	$mail = new Mail();
     	$mail->setSubject('Devis n°'.$entity->getNumber());
     	$mail->setFrom('commerce@jlm-entreprise.fr');
-    	$mail->setBody($this->renderView('JLMOfficeBundle:Quote:email.txt.twig', array('door' => $entity->getDoorCp())));
-    	$mail->setSignature($this->renderView('JLMOfficeBundle:Variant:emailsignature.txt.twig', array('name' => $entity->getFollowerCp())));
+    	$mail->setBody($this->renderView('JLMCommerceBundle:Quote:email.txt.twig', array('door' => $entity->getDoorCp())));
+    	$mail->setSignature($this->renderView('JLMCommerceBundle:QuoteVariant:emailsignature.txt.twig', array('name' => $entity->getFollowerCp())));
     	if ($entity->getContact())
     	{
     		if ($entity->getContact()->getPerson())
@@ -373,7 +373,7 @@ class QuoteController extends Controller
     			if ($variant->getState() > 0)
     			{
 		    		$message->attach(\Swift_Attachment::newInstance(
-		    				$this->render('JLMOfficeBundle:Quote:quote.pdf.php',array('entities'=>array($variant))),
+		    				$this->render('JLMCommerceBundle:Quote:quote.pdf.php',array('entities'=>array($variant))),
 		    				$variant->getNumber().'.pdf','application/pdf'
 		    		))
 		    		;
@@ -385,7 +385,7 @@ class QuoteController extends Controller
     			if ($entity->getVat() == $entity->getVatTransmitter())
     			{
     				$message->attach(\Swift_Attachment::fromPath(
-						$this->get('kernel')->getRootDir().'/../web/bundles/jlmoffice/pdf/attestation.pdf'
+						$this->get('kernel')->getRootDir().'/../web/bundles/jlmcommerce/pdf/attestation.pdf'
 					));
     			}
     

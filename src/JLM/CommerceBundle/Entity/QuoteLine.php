@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\OfficeBundle\Entity;
+namespace JLM\CommerceBundle\Entity;
 
 use JLM\CommerceBundle\Entity\CommercialPartLineProduct;
 use JLM\CommerceBundle\Model\QuoteLineInterface;

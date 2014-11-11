@@ -31,7 +31,7 @@ JLM\CommerceBundle\Entity\QuoteVariant:
       inversedBy: variants
   oneToMany:
     lines:
-      targetEntity: JLM\Commerce\Entity\QuoteLine
+      targetEntity: JLM\CommerceBundle\Entity\QuoteLine
       mappedBy: variant
       orderBy: { position: ASC }
   oneToOne:

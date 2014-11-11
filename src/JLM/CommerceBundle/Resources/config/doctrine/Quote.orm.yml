@@ -29,7 +29,7 @@ JLM\CommerceBundle\Entity\Quote:
       inversedBy: quotes
   oneToMany:
     variants:
-      targetEntity: JLM\OfficeBundle\Entity\QuoteVariant
+      targetEntity: JLM\CommerceBundle\Entity\QuoteVariant
       mappedBy: quote
       
       
