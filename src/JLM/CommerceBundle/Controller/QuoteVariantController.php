@@ -268,7 +268,7 @@ class QuoteVariantController extends Controller
 			if ($entity->getQuote()->getVat() == $entity->getQuote()->getVatTransmitter())
 			{
 				$message->attach(\Swift_Attachment::fromPath(
-						$this->get('kernel')->getRootDir().'/../web/bundles/jlmoffice/pdf/attestation.pdf'
+						$this->get('kernel')->getRootDir().'/../web/bundles/jlmcommerce/pdf/attestation.pdf'
 				))
 				;
 			} 
