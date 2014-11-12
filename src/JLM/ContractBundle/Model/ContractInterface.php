@@ -11,6 +11,7 @@
 
 namespace JLM\ContractBundle\Model;
 
+use JLM\ModelBundle\Entity\Trustee;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -36,6 +37,13 @@ interface ContractInterface
 	 * @return float
 	 */
 	public function getFee();
+	
+	/**
+	 * Get trustee
+	 * 
+	 * @return Trustee
+	 */
+	public function getTrustee();
 	
 	/**
 	 * To String

@@ -341,9 +341,7 @@ class Contract implements ContractInterface
     }
 
     /**
-     * Get trustee
-     *
-     * @return JLM\ModelBundle\Entity\Trustee 
+     * {@inheritdoc}
      */
     public function getTrustee()
     {

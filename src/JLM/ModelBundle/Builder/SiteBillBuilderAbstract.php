@@ -12,16 +12,19 @@
 namespace JLM\ModelBundle\Builder;
 
 use JLM\BillBundle\Builder\BillBuilderAbstract;
+use JLM\ModelBundle\Entity\Site;
+use JLM\ModelBundle\Entity\Trustee;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-abstract class SiteBillBuilderAbstract extends BillBuilderAbstract
+abstract class SiteBillBuilderAbstract extends TrusteeBillBuilderAbstract
 {
-    abstract protected function _getSite();
+    protected $site;
     
-    protected function _getTrustee()
+    public function __construct(Site $site, $options = array())
     {
-        return $this->_getSite()->getTrustee();
+        $this->site = $site;
+        parent::__construct($this->site->getTrustee(), $options);
     }
    
     /**
@@ -29,22 +32,9 @@ abstract class SiteBillBuilderAbstract extends BillBuilderAbstract
      */
     public function buildBusiness()
     {
-        $site = $this->_getSite();
-        $this->getBill()->setSite($site->toString());
-        $this->getBill()->setSiteObject($site);
-        $this->getBill()->setPrelabel($site->getBillingPrelabel());
-        $this->getBill()->setVat($site->getVat()->getRate());
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function buildCustomer()
-    {
-        $trustee = $this->_getTrustee();
-        $this->getBill()->setTrustee($trustee);
-        $this->getBill()->setTrusteeName($trustee->getBillingLabel());
-        $this->getBill()->setTrusteeAddress($trustee->getAddressForBill()->__toString());
-        $this->getBill()->setAccountNumber(($trustee->getAccountNumber() == null) ? '411000' : $trustee->getAccountNumber());
+        $this->bill->setSite($this->site->toString());
+        $this->bill->setSiteObject($this->site);
+        $this->bill->setPrelabel($this->site->getBillingPrelabel());
+        $this->bill->setVat($this->site->getVatRate());
     }
 }

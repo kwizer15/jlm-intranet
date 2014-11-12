@@ -381,6 +381,10 @@ class Site implements AdministratorInterface
      */
     public function toString()
     {
+        if (!$this->getAddress() instanceof AddressInterface)
+        {
+            return '';
+        }
     	return $this->getAddress()->toString();
     }
     
@@ -542,5 +546,23 @@ class Site implements AdministratorInterface
     public function getName()
     {
         return $this->getAddress()->__toString();
+    }
+    
+    /**
+     * 
+     * @return number
+     */
+    public function getVatRate()
+    {
+        if (!$this->getVat() instanceof VAT)
+        {
+            return '0.2';
+        }
+        return $this->getVat()->getRate();
+    }
+    
+    public function getBillingLabel()
+    {
+        return $this->getManager()->getBillingLabel();
     }
 }

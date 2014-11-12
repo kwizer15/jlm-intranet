@@ -12,31 +12,20 @@
 namespace JLM\ModelBundle\Builder;
 
 use JLM\ModelBundle\Entity\Door;
+use JLM\ContractBundle\Model\ContractInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 abstract class DoorBillBuilderAbstract extends SiteBillBuilderAbstract
 {
-	/**
-	 * @return Door
-	 */
-    abstract protected function _getDoor();
+    protected $door;
     
-    /**
-     * {@inheritdoc}
-     */
-    protected function _getSite()
+    public function __construct(Door $door, $options = array())
     {
-        return $this->_getDoor()->getSite();
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    protected function _getTrustee()
-    {
-        $contract = $this->_getDoor()->getActualContract();
-        return (empty($contract)) ? $this->_getDoor()->getSite()->getTrustee() : $contract->getTrustee();
+        $this->door = $door;
+        parent::__construct($this->door->getSite(), $options);
+        $contract = $this->door->getActualContract();
+        $this->trustee = ($contract instanceof ContractInterface) ? $this->trustee : $contract->getTrustee();
     }
     
     /**
@@ -44,7 +33,6 @@ abstract class DoorBillBuilderAbstract extends SiteBillBuilderAbstract
      */
     public function buildDetails()
     {
-        $door = $this->_getDoor();
-        $this->getBill()->setDetails($door->getType().' - '.$door->getLocation());
+        $this->getBill()->setDetails($this->door->getType().' - '.$this->door->getLocation());
     }
 }

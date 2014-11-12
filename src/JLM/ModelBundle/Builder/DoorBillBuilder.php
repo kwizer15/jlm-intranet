@@ -16,23 +16,7 @@ use JLM\ModelBundle\Entity\Door;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class DoorBillBuilder extends DoorBillBuilderAbstract
-{
-    private $door;
-    
-    public function __construct(Door $door, $options = array())
-    {
-        $this->door = $door;
-        parent::__construct($options);
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    protected function _getDoor()
-    {
-        return $this->door;
-    }
-    
+{    
     public function buildLines()
     {
         

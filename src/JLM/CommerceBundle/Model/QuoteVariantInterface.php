@@ -49,4 +49,9 @@ interface QuoteVariantInterface
 	 * @return Site
 	 */
 	public function getSite();
+	
+	/**
+	 * @return string
+	 */
+	public function getNumber();
 }

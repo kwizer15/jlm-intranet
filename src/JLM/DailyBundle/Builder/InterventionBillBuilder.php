@@ -25,7 +25,7 @@ class InterventionBillBuilder extends DoorBillBuilderAbstract
     public function __construct(Intervention $intervention, $options = array())
     {
         $this->intervention = $intervention;
-        parent::__construct($options);
+        parent::__construct($this->intervention->getDoor(), $options);
     }
     
     /**
@@ -50,13 +50,5 @@ class InterventionBillBuilder extends DoorBillBuilderAbstract
     public function buildIntro()
     {
         $this->getBill()->setIntro($this->intervention->getReason());
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    protected function _getDoor()
-    {
-        return $this->intervention->getDoor();
     }
 }

@@ -12,7 +12,7 @@
 namespace JLM\OfficeBundle\Builder;
 
 use JLM\BillBundle\Builder\BillLineBuilderAbstract;
-use JLM\OfficeBundle\Entity\QuoteLine;
+use JLM\CommerceBundle\Entity\QuoteLine;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>

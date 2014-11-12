@@ -9,17 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\OfficeBundle\Tests\Builder;
+namespace JLM\DailyBundle\Tests\Builder;
 
-use JLM\OfficeBundle\Builder\VariantBillBuilder;
+use JLM\DailyBundle\Builder\InterventionBillBuilder;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
+class InterventionBillBuilderTest extends \PHPUnit_Framework_TestCase
 {
     private $builder;
     
-    private $variant;
+    private $intervention;
     
     /**
      * {@inheritdoc}
@@ -39,19 +39,12 @@ class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
         $site->expects($this->any())->method('getVat')->will($this->returnValue($vat));
         $door->expects($this->any())->method('getSite')->will($this->returnValue($site));
         $door->expects($this->any())->method('getActualContract')->will($this->returnValue($contract));
-        $ask = $this->getMock('JLM\OfficeBundle\Entity\AskQuote');
-        $ask->expects($this->any())->method('getSite')->will($this->returnValue($site));
-        $ask->expects($this->any())->method('getDoor')->will($this->returnValue($door));
-        $quote = $this->getMock('JLM\CommerceBundle\Model\QuoteInterface');
-        $quote->expects($this->any())->method('getAsk')->will($this->returnValue($ask));
-        $quote->expects($this->any())->method('getDoor')->will($this->returnValue($door));
         
-        $this->variant = $this->getMock('JLM\CommerceBundle\Model\QuoteVariantInterface');
-        $this->variant->expects($this->any())->method('getNumber')->will($this->returnValue('14120001-1'));
-        $this->variant->expects($this->any())->method('getQuote')->will($this->returnValue($quote));
-        $this->variant->expects($this->any())->method('getDoor')->will($this->returnValue($door));
-        $this->variant->expects($this->any())->method('getLines')->will($this->returnValue(array()));
-        $this->builder = new VariantBillBuilder($this->variant);
+        $this->intervention = $this->getMock('JLM\DailyBundle\Entity\Intervention');
+        $this->intervention->expects($this->any())->method('getLastDate')->will($this->returnValue(new \DateTime));
+        $this->intervention->expects($this->any())->method('getReason')->will($this->returnValue(array()));
+        $this->intervention->expects($this->any())->method('getDoor')->will($this->returnValue($door));
+        $this->builder = new InterventionBillBuilder($this->intervention);
     }
     
     /**
@@ -94,13 +87,11 @@ class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
     public function testBuildReference()
     {
         $this->builder->buildReference();
-        $this->assertEquals('Selon votre accord sur notre devis n°14120001-1', $this->builder->getBill()->getReference());
+//        $this->assertEquals('Selon notre intervention du ', $this->builder->getBill()->getReference());
     }
     
     public function testBuildDetails()
     {
-        $door = $this->getMock('JLM\ModelBundle\Entity\Door');
-        $this->variant->expects($this->any())->method('getDoor')->will($this->returnValue($door));
         $this->builder->buildDetails();
     }
 }

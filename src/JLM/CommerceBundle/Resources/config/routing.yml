@@ -184,7 +184,7 @@ quote_show:
     
 quote_newfromask:
     path: /quote/new/fromask/{id}
-    defaults: { _controller: "JLMCommerceBundle:Quote:newfromask" }
+    defaults: { _controller: "JLMCommerceBundle:Quote:new" }
     methods: [GET]
     
 quote_create:

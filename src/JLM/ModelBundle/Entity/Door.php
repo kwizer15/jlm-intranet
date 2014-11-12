@@ -970,12 +970,12 @@ class Door implements BayInterface, InstallationInterface
      */
     public function toString()
     { 
-        if (!$this->getProperty() instanceof Site)
+        if (!$this->getAdministrator() instanceof Site)
         {
             return $this->__toString();
         }
         
-        return $this->getType().' - '.$this->getLocation().chr(10).$this->getProperty()->__toString();
+        return $this->getType().' - '.$this->getLocation().chr(10).$this->getAdministrator()->__toString();
     }
 
     /**

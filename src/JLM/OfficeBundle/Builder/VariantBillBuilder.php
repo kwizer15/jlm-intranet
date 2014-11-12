@@ -14,6 +14,7 @@ namespace JLM\OfficeBundle\Builder;
 use JLM\ModelBundle\Builder\DoorBillBuilderAbstract;
 use JLM\BillBundle\Builder\BillLineFactory;
 use JLM\CommerceBundle\Model\QuoteVariantInterface;
+use JLM\ModelBundle\Entity\Door;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -25,7 +26,7 @@ class VariantBillBuilder extends DoorBillBuilderAbstract
     public function __construct(QuoteVariantInterface $variant, $options = array())
     {
         $this->variant = $variant;
-        parent::__construct($options);
+        parent::__construct($variant->getDoor(), $options);
     }
     
     /**
@@ -33,7 +34,7 @@ class VariantBillBuilder extends DoorBillBuilderAbstract
      */
     public function buildReference()
     {
-        $this->getBill()->setReference('Selon votre accord sur notre devis n°'.$this->variant->getNumber());
+        $this->bill->setReference('Selon votre accord sur notre devis n°'.$this->variant->getNumber());
     }
     
     /**
@@ -45,25 +46,9 @@ class VariantBillBuilder extends DoorBillBuilderAbstract
         foreach ($lines as $line)
         {
             $l = BillLineFactory::create(new VariantBillLineBuilder($line));
-            $l->setBill($this->getBill());
+            $l->setBill($this->bill);
             $l->setPosition($line->getPosition());
-            $this->getBill()->addLine($l);
+            $this->bill->addLine($l);
         }
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    protected function _getDoor()
-    {
-        return $this->variant->getDoor();
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    protected function _getSite()
-    {
-    	return $this->variant->getSite();
     }
 }

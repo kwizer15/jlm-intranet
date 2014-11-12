@@ -20,12 +20,12 @@ abstract class BillBuilderAbstract implements BillBuilderInterface
     /**
      * @var Bill
      */
-    private $bill;
+    protected $bill;
     
     /**
      * @var array
      */
-    private $options;
+    protected $options;
     
     /**
      * {@inheritdoc}

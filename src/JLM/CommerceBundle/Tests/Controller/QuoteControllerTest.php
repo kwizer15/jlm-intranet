@@ -36,9 +36,9 @@ class QuoteControllerTest extends WebTestCase
     {
         return array(
         	array('GET', '/quote'),
-            array('GET', '/quote/new/1'),
-            array('GET', '/quote/edit/1'),
-            array('GET', '/quote/show/1'),
+            array('GET', '/quote/new/fromask/1'),
+            array('GET', '/quote/1/edit'),
+            array('GET', '/quote/1/show'),
         );
     }
     
