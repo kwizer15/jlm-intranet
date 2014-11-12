@@ -90,7 +90,7 @@ class Site implements AdministratorInterface
     /**
      * @var VAT $vat
      * 
-     * @ORM\ManyToOne(targetEntity="JLM\Commercebundle\Model\VATInterface")
+     * @ORM\ManyToOne(targetEntity="JLM\CommerceBundle\Model\VATInterface")
      * @Assert\Valid
      * @Assert\NotNull
      */

@@ -189,12 +189,13 @@ class Fee
     }
     
     /**
-     * Set Vat
+     * Set VatInterface
      * @return Fee
      */
-    public function setVat(VAT $vat)
+    public function setVat(VATInterface $vat)
     {
     	$this->vat = $vat;
+    	
     	return $this;
     }
     
