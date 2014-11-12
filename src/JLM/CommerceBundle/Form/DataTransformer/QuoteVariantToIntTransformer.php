@@ -1,10 +1,23 @@
 <?php
-namespace JLM\OfficeBundle\Form\DataTransformer;
+
+/*
+ * This file is part of the JLMCommerceBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace JLM\CommerceBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ */
 class QuoteVariantToIntTransformer implements DataTransformerInterface
 {
 	/**
@@ -21,38 +34,31 @@ class QuoteVariantToIntTransformer implements DataTransformerInterface
 	}
 	
 	/**
-	 * Transforms an object (quote) to an integer (id).
-	 *
-	 * @param  QuoteVariant|null $entity
-	 * @return int
+	 * {@inheritdoc}
 	 */
 	public function transform($entity)
 	{
-		if (null === $entity) {
+		if (null === $entity)
+		{
 			return "";
 		}
+		
 		return $entity->getId();
 	}
 	
 	/**
-	 * Transforms an integer (number) to an object (quote).
-	 *
-	 * @param  int $number
-	 * @return QuoteVariant|null
-	 * @throws TransformationFailedException if object (quote) is not found.
+	 * {@inheritdoc}
 	 */
 	public function reverseTransform($id)
 	{
-		if (!$id) {
+		if (!$id)
+		{
 			return null;
 		}
 	
-		
-			$entity = $this->om
-				->getRepository('JLMCommerceBundle:QuoteVariant')
-				->find($id)
-			;
-		if (null === $entity) {
+	    $entity = $this->om->getRepository('JLMCommerceBundle:QuoteVariant')->find($id);
+		if (null === $entity)
+		{
 			throw new TransformationFailedException(sprintf(
 					'A quote variant with id "%s" does not exist!',
 					$id
