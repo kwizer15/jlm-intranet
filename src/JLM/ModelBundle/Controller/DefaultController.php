@@ -65,7 +65,7 @@ class DefaultController extends Controller
     		$person->setRole($role);
     		$em->persist($person);
     	}
-    	$quotes = $em->getRepository('JLMOfficeBundle:Quote')->findAll();
+    	$quotes = $em->getRepository('JLMCommerceBundle:Quote')->findAll();
     	foreach ($quotes as $quote)
     	{
     		$contact = $quote->getContact();

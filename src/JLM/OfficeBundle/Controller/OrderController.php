@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use JLM\OfficeBundle\Entity\Order;
 use JLM\OfficeBundle\Entity\OrderLine;
 use JLM\OfficeBundle\Form\Type\OrderType;
-use JLM\OfficeBundle\Entity\QuoteVariant;
+use JLM\CommerceBundle\Entity\QuoteVariant;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\Task;
 use JLM\DailyBundle\Entity\Work;

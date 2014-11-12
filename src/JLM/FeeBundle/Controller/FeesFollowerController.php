@@ -165,7 +165,7 @@ class FeesFollowerController extends Controller
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename=redevances-'.$follower->getActivation()->format('m-Y').'.pdf');
-		$response->setContent($this->render('JLMOfficeBundle:Bill:print.pdf.php',array('entities'=>$entities,'duplicate'=>false)));
+		$response->setContent($this->render('JLMCommerceBundle:Bill:print.pdf.php',array('entities'=>$entities,'duplicate'=>false)));
 		return $response;
 	}
 }

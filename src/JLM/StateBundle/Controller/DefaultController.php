@@ -179,7 +179,7 @@ class DefaultController extends Controller
     public function quoteAction()
     {
     	$em = $this->getDoctrine()->getManager();
-    	$repo = $em->getRepository('JLMOfficeBundle:QuoteVariant');
+    	$repo = $em->getRepository('JLMCommerceBundle:QuoteVariant');
     	$res = $repo->createQueryBuilder('a')
     		->where('a.state = 5')
     		->getQuery()->getResult();

@@ -105,7 +105,7 @@
 							<li>
 								<a href="{{ path('quote_show',{'id':quote.id}) }}">
 									{{ quote.number }}
-									{% include 'JLMOfficeBundle:Quote:statelabel.html.twig' with {'state': quote.state} %}
+									{% include 'JLMCommerceBundle:Quote:statelabel.html.twig' with {'state': quote.state} %}
 								</a>
 						{#}		du {{ quote.creation|date('d/m/Y') }} {#}
 							</li>

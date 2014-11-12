@@ -49,7 +49,7 @@ class QuoteToIntTransformer implements DataTransformerInterface
 	
 		
 			$entity = $this->om
-				->getRepository('JLMOfficeBundle:Quote')
+				->getRepository('JLMCommerceBundle:Quote')
 				->find($id)
 			;
 		if (null === $entity) {

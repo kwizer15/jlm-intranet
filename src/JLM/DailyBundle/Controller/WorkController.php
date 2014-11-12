@@ -18,7 +18,7 @@ use JLM\DailyBundle\Form\Type\ShiftingEditType;
 use JLM\DailyBundle\Form\Type\ExternalBillType;
 use JLM\DailyBundle\Form\Type\InterventionCancelType;
 use JLM\ModelBundle\Entity\Door;
-use JLM\OfficeBundle\Entity\QuoteVariant;
+use JLM\CommerceBundle\Entity\QuoteVariant;
 
 /**
  * Work controller.

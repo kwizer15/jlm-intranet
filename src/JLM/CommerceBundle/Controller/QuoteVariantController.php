@@ -216,8 +216,8 @@ class QuoteVariantController extends Controller
 		$mail = new Mail();
 		$mail->setSubject('Devis n°'.$entity->getNumber());
 		$mail->setFrom('commerce@jlm-entreprise.fr');
-		$mail->setBody($this->renderView('JLMOfficeBundle:Variant:email.txt.twig', array('intro' => $entity->getIntro(),'door' => $entity->getQuote()->getDoorCp())));
-		$mail->setSignature($this->renderView('JLMOfficeBundle:Variant:emailsignature.txt.twig', array('name' => $entity->getQuote()->getFollowerCp())));
+		$mail->setBody($this->renderView('JLMCommerceBundle:QuoteVariant:email.txt.twig', array('intro' => $entity->getIntro(),'door' => $entity->getQuote()->getDoorCp())));
+		$mail->setSignature($this->renderView('JLMCommerceBundle:QuoteVariant:emailsignature.txt.twig', array('name' => $entity->getQuote()->getFollowerCp())));
 		if ($entity->getQuote()->getContact())
 		{
 			if ($entity->getQuote()->getContact()->getPerson())
@@ -260,7 +260,7 @@ class QuoteVariantController extends Controller
 			$message = $mail->getSwift();
 			$message->setReadReceiptTo('commerce@jlm-entreprise.fr');
 			$message->attach(\Swift_Attachment::newInstance(
-					$this->render('JLMOfficeBundle:Quote:quote.pdf.php',array('entities'=>array($entity))),
+					$this->render('JLMCommerceBundle:Quote:quote.pdf.php',array('entities'=>array($entity))),
 					$entity->getNumber().'.pdf','application/pdf'
 			))
 			;
@@ -294,7 +294,7 @@ class QuoteVariantController extends Controller
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
-		$response->setContent($this->render('JLMOfficeBundle:Quote:quote.pdf.php',array('entities'=>array($entity))));
+		$response->setContent($this->render('JLMCommerceBundle:Quote:quote.pdf.php',array('entities'=>array($entity))));
 		 
 		return $response;
 	}
@@ -315,7 +315,7 @@ class QuoteVariantController extends Controller
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename=chiffrage'.$entity->getNumber().'.pdf');
-		$response->setContent($this->render('JLMOfficeBundle:Variant:coding.pdf.php',array('entity'=>$entity)));
+		$response->setContent($this->render('JLMCommerceBundle:QuoteVariant:coding.pdf.php',array('entity'=>$entity)));
 			
 		return $response;
 	}
