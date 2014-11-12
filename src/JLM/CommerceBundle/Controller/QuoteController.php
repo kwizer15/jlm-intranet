@@ -11,23 +11,23 @@
 
 namespace JLM\CommerceBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use FOS\UserBundle\Model\UserInterface;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use JLM\CommerceBundle\Entity\QuoteLine;
+use JLM\CommerceBundle\Entity\Quote;
+use JLM\CommerceBundle\Form\Type\QuoteType;
+use JLM\CommerceBundle\Model\QuoteInterface;
 use JLM\DefaultBundle\Entity\Search;
 use JLM\DefaultBundle\Form\Type\SearchType;
+use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
-use JLM\ModelBundle\Entity\Door;
-use JLM\CommerceBundle\Entity\Quote;
 use JLM\OfficeBundle\Entity\AskQuote;
-use JLM\OfficeBundle\Form\Type\QuoteType;
-use JLM\CommerceBundle\Entity\QuoteLine;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use FOS\UserBundle\Model\UserInterface;
-use JLM\CommerceBundle\Model\QuoteInterface;
 
 /**
  * Quote controller.

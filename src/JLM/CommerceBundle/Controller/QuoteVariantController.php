@@ -20,7 +20,7 @@ use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
 use JLM\CommerceBundle\Entity\Quote;
 use JLM\CommerceBundle\Entity\QuoteVariant;
-use JLM\OfficeBundle\Form\Type\QuoteVariantType;
+use JLM\CommerceBundle\Form\Type\QuoteVariantType;
 use JLM\CommerceBundle\Entity\QuoteLine;
 use JLM\OfficeBundle\Entity\Task;
 use JLM\OfficeBundle\Entity\Order;
