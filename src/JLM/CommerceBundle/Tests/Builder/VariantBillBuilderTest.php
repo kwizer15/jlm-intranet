@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the JLMOfficeBundle package.
+ * This file is part of the JLMCommerceBundle package.
  *
  * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *
@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\OfficeBundle\Tests\Builder;
+namespace JLM\CommerceBundle\Tests\Builder;
 
-use JLM\OfficeBundle\Builder\VariantBillBuilder;
+use JLM\CommerceBundle\Builder\VariantBillBuilder;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

@@ -22,7 +22,7 @@ use JLM\CommerceBundle\Entity\BillLine;
 use JLM\CommerceBundle\Form\Type\BillType;
 use JLM\CommerceBundle\Model\BillInterface;
 use JLM\CommerceBundle\Entity\QuoteVariant;
-use JLM\OfficeBundle\Builder\VariantBillBuilder;
+use JLM\CommerceBundle\Builder\VariantBillBuilder;
 use JLM\DailyBundle\Entity\Intervention;
 use JLM\DailyBundle\Builder\WorkBillBuilder;
 use JLM\DailyBundle\Builder\InterventionBillBuilder;
