@@ -138,7 +138,7 @@ class FeesFollowerController extends Controller
 				    'product' => $em->getRepository('JLMProductBundle:Product')->find(284),
 				    'penalty' => (string)$em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1),
                     'earlyPayment' => (string)$em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1),
-				    'vatTransmitter' => $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate(),
+				    'vatTransmitter' => $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(),
 				));
 				$bill = BillFactory::create($builder);
 				$em->persist($bill);

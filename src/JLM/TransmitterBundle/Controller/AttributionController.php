@@ -229,7 +229,7 @@ class AttributionController extends Controller
     	    'penalty'      => (string)$em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1),
     	    'property'     => (string)$em->getRepository('JLMOfficeBundle:PropertyModel')->find(1),
     	);
-    	$bill = BillFactory::create(new AttributionBillBuilder($entity, $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate(), $options));
+    	$bill = BillFactory::create(new AttributionBillBuilder($entity, $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(), $options));
     	$em->persist($bill);
     	$entity->setBill($bill);
     	$em->persist($entity);

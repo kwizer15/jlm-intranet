@@ -77,7 +77,7 @@ class AttributionBillBuilderTest extends \PHPUnit_Framework_TestCase
     
     public function testBuildBusiness()
     {
-        $vat = $this->getMock('JLM\ModelBundle\Entity\VAT');
+        $vat = $this->getMock('JLM\CommerceBundle\Model\VATInterface');
         $vat->expects($this->any())->method('getRate')->will($this->returnValue(0.2));
         
         $site = $this->getMock('JLM\ModelBundle\Entity\Site');

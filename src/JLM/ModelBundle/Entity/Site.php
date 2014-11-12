@@ -15,6 +15,7 @@ use JLM\CondominiumBundle\Model\AdministratorInterface;
 use JLM\CondominiumBundle\Model\AdministratorMemberInterface;
 use JLM\TransmitterBundle\Entity\UserGroup;
 use JLM\CommerceBundle\Model\BillInterface;
+use JLM\CommerceBundle\Model\VATInterface;
 
 /**
  * JLM\ModelBundle\Entity\Site
@@ -89,7 +90,7 @@ class Site implements AdministratorInterface
     /**
      * @var VAT $vat
      * 
-     * @ORM\ManyToOne(targetEntity="VAT")
+     * @ORM\ManyToOne(targetEntity="JLM\Commercebundle\Model\VATInterface")
      * @Assert\Valid
      * @Assert\NotNull
      */
@@ -348,10 +349,10 @@ class Site implements AdministratorInterface
     /**
      * Set vat
      *
-     * @param JLM\ModelBundle\Entity\VAT $vat
+     * @param VATInterface $vat
      * @return Site
      */
-    public function setVat(VAT $vat = null)
+    public function setVat(VATInterface $vat = null)
     {
         $this->vat = $vat;
     
@@ -361,7 +362,7 @@ class Site implements AdministratorInterface
     /**
      * Get vat
      *
-     * @return JLM\ModelBundle\Entity\VAT 
+     * @return VATInterface
      */
     public function getVat()
     {
@@ -554,10 +555,6 @@ class Site implements AdministratorInterface
      */
     public function getVatRate()
     {
-        if (!$this->getVat() instanceof VAT)
-        {
-            return '0.2';
-        }
         return $this->getVat()->getRate();
     }
     

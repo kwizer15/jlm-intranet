@@ -1,30 +1,31 @@
 <?php
 
-namespace JLM\ModelBundle\Entity;
+/*
+ * This file is part of the JLMCommerceBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace JLM\CommerceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JLM\CommerceBundle\Model\VATInterface;
 
 /**
- * JLM\ModelBundle\Entity\VAT
- *
- * @ORM\Table(name="vat")
- * @ORM\Entity(readOnly=true)
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class VAT
+class VAT implements VATInterface
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var int $rate
-     *
-     * @ORM\Column(name="rate", type="decimal", precision=3, scale=3)
      */
     private $rate;
 
@@ -50,9 +51,7 @@ class VAT
     }
 
     /**
-     * Get rate
-     *
-     * @return int 
+     * {@inheritdoc}
      */
     public function getRate()
     {

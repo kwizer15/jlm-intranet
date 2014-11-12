@@ -107,7 +107,7 @@ class BillController extends PaginableController
         $entity = new Bill();
         $entity->setCreation(new \DateTime);
 		$em = $this->getDoctrine()->getManager();
-		$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
+		$vat = $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
 		$entity->setVat($vat);
 		$entity = $this->finishNewBill($entity);
         $entity->addLine(new BillLine());
@@ -204,7 +204,7 @@ class BillController extends PaginableController
     {
         $entity  = new Bill();
         $em = $this->getDoctrine()->getManager();
-        $vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
+        $vat = $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
         $entity->setVatTransmitter($vat);
         $form    = $this->createNewForm($entity);
         $form->handleRequest($request);

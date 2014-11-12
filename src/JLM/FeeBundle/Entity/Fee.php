@@ -4,7 +4,7 @@ namespace JLM\FeeBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use JLM\ModelBundle\Entity\VAT;
+use JLM\CommerceBundle\Model\VATInterface;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ProductBundle\Model\ProductInterface;
 
@@ -71,7 +71,7 @@ class Fee
 	
 	/**
 	 * @var Vat $vat
-	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\VAT")
+	 * @ORM\ManyToOne(targetEntity="JLM\CommerceBundle\Model\VATInterface")
 	 * @Assert\Valid
 	 */
 	private $vat;

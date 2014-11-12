@@ -132,7 +132,7 @@ class QuoteController extends Controller
     		throw new AccessDeniedException('This user does not have access to this section.');
     	}
     	$em = $this->getDoctrine()->getManager();
-    	$vat = $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate();
+    	$vat = $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
     	$entity = Quote::createFromAskQuote($askquote);
     	$entity->setFollowerCp($user->getPerson()->getName());
     	$entity->setVatTransmitter($vat);
