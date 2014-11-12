@@ -35,7 +35,7 @@ class BillControllerTest extends WebTestCase
     public function getUrls()
     {
         return array(
-        	array('GET', '/bill'),
+        	array('GET', '/bill/'),
             array('GET', '/bill/inseizure'),
             array('GET', '/bill/sended'),
             array('GET', '/bill/payed'),

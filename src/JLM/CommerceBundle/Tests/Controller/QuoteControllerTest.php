@@ -35,7 +35,7 @@ class QuoteControllerTest extends WebTestCase
     public function getUrls()
     {
         return array(
-        	array('GET', '/quote'),
+        	array('GET', '/quote/'),
             array('GET', '/quote/new/fromask/1'),
             array('GET', '/quote/1/edit'),
             array('GET', '/quote/1/show'),

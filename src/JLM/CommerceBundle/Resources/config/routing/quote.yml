@@ -1,0 +1,74 @@
+quote:
+    path: /
+    defaults: { _controller: "JLMCommerceBundle:Quote:index" }
+    methods: [GET]
+    
+quote_page:
+    path: /page/{page}
+    defaults: { _controller: "JLMCommerceBundle:Quote:index" }
+    methods: [GET]
+    
+quote_state:
+    path: /page/{page}/state/{state}
+    defaults: { _controller: "JLMCommerceBundle:Quote:index" }
+    methods: [GET]
+    
+quote_show:
+    path: /{id}/show
+    defaults: { _controller: "JLMCommerceBundle:Quote:show" }
+    methods: [GET]
+    
+quote_newfromask:
+    path: /new/fromask/{id}
+    defaults: { _controller: "JLMCommerceBundle:Quote:new" }
+    methods: [GET]
+    
+quote_create:
+    path: /create
+    defaults: { _controller: "JLMCommerceBundle:Quote:create" }
+    methods: [POST]
+    
+quote_edit:
+    path: /{id}/edit
+    defaults: { _controller: "JLMCommerceBundle:Quote:edit" }
+    methods: [GET]
+    
+quote_update:
+    path: /{id}/update
+    defaults: { _controller: "JLMCommerceBundle:Quote:update" }
+    methods: [POST]
+    
+quote_delete:
+    path: /{id}/delete
+    defaults: { _controller: "JLMCommerceBundle:Quote:delete" }
+    methods: [POST]
+    
+quote_search:
+    path: /search
+    defaults: { _controller: "JLMCommerceBundle:Quote:search" }
+    methods: [POST]
+    
+quote_print:
+    path: /{id}/print
+    defaults: { _controller: "JLMCommerceBundle:Quote:print" }
+    methods: [GET]
+    
+quote_jacket:
+    path: /{id}/jacket
+    defaults: { _controller: "JLMCommerceBundle:Quote:jacket" }
+    methods: [GET]
+    
+quote_mail:
+    path: /{id}/mail
+    defaults: { _controller: "JLMCommerceBundle:Quote:mail" }
+    methods: [GET]
+    
+quote_sendmail:
+    path: /{id}/sendmail
+    defaults: { _controller: "JLMCommerceBundle:Quote:sendmail" }
+    methods: [POST]
+    
+jlm_commerce_quote_variant:
+    resource: "@JLMCommerceBundle/Resources/config/routing/quote_variant.yml"
+    prefix:   /variant
+ 
