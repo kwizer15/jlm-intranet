@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\CommerceBundle\Builder;
+namespace JLM\CommerceBundle\Factory;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
