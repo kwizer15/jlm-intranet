@@ -115,7 +115,7 @@
 						request.repository = 'JLMCommerceBundle:IntroBillModel';
 						return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
 					}});
-				this.$element.find("#bill_lines > tr").on('change',$.proxy(this.total,this)).billline({
+				this.$element.find("#jlm_commerce_bill_lines > tr").on('change',$.proxy(this.total,this)).billline({
 					autoSource:this.options.autoSource,
 				});
 				$("#jlm_commerce_bill_discount").on('change',$.proxy(this.total,this));
