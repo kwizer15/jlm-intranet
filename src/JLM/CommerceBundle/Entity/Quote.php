@@ -13,8 +13,8 @@ namespace JLM\CommerceBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\CommerceBundle\Model\QuoteRecipientInterface;
-use JLM\ModelBundle\Entity\Door;
-use JLM\OfficeBundle\Entity\AskQuote;
+use JLM\ModelBundle\Entity\Door;                // @todo Must be replaced by BusinessInterface
+use JLM\OfficeBundle\Entity\AskQuote;           // @todo Must be removed
 use JLM\CommerceBundle\Model\QuoteInterface;
 use JLM\CommerceBundle\Model\QuoteVariantInterface;
 
@@ -235,23 +235,46 @@ class Quote extends CommercialPart implements QuoteInterface
     /**
      * Set contact
      *
-     * @param string $contact
+     * @param QuoteRecipientInterface $contact
      * @return self
+     * @deprecated Use setRecipient($recipient)
      */
-    public function setContactPerson(PersonInterface $contact)
+    public function setContactPerson(QuoteRecipientInterface $contact)
     {
-    	$this->contactPerson = $contact;
-    
-    	return $this;
+    	return $this->setRecipient($contact);
     }
     
     /**
      *
-     * @return PersonInterface
+     * @return QuoteRecipientInterface
+     * @deprecated Use getRecipient()
      */
     public function getContactPerson()
     {
-    	return $this->contactPerson;
+    	return $this->getRecipient();
+    }
+    
+    /**
+     * Set recipient
+     *
+     * @param QuoteRecipientInterface $contact
+     * @return self
+     */
+    public function setRecipient(QuoteRecipientInterface $recipient)
+    {
+        $this->contactPerson = $recipient;
+    
+        return $this;
+    }
+    
+    /**
+     * Get recipient
+     * 
+     * @return QuoteRecipientInterface
+     */
+    public function getRecipient()
+    {
+        return $this->contactPerson;
     }
     
     /**
