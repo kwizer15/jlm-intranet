@@ -12,11 +12,12 @@
 namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\PersonInterface;
+use JLM\CommerceBundle\Model\QuoteRecipientInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Person extends Contact implements PersonInterface
+class Person extends Contact implements PersonInterface, QuoteRecipientInterface
 {
 	/**
      * @var integer $id

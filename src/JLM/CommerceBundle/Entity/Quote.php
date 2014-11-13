@@ -12,7 +12,7 @@
 namespace JLM\CommerceBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use JLM\ContactBundle\Model\PersonInterface;
+use JLM\CommerceBundle\Model\QuoteRecipientInterface;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\CommerceBundle\Model\QuoteInterface;

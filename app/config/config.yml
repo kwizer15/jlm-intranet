@@ -81,7 +81,6 @@ doctrine:
             JLM\CondominiumBundle\Model\AdministratorInterface: JLM\ModelBundle\Entity\Site
             JLM\CondominiumBundle\Model\AdministratorMemberInterface: JLM\ModelBundle\Entity\SiteContact
             
-            JLM\BillBundle\Model\BillableContactInterface: JLM\ModelBundle\Entity\Trustee
             JLM\CommerceBundle\Model\BillInterface: JLM\CommerceBundle\Entity\Bill
             JLM\CommerceBundle\Model\BillLineInterface: JLM\CommerceBundle\Entity\BillLine
             JLM\CommerceBundle\Model\QuoteInterface: JLM\CommerceBundle\Entity\Quote
@@ -91,6 +90,7 @@ doctrine:
             JLM\CommerceBundle\Model\VATInterface: JLM\CommerceBundle\Entity\VAT
             JLM\CommerceBundle\Model\BillSourceInterface: JLM\DailyBundle\Entity\Intervention
             JLM\CommerceBundle\Model\BusinessInterface: JLM\ModelBundle\Entity\Site
+            JLM\CommerceBundle\Model\QuoteRecipientInterface: JLM\ContactBundle\Entity\Person
             
             JLM\ProductBundle\Model\ProductInterface: JLM\ProductBundle\Entity\Product
             JLM\ProductBundle\Model\SupplierInterface: JLM\ProductBundle\Entity\Supplier
