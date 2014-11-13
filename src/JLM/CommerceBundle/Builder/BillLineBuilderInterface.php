@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the JLMBillBundle package.
+ * This file is part of the JLMCommerceBundle package.
  *
  * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\BillBundle\Builder;
+namespace JLM\CommerceBundle\Builder;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the JLMBillBundle package.
+ * This file is part of the JLMCommerceBundle package.
  *
  * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\BillBundle\Tests\Builder;
+namespace JLM\CommerceBundle\Tests\Builder;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -23,7 +23,7 @@ class BillLineBuilderAbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->builder = $this->getMockForAbstractClass('JLM\BillBundle\Builder\BillLineBuilderAbstract');
+        $this->builder = $this->getMockForAbstractClass('JLM\CommerceBundle\Builder\BillLineBuilderAbstract');
     }
     
     /**
@@ -31,7 +31,7 @@ class BillLineBuilderAbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\BillBundle\Builder\BillLineBuilderInterface', $this->builder);
+        $this->assertInstanceOf('JLM\CommerceBundle\Builder\BillLineBuilderInterface', $this->builder);
         $this->builder->create();
     }
     

@@ -11,7 +11,7 @@
 
 namespace JLM\CommerceBundle\Builder;
 
-use JLM\BillBundle\Builder\BillLineBuilderAbstract;
+use JLM\CommerceBundle\Builder\BillLineBuilderAbstract;
 use JLM\CommerceBundle\Entity\QuoteLine;
 
 /**

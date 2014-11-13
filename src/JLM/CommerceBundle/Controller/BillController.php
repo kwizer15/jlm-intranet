@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use JLM\BillBundle\Builder\BillFactory;
+use JLM\CommerceBundle\Factory\BillFactory;
 use JLM\CommerceBundle\Entity\Bill;
 use JLM\CommerceBundle\Entity\BillLine;
 use JLM\CommerceBundle\Form\Type\BillType;

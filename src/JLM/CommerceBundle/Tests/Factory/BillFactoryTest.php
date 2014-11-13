@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the JLMBillBundle package.
+ * This file is part of the JLMCommerceBundle package.
  *
  * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *
@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\BillBundle\Tests\Builder;
+namespace JLM\CommerceBundle\Tests\Factory;
 
-use JLM\BillBundle\Builder\BillFactory;
+use JLM\CommerceBundle\Factory\BillFactory;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -26,7 +26,7 @@ class BillFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->builder = $this->getMock('JLM\BillBundle\Builder\BillBuilderInterface');
+        $this->builder = $this->getMock('JLM\CommerceBundle\Builder\BillBuilderInterface');
         
         $this->bill = null;
     }

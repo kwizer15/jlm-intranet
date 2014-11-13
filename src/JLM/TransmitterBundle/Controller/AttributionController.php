@@ -12,7 +12,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\TransmitterBundle\Entity\Attribution;
 use JLM\TransmitterBundle\Entity\Ask;
 use JLM\TransmitterBundle\Form\Type\AttributionType;
-use JLM\BillBundle\Builder\BillFactory;
+use JLM\CommerceBundle\Factory\BillFactory;
 use JLM\TransmitterBundle\Builder\AttributionBillBuilder;
 
 /**

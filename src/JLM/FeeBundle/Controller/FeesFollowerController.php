@@ -13,7 +13,7 @@ use JLM\FeeBundle\Entity\FeesFollower;
 use JLM\CommerceBundle\Entity\Bill;
 use JLM\CommerceBundle\Entity\BillLine;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use JLM\BillBundle\Builder\BillFactory;
+use JLM\CommerceBundle\Factory\BillFactory;
 use JLM\FeeBundle\Builder\FeeBillBuilder;
 
 

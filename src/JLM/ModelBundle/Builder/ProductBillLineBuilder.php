@@ -11,7 +11,7 @@
 
 namespace JLM\ModelBundle\Builder;
 
-use JLM\BillBundle\Builder\BillLineBuilderAbstract;
+use JLM\CommerceBundle\Builder\BillLineBuilderAbstract;
 use JLM\ProductBundle\Model\ProductInterface;
 
 /**

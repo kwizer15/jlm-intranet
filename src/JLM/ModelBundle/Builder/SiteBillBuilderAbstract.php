@@ -11,7 +11,7 @@
 
 namespace JLM\ModelBundle\Builder;
 
-use JLM\BillBundle\Builder\BillBuilderAbstract;
+use JLM\CommerceBundle\Builder\BillBuilderAbstract;
 use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\Trustee;
 /**

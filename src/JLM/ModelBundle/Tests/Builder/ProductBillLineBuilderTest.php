@@ -43,7 +43,7 @@ class ProductBillLineBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\BillBundle\Builder\BillLineBuilderInterface', $this->builder);
+        $this->assertInstanceOf('JLM\CommerceBundle\Builder\BillLineBuilderInterface', $this->builder);
     }
     
     /**

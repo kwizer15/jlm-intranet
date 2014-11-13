@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use JLM\ContactBundle\Entity\Company;
 use JLM\ContactBundle\Model\AddressInterface;
 use JLM\CondominiumBundle\Model\ManagerInterface;
-use JLM\BillBundle\Model\BillableContactInterface;
 use JLM\ContractBundle\Model\ContractInterface;
 use JLM\CommerceBundle\Model\CustomerInterface;
 
@@ -18,7 +17,7 @@ use JLM\CommerceBundle\Model\CustomerInterface;
  * @ORM\Table(name="trustees")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\TrusteeRepository")
  */
-class Trustee extends Company implements ManagerInterface, BillableContactInterface, CustomerInterface
+class Trustee extends Company implements ManagerInterface, CustomerInterface
 {
 
 

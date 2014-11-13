@@ -12,7 +12,7 @@
 namespace JLM\CommerceBundle\Builder;
 
 use JLM\ModelBundle\Builder\DoorBillBuilderAbstract;
-use JLM\BillBundle\Builder\BillLineFactory;
+use JLM\CommerceBundle\Factory\BillLineFactory;
 use JLM\CommerceBundle\Model\QuoteVariantInterface;
 use JLM\ModelBundle\Entity\Door;
 
