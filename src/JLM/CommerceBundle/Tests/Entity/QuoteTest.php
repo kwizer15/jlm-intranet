@@ -39,10 +39,10 @@ class QuoteTest extends \PHPUnit_Framework_TestCase
 
     }
     
-    public function testPerson()
+    public function testRecipient()
     {
-        $person = $this->getMock('JLM\ContactBundle\Model\PersonInterface');
-        $this->assertSame($this->entity, $this->entity->setContactPerson($person));
-        $this->assertSame($person, $this->entity->getContactPerson());
+        $person = $this->getMock('JLM\CommerceBundle\Model\QuoteRecipientInterface');
+        $this->assertSame($this->entity, $this->entity->setRecipient($person));
+        $this->assertSame($person, $this->entity->getRecipient());
     }
 }
