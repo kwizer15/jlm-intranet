@@ -14,30 +14,11 @@ use JLM\ProductBundle\Model\ProductInterface;
 class Model extends \JLM\CommerceBundle\Entity\TextModel
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @var Product
      * 
      * @ORM\OneToOne(targetEntity="JLM\ProductBundle\Model\ProductInterface")
      */
     private $product;
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set product
