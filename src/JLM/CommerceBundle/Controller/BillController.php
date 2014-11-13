@@ -165,9 +165,9 @@ class BillController extends PaginableController
     {
         $em = $this->getDoctrine()->getManager();
         $options = array(
-            'penalty' => (string)$em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1),
-            'property' => (string)$em->getRepository('JLMOfficeBundle:PropertyModel')->find(1),
-            'earlyPayment' => (string)$em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1),
+            'penalty' => (string)$em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
+            'property' => (string)$em->getRepository('JLMCommerceBundle:PropertyModel')->find(1),
+            'earlyPayment' => (string)$em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1),
         );
         $builder = ($interv instanceof Work) ? (($interv->getQuote() !== null) ? new WorkBillBuilder($interv, $options) : null) : null;
         $builder = ($builder === null) ? new InterventionBillBuilder($interv, $options) : $builder;
@@ -187,9 +187,9 @@ class BillController extends PaginableController
     public function finishNewBill(Bill $entity)
     {
     	$em = $this->getDoctrine()->getManager();
-    	$entity->setPenalty($em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1).'');
-    	$entity->setProperty($em->getRepository('JLMOfficeBundle:PropertyModel')->find(1).'');
-    	$entity->setEarlyPayment($em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1).'');
+    	$entity->setPenalty($em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1).'');
+    	$entity->setProperty($em->getRepository('JLMCommerceBundle:PropertyModel')->find(1).'');
+    	$entity->setEarlyPayment($em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1).'');
     	$entity->setMaturity(30);
     	return $entity;
     }

@@ -1,0 +1,8 @@
+JLM\CommerceBundle\Entity\PropertyModel:
+  type: entity
+  table: propertymodel
+  readOnly: true
+  repositoryClass: JLM\CommerceBundle\Repository\TextModelRepository
+
+
+    

@@ -225,9 +225,9 @@ class AttributionController extends Controller
     	// @todo trouver un autre solution que le codage brut
     	$options = array(
     	    'port'         => $em->getRepository('JLMProductBundle:Product')->find(134),
-    	    'earlyPayment' => (string)$em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1),
-    	    'penalty'      => (string)$em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1),
-    	    'property'     => (string)$em->getRepository('JLMOfficeBundle:PropertyModel')->find(1),
+    	    'earlyPayment' => (string)$em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1),
+    	    'penalty'      => (string)$em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
+    	    'property'     => (string)$em->getRepository('JLMCommerceBundle:PropertyModel')->find(1),
     	);
     	$bill = BillFactory::create(new AttributionBillBuilder($entity, $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(), $options));
     	$em->persist($bill);

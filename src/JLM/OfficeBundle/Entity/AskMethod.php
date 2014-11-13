@@ -9,7 +9,7 @@ use JLM\ModelBundle\Entity\StringModel;
  * JLM\OfficeBundle\Entity\AskMethod
  *
  * @ORM\Table(name="askmethods")
- * @ORM\Entity(readOnly=true,repositoryClass="JLM\OfficeBundle\Entity\TextModelRepository")
+ * @ORM\Entity(readOnly=true,repositoryClass="JLM\CommerceBundle\Entity\TextModelRepository")
  */
 class AskMethod extends StringModel
 {

@@ -11,7 +11,7 @@ use JLM\ProductBundle\Model\ProductInterface;
  * @ORM\Table(name="transmitters_model")
  * @ORM\Entity
  */
-class Model extends \JLM\OfficeBundle\Entity\TextModel
+class Model extends \JLM\CommerceBundle\Entity\TextModel
 {
     /**
      * @var integer

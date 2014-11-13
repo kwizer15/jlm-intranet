@@ -1,0 +1,8 @@
+JLM\CommerceBundle\Entity\EarlyPaymentModel:
+  type: entity
+  table: earlypaymentmodel
+  readOnly: true
+  repositoryClass: JLM\CommerceBundle\Repository\TextModelRepository
+
+
+    

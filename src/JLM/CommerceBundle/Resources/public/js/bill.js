@@ -96,23 +96,23 @@
 				});
 				$("#jlm_commerce_bill_property").attr('data-source',this.options.autoSource).autocomplete({
 					source: function(request,response){
-						request.repository = 'JLMOfficeBundle:PropertyModel';
+						request.repository = 'JLMCommerceBundle:PropertyModel';
 						return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
 					}});
 				$("#jlm_commerce_bill_earlyPayment").attr('data-source',this.options.autoSource).autocomplete({
 					source: function(request,response){
-						request.repository = 'JLMOfficeBundle:EarlyPaymentModel';
+						request.repository = 'JLMCommerceBundle:EarlyPaymentModel';
 						return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
 					}});
 				$("#jlm_commerce_bill_penalty").attr('data-source',this.options.autoSource).autocomplete({
 					source: function(request,response){
-						request.repository = 'JLMOfficeBundle:PenaltyModel';
+						request.repository = 'JLMCommerceBundle:PenaltyModel';
 						return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
 					}});
 
 				$("#jlm_commerce_bill_intro").attr('data-source',this.options.autoSource).autocomplete({
 					source: function(request,response){
-						request.repository = 'JLMOfficeBundle:IntroBillModel';
+						request.repository = 'JLMCommerceBundle:IntroBillModel';
 						return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
 					}});
 				this.$element.find("#bill_lines > tr").on('change',$.proxy(this.total,this)).billline({
