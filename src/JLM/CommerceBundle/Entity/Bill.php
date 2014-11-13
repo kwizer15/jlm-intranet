@@ -18,8 +18,8 @@ use JLM\CommerceBundle\Model\BillLineInterface;
 use JLM\FeeBundle\Model\FeeInterface;
 use JLM\FeeBundle\Model\FeesFollowerInterface;
 
-use JLM\DailyBundle\Entity\Intervention;
-use JLM\ModelBundle\Entity\Site;
+use JLM\CommerceBundle\Model\BillSourceInterface;
+use JLM\CommerceBundle\Model\BusinessInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -127,7 +127,7 @@ class Bill extends CommercialPart implements BillInterface
 	
 	/**
 	 * Intervention (si suite à intervention)
-	 * @var JLM\DailyBundle\Entity\Intervention $intervention
+	 * @var BillSourceInterface $intervention
 	 */
 	private $intervention;
 	
@@ -259,10 +259,7 @@ class Bill extends CommercialPart implements BillInterface
     }
 
     /**
-     * Set site
-     *
-     * @param string $site
-     * @return Bill
+     * {@inheritdoc}
      */
     public function setSite($site)
     {
@@ -623,30 +620,53 @@ class Bill extends CommercialPart implements BillInterface
      */
     public function isOneSource()
     {
-    	return !(($this->fee !== null) && ($this->intervention !== null));
+    	return !(($this->fee !== null) && ($this->getSource() !== null));
     }
 
     /**
-     * Set intervention
+     * Set source
      *
-     * @param Intervention $intervention
+     * @param BillSourceInterface $source
      * @return self
      */
-    public function setIntervention(Intervention $intervention = null)
+    public function setSource(BillSourceInterface $source = null)
     {
-        $this->intervention = $intervention;
+        $this->intervention = $source;
     
         return $this;
+    }
+    
+    /**
+     * Get intervention
+     *
+     * @return BillSourceInterface
+     */
+    public function getSource()
+    {
+        return $this->intervention;
+    }
+    
+    /**
+     * Set intervention
+     *
+     * @param BillSourceInterface $intervention
+     * @return self
+     * @deprecated Use setSource($source)
+     */
+    public function setIntervention(BillSourceInterface $intervention = null)
+    {
+        return $this->setSource($intervention);
     }
 
     /**
      * Get intervention
      *
-     * @return Intervention 
+     * @return BillSourceInterface
+     * @deprecated Use getSource
      */
     public function getIntervention()
     {
-        return $this->intervention;
+        return $this->getSource();
     }
 
     /**
@@ -719,12 +739,9 @@ class Bill extends CommercialPart implements BillInterface
     }
 
     /**
-     * Set siteObject
-     *
-     * @param Site $siteObject
-     * @return self
+     * {@inheritdoc}
      */
-    public function setSiteObject(Site $siteObject = null)
+    public function setSiteObject(BusinessInterface $siteObject = null)
     {
         $this->siteObject = $siteObject;
     
@@ -734,11 +751,32 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get siteObject
      *
-     * @return Site 
+     * @return BusinessInterface
+     * @deprecated Use getBusiness()
      */
     public function getSiteObject()
     {
         return $this->siteObject;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setBusiness(BusinessInterface $business = null)
+    {
+        $this->business = $business;
+    
+        return $this;
+    }
+    
+    /**
+     * Get siteObject
+     *
+     * @return BusinessInterface
+     */
+    public function getBusiness()
+    {
+        return $this->business;
     }
     
     /**

@@ -21,22 +21,52 @@ interface BillInterface
 {
 	/**
 	 * 
-	 * @param Site $siteObject
+	 * @param BusinessInterface $siteObject
 	 * @return self
+	 * 
+	 * @deprecated Use setBusiness
 	 */
-    public function setSiteObject(Site $siteObject = null);
+    public function setSiteObject(BusinessInterface $siteObject = null);
+    
+    /**
+     * @param BusinessInterface $siteObject
+	 * @return self
+     */
+    public function setBusiness(BusinessInterface $business = null); 
     
     /**
      * 
-     * @param unknown $site
+     * @param string $site
 	 * @return self
      */
     public function setSite($site);
     
     /**
+     *
+     * @param CustomerInterface $customer
+     * @return self
+     */
+    public function setCustomer(CustomerInterface $customer = null);
+    
+    /**
+     *
+     * @param string $name
+     * @return self
+    */
+    public function setCustomerName($name);
+    
+    /**
+     *
+     * @param string $address
+     * @return self
+    */
+    public function setCustomerAddress($address);
+    
+    /**
      * 
      * @param CustomerInterface $customer
 	 * @return self
+	 * @deprecated Use setCustomer
      */
     public function setTrustee(CustomerInterface $customer = null);
     
@@ -44,6 +74,7 @@ interface BillInterface
      * 
      * @param string $name
 	 * @return self
+	 * @deprecated Use setCustomerName
      */
     public function setTrusteeName($name);
     
@@ -51,6 +82,7 @@ interface BillInterface
      * 
      * @param string $address
 	 * @return self
+	 * @deprecated Use setCustomerAddress
      */
     public function setTrusteeAddress($address);
     

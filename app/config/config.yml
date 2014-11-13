@@ -89,6 +89,8 @@ doctrine:
             JLM\CommerceBundle\Model\QuoteLineInterface: JLM\CommerceBundle\Entity\QuoteLine
             JLM\CommerceBundle\Model\CustomerInterface: JLM\ModelBundle\Entity\Trustee
             JLM\CommerceBundle\Model\VATInterface: JLM\CommerceBundle\Entity\VAT
+            JLM\CommerceBundle\Model\BillSourceInterface: JLM\DailyBundle\Entity\Intervention
+            JLM\CommerceBundle\Model\BusinessInterface: JLM\ModelBundle\Entity\Site
             
             JLM\ProductBundle\Model\ProductInterface: JLM\ProductBundle\Entity\Product
             JLM\ProductBundle\Model\SupplierInterface: JLM\ProductBundle\Entity\Supplier

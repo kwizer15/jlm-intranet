@@ -12,12 +12,12 @@
 namespace JLM\CommerceBundle\Entity;
 
 use JLM\ProductBundle\Model\ProductInterface;
-use JLM\CommerceBundle\Model\CommercialPartLineInterface;
+use JLM\CommerceBundle\Model\CommercialPartLineProductInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class CommercialPartLineProduct implements CommercialPartLineInterface 
+abstract class CommercialPartLineProduct extends CommercialPartLine implements CommercialPartLineProductInterface
 {
 	/**
 	 * Position de la ligne dans le devis

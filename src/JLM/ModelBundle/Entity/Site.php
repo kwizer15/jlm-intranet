@@ -16,6 +16,7 @@ use JLM\CondominiumBundle\Model\AdministratorMemberInterface;
 use JLM\TransmitterBundle\Entity\UserGroup;
 use JLM\CommerceBundle\Model\BillInterface;
 use JLM\CommerceBundle\Model\VATInterface;
+use JLM\CommerceBundle\Model\BusinessInterface;
 
 /**
  * JLM\ModelBundle\Entity\Site
@@ -23,7 +24,7 @@ use JLM\CommerceBundle\Model\VATInterface;
  * @ORM\Table(name="sites")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SiteRepository")
  */
-class Site implements AdministratorInterface
+class Site implements AdministratorInterface, BusinessInterface
 {
     /**
      * @var integer $id

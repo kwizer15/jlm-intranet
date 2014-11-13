@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JLM\ContractBundle\Model\ContractInterface;
 use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\CommerceBundle\Model\BillInterface;
+use JLM\CommerceBundle\Model\BillSourceInterface;
 
 /**
  * Plannification d'intervention
@@ -15,7 +16,7 @@ use JLM\CommerceBundle\Model\BillInterface;
  * @ORM\Table(name="shifting_interventions")
  * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\InterventionRepository")
  */
-abstract class Intervention extends Shifting
+abstract class Intervention extends Shifting implements BillSourceInterface
 {
     /**
      * Porte (lien)
