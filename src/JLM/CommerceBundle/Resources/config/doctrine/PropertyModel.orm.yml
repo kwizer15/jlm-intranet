@@ -1,6 +1,6 @@
-JLM\CommerceBundle\Entity\PenaltyModel:
+JLM\CommerceBundle\Entity\PropertyModel:
   type: entity
-  table: penaltymodel
+  table: propetymodel
   readOnly: true
   repositoryClass: JLM\CommerceBundle\Repository\TextModelRepository
 
