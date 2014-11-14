@@ -70,9 +70,15 @@ class DefaultController extends Controller
     		$times[$period]['total']['total'] += $stat['time'];
     	}
     	foreach ($times as $period => $datas)
+    	{
 	    	foreach ($datas as $key => $tech)
+	    	{
 	    		foreach($tech as $key2 => $type)
+	    		{
 	    			$times[$period][$key][$key2] = new \DateInterval('PT'.round($type/60,0,PHP_ROUND_HALF_ODD).'H'.($type%60).'M');
+	    		}
+	    	}
+    	}
 
     	return array(
     			'year' => $year,
@@ -98,6 +104,7 @@ class DefaultController extends Controller
 	    	$evolutionBase[$date1->getTimestamp()*1000] = (int)($maintenanceTotal*($i/182));
 	    	$date1->add(new \DateInterval('P1D'));
 		}
+		
     	return array(
     			'maintenanceDoes' => $repo->getCountDoes(false),
     			'maintenanceTotal' => $maintenanceTotal,
@@ -115,6 +122,8 @@ class DefaultController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     	$repo = $em->getRepository('JLMDailyBundle:Fixing');
+    	
+    	// @todo Into repsitory class
     	$result = $repo->createQueryBuilder('a')
     		->select('b.id, f.name as type, b.location, d.street, e.name as city, e.zip, g.begin,  COUNT(g) as nb')
     		->leftJoin('a.door','b')
@@ -132,6 +141,7 @@ class DefaultController extends Controller
     		->getQuery()
     		->getResult();
     	;
+    	
     	return array('results' => $result);
     }
     
@@ -152,16 +162,24 @@ class DefaultController extends Controller
 	   		if ($result['accession'] == 1)
 	   		{
 	   			if ($result['complete'] == 1)
+	   			{
 	   				$stats[$d->format('U')*1000]['accession']['complete'] = $result['number'];
-	   			else 
+	   			}
+	   			else
+	   			{ 
 	   				$stats[$d->format('U')*1000]['accession']['normal'] = $result['number'];
+	   			}
 	   		}
 	   		else
 	   		{
 	   			if ($result['complete'] == 1)
+	   			{
 	   				$stats[$d->format('U')*1000]['social']['complete'] = $result['number'];
-	   			else 
+	   			}
+	   			else
+	   			{ 
 	   				$stats[$d->format('U')*1000]['social']['normal'] = $result['number'];
+	   			}
 	   		}
 	   	}
 	   	
@@ -180,6 +198,8 @@ class DefaultController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     	$repo = $em->getRepository('JLMCommerceBundle:QuoteVariant');
+    	
+    	// @todo Into Repository class
     	$res = $repo->createQueryBuilder('a')
     		->where('a.state = 5')
     		->getQuery()->getResult();
@@ -188,16 +208,19 @@ class DefaultController extends Controller
     	{
     		$total += $r->getTotalPrice();
     	}
-    	echo $total.'<br>';
+    	$given = $total;
+    	
+    	// @todo Into Repository class
     	$res = $repo->createQueryBuilder('a')
-    	->where('a.state > 2')
-    	->getQuery()->getResult();
+    	            ->where('a.state > 2')
+    	            ->getQuery()->getResult();
     	$total = 0;
     	foreach($res as $r)
     	{
     		$total += $r->getTotalPrice();
     	}
-    	echo $total; exit;
+    	
+    	return array('given' => $given, 'total' => $total);
     }
     
     /**
@@ -214,9 +237,12 @@ class DefaultController extends Controller
     	foreach ($stats as $stat)
     	{
     		if (!isset($datas[$stat['year']]))
+    		{
     			$datas[$stat['year']] = $base;
+    		}
     		$datas[$stat['year']][$stat['month']] = $stat['number'];
     	}
+    	
     	return array('stats'=>$datas);
     }
 }
