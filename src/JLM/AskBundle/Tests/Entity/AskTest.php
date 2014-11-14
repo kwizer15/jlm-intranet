@@ -43,10 +43,15 @@ class AskTest extends \PHPUnit_Framework_TestCase
             array('Creation', new \DateTime),
             array('Maturity', new \DateTime),
             array('Ask', 'Foo'),
+            array('DontTreat', 'Foo'),
         	array('Contact', $this->getMock('JLM\AskBundle\Model\ContactInterface')),
             array('Payer', $this->getMock('JLM\AskBundle\Model\PayerInterface')),
             array('Method', $this->getMock('JLM\AskBundle\Model\CommunicationMeansInterface')),
             array('Subject', $this->getMock('JLM\AskBundle\Model\SubjectInterface')),
+            // Deprecateds
+            array('Person', $this->getMock('JLM\ContactBundle\Entity\Person')),
+            array('Trustee', $this->getMock('JLM\ModelBundle\Entity\Trustee')),
+            array('Site', $this->getMock('JLM\ModelBundle\Entity\Site')),
         );
     }
     
@@ -59,5 +64,12 @@ class AskTest extends \PHPUnit_Framework_TestCase
         $setter = 'set'.$attribute;
         $this->assertSame($this->entity, $this->entity->$setter($value));
         $this->assertSame($value, $this->entity->$getter());
+    }
+    
+    public function testIsCreationBeforeMaturity()
+    {
+        $this->entity->setCreation(new \DateTime);
+        $this->entity->setMaturity(new \DateTime);
+        $this->assertTrue($this->entity->isCreationBeforeMaturity());
     }
 }
