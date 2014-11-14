@@ -1,3 +1,7 @@
+jlm_ask:
+    resource: "@JLMAskBundle/Resources/config/routing.yml"
+    prefix:   /
+
 jlm_commerce:
     resource: "@JLMCommerceBundle/Resources/config/routing.yml"
     prefix:   /
