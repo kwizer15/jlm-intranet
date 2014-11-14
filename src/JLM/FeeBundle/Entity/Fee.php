@@ -10,6 +10,7 @@ use JLM\ProductBundle\Model\ProductInterface;
 
 use JLM\FeeBundle\Model\FeesFollowerInterface;
 use JLM\ContractBundle\Model\ContractInterface;
+use JLM\FeeBundle\Model\FeeInterface;
 
 /**
  * 
@@ -17,7 +18,7 @@ use JLM\ContractBundle\Model\ContractInterface;
  * @ORM\Table(name="fees")
  * @ORM\Entity
  */
-class Fee
+class Fee implements FeeInterface
 {
 	/**
 	 * @var int $id
@@ -218,7 +219,7 @@ class Fee
     {
         $this->contracts[] = $contract;
     
-        return $this;
+        return true;
     }
 
     /**
@@ -228,7 +229,7 @@ class Fee
      */
     public function removeContract(ContractInterface $contract)
     {
-        $this->contracts->removeElement($contract);
+        return $this->contracts->removeElement($contract);
     }
 
     /**
@@ -273,8 +274,11 @@ class Fee
     	$numbers = array();
     	foreach ($this->contracts as $contract)
     	{
-    		if (!in_array($contract->getNumber(),$numbers))
-    			$numbers[] = $contract->getNumber();
+    	    $num = $contract->getNumber();
+    		if (!in_array($num, $numbers))
+    		{
+    			$numbers[] = $num;
+    		}
     	}
     	return $numbers;
     }
@@ -343,91 +347,4 @@ class Fee
     	}
     	return $group;
     }
-    
-    /**
-     * 
-     * @param ProductInterface $product
-     * @param FeesFollowerInterface $follower
-     * @param string $number
-     * @return Bill
-     * @deprecated
-     *
-    public function getBill(ProductInterface $product, FeesFollowerInterface $follower, $number)
-    {
-      	$bill = new Bill;
-      	$bill->setNumber($number);
-      	$bill->setFee($this);
-      	$bill->setFeesFollower($follower);
-      	$creation = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
-    	// $creation->add(new \DateInterval('P1M'));
-    	// $creation = new \DateTime;
-      	$bill->setCreation($creation);
-      	$bill->setTrustee($this->getTrustee());
-      	$bill->setTrusteeName($this->getTrustee()->getBillingLabel());
-      	$bill->setTrusteeAddress($this->getBillingAddress()->toString());
-      	$bill->setAccountNumber($this->getTrustee()->getAccountNumber());
-     	$bill->setPrelabel($this->getPrelabel());
-      	$bill->setVat($this->getVat()->getRate());
-     	$ref = '';
-     	if ($this->getGroup() != '')
-     		$ref .= 'Groupe : '.$this->getGroup().chr(10);
-     	$ref .= 'Contrat';
-     	if (count($this->getContractNumbers()) > 1)
-    		$ref .= 's';
-     	$ref .= ' n°';
-     	foreach ($this->getContractNumbers() as $key=>$n)
-     	{
-    		if ($key > 0)
-    			$ref .= ', n°';
-    		$ref .= $n;
-    	}
-    	$bill->setReference($ref);
-     	$bill->setSite($this->getAddress());
-      	$dd = '';
-      	foreach ($this->getDoorDescription() as $key=>$desc)
-      	{
-      		if ($key > 0)
-      			$dd .= chr(10);
-      		$dd .= $desc;
-      	}
-      	$bill->setDetails($dd);
-      	$periods = array('1'=>'P1Y','2'=>'P6M','4'=>'P3M');
-      	foreach ($this->getContracts() as $key=>$contract)
-      	{
-      		$begin = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
-      		$endContract = $contract->getEnd();
-      		$end = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
-      		$end->add(new \DateInterval($periods[$this->getFrequence()]));
-      		$end->sub(new \DateInterval('P1D'));
-      		$frequenceString = ' '.$this->getFrequenceString();
-      		if ($endContract !== null)
-      		{
-      			if ($endContract < $end)
-      			{
-      				$end = $endContract;
-      				$frequenceString = '';
-      			} 	
-      		}
-      		$rapport = ($end->diff($begin)->format('%m') + 1) / 12;
-      		$fee = $contract->getFee() * $rapport;
-      		$line = new BillLine();
-      		$line->setBill($bill);
-      		$line->setPosition($key);
-      		$line->setReference($product->getReference());
-      		$line->setDesignation($product->getDesignation().$frequenceString.' du '.$begin->format('d/m/Y').' au '.$end->format('d/m/Y'));
-      		
-      		$line->setShowDescription(true);
-      		$line->setDescription($contract->getDoor()->getType().' / '.$contract->getDoor()->getLocation());
-      		$line->setUnitPrice($fee);
-      		$line->setQuantity(1);
-      		$line->setVat($this->getVat()->getRate());
-      		$bill->addLine($line);
-      	}
-      	$bill->setEarlyPayment('0,00% pour paiement anticipé');
-      	$bill->setMaturity(30);
-      	$bill->setPenalty('de 1,50% par mois pour paiement différé');
-      	
-      	return $bill;
-    }
-    */
 }

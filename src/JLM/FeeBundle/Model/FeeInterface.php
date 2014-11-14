@@ -26,6 +26,6 @@ interface FeeInterface
 	 * @param BillInterface $bill
 	 * @return BillInterface
 	 */
-	public function createBill(FeesFollowerInterface $follower, BillInterface $bill);
+//	public function createBill(FeesFollowerInterface $follower, BillInterface $bill);
 	
 }
