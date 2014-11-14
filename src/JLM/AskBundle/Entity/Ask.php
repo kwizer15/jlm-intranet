@@ -264,7 +264,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      */
     public function setContact(ContactInterface $contact = null)
     {
-        $this->person = $$contact;
+        $this->person = $contact;
     
         return $this;
     }
