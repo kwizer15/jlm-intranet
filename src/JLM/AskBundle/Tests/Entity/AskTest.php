@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the JLMContactBundle package.
+ * This file is part of the JLMAskBundle package.
  *
  * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *
@@ -9,8 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\OfficeBundle\Tests\Entity;
-
+namespace JLM\AskBundle\Tests\Entity;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
