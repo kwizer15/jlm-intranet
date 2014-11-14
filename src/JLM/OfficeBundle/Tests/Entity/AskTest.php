@@ -27,7 +27,7 @@ class AskTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->entity = $this->getMockForAbstractClass('JLM\OfficeBundle\Entity\Ask');
+        $this->entity = $this->getMockForAbstractClass('JLM\AskBundle\Entity\Ask');
     }
     
     /**
@@ -35,13 +35,30 @@ class AskTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-
+        $this->assertInstanceOf('JLM\AskBundle\Model\AskInterface', $this->entity);
     }
     
-    public function testPerson()
+    public function getGetterSetter()
     {
-        $person = $this->getMock('JLM\ContactBundle\Model\PersonInterface');
-        $this->assertSame($this->entity, $this->entity->setPerson($person));
-        $this->assertSame($person, $this->entity->getPerson());
+        return array(
+            array('Creation', new \DateTime),
+            array('Maturity', new \DateTime),
+            array('Ask', 'Foo'),
+        	array('Contact', $this->getMock('JLM\AskBundle\Model\ContactInterface')),
+            array('Payer', $this->getMock('JLM\AskBundle\Model\PayerInterface')),
+            array('Method', $this->getMock('JLM\AskBundle\Model\CommunicationMeansInterface')),
+            array('Subject', $this->getMock('JLM\AskBundle\Model\SubjectInterface')),
+        );
+    }
+    
+    /**
+     * @dataProvider getGetterSetter
+     */
+    public function testGetterSetter($attribute, $value)
+    {
+        $getter = 'get'.$attribute;
+        $setter = 'set'.$attribute;
+        $this->assertSame($this->entity, $this->entity->$setter($value));
+        $this->assertSame($value, $this->entity->$getter());
     }
 }
