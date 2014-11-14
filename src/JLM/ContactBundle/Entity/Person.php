@@ -13,11 +13,12 @@ namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\PersonInterface;
 use JLM\CommerceBundle\Model\QuoteRecipientInterface;
+use JLM\AskBundle\Model\ContactInterface;   // @todo to remove, use a decorator into AskBundle
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Person extends Contact implements PersonInterface, QuoteRecipientInterface
+class Person extends Contact implements PersonInterface, QuoteRecipientInterface, ContactInterface
 {
 	/**
      * @var integer $id

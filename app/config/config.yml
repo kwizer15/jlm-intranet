@@ -68,6 +68,12 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
         resolve_target_entities:
+            JLM\AskBundle\Model\AskInterface: JLM\AskBundle\Entity\Ask
+            JLM\AskBundle\Model\PayerInterface: JLM\ModelBundle\Entity\Trustee
+            JLM\AskBundle\Model\SubjectInterface: JLM\ModelBundle\Entity\Site
+            JLM\AskBundle\Model\ContactInterface: JLM\ContactBundle\Entity\Person
+            JLM\AskBundle\Model\CommunicationMeansInterface: JLM\AskBundle\Entity\CommunicationMeans
+        
             JLM\ContactBundle\Model\CountryInterface: JLM\ContactBundle\Entity\Country
             JLM\ContactBundle\Model\CityInterface: JLM\ContactBundle\Entity\City
             JLM\ContactBundle\Model\AddressInterface: JLM\ContactBundle\Entity\Address

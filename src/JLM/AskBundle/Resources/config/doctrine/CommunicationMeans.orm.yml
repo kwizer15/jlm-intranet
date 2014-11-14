@@ -1,0 +1,11 @@
+JLM\AskBundle\Entity\CommunicationMeans:
+  type: entity
+  table: askmethods
+  readOnly: true
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name: ~

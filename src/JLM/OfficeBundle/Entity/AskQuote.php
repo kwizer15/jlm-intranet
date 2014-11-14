@@ -2,7 +2,7 @@
 
 namespace JLM\OfficeBundle\Entity;
 
-use JLM\OfficeBundle\Entity\Ask;
+use JLM\AskBundle\Entity\Ask;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -68,10 +68,11 @@ class AskQuote extends Ask
      * @param \JLM\DailyBundle\Entity\Intervention $intervention
      * @return AskQuote
      */
-    public function setIntervention(\JLM\DailyBundle\Entity\Intervention $intervention = null)
+    public function setIntervention(Intervention $intervention = null)
     {
         $this->intervention = $intervention;
         $this->setDoor(null);
+        
         return $this;
     }
 
@@ -91,11 +92,12 @@ class AskQuote extends Ask
      * @param \JLM\ModelBundle\Entity\Door $door
      * @return AskQuote
      */
-    public function setDoor(\JLM\ModelBundle\Entity\Door $door = null)
+    public function setDoor(Door $door = null)
     {
         $this->door = $door;
     	$this->site = null;
     	$this->trustee = null;
+    	
         return $this;
     }
 
@@ -106,7 +108,10 @@ class AskQuote extends Ask
     public function getDoor()
     {
     	if ($this->getIntervention() !== null)
+    	{
     		return $this->getIntervention()->getDoor();
+    	}
+    	
         return $this->door;
     }
     
@@ -116,8 +121,11 @@ class AskQuote extends Ask
     public function getSite()
     {
     	if ($this->getDoor() !== null)
+    	{
     		return $this->getDoor()->getSite();
-    	return parent::getSite();
+    	}
+    	
+    	return parent::getSubject();
     }
     
     /**
@@ -126,8 +134,10 @@ class AskQuote extends Ask
     public function getTrustee()
     {
     	if ($this->getDoor() !== null)
+    	{
     		return $this->getDoor()->getTrustee();
-    	return parent::getTrustee();
+    	}
+    	return parent::getPayer();
     }
     
     /**
@@ -136,7 +146,9 @@ class AskQuote extends Ask
     public function getMethod()
     {
     	if ($this->getIntervention() !== null)
+    	{
     		return null;
+    	}
     	return parent::getMethod();
     }
     

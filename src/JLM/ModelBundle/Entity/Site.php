@@ -17,6 +17,7 @@ use JLM\TransmitterBundle\Entity\UserGroup;
 use JLM\CommerceBundle\Model\BillInterface;
 use JLM\CommerceBundle\Model\VATInterface;
 use JLM\CommerceBundle\Model\BusinessInterface;
+use JLM\AskBundle\Model\SubjectInterface;
 
 /**
  * JLM\ModelBundle\Entity\Site
@@ -24,7 +25,7 @@ use JLM\CommerceBundle\Model\BusinessInterface;
  * @ORM\Table(name="sites")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SiteRepository")
  */
-class Site implements AdministratorInterface, BusinessInterface
+class Site implements AdministratorInterface, BusinessInterface, SubjectInterface
 {
     /**
      * @var integer $id

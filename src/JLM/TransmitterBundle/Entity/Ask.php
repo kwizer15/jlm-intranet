@@ -6,6 +6,7 @@ use JLM\TransmitterBundle\Entity\Attribution;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use JLM\AskBundle\Entity\Ask as BaseAsk;
 
 /**
  * Commande d'émetteurs
@@ -14,7 +15,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\Table(name="transmitters_ask")
  * @ORM\Entity(repositoryClass="JLM\TransmitterBundle\Entity\AskRepository")
  */
-class Ask extends \JLM\OfficeBundle\Entity\Ask
+class Ask extends BaseAsk
 {
 	/**
 	 * @ORM\Id
