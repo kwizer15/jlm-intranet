@@ -80,4 +80,20 @@ class FeesFollowerTest extends \PHPUnit_Framework_TestCase
         $this->entity->$setter(0.2);
         $this->assertSame(0.2, $this->entity->getFrequence($freq));
     }
+    
+    public function testIsNotActive()
+    {
+    	$date = new \DateTime();
+    	$date->add(new \DateInterval('P1D'));
+    	$this->entity->setActivation($date);
+    	$this->assertFalse($this->entity->isActive());
+    }
+    
+    public function testIsActive()
+    {
+    	$date = new \DateTime();
+    	$date->sub(new \DateInterval('P1D'));
+    	$this->entity->setActivation($date);
+    	$this->assertTrue($this->entity->isActive());
+    }
 }

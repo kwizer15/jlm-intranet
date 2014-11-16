@@ -202,7 +202,9 @@ class FeesFollower implements FeesFollowerInterface
     {
     	$today = new \DateTime();
     	if ($today > $this->getActivation())
+    	{
     		return true;
+    	}
     	return false;
     }
 }
