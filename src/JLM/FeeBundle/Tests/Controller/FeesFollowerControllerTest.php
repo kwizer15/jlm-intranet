@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class FeeControllerTest extends WebTestCase
+class FeesFollowerControllerTest extends WebTestCase
 {
     /**
      * @var Symfony\Bundle\FrameworkBundle\Client
@@ -36,9 +36,9 @@ class FeeControllerTest extends WebTestCase
     {
         return array(
         	array('GET', '/'),
-        	array('GET', '/1/show'),
-        	array('GET', '/new'),
         	array('GET', '/1/edit'),
+//        	array('GET', '/1/generate'),
+//        	array('GET', '/1/print'),
         );
     }
     
@@ -49,7 +49,7 @@ class FeeControllerTest extends WebTestCase
      */
     public function testUrlIsSuccessful($method, $url)
     {
-    	$prefix = '/fee/fee';
+    	$prefix = '/fee/fees';
         $crawler = $this->client->request(
             $method,
             $prefix.$url

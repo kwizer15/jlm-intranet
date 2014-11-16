@@ -16,6 +16,7 @@ use JLM\FeeBundle\Entity\Fee;
 use JLM\CommerceBundle\Factory\BillLineFactory;
 use JLM\ModelBundle\Builder\ProductBillLineBuilder;
 use JLM\FeeBundle\Entity\FeesFollower;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

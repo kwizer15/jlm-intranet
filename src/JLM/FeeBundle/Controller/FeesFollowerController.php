@@ -15,6 +15,7 @@ use JLM\CommerceBundle\Entity\BillLine;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use JLM\CommerceBundle\Factory\BillFactory;
 use JLM\FeeBundle\Builder\FeeBillBuilder;
+use JLM\FeeBundle\Form\Type\FeesFollowerType;
 
 
 
@@ -49,13 +50,13 @@ class FeesFollowerController extends Controller
 	/**
 	 * Edit a FeesFollower entities.
 	 *
-	 * @Route("/{id}/edit", name="fees_generate")
+	 * @Route("/{id}/edit", name="fees_edit")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function editAction(FeesFollower $entity)
 	{	
-		$editForm = $this->createForm(new FeesFollower(), $entity);
+		$editForm = $this->createForm(new FeesFollowerType(), $entity);
 		return array(
 				'entity'      => $entity,
 				'edit_form'   => $editForm->createView(),
