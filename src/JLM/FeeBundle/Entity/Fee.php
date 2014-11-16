@@ -150,8 +150,10 @@ class Fee implements FeeInterface
     public function setFrequence($frequence)
     {
     	$values = array(1,2,4);
-    	if (in_array($frequence,$values))
+    	if (in_array($frequence, $values))
+    	{
     		$this->frequence = $frequence;
+    	}
     	return $this;
     }
     
@@ -177,16 +179,12 @@ class Fee implements FeeInterface
     		case 1:
     			return 'annuelle';
     			break;
-    		case 2:
-    			return 'semestrielle';
-    			break;
     		case 4:
     			return 'trimestrielle';
     			break;
-    		default:
-    			return '';
     	}
-    	return '';
+    	
+    	return 'semestrielle';
     }
     
     /**
@@ -304,12 +302,16 @@ class Fee implements FeeInterface
      */
     public function getBillingAddress()
     {
-    	$address = $this->getTrustee()->getAddress();
-		$billingaddress = $this->getTrustee()->getBillingAddress();
-		if ($billingaddress)
+    	$trustee = $this->getTrustee();
+		if ($billingaddress = $trustee->getBillingAddress())
+		{
 			if ($billingaddress->getStreet() && $billingaddress->getCity() !== null)
+			{
 				return $billingaddress;
-		return $address;
+			}
+		}
+		
+		return $trustee->getAddress();
     }
     
     /**
@@ -320,7 +322,9 @@ class Fee implements FeeInterface
     {
     	$amount = 0;
     	foreach ($this->contracts as $contract)
+    	{
     		$amount += $contract->getFee();
+    	}
     	return $amount;
     }
     
@@ -343,8 +347,11 @@ class Fee implements FeeInterface
     	{
     		$group .= $contract->getDoor()->getSite()->getGroupNumber();
     		if ($group != '')
+    		{
     			$group .= ' ';
+    		}
     	}
-    	return $group;
+    	
+    	return trim($group);
     }
 }
