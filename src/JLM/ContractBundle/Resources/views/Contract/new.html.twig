@@ -1,5 +1,11 @@
-<form action="{{ path('jlm_contract_contract_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal modal hide fade" id="modalNew" role="dialog" aria-labelledby="modalNewLabel" aria-hidden="true">
-	<div class="modal-header">
+{{ form_start(form, {'attr' : {
+    'class': 'form-horizontal modal hide fade',
+    'id': 'modalNew',
+    'role': 'dialog',
+    'aria-labelledby': 'modalNewLabel',
+    'aria-hidden': 'true' }
+} ) }}
+<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<h3 id="modalNewLabel">Nouveau contrat</h3>
 	</div>
@@ -10,4 +16,4 @@
 		<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
 		<button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer</button>
 	</div>
-</form>
+{{ form_end(form) }}

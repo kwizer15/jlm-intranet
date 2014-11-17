@@ -1,5 +1,12 @@
-<form action="{{ path('jlm_contract_contract_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal modal hide fade" id="modalEdit{{ entity.id }}" role="dialog" aria-labelledby="modalEditLabel{{ entity.id }}" aria-hidden="true">
-	<div class="modal-header">
+{{ form_start(edit_form, {'attr' : {
+    'class': 'form-horizontal modal hide fade',
+    'role': 'dialog',
+    'aria-hidden': 'true',
+    'id': 'modalEdit' ~ entity.id,
+    'aria-labelledby': 'modalEditLabel' ~ entity.id }
+} )
+}}
+    <div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<h3 id="modalEditLabel{{ entity.id }}">Edition d'un contrat</h3>
 	</div>
@@ -10,4 +17,4 @@
 		<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
 		<button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer</button>
 	</div>
-</form>
+{{ form_end(edit_form) }}

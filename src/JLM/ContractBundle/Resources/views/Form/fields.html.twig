@@ -1,7 +1,11 @@
 {% block jlm_contract_contract_select_widget %}
-  {% spaceless %}
-    {% set attr = attr|merge({'data-source':  path('autocomplete_contract') }) %}
-    {% set attr = attr|merge({'class': attr.class|default('') ~ ' autocompletion' }) %}
-    {{ block('form_widget_simple') }}
-  {% endspaceless %}
+    {{ form_widget(form, {'attr': {'class': 'autocompletion', 'data-source':  path('autocomplete_contract')}}) }}
 {% endblock jlm_contract_contract_select_widget %}
+
+{% block _jlm_contract_contract_complete_widget %}
+    {{ form_widget(form, {'attr': {'class': 'input-small'}}) }}
+{% endblock %}
+
+{% block _jlm_contract_contract_fee_widget %}
+    {{ form_widget(form, {'attr': {'class': 'input-small'}}) }}
+{% endblock %}

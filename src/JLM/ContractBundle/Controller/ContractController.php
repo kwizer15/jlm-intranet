@@ -36,7 +36,6 @@ class ContractController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $entities = $em->getRepository('JLMContractBundle:Contract')->findAll();
 
         return array('entities' => $entities);
@@ -214,7 +213,12 @@ class ContractController extends Controller
      */
     private function createEditForm(Contract $entity)
     {
-        return $this->get('form.factory')->createNamed('contractEdit'.$entity->getId(),new ContractType(), $entity);
+        return $this->get('form.factory')->createNamed('contractEdit'.$entity->getId(),new ContractType(), $entity,
+            array(
+                'action' => $this->generateUrl('jlm_contract_contract_update', array('id'=>$entity->getId())),
+                'method' => 'POST',
+            )
+        );
     }
     
     /**
@@ -224,7 +228,12 @@ class ContractController extends Controller
      */
     private function createStopForm(Contract $entity)
     {
-        return $this->get('form.factory')->createNamed('contractStop'.$entity->getId(),new ContractStopType(), $entity);
+        return $this->get('form.factory')->createNamed('contractStop'.$entity->getId(),new ContractStopType(), $entity,
+            array(
+                'action' => $this->generateUrl('jlm_contract_contract_stopupdate', array('id'=>$entity->getId())),
+                'method' => 'POST',
+            )
+        );
     }
     
     /**
@@ -234,7 +243,12 @@ class ContractController extends Controller
      */
     private function createNewForm(Contract $entity)
     {
-        return $this->createForm(new ContractType(), $entity);
+        return $this->createForm(new ContractType(), $entity,
+            array(
+                'action' => $this->generateUrl('jlm_contract_contract_create', array('id'=>$entity->getId())),
+                'method' => 'POST',
+            )
+        );
     }
     
 }

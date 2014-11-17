@@ -29,11 +29,11 @@ class ContractType extends AbstractType
         	->add('door','door_hidden')
         	->add('trustee','trustee_select',array('label'=>'Syndic'))
             ->add('number',null,array('label'=>'Numéro'))
-            ->add('complete','choice',array('label'=>'Type','choices'=>array('0'=>'Normal','1'=>'Complet'),'attr'=>array('class'=>'input-small')))
+            ->add('complete','choice',array('label'=>'Type','choices'=>array('0'=>'Normal','1'=>'Complet')))
             ->add('option','choice',array('label'=>'Option','choices'=>array('0'=>'24/24h 7/7j','1'=>'8h30-17h30 du lundi au vendredi')))
             ->add('begin','datepicker',array('label'=>'Début du contrat'))		
             ->add('endWarranty','datepicker',array('label'=>'Fin de garantie','required'=>false))           
-            ->add('fee','money',array('label'=>'Redevance annuelle','grouping'=>true,'attr'=>array('class'=>'input-small')))
+            ->add('fee','money',array('label'=>'Redevance annuelle','grouping'=>true))
             
         ;
     }
