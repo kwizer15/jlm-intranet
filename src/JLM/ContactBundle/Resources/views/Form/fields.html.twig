@@ -1,7 +1,7 @@
 {% block jlm_contact_address_widget %}
 {% spaceless %}
-	  {{ form_widget(form.street) }}<br>
-	  {{ form_widget(form.city) }}
+	  {{ form_widget(form.street, { 'attr': {'placeholder': 'Adresse'}}) }}<br>
+	  {{ form_widget(form.city, { 'attr': {'placeholder': 'Ville', 'class': 'input-large'}}) }}
 	  {{ form_errors(form.street) }}
       {{ form_errors(form.city) }}
 {% endspaceless %}

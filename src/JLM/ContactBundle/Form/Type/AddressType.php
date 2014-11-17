@@ -26,8 +26,8 @@ class AddressType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('street',null,array('label'=>'Adresse','attr'=>array('placeholder'=>'Adresse')))
-            ->add('city','jlm_contact_city_select' ,array('label'=>'Ville','attr'=>array('placeholder'=>'Ville','class'=>'input-large'))); 
+            ->add('street',null,array('label'=>'Adresse'))
+            ->add('city','jlm_contact_city_select' ,array('label'=>'Ville')); 
         ;
     }
 
