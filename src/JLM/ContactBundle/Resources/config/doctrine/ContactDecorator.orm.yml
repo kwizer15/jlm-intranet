@@ -2,5 +2,9 @@ JLM\ContactBundle\Entity\ContactDecorator:
   type: mappedSuperclass
   oneToOne:
     contact:
-      targetEntity: JLM\ContactBundle\Model\PersonInterface  # Changer pour ContactInterface
+      targetEntity: JLM\ContactBundle\Model\ContactInterface
+      cascade: ["all"]
+      joinColumn:
+        name: contact_id
+        referencedColumnName: id
     

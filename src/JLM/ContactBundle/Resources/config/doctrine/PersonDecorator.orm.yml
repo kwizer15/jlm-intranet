@@ -1,0 +1,4 @@
+JLM\ContactBundle\Entity\PersonDecorator:
+  type: mappedSuperclass
+
+    

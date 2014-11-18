@@ -19,103 +19,42 @@ use JLM\ContactBundle\Model\CorporationContactInterface;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 abstract class Corporation extends Contact implements CorporationInterface
-{
-    /**
-     * @var integer $id
-     * @deprecated
-     */
-    protected $id;
-    
-    /**
-     * @var string
-     */
-    protected $name = '';
-	
+{ 
 	/**
-	 * @var PersonInterface[] $contacts
+	 * @var CorporationContactInterface[] $contacts
 	 *
      */
-	protected $contacts;
-
-	/**
-	 * @var string $phone
-	 */
-	protected $phone;
-	
-	/**
-	 * Get id
-	 * @deprecated
-	 * @return integer
-	 */
-	public function getId()
-	{
-	    return $this->id;
-	}
-	
-	/**
-	 * Set phone
-	 *
-	 * @param string $phone
-	 * @return self
-	 */
-	public function setPhone($phone)
-	{
-	    $this->phone = $phone;
-	
-	    return $this;
-	}
-	
-	/**
-	 * Get phone
-	 *
-	 * @return string
-	 */
-	public function getPhone()
-	{
-	    return $this->phone;
-	}
-
-	/**
-	 * Set text
-	 *
-	 * @param string $text
-	 */
-	public function setName($name)
-	{
-	    $this->name = $name;
-	    
-	    return $this;
-	}
-	
-	/**
-	 * Get text
-	 *
-	 * @return string
-	 */
-	public function getName()
-	{
-	    return $this->name;
-	}
+	private $contacts;
 	
 	/**
 	 * Constructor
 	 */
 	public function __construct()
 	{
+	    parent::__construct();
 		$this->contacts = new ArrayCollection;
 	}
 
     /**
      * Add contacts
      *
-     * @param CorporationContactInterface $contacts
+     * @param CorporationContactInterface $contact
      * @return bool
      */
-    public function addContact(CorporationContactInterface $contacts)
+    public function addContact(CorporationContactInterface $contact)
     {
-    	$this->contacts->add($contacts);
-    	
-    	return true;
+    	return $this->contacts->add($contact);
+    }
+    
+    /**
+     * Remove contacts
+     *
+     * @param CorporationContactInterface $contact
+     * @return bool
+     */
+    public function removeContact(CorporationContactInterface $contact)
+    {
+        return $this->contacts->removeElement($contact);
     }
     
     /**
@@ -126,5 +65,13 @@ abstract class Corporation extends Contact implements CorporationInterface
     public function getContacts()
     {
     	return $this->contacts;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPhone()
+    {
+        return $this->_getPhoneNumber('Principal');
     }
 }

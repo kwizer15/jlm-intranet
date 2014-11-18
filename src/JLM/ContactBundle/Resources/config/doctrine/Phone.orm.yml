@@ -1,0 +1,14 @@
+JLM\ContactBundle\Entity\Phone:
+  type: entity
+  table: jlm_contact_phone
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    label: ~
+    number:
+      lenght: 16
+  
+    

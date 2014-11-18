@@ -16,7 +16,7 @@ use JLM\ContactBundle\Model\ContactInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-abstract class ContactDecorator implements ContactInterface
+abstract class ContactDecorator extends Contact
 {
     /**
      * @var ContactInterface $person

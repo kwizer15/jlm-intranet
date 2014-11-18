@@ -1,6 +1,6 @@
 JLM\ContactBundle\Entity\Address:
   type: entity
-  table: addresses
+  table: jlm_contact_address
   id:
     id:
       type: integer

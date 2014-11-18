@@ -14,7 +14,6 @@ namespace JLM\ContactBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\ContactBundle\Model\ContactInterface;
 use JLM\ContactBundle\Model\AddressInterface;
-use JLM\ContactBundle\Model\PhoneInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -25,71 +24,68 @@ abstract class Contact implements ContactInterface
      * @var int
      * Ehancement
      */
-    private $id;
+//    protected $id;
     
     /**
      * @var string
+     * Ehancement
      */
-    private $name = '';
+//    protected $name = '';
     
 	/**
 	 * @var Address $address
 	 */
-	private $address;
+	protected $address;
 	
 	/**
-	 * @var PhoneInterface[]
+	 * @var string $fax
 	 */
-	private $phones;
+	protected $fax;
 	
 	/**
 	 * @var email $email
 	 */
-	private $email;
+	protected $email;
 	
 	/**
 	 * @var bool $active
 	 */
-	private $active = true;
-	
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-	    $this->phones = new ArrayCollection;
-	}
+	protected $active = true;
 	
 	/**
 	 * Get id
 	 * @return int
+	 * Ehancement
 	 */
-	public function getId()
-	{
-	    return $this->id;
-	}
+//	public function getId()
+//	{
+//	    return $this->id;
+//	}
 	
 	/**
 	 * Set text
 	 *
 	 * @param string $text
+	 * Ehancement
 	 */
-	public function setName($name)
-	{
-	    $this->name = $name;
-	    
-	    return $this;
-	}
+//	public function setName($name)
+//	{
+//	    $this->name = $name;
+//	    return $this;
+//	}
 	
 	/**
 	 * Get text
 	 *
 	 * @return string
+	 * Ehancement
 	 */
-	public function getName()
-	{
-	    return $this->name;
-	}
+//	public function getName()
+//	{
+//	    return $this->name;
+//	}
+	
+	abstract public function getName();
 	
 	/**
 	 * To String
@@ -101,34 +97,26 @@ abstract class Contact implements ContactInterface
 	}
 
 	/**
-	 * Add a phone
+	 * Set fax
 	 *
-	 * @param PhoneInterface $phone
-	 * @return bool
+	 * @param string $fax
+	 * @return self
 	 */
-	public function addPhone(PhoneInterface $phone)
+	public function setFax($fax)
 	{
-	    return $this->phones->add($phone);
+	    $this->fax = $fax;
+	
+	    return $this;
 	}
 	
 	/**
-	 * Remove a phone
+	 * Get fax
 	 *
-	 * @param PhoneInterface
-	 * @return bool
+	 * @return string
 	 */
-	public function removePhone(PhoneInterface $phone)
+	public function getFax()
 	{
-	    return $this->phones->removeElement($phone);
-	}
-	
-	/**
-	 * Get phones
-	 * @return array
-	 */
-	public function getPhones()
-	{
-	    return $this->phones;
+	    return $this->fax;
 	}
 	
     /**
@@ -205,33 +193,5 @@ abstract class Contact implements ContactInterface
     public function isActive()
     {
         return $this->getActive();
-    }
-    
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFax()
-    {
-        return $this->_getPhoneNumber('Fax');
-    }
-
-    /**
-     * Get the phone number by label
-     * @param string $type
-     * @return NULL|string
-     */
-    protected function _getPhoneNumber($type)
-    {
-        $phones = $this->getPhones();
-        foreach ($phones as $phone)
-        {
-            if ($phone->getLabel() == $type)
-            {
-                return $phone->getNumber();
-            }
-        }
-    
-        return null;
     }
 }
