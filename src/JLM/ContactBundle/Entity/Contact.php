@@ -48,6 +48,11 @@ abstract class Contact implements ContactInterface
 	protected $email;
 	
 	/**
+	 * @var bool $active
+	 */
+	protected $active = true;
+	
+	/**
 	 * Get id
 	 * @return int
 	 * Ehancement
@@ -158,5 +163,35 @@ abstract class Contact implements ContactInterface
     public function getAddress()
     {
         return $this->address;
+    }
+    
+    /**
+     * Set active
+     * @param bool $active
+     * @return self
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+        
+        return $this;
+    }
+    
+    /**
+     * Get active
+     * @return bool
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+    
+    /**
+     * Is active
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->getActive();
     }
 }
