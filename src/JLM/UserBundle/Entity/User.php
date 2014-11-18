@@ -50,4 +50,6 @@ class User extends BaseUser implements ContactInterface
     {
         return $this->person;
     }
+    
+    // @todo implements ContactInterface
 }
