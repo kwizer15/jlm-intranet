@@ -1,48 +1,48 @@
 {% block jlm_contact_address_widget %}
-{% spaceless %}
-	  {{ form_widget(form.street, { 'attr': {'placeholder': 'Adresse'}}) }}<br>
-	  {{ form_widget(form.city, { 'attr': {'placeholder': 'Ville', 'class': 'input-large'}}) }}
-	  {{ form_errors(form.street) }}
-      {{ form_errors(form.city) }}
-{% endspaceless %}
+  {% spaceless %}
+    {{ form_widget(form.street, { 'attr': {'placeholder': 'Adresse'}}) }}<br>
+    {{ form_widget(form.city, { 'attr': {'placeholder': 'Ville', 'class': 'input-large'}}) }}
+    {{ form_errors(form.street) }}
+    {{ form_errors(form.city) }}
+  {% endspaceless %}
 {% endblock jlm_contact_address_widget %}
 
 {% block jlm_contact_person_select_widget %}
-{% spaceless %}
-{% set type = 'hidden' %}
-{{ block('form_widget_simple') }}
-<input type="text" id="{{ id }}_selector" class="autocompletion" data-source="{{ path('jlm_contact_ajax_person_autocomplete') }}">
-{% endspaceless %}
+  {% spaceless %}
+    {% set type = 'hidden' %}
+    {{ block('form_widget_simple') }}
+    <input type="text" id="{{ id }}_selector" class="autocompletion" data-source="{{ path('jlm_contact_ajax_person_autocomplete') }}">
+  {% endspaceless %}
 {% endblock jlm_contact_person_select_widget %}
 
 {% block _jlm_contact_person_title_widget %}
-{{ form_widget(form, {'attr': {'class': 'input-small'}}) }}
+  {{ form_widget(form, {'attr': {'class': 'input-small'}}) }}
 {% endblock %}
 
 {% block _jlm_contact_person_fixedPhone_widget %}
-{{ form_widget(form, {'attr': {'class': 'input-medium'}}) }}
+  {{ form_widget(form, {'attr': {'class': 'input-medium'}}) }}
 {% endblock %}
 
 {% block _jlm_contact_person_mobilePhone_widget %}
-{{ form_widget(form, {'attr': {'class': 'input-medium'}}) }}
+  {{ form_widget(form, {'attr': {'class': 'input-medium'}}) }}
 {% endblock %}
 
 {% block _jlm_contact_person_fax_widget %}
-{{ form_widget(form, {'attr': {'class': 'input-medium'}}) }}
+  {{ form_widget(form, {'attr': {'class': 'input-medium'}}) }}
 {% endblock %}
 
 {% block _jlm_contact_person_email_widget %}
-{{ form_widget(form, {'attr': {'class': 'input-xlarge'}}) }}
+  {{ form_widget(form, {'attr': {'class': 'input-xlarge'}}) }}
 {% endblock %}
 
 {% block _jlm_contact_company_phone_widget %}
-{{ form_widget(form, {'attr': {'class': 'input-medium'}}) }}
+  {{ form_widget(form, {'attr': {'class': 'input-medium'}}) }}
 {% endblock %}
 
 {% block _jlm_contact_company_fax_widget %}
-{{ form_widget(form, {'attr': {'class': 'input-medium'}}) }}
+  {{ form_widget(form, {'attr': {'class': 'input-medium'}}) }}
 {% endblock %}
 
 {% block _jlm_contact_company_email_widget %}
-{{ form_widget(form, {'attr': {'class': 'input-xlarge'}}) }}
+  {{ form_widget(form, {'attr': {'class': 'input-xlarge'}}) }}
 {% endblock %}
