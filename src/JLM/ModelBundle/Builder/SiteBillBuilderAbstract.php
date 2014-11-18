@@ -11,18 +11,21 @@
 
 namespace JLM\ModelBundle\Builder;
 
-use JLM\BillBundle\Builder\BillBuilderAbstract;
+use JLM\CommerceBundle\Builder\BillBuilderAbstract;
 use JLM\ModelBundle\Entity\Site;
+use JLM\ModelBundle\Entity\Trustee;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-abstract class SiteBillBuilderAbstract extends BillBuilderAbstract
+abstract class SiteBillBuilderAbstract extends TrusteeBillBuilderAbstract
 {
-    abstract protected function _getSite();
+    protected $site;
     
-    protected function _getTrustee()
+    public function __construct(Site $site, $options = array())
     {
-        return $this->_getSite()->getTrustee();
+        $this->site = $site;
+        parent::__construct($this->site->getTrustee(), $options);
     }
    
     /**

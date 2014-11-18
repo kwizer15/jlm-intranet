@@ -38,7 +38,7 @@ class AttributionBillBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\BillBundle\Builder\BillBuilderInterface', $this->builder);
+        $this->assertInstanceOf('JLM\CommerceBundle\Builder\BillBuilderInterface', $this->builder);
         $this->builder->create();
     }
     
@@ -47,15 +47,15 @@ class AttributionBillBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function assertPostConditions()
     {
-        $this->assertInstanceOf('JLM\OfficeBundle\Entity\Bill', $this->builder->getBill());
+        $this->assertInstanceOf('JLM\CommerceBundle\Model\BillInterface', $this->builder->getBill());
     }
     
     public function testBuildLines()
     {
-        $category = $this->getMock('JLM\ModelBundle\Entity\ProductCategory');
-        $category->expects($this->any())->method('getId')->will($this->returnValue(1));
+        $category = $this->getMock('JLM\ProductBundle\Model\ProductCategoryInterface');
+        $category->expects($this->any())->method('isSmallSupply')->will($this->returnValue(1));
         
-        $product = $this->getMock('JLM\ModelBundle\Entity\Product');
+        $product = $this->getMock('JLM\ProductBundle\Model\ProductInterface');
         $product->expects($this->any())->method('getCategory')->will($this->returnValue($category));
         
         $model = $this->getMock('JLM\TransmitterBundle\Entity\Model');
@@ -77,7 +77,7 @@ class AttributionBillBuilderTest extends \PHPUnit_Framework_TestCase
     
     public function testBuildBusiness()
     {
-        $vat = $this->getMock('JLM\ModelBundle\Entity\VAT');
+        $vat = $this->getMock('JLM\CommerceBundle\Model\VATInterface');
         $vat->expects($this->any())->method('getRate')->will($this->returnValue(0.2));
         
         $site = $this->getMock('JLM\ModelBundle\Entity\Site');

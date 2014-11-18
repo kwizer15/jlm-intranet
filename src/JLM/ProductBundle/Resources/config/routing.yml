@@ -1,0 +1,120 @@
+# ProductCategory
+
+jlm_product_productcategory:
+    path:   /productcategory
+    defaults:  { _controller: "JLMProductBundle:ProductCategory:index" }
+    methods: [GET]
+    
+jlm_product_productcategory_show:
+    path:   /productcategory/{id}/show
+    defaults:  { _controller: "JLMProductBundle:ProductCategory:show" }
+    methods: [GET]
+    
+jlm_product_productcategory_new:
+    path:   /productcategory/new
+    defaults:  { _controller: "JLMProductBundle:ProductCategory:new" }
+    methods: [GET]
+    
+jlm_product_productcategory_create:
+    path:   /productcategory/create
+    defaults:  { _controller: "JLMProductBundle:ProductCategory:create" }
+    methods: [POST]
+    
+jlm_product_productcategory_edit:
+    path:   /productcategory/{id}/edit
+    defaults:  { _controller: "JLMProductBundle:ProductCategory:edit" }
+    methods: [GET]
+
+jlm_product_productcategory_update:
+    path:   /productcategory/{id}/update
+    defaults:  { _controller: "JLMProductBundle:ProductCategory:update" }
+    methods: [POST]
+    
+jlm_product_productcategory_delete:
+    path:   /productcategory/{id}/delete
+    defaults:  { _controller: "JLMProductBundle:ProductCategory:delete" }
+    methods: [POST]
+    
+
+# Product
+
+jlm_product_product:
+    path:   /product
+    defaults:  { _controller: "JLMProductBundle:Product:index" }
+    methods: [GET]
+
+jlm_product_product_page:
+    path:   /product/page/{page}
+    defaults:  { _controller: "JLMProductBundle:Product:index" }
+    methods: [GET]
+    
+jlm_product_product_page_limit:
+    path:   /product/page/{page}/{limit}
+    defaults:  { _controller: "JLMProductBundle:Product:index" }
+    methods: [GET]
+    
+jlm_product_product_show:
+    path:   /product/{id}/show
+    defaults:  { _controller: "JLMProductBundle:Product:show" }
+    methods: [GET]
+    
+jlm_product_product_new:
+    path:   /product/new
+    defaults:  { _controller: "JLMProductBundle:Product:new" }
+    methods: [GET]
+    
+jlm_product_product_create:
+    path:   /product/create
+    defaults:  { _controller: "JLMProductBundle:Product:create" }
+    methods: [POST]
+    
+jlm_product_product_edit:
+    path:   /product/{id}/edit
+    defaults:  { _controller: "JLMProductBundle:Product:edit" }
+    methods: [GET]
+    
+jlm_product_product_update:
+    path:   /product/{id}/update
+    defaults:  { _controller: "JLMProductBundle:Product:update" }
+    methods: [POST]
+    
+jlm_product_product_delete:
+    path:   /product/{id}/delete
+    defaults:  { _controller: "JLMProductBundle:Product:delete" }
+    methods: [POST]
+    
+
+# Supplier
+supplier:
+    path: /supplier
+    defaults: { _controller: "JLMProductBundle:Supplier:index" }
+    methods: [GET]
+supplier_page:
+    path: /supplier/page/{page}
+    defaults: { _controller: "JLMProductBundle:Supplier:index" }
+    methods: [GET]
+supplier_show:
+    path: /supplier/{id}/show
+    defaults: { _controller: "JLMProductBundle:Supplier:show" }
+    methods: [GET]
+supplier_new:
+    path: /supplier/new
+    defaults: { _controller: "JLMProductBundle:Supplier:new" }
+    methods: [GET]
+supplier_create:
+    path: /supplier/create
+    defaults: { _controller: "JLMProductBundle:Supplier:create" }
+    methods: [POST]
+supplier_edit:
+    path: /supplier/{id}/edit
+    defaults: { _controller: "JLMProductBundle:Supplier:edit" }
+    methods: [GET]
+supplier_update:
+    path: /supplier/{id}/update
+    defaults: { _controller: "JLMProductBundle:Supplier:update" }
+    methods: [POST]
+supplier_delete:
+    path: /supplier/{id}/delete
+    defaults: { _controller: "JLMProductBundle:Supplier:delete" }
+    methods: [POST]
+

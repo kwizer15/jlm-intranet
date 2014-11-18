@@ -9,8 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\ModelBundle\Entity\Address;
-use JLM\ModelBundle\Form\Type\AddressType;
+use JLM\ContactBundle\Entity\Address;
+use JLM\ContactBundle\Form\Type\AddressType;
 
 class AutocompleteController extends Controller
 {
@@ -26,27 +26,7 @@ class AutocompleteController extends Controller
     	$query = $request->request->get('term');
 
     	$em = $this->getDoctrine()->getManager();
-    	$results = $em->getRepository('JLMModelBundle:City')->searchResult($query);
-    	$json = json_encode($results);
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/json');
-    	$response->setContent($json);
-    	return $response;
-    }
-    
-    /**
-     * Displays a form to create a new Product entity.
-     *
-     * @Route("/autocomplete/person", name="autocomplete_person")
-     * @Method("post")
-     */
-    public function personAction()
-    {
-    	$request = $this->get('request');
-    	$query = $request->request->get('term');
-    
-    	$em = $this->getDoctrine()->getManager();
-    	$results = $em->getRepository('JLMModelBundle:Person')->searchResult($query);
+    	$results = $em->getRepository('JLMContactBundle:City')->searchResult($query);
     	$json = json_encode($results);
     	$response = new Response();
     	$response->headers->set('Content-Type', 'application/json');
@@ -105,7 +85,7 @@ class AutocompleteController extends Controller
     	$request = $this->get('request');
     	$query = $request->request->get('term');
     	$em = $this->getDoctrine()->getManager();
-    	$results = $em->getRepository('JLMModelBundle:Contract')->searchResult($query);
+    	$results = $em->getRepository('JLMContractBundle:Contract')->searchResult($query);
     	$json = json_encode($results);
     	$response = new Response();
     	$response->headers->set('Content-Type', 'application/json');

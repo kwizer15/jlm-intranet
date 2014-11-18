@@ -17,7 +17,7 @@
 $("#jlm_modelbundle_sitecontacttype_person_selector")
 .autocomplete({
 	source: function(request,response){
-		request.repository = 'JLMModelBundle:Person';
+		request.repository = 'JLMContactBundle:Person';
 		return $.post(
 				this.element.attr('data-source'),
 				request,
@@ -38,7 +38,7 @@ $("#jlm_modelbundle_sitecontacttype_person_selector")
 			{	
 				// On charge et affiche la modal
 				$.ajax({
-			        url: '{{ path('person_new_ajax') }}', 
+			        url: '{{ path('jlm_contact_ajax_person_new') }}', 
 			        type: 'get',
 			        success: function(html) {
 			        	$("footer").after(html);

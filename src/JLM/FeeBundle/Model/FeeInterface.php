@@ -1,8 +1,8 @@
 <?php
 namespace JLM\FeeBundle\Model;
 
-use JLM\ModelBundle\Model\ContractInterface;
-use JLM\BillBundle\Model\BillInterface;
+use JLM\ContractBundle\Model\ContractInterface;
+use JLM\CommerceBundle\Model\BillInterface;
 
 interface FeeInterface
 {	
@@ -26,6 +26,6 @@ interface FeeInterface
 	 * @param BillInterface $bill
 	 * @return BillInterface
 	 */
-	public function createBill(FeesFollowerInterface $follower, BillInterface $bill);
+//	public function createBill(FeesFollowerInterface $follower, BillInterface $bill);
 	
 }

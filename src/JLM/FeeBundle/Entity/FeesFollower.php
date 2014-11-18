@@ -65,10 +65,7 @@ class FeesFollower implements FeesFollowerInterface
 	}
 
     /**
-     * Set activation
-     *
-     * @param \DateTime $activation
-     * @return FeesFollower
+     * {@inheritdoc}
      */
     public function setActivation(\DateTime $activation = null)
     {
@@ -78,9 +75,7 @@ class FeesFollower implements FeesFollowerInterface
     }
 
     /**
-     * Get activation
-     *
-     * @return \DateTime 
+     * {@inheritdoc}
      */
     public function getActivation()
     {
@@ -93,7 +88,7 @@ class FeesFollower implements FeesFollowerInterface
      * @param \DateTime $generation
      * @return FeesFollower
      */
-    public function setGeneration($generation)
+    public function setGeneration(\DateTime $generation)
     {
         $this->generation = $generation;
     
@@ -186,7 +181,7 @@ class FeesFollower implements FeesFollowerInterface
      */
     public function getFrequence($frequence)
     {
-    	switch ($frenquence)
+    	switch ($frequence)
     	{
     		case 1:
     			return $this->getFrequence1();
@@ -207,7 +202,9 @@ class FeesFollower implements FeesFollowerInterface
     {
     	$today = new \DateTime();
     	if ($today > $this->getActivation())
+    	{
     		return true;
+    	}
     	return false;
     }
 }

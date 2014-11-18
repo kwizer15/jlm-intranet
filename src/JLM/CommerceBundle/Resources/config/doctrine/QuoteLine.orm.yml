@@ -1,0 +1,28 @@
+JLM\CommerceBundle\Entity\QuoteLine:
+  type: entity
+  table: quote_lines
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    purchasePrice:
+      type: decimal
+      scale: 2
+    discountSupplier:
+      column: discount_supplier
+      type: decimal
+      scale: 7
+    expenseRatio:
+      column: expense_ratio
+      type: decimal
+      scale: 7
+    shipping:
+      type: decimal
+      scale: 2
+  manyToOne:
+    variant:
+      targetEntity: JLM\CommerceBundle\Entity\QuoteVariant
+      inversedBy: lines
+    

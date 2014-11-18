@@ -23,7 +23,7 @@
             <td>{% if entity.individual %}<i class="icon-ok"></i>{% endif %}</td>
             <td>
             	{% if entity.bill %}
-            	{% include 'JLMOfficeBundle:Bill:statelabel.html.twig' with {'state': entity.bill.state} %}
+            	{% include 'JLMCommerceBundle:Bill:statelabel.html.twig' with {'state': entity.bill.state} %}
             	<br><a href="{{ path('bill_show', { 'id': entity.id }) }}">{{ entity.bill.number }}</a>
             	{% else %}
             	Non facturé

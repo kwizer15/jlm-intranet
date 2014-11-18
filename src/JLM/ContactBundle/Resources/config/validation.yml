@@ -1,0 +1,62 @@
+JLM\ContactBundle\Entity\Country:
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: code
+  properties:
+    code:
+      - Type: { type: string }
+      - Length: { min: 2, max: 2 }
+      - NotBlank: ~
+
+JLM\ContactBundle\Entity\City:
+  properties:
+    zip:
+      - Type: { type: string }
+      - Length: { min: 4, max: 20 }
+      - NotNull: ~
+    country:
+      - NotNull: ~
+      - Valid: ~
+            
+JLM\ContactBundle\Entity\Address:
+  properties:
+    street:
+      - Type: { type: string }
+    city:
+      - NotNull: ~
+      - Valid: ~
+
+JLM\ContactBundle\Entity\Contact:
+  properties:
+    fax:
+      - Regex: { pattern: "/^0[1-589]\d{8}$/",message: "Ce n'est pas un numéro de fax valide" }
+    email:
+      - Email: ~
+      
+JLM\ContactBundle\Entity\Person:
+  properties:
+    title:
+      - NotNull: ~
+      - Choice: { choices: ["M.","Mme","Mlle"] }    
+    firstName:
+      - Type: { type: string }
+    lastName:
+      - Type: { type: string }
+    fixedPhone:
+      - Regex: { pattern: "/^0[1-589]\d{8}$/", message: "Ce n'est pas un numéro de téléphone fixe valide" }
+    mobilePhone:
+      - Regex: { pattern: "/^0[67]\d{8}$/", message: "Ce n'est pas un numéro de téléphone mobile valide" }
+    role:
+      - Type: { type: string }
+
+JLM\ContactBundle\Entity\Corporation:
+  properties:
+    name:
+      - NotNull: ~
+      - Type: { type: string }
+      - NotBlank: ~
+    phone: 
+      - Regex: { pattern: "/^0[1-589]\d{8}$/", message: "Ce n'est pas un numéro de téléphone fixe valide" }
+#    contacts:
+#      - Valid:
+#        - traverse: true
+        

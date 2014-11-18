@@ -1,0 +1,30 @@
+jlm_contact_rest_city_search:
+    path:   /cities.json
+    defaults:  { _controller: "JLMContactBundle:City:search" }
+    methods: [GET]
+    
+jlm_contact_rest_city_get:
+    path:   /city.json
+    defaults:  { _controller: "JLMContactBundle:City:json" }
+    methods: [GET]
+    
+jlm_contact_ajax_person_show:
+    path: /person/ajax/{id}/show
+    defaults:  { _controller: "JLMContactBundle:Person:showajax" }
+    methods: [GET]
+   
+jlm_contact_ajax_person_new:
+    path: /person/ajax/new
+    defaults:  { _controller: "JLMContactBundle:Person:newajax" }
+    methods: [GET]
+    
+jlm_contact_ajax_person_create:
+    path: /person/ajax/create
+    defaults:  { _controller: "JLMContactBundle:Person:createajax" }
+    methods: [POST]
+    
+jlm_contact_ajax_person_autocomplete:
+    path: /person/ajax/autocomplete
+    defaults: { _controller: "JLMContactBundle:Person:autocomplete" }
+    methods: [POST]
+

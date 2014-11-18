@@ -37,7 +37,7 @@ class DoorController extends Controller
 		
 		return array(
 			'entity' => $door,
-			'quotes' => $em->getRepository('JLMOfficeBundle:Quote')->getByDoor($door),
+			'quotes' => $em->getRepository('JLMCommerceBundle:Quote')->getByDoor($door),
 		    'codeForm' => $codeForm->createView(),
 		);
 	}

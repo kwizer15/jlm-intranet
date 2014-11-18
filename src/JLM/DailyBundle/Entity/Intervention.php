@@ -4,9 +4,10 @@ namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use JLM\ModelBundle\Entity\Contract;
-use JLM\OfficeBundle\Entity\Bill;
+use JLM\ContractBundle\Model\ContractInterface;
 use JLM\OfficeBundle\Entity\AskQuote;
+use JLM\CommerceBundle\Model\BillInterface;
+use JLM\CommerceBundle\Model\BillSourceInterface;
 
 /**
  * Plannification d'intervention
@@ -15,7 +16,7 @@ use JLM\OfficeBundle\Entity\AskQuote;
  * @ORM\Table(name="shifting_interventions")
  * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\InterventionRepository")
  */
-abstract class Intervention extends Shifting
+abstract class Intervention extends Shifting implements BillSourceInterface
 {
     /**
      * Porte (lien)
@@ -113,8 +114,8 @@ abstract class Intervention extends Shifting
     
     /**
      * Facture
-     * @var JLM\OfficeBundle\Entity\Bill
-     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Bill", inversedBy="intervention")
+     * @var BillInterface
+     * @ORM\OneToOne(targetEntity="JLM\CommerceBundle\Entity\Bill", inversedBy="intervention")
      * @Assert\Valid
      */
     private $bill;
@@ -173,7 +174,7 @@ abstract class Intervention extends Shifting
     
     /**
      * Get dynamic contract
-     * @return JLMModelBundle\Entity\Contract
+     * @return ContractInterface
      */
     public function getDynContract()
     {
@@ -191,12 +192,12 @@ abstract class Intervention extends Shifting
     
     /**
      * Set contract
-     * @param string|Contract|null $contract
+     * @param string|ContractInterface|null $contract
      * @return Intervention
      */
     public function setContract($contract)
     {
-    	if ($contract instanceof \JLM\ModelBundle\Entity\Contract)
+    	if ($contract instanceof ContractInterface)
     		$this->contract = $contract.'';
     	elseif ($contract === null)
     		$this->contract = 'Hors contrat';
@@ -541,10 +542,10 @@ abstract class Intervention extends Shifting
     /**
      * Set bill
      *
-     * @param \JLM\OfficeBundle\Entity\Bill $bill
+     * @param Bill $bill
      * @return Intervention
      */
-    public function setBill(\JLM\OfficeBundle\Entity\Bill $bill = null)
+    public function setBill(BillInterface $bill = null)
     {
         $this->bill = $bill;
     	
@@ -554,7 +555,7 @@ abstract class Intervention extends Shifting
     /**
      * Get bill
      *
-     * @return \JLM\OfficeBundle\Entity\Bill 
+     * @return Bill 
      */
     public function getBill()
     {

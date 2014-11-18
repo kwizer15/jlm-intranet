@@ -11,10 +11,10 @@
 
 namespace JLM\TransmitterBundle\Builder;
 
-use JLM\BillBundle\Builder\BillBuilderAbstract;
+use JLM\CommerceBundle\Builder\BillBuilderAbstract;
 use JLM\TransmitterBundle\Model\AttributionInterface;
 use JLM\ModelBundle\Builder\ProductBillLineBuilder;
-use JLM\BillBundle\Builder\BillLineFactory;
+use JLM\CommerceBundle\Factory\BillLineFactory;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

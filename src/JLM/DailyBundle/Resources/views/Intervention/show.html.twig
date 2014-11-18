@@ -131,7 +131,7 @@
 					<li>
 						<a href="{{ path('quote_show',{'id':quote.id}) }}">
 							{{ quote.number }}
-							{% include 'JLMOfficeBundle:Quote:statelabel.html.twig' with {'state': quote.state} %}
+							{% include 'JLMCommerceBundle:Quote:statelabel.html.twig' with {'state': quote.state} %}
 						</a>
 				{#}		du {{ quote.creation|date('d/m/Y') }} {#}
 					</li>
@@ -242,7 +242,7 @@
 						 				<li><a href="{{ path('askquote_show',{'id' : entity.askQuote.id }) }}">Voir la demande de devis</a></li>
 						    			<li class="divider"></li>
 									{% for quote in entity.askQuote.quotes %}
-										<li><a href="{{ path('quote_show',{ 'id':quote.id }) }}" tabindex="-1">{{ quote.number }} {% include 'JLMOfficeBundle:Quote:statelabel.html.twig' with {'state': quote.state} %}</a></li> 
+										<li><a href="{{ path('quote_show',{ 'id':quote.id }) }}" tabindex="-1">{{ quote.number }} {% include 'JLMCommerceBundle:Quote:statelabel.html.twig' with {'state': quote.state} %}</a></li> 
 									{% endfor %}
 									</ul>
 								{% elseif entity.askQuote.dontTreat %}

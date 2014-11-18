@@ -1,0 +1,41 @@
+JLM\CommerceBundle\Entity\QuoteVariant:
+  type: entity
+  table: quote_variant
+  repositoryClass: JLM\CommerceBundle\Repository\QuoteVariantRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    creation:
+      type: datetime
+    variantNumber:
+      column: variant_number
+      type: smallint
+    intro:
+      type: text
+    paymentRules:
+      column: payment_rules
+    deliveryRules:
+      column: delivery_rules
+    discount:
+      type: decimal
+      scale: 7
+    state:
+      type: smallint
+    
+  manyToOne:
+    quote:
+      targetEntity: JLM\CommerceBundle\Entity\Quote
+      inversedBy: variants
+  oneToMany:
+    lines:
+      targetEntity: JLM\CommerceBundle\Entity\QuoteLine
+      mappedBy: variant
+      orderBy: { position: ASC }
+  oneToOne:
+    work:
+      targetEntity: JLM\DailyBundle\Entity\Work
+      inversedBy: quote
+      

@@ -13,9 +13,10 @@ namespace JLM\FeeBundle\Builder;
 
 use JLM\ModelBundle\Builder\SiteBillBuilderAbstract;
 use JLM\FeeBundle\Entity\Fee;
-use JLM\BillBundle\Builder\BillLineFactory;
+use JLM\CommerceBundle\Factory\BillLineFactory;
 use JLM\ModelBundle\Builder\ProductBillLineBuilder;
 use JLM\FeeBundle\Entity\FeesFollower;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

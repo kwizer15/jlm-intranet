@@ -3,10 +3,11 @@
 namespace JLM\TransmitterBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JLM\OfficeBundle\Entity\Bill;
-use JLM\OfficeBundle\Entity\BillLine;
-use JLM\ModelBundle\Entity\Product;
+use JLM\CommerceBundle\Model\BillInterface;
+use JLM\CommerceBundle\Model\BillLineInterface;
+use JLM\ProductBundle\Model\ProductInterface;
 use JLM\TransmitterBundle\Model\AttributionInterface;
+use JLM\TransmitterBundle\Model\TransmitterInterface;
 /**
  * Attribution
  *
@@ -63,7 +64,7 @@ class Attribution implements AttributionInterface
     /**
      * @var Bill
      *
-     * @ORM\ManyToOne(targetEntity="\JLM\OfficeBundle\Entity\Bill")
+     * @ORM\ManyToOne(targetEntity="\JLM\CommerceBundle\Model\BillInterface")
      */
     private $bill;
     
@@ -159,7 +160,7 @@ class Attribution implements AttributionInterface
      * @param \JLM\TransmitterBundle\Entity\Transmitter $transmitters
      * @return Attribution
      */
-    public function addTransmitter(\JLM\TransmitterBundle\Entity\Transmitter $transmitters)
+    public function addTransmitter(TransmitterInterface $transmitters)
     {
         $this->transmitters[] = $transmitters;
     
@@ -169,9 +170,9 @@ class Attribution implements AttributionInterface
     /**
      * Remove transmitters
      *
-     * @param \JLM\TransmitterBundle\Entity\Transmitter $transmitters
+     * @param TransmitterInterface $transmitters
      */
-    public function removeTransmitter(\JLM\TransmitterBundle\Entity\Transmitter $transmitters)
+    public function removeTransmitter(TransmitterInterface $transmitters)
     {
         $this->transmitters->removeElement($transmitters);
     }
@@ -189,10 +190,10 @@ class Attribution implements AttributionInterface
     /**
      * Set ask
      *
-     * @param \JLM\OTransmitterBundle\Entity\Ask $ask
+     * @param Ask $ask
      * @return TransmitterAttribution
      */
-    public function setAsk(\JLM\TransmitterBundle\Entity\Ask $ask = null)
+    public function setAsk(Ask $ask = null)
     {
         $this->ask = $ask;
     
@@ -202,7 +203,7 @@ class Attribution implements AttributionInterface
     /**
      * Get ask
      *
-     * @return \JLM\OfficeBundle\Entity\Ask
+     * @return Ask
      */
     public function getAsk()
     {
@@ -212,10 +213,10 @@ class Attribution implements AttributionInterface
     /**
      * Set bill
      *
-     * @param \JLM\OfficeBundle\Entity\Bill $bill
+     * @param BillInterface $bill
      * @return Attribution
      */
-    public function setBill(\JLM\OfficeBundle\Entity\Bill $bill = null)
+    public function setBill(BillInterface $bill = null)
     {
         $this->bill = $bill;
     
@@ -225,7 +226,7 @@ class Attribution implements AttributionInterface
     /**
      * Get bill
      *
-     * @return \JLM\OfficeBundle\Entity\Bill 
+     * @return BillInterface 
      */
     public function getBill()
     {
@@ -240,112 +241,5 @@ class Attribution implements AttributionInterface
     public function getSite()
     {
     	return $this->getAsk()->getSite();
-    }
-
-    /**
-     * populate Bill from Attribution
-     * 
-     * @return Bill
-     */
-    public function populateBill(Bill $bill, $vat, $earlyPayment = '', $penalty = '', $property = '', Product $port = null)
-    {
-    	$bill->populateFromSite($this->getSite(),$this->getAsk()->getTrustee());   // OK
-    	$bill = $this->populateBillLines($bill,$vat,$port);
-    	$bill->setCreation(new \DateTime);     // OK
-    	$bill->setReference('Selon OS');       // OK
-    	$bill->setVatTransmitter($vat);
-    	$bill->setMaturity(30);
-    	$bill->setEarlyPayment($earlyPayment);
-    	$bill->setPenalty($penalty);
-    	$bill->setProperty($property);
-    	return $bill;
-    }
-    
-    /**
-     * populate BillLines from Attribution
-     *
-     * @return Bill
-     */
-    public function populateBillLines(Bill $bill, $vat, Product $port = null)
-    {
-    	$transmitters = $this->getTransmitters();
-    	$models = array();
-    	foreach ($transmitters as $transmitter)
-    	{
-    		$key = $transmitter->getModel()->getId();
-    		if (!isset($models[$key]))
-    		{
-    			$models[$key]['quantity'] = 0;
-    			$models[$key]['product'] = $transmitter->getModel()->getProduct();
-    			$models[$key]['numbers'] = array();
-    		}
-    		$models[$key]['quantity']++;
-    		$models[$key]['numbers'][] = $transmitter->getNumber();
-    	}
-    	 
-    	$position = 0;
-    	foreach ($models as $key=>$values)
-    	{
-    		asort($values['numbers']);
-    		 
-    		$description = '';
-    		$n1 = $temp = $values['numbers'][0];
-    		$i = 1;
-    		$size = sizeof($values['numbers']);
-    		if ($size > 1)
-    		{
-    			do {
-    				if ($values['numbers'][$i] != $temp + 1)
-    				{
-    					$n2 = $temp;
-    					if ($n1 == $n2)
-    						$description .= 'n°'.$n1;
-    					else
-    						$description .= 'du n°'.$n1.' au n°'.$n2;
-    					$description .= chr(10);
-    					$n1 = $models[$key]['numbers'][$i];
-    				}
-    				$temp = $values['numbers'][$i];
-    				$i++;
-    			} while ($i < $size);
-    			if ($temp == $n1)
-    				$description .= 'n°'.$n1;
-    			else
-    				$description .= 'du n°'.$n1.' au n°'.$temp;
-    		}
-    		else
-    			$description .= 'n°'.$n1;
-    	
-    		$line = new BillLine;
-    		$line->setPosition($position);
-    		$line->setDesignation($values['product']->getDesignation());
-    		$line->setIsTransmitter(true);
-    		$line->setProduct($values['product']);
-    		$line->setQuantity($values['quantity']);
-    		$line->setReference($values['product']->getReference());
-    		$line->setShowDescription(true);
-    		$line->setDescription($description);
-    		$line->setUnitPrice($values['product']->getUnitPrice($values['quantity'])); // Ajouter prix unitaire quantitatif
-    		$line->setVat($vat);
-    		$line->setBill($bill);
-    		$bill->addLine($line);
-    		$position++;
-    	}
-    	if ($port !== null)
-    	{
-    		$line = new BillLine;
-    		$line->setPosition($position);
-    		$line->setDesignation($port->getDesignation());
-    		$line->setIsTransmitter(true);
-    		$line->setProduct($port);
-    		$line->setQuantity(1);
-    		$line->setReference($port->getReference());
-    		$line->setUnitPrice($port->getUnitPrice(sizeof($transmitters)));
-    		$line->setVat($vat);
-    		$line->setBill($bill);
-    		$bill->addLine($line);
-    		$position++;
-    	}
-    	return $bill;
     }
 }

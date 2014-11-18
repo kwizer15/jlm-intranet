@@ -2,10 +2,11 @@
 
 namespace JLM\TransmitterBundle\Entity;
 
-use JLM\TransmitterBundle\Entity\Attribution;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use JLM\AskBundle\Entity\Ask as BaseAsk;
+use JLM\TransmitterBundle\Model\AttributionInterface;
 
 /**
  * Commande d'émetteurs
@@ -14,7 +15,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\Table(name="transmitters_ask")
  * @ORM\Entity(repositoryClass="JLM\TransmitterBundle\Entity\AskRepository")
  */
-class Ask extends \JLM\OfficeBundle\Entity\Ask
+class Ask extends BaseAsk
 {
 	/**
 	 * @ORM\Id
@@ -39,7 +40,7 @@ class Ask extends \JLM\OfficeBundle\Entity\Ask
 	}
 	
 	/**
-	 * Dossier de stockage des documents uploadés
+	 * {@inheritdoc}
 	 */
 	protected function getUploadDir()
 	{
@@ -57,24 +58,25 @@ class Ask extends \JLM\OfficeBundle\Entity\Ask
 	/**
 	 * Add attribution
 	 *
-	 * @param \JLM\TransmitterBundle\Entity\Attribution $attribution
-	 * @return AskContract
+	 * @param AttributionInterface $attribution
+	 * @return bool
 	 */
-	public function addAttribution(\JLM\TransmitterBundle\Entity\Attribution $attribution)
+	public function addAttribution(AttributionInterface $attribution)
 	{
 	    $this->attributions[] = $attribution;
 		
-	    return $this;
+	    return true;
 	}
 		
 	/**
 	 * Remove attribution
 	 *
-	 * @param \JLM\TransmitterBundle\Entity\Attribution $attribution
+	 * @param AttributionInterface $attribution
+	 * @return bool
 	 */
-	public function removeAttribution(\JLM\TransmitterBundle\Entity\Attribution $attribution)
+	public function removeAttribution(AttributionInterface $attribution)
 	{
-	    $this->attributions->removeElement($attribution);
+	    return $this->attributions->removeElement($attribution);
 	}
 		
 	/**

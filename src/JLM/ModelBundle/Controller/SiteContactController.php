@@ -63,7 +63,7 @@ class SiteContactController extends Controller
     {
         $entity = new SiteContact();
         if ($site)
-        	$entity->setSite($site);
+        	$entity->setAdministrator($site);
         $form   = $this->createForm(new SiteContactType(), $entity);
 
         return array(
@@ -86,13 +86,15 @@ class SiteContactController extends Controller
     {
         $entity  = new SiteContact();
         $form = $this->createForm(new SiteContactType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
             if ($entity->getPerson()->getAddress() !== null)
+            {
             	$em->persist($entity->getPerson()->getAddress());
+            }
             $entity->getPerson()->formatPhones();
             $em->persist($entity->getPerson());
             $em->persist($entity);
@@ -155,11 +157,14 @@ class SiteContactController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new SiteContactType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isValid())
+        {
         	if ($entity->getPerson()->getAddress() !== null)
+        	{
         		$em->persist($entity->getPerson()->getAddress());
+        	}
         	$entity->getPerson()->formatPhones();
         	$em->persist($entity->getPerson());
             $em->persist($entity);
@@ -185,13 +190,15 @@ class SiteContactController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('JLMModelBundle:SiteContact')->find($id);
 
-            if (!$entity) {
+            if (!$entity)
+            {
                 throw $this->createNotFoundException('Unable to find SiteContact entity.');
             }
 

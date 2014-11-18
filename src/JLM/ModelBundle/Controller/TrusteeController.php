@@ -12,8 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Form\Type\TrusteeType;
-use JLM\ModelBundle\Entity\Person;
-use JLM\ModelBundle\Form\Type\PersonType;
+use JLM\ContactBundle\Form\Type\PersonType;
+use JLM\ContactBundle\Manager\ContactManager;
 
 /**
  * Trustee controller.
@@ -106,7 +106,9 @@ class TrusteeController extends Controller
             $em = $this->getDoctrine()->getManager(); 
             $em->persist($entity->getAddress());
             if ($entity->getBillingAddress() !== null)
-          	  $em->persist($entity->getBillingAddress());
+            {
+          	    $em->persist($entity->getBillingAddress());
+            }
             $em->persist($entity);
             $em->flush();
 
@@ -160,7 +162,9 @@ class TrusteeController extends Controller
         if ($editForm->isValid()) {
         	$em->persist($entity->getAddress());
         	if ($entity->getBillingAddress() !== null)
+        	{
         		$em->persist($entity->getBillingAddress());
+        	}
             $em->persist($entity);
             $em->flush();
 
@@ -188,7 +192,8 @@ class TrusteeController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($entity);
             $em->flush();
@@ -214,7 +219,7 @@ class TrusteeController extends Controller
      */
     public function contactnewAction(Trustee $trustee)
     {
-    	$entity = new Person();
+    	$entity = ContactManager::create('Person');
     	$form   = $this->createForm(new PersonType(), $entity);
     	
     	return array(
@@ -235,12 +240,13 @@ class TrusteeController extends Controller
     public function contactcreateAction(Trustee $trustee)
     {
     	$em = $this->getDoctrine()->getManager();
-    	$entity  = new Person();
+    	$entity  = ContactManager::create('Person');
     	$request = $this->getRequest();
     	$form    = $this->createForm(new PersonType(), $entity);
     	$form->handleRequest($request);
     
-    	if ($form->isValid()) {
+    	if ($form->isValid())
+    	{
     		$em = $this->getDoctrine()->getManager();
     		$trustee->addContact($entity);
     		$em->persist($entity);
@@ -273,6 +279,7 @@ class TrusteeController extends Controller
         $em = $this->getDoctrine()->getManager();
     
         $entities = $em->getRepository('JLMModelBundle:Trustee')->getArray($term, $page_limit);
+        
         return new JsonResponse(array('entities' => $entities));
     }
     

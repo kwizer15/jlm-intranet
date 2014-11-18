@@ -1,0 +1,24 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+{% block content %}
+<h1>Nouveau produit</h1>
+<form action="{{ path('jlm_product_product_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+ <fieldset>
+    {{ form_widget(form) }}
+	<div class="form-actions">
+	   <a href="{{ path('jlm_product_product') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	   <button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer les modifications</button>
+	</div>
+</fieldset>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% javascripts
+    	'@JLMProductBundle/Resources/public/js/product.js'
+    	filter='yui_js' %}
+    	<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+<script>
+$("body").product();
+</script>
+{% endblock %}

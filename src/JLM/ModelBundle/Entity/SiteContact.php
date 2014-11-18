@@ -5,6 +5,9 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\ContactBundle\Model\PersonInterface;
+use JLM\CondominiumBundle\Model\AdministratorMemberInterface;
+use JLM\CondominiumBundle\Model\AdministratorInterface;
 
 /**
  * JLM\ModelBundle\Entity\SiteContact
@@ -12,7 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="site_contacts")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SiteContactRepository")
  */
-class SiteContact
+class SiteContact implements AdministratorMemberInterface, PersonInterface
 {
 	/**
      * @var integer $id
@@ -34,7 +37,7 @@ class SiteContact
 	/**
 	 * @var $person
 	 *
-	 * @ORM\ManyToOne(targetEntity="Person")
+	 * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\PersonInterface")
 	 * @Assert\Valid
 	 * @Assert\NotNull
 	 */
@@ -68,34 +71,53 @@ class SiteContact
 	
     /**
      * Set site
-     *
-     * @param JLM\ModelBundle\Entity\Site $site
-     * @return SiteContact
+     * @deprecated
+     * @param UnionCouncilInterface $site
+     * @return self
      */
-    public function setSite(\JLM\ModelBundle\Entity\Site $site = null)
+    public function setSite(AdministratorInterface $site = null)
     {
-        $this->site = $site;
-    
-        return $this;
+        return $this->setAdministrator($site);
     }
 
     /**
      * Get site
-     *
+     * @deprecated
      * @return JLM\ModelBundle\Entity\Site 
      */
     public function getSite()
+    {
+        return $this->getAdministrator();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getAdministrator()
     {
         return $this->site;
     }
 
     /**
-     * Set person
+     * Set union council
      *
-     * @param JLM\ModelBundle\Entity\Person $person
+     * @param UnionCouncilInterface $unioncouncil
      * @return SiteContact
      */
-    public function setPerson(\JLM\ModelBundle\Entity\Person $person = null)
+    public function setAdministrator(AdministratorInterface $unioncouncil = null)
+    {
+        $this->site = $unioncouncil;
+    
+        return $this;
+    }
+    
+    /**
+     * Set person
+     *
+     * @param PersonInterface $person
+     * @return SiteContact
+     */
+    public function setPerson(PersonInterface $person = null)
     {
         $this->person = $person;
     
@@ -105,7 +127,7 @@ class SiteContact
     /**
      * Get person
      *
-     * @return JLM\ModelBundle\Entity\Person 
+     * @return PersonInterface
      */
     public function getPerson()
     {
@@ -167,4 +189,86 @@ class SiteContact
 //    {
 //    	return $this->professionnalPhone;
 //    }
+
+    // Person Decorators
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getTitle()
+    {
+        return $this->getPerson()->getTitle();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getFirstName()
+    {
+        return $this->getPerson()->getFirstName();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getLastName()
+    {
+        return $this->getPerson()->getLastName();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getFixedPhone()
+    {
+        return $this->getPerson()->getFixedPhone();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getMobilePhone()
+    {
+        return $this->getPerson()->getMobilePhone();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getFax()
+    {
+        return $this->getPerson()->getFax();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getEmail()
+    {
+        return $this->getPerson()->getEmail();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getAddress()
+    {
+        return $this->getPerson()->getAddress();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->getPerson()->getName();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return $this->getPerson()->__toString();
+    }
 }

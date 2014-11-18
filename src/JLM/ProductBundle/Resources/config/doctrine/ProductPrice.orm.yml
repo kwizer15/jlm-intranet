@@ -1,0 +1,18 @@
+JLM\ProductBundle\Entity\ProductPrice:
+  type: entity
+  table: product_prices
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    quantity:
+      type: integer
+    unitPrice:
+      type: decimal
+      scale: 2
+  manyToOne:
+    product:
+      targetEntity: JLM\ProductBundle\Entity\Product
+      inversedBy: unitPrices

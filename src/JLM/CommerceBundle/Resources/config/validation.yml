@@ -1,0 +1,4 @@
+JLM\Commerce\Entity\Bill:
+  getters:
+    oneSource:
+      - True: ~

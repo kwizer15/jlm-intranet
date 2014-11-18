@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use JLM\OfficeBundle\Entity\Order;
 use JLM\OfficeBundle\Entity\OrderLine;
 use JLM\OfficeBundle\Form\Type\OrderType;
-use JLM\OfficeBundle\Entity\QuoteVariant;
+use JLM\CommerceBundle\Entity\QuoteVariant;
 use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\Task;
 use JLM\DailyBundle\Entity\Work;
@@ -107,7 +107,7 @@ class OrderController extends Controller
 	{
 		$entity  = new Order();
 		$form    = $this->createForm(new OrderType(), $entity);
-		$form->bind($request);
+		$form->handleRequest($request);
 	
 		if ($form->isValid())
 		{
@@ -165,7 +165,7 @@ class OrderController extends Controller
 			return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
 	
 		$editForm = $this->createForm(new OrderType(), $entity);
-		$editForm->bind($request);
+		$editForm->handleRequest($request);
 	
 		if ($editForm->isValid())
 		{

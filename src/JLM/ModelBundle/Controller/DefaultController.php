@@ -36,8 +36,8 @@ class DefaultController extends Controller
     				'sites'   => $em->getRepository('JLMModelBundle:Site')->search($entity),
     				'trustees'=> $em->getRepository('JLMModelBundle:Trustee')->search($entity),
     				'suppliers'=> $em->getRepository('JLMModelBundle:Supplier')->search($entity),
-    				'products' => $em->getRepository('JLMModelBundle:Product')->search($entity),
-    				'persons' => $em->getRepository('JLMModelBundle:Person')->search($entity),
+    				'products' => $em->getRepository('JLMProductBundle:Product')->search($entity),
+    				'persons' => $em->getRepository('JLMContactBundle:Person')->search($entity),
     		);
     	}
     	return array(
@@ -65,7 +65,7 @@ class DefaultController extends Controller
     		$person->setRole($role);
     		$em->persist($person);
     	}
-    	$quotes = $em->getRepository('JLMOfficeBundle:Quote')->findAll();
+    	$quotes = $em->getRepository('JLMCommerceBundle:Quote')->findAll();
     	foreach ($quotes as $quote)
     	{
     		$contact = $quote->getContact();

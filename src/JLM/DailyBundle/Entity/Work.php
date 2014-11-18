@@ -3,8 +3,8 @@ namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use JLM\OfficeBundle\Entity\QuoteVariant;
 use JLM\OfficeBundle\Entity\Order;
+use JLM\CommerceBundle\Model\QuoteVariantInterface;
 
 /**
  * Plannification de travaux
@@ -18,7 +18,7 @@ class Work extends Intervention
 	/**
 	 * Devis source (pour "selon devis...")
 	 * 
-	 * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\QuoteVariant", mappedBy="work")
+	 * @ORM\OneToOne(targetEntity="JLM\CommerceBundle\Entity\QuoteVariant", mappedBy="work")
 	 * @Assert\Valid
 	 */
 	private $quote;
@@ -133,10 +133,10 @@ class Work extends Intervention
     /**
      * Set quote
      *
-     * @param \JLM\OfficeBundle\Entity\QuoteVariant $quote
+     * @param QuoteVariantInterface $quote
      * @return Work
      */
-    public function setQuote(\JLM\OfficeBundle\Entity\QuoteVariant $quote = null)
+    public function setQuote(QuoteVariantInterface $quote = null)
     {
         $this->quote = $quote;
     
@@ -146,7 +146,7 @@ class Work extends Intervention
     /**
      * Get quote
      *
-     * @return \JLM\OfficeBundle\Entity\QuoteVariant 
+     * @return QuoteVariantInterface
      */
     public function getQuote()
     {
@@ -208,7 +208,7 @@ class Work extends Intervention
      * @param QuoteVariant $variant
      * @return void
      */
-    public function populateFromQuoteVariant(QuoteVariant $variant)
+    public function populateFromQuoteVariant(QuoteVariantInterface $variant)
     {
     	$quote = $variant->getQuote();
     	$this->setCreation(new \DateTime);
@@ -236,7 +236,7 @@ class Work extends Intervention
      * @param QuoteVariant $variant
      * @return \JLM\DailyBundle\Entity\Work
      */
-    public static function createFromQuoteVariant(QuoteVariant $variant)
+    public static function createFromQuoteVariant(QuoteVariantInterface $variant)
     {
     	$work = new Work;
     	$work->populateFromQuoteVariant($variant);

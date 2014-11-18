@@ -1,0 +1,8 @@
+JLM\CommerceBundle\Entity\PaymentModel:
+  type: entity
+  table: paymentmodel
+  readOnly: true
+  repositoryClass: JLM\CommerceBundle\Repository\TextModelRepository
+
+
+    

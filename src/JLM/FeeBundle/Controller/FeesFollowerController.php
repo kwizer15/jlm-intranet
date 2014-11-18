@@ -10,11 +10,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\FeeBundle\Entity\Fee;
 use JLM\FeeBundle\Entity\FeesFollower;
-use JLM\OfficeBundle\Entity\Bill;
-use JLM\OfficeBundle\Entity\BillLine;
+use JLM\CommerceBundle\Entity\Bill;
+use JLM\CommerceBundle\Entity\BillLine;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use JLM\BillBundle\Builder\BillFactory;
+use JLM\CommerceBundle\Factory\BillFactory;
 use JLM\FeeBundle\Builder\FeeBillBuilder;
+use JLM\FeeBundle\Form\Type\FeesFollowerType;
 
 
 
@@ -49,13 +50,13 @@ class FeesFollowerController extends Controller
 	/**
 	 * Edit a FeesFollower entities.
 	 *
-	 * @Route("/{id}/edit", name="fees_generate")
+	 * @Route("/{id}/edit", name="fees_edit")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function editAction(FeesFollower $entity)
 	{	
-		$editForm = $this->createForm(new FeesFollower(), $entity);
+		$editForm = $this->createForm(new FeesFollowerType(), $entity);
 		return array(
 				'entity'      => $entity,
 				'edit_form'   => $editForm->createView(),
@@ -165,11 +166,11 @@ class FeesFollowerController extends Controller
 	public function printAction(FeesFollower $follower)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$entities = $em->getRepository('JLMOfficeBundle:Bill')->findBy(array('feesFollower'=>$follower),array('number'=>'ASC'));
+		$entities = $em->getRepository('JLMCommerceBundle:Bill')->findBy(array('feesFollower'=>$follower),array('number'=>'ASC'));
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename=redevances-'.$follower->getActivation()->format('m-Y').'.pdf');
-		$response->setContent($this->render('JLMOfficeBundle:Bill:print.pdf.php',array('entities'=>$entities,'duplicate'=>false)));
+		$response->setContent($this->render('JLMCommerceBundle:Bill:print.pdf.php',array('entities'=>$entities,'duplicate'=>false)));
 		return $response;
 	}
 }

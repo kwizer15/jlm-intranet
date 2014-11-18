@@ -1,0 +1,57 @@
+JLM\ProductBundle\Entity\Product:
+  type: entity
+  table: products
+  repositoryClass: JLM\ProductBundle\Repository\ProductRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    designation:
+      type: string
+    description:
+      type: text
+      nullable: true
+    reference:
+      type: string
+      length: 16
+    barcode:
+      type: string
+      nullable: true
+    unitPrice:
+      type: decimal
+      scale: 2
+    purchase:
+      type: decimal
+      scale: 2
+    discountSupplier:
+      column: discount_supplier
+      type: smallint
+    expenseRatio:
+      column: expense_ratio
+      type: smallint
+    shipping:
+      type: decimal
+      scale: 2
+    unity:
+      type: string
+  manyToOne:
+    supplier:
+      targetEntity: JLM\ProductBundle\Model\SupplierInterface
+    category:
+      targetEntity: JLM\ProductBundle\Model\ProductCategoryInterface
+#    parent:
+#      targetEntity: JLM\ProductBundle\Entity\Product
+#      inversedBy: children
+  oneToMany:
+    unitPrices:
+      targetEntity: JLM\ProductBundle\Entity\ProductPrice
+      mappedBy: product
+      orderBy: { quantity : ASC }
+#    children:
+#      targetEntity: JLM\ProductBundle\Entity\Product
+#      mappedBy: parent
+#    files:
+#      targetEntity: JLM\ProductBundle\Entity\LinkedFile
+#      mappedBy: product

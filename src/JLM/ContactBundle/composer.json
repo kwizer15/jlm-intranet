@@ -1,0 +1,27 @@
+{
+    "name": "jlm-entreprise/contact-bundle",
+	"type": "symfony-bundle",
+	"description": "Contact bundle for JLM Intranet",
+	"keywords": ["contact", "symfony2"],
+	"license": "GPLv2",
+	"authors": [
+		{
+		"name": "Emmanuel Bernaszuk",
+		"email": "emmanuel.bernaszuk@jlm-entreprise.fr"
+		}
+	],
+	"minimum-stability": "dev",
+	"require": {
+		"php": ">=5.3.2",
+		"symfony/form": "2.3.*",
+		"doctrine/orm": ">=2.2.3,<2.4-dev",
+		"doctrine/doctrine-bundle": "1.2.*",
+		"genemu/form-bundle": "2.2.*"
+	},
+	"autoload": {
+		"psr-0": {
+			"JLM\\ContactBundle": ""
+		}
+	},
+	"target-dir": "JLM/ContactBundle"
+}

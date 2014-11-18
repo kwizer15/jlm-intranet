@@ -1,0 +1,57 @@
+{% extends "JLMCommerceBundle:Quote:layout.html.twig" %}
+
+{% block content %}
+<h1>Devis <small>{{ entity.number }}</small></h1>
+{% include 'JLMCommerceBundle:Quote:stateheader.html.twig' with {'state': entity.state} %}
+{% include 'JLMCommerceBundle:Quote:showheader.html.twig' with {'quote': entity} %}
+<div class="form-actions">
+{% if entity.ask %}
+	<a href="{{ path('askquote_show',{'id':entity.ask.id}) }}" class="btn"><i class="icon-arrow-left"></i> Voir la demande</a>
+{% endif %}
+	<a href="{{ path('quote_jacket',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer la chemise</a>
+{% if entity.variants|length > 0 %}	
+	<a href="{{ path('quote_print',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-white icon-print"></i> Imprimer tout</a>	
+{% endif %}
+{% if entity.state == 0 %}
+	<a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+{% else %}
+<a href="{{ path('quote_mail',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-white icon-envelope"></i> Envoyer tout par mail</a>
+{% endif %}
+
+	<a href="{{ path('variant_new',{ 'id' : entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter une variante</a>
+</div>
+
+
+<ul id="variants" class="nav nav-tabs">
+	{% for variant in entity.variants %}
+    <li{% if loop.first %} class="active"{% endif %}>
+        <a href="#variant-{{ variant.number }}" data-toggle="tab">{{ variant.number }}
+		{% include 'JLMCommerceBundle:Quote:statelabel.html.twig' with {'state': variant.state} %}
+         </a>
+    </li>
+    {% endfor %}
+</ul>
+{%  if entity.variants | length %}
+<div id="variantsContent" class="tab-content">
+{% for variant in entity.variants %}
+    <div class="tab-pane fade{% if loop.first %} active in{% endif %}" id="variant-{{ variant.number }}">
+		{% include 'JLMCommerceBundle:QuoteVariant:show.html.twig' with {'variant': variant} %}
+	</div>
+{% endfor %}
+</div>
+{% else %}
+<p>Pas encore de devis</p>
+{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+	{% javascripts
+    	'@JLMCommerceBundle/Resources/public/js/quote.js'
+        filter='yui_js' %}
+    	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+<script>
+$("body").quotevariant();
+</script>
+{% endblock %}

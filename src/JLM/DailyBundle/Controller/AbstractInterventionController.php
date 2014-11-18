@@ -44,7 +44,7 @@ abstract class AbstractInterventionController extends PaginableController
 				'form_externalbill' => $form_externalbill->createView(),
 				'form_cancel' => $form_cancel->createView(),
 				'forms_editTech' => $formsEditTech,
-				'quotes' => $em->getRepository('JLMOfficeBundle:Quote')->getByDoor($entity->getDoor()),
+				'quotes' => $em->getRepository('JLMCommerceBundle:Quote')->getByDoor($entity->getDoor()),
 		);
 		
 		

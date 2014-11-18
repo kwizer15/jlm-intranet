@@ -1,0 +1,13 @@
+JLM\ContactBundle\Entity\Company:
+  type: entity
+  table: companies
+  inheritanceType: JOINED
+  discriminatorColumn:
+    name: discr
+    type: string
+  discriminatorMap:
+    trustee: JLM\ModelBundle\Entity\Trustee
+    supplier: JLM\ProductBundle\Entity\Supplier
+    company: Company
+  
+    

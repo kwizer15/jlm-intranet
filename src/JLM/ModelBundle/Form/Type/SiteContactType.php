@@ -13,7 +13,7 @@ class SiteContactType extends AbstractType
         $builder
         	->add('site','site_select',array('label'=>'Affaire','attr'=>array('class'=>'input-xxlarge')))
         //	->add('role',null,array('label'=>'Rôle du contact'))
-        	->add('person','person_select',array('label'=>'Contact'))
+        	->add('person','jlm_contact_person_select',array('label'=>'Contact'))
         //	->add('professionnalPhone',null,array('label'=>'Téléphone pro','required'=>false))  
         ;
     }

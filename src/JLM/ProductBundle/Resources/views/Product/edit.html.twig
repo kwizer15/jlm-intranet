@@ -1,0 +1,30 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+{% block content %}
+{% if form_errors(edit_form) %}
+<div class="alert">{{ form_errors(edit_form) }}</div>
+{% endif %}
+<h1>Edition d'un produit</h1>
+
+<form action="{{ path('jlm_product_product_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
+<fieldset>
+    {{ form_widget(edit_form) }}
+    <div class="form-actions">
+	   <a href="{{ path('jlm_product_product') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
+	   <button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer les modifications</button>
+	</div>
+</fieldset>
+</form>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset("bundles/jlmmodel/js/product.js") }}"></script>
+{% javascripts
+    	'@JLMProductBundle/Resources/public/js/product.js'
+    	filter='yui_js' %}
+    	<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+<script>
+$("body").product();
+</script>
+{% endblock %}

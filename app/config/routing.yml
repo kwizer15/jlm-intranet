@@ -1,3 +1,31 @@
+jlm_ask:
+    resource: "@JLMAskBundle/Resources/config/routing.yml"
+    prefix:   /
+
+jlm_commerce:
+    resource: "@JLMCommerceBundle/Resources/config/routing.yml"
+    prefix:   /
+
+jlm_contract:
+    resource: "@JLMContractBundle/Resources/config/routing.yml"
+    prefix:   /
+
+jlm_product:
+    resource: "@JLMProductBundle/Resources/config/routing.yml"
+    prefix:   /
+
+jlm_installation:
+    resource: "@JLMInstallationBundle/Resources/config/routing.yml"
+    prefix:   /
+
+jlm_condominium:
+    resource: "@JLMCondominiumBundle/Resources/config/routing.yml"
+    prefix:   /
+
+jlm_contact:
+    resource: "@JLMContactBundle/Resources/config/routing.yml"
+    prefix:   /contact
+
 jlm_fee:
     resource: "@JLMFeeBundle/Controller/"
     type:     annotation
@@ -51,6 +79,9 @@ fos_user_resetting:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
+
+#fos_user:
+#    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
 # Internal routing configuration to handle ESI
 #_internal:

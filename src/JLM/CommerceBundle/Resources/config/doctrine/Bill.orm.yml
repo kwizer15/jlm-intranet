@@ -1,0 +1,65 @@
+JLM\CommerceBundle\Entity\Bill:
+  type: entity
+  table: bill
+  repositoryClass: JLM\CommerceBundle\Repository\BillRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    prelabel:
+      type: text
+      nullable: true
+    reference:
+      type: text
+    accountNumber:
+      nullable: true
+    details:
+      type: text
+      nullable: true
+    site:
+      type: text
+    intro:
+      type: text
+      nullable: true
+    state:
+      type: smallint
+    property:
+      nullable: true
+    earlyPayment: ~
+    penalty: ~
+    maturity:
+      type: integer
+    discount:
+      type: decimal
+      scale: 7
+    firstBoost:
+      column: first_boost
+      type: datetime
+      nullable: true
+    secondBoost:
+      column: second_boost
+      type: datetime
+      nullable: true
+    secondBoostComment:
+      column: second_boost_comment
+      nullable: true
+  manyToOne:
+    fee:
+      targetEntity: JLM\FeeBundle\Entity\Fee
+    feesFollower:
+      targetEntity: JLM\FeeBundle\Entity\FeesFollower
+    siteObject:
+      targetEntity: JLM\ModelBundle\Entity\Site
+      inversedBy: bills
+  oneToMany:
+    lines:
+      targetEntity: JLM\CommerceBundle\Entity\BillLine
+      mappedBy: bill
+      orderBy: { position: ASC }
+  oneToOne:
+    intervention:
+      targetEntity: JLM\DailyBundle\Entity\Intervention
+      mappedBy: bill
+    

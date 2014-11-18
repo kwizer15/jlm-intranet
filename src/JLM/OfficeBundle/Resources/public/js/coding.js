@@ -216,7 +216,7 @@
 			  $(line + "_reference").attr('data-source',this.options.autoSource)
 					              .autocomplete({
 						source: function(request,response){
-							request.repository = 'JLMModelBundle:Product';
+							request.repository = 'JLMProductBundle:Product';
 							request.action = 'Reference';
 							return $.post(
 								this.element.attr('data-source'),
@@ -244,7 +244,7 @@
 			  $(line + "_designation").attr('data-source',this.options.autoSource)
 				              .autocomplete({
 					source: function(request,response){
-						request.repository = 'JLMModelBundle:Product';
+						request.repository = 'JLMProductBundle:Product';
 						request.action = 'Designation';
 						return $.post(
 							this.element.attr('data-source'),

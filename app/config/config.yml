@@ -68,6 +68,45 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
         resolve_target_entities:
+            JLM\AskBundle\Model\AskInterface: JLM\AskBundle\Entity\AskQuote
+            JLM\AskBundle\Model\PayerInterface: JLM\ModelBundle\Entity\Trustee
+            JLM\AskBundle\Model\SubjectInterface: JLM\ModelBundle\Entity\Site
+            JLM\AskBundle\Model\ContactInterface: JLM\ContactBundle\Entity\Person
+            JLM\AskBundle\Model\CommunicationMeansInterface: JLM\AskBundle\Entity\CommunicationMeans
+        
+            JLM\ContactBundle\Model\CountryInterface: JLM\ContactBundle\Entity\Country
+            JLM\ContactBundle\Model\CityInterface: JLM\ContactBundle\Entity\City
+            JLM\ContactBundle\Model\AddressInterface: JLM\ContactBundle\Entity\Address
+            JLM\ContactBundle\Model\ContactInterface: JLM\ContactBundle\Entity\Contact
+            JLM\ContactBundle\Model\CorporationContactInterface: JLM\ContactBundle\Entity\CorporationContact
+            JLM\ContactBundle\Model\PersonInterface: JLM\ContactBundle\Entity\Person
+            JLM\ContactBundle\Model\CorporationInterface: JLM\ContactBundle\Entity\Company
+            JLM\ContactBundle\Model\CompanyInterface: JLM\ContactBundle\Entity\Company
+            
+            JLM\CondominiumBundle\Model\ManagerInterface: JLM\ModelBundle\Entity\Trustee            
+            JLM\CondominiumBundle\Model\AdministratorInterface: JLM\ModelBundle\Entity\Site
+            JLM\CondominiumBundle\Model\AdministratorMemberInterface: JLM\ModelBundle\Entity\SiteContact
+            
+            JLM\CommerceBundle\Model\BillInterface: JLM\CommerceBundle\Entity\Bill
+            JLM\CommerceBundle\Model\BillLineInterface: JLM\CommerceBundle\Entity\BillLine
+            JLM\CommerceBundle\Model\QuoteInterface: JLM\CommerceBundle\Entity\Quote
+            JLM\CommerceBundle\Model\QuoteVariantInterface: JLM\CommerceBundle\Entity\QuoteVariant
+            JLM\CommerceBundle\Model\QuoteLineInterface: JLM\CommerceBundle\Entity\QuoteLine
+            JLM\CommerceBundle\Model\CustomerInterface: JLM\ModelBundle\Entity\Trustee
+            JLM\CommerceBundle\Model\VATInterface: JLM\CommerceBundle\Entity\VAT
+            JLM\CommerceBundle\Model\BillSourceInterface: JLM\DailyBundle\Entity\Intervention
+            JLM\CommerceBundle\Model\BusinessInterface: JLM\ModelBundle\Entity\Site
+            JLM\CommerceBundle\Model\QuoteRecipientInterface: JLM\ContactBundle\Entity\Person
+            
+            JLM\ProductBundle\Model\ProductInterface: JLM\ProductBundle\Entity\Product
+            JLM\ProductBundle\Model\SupplierInterface: JLM\ProductBundle\Entity\Supplier
+            JLM\ProductBundle\Model\ProductCategoryInterface: JLM\ProductBundle\Entity\ProductCategory
+            JLM\ProductBundle\Model\ProductPriceInterface: JLM\ProductBundle\Entity\ProductPrice
+            
+            JLM\InstallationBundle\Model\BayInterface: JLM\ModelBundle\Entity\Site
+            
+            JLM\ContractBundle\Model\ContractInterface: JLM\ContractBundle\Entity\Contract
+
             JLM\TransmitterBundle\Model\AttributionInterface: JLM\TransmitterBundle\Entity\Attribution
             JLM\TransmitterBundle\Model\TransmitterInterface: JLM\TransmitterBundle\Entity\Transmitter
 

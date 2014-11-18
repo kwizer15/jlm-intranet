@@ -5,18 +5,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     
     <services>
-        <service id="jlm_office.listener.billnumbergenerator_listener" class="JLM\OfficeBundle\EventListener\BillNumberGenerator">
-            <tag name="doctrine.event_listener" event="prePersist" />
-        </service>
-    	<service id="jlm_office.eventlistener.billcount_listener" class="JLM\OfficeBundle\EventListener\BillCountListener">
-        	<argument type="service" id="doctrine.orm.entity_manager"/>
-    		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
-		</service>
     	<service id="jlm_office.eventlistener.askquotecount_listener" class="JLM\OfficeBundle\EventListener\AskQuoteCountListener">
-        	<argument type="service" id="doctrine.orm.entity_manager"/>
-    		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
-		</service>
-        <service id="jlm_office.eventlistener.quotecount_listener" class="JLM\OfficeBundle\EventListener\QuoteCountListener">
         	<argument type="service" id="doctrine.orm.entity_manager"/>
     		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
 		</service>
@@ -24,26 +13,8 @@
         	<argument type="service" id="doctrine.orm.entity_manager"/>
     		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
 		</service>
-		<service id="jlm_office.eventlistener.quotelast_listener" class="JLM\OfficeBundle\EventListener\QuoteLastListener">
-        	<argument type="service" id="doctrine.orm.entity_manager"/>
-    		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
-		</service>
-    	<service id="jlm_office.type.quote_line" class="JLM\OfficeBundle\Form\Type\QuoteLineType">
-   			<tag name="form.type" alias="quote_line" />
-		</service>
 		<service id="jlm_office.type.order_line" class="JLM\OfficeBundle\Form\Type\OrderLineType">
    			<tag name="form.type" alias="order_line" />
-		</service>
-		<service id="jlm_office.type.bill_line" class="JLM\OfficeBundle\Form\Type\BillLineType">
-   			<tag name="form.type" alias="bill_line" />
-		</service>
-		<service id="jlm_office.type.quote_hidden" class="JLM\OfficeBundle\Form\Type\QuoteHiddenType">
-			<argument type="service" id="doctrine.orm.entity_manager"/>
-   			<tag name="form.type" alias="quote_hidden" />
-		</service>
-		<service id="jlm_office.type.quotevariant_hidden" class="JLM\OfficeBundle\Form\Type\QuoteVariantHiddenType">
-			<argument type="service" id="doctrine.orm.entity_manager"/>
-   			<tag name="form.type" alias="quotevariant_hidden" />
 		</service>
 		<service id="jlm_office.type.askquote_hidden" class="JLM\OfficeBundle\Form\Type\AskQuoteHiddenType">
 			<argument type="service" id="doctrine.orm.entity_manager"/>

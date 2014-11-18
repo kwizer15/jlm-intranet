@@ -1,0 +1,37 @@
+JLM\ContactBundle\Entity\Person:
+  type: entity
+  table: persons
+  repositoryClass: JLM\ContactBundle\Repository\PersonRepository
+  inheritanceType: JOINED
+  discriminatorColumn:
+    name: discr
+    type: string
+  discriminatorMap:
+    person: Person
+    technician: JLM\ModelBundle\Entity\Technician
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    title:
+      type: string
+      length: 4
+    firstName:
+      type: string
+      nullable: true
+    lastName:
+      type: string
+    fixedPhone:
+      type: string
+      length: 20
+      nullable: true
+    mobilePhone:
+      type: string
+      length: 20
+      nullable: true
+    role:
+      type: string
+      nullable: true
+    

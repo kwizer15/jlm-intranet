@@ -12,7 +12,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\TransmitterBundle\Entity\Attribution;
 use JLM\TransmitterBundle\Entity\Ask;
 use JLM\TransmitterBundle\Form\Type\AttributionType;
-use JLM\BillBundle\Builder\BillFactory;
+use JLM\CommerceBundle\Factory\BillFactory;
 use JLM\TransmitterBundle\Builder\AttributionBillBuilder;
 
 /**
@@ -224,12 +224,12 @@ class AttributionController extends Controller
     	}
     	// @todo trouver un autre solution que le codage brut
     	$options = array(
-    	    'port'         => $em->getRepository('JLMModelBundle:Product')->find(134),
-    	    'earlyPayment' => (string)$em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1),
-    	    'penalty'      => (string)$em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1),
-    	    'property'     => (string)$em->getRepository('JLMOfficeBundle:PropertyModel')->find(1),
+    	    'port'         => $em->getRepository('JLMProductBundle:Product')->find(134),
+    	    'earlyPayment' => (string)$em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1),
+    	    'penalty'      => (string)$em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
+    	    'property'     => (string)$em->getRepository('JLMCommerceBundle:PropertyModel')->find(1),
     	);
-    	$bill = BillFactory::create(new AttributionBillBuilder($entity, $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate(), $options));
+    	$bill = BillFactory::create(new AttributionBillBuilder($entity, $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(), $options));
     	$em->persist($bill);
     	$entity->setBill($bill);
     	$em->persist($entity);

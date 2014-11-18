@@ -3,7 +3,7 @@
 namespace JLM\TransmitterBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JLM\ModelBundle\Entity\Product;
+use JLM\ProductBundle\Model\ProductInterface;
 
 /**
  * Model
@@ -11,41 +11,22 @@ use JLM\ModelBundle\Entity\Product;
  * @ORM\Table(name="transmitters_model")
  * @ORM\Entity
  */
-class Model extends \JLM\OfficeBundle\Entity\TextModel
+class Model extends \JLM\CommerceBundle\Entity\TextModel
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
     /**
      * @var Product
      * 
-     * @ORM\OneToOne(targetEntity="JLM\ModelBundle\Entity\Product")
+     * @ORM\OneToOne(targetEntity="JLM\ProductBundle\Model\ProductInterface")
      */
     private $product;
 
     /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * Set product
      *
-     * @param Product $product
+     * @param ProductInterface $product
      * @return Model
      */
-    public function setProduct(Product $product = null)
+    public function setProduct(ProductInterface $product = null)
     {
         $this->product = $product;
     
@@ -55,7 +36,7 @@ class Model extends \JLM\OfficeBundle\Entity\TextModel
     /**
      * Get product
      *
-     * @return Product 
+     * @return ProductInterface 
      */
     public function getProduct()
     {

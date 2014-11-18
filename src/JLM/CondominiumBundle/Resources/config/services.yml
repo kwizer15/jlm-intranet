@@ -1,0 +1,7 @@
+parameters:
+#    jlm_condominium.example.class: JLM\CondominiumBundle\Example
+
+services:
+#    jlm_condominium.example:
+#        class: %jlm_condominium.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

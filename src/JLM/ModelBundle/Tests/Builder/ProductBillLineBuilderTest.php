@@ -30,12 +30,9 @@ class ProductBillLineBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->product = $this->getMock('JLM\ModelBundle\Entity\Product');
+        $this->product = $this->getMock('JLM\ProductBundle\Model\ProductInterface');
         
-        $this->categoryId = 1;
-        $category = $this->getMock('JLM\ModelBundle\Entity\ProductCategory');
-        $category->expects($this->any())->method('getId')->will($this->returnValue($this->categoryId));
-        $this->product->expects($this->any())->method('getCategory')->will($this->returnValue($category));
+        $this->product->expects($this->any())->method('isSmallSupply')->will($this->returnValue(true));
         $this->vat = 0.2;
         $this->builder = new ProductBillLineBuilder($this->product, $this->vat);
         $this->builder->create();
@@ -46,7 +43,7 @@ class ProductBillLineBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\BillBundle\Builder\BillLineBuilderInterface', $this->builder);
+        $this->assertInstanceOf('JLM\CommerceBundle\Builder\BillLineBuilderInterface', $this->builder);
     }
     
     /**
@@ -54,7 +51,7 @@ class ProductBillLineBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function assertPostConditions()
     {
-        $this->assertInstanceOf('JLM\OfficeBundle\Entity\BillLine', $this->builder->getLine());
+        $this->assertInstanceOf('JLM\CommerceBundle\Model\BillLineInterface', $this->builder->getLine());
     }
     
     public function testBuildQuantity()

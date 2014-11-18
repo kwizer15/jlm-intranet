@@ -5,6 +5,12 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\ContactBundle\Entity\Company;
+use JLM\ContactBundle\Model\AddressInterface;
+use JLM\CondominiumBundle\Model\ManagerInterface;
+use JLM\ContractBundle\Model\ContractInterface;
+use JLM\CommerceBundle\Model\CustomerInterface;
+use JLM\AskBundle\Model\PayerInterface;
 
 /**
  * JLM\ModelBundle\Entity\Trustee
@@ -12,7 +18,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="trustees")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\TrusteeRepository")
  */
-class Trustee extends Company
+class Trustee extends Company implements ManagerInterface, CustomerInterface, PayerInterface
 {
 
 
@@ -27,7 +33,7 @@ class Trustee extends Company
     /**
      * @var ArrayCollection $contracts
      * 
-     * @ORM\OneToMany(targetEntity="Contract", mappedBy="trustee")
+     * @ORM\OneToMany(targetEntity="JLM\ContractBundle\Entity\Contract", mappedBy="trustee")
      */
     private $contracts;
 
@@ -50,9 +56,9 @@ class Trustee extends Company
     
     /**
      * Adresse de facturation (si differente)
-     * @var Address $billingAddress
+     * @var AddressInterface $billingAddress
      *
-     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
      */
     private $billingAddress;
     
@@ -186,10 +192,10 @@ class Trustee extends Company
     /**
      * Add contracts
      *
-     * @param JLM\ModelBundle\Entity\Contract $contracts
+     * @param ContractInterface $contracts
      * @return Trustee
      */
-    public function addContract(\JLM\ModelBundle\Entity\Contract $contracts)
+    public function addContract(ContractInterface $contracts)
     {
         $this->contracts[] = $contracts;
     
@@ -199,9 +205,9 @@ class Trustee extends Company
     /**
      * Remove contracts
      *
-     * @param JLM\ModelBundle\Entity\Contract $contracts
+     * @param ContractInterface $contracts
      */
-    public function removeContract(\JLM\ModelBundle\Entity\Contract $contracts)
+    public function removeContract(ContractInterface $contracts)
     {
         $this->contracts->removeElement($contracts);
     }
@@ -252,10 +258,10 @@ class Trustee extends Company
     /**
      * Set billingAddress
      *
-     * @param JLM\ModelBundle\Entity\Address $billingAddress
+     * @param AddressInterface $billingAddress
      * @return Trustee
      */
-    public function setBillingAddress(\JLM\ModelBundle\Entity\Address $billingAddress = null)
+    public function setBillingAddress(AddressInterface $billingAddress = null)
     {
         $this->billingAddress = $billingAddress;
     
@@ -265,25 +271,37 @@ class Trustee extends Company
     /**
      * Get billingAddress
      *
-     * @return JLM\ModelBundle\Entity\Address 
+     * @return AddressInterface
      */
     public function getBillingAddress()
     {
-    	return $this->billingAddress;
+        if ($this->billingAddress === null)
+        {
+            return $this->getAddress();
+        }
         
+    	return $this->billingAddress;
     }
     
+    /**
+     * @deprecated
+     * @return AddressInterface
+     */
     public function getAddressForBill()
     {
     	if ($this->billingAddress)
+    	{
     		if ($this->billingAddress->getStreet())
+    		{
     			return $this->billingAddress;
+    		}
+    	}
     	return $this->getAddress();
     }
     
     /**
      * Get BillingLabel
-     * 
+     * @deprecated
      * @return string
      */
     public function getBillingLabel()
@@ -318,5 +336,21 @@ class Trustee extends Company
     			$sum += $contract->getFee();
     	}
     	return $sum;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getBillingName()
+    {
+        return $this->getBillingLabel();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getBillingBoostContacts()
+    {
+        return new ArrayCollection();
     }
 }

@@ -1,0 +1,20 @@
+JLM\ProductBundle\Entity\ProductCategory:
+  type: entity
+  table: product_category
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+  manyToOne:
+    parent:
+      targetEntity: JLM\ProductBundle\Entity\ProductCategory
+      inversedBy: children
+  oneToMany:
+    children:
+      targetEntity: JLM\ProductBundle\Entity\ProductCategory
+      mappedBy: parent
+

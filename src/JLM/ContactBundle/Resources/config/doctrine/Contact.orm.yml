@@ -1,0 +1,16 @@
+JLM\ContactBundle\Entity\Contact:
+  type: mappedSuperclass
+  fields:
+#    name:
+#      type: string
+    email:
+      type: string
+      nullable: true
+    fax:
+      type: string
+      length: 20
+      nullable: true
+  oneToOne:
+    address:
+      targetEntity: JLM\ContactBundle\Model\AddressInterface
+    

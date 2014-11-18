@@ -1,0 +1,24 @@
+JLM\AskBundle\Entity\Ask:
+  type: mappedSuperclass
+  fields:
+    creation:
+      type: date
+    maturity:
+      type: date
+      nullable: true
+    dontTreat:
+      column: dont_treat
+      type: text
+      nullable: true
+    ask:
+      type: text
+  manyToOne:
+    trustee:
+      targetEntity: JLM\AskBundle\Model\PayerInterface
+    site:
+      targetEntity: JLM\AskBundle\Model\SubjectInterface
+    method:
+      targetEntity: JLM\AskBundle\Model\CommunicationMeansInterface
+    person:
+      targetEntity: JLM\AskBundle\Model\ContactInterface
+    

@@ -4,13 +4,13 @@ namespace JLM\FeeBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use JLM\ModelBundle\Entity\VAT;
-use JLM\ModelBundle\Entity\Contract;
+use JLM\CommerceBundle\Model\VATInterface;
 use JLM\ModelBundle\Entity\Trustee;
-use JLM\ModelBundle\Entity\Product;
+use JLM\ProductBundle\Model\ProductInterface;
 
-use JLM\OfficeBundle\Entity\Bill;
-use JLM\OfficeBundle\Entity\BillLine;
+use JLM\FeeBundle\Model\FeesFollowerInterface;
+use JLM\ContractBundle\Model\ContractInterface;
+use JLM\FeeBundle\Model\FeeInterface;
 
 /**
  * 
@@ -18,7 +18,7 @@ use JLM\OfficeBundle\Entity\BillLine;
  * @ORM\Table(name="fees")
  * @ORM\Entity
  */
-class Fee
+class Fee implements FeeInterface
 {
 	/**
 	 * @var int $id
@@ -31,7 +31,7 @@ class Fee
 	
 	/**
 	 * @var ArrayCollection $contracts
-	 * @ORM\ManyToMany(targetEntity="JLM\ModelBundle\Entity\Contract")
+	 * @ORM\ManyToMany(targetEntity="JLM\ContractBundle\Model\ContractInterface")
 	 * @ORM\JoinTable(name="fees_contracts",
 	 * 				  joinColumns={@ORM\JoinColumn(name="fee_id", referencedColumnName="id")},
 	 * 				  inverseJoinColumns={@ORM\JoinColumn(name="contract_id", referencedColumnName="id")}
@@ -72,7 +72,7 @@ class Fee
 	
 	/**
 	 * @var Vat $vat
-	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\VAT")
+	 * @ORM\ManyToOne(targetEntity="JLM\CommerceBundle\Model\VATInterface")
 	 * @Assert\Valid
 	 */
 	private $vat;
@@ -150,8 +150,10 @@ class Fee
     public function setFrequence($frequence)
     {
     	$values = array(1,2,4);
-    	if (in_array($frequence,$values))
+    	if (in_array($frequence, $values))
+    	{
     		$this->frequence = $frequence;
+    	}
     	return $this;
     }
     
@@ -177,25 +179,22 @@ class Fee
     		case 1:
     			return 'annuelle';
     			break;
-    		case 2:
-    			return 'semestrielle';
-    			break;
     		case 4:
     			return 'trimestrielle';
     			break;
-    		default:
-    			return '';
     	}
-    	return '';
+    	
+    	return 'semestrielle';
     }
     
     /**
-     * Set Vat
+     * Set VatInterface
      * @return Fee
      */
-    public function setVat(VAT $vat)
+    public function setVat(VATInterface $vat)
     {
     	$this->vat = $vat;
+    	
     	return $this;
     }
     
@@ -209,26 +208,26 @@ class Fee
     }
     
     /**
-     * Add contracts
+     * Add contract
      *
-     * @param JLM\ModelBundle\Entity\Contract $contracts
+     * @param ContractInterface $contract
      * @return Fee
      */
-    public function addContract(Contract $contracts)
+    public function addContract(ContractInterface $contract)
     {
-        $this->contracts[] = $contracts;
+        $this->contracts[] = $contract;
     
-        return $this;
+        return true;
     }
 
     /**
-     * Remove contracts
+     * Remove contract
      *
-     * @param JLM\ModelBundle\Entity\Contract $contracts
+     * @param ContractInterface $contract
      */
-    public function removeContract(Contract $contracts)
+    public function removeContract(ContractInterface $contract)
     {
-        $this->contracts->removeElement($contracts);
+        return $this->contracts->removeElement($contract);
     }
 
     /**
@@ -273,8 +272,11 @@ class Fee
     	$numbers = array();
     	foreach ($this->contracts as $contract)
     	{
-    		if (!in_array($contract->getNumber(),$numbers))
-    			$numbers[] = $contract->getNumber();
+    	    $num = $contract->getNumber();
+    		if (!in_array($num, $numbers))
+    		{
+    			$numbers[] = $num;
+    		}
     	}
     	return $numbers;
     }
@@ -300,12 +302,16 @@ class Fee
      */
     public function getBillingAddress()
     {
-    	$address = $this->getTrustee()->getAddress();
-		$billingaddress = $this->getTrustee()->getBillingAddress();
-		if ($billingaddress)
+    	$trustee = $this->getTrustee();
+		if ($billingaddress = $trustee->getBillingAddress())
+		{
 			if ($billingaddress->getStreet() && $billingaddress->getCity() !== null)
+			{
 				return $billingaddress;
-		return $address;
+			}
+		}
+		
+		return $trustee->getAddress();
     }
     
     /**
@@ -316,7 +322,9 @@ class Fee
     {
     	$amount = 0;
     	foreach ($this->contracts as $contract)
+    	{
     		$amount += $contract->getFee();
+    	}
     	return $amount;
     }
     
@@ -339,94 +347,11 @@ class Fee
     	{
     		$group .= $contract->getDoor()->getSite()->getGroupNumber();
     		if ($group != '')
+    		{
     			$group .= ' ';
+    		}
     	}
-    	return $group;
+    	
+    	return trim($group);
     }
-    
-    /**
-     * 
-     * @param Product $product
-     * @param FeesFollower $follower
-     * @param unknown $number
-     * @return \JLM\OfficeBundle\Entity\Bill
-     * @deprecated
-     */
-    public function getBill(Product $product, FeesFollower $follower, $number)
-    {
-      	$bill = new Bill;
-      	$bill->setNumber($number);
-      	$bill->setFee($this);
-      	$bill->setFeesFollower($follower);
-      	$creation = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
-    	// $creation->add(new \DateInterval('P1M'));
-    	// $creation = new \DateTime;
-      	$bill->setCreation($creation);
-      	$bill->setTrustee($this->getTrustee());
-      	$bill->setTrusteeName($this->getTrustee()->getBillingLabel());
-      	$bill->setTrusteeAddress($this->getBillingAddress()->toString());
-      	$bill->setAccountNumber($this->getTrustee()->getAccountNumber());
-     	$bill->setPrelabel($this->getPrelabel());
-      	$bill->setVat($this->getVat()->getRate());
-     	$ref = '';
-     	if ($this->getGroup() != '')
-     		$ref .= 'Groupe : '.$this->getGroup().chr(10);
-     	$ref .= 'Contrat';
-     	if (count($this->getContractNumbers()) > 1)
-    		$ref .= 's';
-     	$ref .= ' n°';
-     	foreach ($this->getContractNumbers() as $key=>$n)
-     	{
-    		if ($key > 0)
-    			$ref .= ', n°';
-    		$ref .= $n;
-    	}
-    	$bill->setReference($ref);
-     	$bill->setSite($this->getAddress());
-      	$dd = '';
-      	foreach ($this->getDoorDescription() as $key=>$desc)
-      	{
-      		if ($key > 0)
-      			$dd .= chr(10);
-      		$dd .= $desc;
-      	}
-      	$bill->setDetails($dd);
-      	$periods = array('1'=>'P1Y','2'=>'P6M','4'=>'P3M');
-      	foreach ($this->getContracts() as $key=>$contract)
-      	{
-      		$begin = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
-      		$endContract = $contract->getEnd();
-      		$end = \DateTime::createFromFormat('Y-m-d',$follower->getActivation()->format('Y-m-d'));
-      		$end->add(new \DateInterval($periods[$this->getFrequence()]));
-      		$end->sub(new \DateInterval('P1D'));
-      		$frequenceString = ' '.$this->getFrequenceString();
-      		if ($endContract !== null)
-      		{
-      			if ($endContract < $end)
-      			{
-      				$end = $endContract;
-      				$frequenceString = '';
-      			} 	
-      		}
-      		$rapport = ($end->diff($begin)->format('%m') + 1) / 12;
-      		$fee = $contract->getFee() * $rapport;
-      		$line = new BillLine();
-      		$line->setBill($bill);
-      		$line->setPosition($key);
-      		$line->setReference($product->getReference());
-      		$line->setDesignation($product->getDesignation().$frequenceString.' du '.$begin->format('d/m/Y').' au '.$end->format('d/m/Y'));
-      		
-      		$line->setShowDescription(true);
-      		$line->setDescription($contract->getDoor()->getType().' / '.$contract->getDoor()->getLocation());
-      		$line->setUnitPrice($fee);
-      		$line->setQuantity(1);
-      		$line->setVat($this->getVat()->getRate());
-      		$bill->addLine($line);
-      	}
-      	$bill->setEarlyPayment('0,00% pour paiement anticipé');
-      	$bill->setMaturity(30);
-      	$bill->setPenalty('de 1,50% par mois pour paiement différé');
-      	return $bill;
-    }
-    
 }

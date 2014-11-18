@@ -1,0 +1,74 @@
+variant_new:
+    path: /{id}/new
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:new" }
+    methods: [GET]
+    
+variant_create:
+    path: /create
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:create" }
+    methods: [POST]
+    
+variant_edit:
+    path: /{id}/edit
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:edit" }
+    methods: [GET]
+    
+variant_update:
+    path: /{id}/update
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:update" }
+    methods: [POST]
+    
+variant_ready:
+    path: /{id]/ready
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:ready" }
+    methods: [GET]
+    
+variant_mail:
+    path: /{id}/mail
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:mail" }
+    methods: [GET]
+    
+variant_sendmail:
+    path: /{id}/sendmail
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:sendmail" }
+    methods: [POST]
+    
+variant_print:
+    path: /{id}/print
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:print" }
+    methods: [GET]
+    
+variant_printcoding:
+    path: /{id}/printcoding
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:printcoding" }
+    methods: [GET]
+    
+variant_unvalid:
+    path: /{id}/unvalid
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:unvalid" }
+    methods: [GET]
+    
+variant_fax:
+    path: /{id}/fax
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:fax" }
+    methods: [GET]
+    
+variant_cancel:
+    path: /{id}/cancel
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:cancel" }
+    methods: [GET]
+    
+variant_receipt:
+    path: /{id}/receipt
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:receipt" }
+    methods: [GET]
+    
+variant_oldgiven:
+    path: /{id}/oldgiven
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:oldgiven" }
+    methods: [GET]
+    
+variant_given:
+    path: /{id}/given
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:given" }
+    methods: [GET]

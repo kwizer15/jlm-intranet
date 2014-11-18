@@ -1,0 +1,8 @@
+JLM\ProductBundle\Entity\Supplier:
+  type: entity
+  table: suppliers
+  repositoryClass: JLM\ProductBundle\Repository\SupplierRepository
+  fields:
+    website:
+      type: string
+      nullable: true

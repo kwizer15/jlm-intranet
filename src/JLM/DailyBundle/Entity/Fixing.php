@@ -3,7 +3,7 @@ namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use JLM\OfficeBundle\Entity\AskMethod;
+use JLM\AskBundle\Model\CommunicationMeansInterface;
 
 /**
  * Plannification d'une panne
@@ -23,7 +23,7 @@ class Fixing extends Intervention
 	
 	/**
 	 * Méthode de la demande
-	 * @ORM\ManyToOne(targetEntity="JLM\OfficeBundle\Entity\AskMethod")
+	 * @ORM\ManyToOne(targetEntity="JLM\AskBundle\Model\CommunicationMeansInterface")
 	 */
 	private $askMethod;
 	
@@ -86,7 +86,7 @@ class Fixing extends Intervention
 	/**
 	 * Get askMethod
 	 *
-	 * @return AskMethod
+	 * @return CommunicationMeansInterface
 	 */
 	public function getAskMethod()
 	{
@@ -96,10 +96,10 @@ class Fixing extends Intervention
 	/**
 	 * Set askMethod
 	 *
-	 * @param AskMethod $method
+	 * @param CommunicationMeansInterface $method
 	 * @return Fixng
 	 */
-	public function setAskMethod(AskMethod $method = null)
+	public function setAskMethod(CommunicationMeansInterface $method = null)
 	{
 		$this->askMethod = $method;
 		return $this;

@@ -1,0 +1,49 @@
+services:
+    jlm_commerce.type.bill:
+        class: JLM\CommerceBundle\Form\Type\BillType
+        tags:
+            - { name: form.type, alias: jlm_commerce_bill }
+            
+    jlm_commerce.type.bill_line:
+        class: JLM\CommerceBundle\Form\Type\BillLineType
+        tags:
+            - { name: form.type, alias: jlm_commerce_bill_line }
+    
+    jlm_commerce.type.quote_line:
+        class: JLM\CommerceBundle\Form\Type\QuoteLineType
+        tags:
+            - { name: form.type, alias: quote_line }
+            
+    jlm_commerce.type.quote_hidden:
+        class: JLM\CommerceBundle\Form\Type\QuoteHiddenType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: quote_hidden }
+    jlm_commerce.type.quotevariant_hidden:
+        class: JLM\CommerceBundle\Form\Type\QuoteVariantHiddenType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: quotevariant_hidden }
+    
+    jlm_commerce.listener.billnumbergenerator_listener:
+        class: JLM\CommerceBundle\EventListener\BillNumberGenerator
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+    
+    jlm_commerce.eventlistener.billcount_listener:
+        class: JLM\CommerceBundle\EventListener\BillCountListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.view, method: onKernelResponse }
+    
+    jlm_commerce.eventlistener.quotecount_listener:
+        class: JLM\CommerceBundle\EventListener\QuoteCountListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.view, method: onKernelResponse }
+            
+    jlm_commerce.eventlistener.quotelast_listener:
+        class: JLM\CommerceBundle\EventListener\QuoteLastListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.view, method: onKernelResponse }   

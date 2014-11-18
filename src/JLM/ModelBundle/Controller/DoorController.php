@@ -10,10 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\Door;
-use JLM\ModelBundle\Entity\Contract;
+use JLM\ContractBundle\Entity\Contract;
 use JLM\ModelBundle\Form\Type\DoorType;
-use JLM\ModelBundle\Form\Type\ContractType;
-use JLM\ModelBundle\Form\Type\ContractStopType;
+use JLM\ContractBundle\Form\Type\ContractType;
+use JLM\ContractBundle\Form\Type\ContractStopType;
 
 /**
  * Door controller.
@@ -49,7 +49,7 @@ class DoorController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 		
-        $contracts = $em->getRepository('JLMModelBundle:Contract')->findByDoor($entity,array('begin'=>'DESC'));
+        $contracts = $em->getRepository('JLMContractBundle:Contract')->findByDoor($entity,array('begin'=>'DESC'));
 
         // Modal nouveau contrat
         $contractNew = new Contract();

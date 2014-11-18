@@ -6,13 +6,26 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use JLM\ContactBundle\Model\AddressInterface;
+use JLM\CondominiumBundle\Model\ManagerInterface;
+use JLM\CondominiumBundle\Model\CondominiumInterface;
+use JLM\CondominiumBundle\Model\UnionCouncilMemberInterface;
+use JLM\CondominiumBundle\Model\UnionCouncilInterface;
+use JLM\CondominiumBundle\Model\AdministratorInterface;
+use JLM\CondominiumBundle\Model\AdministratorMemberInterface;
+use JLM\TransmitterBundle\Entity\UserGroup;
+use JLM\CommerceBundle\Model\BillInterface;
+use JLM\CommerceBundle\Model\VATInterface;
+use JLM\CommerceBundle\Model\BusinessInterface;
+use JLM\AskBundle\Model\SubjectInterface;
+
 /**
  * JLM\ModelBundle\Entity\Site
  *
  * @ORM\Table(name="sites")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SiteRepository")
  */
-class Site
+class Site implements AdministratorInterface, BusinessInterface, SubjectInterface
 {
     /**
      * @var integer $id
@@ -37,7 +50,7 @@ class Site
     /**
      * @var Address $address
      * 
-     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
      * @Assert\Valid
      * @Assert\NotNull
      */
@@ -68,7 +81,7 @@ class Site
     private $contacts;
     
     /**
-     * @var Trustee $trustee
+     * @var ManagerInterface $trustee
      * 
      * @ORM\ManyToOne(targetEntity="Trustee",inversedBy="sites")
      * @Assert\Valid
@@ -79,7 +92,7 @@ class Site
     /**
      * @var VAT $vat
      * 
-     * @ORM\ManyToOne(targetEntity="VAT")
+     * @ORM\ManyToOne(targetEntity="JLM\CommerceBundle\Model\VATInterface")
      * @Assert\Valid
      * @Assert\NotNull
      */
@@ -88,7 +101,7 @@ class Site
     /**
      * @var Address $lodge
      *
-     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
      * @Assert\Valid
      */
     private $lodge;
@@ -112,7 +125,7 @@ class Site
     /**
      * @var ArrayColection
      * 
-     * @ORM\OneToMany(targetEntity="JLM\OfficeBundle\Entity\Bill", mappedBy="siteObject")
+     * @ORM\OneToMany(targetEntity="JLM\CommerceBundle\Entity\Bill", mappedBy="siteObject")
      */
     private $bills;
     
@@ -164,10 +177,10 @@ class Site
     /**
      * Set address
      *
-     * @param JLM\ModelBundle\Entity\Address $address
+     * @param AddressInterface $address
      * @return Site
      */
-    public function setAddress(\JLM\ModelBundle\Entity\Address $address = null)
+    public function setAddress(AddressInterface $address = null)
     {
         $this->address = $address;
     
@@ -177,7 +190,7 @@ class Site
     /**
      * Get address
      *
-     * @return JLM\ModelBundle\Entity\Address 
+     * @return AddressInterface
      */
     public function getAddress()
     {
@@ -187,10 +200,10 @@ class Site
     /**
      * Set lodge
      *
-     * @param JLM\ModelBundle\Entity\Address $lodge
-     * @return Site
+     * @param AddresInterface $lodge
+     * @return self
      */
-    public function setLodge(\JLM\ModelBundle\Entity\Address $lodge = null)
+    public function setLodge(AddressInterface $lodge = null)
     {
     	$this->lodge = $lodge;
     
@@ -200,7 +213,7 @@ class Site
     /**
      * Get lodge
      *
-     * @return JLM\ModelBundle\Entity\Address
+     * @return AddresInterface
      */
     public function getLodge()
     {
@@ -211,7 +224,7 @@ class Site
      * Set observations
      *
      * @param string $observations
-     * @return Door
+     * @return self
      */
     public function setObservations($observations)
     {
@@ -232,17 +245,19 @@ class Site
     
     /**
      * Set groupnumber
-     * 
+     * @param string
+     * @return self
      */
     public function setGroupNumber($groupNumber)
     {
     	$this->groupNumber = $groupNumber;
+    	
     	return $this;
     }
     
     /**
      * Get groupnumber
-     *
+     * @return string
      */
     public function getGroupNumber()
     {
@@ -252,24 +267,23 @@ class Site
     /**
      * Add doors
      *
-     * @param JLM\ModelBundle\Entity\Door $doors
-     * @return Site
+     * @param Door $doors
+     * @return boolean
      */
-    public function addDoor(\JLM\ModelBundle\Entity\Door $doors)
+    public function addDoor(Door $doors)
     {
-        $this->doors[] = $doors;
-    
-        return $this;
+        return $this->doors->add($doors);
     }
 
     /**
      * Remove doors
      *
-     * @param JLM\ModelBundle\Entity\Door $doors
+     * @param Door $doors
+     * @return boolean
      */
-    public function removeDoor(\JLM\ModelBundle\Entity\Door $doors)
+    public function removeDoor(Door $doors)
     {
-        $this->doors->removeElement($doors);
+        return $this->doors->removeElement($doors);
     }
 
     /**
@@ -284,67 +298,63 @@ class Site
 
     /**
      * Add contacts
-     *
-     * @param JLM\ModelBundle\Entity\Person $contacts
+     * @deprecated
+     * @param AdministratorMemberInterface $member
      * @return Site
      */
-    public function addContact(\JLM\ModelBundle\Entity\Person $contacts)
+    public function addContact(AdministratorMemberInterface $member)
     {
-        $this->contacts[] = $contacts;
-    
-        return $this;
+        return $this->addMember($member);
     }
 
     /**
      * Remove contacts
-     *
-     * @param JLM\ModelBundle\Entity\Person $contacts
+     * @deprecated
+     * @param AdministratorMemberInterface $member
      */
-    public function removeContact(\JLM\ModelBundle\Entity\Person $contacts)
+    public function removeContact(AdministratorMemberInterface $member)
     {
-        $this->contacts->removeElement($contacts);
+        return $this->removeMember($member);
     }
 
     /**
      * Get contacts
-     *
+     * @deprecated
      * @return Doctrine\Common\Collections\Collection 
      */
     public function getContacts()
     {
-        return $this->contacts;
+        return $this->getMembers();
     }
 
     /**
      * Set trustee
-     *
+     * @deprecated
      * @param JLM\ModelBundle\Entity\Trustee $trustee
      * @return Site
      */
-    public function setTrustee(\JLM\ModelBundle\Entity\Trustee $trustee = null)
+    public function setTrustee(ManagerInterface $manager = null)
     {
-        $this->trustee = $trustee;
-    
-        return $this;
+        return $this->setManager($manager);
     }
-
+    
     /**
      * Get trustee
-     *
+     * @deprecated
      * @return JLM\ModelBundle\Entity\Trustee 
      */
     public function getTrustee()
     {
-        return $this->trustee;
+        return $this->getManager();
     }
 
     /**
      * Set vat
      *
-     * @param JLM\ModelBundle\Entity\VAT $vat
+     * @param VATInterface $vat
      * @return Site
      */
-    public function setVat(\JLM\ModelBundle\Entity\VAT $vat = null)
+    public function setVat(VATInterface $vat = null)
     {
         $this->vat = $vat;
     
@@ -354,7 +364,7 @@ class Site
     /**
      * Get vat
      *
-     * @return JLM\ModelBundle\Entity\VAT 
+     * @return VATInterface
      */
     public function getVat()
     {
@@ -366,7 +376,7 @@ class Site
      */
     public function __toString()
     {
-    	return $this->getAddress().'';
+    	return $this->getName();
     }
     
     /**
@@ -374,6 +384,10 @@ class Site
      */
     public function toString()
     {
+        if (!$this->getAddress() instanceof AddressInterface)
+        {
+            return '';
+        }
     	return $this->getAddress()->toString();
     }
     
@@ -400,7 +414,7 @@ class Site
      * @param \JLM\TransmitterBundle\Entity\UserGroup $userGroups
      * @return Site
      */
-    public function addUserGroup(\JLM\TransmitterBundle\Entity\UserGroup $userGroups)
+    public function addUserGroup(UserGroup $userGroups)
     {
         $this->userGroups[] = $userGroups;
     
@@ -412,7 +426,7 @@ class Site
      *
      * @param \JLM\TransmitterBundle\Entity\UserGroup $userGroups
      */
-    public function removeUserGroup(\JLM\TransmitterBundle\Entity\UserGroup $userGroups)
+    public function removeUserGroup(UserGroup $userGroups)
     {
         $this->userGroups->removeElement($userGroups);
     }
@@ -430,10 +444,10 @@ class Site
     /**
      * Add bills
      *
-     * @param \JLM\OfficeBundle\Entity\Bill $bills
+     * @param BillInterface $bills
      * @return Site
      */
-    public function addBill(\JLM\OfficeBundle\Entity\Bill $bills)
+    public function addBill(BillInterface $bills)
     {
         $this->bills[] = $bills;
     
@@ -443,9 +457,9 @@ class Site
     /**
      * Remove bills
      *
-     * @param \JLM\OfficeBundle\Entity\Bill $bills
+     * @param BillInterface $bills
      */
-    public function removeBill(\JLM\OfficeBundle\Entity\Bill $bills)
+    public function removeBill(BillInterface $bills)
     {
         $this->bills->removeElement($bills);
     }
@@ -474,5 +488,80 @@ class Site
     			return true;
     	}
     	return false;
+    }
+    
+    
+    // New
+    
+    /**
+     * Set the manager
+     * @param ManagerInterface $manager
+     * @return self
+     */
+    public function setManager(ManagerInterface $manager = null)
+    {
+        $this->trustee = $manager;
+    
+        return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getManager()
+    {
+        return $this->trustee;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getMembers()
+    {
+        return $this->contacts;
+    }
+    
+    /**
+     * Add contacts
+     *
+     * @param AdministratorMemberInterface $contacts
+     * @return boolean
+     */
+    public function addMember(AdministratorMemberInterface $member)
+    {
+        return $this->contacts->add($member);
+    }
+    
+    /**
+     * Remove contacts
+     *
+     * @param AdministratorMemberInterface $contacts
+     * @return boolean
+     */
+    public function removeMember(AdministratorMemberInterface $member)
+    {
+        return $this->contacts->removeElement($member);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->getAddress()->__toString();
+    }
+    
+    /**
+     * 
+     * @return number
+     */
+    public function getVatRate()
+    {
+        return $this->getVat()->getRate();
+    }
+    
+    public function getBillingLabel()
+    {
+        return $this->getManager()->getBillingLabel();
     }
 }

@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\ModelBundle\Entity\Contract;
+use JLM\ContractBundle\Entity\Contract;
 
 /**
  * Quote controller.
@@ -42,7 +42,7 @@ class ContractController extends Controller
 	public function printallAction()
 	{
 		$em = $this->getDoctrine()->getManager();
-		$entities = $em->getRepository('JLMModelBundle:Contract')->findAll();
+		$entities = $em->getRepository('JLMContractBundle:Contract')->findAll();
 		$today = new \DateTime();
 		
 		$response = new Response();

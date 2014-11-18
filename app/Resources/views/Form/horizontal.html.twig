@@ -106,7 +106,7 @@
 {{ block('form_widget_simple') }}
 {% endspaceless %}
 {% endblock city_select_widget %}
-#}
+
 {% block city_select_javascript %}
 
     <script type="text/javascript">
@@ -159,7 +159,7 @@
         $field.select2($configs);
     </script>
 {% endblock %}
-
+#}
 {% block trustee_select_javascript %}
 
     <script type="text/javascript">
@@ -221,6 +221,7 @@
 {% endspaceless %}
 {% endblock site_select_widget %}
 
+{#
 {% block contract_select_widget %}
 {% spaceless %}
 {% set attr = attr|merge({'data-source':  path('autocomplete_contract') }) %}
@@ -229,6 +230,7 @@
 {% endspaceless %}
 {% endblock contract_select_widget %}
 
+
 {% block person_select_widget %}
 {% spaceless %}
 {% set type = 'hidden' %}
@@ -236,7 +238,7 @@
 <input type="text" id="{{ id }}_selector" class="autocompletion" data-source="{{ path('autocomplete_person') }}">
 {% endspaceless %}
 {% endblock person_select_widget %}
-
+#}
 
 
 {% block distance_widget %}
@@ -245,6 +247,7 @@
 {% endspaceless %}
 {% endblock distance_widget %}
 
+{#
 {% block address_widget %}
 {% spaceless %}
 	  {{ form_widget(form.street) }}<br>
@@ -253,6 +256,7 @@
       {{ form_errors(form.city) }}
 {% endspaceless %}
 {% endblock address_widget %}
+#}
 
 {% block datetime_widget %}
 {% spaceless %}

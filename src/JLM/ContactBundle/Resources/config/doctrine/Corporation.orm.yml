@@ -1,0 +1,27 @@
+JLM\ContactBundle\Entity\Corporation:
+  type: mappedSuperclass
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+    phone:
+      type: string
+      length: 20
+  manyToMany:
+    contacts:
+      targetEntity: JLM\ContactBundle\Entity\CorporationContact
+      cascade: ["all"]
+      joinTable:
+        name: jlm_contact_corporation_corporationcontact
+        joinColumns:
+          company_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          person_id:
+            referencedColumnName: id
+            unique: true
+    

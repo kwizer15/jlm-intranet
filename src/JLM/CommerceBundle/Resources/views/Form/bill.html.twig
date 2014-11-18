@@ -1,0 +1,108 @@
+{% block jlm_commerce_bill_widget %}
+<div class="row_fluid clearfix">
+	<div class="span6 well">
+		
+    	{{ form_row(form.reference) }}
+    	{{ form_row(form.site) }}
+    	{{ form_row(form.details) }}
+    	
+    </div>
+    <div class="span6">
+    	{{ form_row(form.creation) }}
+    	{{ form_row(form.trustee) }}
+    	{{ form_row(form.accountNumber) }}
+    	{{ form_row(form.prelabel) }}
+    	{{ form_row(form.trusteeName) }}
+    	{{ form_row(form.trusteeAddress) }}
+    	{{ form_row(form.vat) }}
+    </div>
+</div>
+<div class="row_fluid">
+    {{ form_widget(form.intro) }}
+    </div><br>
+    <table class="table table-bordered">
+    <thead>
+    <tr>
+    <th>Référence</th>
+    <th>Designation</th>
+    <th>Qté</th>
+    <th>PU HT</th>
+    <th>Remise</th>
+    <th>TVA</th>
+    <th>PT HT</th>
+    <th class="span1"><a href="#" class="btn btn-success newline"><i class="icon-plus-sign icon-white"></i></a></th>
+    </tr>
+    </thead>
+    {{ form_widget(form.lines) }}
+    </table>
+    <div class="row_fluid">
+	    <div class="span6">
+	    <div class="control-group">
+	    		<label class="control-label">Total HT avant remise</label>
+	    		<div class="controls">
+	    			<div class="input-append"><span class="input-small uneditable-input" id="jlm_commerce_bill_total_htbd">0,00</span><span class="add-on">€</span></div>
+	    		</div>
+	    	</div>
+	    	{{ form_row(form.discount) }}
+	    	<div class="control-group">
+	    		<label class="control-label">Montant remise</label>
+	    		<div class="controls">
+	    			<div class="input-append"><span class="input-small uneditable-input" id="jlm_commerce_bill_total_discount">0,00</span><span class="add-on">€</span></div>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="span6 well">
+
+	    	<div class="control-group">
+	    		<label class="control-label">Total HT</label>
+	    		<div class="controls">
+	    			<div class="input-append"><span class="input-small uneditable-input" id="jlm_commerce_bill_total_ht">0,00</span><span class="add-on">€</span></div>
+	    		</div>
+	    	</div>
+	    	 
+	    	<div class="control-group">
+	    		<label class="control-label">Total TVA</label>
+	    		<div class="controls">
+	    			<div class="input-append"><span class="input-small uneditable-input" id="jlm_commerce_bill_total_tva">0,00</span><span class="add-on">€</span></div>
+	    		</div>
+	    	</div>
+	    	<div class="control-group">
+	    		<label class="control-label">Total TTC</label>
+	    		<div class="controls">
+	    			<div class="input-append"><span class="input-small uneditable-input" id="jlm_commerce_bill_total_ttc">0,00</span><span class="add-on">€</span></div>
+	    		</div>
+	    	</div>
+	    </div>
+    </div>
+    <div class="control-group">
+{{ form_label(form.maturity) }}
+<div class="controls">
+<div class="input-append">
+{{ form_widget(form.maturity) }}
+<span class="add-on">jour(s)</span>
+</div>
+</div>
+</div>
+{{ form_rest(form) }}
+{% endblock %}
+
+{% block jlm_commerce_bill_line_row %}
+<tr {{ block('widget_container_attributes') }}>
+    <td>
+        {{ form_widget(form.position) }}
+        {{ form_widget(form.product) }}
+        {{ form_widget(form.isTransmitter) }}
+        {{ form_widget(form.reference) }}
+    </td>
+    <td><div class="input-append">{{ form_widget(form.designation) }}<a class="add-on show-description" href="#"><i class="icon-plus-sign"></i></a></div>
+	<br>{{ form_widget(form.showDescription) }}    
+	{{ form_widget(form.description) }}
+    </td>
+    <td>{{ form_widget(form.quantity) }}</td>
+    <td>{{ form_widget(form.unitPrice) }}</td>
+    <td>{{ form_widget(form.discount) }}</td>
+    <td>{{ form_widget(form.vat) }}</td>
+    <td><div class="input-append"><span class="input-mini uneditable-input" id="{{ id }}_total">0,00</span><span class="add-on">€</span></div></td>
+    <td><a href="#" class="btn btn-danger remove-line"><i class="icon-minus-sign icon-white"></i></a></td>
+</tr>
+{% endblock jlm_commerce_bill_line_row %}
