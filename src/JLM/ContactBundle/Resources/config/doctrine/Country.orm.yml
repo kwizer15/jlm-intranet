@@ -1,12 +1,12 @@
 JLM\ContactBundle\Entity\Country:
-    type: entity
-    table: jlm_contact_country
-    readOnly: true
-    id:
-        code:
-            type: string
-            length: 2
-    fields:
-        name:
-            type: string
+  type: entity
+  table: jlm_contact_country
+  readOnly: true
+  id:
+    code:
+      type: string
+      length: 2
+  fields:
+    name:
+      type: string
     
