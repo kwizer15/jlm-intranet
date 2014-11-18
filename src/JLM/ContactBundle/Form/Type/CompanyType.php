@@ -28,9 +28,9 @@ class CompanyType extends AbstractType
         $builder
             ->add('name',null,array('label'=>'Prénom','required'=>false))
             ->add('address','jlm_contact_address',array('label'=>'Adresse','required'=>false))
-            ->add('phone',null,array('label'=>'Téléphone','required'=>false,'attr'=>array('class'=>'input-medium')))
-            ->add('fax',null,array('label'=>'Fax','required'=>false,'attr'=>array('class'=>'input-medium')))
-            ->add('email','email',array('label'=>'Adresse e-mail','required'=>false,'attr'=>array('class'=>'input-xlarge')))
+            ->add('phone',null,array('label'=>'Téléphone','required'=>false))
+            ->add('fax',null,array('label'=>'Fax','required'=>false))
+            ->add('email','email',array('label'=>'Adresse e-mail','required'=>false))
         ;
     }
 
