@@ -1,6 +1,6 @@
 JLM\ContactBundle\Entity\Country:
     type: entity
-    table: countries
+    table: jlm_contact_country
     readOnly: true
     id:
         code:
