@@ -3,13 +3,13 @@ namespace JLM\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use JLM\ContactBundle\Model\PersonInterface;
+use JLM\ContactBundle\Model\ContactInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
  */
-class User extends BaseUser
+class User extends BaseUser implements ContactInterface
 {
     /**
      * @ORM\Id
@@ -19,9 +19,9 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\PersonInterface")
+     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\ContactInterface")
      */
-    private $person;
+    private $contact;
     
     public function __construct()
     {
@@ -29,24 +29,24 @@ class User extends BaseUser
     }
 
     /**
-     * Set person
+     * Set contact
      *
-     * @param PersonInterface $person
-     * @return User
+     * @param ContactInterface $contact
+     * @return self
      */
-    public function setPerson(PersonInterface $person = null)
+    public function setContact(ContactInterface $contact = null)
     {
-        $this->person = $person;
+        $this->contact = $contact;
     
         return $this;
     }
 
     /**
-     * Get person
+     * Get contact
      *
-     * @return PersonInterface
+     * @return ContactInterface
      */
-    public function getPerson()
+    public function getContact()
     {
         return $this->person;
     }
