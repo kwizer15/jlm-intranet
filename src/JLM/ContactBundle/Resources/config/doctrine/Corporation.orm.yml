@@ -1,17 +1,5 @@
 JLM\ContactBundle\Entity\Corporation:
   type: entity
   table: jlm_contact_corporation
-  manyToMany:
-    contacts:
-      targetEntity: JLM\ContactBundle\Entity\CorporationContact
-      cascade: ["all"]
-      joinTable:
-        name: jlm_contact_corporation_corporationcontact
-        joinColumns:
-          corporation_id:
-            referencedColumnName: id
-        inverseJoinColumns:
-          contact_id:
-            referencedColumnName: id
-            unique: true
+
     

@@ -10,6 +10,16 @@ services:
         tags:
             - { name: form.type, alias: jlm_contact_address }
         
+    jlm_contact.type.phone:
+        class: JLM\ContactBundle\Form\Type\PhoneType
+        tags:
+            - { name: form.type, alias: jlm_contact_phone }    
+        
+    jlm_contact.type.phonecollection:
+        class: JLM\ContactBundle\Form\Type\PhoneCollectionType
+        tags:
+            - { name: form.type, alias: jlm_contact_phonecollection }  
+        
     jlm_contact.type.person_select:
         class: JLM\ContactBundle\Form\Type\PersonSelectType
         arguments: ["@doctrine.orm.entity_manager"]

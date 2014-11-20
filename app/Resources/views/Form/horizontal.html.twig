@@ -46,7 +46,6 @@
 
 {% block collection_widget %}
 {% spaceless %}
-
     {% if prototype is defined %}
         {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
     {% endif %}
@@ -97,6 +96,21 @@
 <span class="add-on"><i class="icon-envelope"></i></span>{{ block('form_widget_simple') }}</div>
 {% endspaceless %}
 {% endblock email_widget %}
+
+{% block button_widget %}
+  {% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn')|trim}) %}
+  {{ parent() }}
+{% endblock %}
+
+{% block submit_widget %}
+  {% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn-primary')|trim}) %}
+  {{ parent() }}
+{% endblock %}
+
+{% block reset_widget %}
+  {% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn-danger')|trim}) %}
+  {{ parent() }}
+{% endblock %}
 
 {# Personal Types #}
 {# {% block city_select_widget %}

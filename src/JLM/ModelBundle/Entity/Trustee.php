@@ -5,12 +5,12 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-use JLM\ContactBundle\Entity\Company;
 use JLM\ContactBundle\Model\AddressInterface;
 use JLM\CondominiumBundle\Model\ManagerInterface;
 use JLM\ContractBundle\Model\ContractInterface;
 use JLM\CommerceBundle\Model\CustomerInterface;
 use JLM\AskBundle\Model\PayerInterface;
+use JLM\ContactBundle\Entity\ContactDecorator;
 
 /**
  * JLM\ModelBundle\Entity\Trustee
@@ -18,7 +18,7 @@ use JLM\AskBundle\Model\PayerInterface;
  * @ORM\Table(name="trustees")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\TrusteeRepository")
  */
-class Trustee extends Company implements ManagerInterface, CustomerInterface, PayerInterface
+class Trustee extends ContactDecorator implements ManagerInterface, CustomerInterface, PayerInterface
 {
 
 

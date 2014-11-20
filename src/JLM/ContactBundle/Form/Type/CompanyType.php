@@ -27,10 +27,7 @@ class CompanyType extends AbstractType
     {
         $builder
             ->add('name',null,array('label'=>'Prénom','required'=>false))
-            ->add('address','jlm_contact_address',array('label'=>'Adresse','required'=>false))
-            ->add('phone',null,array('label'=>'Téléphone','required'=>false))
-            ->add('fax',null,array('label'=>'Fax','required'=>false))
-            ->add('email','email',array('label'=>'Adresse e-mail','required'=>false))
+            ->add('contact', new ContactType(), array('data_class' => 'JLM\ContactBundle\Entity\Company'))
         ;
     }
 

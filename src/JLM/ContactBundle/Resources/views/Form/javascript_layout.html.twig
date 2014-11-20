@@ -50,3 +50,34 @@
         $field.select2($configs);
     </script>
 {% endblock %}
+
+{% block jlm_contact_phonecollection_javascript %}
+<script>
+    var phoneCount = '{{ form|length }}';
+
+    var removeLine = function(e) {
+    	e.preventDefault();
+
+    	var line = $(this).parent();
+    	line.remove();
+    }
+    
+    var addLine = function(e) {
+    	e.preventDefault();
+
+        var phoneList = $('#jlm_contact_person_contact_phones');
+        var newWidget = phoneList.attr('data-prototype');
+        newWidget = newWidget.replace(/__name__/g, phoneCount);
+        phoneCount++;
+
+        var newLi = $('<li></li>').html(newWidget);
+        newLi.appendTo(phoneList);
+        $('.remove-phone').click(removeLine);
+    }
+
+    $(document).ready(function() {
+        $('#add-another-phone').click(addLine);
+        $('.remove-phone').click(removeLine);
+    })
+</script>
+{% endblock %}

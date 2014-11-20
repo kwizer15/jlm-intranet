@@ -7,13 +7,8 @@ JLM\ContactBundle\Entity\Contact:
     type: string
   discriminatorMap:
     person: JLM\ContactBundle\Entity\Person
-    corporation_contact: JLM\ContactBundle\Entity\CorporationContact
     company: JLM\ContactBundle\Entity\Company
     association: JLM\ContactBundle\Entity\Association
-    technician: JLM\ModelBundle\Entity\Technician
-    trustee: JLM\ModelBundle\Entity\Trustee
-    supplier: JLM\ProductBundle\Entity\Supplier
-
   id:
     id:
       type: integer

@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class PersonType extends AbstractType
+class AssociationType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -26,10 +26,8 @@ class PersonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('title','choice',array('label'=>'Titre', 'choices'=>array('M.'=>'M.','Mme'=>'Mme','Mlle'=>'Mlle')))
-        	->add('lastName',null,array('label'=>'Nom'))
-            ->add('firstName',null,array('label'=>'Prénom', 'required'=>false))
-            ->add('contact', new ContactType(), array('data_class' => 'JLM\ContactBundle\Entity\Person'))
+            ->add('name',null,array('label'=>'Prénom','required'=>false))
+            ->add('contact', new ContactType(), array('data_class' => 'JLM\ContactBundle\Entity\Association'))
         ;
     }
 
@@ -38,7 +36,7 @@ class PersonType extends AbstractType
      */
     public function getName()
     {
-        return 'jlm_contact_person';
+        return 'jlm_contact_association';
     }
     
     /**
@@ -48,7 +46,7 @@ class PersonType extends AbstractType
     {
         $resolver
         ->setDefaults(array(
-            'data_class' => 'JLM\ContactBundle\Entity\Person',
+            'data_class' => 'JLM\ContactBundle\Entity\Association',
         ));
     }
 }

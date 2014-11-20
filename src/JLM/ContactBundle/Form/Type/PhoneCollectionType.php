@@ -18,27 +18,22 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class PersonType extends AbstractType
+class PhoneCollectionType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function getParent()
     {
-        $builder
-        	->add('title','choice',array('label'=>'Titre', 'choices'=>array('M.'=>'M.','Mme'=>'Mme','Mlle'=>'Mlle')))
-        	->add('lastName',null,array('label'=>'Nom'))
-            ->add('firstName',null,array('label'=>'Prénom', 'required'=>false))
-            ->add('contact', new ContactType(), array('data_class' => 'JLM\ContactBundle\Entity\Person'))
-        ;
+    	return 'collection';
     }
-
+    
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-        return 'jlm_contact_person';
+        return 'jlm_contact_phonecollection';
     }
     
     /**
@@ -46,9 +41,10 @@ class PersonType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver
-        ->setDefaults(array(
-            'data_class' => 'JLM\ContactBundle\Entity\Person',
+        $resolver->setDefaults(array(
+            'type'=>'jlm_contact_phone',
+            'prototype'=>true,
+            'allow_add'=>true,
         ));
     }
 }

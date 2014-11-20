@@ -25,6 +25,7 @@ class User extends BaseUser implements ContactInterface
     
     public function __construct()
     {
+        $this->setContact($contact);
         parent::__construct();
     }
 
@@ -48,8 +49,43 @@ class User extends BaseUser implements ContactInterface
      */
     public function getContact()
     {
-        return $this->person;
+        return $this->contact;
     }
     
-    // @todo implements ContactInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        if (null === $this->getContact())
+        {
+            return parent::__toString();
+        }
+        
+        return $this->getContact()->__toString();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getFax()
+    {
+        return $this->contact->getFax();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getAddress()
+    {
+        return $this->contact->getAddress();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->contact->getName();
+    }
 }

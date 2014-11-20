@@ -19,6 +19,10 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ContactBundle\Manager\ContactManager;
 use JLM\ContactBundle\Form\Type\PersonType;
 use JLM\ContactBundle\Entity\Person;
+use JLM\ContactBundle\Entity\CorporationContact;
+use JLM\ModelBundle\Entity\Technician;
+use JLM\ContactBundle\Entity\Phone;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Person controller.
@@ -29,10 +33,66 @@ class ContactController extends Controller
      * Display contact list
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
      */
     public function indexAction()
     {
-        return array();
+        $request = $this->container->get('request');
+        
+        $entity = new Person();
+        $entity->addPhone(new Phone());
+        $form = $this->createNewForm($entity);
+        $form->handleRequest($request);
+        if ($request->getMethod() == 'POST')
+        {
+            if ($form->isValid())
+            {
+                $em = $this->container->get('doctrine')->getManager();
+                $phones = $entity->getPhones();
+                foreach ($phones as $phone)
+                {
+                    $em->persist($phone);
+                }
+                $em->persist($entity);
+                $em->flush();
+                $router = $this->container->get('router');
+                $url = $router->generate('jlm_contact_contact_show', array('id'=>$entity->getId()));
+                
+                return new RedirectResponse($url);
+            }
+        }
+        
+        return $this->render('JLMContactBundle:index.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
+    }
+    
+    public function showAction($id)
+    {
+        $entity = $this->getEntity($id);
+        
+        return $this->render('JLMContactBundle:show.html.twig', array('entity'=>$entity));
+    }
+    
+    private function getEntity($id)
+    {
+        $em = $this->container->get('doctrine')->getManager();
+        $entity = $em->getRepository('JLMContactBundle:Contact')->find($id);
+        if (!$entity)
+        {
+            throw $this->createNotFoundException('Unable to find Contact entity.');
+        }
+    
+        return $entity;
+    }
+    
+    private function createNewForm(Person $entity)
+    {
+        $form = $this->container->get('form.factory')->create(new PersonType(), $entity,
+            array(
+                'action' => $this->generateUrl('jlm_contact_contact_index'),
+                'method' => 'POST',
+            )
+        );
+        $form->add('submit','submit',array('label'=>'Enregistrer'));
+        
+        return $form;
     }
 }
