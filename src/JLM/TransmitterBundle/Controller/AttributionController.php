@@ -141,18 +141,7 @@ class AttributionController extends Controller
             'edit_form'   => $editForm->createView(),
         );
     }
-    
-    /**
-     * Sidebar
-     *
-     * @Route("/sidebar", name="transmitter_attribution_sidebar")
-     * @Template()
-     */
-    public function sidebarAction()
-    {
-    	return array('all'=>0);
-    }
-    
+
     /**
      * Imprime la liste d'attribution
      *
