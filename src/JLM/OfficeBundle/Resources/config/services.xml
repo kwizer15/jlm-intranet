@@ -5,13 +5,13 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     
     <services>
-    	<service id="jlm_office.eventlistener.askquotecount_listener" class="JLM\OfficeBundle\EventListener\AskQuoteCountListener">
+    	<service id="jlm_office.twig.askquotecount_extension" class="JLM\OfficeBundle\Twig\Extension\AskQuoteCountExtension">
         	<argument type="service" id="doctrine.orm.entity_manager"/>
-    		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
+    		<tag name="twig.extension" />
 		</service>
-		<service id="jlm_office.eventlistener.ordercount_listener" class="JLM\OfficeBundle\EventListener\OrderCountListener">
+		<service id="jlm_office.twig.ordercount_extension" class="JLM\OfficeBundle\Twig\Extension\OrderCountExtension">
         	<argument type="service" id="doctrine.orm.entity_manager"/>
-    		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
+    		<tag name="twig.extension" />
 		</service>
 		<service id="jlm_office.type.order_line" class="JLM\OfficeBundle\Form\Type\OrderLineType">
    			<tag name="form.type" alias="order_line" />

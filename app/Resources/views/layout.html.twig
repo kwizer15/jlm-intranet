@@ -49,11 +49,11 @@
 		        					<ul class="dropdown-menu">
 		        						<li><a href="{{ path('askquote_new') }}"><i class="icon-plus-sign"></i> Nouvelle demande de devis</a></li>
 		        						<li class="divider"></li>
-		        						{% include 'JLMOfficeBundle:Askquote:sidebar.html.twig' with {'count':layout.askQuoteCount} %}
+		        						{% include 'JLMOfficeBundle:Askquote:sidebar.html.twig' %}
 		        					</ul>
 		        				</li>
 		        				<li class="divider"></li>
-		        				{% include 'JLMCommerceBundle:Quote:sidebar.html.twig' with {'count':layout.quoteCount} %}
+		        			{% include 'JLMCommerceBundle:Quote:sidebar.html.twig' %}
 		        			</ul>
 		        		</li>
 		        		<li class="dropdown-submenu">
@@ -61,8 +61,7 @@
 		        			<ul class="dropdown-menu">
 		        			{#	<li><a href="{{ path('order_new') }}"><i class="icon-plus-sign"></i> Nouvelle fiche</a></li>
 								<li class="divider"></li> #}
-								{% include 'JLMOfficeBundle:Order:sidebar.html.twig' with {'count':layout.orderCount} %}
-								{#{{ render(controller('JLMOfficeBundle:Order:sidebar')) }}#} 
+								{% include 'JLMOfficeBundle:Order:sidebar.html.twig' %} 
 		        			</ul>
 		        		</li>
                         <li class="dropdown-submenu">
@@ -70,8 +69,7 @@
 		        			<ul class="dropdown-menu">
 				        		<li><a href="{{ path('bill_new') }}"><i class="icon-plus-sign"></i> Nouvelle facture</a></li>
 				        		<li class="divider"></li>
-				        		{% include 'JLMCommerceBundle:Bill:sidebar.html.twig' with {'count':layout.billCount} %}
-				        		{#{{ render(controller('JLMOfficeBundle:Bill:sidebar')) }}#}
+				        		{% include 'JLMCommerceBundle:Bill:sidebar.html.twig' %}
 		        			</ul>
 		        		</li>
                         <li class="dropdown-submenu">
