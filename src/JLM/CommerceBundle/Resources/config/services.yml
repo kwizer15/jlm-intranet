@@ -29,21 +29,14 @@ services:
         class: JLM\CommerceBundle\EventListener\BillNumberGenerator
         tags:
             - { name: doctrine.event_listener, event: prePersist }
-    
-    jlm_commerce.eventlistener.billcount_listener:
-        class: JLM\CommerceBundle\EventListener\BillCountListener
-        arguments: ["@doctrine.orm.entity_manager"]
-        tags:
-            - { name: kernel.event_listener, event: kernel.view, method: onKernelResponse }
-    
-    jlm_commerce.eventlistener.quotecount_listener:
-        class: JLM\CommerceBundle\EventListener\QuoteCountListener
-        arguments: ["@doctrine.orm.entity_manager"]
-        tags:
-            - { name: kernel.event_listener, event: kernel.view, method: onKernelResponse }
             
-    jlm_commerce.eventlistener.quotelast_listener:
-        class: JLM\CommerceBundle\EventListener\QuoteLastListener
+    jlm_commerce.twig.billcount_extension:
+        class: JLM\CommerceBundle\Twig\Extension\BillCountExtension
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
-            - { name: kernel.event_listener, event: kernel.view, method: onKernelResponse }   
+            - { name: twig.extension }
+    jlm_commerce.twig.quotecount_extension:
+        class: JLM\CommerceBundle\Twig\Extension\QuoteCountExtension
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: twig.extension }

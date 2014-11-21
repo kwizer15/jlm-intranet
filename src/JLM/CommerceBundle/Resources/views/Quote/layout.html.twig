@@ -9,8 +9,8 @@
 	<li><a href="{{ path('askquote_new') }}"><i class="icon-plus-sign"></i> Nouvelle demande de devis</a></li>
 	<li class="divider"></li>
 	<li class="nav-header">États</li>
- 	{% include 'JLMCommerceBundle:Quote:sidebar.html.twig' with {'count' : layout.quoteCount} %} 
+ 	{% include 'JLMCommerceBundle:Quote:sidebar.html.twig' %} 
 	<li class="divider"></li>
 	<li class="nav-header">Derniers devis</li>
-	{% include 'JLMCommerceBundle:Quote:last.html.twig' with {'entities' : layout.quoteLast} %}
+	{% include 'JLMCommerceBundle:Quote:last.html.twig' %}
 {% endblock sidebar %}

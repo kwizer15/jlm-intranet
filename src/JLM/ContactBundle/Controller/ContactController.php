@@ -61,14 +61,14 @@ class ContactController extends Controller
             }
         }
         
-        return $this->render('JLMContactBundle:index.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
+        return $this->render('JLMContactBundle:Contact:index.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
     }
     
     public function showAction($id)
     {
         $entity = $this->getEntity($id);
         
-        return $this->render('JLMContactBundle:show.html.twig', array('entity'=>$entity));
+        return $this->render('JLMContactBundle:Contact:show.html.twig', array('entity'=>$entity));
     }
     
     private function getEntity($id)
