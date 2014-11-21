@@ -91,7 +91,7 @@ class AskquoteController extends PaginableController
 		
 		if ($this->getRequest()->isMethod('POST'))
 		{
-			$form->bind($this->getRequest());
+			$form->handleRequest($this->getRequest());
 			if ($form->isValid())
 			{
 				if ($entity->getMaturity() === null)
@@ -119,7 +119,7 @@ class AskquoteController extends PaginableController
 		
 		if ($this->getRequest()->isMethod('POST'))
 		{
-			$form->bind($this->getRequest());
+			$form->handleRequest($this->getRequest());
 			if ($form->isValid())
 			{
 				$em = $this->getDoctrine()->getManager();
@@ -141,23 +141,6 @@ class AskquoteController extends PaginableController
 		$em->persist($entity);
 		$em->flush();
 		return $this->redirect($this->generateUrl('askquote_show', array('id' => $entity->getId())));
-	}
-	
-	/**
-	 * Sidebar
-	 * @Route("/sidebar", name="askquote_sidebar")
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function sidebarAction()
-	{
-		$em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('JLMOfficeBundle:AskQuote');
-		return array('count'=>array(
-				'all' => $repo->getTotal(),
-				'untreated' => $repo->getCountUntreated(),
-				'treated' => $repo->getCountTreated(),
-		));
 	}
 	
 	/**

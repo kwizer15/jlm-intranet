@@ -448,25 +448,6 @@ class BillController extends PaginableController
     }
     
     /**
-     * Sidebar
-     * @Template()
-     * @Secure(roles="ROLE_USER")
-     */
-    public function sidebarAction()
-    {
-    	$em = $this->getDoctrine()->getManager();
-    
-    	return array('count'=>array(
-    			'todo' => $em->getRepository('JLMDailyBundle:Intervention')->getCountToBilled(),
-    			'all' => $em->getRepository('JLMCommerceBundle:Bill')->getTotal(),
-    			'input' => $em->getRepository('JLMCommerceBundle:Bill')->getCount(0),
-    			'send' => $em->getRepository('JLMCommerceBundle:Bill')->getCount(1),
-    			'payed' => $em->getRepository('JLMCommerceBundle:Bill')->getCount(2),
-    			'canceled' => $em->getRepository('JLMCommerceBundle:Bill')->getCount(-1),
-    	));
-    }
-    
-    /**
      * @Template()
      * @Secure(roles="ROLE_USER")
      */

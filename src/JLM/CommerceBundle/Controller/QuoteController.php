@@ -62,51 +62,6 @@ class QuoteController extends Controller
         		'state'	   => $state,
         );
     }
-    
-    /**
-     * Lists lasts Quote entities.
-     *
-     * @Template()
-     * @Secure(roles="ROLE_USER")
-     */
-    public function lastAction($limit = 10)
-    {
-    	$em = $this->getDoctrine()->getManager();
-
-    	$entities = $em->getRepository('JLMCommerceBundle:Quote')->findBy(
-    			array(),
-    			array('number'=>'desc'),
-    			$limit
-    	);
-    
-    	return array(
-    			'entities' => $entities,
-    	);
-    }
-    
-    /**
-     * sidebar Quote entities.
-     *
-     * @deprecated
-     * @Template()
-     * @Secure(roles="ROLE_USER")
-     */
-    public function sidebarAction()
-    {
-    	$em = $this->getDoctrine()->getManager();
-
-    	$repo = $em->getRepository('JLMCommerceBundle:Quote');
-    	$date = new \DateTime;
-    	$year = $date->format('Y');
-    	return array('count' => array(
-    			'all' => $repo->getCountState('uncanceled', $year),
-    			'input' => $repo->getCountState(0, $year),
-    			'wait' => $repo->getCountState(1, $year),
-    			'send' => $repo->getCountState(3, $year),
-    			'given' => $repo->getCountState(5, $year),
-    	));
-    }
-    
 
     /**
      * Finds and displays a Quote entity.
