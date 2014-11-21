@@ -28,12 +28,17 @@ jlm_contact_ajax_person_autocomplete:
     defaults: { _controller: "JLMContactBundle:Person:autocomplete" }
     methods: [POST]
 
-jlm_contact_contact_index:
-    path: /contact/
-    defaults: { _controller: "JLMContactBundle:Contact:index" }
+jlm_contact_contact_new:
+    path: /contact/new
+    defaults: { _controller: "JLMContactBundle:Contact:new" }
     methods: [GET, POST]
+
+jlm_contact_contact_edit:
+    path: /contact/{id}/edit
+    defaults: { _controller: "JLMContactBundle:Contact:edit" }
+    methods: [GET, PUT]
     
 jlm_contact_contact_show:
-    path: /contact/{id}/show
+    path: /contact/{id}
     defaults: { _controller: "JLMContactBundle:Contact:show" }
     methods: [GET]

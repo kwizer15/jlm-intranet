@@ -12,6 +12,7 @@ JLM\ContactBundle\Entity\Contact:
   id:
     id:
       type: integer
+      nullable: true
       generator:
         strategy: AUTO
   fields:
@@ -23,15 +24,21 @@ JLM\ContactBundle\Entity\Contact:
   manyToMany:
     phones:
       targetEntity: JLM\ContactBundle\Entity\Phone
+      cascade: ["persist", "remove"]
       joinTable:
         name: jlm_contact_contact_phone
         joinColumns:
           contact_id:
+            nullable: true
             referencedColumnName: id
+            onDelete: "SET NULL"
         inverseJoinColumns:
           phone_id:
             referencedColumnName: id
             unique: true
+
+            
+            
   oneToOne:
     address:
       targetEntity: JLM\ContactBundle\Model\AddressInterface

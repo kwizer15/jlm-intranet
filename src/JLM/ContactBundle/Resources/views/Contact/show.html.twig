@@ -1,0 +1,16 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+
+{% block content %}
+{{ entity.name }}<br>
+{% if entity.address %}
+{{ entity.address.street }}<br>
+{{ entity.address.city }}<br>
+{% endif %}
+<ul>
+{% for phone in entity.phones %}
+  <li>{{ phone.label }} : {{ phone.number }}</li>
+{% endfor %}
+</ul>
+{{ entity.email }}<br>
+<a href="{{ path('jlm_contact_contact_edit', {'id':entity.id}) }}" class="btn btn-warning">Editer</a>
+{% endblock %}

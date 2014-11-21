@@ -30,11 +30,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class ContactController extends Controller
 {
     /**
-     * Display contact list
-     *
-     * @Template()
+     * Create a new contact
      */
-    public function indexAction()
+    public function newAction()
     {
         $request = $this->container->get('request');
         
@@ -61,7 +59,57 @@ class ContactController extends Controller
             }
         }
         
-        return $this->render('JLMContactBundle:Contact:index.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
+        return $this->render('JLMContactBundle:Contact:new.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
+    }
+    
+    /**
+     * Create a new contact
+     */
+    public function editAction($id)
+    {
+        $request = $this->container->get('request');
+    
+        $entity = $this->getEntity($id);
+        $originalPhones = array();
+        foreach ($entity->getPhones() as $phone)
+        {
+            $originalPhones[] = $phone;
+        }
+        
+        $form = $this->createEditForm($entity);
+        $form->handleRequest($request);
+        if ($request->getMethod() == 'PUT')
+        {
+            if ($form->isValid())
+            {
+                $em = $this->container->get('doctrine')->getManager();
+                
+                $phones = $entity->getPhones();
+                foreach ($phones as $phone)
+                {
+                    $em->persist($phone);
+                    foreach ($originalPhones as $key => $toDel)
+                    {
+                        if ($toDel->getId() === $phone->getId())
+                        {
+                            unset($originalPhones[$key]);
+                        }
+                    }
+                }
+                foreach ($originalPhones as $phone)
+                {
+                    $em->remove($phone);
+                } 
+                $em->persist($entity);
+                $em->flush();
+                $router = $this->container->get('router');
+                $url = $router->generate('jlm_contact_contact_show', array('id'=>$entity->getId()));
+    
+                return new RedirectResponse($url);
+            }
+        }
+    
+        return $this->render('JLMContactBundle:Contact:new.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
     }
     
     public function showAction($id)
@@ -87,12 +135,25 @@ class ContactController extends Controller
     {
         $form = $this->container->get('form.factory')->create(new PersonType(), $entity,
             array(
-                'action' => $this->generateUrl('jlm_contact_contact_index'),
+                'action' => $this->generateUrl('jlm_contact_contact_new'),
                 'method' => 'POST',
             )
         );
         $form->add('submit','submit',array('label'=>'Enregistrer'));
         
+        return $form;
+    }
+    
+    private function createEditForm(Person $entity)
+    {
+        $form = $this->container->get('form.factory')->create(new PersonType(), $entity,
+            array(
+                'action' => $this->generateUrl('jlm_contact_contact_edit', array('id'=>$entity->getId())),
+                'method' => 'PUT',
+            )
+        );
+        $form->add('submit','submit',array('label'=>'Enregistrer'));
+    
         return $form;
     }
 }
