@@ -13,6 +13,7 @@ JLM\ContactBundle\Entity\ContactPhone:
       targetEntity: JLM\ContactBundle\Model\PhoneInterface
   manyToOne:
     contact:
-      targetEntity: JLM\ContactBundle\Model\ContactInterface
+      targetEntity: JLM\ContactBundle\Entity\Contact
+      inversedBy: phones
   
     
