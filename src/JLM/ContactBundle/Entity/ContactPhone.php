@@ -1,0 +1,155 @@
+<?php
+
+/*
+ * This file is part of the JLMContactBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace JLM\ContactBundle\Entity;
+
+use JLM\ContactBundle\Model\ContactPhoneInterface;
+use JLM\AskBundle\Model\ContactInterface;
+use JLM\ContactBundle\Model\PhoneInterface;
+
+/**
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ */
+class ContactPhone implements ContactPhoneInterface
+{
+    /**
+     * @var int
+     */
+    private $id;
+    
+    /**
+     * @var ContactInterface $contact
+     */
+    private $contact;
+    
+    /**
+     * @var string
+     */
+    private $label;
+    
+    /**
+     * @var PhoneInterface
+     */
+    private $phone;
+    
+    /**
+     * Constructor
+     * @param ContactInterface $contact
+     * @param string $label
+     * @param PhoneInterface $phone
+     */
+    public function __construct(ContactInterface $contact, $label, PhoneInterface $phone)
+    {
+    	$this->setContact($contact);
+    	$this->setLabel($label);
+    	$this->setPhone($phone);
+    }
+    
+    /**
+     * Get id
+     * @return number
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
+     * Get contact
+     * @return ContactInterface
+     */
+    public function getContact()
+    {
+    	return $this->contact;
+    }
+    
+    /**
+     * Set contact
+     * @param ContactInterface $contact
+     * @return self
+     */
+    public function setContact(ContactInterface $contact)
+    {
+    	$this->contact = $contact;
+    	
+    	return $this;
+    }
+    
+    /**
+     * Set label
+     * @param string $label
+     * @return self
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+        
+        return $this;
+    }
+    
+    /**
+     * Get label
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+    
+    /**
+     * Get phone
+     * @return PhoneInterface
+     */
+    protected function getPhone()
+    {
+    	return $this->phone;
+    }
+    
+    /**
+     * Set phone
+     * @param PhoneInterface $phone
+     * @return self
+     */
+    protected function setPhone(PhoneInterface $phone)
+    {
+    	$this->phone = $phone;
+    	
+    	return $this;
+    }
+    
+    /**
+     * Set number
+     * @param string $number
+     * @return self
+     */
+    public function setNumber($number)
+    {
+        return $this->phone->setNumber($number);
+    }
+    
+    /**
+     * Get number
+     * @return string
+     */
+    public function getNumber()
+    {
+        return $this->phone->getNumber();
+    }
+    
+    /**
+     * To string
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getLabel() . ' : ' . $this->phone->getNumber();
+    }
+} 

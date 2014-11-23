@@ -7,7 +7,6 @@ JLM\ContactBundle\Entity\Phone:
       generator:
         strategy: AUTO
   fields:
-    label: ~
     number:
       lenght: 16
   
