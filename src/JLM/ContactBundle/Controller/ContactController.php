@@ -24,6 +24,7 @@ use JLM\ModelBundle\Entity\Technician;
 use JLM\ContactBundle\Entity\Phone;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use JLM\ContactBundle\Entity\ContactPhone;
+use JLM\ContactBundle\Form\Handler\ContactNewHandler;
 
 /**
  * Person controller.
@@ -40,25 +41,16 @@ class ContactController extends Controller
         $entity = new Person();
         $entity->addPhone(new ContactPhone());
         $form = $this->createNewForm($entity);
-        $form->handleRequest($request);
-        if ($request->getMethod() == 'POST')
+
+        $em = $this->container->get('doctrine')->getManager();
+        
+        $handler = new ContactNewHandler($form, $request, $em);
+        if ($handler->process('POST'))
         {
-            if ($form->isValid())
-            {
-                $em = $this->container->get('doctrine')->getManager();
-                $phones = $entity->getPhones();
-                foreach ($phones as $phone)
-                {
-                	$phone->setContact($entity);
-                    $em->persist($phone);
-                }
-                $em->persist($entity);
-                $em->flush();
-                $router = $this->container->get('router');
-                $url = $router->generate('jlm_contact_contact_show', array('id'=>$entity->getId()));
-                
-                return new RedirectResponse($url);
-            }
+        	$router = $this->container->get('router');
+        	$url = $router->generate('jlm_contact_contact_show', array('id'=>$entity->getId()));
+        	
+        	return new RedirectResponse($url);
         }
         
         return $this->render('JLMContactBundle:Contact:new.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
@@ -78,6 +70,15 @@ class ContactController extends Controller
             $originalPhones[] = $phone;
         }
         $form = $this->createEditForm($entity);
+        
+//        $handler = new ContactEditHandler($form, $request, $em);
+//        if ($handler->process('PUT'))
+//        {
+//        	$router = $this->container->get('router');
+//        	$url = $router->generate('jlm_contact_contact_show', array('id'=>$entity->getId()));
+//        	
+//        	return new RedirectResponse($url);
+//        }
         $form->handleRequest($request);
         if ($request->getMethod() == 'PUT')
         {
@@ -121,6 +122,20 @@ class ContactController extends Controller
         $entity = $this->getEntity($id);
         
         return $this->render('JLMContactBundle:Contact:show.html.twig', array('entity'=>$entity));
+    }
+    
+    public function unactiveAction($id)
+    {
+    	$entity = $this->getEntity($id);
+    	$entity->setActive(false);
+    	
+    	$em = $this->get('doctrine')->getManager();
+    	$em->persist($entity);
+    	$em->flush();
+    	
+    	$this->get('session')->setFlash('notice', 'Contact '.$entity->getName().' désactivé');
+    	
+    	return $this->redirect($this->get('request')->headers->get('referer'));
     }
     
     private function getEntity($id)
