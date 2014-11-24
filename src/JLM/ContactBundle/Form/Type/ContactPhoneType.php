@@ -14,11 +14,13 @@ namespace JLM\ContactBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use JLM\ContactBundle\Entity\ContactPhone;
+use JLM\ContactBundle\Model\ContactInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ContactType extends AbstractType
+class ContactPhoneType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -26,9 +28,8 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('address','jlm_contact_address',array('label'=>'Adresse', 'required'=>false))
-            ->add('phones','jlm_contact_contactphonecollection',array('label'=>'Téléphones', 'required'=>false))
-            ->add('email','email',array('label'=>'Adresse e-mail', 'required'=>false))
+        	->add('label',null,array('label'=>'Libélé'))
+        	->add('phone','jlm_contact_phone',array('label'=>'Numéro'))
         ;
     }
 
@@ -37,7 +38,7 @@ class ContactType extends AbstractType
      */
     public function getName()
     {
-        return 'jlm_contact_contact';
+        return 'jlm_contact_contactphone';
     }
     
     /**
@@ -47,7 +48,8 @@ class ContactType extends AbstractType
     {
         $resolver
         ->setDefaults(array(
-            'inherit_data' => true,
+            'data_class' => 'JLM\ContactBundle\Entity\ContactPhone',
+        	//'empty_data' => new ContactPhone($this->contact, $this->label, $this->phone),
         ));
     }
 }

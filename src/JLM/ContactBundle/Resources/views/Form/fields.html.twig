@@ -23,21 +23,26 @@
   {{ form_widget(form, {'attr': {'class': 'input-xlarge'}}) }}
 {% endblock %}
 
-{% block jlm_contact_phone_row %}
-  {{ form_widget(form.label, {'attr': {'class': 'input-medium', 'placeholder': form.label.vars.label }}) }}&nbsp;
-  {{ form_widget(form.number, {'attr': {'class': 'input-medium', 'placeholder': form.number.vars.label }}) }}&nbsp;
+{% block jlm_contact_contactphone_row %}
+  <li id="{{ id }}">{{ form_widget(form.label, {'attr': {'class': 'input-medium', 'placeholder': form.label.vars.label }}) }}&nbsp;
+  {{ form_widget(form.phone, {'attr': {'class': 'input-medium', 'placeholder': form.phone.vars.label }}) }}&nbsp;
   <button class="btn btn-danger btn-small remove-phone"><i class="icon-minus-sign icon-white"></i></button>
-  {{ form_errors(form) }} 
+  {{ form_errors(form) }}
+  </li>
 {% endblock %}
 
-{% block jlm_contact_phonecollection_widget %}
+{% block jlm_contact_phone_widget %}
+  {{ form_widget(form.number, {'attr': {'class': 'input-medium', 'placeholder': form.number.vars.label }}) }}&nbsp;
+{% endblock %}
+
+{% block jlm_contact_contactphonecollection_widget %}
 {% spaceless %}
     {% if prototype is defined %}
         {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
     {% endif %}
     {%- set attr = attr|merge({'class': (attr.class|default('') ~ ' unstyled')|trim }) -%}
     <ul {{ block('widget_container_attributes') }}>
-		{{ block('jlm_contact_phonecollection_rows') }}
+		{{ block('jlm_contact_contactphonecollection_rows') }}
     </ul>
 	{{ form_rest(form) }}
     <button id="add-another-phone" class="btn">Ajouter un numéro</button>
@@ -55,9 +60,9 @@
     {{ form_rest(form) }}
 {% endblock %}
 
-{% block jlm_contact_phonecollection_rows %}
+{% block jlm_contact_contactphonecollection_rows %}
     {% for child in form -%}
-        <li>{{ form_row(child) }}</li>
+        {{ form_row(child) }}
     {%- endfor %}
 {% endblock %}
 

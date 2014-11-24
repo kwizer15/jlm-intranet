@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class PhoneCollectionType extends AbstractType
+class ContactPhoneCollectionType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -33,7 +33,7 @@ class PhoneCollectionType extends AbstractType
      */
     public function getName()
     {
-        return 'jlm_contact_phonecollection';
+        return 'jlm_contact_contactphonecollection';
     }
     
     /**
@@ -42,9 +42,10 @@ class PhoneCollectionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'type'=>'jlm_contact_phone',
+            'type'=>'jlm_contact_contactphone',
             'prototype'=>true,
             'allow_add'=>true,
+        	'allow_delete'=>true,
         ));
     }
 }

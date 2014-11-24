@@ -11,6 +11,7 @@ use JLM\ContractBundle\Model\ContractInterface;
 use JLM\CommerceBundle\Model\CustomerInterface;
 use JLM\AskBundle\Model\PayerInterface;
 use JLM\ContactBundle\Entity\ContactDecorator;
+use JLM\ContactBundle\Model\ContactInterface;
 
 /**
  * JLM\ModelBundle\Entity\Trustee
@@ -89,9 +90,9 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(ContactInterface $contact)
     {
-    	parent::__construct();
+    	parent::__construct($contact);
     	$this->sites = new ArrayCollection;
     	$this->contracts = new ArrayCollection;
     }

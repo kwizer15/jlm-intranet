@@ -51,7 +51,7 @@
     </script>
 {% endblock %}
 
-{% block jlm_contact_phonecollection_javascript %}
+{% block jlm_contact_contactphonecollection_javascript %}
 <script>
     var phoneCount = '{{ form|length }}';
 
@@ -69,9 +69,7 @@
         var newWidget = phoneList.attr('data-prototype');
         newWidget = newWidget.replace(/__name__/g, phoneCount);
         phoneCount++;
-
-        var newLi = $('<li></li>').html(newWidget);
-        newLi.appendTo(phoneList);
+        phoneList.append(newWidget);
         $('.remove-phone').click(removeLine);
     }
 

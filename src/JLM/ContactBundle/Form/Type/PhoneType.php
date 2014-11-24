@@ -26,11 +26,10 @@ class PhoneType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('label',null,array('label'=>'Libélé'))
         	->add('number',null,array('label'=>'Numéro'))
         ;
     }
-
+    
     /**
      * {@inheritdoc}
      */

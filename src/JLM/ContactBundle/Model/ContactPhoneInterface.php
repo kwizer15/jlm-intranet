@@ -11,10 +11,11 @@
 
 namespace JLM\ContactBundle\Model;
 
+use JLM\ContactBundle\Model\ContactInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 interface ContactPhoneInterface extends PhoneInterface
 {
-    
+	public function setContact(ContactInterface $contact = null);
 }

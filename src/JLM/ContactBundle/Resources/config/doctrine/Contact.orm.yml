@@ -25,7 +25,6 @@ JLM\ContactBundle\Entity\Contact:
     phones:
       targetEntity: JLM\ContactBundle\Entity\ContactPhone
       mappedBy: contact
-      cascade: ["persist", "remove"]
   oneToOne:
     address:
       targetEntity: JLM\ContactBundle\Model\AddressInterface

@@ -14,7 +14,7 @@ namespace JLM\ContactBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\ContactBundle\Model\ContactInterface;
 use JLM\ContactBundle\Model\AddressInterface;
-use JLM\ContactBundle\Model\PhoneInterface;
+use JLM\ContactBundle\Model\ContactPhoneInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -38,7 +38,7 @@ abstract class Contact implements ContactInterface
 	private $address;
 	
 	/**
-	 * @var PhoneInterface[]
+	 * @var ContactPhoneInterface[]
 	 */
 	private $phones;
 	
@@ -103,22 +103,26 @@ abstract class Contact implements ContactInterface
 	/**
 	 * Add a phone
 	 *
-	 * @param PhoneInterface $phone
+	 * @param ContactPhoneInterface $phone
 	 * @return bool
 	 */
-	public function addPhone(PhoneInterface $phone)
+	public function addPhone(ContactPhoneInterface $phone)
 	{
+		$phone->setContact($this);
+		
 	    return $this->phones->add($phone);
 	}
 	
 	/**
 	 * Remove a phone
 	 *
-	 * @param PhoneInterface
+	 * @param ContactPhoneInterface
 	 * @return bool
 	 */
-	public function removePhone(PhoneInterface $phone)
+	public function removePhone(ContactPhoneInterface $phone)
 	{
+		$phone->setContact();
+		
 	    return $this->phones->removeElement($phone);
 	}
 	

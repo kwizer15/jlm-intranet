@@ -13,12 +13,17 @@ services:
     jlm_contact.type.phone:
         class: JLM\ContactBundle\Form\Type\PhoneType
         tags:
-            - { name: form.type, alias: jlm_contact_phone }    
-        
-    jlm_contact.type.phonecollection:
-        class: JLM\ContactBundle\Form\Type\PhoneCollectionType
+            - { name: form.type, alias: jlm_contact_phone }
+            
+    jlm_contact.type.contactphone:
+        class: JLM\ContactBundle\Form\Type\ContactPhoneType
         tags:
-            - { name: form.type, alias: jlm_contact_phonecollection }  
+            - { name: form.type, alias: jlm_contact_contactphone }        
+        
+    jlm_contact.type.contactphonecollection:
+        class: JLM\ContactBundle\Form\Type\ContactPhoneCollectionType
+        tags:
+            - { name: form.type, alias: jlm_contact_contactphonecollection }  
         
     jlm_contact.type.person_select:
         class: JLM\ContactBundle\Form\Type\PersonSelectType

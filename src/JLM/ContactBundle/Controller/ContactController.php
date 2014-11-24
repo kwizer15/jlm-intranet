@@ -23,6 +23,7 @@ use JLM\ContactBundle\Entity\CorporationContact;
 use JLM\ModelBundle\Entity\Technician;
 use JLM\ContactBundle\Entity\Phone;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use JLM\ContactBundle\Entity\ContactPhone;
 
 /**
  * Person controller.
@@ -37,7 +38,7 @@ class ContactController extends Controller
         $request = $this->container->get('request');
         
         $entity = new Person();
-        $entity->addPhone(new Phone());
+        $entity->addPhone(new ContactPhone());
         $form = $this->createNewForm($entity);
         $form->handleRequest($request);
         if ($request->getMethod() == 'POST')
@@ -48,6 +49,7 @@ class ContactController extends Controller
                 $phones = $entity->getPhones();
                 foreach ($phones as $phone)
                 {
+                	$phone->setContact($entity);
                     $em->persist($phone);
                 }
                 $em->persist($entity);
@@ -75,7 +77,6 @@ class ContactController extends Controller
         {
             $originalPhones[] = $phone;
         }
-        
         $form = $this->createEditForm($entity);
         $form->handleRequest($request);
         if ($request->getMethod() == 'PUT')
@@ -83,11 +84,13 @@ class ContactController extends Controller
             if ($form->isValid())
             {
                 $em = $this->container->get('doctrine')->getManager();
-                
+                $em->persist($entity);
                 $phones = $entity->getPhones();
-                foreach ($phones as $phone)
+                foreach ($phones as $key => $phone)
                 {
-                    $em->persist($phone);
+                	$phone->setContact($entity);
+                	$em->persist($phone->getPhone());	// Persist Phone
+                	$em->persist($phone);				// Persist ContactPhone
                     foreach ($originalPhones as $key => $toDel)
                     {
                         if ($toDel->getId() === $phone->getId())
@@ -99,8 +102,9 @@ class ContactController extends Controller
                 foreach ($originalPhones as $phone)
                 {
                     $em->remove($phone);
+                    $em->remove($phone->getPhone());
                 } 
-                $em->persist($entity);
+                
                 $em->flush();
                 $router = $this->container->get('router');
                 $url = $router->generate('jlm_contact_contact_show', array('id'=>$entity->getId()));

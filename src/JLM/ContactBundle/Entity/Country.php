@@ -39,7 +39,9 @@ class Country implements CountryInterface
     {
     	$code = strtoupper(substr(trim($code),0,2));
     	if (!preg_match('#^[A-Z]{2}$#',$code))
+    	{
     		throw new \Exception('Code pays incorrect');
+    	}
     	$this->code = $code;
     	
     	return $this;

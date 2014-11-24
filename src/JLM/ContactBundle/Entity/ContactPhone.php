@@ -12,7 +12,7 @@
 namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\ContactPhoneInterface;
-use JLM\AskBundle\Model\ContactInterface;
+use JLM\ContactBundle\Model\ContactInterface;
 use JLM\ContactBundle\Model\PhoneInterface;
 
 /**
@@ -39,20 +39,7 @@ class ContactPhone implements ContactPhoneInterface
      * @var PhoneInterface
      */
     private $phone;
-    
-    /**
-     * Constructor
-     * @param ContactInterface $contact
-     * @param string $label
-     * @param PhoneInterface $phone
-     */
-    public function __construct(ContactInterface $contact, $label, PhoneInterface $phone)
-    {
-    	$this->setContact($contact);
-    	$this->setLabel($label);
-    	$this->setPhone($phone);
-    }
-    
+
     /**
      * Get id
      * @return number
@@ -76,7 +63,7 @@ class ContactPhone implements ContactPhoneInterface
      * @param ContactInterface $contact
      * @return self
      */
-    public function setContact(ContactInterface $contact)
+    public function setContact(ContactInterface $contact = null)
     {
     	$this->contact = $contact;
     	
@@ -108,7 +95,7 @@ class ContactPhone implements ContactPhoneInterface
      * Get phone
      * @return PhoneInterface
      */
-    protected function getPhone()
+    public function getPhone()
     {
     	return $this->phone;
     }
@@ -118,7 +105,7 @@ class ContactPhone implements ContactPhoneInterface
      * @param PhoneInterface $phone
      * @return self
      */
-    protected function setPhone(PhoneInterface $phone)
+    public function setPhone(PhoneInterface $phone)
     {
     	$this->phone = $phone;
     	
@@ -130,7 +117,7 @@ class ContactPhone implements ContactPhoneInterface
      * @param string $number
      * @return self
      */
-    public function setNumber($number)
+    public function setPhoneNumber($number)
     {
         return $this->phone->setNumber($number);
     }
@@ -139,9 +126,18 @@ class ContactPhone implements ContactPhoneInterface
      * Get number
      * @return string
      */
-    public function getNumber()
+    public function getPhoneNumber()
     {
         return $this->phone->getNumber();
+    }
+    
+    /**
+     * Get number
+     * @return string
+     */
+    public function getNumber()
+    {
+    	return $this->phone->getNumber();
     }
     
     /**
