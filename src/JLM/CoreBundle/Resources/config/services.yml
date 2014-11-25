@@ -1,0 +1,5 @@
+services:
+    jlm_core.type.uploaddocument:
+        class: JLM\CoreBundle\Form\Type\UploadDocumentType
+        tags:
+            - { name: form.type, alias: jlm_core_uploaddocument }
