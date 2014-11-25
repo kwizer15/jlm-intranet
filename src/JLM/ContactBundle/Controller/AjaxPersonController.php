@@ -23,7 +23,7 @@ use JLM\ContactBundle\Entity\Person;
 /**
  * Person controller.
  */
-class PersonController extends Controller
+class AjaxPersonController extends Controller
 {
     /**
      * Finds and displays a Person entity.

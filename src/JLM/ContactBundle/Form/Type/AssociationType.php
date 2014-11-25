@@ -26,7 +26,7 @@ class AssociationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',null,array('label'=>'Prénom','required'=>false))
+        	->add('name', null, array('label'=>'Nom'))
             ->add('contact', new ContactType(), array('data_class' => 'JLM\ContactBundle\Entity\Association'))
         ;
     }

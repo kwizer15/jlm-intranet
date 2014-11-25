@@ -29,7 +29,7 @@ class PersonType extends AbstractType
         	->add('title','choice',array('label'=>'Titre', 'choices'=>array('M.'=>'M.','Mme'=>'Mme','Mlle'=>'Mlle')))
         	->add('lastName',null,array('label'=>'Nom'))
             ->add('firstName',null,array('label'=>'Prénom', 'required'=>false))
-            ->add('contact', new ContactType(), array('data_class' => 'JLM\ContactBundle\Entity\Person'))
+            ->add('contact', 'jlm_contact_contact', array('data_class' => 'JLM\ContactBundle\Entity\Person'))
         ;
     }
 

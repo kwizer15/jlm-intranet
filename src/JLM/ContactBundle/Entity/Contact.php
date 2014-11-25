@@ -31,7 +31,7 @@ abstract class Contact implements ContactInterface
     /**
      * @var string
      */
-    private $name = '';
+    protected $name = '';
     
 	/**
 	 * @var Address $address
@@ -73,6 +73,14 @@ abstract class Contact implements ContactInterface
 	public function getId()
 	{
 	    return $this->id;
+	}
+	
+	public function getType()
+	{
+		$shorts = explode('\\', get_class($this));
+		$short = $shorts[sizeof($shorts) - 1];
+	 
+		return strtolower($short);
 	}
 	
 	/**

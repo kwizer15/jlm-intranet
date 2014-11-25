@@ -20,17 +20,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class CompanyType extends AbstractType
 {
-    /**
+	/**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',null,array('label'=>'Prénom','required'=>false))
+        	->add('name', null, array('label'=>'Nom'))
             ->add('contact', new ContactType(), array('data_class' => 'JLM\ContactBundle\Entity\Company'))
         ;
     }
-
+	
     /**
      * {@inheritdoc}
      */

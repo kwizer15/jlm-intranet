@@ -1,0 +1,29 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+
+{% block content %}
+<table class="table table-bordered">
+<tbody>
+{% for entity in entities %}
+<tr>
+  <td>
+    {{ entity.name }}
+  </td>
+  <td>
+    <ul>
+    {% for phone in entity.phones %}
+      <li>{{ phone }}</li>
+    {% endfor %}
+    </ul>
+  </td>
+  <td>
+    <a href="mailto:{{ entity.email }}">{{ entity.email }}</a><br>
+  </td>
+  <td>
+    <a href="{{ path('jlm_contact_contact_edit', {'id':entity.id}) }}" class="btn btn-warning btn-small">Editer</a>
+  </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock %}
