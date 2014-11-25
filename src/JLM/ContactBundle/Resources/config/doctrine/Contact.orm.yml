@@ -39,4 +39,7 @@ JLM\ContactBundle\Entity\Contact:
     address:
       targetEntity: JLM\ContactBundle\Model\AddressInterface
       cascade: ["persist"]
+    image:
+      targetEntity: JLM\CoreBundle\Entity\UploadDocument
+      cascade: ["all"]
     

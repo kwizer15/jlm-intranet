@@ -15,6 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use JLM\ContactBundle\Model\ContactInterface;
 use JLM\ContactBundle\Model\AddressInterface;
 use JLM\ContactBundle\Model\ContactPhoneInterface;
+use JLM\CoreBundle\Entity\UploadDocument;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -51,6 +52,11 @@ abstract class Contact implements ContactInterface
 	 * @var bool $active
 	 */
 	private $active = true;
+	
+	/**
+	 * @var UploadDocument $image
+	 */
+	private $image;
 	
 	/**
 	 * Constructor
@@ -207,7 +213,18 @@ abstract class Contact implements ContactInterface
         return $this->getActive();
     }
     
-
+	public function setImage(UploadDocument $image)
+	{
+		$this->image = $image;
+		
+		return $this;
+	}
+	
+	public function getImage()
+	{
+		return $this->image;
+	}
+    
     /**
      * {@inheritdoc}
      */

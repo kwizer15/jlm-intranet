@@ -1,6 +1,7 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
 
 {% block content %}
+<img src="/{{ entity.image }}" width="100" height="100">
 {{ entity.name }}<br>
 {% if entity.address %}
 <address>
@@ -13,6 +14,7 @@
   <li>{{ phone }}</li>
 {% endfor %}
 </ul>
+
 <a href="mailto:{{ entity.email }}">{{ entity.email }}</a><br>
 <a href="{{ path('jlm_contact_contact_edit', {'id':entity.id}) }}" class="btn btn-warning">Editer</a>
 {% endblock %}

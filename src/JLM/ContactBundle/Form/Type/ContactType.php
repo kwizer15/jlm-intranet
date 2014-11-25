@@ -29,6 +29,7 @@ class ContactType extends AbstractType
             ->add('address','jlm_contact_address',array('label'=>'Adresse', 'required'=>false))
             ->add('phones','jlm_contact_contactphonecollection',array('label'=>'Téléphones', 'required'=>false))
             ->add('email','email',array('label'=>'Adresse e-mail', 'required'=>false))
+            ->add('image','jlm_core_uploaddocument')
         ;
     }
 
