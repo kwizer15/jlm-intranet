@@ -35,7 +35,7 @@ class ContactController extends Controller
 	 */
 	public function editAction($id)
 	{
-		if (is_string($id))
+		if ($id == 'person' || $id == 'company' || $id == 'association')
 		{
 			$type = $id;
 			$id = 0;
@@ -134,6 +134,11 @@ class ContactController extends Controller
         return $entity;
     }
     
+    /**
+     * 
+     * @param string $type
+     * @return \JLM\ContactBundle\Form\Type\AbstractType| null
+     */
     private function getFormType($type)
     {
     	switch ($type)
@@ -149,6 +154,11 @@ class ContactController extends Controller
     	return null;
     }
     
+    /**
+     * 
+     * @param string $type
+     * @return Contact
+     */
     private function getNewEntity($type)
     {
     	switch ($type)
