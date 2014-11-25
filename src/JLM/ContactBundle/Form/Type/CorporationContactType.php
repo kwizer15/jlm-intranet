@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the JLMContactBundle package.
+ * This file is part of the  package.
  *
  * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *
@@ -14,13 +14,11 @@ namespace JLM\ContactBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use JLM\ContactBundle\Entity\ContactPhone;
-use JLM\ContactBundle\Model\ContactInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ContactPhoneType extends AbstractType
+class CorporationContactType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -28,8 +26,9 @@ class ContactPhoneType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('label',null,array('label'=>'Libélé'))
-        	->add('phone','jlm_contact_phone',array('label'=>'Numéro'))
+        	->add('corporation','jlm_contact_contact_select' ,array('label'=>'Groupement'))
+            ->add('position',null,array('label'=>'Rôle'))
+            ->add('manager','jlm_contact_contact_select',array('label'=>'Supérieur', 'required'=>false))
         ;
     }
 
@@ -38,17 +37,17 @@ class ContactPhoneType extends AbstractType
      */
     public function getName()
     {
-        return 'jlm_contact_contactphone';
+        return 'jlm_contact_corporation_contact';
     }
     
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+	public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver
-        ->setDefaults(array(
-            'data_class' => 'JLM\ContactBundle\Entity\ContactPhone',
+    	$resolver
+    		->setDefaults(array(
+            	'data_class' => 'JLM\ContactBundle\Entity\CorporationContact',
         ));
     }
 }

@@ -1,4 +1,4 @@
-{% extends "JLMModelBundle::layout.html.twig" %}
+{% extends "JLMContactBundle::layout.html.twig" %}
 
 {% block content %}
 <table class="table table-bordered">
@@ -6,7 +6,7 @@
 {% for entity in entities %}
 <tr>
   <td>
-    {{ entity.name }}
+    <a href="{{ path('jlm_contact_contact_show', {'id': entity.id }) }}">{{ entity.name }}</a>
   </td>
   <td>
     <ul>

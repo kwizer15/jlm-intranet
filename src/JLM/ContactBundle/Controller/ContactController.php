@@ -104,8 +104,9 @@ class ContactController extends Controller
     public function showAction($id)
     {
         $entity = $this->getEntity($id);
+        $template = 'JLMContactBundle:Contact:show_'.$entity->getType().'.html.twig';
         
-        return $this->render('JLMContactBundle:Contact:show.html.twig', array('entity'=>$entity));
+        return $this->render($template, array('entity'=>$entity));
     }
     
     public function unactiveAction($id)

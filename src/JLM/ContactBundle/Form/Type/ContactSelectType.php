@@ -12,43 +12,51 @@
 namespace JLM\ContactBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use JLM\ContactBundle\Entity\ContactPhone;
-use JLM\ContactBundle\Model\ContactInterface;
+use JLM\ContactBundle\Form\DataTransformer\CityToIntTransformer;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ContactPhoneType extends AbstractType
+class ContactSelectType extends AbstractType
 {
     /**
-     * {@inheritdoc}
+     * @var ObjectManager
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-        	->add('label',null,array('label'=>'Libélé'))
-        	->add('phone','jlm_contact_phone',array('label'=>'Numéro'))
-        ;
-    }
-
+    private $om;
+    
     /**
-     * {@inheritdoc}
+     * @param ObjectManager $om
      */
-    public function getName()
+    public function __construct(ObjectManager $om)
     {
-        return 'jlm_contact_contactphone';
+        $this->om = $om;
     }
     
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function getParent()
     {
-        $resolver
-        ->setDefaults(array(
-            'data_class' => 'JLM\ContactBundle\Entity\ContactPhone',
+    	return 'genemu_jqueryselect2_hidden';
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'jlm_contact_contact_select';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+	public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'transformer' => new ContactToIntTransformer($this->om),
         ));
     }
 }

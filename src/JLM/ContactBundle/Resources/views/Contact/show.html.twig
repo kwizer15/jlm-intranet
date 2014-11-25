@@ -1,4 +1,4 @@
-{% extends "JLMModelBundle::layout.html.twig" %}
+{% extends "JLMContactBundle::layout.html.twig" %}
 
 {% block content %}
 <img src="/{{ entity.image }}" width="100" height="100">
@@ -16,5 +16,9 @@
 </ul>
 
 <a href="mailto:{{ entity.email }}">{{ entity.email }}</a><br>
+
+{% block special %}
+{% endblock %}
+
 <a href="{{ path('jlm_contact_contact_edit', {'id':entity.id}) }}" class="btn btn-warning">Editer</a>
 {% endblock %}
