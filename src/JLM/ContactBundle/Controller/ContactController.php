@@ -12,20 +12,11 @@
 namespace JLM\ContactBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\ContactBundle\Manager\ContactManager;
-use JLM\ContactBundle\Form\Type\PersonType;
 use JLM\ContactBundle\Entity\Person;
-use JLM\ContactBundle\Entity\CorporationContact;
-use JLM\ModelBundle\Entity\Technician;
-use JLM\ContactBundle\Entity\Phone;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use JLM\ContactBundle\Entity\ContactPhone;
 use JLM\ContactBundle\Form\Handler\DoctrineHandler;
-
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use JLM\ContactBundle\Form\Type\PersonType;
 /**
  * Person controller.
  */
