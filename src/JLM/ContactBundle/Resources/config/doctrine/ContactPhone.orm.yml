@@ -11,9 +11,7 @@ JLM\ContactBundle\Entity\ContactPhone:
   oneToOne:
     phone:
       targetEntity: JLM\ContactBundle\Model\PhoneInterface
-  manyToOne:
-    contact:
-      targetEntity: JLM\ContactBundle\Entity\Contact
-      inversedBy: phones
+      cascade: ["persist", "remove"]
+
   
     

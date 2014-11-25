@@ -26,11 +26,6 @@ class ContactPhone implements ContactPhoneInterface
     private $id;
     
     /**
-     * @var ContactInterface $contact
-     */
-    private $contact;
-    
-    /**
      * @var string
      */
     private $label;
@@ -47,27 +42,6 @@ class ContactPhone implements ContactPhoneInterface
     public function getId()
     {
         return $this->id;
-    }
-    
-    /**
-     * Get contact
-     * @return ContactInterface
-     */
-    public function getContact()
-    {
-    	return $this->contact;
-    }
-    
-    /**
-     * Set contact
-     * @param ContactInterface $contact
-     * @return self
-     */
-    public function setContact(ContactInterface $contact = null)
-    {
-    	$this->contact = $contact;
-    	
-    	return $this;
     }
     
     /**

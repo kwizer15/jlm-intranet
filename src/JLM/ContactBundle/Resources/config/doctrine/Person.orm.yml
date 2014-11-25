@@ -11,5 +11,7 @@ JLM\ContactBundle\Entity\Person:
       nullable: true
     lastName:
       type: string
-    
+  lifecycleCallbacks:
+    prePersist: [ attributeName ]
+    preUpdate: [ attributeName ]
     

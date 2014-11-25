@@ -21,11 +21,22 @@ JLM\ContactBundle\Entity\Contact:
     email:
       type: string
       nullable: true
-  oneToMany:
+  manyToMany:
     phones:
       targetEntity: JLM\ContactBundle\Entity\ContactPhone
-      mappedBy: contact
+      joinTable:
+        name: jlm_contact_contact_join_contact_phone
+        joinColumns:
+          contact_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          phone_id:
+            referencedColumnName: id
+            unique: true
+      orphanRemoval: true
+      cascade: ["persist"]
   oneToOne:
     address:
       targetEntity: JLM\ContactBundle\Model\AddressInterface
+      cascade: ["persist"]
     

@@ -30,7 +30,7 @@ jlm_contact_ajax_person_autocomplete:
 
 jlm_contact_contact_new:
     path: /contact/new
-    defaults: { _controller: "JLMContactBundle:Contact:new" }
+    defaults: { _controller: "JLMContactBundle:Contact:edit", id: 0 }
     methods: [GET, POST]
 
 jlm_contact_contact_edit:

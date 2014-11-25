@@ -92,6 +92,8 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
     public function setName($name)
     {
         parent::setName(trim($this->lastName.' '.$this->firstName));
+        
+        return $this;
     }
 
     /**
@@ -129,6 +131,15 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
     public function getFixedPhone()
     {
         return $this->_getPhoneNumber('Principal');
+    }
+    
+    /**
+     * 
+     * @return self
+     */
+    public function attributeName()
+    {
+    	return $this->setName('');
     }
 
 }

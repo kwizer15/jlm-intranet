@@ -17,5 +17,4 @@ use JLM\ContactBundle\Model\ContactInterface;
  */
 interface ContactPhoneInterface extends PhoneInterface
 {
-	public function setContact(ContactInterface $contact = null);
 }

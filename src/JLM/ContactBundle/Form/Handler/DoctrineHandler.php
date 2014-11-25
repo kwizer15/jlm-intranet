@@ -18,7 +18,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ContactNewHandler extends FormHandler
+class DoctrineHandler extends FormHandler
 {
 	/**
 	 * @var Request
@@ -33,7 +33,7 @@ class ContactNewHandler extends FormHandler
 	 */
 	public function __construct(Form $form, Request $request, ObjectManager $om)
 	{
-		$this->__construct($form, $request);
+		parent::__construct($form, $request);
 		$this->om = $om;
 	}
 	
@@ -43,12 +43,6 @@ class ContactNewHandler extends FormHandler
 	public function onSuccess()
 	{
 		$entity = $this->form->getData();
-		$phones = $entity->getPhones();
-		foreach ($phones as $phone)
-		{
-			$phone->setContact($entity);
-			$this->om->persist($phone);
-		}
 		$this->om->persist($entity);
 		$this->om->flush();
 		

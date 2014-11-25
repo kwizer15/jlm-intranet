@@ -108,8 +108,6 @@ abstract class Contact implements ContactInterface
 	 */
 	public function addPhone(ContactPhoneInterface $phone)
 	{
-		$phone->setContact($this);
-		
 	    return $this->phones->add($phone);
 	}
 	
@@ -121,8 +119,6 @@ abstract class Contact implements ContactInterface
 	 */
 	public function removePhone(ContactPhoneInterface $phone)
 	{
-		$phone->setContact();
-		
 	    return $this->phones->removeElement($phone);
 	}
 	
