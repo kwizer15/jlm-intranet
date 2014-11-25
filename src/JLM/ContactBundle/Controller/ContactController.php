@@ -11,19 +11,22 @@
 
 namespace JLM\ContactBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use JLM\ContactBundle\Entity\Person;
 use JLM\ContactBundle\Entity\ContactPhone;
+use JLM\ContactBundle\Entity\Person;
 use JLM\ContactBundle\Form\Handler\DoctrineHandler;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use JLM\ContactBundle\Form\Type\PersonType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Form\Exception\LogicException;
+
 /**
  * Person controller.
  */
 class ContactController extends Controller
 {
     /**
-     * Edit a contact
+     * Edit or add a contact
+     * @param int $id The entity identifier (0 for a new entity)
      */
     public function editAction($id = 0)
     {
@@ -96,6 +99,8 @@ class ContactController extends Controller
     		case 'PUT':
     			$url = $this->generateUrl('jlm_contact_contact_edit', array('id' => $entity->getId()));
     			break;
+    		default:
+    			throw new LogicException('HTTP request method must be POST or PUT only');
     	}
     	
         $form = $this->container->get('form.factory')->create(new PersonType(), $entity,
