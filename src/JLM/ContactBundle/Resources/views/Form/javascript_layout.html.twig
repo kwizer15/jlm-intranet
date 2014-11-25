@@ -65,7 +65,7 @@
     var addLine = function(e) {
     	e.preventDefault();
 
-        var phoneList = $('#jlm_contact_person_contact_phones');
+        var phoneList = $('.phone-list');
         var newWidget = phoneList.attr('data-prototype');
         newWidget = newWidget.replace(/__name__/g, phoneCount);
         phoneCount++;

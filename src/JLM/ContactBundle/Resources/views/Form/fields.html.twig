@@ -40,7 +40,7 @@
     {% if prototype is defined %}
         {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
     {% endif %}
-    {%- set attr = attr|merge({'class': (attr.class|default('') ~ ' unstyled')|trim }) -%}
+    {%- set attr = attr|merge({'class': (attr.class|default('') ~ ' unstyled phone-list')|trim }) -%}
     <ul {{ block('widget_container_attributes') }}>
 		{{ block('jlm_contact_contactphonecollection_rows') }}
     </ul>
