@@ -9,11 +9,22 @@
 
 {% block jlm_contact_person_select_widget %}
   {% spaceless %}
-    {% set type = 'hidden' %}
-    {{ block('form_widget_simple') }}
-    <input type="text" id="{{ id }}_selector" class="autocompletion" data-source="{{ path('jlm_contact_ajax_person_autocomplete') }}">
+    {{ form_widget(form)) }} <button class="btn" id="{{ id }}_add-person">Nouveau</button>
   {% endspaceless %}
 {% endblock jlm_contact_person_select_widget %}
+
+{% block jlm_contact_person_select_javascript %}
+{% javascripts
+    	'@JLMContactBundle/Resources/public/modal_contact.js'
+        filter='yui_js' %}
+    	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+  <script>
+  $("#{{ id }}_add-person").formModal({
+		urlModal: '{{ path('jlm_contact_contact_new', {'id': 'person'}) }}',
+	});
+  </script>
+{% endblock jlm_contact_person_select_javascript %}
 
 {% block jlm_contact_person_widget %}
 <div class="control-group">{{ form_label(form.lastName) }}

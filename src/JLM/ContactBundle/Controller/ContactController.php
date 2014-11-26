@@ -24,6 +24,8 @@ use JLM\ContactBundle\Form\Type\CompanyType;
 use JLM\ContactBundle\Form\Type\AssociationType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use JLM\ContactBundle\Form\Type\CorporationContactType;
+use JLM\ContactBundle\Entity\CorporationContact;
 
 /**
  * Person controller.
@@ -35,7 +37,14 @@ class ContactController extends Controller
 	 */
 	public function testAction()
 	{
-		return $this->render('JLMContactBundle:Contact:test.html.twig');
+		$form = $this->container->get('form.factory')->create(new CorporationContactType(), $entity,
+				array(
+						'action' => '',
+						'method' => 'POST',
+				)
+		);
+		$form->add('submit','submit',array('label'=>'Enregistrer'));
+		return $this->render('JLMContactBundle:Contact:test.html.twig', array('form'=>$form));
 	}
 	
 	/**
