@@ -52,3 +52,9 @@ jlm_contact_contact_show:
     path: /{id}
     defaults: { _controller: "JLMContactBundle:Contact:show" }
     methods: [GET]
+    
+
+jlm_contact_contact_test:
+    path: /test/
+    defaults: { _controller: "JLMContactBundle:Contact:test" }
+    methods: [GET]

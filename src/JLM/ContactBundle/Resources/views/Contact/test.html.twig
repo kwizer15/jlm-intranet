@@ -1,0 +1,23 @@
+{% extends "JLMContactBundle::layout.html.twig" %}
+
+{% block content %}
+<a role="button" class="btn" id="add-contact">Nouveau contact</a>
+{# Créer un helper pour ce type de bouton #}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% javascripts
+    	'@JLMContactBundle/Resources/public/modal_contact.js'
+        filter='yui_js' %}
+    	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block javascripts_script %}
+{{ parent() }}
+$("#add-contact").formModal({
+	urlModal: '{{ path('jlm_contact_contact_new', {'id': 'person'}) }}',
+});
+
+{% endblock %}

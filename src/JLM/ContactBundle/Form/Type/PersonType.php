@@ -49,6 +49,7 @@ class PersonType extends AbstractType
         $resolver
         ->setDefaults(array(
             'data_class' => 'JLM\ContactBundle\Entity\Person',
+        	'label' => 'Personne',
         ));
     }
 }

@@ -11,7 +11,6 @@
 
 namespace JLM\ContactBundle\Controller;
 
-use JLM\ContactBundle\Entity\ContactPhone;
 use JLM\CoreBundle\Form\Handler\DoctrineHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,12 +22,22 @@ use JLM\ContactBundle\Entity\Association;
 use JLM\ContactBundle\Form\Type\PersonType;
 use JLM\ContactBundle\Form\Type\CompanyType;
 use JLM\ContactBundle\Form\Type\AssociationType;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Person controller.
  */
 class ContactController extends Controller
 {
+	/**
+	 * Test action for modals
+	 */
+	public function testAction()
+	{
+		return $this->render('JLMContactBundle:Contact:test.html.twig');
+	}
+	
 	/**
 	 * Edit or add a contact
 	 * @param int|string $id The entity identifier or typeof new entity
@@ -40,7 +49,6 @@ class ContactController extends Controller
 			$type = $id;
 			$id = 0;
 			$entity = $this->getNewEntity($type);
-			$entity->addPhone(new ContactPhone());
 			$method = 'POST';
 		}
 		else
@@ -54,6 +62,16 @@ class ContactController extends Controller
 		$em = $this->container->get('doctrine')->getManager();
 		$handler = new DoctrineHandler($form, $request, $em);
 	
+		if ($request->isXmlHttpRequest())
+		{
+			if ($handler->process($method))
+			{
+				return new Response('form valid');
+			}
+			
+			return $this->render('JLMContactBundle:Contact:modal_new.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
+		}
+		
 		if ($handler->process($method))
 		{
 			$router = $this->container->get('router');

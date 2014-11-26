@@ -1,0 +1,20 @@
+{{ form_start(form, {'attr': {'id': 'myModal',
+							  'class': 'modal hide fade', 
+                              'tabindex': '-1',
+                              'role': 'dialog', 
+                              'aria-labelledby': 'myModalLabel',
+                              'aria-hidden': 'true'} } ) }}
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">{{ form_label(form) }}</h3>
+  </div>
+  <div class="modal-body">
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+    {{ form_rest(form) }}
+  </div>
+{{ form_end(form) }}
+{{ form_javascript(form) }}
