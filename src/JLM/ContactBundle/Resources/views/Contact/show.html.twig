@@ -1,7 +1,9 @@
 {% extends "JLMContactBundle::layout.html.twig" %}
 
 {% block content %}
+{%  if image is defined %}
 <img src="/{{ entity.image }}" width="100" height="100">
+{% endif %}
 {{ entity.name }}<br>
 {% if entity.address %}
 <address>

@@ -16,11 +16,14 @@
 {% endblock jlm_contact_person_select_widget %}
 
 {% block jlm_contact_person_widget %}
-{{ form_label(form.lastName) }}
+<div class="control-group">{{ form_label(form.lastName) }}
+<div class="controls">
 {{ form_widget(form.title, {'attr': {'class': 'input-small'}}) }}
 {{ form_widget(form.firstName, {'attr': {'class': 'input-medium', 'placeholder': 'Prénom'}}) }}
 {{ form_widget(form.lastName, {'attr': {'class': 'input-medium', 'placeholder': 'Nom'}}) }}
-{{ form_rest(form) }} 
+</div>
+</div>
+{{ form_row(form.contact) }} 
 {% endblock jlm_contact_person_widget %}
 
 {% block _jlm_contact_person_email_widget %}
