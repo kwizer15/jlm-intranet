@@ -40,7 +40,7 @@
 			, modalclose: function(e) {
 				e.preventDefault();
 				$(this).modal('hide')
-				       .remove();
+				$("#modals").empty();
 			}
 
 			, modalsubmit: function(e) {
