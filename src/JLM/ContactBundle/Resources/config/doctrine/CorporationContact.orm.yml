@@ -7,7 +7,5 @@ JLM\ContactBundle\Entity\CorporationContact:
   manyToOne:
     corporation:
       targetEntity: JLM\ContactBundle\Model\CorporationInterface
-    manager:
-      targetEntity: JLM\ContactBundle\Model\CorporationContactInterface
     
     

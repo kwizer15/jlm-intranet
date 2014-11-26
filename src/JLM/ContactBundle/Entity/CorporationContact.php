@@ -29,12 +29,6 @@ class CorporationContact extends PersonDecorator implements CorporationContactIn
      * @var string
      */
     protected $position;
-
-    /**
-     * Manager
-     * @var CorporationContactInterface
-     */
-    protected $manager;
     
     /**
      * {@inheritdoc}
@@ -74,33 +68,5 @@ class CorporationContact extends PersonDecorator implements CorporationContactIn
         $this->position = $position;
         
         return $this;
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getManager()
-    {
-        return $this->manager;
-    }
-    
-    /**
-     * Set the manager
-     * @param CorporationContactInterface $manager
-     * @return CorporationContact
-     */
-    public function setManager(CorporationContactInterface $manager = null)
-    {
-        $this->manager = $manager;
-        
-        return $this;
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function hasManager()
-    {
-        return $this->getManager() !== null;
     }
 }
