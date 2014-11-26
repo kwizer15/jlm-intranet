@@ -30,28 +30,29 @@ abstract class ContactDecorator implements ContactInterface
     protected $contact;
     
     /**
-     * Constructor
-     * @param ContactInterface $contact
+     * Get contact
      */
-    public function __construct(ContactInterface $contact)
+    protected function getContact()
     {
-        $this->contact = $contact;
+        return $this->contact;
     }
     
     /**
      * Get contact
      */
-    protected function _getContact()
+    protected function setContact(ContactInterface $contact)
     {
-        return $this->contact;
-    } 
+    	$this->contact = $contact;
+    	
+    	return $this;
+    }
     
     /**
      * {@inheritdoc}
      */
     public function getAddress()
     {
-        return $this->_getContact()->getAddress();
+        return $this->getContact()->getAddress();
     }
     
     /**
@@ -59,7 +60,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getEmail()
     {
-        return $this->_getContact()->getEmail();
+        return $this->getContact()->getEmail();
     }
     
     /**
@@ -67,7 +68,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getFax()
     {
-        return $this->_getContact()->getFax();
+        return $this->getContact()->getFax();
     }
     
     /**
@@ -75,7 +76,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getName()
     {
-        return $this->_getContact()->getName();
+        return $this->getContact()->getName();
     }
     
     /**
@@ -83,6 +84,6 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function __toString()
     {
-        return $this->_getContact()->__toString();
+        return $this->getContact()->__toString();
     }
 }
