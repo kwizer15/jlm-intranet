@@ -37,6 +37,7 @@ class ContactController extends Controller
 	 */
 	public function testAction()
 	{
+		$entity = new CorporationContact();
 		$form = $this->container->get('form.factory')->create(new CorporationContactType(), $entity,
 				array(
 						'action' => '',
