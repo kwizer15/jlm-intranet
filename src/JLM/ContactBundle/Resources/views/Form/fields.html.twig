@@ -15,9 +15,13 @@
   {% endspaceless %}
 {% endblock jlm_contact_person_select_widget %}
 
-{% block _jlm_contact_person_title_widget %}
-  {{ form_widget(form, {'attr': {'class': 'input-small'}}) }}
-{% endblock %}
+{% block jlm_contact_person_widget %}
+{{ form_label(form.lastName) }}
+{{ form_widget(form.title, {'attr': {'class': 'input-small'}}) }}
+{{ form_widget(form.firstName, {'attr': {'class': 'input-medium', 'placeholder': 'Prénom'}}) }}
+{{ form_widget(form.lastName, {'attr': {'class': 'input-medium', 'placeholder': 'Nom'}}) }}
+{{ form_rest(form) }} 
+{% endblock jlm_contact_person_widget %}
 
 {% block _jlm_contact_person_email_widget %}
   {{ form_widget(form, {'attr': {'class': 'input-xlarge'}}) }}
