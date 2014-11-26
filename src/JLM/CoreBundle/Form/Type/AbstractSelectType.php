@@ -9,17 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\ContactBundle\Form\Type;
+namespace JLM\CoreBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\AbstractType;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-abstract class AbstractHiddenType extends AbstractType
+abstract class AbstractSelectType extends AbstractType
 {
 	/**
 	 * @var ObjectManager
@@ -35,54 +35,43 @@ abstract class AbstractHiddenType extends AbstractType
 	}
 	
 	/**
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
+	 * {@inheritdoc}
 	 */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-    	$cl = $this->getTransformerClass();
-    	$transformer = new $cl($this->om);
-    	$builder->addModelTransformer($transformer);
-    	
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
-    {
-    	return 'hidden';
-    }
-    
+	public function getParent()
+	{
+		return 'genemu_jqueryselect2_hidden';
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setDefaultOptions(OptionsResolverInterface $resolver)
+	{
+		$transformer = $this->getTransformerClass();
+		$resolver->setDefaults(array(
+				'transformer' => new $transformer($this->om),
+		));
+	}
+	
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-        return $this->getTypeName().'_hidden';
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'invalid_message' => 'The selected '.$this->getTypeName().' does not exist',
-        ));
+        return $this->getTypeName().'_select';
     }
     
     /**
      * Get the transformer class
-     * 
+     *
      * @return string
      */
     abstract protected function getTransformerClass();
     
     /**
      * Get the type name
-     * 
+     *
      * @return string
-     */
+    */
     abstract protected function getTypeName();
 }

@@ -12,7 +12,7 @@
 namespace JLM\ContactBundle\Controller;
 
 use JLM\ContactBundle\Entity\ContactPhone;
-use JLM\ContactBundle\Form\Handler\DoctrineHandler;
+use JLM\CoreBundle\Form\Handler\DoctrineHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Exception\LogicException;

@@ -11,7 +11,7 @@
 
 namespace JLM\ContactBundle\Form\DataTransformer;
 
-use JLM\ContactBundle\Form\DataTransformer\ObjectToIntTransformer;
+use JLM\CoreBundle\Form\DataTransformer\ObjectToIntTransformer;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
