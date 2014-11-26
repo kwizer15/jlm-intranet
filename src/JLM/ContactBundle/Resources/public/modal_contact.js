@@ -39,8 +39,7 @@
 			
 			, modalclose: function(e) {
 				e.preventDefault();
-				$(this).modal('hide')
-				$("#modals").empty();
+				$(this).modal('hide').parent().empty();
 			}
 
 			, modalsubmit: function(e) {
