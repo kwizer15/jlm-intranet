@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the  package.
+ * This file is part of the JLMContactBundle package.
  *
  * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *
@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class CorporationContactType extends AbstractType
+class ContactDecoratorType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -26,9 +26,7 @@ class CorporationContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('contact', 'jlm_contact_contactdecorator', array('data_class' => 'JLM\ContactBundle\Entity\Person'))
-        	->add('corporation','jlm_contact_corporation_select' ,array('label'=>'Groupement'))
-            ->add('position',null,array('label'=>'Rôle'))
+            ->add('contact','jlm_contact_contact_select', array('label'=>'Contact'))
         ;
     }
 
@@ -37,17 +35,17 @@ class CorporationContactType extends AbstractType
      */
     public function getName()
     {
-        return 'jlm_contact_corporation_contact';
+        return 'jlm_contact_contactdecorator';
     }
     
     /**
      * {@inheritdoc}
      */
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-    	$resolver
-    		->setDefaults(array(
-            	'data_class' => 'JLM\ContactBundle\Entity\CorporationContact',
+        $resolver
+        ->setDefaults(array(
+            'inherit_data' => true,
         ));
     }
 }
