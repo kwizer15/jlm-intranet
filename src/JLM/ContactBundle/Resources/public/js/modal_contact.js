@@ -11,6 +11,7 @@
 
 	var FormModal = function (element, options) {
 		this.$element = $(element)
+		this.$modal = undefined
 		this.options = $.extend({}, $.fn.formModal.defaults, options)
 		this.listen()
 	}
@@ -20,7 +21,6 @@
 
 			, listen: function() {
 				this.$element.on('click', this, this.load);
-				
 			}
 				
 			, load: function(e) {
@@ -28,10 +28,10 @@
 				$.get(e.data.options.urlModal, function(data) {
 					$newContent = $('<div/>').html(data);
 					$('#modals').append($newContent);
-					var $modal = $newContent.find('form.modal');
-					$modal.modal()
+					e.data.$modal = $newContent.find('form.modal');
+					e.data.$modal.modal()
 					  .on('submit', e.data, e.data.modalsubmit)
-					  .on('hidden', e.data.modalclose)
+					  .on('hidden', e.data, e.data.modalclose)
 					  .modal('show')
 				}, 'html');
 
@@ -40,7 +40,7 @@
 			
 			, modalclose: function(e) {
 				e.preventDefault();
-				$(this).modal('hide').parent().empty();
+				e.data.$modal.modal('hide').parent().remove();
 			}
 
 			, modalsubmit: function(e) {
@@ -52,7 +52,7 @@
 					data: $(this).serialize(),
 					success: function(data) {
 						e.data.options.closure(data);
-						e.data.modalclose(e);
+						$(this).modal('hide').parent().remove();
 					}
 				});
 				
@@ -78,7 +78,7 @@
 			urlModal : '',
 			closure : function(data, closer) {
 				$("#modals .modal-body").html(data);
-			//	$("#modals .modal-footer [type=submit]").remove();
+				$("#modals .modal-footer [type=submit]").remove();
 			}
 	}
 
