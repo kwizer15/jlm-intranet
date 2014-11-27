@@ -2,5 +2,44 @@
 
 
 {% block special %}
-Ajouter un employé
+<button class="btn" id="add-corporationcontact">Nouvelle</button>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <td>Nom</td>
+      <td>Rôle</td>
+      <td>Téléphones</td>
+  </thead>
+  <tbody>
+    {% for contact in entity.contacts %}
+    <tr>
+      <td>{{ contact.name }}</td>
+      <td>{{ contact.position }}</td>
+      <td>
+        <ul>
+        {% for phone in contact.phones %}
+          <li>{{ phone }}</li>  
+        {% endfor %}
+        </ul>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% javascripts
+    	'@JLMContactBundle/Resources/public/modal_contact.js'
+        filter='yui_js' %}
+    	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block javascripts_script %}
+{{ parent() }}
+$("#add-corporationcontact").formModal({
+    urlModal: '{{ path('jlm_contact_corporationcontact_new') }}'
+});
 {% endblock %}

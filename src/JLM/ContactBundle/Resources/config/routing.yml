@@ -78,3 +78,15 @@ jlm_contact_rest_corporation_get:
     path:   /ajax/corporation.json
     defaults:  { _controller: "JLMContactBundle:AjaxCorporation:json" }
     methods: [GET]
+    
+jlm_contact_corporationcontact_new:
+    path: /corporationcontact/new
+    defaults: { _controller: "JLMContactBundle:CorporationContact:edit" }
+    methods: [GET, POST]
+
+jlm_contact_corporationcontact_edit:
+    path: /corporationcontact/{id}/edit
+    defaults: { _controller: "JLMContactBundle:CorporationContact:edit" }
+    requirements:
+      id: \d+
+    methods: [GET, PUT]

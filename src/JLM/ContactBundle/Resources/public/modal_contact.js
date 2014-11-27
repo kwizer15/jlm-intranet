@@ -26,8 +26,9 @@
 			, load: function(e) {
 				e.preventDefault();
 				$.get(e.data.options.urlModal, function(data) {
-					$('#modals').html(data);
-					var $modal = $('#modals form');
+					$newContent = $('<div/>').html(data);
+					$('#modals').append($newContent);
+					var $modal = $newContent.find('form');
 					$modal.modal()
 					  .on('submit', $modal, e.data.modalsubmit)
 					  .on('hidden', e.data.modalclose)

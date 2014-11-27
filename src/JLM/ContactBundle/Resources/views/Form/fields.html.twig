@@ -9,7 +9,7 @@
 
 {% block jlm_contact_person_select_widget %}
   {% spaceless %}
-    {{ form_widget(form, { 'attr': {'placeholder': 'Personne', 'class': 'input-large'}}) }} <button class="btn" id="{{ id }}_add-person">Nouveau</button>
+    {{ form_widget(form, { 'attr': {'placeholder': 'Personne', 'class': 'input-large'}}) }} <button class="btn" id="{{ id }}_add-person">Nouvelle</button>
   {% endspaceless %}
 {% endblock %}
 
@@ -17,7 +17,7 @@
   {% spaceless %}
     {{ form_widget(form, { 'attr': {'placeholder': 'Groupement', 'class': 'input-large'}}) }}
     <div class="btn-group">
-    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Nouveau <b class="caret"></b></a>
+    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Nouvelle <b class="caret"></b></a>
     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
       <li><a id="{{ id }}_add-company">Société</a></li>
       <li><a id="{{ id }}_add-association">Association</a></li>
@@ -26,7 +26,9 @@
     {% endspaceless %}
 {% endblock %}
 
-
+{% block jlm_contact_corporationcontact_widget %}
+  {{ form_widget(form.contact) }} {{ form_widget(form.position) }} {{ form_widget(form.corporation) }}
+{% endblock %}
 
 {% block jlm_contact_person_widget %}
 <div class="control-group">{{ form_label(form.lastName) }}

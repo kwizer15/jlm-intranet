@@ -16,7 +16,7 @@ use JLM\DefaultBundle\Entity\SearchRepository;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class PersonRepository extends SearchRepository
+class CorporationRepository extends SearchRepository
 {
 	/**
 	 * {@inheritdoc}
