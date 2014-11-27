@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use JLM\ContactBundle\Form\Type\CorporationContactType;
 use JLM\ContactBundle\Entity\CorporationContact;
+use Symfony\Component\Form\Form;
 
 /**
  * Person controller.
@@ -27,7 +28,8 @@ class CorporationContactController extends Controller
 {
 	/**
 	 * Edit or add a contact
-	 * @param int|string $id The entity identifier or typeof new entity
+	 * @param int|string $id The entity identifier
+	 * @return Response
 	 */
 	public function editAction($id = 0)
 	{
@@ -62,8 +64,13 @@ class CorporationContactController extends Controller
 		return $this->render('JLMContactBundle:CorporationContact:new.html.twig', array('form'=>$form->createView()));
 	}
 	
-	
-	
+	/**
+	 * 
+	 * @param string $method
+	 * @param CorporationContact $entity
+	 * @throws LogicException
+	 * @return Form
+	 */
 	private function createContactForm($method, CorporationContact $entity)
 	{
 		$url = '';
@@ -90,6 +97,11 @@ class CorporationContactController extends Controller
 		return $form;
 	}
     
+	/**
+	 * 
+	 * @param int $id
+	 * @return CorporationContact
+	 */
     private function getEntity($id)
     {
         $em = $this->container->get('doctrine')->getManager();
