@@ -1,11 +1,13 @@
 JLM\ContactBundle\Entity\CorporationContact:
   type: entity
   table: jlm_contact_corporationcontact
+  repositoryClass: JLM\ContactBundle\Repository\CorporationContactRepository
   fields:
     position:
       type: string
   manyToOne:
     corporation:
       targetEntity: JLM\ContactBundle\Model\CorporationInterface
+      inversedBy: contacts
     
     

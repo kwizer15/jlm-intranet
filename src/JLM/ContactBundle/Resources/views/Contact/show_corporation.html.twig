@@ -3,7 +3,7 @@
 
 {% block special %}
 <button class="btn" id="add-corporationcontact">Nouvelle</button>
-<table class="table table-bordered">
+<table class="table table-bordered" id="contacts-list">
   <thead>
     <tr>
       <th>Nom</th>
@@ -22,6 +22,7 @@
         {% endfor %}
         </ul>
       </td>
+      <td><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></td>
       <td><button class="btn btn-danger"><i class="icon-white icon-minus-sign"></i></button></td>
     </tr>
     {% endfor %}
@@ -41,6 +42,11 @@
 {% block javascripts_script %}
 {{ parent() }}
 $("#add-corporationcontact").formModal({
-        	urlModal: '{{ path('jlm_contact_corporationcontact_new', {'corporation_id': entity.id }) }}'
-        });
+   	urlModal: '{{ path('jlm_contact_corporationcontact_new', {'corporation_id': entity.id }) }}',
+    closure: function(data) {
+    	var $line = $('<tr/>');
+    	$line.html('<td>' + data + '</td>'); 
+    	$("#contacts-list tbody").append($line);
+    }
+});
 {% endblock %}

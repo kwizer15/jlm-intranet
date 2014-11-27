@@ -31,32 +31,11 @@ class CorporationContactController extends Controller
 	 */
 	public function editAction($id = 0)
 	{
-		$request = $this->container->get('request');
-		if ($id)
-		{
-			$entity = $this->getEntity($id);
-			$method = 'PUT';
-		}
-		else {
-			$entity = $this->getNewEntity();
-			$method = 'POST';
-			$corpoId = $request->get('corporation_id');
-			if ($corpoId)
-			{
-				$em = $this->get('doctrine')->getManager();
-				$corpo = $em->getRepository('JLMContactBundle:Corporation')->find($corpoId);
-				$entity->setCorporation($corpo);
-			}
-			$personId = $request->get('person_id');
-			if ($personId)
-			{
-				$em = $this->get('doctrine')->getManager();
-				$person = $em->getRepository('JLMContactBundle:Person')->find($personId);
-				$entity->setContact($person);
-			}
-		}
+		$entity = ($id) ? $this->getEntity($id) : $this->getNewEntity();
+		$method = ($id) ? 'PUT' : 'POST';
 		$form = $this->createContactForm($method, $entity);
 		
+		$request = $this->container->get('request');
 		$em = $this->container->get('doctrine')->getManager();
 		$handler = new DoctrineHandler($form, $request, $em);
 	
@@ -64,7 +43,10 @@ class CorporationContactController extends Controller
 		{
 			if ($handler->process($method))
 			{
-				return new Response('form valid');
+				$contact = $em->getRepository('JLMContactBundle:CorporationContact')->getByIdToArray($entity->getId());
+				
+				return new JsonResponse($contact);
+//				return new Response('form valid');
 			}
 			
 			return $this->render('JLMContactBundle:CorporationContact:modal_new.html.twig', array('form'=>$form->createView()));
@@ -80,6 +62,8 @@ class CorporationContactController extends Controller
 	
 		return $this->render('JLMContactBundle:CorporationContact:new.html.twig', array('form'=>$form->createView()));
 	}
+	
+	
 	
 	private function createContactForm($method, CorporationContact $entity)
 	{
@@ -133,6 +117,32 @@ class CorporationContactController extends Controller
      */
     private function getNewEntity()
     {
-    	return new CorporationContact();
+    	$entity = new CorporationContact();
+    	
+    	if ($corpo = $this->setterFromRequest('corporation_id', 'JLMContactBundle:Corporation'))
+    	{
+    		$entity->setCorporation($corpo);
+    	}
+    	if ($person = $this->setterFromRequest('person_id', 'JLMContactBundle:Person'))
+    	{
+    		$entity->setContact($person);
+    	}
+    	
+    	return $entity;
+    }
+    
+    private function setterFromRequest($param, $repoName)
+    {
+    	$request = $this->container->get('request');
+    	$id = $request->get($param);
+    	if ($id)
+    	{
+    		$em = $this->get('doctrine')->getManager();
+    		$entity = $em->getRepository($repoName)->find($id);
+    		
+    		return $entity;
+    	}
+    
+    	return null;
     }
 }

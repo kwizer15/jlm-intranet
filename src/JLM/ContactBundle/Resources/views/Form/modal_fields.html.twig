@@ -1,14 +1,14 @@
 {% extends ':Form:horizontal.html.twig' %}
 
 {% block form %}
-{{ form_start(form, {'attr': {'id': 'myModal',
+{{ form_start(form, {'attr': {'id': form.vars.id,
 							  'class': 'modal hide fade', 
                               'role': 'dialog', 
-                              'aria-labelledby': 'myModalLabel',
+                              'aria-labelledby': form.vars.id ~ '_modalLabel',
                               'aria-hidden': 'true'} } ) }}
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">{{ label|trans({}, translation_domain) }}</h3>
+    <h3 id="{{ form.vars.id }}_modalLabel">{{ label|trans({}, translation_domain) }}</h3>
   </div>
   <div class="modal-body">
     {{ form_errors(form) }}

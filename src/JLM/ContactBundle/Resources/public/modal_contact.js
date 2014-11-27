@@ -28,9 +28,9 @@
 				$.get(e.data.options.urlModal, function(data) {
 					$newContent = $('<div/>').html(data);
 					$('#modals').append($newContent);
-					var $modal = $newContent.find('form');
+					var $modal = $newContent.find('form.modal');
 					$modal.modal()
-					  .on('submit', $modal, e.data.modalsubmit)
+					  .on('submit', e.data, e.data.modalsubmit)
 					  .on('hidden', e.data.modalclose)
 					  .modal('show')
 				}, 'html');
@@ -51,8 +51,8 @@
 					dataType: 'html',
 					data: $(this).serialize(),
 					success: function(data) {
-						var $m = e.data.find(".modal-body");
-						$m.html(data);
+						e.data.options.closure(data);
+						e.data.modalclose(e);
 					}
 				});
 				
@@ -76,7 +76,10 @@
 
 	$.fn.formModal.defaults = {
 			urlModal : '',
-			jsLoader : function() {}
+			closure : function(data, closer) {
+				$("#modals .modal-body").html(data);
+			//	$("#modals .modal-footer [type=submit]").remove();
+			}
 	}
 
 	$.fn.formModal.Constructor = FormModal

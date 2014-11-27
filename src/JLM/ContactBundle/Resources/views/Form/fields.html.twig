@@ -26,8 +26,10 @@
     {% endspaceless %}
 {% endblock %}
 
-{% block jlm_contact_corporationcontact_widget %}
-  {{ form_widget(form.contact) }} {{ form_widget(form.position) }} {{ form_widget(form.corporation) }}
+{% block jlm_contact_corporation_contact_widget %}
+  {{ form_row(form.person) }}
+  {{ form_row(form.corporation) }}
+  {{ form_row(form.position) }}
 {% endblock %}
 
 {% block jlm_contact_person_widget %}
