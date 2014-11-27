@@ -45,8 +45,8 @@ class CorporationContactController extends Controller
 			{
 				$contact = $em->getRepository('JLMContactBundle:CorporationContact')->getByIdToArray($entity->getId());
 				$contact['contact']['link'] =  $router->generate('jlm_contact_contact_show', array('id' => $contact['contact']['id']));
+				
 				return new JsonResponse($contact);
-//				return new Response('form valid');
 			}
 			
 			return $this->render('JLMContactBundle:CorporationContact:modal_new.html.twig', array('form'=>$form->createView()));
