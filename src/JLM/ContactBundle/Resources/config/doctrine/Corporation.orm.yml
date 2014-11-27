@@ -2,5 +2,10 @@ JLM\ContactBundle\Entity\Corporation:
   type: entity
   table: jlm_contact_corporation
   repositoryClass: JLM\ContactBundle\Repository\CorporationRepository
-
+  oneToMany:
+    contacts:
+      targetEntity: JLM\ContactBundle\Entity\CorporationContact
+      mappedBy: corporation
+      orphanRemoval: true
+      cascade: ["persist"]
     

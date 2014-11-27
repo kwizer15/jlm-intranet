@@ -19,8 +19,6 @@ use JLM\ContactBundle\Model\ContactInterface;
  */
 abstract class PersonDecorator extends ContactDecorator implements PersonInterface
 {
-
-    
     /**
      * Get person
      */

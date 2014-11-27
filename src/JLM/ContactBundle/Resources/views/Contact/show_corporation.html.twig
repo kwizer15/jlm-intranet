@@ -1,0 +1,46 @@
+{% extends "JLMContactBundle:Contact:show.html.twig" %}
+
+
+{% block special %}
+<button class="btn" id="add-corporationcontact">Nouvelle</button>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Rôle</th>
+      <th>Téléphones</th>
+  </thead>
+  <tbody>
+    {% for contact in entity.contacts %}
+    <tr>
+      <td><a href="{{ path('jlm_contact_contact_show', {'id': contact.id} ) }}">{{ contact.name }}</a></td>
+      <td>{{ contact.position }}</td>
+      <td>
+        <ul>
+        {% for phone in contact.phones %}
+          <li>{{ phone }}</li>  
+        {% endfor %}
+        </ul>
+      </td>
+      <td><button class="btn btn-danger"><i class="icon-white icon-minus-sign"></i></button></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% javascripts
+    	'@JLMContactBundle/Resources/public/modal_contact.js'
+        filter='yui_js' %}
+    	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block javascripts_script %}
+{{ parent() }}
+$("#add-corporationcontact").formModal({
+        	urlModal: '{{ path('jlm_contact_corporationcontact_new', {'corporation_id': entity.id }) }}'
+        });
+{% endblock %}

@@ -47,6 +47,13 @@ class CorporationContactController extends Controller
 				$corpo = $em->getRepository('JLMContactBundle:Corporation')->find($corpoId);
 				$entity->setCorporation($corpo);
 			}
+			$personId = $request->get('person_id');
+			if ($personId)
+			{
+				$em = $this->get('doctrine')->getManager();
+				$person = $em->getRepository('JLMContactBundle:Person')->find($personId);
+				$entity->setContact($person);
+			}
 		}
 		$form = $this->createContactForm($method, $entity);
 		

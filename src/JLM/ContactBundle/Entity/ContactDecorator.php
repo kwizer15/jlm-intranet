@@ -30,6 +30,15 @@ abstract class ContactDecorator implements ContactInterface
     protected $contact;
     
     /**
+     * Get id
+     * @return int
+     */
+    public function getId()
+    {
+    	return $this->id;
+    }
+    
+    /**
      * Get contact
      */
     public function getContact()
@@ -69,6 +78,14 @@ abstract class ContactDecorator implements ContactInterface
     public function getFax()
     {
         return $this->getContact()->getFax();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getPhones()
+    {
+    	return $this->getContact()->getPhones();
     }
     
     /**
