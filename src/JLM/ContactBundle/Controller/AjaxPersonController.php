@@ -19,6 +19,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ContactBundle\Manager\ContactManager;
 use JLM\ContactBundle\Form\Type\PersonType;
 use JLM\ContactBundle\Entity\Person;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Person controller.
@@ -102,5 +103,32 @@ class AjaxPersonController extends Controller
         $response->headers->set('Content-Type', 'application/json');
         $response->setContent($json);
         return $response;
+    }
+    
+    /**
+     * Person json
+     */
+    public function searchAction()
+    {
+    	$request = $this->get('request');
+    	$term = $request->get('q');
+    	$page_limit = $request->get('page_limit');
+    	$em = $this->getDoctrine()->getManager();
+    	$persons = $em->getRepository('JLMContactBundle:Person')->getArray($term, $page_limit);
+    	
+    	return new JsonResponse(array('persons' => $persons));
+    }
+    
+    /**
+     * Person json
+     */
+    public function jsonAction()
+    {
+    	$request = $this->get('request');
+    	$id = $request->get('id');
+    	$em = $this->getDoctrine()->getManager();
+    	$person = $em->getRepository('JLMContactBundle:Person')->getByIdToArray($id);
+    
+    	return new JsonResponse($person);
     }
 }

@@ -32,7 +32,7 @@ abstract class ContactDecorator implements ContactInterface
     /**
      * Get contact
      */
-    protected function getContact()
+    public function getContact()
     {
         return $this->contact;
     }
@@ -40,7 +40,7 @@ abstract class ContactDecorator implements ContactInterface
     /**
      * Get contact
      */
-    protected function setContact(ContactInterface $contact)
+    public function setContact(ContactInterface $contact)
     {
     	$this->contact = $contact;
     	

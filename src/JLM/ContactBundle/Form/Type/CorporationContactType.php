@@ -26,7 +26,7 @@ class CorporationContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('contact', 'jlm_contact_contactdecorator', array('data_class' => 'JLM\ContactBundle\Entity\Person'))
+        	->add('person', 'jlm_contact_person_select')
         	->add('corporation','jlm_contact_corporation_select' ,array('label'=>'Groupement'))
             ->add('position',null,array('label'=>'Rôle'))
         ;

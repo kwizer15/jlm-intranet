@@ -6,7 +6,7 @@ services:
             - { name: form.type, alias: jlm_contact_city_select }
         
     jlm_contact.type.contact_select:
-        class: JLM\ContactBundle\Form\Type\ConatactSelectType
+        class: JLM\ContactBundle\Form\Type\ContactSelectType
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: jlm_contact_contact_select }

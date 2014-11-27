@@ -31,7 +31,7 @@ class PersonRepository extends SearchRepository
 	 */
 	protected function getSearchParams()
 	{
-		return array('a.firstName','a.lastName');
+		return array('a.name');
 	}
 	
 	/**

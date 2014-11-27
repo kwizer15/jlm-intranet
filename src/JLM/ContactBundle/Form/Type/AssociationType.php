@@ -47,6 +47,7 @@ class AssociationType extends AbstractType
         $resolver
         ->setDefaults(array(
             'data_class' => 'JLM\ContactBundle\Entity\Association',
+        	'label' => 'Association',
         ));
     }
 }

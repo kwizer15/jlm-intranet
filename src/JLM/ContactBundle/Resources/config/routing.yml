@@ -58,3 +58,23 @@ jlm_contact_contact_test:
     path: /test/
     defaults: { _controller: "JLMContactBundle:Contact:test" }
     methods: [GET]
+    
+jlm_contact_rest_person_search:
+    path:   /ajax/persons.json
+    defaults:  { _controller: "JLMContactBundle:AjaxPerson:search" }
+    methods: [GET]
+    
+jlm_contact_rest_person_get:
+    path:   /ajax/person.json
+    defaults:  { _controller: "JLMContactBundle:AjaxPerson:json" }
+    methods: [GET]
+    
+jlm_contact_rest_corporation_search:
+    path:   /ajax/corporations.json
+    defaults:  { _controller: "JLMContactBundle:AjaxCorporation:search" }
+    methods: [GET]
+    
+jlm_contact_rest_corporation_get:
+    path:   /ajax/corporation.json
+    defaults:  { _controller: "JLMContactBundle:AjaxCorporation:json" }
+    methods: [GET]

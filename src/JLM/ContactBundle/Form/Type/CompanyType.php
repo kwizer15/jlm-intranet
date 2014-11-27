@@ -47,6 +47,7 @@ class CompanyType extends AbstractType
         $resolver
         ->setDefaults(array(
             'data_class' => 'JLM\ContactBundle\Entity\Company',
+        	'label' => 'Société',
         ));
     }
 }

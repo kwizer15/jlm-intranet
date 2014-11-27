@@ -9,22 +9,24 @@
 
 {% block jlm_contact_person_select_widget %}
   {% spaceless %}
-    {{ form_widget(form)) }} <button class="btn" id="{{ id }}_add-person">Nouveau</button>
+    {{ form_widget(form, { 'attr': {'placeholder': 'Personne', 'class': 'input-large'}}) }} <button class="btn" id="{{ id }}_add-person">Nouveau</button>
   {% endspaceless %}
-{% endblock jlm_contact_person_select_widget %}
+{% endblock %}
 
-{% block jlm_contact_person_select_javascript %}
-{% javascripts
-    	'@JLMContactBundle/Resources/public/modal_contact.js'
-        filter='yui_js' %}
-    	<script src="{{ asset_url }}"></script>
-	{% endjavascripts %}
-  <script>
-  $("#{{ id }}_add-person").formModal({
-		urlModal: '{{ path('jlm_contact_contact_new', {'id': 'person'}) }}',
-	});
-  </script>
-{% endblock jlm_contact_person_select_javascript %}
+{% block jlm_contact_corporation_select_widget %}
+  {% spaceless %}
+    {{ form_widget(form, { 'attr': {'placeholder': 'Groupement', 'class': 'input-large'}}) }}
+    <div class="btn-group">
+    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Nouveau <b class="caret"></b></a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+      <li><a id="{{ id }}_add-company">Société</a></li>
+      <li><a id="{{ id }}_add-association">Association</a></li>
+    </ul>
+    </div>
+    {% endspaceless %}
+{% endblock %}
+
+
 
 {% block jlm_contact_person_widget %}
 <div class="control-group">{{ form_label(form.lastName) }}
@@ -36,6 +38,16 @@
 </div>
 {{ form_row(form.contact) }} 
 {% endblock jlm_contact_person_widget %}
+
+{% block jlm_contact_company_widget %}
+{{ form_row(form.name) }} 
+{{ form_row(form.contact) }} 
+{% endblock %}
+
+{% block jlm_contact_association_widget %}
+{{ form_row(form.name) }} 
+{{ form_row(form.contact) }} 
+{% endblock %}
 
 {% block _jlm_contact_person_email_widget %}
   {{ form_widget(form, {'attr': {'class': 'input-xlarge'}}) }}

@@ -46,7 +46,7 @@ class ContactController extends Controller
 		);
 		$form->add('submit','submit',array('label'=>'Enregistrer'));
 		
-		return $this->render('JLMContactBundle:Contact:test.html.twig', array('form'=>$form));
+		return $this->render('JLMContactBundle:Contact:test.html.twig', array('form'=>$form->createView()));
 	}
 	
 	/**

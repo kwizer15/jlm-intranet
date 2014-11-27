@@ -12,26 +12,19 @@
 namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\PersonInterface;
-use JLM\AskBundle\Model\ContactInterface;
+use JLM\ContactBundle\Model\ContactInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 abstract class PersonDecorator extends ContactDecorator implements PersonInterface
 {
-    /**
-     * Constructor
-     * @param PersonInterface $person
-     */
-    public function __construct(PersonInterface $person)
-    {
-        parent::__construct($person);
-    }
+
     
     /**
      * Get person
      */
-    protected function getPerson()
+    public function getPerson()
     {
         return $this->getContact();
     }
@@ -39,7 +32,7 @@ abstract class PersonDecorator extends ContactDecorator implements PersonInterfa
     /**
      * {@inheritdoc}
      */
-    protected function setContact(ContactInterface $contact)
+    public function setContact(ContactInterface $contact)
     {
     	if ($contact instanceof PersonInterface)
     	{
@@ -54,7 +47,7 @@ abstract class PersonDecorator extends ContactDecorator implements PersonInterfa
      * @param PersonInterface $person
      * @return \JLM\ContactBundle\Entity\PersonDecorator
      */
-    protected function setPerson(PersonInterface $person)
+    public function setPerson(PersonInterface $person)
     {
     	return $this->setContact($person); 
     }
