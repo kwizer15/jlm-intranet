@@ -25,8 +25,12 @@ class CorporationContactRepository extends EntityRepository
 	 */
 	public function getByIdToArray($id)
 	{
-		$qb = $this->createQueryBuilder('c')
-		->where('c.id = :id')
+		$qb = $this->createQueryBuilder('a')
+		->select('a,b,c,d')
+		->leftJoin('a.contact', 'b')
+		->leftJoin('b.phones', 'c')
+		->leftJoin('c.phone', 'd')
+		->where('a.id = :id')
 		->setParameter('id', $id)
 		;
 		$res = $qb->getQuery()->getArrayResult();

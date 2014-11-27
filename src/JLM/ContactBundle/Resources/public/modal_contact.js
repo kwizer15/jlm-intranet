@@ -48,7 +48,7 @@
 				$.ajax({
 					url: $(this).attr('action'),
 					type: $(this).attr('method'),
-					dataType: 'html',
+					dataType: 'json',
 					data: $(this).serialize(),
 					success: function(data) {
 						e.data.options.closure(data);

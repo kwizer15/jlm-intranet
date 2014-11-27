@@ -34,7 +34,7 @@ class CorporationContactController extends Controller
 		$entity = ($id) ? $this->getEntity($id) : $this->getNewEntity();
 		$method = ($id) ? 'PUT' : 'POST';
 		$form = $this->createContactForm($method, $entity);
-		
+		$router = $this->container->get('router');
 		$request = $this->container->get('request');
 		$em = $this->container->get('doctrine')->getManager();
 		$handler = new DoctrineHandler($form, $request, $em);
@@ -44,7 +44,7 @@ class CorporationContactController extends Controller
 			if ($handler->process($method))
 			{
 				$contact = $em->getRepository('JLMContactBundle:CorporationContact')->getByIdToArray($entity->getId());
-				
+				$contact['contact']['link'] =  $router->generate('jlm_contact_contact_show', array('id' => $contact['contact']['id']));
 				return new JsonResponse($contact);
 //				return new Response('form valid');
 			}
@@ -54,7 +54,6 @@ class CorporationContactController extends Controller
 		
 		if ($handler->process($method))
 		{
-			$router = $this->container->get('router');
 			$url = $router->generate('jlm_contact_contact_show', array('id' => $entity->getCorporation()->getId()));
 			 
 			return new RedirectResponse($url);

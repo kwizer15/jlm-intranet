@@ -52,11 +52,6 @@
 {% endblock %}
 
 {% block jlm_contact_person_select_javascript %}
-{% javascripts
-    	'@JLMContactBundle/Resources/public/modal_contact.js'
-        filter='yui_js' %}
-    	<script src="{{ asset_url }}"></script>
-	{% endjavascripts %}
     <script type="text/javascript">
         $field = $('#{{ id }}');
 
@@ -113,11 +108,6 @@
 {% endblock %}
 
 {% block jlm_contact_corporation_select_javascript %}
-{% javascripts
-    	'@JLMContactBundle/Resources/public/modal_contact.js'
-        filter='yui_js' %}
-    	<script src="{{ asset_url }}"></script>
-	{% endjavascripts %}
     <script type="text/javascript">
         $field = $('#{{ id }}');
 
