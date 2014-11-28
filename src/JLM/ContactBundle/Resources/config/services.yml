@@ -1,8 +1,17 @@
 parameters:
+    jlm_contact.model.contact.class: JLM\ContactBundle\Entity\Contact
+    jlm_contact.manager.contact.class: JLM\ContactBundle\Manager\ContactManager
     jlm_contact.model.corporationcontact.class: JLM\ContactBundle\Entity\CorporationContact
     jlm_contact.manager.corporationcontact.class: JLM\ContactBundle\Manager\CorporationContactManager
 
 services:
+    jlm_contact.contact_manager:
+        class: "%jlm_contact.manager.contact.class%"
+        arguments: ["%jlm_contact.model.contact.class%"]
+        calls:
+            - [ setContainer, ["@service_container"]]
+            - [ setServices ]
+
     jlm_contact.corporationcontact_manager:
         class: "%jlm_contact.manager.corporationcontact.class%"
         arguments: ["%jlm_contact.model.corporationcontact.class%"]

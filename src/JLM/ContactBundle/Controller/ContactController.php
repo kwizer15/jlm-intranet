@@ -11,67 +11,40 @@
 
 namespace JLM\ContactBundle\Controller;
 
-use JLM\CoreBundle\Form\Handler\DoctrineHandler;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Form\Exception\LogicException;
-use JLM\ContactBundle\Entity\Contact;
-use JLM\ContactBundle\Entity\Person;
-use JLM\ContactBundle\Entity\Company;
-use JLM\ContactBundle\Entity\Association;
-use JLM\ContactBundle\Form\Type\PersonType;
-use JLM\ContactBundle\Form\Type\CompanyType;
-use JLM\ContactBundle\Form\Type\AssociationType;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use JLM\ContactBundle\Form\Type\CorporationContactType;
-use JLM\ContactBundle\Entity\CorporationContact;
+use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
  * Person controller.
  */
-class ContactController extends Controller
+class ContactController extends ContainerAware
 {
-	/**
-	 * Test action for modals
-	 */
-	public function testAction()
-	{
-		$entity = new CorporationContact();
-		$form = $this->container->get('form.factory')->create(new CorporationContactType(), $entity,
-				array(
-						'action' => '',
-						'method' => 'POST',
-				)
-		);
-		$form->add('submit','submit',array('label'=>'Enregistrer'));
-		
-		return $this->render('JLMContactBundle:Contact:test.html.twig', array('form'=>$form->createView()));
-	}
-	
 	/**
 	 * Edit or add a contact
 	 * @param int|string $id The entity identifier or typeof new entity
 	 */
 	public function editAction($id)
 	{
+		$manager = $this->container->get('jlm_contact.contact_manager');
+		
+		
 		if ($id == 'person' || $id == 'company' || $id == 'association')
 		{
 			$type = $id;
 			$id = 0;
-			$entity = $this->getNewEntity($type);
+			$entity = $manager->getNewEntity($type);
 			$method = 'POST';
 		}
 		else
 		{
-			$entity = $this->getEntity($id);
+			$entity = $manager->getEntity($id);
 			$method = 'PUT';
 		}
+		
 
-		$form = $this->createContactForm($method, $entity);
-		$request = $this->container->get('request');
-		$em = $this->container->get('doctrine')->getManager();
-		$handler = new DoctrineHandler($form, $request, $em, $entity);
+		$form = $manager->createForm($method, $entity);
+		$request = $manager->getRequest();
+		$handler = $manager->getHandler($form, $entity); 
 	
 		if ($request->isXmlHttpRequest())
 		{
@@ -81,127 +54,47 @@ class ContactController extends Controller
 				return new JsonResponse($resp);
 			}
 			
-			return $this->render('JLMContactBundle:Contact:modal_new.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
+			return $manager->renderResponse('JLMContactBundle:Contact:modal_new.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
 		}
 		
 		if ($handler->process($method))
 		{
-			$router = $this->container->get('router');
-			$url = $router->generate('jlm_contact_contact_show', array('id'=>$entity->getId()));
-			 
-			return new RedirectResponse($url);
+			$url = $manager->getRouter()->generate('jlm_contact_contact_show', array('id'=>$entity->getId()));
+			return $manager->redirect($url); 
 		}
 	
-		return $this->render('JLMContactBundle:Contact:new.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
-	}
-	
-	private function createContactForm($method, Contact $entity)
-	{
-		$url = '';
-		$type = $entity->getType();
-		switch ($method)
-		{
-			case 'POST':
-				$url = $this->generateUrl('jlm_contact_contact_new', array('id' => $type));
-				break;
-			case 'PUT':
-				$url = $this->generateUrl('jlm_contact_contact_edit', array('id' => $entity->getId()));
-				break;
-			default:
-				throw new LogicException('HTTP request method must be POST or PUT only');
-		}
-		 
-		$form = $this->container->get('form.factory')->create($this->getFormType($type), $entity,
-				array(
-						'action' => $url,
-						'method' => $method,
-				)
-		);
-		$form->add('submit','submit',array('label'=>'Enregistrer'));
-	
-		return $form;
+		return $manager->renderReponse('JLMContactBundle:Contact:new.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
 	}
 	
 	public function listAction()
 	{
-		$em = $this->get('doctrine')->getManager();
-		$repo = $em->getRepository('JLMContactBundle:Contact');
-		$entities = $repo->findAll();
+		$manager = $this->container->get('jlm_contact.contact_manager');
+		$entities = $manager->getRepository()->findAll();
 		
-		return $this->render('JLMContactBundle:Contact:list.html.twig', array('entities'=>$entities));
+		return $manager->renderReponse('JLMContactBundle:Contact:list.html.twig', array('entities'=>$entities));
 	}
     
     public function showAction($id)
     {
-        $entity = $this->getEntity($id);
+    	$manager = $this->container->get('jlm_contact.contact_manager');
+        $entity = $manager->getEntity($id);
         $template = 'JLMContactBundle:Contact:show_'.$entity->getType().'.html.twig';
         
-        return $this->render($template, array('entity'=>$entity));
+        return $manager->renderReponse($template, array('entity'=>$entity));
     }
     
     public function unactiveAction($id)
     {
-    	$entity = $this->getEntity($id);
+    	$manager = $this->container->get('jlm_contact.contact_manager');
+    	$entity = $manager->getEntity($id);
     	$entity->setActive(false);
     	
-    	$em = $this->get('doctrine')->getManager();
+    	$em = $manager->getObjectManager();
     	$em->persist($entity);
     	$em->flush();
     	
-    	$this->get('session')->setFlash('notice', 'Contact '.$entity->getName().' désactivé');
+    	$manager->getSession()->setFlash('notice', 'Contact '.$entity->getName().' désactivé');
     	
-    	return $this->redirect($this->get('request')->headers->get('referer'));
-    }
-    
-    private function getEntity($id)
-    {
-        $em = $this->container->get('doctrine')->getManager();
-        $entity = $em->getRepository('JLMContactBundle:Contact')->find($id);
-        if (!$entity)
-        {
-            throw $this->createNotFoundException('Unable to find Contact entity.');
-        }
-    
-        return $entity;
-    }
-    
-    /**
-     * 
-     * @param string $type
-     * @return \JLM\ContactBundle\Form\Type\AbstractType| null
-     */
-    private function getFormType($type)
-    {
-    	switch ($type)
-    	{
-    		case 'person':
-    			return new PersonType();
-    		case 'company':
-    			return new CompanyType();
-    		case 'association':
-    			return new AssociationType();
-    	}
-    	
-    	return null;
-    }
-    
-    /**
-     * 
-     * @param string $type
-     * @return Contact
-     */
-    private function getNewEntity($type)
-    {
-    	switch ($type)
-    	{
-    		case 'person':
-    			return new Person();
-    		case 'company':
-    			return new Company();
-    		case 'association':
-    			return new Association();
-    	}
-    	 
-    	return null;
+    	return $manager->redirectReferer();
     }
 }
