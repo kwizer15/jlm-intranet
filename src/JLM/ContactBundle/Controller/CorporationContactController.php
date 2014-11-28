@@ -11,20 +11,15 @@
 
 namespace JLM\ContactBundle\Controller;
 
-use JLM\CoreBundle\Form\Handler\DoctrineHandler;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Form\Exception\LogicException;
+use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use JLM\ContactBundle\Form\Type\CorporationContactType;
-use JLM\ContactBundle\Entity\CorporationContact;
-use Symfony\Component\Form\Form;
 
 /**
  * Person controller.
  */
-class CorporationContactController extends Controller
+class CorporationContactController extends ContainerAware
 {
 	/**
 	 * Edit or add a contact
@@ -33,127 +28,53 @@ class CorporationContactController extends Controller
 	 */
 	public function editAction($id = 0)
 	{
-		$entity = ($id) ? $this->getEntity($id) : $this->getNewEntity();
+		$manager = $this->container->get('jlm_contact.corporationcontact_manager');
+		$router = $manager->getRouter();	
+		$entity = $manager->getEntity($id);
 		$method = ($id) ? 'PUT' : 'POST';
-		$form = $this->createContactForm($method, $entity);
-		$router = $this->container->get('router');
-		$request = $this->container->get('request');
-		$em = $this->container->get('doctrine')->getManager();
-		$handler = new DoctrineHandler($form, $request, $em);
-	
-		if ($request->isXmlHttpRequest())
+		$form = $manager->createForm($method, $entity);
+		$ajax = $manager->getRequest()->isXmlHttpRequest();
+		if ($manager->getHandler($form, $entity)->process($method))
 		{
-			if ($handler->process($method))
+			if ($ajax)
 			{
-				$contact = $em->getRepository('JLMContactBundle:CorporationContact')->getByIdToArray($entity->getId());
-				$contact['contact']['link'] =  $router->generate('jlm_contact_contact_show', array('id' => $contact['contact']['id']));
-				
-				return new JsonResponse($contact);
+				$contact = $manager->getRepository()->getByIdToArray($entity->getId());
+				$contact['contact']['contact']['show_link'] =  $router->generate('jlm_contact_contact_show', array('id' => $contact['contact']['id']));
+				$contact['edit_link'] = $manager->getEditUrl($contact['id']);  
+
+				$response = new JsonResponse($contact);
 			}
-			
-			return $this->render('JLMContactBundle:CorporationContact:modal_new.html.twig', array('form'=>$form->createView()));
+			else
+			{
+				$response = new RedirectResponse($router->generate('jlm_contact_contact_show', array('id' => $entity->getCorporation()->getId())));
+			}
+		}
+		else
+		{
+			$delete_formview = null;
+			if ($entity->getId())
+			{
+				$delete_formview = $manager->createDeleteForm($entity)->createView();
+			}
+			$template = ($ajax) ? 'modal_new.html.twig'	: 'new.html.twig';
+			$response = $manager->renderResponse('JLMContactBundle:CorporationContact:' . $template, array('form'=>$form->createView(), 'delete_form'=>$delete_formview));
 		}
 		
-		if ($handler->process($method))
-		{
-			$url = $router->generate('jlm_contact_contact_show', array('id' => $entity->getCorporation()->getId()));
-			 
-			return new RedirectResponse($url);
-		}
-	
-		return $this->render('JLMContactBundle:CorporationContact:new.html.twig', array('form'=>$form->createView()));
+		return $response;
 	}
 	
 	/**
+	 * Remove a CorporationContact
 	 * 
-	 * @param string $method
-	 * @param CorporationContact $entity
-	 * @throws LogicException
-	 * @return Form
 	 */
-	private function createContactForm($method, CorporationContact $entity)
+	public function deleteAction($id)
 	{
-		$url = '';
-		switch ($method)
-		{
-			case 'POST':
-				$url = $this->generateUrl('jlm_contact_corporationcontact_new');
-				break;
-			case 'PUT':
-				$url = $this->generateUrl('jlm_contact_corporationcontact_edit', array('id' => $entity->getId()));
-				break;
-			default:
-				throw new LogicException('HTTP request method must be POST or PUT only');
-		}
-		 
-		$form = $this->container->get('form.factory')->create($this->getFormType(), $entity,
-				array(
-						'action' => $url,
-						'method' => $method,
-				)
-		);
-		$form->add('submit','submit',array('label'=>'Enregistrer'));
-	
-		return $form;
+		$manager = $this->container->get('jlm_contact.corporationcontact_manager');
+		$entity = $manager->getEntity($id);
+		$corpoId = $entity->getCorporation()->getId();
+		$form = $manager->createDeleteForm($entity);
+		$manager->getHandler($form, $entity)->process('DELETE');
+
+		return new RedirectResponse($manager->getRouter()->generate('jlm_contact_contact_show', array('id' => $corpoId)));
 	}
-    
-	/**
-	 * 
-	 * @param int $id
-	 * @return CorporationContact
-	 */
-    private function getEntity($id)
-    {
-        $em = $this->container->get('doctrine')->getManager();
-        $entity = $em->getRepository('JLMContactBundle:CorporationContact')->find($id);
-        if (!$entity)
-        {
-            throw $this->createNotFoundException('Unable to find CorporationContact entity.');
-        }
-    
-        return $entity;
-    }
-    
-    /**
-     * @return \JLM\ContactBundle\Form\Type\CorporationContactType| null
-     */
-    private function getFormType()
-    {
-    	return new CorporationContactType();
-    }
-    
-    /**
-     * 
-     * @return CorporationContact
-     */
-    private function getNewEntity()
-    {
-    	$entity = new CorporationContact();
-    	
-    	if ($corpo = $this->setterFromRequest('corporation_id', 'JLMContactBundle:Corporation'))
-    	{
-    		$entity->setCorporation($corpo);
-    	}
-    	if ($person = $this->setterFromRequest('person_id', 'JLMContactBundle:Person'))
-    	{
-    		$entity->setContact($person);
-    	}
-    	
-    	return $entity;
-    }
-    
-    private function setterFromRequest($param, $repoName)
-    {
-    	$request = $this->container->get('request');
-    	$id = $request->get($param);
-    	if ($id)
-    	{
-    		$em = $this->get('doctrine')->getManager();
-    		$entity = $em->getRepository($repoName)->find($id);
-    		
-    		return $entity;
-    	}
-    
-    	return null;
-    }
 }

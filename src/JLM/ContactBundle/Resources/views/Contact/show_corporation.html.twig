@@ -3,7 +3,7 @@
 
 {% block special %}
 <button class="btn" id="add-corporationcontact">Nouvelle</button>
-<table class="table table-bordered" id="contacts-list">
+<table class="table table-bordered table-hover" id="contacts-list">
   <thead>
     <tr>
       <th>Nom</th>
@@ -13,7 +13,7 @@
   <tbody>
     {% for contact in entity.contacts %}
     <tr>
-      <td><a href="{{ path('jlm_contact_contact_show', {'id': contact.id} ) }}">{{ contact.name }}</a></td>
+      <td><a href="{{ path('jlm_contact_contact_show', {'id': contact.contact.id} ) }}">{{ contact.name }}</a></td>
       <td>{{ contact.position }}</td>
       <td>
         <ul>
@@ -23,7 +23,9 @@
         </ul>
       </td>
       <td><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></td>
-      <td><button class="btn btn-danger"><i class="icon-white icon-minus-sign"></i></button></td>
+      <td>
+        <a class="btn btn-warning btn-small" href="{{ path('jlm_contact_corporationcontact_edit', {'id': contact.id} ) }}"><i class="icon-white icon-pencil"></i></a>
+      </td>
     </tr>
     {% endfor %}
   </tbody>
@@ -36,7 +38,6 @@
 $("#add-corporationcontact").formModal({
    	urlModal: '{{ path('jlm_contact_corporationcontact_new', {'corporation_id': entity.id }) }}',
     closure: function(data) {
-    	console.log(data);
     	var $phones = $('<ul/>');
     	var email = (data.contact.email === null) ? '' : '<a href="mailto:' + data.contact.email + '">' + data.contact.email + '</a>';
     	
@@ -45,11 +46,11 @@ $("#add-corporationcontact").formModal({
     	})
     	
     	var $line = $('<tr/>');
-    	$line.append($('<td/>').html('<a href="' + data.contact.link + '">' + data.contact.title + ' ' + data.contact.name + '</a>'))
+    	$line.append($('<td/>').html('<a href="' + data.contact.contact.show_link + '">' + data.contact.title + ' ' + data.contact.name + '</a>'))
     	     .append($('<td/>').html(data.position))
     		 .append($('<td/>').html($phones))
     	     .append($('<td/>').html(email))
-    	     .append($('<td/>').html('<button class="btn btn-danger"><i class="icon-white icon-minus-sign"></i></button>'));
+    	     .append($('<td/>').html('<a class="btn btn-warning btn-small" href="' + data.edit_link + '"><i class="icon-white icon-pencil"></i></a>'));
     	$("#contacts-list tbody").append($line);
     	$("#modals .modal").modal('hide');
     	$("#modals").empty();

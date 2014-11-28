@@ -1,4 +1,15 @@
+parameters:
+    jlm_contact.model.corporationcontact.class: JLM\ContactBundle\Entity\CorporationContact
+    jlm_contact.manager.corporationcontact.class: JLM\ContactBundle\Manager\CorporationContactManager
+
 services:
+    jlm_contact.corporationcontact_manager:
+        class: "%jlm_contact.manager.corporationcontact.class%"
+        arguments: ["%jlm_contact.model.corporationcontact.class%"]
+        calls:
+            - [ setContainer, ["@service_container"]]
+            - [ setServices ]
+
     jlm_contact.type.city_select:
         class: JLM\ContactBundle\Form\Type\CitySelectType
         arguments: ["@doctrine.orm.entity_manager"]

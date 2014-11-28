@@ -8,7 +8,7 @@ JLM\ContactBundle\Entity\ContactDecorator:
   manyToOne:
     contact:
       targetEntity: JLM\ContactBundle\Model\ContactInterface
-      cascade: ["all"]
+      cascade: ["persist"]
       joinColumn:
         name: contact_id
         referencedColumnName: id

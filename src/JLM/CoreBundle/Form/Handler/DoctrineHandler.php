@@ -31,10 +31,11 @@ class DoctrineHandler extends FormHandler
 	 * @param Request $request
 	 * @param ObjectManager $om
 	 */
-	public function __construct(Form $form, Request $request, ObjectManager $om)
+	public function __construct(Form $form, Request $request, ObjectManager $om, $entity)
 	{
 		parent::__construct($form, $request);
 		$this->om = $om;
+		$this->entity = $entity;
 	}
 	
 	/**
@@ -42,8 +43,16 @@ class DoctrineHandler extends FormHandler
 	 */
 	public function onSuccess()
 	{
-		$entity = $this->form->getData();
-		$this->om->persist($entity);
+		switch ($this->request->getMethod())
+		{
+			case 'GET':
+				return false;
+			case 'DELETE':
+				$this->om->remove($this->entity);
+				break;
+			default:
+				$this->om->persist($this->entity);
+		}
 		$this->om->flush();
 		
 		return true;

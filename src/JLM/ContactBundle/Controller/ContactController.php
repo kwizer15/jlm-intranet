@@ -71,7 +71,7 @@ class ContactController extends Controller
 		$form = $this->createContactForm($method, $entity);
 		$request = $this->container->get('request');
 		$em = $this->container->get('doctrine')->getManager();
-		$handler = new DoctrineHandler($form, $request, $em);
+		$handler = new DoctrineHandler($form, $request, $em, $entity);
 	
 		if ($request->isXmlHttpRequest())
 		{
