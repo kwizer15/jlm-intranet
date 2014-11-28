@@ -15,9 +15,9 @@ use JLM\ContactBundle\Entity\CorporationContact;
 use JLM\ContactBundle\Form\Type\CorporationContactType;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
 use JLM\CoreBundle\Form\Handler\DoctrineHandler;
-use JLM\CoreBundle\Form\Handler\DoctrineRemoveHandler;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -133,7 +133,7 @@ class CorporationContactManager extends ContainerAware
 				$type = 'form';
 				break;
 			default:
-				throw new \Exception('HTTP request method must be POST, PUT or DELETE only');
+				throw new LogicException('HTTP request method must be POST, PUT or DELETE only');
 		}
 		$form = $this->formFactory->create($type, $entity,
 				array(

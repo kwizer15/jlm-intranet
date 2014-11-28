@@ -9,7 +9,7 @@
 
 {% block jlm_contact_person_select_widget %}
   {% spaceless %}
-    {{ form_widget(form, { 'attr': {'placeholder': 'Personne', 'class': 'input-large'}}) }} <button class="btn" id="{{ id }}_add-person">Nouvelle</button>
+    {{ form_widget(form, { 'attr': {'placeholder': 'Personne', 'class': 'input-large'}}) }} <button class="btn" id="{{ id }}_add-person" href="{{ path('jlm_contact_contact_new', {'id': 'person'}) }}">Nouvelle</button>
   {% endspaceless %}
 {% endblock %}
 
@@ -19,8 +19,8 @@
     <div class="btn-group">
     <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Nouvelle <b class="caret"></b></a>
     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-      <li><a id="{{ id }}_add-company">Société</a></li>
-      <li><a id="{{ id }}_add-association">Association</a></li>
+      <li><a id="{{ id }}_add-company" href="{{ path('jlm_contact_contact_new', {'id': 'company'}) }}">Société</a></li>
+      <li><a id="{{ id }}_add-association" href="{{ path('jlm_contact_contact_new', {'id': 'association'}) }}">Association</a></li>
     </ul>
     </div>
     {% endspaceless %}

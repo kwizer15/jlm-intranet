@@ -2,7 +2,7 @@
 
 
 {% block special %}
-<button class="btn" id="add-corporationcontact">Nouvelle</button>
+<button class="btn" id="add-corporationcontact" href="{{ path('jlm_contact_corporationcontact_new', {'corporation_id': entity.id }) }}">Nouvelle</button>
 <table class="table table-bordered table-hover" id="contacts-list">
   <thead>
     <tr>
@@ -24,7 +24,7 @@
       </td>
       <td><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></td>
       <td>
-        <a class="btn btn-warning btn-small" href="{{ path('jlm_contact_corporationcontact_edit', {'id': contact.id} ) }}"><i class="icon-white icon-pencil"></i></a>
+        <a class="btn btn-warning btn-small edit-corporationcontact" href="{{ path('jlm_contact_corporationcontact_edit', {'id': contact.id} ) }}"><i class="icon-white icon-pencil"></i></a>
       </td>
     </tr>
     {% endfor %}
@@ -36,7 +36,6 @@
 {% block javascripts_script %}
 {{ parent() }}
 $("#add-corporationcontact").formModal({
-   	urlModal: '{{ path('jlm_contact_corporationcontact_new', {'corporation_id': entity.id }) }}',
     closure: function(data) {
     	var $phones = $('<ul/>');
     	var email = (data.contact.email === null) ? '' : '<a href="mailto:' + data.contact.email + '">' + data.contact.email + '</a>';
@@ -50,10 +49,11 @@ $("#add-corporationcontact").formModal({
     	     .append($('<td/>').html(data.position))
     		 .append($('<td/>').html($phones))
     	     .append($('<td/>').html(email))
-    	     .append($('<td/>').html('<a class="btn btn-warning btn-small" href="' + data.edit_link + '"><i class="icon-white icon-pencil"></i></a>'));
+    	     .append($('<td/>').html('<a class="btn btn-warning btn-small edit-corporationcontact" href="' + data.edit_link + '"><i class="icon-white icon-pencil"></i></a>'));
+    	$line.find('a').formModal();
     	$("#contacts-list tbody").append($line);
-    	$("#modals .modal").modal('hide');
-    	$("#modals").empty();
     }
 });
+
+$(".edit-corporationcontact").formModal();
 {% endblock %}

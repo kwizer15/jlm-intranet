@@ -20,11 +20,13 @@
 			constructor: FormModal
 
 			, listen: function() {
+				this.options.urlModal = this.$element.attr('href');
 				this.$element.on('click', this, this.load);
 			}
 				
 			, load: function(e) {
 				e.preventDefault();
+				console.log(e.data.options.urlModal);
 				$.get(e.data.options.urlModal, function(data) {
 					$newContent = $('<div/>').html(data);
 					$('#modals').append($newContent);
@@ -45,6 +47,7 @@
 
 			, modalsubmit: function(e) {
 				e.preventDefault();
+				console.log('submit');
 				$.ajax({
 					url: $(this).attr('action'),
 					type: $(this).attr('method'),
@@ -52,7 +55,7 @@
 					data: $(this).serialize(),
 					success: function(data) {
 						e.data.options.closure(data);
-						$(this).modal('hide').parent().remove();
+						e.data.$modal.modal('hide').parent().remove();
 					}
 				});
 				
@@ -75,11 +78,7 @@
 	}
 
 	$.fn.formModal.defaults = {
-			urlModal : '',
-			closure : function(data, closer) {
-				$("#modals .modal-body").html(data);
-				$("#modals .modal-footer [type=submit]").remove();
-			}
+			closure : function(data) {}
 	}
 
 	$.fn.formModal.Constructor = FormModal

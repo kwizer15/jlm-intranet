@@ -77,7 +77,8 @@ class ContactController extends Controller
 		{
 			if ($handler->process($method))
 			{
-				return new Response('form valid');
+				$resp = array('ok'=>true);
+				return new JsonResponse($resp);
 			}
 			
 			return $this->render('JLMContactBundle:Contact:modal_new.html.twig', array('form'=>$form->createView(), 'c'=>$entity));

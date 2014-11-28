@@ -101,9 +101,7 @@
         });
 
         $field.select2($configs);
-        $("#{{ id }}_add-person").formModal({
-        	urlModal: '{{ path('jlm_contact_contact_new', {'id': 'person'}) }}',
-        });
+        $("#{{ id }}_add-person").formModal();
     </script>
 {% endblock %}
 
@@ -157,12 +155,8 @@
         });
 
         $field.select2($configs);
-        $("#{{ id }}_add-association").formModal({
-        	urlModal: '{{ path('jlm_contact_contact_new', {'id': 'association'}) }}',
-        });
-        $("#{{ id }}_add-company").formModal({
-        	urlModal: '{{ path('jlm_contact_contact_new', {'id': 'company'}) }}',
-        });
+        $("#{{ id }}_add-association").formModal();
+        $("#{{ id }}_add-company").formModal();
     </script>
 {% endblock %}
 
