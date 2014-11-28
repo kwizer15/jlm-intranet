@@ -55,7 +55,7 @@ class ContactManager
     			$url = $this->generateUrl('jlm_contact_contact_edit', array('id' => $entity->getId()));
     			break;
     		default:
-    			throw new LogicException('HTTP request method must be POST or PUT only');
+    			throw new \LogicException('HTTP request method must be POST or PUT only');
     	}
     		
     	$form = $this->container->get('form.factory')->create($this->getFormType($type), $entity,
