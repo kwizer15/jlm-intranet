@@ -25,134 +25,79 @@ use JLM\CoreBundle\Form\Handler\DoctrineHandler;
  */
 class ContactManager
 {
-	protected $class;
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getRepository()
+	{
+		return $this->om->getRepository('JLMContactBundle:Contact');
+	}
 	
-	protected $om;
+	protected function getObjectByType($type)
+	{
+		$objects = array(
+			'person' => 'JLM\\ContactBundle\\Entity\\Person',
+			'company' => 'JLM\\ContactBundle\\Entity\\Company',
+			'association' => 'JLM\\ContactBundle\\Entity\\Association',
+		);
+		if (array_key_exists($type, $objects))
+		{
+			return new $objects[$type];
+		}
+		
+		return null;
+	}
 	
-	protected $request;
+	protected function getFormType($type = null)
+	{
+		$objects = array(
+				'person' => 'JLM\\ContactBundle\\Form\\Type\\PersonType',
+				'company' => 'JLM\\ContactBundle\\Form\\Type\\CompanyType',
+				'association' => 'JLM\\ContactBundle\\Form\\Type\\AssociationType',
+		);
+		if (array_key_exists($type, $objects))
+		{
+			return new $objects[$type];
+		}
 	
-    public function __construct($class)
-    {
-    	$this->class = $class;
-    }
-    
-    public function setServices()
-    {
-    	$this->om = $this->container->get('doctrine')->getManager();
-    	$this->request = $this->container->get('request');
-    }
-    
-    public function createForm($method, $entity)
-    {
-    	$url = '';
-    	$type = $entity->getType();
-    	switch ($method)
-    	{
-    		case 'POST':
-    			$url = $this->generateUrl('jlm_contact_contact_new', array('id' => $type));
-    			break;
-    		case 'PUT':
-    			$url = $this->generateUrl('jlm_contact_contact_edit', array('id' => $entity->getId()));
-    			break;
-    		default:
-    			throw new \LogicException('HTTP request method must be POST or PUT only');
-    	}
-    		
-    	$form = $this->container->get('form.factory')->create($this->getFormType($type), $entity,
-    			array(
-    					'action' => $url,
-    					'method' => $method,
-    			)
-    	);
-    	$form->add('submit','submit',array('label'=>'Enregistrer'));
-    
-    	return $form;
-    }
-    
-    public function getRepository()
-    {
-    	return $this->om->getRepository('JLMContactBundle:CorporationContact');
-    	return $this->om->getRepository($this->class);	// A tester
-    }
-    
-    public function getObjectManager()
-    {
-    	return $this->om;
-    }
+		return null;
+	}
+	
+	public function getEntity($id = null)
+	{
+		$entity = $this->getObjectByType($id);
+		if (null === $entity)
+		{
+			$entity = $this->getRepository()->find($id);
+			if (!$entity)
+			{
+				throw $this->createNotFoundException('Unable to find Contact entity.');
+			}
+		}
+
+		return $entity;
+	}
+	
+	protected function getFormParam($entity)
+	{
+		$id = $entity->getId();
+		$entityType = $entity->getType();
+		return array(
+			'POST' => array(
+				'url'   => $this->router->generate('jlm_contact_contact_new', array('id' => $entityType)),
+				'label' => 'Créer',
+				'type'  => $this->getFormType($entityType),
+			),
+			'PUT' => array(
+				'url'   => $this->router->generate('jlm_contact_contact_edit', array('id' => $id)),
+				'label' => 'Modifier',
+				'type'  => $this->getFormType($entityType),
+			),
+		);
+	}
     
     public function getNewEntity($type)
     {
-    	switch ($type)
-    	{
-    		case 'person':
-    			return new Person();
-    		case 'company':
-    			return new Company();
-    		case 'association':
-    			return new Association();
-    	}
-    
-    	return null;
-    }
-    
-    public function getEntity($id)
-    {
-    	$entity = $this->getRepository()->find($id);
-    	if (!$entity)
-    	{
-    		throw $this->createNotFoundException('Unable to find Contact entity.');
-    	}
-    
-    	return $entity;
-    }
-    
-    public function getFormType($type)
-    {
-    	switch ($type)
-    	{
-    		case 'person':
-    			return new PersonType();
-    		case 'company':
-    			return new CompanyType();
-    		case 'association':
-    			return new AssociationType();
-    	}
-    	 
-    	return null;
-    }
-    
-    public function renderResponse($view, array $parameters = array(), Response $response = null)
-    {
-    	return $this->container->get('templating')->renderResponse($view, $parameters, $response);
-    }
-    
-    public function redirect($url, $status = 302)
-    {
-    	return new RedirectResponse($url, $status);
-    }
-    
-    public function redirectReferer()
-    {
-    	return new RedirectResponse($this->request->headers->get('referer'));
-    }
-    
-    public function getSession()
-    {
-    	return $this->container->get('session');
-    }
-    
-    public function getHandler($form, $entity)
-    {
-    	return new DoctrineHandler($form, $this->request, $this->om, $entity);
-    }
-    
-    public function getRequest()
-    {
-    	return $this->request;
-    }
-    
-    public function getRouter()
-    {
-    	return $this->container->get('router');
+    	return $this->getEntity($type);
     }
 }

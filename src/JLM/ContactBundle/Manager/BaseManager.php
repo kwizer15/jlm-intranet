@@ -21,21 +21,15 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class CorporationContactManager extends ContainerAware
+abstract class BaseManager extends ContainerAware
 {
 	protected $class;
-
-	protected $form;
-
-	protected $handler;
-
-	protected $router;
-
-	protected $formFactory;
 
 	protected $request;
 
 	protected $om;
+	
+	protected $router;
 
 	public function __construct($class)
 	{
@@ -45,7 +39,6 @@ class CorporationContactManager extends ContainerAware
 	public function setServices()
 	{
 		$this->om = $this->container->get('doctrine')->getManager();
-		$this->formFactory = $this->container->get('form.factory');
 		$this->request = $this->container->get('request');
 		$this->router = $this->container->get('router');
 	}
@@ -60,26 +53,7 @@ class CorporationContactManager extends ContainerAware
 		return $this->container->get('templating')->renderResponse($view, $parameters, $response);
 	}
 
-	public function getEntity($id = null)
-	{
-		$entity = $this->getRepository()->find($id);
-		if (!$entity)
-		{
-			$class = $this->class;
-				
-			$entity = new $class();
-			if ($corpo = $this->setterFromRequest('corporation_id', 'JLMContactBundle:Corporation'))
-			{
-				$entity->setCorporation($corpo);
-			}
-			if ($person = $this->setterFromRequest('person_id', 'JLMContactBundle:Person'))
-			{
-				$entity->setContact($person);
-			}
-		}
-
-		return $entity;
-	}
+	abstract public function getEntity($id = null);
 
 	private function setterFromRequest($param, $repoName)
 	{
@@ -94,6 +68,28 @@ class CorporationContactManager extends ContainerAware
 		return null;
 	}
 
+	public function createForm($method, $entity)
+	{
+		$datas = $this->getFormParam($entity);
+		if (array_key_exists($method, $datas))
+		{
+			$param = $datas[$method];
+			$form = $this->getFormFactory()->create($param['type'], $entity,
+					array(
+							'action' => $param['url'],
+							'method' => $method,
+					)
+			);
+			$form->add('submit','submit', array('label' => $param['label']));
+			
+			return $form;
+		}
+		
+		throw new LogicException('HTTP request method must be POST, PUT or DELETE only');
+	}
+	
+	abstract function getFormParam($entity);
+	
 	public function createNewForm($entity)
 	{
 		return $this->createForm('POST', $entity);
@@ -109,71 +105,31 @@ class CorporationContactManager extends ContainerAware
 		return $this->createForm('DELETE', $entity);
 	}
 
-	public function createForm($method, $entity)
-	{
-		$id = $entity->getId();
-		$url = '';
-		$label = '';
-		$type = null;
-		switch ($method)
-		{
-			case 'POST':
-				$url = $this->router->generate('jlm_contact_corporationcontact_create');
-				$label = 'Créer';
-				$type = $this->getFormType();
-				break;
-			case 'PUT':
-				$url = $this->router->generate('jlm_contact_corporationcontact_update', array('id' => $id));
-				$label = 'Modifier';
-				$type = $this->getFormType();
-				break;
-			case 'DELETE':
-				$url = $this->router->generate('jlm_contact_corporationcontact_delete', array('id' => $id));
-				$label = 'Supprimer';
-				$type = 'form';
-				break;
-			default:
-				throw new LogicException('HTTP request method must be POST, PUT or DELETE only');
-		}
-		$form = $this->formFactory->create($type, $entity,
-				array(
-						'action' => $url,
-						'method' => $method,
-				)
-		);
-		$form->add('submit','submit', array('label' => $label));
-
-		return $form;
-	}
-
-	public function getEditUrl($id)
-	{
-		return $this->router->generate('jlm_contact_corporationcontact_edit', array('id' => $id));
-	}
-
 	public function redirectReferer()
 	{
 		return new RedirectResponse($this->request->headers->get('referer'));
 	}
-
-	public function getFormType()
+	
+	public function redirect($url, $status = 302)
 	{
-		return new CorporationContactType();
+		return new RedirectResponse($url, $status);
 	}
+	
+	abstract public function getFormType($type = null);
 
-	public function getRouter()
-	{
-		return $this->router;
-	}
+	public function redirect($url, $status = 302)
+    {
+    	return new RedirectResponse($url, $status);
+    }
 
 	public function getObjectManager()
 	{
-		return $this->doctrine;
+		return $this->om;
 	}
 
 	public function getFormFactory()
 	{
-		return $this->formFactory;
+		return $this->container->get('form.factory');
 	}
 
 	public function getRequest()
@@ -181,10 +137,10 @@ class CorporationContactManager extends ContainerAware
 		return $this->request;
 	}
 
-	public function getForm()
-	{
-		return $this->form;
-	}
+	public function getSession()
+    {
+    	return $this->container->get('session');
+    }
 
 	public function getHandler($form, $entity)
 	{

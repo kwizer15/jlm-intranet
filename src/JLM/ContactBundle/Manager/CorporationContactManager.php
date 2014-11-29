@@ -21,44 +21,14 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class CorporationContactManager extends ContainerAware
-{
-	protected $class;
-	
-	protected $form;
-	
-	protected $handler;
-	
-	protected $router;
-	
-	protected $formFactory;
-	
-	protected $request;
-	
-	protected $om;
-	
-	public function __construct($class)
-	{
-		$this->class = $class;
-	}
-	
-	public function setServices()
-	{
-		$this->om = $this->container->get('doctrine')->getManager();
-		$this->formFactory = $this->container->get('form.factory');
-		$this->request = $this->container->get('request');
-		$this->router = $this->container->get('router');
-	}
-	
+class CorporationContactManager extends BaseManager
+{		
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getRepository()
 	{
 		return $this->om->getRepository('JLMContactBundle:CorporationContact');
-		return $this->om->getRepository($this->class);	// A tester
-	}
-	
-	public function renderResponse($view, array $parameters = array(), Response $response = null)
-	{
-		return $this->container->get('templating')->renderResponse($view, $parameters, $response);
 	}
 	
 	public function getEntity($id = null)
@@ -95,56 +65,26 @@ class CorporationContactManager extends ContainerAware
 		return null;
 	}
 	
-	public function createNewForm($entity)
-	{
-		return $this->createForm('POST', $entity);
-	}
-	
-	public function createEditForm($entity)
-	{
-		return $this->createForm('PUT', $entity);
-	}
-	
-	public function createDeleteForm($entity)
-	{
-		return $this->createForm('DELETE', $entity);
-	}
-	
-	public function createForm($method, $entity)
+	protected function getFormParam($entity)
 	{
 		$id = $entity->getId();
-		$url = '';
-		$label = '';
-		$type = null;
-		switch ($method)
-		{
-			case 'POST':
-				$url = $this->router->generate('jlm_contact_corporationcontact_create');
-				$label = 'Créer';
-				$type = $this->getFormType();
-				break;
-			case 'PUT':
-				$url = $this->router->generate('jlm_contact_corporationcontact_update', array('id' => $id));
-				$label = 'Modifier';
-				$type = $this->getFormType();
-				break;
-			case 'DELETE':
-				$url = $this->router->generate('jlm_contact_corporationcontact_delete', array('id' => $id));
-				$label = 'Supprimer';
-				$type = 'form';
-				break;
-			default:
-				throw new LogicException('HTTP request method must be POST, PUT or DELETE only');
-		}
-		$form = $this->formFactory->create($type, $entity,
-				array(
-						'action' => $url,
-						'method' => $method,
-				)
+		return array(
+			'POST' => array(
+				'url'   => $this->router->generate('jlm_contact_corporationcontact_create'),
+				'label' => 'Créer',
+				'type'  => $this->getFormType(),
+			),
+			'PUT' => array(
+				'url'   => $this->router->generate('jlm_contact_corporationcontact_update', array('id' => $id)),
+				'label' => 'Modifier',
+				'type'  => $this->getFormType(),
+			),
+			'DELETE' => array(
+				'url' => $this->router->generate('jlm_contact_corporationcontact_delete', array('id' => $id)),
+				'label' => 'Supprimer',
+				'type' => 'form',
+			),
 		);
-		$form->add('submit','submit', array('label' => $label));
-
-		return $form;
 	}
 	
 	public function getEditUrl($id)
@@ -152,43 +92,8 @@ class CorporationContactManager extends ContainerAware
 		return $this->router->generate('jlm_contact_corporationcontact_edit', array('id' => $id));
 	}
 	
-	public function redirectReferer()
-	{
-		return new RedirectResponse($this->request->headers->get('referer'));
-	}
-	
-	public function getFormType()
+	public function getFormType($type = null)
 	{
 		return new CorporationContactType();
-	}
-	
-	public function getRouter()
-	{
-		return $this->router;
-	}
-	
-	public function getObjectManager()
-	{
-		return $this->om;
-	}
-	
-	public function getFormFactory()
-	{
-		return $this->formFactory;
-	}
-	
-	public function getRequest()
-	{
-		return $this->request;
-	}
-	
-	public function getForm()
-	{
-		return $this->form;
-	}
-	
-	public function getHandler($form, $entity)
-	{
-		return new DoctrineHandler($form, $this->request, $this->om, $entity);
 	}
 }
