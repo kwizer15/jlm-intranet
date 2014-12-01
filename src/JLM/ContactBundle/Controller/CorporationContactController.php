@@ -46,7 +46,7 @@ class CorporationContactController extends ContainerAware
 			}
 			else
 			{
-				$response = new RedirectResponse($router->generate('jlm_contact_contact_show', array('id' => $entity->getCorporation()->getId())));
+				$response = $manager->redirect('jlm_contact_contact_show', array('id' => $entity->getCorporation()->getId()));
 			}
 		}
 		else
@@ -75,6 +75,6 @@ class CorporationContactController extends ContainerAware
 		$form = $manager->createDeleteForm($entity);
 		$manager->getHandler($form, $entity)->process('DELETE');
 
-		return new RedirectResponse($manager->getRouter()->generate('jlm_contact_contact_show', array('id' => $corpoId)));
+		return $manager->redirect('jlm_contact_contact_show', array('id' => $corpoId));
 	}
 }

@@ -11,26 +11,12 @@
 
 namespace JLM\ContactBundle\Manager;
 
-use JLM\ContactBundle\Entity\CorporationContact;
 use JLM\ContactBundle\Form\Type\CorporationContactType;
-use Symfony\Component\DependencyInjection\Exception\LogicException;
-use JLM\CoreBundle\Form\Handler\DoctrineHandler;
-use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class CorporationContactManager extends BaseManager
 {		
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getRepository()
-	{
-		return $this->om->getRepository('JLMContactBundle:CorporationContact');
-	}
-	
 	public function getEntity($id = null)
 	{
 		$entity = $this->getRepository()->find($id);

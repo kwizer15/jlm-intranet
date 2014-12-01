@@ -45,8 +45,7 @@ class ContactController extends ContainerAware
 		
 		if ($handler->process($method))
 		{
-			$url = $manager->getRouter()->generate('jlm_contact_contact_show', array('id'=>$entity->getId()));
-			return $manager->redirect($url); 
+			return $manager->redirect('jlm_contact_contact_show', array('id'=>$entity->getId())); 
 		}
 	
 		return $manager->renderResponse('JLMContactBundle:Contact:new.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
