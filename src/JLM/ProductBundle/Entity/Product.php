@@ -105,6 +105,8 @@ class Product implements ProductInterface
      */
     private $unitPrices;
     
+    private $publicPrice;
+    
     /**
      * Fichiers liés (plans, docs...)
      * @var LinkedFile[] $files
