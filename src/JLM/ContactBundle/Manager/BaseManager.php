@@ -131,6 +131,11 @@ abstract class BaseManager extends ContainerAware
 	{
 		return $this->request;
 	}
+	
+	public function getRouter()
+	{
+		return $this->router;
+	}
 
 	public function getSession()
     {

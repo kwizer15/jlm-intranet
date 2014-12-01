@@ -30,6 +30,7 @@ class ContactManager extends BaseManager
 	 */
 	public function getRepository()
 	{
+		return $this->om->getRepository($this->class);
 		return $this->om->getRepository('JLMContactBundle:Contact');
 	}
 	
@@ -84,22 +85,17 @@ class ContactManager extends BaseManager
 		$entityType = $entity->getType();
 		return array(
 			'POST' => array(
-				'route'   => 'jlm_contact_contact_new',
+				'route'   => 'jlm_contact_contact_create',
 				'params' => array('id' => $entityType),
 				'label' => 'Créer',
 				'type'  => $this->getFormType($entityType),
 			),
 			'PUT' => array(
-				'route' => 'jlm_contact_contact_edit',
+				'route' => 'jlm_contact_contact_update',
 				'params' => array('id' => $id),
 				'label' => 'Modifier',
 				'type'  => $this->getFormType($entityType),
 			),
 		);
 	}
-    
-    public function getNewEntity($type)
-    {
-    	return $this->getEntity($type);
-    }
 }

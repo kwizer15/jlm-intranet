@@ -26,22 +26,8 @@ class ContactController extends ContainerAware
 	public function editAction($id)
 	{
 		$manager = $this->container->get('jlm_contact.contact_manager');
-		
-		
-		if ($id == 'person' || $id == 'company' || $id == 'association')
-		{
-			$type = $id;
-			$id = 0;
-			$entity = $manager->getNewEntity($type);
-			$method = 'POST';
-		}
-		else
-		{
-			$entity = $manager->getEntity($id);
-			$method = 'PUT';
-		}
-		
-
+		$method = ($id == 'person' || $id == 'company' || $id == 'association') ? 'POST' : 'PUT';
+		$entity = $manager->getEntity($id);
 		$form = $manager->createForm($method, $entity);
 		$request = $manager->getRequest();
 		$handler = $manager->getHandler($form, $entity); 
