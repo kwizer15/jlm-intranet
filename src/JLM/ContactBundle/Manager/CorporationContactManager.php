@@ -70,17 +70,20 @@ class CorporationContactManager extends BaseManager
 		$id = $entity->getId();
 		return array(
 			'POST' => array(
-				'url'   => $this->router->generate('jlm_contact_corporationcontact_create'),
+				'route' => 'jlm_contact_corporationcontact_create',
+				'params' => array(),
 				'label' => 'Créer',
 				'type'  => $this->getFormType(),
 			),
 			'PUT' => array(
-				'url'   => $this->router->generate('jlm_contact_corporationcontact_update', array('id' => $id)),
+				'route' => 'jlm_contact_corporationcontact_update',
+				'params' => array('id' => $id),
 				'label' => 'Modifier',
 				'type'  => $this->getFormType(),
 			),
 			'DELETE' => array(
-				'url' => $this->router->generate('jlm_contact_corporationcontact_delete', array('id' => $id)),
+				'route' => 'jlm_contact_corporationcontact_delete',
+				'params' => array('id' => $id),
 				'label' => 'Supprimer',
 				'type' => 'form',
 			),

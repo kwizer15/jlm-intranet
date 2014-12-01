@@ -31,6 +31,12 @@ abstract class BaseManager extends ContainerAware
 	
 	protected $router;
 
+	abstract public function getEntity($id = null);
+	
+	abstract protected function getFormParam($entity);
+	
+	abstract protected function getFormType($type = null);
+
 	public function __construct($class)
 	{
 		$this->class = $class;
@@ -53,8 +59,6 @@ abstract class BaseManager extends ContainerAware
 		return $this->container->get('templating')->renderResponse($view, $parameters, $response);
 	}
 
-	abstract public function getEntity($id = null);
-
 	private function setterFromRequest($param, $repoName)
 	{
 		$id = $this->request->get($param);
@@ -76,7 +80,7 @@ abstract class BaseManager extends ContainerAware
 			$param = $datas[$method];
 			$form = $this->getFormFactory()->create($param['type'], $entity,
 					array(
-							'action' => $param['url'],
+							'action' => $this->router->generate($param['route'], $param['params']),
 							'method' => $method,
 					)
 			);
@@ -87,8 +91,6 @@ abstract class BaseManager extends ContainerAware
 		
 		throw new LogicException('HTTP request method must be POST, PUT or DELETE only');
 	}
-	
-	abstract function getFormParam($entity);
 	
 	public function createNewForm($entity)
 	{
@@ -114,13 +116,6 @@ abstract class BaseManager extends ContainerAware
 	{
 		return new RedirectResponse($url, $status);
 	}
-	
-	abstract public function getFormType($type = null);
-
-	public function redirect($url, $status = 302)
-    {
-    	return new RedirectResponse($url, $status);
-    }
 
 	public function getObjectManager()
 	{

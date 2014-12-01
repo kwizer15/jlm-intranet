@@ -63,7 +63,7 @@ class ContactController extends ContainerAware
 			return $manager->redirect($url); 
 		}
 	
-		return $manager->renderReponse('JLMContactBundle:Contact:new.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
+		return $manager->renderResponse('JLMContactBundle:Contact:new.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
 	}
 	
 	public function listAction()
@@ -71,7 +71,7 @@ class ContactController extends ContainerAware
 		$manager = $this->container->get('jlm_contact.contact_manager');
 		$entities = $manager->getRepository()->findAll();
 		
-		return $manager->renderReponse('JLMContactBundle:Contact:list.html.twig', array('entities'=>$entities));
+		return $manager->renderResponse('JLMContactBundle:Contact:list.html.twig', array('entities'=>$entities));
 	}
     
     public function showAction($id)
@@ -80,7 +80,7 @@ class ContactController extends ContainerAware
         $entity = $manager->getEntity($id);
         $template = 'JLMContactBundle:Contact:show_'.$entity->getType().'.html.twig';
         
-        return $manager->renderReponse($template, array('entity'=>$entity));
+        return $manager->renderResponse($template, array('entity'=>$entity));
     }
     
     public function unactiveAction($id)

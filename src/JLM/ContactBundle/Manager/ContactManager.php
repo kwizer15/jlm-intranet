@@ -23,7 +23,7 @@ use JLM\CoreBundle\Form\Handler\DoctrineHandler;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ContactManager
+class ContactManager extends BaseManager
 {
 	/**
 	 * {@inheritdoc}
@@ -84,12 +84,14 @@ class ContactManager
 		$entityType = $entity->getType();
 		return array(
 			'POST' => array(
-				'url'   => $this->router->generate('jlm_contact_contact_new', array('id' => $entityType)),
+				'route'   => 'jlm_contact_contact_new',
+				'params' => array('id' => $entityType),
 				'label' => 'Créer',
 				'type'  => $this->getFormType($entityType),
 			),
 			'PUT' => array(
-				'url'   => $this->router->generate('jlm_contact_contact_edit', array('id' => $id)),
+				'route' => 'jlm_contact_contact_edit',
+				'params' => array('id' => $id),
 				'label' => 'Modifier',
 				'type'  => $this->getFormType($entityType),
 			),
