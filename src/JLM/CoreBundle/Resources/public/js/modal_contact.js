@@ -47,14 +47,13 @@
 
 			, modalsubmit: function(e) {
 				e.preventDefault();
-				console.log('submit');
 				$.ajax({
 					url: $(this).attr('action'),
 					type: $(this).attr('method'),
 					dataType: 'json',
 					data: $(this).serialize(),
 					success: function(data) {
-						e.data.options.closure(data);
+						e.data.options.closure(data, e);
 						e.data.$modal.modal('hide').parent().remove();
 					}
 				});

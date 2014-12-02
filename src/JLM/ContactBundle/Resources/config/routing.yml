@@ -122,3 +122,10 @@ jlm_contact_corporationcontact_delete:
     requirements:
       id: \d+
     methods: [DELETE]
+    
+jlm_contact_corporationcontact_confirmdelete:
+    path: /corporationcontact/{id}/delete
+    defaults: { _controller: "JLMContactBundle:CorporationContact:delete" }
+    requirements:
+      id: \d+
+    methods: [GET]

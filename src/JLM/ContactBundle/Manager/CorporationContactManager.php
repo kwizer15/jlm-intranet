@@ -81,6 +81,11 @@ class CorporationContactManager extends BaseManager
 		return $this->router->generate('jlm_contact_corporationcontact_edit', array('id' => $id));
 	}
 	
+	public function getDeleteUrl($id)
+	{
+		return $this->router->generate('jlm_contact_corporationcontact_confirmdelete', array('id' => $id));
+	}
+	
 	public function getFormType($type = null)
 	{
 		return new CorporationContactType();
