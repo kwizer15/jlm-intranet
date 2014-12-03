@@ -27,12 +27,22 @@ class ContactController extends ContainerAware
 	{
 		$manager = $this->container->get('jlm_contact.contact_manager');
 		$method = ($id == 'person' || $id == 'company' || $id == 'association') ? 'POST' : 'PUT';
-		$entity = $manager->getEntity($id);
-		$form = $manager->createForm($method, $entity);
-		$request = $manager->getRequest();
+		$options = array();
+		if (in_array($id, array('person','company','association')))
+		{
+			$method = 'POST';
+			$options['type'] = $id;
+			$entity = null;
+		}
+		else
+		{
+			$method = 'PUT';
+			$entity = $options['entity'] = $manager->getEntity($id);
+		}
+		$form = $manager->createForm($method, $options);
 		$handler = $manager->getHandler($form, $entity); 
 	
-		if ($request->isXmlHttpRequest())
+		if ($manager->getRequest()->isXmlHttpRequest())
 		{
 			if ($handler->process($method))
 			{

@@ -14,6 +14,8 @@ namespace JLM\ContactBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use JLM\ContactBundle\Entity\CorporationContact;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -47,7 +49,13 @@ class CorporationContactType extends AbstractType
     {
     	$resolver
     		->setDefaults(array(
-            	'data_class' => 'JLM\ContactBundle\Entity\CorporationContact',
+    			'empty_data' => function (FormInterface $form) {
+            		return new CorporationContact($form->get('person')->getData(),
+            				                      $form->get('corporation')->getData(),
+            				                      $form->get('position')->getData()
+            				);
+        		},
+//            	'data_class' => 'JLM\ContactBundle\Entity\CorporationContact',
     			'label' => 'Contacts de groupement',
         ));
     }

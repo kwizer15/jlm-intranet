@@ -11,6 +11,7 @@
 
 namespace JLM\ContactBundle\Manager;
 
+use JLM\ContactBundle\Model\ContactInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -61,23 +62,32 @@ class ContactManager extends BaseManager
 		return $entity;
 	}
 	
-	protected function getFormParam($entity)
+	protected function getFormParam($method, $options)
 	{
-		$id = $entity->getId();
-		$entityType = $entity->getType();
-		return array(
-			'POST' => array(
-				'route'   => 'jlm_contact_contact_create',
-				'params' => array('id' => $entityType),
-				'label' => 'Créer',
-				'type'  => $this->getFormType($entityType),
-			),
-			'PUT' => array(
-				'route' => 'jlm_contact_contact_update',
-				'params' => array('id' => $id),
-				'label' => 'Modifier',
-				'type'  => $this->getFormType($entityType),
-			),
-		);
+		if (!in_array($method, array('POST', 'PUT')))
+		{
+			return null;
+		}
+		$entity = (isset($options['entity'])) ? $options['entity'] : null;
+		$entityType = (isset($options['type'])) ? $options['type'] : null;
+		$entityType = ($entity instanceof ContactInterface) ? $entity->getType() : $entityType ;
+		
+		switch ($method)
+		{
+			case 'POST':
+				return array(
+					'route' => 'jlm_contact_contact_create',
+					'params' => array('id' => $entityType),
+					'label' => 'Créer',
+					'type'  => $this->getFormType($entityType),
+				);
+			case 'PUT' :
+				return array(
+					'route' => 'jlm_contact_contact_update',
+					'params' => array('id' => $entity->getId()),
+					'label' => 'Modifier',
+					'type'  => $this->getFormType($entityType),
+				);
+		}
 	}
 }

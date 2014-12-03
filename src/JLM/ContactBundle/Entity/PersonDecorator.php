@@ -19,6 +19,11 @@ use JLM\ContactBundle\Model\ContactInterface;
  */
 abstract class PersonDecorator extends ContactDecorator implements PersonInterface
 {
+	public function __construct(PersonInterface $contact = null)
+	{
+		$this->setPerson($contact);
+	}
+	
     /**
      * Get person
      */

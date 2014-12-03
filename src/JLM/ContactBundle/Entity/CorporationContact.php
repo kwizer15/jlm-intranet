@@ -13,6 +13,7 @@ namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\CorporationContactInterface;
 use JLM\ContactBundle\Model\CorporationInterface;
+use JLM\ContactBundle\Model\PersonInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -29,6 +30,22 @@ class CorporationContact extends PersonDecorator implements CorporationContactIn
      * @var string
      */
     protected $position;
+    
+    /**
+     * Constructor
+     * @param PersonInterface $person
+     * @param CorporationInterface $corporation
+     * @param string $position
+     */
+    public function __construct(PersonInterface $person = null, CorporationInterface $corporation = null, $position = null)
+    {
+    	if ($position !== null)
+    	{
+    	parent::__construct($person);
+    	$this->setCorporation($corporation);
+    	$this->setPosition($position);
+    	}
+    }
     
     /**
      * {@inheritdoc}

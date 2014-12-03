@@ -31,12 +31,6 @@ abstract class BaseManager extends ContainerAware
 	
 	protected $router;
 
-	abstract public function getEntity($id = null);
-	
-	abstract protected function getFormParam($entity);
-	
-	abstract protected function getFormType($type = null);
-
 	public function __construct($class)
 	{
 		$this->class = $class;
@@ -72,24 +66,32 @@ abstract class BaseManager extends ContainerAware
 		return null;
 	}
 
-	public function createForm($method, $entity)
+	public function createForm($method, $options = array())
 	{
-		$datas = $this->getFormParam($entity);
-		if (array_key_exists($method, $datas))
-		{
-			$param = $datas[$method];
-			$form = $this->getFormFactory()->create($param['type'], $entity,
-					array(
-							'action' => $this->router->generate($param['route'], $param['params']),
-							'method' => $method,
-					)
-			);
-			$form->add('submit','submit', array('label' => $param['label']));
-			
-			return $form;
-		}
 		
-		throw new LogicException('HTTP request method must be POST, PUT or DELETE only');
+		$param = $this->getFormParam($method, $options);
+		if ($param === null)
+		{
+			throw new LogicException('HTTP request method cannot be "'.$method.'"');
+		}
+		$entity = (isset($options['entity'])) ? $options['entity'] : null;
+		$form = $this->getFormFactory()->create($param['type'], $entity,
+			array(
+				'action' => $this->router->generate($param['route'], $param['params']),
+				'method' => $method,
+			)
+		);
+		$form->add('submit','submit', array('label' => $param['label']));
+		$form = $this->setFormDatas($form);
+		
+		return $form;
+	}
+	
+	abstract protected function getFormParam($method, $entity);
+	
+	public function setFormDatas($form)
+	{
+		return $form;
 	}
 	
 	public function createNewForm($entity)

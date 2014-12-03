@@ -29,10 +29,10 @@ class CorporationContactController extends ContainerAware
 	public function editAction($id = 0)
 	{
 		$manager = $this->container->get('jlm_contact.corporationcontact_manager');
-		$router = $manager->getRouter();	
-		$entity = $manager->getEntity($id);
+		$router = $manager->getRouter();
+		$entity = ($id) ? $manager->getEntity($id) : null;
 		$method = ($id) ? 'PUT' : 'POST';
-		$form = $manager->createForm($method, $entity);
+		$form = $manager->createForm($method, array('entity' => $entity));
 		$ajax = $manager->getRequest()->isXmlHttpRequest();
 		if ($manager->getHandler($form, $entity)->process($method))
 		{
@@ -67,14 +67,11 @@ class CorporationContactController extends ContainerAware
 	{
 		$manager = $this->container->get('jlm_contact.corporationcontact_manager');
 		$entity = $manager->getEntity($id);
-		$corpoId = $entity->getCorporation()->getId();
 		$form = $manager->createDeleteForm($entity);
 		$process = $manager->getHandler($form, $entity)->process('DELETE');
 		if ($process)
 		{
-//			$manager->getSession()->setFlash('notice', $entity->getName().' a bien été supprimé');
 			return new JsonResponse(array('delete'=>true));
-//			return $manager->redirect('jlm_contact_contact_show', array('id' => $corpoId));
 		}
 		$ajax = $manager->getRequest()->isXmlHttpRequest();
 		$template = ($ajax) ? 'modal_delete.html.twig'	: 'delete.html.twig';
