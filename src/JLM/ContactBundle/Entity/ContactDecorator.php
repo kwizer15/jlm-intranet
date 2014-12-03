@@ -12,6 +12,7 @@
 namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\ContactInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -28,6 +29,14 @@ abstract class ContactDecorator implements ContactInterface
      * @var ContactInterface $person
      */
     protected $contact;
+    
+    public function __construct(ContactInterface $contact = null)
+    {
+    	if ($contact !== null)
+    	{
+    		$this->setContact($contact);
+    	}
+    }
     
     /**
      * Get id
@@ -61,7 +70,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getAddress()
     {
-        return $this->getContact()->getAddress();
+    	return $this->decoratedGetMethod('getAddress', null);
     }
     
     /**
@@ -69,7 +78,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getEmail()
     {
-        return $this->getContact()->getEmail();
+    	return $this->decoratedGetMethod('getEmail', '');
     }
     
     /**
@@ -77,7 +86,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getFax()
     {
-        return $this->getContact()->getFax();
+        return $this->decoratedGetMethod('getFax', '');
     }
     
     /**
@@ -85,7 +94,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getPhones()
     {
-    	return $this->getContact()->getPhones();
+    	return $this->decoratedGetMethod('getPhones', new ArrayCollection());
     }
     
     /**
@@ -93,7 +102,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getName()
     {
-        return $this->getContact()->getName();
+    	return $this->decoratedGetMethod('getName', '');
     }
     
     /**
@@ -101,6 +110,22 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function __toString()
     {
-        return $this->getContact()->__toString();
+        return $this->decoratedGetMethod('__toString', '');
+    }
+    
+    /**
+     * 
+     * @param string $method
+     * @param mixed $default
+     * @return mixed
+     */
+    private function decoratedGetMethod($method, $default)
+    {
+    	if ($this->getContact() === null)
+    	{
+    		return $default;
+    	}
+    	
+    	return $this->getContact()->$method();
     }
 }

@@ -24,7 +24,8 @@ class CorporationContactTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->person = $this->getMock('JLM\ContactBundle\Model\PersonInterface');
-        $this->entity = new CorporationContact($this->person);
+        $this->entity = new CorporationContact();
+        $this->entity->setPerson($this->person);
     }
     
     /**
@@ -33,7 +34,6 @@ class CorporationContactTest extends \PHPUnit_Framework_TestCase
     protected function assertPreConditions()
     {
         $this->assertInstanceOf('JLM\ContactBundle\Model\PersonInterface', $this->entity);
-        $this->assertNull($this->entity->getManager());
     }
     
     public function testCorporation()
@@ -61,26 +61,6 @@ class CorporationContactTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($position, $this->entity->getPosition());
     }
     
-    public function getManagers()
-    {
-        return array(
-        	array($this->getMock('JLM\ContactBundle\Model\CorporationContactInterface'), true),
-            array(null, false),
-        );
-    }
-    
-    /**
-     * @dataProvider getManagers
-     * @param null|JLM\ContactBundle\Model\CorporationContactInterface $manager
-     * @param bool $has
-     */
-    public function testManager($manager, $has)
-    {
-        $this->assertSame($this->entity, $this->entity->setManager($manager));
-        $this->assertSame($manager, $this->entity->getManager());
-        $this->assertSame($has, $this->entity->hasManager());
-    }
-    
     public function getDecoFunctions()
     {
         return array(
@@ -88,10 +68,7 @@ class CorporationContactTest extends \PHPUnit_Framework_TestCase
             array('getFirstName', 'Foo'),
             array('getLastName', 'Foo'),
             array('getName', 'Foo'),
-            array('getFixedPhone', 'Foo'),
-            array('getMobilePhone', 'Foo'),
             array('getAddress', 'Foo'),
-            array('getFax', 'Foo'),
             array('getEmail', 'Foo'),
             array('__toString', 'Foo'),
         );

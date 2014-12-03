@@ -11,12 +11,7 @@ class TrusteeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {	
         $builder
-            ->add('name',null,array('label'=>'Nom','attr'=>array('class'=>'input-large')))
-
-            ->add('address','jlm_contact_address',array('label'=>'Adresse'))
-            ->add('phone',null,array('label'=>'Téléphone','attr'=>array('class'=>'input-medium')))
-            ->add('fax',null,array('label'=>'Fax','required'=>false,'attr'=>array('class'=>'input-medium')))
-            ->add('email','email',array('label'=>'e-mail','required'=>false,'attr'=>array('class'=>'input-xlarge')))
+            ->add('contact','jlm_contact_contact_select',array('label'=>'Contact','attr'=>array('class'=>'input-large')))
 
             ->add('accountNumber',null,array('label'=>'Numéro de compte','required'=>false,'attr'=>array('class'=>'input-small')))
             ->add('billingLabel',null,array('label'=>'Libélé de facturation','required'=>false))

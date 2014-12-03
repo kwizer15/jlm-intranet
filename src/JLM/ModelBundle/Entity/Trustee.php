@@ -90,13 +90,12 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
     /**
      * Constructor
      */
-    public function __construct(ContactInterface $contact)
+    public function __construct(ContactInterface $contact = null)
     {
     	parent::__construct($contact);
     	$this->sites = new ArrayCollection;
     	$this->contracts = new ArrayCollection;
     }
-
    
     /**
      * Set accountNumber
