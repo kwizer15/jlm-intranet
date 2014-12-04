@@ -27,11 +27,7 @@ class SupplierType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',null,array('label'=>'Nom'))
-            ->add('address',new AddressType,array('label'=>'Adresse'))
-            ->add('phone',null,array('label'=>'Téléphone'))
-            ->add('fax',null,array('label'=>'Fax','required'=>false))
-            ->add('email','email',array('label'=>'e-mail','required'=>false))
+            ->add('contact','jlm_contact_corporation_select',array('label'=>'Société'))
             ->add('website','url',array('label'=>'Site internet','required'=>false))
         ;
     }

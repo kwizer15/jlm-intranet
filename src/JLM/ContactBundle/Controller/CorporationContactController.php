@@ -40,24 +40,20 @@ class CorporationContactController extends ContainerAware
 			{
 				$contact = $manager->getRepository()->getByIdToArray($entity->getId());
 				$contact['contact']['contact']['show_link'] =  $router->generate('jlm_contact_contact_show', array('id' => $contact['contact']['id']));
-				$contact['edit_link'] = $manager->getEditUrl($contact['id']);  
+				$contact['edit_link'] = $manager->getEditUrl($contact['id']);
+				$contact['delete_link'] = $manager->getDeleteUrl($contact['id']);
 
 				$response = new JsonResponse($contact);
 			}
 			else
 			{
-				$response = new RedirectResponse($router->generate('jlm_contact_contact_show', array('id' => $entity->getCorporation()->getId())));
+				$response = $manager->redirect('jlm_contact_contact_show', array('id' => $entity->getCorporation()->getId()));
 			}
 		}
 		else
 		{
-			$delete_formview = null;
-			if ($entity->getId())
-			{
-				$delete_formview = $manager->createDeleteForm($entity)->createView();
-			}
 			$template = ($ajax) ? 'modal_new.html.twig'	: 'new.html.twig';
-			$response = $manager->renderResponse('JLMContactBundle:CorporationContact:' . $template, array('form'=>$form->createView(), 'delete_form'=>$delete_formview));
+			$response = $manager->renderResponse('JLMContactBundle:CorporationContact:' . $template, array('form'=>$form->createView()));
 		}
 		
 		return $response;
@@ -73,8 +69,16 @@ class CorporationContactController extends ContainerAware
 		$entity = $manager->getEntity($id);
 		$corpoId = $entity->getCorporation()->getId();
 		$form = $manager->createDeleteForm($entity);
-		$manager->getHandler($form, $entity)->process('DELETE');
-
-		return new RedirectResponse($manager->getRouter()->generate('jlm_contact_contact_show', array('id' => $corpoId)));
+		$process = $manager->getHandler($form, $entity)->process('DELETE');
+		if ($process)
+		{
+//			$manager->getSession()->setFlash('notice', $entity->getName().' a bien été supprimé');
+			return new JsonResponse(array('delete'=>true));
+//			return $manager->redirect('jlm_contact_contact_show', array('id' => $corpoId));
+		}
+		$ajax = $manager->getRequest()->isXmlHttpRequest();
+		$template = ($ajax) ? 'modal_delete.html.twig'	: 'delete.html.twig';
+		
+		return $manager->renderResponse('JLMContactBundle:CorporationContact:' . $template, array('form'=>$form->createView()));
 	}
 }

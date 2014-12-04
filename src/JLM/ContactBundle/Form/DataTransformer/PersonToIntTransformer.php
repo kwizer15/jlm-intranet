@@ -21,7 +21,7 @@ class PersonToIntTransformer extends ObjectToIntTransformer
     /**
      * {@inheritdoc}
      */
-	public function _getClass()
+	protected function _getClass()
 	{
 		return 'JLMContactBundle:Person';
 	}

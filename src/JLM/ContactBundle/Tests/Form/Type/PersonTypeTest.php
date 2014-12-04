@@ -17,6 +17,10 @@ use JLM\ContactBundle\Form\Type\AddressType;
 use JLM\ContactBundle\Form\Type\CitySelectType;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Form\PreloadedExtension;
+use JLM\ContactBundle\Form\Type\ContactType;
+use JLM\ContactBundle\Form\Type\ContactPhoneCollectionType;
+use JLM\ContactBundle\Form\Type\ContactPhoneType;
+use JLM\ContactBundle\Form\Type\PhoneType;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -42,10 +46,18 @@ class PersonTypeTest extends TypeTestCase
         $s2 = new \Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type('hidden');
         $city = new CitySelectType($om);
         $address = new AddressType();
+        $contact = new ContactType();
+        $contactphonecollection = new ContactPhoneCollectionType();
+        $contactphone = new ContactPhoneType();
+        $phone = new PhoneType();
         return array(new PreloadedExtension(array(
             $address->getName() => $address,
             $city->getName() => $city,
             $s2->getName() => $s2,
+        	$contact->getName() => $contact,
+        	$contactphonecollection->getName() => $contactphonecollection,
+        	$contactphone->getName() => $contactphone,
+        	$phone->getName() => $phone,
         ), array()));
     }
     

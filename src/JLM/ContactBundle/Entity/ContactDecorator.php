@@ -12,6 +12,8 @@
 namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\ContactInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use JLM\ContactBundle\Model\AddressInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -61,7 +63,15 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getAddress()
     {
-        return $this->getContact()->getAddress();
+    	return $this->getContact()->getAddress();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setAddress(AddressInterface $address)
+    {
+    	return $this->getContact()->setAddress($address);
     }
     
     /**
@@ -69,7 +79,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getEmail()
     {
-        return $this->getContact()->getEmail();
+    	return $this->getContact()->getEmail();
     }
     
     /**
@@ -93,7 +103,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getName()
     {
-        return $this->getContact()->getName();
+    	return $this->getContact()->getName();
     }
     
     /**
@@ -102,5 +112,21 @@ abstract class ContactDecorator implements ContactInterface
     public function __toString()
     {
         return $this->getContact()->__toString();
+    }
+    
+    /**
+     * 
+     * @param string $method
+     * @param mixed $default
+     * @return mixed
+     */
+    private function decoratedGetMethod($method, $default)
+    {
+    	if ($this->getContact() === null)
+    	{
+    		return $default;
+    	}
+    	
+    	return $this->getContact()->$method();
     }
 }

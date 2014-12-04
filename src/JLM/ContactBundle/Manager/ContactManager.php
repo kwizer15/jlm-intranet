@@ -11,28 +11,11 @@
 
 namespace JLM\ContactBundle\Manager;
 
-use JLM\ContactBundle\Form\Type\PersonType;
-use JLM\ContactBundle\Form\Type\CompanyType;
-use JLM\ContactBundle\Form\Type\AssociationType;
-use JLM\ContactBundle\Entity\Person;
-use JLM\ContactBundle\Entity\Company;
-use JLM\ContactBundle\Entity\Association;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
-use JLM\CoreBundle\Form\Handler\DoctrineHandler;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ContactManager
+class ContactManager extends BaseManager
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getRepository()
-	{
-		return $this->om->getRepository('JLMContactBundle:Contact');
-	}
-	
 	protected function getObjectByType($type)
 	{
 		$objects = array(
@@ -84,20 +67,17 @@ class ContactManager
 		$entityType = $entity->getType();
 		return array(
 			'POST' => array(
-				'url'   => $this->router->generate('jlm_contact_contact_new', array('id' => $entityType)),
+				'route'   => 'jlm_contact_contact_create',
+				'params' => array('id' => $entityType),
 				'label' => 'Créer',
 				'type'  => $this->getFormType($entityType),
 			),
 			'PUT' => array(
-				'url'   => $this->router->generate('jlm_contact_contact_edit', array('id' => $id)),
+				'route' => 'jlm_contact_contact_update',
+				'params' => array('id' => $id),
 				'label' => 'Modifier',
 				'type'  => $this->getFormType($entityType),
 			),
 		);
 	}
-    
-    public function getNewEntity($type)
-    {
-    	return $this->getEntity($type);
-    }
 }

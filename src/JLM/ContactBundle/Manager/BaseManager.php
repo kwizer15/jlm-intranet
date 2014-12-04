@@ -18,6 +18,7 @@ use JLM\CoreBundle\Form\Handler\DoctrineHandler;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -30,6 +31,12 @@ abstract class BaseManager extends ContainerAware
 	protected $om;
 	
 	protected $router;
+
+	abstract public function getEntity($id = null);
+	
+	abstract protected function getFormParam($entity);
+	
+	abstract protected function getFormType($type = null);
 
 	public function __construct($class)
 	{
@@ -53,8 +60,6 @@ abstract class BaseManager extends ContainerAware
 		return $this->container->get('templating')->renderResponse($view, $parameters, $response);
 	}
 
-	abstract public function getEntity($id = null);
-
 	private function setterFromRequest($param, $repoName)
 	{
 		$id = $this->request->get($param);
@@ -76,7 +81,7 @@ abstract class BaseManager extends ContainerAware
 			$param = $datas[$method];
 			$form = $this->getFormFactory()->create($param['type'], $entity,
 					array(
-							'action' => $param['url'],
+							'action' => $this->router->generate($param['route'], $param['params']),
 							'method' => $method,
 					)
 			);
@@ -87,8 +92,6 @@ abstract class BaseManager extends ContainerAware
 		
 		throw new LogicException('HTTP request method must be POST, PUT or DELETE only');
 	}
-	
-	abstract function getFormParam($entity);
 	
 	public function createNewForm($entity)
 	{
@@ -110,17 +113,16 @@ abstract class BaseManager extends ContainerAware
 		return new RedirectResponse($this->request->headers->get('referer'));
 	}
 	
-	public function redirect($url, $status = 302)
+	public function redirect($route, $params, $status = 302)
 	{
+		$url = $this->getRouter()->generate($route, $params);
 		return new RedirectResponse($url, $status);
 	}
 	
-	abstract public function getFormType($type = null);
-
-	public function redirect($url, $status = 302)
-    {
-    	return new RedirectResponse($url, $status);
-    }
+	public function renderJson($data = null, $status = 200, $headers = array())
+	{
+		return new JsonResponse($data, $status, $headers);
+	}
 
 	public function getObjectManager()
 	{
@@ -135,6 +137,11 @@ abstract class BaseManager extends ContainerAware
 	public function getRequest()
 	{
 		return $this->request;
+	}
+	
+	public function getRouter()
+	{
+		return $this->router;
 	}
 
 	public function getSession()

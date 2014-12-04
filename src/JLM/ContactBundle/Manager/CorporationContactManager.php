@@ -11,26 +11,12 @@
 
 namespace JLM\ContactBundle\Manager;
 
-use JLM\ContactBundle\Entity\CorporationContact;
 use JLM\ContactBundle\Form\Type\CorporationContactType;
-use Symfony\Component\DependencyInjection\Exception\LogicException;
-use JLM\CoreBundle\Form\Handler\DoctrineHandler;
-use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class CorporationContactManager extends BaseManager
 {		
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getRepository()
-	{
-		return $this->om->getRepository('JLMContactBundle:CorporationContact');
-	}
-	
 	public function getEntity($id = null)
 	{
 		$entity = $this->getRepository()->find($id);
@@ -70,17 +56,20 @@ class CorporationContactManager extends BaseManager
 		$id = $entity->getId();
 		return array(
 			'POST' => array(
-				'url'   => $this->router->generate('jlm_contact_corporationcontact_create'),
+				'route' => 'jlm_contact_corporationcontact_create',
+				'params' => array(),
 				'label' => 'Créer',
 				'type'  => $this->getFormType(),
 			),
 			'PUT' => array(
-				'url'   => $this->router->generate('jlm_contact_corporationcontact_update', array('id' => $id)),
+				'route' => 'jlm_contact_corporationcontact_update',
+				'params' => array('id' => $id),
 				'label' => 'Modifier',
 				'type'  => $this->getFormType(),
 			),
 			'DELETE' => array(
-				'url' => $this->router->generate('jlm_contact_corporationcontact_delete', array('id' => $id)),
+				'route' => 'jlm_contact_corporationcontact_delete',
+				'params' => array('id' => $id),
 				'label' => 'Supprimer',
 				'type' => 'form',
 			),
@@ -90,6 +79,11 @@ class CorporationContactManager extends BaseManager
 	public function getEditUrl($id)
 	{
 		return $this->router->generate('jlm_contact_corporationcontact_edit', array('id' => $id));
+	}
+	
+	public function getDeleteUrl($id)
+	{
+		return $this->router->generate('jlm_contact_corporationcontact_confirmdelete', array('id' => $id));
 	}
 	
 	public function getFormType($type = null)

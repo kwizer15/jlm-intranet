@@ -67,7 +67,7 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
     public function getAdderRemover()
     {
         return array(
-            array('Phone', 'Phones', $this->getMock('JLM\ContactBundle\Model\PhoneInterface')),
+            array('Phone', 'Phones', $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface')),
             array('Contact', 'Contacts', $this->getMock('JLM\ContactBundle\Model\CorporationContactInterface')),
         );
     }

@@ -179,7 +179,7 @@
     	'@JLMDefaultBundle/Resources/public/js/highstock.js'
     	'../app/Resources/public/js/highcharts_init.js'
     	'@JLMDefaultBundle/Resources/public/js/select2-3.4.5/select2.js'
-    	'@JLMContactBundle/Resources/public/js/modal_contact.js'
+    	'@JLMCoreBundle/Resources/public/js/modal_contact.js'
     	filter='yui_js' %}
     	<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
@@ -203,5 +203,5 @@ $('.autocompletion').autocomplete({
 
 {% block javascriptappend %}
 {# z-index pour appartition dans une modal #}
-$('.ui-autocomplete, .modal .datepicker, .select2-input').css('z-index','15000');
+{#$('.ui-autocomplete, .modal .datepicker, .select2-input').css('z-index','15000'); #}
 {% endblock %}

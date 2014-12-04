@@ -47,8 +47,10 @@ class AjaxPersonController extends Controller
      */
     public function newajaxAction()
     {
-        $entity = ContactManager::create('Person');
-        $form   = $this->createForm(new PersonType(), $entity);
+    	$manager = $this->container->get('jlm_contact.contact_manager');
+    	$entity = $manager->getEntity('person');
+        $form = $manager->createForm('POST',$entity);
+        
 
         return array(
             'entity' => $entity,

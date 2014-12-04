@@ -90,13 +90,11 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
     /**
      * Constructor
      */
-    public function __construct(ContactInterface $contact)
+    public function __construct()
     {
-    	parent::__construct($contact);
     	$this->sites = new ArrayCollection;
     	$this->contracts = new ArrayCollection;
     }
-
    
     /**
      * Set accountNumber
@@ -276,6 +274,7 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
      */
     public function getBillingAddress()
     {
+    	return $this->billingAddress;
         if ($this->billingAddress === null)
         {
             return $this->getAddress();
@@ -307,9 +306,8 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
      */
     public function getBillingLabel()
     {
-    	if ($this->billingLabel === null)
-    		return $this->getName();
     	return $this->billingLabel;
+    	return ($this->billingLabel === null) ? $this->getName() : $this->billingLabel;
     }
     
     /**

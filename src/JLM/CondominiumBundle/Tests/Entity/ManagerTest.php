@@ -29,7 +29,8 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->contact = $this->getMock('JLM\ContactBundle\Model\ContactInterface');
-        $this->entity = new Manager($this->contact);
+        $this->entity = new Manager();
+        $this->entity->setContact($this->contact);
     }
     
     /**

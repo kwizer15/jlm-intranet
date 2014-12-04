@@ -66,19 +66,16 @@ class SiteController extends Controller
      * Displays a form to create a new Site entity.
      *
      * @Route("/new", name="site_new")
-     * @Route("/new/{id}", requirements={"id" = "\d+"}, name="site_new_id")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function newAction(Trustee $trustee = null)
+    public function newAction()
     {
-    	
+    	$trustee = $this->getRequest()->get('trustee', null);
         $entity = new Site();
-        if ($trustee)
-        {
-        	$entity->setManager($trustee);
-        }
         $form   = $this->createForm(new SiteType(), $entity);
+        $em = $this->get('doctrine')->getManager();
+        $form->get('trustee')->setData($em->getRepository('JLMModelBundle:Trsutee')->find($trustee));
 
         return array(
             'entity' => $entity,
