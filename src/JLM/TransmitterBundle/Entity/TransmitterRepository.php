@@ -96,11 +96,11 @@ class TransmitterRepository extends SearchRepository
 		$rsm->addScalarResult('n', 'number');
 		$em = $this->getEntityManager();
 		$query = $em->createNativeQuery('
-    				SELECT MONTH( calendar.dt ) AS m , YEAR( calendar.dt ) AS y, COUNT( transmitters_transmitters.id ) AS n
+    				SELECT MONTH( jlm_core_calendar.dt ) AS m , YEAR( jlm_core_calendar.dt ) AS y, COUNT( transmitters_transmitters.id ) AS n
 					FROM transmitters_transmitters
 					LEFT JOIN transmitters_attributions ON transmitters_attributions.id = transmitters_transmitters.attribution_id
-					LEFT JOIN calendar ON calendar.dt = transmitters_attributions.creation
-					GROUP BY MONTH( calendar.dt ),YEAR(calendar.dt)
+					LEFT JOIN jlm_core_calendar ON jlm_core_calendar.dt = transmitters_attributions.creation
+					GROUP BY MONTH( jlm_core_calendar.dt ),YEAR(jlm_core_calendar.dt)
 					ORDER BY m,y
     		', $rsm);
 		return $query->getResult();

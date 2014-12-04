@@ -1,0 +1,6 @@
+JLM\CoreBundle\Entity\Calendar:
+  type: entity
+  table: jlm_core_calendar
+  id:
+    dt:
+      type: date  

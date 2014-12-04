@@ -43,12 +43,7 @@ class SupplierController extends Controller
         	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
         }
 
-        $entities = $em->getRepository('JLMProductBundle:Supplier')->findBy(
-        		array(),
-        		array('name' => 'asc'),
-        		$limit,
-        		$offset
-        		);
+        $entities = $em->getRepository('JLMProductBundle:Supplier')->getAll($limit, $offset);
 
         return array(
         	'entities' => $entities,
@@ -110,7 +105,6 @@ class SupplierController extends Controller
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity->getAddress());
             $em->persist($entity);
             $em->flush();
 

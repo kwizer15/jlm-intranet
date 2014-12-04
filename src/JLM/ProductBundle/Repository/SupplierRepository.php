@@ -66,4 +66,16 @@ class SupplierRepository extends SearchRepository
 		
 		return (int) $qb->getQuery()->getSingleScalarResult();
 	}
+	
+	public function getAll($limit, $offset)
+	{
+		$query = $this->createQueryBuilder('a')
+			->leftJoin('a.contact','b')
+			->orderBy('b.name','ASC')
+			->setMaxResults($limit)
+			->setFirstResult($offset)
+		;
+			
+		return $query->getQuery()->getResult();
+	}
 }
