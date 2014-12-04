@@ -18,6 +18,7 @@ use JLM\CoreBundle\Form\Handler\DoctrineHandler;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -116,6 +117,11 @@ abstract class BaseManager extends ContainerAware
 	{
 		$url = $this->getRouter()->generate($route, $params);
 		return new RedirectResponse($url, $status);
+	}
+	
+	public function renderJson($data = null, $status = 200, $headers = array())
+	{
+		return new JsonResponse($data, $status, $headers);
 	}
 
 	public function getObjectManager()

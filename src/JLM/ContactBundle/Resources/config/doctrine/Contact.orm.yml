@@ -1,6 +1,7 @@
 JLM\ContactBundle\Entity\Contact:
   type: entity
   table: jlm_contact_contact
+  repositoryClass: JLM\ContactBundle\Repository\ContactRepository
   inheritanceType: JOINED
   discriminatorColumn:
     name: discr

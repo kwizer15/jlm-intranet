@@ -76,8 +76,15 @@ class TrusteeController extends Controller
      */
     public function newAction()
     {
+    	$request = $this->getRequest();
+    	$contact = $request->get('contact');
+    	$em = $this->get('doctrine')->getManager();
         $entity = new Trustee();
         $form   = $this->createForm(new TrusteeType(), $entity);
+        if ($contact)
+        {
+        	$form->get('contact')->setData($em->getRepository('JLMContactBundle:Contact')->find($contact));
+        }
 
         return array(
             'entity' => $entity,

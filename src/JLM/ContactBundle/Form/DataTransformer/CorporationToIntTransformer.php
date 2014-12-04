@@ -21,7 +21,7 @@ class CorporationToIntTransformer extends ObjectToIntTransformer
     /**
      * {@inheritdoc}
      */
-	public function _getClass()
+	protected function _getClass()
 	{
 		return 'JLMContactBundle:Corporation';
 	}

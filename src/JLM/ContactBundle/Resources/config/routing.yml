@@ -28,8 +28,8 @@ jlm_contact_ajax_person_autocomplete:
     defaults: { _controller: "JLMContactBundle:AjaxPerson:autocomplete" }
     methods: [POST]
 
-jlm_contact_contact_list:
-    path: /contact
+jlm_contact_contact:
+    path: /
     defaults: { _controller: "JLMContactBundle:Contact:list" }
     methods: [GET]
 

@@ -11,7 +11,6 @@
 
 namespace JLM\ContactBundle\Controller;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
@@ -29,43 +28,37 @@ class ContactController extends ContainerAware
 		$method = ($id == 'person' || $id == 'company' || $id == 'association') ? 'POST' : 'PUT';
 		$entity = $manager->getEntity($id);
 		$form = $manager->createForm($method, $entity);
-		$request = $manager->getRequest();
-		$handler = $manager->getHandler($form, $entity); 
-	
-		if ($request->isXmlHttpRequest())
-		{
-			if ($handler->process($method))
-			{
-				$resp = array('ok'=>true);
-				return new JsonResponse($resp);
-			}
-			
-			return $manager->renderResponse('JLMContactBundle:Contact:modal_new.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
-		}
+		$process = $manager->getHandler($form, $entity)->process($method);
 		
-		if ($handler->process($method))
-		{
-			return $manager->redirect('jlm_contact_contact_show', array('id'=>$entity->getId())); 
-		}
-	
-		return $manager->renderResponse('JLMContactBundle:Contact:new.html.twig', array('form'=>$form->createView(), 'c'=>$entity));
+		return $manager->getRequest()->isXmlHttpRequest()
+			? ($process ? $manager->renderJson(array('ok'=>true))
+						: $manager->renderResponse('JLMContactBundle:Contact:modal_new.html.twig', array('form'=>$form->createView(), 'c'=>$entity))) 
+			: ($process ? $manager->redirect('jlm_contact_contact_show', array('id'=>$entity->getId()))
+			            : $manager->renderResponse('JLMContactBundle:Contact:new.html.twig', array('form'=>$form->createView(), 'c'=>$entity)))
+			;
 	}
 	
 	public function listAction()
 	{
 		$manager = $this->container->get('jlm_contact.contact_manager');
-		$entities = $manager->getRepository()->findAll();
+		$request = $manager->getRequest();
+		$ajax = $manager->getRequest()->isXmlHttpRequest();
+		$repo = $manager->getRepository();
+		$entities = $ajax ? $repo->getArray($request->get('q',''), $request->get('page_limit',10))
+		                  : $repo->findAll();
 		
-		return $manager->renderResponse('JLMContactBundle:Contact:list.html.twig', array('entities'=>$entities));
+		return $ajax ? $manager->renderJson(array('contacts' => $entities))
+		                  : $manager->renderResponse('JLMContactBundle:Contact:list.html.twig', array('entities'=>$entities));
 	}
     
     public function showAction($id)
     {
     	$manager = $this->container->get('jlm_contact.contact_manager');
-        $entity = $manager->getEntity($id);
-        $template = 'JLMContactBundle:Contact:show_'.$entity->getType().'.html.twig';
-        
-        return $manager->renderResponse($template, array('entity'=>$entity));
+    	$ajax = $manager->getRequest()->isXmlHttpRequest();
+        $entity = $ajax ? $manager->getRepository()->getByIdToArray($id)
+                        : $manager->getEntity($id);
+		return $ajax ? $manager->renderJson($entity)
+		                  : $manager->renderResponse('JLMContactBundle:Contact:show_'.$entity->getType().'.html.twig', array('entity'=>$entity));
     }
     
     public function unactiveAction($id)

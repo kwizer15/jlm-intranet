@@ -13,6 +13,7 @@ namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\ContactInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\ContactBundle\Model\AddressInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -29,14 +30,6 @@ abstract class ContactDecorator implements ContactInterface
      * @var ContactInterface $person
      */
     protected $contact;
-    
-    public function __construct(ContactInterface $contact = null)
-    {
-    	if ($contact !== null)
-    	{
-    		$this->setContact($contact);
-    	}
-    }
     
     /**
      * Get id
@@ -70,7 +63,15 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getAddress()
     {
-    	return $this->decoratedGetMethod('getAddress', null);
+    	return $this->getContact()->getAddress();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setAddress(AddressInterface $address)
+    {
+    	return $this->getContact()->setAddress($address);
     }
     
     /**
@@ -78,7 +79,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getEmail()
     {
-    	return $this->decoratedGetMethod('getEmail', '');
+    	return $this->getContact()->getEmail();
     }
     
     /**
@@ -86,7 +87,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getFax()
     {
-        return $this->decoratedGetMethod('getFax', '');
+        return $this->getContact()->getFax();
     }
     
     /**
@@ -94,7 +95,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getPhones()
     {
-    	return $this->decoratedGetMethod('getPhones', new ArrayCollection());
+    	return $this->getContact()->getPhones();
     }
     
     /**
@@ -102,7 +103,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getName()
     {
-    	return $this->decoratedGetMethod('getName', '');
+    	return $this->getContact()->getName();
     }
     
     /**
@@ -110,7 +111,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function __toString()
     {
-        return $this->decoratedGetMethod('__toString', '');
+        return $this->getContact()->__toString();
     }
     
     /**

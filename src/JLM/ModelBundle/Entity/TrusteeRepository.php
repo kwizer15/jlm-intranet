@@ -16,10 +16,11 @@ class TrusteeRepository extends SearchRepository
 	public function getList($limit,$offset)
 	{
 		$qb = $this->createQueryBuilder('a')
-			->select('a,b,c')
-			->leftJoin('a.address','b')
-			->leftJoin('b.city','c')
-			->orderBy('a.name','ASC')
+			->select('a,b,c,d')
+			->leftJoin('a.contact','b')
+			->leftJoin('b.address','c')
+			->leftJoin('c.city','d')
+			->orderBy('b.name','ASC')
 			->setFirstResult($offset)
 			->setMaxResults($limit);
 		return $qb->getQuery()->getResult();
