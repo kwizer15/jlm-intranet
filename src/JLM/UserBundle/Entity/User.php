@@ -22,12 +22,6 @@ class User extends BaseUser implements ContactInterface
      * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\ContactInterface")
      */
     private $contact;
-    
-    public function __construct()
-    {
-        $this->setContact($contact);
-        parent::__construct();
-    }
 
     /**
      * Set contact
