@@ -88,4 +88,50 @@ class WorkRepository extends InterventionRepository
 		;
 		return $qb->getQuery()->getSingleScalarResult();
 	}
+	
+	/**
+	 *
+	 * @param string $query
+	 * @param int $limit
+	 * @return array
+	 * @todo Corrections for work entity
+	 */
+	public function getArray($query, $limit = 8)
+	{
+		$qb = $this->createQueryBuilder('a')
+		    ->leftJoin('a.door','b')
+		    ->leftJoin('b.site','c')
+		    ->leftJoin('c.address','d')
+		    ->leftJoin('d.city','e')
+		    ->leftJoin('a.quote','f')
+		    ->leftJoin('f.quote','g')
+			->where('b.street LIKE :query')
+			->where('c.street LIKE :query')
+			->orWhere('e.name LIKE :query')
+			->orWhere('g.number LIKE :query')
+			->orWhere('a.reason LIKE :query')
+			->orderBy('a.name','ASC')
+			->setParameter('query', '%'.$query.'%')
+		;
+		$res = $qb->getQuery()->getArrayResult();
+	
+		return $res;
+	}
+	
+	/**
+	 *
+	 * @param int $id
+	 * @return array|null
+	 * @todo Corrections for work entity
+	 */
+	public function getByIdToArray($id)
+	{
+		$qb = $this->createQueryBuilder('a')
+		->where('a.id = :id')
+		->setParameter('id', $id)
+		;
+		$res = $qb->getQuery()->getArrayResult();
+	
+		return $res[0];
+	}
 }

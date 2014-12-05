@@ -19,6 +19,7 @@ use JLM\DailyBundle\Form\Type\ExternalBillType;
 use JLM\DailyBundle\Form\Type\InterventionCancelType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\CommerceBundle\Entity\QuoteVariant;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Work controller.
@@ -27,6 +28,46 @@ use JLM\CommerceBundle\Entity\QuoteVariant;
  */
 class WorkController extends AbstractInterventionController
 {
+	/**
+	 * @Route("/", name="jlm_daily_work")
+	 */
+	public function indexAction()
+	{
+		$request = $this->getRequest();
+		if (!$request->isXmlHttpRequest())
+		{
+			return $this->redirect($this->generateUrl('work_list'));
+		}
+		
+		$query = $request->get('q','');
+		$pageLimit = $request->get('page_limit',10);
+		$om = $this->get('doctrine')->getManager();
+		$repo = $om->getRepository('JLMDailyBundle:Work');
+		$entities = $repo->getArray($query, $pageLimit);
+		
+		return new JsonResponse(array('works' => $entities));
+		
+	}
+	
+	/**
+	 * @Route("/{id}", name="jlm_daily_work_show")
+	 */
+	public function indexAction($id)
+	{
+		$request = $this->getRequest();
+		if (!$request->isXmlHttpRequest())
+		{
+			return $this->redirect($this->generateUrl('work_show', array('id'=>$id)));
+		}
+	
+		$om = $this->get('doctrine')->getManager();
+		$repo = $om->getRepository('JLMDailyBundle:Work');
+		$entity = $repo->getByIdToArray($id);
+	
+		return new JsonResponse(array($entity));
+	
+	}
+	
 	/**
 	 * @Route("/list", name="work_list")
 	 * @Route("/list/{page}", name="work_list_page")

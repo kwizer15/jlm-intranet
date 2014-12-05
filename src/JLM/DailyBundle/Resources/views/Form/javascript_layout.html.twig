@@ -1,0 +1,56 @@
+{% block jlm_daily_work_select_javascript %}
+    <script type="text/javascript">
+        $field = $('#{{ id }}');
+
+        var $configs = {{ configs|json_encode|raw }};
+
+        $configs = $.extend($configs, {
+        	minimumInputLength: 1,
+        	ajax: {
+        		url: "{{ path('jlm_daily_work') }}",
+        		dataType: "json",
+        		data: function (term, page) {
+        			return {
+        				q: term,
+        				page_limit: 10
+        			};
+        		},
+        		results: function (data, page) {
+    	        	return {
+    	           		results: data.works
+    	           	};
+    	        }
+        	},
+        	{% if value is not empty %}
+        	initSelection: function(element, callback) {
+        		var id = $(element).val();
+        		if (id!=="") {
+        			$.ajax("{{ path('jlm_daily_work_show') }}", {
+        				dataType: "json",
+        				data: {
+        					id: {{ value }}
+        				}
+        			}).done(function(data) { callback(data); });
+        		}
+        	},
+        	{% endif %}
+	        formatResult: function (item) {
+	        	return "<strong>Travaux #" + item.id + "</strong>"
+	        	     + "<br>" + item.door.type.name + " / " + item.door.location
+	        	     + "<br>" + item.door.street
+	        	     + " " + item.door.site.address.city.zip + " " + item.door.site.address.city.name
+	        	     + "<br>" + item.reason;
+	        },
+	
+	        formatSelection: function (item) {
+				return "Travaux #" + item.id;
+	        },
+	        
+	        formatNoMatches: function(term) { return "Pas de résultat pour \"" + term + "\""; },
+	        
+	        formatSearching: function() { return "Recherche..."; }
+        });
+
+        $field.select2($configs);
+    </script>
+{% endblock %}
