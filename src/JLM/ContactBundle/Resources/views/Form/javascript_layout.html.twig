@@ -132,11 +132,8 @@
         	initSelection: function(element, callback) {
         		var id = $(element).val();
         		if (id!=="") {
-        			$.ajax("{{ path('jlm_contact_contact_show') }}", {
+        			$.ajax("{{ path('jlm_contact_contact_show',{'id':value}) }}", {
         				dataType: "json",
-        				data: {
-        					id: {{ value }}
-        				}
         			}).done(function(data) { callback(data); });
         		}
         	},

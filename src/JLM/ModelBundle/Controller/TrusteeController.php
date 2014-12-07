@@ -111,7 +111,6 @@ class TrusteeController extends Controller
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager(); 
-            $em->persist($entity->getAddress());
             if ($entity->getBillingAddress() !== null)
             {
           	    $em->persist($entity->getBillingAddress());

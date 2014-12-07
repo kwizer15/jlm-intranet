@@ -4,9 +4,10 @@
 <div class="row-fluid">
 	<div class="span4">
 		<address>
-{% include 'JLMModelBundle:Helpers:address.html.twig' with {'address':entity.address} %}
-			{% if entity.phone %}<br>Tel : {% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone':entity.phone} %}{% endif %}
-			{% if entity.fax %}<br>Fax : {% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone':entity.fax} %}{% endif %}
+            {% include 'JLMModelBundle:Helpers:address.html.twig' with {'address':entity.address} %}
+              {% for phone in entity.phones %}
+            	<br>{{ phone }}
+              {% endfor %}
 			{% if entity.email %}<br>e-mail : <a href="mailto:{{ entity.email }}">{{ entity.email }}</a>{% endif %}
 		</address>
 	</div>
@@ -26,6 +27,6 @@
 <div class="form-actions">
 	<a href="{{ path('trustee') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
 	<a href="{{ path('trustee_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
-	<a href="{{ path('site_new_id', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter une affaire</a>
+	<a href="{{ path('site_new', { 'trustee': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter une affaire</a>
 </div>
 {% endblock %}

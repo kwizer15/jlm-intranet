@@ -151,11 +151,11 @@
         	},
         	{% endif %}
 	        formatResult: function (item) {
-	        	return item.name;
+	        	return item.contact.name;
 	        },
 	
 	        formatSelection: function (item) {
-				return item.name;
+				return item.contact.name;
 	        },
 	        formatNoMatches: function(term) { return "Pas de résultat pour \"" + term + "\""; },
 	        

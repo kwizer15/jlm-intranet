@@ -89,7 +89,7 @@ class QuoteController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$vat = $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
     	$entity = Quote::createFromAskQuote($askquote);
-    	$entity->setFollowerCp($user->getPerson()->getName());
+    	$entity->setFollowerCp($user->getContact()->getName());
     	$entity->setVatTransmitter($vat);
     	
     	$form   = $this->createNewForm($entity);

@@ -75,7 +75,7 @@ class SiteController extends Controller
         $entity = new Site();
         $form   = $this->createForm(new SiteType(), $entity);
         $em = $this->get('doctrine')->getManager();
-        $form->get('trustee')->setData($em->getRepository('JLMModelBundle:Trsutee')->find($trustee));
+        $form->get('trustee')->setData($em->getRepository('JLMModelBundle:Trustee')->find($trustee));
 
         return array(
             'entity' => $entity,
