@@ -1,0 +1,207 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}JLM{% endblock %}
+
+{% block stylesheets %}
+	{% stylesheets
+		'bundles/jlmdefault/css/bootstrap.css'
+		'bundles/jlmdefault/css/bootstrap-responsive.css'
+		'bundles/jlmdefault/js/select2-3.4.5/select2.css'
+		filter='cssrewrite'
+		 %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css">
+	{% stylesheets '@JLMDefaultBundle/Resources/public/css/style.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+	{% if form is defined %}{{ form_stylesheet(form) }}{% endif %}
+	{% if edit_form is defined %}{{ form_stylesheet(edit_form) }}{% endif %}
+{% endblock %}
+
+{% block body %}
+	<div id="modals">
+      {% block modals %}
+      {% endblock modals %}
+      </div>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+	        <div class="container">
+	        {# Responsive #}
+		        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+		           <span class="icon-bar"></span>
+		           <span class="icon-bar"></span>
+		           <span class="icon-bar"></span>
+	         	</a>
+	         	<a href="{{ path('default') }}" class="brand">JLM</a>
+	         	<div class="nav-collapse collapse">
+	      {% block header %}
+	      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	      	
+			{% block navigation %}
+			<ul class="nav navbar-nav">
+			    <li><a href="{{ path('trustee') }}">Saisie</a></li>
+		        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Bureau <b class="caret"></b></a>
+		        	<ul class="dropdown-menu">
+                        <li class="dropdown-submenu">
+		        			<a tabindex="-1" href="{{ path('quote') }}">Devis</a>
+		        			<ul class="dropdown-menu">
+		        				<li class="dropdown-submenu">
+		        					<a tabindex="-1" href="{{ path('askquote') }}">Demandes</a>
+		        					<ul class="dropdown-menu">
+		        						<li><a href="{{ path('askquote_new') }}"><i class="icon-plus-sign"></i> Nouvelle demande de devis</a></li>
+		        						<li class="divider"></li>
+		        						{% include 'JLMOfficeBundle:Askquote:sidebar.html.twig' %}
+		        					</ul>
+		        				</li>
+		        				<li class="divider"></li>
+		        			{% include 'JLMCommerceBundle:Quote:sidebar.html.twig' %}
+		        			</ul>
+		        		</li>
+		        		<li class="dropdown-submenu">
+		        			<a tabindex="-1" href="{{ path('order') }}">Fiches travaux</a>
+		        			<ul class="dropdown-menu">
+		        			{#	<li><a href="{{ path('order_new') }}"><i class="icon-plus-sign"></i> Nouvelle fiche</a></li>
+								<li class="divider"></li> #}
+								{% include 'JLMOfficeBundle:Order:sidebar.html.twig' %} 
+		        			</ul>
+		        		</li>
+                        <li class="dropdown-submenu">
+		        			<a tabindex="-1" href="{{ path('bill') }}">Facture</a>
+		        			<ul class="dropdown-menu">
+				        		<li><a href="{{ path('bill_new') }}"><i class="icon-plus-sign"></i> Nouvelle facture</a></li>
+				        		<li class="divider"></li>
+				        		{% include 'JLMCommerceBundle:Bill:sidebar.html.twig' %}
+		        			</ul>
+		        		</li>
+                        <li class="dropdown-submenu">
+		        			<a tabindex="-1" href="{{ path('fees') }}">Redevances</a>
+		        			<ul class="dropdown-menu">
+		        				<li><a href="{{ path('fees') }}"><i class="icon-list"></i> Liste</a></li>
+		        			</ul>
+		        		</li>
+		        	</ul>
+		        <li><a href="{{ path('intervention_today') }}">Journal de bord</a></li>
+		        {# Emetteurs #}
+		        <li class="dropdown">
+		            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestion JCM <b class="caret"></b></a>
+		        	<ul class="dropdown-menu">
+		        		<li><a href="{{ path('transmitter_ask_new') }}">Nouvelle demande</a></li>
+		        		<li><a href="{{ path('transmitter_ask_untreated') }}">Demandes non traitées</a></li>
+		        		<li><a href="{{ path('transmitter_attribution') }}">Liste des attributions</a></li>
+		        	</ul>
+		        </li>
+		        <li class="dropdown">
+		            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Etats <b class="caret"></b></a>
+		        	<ul class="dropdown-menu">
+		        		<li><a href="{{ path('state_top') }}">Top dépannage</a></li>
+		        		<li><a href="{{ path('state_technicians') }}">Techniciens</a></li>
+		        		<li><a href="{{ path('state_maintenance') }}">Entretiens</a></li>
+		        		<li><a href="{{ path('state_contracts') }}">Contrats</a></li>
+		        		<li><a href="{{ path('state_transmitters') }}">Émetteurs</a></li>
+		        	</ul>
+		        </li>
+			  {% endblock navigation %}
+			</ul>
+			<ul class="nav navbar-nav pull-right">
+				<li><a href="https://github.com/jlm-entreprise/jlm-intranet/issues?state=open">Signaler un bug</a></li>
+			</ul>
+			<div class="btn-group pull-right">
+			   
+			   <a href="#" class="btn btn-info navbar-btn dropdown-toggle" data-toggle="dropdown"><i class="icon-user  icon-white"></i> {{ app.user }} <b class="caret"></b></a>
+			   <ul class="dropdown-menu">
+			   		<li><a href="{{ path('fos_user_security_logout') }}"><i class="icon-remove-sign"></i> Déconnexion</a></li>
+			   		<li class="divider"></li>
+			   		<li><a href="{{ path('fos_user_profile_show') }}"><i class="icon-user"></i> Mon profil</a></li>
+			   		<li><a href="{{ path('fos_user_change_password') }}"><i class="icon-lock"></i> Changer mon mot de passe</a></li>  		
+			   </ul>
+			</div>
+			{% endif %}	
+	      {% endblock header %}
+	          </div>
+	      	</div>
+	     </div>
+      </div>   
+      <div class="container-fluid">
+		  {% block container %}
+			<div class="row-fluid">
+			    <div class="span2">    
+				    <ul class="nav nav-list">
+					    {% block sidebar %}
+					  	{% endblock sidebar %}
+					</ul>
+			    </div>
+			    <div class="span10">
+		            {% block content %}
+		            {% endblock content %}
+		            {% block pagination %}
+		            	{% if page is defined and pageTotal is defined and pageRoute is defined %}
+		            	{% set flag = true %}
+							<div class="pagination pagination-centered">
+							    <ul>
+							        <li{% if page == 1 %} class="disabled"{% endif %}><a href="{{ path(pageRoute,{ 'page' : page-1 }) }}">«</a></li>
+									{% for p in range(1,pageTotal) %}
+									{% if (p > page - 3 and p < page + 3) or p == 1 or p == pageTotal or (p < 6 and page < 6) %}
+									<li{% if p == page %} class="active"{% endif %}><a href="{{ path(pageRoute,{ 'page' : p }) }}">{{ p }}</a></li>
+									{% set flag = true %}
+									{% elseif p % 10 == 0 %}
+									<li><a href="{{ path(pageRoute,{ 'page' : p }) }}">{{ p }}</a><li>
+									{% set flag = true %}
+									{% elseif flag %}
+									<li><a href="#">...</a></li>
+									{% set flag = false %}
+									{% endif %}
+									{% endfor %}
+									<li{% if page == pageTotal %} class="disabled"{% endif %}><a href="{{ path(pageRoute,{ 'page' : page+1 }) }}">»</a></li>
+								</ul>
+							</div>
+		            	{% endif %}
+		            {% endblock pagination %}
+			    </div>
+		    </div>
+		  {% endblock container %}
+      </div>
+      <footer>
+          {% block footer %}
+          {% endblock footer %}
+      </footer>
+{% endblock body%}
+
+{% block javascripts %}
+    {% javascripts
+    	'../app/Resources/public/js/jquery-2.0.3.js'
+    	'../app/Resources/public/js/jquery-ui-1.10.3/jquery-ui.js'
+    	'../app/Resources/public/js/hinclude.js'
+    	'../app/Resources/public/js/bootstrap.js'
+    	'../app/Resources/public/js/jquery-ui-1.10.3/i18n/jquery.ui.datepicker-fr.js'
+    	'../app/Resources/public/js/number_format.js'
+    	'../app/Resources/public/js/modalform.js'
+    	'@JLMDefaultBundle/Resources/public/js/highstock.js'
+    	'../app/Resources/public/js/highcharts_init.js'
+    	'@JLMDefaultBundle/Resources/public/js/select2-3.4.5/select2.js'
+    	'@JLMCoreBundle/Resources/public/js/modal_contact.js'
+    	filter='yui_js' %}
+    	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	{% if form is defined %}{{ form_javascript(form) }}{% endif %}
+	{% if edit_form is defined %}{{ form_javascript(edit_form) }}{% endif %}
+{% endblock %}
+
+{% block javascripts_script %}
+$('.autocompletion').autocomplete({
+	source : function(request,response){
+		return $.post(
+			this.element.attr('data-source'),
+			request, 
+			function (data) { response(data);},
+			'json'
+		);
+    },
+    items:12,
+});
+{% endblock %}
+
+{% block javascriptappend %}
+{# z-index pour appartition dans une modal #}
+{#$('.ui-autocomplete, .modal .datepicker, .select2-input').css('z-index','15000'); #}
+{% endblock %}
