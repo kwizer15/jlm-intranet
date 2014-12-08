@@ -149,7 +149,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      */
     public function setPayer(PayerInterface $payer = null)
     {
-        $this->payer = $payer;
+        $this->trustee = $payer;
     
         return $this;
     }
@@ -161,7 +161,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      */
     public function getPayer()
     {
-        return $this->payer;
+        return $this->trustee;
     }
 
     /**

@@ -21,19 +21,17 @@
     	           	};
     	        }
         	},
-        	{% if value is not empty %}
         	initSelection: function(element, callback) {
         		var id = $(element).val();
         		if (id!=="") {
         			$.ajax("{{ path('jlm_contact_rest_city_get') }}", {
         				dataType: "json",
         				data: {
-        					id: {{ value }}
+        					id: id
         				}
         			}).done(function(data) { callback(data); });
         		}
         	},
-        	{% endif %}
 	        formatResult: function (item) {
 	        	return item.zip + " " + item.name;
 	        },
@@ -74,19 +72,17 @@
     	           	};
     	        }
         	},
-        	{% if value is not empty %}
         	initSelection: function(element, callback) {
         		var id = $(element).val();
         		if (id!=="") {
         			$.ajax("{{ path('jlm_contact_rest_person_get') }}", {
         				dataType: "json",
         				data: {
-        					id: {{ value }}
+        					id: id
         				}
         			}).done(function(data) { callback(data); });
         		}
         	},
-        	{% endif %}
 	        formatResult: function (item) {
 	        	return item.name;
 	        },
@@ -181,19 +177,17 @@
     	           	};
     	        }
         	},
-        	{% if value is not empty %}
         	initSelection: function(element, callback) {
         		var id = $(element).val();
         		if (id!=="") {
         			$.ajax("{{ path('jlm_contact_rest_corporation_get') }}", {
         				dataType: "json",
         				data: {
-        					id: {{ value }}
+        					id: id
         				}
         			}).done(function(data) { callback(data); });
         		}
         	},
-        	{% endif %}
 	        formatResult: function (item) {
 	        	return item.name;
 	        },

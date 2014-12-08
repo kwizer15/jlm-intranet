@@ -10,18 +10,7 @@
 	<li><a href="{{ path('transmitter_ask_new') }}"><i class="icon-plus-sign"></i> Nouvelle commandes d'émetteurs</a></li>
 	<li class="divider"></li>
 	<li class="nav-header">États</li>
-	{{ render(controller('JLMTransmitterBundle:Ask:sidebar')) }}
+	{% include 'JLMTransmitterBundle:Ask:sidebar.html.twig' %}
 </ul>
 {% endblock sidebar %}
 
-{% block javascripts %}
-{{ parent() }}
-<script src="{{ asset("bundles/jlmoffice/js/ask.js") }}"></script>
-{% endblock %}
-
-{% block javascripts_script %}
-{{ parent() }}
-$(".askForm").ask({
-	 autoSource:'{{ path('autocomplete') }}',
-});
-{% endblock javascripts_script %}

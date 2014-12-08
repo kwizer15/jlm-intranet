@@ -1,0 +1,9 @@
+
+{% block _jlm_transmitterbundle_asktype_javascript %}
+{{ form_javascript(form) }}
+<script>
+$("#{{ id }}_site").on("autocompleteselect", function(event,ui) {
+  $("#{{ id }}_trustee").select2("val",ui.item.trustee);
+});
+</script>
+{% endblock %}
