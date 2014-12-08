@@ -199,9 +199,10 @@ $('.autocompletion').autocomplete({
     },
     items:12,
 });
+
 {% endblock %}
 
 {% block javascriptappend %}
 {# z-index pour appartition dans une modal #}
-{#$('.ui-autocomplete, .modal .datepicker, .select2-input').css('z-index','15000'); #}
+$('.ui-autocomplete, .ui-datepicker').css('z-index','15000');
 {% endblock %}

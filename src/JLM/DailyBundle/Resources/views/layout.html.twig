@@ -15,10 +15,11 @@
 	    <li><a href="{{ path('shifting_list', {'id':5}) }}"><i class="icon-user"></i> Christophe</a></li>
 	    <li><a href="{{ path('shifting_list', {'id':4}) }}"><i class="icon-user"></i> Oscar</a></li>
 	    <li class="nav-header">Ajouter</li>
-	    <li><a href="#modalNewShift" data-toggle="modal"><i class="icon-plus-sign"></i> Récupération matériel</a>
-		{{ render(controller('JLMDailyBundle:Equipment:new')) }}</li>
-	    <li><a href="#modalNewStandby" data-toggle="modal"><i class="icon-plus-sign"></i> Astreinte</a>
-		{{ render(controller('JLMDailyBundle:Standby:new')) }}</li>
+	    <li><a id="shift-new" data-toggle="modal" href="{{ path('equipment_new') }}"><i class="icon-plus-sign"></i> Récupération matériel</a>
+		{# render(controller('JLMDailyBundle:Equipment:new')) #}</li>
+	    <li><a id="standby-new" data-toggle="modal" href="{{ path('standby_new') }}"><i class="icon-plus-sign"></i> Astreinte</a>
+		{# render(controller('JLMDailyBundle:Standby:new')) #}
+		</li>
 		<li><a href="{{ path('standby') }}"><i class="icon-list"></i> Liste des astreintes</a>
 	    <li class="nav-header">Interventions</li>
 		{# render(controller('JLMDailyBundle:Default:datesearch')) #}
@@ -36,5 +37,7 @@
 $(".interventionForm").intervention({
 	 autoSource:'{{ path('autocomplete') }}'
 });
+$("#standby-new").formModal();
+$("#shift-new").formModal();
 </script>
 {% endblock %}

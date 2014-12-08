@@ -92,10 +92,10 @@
 							<dd>
 							<address>{{ entity.trustee.address|nl2br }}</address>
 							</dd>
-							<dt>Téléphone</dt>
-							<dd>{{ entity.trustee.phone }}</dd>
-							<dt>Fax</dt>
-							<dd>{{ entity.trustee.fax }}</dd>
+							<dt>Téléphones</dt>
+							{% for phone in entity.trustee.phones %}
+							<dd>{{ phone }}</dd>
+							{% endfor %}
 						</dl>
 					</div>
 					<div class="tab-pane" id="quotes">

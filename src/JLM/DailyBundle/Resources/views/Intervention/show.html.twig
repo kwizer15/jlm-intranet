@@ -109,10 +109,10 @@
 						<dd>
 						<address>{{ entity.door.trustee.address|nl2br }}</address>
 						</dd>
-						<dt>Téléphone</dt>
-						<dd>{{ entity.door.trustee.phone }}</dd>
-						<dt>Fax</dt>
-						<dd>{{ entity.door.trustee.fax }}</dd>
+						<dt>Téléphones</dt>
+						{% for phone in entity.door.trustee.phones %}
+						<dd>{{ phone }}</dd>
+						{% endfor %}
 					</dl>
 				</div>
 				<div class="tab-pane" id="others">
