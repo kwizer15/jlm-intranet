@@ -961,7 +961,7 @@ class Door implements BayInterface, InstallationInterface
      */
     public function __toString()
     {
-    	return $this->getType().' - '.$this->getLocation().chr(10).$this->getProperty();
+    	return $this->getType().' - '.$this->getLocation().chr(10).$this->getAdministrator();
     }
     
     /**
