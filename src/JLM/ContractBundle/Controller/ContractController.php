@@ -29,96 +29,87 @@ class ContractController extends Controller
     /**
      * Lists all Contract entities.
      *
-     * @Template()
      * @deprecated not used
-     * @Secure(roles="ROLE_USER")
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('JLMContractBundle:Contract')->findAll();
+    	$manager = $this->container->get('jlm_contract.contract_manager');
+    	$manager->secure('ROLE_USER');
+        $entities = $manager->getRepository()->findAll();
 
-        return array('entities' => $entities);
+        return $manager->renderResponse('JLMContractBundle:Contract:index.html.twig', array('entities' => $entities));
     }
 
     /**
      * Finds and displays a Contract entity.
      *
-     * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function showAction(Contract $entity)
+    public function showAction($id)
     {
-        return array(
-            'entity'      => $entity,
-        );
+    	$manager = $this->container->get('jlm_contract.contract_manager');
+    	$manager->secure('ROLE_USER');
+    	$entity = $manager->getEntity($id);
+    	
+        return $manager->renderResponse('JLMContractBundle:Contract:show.html.twig', array('entity' => $entity));
     }
     
     /**
      * Displays a form to create a new Contract entity.
-     *
-     * @Template()
-     * @Secure(roles="ROLE_USER")
      */
-    public function newAction(Door $door)
+    public function newAction()
     {
-        $entity = new Contract();
-        if (!empty($door))
-        {
-        	$entity->setDoor($door);
-        	$entity->setTrustee($door->getSite()->getTrustee());
-        }
-  
-        $entity->setBegin(new \DateTime);
-        $form   = $this->createNewForm($entity);
-
-        return array(
-            'entity' => $entity,
+    	$manager = $this->container->get('jlm_contract.contract_manager');
+    	$manager->secure('ROLE_USER');
+        $form   = $manager->createNewForm();
+        $template = $manager->getRequest()->isXmlHttpRequest()
+        		? 'JLMContractBundle:Contract:modal_new.html.twig'
+        		: 'JLMContractBundle:Contract:new.html.twig'
+          		;
+          		
+        return $manager->renderResponse($template, array(
             'form'   => $form->createView()
-        );
+        ));
     }
 
     /**
      * Creates a new Contract entity.
-     *
-     * @Template("JLMContractBundle:Contract:new.html.twig")
-     * @Secure(roles="ROLE_USER")
      */
-    public function createAction(Request $request)
+    public function createAction()
     {
-        $entity  = new Contract();
-        $form    = $this->createNewForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid())
-        {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            
-            // Temporaire : se fera jour par jour
-            // ***********************************
-            if ($entity->getInProgress())
-            {
-            	$fee = new Fee();
-            	$fee->addContract($entity);
-            	$fee->setTrustee($entity->getTrustee());
-            	$fee->setAddress($entity->getDoor()->getSite()->getAddress()->toString());
-            	$fee->setPrelabel($entity->getDoor()->getSite()->getBillingPrelabel());
-            	$fee->setVat($entity->getDoor()->getSite()->getVat());
-            	$em->persist($fee);
-            }
-            //***************************************
-            
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('door_show', array('id' => $entity->getDoor()->getId())));
-            
+    	$manager = $this->container->get('jlm_contract.contract_manager');
+    	$manager->secure('ROLE_USER');
+    	$form   = $manager->createNewForm();
+    	if ($manager->getHandler($form)->process('POST'))
+    	{
+    		// Temporaire : se fera jour par jour
+    		// ***********************************
+    		$entity = $form->getData();
+    		if ($entity->getInProgress())
+    		{
+	    		$fee = new Fee();
+	    		$fee->addContract($entity);
+	    		$fee->setTrustee($entity->getTrustee());
+	    		$fee->setAddress($entity->getDoor()->getSite()->getAddress()->toString());
+	    		$fee->setPrelabel($entity->getDoor()->getSite()->getBillingPrelabel());
+	    		$fee->setVat($entity->getDoor()->getSite()->getVat());
+	    		$em = $manager->getObjectManager();
+	    		$em->persist($fee);
+	    		$em->flush();
+    		}
+    		//***************************************
+    		
+            return $manager->redirect('door_show', array('id' => $entity->getDoor()->getId()));
         }
 
-        return array(
-            'entity' => $entity,
+        $template = $manager->getRequest()->isXmlHttpRequest()
+        		? 'JLMContractBundle:Contract:modal_new.html.twig'
+        		: 'JLMContractBundle:Contract:new.html.twig'
+          		;
+          		
+        return $manager->renderResponse($template, array(
             'form'   => $form->createView()
-        );
+        ));
     }
 
     /**

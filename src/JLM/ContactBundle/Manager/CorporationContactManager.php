@@ -13,6 +13,7 @@ namespace JLM\ContactBundle\Manager;
 
 
 use JLM\CoreBundle\Manager\BaseManager as Manager;
+use JLM\ContactBundle\Form\Type\CorporationContactType;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -41,12 +42,9 @@ class CorporationContactManager extends Manager
 	
 	private function setterFromRequest($param, $repoName)
 	{
-		$id = $this->request->get($param);
-		if ($id)
+		if ($id = $this->request->get($param))
 		{
-			$entity = $this->om->getRepository($repoName)->find($id);
-	
-			return $entity;
+			return $this->om->getRepository($repoName)->find($id);
 		}
 	
 		return null;

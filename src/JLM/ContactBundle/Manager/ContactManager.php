@@ -63,11 +63,6 @@ class ContactManager extends Manager
 		return $entity;
 	}
 	
-	public function createNotFoundException($message = 'Not Found', \Exception $previous = null)
-	{
-		return new NotFoundHttpException($message, $previous);
-	}
-	
 	protected function getFormParam($entity)
 	{
 		$id = $entity->getId();

@@ -11,7 +11,7 @@ jlm_contract_contract_show:
     methods: [GET]
     
 jlm_contract_contract_new:
-    path:   /contract/new/{id}
+    path:   /contract/new
     defaults:  { _controller: "JLMContractBundle:Contract:new" }
     methods: [GET]
  

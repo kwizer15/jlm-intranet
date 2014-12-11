@@ -17,6 +17,8 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -30,6 +32,15 @@ class BaseManager extends ContainerAware implements ManagerInterface
 	
 	protected $router;
 
+	public function secure($role)
+	{
+		if (false === $this->container->get('security.context')->isGranted($role))
+		{
+			throw new AccessDeniedException();
+		}
+	}
+	
+	
 	public function getEntity($id = null)
 	{
 		if ($id === null)
@@ -72,7 +83,7 @@ class BaseManager extends ContainerAware implements ManagerInterface
 		return $this->container->get('templating')->renderResponse($view, $parameters, $response);
 	}
 
-	private function setterFromRequest($param, $repoName)
+	protected function setterFromRequest($param, $repoName)
 	{
 		$id = $this->request->get($param);
 		if ($id)
@@ -98,14 +109,19 @@ class BaseManager extends ContainerAware implements ManagerInterface
 					)
 			);
 			$form->add('submit','submit', array('label' => $param['label']));
-			
-			return $form;
+
+			return $this->populateForm($form);;
 		}
 		
 		throw new LogicException('HTTP request method must be POST, PUT or DELETE only');
 	}
 	
-	public function createNewForm($entity)
+	public function populateForm($form)
+	{
+		return $form;
+	}
+	
+	public function createNewForm($entity = null)
 	{
 		return $this->createForm('POST', $entity);
 	}
@@ -118,6 +134,11 @@ class BaseManager extends ContainerAware implements ManagerInterface
 	public function createDeleteForm($entity)
 	{
 		return $this->createForm('DELETE', $entity);
+	}
+
+	public function createNotFoundException($message = 'Not Found', \Exception $previous = null)
+	{
+		return new NotFoundHttpException($message, $previous);
 	}
 
 	public function redirectReferer()
