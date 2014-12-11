@@ -83,6 +83,7 @@ class ContractController extends Controller
     	if ($manager->getHandler($form)->process('POST'))
     	{
     		// Temporaire : se fera jour par jour
+    		// @todo Mettre ça dans onSuccess()
     		// ***********************************
     		$entity = $form->getData();
     		if ($entity->getInProgress())
