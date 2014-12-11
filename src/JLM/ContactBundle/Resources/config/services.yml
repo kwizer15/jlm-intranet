@@ -3,6 +3,8 @@ parameters:
     jlm_contact.manager.contact.class: JLM\ContactBundle\Manager\ContactManager
     jlm_contact.model.corporationcontact.class: JLM\ContactBundle\Entity\CorporationContact
     jlm_contact.manager.corporationcontact.class: JLM\ContactBundle\Manager\CorporationContactManager
+    jlm_contact.model.city.class: JLM\ContactBundle\Entity\City
+    jlm_contact.manager.city.class: JLM\CoreBundle\Manager\BaseManager
 
 services:
     jlm_contact.contact_manager:
@@ -15,6 +17,13 @@ services:
     jlm_contact.corporationcontact_manager:
         class: "%jlm_contact.manager.corporationcontact.class%"
         arguments: ["%jlm_contact.model.corporationcontact.class%"]
+        calls:
+            - [ setContainer, ["@service_container"]]
+            - [ setServices ]
+
+    jlm_contact.city_manager:
+        class: "%jlm_contact.manager.city.class%"
+        arguments: ["%jlm_contact.model.city.class%"]
         calls:
             - [ setContainer, ["@service_container"]]
             - [ setServices ]

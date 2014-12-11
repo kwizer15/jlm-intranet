@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the JLMContactBundle package.
+ * This file is part of the JLMCoreBundle package.
 *
 * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
 *
@@ -9,12 +9,10 @@
 * file that was distributed with this source code.
 */
 
-namespace JLM\ContactBundle\Manager;
+namespace JLM\CoreBundle\Manager;
 
-use JLM\ContactBundle\Entity\CorporationContact;
-use JLM\ContactBundle\Form\Type\CorporationContactType;
-use Symfony\Component\DependencyInjection\Exception\LogicException;
 use JLM\CoreBundle\Form\Handler\DoctrineHandler;
+use Symfony\Component\DependencyInjection\Exception\LogicException;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +20,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-abstract class BaseManager extends ContainerAware
+class BaseManager extends ContainerAware implements ManagerInterface
 {
 	protected $class;
 
@@ -32,11 +30,25 @@ abstract class BaseManager extends ContainerAware
 	
 	protected $router;
 
-	abstract public function getEntity($id = null);
+	public function getEntity($id = null)
+	{
+		if ($id === null)
+		{
+			return null;
+		}
+		
+		return $this->getRepository()->find($id);
+	}
 	
-	abstract protected function getFormParam($entity);
+	protected function getFormParam($entity)
+	{
+		return array();
+	}
 	
-	abstract protected function getFormType($type = null);
+	protected function getFormType($type = null)
+	{
+		return 'form';
+	}
 
 	public function __construct($class)
 	{

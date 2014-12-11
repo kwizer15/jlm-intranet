@@ -1,5 +1,5 @@
 <?php
-namespace JLM\ContactBundle\Manager;
+namespace JLM\CoreBundle\Manager;
 
 interface ManagerInterface
 {

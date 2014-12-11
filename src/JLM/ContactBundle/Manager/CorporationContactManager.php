@@ -11,11 +11,12 @@
 
 namespace JLM\ContactBundle\Manager;
 
-use JLM\ContactBundle\Form\Type\CorporationContactType;
+
+use JLM\CoreBundle\Manager\BaseManager as Manager;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class CorporationContactManager extends BaseManager
+class CorporationContactManager extends Manager
 {		
 	public function getEntity($id = null)
 	{

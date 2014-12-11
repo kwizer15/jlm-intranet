@@ -11,10 +11,12 @@
 
 namespace JLM\ContactBundle\Manager;
 
+use JLM\CoreBundle\Manager\BaseManager as Manager;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ContactManager extends BaseManager
+class ContactManager extends Manager
 {
 	protected function getObjectByType($type)
 	{
@@ -59,6 +61,11 @@ class ContactManager extends BaseManager
 		}
 
 		return $entity;
+	}
+	
+	public function createNotFoundException($message = 'Not Found', \Exception $previous = null)
+	{
+		return new NotFoundHttpException($message, $previous);
 	}
 	
 	protected function getFormParam($entity)
