@@ -40,16 +40,6 @@ class CorporationContactManager extends Manager
 		return $entity;
 	}
 	
-	private function setterFromRequest($param, $repoName)
-	{
-		if ($id = $this->request->get($param))
-		{
-			return $this->om->getRepository($repoName)->find($id);
-		}
-	
-		return null;
-	}
-	
 	protected function getFormParam($entity)
 	{
 		$id = $entity->getId();
