@@ -43,15 +43,12 @@ abstract class FormHandler
 	/**
 	 * @return bool
 	 */
-	public function process($method)
+	public function process()
 	{
-		if ($method == $this->request->getMethod())
+		$this->form->handleRequest($this->request);
+		if ($this->form->isValid())
 		{
-			$this->form->handleRequest($this->request);
-			if ($this->form->isValid())
-			{
-				return $this->onSuccess();
-			}
+			return $this->onSuccess();
 		}
 		
 		return false;

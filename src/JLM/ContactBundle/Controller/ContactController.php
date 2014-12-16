@@ -25,16 +25,28 @@ class ContactController extends ContainerAware
 	public function editAction($id)
 	{
 		$manager = $this->container->get('jlm_contact.contact_manager');
-		$method = ($id == 'person' || $id == 'company' || $id == 'association') ? 'POST' : 'PUT';
-		$entity = $manager->getEntity($id);
-		$form = $manager->createForm($method, $entity);
-		$process = $manager->getHandler($form, $entity)->process($method);
+		 
+		if (in_array($id, array('person','company','association')))
+		{
+			$type = $id;
+			$id = null;
+			$formName = 'new';
+			$entity = null;
+		}
+		else 
+		{
+			$entity = $manager->getEntity($id);
+			$formName = 'edit';
+			$type = $entity->getType();
+		}
+		$form = $manager->createForm($formName, array('type' => $type, 'entity' => $entity));
+		$process = $manager->getHandler($form, $entity)->process();
 		
 		return $manager->getRequest()->isXmlHttpRequest()
 			? ($process ? $manager->renderJson(array('ok'=>true))
-						: $manager->renderResponse('JLMContactBundle:Contact:modal_new.html.twig', array('form'=>$form->createView(), 'c'=>$entity))) 
-			: ($process ? $manager->redirect('jlm_contact_contact_show', array('id'=>$entity->getId()))
-			            : $manager->renderResponse('JLMContactBundle:Contact:new.html.twig', array('form'=>$form->createView(), 'c'=>$entity)))
+						: $manager->renderResponse('JLMContactBundle:Contact:modal_new.html.twig', array('form'=>$form->createView()))) 
+			: ($process ? $manager->redirect('jlm_contact_contact_show', array('id' => $form->getData()->getId()))
+			            : $manager->renderResponse('JLMContactBundle:Contact:new.html.twig', array('form'=>$form->createView())))
 			;
 	}
 	
@@ -44,21 +56,19 @@ class ContactController extends ContainerAware
 		$request = $manager->getRequest();
 		$ajax = $manager->getRequest()->isXmlHttpRequest();
 		$repo = $manager->getRepository();
-		$entities = $ajax ? $repo->getArray($request->get('q',''), $request->get('page_limit',10))
-		                  : $repo->findAll();
 		
-		return $ajax ? $manager->renderJson(array('contacts' => $entities))
-		                  : $manager->renderResponse('JLMContactBundle:Contact:list.html.twig', array('entities'=>$entities));
+		return $ajax ? $manager->renderJson(array('contacts' => $repo->getArray($request->get('q',''), $request->get('page_limit',10))))
+		                  : $manager->renderResponse('JLMContactBundle:Contact:list.html.twig', array('entities'=>$repo->findAll()));
 	}
     
     public function showAction($id)
     {
     	$manager = $this->container->get('jlm_contact.contact_manager');
-    	$ajax = $manager->getRequest()->isXmlHttpRequest();
-        $entity = $ajax ? $manager->getRepository()->getByIdToArray($id)
-                        : $manager->getEntity($id);
-		return $ajax ? $manager->renderJson($entity)
-		                  : $manager->renderResponse('JLMContactBundle:Contact:show_'.$entity->getType().'.html.twig', array('entity'=>$entity));
+    	$entity = $manager->getEntity($id);
+    	
+		return $manager->getRequest()->isXmlHttpRequest()
+			? $manager->renderJson($manager->getRepository()->getByIdToArray($id))
+		    : $manager->renderResponse('JLMContactBundle:Contact:show_'.$entity->getType().'.html.twig', array('entity'=>$entity));
     }
     
     public function unactiveAction($id)

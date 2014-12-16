@@ -51,9 +51,9 @@ class BaseManager extends ContainerAware implements ManagerInterface
 		return $this->getRepository()->find($id);
 	}
 	
-	protected function getFormParam($entity)
+	protected function getFormParam($name, $options = array())
 	{
-		return array();
+		return null;
 	}
 	
 	protected function getFormType($type = null)
@@ -75,7 +75,7 @@ class BaseManager extends ContainerAware implements ManagerInterface
 
 	public function getRepository()
 	{
-		return $this->om->getRepository($this->class);	// A tester
+		return $this->om->getRepository($this->class);
 	}
 
 	public function renderResponse($view, array $parameters = array(), Response $response = null)
@@ -85,32 +85,28 @@ class BaseManager extends ContainerAware implements ManagerInterface
 
 	protected function setterFromRequest($param, $repoName)
 	{
-		$id = $this->request->get($param);
-		if ($id)
+		if ($id = $this->request->get($param))
 		{
-			$entity = $this->om->getRepository($repoName)->find($id);
-
-			return $entity;
+			return $this->om->getRepository($repoName)->find($id);
 		}
 
 		return null;
 	}
 
-	public function createForm($method, $entity)
+	public function createForm($name, $options = array())
 	{
-		$datas = $this->getFormParam($entity);
-		if (array_key_exists($method, $datas))
+		$param = $this->getFormParam($name, $options);
+		if ($param !== null)
 		{
-			$param = $datas[$method];
-			$form = $this->getFormFactory()->create($param['type'], $entity,
+			$form = $this->getFormFactory()->create($param['type'], $param['entity'],
 					array(
 							'action' => $this->router->generate($param['route'], $param['params']),
-							'method' => $method,
+							'method' => $param['method'],
 					)
 			);
 			$form->add('submit','submit', array('label' => $param['label']));
 
-			return $this->populateForm($form);;
+			return $this->populateForm($form);
 		}
 		
 		throw new LogicException('HTTP request method must be POST, PUT or DELETE only');
@@ -119,21 +115,6 @@ class BaseManager extends ContainerAware implements ManagerInterface
 	public function populateForm($form)
 	{
 		return $form;
-	}
-	
-	public function createNewForm($entity = null)
-	{
-		return $this->createForm('POST', $entity);
-	}
-
-	public function createEditForm($entity)
-	{
-		return $this->createForm('PUT', $entity);
-	}
-
-	public function createDeleteForm($entity)
-	{
-		return $this->createForm('DELETE', $entity);
 	}
 
 	public function createNotFoundException($message = 'Not Found', \Exception $previous = null)

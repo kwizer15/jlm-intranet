@@ -31,10 +31,10 @@ class CorporationContactController extends ContainerAware
 		$manager = $this->container->get('jlm_contact.corporationcontact_manager');
 		$router = $manager->getRouter();	
 		$entity = $manager->getEntity($id);
-		$method = ($id) ? 'PUT' : 'POST';
-		$form = $manager->createForm($method, $entity);
+		$formName = ($id) ? 'edit' : 'new';
+		$form = $manager->createForm($formName, array('entity' => $entity));
 		$ajax = $manager->getRequest()->isXmlHttpRequest();
-		if ($manager->getHandler($form, $entity)->process($method))
+		if ($manager->getHandler($form, $entity)->process())
 		{
 			if ($ajax)
 			{

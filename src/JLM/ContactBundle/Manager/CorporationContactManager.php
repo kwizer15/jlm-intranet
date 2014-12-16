@@ -18,51 +18,64 @@ use JLM\ContactBundle\Form\Type\CorporationContactType;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class CorporationContactManager extends Manager
-{		
-	public function getEntity($id = null)
+{	
+	/**
+	 * {@inheritdoc}
+	 */	
+	protected function getFormParam($name, $options = array())
 	{
-		$entity = $this->getRepository()->find($id);
-		if (!$entity)
+		switch ($name)
 		{
-			$class = $this->class;
-			
-			$entity = new $class();
-			if ($corpo = $this->setterFromRequest('corporation_id', 'JLMContactBundle:Corporation'))
-			{
-				$entity->setCorporation($corpo);
-			}
-			if ($person = $this->setterFromRequest('person_id', 'JLMContactBundle:Person'))
-			{
-				$entity->setContact($person);
-			}
+			case 'new':
+				return array(
+					'method' => 'POST',
+					'route' => 'jlm_contact_corporationcontact_create',
+					'params' => array(),
+					'label' => 'Créer',
+					'type'  => new CorporationContactType(),
+					'entity' => null,
+				);
+			case 'edit':
+				return array(
+					'method' => 'PUT',
+					'route' => 'jlm_contact_corporationcontact_update',
+					'params' => array('id' => $options['entity']->getId()),
+					'label' => 'Modifier',
+					'type'  => new CorporationContactType(),
+					'entity' => $options['entity'],
+				);
+			case 'delete':
+				return array(
+					'method' => 'DELETE',
+					'route' => 'jlm_contact_corporationcontact_delete',
+					'params' => array('id' => $options['entity']->getId()),
+					'label' => 'Supprimer',
+					'type'  => 'form',
+					'entity' => $options['entity'],
+				);
 		}
-		
-		return $entity;
+
+		return parent::getFormParam($name, $options);
 	}
 	
-	protected function getFormParam($entity)
+	/**
+	 * {@inheritdoc}
+	 */
+	public function populateForm($form)
 	{
-		$id = $entity->getId();
-		return array(
-			'POST' => array(
-				'route' => 'jlm_contact_corporationcontact_create',
-				'params' => array(),
-				'label' => 'Créer',
-				'type'  => $this->getFormType(),
-			),
-			'PUT' => array(
-				'route' => 'jlm_contact_corporationcontact_update',
-				'params' => array('id' => $id),
-				'label' => 'Modifier',
-				'type'  => $this->getFormType(),
-			),
-			'DELETE' => array(
-				'route' => 'jlm_contact_corporationcontact_delete',
-				'params' => array('id' => $id),
-				'label' => 'Supprimer',
-				'type' => 'form',
-			),
+		$params = array(
+				'corporation' => 'JLMContactBundle:Corporation',
+				'person' => 'JLMContactBundle:Person',
 		);
+		foreach ($params as $param => $repo)
+		{
+			if ($data = $this->setterFromRequest($param, $repo))
+			{
+				$form->get($param)->setData($data);
+			}
+		}
+	
+		return $form;
 	}
 	
 	public function getEditUrl($id)
@@ -73,10 +86,5 @@ class CorporationContactManager extends Manager
 	public function getDeleteUrl($id)
 	{
 		return $this->router->generate('jlm_contact_corporationcontact_confirmdelete', array('id' => $id));
-	}
-	
-	public function getFormType($type = null)
-	{
-		return new CorporationContactType();
 	}
 }

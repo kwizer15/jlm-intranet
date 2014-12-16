@@ -31,7 +31,7 @@ class DoctrineHandler extends FormHandler
 	 * @param Request $request
 	 * @param ObjectManager $om
 	 */
-	public function __construct(Form $form, Request $request, ObjectManager $om, $entity)
+	public function __construct(Form $form, Request $request, ObjectManager $om, $entity = null)
 	{
 		parent::__construct($form, $request);
 		$this->om = $om;
@@ -51,7 +51,7 @@ class DoctrineHandler extends FormHandler
 				$this->om->remove($this->entity);
 				break;
 			default:
-				$this->om->persist($this->entity);
+				$this->om->persist($this->form->getData());
 		}
 		$this->om->flush();
 		
