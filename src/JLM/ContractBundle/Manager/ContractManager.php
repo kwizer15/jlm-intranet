@@ -14,36 +14,63 @@ namespace JLM\ContractBundle\Manager;
 
 use JLM\CoreBundle\Manager\BaseManager as Manager;
 use JLM\ContractBundle\Form\Type\ContractType;
+use JLM\ContractBundle\Form\Type\ContractStopType;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class ContractManager extends Manager
 {			
-	protected function getFormParam($entity)
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getFormParam($name, $options = array())
 	{
-		$id = ($entity) ? $entity->getId() : 0;
-		return array(
-			'POST' => array(
-				'route' => 'jlm_contract_contract_create',
-				'params' => array(),
-				'label' => 'Créer',
-				'type'  => new ContractType(),
-			),
-			'PUT' => array(
-				'route' => 'jlm_contract_contract_update',
-				'params' => array('id' => $id),
-				'label' => 'Modifier',
-				'type'  => new ContractType(),
-			),
-			'DELETE' => array(
-				'route' => 'jlm_contract_contract_delete',
-				'params' => array('id' => $id),
-				'label' => 'Supprimer',
-				'type' => 'form',
-			),
-		);
+		switch ($name)
+		{
+			case 'new':
+				return array(
+					'method' => 'POST',
+					'route' => 'jlm_contract_contract_create',
+					'params' => array(),
+					'label' => 'Créer',
+					'type'  => new ContractType(),
+					'entity' => null,
+				);
+			case 'edit':
+				return array(
+					'method' => 'PUT',
+					'route' => 'jlm_contract_contract_update',
+					'params' => array('id' => $options['entity']->getId()),
+					'label' => 'Modifier',
+					'type'  => new ContractType(),
+					'entity' => $options['entity'],
+				);
+			case 'delete':
+				return array(
+					'method' => 'DELETE',
+					'route' => 'jlm_contract_contract_delete',
+					'params' => array('id' => $options['entity']->getId()),
+					'label' => 'Supprimer',
+					'type'  => 'form',
+					'entity' => $options['entity'],
+				);
+			case 'stop':
+				return array(
+						'method' => 'PUT',
+						'route' => 'jlm_contract_contract_update',
+						'params' => array('id' => $options['entity']->getId()),
+						'label' => 'Arrêter',
+						'type'  => new ContractStopType(),
+						'entity' => $options['entity'],
+				);
+		}
+	
+		return parent::getFormParam($name, $options);
 	}
 	
+	/**
+	 * {@inheritdoc}
+	 */
 	public function populateForm($form)
 	{
 		$door = $this->setterFromRequest('door', 'JLMModelBundle:Door');

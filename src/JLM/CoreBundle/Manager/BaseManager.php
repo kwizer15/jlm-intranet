@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\EventDispatcher\Event;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -161,6 +162,11 @@ class BaseManager extends ContainerAware implements ManagerInterface
 	public function getSession()
     {
     	return $this->container->get('session');
+    }
+    
+    public function disptach($eventName, Event $event = null)
+    {
+    	return $this->container->get('dispatcher')->dispatch($eventName, $event);
     }
 
 	public function getHandler($form, $entity)

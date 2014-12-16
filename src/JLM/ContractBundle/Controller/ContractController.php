@@ -20,6 +20,8 @@ use JLM\ModelBundle\Entity\Door;
 use JLM\FeeBundle\Entity\Fee;
 use JLM\ContractBundle\Form\Type\ContractType;
 use JLM\ContractBundle\Form\Type\ContractStopType;
+use JLM\ContractBundle\Event\ContractEvent;
+use JLM\ContractBundle\JLMContractEvents;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -82,23 +84,8 @@ class ContractController extends Controller
     	$form   = $manager->createNewForm();
     	if ($manager->getHandler($form)->process('POST'))
     	{
-    		// Temporaire : se fera jour par jour
-    		// @todo Mettre ça dans onSuccess()
-    		// ***********************************
-    		$entity = $form->getData();
-    		if ($entity->getInProgress())
-    		{
-	    		$fee = new Fee();
-	    		$fee->addContract($entity);
-	    		$fee->setTrustee($entity->getTrustee());
-	    		$fee->setAddress($entity->getDoor()->getSite()->getAddress()->toString());
-	    		$fee->setPrelabel($entity->getDoor()->getSite()->getBillingPrelabel());
-	    		$fee->setVat($entity->getDoor()->getSite()->getVat());
-	    		$em = $manager->getObjectManager();
-	    		$em->persist($fee);
-	    		$em->flush();
-    		}
-    		//***************************************
+    		$event = new ContractEvent($form->getData());
+    		$manager->dispatch(JLMContractEvents::AFTER_CONTRACT_CREATE, $event);
     		
             return $manager->redirect('door_show', array('id' => $entity->getDoor()->getId()));
         }

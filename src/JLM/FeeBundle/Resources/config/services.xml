@@ -8,13 +8,13 @@
     <parameters>
         <parameter key="jlm_fee.example.class">JLM\FeeBundle\Example</parameter>
     </parameters>
-
+-->
     <services>
-        <service id="jlm_fee.example" class="%jlm_fee.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+    	<service id="jlm_fee.contract_subscriber" class="JLM\FeeBundle\EventListener\ContractSubscriber">
+    	    <argument type="service" id="doctrine.orm.entity_manager"/>
+            <tag name="kernel.event_subscriber" />
         </service>
+      
     </services>
-    -->
+
 </container>
