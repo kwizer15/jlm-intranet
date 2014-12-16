@@ -16,5 +16,5 @@ namespace JLM\ContractBundle;
  */
 final class JLMContractEvents
 {
-	const AFTER_CONTRACT_CREATE = "acme_upload.after_file_upload";
+	const AFTER_CONTRACT_PERSIST = "jlm_contract.after_contract_persist";
 }
