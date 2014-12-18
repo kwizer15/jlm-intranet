@@ -156,5 +156,5 @@ bill_boostok:
 bill_search:
     path:   /search
     defaults:  { _controller: "JLMCommerceBundle:Bill:search" }
-    methods: [POST]
+    methods: [GET]
     

@@ -19,18 +19,20 @@ class DefaultController extends Controller
 	/**
 	 * Search
 	 * @Route("/search", name="daily_search")
-	 * @Method("post")
+	 * @Method("get")
      * @Secure(roles="ROLE_USER")
 	 * @Template()
 	 */
 	public function searchAction(Request $request)
 	{
-		$entity = new Search;
-		$form = $this->createForm(new SearchType(), $entity);
-		$form->handleRequest($request);
-		if ($form->isValid())
-		{
-			$em = $this->getDoctrine()->getManager();
+		$formData = $request->get('jlm_core_search');
+    	 
+    	if (is_array($formData) && array_key_exists('query', $formData))
+    	{
+    		$em = $this->getDoctrine()->getManager();
+    		$entity = new Search();
+    		$query = $formData['query'];
+    		$entity->setQuery($query);
 			$doors = $em->getRepository('JLMModelBundle:Door')->search($entity);
 			/*
 			 * Voir aussi
@@ -48,13 +50,12 @@ class DefaultController extends Controller
 			}
 			/* à la */
 			return array(
-					'layout'=>array('form_search_query'=>$entity),
 					'query'   => $entity->getQuery(),
 					'doors'   => $doors,
 					'fixing_forms' => $fixingForms,
 			);
 		}
-		return array('layout'=>array('form_search_query'=>$entity->getQuery()),'query'   => $query,);
+		return array();
 	}
 	
 	/**

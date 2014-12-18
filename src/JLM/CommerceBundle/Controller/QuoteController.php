@@ -193,7 +193,8 @@ class QuoteController extends Controller
         $form->handleRequest($request);
         if ($form->isValid())
         {
-            $em->remove($entity);
+        	$em = $this->getDoctrine()->getManager();
+            $em->remove($quote);
             $em->flush();
         }
         
@@ -221,19 +222,21 @@ class QuoteController extends Controller
      */
     public function searchAction(Request $request)
     {
-    	$entity = new Search;
-    	$form = $this->createForm(new SearchType(), $entity);
-    	$form->handleRequest($request);
-    	if ($form->isValid())
+    	$formData = $request->get('jlm_core_search');
+    	
+    	if (is_array($formData) && array_key_exists('query', $formData))
     	{
     		$em = $this->getDoctrine()->getManager();
+    		$entity = new Search();
+    		$query = $formData['query'];
+    		$entity->setQuery($query);
     		return array(
-    				'layout'=> array('form_search_query'=>$entity),
     				'results' => $em->getRepository('JLMCommerceBundle:Quote')->search($entity),
     				'query' => $entity->getQuery(),
     		);
     	}
-    	return array('layout'=>array('form_search_query'=>$entity),'query' => $entity->getQuery(),);
+    	
+    	return array();
     }
     
     /**

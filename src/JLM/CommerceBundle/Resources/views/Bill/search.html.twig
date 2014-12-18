@@ -2,8 +2,8 @@
 
 {% block content %}
 	<h1>Résultats de la recherche</h1>
-	{% if bills|length %}
+	{% if results|length %}
 		<h1><small>Factures</small></h1>
-		{% include 'JLMCommerceBundle:Bill:list.html.twig' with {'entities':bills} %}
+		{% include 'JLMCommerceBundle:Bill:list.html.twig' with {'entities':results} %}
 	{% endif %}
 {% endblock %}

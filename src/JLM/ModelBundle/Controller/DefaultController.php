@@ -17,21 +17,22 @@ class DefaultController extends Controller
      * Resultats de la barre de recherche.
      *
      * @Route("/search", name="model_search")
-     * @Method("post")
+     * @Method("get")
      * @Secure(roles="ROLE_USER")
      * @Template()
      */
     public function searchAction(Request $request)
     {
-    	$entity = new Search;
-    	$form = $this->createForm(new SearchType(), $entity);
-    	$form->handleRequest($request);
-    	if ($form->isValid())
+    	$formData = $request->get('jlm_core_search');
+
+    	if (is_array($formData) && array_key_exists('query', $formData()))
     	{
     		$em = $this->getDoctrine()->getManager();
+    		$entity = new Search();
+    		$query = $formData['query'];
+    		$entity->setQuery($query);
     		return array(
-    				'layout'=>array('form_search_query'=>$entity),
-    				'query'   => $entity->getQuery(),
+    				'query' => $query,
     				'doors'   => $em->getRepository('JLMModelBundle:Door')->search($entity),
     				'sites'   => $em->getRepository('JLMModelBundle:Site')->search($entity),
     				'trustees'=> $em->getRepository('JLMModelBundle:Trustee')->search($entity),
@@ -40,11 +41,7 @@ class DefaultController extends Controller
     				'persons' => $em->getRepository('JLMContactBundle:Person')->search($entity),
     		);
     	}
-
-    	return array(
-    			'layout'=>array('form_search_query'=>$entity->getQuery()),
-    			'query' => $entity->getQuery(),
-    	);
+    	return array();
     }
     
     /**

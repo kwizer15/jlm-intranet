@@ -18,7 +18,9 @@ class SearchType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
     	$resolver->setDefaults(array(
-    		'data_class' => 'JLM\CoreBundle\Entity\Search'
+    		'data_class' => 'JLM\CoreBundle\Entity\Search',
+    		'method' => 'GET',
+    		'csrf_protection'   => false,
     	));
     }
     

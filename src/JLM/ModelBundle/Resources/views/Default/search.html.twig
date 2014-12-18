@@ -29,7 +29,7 @@
 	{% endif %}
 	{% if suppliers|length %}
 		<h2><small>Fournisseurs</small></h2>
-		{% include 'JLMModelBundle:Supplier:search.html.twig' with {'suppliers': suppliers } %}
+		{% include 'JLMProductBundle:Supplier:search.html.twig' with {'suppliers': suppliers } %}
 	{% endif %}
 	
 	{% if products|length %}

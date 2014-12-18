@@ -102,11 +102,12 @@ class AskRepository extends SearchRepository
 	protected function getSearchQb()
 	{
 		return $this->createQueryBuilder('a')
-			->select('a')
+			->select('a,b,c,d,e,f')
 			->leftJoin('a.trustee','b')
+				->leftJoin('b.contact','f')
 			->leftJoin('a.site','c')
-			->leftJoin('c.address','d')
-			->leftJoin('d.city','e');
+				->leftJoin('c.address','d')
+					->leftJoin('d.city','e');
 	}
 	
 	/**
@@ -114,7 +115,7 @@ class AskRepository extends SearchRepository
 	 */
 	protected function getSearchParams()
 	{
-		return array('b.name','d.street','e.name');
+		return array('f.name','d.street','e.name');
 	}
 	
 	/**

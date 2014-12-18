@@ -14,24 +14,25 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/search",name="transmitter_search")
-     * @Method("POST")
+     * @Method("get")
      * @Template()
      */
     public function searchAction(Request $request)
     {
-    	$entity = new Search;
-    	$form = $this->createForm(new SearchType(), $entity);
-    	$form->handleRequest($request);
-    	if ($form->isValid())
+    	$formData = $request->get('jlm_core_search');
+    	 
+    	if (is_array($formData) && array_key_exists('query', $formData))
     	{
     		$em = $this->getDoctrine()->getManager();
+    		$entity = new Search();
+    		$query = $formData['query'];
+    		$entity->setQuery($query);
     		return array(
-    				'layout'=>array('form_search_query'=>$entity),
     				'transmitters' => $em->getRepository('JLMTransmitterBundle:Transmitter')->search($entity),
     		//		'attributions' => $em->getRepository('JLMTransmitterBundle:Attribution')->search($entity),
     				'asks'          => $em->getRepository('JLMTransmitterBundle:Ask')->search($entity),
     		);
     	}
-        return array('layout'=>array('form_search_query'=>$entity->getQuery()),);
+        return array();
     }
 }

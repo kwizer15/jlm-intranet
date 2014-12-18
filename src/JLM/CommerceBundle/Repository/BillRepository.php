@@ -156,9 +156,10 @@ class BillRepository extends SearchRepository
 		return $this->createQueryBuilder('a')
 		->select('a')
 		->leftJoin('a.trustee','b')
+			->leftJoin('b.contact','f')
 		->leftJoin('a.siteObject','c')
-		->leftJoin('c.address','d')
-		->leftJoin('d.city','e')
+			->leftJoin('c.address','d')
+				->leftJoin('d.city','e')
 		;
 	}
 	
@@ -167,6 +168,6 @@ class BillRepository extends SearchRepository
 	 */
 	protected function getSearchParams()
 	{
-		return array('a.number','b.name','d.street','e.name','a.trusteeName','a.reference','a.site','a.prelabel');
+		return array('a.number','f.name','d.street','e.name','a.trusteeName','a.reference','a.site','a.prelabel');
 	}
 }

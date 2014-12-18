@@ -48,8 +48,15 @@ class TrusteeRepository extends SearchRepository
 	protected function getSearchQb()
 	{
 		return $this->createQueryBuilder('a')
-			->select('a,b')
+			->select('a,b,c,d,e,f,g,h,i')
 			->leftJoin('a.contact','b')
+				->leftJoin('b.phones','c')
+					->leftJoin('c.phone','d')
+				->leftJoin('b.address','h')
+					->leftJoin('h.city','i')
+			->leftJoin('a.sites','e')
+				->leftJoin('e.address','f')
+					->leftJoin('f.city','g')
 		;
 	}
 	

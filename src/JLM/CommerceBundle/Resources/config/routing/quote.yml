@@ -46,7 +46,7 @@ quote_delete:
 quote_search:
     path: /search
     defaults: { _controller: "JLMCommerceBundle:Quote:search" }
-    methods: [POST]
+    methods: [GET]
     
 quote_print:
     path: /{id}/print
