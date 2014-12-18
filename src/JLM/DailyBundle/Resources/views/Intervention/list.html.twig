@@ -64,9 +64,10 @@
 			{% if entity.shiftTechnicians|length %}
 				{% if entity.shiftTechnicians|length < 4%}
 					{% for shift in entity.shiftTechnicians %}
-						<a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a><br>
+						<a class="shifting-edit" href="{{ path('shifting_edit',{'id':shift.id}) }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a><br>
+{#}						<a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a><br>
 						{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }}
-					{% endfor %}
+{#}					{% endfor %}
 				{% else %}
 					<div class="btn-group">
 					    <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
@@ -75,17 +76,19 @@
 					    </a>
 					    <ul class="dropdown-menu">
 					    {% for shift in entity.shiftTechnicians %}
-								<li><a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a></li>
+					    <li><a class="shifting-edit" href="{{ path('shifting_edit',{'id':shift.id}) }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a></li>
+							{#}	<li><a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a></li>{#}
 						{% endfor %}
-					    </ul>
+					    </ul>{#}
 					    {% for shift in entity.shiftTechnicians %}
 					    	{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }}
-					    {% endfor %}
+					    {% endfor %} {#}
 					 </div>
 				{% endif %}
 			{% else %}
-				<a href="#modalAddTech{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-small"><i class="icon-plus-sign"></i> Ajouter</a>
-				{{ render(controller('JLMDailyBundle:Shifting:new',{'id':entity.id})) }}
+			<a href="{{ path('shifting_new',{'id':entity.id}) }}" role="button" data-toggle="modal" class="btn btn-small shifting-new"><i class="icon-plus-sign"></i> Ajouter</a>
+			{#}	<a href="#modalAddTech{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-small"><i class="icon-plus-sign"></i> Ajouter</a>
+				{{ render(controller('JLMDailyBundle:Shifting:new',{'id':entity.id})) }}{#}
 			{% endif %}
 			</td>
 {#			<td>
@@ -120,12 +123,14 @@
 				<td>
 				{% if entity.shiftTechnicians|length %}
 					{% for shift in entity.shiftTechnicians %}
-					<a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a><br>
-					{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }}
+					<a class="shifting-edit" href="{{ path('shifting_edit',{'id':shift.id}) }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a><br>
+					{#}<a href="#modalEditTech{{ shift.id }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a><br>
+					{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }}{#}
 					{% endfor %}
 				{% else %}
-					<a href="#modalAddTech{{ entity.id }}" role="button" data-toggle="modal" class="btn"><i class="icon-plus-sign"></i> Ajouter</a>
-					{{ render(controller('JLMDailyBundle:Shifting:new',{'id':entity.id})) }}
+				<a href="{{ path('shifting_new',{'id':entity.id}) }}" role="button" data-toggle="modal" class="btn shifting-new"><i class="icon-plus-sign"></i> Ajouter</a>
+					{#}<a href="#modalAddTech{{ entity.id }}" role="button" data-toggle="modal" class="btn"><i class="icon-plus-sign"></i> Ajouter</a>
+					{{ render(controller('JLMDailyBundle:Shifting:new',{'id':entity.id})) }}{#}
 				{% endif %}
 			</td>
 		</tr>

@@ -12,5 +12,9 @@
         	<argument type="service" id="form.factory"/>
     		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
 		</service>
+		<service id="jlm_commerce.twig.interventioncount_extension" class="JLM\DailyBundle\Twig\Extension\InterventionCountExtension">
+        	<argument type="service" id="doctrine.orm.entity_manager"/>
+    		<tag name="twig.extension" />
+    	</service>
     </services>    
 </container>

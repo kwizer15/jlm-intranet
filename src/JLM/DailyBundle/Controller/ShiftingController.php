@@ -13,6 +13,7 @@ use JLM\DailyBundle\Entity\Intervention;
 use JLM\DailyBundle\Entity\ShiftTechnician;
 use JLM\DailyBundle\Form\Type\AddTechnicianType;
 use JLM\DailyBundle\Form\Type\ShiftingEditType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Fixing controller.
@@ -95,6 +96,10 @@ class ShiftingController extends Controller
 			$em->persist($entity);
 			$em->flush();
 	
+			if ($request->isXmlHttpRequest())
+			{
+				return new JsonResponse(array());
+			}
 			return $this->redirect($request->headers->get('referer'));
 		}
 	
@@ -163,6 +168,11 @@ class ShiftingController extends Controller
 				$entity->setEnd();
 			$em->persist($entity);
 			$em->flush();
+			
+			if ($request->isXmlHttpRequest())
+			{
+				return new JsonResponse(array());
+			}
 			return $this->redirect($request->headers->get('referer'));
 		}
 	

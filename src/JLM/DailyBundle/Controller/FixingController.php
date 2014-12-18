@@ -20,6 +20,7 @@ use JLM\DailyBundle\Form\Type\ExternalBillType;
 use JLM\DailyBundle\Form\Type\InterventionCancelType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Entity\DoorStop;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Fixing controller.
@@ -106,7 +107,10 @@ class FixingController extends AbstractInterventionController
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
 			$em->flush();
-	
+			if ($request->isXmlHttpRequest())
+			{
+				return new JsonResponse(array('id' => $entity->getId()));
+			}
 			return $this->redirect($this->generateUrl('fixing_show', array('id' => $entity->getId())));
 		}
 	
