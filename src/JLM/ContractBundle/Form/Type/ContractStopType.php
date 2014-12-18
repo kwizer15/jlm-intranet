@@ -45,6 +45,7 @@ class ContractStopType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'JLM\ContractBundle\Entity\Contract',
+        	'label' => 'Arrêt du contrat',
         ));
     }
 }

@@ -53,6 +53,7 @@ class ContractType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'JLM\ContractBundle\Entity\Contract',
+        	'label' => 'Contrat',
         ));
     }
 }
