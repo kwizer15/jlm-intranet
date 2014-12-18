@@ -3,7 +3,7 @@
 namespace JLM\DefaultBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use JLM\DefaultBundle\Entity\Search;
+use JLM\CoreBundle\Entity\Search;
 
 class SearchRepository extends EntityRepository
 {
@@ -15,7 +15,6 @@ class SearchRepository extends EntityRepository
 	public function search($search)
 	{
 		if ($search instanceof Search)
-			$keywords = $search->getKeywords();
 		{
 			$s = new Search;
 			$s->setQuery($search);
