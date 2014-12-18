@@ -395,7 +395,6 @@
 {% include 'JLMDailyBundle:Shifting:new.html.twig' with {'id':entity.id, 'form':form_newtech} %}
 {% for key,shift in entity.shiftTechnicians %}
 	{% include 'JLMDailyBundle:Shifting:edit.html.twig' with {'entity':shift, 'form':forms_editTech[key]} %}
-{#}	{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }} {#}
 {% endfor %}
 {% endblock modals %}
 
