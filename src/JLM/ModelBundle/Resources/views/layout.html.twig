@@ -1,10 +1,10 @@
 {% extends "::layout.html.twig" %}
 
     {% block sidebar %}
-    	<li>
-    		<form  action="{{ path('model_search') }}" method="post" class="form-search">
-{#}				{{ form_widget(layout.form_search) }} {#}
-    		</form>
+    	<li>{{ form(search.form, {'action': path('model_search'), 'method':'post', 'class':'form-search' }) }}
+{#}    		<form  action="{{ path('model_search') }}" method="post" class="form-search">
+				{{ form_widget(layout.form_search) }} 
+    		</form>{#}
 	    </li>
 		<li class="nav-header">Syndics</li>
 		<li><a href="{{ path('trustee') }}"><i class="icon-list"></i> Liste syndics</a></li>

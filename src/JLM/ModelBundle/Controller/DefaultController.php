@@ -8,8 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\DefaultBundle\Entity\Search;
-use JLM\DefaultBundle\Form\Type\SearchType;
+use JLM\CoreBundle\Entity\Search;
+use JLM\CoreBundle\Form\Type\SearchType;
 
 class DefaultController extends Controller
 {
@@ -35,11 +35,12 @@ class DefaultController extends Controller
     				'doors'   => $em->getRepository('JLMModelBundle:Door')->search($entity),
     				'sites'   => $em->getRepository('JLMModelBundle:Site')->search($entity),
     				'trustees'=> $em->getRepository('JLMModelBundle:Trustee')->search($entity),
-    				'suppliers'=> $em->getRepository('JLMModelBundle:Supplier')->search($entity),
+    				'suppliers'=> $em->getRepository('JLMProductBundle:Supplier')->search($entity),
     				'products' => $em->getRepository('JLMProductBundle:Product')->search($entity),
     				'persons' => $em->getRepository('JLMContactBundle:Person')->search($entity),
     		);
     	}
+
     	return array(
     			'layout'=>array('form_search_query'=>$entity->getQuery()),
     			'query' => $entity->getQuery(),

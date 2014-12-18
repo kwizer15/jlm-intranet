@@ -7,3 +7,12 @@ services:
         class: JLM\CoreBundle\Twig\Extension\CoreExtension
         tags:
             - { name: twig.extension }
+    jlm_core.type.search:
+        class: JLM\CoreBundle\Form\Type\SearchType
+        tags:
+            - { name: form.type, alias: jlm_core_search }
+    jlm_core.twig.search_extension:
+        class: JLM\CoreBundle\Twig\Extension\SearchExtension
+        arguments: ["@service_container"]
+        tags:
+            - { name: twig.extension }

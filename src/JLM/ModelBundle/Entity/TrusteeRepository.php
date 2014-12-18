@@ -47,7 +47,10 @@ class TrusteeRepository extends SearchRepository
 	 */
 	protected function getSearchQb()
 	{
-		return $this->createQueryBuilder('a');
+		return $this->createQueryBuilder('a')
+			->select('a,b')
+			->leftJoin('a.contact','b')
+		;
 	}
 	
 	/**
@@ -55,7 +58,7 @@ class TrusteeRepository extends SearchRepository
 	 */
 	protected function getSearchParams()
 	{
-		return array('a.name');
+		return array('b.name');
 	}
 	
 	public function searchResult($query, $limit = 8)

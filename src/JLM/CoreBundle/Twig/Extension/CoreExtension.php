@@ -24,6 +24,8 @@ class CoreExtension extends \Twig_Extension
     
     public function getGlobals()
     {
-        return array('today' => new \DateTime());
+        return array(
+        	'today' => new \DateTime()
+        );
     }
 }

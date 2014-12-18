@@ -28,7 +28,7 @@ class SupplierRepository extends SearchRepository
 	 */
 	protected function getSearchQb()
 	{
-		return $this->createQueryBuilder('a');
+		return $this->createQueryBuilder('a')->select('a,b')->leftJoin('a.contact','b');
 	}
 	
 	/**
@@ -36,7 +36,7 @@ class SupplierRepository extends SearchRepository
 	 */
 	protected function getSearchParams()
 	{
-		return array('a.name');
+		return array('b.name');
 	}
 	
 	/**
