@@ -18,6 +18,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class ContactRepository extends EntityRepository
 {
+	private function getQueryBuilder()
+	{
+		return $this->createQueryBuilder('a')
+			->select('a,b,c')
+			->leftJoin('a.phones','b')
+			->leftJoin('b.phone','c')
+		;
+	}
+	
 	/**
 	 *
 	 * @param string $query
@@ -26,9 +35,9 @@ class ContactRepository extends EntityRepository
 	 */
 	public function getArray($query, $limit = 8)
 	{
-		$qb = $this->createQueryBuilder('c')
-			->where('c.name LIKE :query')
-			->orderBy('c.name','ASC')
+		$qb = $this->getQueryBuilder()
+			->where('a.name LIKE :query')
+			->orderBy('a.name','ASC')
 			->setParameter('query', '%'.$query.'%')
 		;
 		$res = $qb->getQuery()->getArrayResult();
@@ -36,6 +45,14 @@ class ContactRepository extends EntityRepository
 		return $res;
 	}
 	
+	public function getAll($limit = 8, $offset = 0)
+	{
+		$qb = $this->getQueryBuilder();
+		$res = $qb->getQuery()->getResult();
+		
+		return $res;
+	}
+
 	/**
 	 *
 	 * @param int $id
@@ -43,9 +60,9 @@ class ContactRepository extends EntityRepository
 	 */
 	public function getByIdToArray($id)
 	{
-		$qb = $this->createQueryBuilder('c')
-		->where('c.id = :id')
-		->setParameter('id', $id)
+		$qb = $this->getQueryBuilder()
+			->where('a.id = :id')
+			->setParameter('id', $id)
 		;
 		$res = $qb->getQuery()->getArrayResult();
 

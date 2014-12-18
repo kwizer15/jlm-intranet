@@ -37,8 +37,6 @@ class ContractController extends ContainerAware
 
     /**
      * Finds and displays a Contract entity.
-     *
-     * @Secure(roles="ROLE_USER")
      */
     public function showAction($id)
     {
@@ -49,7 +47,7 @@ class ContractController extends ContainerAware
         return $manager->renderResponse('JLMContractBundle:Contract:show.html.twig', array('entity' => $entity));
     }
     
-/**
+	/**
      * Creates a new Contract entity.
      */
     public function newAction()
