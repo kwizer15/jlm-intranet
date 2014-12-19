@@ -30,7 +30,6 @@ abstract class AbstractInterventionController extends PaginableController
 	{
 		$st = new ShiftTechnician();
 		$st->setBegin(new \DateTime);
-		$form   = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(),new AddTechnicianType(), $st);
 		$form_externalbill = $this->get('form.factory')->createNamed('externalBill'.$entity->getId(),new ExternalBillType(), $entity);
 		$form_cancel = $this->createForm(new InterventionCancelType(), $entity);
 		$shiftTechs = $entity->getShiftTechnicians();
@@ -40,7 +39,6 @@ abstract class AbstractInterventionController extends PaginableController
 		$em = $this->getDoctrine()->getManager();
 		return array(
 				'entity' => $entity,
-				'form_newtech'   => $form->createView(),
 				'form_externalbill' => $form_externalbill->createView(),
 				'form_cancel' => $form_cancel->createView(),
 				'forms_editTech' => $formsEditTech,

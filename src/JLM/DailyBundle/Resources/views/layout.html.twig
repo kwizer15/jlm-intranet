@@ -11,8 +11,8 @@
 	    <li><a href="{{ path('shifting_list', {'id':5}) }}"><i class="icon-user"></i> Christophe</a></li>
 	    <li><a href="{{ path('shifting_list', {'id':4}) }}"><i class="icon-user"></i> Oscar</a></li>
 	    <li class="nav-header">Ajouter</li>
-	    <li><a id="shift-new" data-toggle="modal" href="{{ path('equipment_new') }}"><i class="icon-plus-sign"></i> Récupération matériel</a></li>
-	    <li><a id="standby-new" data-toggle="modal" href="{{ path('standby_new') }}"><i class="icon-plus-sign"></i> Astreinte</a></li>
+	    <li><a class="shift-new" href="{{ path('equipment_new') }}"><i class="icon-plus-sign"></i> Récupération matériel</a></li>
+	    <li><a class="standby-new" href="{{ path('standby_new') }}"><i class="icon-plus-sign"></i> Astreinte</a></li>
 		<li><a href="{{ path('standby') }}"><i class="icon-list"></i> Liste des astreintes</a>
 	    <li class="nav-header">Interventions</li>
 		{% include 'JLMDailyBundle:Default:datesearch.html.twig' with {'form':layout.form_searchByDate} %}
@@ -29,10 +29,10 @@
 $(".interventionForm").intervention({
 	 autoSource:'{{ path('autocomplete') }}'
 });
-$("#standby-new").formModal();
-$("#shift-new").formModal();
+$(".standby-new").formModal();
+$(".shift-new").formModal();
 $(".fixing-new").formModal();
-$(".shifting-edit").formModal();
-$(".shifting-new").formModal();
+$(".shifting-edit").formModal({closure: function(){location.reload();}});
+$(".shifting-new").formModal({closure: function(){location.reload();}});
 </script>
 {% endblock %}
