@@ -32,16 +32,11 @@ abstract class AbstractInterventionController extends PaginableController
 		$st->setBegin(new \DateTime);
 		$form_externalbill = $this->get('form.factory')->createNamed('externalBill'.$entity->getId(),new ExternalBillType(), $entity);
 		$form_cancel = $this->createForm(new InterventionCancelType(), $entity);
-		$shiftTechs = $entity->getShiftTechnicians();
-		$formsEditTech = array();
-		foreach ($shiftTechs as $shiftTech)
-			$formsEditTech[] = $this->get('form.factory')->createNamed('shiftTechEdit'.$shiftTech->getId(),new ShiftingEditType(), $shiftTech)->createView();
 		$em = $this->getDoctrine()->getManager();
 		return array(
 				'entity' => $entity,
 				'form_externalbill' => $form_externalbill->createView(),
 				'form_cancel' => $form_cancel->createView(),
-				'forms_editTech' => $formsEditTech,
 				'quotes' => $em->getRepository('JLMCommerceBundle:Quote')->getByDoor($entity->getDoor()),
 		);
 		
