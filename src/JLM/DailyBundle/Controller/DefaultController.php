@@ -11,8 +11,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Form\Type\DatepickerType;
 use JLM\DailyBundle\Entity\Fixing;
 use JLM\DailyBundle\Form\Type\FixingType;
-use JLM\DefaultBundle\Entity\Search;
-use JLM\DefaultBundle\Form\Type\SearchType;
+use JLM\CoreBundle\Entity\Search;
 
 class DefaultController extends Controller
 {
