@@ -173,4 +173,43 @@ class BaseManager extends ContainerAware implements ManagerInterface
 	{
 		return new DoctrineHandler($form, $this->request, $this->om, $entity);
 	}
+
+	/**
+	 * Pagination
+	 */
+	public function pagination($functionCount = 'getCountAll', $functionDatas = 'getAll', $route = null, $params = array())
+	{
+		$request = $this->getRequest();
+		$page = $request->get('page', 1);
+		$limit = $request->get('limit', 10);
+		$params = ($limit != 10) ? array_merge($params, array('limit' => $limit)) : $params;
+		$repo = $this->getRepository();
+		if (!method_exists($repo,$functionCount))
+		{
+			throw $this->createNotFoundException('Page insexistante (La méthode '.get_class($repo).'#'.$functionCount.' n\'existe pas)');
+		}
+		if (!method_exists($repo,$functionDatas))
+		{
+			throw $this->createNotFoundException('Page insexistante (La méthode '.get_class($repo).'#'.$functionDatas.' n\'existe pas)');
+		}
+		$nb = $repo->$functionCount();
+		$nbPages = ceil($nb/$limit);
+		$nbPages = ($nbPages < 1) ? 1 : $nbPages;
+		$offset = ($page-1) * $limit;
+		if ($page < 1 || $page > $nbPages)
+		{
+			throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
+		}
+	
+		return array(
+				'entities' => $repo->$functionDatas($limit,$offset),
+				'pagination' => array(
+						'total' => $nbPages,
+						'current' => $page,
+						'limit' => $limit,
+						'route' => $route,
+						'params' => $params,
+				)
+		);
+	}
 }
