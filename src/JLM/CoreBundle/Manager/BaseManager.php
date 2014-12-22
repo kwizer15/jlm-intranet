@@ -176,7 +176,7 @@ class BaseManager extends ContainerAware implements ManagerInterface
     
     public function disptach($eventName, Event $event = null)
     {
-    	return $this->container->get('dispatcher')->dispatch($eventName, $event);
+    	return $this->container->get('event_dispatcher')->dispatch($eventName, $event);
     }
 
 	public function getHandler($form, $entity)

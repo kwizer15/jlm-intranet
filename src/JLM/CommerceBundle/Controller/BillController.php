@@ -105,7 +105,6 @@ class BillController extends Controller
     	$form   = $this->createNewForm($entity);
     
     	return array(
-    			'entity' => $entity,
     			'form'   => $form->createView()
     	);
     }
@@ -123,7 +122,6 @@ class BillController extends Controller
     	$form   = $this->createNewForm($entity);
     
     	return array(
-    			'entity' => $entity,
     			'form'   => $form->createView()
     	);
     }
@@ -149,7 +147,6 @@ class BillController extends Controller
     	$form   = $this->createNewForm($entity);
     
     	return array(
-    			'entity' => $entity,
     			'form'   => $form->createView()
     	);
     }

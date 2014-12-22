@@ -14,6 +14,8 @@ namespace JLM\CommerceBundle\Manager;
 use JLM\CoreBundle\Manager\BaseManager as Manager;
 use JLM\CommerceBundle\Form\Type\BillType;
 use JLM\CommerceBundle\Entity\BillLine;
+use JLM\CommerceBundle\JLMCommerceEvents;
+use JLM\CommerceBundle\Event\BillEvent;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -65,8 +67,8 @@ class BillManager extends Manager
 		{
 			$form->get($key)->setData($value);
 		}
+		$this->disptach(JLMCommerceEvents::BILL_FORM_POPULATE, new BillEvent($form, $this->getRequest()));
 		$lines = $form->get('lines')->getData();
-//		var_dump($lines); exit;
 		if (empty($lines))
 		{
 			$form->get('lines')->setData(array(new BillLine()));
