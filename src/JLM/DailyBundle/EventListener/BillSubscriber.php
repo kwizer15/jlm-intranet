@@ -25,14 +25,6 @@ class BillSubscriber implements EventSubscriberInterface
 	
 	public function populateFromIntervention(BillEvent $event)
 	{
-		$this->form = $event->getForm();
-//		$this->populate('property', 'Ah ah ah ah');
-	}
-
-	private function populate($key, $value)
-	{
-		$this->form->get($key)->setData($value);
-		
-		return $this;
+		$event->setFormData('property', 'Ah ah ah kh');
 	}
 }

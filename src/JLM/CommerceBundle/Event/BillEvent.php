@@ -40,16 +40,16 @@ class BillEvent extends Event
     /**
      * @return FormInterface
      */
-    public function getForm()
+    public function setFormData($name, $modelData)
     {
-        return $this->form;
+        return $this->form->get($name)->setData($modelData);
     }
     
     /**
-     * @return Request
+     * @return string
      */
-    public function getRequest()
+    public function getParam($param)
     {
-    	return $this->request;
+    	return $this->request->get($param);
     }
 }
