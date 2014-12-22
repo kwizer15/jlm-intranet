@@ -25,7 +25,7 @@ class DefaultController extends Controller
     {
     	$formData = $request->get('jlm_core_search');
 
-    	if (is_array($formData) && array_key_exists('query', $formData()))
+    	if (is_array($formData) && array_key_exists('query', $formData))
     	{
     		$em = $this->getDoctrine()->getManager();
     		$entity = new Search();
