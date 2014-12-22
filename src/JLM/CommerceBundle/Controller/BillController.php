@@ -80,21 +80,14 @@ class BillController extends Controller
      * Displays a form to create a new Bill entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
      */
     public function newAction()
     {
-        $entity = new Bill();
-        $entity->setCreation(new \DateTime);
-		$em = $this->getDoctrine()->getManager();
-		$vat = $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
-		$entity->setVat($vat);
-		$entity = $this->finishNewBill($entity);
-        $entity->addLine(new BillLine());
-        $form   = $this->createNewForm($entity);
+    	$manager = $this->container->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_USER');
+    	$form = $manager->createForm('new');
 
         return array(
-            'entity' => $entity,
             'form'   => $form->createView()
         );
     }
@@ -281,40 +274,33 @@ class BillController extends Controller
     
     /**
      * Imprimer la facture
-     *
-     * @Secure(roles="ROLE_USER")
      */
-    public function printAction(Bill $entity)
+    public function printAction($id)
     {
-        return $this->printer($entity);
+        return $this->printer($id);
     }
     
     /**
      * Imprimer un duplicata de facture
-     *
-     * @Secure(roles="ROLE_USER")
      */
-    public function printduplicateAction(Bill $entity)
+    public function printduplicateAction($id)
     {
-    	return $this->printer($entity, true);
+    	return $this->printer($id, true);
     }
     
-    private function printer(BillInterface $entity, $duplicate = false)
+    private function printer($id, $duplicate = false)
     {
+    	$manager = $this->container->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_USER');
+    	$entity = $manager->getEntity($id);
         $filename = $entity->getNumber();
         if ($duplicate)
         {
             $filename .= '-duplicata';
         }
-        
         $filename .= '.pdf';
-            
-        $response = new Response();
-        $response->headers->set('Content-Type', 'application/pdf');
-        $response->headers->set('Content-Disposition', 'inline; filename='.$filename);
-        $response->setContent($this->render('JLMCommerceBundle:Bill:print.pdf.php',array('entities'=>array($entity),'duplicate'=>$duplicate)));
         
-        return $response;
+        return $manager->renderPdf($filename, 'JLMCommerceBundle:Bill:print.pdf.php',array('entities'=>array($entity),'duplicate'=>$duplicate));
     }
     
     /**
@@ -324,77 +310,70 @@ class BillController extends Controller
      */
     public function printlistAction()
     {
-    	$em = $this->getDoctrine()->getManager();
-    	$entities = $em->getRepository('JLMDailyBundle:Intervention')->getToBilled();
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/pdf');
-    	$response->headers->set('Content-Disposition', 'inline; filename=factures-a-faire.pdf');
-    	$response->setContent($this->render('JLMCommerceBundle:Bill:printlist.pdf.php',array('entities'=>$entities)));
-    
-    	//   return array('entity'=>$entity);
-    	return $response;
+    	$manager = $this->container->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_USER');
+    	
+    	return $manager->renderPdf('factures-a-faire', 'JLMCommerceBundle:Bill:printlist.pdf.php',
+    			array('entities' => $manager->getObjectManager()->getRepository('JLMDailyBundle:Intervention')->getToBilled())
+    			);
     }
     
     /**
      * Note Bill as ready to send.
-     *
-     * @Secure(roles="ROLE_USER")
      */
-    public function readyAction(Bill $entity)
+    public function readyAction($id)
     {
-    	return $this->stateChange($entity, 1);
+    	return $this->stateChange($id, 1);
     }
     
     /**
      * Note Bill as been send.
-     *
-     * @Secure(roles="ROLE_USER")
      */
-    public function sendAction(Bill $entity)
+    public function sendAction($id)
     {
+    	$manager = $this->container->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_USER');
+    	$entity = $manager->getEntity($id);
     	if ($entity->getState() != 1)
     	{
     		$entity->setState(1);
     	}
-    	$em = $this->getDoctrine()->getManager();
+    	$em = $manager->getObjectManager();
     	$em->persist($entity);
     	$em->flush();
     	
-    	return $this->redirect($this->getRequest()->headers->get('referer'));
+    	return $manager->redirectReferer();
     }
     
     /**
      * Note Bill as been canceled.
-     *
-     * @Secure(roles="ROLE_USER")
      */
-    public function cancelAction(Bill $entity)
+    public function cancelAction($id)
     {
-    	return $this->stateChange($entity, -1);
+    	return $this->stateChange($id, -1);
     }
     
     /**
      * Note Bill retour à la saisie.
-     *
-     * @Secure(roles="ROLE_USER")
      */
-    public function backAction(Bill $entity)
+    public function backAction($id)
     {
-    	return $this->stateChange($entity, 0);
+    	return $this->stateChange($id, 0);
     }
     
     /**
      * Note Bill réglée.
-     *
-     * @Secure(roles="ROLE_USER")
      */
-    public function payedAction(Bill $entity)
+    public function payedAction($id)
     {
-    	return $this->stateChange($entity, 2);
+    	return $this->stateChange($id, 2);
     }
     
-    private function stateChange(Bill $entity, $newState)
+    private function stateChange($id, $newState)
     {
+    	$manager = $this->container->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_USER');
+    	$entity = $manager->getEntity($id);
         switch ($newState)
         {
         	case 1:
@@ -414,73 +393,70 @@ class BillController extends Controller
         }
         if ($redirect)
         {
-            return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+            return $manager->redirect('bill_show', array('id' => $entity->getId()));
         }
         if ($set)
         {
             $entity->setState($newState);
         }
-        $em = $this->getDoctrine()->getManager();
+        $em = $manager->getObjectManager();
         $em->persist($entity);
         $em->flush();
          
-        return $this->redirect($this->getRequest()->headers->get('referer'));
+        return $this->redirectReferer();
     }
     
     /**
-     * @Template()
-     * @Secure(roles="ROLE_USER")
+     * Display bills to do
      */
     public function todoAction()
     {
-    	$em = $this->getDoctrine()->getManager();
-    	$list = $em->getRepository('JLMDailyBundle:Intervention')->getToBilled();
+    	$manager = $this->container->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_USER');
+    	$om = $manager->getObjectManager();
+    	$list = $om->getRepository('JLMDailyBundle:Intervention')->getToBilled();
     	$forms_externalBill = array();
     	foreach ($list as $interv)
     	{
-    		$forms_externalBill[] = $this->get('form.factory')->createNamed('externalBill'.$interv->getId(),new ExternalBillType(), $interv)->createView();
+    		$forms_externalBill[] = $manager->getFormFactory()->createNamed('externalBill'.$interv->getId(),new ExternalBillType(), $interv)->createView();
     	}
-    	return array(
+    	return $manager->renderResponse('JLMCommerceBundle:Bill:todo.html.twig', array(
     			'entities'=>$list,
     			'forms_externalbill' => $forms_externalBill,
-    	);
+    	));
     }
     
     /**
-     * @Template()
-     * @Secure(roles="ROLE_USER")
+     * Display bills to boost
      */
     public function toboostAction()
     {
-    	$em = $this->getDoctrine()->getManager();
-    	$bills = $em->getRepository('JLMCommerceBundle:Bill')->getToBoost();
+    	$manager = $this->container->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_USER');
     	
-    	return array('entities'=>$bills);
+    	return $manager->renderResponse('JLMCommerceBundle:Bill:toboost.html.twig', array('entities' => $manager->getRepository()->getToBoost()));
     }
     
     /**
      * Imprimer le courrier de relance 
-     *
-     * @Secure(roles="ROLE_USER")
      */
-    public function printboostAction(Bill $entity)
+    public function printboostAction($id)
     {
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/pdf');
-    	$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
-    	$response->setContent($this->render('JLMCommerceBundle:Bill:printboost.pdf.php',array('entities'=>array($entity))));
-    
-    	//   return array('entity'=>$entity);
-    	return $response;
+    	$manager = $this->container->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_USER');
+    	$entity = $manager->getEntity($id);
+    	
+    	return $manager->renderPdf($entity->getNumber(), 'JLMCommerceBundle:Bill:printboost.pdf.php',array('entities'=>array($entity)));
     }
     
     /**
      * Noter relance effectuée
-     * 
-     * @Secure(roles="ROLE_USER")
      */
-    public function boostokAction(Bill $entity)
+    public function boostokAction($id)
     {
+    	$manager = $this->container->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_USER');
+    	$entity = $manager->getEntity($id);
         $date = new \DateTime;
     	if ($entity->getFirstBoost() === null)
     	{
@@ -490,33 +466,33 @@ class BillController extends Controller
     	{
     		$entity->setSecondBoost($date);
     	}
-    	$em = $this->getDoctrine()->getManager();
+    	$em = $manager->getObjectManager();
     	$em->persist($entity);
     	$em->flush();
     	
-    	return $this->redirect($this->generateUrl('bill_toboost'));
+    	return $manager->redirect('bill_toboost');
     }
     
     /**
-     * @Template()
+     * Search
      */
-    public function searchAction(Request $request)
+    public function searchAction()
     {
-    	$formData = $request->get('jlm_core_search');
-    	 
+    	$manager = $this->container->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_USER');
+    	$formData = $manager->getRequest()->get('jlm_core_search');
+    	$params = array();
     	if (is_array($formData) && array_key_exists('query', $formData))
     	{
-    		$em = $this->getDoctrine()->getManager();
+    		$em = $manager->getObjectManager();
     		$entity = new Search();
     		$query = $formData['query'];
     		$entity->setQuery($query);
-    		return array(
-    				'results' => $em->getRepository('JLMCommerceBundle:Bill')->search($entity),
-    				'query' => $entity->getQuery(),
-    		);
+    		$params = array('results' => $em->getRepository('JLMCommerceBundle:Bill')->search($entity));
+    		
     	}
     	 
-    	return array();
+    	return $manager->renderResponse('JLMCommerceBundle:Bill:search.html.twig', $params);
     }
     
     private function createNewForm(BillInterface $entity)

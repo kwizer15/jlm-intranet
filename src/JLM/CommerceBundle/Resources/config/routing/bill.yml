@@ -4,8 +4,10 @@ bill:
     methods: [GET]
 
 bill_show:
-    path:   /{id}/show
+    path:   /{id}
     defaults:  { _controller: "JLMCommerceBundle:Bill:show" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_new:
@@ -36,16 +38,22 @@ bill_create:
 bill_edit:
     path:   /{id}/edit
     defaults:  { _controller: "JLMCommerceBundle:Bill:edit" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_update:
     path:   /{id}/update
     defaults:  { _controller: "JLMCommerceBundle:Bill:update" }
+    requirements:
+        id: \d+
     methods: [POST]
     
 bill_print:
     path:   /{id}/print
     defaults:  { _controller: "JLMCommerceBundle:Bill:print" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_printduplicate:
@@ -61,31 +69,43 @@ bill_printlist:
 bill_printboost:
     path:   /{id}/printboost
     defaults:  { _controller: "JLMCommerceBundle:Bill:printboost" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_ready:
     path:   /{id}/ready
     defaults:  { _controller: "JLMCommerceBundle:Bill:ready" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_send:
     path:   /{id}/send
     defaults:  { _controller: "JLMCommerceBundle:Bill:send" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_cancel:
     path:   /{id}/cancel
     defaults:  { _controller: "JLMCommerceBundle:Bill:cancel" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_back:
     path:   /{id}/back
     defaults:  { _controller: "JLMCommerceBundle:Bill:back" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_payed:
     path:   /{id}/payed
     defaults:  { _controller: "JLMCommerceBundle:Bill:payed" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_sidebar:
@@ -106,6 +126,8 @@ bill_toboost:
 bill_boostok:
     path:   /{id}/boostok
     defaults:  { _controller: "JLMCommerceBundle:Bill:boostok" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_search:

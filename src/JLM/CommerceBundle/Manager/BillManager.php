@@ -13,6 +13,7 @@ namespace JLM\CommerceBundle\Manager;
 
 use JLM\CoreBundle\Manager\BaseManager as Manager;
 use JLM\CommerceBundle\Form\Type\BillType;
+use JLM\CommerceBundle\Entity\BillLine;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -43,5 +44,34 @@ class BillManager extends Manager
 		}
 		
 		return parent::getFormParam($name, $options);
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function populateForm($form)
+	{
+		$vat = $this->om->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
+		$params = array(
+				'creation' => new \DateTime,
+				'vat' => $vat,
+				'vatTransmitter' => $vat * 100,
+				'penalty' => $this->om->getRepository('JLMCommerceBundle:PenaltyModel')->find(1).'',
+				'property' => $this->om->getRepository('JLMCommerceBundle:PropertyModel')->find(1).'',
+				'earlyPayment' => $this->om->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1).'',
+				'maturity' => 30,
+		);
+		foreach ($params as $key => $value)
+		{
+			$form->get($key)->setData($value);
+		}
+		$lines = $form->get('lines')->getData();
+//		var_dump($lines); exit;
+		if (empty($lines))
+		{
+			$form->get('lines')->setData(array(new BillLine()));
+		}
+	
+		return parent::populateForm($form);
 	}
 }
