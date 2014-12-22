@@ -138,6 +138,16 @@ class BaseManager extends ContainerAware implements ManagerInterface
 	{
 		return new JsonResponse($data, $status, $headers);
 	}
+	
+	public function renderPdf($filename, $view, array $parameters = array())
+	{
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/pdf');
+		$response->headers->set('Content-Disposition', 'inline; filename='.$filename.'.pdf');
+		$response->setContent($this->render($view , $parameters));
+		
+		return $response;
+	}
 
 	public function getObjectManager()
 	{
