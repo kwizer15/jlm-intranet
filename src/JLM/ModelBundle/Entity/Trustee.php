@@ -306,7 +306,7 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
      */
     public function getBillingLabel()
     {
-    	return $this->billingLabel;
+    	//return $this->billingLabel;
     	return ($this->billingLabel === null) ? $this->getName() : $this->billingLabel;
     }
     
