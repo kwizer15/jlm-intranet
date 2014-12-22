@@ -6,7 +6,7 @@
 {% endif %}
 <form action="{{ path('bill_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
     <fieldset>
-    <input type="hidden" value="{{ (entity.vatTransmitter*100) | number_format(1,',',' ') }}" id="jlm_commerce_bill_vatTransmitter">
+    {#}<input type="hidden" value="{{ (entity.vatTransmitter*100) | number_format(1,',',' ') }}" id="jlm_commerce_bill_vatTransmitter">#}
     {{ form_widget(form) }}
 	<div class="form-actions">
 	  <a href="{{ path('bill') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
