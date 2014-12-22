@@ -1,4 +1,15 @@
+parameters:
+    jlm_commerce.model.bill.class: JLM\CommerceBundle\Entity\Bill
+    jlm_commerce.manager.bill.class: JLM\CommerceBundle\Manager\BillManager
+
 services:
+    jlm_commerce.bill_manager:
+        class: "%jlm_commerce.manager.bill.class%"
+        arguments: ["%jlm_commerce.model.bill.class%"]
+        calls:
+            - [ setContainer, ["@service_container"]]
+            - [ setServices ]
+            
     jlm_commerce.type.bill:
         class: JLM\CommerceBundle\Form\Type\BillType
         tags:

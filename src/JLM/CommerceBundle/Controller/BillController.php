@@ -11,6 +11,7 @@
 
 namespace JLM\CommerceBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,73 +28,52 @@ use JLM\DailyBundle\Entity\Intervention;
 use JLM\DailyBundle\Builder\WorkBillBuilder;
 use JLM\DailyBundle\Builder\InterventionBillBuilder;
 use JLM\DailyBundle\Entity\Work;
-use JLM\DefaultBundle\Controller\PaginableController;
-use JLM\DefaultBundle\Entity\Search;
-use JLM\DefaultBundle\Form\Type\SearchType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Builder\DoorBillBuilder;
 use JLM\DailyBundle\Form\Type\ExternalBillType;
+use JLM\CoreBundle\Entity\Search;
 
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class BillController extends PaginableController
+class BillController extends Controller
 {
 	/**
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * List bills
 	 */
-	public function indexAction($page = 1)
+	public function indexAction()
 	{
-		return $this->pagelist('All', $page, 'bill_page');
-	}
-	
-	/**
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function listinseizureAction($page = 1)
-	{
-		return $this->pagelist('InSeizure', $page, 'bill_listinseizure_page');
-	}
-	
-	/**
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function listsendedAction($page = 1)
-	{
-		return $this->pagelist('Sended', $page, 'bill_listsended_page');
-	}
-	
-	/**
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function listpayedAction($page = 1)
-	{
-		return $this->pagelist('Payed', $page, 'bill_listpayed_page');
-	}
-	
-	/**
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function listcanceledAction($page = 1)
-	{
-		return $this->pagelist('Canceled', $page, 'bill_listcanceled_page');
+		$manager = $this->container->get('jlm_commerce.bill_manager');
+		$manager->secure('ROLE_USER');
+		$request = $manager->getRequest();
+		$states = array(
+			'all' => 'All',
+			'in_seizure' => 'InSeizure',
+			'sended' => 'Sended',
+			'payed' => 'Payed',
+			'canceled' => 'Canceled'
+		);
+		$state = $request->get('state');
+		$state = (!array_key_exists($state, $states)) ? 'all' : $state;
+		$method = $states[$state];
+		$functionCount = 'getCount'.$method;
+		$functionDatas = 'get'.$method;
+		
+		return $manager->renderResponse('JLMCommerceBundle:Bill:index.html.twig',
+				$manager->pagination($functionCount, $functionDatas, 'bill', array('state' => $state))
+		);
 	}
     
     /**
      * Finds and displays a Bill entity.
-     *
-     * @Template()
-     * @Secure(roles="ROLE_USER")
      */
-    public function showAction(Bill $entity)
+    public function showAction($id)
     {
-        return array('entity'=> $entity);
+    	$manager = $this->container->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_USER');
+    	
+        return $manager->renderResponse('JLMCommerceBundle:Bill:show.html.twig',array('entity'=> $manager->getEntity($id)));
     }
     
     /**
@@ -547,10 +527,5 @@ class BillController extends PaginableController
     private function createEditForm(BillInterface $entity)
     {
         return $this->createForm(new BillType(), $entity);
-    }
-    
-    private function pagelist($functiondata, $page, $route)
-    {
-        return $this->pagination('JLMCommerceBundle:Bill', $functiondata, $page, 10, $route);
     }
 }

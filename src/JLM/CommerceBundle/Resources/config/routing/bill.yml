@@ -2,51 +2,6 @@ bill:
     path:   /
     defaults:  { _controller: "JLMCommerceBundle:Bill:index" }
     methods: [GET]
-    
-bill_page:
-    path:   /page/{page}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:index" }
-    methods: [GET]
-    
-bill_listinseizure:
-    path:   /inseizure
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listinseizure" }
-    methods: [GET]
-    
-bill_listinseizure_page:
-    path:   /inseizure/page/{page}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listinseizure" }
-    methods: [GET]
-    
-bill_listsended:
-    path:   /sended
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listsended" }
-    methods: [GET]
-    
-bill_listsended_page:
-    path:   /sended/page/{page}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listsended" }
-    methods: [GET]
-    
-bill_listpayed:
-    path:   /payed
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listpayed" }
-    methods: [GET]
-    
-bill_listpayed_page:
-    path:   /payed/page/{page}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listpayed" }
-    methods: [GET]
-    
-bill_listcanceled:
-    path:   /canceled
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listcanceled" }
-    methods: [GET]
-    
-bill_listcanceled_page:
-    path:   /canceled/page/{page}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listcanceled" }
-    methods: [GET]
 
 bill_show:
     path:   /{id}/show
