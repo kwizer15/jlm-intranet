@@ -28,19 +28,15 @@ abstract class AbstractInterventionController extends PaginableController
 	 */
 	public function show(Intervention $entity)
 	{
-		$st = new ShiftTechnician();
-		$st->setBegin(new \DateTime);
 		$form_externalbill = $this->get('form.factory')->createNamed('externalBill'.$entity->getId(),new ExternalBillType(), $entity);
 		$form_cancel = $this->createForm(new InterventionCancelType(), $entity);
 		$em = $this->getDoctrine()->getManager();
+		
 		return array(
 				'entity' => $entity,
 				'form_externalbill' => $form_externalbill->createView(),
 				'form_cancel' => $form_cancel->createView(),
 				'quotes' => $em->getRepository('JLMCommerceBundle:Quote')->getByDoor($entity->getDoor()),
 		);
-		
-		
-		
 	}
 }
