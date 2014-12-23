@@ -11,28 +11,31 @@
 
 namespace JLM\CoreBundle\Event;
 
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class FormPopulatingEvent extends RequestEvent
+class RequestEvent extends Event
 {
-	/**
-	 * @var FormInterface
-	 */
-    private $form;
+    /**
+     * @var Request
+     */
+    private $request;
 
     /**
      * @param FormInterface $form
      * @param Request $request
      */
-    public function __construct(FormInterface $form, Request $request)
+    public function __construct(Request $request)
     {
-    	$this->form = $form;
-    	parent::__construct($request);
+    	$this->request = $request;
     }
     
-    public function getForm()
+    /**
+     * @return string
+     */
+    public function getParam($param, $default = null, $deep = false)
     {
-    	return $this->form;
+    	return $this->request->get($param, $default = null, $deep);
     }
 }
