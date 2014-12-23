@@ -171,7 +171,7 @@
 						{% elseif entity.externalBill %}
 							Facture n°{{ entity.externalBill }} (externe)
 						{% else %}
-							<a href="{{ path('bill_new_intervention',{'id':entity.id}) }}">A facturer</a>
+							<a href="{{ path('bill_new',{'intervention':entity.id}) }}">A facturer</a>
 							<a href="#modalExternalBill" data-toggle="modal" class="btn btn-small">Saisir le numéro</a>
 						{% endif %}
 					{% else %}
