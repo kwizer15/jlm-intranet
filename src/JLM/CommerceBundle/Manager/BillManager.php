@@ -53,6 +53,10 @@ class BillManager extends Manager
 	 */
 	public function populateForm($form)
 	{
+		// Appel des évenements de remplissage du formulaire
+		$this->disptach(JLMCommerceEvents::BILL_FORM_POPULATE, new BillEvent($form, $this->getRequest()));
+		
+		// On complète avec ce qui reste vide
 		$vat = $this->om->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
 		$params = array(
 				'creation' => new \DateTime,
@@ -65,9 +69,14 @@ class BillManager extends Manager
 		);
 		foreach ($params as $key => $value)
 		{
-			$form->get($key)->setData($value);
+			$param = $form->get($key)->getData();
+			if (empty($param))
+			{
+				$form->get($key)->setData($value);
+			}
 		}
-		$this->disptach(JLMCommerceEvents::BILL_FORM_POPULATE, new BillEvent($form, $this->getRequest()));
+		
+		// on met un ligne vide si y en a pas 
 		$lines = $form->get('lines')->getData();
 		if (empty($lines))
 		{

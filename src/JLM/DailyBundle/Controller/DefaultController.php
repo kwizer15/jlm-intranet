@@ -29,10 +29,8 @@ class DefaultController extends Controller
     	if (is_array($formData) && array_key_exists('query', $formData))
     	{
     		$em = $this->getDoctrine()->getManager();
-    		$entity = new Search();
-    		$query = $formData['query'];
-    		$entity->setQuery($query);
-			$doors = $em->getRepository('JLMModelBundle:Door')->search($entity);
+			$doors = $em->getRepository('JLMModelBundle:Door')->search($formData['query']);
+
 			/*
 			 * Voir aussi
 			* 	DoorController:stoppedAction
@@ -49,7 +47,7 @@ class DefaultController extends Controller
 			}
 			/* à la */
 			return array(
-					'query'   => $entity->getQuery(),
+					'query'   => $formData['query'],
 					'doors'   => $doors,
 					'fixing_forms' => $fixingForms,
 			);
