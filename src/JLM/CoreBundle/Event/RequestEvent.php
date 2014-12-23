@@ -36,6 +36,6 @@ class RequestEvent extends Event
      */
     public function getParam($param, $default = null, $deep = false)
     {
-    	return $this->request->get($param, $default = null, $deep);
+    	return $this->request->get($param, $default, $deep);
     }
 }

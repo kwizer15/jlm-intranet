@@ -80,8 +80,6 @@ class BillController extends Controller
     
     /**
      * Displays a form to create a new Bill entity.
-     *
-     * @Template()
      */
     public function newAction()
     {
@@ -92,7 +90,7 @@ class BillController extends Controller
 		{
 			$entity = $form->getData();
 			$manager->dispatch(JLMCommerceEvents::BILL_AFTER_PERSIST, new BillEvent($entity, $manager->getRequest()));
-			
+
 			return $manager->redirect('bill_show', array('id' => $form->getData()->getId()));
 		}
 		
