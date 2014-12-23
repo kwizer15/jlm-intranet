@@ -86,112 +86,14 @@ class BillController extends Controller
     	$manager = $this->container->get('jlm_commerce.bill_manager');
     	$manager->secure('ROLE_USER');
     	$form = $manager->createForm('new');
-
-        return array(
-            'form'   => $form->createView()
-        );
-    }
-    
-    /**
-     * Displays a form to create a new Bill entity.
-     *
-     * @Template("JLMCommerceBundle:Bill:new.html.twig")
-     * @Secure(roles="ROLE_USER")
-     * @deprecated No used
-     */
-    public function newdoorAction(Door $door)
-    {
-    	$entity = BillFactory::create(new DoorBillBuilder($door));
-    	$form   = $this->createNewForm($entity);
-    
-    	return array(
-    			'form'   => $form->createView()
-    	);
-    }
-
-    /**
-     * Displays a form to create a new Bill entity.
-     * 
-     * @Template("JLMCommerceBundle:Bill:new.html.twig")
-     * @Secure(roles="ROLE_USER")
-     * @deprecated
-     */
-    public function newquoteAction(QuoteVariant $quote)
-    {
-        $entity = BillFactory::create(new VariantBillBuilder($quote));
-    	$form   = $this->createNewForm($entity);
-    
-    	return array(
-    			'form'   => $form->createView()
-    	);
-    }
-    
-    /**
-     * Displays a form to create a new Bill entity.
-     *
-     * @Template("JLMCommerceBundle:Bill:new.html.twig")
-     * @Secure(roles="ROLE_USER")
-     */
-    public function newinterventionAction(Intervention $interv)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $options = array(
-            'penalty' => (string)$em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
-            'property' => (string)$em->getRepository('JLMCommerceBundle:PropertyModel')->find(1),
-            'earlyPayment' => (string)$em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1),
-        );
-        $builder = ($interv instanceof Work) ? (($interv->getQuote() !== null) ? new WorkBillBuilder($interv, $options) : null) : null;
-        $builder = ($builder === null) ? new InterventionBillBuilder($interv, $options) : $builder;
-        $entity = BillFactory::create($builder);
-
-    	$form   = $this->createNewForm($entity);
-    
-    	return array(
-    			'form'   => $form->createView()
-    	);
-    }
-    
-    /**
-     * Finish Bill
-     */
-    public function finishNewBill(Bill $entity)
-    {
-    	$em = $this->getDoctrine()->getManager();
-    	$entity->setPenalty($em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1).'');
-    	$entity->setProperty($em->getRepository('JLMCommerceBundle:PropertyModel')->find(1).'');
-    	$entity->setEarlyPayment($em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1).'');
-    	$entity->setMaturity(30);
-    	return $entity;
-    }
-    
-    /**
-     * Creates a new Bill entity.
-     *
-     * @Template("JLMCommerceBundle:Bill:new.html.twig")
-     * @Secure(roles="ROLE_USER")
-     */
-    public function createAction(Request $request)
-    {
-        $entity  = new Bill();
-        $em = $this->getDoctrine()->getManager();
-        $vat = $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
-        $entity->setVatTransmitter($vat);
-        $form    = $this->createNewForm($entity);
-        $form->handleRequest($request);
+		if ($manager->getHandler($form)->process())
+		{
+			return $manager->redirect('bill_show', array('id' => $form->getData()->getId()));
+		}
 		
-        if ($form->isValid())
-        {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-            
-            return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));  
-        }
-
-        return array(
-            'entity' => $entity,
+        return $manager->renderResponse('JLMCommerceBundle:Bill:new.html.twig', array(
             'form'   => $form->createView()
-        );
+        ));
     }
 
     /**

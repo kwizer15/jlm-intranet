@@ -15,24 +15,9 @@ bill_new:
     defaults:  { _controller: "JLMCommerceBundle:Bill:new" }
     methods: [GET]
     
-bill_new_door:
-    path:   /new/door/{id}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:newdoor" }
-    methods: [GET]
-    
-bill_new_quotevariant:
-    path:   /new/quote/{id}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:newquote" }
-    methods: [GET]
-    
-bill_new_intervention:
-    path:   /new/intervention/{id}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:newintervention" }
-    methods: [GET]
-    
 bill_create:
-    path:   /create
-    defaults:  { _controller: "JLMCommerceBundle:Bill:create" }
+    path:   /
+    defaults:  { _controller: "JLMCommerceBundle:Bill:new" }
     methods: [POST]
     
 bill_edit:
@@ -43,11 +28,11 @@ bill_edit:
     methods: [GET]
     
 bill_update:
-    path:   /{id}/update
+    path:   /{id}
     defaults:  { _controller: "JLMCommerceBundle:Bill:update" }
     requirements:
         id: \d+
-    methods: [POST]
+    methods: [PUT]
     
 bill_print:
     path:   /{id}/print

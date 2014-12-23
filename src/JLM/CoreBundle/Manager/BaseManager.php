@@ -179,7 +179,7 @@ class BaseManager extends ContainerAware implements ManagerInterface
     	return $this->container->get('event_dispatcher')->dispatch($eventName, $event);
     }
 
-	public function getHandler($form, $entity)
+	public function getHandler($form, $entity = null)
 	{
 		return new DoctrineHandler($form, $this->request, $this->om, $entity);
 	}

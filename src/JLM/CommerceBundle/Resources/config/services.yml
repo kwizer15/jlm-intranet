@@ -41,6 +41,12 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             
+    jlm_commerce.bill_subscriber:
+        class: JLM\CommerceBundle\EventListener\BillSubscriber
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_subscriber }
+    
     jlm_commerce.twig.billcount_extension:
         class: JLM\CommerceBundle\Twig\Extension\BillCountExtension
         arguments: ["@doctrine.orm.entity_manager"]
