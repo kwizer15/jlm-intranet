@@ -36,7 +36,7 @@ class BillSubscriber implements EventSubscriberInterface
 			);
 			$entity = BillFactory::create(new AttributionBillBuilder($attribution, $this->om->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate() * 100, $options));
         	$event->getForm()->setData($entity);
-        	$event->getForm()->add('attribution', 'hidden', array('data' => $attribution->getId(), 'mapped'=>false));
+        	$event->getForm()->add('attribution', 'hidden', array('data' => $attribution->getId(), 'mapped' => false));
 		}
 	}
 	
@@ -53,6 +53,11 @@ class BillSubscriber implements EventSubscriberInterface
 	private function getAttribution(RequestEvent $event)
 	{
 		$id = $event->getParam('jlm_commerce_bill', array('attribution'=>$event->getParam('attribution')))['attribution'];
-		return $this->om->getRepository('JLMTransmitterBundle:Attribution')->find($id);
+		if ($id !== null)
+		{
+			return $this->om->getRepository('JLMTransmitterBundle:Attribution')->find($id);
+		}
+		
+		return null;
 	}
 }
