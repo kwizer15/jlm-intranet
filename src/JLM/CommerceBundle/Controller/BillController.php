@@ -32,6 +32,8 @@ use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Builder\DoorBillBuilder;
 use JLM\DailyBundle\Form\Type\ExternalBillType;
 use JLM\CoreBundle\Entity\Search;
+use JLM\CommerceBundle\JLMCommerceEvents;
+use JLM\CommerceBundle\Event\BillEvent;
 
 
 /**
@@ -88,6 +90,9 @@ class BillController extends Controller
     	$form = $manager->createForm('new');
 		if ($manager->getHandler($form)->process())
 		{
+			$entity = $form->getData();
+			$manager->dispatch(JLMCommerceEvents::BILL_AFTER_PERSIST, new BillEvent($entity, $manager->getRequest()));
+			
 			return $manager->redirect('bill_show', array('id' => $form->getData()->getId()));
 		}
 		

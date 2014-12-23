@@ -2,11 +2,11 @@
 namespace JLM\ModelBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use JLM\CommerceBundle\Event\BillEvent;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Factory\BillFactory;
 use Doctrine\Common\Persistence\ObjectManager;
 use JLM\ModelBundle\Builder\DoorBillBuilder;
+use JLM\CoreBundle\Event\FormPopulatingEvent;
 
 class BillSubscriber implements EventSubscriberInterface
 {	
@@ -25,7 +25,7 @@ class BillSubscriber implements EventSubscriberInterface
 		);
 	}
 	
-	public function populateFromDoor(BillEvent $event)
+	public function populateFromDoor(FormPopulatingEvent $event)
 	{
 		if (null !== $id = $event->getParam('installation'))
 		{

@@ -17,4 +17,5 @@ namespace JLM\CommerceBundle;
 final class JLMCommerceEvents
 {
 	const BILL_FORM_POPULATE = "jlm_commerce.bill_form_populate";
+	const BILL_AFTER_PERSIST = "jlm_commerce.bill_after_persist";
 }

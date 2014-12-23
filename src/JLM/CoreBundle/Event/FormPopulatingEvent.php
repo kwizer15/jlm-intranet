@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the JLMCommerceBundle package.
+ * This file is part of the JLMCoreBundle package.
  *
  * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *
@@ -9,18 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\CommerceBundle\Event;
+namespace JLM\CoreBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use JLM\CommerceBundle\Model\BillInterface;
 
-class BillEvent extends Event
+class FormPopulatingEvent extends Event
 {
 	/**
-	 * @var BillInterface
+	 * @var FormInterface
 	 */
-    private $bill;
+    private $form;
     
     /**
      * @var Request
@@ -31,22 +31,22 @@ class BillEvent extends Event
      * @param FormInterface $form
      * @param Request $request
      */
-    public function __construct(BillInterface $bill, Request $request)
+    public function __construct(FormInterface $form, Request $request)
     {
-    	$this->bill = $bill;
+    	$this->form = $form;
     	$this->request = $request;
     }
     
-    public function getBill()
+    public function getForm()
     {
-    	return $this->bill;
+    	return $this->form;
     }
     
     /**
      * @return string
      */
-    public function getParam($param, $deep = false)
+    public function getParam($param)
     {
-    	return $this->request->get($param, null, $deep);
+    	return $this->request->get($param);
     }
 }

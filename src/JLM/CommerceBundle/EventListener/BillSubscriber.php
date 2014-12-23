@@ -2,11 +2,11 @@
 namespace JLM\CommerceBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use JLM\CommerceBundle\Event\BillEvent;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Factory\BillFactory;
 use Doctrine\Common\Persistence\ObjectManager;
 use JLM\CommerceBundle\Builder\VariantBillBuilder;
+use JLM\CoreBundle\Event\FormPopulatingEvent;
 
 class BillSubscriber implements EventSubscriberInterface
 {	
@@ -25,7 +25,7 @@ class BillSubscriber implements EventSubscriberInterface
 		);
 	}
 	
-	public function populateFromQuote(BillEvent $event)
+	public function populateFromQuote(FormPopulatingEvent $event)
 	{
 		if (null !== $id = $event->getParam('quote'))
 		{

@@ -2,13 +2,13 @@
 namespace JLM\DailyBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use JLM\CommerceBundle\Event\BillEvent;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Factory\BillFactory;
 use Doctrine\Common\Persistence\ObjectManager;
 use JLM\DailyBundle\Builder\WorkBillBuilder;
 use JLM\DailyBundle\Builder\InterventionBillBuilder;
 use JLM\DailyBundle\Entity\Work;
+use JLM\CoreBundle\Event\FormPopulatingEvent;
 
 
 class BillSubscriber implements EventSubscriberInterface
@@ -28,7 +28,7 @@ class BillSubscriber implements EventSubscriberInterface
 		);
 	}
 	
-	public function populateFromIntervention(BillEvent $event)
+	public function populateFromIntervention(FormPopulatingEvent $event)
 	{
 		if (null !== $id = $event->getParam('intervention'))
 		{
