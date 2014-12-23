@@ -48,7 +48,7 @@ class SeriesController extends Controller
     {
         $entity  = new Series();
         $form = $this->createForm(new SeriesType($attribution->getSite()->getId()), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
