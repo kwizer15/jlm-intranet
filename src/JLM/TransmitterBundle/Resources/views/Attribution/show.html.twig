@@ -34,7 +34,7 @@
 	<a href="#modalNewTransmitterReplacement" role="button" class="btn btn-primary" data-toggle="modal"><i class="icon-refresh icon-white"></i> Remplacement d'émetteurs</a>
 	<a href="{{ path('transmitter_attribution_printlist', { 'id': entity.id }) }}" role="button" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer la liste</a>
 	<a href="{{ path('transmitter_attribution_printcourrier', { 'id': entity.id }) }}" role="button" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer le courrier</a>
-	<a href="{{ path('transmitter_attribution_bill', { 'id': entity.id }) }}" role="button" class="btn btn-primary"><i class="icon-print icon-white"></i> Facturer</a>
+	<a href="{{ path('bill_new', { 'attribution': entity.id }) }}" role="button" class="btn btn-primary"><i class="icon-print icon-white"></i> Facturer</a>
 </div>
 {% if entity.transmitters|length > 0 %}
 <h3></h3>
@@ -44,12 +44,12 @@
 {% endif %}
 {% endblock %}
 
-{% block modals %}
+{% block modals %}{#
 {{ render(controller('JLMTransmitterBundle:Transmitter:new',{'id':entity.id})) }}
 {{ render(controller('JLMTransmitterBundle:Series:new',{'id':entity.id})) }}
 {{ render(controller('JLMTransmitterBundle:Replacement:new',{'id':entity.id})) }}
 {{ render(controller('JLMTransmitterBundle:UserGroup:new',{'id':entity.ask.site.id})) }}
-{#
+
 {% for  transmitter in entity.transmitters %}
 {{ render(controller('JLMTransmitterBundle:Transmitter:edit',{'id':transmitter.id})) }}
 {% endfor %}
