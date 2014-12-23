@@ -32,14 +32,9 @@ class BillSubscriber implements EventSubscriberInterface
 	{
 		if (null !== $id = $event->getParam('intervention'))
 		{
-			$options = array();
-//					'penalty' => (string)$this->om->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
-//					'property' => (string)$this->om->getRepository('JLMCommerceBundle:PropertyModel')->find(1),
-//					'earlyPayment' => (string)$this->om->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1),
-//			);
 			$interv = $this->om->getRepository('JLMDailyBundle:Intervention')->find($id);
-			$builder = ($interv instanceof Work) ? (($interv->getQuote() !== null) ? new WorkBillBuilder($interv, $options) : null) : null;
-        	$builder = ($builder === null) ? new InterventionBillBuilder($interv, $options) : $builder;
+			$builder = ($interv instanceof Work) ? (($interv->getQuote() !== null) ? new WorkBillBuilder($interv) : null) : null;
+        	$builder = ($builder === null) ? new InterventionBillBuilder($interv) : $builder;
         	$entity = BillFactory::create($builder);
         	$event->getForm()->setData($entity);
 		}
