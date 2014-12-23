@@ -16,6 +16,7 @@ use JLM\CommerceBundle\Form\Type\BillType;
 use JLM\CommerceBundle\Entity\BillLine;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CoreBundle\Event\FormPopulatingEvent;
+use JLM\CommerceBundle\Entity\Bill;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -84,5 +85,13 @@ class BillManager extends Manager
 		}
 	
 		return parent::populateForm($form);
+	}
+	
+	public function assertState(Bill $bill, $states = array())
+	{
+		if (!in_array($bill->getState(), $states))
+		{
+			return $this->redirect('bill_show', array('id' => $bill->getId()));
+		}
 	}
 }
