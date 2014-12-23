@@ -28,7 +28,10 @@ class BillSubscriber implements EventSubscriberInterface
 	
 	public function populateFromAttribution(FormPopulatingEvent $event)
 	{
-		if (null !== $id = $event->getParam('attribution'))
+		$id = $event->getParam('jlm_commerce_bill', array('attribution'=>$event->getParam('attribution')))['attribution'];
+		echo 'pop : ';
+		var_dump($id);
+		if (null !== $id)
 		{
 			$attribution = $this->om->getRepository('JLMTransmitterBundle:Attribution')->find($id);
 			$options = array(
@@ -42,7 +45,10 @@ class BillSubscriber implements EventSubscriberInterface
 	
 	public function setBillToAttribution(BillEvent $event)
 	{
-		if (null !== $id = $event->getParam('jlm_commerce_bill', 'attribution'))
+		$id = $event->getParam('jlm_commerce_bill', array('attribution'=>$event->getParam('attribution')))['attribution'];
+		echo 'setter : ';
+		var_dump($id);
+		if (null !== $id)
 		{
 			$entity = $this->om->getRepository('JLMTransmitterBundle:Attribution')->find($id);
 			$entity->setBill($event->getBill());

@@ -45,8 +45,8 @@ class FormPopulatingEvent extends Event
     /**
      * @return string
      */
-    public function getParam($param)
+    public function getParam($param, $default = null, $deep = false)
     {
-    	return $this->request->get($param);
+    	return $this->request->get($param, $default = null, $deep);
     }
 }

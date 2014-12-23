@@ -54,7 +54,7 @@ class BillManager extends Manager
 	public function populateForm($form)
 	{
 		// Appel des évenements de remplissage du formulaire
-		$this->disptach(JLMCommerceEvents::BILL_FORM_POPULATE, new FormPopulatingEvent($form, $this->getRequest()));
+		$this->dispatch(JLMCommerceEvents::BILL_FORM_POPULATE, new FormPopulatingEvent($form, $this->getRequest()));
 		
 		// On complète avec ce qui reste vide
 		$vat = $this->om->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
