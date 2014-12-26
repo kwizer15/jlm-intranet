@@ -143,8 +143,11 @@ class FeesFollowerController extends Controller
 					    'vatTransmitter' => $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(),
 					));
 					$bill = BillFactory::create($builder);
-					$em->persist($bill);
-					$number = $bill->getNumber() + 1;
+					if ($bill->getTotal() != 0)
+					{
+						$em->persist($bill);
+						$number = $bill->getNumber() + 1;
+					}
 				}
 			}
 		}

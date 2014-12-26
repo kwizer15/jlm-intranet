@@ -29,10 +29,13 @@ class BillRepository extends SearchRepository
 		return $this->getCount();
 	}
 	
-	public function getLastNumber()
+	public function getLastNumber($year = null)
 	{
-		$date = new \DateTime;
-		$year = $date->format('Y');
+		if ($year === null)
+		{
+			$date = new \DateTime;
+			$year = $date->format('Y');
+		}
 		$qb = $this->createQueryBuilder('q')
 			->select('SUBSTRING(q.number,5) as num')
 			->where('SUBSTRING(q.creation, 1, 4) = :year')
@@ -40,11 +43,8 @@ class BillRepository extends SearchRepository
 			->setMaxResults(1)
 			->setParameter('year',$year);
 		$result = $qb->getQuery()->getResult();
-//		var_dump($result); exit;
-		if (!$result)
-			return 0;
-		else
-			return $result[0]['num'];
+
+		return (!$result) ? 0 : $result[0]['num'];
 	}
 	
 	public function getCount($state = null)

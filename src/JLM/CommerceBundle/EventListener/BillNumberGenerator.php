@@ -33,22 +33,27 @@ class BillNumberGenerator
 			
 			if ($entity->getNumber() === null)
 			{
-				$number = $entity->getCreation()->format('ym');
-				$n = ($em->getRepository('JLMCommerceBundle:Bill')->getLastNumber() + 1);
+				$creation = $entity->getCreation();
+				$year = $creation->format('Y');
+				$number = $creation->format('ym');
+				$n = ($em->getRepository('JLMCommerceBundle:Bill')->getLastNumber($year) + 1);
 				for ($i = strlen($n); $i < 4 ; $i++)
+				{
 					$number.= '0';
+				}
 				$number.= $n;
 				$entity->setNumber($number);
 			}
 			
 			$lines = $entity->getLines();
 			
+			// @todo Chercher a virer ca avec le mapping de bill
 			foreach ($lines as $line)
 			{
 				$line->setBill($entity);
 				$em->persist($line);
 			}
-			
+			// @todo Lancer un evenement BillAfterPersist dans le controller
 			$interv = $entity->getIntervention();
 			if ($interv !== null)
 			{
