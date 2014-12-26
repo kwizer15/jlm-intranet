@@ -88,8 +88,13 @@ class BillController extends ContainerAware
     	$manager->secure('ROLE_USER');
     	$entity = $manager->getEntity($id);
     	$manager->assertState($entity, array(0));
-
         $editForm = $manager->createForm('edit', array('entity'=> $entity));
+        
+        if ($manager->getHandler($editForm, $entity)->process())
+        {
+        	return $manager->redirect('bill_show', array('id' => $entity->getId()));
+        }
+        
         return $manager->renderResponse('JLMCommerceBundle:Bill:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
@@ -97,27 +102,6 @@ class BillController extends ContainerAware
 
     }
 
-    /**
-     * Edits an existing Bill entity.
-     */
-    public function updateAction($id)
-    {
-    	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
-    	$entity = $manager->getEntity($id);
-    	$manager->assertState($entity, array(0));
-    	$editForm = $manager->createForm('edit', array('entity'=> $entity));
-        if ($manager->getHandler($editForm, $entity)->process())
-        {            
-            return $manager->redirect('bill_show', array('id' => $entity->getId()));
-        }
-
-        return $manager->renderResponse('JLMCommerceBundle:Bill:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        ));
-    } 
-    
     /**
      * Imprimer la facture
      */
