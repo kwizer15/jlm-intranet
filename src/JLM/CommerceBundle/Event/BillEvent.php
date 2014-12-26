@@ -11,21 +11,16 @@
 
 namespace JLM\CommerceBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 use JLM\CommerceBundle\Model\BillInterface;
+use JLM\CoreBundle\Event\RequestEvent;
 
-class BillEvent extends Event
+class BillEvent extends RequestEvent
 {
 	/**
 	 * @var BillInterface
 	 */
     private $bill;
-    
-    /**
-     * @var Request
-     */
-    private $request;
 
     /**
      * @param FormInterface $form
@@ -34,19 +29,11 @@ class BillEvent extends Event
     public function __construct(BillInterface $bill, Request $request)
     {
     	$this->bill = $bill;
-    	$this->request = $request;
+    	parent::__construct($request);
     }
     
     public function getBill()
     {
     	return $this->bill;
-    }
-    
-    /**
-     * @return string
-     */
-    public function getParam($param, $deep = false)
-    {
-    	return $this->request->get($param, null, $deep);
     }
 }

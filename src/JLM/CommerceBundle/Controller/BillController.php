@@ -11,35 +11,15 @@
 
 namespace JLM\CommerceBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-
-use JLM\CommerceBundle\Factory\BillFactory;
-use JLM\CommerceBundle\Entity\Bill;
-use JLM\CommerceBundle\Entity\BillLine;
-use JLM\CommerceBundle\Form\Type\BillType;
-use JLM\CommerceBundle\Model\BillInterface;
-use JLM\CommerceBundle\Entity\QuoteVariant;
-use JLM\CommerceBundle\Builder\VariantBillBuilder;
-use JLM\DailyBundle\Entity\Intervention;
-use JLM\DailyBundle\Builder\WorkBillBuilder;
-use JLM\DailyBundle\Builder\InterventionBillBuilder;
-use JLM\DailyBundle\Entity\Work;
-use JLM\ModelBundle\Entity\Door;
-use JLM\ModelBundle\Builder\DoorBillBuilder;
-use JLM\DailyBundle\Form\Type\ExternalBillType;
-use JLM\CoreBundle\Entity\Search;
+use Symfony\Component\DependencyInjection\ContainerAware;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Event\BillEvent;
-
-
+use JLM\DailyBundle\Form\Type\ExternalBillType;
+use JLM\CoreBundle\Entity\Search;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class BillController extends Controller
+class BillController extends ContainerAware
 {
 	/**
 	 * List bills
@@ -80,8 +60,6 @@ class BillController extends Controller
     
     /**
      * Displays a form to create a new Bill entity.
-     *
-     * @Template()
      */
     public function newAction()
     {
@@ -92,7 +70,7 @@ class BillController extends Controller
 		{
 			$entity = $form->getData();
 			$manager->dispatch(JLMCommerceEvents::BILL_AFTER_PERSIST, new BillEvent($entity, $manager->getRequest()));
-			
+
 			return $manager->redirect('bill_show', array('id' => $form->getData()->getId()));
 		}
 		
@@ -103,50 +81,42 @@ class BillController extends Controller
 
     /**
      * Displays a form to edit an existing Bill entity.
-     *
-     * @Template()
-     * @Secure(roles="ROLE_USER")
      */
-    public function editAction(Bill $entity)
+    public function editAction($id)
     {
-    	// Si le devis est déjà validé, on empèche quelconque modification
-    	if ($entity->getState())
-    	{
-    		return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
-    	}
-        $editForm = $this->createEditForm($entity);
-        return array(
+    	$manager = $this->container->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_USER');
+    	$entity = $manager->getEntity($id);
+    	$manager->assertState($entity, array(0));
+
+        $editForm = $manager->createForm('edit', array('entity'=> $entity));
+        return $manager->renderResponse('JLMCommerceBundle:Bill:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-        );
+        ));
 
     }
 
     /**
      * Edits an existing Bill entity.
-     *
-     * @Template("JLMCommerceBundle:Bill:edit.html.twig")
-     * @Secure(roles="ROLE_USER")
      */
-    public function updateAction(Request $request, Bill $entity)
+    public function updateAction($id)
     {
-    	// Si la facture est déjà validé, on empèche quelconque modification
-    	if ($entity->getState())
-    	{
-    		return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
-    	}
+    	$manager = $this->container->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_USER');
+    	$entity = $manager->getEntity($id);
+    	$manager->assertState($entity, array(0));
     	 
     	$originalLines = array();
     	foreach ($entity->getLines() as $line)
     	{
     	   $originalLines[] = $line;
     	}
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-        
-        if ($editForm->isValid())
+
+    	$editForm = $manager->createForm('edit', array('entity'=> $entity));
+        if ($manager->getHandler($editForm, $entity)->process())
         {
-        	$em = $this->getDoctrine()->getManager();
+        	$em = $manager->getObjectManager();
         	$em->persist($entity);
 	       	$lines = $entity->getLines();
 	       	foreach ($lines as $key => $line)
@@ -167,13 +137,13 @@ class BillController extends Controller
 	       	}
             $em->flush();
             
-            return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
+            return $manager->redirect('bill_show', array('id' => $entity->getId()));
         }
 
-        return array(
+        return $manager->renderResponse('JLMCommerceBundle:Bill:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-        );
+        ));
     } 
     
     /**
@@ -209,8 +179,6 @@ class BillController extends Controller
     
     /**
      * Imprimer la liste des factures à faire
-     *
-     * @Secure(roles="ROLE_USER")
      */
     public function printlistAction()
     {
@@ -388,24 +356,9 @@ class BillController extends Controller
     	$params = array();
     	if (is_array($formData) && array_key_exists('query', $formData))
     	{
-    		$em = $manager->getObjectManager();
-    		$entity = new Search();
-    		$query = $formData['query'];
-    		$entity->setQuery($query);
-    		$params = array('results' => $em->getRepository('JLMCommerceBundle:Bill')->search($entity));
-    		
+    		$params = array('results' => $manager->getRepository()->search($formData['query']));
     	}
     	 
     	return $manager->renderResponse('JLMCommerceBundle:Bill:search.html.twig', $params);
-    }
-    
-    private function createNewForm(BillInterface $entity)
-    {
-        return $this->createForm(new BillType(), $entity);
-    }
-    
-    private function createEditForm(BillInterface $entity)
-    {
-        return $this->createForm(new BillType(), $entity);
     }
 }
