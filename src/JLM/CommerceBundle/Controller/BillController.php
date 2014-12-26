@@ -135,12 +135,6 @@ class BillController extends Controller
     	{
     		return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
     	}
-    	 
-    	$originalLines = array();
-    	foreach ($entity->getLines() as $line)
-    	{
-    	   $originalLines[] = $line;
-    	}
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
         
@@ -148,23 +142,6 @@ class BillController extends Controller
         {
         	$em = $this->getDoctrine()->getManager();
         	$em->persist($entity);
-	       	$lines = $entity->getLines();
-	       	foreach ($lines as $key => $line)
-	       	{
-	       		$line->setBill($entity);
-	       		$em->persist($line);
-	       		foreach ($originalLines as $key => $toDel)
-	       		{
-	       			if ($toDel->getId() === $line->getId())
-	       			{
-	       				unset($originalLines[$key]);
-	       			}
-	       		}
-	       	}
-	       	foreach ($originalLines as $line)
-	       	{
-	       		$em->remove($line);
-	       	}
             $em->flush();
             
             return $this->redirect($this->generateUrl('bill_show', array('id' => $entity->getId())));
