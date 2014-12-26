@@ -162,7 +162,7 @@ $billLineQuery = "SELECT id, bill_id FROM bill_lines";
 $billLines = $db->query($billLineQuery);
 while ($billLine = $billLines->fetch_array())
 {
-	$query[] = 'INSERT INTO jlm_commerce_bill_join_bill_line (bill_line_id, bill_id) VALUES ('.$billLine['id'].','.$billLine['bill_id'].');';
+	$query[] = 'INSERT INTO jlm_commerce_bill_join_bill_line (billline_id, bill_id) VALUES ('.$billLine['id'].','.$billLine['bill_id'].');';
 }
 
 $q2 = array(
