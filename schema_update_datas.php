@@ -157,6 +157,11 @@ while ($company = $companies->fetch_array())
   }
 }
 
+/* parcourir billlines
+ * foreach lines as line
+ * 		insert into jlm_commerce_bill_join_billline values billine.bill_id billline.id
+ */
+
 $q2 = array(
 'ALTER TABLE site_contacts DROP does ;',
 'ALTER TABLE quote DROP does ;',
