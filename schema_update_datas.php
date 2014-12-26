@@ -33,6 +33,7 @@ $query = array(
 'CREATE TABLE jlm_contact_corporation (id INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
 'CREATE TABLE jlm_contact_person (id INT NOT NULL, title VARCHAR(4) NOT NULL, firstName VARCHAR(255) DEFAULT NULL, lastName VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
 'CREATE TABLE jlm_contact_company (id INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
+'CREATE TABLE jlm_commerce_bill_join_bill_line (bill_id INT NOT NULL, billline_id INT NOT NULL, INDEX IDX_9D570A4E1A8C12F5 (bill_id), UNIQUE INDEX UNIQ_9D570A4EA3C9DCD7 (billline_id), PRIMARY KEY(bill_id, billline_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
 'ALTER TABLE jlm_contact_contact_phone ADD CONSTRAINT FK_17C3A5BF3B7323CB FOREIGN KEY (phone_id) REFERENCES jlm_contact_phone (id);',
 'ALTER TABLE jlm_contact_contact ADD CONSTRAINT FK_11D566613DA5256D FOREIGN KEY (image_id) REFERENCES jlm_core_upload_document (id);',
 'ALTER TABLE jlm_contact_contact ADD CONSTRAINT FK_11D56661F5B7AF75 FOREIGN KEY (address_id) REFERENCES jlm_contact_address (id);',
@@ -157,12 +158,19 @@ while ($company = $companies->fetch_array())
   }
 }
 
-/* parcourir billlines
- * foreach lines as line
- * 		insert into jlm_commerce_bill_join_billline values billine.bill_id billline.id
- */
+$billLineQuery = "SELECT id, bill_id FROM bill_lines";
+$billLines = $db->query($billLineQuery);
+while ($billLine = $billLines->fetch_array())
+{
+	$query[] = 'INSERT INTO jlm_commerce_bill_join_bill_line (bill_line_id, bill_id) VALUES ('.$billLine['id'].','.$billLine['bill_id'].');';
+}
 
 $q2 = array(
+'ALTER TABLE jlm_commerce_bill_join_bill_line ADD CONSTRAINT FK_9D570A4E1A8C12F5 FOREIGN KEY (bill_id) REFERENCES bill (id);',
+'ALTER TABLE jlm_commerce_bill_join_bill_line ADD CONSTRAINT FK_9D570A4EA3C9DCD7 FOREIGN KEY (billline_id) REFERENCES bill_lines (id);',
+'ALTER TABLE bill_lines DROP FOREIGN KEY FK_79F1D9081A8C12F5;',
+'DROP INDEX IDX_79F1D9081A8C12F5 ON bill_lines;',
+'ALTER TABLE bill_lines DROP bill_id;',	
 'ALTER TABLE site_contacts DROP does ;',
 'ALTER TABLE quote DROP does ;',
 'ALTER TABLE users DROP does ;',
