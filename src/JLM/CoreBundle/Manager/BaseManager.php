@@ -144,7 +144,7 @@ class BaseManager extends ContainerAware implements ManagerInterface
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$filename.'.pdf');
-		$response->setContent($this->render($view , $parameters));
+		$response->setContent($this->renderResponse($view , $parameters));
 		
 		return $response;
 	}
@@ -174,7 +174,7 @@ class BaseManager extends ContainerAware implements ManagerInterface
     	return $this->container->get('session');
     }
     
-    public function disptach($eventName, Event $event = null)
+    public function dispatch($eventName, Event $event = null)
     {
     	return $this->container->get('event_dispatcher')->dispatch($eventName, $event);
     }

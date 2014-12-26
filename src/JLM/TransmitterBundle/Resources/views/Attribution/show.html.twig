@@ -34,7 +34,11 @@
 	<a href="#modalNewTransmitterReplacement" role="button" class="btn btn-primary" data-toggle="modal"><i class="icon-refresh icon-white"></i> Remplacement d'émetteurs</a>
 	<a href="{{ path('transmitter_attribution_printlist', { 'id': entity.id }) }}" role="button" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer la liste</a>
 	<a href="{{ path('transmitter_attribution_printcourrier', { 'id': entity.id }) }}" role="button" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer le courrier</a>
+	{% if entity.bill %}
+	<a href="{{ path('bill_print', {'id': entity.bill.id}) }}" role="button" class="btn btn-primary"><i class="icon-print icon-white"></i> Facture</a>
+	{% else %}
 	<a href="{{ path('bill_new', { 'attribution': entity.id }) }}" role="button" class="btn btn-primary"><i class="icon-print icon-white"></i> Facturer</a>
+	{% endif %}
 </div>
 {% if entity.transmitters|length > 0 %}
 <h3></h3>

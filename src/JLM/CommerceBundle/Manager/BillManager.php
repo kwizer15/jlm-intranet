@@ -16,6 +16,7 @@ use JLM\CommerceBundle\Form\Type\BillType;
 use JLM\CommerceBundle\Entity\BillLine;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CoreBundle\Event\FormPopulatingEvent;
+use JLM\CommerceBundle\Entity\Bill;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -54,7 +55,7 @@ class BillManager extends Manager
 	public function populateForm($form)
 	{
 		// Appel des évenements de remplissage du formulaire
-		$this->disptach(JLMCommerceEvents::BILL_FORM_POPULATE, new FormPopulatingEvent($form, $this->getRequest()));
+		$this->dispatch(JLMCommerceEvents::BILL_FORM_POPULATE, new FormPopulatingEvent($form, $this->getRequest()));
 		
 		// On complète avec ce qui reste vide
 		$vat = $this->om->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
@@ -84,5 +85,13 @@ class BillManager extends Manager
 		}
 	
 		return parent::populateForm($form);
+	}
+	
+	public function assertState(Bill $bill, $states = array())
+	{
+		if (!in_array($bill->getState(), $states))
+		{
+			return $this->redirect('bill_show', array('id' => $bill->getId()));
+		}
 	}
 }
