@@ -133,17 +133,19 @@ class FeesFollowerController extends Controller
 						$em->persist($contract);
 					}
 				}
-				
-				$builder = new FeeBillBuilder($fee, $entity, array(
-				    'number' => $number,
-				    'product' => $em->getRepository('JLMProductBundle:Product')->find(284),
-				    'penalty' => (string)$em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
-                    'earlyPayment' => (string)$em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1),
-				    'vatTransmitter' => $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(),
-				));
-				$bill = BillFactory::create($builder);
-				$em->persist($bill);
-				$number = $bill->getNumber() + 1;
+				if (sizeof($fee->getContracts()))
+				{
+					$builder = new FeeBillBuilder($fee, $entity, array(
+					    'number' => $number,
+					    'product' => $em->getRepository('JLMProductBundle:Product')->find(284),
+					    'penalty' => (string)$em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
+	                    'earlyPayment' => (string)$em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1),
+					    'vatTransmitter' => $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(),
+					));
+					$bill = BillFactory::create($builder);
+					$em->persist($bill);
+					$number = $bill->getNumber() + 1;
+				}
 			}
 		}
 
