@@ -231,7 +231,7 @@ class BillController extends ContainerAware
         $em->persist($entity);
         $em->flush();
          
-        return $this->redirectReferer();
+        return $manager->redirectReferer();
     }
     
     /**
