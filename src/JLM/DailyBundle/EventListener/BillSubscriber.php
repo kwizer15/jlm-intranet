@@ -9,7 +9,8 @@ use JLM\DailyBundle\Builder\WorkBillBuilder;
 use JLM\DailyBundle\Builder\InterventionBillBuilder;
 use JLM\DailyBundle\Entity\Work;
 use JLM\CoreBundle\Event\FormPopulatingEvent;
-
+use JLM\CoreBundle\Event\RequestEvent;
+use JLM\CommerceBundle\Event\BillEvent;
 
 class BillSubscriber implements EventSubscriberInterface
 {	
@@ -31,14 +32,13 @@ class BillSubscriber implements EventSubscriberInterface
 	
 	public function populateFromIntervention(FormPopulatingEvent $event)
 	{
-		if (null !== $intervention = $this->getIntervention($event))
+		if (null !== $interv = $this->getIntervention($event))
 		{
-			
 			$builder = ($interv instanceof Work) ? (($interv->getQuote() !== null) ? new WorkBillBuilder($interv) : null) : null;
         	$builder = ($builder === null) ? new InterventionBillBuilder($interv) : $builder;
         	$entity = BillFactory::create($builder);
         	$event->getForm()->setData($entity);
-			$event->getForm()->add('intervention', 'hidden', array('data' => $intervention->getId(), 'mapped' => false));
+			$event->getForm()->add('intervention', 'hidden', array('data' => $interv->getId(), 'mapped' => false));
 		}
 	}
 	
