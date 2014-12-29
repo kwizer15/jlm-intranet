@@ -1,11 +1,20 @@
 parameters:
     jlm_commerce.model.bill.class: JLM\CommerceBundle\Entity\Bill
     jlm_commerce.manager.bill.class: JLM\CommerceBundle\Manager\BillManager
+    jlm_commerce.model.quote.class: JLM\CommerceBundle\Entity\Quote
+    jlm_commerce.manager.quote.class: JLM\CommerceBundle\Manager\QuoteManager
 
 services:
     jlm_commerce.bill_manager:
         class: "%jlm_commerce.manager.bill.class%"
         arguments: ["%jlm_commerce.model.bill.class%"]
+        calls:
+            - [ setContainer, ["@service_container"]]
+            - [ setServices ]
+    
+    jlm_commerce.quote_manager:
+        class: "%jlm_commerce.manager.quote.class%"
+        arguments: ["%jlm_commerce.model.quote.class%"]
         calls:
             - [ setContainer, ["@service_container"]]
             - [ setServices ]
