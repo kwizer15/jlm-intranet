@@ -38,40 +38,44 @@ class QuoteController extends Controller
 {
     /**
      * Lists all Quote entities.
-     *
-     * @Template()
-     * @Secure(roles="ROLE_USER")
      */
-    public function indexAction($page = 1, $state = null)
+    public function indexAction($state = null)
     {
-    	$limit = 20;
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('JLMCommerceBundle:Quote');
+    	$manager = $this->container->get('jlm_commerce.quote_manager');
+    	$manager->secure('ROLE_USER');
+    	$request = $manager->getRequest();
+    	$page = $request->get('page', 1);
+    	$limit = $request->get('limit', 20);
+    	$state = $request->get('state', null);
+        $repo = $manager->getRepository();
         $nb = ($state === null) ? $repo->getTotal() : $repo->getCountState($state);
         $nbPages = ceil($nb/$limit);
         $nbPages = ($nbPages < 1) ? 1 : $nbPages;
         $offset = ($page-1) * $limit;
-        $page = ($page < 1) ? 1 : $page;
+        
        	$page = ($page > $nbPages) ? $nbPages : $page;
         $entities = ($state === null) ? $repo->getAll($limit,$offset) : $repo->getByState($state,$limit,$offset);
  
-        return array(
+        return $manager->renderResponse('JLMCommerceBundle:Quote:index.html.twig', 
+        	array(
         		'entities' => $entities,
         		'page'     => $page,
         		'nbPages'  => $nbPages,
         		'state'	   => $state,
-        );
+        ));
     }
 
     /**
      * Finds and displays a Quote entity.
-     *
-     * @Template()
-     * @Secure(roles="ROLE_USER")
      */
-    public function showAction(Quote $entity)
+    public function showAction($id)
     {
-        return array('entity'=> $entity);
+    	$manager = $this->container->get('jlm_commerce.quote_manager');
+    	$manager->secure('ROLE_USER');
+    	
+        return $manager->renderResponse('JLMCommerceBundle:Quote:show.html.twig', 
+        		array('entity'=> $manager->getEntity($id))
+        );
     }
     
     /**

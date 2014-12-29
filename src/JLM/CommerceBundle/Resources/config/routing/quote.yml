@@ -3,16 +3,6 @@ quote:
     defaults: { _controller: "JLMCommerceBundle:Quote:index" }
     methods: [GET]
     
-quote_page:
-    path: /page/{page}
-    defaults: { _controller: "JLMCommerceBundle:Quote:index" }
-    methods: [GET]
-    
-quote_state:
-    path: /page/{page}/state/{state}
-    defaults: { _controller: "JLMCommerceBundle:Quote:index" }
-    methods: [GET]
-    
 quote_show:
     path: /{id}/show
     defaults: { _controller: "JLMCommerceBundle:Quote:show" }
