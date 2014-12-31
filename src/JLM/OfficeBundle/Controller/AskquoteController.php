@@ -157,9 +157,6 @@ class AskquoteController extends PaginableController
 	 * Resultats de la barre de recherche.
 	 *
 	 * @Route("/search", name="askquote_search")
-	 * @Method("post")
-	 * @Secure(roles="ROLE_USER")
-	 * @Template()
 	 */
 	public function searchAction(Request $request)
 	{
@@ -172,6 +169,6 @@ class AskquoteController extends PaginableController
 			$params = array('entities' => $manager->getRepository()->search($formData['query']));
 		}
 		
-		return $manager->renderResponse('JLMOficeBundle:Askqoute:search.html.twig', $params);
+		return $manager->renderResponse('JLMOfficeBundle:Askquote:index.html.twig', $params);
 	}
 }
