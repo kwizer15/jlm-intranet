@@ -13,6 +13,7 @@ namespace JLM\CoreBundle\Manager;
 
 use JLM\CoreBundle\Form\Handler\DoctrineHandler;
 use JLM\CoreBundle\Repository\SearchRepositoryInterface;
+use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;

@@ -8,8 +8,8 @@ quote_show:
     defaults: { _controller: "JLMCommerceBundle:Quote:show" }
     methods: [GET]
     
-quote_newfromask:
-    path: /new/fromask/{id}
+quote_new:
+    path: /new
     defaults: { _controller: "JLMCommerceBundle:Quote:new" }
     methods: [GET]
     

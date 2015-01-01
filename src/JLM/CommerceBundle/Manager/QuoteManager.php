@@ -29,7 +29,7 @@ class QuoteManager extends Manager
 			case 'new' :
 				return array(
 					'method' => 'POST',
-					'route' => 'bill_create',
+					'route' => 'quote_create',
 					'params' => array(),
 					'label' => 'Créer',
 					'type'  => new QuoteType(),
@@ -38,7 +38,7 @@ class QuoteManager extends Manager
 			case 'edit' :
 				return array(
 					'method' => 'PUT',
-					'route' => 'bill_update',
+					'route' => 'quote_update',
 					'params' => array('id' => $options['entity']->getId()),
 					'label' => 'Modifier',
 					'type'  => new QuoteType(),
@@ -56,34 +56,24 @@ class QuoteManager extends Manager
 	{
 		// Appel des évenements de remplissage du formulaire
 		$this->dispatch(JLMCommerceEvents::QUOTE_FORM_POPULATE, new FormPopulatingEvent($form, $this->getRequest()));
-//		
-//		// On complète avec ce qui reste vide
-//      $vat = $this->om->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
-//		$params = array(
-//				'creation' => new \DateTime,
-//				'vat' => $vat,
-//				'vatTransmitter' => $vat * 100,
-//				'penalty' => $this->om->getRepository('JLMCommerceBundle:PenaltyModel')->find(1).'',
-//				'property' => $this->om->getRepository('JLMCommerceBundle:PropertyModel')->find(1).'',
-//				'earlyPayment' => $this->om->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1).'',
-//				'maturity' => 30,
-//		);
-//		foreach ($params as $key => $value)
-//		{
-//			$param = $form->get($key)->getData();
-//			if (empty($param))
-//			{
-//				$form->get($key)->setData($value);
-//			}
-//		}
-//		
-//		// on met un ligne vide si y en a pas 
-//		$lines = $form->get('lines')->getData();
-//		if (empty($lines))
-//		{
-//			$form->get('lines')->setData(array(new BillLine()));
-//		}
-//	
+  		
+		// On complète avec ce qui reste vide
+        $vat = $this->om->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
+		$params = array(
+				'creation' => new \DateTime,
+				'vat' => $vat,
+				'vatTransmitter' => $vat * 100,
+				'followerCp' => $this->getUser()->getContact()->getName(),
+		);
+		foreach ($params as $key => $value)
+		{
+			$param = $form->get($key)->getData();
+			if (empty($param))
+			{
+				$form->get($key)->setData($value);
+			}
+		}
+
 		return parent::populateForm($form);
 	}
 }

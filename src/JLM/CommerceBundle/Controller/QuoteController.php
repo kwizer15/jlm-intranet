@@ -11,7 +11,6 @@
 
 namespace JLM\CommerceBundle\Controller;
 
-use FOS\UserBundle\Model\UserInterface;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\CommerceBundle\Entity\QuoteLine;
 use JLM\CommerceBundle\Entity\Quote;
@@ -77,24 +76,13 @@ class QuoteController extends Controller
     }
     
     /**
-     * Nouveau devis depuis un demande de devis
-     * 
+     * Nouveau devis depuis un demande de devis 
      */
-    public function newAction(AskQuote $askquote)
+    public function newAction()
     {
     	$manager = $this->container->get('jlm_commerce.quote_manager');
     	$manager->secure('ROLE_USER');
     	$form = $manager->createForm('new');
-    	
-    	// To populate form
-    	$user = $manager->getUser();
-    	$em = $manager->getObjectManager();
-    	$vat = $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
-    	$entity = Quote::createFromAskQuote($askquote);
-    	$entity->setFollowerCp($user->getContact()->getName());
-    	$entity->setVatTransmitter($vat);
-    	$form   = $this->createNewForm($entity);
-    	// End
     	
     	return $manager->renderResponse('JLMCommerceBundle:Quote:new.html.twig', array(
     			'form'   => $form->createView()
