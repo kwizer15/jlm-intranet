@@ -4,8 +4,9 @@ namespace JLM\DefaultBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use JLM\CoreBundle\Entity\Search;
+use JLM\CoreBundle\Repository\SearchRepositoryInterface;
 
-class SearchRepository extends EntityRepository
+class SearchRepository extends EntityRepository implements SearchRepositoryInterface
 {
 	/**
 	 * 
