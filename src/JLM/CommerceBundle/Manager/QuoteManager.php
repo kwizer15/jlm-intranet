@@ -55,10 +55,10 @@ class QuoteManager extends Manager
 	public function populateForm($form)
 	{
 		// Appel des évenements de remplissage du formulaire
-		$this->dispatch(JLMCommerceEvents::BILL_FORM_POPULATE, new FormPopulatingEvent($form, $this->getRequest()));
+		$this->dispatch(JLMCommerceEvents::QUOTE_FORM_POPULATE, new FormPopulatingEvent($form, $this->getRequest()));
 //		
 //		// On complète avec ce qui reste vide
-//		$vat = $this->om->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
+//      $vat = $this->om->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
 //		$params = array(
 //				'creation' => new \DateTime,
 //				'vat' => $vat,

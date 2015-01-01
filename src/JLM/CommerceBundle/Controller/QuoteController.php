@@ -44,25 +44,23 @@ class QuoteController extends Controller
     	$manager = $this->container->get('jlm_commerce.quote_manager');
     	$manager->secure('ROLE_USER');
     	$request = $manager->getRequest();
-    	$page = $request->get('page', 1);
-    	$limit = $request->get('limit', 20);
-    	$state = $request->get('state', null);
-        $repo = $manager->getRepository();
-        $nb = ($state === null) ? $repo->getTotal() : $repo->getCountState($state);
-        $nbPages = ceil($nb/$limit);
-        $nbPages = ($nbPages < 1) ? 1 : $nbPages;
-        $offset = ($page-1) * $limit;
-        
-       	$page = ($page > $nbPages) ? $nbPages : $page;
-        $entities = ($state === null) ? $repo->getAll($limit,$offset) : $repo->getByState($state,$limit,$offset);
- 
-        return $manager->renderResponse('JLMCommerceBundle:Quote:index.html.twig', 
-        	array(
-        		'entities' => $entities,
-        		'page'     => $page,
-        		'nbPages'  => $nbPages,
-        		'state'	   => $state,
-        ));
+    	$states = array(
+    			'all' => 'All',
+    			'in_seizure' => 'InSeizure',
+    			'waiting' => 'Waiting',
+    			'sended' => 'Sended',
+    			'given' => 'Given',
+    			'canceled' => 'Canceled'
+    	);
+    	$state = $request->get('state');
+    	$state = (!array_key_exists($state, $states)) ? 'all' : $state;
+    	$method = $states[$state];
+    	$functionCount = 'getCount'.$method;
+    	$functionDatas = 'get'.$method;
+    	
+    	return $manager->renderResponse('JLMCommerceBundle:Quote:index.html.twig',
+    			$manager->pagination($functionCount, $functionDatas, 'quote', array('state' => $state))
+    	);
     }
 
     /**
@@ -81,27 +79,26 @@ class QuoteController extends Controller
     /**
      * Nouveau devis depuis un demande de devis
      * 
-     * @Template()
-     * @Secure(roles="ROLE_USER")
      */
     public function newAction(AskQuote $askquote)
     {
-    	$user = $this->container->get('security.context')->getToken()->getUser();
-    	if (!is_object($user) || !$user instanceof UserInterface) {
-    		throw new AccessDeniedException('This user does not have access to this section.');
-    	}
-    	$em = $this->getDoctrine()->getManager();
+    	$manager = $this->container->get('jlm_commerce.quote_manager');
+    	$manager->secure('ROLE_USER');
+    	$form = $manager->createForm('new');
+    	
+    	// To populate form
+    	$user = $manager->getUser();
+    	$em = $manager->getObjectManager();
     	$vat = $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
     	$entity = Quote::createFromAskQuote($askquote);
     	$entity->setFollowerCp($user->getContact()->getName());
     	$entity->setVatTransmitter($vat);
-    	
     	$form   = $this->createNewForm($entity);
-    
-    	return array(
-    			'entity' => $entity,
+    	// End
+    	
+    	return $manager->renderResponse('JLMCommerceBundle:Quote:new.html.twig', array(
     			'form'   => $form->createView()
-    	);
+    	));
     }
 
     /**
@@ -204,43 +201,16 @@ class QuoteController extends Controller
         
         return $this->redirect($this->generateUrl('quote'));
     }
-
-    /**
-     * Create a delete form
-     * @param unknown $id
-     * @return \Symfony\Component\Form\Form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
     
     /**
      * Resultats de la barre de recherche.
-     * 
-     * @Secure(roles="ROLE_USER")
-     * @Template()
      */
-    public function searchAction(Request $request)
+    public function searchAction()
     {
-    	$formData = $request->get('jlm_core_search');
+    	$manager = $this->container->get('jlm_commerce.quote_manager');
+    	$manager->secure('ROLE_USER');
     	
-    	if (is_array($formData) && array_key_exists('query', $formData))
-    	{
-    		$em = $this->getDoctrine()->getManager();
-    		$entity = new Search();
-    		$query = $formData['query'];
-    		$entity->setQuery($query);
-    		return array(
-    				'results' => $em->getRepository('JLMCommerceBundle:Quote')->search($entity),
-    				'query' => $entity->getQuery(),
-    		);
-    	}
-    	
-    	return array();
+    	return $manager->renderSearch('JLMCommerceBundle:Quote:search.html.twig');
     }
     
     /**
@@ -379,4 +349,19 @@ class QuoteController extends Controller
     {
     	return $this->createForm(new QuoteType(), $entity);
     }
+
+
+    /**
+     * Create a delete form
+     * @param unknown $id
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createDeleteForm($id)
+    {
+    	return $this->createFormBuilder(array('id' => $id))
+    	->add('id', 'hidden')
+    	->getForm()
+    	;
+    }
+
 }
