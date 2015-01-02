@@ -76,4 +76,12 @@ class QuoteManager extends Manager
 
 		return parent::populateForm($form);
 	}
+	
+	public function assertState($quote, $states = array())
+	{
+		if (!in_array($quote->getState(), $states))
+		{
+			return $this->redirect('quote_show', array('id' => $quote->getId()));
+		}
+	}
 }

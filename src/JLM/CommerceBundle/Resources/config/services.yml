@@ -50,6 +50,11 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             
+    jlm_commerce.listener.quotenumbergenerator_listener:
+        class: JLM\CommerceBundle\EventListener\QuoteNumberGenerator
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            
     jlm_commerce.bill_subscriber:
         class: JLM\CommerceBundle\EventListener\BillSubscriber
         arguments: ["@doctrine.orm.entity_manager"]

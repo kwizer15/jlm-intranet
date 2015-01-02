@@ -22,6 +22,8 @@ use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
 use JLM\OfficeBundle\Entity\AskQuote;
+use JLM\CommerceBundle\JLMCommerceEvents;
+use JLM\CommerceBundle\Event\QuoteEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -84,112 +86,40 @@ class QuoteController extends Controller
     	$manager->secure('ROLE_USER');
     	$form = $manager->createForm('new');
     	
+    	if ($manager->getHandler($form)->process())
+    	{
+    		$entity = $form->getData();
+    		$manager->dispatch(JLMCommerceEvents::QUOTE_AFTER_PERSIST, new QuoteEvent($entity, $manager->getRequest()));
+    	
+    		return $manager->redirect('quote_show', array('id' => $form->getData()->getId()));
+    	}
+    	
     	return $manager->renderResponse('JLMCommerceBundle:Quote:new.html.twig', array(
     			'form'   => $form->createView()
     	));
     }
 
     /**
-     * Creates a new Quote entity.
-     *
-     * @Template("JLMCommerceBundle:Quote:new.html.twig")
-     * @Secure(roles="ROLE_USER")
-     */
-    public function createAction(Request $request)
-    {
-        $entity  = new Quote();
-        $form    = $this->createNewForm($entity);
-        $form->handleRequest($request);
-		
-        if ($form->isValid())
-        {
-            $em = $this->getDoctrine()->getManager();
-            $lastNumber = $em->getRepository('JLMCommerceBundle:Quote')->getLastNumber();
-            $entity->generateNumber($lastNumber);
-            $em->persist($entity);
-            $em->flush();
-            
-            return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));  
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        );
-    }
-
-    /**
      * Displays a form to edit an existing Quote entity.
-     *
-     * @Template()
-     * @Secure(roles="ROLE_USER")
      */
-    public function editAction(Quote $entity)
+    public function editAction($id)
     {
-    	// Si le devis est déjà validé, on empèche quelconque modification
-    	if ($entity->getState())
+    	$manager = $this->container->get('jlm_commerce.quote_manager');
+    	$manager->secure('ROLE_USER');
+    	$entity = $manager->getEntity($id);
+    	$manager->assertState($entity, array(0));
+    	$form = $manager->createForm('edit', array('entity' => $entity));
+    	if ($manager->getHandler($form)->process())
     	{
-    		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
+    		return $manager->redirect('quote_show', array('id' => $form->getData()->getId()));
     	}
-        $editForm = $this->createEditForm($entity);
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        );
-    }
-
-    /**
-     * Edits an existing Quote entity.
-     *
-     * @Template("JLMCommerceBundle:Quote:edit.html.twig")
-     * @Secure(roles="ROLE_USER")
-     */
-    public function updateAction(Request $request, Quote $entity)
-    {
     	
-    	// Si le devis est déjà validé, on empèche quelconque modification
-    	if ($entity->getState())
-    	{
-    		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
-    	}
-    	 
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-        
-        if ($editForm->isValid())
-        {
-        	$em = $this->getDoctrine()->getManager();
-        	$em->persist($entity);
-            $em->flush();
-            
-            return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
-        }
-
-        return array(
+        return $manager->renderResponse('JLMCommerceBundle:Quote:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        );
-    }  
-    
-    /**
-     * Deletes a Quote entity.
-     * 
-     * @Secure(roles="ROLE_USER")
-     */
-    public function deleteAction(Request $request, Quote $quote)
-    {
-        $form = $this->createDeleteForm($quote->getId());
-        $form->handleRequest($request);
-        if ($form->isValid())
-        {
-        	$em = $this->getDoctrine()->getManager();
-            $em->remove($quote);
-            $em->flush();
-        }
-        
-        return $this->redirect($this->generateUrl('quote'));
+            'edit_form'   => $form->createView(),
+        ));
     }
-    
+     
     /**
      * Resultats de la barre de recherche.
      */
@@ -316,40 +246,4 @@ class QuoteController extends Controller
     	}
     	return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
     }
-    
-    /**
-     * Create a new form
-     * 
-     * @param Quote $entity
-     * @return \Symfony\Component\Form\Form
-     */
-    private function createNewForm(Quote $entity)
-    {
-    	return $this->createForm(new QuoteType(), $entity);
-    }
-    
-    /**
-     * Create an edit form
-     * @param Quote $entity
-     * @return \Symfony\Component\Form\Form
-     */
-    private function createEditForm(Quote $entity)
-    {
-    	return $this->createForm(new QuoteType(), $entity);
-    }
-
-
-    /**
-     * Create a delete form
-     * @param unknown $id
-     * @return \Symfony\Component\Form\Form
-     */
-    private function createDeleteForm($id)
-    {
-    	return $this->createFormBuilder(array('id' => $id))
-    	->add('id', 'hidden')
-    	->getForm()
-    	;
-    }
-
 }
