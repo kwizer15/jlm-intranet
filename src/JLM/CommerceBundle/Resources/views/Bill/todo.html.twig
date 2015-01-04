@@ -44,7 +44,7 @@
 			
             <td>{{ entity.totalTime.format('%hh%I') }}</td>
             <td>
-            	<a href="{{ path('bill_new_intervention',{'id':entity.id}) }}" class="btn btn-primary">Facturer...</a><br>
+            	<a href="{{ path('bill_new',{'intervention':entity.id}) }}" class="btn btn-primary">Facturer...</a><br>
             	<a href="#modalExternalBill{{ entity.id }}" data-toggle="modal" class="btn btn-small">Saisir numéro</a>
             </td>
         </tr>
