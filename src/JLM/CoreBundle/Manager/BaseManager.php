@@ -94,6 +94,11 @@ class BaseManager extends ContainerAware implements ManagerInterface
 	{
 		return $this->container->get('templating')->renderResponse($view, $parameters, $response);
 	}
+	
+	public function renderView($view, array $parameters = array())
+	{
+		return $this->container->get('templating')->render($view, $parameters);
+	}
 
 	protected function setterFromRequest($param, $repoName)
 	{
@@ -170,6 +175,11 @@ class BaseManager extends ContainerAware implements ManagerInterface
 		return $this->container->get('form.factory');
 	}
 
+	public function getMailer()
+	{
+		return $this->container->get('mailer');
+	}
+	
 	public function getRequest()
 	{
 		return $this->request;

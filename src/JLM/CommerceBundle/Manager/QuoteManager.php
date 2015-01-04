@@ -16,7 +16,7 @@ use JLM\CommerceBundle\Form\Type\QuoteType;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CoreBundle\Event\FormPopulatingEvent;
 use JLM\CommerceBundle\Entity\Quote;
-
+use JLM\ModelBundle\Form\Type\MailType;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

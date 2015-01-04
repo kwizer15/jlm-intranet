@@ -11,36 +11,23 @@
 
 namespace JLM\CommerceBundle\Controller;
 
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\CommerceBundle\Entity\QuoteLine;
-use JLM\CommerceBundle\Entity\Quote;
-use JLM\CommerceBundle\Form\Type\QuoteType;
-use JLM\CommerceBundle\Model\QuoteInterface;
-use JLM\DefaultBundle\Entity\Search;
-use JLM\DefaultBundle\Form\Type\SearchType;
-use JLM\ModelBundle\Entity\Door;
+use Symfony\Component\DependencyInjection\ContainerAware;
 use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
-use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Event\QuoteEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Quote controller.
  *
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class QuoteController extends Controller
+class QuoteController extends ContainerAware
 {
     /**
      * Lists all Quote entities.
      */
-    public function indexAction($state = null)
+    public function indexAction()
     {
     	$manager = $this->container->get('jlm_commerce.quote_manager');
     	$manager->secure('ROLE_USER');
@@ -133,51 +120,44 @@ class QuoteController extends Controller
     
     /**
      * Imprimer toute les variantes
-     * 
-     * @Secure(roles="ROLE_USER")
      */
-    public function printAction(Quote $entity)
+    public function printAction($id)
     {
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/pdf');
-    	$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
-    	$response->setContent($this->render('JLMCommerceBundle:Quote:quote.pdf.php',array('entities'=>$entity->getVariants())));
-    		
-    	//   return array('entity'=>$entity);
-    	return $response;
+    	$manager = $this->container->get('jlm_commerce.quote_manager');
+    	$manager->secure('ROLE_USER');
+    	$entity = $manager->getEntity($id);
+    	$filename = $entity->getNumber().'.pdf';
+    	
+    	return $manager->renderPdf($filename, 'JLMCommerceBundle:Quote:quote.pdf.php', array('entities'=>array($entity->getVariants())));
     }
     
     /**
      * Imprimer la chemise
-     *
-     * @Secure(roles="ROLE_USER")
      */
-    public function jacketAction(Quote $entity)
+    public function jacketAction($id)
     {
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/pdf');
-    	$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
-    	$response->setContent($this->render('JLMCommerceBundle:Quote:jacket.pdf.php',array('entity'=>$entity)));
-    
-    	//   return array('entity'=>$entity);
-    	return $response;
+    	$manager = $this->container->get('jlm_commerce.quote_manager');
+    	$manager->secure('ROLE_USER');
+    	$entity = $manager->getEntity($id);
+    	$filename = $entity->getNumber().'-jacket.pdf';
+    	 
+    	return $manager->renderPdf($filename, 'JLMCommerceBundle:Quote:jacket.pdf.php',array('entity'=>$entity));
     }
     
     /**
      * Mail
-     * 
-     * @Template()
-     * @Secure(roles="ROLE_USER")
      */
-    public function mailAction(Quote $entity)
+    public function mailAction($id)
     {
-    	if ($entity->getState() < 1)
-    		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+    	$manager = $this->container->get('jlm_commerce.quote_manager');
+    	$manager->secure('ROLE_USER');
+    	$entity = $manager->getEntity($id);
+    	$manager->assertState($entity, array(1,2,3,4,5));
     	$mail = new Mail();
     	$mail->setSubject('Devis n°'.$entity->getNumber());
     	$mail->setFrom('commerce@jlm-entreprise.fr');
-    	$mail->setBody($this->renderView('JLMCommerceBundle:Quote:email.txt.twig', array('door' => $entity->getDoorCp())));
-    	$mail->setSignature($this->renderView('JLMCommerceBundle:QuoteVariant:emailsignature.txt.twig', array('name' => $entity->getFollowerCp())));
+    	$mail->setBody($manager->renderView('JLMCommerceBundle:Quote:email.txt.twig', array('door' => $entity->getDoorCp())));
+    	$mail->setSignature($manager->renderView('JLMCommerceBundle:QuoteVariant:emailsignature.txt.twig', array('name' => $entity->getFollowerCp())));
     	if ($entity->getContact())
     	{
     		if ($entity->getContact()->getPerson())
@@ -188,29 +168,27 @@ class QuoteController extends Controller
     			}
     		}
     	}
-    	$form   = $this->createForm(new MailType(), $mail);
-    
-    	return array(
+    	$form = $manager->getFormFactory()->create(new MailType(), $mail);
+    	
+    	return $manager->renderResponse('JLMCommerceBundle:Quote:mail.html.twig', array(
     			'entity' => $entity,
     			'form'   => $form->createView()
-    	);
+    	));
     }
     
     /**
      * Send by mail a QuoteVariant entity.
-     * 
-     * @Secure(roles="ROLE_USER")
      */
-    public function sendmailAction(Request $request, Quote $entity)
+    public function sendmailAction($id)
     {
-    	if ($entity->getState() < 1)
-    	{
-    		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
-    	}
-    	
+    	$manager = $this->container->get('jlm_commerce.quote_manager');
+    	$manager->secure('ROLE_USER');
+    	$entity = $manager->getEntity($id);
+    	$manager->assertState($entity, array(1,2,3,4,5));
+    	$request = $manager->getRequest();
     	// Message
     	$mail = new Mail;
-    	$form = $this->createForm(new MailType(), $mail);
+    	$form = $manager->getFormFactory()->create(new MailType(), $mail);
     	$form->handleRequest($request);
     		
     	if ($form->isValid())
@@ -220,10 +198,11 @@ class QuoteController extends Controller
     		$message = $mail->getSwift();
     		$message->setReadReceiptTo('commerce@jlm-entreprise.fr');
     		foreach ($entity->getVariants() as $variant)
+    		{
     			if ($variant->getState() > 0)
     			{
 		    		$message->attach(\Swift_Attachment::newInstance(
-		    				$this->render('JLMCommerceBundle:Quote:quote.pdf.php',array('entities'=>array($variant))),
+		    				$manager->renderResponse('JLMCommerceBundle:Quote:quote.pdf.php',array('entities'=>array($variant))),
 		    				$variant->getNumber().'.pdf','application/pdf'
 		    		))
 		    		;
@@ -232,18 +211,20 @@ class QuoteController extends Controller
 		    			$variant->setState(3);
 		    		}
     			}
-    			if ($entity->getVat() == $entity->getVatTransmitter())
-    			{
-    				$message->attach(\Swift_Attachment::fromPath(
-						$this->get('kernel')->getRootDir().'/../web/bundles/jlmcommerce/pdf/attestation.pdf'
-					));
-    			}
+    		}
+    		if ($entity->getVat() == $entity->getVatTransmitter())
+    		{
+    			$message->attach(\Swift_Attachment::fromPath(
+					$this->container->get('kernel')->getRootDir().'/../web/bundles/jlmcommerce/pdf/attestation.pdf'
+				));
+    		}
     
-    		$this->get('mailer')->send($message);
-    		$em = $this->getDoctrine()->getManager();
+    		$manager->getMailer()->send($message);
+    		$em = $manager->getObjectManager();
     		$em->persist($entity);
     		$em->flush();
     	}
-    	return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getId())));
+    	
+    	return $manager->redirect('quote_show', array('id' => $entity->getId()));
     }
 }
