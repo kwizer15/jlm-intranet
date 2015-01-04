@@ -284,30 +284,40 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
     }
     
     /**
-     * @deprecated
+     * Get bill address
+     *
      * @return AddressInterface
      */
-    public function getAddressForBill()
+    public function getBillAddress()
     {
-    	if ($this->billingAddress)
+    	if ($this->billingAddress instanceof AddressInterface)
     	{
     		if ($this->billingAddress->getStreet())
     		{
     			return $this->billingAddress;
     		}
     	}
+    	
     	return $this->getAddress();
     }
     
     /**
+     * @deprecated Use getBillAddress
+     * @return AddressInterface
+     */
+    public function getAddressForBill()
+    {
+    	return $this->getBillAddress();
+    }
+    
+    /**
      * Get BillingLabel
-     * @deprecated
+     * @deprecated Use getBillLabel
      * @return string
      */
     public function getBillingLabel()
     {
-    	//return $this->billingLabel;
-    	return ($this->billingLabel === null) ? $this->getName() : $this->billingLabel;
+    	return $this->billingLabel;
     }
     
     /**
@@ -319,7 +329,17 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
     public function setBillingLabel($label)
     {
     	$this->billingLabel = $label;
+    	
     	return $this;
+    }
+    
+    /**
+     * Get BillLabel
+     * @return string
+     */
+    public function getBillLabel()
+    {
+    	return ($this->billingLabel === null) ? $this->getName() : $this->billingLabel;
     }
     
     /**
