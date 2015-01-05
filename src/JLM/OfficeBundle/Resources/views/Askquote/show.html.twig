@@ -23,7 +23,7 @@
 	{% if entity.webPath %}<a href="/{{ entity.webPath }}" class="btn btn-info"><i class="icon-file icon-white"></i> Fichier joint</a>
 	{% else %}<a href="#" class="btn btn-info disabled"><i class="icon-file icon-white"></i> Pas de fichier joint</a>
 	{% endif %}
-	<a href="{{ path('quote_newfromask',{'id':entity.id}) }}" class="btn btn-success"><i class="icon-white icon-plus-sign"></i> Nouveau devis</a>
+	<a href="{{ path('quote_new',{'ask':entity.id}) }}" class="btn btn-success"><i class="icon-white icon-plus-sign"></i> Nouveau devis</a>
 	{% if not entity.quotes|length and entity.dontTreat is null %}
 	<a href="#modalDontTreat" data-toggle="modal" class="btn btn-danger"><i class="icon-white icon-remove"></i> Ne pas traiter</a>
 	{# Modal #}

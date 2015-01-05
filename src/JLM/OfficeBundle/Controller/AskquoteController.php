@@ -24,35 +24,26 @@ class AskquoteController extends PaginableController
 {
 	/**
 	 * @Route("/", name="askquote")
-	 * @Route("/page/{page}", name="askquote_page")
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
 	 */
-	public function indexAction($page = 1)
+	public function indexAction()
 	{
-		return $this->pagination('JLMOfficeBundle:AskQuote','All',$page,10,'askquote_page');
-	}
+		$manager = $this->container->get('jlm_office.askquote_manager');
+		$manager->secure('ROLE_USER');
+		$request = $manager->getRequest();
+		$states = array(
+				'all' => 'All',
+				'treated' => 'Treated',
+				'untreated' => 'Untreated',
+		);
+		$state = $request->get('state');
+		$state = (!array_key_exists($state, $states)) ? 'all' : $state;
+		$method = $states[$state];
+		$functionCount = 'getCount'.$method;
+		$functionDatas = 'get'.$method;
 	
-	/**
-	 * @Route("/treated", name="askquote_listtreated")
-	 * @Route("/treated/page/{page}", name="askquote_listtreated_page")
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function listtreatedAction($page = 1)
-	{
-		return $this->pagination('JLMOfficeBundle:AskQuote','Treated',$page,10,'askquote_listtreated_page');
-	}
-	
-	/**
-	 * @Route("/untreated", name="askquote_listuntreated")
-	 * @Route("/untreated/page/{page}", name="askquote_listuntreated_page")
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function listuntreatedAction($page = 1)
-	{
-		return $this->pagination('JLMOfficeBundle:AskQuote','Untreated',$page,10,'askquote_listuntreated_page');
+		return $manager->renderResponse('JLMOfficeBundle:Askquote:index.html.twig',
+				$manager->pagination($functionCount, $functionDatas, 'askquote', array('state' => $state))
+		);
 	}
 	
 	/**
@@ -166,24 +157,18 @@ class AskquoteController extends PaginableController
 	 * Resultats de la barre de recherche.
 	 *
 	 * @Route("/search", name="askquote_search")
-	 * @Method("post")
-	 * @Secure(roles="ROLE_USER")
-	 * @Template()
 	 */
 	public function searchAction(Request $request)
 	{
-		$entity = new Search;
-		$form = $this->createForm(new SearchType(), $entity);
-		$form->handleRequest($request);
-		if ($form->isValid())
+		$manager = $this->container->get('jlm_office.askquote_manager');
+		$manager->secure('ROLE_USER');
+		$formData = $manager->getRequest()->get('jlm_core_search');
+		$params = array();
+		if (is_array($formData) && array_key_exists('query', $formData))
 		{
-			$em = $this->getDoctrine()->getManager();
-			return array(
-					'layout'=> array('form_search_query'=>$entity),
-					'entities' => $em->getRepository('JLMOfficeBundle:AskQuote')->search($entity),
-					'query' => $entity->getQuery(),
-			);
+			$params = array('entities' => $manager->getRepository()->search($formData['query']));
 		}
-		return array('layout'=>array('form_search_query'=>$entity),'query' => $entity->getQuery(),);
+		
+		return $manager->renderResponse('JLMOfficeBundle:Askquote:index.html.twig', $params);
 	}
 }

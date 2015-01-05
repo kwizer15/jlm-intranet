@@ -1,5 +1,5 @@
-<li><a href="{{ path('quote_page', {'page' : 1 }) }}"><span class="badge badge-inverse">{{ quotecount.all }}</span> Tout les devis</a></li>
-<li><a href="{{ path('quote_state', {'page' : 1, 'state' : 0 }) }}"><span class="badge">{{ quotecount.input }}</span> En saisie</a></li>
-<li><a href="{{ path('quote_state', {'page' : 1, 'state' : 1 }) }}"><span class="badge badge-warning">{{ quotecount.wait }}</span> En attente</a></li>
-<li><a href="{{ path('quote_state', {'page' : 1, 'state' : 3 }) }}"><span class="badge badge-info">{{ quotecount.send }}</span> Envoyés</a></li>
-<li><a href="{{ path('quote_state', {'page' : 1, 'state' : 5 }) }}"><span class="badge badge-success">{{ quotecount.given }}</span> Accordés</a></li>
+<li><a href="{{ path('quote') }}"><span class="badge badge-inverse">{{ quotecount.all }}</span> Tout les devis</a></li>
+<li><a href="{{ path('quote', { 'state' : 'in_seizure' }) }}"><span class="badge">{{ quotecount.input }}</span> En saisie</a></li>
+<li><a href="{{ path('quote', { 'state' : 'waiting' }) }}"><span class="badge badge-warning">{{ quotecount.wait }}</span> En attente</a></li>
+<li><a href="{{ path('quote', { 'state' : 'sended' }) }}"><span class="badge badge-info">{{ quotecount.send }}</span> Envoyés</a></li>
+<li><a href="{{ path('quote', { 'state' : 'given' }) }}"><span class="badge badge-success">{{ quotecount.given }}</span> Accordés</a></li>

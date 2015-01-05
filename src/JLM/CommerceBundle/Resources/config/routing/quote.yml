@@ -3,45 +3,38 @@ quote:
     defaults: { _controller: "JLMCommerceBundle:Quote:index" }
     methods: [GET]
     
-quote_page:
-    path: /page/{page}
-    defaults: { _controller: "JLMCommerceBundle:Quote:index" }
-    methods: [GET]
-    
-quote_state:
-    path: /page/{page}/state/{state}
-    defaults: { _controller: "JLMCommerceBundle:Quote:index" }
-    methods: [GET]
-    
 quote_show:
-    path: /{id}/show
+    path: /{id}
     defaults: { _controller: "JLMCommerceBundle:Quote:show" }
+    requirements:
+        id: \d+
     methods: [GET]
     
-quote_newfromask:
-    path: /new/fromask/{id}
+quote_new:
+    path: /new
     defaults: { _controller: "JLMCommerceBundle:Quote:new" }
     methods: [GET]
     
 quote_create:
-    path: /create
-    defaults: { _controller: "JLMCommerceBundle:Quote:create" }
+    path: /
+    defaults: { _controller: "JLMCommerceBundle:Quote:new" }
+    requirements:
+        id: \d+
     methods: [POST]
     
 quote_edit:
     path: /{id}/edit
     defaults: { _controller: "JLMCommerceBundle:Quote:edit" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 quote_update:
-    path: /{id}/update
-    defaults: { _controller: "JLMCommerceBundle:Quote:update" }
-    methods: [POST]
-    
-quote_delete:
-    path: /{id}/delete
-    defaults: { _controller: "JLMCommerceBundle:Quote:delete" }
-    methods: [POST]
+    path: /{id}
+    defaults: { _controller: "JLMCommerceBundle:Quote:edit" }
+    requirements:
+        id: \d+
+    methods: [PUT]
     
 quote_search:
     path: /search
@@ -51,21 +44,29 @@ quote_search:
 quote_print:
     path: /{id}/print
     defaults: { _controller: "JLMCommerceBundle:Quote:print" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 quote_jacket:
     path: /{id}/jacket
     defaults: { _controller: "JLMCommerceBundle:Quote:jacket" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 quote_mail:
     path: /{id}/mail
     defaults: { _controller: "JLMCommerceBundle:Quote:mail" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 quote_sendmail:
     path: /{id}/sendmail
     defaults: { _controller: "JLMCommerceBundle:Quote:sendmail" }
+    requirements:
+        id: \d+
     methods: [POST]
     
 jlm_commerce_quote_variant:

@@ -2,16 +2,18 @@
 
 /*
  * This file is part of the JLMCoreBundle package.
-*
-* (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace JLM\CoreBundle\Manager;
 
 use JLM\CoreBundle\Form\Handler\DoctrineHandler;
+use JLM\CoreBundle\Repository\SearchRepositoryInterface;
+use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -41,6 +43,15 @@ class BaseManager extends ContainerAware implements ManagerInterface
 		}
 	}
 	
+	public function getUser()
+	{
+		$user = $this->container->get('security.context')->getToken()->getUser();
+		if (!is_object($user) || !$user instanceof UserInterface) {
+			throw new AccessDeniedException('This user does not have access to this section.');
+		}
+		
+		return $user;
+	}
 	
 	public function getEntity($id = null)
 	{
@@ -82,6 +93,11 @@ class BaseManager extends ContainerAware implements ManagerInterface
 	public function renderResponse($view, array $parameters = array(), Response $response = null)
 	{
 		return $this->container->get('templating')->renderResponse($view, $parameters, $response);
+	}
+	
+	public function renderView($view, array $parameters = array())
+	{
+		return $this->container->get('templating')->render($view, $parameters);
 	}
 
 	protected function setterFromRequest($param, $repoName)
@@ -159,6 +175,11 @@ class BaseManager extends ContainerAware implements ManagerInterface
 		return $this->container->get('form.factory');
 	}
 
+	public function getMailer()
+	{
+		return $this->container->get('mailer');
+	}
+	
 	public function getRequest()
 	{
 		return $this->request;
@@ -221,5 +242,24 @@ class BaseManager extends ContainerAware implements ManagerInterface
 						'params' => $params,
 				)
 		);
+	}
+	
+	public function renderSearch($template)
+	{
+		$formData = $this->getRequest()->get('jlm_core_search');
+		 
+		if (is_array($formData) && array_key_exists('query', $formData))
+		{
+			$repo = $this->getRepository();
+			if ($repo instanceof SearchRepositoryInterface)
+			{
+				return $this->renderResponse($template, array(
+					'results' => $this->getRepository()->search($formData['query']),
+					'query' => $formData['query'],
+				));
+			}
+		}
+		 
+		return $this->renderResponse($template, array('results' => array(), 'query' => ''));
 	}
 }

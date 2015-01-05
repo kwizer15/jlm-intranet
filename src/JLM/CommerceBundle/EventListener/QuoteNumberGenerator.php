@@ -12,12 +12,12 @@
 namespace JLM\CommerceBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use JLM\CommerceBundle\Entity\Bill;
+use JLM\CommerceBundle\Entity\Quote;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class BillNumberGenerator
+class QuoteNumberGenerator
 {
 	/**
 	 * PrePersist
@@ -27,7 +27,7 @@ class BillNumberGenerator
 	{
 		$entity = $args->getEntity();
 		
-		if ($entity instanceof Bill)
+		if ($entity instanceof Quote)
 		{
 			$em = $args->getEntityManager();
 			
@@ -36,7 +36,7 @@ class BillNumberGenerator
 				$creation = $entity->getCreation();
 				$year = $creation->format('Y');
 				$number = $creation->format('ym');
-				$n = ($em->getRepository('JLMCommerceBundle:Bill')->getLastNumber($year) + 1);
+				$n = ($em->getRepository('JLMCommerceBundle:Quote')->getLastNumber($year) + 1);
 				for ($i = strlen($n); $i < 4 ; $i++)
 				{
 					$number.= '0';

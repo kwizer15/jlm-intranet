@@ -52,12 +52,8 @@ class BillSubscriber implements EventSubscriberInterface
 	
 	private function getAttribution(RequestEvent $event)
 	{
-		$id = $event->getParam('jlm_commerce_bill', array('attribution'=>$event->getParam('attribution')))['attribution'];
-		if ($id !== null)
-		{
-			return $this->om->getRepository('JLMTransmitterBundle:Attribution')->find($id);
-		}
+		$id = $event->getParam('jlm_commerce_bill', array('attribution'=>$event->getParam('attribution')));
 		
-		return null;
+		return (isset($id['attribution']) && $id['attribution'] !== null) ? $this->om->getRepository('JLMTransmitterBundle:Attribution')->find($id['attribution']) : null;
 	}
 }

@@ -29,7 +29,7 @@ bill_edit:
     
 bill_update:
     path:   /{id}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:update" }
+    defaults:  { _controller: "JLMCommerceBundle:Bill:edit" }
     requirements:
         id: \d+
     methods: [PUT]

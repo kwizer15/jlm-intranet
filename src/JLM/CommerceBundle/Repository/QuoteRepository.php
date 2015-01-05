@@ -167,7 +167,7 @@ class QuoteRepository extends SearchRepository
 	 * @param unknown $offset
 	 * @return Ambigous <multitype:, \Doctrine\ORM\mixed, \Doctrine\ORM\Internal\Hydration\mixed, \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
 	 */
-	public function getByState($state,$limit,$offset)
+	public function getByState($state, $limit = 10, $offset = 0)
 	{
 		if (isset($this->byState))
 			return $this->byState;
@@ -239,6 +239,61 @@ class QuoteRepository extends SearchRepository
 		}
 		
 		return $qb->getQuery()->getResult();
+	}
+
+	public function getCountAll()
+	{
+		return $this->getTotal();
+	}
+	
+	public function getCountInSeizure()
+	{
+		return $this->getCountState(0);
+	}
+	
+	public function getInSeizure($limit = 10, $offset = 0)
+	{
+		return $this->getByState(0, $limit, $offset);
+	}
+	
+	public function getCountWaiting()
+	{
+		return $this->getCountState(1);
+	}
+	
+	public function getWaiting($limit = 10, $offset = 0)
+	{
+		return $this->getByState(1, $limit, $offset);
+	}
+	
+	public function getCountSended()
+	{
+		return $this->getCountState(3);
+	}
+	
+	public function getSended($limit = 10, $offset = 0)
+	{
+		return $this->getByState(3, $limit, $offset);
+	}
+	
+	public function getCountGiven()
+	{
+		return $this->getCountState(5);
+	}
+	
+	public function getGiven($limit = 10, $offset = 0)
+	{
+		return $this->getByState(5, $limit, $offset);
+	}
+	
+	public function getCountCanceled()
+	{
+		return $this->getCountState(-1);
+	}
+	
+	public function getCanceled($limit = 10, $offset = 0)
+	{
+		return $this->getByState(-1, $limit, $offset);
 	}
 	
 	/**

@@ -1,3 +1,3 @@
 <li><a href="{{ path('askquote') }}"><span class="badge badge-inverse">{{ askquotecount.all }}</span> Toutes</a></li>
-<li><a href="{{ path('askquote_listuntreated') }}"><span class="badge badge-warning">{{ askquotecount.untreated }}</span> Non traitées</a></li>
-<li><a href="{{ path('askquote_listtreated') }}"><span class="badge badge-success">{{ askquotecount.treated }}</span> Traitées</a></li>
+<li><a href="{{ path('askquote', { state: 'untreated' }) }}"><span class="badge badge-warning">{{ askquotecount.untreated }}</span> Non traitées</a></li>
+<li><a href="{{ path('askquote', { state: 'treated' }) }}"><span class="badge badge-success">{{ askquotecount.treated }}</span> Traitées</a></li>
