@@ -402,6 +402,7 @@ class Quote extends CommercialPart implements QuoteInterface
     /**
      * Generation du numéro de devis
      * @todo Create a service
+     * @deprecated
      */
     public function generateNumber($lastnumber)
     {
