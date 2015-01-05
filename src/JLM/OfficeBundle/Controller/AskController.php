@@ -43,20 +43,6 @@ abstract class AskController extends PaginableController
 	}
 	
 	/**
-	 * Sidebar
-	 */
-	public function sidebarAction()
-	{
-		$em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository($this->getRepositoryName());
-		return array(
-				'all' => $repo->getTotal(),
-				'untreated' => $repo->getCountUntreated(),
-				'treated' => $repo->getCountTreated(),
-		);
-	}
-	
-	/**
 	 * @return Repository
 	 */
 	abstract protected function getRepositoryName();

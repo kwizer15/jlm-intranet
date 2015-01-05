@@ -1,0 +1,18 @@
+JLM\CoreBundle\Entity\UploadDocument:
+  type: entity
+  table: jlm_core_upload_document
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    path:
+      nullable: true
+  lifecycleCallbacks:
+    prePersist: [ 'preUpload' ]
+    preUpdate: [ 'preUpload' ]
+    postPersist: [ 'upload' ]
+    postUpdate: [ 'upload' ]
+    postRemove: [ 'removeUpload' ]
+    

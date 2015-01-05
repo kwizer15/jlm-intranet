@@ -7,7 +7,6 @@
             <th>Nom</th>
             <th>Adresse</th>
             <th>Téléphone</th>
-            <th>Fax</th>
             <th>CA</th>
             <th></th>
         </tr>
@@ -17,8 +16,13 @@
         <tr>
             <td><a href="{{ path('trustee_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
             <td>{% include 'JLMModelBundle:Helpers:address.html.twig' with {'address':entity.address} %}</td>
-            <td>{% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone':entity.phone} %}</td>
-            <td>{% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone':entity.fax} %}</td>
+            <td>
+            <ul>
+              {% for phone in entity.phones %}
+            	<li>{{ phone }}</li>
+              {% endfor %}
+              </ul>
+            </td>
             <td>{{ entity.contractsSum | number_format(2,',',' ') }} €</td>
             <td>
                 <a href="{{ path('trustee_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>

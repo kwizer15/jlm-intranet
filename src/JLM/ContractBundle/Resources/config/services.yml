@@ -1,4 +1,15 @@
+parameters:
+    jlm_contract.model.contract.class: JLM\ContractBundle\Entity\Contract
+    jlm_contract.manager.contract.class: JLM\ContractBundle\Manager\ContractManager
+
 services:
+    jlm_contract.contract_manager:
+        class: "%jlm_contract.manager.contract.class%"
+        arguments: ["%jlm_contract.model.contract.class%"]
+        calls:
+            - [ setContainer, ["@service_container"]]
+            - [ setServices ]
+
     jlm_contract.type.contract_select:
         class: JLM\ContractBundle\Form\Type\ContractSelectType
         arguments: ["@doctrine.orm.entity_manager"]

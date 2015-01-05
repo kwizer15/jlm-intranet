@@ -1,0 +1,7 @@
+{% block site_select_widget %}
+{% spaceless %}
+{% set attr = attr|merge({'data-source':  path('autocomplete_site') }) %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' autocompletion' }) %}
+{{ block('textarea_widget') }}
+{% endspaceless %}
+{% endblock site_select_widget %}

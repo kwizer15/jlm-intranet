@@ -19,7 +19,7 @@ variant_update:
     methods: [POST]
     
 variant_ready:
-    path: /{id]/ready
+    path: /{id}/ready
     defaults: { _controller: "JLMCommerceBundle:QuoteVariant:ready" }
     methods: [GET]
     

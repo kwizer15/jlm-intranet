@@ -1,11 +1,23 @@
 {% extends "::layout.html.twig" %}
 
     {% block sidebar %}
-    	<li>
-    		<form  action="{{ path('model_search') }}" method="post" class="form-search">
-				{{ form_widget(layout.form_search) }}
-    		</form>
+    	<li>{{ form(search.form, { 'action': path('model_search') }) }}
 	    </li>
+	    <li class="nav-header">Contacts</li>
+		<li><a href="{{ path('jlm_contact_contact') }}"><i class="icon-list"></i> Liste contacts</a></li>
+		<li>
+	      <div class="dropdown">
+		    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+		      <i class="icon-plus-sign"></i> Ajouter un contact
+		      <span class="caret"></span>
+		    </a>
+		      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+		        <li><a tabindex="-1" href="{{ path('jlm_contact_contact_new', {'id': 'person'}) }}">Personne</a></li>
+		        <li><a tabindex="-1" href="{{ path('jlm_contact_contact_new', {'id': 'company'}) }}">Société</a></li>
+		        <li><a tabindex="-1" href="{{ path('jlm_contact_contact_new', {'id': 'association'}) }}">Association</a></li>
+		      </ul>
+		  </div>
+		</li>
 		<li class="nav-header">Syndics</li>
 		<li><a href="{{ path('trustee') }}"><i class="icon-list"></i> Liste syndics</a></li>
         <li><a href="{{ path('trustee_new') }}"><i class="icon-plus-sign"></i> Nouveau syndic</a></li>

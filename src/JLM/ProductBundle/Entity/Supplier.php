@@ -11,13 +11,13 @@
 
 namespace JLM\ProductBundle\Entity;
 
-use JLM\ContactBundle\Entity\Company;
 use JLM\ProductBundle\Model\SupplierInterface;
+use JLM\ContactBundle\Entity\ContactDecorator;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Supplier extends Company implements SupplierInterface
+class Supplier extends ContactDecorator implements SupplierInterface
 {
 	/**
 	 * @var string $website

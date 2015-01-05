@@ -8,8 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\DefaultBundle\Entity\Search;
-use JLM\DefaultBundle\Form\Type\SearchType;
+use JLM\CoreBundle\Entity\Search;
+use JLM\CoreBundle\Form\Type\SearchType;
 
 class DefaultController extends Controller
 {
@@ -17,33 +17,29 @@ class DefaultController extends Controller
      * Resultats de la barre de recherche.
      *
      * @Route("/search", name="model_search")
-     * @Method("post")
+     * @Method("get")
      * @Secure(roles="ROLE_USER")
      * @Template()
      */
     public function searchAction(Request $request)
     {
-    	$entity = new Search;
-    	$form = $this->createForm(new SearchType(), $entity);
-    	$form->handleRequest($request);
-    	if ($form->isValid())
+    	$formData = $request->get('jlm_core_search');
+
+    	if (is_array($formData) && array_key_exists('query', $formData))
     	{
     		$em = $this->getDoctrine()->getManager();
+    		$query = $formData['query'];
     		return array(
-    				'layout'=>array('form_search_query'=>$entity),
-    				'query'   => $entity->getQuery(),
-    				'doors'   => $em->getRepository('JLMModelBundle:Door')->search($entity),
-    				'sites'   => $em->getRepository('JLMModelBundle:Site')->search($entity),
-    				'trustees'=> $em->getRepository('JLMModelBundle:Trustee')->search($entity),
-    				'suppliers'=> $em->getRepository('JLMModelBundle:Supplier')->search($entity),
-    				'products' => $em->getRepository('JLMProductBundle:Product')->search($entity),
-    				'persons' => $em->getRepository('JLMContactBundle:Person')->search($entity),
+    				'query' => $query,
+    				'doors'   => $em->getRepository('JLMModelBundle:Door')->search($query),
+    				'sites'   => $em->getRepository('JLMModelBundle:Site')->search($query),
+    				'trustees'=> $em->getRepository('JLMModelBundle:Trustee')->search($query),
+    				'suppliers'=> $em->getRepository('JLMProductBundle:Supplier')->search($query),
+    				'products' => $em->getRepository('JLMProductBundle:Product')->search($query),
+    				'persons' => $em->getRepository('JLMContactBundle:Person')->search($query),
     		);
     	}
-    	return array(
-    			'layout'=>array('form_search_query'=>$entity->getQuery()),
-    			'query' => $entity->getQuery(),
-    	);
+    	return array();
     }
     
     /**

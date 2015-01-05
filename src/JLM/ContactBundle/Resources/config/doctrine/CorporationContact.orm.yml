@@ -1,18 +1,13 @@
 JLM\ContactBundle\Entity\CorporationContact:
   type: entity
   table: jlm_contact_corporationcontact
-  id:
-    id:
-      type: integer
-      generator:
-        strategy: AUTO
+  repositoryClass: JLM\ContactBundle\Repository\CorporationContactRepository
   fields:
     position:
       type: string
   manyToOne:
     corporation:
       targetEntity: JLM\ContactBundle\Model\CorporationInterface
-    manager:
-      targetEntity: JLM\ContactBundle\Model\CorporationContactInterface
+      inversedBy: contacts
     
     

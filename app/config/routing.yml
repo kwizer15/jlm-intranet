@@ -1,3 +1,7 @@
+jlm_core:
+    resource: "@JLMCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
 jlm_ask:
     resource: "@JLMAskBundle/Resources/config/routing.yml"
     prefix:   /

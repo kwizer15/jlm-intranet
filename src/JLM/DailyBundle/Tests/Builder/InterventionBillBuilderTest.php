@@ -31,7 +31,7 @@ class InterventionBillBuilderTest extends \PHPUnit_Framework_TestCase
         $vat = $this->getMock('JLM\CommerceBundle\Model\VATInterface');
         $address = $this->getMock('JLM\ContactBundle\Model\AddressInterface');
         $trustee = $this->getMock('JLM\ModelBundle\Entity\Trustee');
-        $trustee->expects($this->any())->method('getAddressForBill')->will($this->returnValue($address));
+        $trustee->expects($this->any())->method('getBillAddress')->will($this->returnValue($address));
         $contract = $this->getMock('JLM\ContractBundle\Model\ContractInterface');
         $contract->expects($this->any())->method('getTrustee')->will($this->returnValue($trustee));
         $site = $this->getMock('JLM\ModelBundle\Entity\Site');

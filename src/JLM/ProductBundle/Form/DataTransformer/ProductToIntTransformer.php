@@ -58,7 +58,7 @@ class ProductToIntTransformer implements DataTransformerInterface
 	 */
 	public function reverseTransform($id)
 	{
-		if (!$string)
+		if (!$id)
 		{
 			return null;
 		}

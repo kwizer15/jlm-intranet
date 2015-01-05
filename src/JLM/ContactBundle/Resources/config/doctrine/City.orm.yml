@@ -1,6 +1,6 @@
 JLM\ContactBundle\Entity\City:
   type: entity
-  table: cities
+  table: jlm_contact_city
   repositoryClass: JLM\ContactBundle\Repository\CityRepository
   readOnly: true
   id:

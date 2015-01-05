@@ -12,6 +12,7 @@
 namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\PersonInterface;
+use JLM\ContactBundle\Model\ContactInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -19,28 +20,42 @@ use JLM\ContactBundle\Model\PersonInterface;
 abstract class PersonDecorator extends ContactDecorator implements PersonInterface
 {
     /**
-     * Constructor
-     * @param PersonInterface $person
+     * Get person
      */
-    public function __construct(PersonInterface $person)
+    public function getPerson()
     {
-        parent::__construct($person);
+        return $this->getContact();
     }
     
     /**
-     * Get person
+     * {@inheritdoc}
      */
-    protected function _getPerson()
+    public function setContact(ContactInterface $contact)
     {
-        return $this->_getContact();
-    } 
+    	if ($contact instanceof PersonInterface)
+    	{
+    		return parent::setContact($contact);
+    	}
+    	
+    	return $this;
+    }
+    
+    /**
+     * 
+     * @param PersonInterface $person
+     * @return \JLM\ContactBundle\Entity\PersonDecorator
+     */
+    public function setPerson(PersonInterface $person)
+    {
+    	return $this->setContact($person); 
+    }
     
     /**
      * {@inheritdoc}
      */
     public function getTitle()
     {
-        return $this->_getPerson()->getTitle();
+        return $this->getPerson()->getTitle();
     }
     
     /**
@@ -48,7 +63,7 @@ abstract class PersonDecorator extends ContactDecorator implements PersonInterfa
      */
     public function getFirstName()
     {
-        return $this->_getPerson()->getFirstName();
+        return $this->getPerson()->getFirstName();
     }
 
     /**
@@ -56,7 +71,7 @@ abstract class PersonDecorator extends ContactDecorator implements PersonInterfa
      */
     public function getLastName()
     {
-        return $this->_getPerson()->getLastName();
+        return $this->getPerson()->getLastName();
     }
     
     /**
@@ -64,7 +79,7 @@ abstract class PersonDecorator extends ContactDecorator implements PersonInterfa
      */
     public function getFixedPhone()
     {
-        return $this->_getPerson()->getFixedPhone();
+        return $this->getPerson()->getFixedPhone();
     }
     
     /**
@@ -72,6 +87,6 @@ abstract class PersonDecorator extends ContactDecorator implements PersonInterfa
      */
     public function getMobilePhone()
     {
-        return $this->_getPerson()->getMobilePhone();
+        return $this->getPerson()->getMobilePhone();
     }
 }

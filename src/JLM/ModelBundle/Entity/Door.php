@@ -362,7 +362,12 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getMapsImageUrl()
     {
-    	list($url,$params) = explode('?',$this->googlemaps);
+    	$tab = explode('?',$this->googlemaps);
+    	if (sizeof($tab) != 2)
+    	{
+    		return null;
+    	}
+    	list($url,$params) = $tab;
     	$parms = explode('&',$params);
     	foreach ($parms as $p)
     	{
@@ -961,7 +966,7 @@ class Door implements BayInterface, InstallationInterface
      */
     public function __toString()
     {
-    	return $this->getType().' - '.$this->getLocation().chr(10).$this->getProperty();
+    	return $this->getType().' - '.$this->getLocation().chr(10).$this->getAdministrator();
     }
     
     /**

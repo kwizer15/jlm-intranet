@@ -17,6 +17,10 @@ use JLM\ContactBundle\Form\Type\AddressType;
 use JLM\ContactBundle\Form\Type\CitySelectType;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Form\PreloadedExtension;
+use JLM\ContactBundle\Form\Type\ContactPhoneCollectionType;
+use JLM\ContactBundle\Form\Type\ContactPhoneType;
+use JLM\ContactBundle\Form\Type\ContactType;
+use JLM\ContactBundle\Form\Type\PhoneType;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -42,10 +46,16 @@ class CompanyTypeTest extends TypeTestCase
         $s2 = new \Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type('hidden');
         $city = new CitySelectType($om);
         $address = new AddressType();
+        $phone = new PhoneType();
+        $contactphone = new ContactPhoneType();
+        $contactphonecollection = new ContactPhoneCollectionType();
         return array(new PreloadedExtension(array(
             $address->getName() => $address,
             $city->getName() => $city,
             $s2->getName() => $s2,
+        	$phone->getName() => $phone,
+        	$contactphone->getName() => $contactphone,
+        	$contactphonecollection->getName() => $contactphonecollection,
         ), array()));
     }
     

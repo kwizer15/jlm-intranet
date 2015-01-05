@@ -1,0 +1,6 @@
+JLM\ContactBundle\Entity\Association:
+  type: entity
+  table: jlm_contact_association
+
+  
+    

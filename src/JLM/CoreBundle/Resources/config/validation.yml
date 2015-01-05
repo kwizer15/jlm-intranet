@@ -1,0 +1,4 @@
+JLM\CoreBundle\Entity\UploadDocument:
+  parameters:
+    file:
+      - File: { maxSize: "6000000" }

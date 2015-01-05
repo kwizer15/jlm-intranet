@@ -21,41 +21,20 @@ use JLM\AskBundle\Model\ContactInterface;   // @todo to remove, use a decorator 
 class Person extends Contact implements PersonInterface, QuoteRecipientInterface, ContactInterface
 {
 	/**
-     * @var integer $id
-     * @deprecated
-     */
-    protected $id;
-    
-	/**
 	 * M. Mme Mlle
 	 * @var string $title
 	 */
-	protected $title;
+	private $title;
 	
     /**
      * @var string $firstName
      */
-    protected $firstName;
+    private $firstName;
 
     /**
      * @var string $lastName
      */
-    protected $lastName;
-    
-    /**
-     * @var string $fixedPhone
-     */
-    protected $fixedPhone;
-    
-    /**
-     * @var string $mobilePhone
-     */
-    protected $mobilePhone;
-    
-    /**
-     * @var $role
-     */
-    protected $role;
+    private $lastName;
     
     /**
      * Set firstName
@@ -106,15 +85,15 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
     {
     	return trim($this->title.' '.trim($this->lastName.' '.$this->firstName));
     }
-
+    
     /**
-     * Get id
-     * @deprecated
-     * @return integer 
+     * {@inheritdoc}
      */
-    public function getId()
+    public function setName($name)
     {
-        return $this->id;
+        parent::setName(trim($this->lastName.' '.$this->firstName));
+        
+        return $this;
     }
 
     /**
@@ -137,89 +116,30 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
     {
         return $this->title;
     }
-
-    /**
-     * Format phones
-     * 
-     * @return self
-     */
-    public function formatPhones()
-    {
-    	$this->fixedPhone = str_replace('+33','0',$this->fixedPhone);
-    	$this->fixedPhone = str_replace(array('-','/','.',','),'',$this->fixedPhone);
-    	$this->mobilePhone = str_replace('+33','0',$this->mobilePhone);
-    	$this->mobilePhone = str_replace(array('-','/','.',','),'',$this->mobilePhone);
-    	$fax = $this->getFax();
-    	$fax = str_replace('+33','0',$fax);
-    	$fax = str_replace(array('-','/','.',','),'',$fax);
-    	$this->setFax($fax);
-    	
-    	return $this;
-    }
     
-    /**
-     * Set fixedPhone
-     *
-     * @param string $fixedPhone
-     * @return self
-     */
-    public function setFixedPhone($fixedPhone)
-    {
-        $this->fixedPhone = $fixedPhone;
-        
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFixedPhone()
-    {
-        return $this->fixedPhone;
-    }
-
-    /**
-     * Set mobilePhone
-     *
-     * @param string $mobilePhone
-     * @return self
-     */
-    public function setMobilePhone($mobilePhone)
-    {
-        $this->mobilePhone = $mobilePhone;
-        
-        return $this;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function getMobilePhone()
     {
-        return $this->mobilePhone;
+        return $this->_getPhoneNumber('Portable');
     }
-
+    
     /**
-     * Set role
-     *
-     * @param string $role
+     * {@inheritdoc}
+     */
+    public function getFixedPhone()
+    {
+        return $this->_getPhoneNumber('Principal');
+    }
+    
+    /**
+     * 
      * @return self
      */
-    public function setRole($role)
+    public function attributeName()
     {
-    	$this->role = $role;
-    
-    	return $this;
+    	return $this->setName('');
     }
-    
-    /**
-     * Get role
-     *
-     * @return string
-     * @deprecated
-     */
-    public function getRole()
-    {
-    	return $this->role;
-    }
+
 }

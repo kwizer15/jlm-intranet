@@ -53,13 +53,23 @@ JLM\CommerceBundle\Entity\Bill:
     siteObject:
       targetEntity: JLM\ModelBundle\Entity\Site
       inversedBy: bills
-  oneToMany:
-    lines:
-      targetEntity: JLM\CommerceBundle\Entity\BillLine
-      mappedBy: bill
-      orderBy: { position: ASC }
   oneToOne:
     intervention:
       targetEntity: JLM\DailyBundle\Entity\Intervention
       mappedBy: bill
+  manyToMany:
+    lines:
+      targetEntity: JLM\CommerceBundle\Entity\BillLine
+      joinTable:
+        name: jlm_commerce_bill_join_bill_line
+        joinColumns:
+          bill_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          billline_id:
+            referencedColumnName: id
+            unique: true
+      orderBy: { position: ASC }
+      orphanRemoval: true
+      cascade: ["persist"]
     

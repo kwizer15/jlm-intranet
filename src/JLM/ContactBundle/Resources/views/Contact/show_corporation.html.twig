@@ -1,0 +1,72 @@
+{% extends "JLMContactBundle:Contact:show.html.twig" %}
+
+
+{% block special %}
+<button class="btn" id="add-corporationcontact" href="{{ path('jlm_contact_corporationcontact_new', {'corporation': entity.id }) }}">Nouvelle</button>
+<table class="table table-bordered table-hover" id="contacts-list">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Rôle</th>
+      <th>Téléphones</th>
+  </thead>
+  <tbody>
+    {% for contact in entity.contacts %}
+    <tr>
+      <td><a href="{{ path('jlm_contact_contact_show', {'id': contact.contact.id} ) }}">{{ contact.name }}</a></td>
+      <td>{{ contact.position }}</td>
+      <td>
+        <ul>
+        {% for phone in contact.phones %}
+          <li>{{ phone }}</li>  
+        {% endfor %}
+        </ul>
+      </td>
+      <td><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></td>
+      <td>
+        <a class="btn btn-warning btn-small edit-corporationcontact" href="{{ path('jlm_contact_corporationcontact_edit', {'id': contact.id} ) }}"><i class="icon-white icon-pencil"></i></a>
+        <a class="btn btn-danger btn-small delete-corporationcontact" href="{{ path('jlm_contact_corporationcontact_confirmdelete', {'id': contact.id} ) }}"><i class="icon-white icon-remove"></i></a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
+
+{% block javascripts_script %}
+{{ parent() }}
+$("#add-corporationcontact").formModal({
+    closure: function(data) {
+    	var $phones = $('<ul/>');
+    	var email = (data.contact.email === null) ? '' : '<a href="mailto:' + data.contact.email + '">' + data.contact.email + '</a>';
+    	
+    	$.each(data.contact.phones, function(index, phone) {
+    	    $phones.append($('<li/>').html(phone.label + ' : ' + phone.phone.number));
+    	})
+    	
+    	var $line = $('<tr/>');
+    	$line.append($('<td/>').html('<a href="' + data.contact.contact.show_link + '">' + data.contact.title + ' ' + data.contact.name + '</a>'))
+    	     .append($('<td/>').html(data.position))
+    		 .append($('<td/>').html($phones))
+    	     .append($('<td/>').html(email))
+    	     .append($('<td/>').html('<a class="btn btn-warning btn-small edit-corporationcontact" href="' + data.edit_link + '"><i class="icon-white icon-pencil"></i></a> <a class="btn btn-danger btn-small delete-corporationcontact" href="' + data.delete_link + '"><i class="icon-white icon-remove"></i></a>'));
+    	$line.find('.edit-corporationcontact').formModal();
+    	$line.find('.delete-corporationcontact').formModal({
+			closure: function(data, e) {
+				e.data.$element.parent().parent().remove();
+			}
+		});
+    	$("#contacts-list tbody").append($line);
+    }
+});
+
+$(".edit-corporationcontact").formModal();
+var $deleteBtns = $(".delete-corporationcontact");
+$deleteBtns.formModal({
+		closure: function(data, e) {
+			e.data.$element.parent().parent().remove();
+		}
+	});
+
+{% endblock %}

@@ -2,55 +2,12 @@ bill:
     path:   /
     defaults:  { _controller: "JLMCommerceBundle:Bill:index" }
     methods: [GET]
-    
-bill_page:
-    path:   /page/{page}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:index" }
-    methods: [GET]
-    
-bill_listinseizure:
-    path:   /inseizure
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listinseizure" }
-    methods: [GET]
-    
-bill_listinseizure_page:
-    path:   /inseizure/page/{page}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listinseizure" }
-    methods: [GET]
-    
-bill_listsended:
-    path:   /sended
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listsended" }
-    methods: [GET]
-    
-bill_listsended_page:
-    path:   /sended/page/{page}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listsended" }
-    methods: [GET]
-    
-bill_listpayed:
-    path:   /payed
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listpayed" }
-    methods: [GET]
-    
-bill_listpayed_page:
-    path:   /payed/page/{page}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listpayed" }
-    methods: [GET]
-    
-bill_listcanceled:
-    path:   /canceled
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listcanceled" }
-    methods: [GET]
-    
-bill_listcanceled_page:
-    path:   /canceled/page/{page}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:listcanceled" }
-    methods: [GET]
 
 bill_show:
-    path:   /{id}/show
+    path:   /{id}
     defaults:  { _controller: "JLMCommerceBundle:Bill:show" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_new:
@@ -58,39 +15,30 @@ bill_new:
     defaults:  { _controller: "JLMCommerceBundle:Bill:new" }
     methods: [GET]
     
-bill_new_door:
-    path:   /new/door/{id}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:newdoor" }
-    methods: [GET]
-    
-bill_new_quotevariant:
-    path:   /new/quote/{id}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:newquote" }
-    methods: [GET]
-    
-bill_new_intervention:
-    path:   /new/intervention/{id}
-    defaults:  { _controller: "JLMCommerceBundle:Bill:newintervention" }
-    methods: [GET]
-    
 bill_create:
-    path:   /create
-    defaults:  { _controller: "JLMCommerceBundle:Bill:create" }
+    path:   /
+    defaults:  { _controller: "JLMCommerceBundle:Bill:new" }
     methods: [POST]
     
 bill_edit:
     path:   /{id}/edit
     defaults:  { _controller: "JLMCommerceBundle:Bill:edit" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_update:
-    path:   /{id}/update
-    defaults:  { _controller: "JLMCommerceBundle:Bill:update" }
-    methods: [POST]
+    path:   /{id}
+    defaults:  { _controller: "JLMCommerceBundle:Bill:edit" }
+    requirements:
+        id: \d+
+    methods: [PUT]
     
 bill_print:
     path:   /{id}/print
     defaults:  { _controller: "JLMCommerceBundle:Bill:print" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_printduplicate:
@@ -106,31 +54,43 @@ bill_printlist:
 bill_printboost:
     path:   /{id}/printboost
     defaults:  { _controller: "JLMCommerceBundle:Bill:printboost" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_ready:
     path:   /{id}/ready
     defaults:  { _controller: "JLMCommerceBundle:Bill:ready" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_send:
     path:   /{id}/send
     defaults:  { _controller: "JLMCommerceBundle:Bill:send" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_cancel:
     path:   /{id}/cancel
     defaults:  { _controller: "JLMCommerceBundle:Bill:cancel" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_back:
     path:   /{id}/back
     defaults:  { _controller: "JLMCommerceBundle:Bill:back" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_payed:
     path:   /{id}/payed
     defaults:  { _controller: "JLMCommerceBundle:Bill:payed" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_sidebar:
@@ -151,10 +111,12 @@ bill_toboost:
 bill_boostok:
     path:   /{id}/boostok
     defaults:  { _controller: "JLMCommerceBundle:Bill:boostok" }
+    requirements:
+        id: \d+
     methods: [GET]
     
 bill_search:
     path:   /search
     defaults:  { _controller: "JLMCommerceBundle:Bill:search" }
-    methods: [POST]
+    methods: [GET]
     

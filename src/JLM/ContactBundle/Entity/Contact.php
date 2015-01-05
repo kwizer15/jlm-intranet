@@ -14,6 +14,8 @@ namespace JLM\ContactBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\ContactBundle\Model\ContactInterface;
 use JLM\ContactBundle\Model\AddressInterface;
+use JLM\ContactBundle\Model\ContactPhoneInterface;
+use JLM\CoreBundle\Entity\UploadDocument;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -24,68 +26,84 @@ abstract class Contact implements ContactInterface
      * @var int
      * Ehancement
      */
-//    protected $id;
+    private $id;
     
     /**
      * @var string
-     * Ehancement
      */
-//    protected $name = '';
+    protected $name = '';
     
 	/**
 	 * @var Address $address
 	 */
-	protected $address;
+	private $address;
 	
 	/**
-	 * @var string $fax
+	 * @var ContactPhoneInterface[]
 	 */
-	protected $fax;
+	private $phones;
 	
 	/**
 	 * @var email $email
 	 */
-	protected $email;
+	private $email;
 	
 	/**
 	 * @var bool $active
 	 */
-	protected $active = true;
+	private $active = true;
+	
+	/**
+	 * @var UploadDocument $image
+	 */
+	private $image;
+	
+	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+	    $this->phones = new ArrayCollection;
+	}
 	
 	/**
 	 * Get id
 	 * @return int
-	 * Ehancement
 	 */
-//	public function getId()
-//	{
-//	    return $this->id;
-//	}
+	public function getId()
+	{
+	    return $this->id;
+	}
+	
+	public function getType()
+	{
+		$shorts = explode('\\', get_class($this));
+		$short = $shorts[sizeof($shorts) - 1];
+	 
+		return strtolower($short);
+	}
 	
 	/**
 	 * Set text
 	 *
 	 * @param string $text
-	 * Ehancement
 	 */
-//	public function setName($name)
-//	{
-//	    $this->name = $name;
-//	    return $this;
-//	}
+	public function setName($name)
+	{
+	    $this->name = $name;
+	    
+	    return $this;
+	}
 	
 	/**
 	 * Get text
 	 *
 	 * @return string
-	 * Ehancement
 	 */
-//	public function getName()
-//	{
-//	    return $this->name;
-//	}
-	
-	abstract public function getName();
+	public function getName()
+	{
+	    return $this->name;
+	}
 	
 	/**
 	 * To String
@@ -97,26 +115,34 @@ abstract class Contact implements ContactInterface
 	}
 
 	/**
-	 * Set fax
+	 * Add a phone
 	 *
-	 * @param string $fax
-	 * @return self
+	 * @param ContactPhoneInterface $phone
+	 * @return bool
 	 */
-	public function setFax($fax)
+	public function addPhone(ContactPhoneInterface $phone)
 	{
-	    $this->fax = $fax;
-	
-	    return $this;
+	    return $this->phones->add($phone);
 	}
 	
 	/**
-	 * Get fax
+	 * Remove a phone
 	 *
-	 * @return string
+	 * @param ContactPhoneInterface
+	 * @return bool
 	 */
-	public function getFax()
+	public function removePhone(ContactPhoneInterface $phone)
 	{
-	    return $this->fax;
+	    return $this->phones->removeElement($phone);
+	}
+	
+	/**
+	 * Get phones
+	 * @return array
+	 */
+	public function getPhones()
+	{
+	    return $this->phones;
 	}
 	
     /**
@@ -193,5 +219,44 @@ abstract class Contact implements ContactInterface
     public function isActive()
     {
         return $this->getActive();
+    }
+    
+	public function setImage(UploadDocument $image)
+	{
+		$this->image = $image;
+		
+		return $this;
+	}
+	
+	public function getImage()
+	{
+		return $this->image;
+	}
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getFax()
+    {
+        return $this->_getPhoneNumber('Fax');
+    }
+
+    /**
+     * Get the phone number by label
+     * @param string $type
+     * @return NULL|string
+     */
+    protected function _getPhoneNumber($type)
+    {
+        $phones = $this->getPhones();
+        foreach ($phones as $phone)
+        {
+            if ($phone->getLabel() == $type)
+            {
+                return $phone->getNumber();
+            }
+        }
+    
+        return null;
     }
 }

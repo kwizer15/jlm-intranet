@@ -3,9 +3,10 @@
 namespace JLM\DefaultBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use JLM\DefaultBundle\Entity\Search;
+use JLM\CoreBundle\Entity\Search;
+use JLM\CoreBundle\Repository\SearchRepositoryInterface;
 
-class SearchRepository extends EntityRepository
+class SearchRepository extends EntityRepository implements SearchRepositoryInterface
 {
 	/**
 	 * 
@@ -14,8 +15,7 @@ class SearchRepository extends EntityRepository
 	 */
 	public function search($search)
 	{
-		if ($search instanceof Search)
-			$keywords = $search->getKeywords();
+		if (!$search instanceof Search)
 		{
 			$s = new Search;
 			$s->setQuery($search);
@@ -28,13 +28,14 @@ class SearchRepository extends EntityRepository
 		if ($qb === null)
 			return null;
 		$params = $this->getSearchParams();
-	
+		$wheres = array();
 		foreach ($keywords as $key=>$keyword)
 		{
 			foreach ($params as $param)
 				$wheres[$param][] = $param . ' LIKE ?'.$key;
 			$qb->setParameter($key,'%'.$keyword.'%');
 		}
+		
 		foreach ($params as $param)
 			$qb->orWhere(implode(' AND ',$wheres[$param]));
 		$orderBys = $this->getSearchOrderBy();

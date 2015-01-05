@@ -38,8 +38,9 @@ class SiteRepository extends SearchRepository
 	protected function getSearchQb()
 	{
 		return $this->createQueryBuilder('a')
-		->leftJoin('a.address','b')
-		->leftJoin('b.city','c');
+			->select('a,b,c')
+			->leftJoin('a.address','b')
+			->leftJoin('b.city','c');
 	}
 	
 	/**
@@ -54,15 +55,18 @@ class SiteRepository extends SearchRepository
 	{
 		$res = $this->search($query);
 		
-		
 		$r2 = array();
 		foreach ($res as $r)
 		{
 			$reference = '';
 			if ($r->getGroupNumber())
+			{
 				$reference .= 'Groupe : '.$r->getGroupNumber();
+			}
 			foreach ($r->getDoors() as $d)
+			{
 				$doorDetails = $d->getType().' - '.$d->getLocation().chr(10);
+			}
 			$r2[] = array(
 					'id'=>''.$r->getId(),
 					'label'=>''.$r,
@@ -80,6 +84,7 @@ class SiteRepository extends SearchRepository
 					'reference'=>$reference,
 				);
 		}
+		
 		return $r2;
 	}
 	

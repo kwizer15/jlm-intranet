@@ -70,7 +70,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
     {
         $entity  = new Ask();
         $form = $this->createForm(new AskType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -128,7 +128,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
         }
 
         $editForm = $this->createForm(new AskType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -205,7 +205,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
 		
 		if ($this->getRequest()->isMethod('POST'))
 		{
-			$form->bind($this->getRequest());
+			$form->handleRequest($this->getRequest());
 			if ($form->isValid())
 			{
 				$em->persist($entity);

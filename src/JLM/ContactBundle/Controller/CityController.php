@@ -11,38 +11,37 @@
 
 namespace JLM\ContactBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class CityController extends Controller
+class CityController extends ContainerAware
 {
 	/**
 	 * City json
 	 */
-	public function searchAction(Request $request)
+	public function searchAction()
 	{
+		$manager = $this->container->get('jlm_contact.city_manager');
+		$request = $manager->getRequest();
 		$term = $request->get('q');
-		$page_limit = $request->get('page_limit');
+		$page_limit = $request->get('page_limit');;
+		$cities = $manager->getRepository()->getArray($term, $page_limit);
 		
-		$em = $this->getDoctrine()->getManager();
-		
-		$cities = $em->getRepository('JLMContactBundle:City')->getArray($term, $page_limit);
-		return new JsonResponse(array('cities' => $cities));
+		return $manager->renderJson(array('cities' => $cities));
 	}
 	
 	/**
 	 * City json
 	 */
-	public function jsonAction(Request $request)
+	public function jsonAction()
 	{
-		$id = $request->get('id');
-		$em = $this->getDoctrine()->getManager();
-		$city = $em->getRepository('JLMContactBundle:City')->getByIdToArray($id);
+		$manager = $this->container->get('jlm_contact.city_manager');
+		$id = $manager->getRequest()->get('id');
+		$city = $manager->getRepository()->getByIdToArray($id);
 		
-		return new JsonResponse($city);
+		return $manager->renderJson($city);
 	}
 }

@@ -50,6 +50,7 @@ class BillType extends AbstractType
             ->add('lines','collection',array('prototype'=>true,'allow_add'=>true,'allow_delete'=>true,'type'=>'jlm_commerce_bill_line'))
             
             ->add('vat','percent',array('precision'=>1,'label'=>'TVA applicable','attr'=>array('class'=>'input-mini')))
+            ->add('vatTransmitter','hidden')
          ;
     }
 

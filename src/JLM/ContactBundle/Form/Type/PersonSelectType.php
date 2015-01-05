@@ -11,8 +11,7 @@
 
 namespace JLM\ContactBundle\Form\Type;
 
-use JLM\ContactBundle\Form\DataTransformer\PersonToStringTransformer;
-use JLM\ContactBundle\Form\Type\AbstractHiddenType;
+use JLM\CoreBundle\Form\Type\AbstractSelectType;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -21,7 +20,7 @@ class PersonSelectType extends AbstractSelectType
 { 
     protected function getTransformerClass()
     {
-    	return 'JLM\ContactBundle\Form\DataTransformer\PersonToIntTransformer';
+    	return '\JLM\ContactBundle\Form\DataTransformer\PersonToIntTransformer';
     }
     
     protected function getTypeName()

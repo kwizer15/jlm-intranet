@@ -30,20 +30,4 @@ interface CorporationContactInterface extends PersonInterface
      * @return string
      */
     public function getPosition();
-    
-    /**
-     * Get manager
-     * Responsable éventuel
-     *
-     * @return null|CorporationContactInterface
-     */
-    public function getManager();
-    
-    /**
-     * Has manager
-     * 
-     * @return bool
-     */
-    public function hasManager();
-    
 }

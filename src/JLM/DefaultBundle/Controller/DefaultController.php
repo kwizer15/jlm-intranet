@@ -57,6 +57,7 @@ class DefaultController extends Controller
 		$evolutionBaseDay = $maintenanceTotal / 182;
 		$date1 = \DateTime::createFromFormat('Y-m-d H:i:s','2013-01-01 00:00:00');
 		$now = new \DateTime;
+		$evolutionBase = array();
 		for ($i = 1; $i <= 182 && $date1 < $now  ; $i++)
 		{
 			$evolutionBase[$date1->getTimestamp()*1000] = (int)($maintenanceTotal*($i / 182));
@@ -148,6 +149,7 @@ class DefaultController extends Controller
 	 */
 	public function printtagAction($code = null)
 	{
+		
 		$em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('JLMModelBundle:Door');
 		if ($code === null)
@@ -155,15 +157,17 @@ class DefaultController extends Controller
 			$nb = 0;
 			$codes = array();
 			$lettres = 'AZERTY';
-			while ($nb < 100)
+			$request = $this->get('request');
+			$max = $request->get('total',100);
+			while ($nb < $max)
 			{
-				// On genèree un code aléatoire
-				$nb = rand(0,9999);
-				while (strlen($nb) < 4)
+				// On genère un code aléatoire
+				$number = rand(0,9999);
+				while (strlen($number) < 4)
 				{
-				    $nb = '0'.$nb;
+				    $number = '0'.$number;
 				}
-				$newCode = $lettres[rand(0,5)].$nb;
+				$newCode = $lettres[rand(0,5)].$number;
 				// On vérifie s'il n'existe pas en BDD
 				$door = $repo->getByCode($newCode);
 				if ($door === null && !in_array($newCode,$codes))

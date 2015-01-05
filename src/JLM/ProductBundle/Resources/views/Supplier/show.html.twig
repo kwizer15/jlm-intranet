@@ -3,8 +3,9 @@
 <h1>{{ entity.name }}</h1>
 <address>
 	{{ entity.address|nl2br }}
-	<br>Tel : {{ entity.phone }}
-	{% if entity.fax %}<br>Fax : {{ entity.fax }}{% endif %}
+	{% for phone in entity.phones %}
+	<br>{{ phone }}
+	{% endfor %}
 	<br>
 	{% if entity.email %}<br>e-mail : <a href="mailto:{{ entity.email }}">{{ entity.email }}</a>{% endif %}
 	{% if entity.website %}<br>Site internet : <a href="{{ entity.website }}">{{ entity.website }}</a>{% endif %}

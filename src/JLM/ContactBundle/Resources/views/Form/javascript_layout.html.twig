@@ -21,19 +21,17 @@
     	           	};
     	        }
         	},
-        	{% if value is not empty %}
         	initSelection: function(element, callback) {
         		var id = $(element).val();
         		if (id!=="") {
         			$.ajax("{{ path('jlm_contact_rest_city_get') }}", {
         				dataType: "json",
         				data: {
-        					id: {{ value }}
+        					id: id
         				}
         			}).done(function(data) { callback(data); });
         		}
         	},
-        	{% endif %}
 	        formatResult: function (item) {
 	        	return item.zip + " " + item.name;
 	        },
@@ -49,4 +47,191 @@
 
         $field.select2($configs);
     </script>
+{% endblock %}
+
+{% block jlm_contact_person_select_javascript %}
+    <script type="text/javascript">
+        $field = $('#{{ id }}');
+
+        var $configs = {{ configs|json_encode|raw }};
+
+        $configs = $.extend($configs, {
+        	minimumInputLength: 1,
+        	ajax: {
+        		url: "{{ path('jlm_contact_rest_person_search') }}",
+        		dataType: "json",
+        		data: function (term, page) {
+        			return {
+        				q: term,
+        				page_limit: 10
+        			};
+        		},
+        		results: function (data, page) {
+    	        	return {
+    	           		results: data.persons
+    	           	};
+    	        }
+        	},
+        	initSelection: function(element, callback) {
+        		var id = $(element).val();
+        		if (id!=="") {
+        			$.ajax("{{ path('jlm_contact_rest_person_get') }}", {
+        				dataType: "json",
+        				data: {
+        					id: id
+        				}
+        			}).done(function(data) { callback(data); });
+        		}
+        	},
+	        formatResult: function (item) {
+	        	return item.name;
+	        },
+	
+	        formatSelection: function (item) {
+				return item.name;
+	        },
+	        
+	        formatNoMatches: function(term) { return "Pas de résultat pour \"" + term + "\""; },
+	        
+	        formatSearching: function() { return "Recherche..."; }
+        });
+
+        $field.select2($configs);
+        $("#{{ id }}_add-person").formModal();
+    </script>
+{% endblock %}
+
+{% block jlm_contact_contact_select_javascript %}
+    <script type="text/javascript">
+        $field = $('#{{ id }}');
+
+        var $configs = {{ configs|json_encode|raw }};
+
+        $configs = $.extend($configs, {
+        	minimumInputLength: 1,
+        	ajax: {
+        		url: "{{ path('jlm_contact_contact') }}",
+        		dataType: "json",
+        		data: function (term, page) {
+        			return {
+        				q: term,
+        				page_limit: 10
+        			};
+        		},
+        		results: function (data, page) {
+    	        	return {
+    	           		results: data.contacts
+    	           	};
+    	        }
+        	},
+        	{% if value is not empty %}
+        	initSelection: function(element, callback) {
+        		var id = $(element).val();
+        		if (id!=="") {
+        			$.ajax("{{ path('jlm_contact_contact_show',{'id':value}) }}", {
+        				dataType: "json",
+        			}).done(function(data) { callback(data); });
+        		}
+        	},
+        	{% endif %}
+	        formatResult: function (item) {
+	        	return item.name;
+	        },
+	
+	        formatSelection: function (item) {
+				return item.name;
+	        },
+	        
+	        formatNoMatches: function(term) { return "Pas de résultat pour \"" + term + "\""; },
+	        
+	        formatSearching: function() { return "Recherche..."; }
+        });
+
+        $field.select2($configs);
+        $("#{{ id }}_add-person").formModal();
+        $("#{{ id }}_add-association").formModal();
+        $("#{{ id }}_add-company").formModal();
+    </script>
+{% endblock %}
+
+{% block jlm_contact_corporation_select_javascript %}
+    <script type="text/javascript">
+        $field = $('#{{ id }}');
+
+        var $configs = {{ configs|json_encode|raw }};
+
+        $configs = $.extend($configs, {
+        	minimumInputLength: 1,
+        	ajax: {
+        		url: "{{ path('jlm_contact_rest_corporation_search') }}",
+        		dataType: "json",
+        		data: function (term, page) {
+        			return {
+        				q: term,
+        				page_limit: 10
+        			};
+        		},
+        		results: function (data, page) {
+    	        	return {
+    	           		results: data.corporations
+    	           	};
+    	        }
+        	},
+        	initSelection: function(element, callback) {
+        		var id = $(element).val();
+        		if (id!=="") {
+        			$.ajax("{{ path('jlm_contact_rest_corporation_get') }}", {
+        				dataType: "json",
+        				data: {
+        					id: id
+        				}
+        			}).done(function(data) { callback(data); });
+        		}
+        	},
+	        formatResult: function (item) {
+	        	return item.name;
+	        },
+	
+	        formatSelection: function (item) {
+				return item.name;
+	        },
+	        
+	        formatNoMatches: function(term) { return "Pas de résultat pour \"" + term + "\""; },
+	        
+	        formatSearching: function() { return "Recherche..."; }
+        });
+
+        $field.select2($configs);
+        $("#{{ id }}_add-association").formModal();
+        $("#{{ id }}_add-company").formModal();
+    </script>
+{% endblock %}
+
+{% block jlm_contact_contactphonecollection_javascript %}
+<script>
+    var phoneCount = '{{ form|length }}';
+
+    var removeLine = function(e) {
+    	e.preventDefault();
+
+    	var line = $(this).parent();
+    	line.remove();
+    }
+    
+    var addLine = function(e) {
+    	e.preventDefault();
+
+        var phoneList = $('.phone-list');
+        var newWidget = phoneList.attr('data-prototype');
+        newWidget = newWidget.replace(/__name__/g, phoneCount);
+        phoneCount++;
+        phoneList.append(newWidget);
+        $('.remove-phone').click(removeLine);
+    }
+
+    $(document).ready(function() {
+        $('#add-another-phone').click(addLine);
+        $('.remove-phone').click(removeLine);
+    })
+</script>
 {% endblock %}

@@ -25,7 +25,7 @@ abstract class DoorBillBuilderAbstract extends SiteBillBuilderAbstract
         $this->door = $door;
         parent::__construct($this->door->getSite(), $options);
         $contract = $this->door->getActualContract();
-        $this->trustee = ($contract instanceof ContractInterface) ? $this->trustee : $contract->getTrustee();
+        $this->trustee = ($contract instanceof ContractInterface) ? $contract->getTrustee() : $this->trustee ;
     }
     
     /**

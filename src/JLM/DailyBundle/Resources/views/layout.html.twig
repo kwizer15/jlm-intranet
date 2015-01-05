@@ -5,25 +5,18 @@
 
     {% block sidebar %}
     	<li><h4>Journal de bord</h4></li>
-    	<li>
-    		<form  action="{{ path('daily_search') }}" method="post" class="form-search">
-				{{ form_widget(layout.form_search) }}
-    		</form>
-    	</li>
+    	<li>{{ form(search.form, {'action': path('daily_search')}) }}</li>
 	    <li class="nav-header">Techniciens</li>
 	    <li><a href="{{ path('shifting_list', {'id':6}) }}"><i class="icon-user"></i> Cyrille</a></li>
 	    <li><a href="{{ path('shifting_list', {'id':5}) }}"><i class="icon-user"></i> Christophe</a></li>
 	    <li><a href="{{ path('shifting_list', {'id':4}) }}"><i class="icon-user"></i> Oscar</a></li>
 	    <li class="nav-header">Ajouter</li>
-	    <li><a href="#modalNewShift" data-toggle="modal"><i class="icon-plus-sign"></i> Récupération matériel</a>
-		{{ render(controller('JLMDailyBundle:Equipment:new')) }}</li>
-	    <li><a href="#modalNewStandby" data-toggle="modal"><i class="icon-plus-sign"></i> Astreinte</a>
-		{{ render(controller('JLMDailyBundle:Standby:new')) }}</li>
+	    <li><a class="shift-new" href="{{ path('equipment_new') }}"><i class="icon-plus-sign"></i> Récupération matériel</a></li>
+	    <li><a class="standby-new" href="{{ path('standby_new') }}"><i class="icon-plus-sign"></i> Astreinte</a></li>
 		<li><a href="{{ path('standby') }}"><i class="icon-list"></i> Liste des astreintes</a>
 	    <li class="nav-header">Interventions</li>
-		{# render(controller('JLMDailyBundle:Default:datesearch')) #}
 		{% include 'JLMDailyBundle:Default:datesearch.html.twig' with {'form':layout.form_searchByDate} %}
-		{{ render(controller('JLMDailyBundle:Default:sidebar')) }}
+		{% include 'JLMDailyBundle:Default:sidebar.html.twig' %}
 		<li class="nav-header">Imprimer</li>
 		<li><a href="{{ path('intervention_printtomorrow') }}"><i class="icon-print"></i> Demain</a></li>
 	{% endblock sidebar %}
@@ -36,5 +29,10 @@
 $(".interventionForm").intervention({
 	 autoSource:'{{ path('autocomplete') }}'
 });
+$(".standby-new").formModal();
+$(".shift-new").formModal();
+$(".fixing-new").formModal();
+$(".shifting-edit").formModal({closure: function(){location.reload();}});
+$(".shifting-new").formModal({closure: function(){location.reload();}});
 </script>
 {% endblock %}

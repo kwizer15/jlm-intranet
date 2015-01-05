@@ -28,7 +28,14 @@ class SupplierRepository extends SearchRepository
 	 */
 	protected function getSearchQb()
 	{
-		return $this->createQueryBuilder('a');
+		return $this->createQueryBuilder('a')
+			->select('a,b,c,d,h,i')
+			->leftJoin('a.contact','b')
+				->leftJoin('b.phones','c')
+					->leftJoin('c.phone','d')
+				->leftJoin('b.address','h')
+					->leftJoin('h.city','i')
+		;
 	}
 	
 	/**
@@ -36,7 +43,7 @@ class SupplierRepository extends SearchRepository
 	 */
 	protected function getSearchParams()
 	{
-		return array('a.name');
+		return array('b.name');
 	}
 	
 	/**
@@ -65,5 +72,17 @@ class SupplierRepository extends SearchRepository
 		$qb = $this->createQueryBuilder('s')->select('COUNT(s)');
 		
 		return (int) $qb->getQuery()->getSingleScalarResult();
+	}
+	
+	public function getAll($limit, $offset)
+	{
+		$query = $this->createQueryBuilder('a')
+			->leftJoin('a.contact','b')
+			->orderBy('b.name','ASC')
+			->setMaxResults($limit)
+			->setFirstResult($offset)
+		;
+			
+		return $query->getQuery()->getResult();
 	}
 }

@@ -26,9 +26,6 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
-    form:
-        resources:
-            - ':Form:horizontal_ext.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -80,8 +77,10 @@ doctrine:
             JLM\ContactBundle\Model\ContactInterface: JLM\ContactBundle\Entity\Contact
             JLM\ContactBundle\Model\CorporationContactInterface: JLM\ContactBundle\Entity\CorporationContact
             JLM\ContactBundle\Model\PersonInterface: JLM\ContactBundle\Entity\Person
-            JLM\ContactBundle\Model\CorporationInterface: JLM\ContactBundle\Entity\Company
+            JLM\ContactBundle\Model\CorporationInterface: JLM\ContactBundle\Entity\Corporation
+            JLM\ContactBundle\Model\AssociationInterface: JLM\ContactBundle\Entity\Association
             JLM\ContactBundle\Model\CompanyInterface: JLM\ContactBundle\Entity\Company
+            JLM\ContactBundle\Model\PhoneInterface: JLM\ContactBundle\Entity\Phone
             
             JLM\CondominiumBundle\Model\ManagerInterface: JLM\ModelBundle\Entity\Trustee            
             JLM\CondominiumBundle\Model\AdministratorInterface: JLM\ModelBundle\Entity\Site

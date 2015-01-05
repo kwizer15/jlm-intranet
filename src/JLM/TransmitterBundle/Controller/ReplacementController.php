@@ -48,7 +48,7 @@ class ReplacementController extends Controller
     {
         $entity  = new Replacement();
         $form = $this->createForm(new ReplacementType($attribution->getSite()->getId()), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();

@@ -69,34 +69,15 @@ class ShiftTechnicianRepository extends EntityRepository
 	
 	public function getStatsByYear($year = null)
 	{
-		if ($year === null)
-		{
-			$today = new \DateTime;
-			$year = $today->format('Y');
-		} 
-		$em = $this->getEntityManager();
-		$rsm = new ResultSetMapping();
-		$rsm->addScalarResult('name', 'name');
-		$rsm->addScalarResult('actionType', 'type');
-		$rsm->addScalarResult('ttime', 'time');
-		$rsm->addScalarResult('number', 'number');
-		$query = $em->createNativeQuery('
-				SELECT b.firstName AS name,
-				       d.actionType AS actionType,
-				       SUM( TIMESTAMPDIFF(MINUTE,  a.begin, a.end ) ) AS ttime,
-				       COUNT(d.actionType) as number
-				FROM shift_technician a
-				LEFT JOIN persons b ON a.technician_id = b.id
-				LEFT JOIN shifting d ON a.shifting_id = d.id
-				WHERE YEAR(a.begin) = ?'.
-			//	AND a.end IS NOT NULL
-				' GROUP BY d.actionType, b.firstName'
-			, $rsm);
-		$query->setParameter(1,$year);
-		return $query->getResult();
+		return $this->getStatesByPeriod('year', $year);
 	}
 	
 	public function getStatsByMonths($year = null)
+	{
+		return $this->getStatesByPeriod('month', $year);
+	}
+	
+	private function getStatesByPeriod($period = 'year', $year = null)
 	{
 		if ($year === null)
 		{
@@ -109,21 +90,29 @@ class ShiftTechnicianRepository extends EntityRepository
 		$rsm->addScalarResult('actionType', 'type');
 		$rsm->addScalarResult('ttime', 'time');
 		$rsm->addScalarResult('number', 'number');
-		$rsm->addScalarResult('month', 'month');
-		$query = $em->createNativeQuery('
-				SELECT b.firstName AS name,
+		$query_select = 'SELECT c.name AS name,
 				       d.actionType AS actionType,
 				       SUM( TIMESTAMPDIFF(MINUTE,  a.begin, a.end ) ) AS ttime,
-				       COUNT(d.actionType) as number,
-					   MONTH(a.begin) as month
+				       COUNT(d.actionType) as number';
+		$query_groupby = ' GROUP BY d.actionType, c.name';
+		
+		if ($period = 'month')
+		{
+			$rsm->addScalarResult('month', 'month');
+			$query_select .= ', MONTH(a.begin) as month';
+			$query_groupby .= ' , MONTH(a.begin)';
+		}
+		$query = $em->createNativeQuery($query_select. '
 				FROM shift_technician a
-				LEFT JOIN persons b ON a.technician_id = b.id
+				LEFT JOIN technicians b ON a.technician_id = b.id
+				LEFT JOIN jlm_contact_contact c ON b.contact_id = c.id
 				LEFT JOIN shifting d ON a.shifting_id = d.id
 				WHERE YEAR(a.begin) = ?'.
 				//	AND a.end IS NOT NULL
-				' GROUP BY d.actionType, b.firstName, MONTH(a.begin)'
+				$query_groupby
 				, $rsm);
 		$query->setParameter(1,$year);
+		
 		return $query->getResult();
 	}
 }

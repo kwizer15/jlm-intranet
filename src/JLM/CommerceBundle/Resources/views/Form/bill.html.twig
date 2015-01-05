@@ -1,4 +1,5 @@
-{% block jlm_commerce_bill_widget %}
+{% block _jlm_commerce_bill_widget %}
+<fieldset>
 <div class="row_fluid clearfix">
 	<div class="span6 well">
 		
@@ -83,7 +84,13 @@
 </div>
 </div>
 </div>
-{{ form_rest(form) }}
+{{ form_row(form.property) }}
+{{ form_row(form.earlyPayment) }}
+{{ form_row(form.penalty) }}
+<div class="form-actions">
+    {{ form_rest(form) }}
+</div>
+</fieldset>
 {% endblock %}
 
 {% block jlm_commerce_bill_line_row %}

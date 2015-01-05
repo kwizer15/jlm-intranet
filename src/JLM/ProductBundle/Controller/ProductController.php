@@ -108,7 +108,7 @@ class ProductController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('product_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('jlm_product_product_show', array('id' => $entity->getId())));
             
         }
 
@@ -153,7 +153,7 @@ class ProductController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('product_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('jlm_product_product_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -182,7 +182,7 @@ class ProductController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('product'));
+        return $this->redirect($this->generateUrl('jlm_product_product'));
     }
     
     /**

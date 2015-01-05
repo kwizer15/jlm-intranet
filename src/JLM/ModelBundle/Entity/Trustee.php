@@ -5,12 +5,13 @@ namespace JLM\ModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-use JLM\ContactBundle\Entity\Company;
 use JLM\ContactBundle\Model\AddressInterface;
 use JLM\CondominiumBundle\Model\ManagerInterface;
 use JLM\ContractBundle\Model\ContractInterface;
 use JLM\CommerceBundle\Model\CustomerInterface;
 use JLM\AskBundle\Model\PayerInterface;
+use JLM\ContactBundle\Entity\ContactDecorator;
+use JLM\ContactBundle\Model\ContactInterface;
 
 /**
  * JLM\ModelBundle\Entity\Trustee
@@ -18,7 +19,7 @@ use JLM\AskBundle\Model\PayerInterface;
  * @ORM\Table(name="trustees")
  * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\TrusteeRepository")
  */
-class Trustee extends Company implements ManagerInterface, CustomerInterface, PayerInterface
+class Trustee extends ContactDecorator implements ManagerInterface, CustomerInterface, PayerInterface
 {
 
 
@@ -91,11 +92,9 @@ class Trustee extends Company implements ManagerInterface, CustomerInterface, Pa
      */
     public function __construct()
     {
-    	parent::__construct();
     	$this->sites = new ArrayCollection;
     	$this->contracts = new ArrayCollection;
     }
-
    
     /**
      * Set accountNumber
@@ -275,6 +274,7 @@ class Trustee extends Company implements ManagerInterface, CustomerInterface, Pa
      */
     public function getBillingAddress()
     {
+    	return $this->billingAddress;
         if ($this->billingAddress === null)
         {
             return $this->getAddress();
@@ -284,30 +284,39 @@ class Trustee extends Company implements ManagerInterface, CustomerInterface, Pa
     }
     
     /**
-     * @deprecated
+     * Get bill address
+     *
      * @return AddressInterface
      */
-    public function getAddressForBill()
+    public function getBillAddress()
     {
-    	if ($this->billingAddress)
+    	if ($this->billingAddress instanceof AddressInterface)
     	{
     		if ($this->billingAddress->getStreet())
     		{
     			return $this->billingAddress;
     		}
     	}
+    	
     	return $this->getAddress();
     }
     
     /**
+     * @deprecated Use getBillAddress
+     * @return AddressInterface
+     */
+    public function getAddressForBill()
+    {
+    	return $this->getBillAddress();
+    }
+    
+    /**
      * Get BillingLabel
-     * @deprecated
+     * @deprecated Use getBillLabel
      * @return string
      */
     public function getBillingLabel()
     {
-    	if ($this->billingLabel === null)
-    		return $this->getName();
     	return $this->billingLabel;
     }
     
@@ -320,7 +329,17 @@ class Trustee extends Company implements ManagerInterface, CustomerInterface, Pa
     public function setBillingLabel($label)
     {
     	$this->billingLabel = $label;
+    	
     	return $this;
+    }
+    
+    /**
+     * Get BillLabel
+     * @return string
+     */
+    public function getBillLabel()
+    {
+    	return ($this->billingLabel === null) ? $this->getName() : $this->billingLabel;
     }
     
     /**

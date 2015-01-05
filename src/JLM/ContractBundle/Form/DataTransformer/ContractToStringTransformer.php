@@ -61,8 +61,9 @@ class ContractToStringTransformer implements DataTransformerInterface
 		{
 			return null;
 		}
-			
-		if ($model = preg_match('#(.+) / (.+) / (.+)#',$string,$matches))
+		$matches = array();
+		if (preg_match('#(.+) / (.+) / (.+)#',$string, $matches))
+		{
 			$entity = $this->om
 				->getRepository('JLMContractBundle:Contract')
 				->createQueryBuilder('c')
@@ -75,7 +76,7 @@ class ContractToStringTransformer implements DataTransformerInterface
 				->setParameter('location', trim($matches[2]))
 				->setParameter('type', trim($matches[3]))
 				->getQuery()->getResult();		
-		
+		}
 			
 		if (null === $entity) {
 			

@@ -11,27 +11,26 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Form\Type\DatepickerType;
 use JLM\DailyBundle\Entity\Fixing;
 use JLM\DailyBundle\Form\Type\FixingType;
-use JLM\DefaultBundle\Entity\Search;
-use JLM\DefaultBundle\Form\Type\SearchType;
+use JLM\CoreBundle\Entity\Search;
 
 class DefaultController extends Controller
 {
 	/**
 	 * Search
 	 * @Route("/search", name="daily_search")
-	 * @Method("post")
+	 * @Method("get")
      * @Secure(roles="ROLE_USER")
 	 * @Template()
 	 */
 	public function searchAction(Request $request)
 	{
-		$entity = new Search;
-		$form = $this->createForm(new SearchType(), $entity);
-		$form->handleRequest($request);
-		if ($form->isValid())
-		{
-			$em = $this->getDoctrine()->getManager();
-			$doors = $em->getRepository('JLMModelBundle:Door')->search($entity);
+		$formData = $request->get('jlm_core_search');
+    	 
+    	if (is_array($formData) && array_key_exists('query', $formData))
+    	{
+    		$em = $this->getDoctrine()->getManager();
+			$doors = $em->getRepository('JLMModelBundle:Door')->search($formData['query']);
+
 			/*
 			 * Voir aussi
 			* 	DoorController:stoppedAction
@@ -48,13 +47,12 @@ class DefaultController extends Controller
 			}
 			/* à la */
 			return array(
-					'layout'=>array('form_search_query'=>$entity),
-					'query'   => $entity->getQuery(),
+					'query'   => $formData['query'],
 					'doors'   => $doors,
 					'fixing_forms' => $fixingForms,
 			);
 		}
-		return array('layout'=>array('form_search_query'=>$entity->getQuery()),'query'   => $query,);
+		return array();
 	}
 	
 	/**

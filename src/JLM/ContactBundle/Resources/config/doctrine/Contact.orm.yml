@@ -1,16 +1,46 @@
 JLM\ContactBundle\Entity\Contact:
-  type: mappedSuperclass
+  type: entity
+  table: jlm_contact_contact
+  repositoryClass: JLM\ContactBundle\Repository\ContactRepository
+  inheritanceType: JOINED
+  discriminatorColumn:
+    name: discr
+    type: string
+  discriminatorMap:
+    person: JLM\ContactBundle\Entity\Person
+    company: JLM\ContactBundle\Entity\Company
+    association: JLM\ContactBundle\Entity\Association
+  id:
+    id:
+      type: integer
+      nullable: true
+      generator:
+        strategy: AUTO
   fields:
-#    name:
-#      type: string
+    name:
+      type: string
     email:
       type: string
       nullable: true
-    fax:
-      type: string
-      length: 20
-      nullable: true
+  manyToMany:
+    phones:
+      targetEntity: JLM\ContactBundle\Entity\ContactPhone
+      joinTable:
+        name: jlm_contact_contact_join_contact_phone
+        joinColumns:
+          contact_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          phone_id:
+            referencedColumnName: id
+            unique: true
+      orphanRemoval: true
+      cascade: ["persist"]
   oneToOne:
     address:
       targetEntity: JLM\ContactBundle\Model\AddressInterface
+      cascade: ["persist"]
+    image:
+      targetEntity: JLM\CoreBundle\Entity\UploadDocument
+      cascade: ["all"]
     

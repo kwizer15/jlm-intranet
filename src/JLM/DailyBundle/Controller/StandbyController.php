@@ -43,7 +43,11 @@ class StandbyController extends Controller
     public function newAction()
     {
         $entity = new Standby();
-        $form   = $this->createForm(new StandbyType(), $entity);
+        $form   = $this->createForm(new StandbyType(), $entity, array(
+        		'method'=>'POST',
+        		'action'=>$this->generateUrl('standby_create'),
+        ));
+        $form->add('submit','submit',array('label'=>'Enregistrer'));
 
         return array(
             'entity' => $entity,

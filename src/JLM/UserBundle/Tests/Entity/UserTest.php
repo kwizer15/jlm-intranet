@@ -41,8 +41,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
     
     public function testGetPerson()
     {
-        $person = $this->getMock('JLM\ContactBundle\Model\PersonInterface');
-        $this->assertSame($this->entity, $this->entity->setPerson($person));
-        $this->assertSame($person, $this->entity->getPerson());
+        $person = $this->getMock('JLM\ContactBundle\Model\ContactInterface');
+        $this->assertSame($this->entity, $this->entity->setContact($person));
+        $this->assertSame($person, $this->entity->getContact());
     }
 }

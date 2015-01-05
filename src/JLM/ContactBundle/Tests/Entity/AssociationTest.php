@@ -40,95 +40,51 @@ class AssociationTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->entity->getId());
         $this->assertCount(0, $this->entity->getContacts());
     }
-	
-    public function getNames()
+
+    public function getAttributes()
     {
         return array(
-            array('Foo', 'Foo'),
+            array('Name', 'Foo'),
+            array('Email', 'commerce@jlm-entreprise.fr'),
+            array('Address', $this->getMock('JLM\ContactBundle\Model\AddressInterface')),
         );
     }
     
     /**
-     * @dataProvider getNames
-     * @param string $in
-     * @param string $out
+     * Test getters and setters
+     * @param string $attribute
+     * @param mixed $value
+     * @dataProvider getAttributes
      */
-    public function testName($in, $out)
+    public function testGettersSetters($attribute, $value)
     {
-        $this->assertSame($this->entity, $this->entity->setName($in));
-        $this->assertSame($out, $this->entity->getName());
-        $this->assertSame($out, $this->entity->__toString());
+        $getter = 'get'.$attribute;
+        $setter = 'set'.$attribute;
+        $this->assertSame($this->entity, $this->entity->$setter($value));
+        $this->assertSame($value, $this->entity->$getter());
     }
     
-    public function getValidPhones()
+    public function getAdderRemover()
     {
         return array(
-            array('0119379665','0119379665'),
+            array('Phone', 'Phones', $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface')),
+            array('Contact', 'Contacts', $this->getMock('JLM\ContactBundle\Model\CorporationContactInterface')),
         );
     }
     
     /**
-     * @dataProvider getValidPhones
-     * @param string $in
-     * @param string $out
+     * @dataProvider getAdderRemover
      */
-    public function testValidPhone($in, $out)
+    public function testAdderRemover($attribute, $attributes, $value)
     {
-        $this->assertSame($this->entity, $this->entity->setPhone($in));
-        $this->assertSame($in, $this->entity->getPhone());
-    }
-    
-    /**
-     * @dataProvider getValidPhones
-     * @param string $in
-     * @param string $out
-     */
-    public function testValidFax($in, $out)
-    {
-        $this->assertSame($this->entity, $this->entity->setFax($in));
-        $this->assertSame($in, $this->entity->getFax());
-    }
-    
-    public function getValidEmails()
-    {
-        return array(
-            array('0119379665','0119379665'),
-        );
-    }
-    
-    /**
-     * @dataProvider getValidEmails
-     * @param string $in
-     * @param string $out
-     */
-    public function testEmail($in, $out)
-    {
-        $this->assertSame($this->entity, $this->entity->setEmail($in));
-        $this->assertSame($out, $this->entity->getEmail());
-    }
-    
-    public function getValidAddresses()
-    {
-        return array(
-            array($this->getMock('JLM\ContactBundle\Model\AddressInterface')),
-        );
-    }
-    
-    /**
-     * @dataProvider getValidAddresses
-     * @param string $in
-     * @param string $out
-     */
-    public function testValidAddress($in)
-    {
-        $this->assertSame($this->entity, $this->entity->setAddress($in));
-        $this->assertSame($in, $this->entity->getAddress());
-    }
-    
-    public function testAddContact()
-    {
-        $contact = $this->getMock('JLM\ContactBundle\Model\CorporationContactInterface');
-        $this->assertTrue($this->entity->addContact($contact));
-        $this->assertCount(1, $this->entity->getContacts());
+        $getters = 'get'.$attributes;
+        $adder = 'add'.$attribute;
+        $remover = 'remove'.$attribute;
+        $this->assertCount(0, $this->entity->$getters());
+        $this->assertFalse($this->entity->$remover($value));
+        $this->assertTrue($this->entity->$adder($value));
+        $this->assertCount(1, $this->entity->$getters());
+        $this->assertTrue($this->entity->$remover($value));
+        $this->assertCount(0, $this->entity->$getters());
     }
 }

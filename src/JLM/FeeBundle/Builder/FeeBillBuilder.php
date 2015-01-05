@@ -35,7 +35,7 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
     {
         $this->fee = $fee;
         $this->follower = $follower;
-        parent::__construct($options);
+        parent::__construct($this->_getSite(), $options);
     }
     
     /**
@@ -52,10 +52,6 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
     protected function _getSite()
     {
         $contrats = $this->fee->getContracts();
-        if (empty($contrats))
-        {
-            return new Site();
-        }
         
         return $contrats[0]->getDoor()->getSite();
     }

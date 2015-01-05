@@ -17,8 +17,6 @@ use JLM\CommerceBundle\Factory\BillFactory;
 use JLM\FeeBundle\Builder\FeeBillBuilder;
 use JLM\FeeBundle\Form\Type\FeesFollowerType;
 
-
-
 /**
  * Fees controller.
  *
@@ -99,7 +97,6 @@ class FeesFollowerController extends Controller
 	public function generateAction(FeesFollower $entity)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$today = new \DateTime;
 
 		$fees = $em->getRepository('JLMFeeBundle:Fee')
 			->createQueryBuilder('a')
@@ -117,38 +114,43 @@ class FeesFollowerController extends Controller
 		// @todo Ajouter pas de facture si sous garantie
 		foreach ($fees as $fee)
 		{
-		    $contracts = $fee->getContracts();
+			$contracts = $fee->getContracts();
 		    if (count($contracts))
 		    {
-    			$gf = 'getFrequence'.$fee->getFrequence();
-    			if ($entity->$gf() !== null)
-    			{
-    			    // On fait l'aumentation dans le contrat
-    				$majoration = $entity->$gf();
-    				if ($majoration > 0)
-    				{
-    					$contracts = $fee->getContracts();
-    					foreach ($contracts as $contract)
-    					{
-    						$amount = $contract->getFee();
-    						$amount *= (1 + $majoration);
-    						$contract->setFee($amount);
-    						$em->persist($contract);
-    					}
-    				}
-    				
-    				$builder = new FeeBillBuilder($fee, $entity, array(
-    				    'number' => $number,
-    				    'product' => $em->getRepository('JLMModelBundle:Product')->find(284),
-    				    'penalty' => (string)$em->getRepository('JLMOfficeBundle:PenaltyModel')->find(1),
-                        'earlyPayment' => (string)$em->getRepository('JLMOfficeBundle:EarlyPaymentModel')->find(1),
-    				    'vatTransmitter' => $em->getRepository('JLMModelBundle:VAT')->find(1)->getRate(),
-    				));
-    				$bill = BillFactory::create($builder);
-    				$em->persist($bill);
-    				$number = $bill->getNumber() + 1;
-    			}
-		    }
+				$gf = 'getFrequence'.$fee->getFrequence();
+				if ($entity->$gf() !== null)
+				{
+				    // On fait l'augmentation dans le contrat
+					$majoration = $entity->$gf();
+					if ($majoration > 0)
+					{
+						$contracts = $fee->getContracts();
+						foreach ($contracts as $contract)
+						{
+							$amount = $contract->getFee();
+							$amount *= (1 + $majoration);
+							$contract->setFee($amount);
+							$em->persist($contract);
+						}
+					}
+					if (sizeof($fee->getContracts()))
+					{
+						$builder = new FeeBillBuilder($fee, $entity, array(
+						    'number' => $number,
+						    'product' => $em->getRepository('JLMProductBundle:Product')->find(284),
+						    'penalty' => (string)$em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
+		                    'earlyPayment' => (string)$em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1),
+						    'vatTransmitter' => $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(),
+						));
+						$bill = BillFactory::create($builder);
+						if ($bill->getTotal() != 0)
+						{
+							$em->persist($bill);
+							$number = $bill->getNumber() + 1;
+						}
+					}
+				}
+			}
 		}
 
 		$entity->setGeneration(new \DateTime);

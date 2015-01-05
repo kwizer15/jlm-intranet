@@ -1,19 +1,7 @@
 JLM\ContactBundle\Entity\Person:
   type: entity
-  table: persons
+  table: jlm_contact_person
   repositoryClass: JLM\ContactBundle\Repository\PersonRepository
-  inheritanceType: JOINED
-  discriminatorColumn:
-    name: discr
-    type: string
-  discriminatorMap:
-    person: Person
-    technician: JLM\ModelBundle\Entity\Technician
-  id:
-    id:
-      type: integer
-      generator:
-        strategy: AUTO
   fields:
     title:
       type: string
@@ -23,15 +11,7 @@ JLM\ContactBundle\Entity\Person:
       nullable: true
     lastName:
       type: string
-    fixedPhone:
-      type: string
-      length: 20
-      nullable: true
-    mobilePhone:
-      type: string
-      length: 20
-      nullable: true
-    role:
-      type: string
-      nullable: true
+  lifecycleCallbacks:
+    prePersist: [ attributeName ]
+    preUpdate: [ attributeName ]
     

@@ -8,12 +8,12 @@
     <parameters>
         <parameter key="jlm_default.example.class">JLM\DefaultBundle\Example</parameter>
     </parameters>
-	-->
+	
     <services>
         <service id="jlm_default.eventlistener.search_listener" class="JLM\DefaultBundle\EventListener\SearchListener">
         	<argument type="service" id="form.factory"/>
     		<tag name="kernel.event_listener" event="kernel.view" method="onKernelResponse" />
 		</service>
     </services>
-
+-->
 </container>

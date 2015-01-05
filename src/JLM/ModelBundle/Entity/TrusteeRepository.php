@@ -16,10 +16,11 @@ class TrusteeRepository extends SearchRepository
 	public function getList($limit,$offset)
 	{
 		$qb = $this->createQueryBuilder('a')
-			->select('a,b,c')
-			->leftJoin('a.address','b')
-			->leftJoin('b.city','c')
-			->orderBy('a.name','ASC')
+			->select('a,b,c,d')
+			->leftJoin('a.contact','b')
+			->leftJoin('b.address','c')
+			->leftJoin('c.city','d')
+			->orderBy('b.name','ASC')
 			->setFirstResult($offset)
 			->setMaxResults($limit);
 		return $qb->getQuery()->getResult();
@@ -27,15 +28,16 @@ class TrusteeRepository extends SearchRepository
 	
 	public function find($id, $lockMode = LockMode::NONE, $lockVersion = null)
 	{
-		$qb = $this->createQueryBuilder('a')
-		->select('a,b,c,d,e,f,g')
+		$qb = $this->createQueryBuilder('z')
+		->select('z,a,b,c,d,e,f,g')
+		->leftJoin('z.contact','a')
 		->leftJoin('a.address','b')
 		->leftJoin('b.city','c')
-		->leftJoin('a.sites','d')
+		->leftJoin('z.sites','d')
 		->leftJoin('d.address','e')
 		->leftJoin('e.city','f')
 		->leftJoin('d.doors','g')
-		->where('a.id = ?1')
+		->where('z.id = ?1')
 		->setParameter(1,$id);
 		return $qb->getQuery()->getSingleResult();
 	}
@@ -45,7 +47,17 @@ class TrusteeRepository extends SearchRepository
 	 */
 	protected function getSearchQb()
 	{
-		return $this->createQueryBuilder('a');
+		return $this->createQueryBuilder('a')
+			->select('a,b,c,d,e,f,g,h,i')
+			->leftJoin('a.contact','b')
+				->leftJoin('b.phones','c')
+					->leftJoin('c.phone','d')
+				->leftJoin('b.address','h')
+					->leftJoin('h.city','i')
+			->leftJoin('a.sites','e')
+				->leftJoin('e.address','f')
+					->leftJoin('f.city','g')
+		;
 	}
 	
 	/**
@@ -53,7 +65,7 @@ class TrusteeRepository extends SearchRepository
 	 */
 	protected function getSearchParams()
 	{
-		return array('a.name');
+		return array('b.name');
 	}
 	
 	public function searchResult($query, $limit = 8)
@@ -67,8 +79,8 @@ class TrusteeRepository extends SearchRepository
 			$r2[] = array(
 					'trustee'       => ''.$r->getId(),
 					'label'         => ''.$r,
-					'trusteeBillingLabel'   => ''.$r->getBillingLabel(),
-					'trusteeBillingAddress'   => ''.$r->getAddressForBill()->toString(),
+					'trusteeBillingLabel'   => ''.$r->getBillLabel(),
+					'trusteeBillingAddress'   => ''.$r->getBillAddress()->toString(),
 					'trusteeAddress'=> ''.$r->getAddress(),
 					'accountNumber' => $r->getAccountNumber(),
 			);
@@ -87,8 +99,10 @@ class TrusteeRepository extends SearchRepository
 	
 	public function getArray($query, $limit = 8)
 	{
-	    $qb = $this->createQueryBuilder('c')
-	    ->where('c.name LIKE :query')
+	    $qb = $this->createQueryBuilder('a')
+	    ->select('a,b')
+	    ->leftJoin('a.contact','b')
+	    ->where('b.name LIKE :query')
 	    ->setParameter('query', '%'.$query.'%')
 	    ;
 	    $res = $qb->getQuery()->getArrayResult();
@@ -98,8 +112,10 @@ class TrusteeRepository extends SearchRepository
 	
 	public function getByIdToArray($id)
 	{
-	    $qb = $this->createQueryBuilder('c')
-	    ->where('c.id = :id')
+	    $qb = $this->createQueryBuilder('a')
+	    ->select('a,b')
+	    ->leftJoin('a.contact','b')
+	    ->where('a.id = :id')
 	    ->setParameter('id', $id)
 	    ;
 	    $res = $qb->getQuery()->getArrayResult();

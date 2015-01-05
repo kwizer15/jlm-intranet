@@ -159,26 +159,34 @@ class DefaultController extends Controller
 	   	foreach ($results as $result)
 	   	{
 	   		$d = new \DateTime($result['date']);
-	   		if ($result['accession'] == 1)
+	   		$fd = $d->format('U')*1000;
+	   		$stats[$fd] = array(
+	   				'accession'=>array(
+	   						'complete'=>0,
+	   						'normal'=>0
+	   						
+	   				),'social'=>array('complete'=>0,'normal'=>0));
+	   		
+	   		if ($result['accession'])
 	   		{
-	   			if ($result['complete'] == 1)
+	   			if ($result['complete'])
 	   			{
-	   				$stats[$d->format('U')*1000]['accession']['complete'] = $result['number'];
+	   				$stats[$fd]['accession']['complete'] = $result['number'];
 	   			}
 	   			else
 	   			{ 
-	   				$stats[$d->format('U')*1000]['accession']['normal'] = $result['number'];
+	   				$stats[$fd]['accession']['normal'] = $result['number'];
 	   			}
 	   		}
 	   		else
 	   		{
-	   			if ($result['complete'] == 1)
+	   			if ($result['complete'])
 	   			{
-	   				$stats[$d->format('U')*1000]['social']['complete'] = $result['number'];
+	   				$stats[$fd]['social']['complete'] = $result['number'];
 	   			}
 	   			else
 	   			{ 
-	   				$stats[$d->format('U')*1000]['social']['normal'] = $result['number'];
+	   				$stats[$fd]['social']['normal'] = $result['number'];
 	   			}
 	   		}
 	   	}

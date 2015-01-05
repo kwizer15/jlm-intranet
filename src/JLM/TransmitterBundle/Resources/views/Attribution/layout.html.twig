@@ -2,12 +2,10 @@
 {% block sidebar %}
 <ul class="nav nav-list  affix">
 	<li><h4>Attributions d'émetteurs</h4></li>
-	<form  action="{{ path('transmitter_search') }}" method="post" class="form-search">
-			{{ form_widget(layout.form_search) }}
-		</form>
+	<li>{{ form(search.form, { 'action': path('transmitter_search') }) }}
 	<li><a href="{{ path('transmitter_ask_new') }}"><i class="icon-plus-sign"></i> Nouvelle commandes d'émetteurs</a></li>
 	<li class="divider"></li>
 	<li class="nav-header">États</li>
-	{{ render(controller('JLMTransmitterBundle:Attribution:sidebar')) }}
+	{% include 'JLMTransmitterBundle:Attribution:sidebar.html.twig' %}
 </ul>
 {% endblock sidebar %}

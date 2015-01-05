@@ -143,7 +143,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
      */
     public function setRole($role)
     {
-        $this->getPerson()->setRole($role);
+        $this->role = $role;
     
         return $this;
     }
@@ -156,7 +156,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
      */
     public function getRole()
     {
-        return $this->getPerson()->getRole();
+        return $this->role;
     }
     
     /**

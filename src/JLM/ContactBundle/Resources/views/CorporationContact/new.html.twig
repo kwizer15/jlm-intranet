@@ -1,0 +1,8 @@
+{% extends "JLMContactBundle::layout.html.twig" %}
+
+{% block content %}
+{{ form(form, {'attr': {'class': 'form-horizontal'}}) }}
+{% if delete_form is defined %}
+{{ form(delete_form, {'attr': {'class': 'form-horizontal'}}) }}
+{% endif %}
+{% endblock %}

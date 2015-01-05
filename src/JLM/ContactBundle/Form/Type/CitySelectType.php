@@ -11,52 +11,26 @@
 
 namespace JLM\ContactBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
-use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use JLM\ContactBundle\Form\DataTransformer\CityToIntTransformer;
+use JLM\CoreBundle\Form\Type\AbstractSelectType;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class CitySelectType extends AbstractType
+class CitySelectType extends AbstractSelectType
 {
-    /**
-     * @var ObjectManager
-     */
-    private $om;
-    
-    /**
-     * @param ObjectManager $om
-     */
-    public function __construct(ObjectManager $om)
-    {
-        $this->om = $om;
-    }
-    
-    /**
+	/**
      * {@inheritdoc}
      */
-    public function getParent()
-    {
-    	return 'genemu_jqueryselect2_hidden';
-    }
-    
-    /**
+	protected function getTransformerClass()
+	{
+		return '\JLM\ContactBundle\Form\DataTransformer\CityToIntTransformer';
+	}
+	
+	/**
      * {@inheritdoc}
      */
-    public function getName()
-    {
-        return 'jlm_contact_city_select';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'transformer' => new CityToIntTransformer($this->om),
-        ));
-    }
+	protected function getTypeName()
+	{
+		return 'jlm_contact_city';
+	}
 }

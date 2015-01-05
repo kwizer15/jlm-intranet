@@ -29,12 +29,7 @@ class PersonType extends AbstractType
         	->add('title','choice',array('label'=>'Titre', 'choices'=>array('M.'=>'M.','Mme'=>'Mme','Mlle'=>'Mlle')))
         	->add('lastName',null,array('label'=>'Nom'))
             ->add('firstName',null,array('label'=>'Prénom', 'required'=>false))
-            ->add('role',null,array('label'=>'Rôle', 'required'=>true))
-            ->add('address','jlm_contact_address',array('label'=>'Adresse', 'required'=>false))
-            ->add('fixedPhone',null,array('label'=>'Téléphone fixe', 'required'=>false))
-            ->add('mobilePhone',null,array('label'=>'Téléphone mobile', 'required'=>false))
-            ->add('fax',null,array('label'=>'Fax', 'required'=>false))
-            ->add('email','email',array('label'=>'Adresse e-mail', 'required'=>false))
+            ->add('contact', 'jlm_contact_contact', array('data_class' => 'JLM\ContactBundle\Entity\Person'))
         ;
     }
 
@@ -54,6 +49,7 @@ class PersonType extends AbstractType
         $resolver
         ->setDefaults(array(
             'data_class' => 'JLM\ContactBundle\Entity\Person',
+        	'label' => 'Personne',
         ));
     }
 }

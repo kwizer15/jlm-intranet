@@ -12,7 +12,7 @@
 namespace JLM\DailyBundle\Builder;
 
 use JLM\DailyBundle\Entity\Work;
-use JLM\OfficeBundle\Builder\VariantBillBuilder;
+use JLM\CommerceBundle\Builder\VariantBillBuilder;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -44,7 +44,7 @@ class WorkBillBuilder extends VariantBillBuilder
         parent::buildReference();
         $ref = $this->getBill()->getReference();
         $this->getBill()->setReference($ref.' et notre intervention du '.$this->intervention->getLastDate()->format('d/m/Y'));
-	$this->getBill()->setIntervention($this->intervention);
+		$this->getBill()->setIntervention($this->intervention);
     }
     
     /**

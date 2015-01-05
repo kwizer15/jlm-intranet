@@ -23,9 +23,14 @@
 				var id = "#" + this.$element.attr("id") + "_";
 				$(id + "site").on("autocompleteselect", function(event,ui) {
 					console.log(ui.item);
-					$(id + "trustee").val(ui.item.trusteeName);
+					console.log('ok');
+					$.getJSON('/app_dev.php/model/trustee/trustee.json',{'id':ui.item.trustee},
+						function(data) {
+						console.log(id);
+						  $(id + "trustee").select2("data",{id: data.id, text: data.contact.name});
+						}
+					);
 				})
-					
 			}
 	}
 

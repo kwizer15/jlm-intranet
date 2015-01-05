@@ -11,31 +11,25 @@ jlm_contract_contract_show:
     methods: [GET]
     
 jlm_contract_contract_new:
-    path:   /contract/new/{id}
+    path:   /contract/new
     defaults:  { _controller: "JLMContractBundle:Contract:new" }
     methods: [GET]
  
 jlm_contract_contract_create:
-    path:   /contract/create
-    defaults:  { _controller: "JLMContractBundle:Contract:create" }
+    path:   /contract/new
+    defaults:  { _controller: "JLMContractBundle:Contract:new" }
     methods: [POST]
-    
-jlm_contract_contract_stopupdate:
-    path:   /contract/{id}/stopupdate
-    defaults:  { _controller: "JLMContractBundle:Contract:stopupdate" }
-    methods: [POST]
-    
-jlm_contract_contract_stop:
-    path:   /contract/{id}/stop
-    defaults:  { _controller: "JLMContractBundle:Contract:stop" }
-    methods: [GET]
-    
+
 jlm_contract_contract_edit:
-    path:   /contract/{id}/edit
+    path:   /contract/{id}/{formName}
     defaults:  { _controller: "JLMContractBundle:Contract:edit" }
+    requirements:
+      id: edit|stop
     methods: [GET]
     
 jlm_contract_contract_update:
-    path:   /contract/{id}/update
-    defaults:  { _controller: "JLMContractBundle:Contract:update" }
-    methods: [POST]
+    path:   /contract/{id}/{formName}
+    defaults:  { _controller: "JLMContractBundle:Contract:edit" }
+    requirements:
+      id: edit|stop
+    methods: [PUT]

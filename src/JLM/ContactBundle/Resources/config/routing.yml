@@ -10,21 +10,122 @@ jlm_contact_rest_city_get:
     
 jlm_contact_ajax_person_show:
     path: /person/ajax/{id}/show
-    defaults:  { _controller: "JLMContactBundle:Person:showajax" }
+    defaults:  { _controller: "JLMContactBundle:AjaxPerson:showajax" }
     methods: [GET]
    
 jlm_contact_ajax_person_new:
     path: /person/ajax/new
-    defaults:  { _controller: "JLMContactBundle:Person:newajax" }
+    defaults:  { _controller: "JLMContactBundle:AjaxPerson:newajax" }
     methods: [GET]
     
 jlm_contact_ajax_person_create:
     path: /person/ajax/create
-    defaults:  { _controller: "JLMContactBundle:Person:createajax" }
+    defaults:  { _controller: "JLMContactBundle:AjaxPerson:createajax" }
     methods: [POST]
     
 jlm_contact_ajax_person_autocomplete:
     path: /person/ajax/autocomplete
-    defaults: { _controller: "JLMContactBundle:Person:autocomplete" }
+    defaults: { _controller: "JLMContactBundle:AjaxPerson:autocomplete" }
     methods: [POST]
 
+jlm_contact_contact:
+    path: /
+    defaults: { _controller: "JLMContactBundle:Contact:list" }
+    methods: [GET]
+
+jlm_contact_contact_new:
+    path: /{id}/new
+    defaults: { _controller: "JLMContactBundle:Contact:edit" }
+    requirements:
+      id: person|company|association
+    methods: [GET]
+
+jlm_contact_contact_create:
+    path: /{id}
+    defaults: { _controller: "JLMContactBundle:Contact:edit" }
+    requirements:
+      id: person|company|association
+    methods: [POST]
+
+jlm_contact_contact_edit:
+    path: /{id}/edit
+    defaults: { _controller: "JLMContactBundle:Contact:edit" }
+    requirements:
+      id: \d+
+    methods: [GET]
+
+jlm_contact_contact_update:
+    path: /{id}
+    defaults: { _controller: "JLMContactBundle:Contact:edit" }
+    requirements:
+      id: \d+
+    methods: [PUT]  
+
+jlm_contact_contact_show:
+    path: /{id}
+    defaults: { _controller: "JLMContactBundle:Contact:show" }
+    methods: [GET]
+    
+
+jlm_contact_contact_test:
+    path: /test/
+    defaults: { _controller: "JLMContactBundle:Contact:test" }
+    methods: [GET]
+    
+jlm_contact_rest_person_search:
+    path:   /ajax/persons.json
+    defaults:  { _controller: "JLMContactBundle:AjaxPerson:search" }
+    methods: [GET]
+    
+jlm_contact_rest_person_get:
+    path:   /ajax/person.json
+    defaults:  { _controller: "JLMContactBundle:AjaxPerson:json" }
+    methods: [GET]
+    
+jlm_contact_rest_corporation_search:
+    path:   /ajax/corporations.json
+    defaults:  { _controller: "JLMContactBundle:AjaxCorporation:search" }
+    methods: [GET]
+    
+jlm_contact_rest_corporation_get:
+    path:   /ajax/corporation.json
+    defaults:  { _controller: "JLMContactBundle:AjaxCorporation:json" }
+    methods: [GET]
+    
+jlm_contact_corporationcontact_new:
+    path: /corporationcontact/new
+    defaults: { _controller: "JLMContactBundle:CorporationContact:edit" }
+    methods: [GET]
+    
+jlm_contact_corporationcontact_create:
+    path: /corporationcontact
+    defaults: { _controller: "JLMContactBundle:CorporationContact:edit" }
+    methods: [POST]
+
+jlm_contact_corporationcontact_edit:
+    path: /corporationcontact/{id}/edit
+    defaults: { _controller: "JLMContactBundle:CorporationContact:edit" }
+    requirements:
+      id: \d+
+    methods: [GET]
+    
+jlm_contact_corporationcontact_update:
+    path: /corporationcontact/{id}
+    defaults: { _controller: "JLMContactBundle:CorporationContact:edit" }
+    requirements:
+      id: \d+
+    methods: [PUT]
+    
+jlm_contact_corporationcontact_delete:
+    path: /corporationcontact/{id}
+    defaults: { _controller: "JLMContactBundle:CorporationContact:delete" }
+    requirements:
+      id: \d+
+    methods: [DELETE]
+    
+jlm_contact_corporationcontact_confirmdelete:
+    path: /corporationcontact/{id}/delete
+    defaults: { _controller: "JLMContactBundle:CorporationContact:delete" }
+    requirements:
+      id: \d+
+    methods: [GET]

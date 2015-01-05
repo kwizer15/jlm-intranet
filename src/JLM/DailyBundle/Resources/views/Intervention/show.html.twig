@@ -109,10 +109,10 @@
 						<dd>
 						<address>{{ entity.door.trustee.address|nl2br }}</address>
 						</dd>
-						<dt>Téléphone</dt>
-						<dd>{{ entity.door.trustee.phone }}</dd>
-						<dt>Fax</dt>
-						<dd>{{ entity.door.trustee.fax }}</dd>
+						<dt>Téléphones</dt>
+						{% for phone in entity.door.trustee.phones %}
+						<dd>{{ phone }}</dd>
+						{% endfor %}
 					</dl>
 				</div>
 				<div class="tab-pane" id="others">
@@ -171,7 +171,7 @@
 						{% elseif entity.externalBill %}
 							Facture n°{{ entity.externalBill }} (externe)
 						{% else %}
-							<a href="{{ path('bill_new_intervention',{'id':entity.id}) }}">A facturer</a>
+							<a href="{{ path('bill_new',{'intervention':entity.id}) }}">A facturer</a>
 							<a href="#modalExternalBill" data-toggle="modal" class="btn btn-small">Saisir le numéro</a>
 						{% endif %}
 					{% else %}
@@ -344,7 +344,7 @@
 						<td>{% if shift.end %}{{ shift.time.format('%hh%I') }}{% endif %}</td>
 						<td>{{ shift.comment | nl2br}}</td>
 						<td>
-							<a href="#modalEditTech{{ shift.id }}" data-toggle="modal" role="button" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a>
+							<a href="{{ path('shifting_edit',{'id':shift.id}) }}" role="button" class="btn btn-warning shifting-edit"><i class="icon-pencil icon-white"></i></a>
 							<a href="#modalDeleteTech{{ shift.id }}" data-toggle="modal" role="button" class="btn btn-danger"><i class="icon-white icon-remove"></i></a>
 							<div id="modalDeleteTech{{ shift.id }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTech{{ shift.id }}Label" aria-hidden="true">
 								<div class="modal-header">
@@ -378,7 +378,7 @@
 			{% else %}
 			<p>Aucun</p>
 			{% endif %}
-			<a href="#modalAddTech{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-small btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter un déplacement technicien</a>
+			<a href="{{ path('shifting_new', { 'id': entity.id }) }}" role="button" class="btn btn-small btn-success shifting-new"><i class="icon-plus-sign icon-white"></i> Ajouter un déplacement technicien</a>
 	</div>
 </div>
     	
@@ -392,17 +392,4 @@
 
 {% block modals %}
 {% include 'JLMDailyBundle:Intervention:delete.html.twig' with {'id':entity.id} %}
-{% include 'JLMDailyBundle:Shifting:new.html.twig' with {'id':entity.id, 'form':form_newtech} %}
-{% for key,shift in entity.shiftTechnicians %}
-	{% include 'JLMDailyBundle:Shifting:edit.html.twig' with {'entity':shift, 'form':forms_editTech[key]} %}
-{#}	{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }} {#}
-{% endfor %}
 {% endblock modals %}
-
-{% block javascripts %}
-{{ parent() }}
-{{ form_javascript(form_newtech) }}
-{% for form_editTech in forms_editTech %}
-	{{ form_javascript(form_editTech) }}
-{% endfor %}
-{% endblock %}

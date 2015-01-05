@@ -18,13 +18,7 @@ use JLM\ContactBundle\Model\CorporationInterface;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class CorporationContact extends PersonDecorator implements CorporationContactInterface
-{
-    /**
-     * @var int
-     * @deprecated
-     */
-    protected $id;
-    
+{   
     /**
      * @var CorporationInterface
      */
@@ -35,21 +29,6 @@ class CorporationContact extends PersonDecorator implements CorporationContactIn
      * @var string
      */
     protected $position;
-
-    /**
-     * Manager
-     * @var CorporationContactInterface
-     */
-    protected $manager;
-    
-    /**
-     * @deprecated
-     * @return number
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
     
     /**
      * {@inheritdoc}
@@ -89,33 +68,5 @@ class CorporationContact extends PersonDecorator implements CorporationContactIn
         $this->position = $position;
         
         return $this;
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getManager()
-    {
-        return $this->manager;
-    }
-    
-    /**
-     * Set the manager
-     * @param CorporationContactInterface $manager
-     * @return CorporationContact
-     */
-    public function setManager(CorporationContactInterface $manager = null)
-    {
-        $this->manager = $manager;
-        
-        return $this;
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function hasManager()
-    {
-        return $this->getManager() !== null;
     }
 }

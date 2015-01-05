@@ -2,15 +2,11 @@
 
 {% block sidebar %}
 	<li><h4>Factures</h4></li>
-	<li>
-		<form action="{{ path('bill_search') }}" method="post" class="form-search">
-			{{ form_widget(layout.form_search) }}
-		</form>
-	</li>
+	<li>{{ form(search.form, {'action': path('bill_search')}) }}</li>
     <li><a href="{{ path('bill_new') }}"><i class="icon-plus-sign"></i> Nouvelle facture</a></li>
     <li class="divider"></li>
     <li class="nav-header">Etats</li>
-    {{ render(controller('JLMCommerceBundle:Bill:sidebar')) }}
+    {% include 'JLMCommerceBundle:Bill:sidebar.html.twig' %}
     <li class="divider"></li>
     <li><a href="{{ path('bill_toboost') }}"><i class="icon-list"></i> Liste des relances</a></li>
     <li><a href="{{ path('bill_printlist') }}"><i class="icon-print"></i> Imprimer les factures à faire</a></li>

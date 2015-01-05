@@ -1,4 +1,24 @@
+parameters:
+    jlm_commerce.model.bill.class: JLM\CommerceBundle\Entity\Bill
+    jlm_commerce.manager.bill.class: JLM\CommerceBundle\Manager\BillManager
+    jlm_commerce.model.quote.class: JLM\CommerceBundle\Entity\Quote
+    jlm_commerce.manager.quote.class: JLM\CommerceBundle\Manager\QuoteManager
+
 services:
+    jlm_commerce.bill_manager:
+        class: "%jlm_commerce.manager.bill.class%"
+        arguments: ["%jlm_commerce.model.bill.class%"]
+        calls:
+            - [ setContainer, ["@service_container"]]
+            - [ setServices ]
+    
+    jlm_commerce.quote_manager:
+        class: "%jlm_commerce.manager.quote.class%"
+        arguments: ["%jlm_commerce.model.quote.class%"]
+        calls:
+            - [ setContainer, ["@service_container"]]
+            - [ setServices ]
+            
     jlm_commerce.type.bill:
         class: JLM\CommerceBundle\Form\Type\BillType
         tags:
@@ -29,21 +49,25 @@ services:
         class: JLM\CommerceBundle\EventListener\BillNumberGenerator
         tags:
             - { name: doctrine.event_listener, event: prePersist }
-    
-    jlm_commerce.eventlistener.billcount_listener:
-        class: JLM\CommerceBundle\EventListener\BillCountListener
-        arguments: ["@doctrine.orm.entity_manager"]
-        tags:
-            - { name: kernel.event_listener, event: kernel.view, method: onKernelResponse }
-    
-    jlm_commerce.eventlistener.quotecount_listener:
-        class: JLM\CommerceBundle\EventListener\QuoteCountListener
-        arguments: ["@doctrine.orm.entity_manager"]
-        tags:
-            - { name: kernel.event_listener, event: kernel.view, method: onKernelResponse }
             
-    jlm_commerce.eventlistener.quotelast_listener:
-        class: JLM\CommerceBundle\EventListener\QuoteLastListener
+    jlm_commerce.listener.quotenumbergenerator_listener:
+        class: JLM\CommerceBundle\EventListener\QuoteNumberGenerator
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            
+    jlm_commerce.bill_subscriber:
+        class: JLM\CommerceBundle\EventListener\BillSubscriber
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
-            - { name: kernel.event_listener, event: kernel.view, method: onKernelResponse }   
+            - { name: kernel.event_subscriber }
+    
+    jlm_commerce.twig.billcount_extension:
+        class: JLM\CommerceBundle\Twig\Extension\BillCountExtension
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: twig.extension }
+    jlm_commerce.twig.quotecount_extension:
+        class: JLM\CommerceBundle\Twig\Extension\QuoteCountExtension
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: twig.extension }

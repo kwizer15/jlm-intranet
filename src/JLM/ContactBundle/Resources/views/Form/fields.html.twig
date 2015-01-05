@@ -9,38 +9,109 @@
 
 {% block jlm_contact_person_select_widget %}
   {% spaceless %}
-    {% set type = 'hidden' %}
-    {{ block('form_widget_simple') }}
-    <input type="text" id="{{ id }}_selector" class="autocompletion" data-source="{{ path('jlm_contact_ajax_person_autocomplete') }}">
+    {{ form_widget(form, { 'attr': {'placeholder': 'Personne', 'class': 'input-large'}}) }} <button class="btn" id="{{ id }}_add-person" href="{{ path('jlm_contact_contact_new', {'id': 'person'}) }}">Nouvelle</button>
   {% endspaceless %}
-{% endblock jlm_contact_person_select_widget %}
-
-{% block _jlm_contact_person_title_widget %}
-  {{ form_widget(form, {'attr': {'class': 'input-small'}}) }}
 {% endblock %}
 
-{% block _jlm_contact_person_fixedPhone_widget %}
-  {{ form_widget(form, {'attr': {'class': 'input-medium'}}) }}
+{% block jlm_contact_corporation_select_widget %}
+  {% spaceless %}
+    {{ form_widget(form, { 'attr': {'placeholder': 'Groupement', 'class': 'input-large'}}) }}
+    <div class="btn-group">
+    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Nouvelle <b class="caret"></b></a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+      <li><a id="{{ id }}_add-company" href="{{ path('jlm_contact_contact_new', {'id': 'company'}) }}">Société</a></li>
+      <li><a id="{{ id }}_add-association" href="{{ path('jlm_contact_contact_new', {'id': 'association'}) }}">Association</a></li>
+    </ul>
+    </div>
+    {% endspaceless %}
 {% endblock %}
 
-{% block _jlm_contact_person_mobilePhone_widget %}
-  {{ form_widget(form, {'attr': {'class': 'input-medium'}}) }}
+{% block jlm_contact_contact_select_widget %}
+  {% spaceless %}
+    {{ form_widget(form, { 'attr': {'placeholder': 'Contact', 'class': 'input-large'}}) }}
+    <div class="btn-group">
+    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Nouvelle <b class="caret"></b></a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+      <li><a id="{{ id }}_add-person" href="{{ path('jlm_contact_contact_new', {'id': 'person'}) }}">Personne</a></li>
+      <li><a id="{{ id }}_add-company" href="{{ path('jlm_contact_contact_new', {'id': 'company'}) }}">Société</a></li>
+      <li><a id="{{ id }}_add-association" href="{{ path('jlm_contact_contact_new', {'id': 'association'}) }}">Association</a></li>
+    </ul>
+    </div>
+    {% endspaceless %}
 {% endblock %}
 
-{% block _jlm_contact_person_fax_widget %}
-  {{ form_widget(form, {'attr': {'class': 'input-medium'}}) }}
+{% block jlm_contact_corporation_contact_widget %}
+  {{ form_row(form.person) }}
+  {{ form_row(form.corporation) }}
+  {{ form_row(form.position) }}
+{% endblock %}
+
+{% block jlm_contact_person_widget %}
+<div class="control-group">{{ form_label(form.lastName) }}
+<div class="controls">
+{{ form_widget(form.title, {'attr': {'class': 'input-small'}}) }}
+{{ form_widget(form.firstName, {'attr': {'class': 'input-medium', 'placeholder': 'Prénom'}}) }}
+{{ form_widget(form.lastName, {'attr': {'class': 'input-medium', 'placeholder': 'Nom'}}) }}
+</div>
+</div>
+{{ form_row(form.contact) }} 
+{% endblock jlm_contact_person_widget %}
+
+{% block jlm_contact_company_widget %}
+{{ form_row(form.name) }} 
+{{ form_row(form.contact) }} 
+{% endblock %}
+
+{% block jlm_contact_association_widget %}
+{{ form_row(form.name) }} 
+{{ form_row(form.contact) }} 
 {% endblock %}
 
 {% block _jlm_contact_person_email_widget %}
   {{ form_widget(form, {'attr': {'class': 'input-xlarge'}}) }}
 {% endblock %}
 
-{% block _jlm_contact_company_phone_widget %}
-  {{ form_widget(form, {'attr': {'class': 'input-medium'}}) }}
+{% block jlm_contact_contactphone_row %}
+  <li id="{{ id }}">{{ form_widget(form.label, {'attr': {'class': 'input-medium', 'placeholder': form.label.vars.label }}) }}&nbsp;
+  {{ form_widget(form.phone, {'attr': {'class': 'input-medium', 'placeholder': form.phone.vars.label }}) }}&nbsp;
+  <button class="btn btn-danger btn-small remove-phone"><i class="icon-minus-sign icon-white"></i></button>
+  {{ form_errors(form) }}
+  </li>
 {% endblock %}
 
-{% block _jlm_contact_company_fax_widget %}
-  {{ form_widget(form, {'attr': {'class': 'input-medium'}}) }}
+{% block jlm_contact_phone_widget %}
+  {{ form_widget(form.number, {'attr': {'class': 'input-medium', 'placeholder': form.number.vars.label }}) }}&nbsp;
+{% endblock %}
+
+{% block jlm_contact_contactphonecollection_widget %}
+{% spaceless %}
+    {% if prototype is defined %}
+        {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+    {% endif %}
+    {%- set attr = attr|merge({'class': (attr.class|default('') ~ ' unstyled phone-list')|trim }) -%}
+    <ul {{ block('widget_container_attributes') }}>
+		{{ block('jlm_contact_contactphonecollection_rows') }}
+    </ul>
+	{{ form_rest(form) }}
+    <button id="add-another-phone" class="btn">Ajouter un numéro</button>
+{% endspaceless %}
+{% endblock %}
+
+{% block jlm_contact_contact_row %}{{ form_widget(form) }}{% endblock %}
+{% block jlm_contact_contact_widget %}
+    {% if form.parent is empty %}
+      	{% if form_errors(form) %}
+            <div class="alert">{{ form_errors(form) }}</div>
+        {% endif %}
+    {% endif %}
+    {{ block('form_rows') }}
+    {{ form_rest(form) }}
+{% endblock %}
+
+{% block jlm_contact_contactphonecollection_rows %}
+    {% for child in form -%}
+        {{ form_row(child) }}
+    {%- endfor %}
 {% endblock %}
 
 {% block _jlm_contact_company_email_widget %}

@@ -36,7 +36,7 @@ class SiteControllerTest extends WebTestCase
     {
         $this->client->followRedirects();
         
-        $crawler = $this->client->request('GET', '/model/site/new/1');
+        $crawler = $this->client->request('GET', '/model/site/new?trustee=1');
         // Page d'identification (a supprimer plus tard)
         $crawler = $this->login($crawler);
         $this->assertTrue($this->client->getResponse()->isSuccessful());

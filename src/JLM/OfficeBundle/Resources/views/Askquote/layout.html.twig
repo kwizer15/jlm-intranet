@@ -1,15 +1,11 @@
 {% extends "JLMOfficeBundle::layout.html.twig" %} 
 {% block sidebar %}
 	<li><h4>Demandes de devis</h4></li>
-	<li>
-		<form  action="{{ path('askquote_search') }}" method="post" class="form-search">
-			{{ form_widget(layout.form_search) }}
-		</form>
-	</li>
+	<li>{{ form(search.form, {'action': path('askquote_search')}) }}</li>
 	<li><a href="{{ path('askquote_new') }}"><i class="icon-plus-sign"></i> Nouvelle demande de devis</a></li>
 	<li class="divider"></li>
 	<li class="nav-header">États</li>
-	{{ render(controller('JLMOfficeBundle:Askquote:sidebar')) }}
+    {% include 'JLMOfficeBundle:Askquote:sidebar.html.twig' %} 
 	<li class="divider"></li>
 	<li><a href="{{ path('askquote_printlist') }}"><i class="icon-print"></i> Imprimer les devis à faire</a>
 {% endblock sidebar %}

@@ -4,7 +4,7 @@ namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use JLM\ContactBundle\Entity\Person as BasePerson;
+use JLM\ContactBundle\Entity\PersonDecorator as BasePerson;
 
 /**
  * JLM\ModelBundle\Entity\Technician
