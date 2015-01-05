@@ -28,17 +28,15 @@ class DefaultController extends Controller
     	if (is_array($formData) && array_key_exists('query', $formData))
     	{
     		$em = $this->getDoctrine()->getManager();
-    		$entity = new Search();
     		$query = $formData['query'];
-    		$entity->setQuery($query);
     		return array(
     				'query' => $query,
-    				'doors'   => $em->getRepository('JLMModelBundle:Door')->search($entity),
-    				'sites'   => $em->getRepository('JLMModelBundle:Site')->search($entity),
-    				'trustees'=> $em->getRepository('JLMModelBundle:Trustee')->search($entity),
-    				'suppliers'=> $em->getRepository('JLMProductBundle:Supplier')->search($entity),
-    				'products' => $em->getRepository('JLMProductBundle:Product')->search($entity),
-    				'persons' => $em->getRepository('JLMContactBundle:Person')->search($entity),
+    				'doors'   => $em->getRepository('JLMModelBundle:Door')->search($query),
+    				'sites'   => $em->getRepository('JLMModelBundle:Site')->search($query),
+    				'trustees'=> $em->getRepository('JLMModelBundle:Trustee')->search($query),
+    				'suppliers'=> $em->getRepository('JLMProductBundle:Supplier')->search($query),
+    				'products' => $em->getRepository('JLMProductBundle:Product')->search($query),
+    				'persons' => $em->getRepository('JLMContactBundle:Person')->search($query),
     		);
     	}
     	return array();

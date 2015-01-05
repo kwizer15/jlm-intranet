@@ -1,11 +1,11 @@
-{% extends "::layout.html.twig" %}
-
+{% extends "JLMModelBundle::layout.html.twig" %}
+{#}
     {% block sidebar %}
     	<li>
     		<form  action="{{ path('model_search') }}" method="post" class="form-search">
-{#}				{{ form_widget(layout.form_search) }} {#}
+				{{ form_widget(layout.form_search) }} 
     		</form>
 	    </li>
 		{% include 'JLMContactBundle::sidebar.html.twig' %}
     {% endblock %}
-    
+{#}
