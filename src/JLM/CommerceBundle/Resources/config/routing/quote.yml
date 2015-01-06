@@ -34,7 +34,7 @@ quote_update:
     defaults: { _controller: "JLMCommerceBundle:Quote:edit" }
     requirements:
         id: \d+
-    methods: [PUT]
+    methods: [PUT,POST]
     
 quote_search:
     path: /search

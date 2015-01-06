@@ -59,7 +59,7 @@ jlm_contact_contact_update:
     defaults: { _controller: "JLMContactBundle:Contact:edit" }
     requirements:
       id: \d+
-    methods: [PUT]  
+    methods: [PUT,POST]  
 
 jlm_contact_contact_show:
     path: /{id}
@@ -114,7 +114,7 @@ jlm_contact_corporationcontact_update:
     defaults: { _controller: "JLMContactBundle:CorporationContact:edit" }
     requirements:
       id: \d+
-    methods: [PUT]
+    methods: [PUT,POST]
     
 jlm_contact_corporationcontact_delete:
     path: /corporationcontact/{id}

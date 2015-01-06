@@ -32,7 +32,7 @@ bill_update:
     defaults:  { _controller: "JLMCommerceBundle:Bill:edit" }
     requirements:
         id: \d+
-    methods: [PUT]
+    methods: [PUT,POST]
     
 bill_print:
     path:   /{id}/print
