@@ -12,6 +12,7 @@ use JLM\CondominiumBundle\Model\PropertyInterface;
 use JLM\CondominiumBundle\Model\AdministratorInterface;
 use JLM\ProductBundle\Model\ProductInterface;
 use JLM\ContractBundle\Model\ContractInterface;
+use JLM\ContactBundle\Entity\Address;
 
 /**
  * JLM\ModelBundle\Entity\Door
@@ -369,6 +370,7 @@ class Door implements BayInterface, InstallationInterface
     	}
     	list($url,$params) = $tab;
     	$parms = explode('&',$params);
+    	$arg = array();
     	foreach ($parms as $p)
     	{
     		list($key,$value) = explode('=',$p);
@@ -886,7 +888,6 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getNextMaintenance()
     {
-    	$last = null;
     	foreach($this->interventions as $interv)
     	{
     		if ($interv instanceof \JLM\DailyBundle\Entity\Maintenance)
@@ -921,7 +922,6 @@ class Door implements BayInterface, InstallationInterface
     			if ($interv->getClosed())
     			{
     				$shifts = $interv->getShiftTechnicians();
-    				$date = null;
     				$flag = false;
     				foreach ($shifts as $shift)
     				{
