@@ -59,28 +59,32 @@ class AskQuoteRepository extends SearchRepository
 	
 	public function getCountUntreated()
 	{
-		if (!isset($this->untreated))
-		{
-			$qb = $this->createQueryBuilder('a')
-				->select('COUNT(a)')
-				->leftJoin('a.quotes','b')
-				->where('b is null')
-				->andWhere('a.dontTreat is null')
-			;
-			$this->untreated = $qb->getQuery()->getSingleScalarResult();
-		}
-		return $this->untreated;
+		$qb = $this->createQueryBuilder('a')
+			->select('COUNT(a)')
+			->leftJoin('a.quotes','b')
+			->where('b is null')
+			->andWhere('a.dontTreat is null')
+		;
+
+		return $qb->getQuery()->getSingleScalarResult();
 	}
 	
 	public function getCountTreated()
 	{
-		return $this->getTotal() - $this->getCountUntreated();
+		$qb = $this->createQueryBuilder('a')
+			->select('COUNT(a)')
+			->leftJoin('a.quotes','b')
+			->where('b is not null')
+			->orWhere('a.dontTreat is not null')
+		;
+
+		return $qb->getQuery()->getSingleScalarResult();
 	}
 	
 	public function getUntreated($limit = 10, $offset = 0)
 	{
 		$qb = $this->createQueryBuilder('a')
-			->select('a')
+			->select('a,b,c,d')
 			->leftJoin('a.quotes','b')
 			->leftJoin('a.intervention','c')
 			->leftJoin('c.door','d')
