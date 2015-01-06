@@ -12,6 +12,7 @@
 namespace JLM\CommerceBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use JLM\CommerceBundle\Model\QuoteInterface;
 
 /**
  * QuoteRepository
