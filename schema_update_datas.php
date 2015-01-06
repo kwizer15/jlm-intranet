@@ -1,5 +1,5 @@
 <?php
-$db = new mysqli('localhost','root','sslover','jlm');
+$db = new mysqli('localhost','root','Hary_99','jlm');
 
 
 $personQuery = "SELECT * FROM persons";
