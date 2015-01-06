@@ -48,7 +48,7 @@ class ContactManager extends Manager
 				);
 			case 'edit' :
 				return array(
-					'method' => 'PUT',
+					'method' => 'POST',
 					'route' => 'jlm_contact_contact_update',
 					'params' => array('id' => $options['entity']->getId()),
 					'label' => 'Modifier',

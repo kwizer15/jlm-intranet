@@ -37,7 +37,7 @@ class BillManager extends Manager
 				);
 			case 'edit' :
 				return array(
-					'method' => 'PUT',
+					'method' => 'POST',
 					'route' => 'bill_update',
 					'params' => array('id' => $options['entity']->getId()),
 					'label' => 'Modifier',

@@ -121,7 +121,7 @@ jlm_contact_corporationcontact_delete:
     defaults: { _controller: "JLMContactBundle:CorporationContact:delete" }
     requirements:
       id: \d+
-    methods: [DELETE]
+    methods: [DELETE,POST]
     
 jlm_contact_corporationcontact_confirmdelete:
     path: /corporationcontact/{id}/delete

@@ -37,7 +37,7 @@ class CorporationContactManager extends Manager
 				);
 			case 'edit':
 				return array(
-					'method' => 'PUT',
+					'method' => 'POST',
 					'route' => 'jlm_contact_corporationcontact_update',
 					'params' => array('id' => $options['entity']->getId()),
 					'label' => 'Modifier',

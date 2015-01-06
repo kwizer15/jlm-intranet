@@ -37,7 +37,7 @@ class QuoteManager extends Manager
 				);
 			case 'edit' :
 				return array(
-					'method' => 'PUT',
+					'method' => 'POST',
 					'route' => 'quote_update',
 					'params' => array('id' => $options['entity']->getId()),
 					'label' => 'Modifier',
