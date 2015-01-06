@@ -9,3 +9,17 @@
 {% block _jlm_contract_contract_fee_widget %}
     {{ form_widget(form, {'attr': {'class': 'input-small'}}) }}
 {% endblock %}
+
+{% block jlm_contract_contractstop_widget %}
+  {{ form_row(form.end) }}
+{% endblock %}
+
+{% block jlm_contract_contract_widget %}
+  {{ form_row(form.trustee) }}
+  {{ form_row(form.number) }}
+  {{ form_row(form.complete) }}
+  {{ form_row(form.option) }}
+  {{ form_row(form.begin) }}
+  {{ form_row(form.endWarranty) }}
+  {{ form_row(form.fee) }}
+{% endblock %}

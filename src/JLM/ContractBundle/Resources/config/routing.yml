@@ -24,12 +24,12 @@ jlm_contract_contract_edit:
     path:   /contract/{id}/{formName}
     defaults:  { _controller: "JLMContractBundle:Contract:edit" }
     requirements:
-      id: edit|stop
+      formName: edit|stop
     methods: [GET]
     
 jlm_contract_contract_update:
     path:   /contract/{id}/{formName}
     defaults:  { _controller: "JLMContractBundle:Contract:edit" }
     requirements:
-      id: edit|stop
-    methods: [PUT]
+      formName: edit|stop
+    methods: [PUT,POST]

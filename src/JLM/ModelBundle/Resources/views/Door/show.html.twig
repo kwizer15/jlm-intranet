@@ -52,8 +52,8 @@
 
 {% block modals%}
 {% for key,contract in contracts %}
-	{% include 'JLMContractBundle:Contract:edit.html.twig' with {'entity':contract,'edit_form':form_contractEdits[key] } %}
-	{% include 'JLMContractBundle:Contract:stop.html.twig' with {'entity':contract,'form':form_contractStops[key] } %}
+	{# include 'JLMContractBundle:Contract:edit.html.twig' with {'entity':contract,'edit_form':form_contractEdits[key] } #}
+	{# include 'JLMContractBundle:Contract:stop.html.twig' with {'entity':contract,'form':form_contractStops[key] } #}
 {% endfor %}
 {% endblock modals%}
 
@@ -63,12 +63,13 @@
 {% for form in form_contractEdits %}
 {{ form_javascript(form) }}
 {% endfor %}
-{% for form in form_contractStops %}
+{# for form in form_contractStops %}
 {{ form_javascript(form) }}
-{% endfor %}
+{% endfor #}
 {% endblock %}
 
 {% block javascripts_script %}
 {{ parent() }}
 $("#contract-new").formModal();
+$(".contract-edit").formModal();
 {% endblock %}

@@ -29,17 +29,16 @@
 			<td>{% if contract.endWarranty %}{{ contract.endWarranty|date('d/m/Y') }}{% endif %}</td>
 			<td>
 				{% if contract.end %}
-				<a href="#modalStop{{ contract.id }}" data-toggle="modal">{{ contract.end|date('d/m/Y') }}</a>
+				<a href="{{ path('jlm_contract_contract_edit',{'id' : contract.id, 'formName':'stop' }) }}" class="contract-edit">{{ contract.end|date('d/m/Y') }}</a>
 				{% else %}
-				{# <a href="{{ path('jlm_contract_contract_stop',{'id' : contract.id }) }}" class="btn btn-danger">Arrêter</a> #}
-				<a href="#modalStop{{ contract.id }}" class="btn btn-danger" role="button" data-toggle="modal">Arrêter</a>
-				{% endif %}
+				<a href="{{ path('jlm_contract_contract_edit',{'id' : contract.id, 'formName':'stop' }) }}" class="btn btn-danger contract-edit">Arrêter</a>
+				{% endif %}</a>
 				
 			</td>
 			<td>{{ contract.fee|number_format(2,',',' ') }} €</td>
-			{#<td><a href="{{ path('jlm_contract_contract_edit',{'id':contract.id}) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a> #}
+			<td><a href="{{ path('jlm_contract_contract_edit',{'id':contract.id, 'formName':'edit'}) }}" class="btn btn-warning contract-edit"><i class="icon-pencil icon-white"></i></a>
 			{# <td><a href="#modalContractEdit" class="btn btn-warning" role="button" data-toggle="modal">Editer</a> #}
-			<td><a href="#modalEdit{{ contract.id }}" class="btn btn-warning" role="button" data-toggle="modal">Editer</a>
+			{#}<td><a href="#modalEdit{{ contract.id }}" class="btn btn-warning" role="button" data-toggle="modal">Editer</a>{#}
 			
 			</td>
 		</tr>

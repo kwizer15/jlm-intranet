@@ -38,9 +38,9 @@ class ContractManager extends Manager
 				);
 			case 'edit':
 				return array(
-					'method' => 'PUT',
+					'method' => 'POST',
 					'route' => 'jlm_contract_contract_update',
-					'params' => array('id' => $options['entity']->getId()),
+					'params' => array('id' => $options['entity']->getId(), 'formName'=>'edit'),
 					'label' => 'Modifier',
 					'type'  => new ContractType(),
 					'entity' => $options['entity'],
@@ -58,7 +58,7 @@ class ContractManager extends Manager
 				return array(
 						'method' => 'PUT',
 						'route' => 'jlm_contract_contract_update',
-						'params' => array('id' => $options['entity']->getId()),
+						'params' => array('id' => $options['entity']->getId(), 'formName'=>'stop'),
 						'label' => 'Arrêter',
 						'type'  => new ContractStopType(),
 						'entity' => $options['entity'],
@@ -73,16 +73,19 @@ class ContractManager extends Manager
 	 */
 	public function populateForm($form)
 	{
-		$door = $this->setterFromRequest('door', 'JLMModelBundle:Door');
-		if ($door)
+		if ($form instanceof ContractType)
 		{
-			$form->get('door')->setData($door);
-			$form->get('trustee')->setData($door->getSite()->getTrustee());
-		}
-		$begin = $form->get('begin');
-		if (!$begin->getData())
-		{
-			$begin->setData(new \DateTime);
+			$door = $this->setterFromRequest('door', 'JLMModelBundle:Door');
+			if ($door)
+			{
+				$form->get('door')->setData($door);
+				$form->get('trustee')->setData($door->getSite()->getTrustee());
+			}
+			$begin = $form->get('begin');
+			if (!$begin->getData())
+			{
+				$begin->setData(new \DateTime);
+			}
 		}
 		
 		return $form;
