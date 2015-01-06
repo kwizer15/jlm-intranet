@@ -13,6 +13,8 @@ use JLM\CondominiumBundle\Model\AdministratorInterface;
 use JLM\ProductBundle\Model\ProductInterface;
 use JLM\ContractBundle\Model\ContractInterface;
 use JLM\ContactBundle\Entity\Address;
+use JLM\DailyBundle\Entity\Intervention;
+use JLM\DailyBundle\Entity\Work;
 
 /**
  * JLM\ModelBundle\Entity\Door
@@ -340,6 +342,7 @@ class Door implements BayInterface, InstallationInterface
     {
     	list($url,$params) = explode('?',$this->googlemaps);
     	$parms = explode('&',$params);
+    	$arg = array();
     	foreach ($parms as $p)
     	{
     		list($key,$value) = explode('=',$p);
@@ -347,12 +350,14 @@ class Door implements BayInterface, InstallationInterface
     	}
 
     	$url .= '?hl=fr&z=17&layer=c&output=svembed';
-    	if (isset($arg['ll']))
-    		$url .= '&ll='.$arg['ll'];
-    	if (isset($arg['cbll']))
-    		$url .= '&cbll='.$arg['cbll'];
-    	if (isset($arg['cbp']))
-    		$url .= '&cbp='.$arg['cbp'];
+    	foreach (array('ll','cbll','cbp') as $key)
+    	{
+	    	if (isset($arg[$key]))
+	    	{
+	    		$url .= '&'.$key.'='.$arg[$key];
+	    	}
+    	}
+    	
     	return $url;
     }
     
@@ -407,7 +412,7 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getSite()
     {
-        return $this->site;
+        return $this->getAdministrator();
     }
 
     /**
@@ -416,9 +421,9 @@ class Door implements BayInterface, InstallationInterface
      * @param PropertyInterface $site
      * @return self
      */
-    public function setAdministrator(AdministratorInterface $property = null)
+    public function setAdministrator(AdministratorInterface $administrator = null)
     {
-        $this->site = $property;
+        $this->site = $administrator;
     
         return $this;
     }
@@ -437,7 +442,7 @@ class Door implements BayInterface, InstallationInterface
      * @param JLM\ModelBundle\Entity\DoorType $type
      * @return Door
      */
-    public function setType(\JLM\ModelBundle\Entity\DoorType $type = null)
+    public function setType(DoorType $type = null)
     {
         $this->type = $type;
     
@@ -532,7 +537,7 @@ class Door implements BayInterface, InstallationInterface
      * @param JLM\DailyBundle\Entity\Intervention $interventions
      * @return Door
      */
-    public function addIntervention(\JLM\DailyBundle\Entity\Intervention $intervention)
+    public function addIntervention(Intervention $intervention)
     {
     	$this->interventions[] = $intervention;
     
@@ -544,7 +549,7 @@ class Door implements BayInterface, InstallationInterface
      *
      * @param JLM\DailyBundle\Entity\Intervention $interventions
      */
-    public function removeIntervention(\JLM\DailyBundle\Entity\Intervention $intervention)
+    public function removeIntervention(Intervention $intervention)
     {
     	$this->interventions->removeElement($intervention);
     }
@@ -789,7 +794,7 @@ class Door implements BayInterface, InstallationInterface
     {
     	foreach($this->interventions as $interv)
     	{
-    		if ($interv instanceof \JLM\DailyBundle\Entity\Work)
+    		if ($interv instanceof Work)
     		{
     			if (!$interv->getClosed())
     			{
