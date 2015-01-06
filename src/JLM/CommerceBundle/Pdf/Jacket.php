@@ -12,6 +12,7 @@
 namespace JLM\CommerceBundle\Pdf;
 
 use JLM\DefaultBundle\Pdf\FPDFext;
+use JLM\CommerceBundle\Model\QuoteInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
