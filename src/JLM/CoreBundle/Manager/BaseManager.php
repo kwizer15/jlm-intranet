@@ -144,7 +144,7 @@ class BaseManager extends ContainerAware implements ManagerInterface
 		return new RedirectResponse($this->request->headers->get('referer'));
 	}
 	
-	public function redirect($route, $params, $status = 302)
+	public function redirect($route, $params = array(), $status = 302)
 	{
 		$url = $this->getRouter()->generate($route, $params);
 		return new RedirectResponse($url, $status);
