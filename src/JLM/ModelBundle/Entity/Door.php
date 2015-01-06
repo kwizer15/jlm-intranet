@@ -257,7 +257,7 @@ class Door implements BayInterface, InstallationInterface
     {
         $address = new Address();
         $address->setStreet($this->getStreet());
-        $address->setCity($this->getProperty()->getAddress()->getCity());
+        $address->setCity($this->getAdministrator()->getAddress()->getCity());
         
         return $address;
     }
