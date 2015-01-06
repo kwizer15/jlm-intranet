@@ -13,6 +13,7 @@ use JLM\DailyBundle\Entity\Equipment;
 use JLM\DailyBundle\Form\Type\EquipmentType;
 use JLM\DailyBundle\Form\Type\RecuperationEquipmentType;
 use JLM\DailyBundle\Form\Type\RecuperationEquipmentEditType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 /**
@@ -57,13 +58,18 @@ class EquipmentController extends Controller
 		$entity  = new ShiftTechnician();
 		$entity->setCreation(new \DateTime);
 		$form = $this->createForm(new RecuperationEquipmentType(), $entity);
-		$form->bind($request);
+		$form->handleRequest($request);
 		if ($form->isValid())
 		{
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity->getShifting()->setCreation(new \DateTime));
 			$em->persist($entity);
 			$em->flush();
+			if ($this->getRequest()->isXmlHttpRequest())
+			{
+				return new JsonResponse(array());
+			}
+			
 			return $this->redirect($request->headers->get('referer'));
 		}
 		return array(
