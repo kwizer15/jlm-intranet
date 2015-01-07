@@ -21,9 +21,9 @@ class ContactRepository extends EntityRepository
 	private function getQueryBuilder()
 	{
 		return $this->createQueryBuilder('a')
-			->select('a,b,c')
-			->leftJoin('a.phones','b')
-			->leftJoin('b.phone','c')
+			->select('a')
+			//->leftJoin('a.phones','b')
+			//->leftJoin('b.phone','c')
 		;
 	}
 	
@@ -33,7 +33,7 @@ class ContactRepository extends EntityRepository
 	 * @param int $limit
 	 * @return array
 	 */
-	public function getArray($query, $limit = 8)
+	public function getArray($query, $limit = 10)
 	{
 		$qb = $this->getQueryBuilder()
 			->where('a.name LIKE :query')
@@ -45,12 +45,23 @@ class ContactRepository extends EntityRepository
 		return $res;
 	}
 	
-	public function getAll($limit = 8, $offset = 0)
+	public function getAll($limit = 10, $offset = 0)
 	{
-		$qb = $this->getQueryBuilder();
+		$qb = $this->getQueryBuilder()
+			->orderBy('a.name')
+			->setFirstResult($offset)
+			->setMaxResults($limit);
 		$res = $qb->getQuery()->getResult();
 		
 		return $res;
+	}
+	
+	public function getCountAll()
+	{
+		$qb = $this->createQueryBuilder('a')
+			->select('COUNT(a)');
+		
+		return $qb->getQuery()->getSingleScalarResult();
 	}
 
 	/**

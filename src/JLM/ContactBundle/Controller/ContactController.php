@@ -57,9 +57,9 @@ class ContactController extends ContainerAware
 		$request = $manager->getRequest();
 		$ajax = $manager->getRequest()->isXmlHttpRequest();
 		$repo = $manager->getRepository();
-		
+
 		return $ajax ? $manager->renderJson(array('contacts' => $repo->getArray($request->get('q',''), $request->get('page_limit',10))))
-		                  : $manager->renderResponse('JLMContactBundle:Contact:list.html.twig', array('entities'=>$repo->getAll()));
+		                  : $manager->renderResponse('JLMContactBundle:Contact:list.html.twig', $manager->pagination('getCountAll', 'getAll', 'jlm_contact_contact', array()));
 	}
     
     public function showAction($id)
