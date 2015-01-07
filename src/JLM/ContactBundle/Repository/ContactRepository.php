@@ -35,14 +35,21 @@ class ContactRepository extends EntityRepository
 	 */
 	public function getArray($query, $limit = 10)
 	{
-		$qb = $this->getQueryBuilder()
+		return $this->getByQuery($query)->getQuery()->getArrayResult();
+	}
+	
+	public function search($query)
+	{
+		return $this->getByQuery($query)->getQuery()->getResult();
+	}
+	
+	public function getByQuery($query)
+	{
+		return $this->getQueryBuilder()
 			->where('a.name LIKE :query')
 			->orderBy('a.name','ASC')
 			->setParameter('query', '%'.$query.'%')
 		;
-		$res = $qb->getQuery()->getArrayResult();
-	
-		return $res;
 	}
 	
 	public function getAll($limit = 10, $offset = 0)

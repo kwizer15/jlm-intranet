@@ -31,12 +31,12 @@ class DefaultController extends Controller
     		$query = $formData['query'];
     		return array(
     				'query' => $query,
+    				'contacts' => $em->getRepository('JLMContactBundle:Contact')->search($query),
     				'doors'   => $em->getRepository('JLMModelBundle:Door')->search($query),
     				'sites'   => $em->getRepository('JLMModelBundle:Site')->search($query),
     				'trustees'=> $em->getRepository('JLMModelBundle:Trustee')->search($query),
     				'suppliers'=> $em->getRepository('JLMProductBundle:Supplier')->search($query),
     				'products' => $em->getRepository('JLMProductBundle:Product')->search($query),
-    				'persons' => $em->getRepository('JLMContactBundle:Person')->search($query),
     		);
     	}
     	return array();
