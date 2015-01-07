@@ -2,11 +2,7 @@
 
 {% block sidebar %}
 	<li><h4>Fiches travaux</h4></li>
-	<li>
-		<form  action="{{ path('order_search') }}" method="post" class="form-search">
-			{{ form_widget(layout.form_search) }}
-		</form>
-	</li>
+	<li>{{ form(search.form, {'action': path('order_search')}) }}</li>
 	<li class="divider"></li>
 	<li class="nav-header">Etats</li>
     {% include 'JLMOfficeBundle:Order:sidebar.html.twig' %} 
