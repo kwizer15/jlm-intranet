@@ -123,7 +123,7 @@ class EquipmentController extends Controller
 		$em = $this->getDoctrine()->getManager();
 	
 		$editForm = $this->createForm(new EquipmentType(), $entity);
-		$editForm->bind($request);
+		$editForm->handleRequest($request);
 	
 		if ($editForm->isValid())
 		{
