@@ -24,7 +24,7 @@
       {% block modals %}
       {% endblock modals %}
       </div>
-    <div class="navbar navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
 	        <div class="container">
 	        {# Responsive #}
@@ -33,7 +33,7 @@
 		           <span class="icon-bar"></span>
 		           <span class="icon-bar"></span>
 	         	</a>
-	         	<a href="{{ path('default') }}" class="brand">JLM</a>
+	         	<a href="{{ path('default') }}" class="brand">Aufedis</a>
 	         	<div class="nav-collapse collapse">
 	      {% block header %}
 	      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -57,15 +57,13 @@
 		        				<li class="divider"></li>
 		        			{% include 'JLMCommerceBundle:Quote:sidebar.html.twig' %}
 		        			</ul>
-		        		</li>
+		        		</li>{#}
 		        		<li class="dropdown-submenu">
 		        			<a tabindex="-1" href="{{ path('order') }}">Fiches travaux</a>
 		        			<ul class="dropdown-menu">
-		        			{#	<li><a href="{{ path('order_new') }}"><i class="icon-plus-sign"></i> Nouvelle fiche</a></li>
-								<li class="divider"></li> #}
 								{% include 'JLMOfficeBundle:Order:sidebar.html.twig' %} 
 		        			</ul>
-		        		</li>
+		        		</li>{#}
                         <li class="dropdown-submenu">
 		        			<a tabindex="-1" href="{{ path('bill') }}">Facture</a>
 		        			<ul class="dropdown-menu">
@@ -73,16 +71,15 @@
 				        		<li class="divider"></li>
 				        		{% include 'JLMCommerceBundle:Bill:sidebar.html.twig' %}
 		        			</ul>
-		        		</li>
+		        		</li>{#}
                         <li class="dropdown-submenu">
 		        			<a tabindex="-1" href="{{ path('fees') }}">Redevances</a>
 		        			<ul class="dropdown-menu">
 		        				<li><a href="{{ path('fees') }}"><i class="icon-list"></i> Liste</a></li>
 		        			</ul>
-		        		</li>
+		        		</li>{#}
 		        	</ul>
-		        <li><a href="{{ path('intervention_today') }}">Journal de bord</a></li>
-		        {# Emetteurs #}
+		        {#}<li><a href="{{ path('intervention_today') }}">Journal de bord</a></li>
 		        <li class="dropdown">
 		            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestion JCM <b class="caret"></b></a>
 		        	<ul class="dropdown-menu">
@@ -100,7 +97,7 @@
 		        		<li><a href="{{ path('state_contracts') }}">Contrats</a></li>
 		        		<li><a href="{{ path('state_transmitters') }}">Émetteurs</a></li>
 		        	</ul>
-		        </li>
+		        </li>{#}
 			  {% endblock navigation %}
 			</ul>
 			<ul class="nav navbar-nav pull-right">
