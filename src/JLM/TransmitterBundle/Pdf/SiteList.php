@@ -79,7 +79,7 @@ class SiteList extends FPDFext
 	public function header()
 	{
 		if ($this->getWithHeader())
-			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-header-comp.jpg',10,4,190);
+			$this->Image($_SERVER['DOCUMENT_ROOT'].'/bundles/jlmcommerce/img/pdf-header-comp.jpg',10,4,190);
 
 		if ($this->pageNo() > 1)
 		{
@@ -105,7 +105,7 @@ class SiteList extends FPDFext
 	public function footer()
 	{
 		if ($this->getWithHeader())
-			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-footer.jpg',50,280,110);
+			$this->Image($_SERVER['DOCUMENT_ROOT'].'/bundles/jlmcommerce/img/pdf-footer.jpg',50,280,110);
 		
 		$this->SetY(-15);
 		// Police Arial italique 8
