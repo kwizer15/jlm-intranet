@@ -168,7 +168,7 @@ class FeesFollowerController extends Controller
 	public function printAction(FeesFollower $follower)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$entities = $em->getRepository('JLMCommerceBundle:Bill')->findBy(array('feesFollower'=>$follower,'canceled' => null),array('number'=>'ASC'));
+		$entities = $em->getRepository('JLMCommerceBundle:Bill')->getFees($follower);
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename=redevances-'.$follower->getActivation()->format('m-Y').'.pdf');
