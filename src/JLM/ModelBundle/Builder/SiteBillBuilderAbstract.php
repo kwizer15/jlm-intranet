@@ -52,7 +52,7 @@ abstract class SiteBillBuilderAbstract extends TrusteeBillBuilderAbstract
      */
     public function buildCustomer()
     {
-        $trustee = $this->_getTrustee();
+        $trustee = $this->trustee;
         $this->getBill()->setTrustee($trustee);
         $this->getBill()->setTrusteeName($trustee->getBillingLabel());
         $this->getBill()->setTrusteeAddress($trustee->getAddressForBill()->toString());
