@@ -33,7 +33,7 @@ abstract class SiteBillBuilderAbstract extends TrusteeBillBuilderAbstract
      */
     public function buildBusiness()
     {
-        $site = $this->_getSite();
+        $site = $this->site;
         if ($site instanceof Site)
         {
             $this->getBill()->setSite($site->toString());
