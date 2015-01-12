@@ -394,35 +394,6 @@ class QuoteVariantController extends Controller
 	}
 	
 	/**
-	 * Note QuoteVariant as given.
-	 *
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function oldgivenAction(QuoteVariant $entity)
-	{
-		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		if (!$this->changeEntityState($entity, 5))
-		{
-			return $response;
-		}
-		$em = $this->getDoctrine()->getManager();
-		
-		$task = new Task();
-		$task->setDoor($entity->getQuote()->getDoor());
-		$task->setPlace($entity->getQuote()->getDoorCp());
-		$task->setTodo('Accord du devis n°'.$entity->getNumber());
-		$task->setType($em->getRepository('JLMOfficeBundle:TaskType')->find(3));
-		$task->setUrlSource($this->generateUrl('variant_print', array('id' => $entity->getId())));
-		$task->setUrlAction($this->generateUrl('order_new_quotevariant', array('id' => $entity->getId())));
-		
-		$em->persist($entity);
-		$em->persist($task);
-		$em->flush();
-		
-		return $response;
-	}
-	
-	/**
 	 * Accord du devis / Création de l'intervention
 	 *
 	 * @Secure(roles="ROLE_USER")
