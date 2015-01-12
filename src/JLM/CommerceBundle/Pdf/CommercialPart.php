@@ -68,11 +68,17 @@ abstract class CommercialPart extends FPDFext
         }
     }
     
+    public function Image($file, $x, $y, $z)
+    {
+    	$path = $_SERVER['DOCUMENT_ROOT'].'/../src/JLM/CommerceBundle/Resources/public/img/' . $file;
+    	return parent::Image($path, $x, $y, $z);
+    }
+    
     public function header()
     {
         if ($this->pageNo() == $this->variantpage )
         {
-            $this->Image($_SERVER['DOCUMENT_ROOT'].'/bundles/jlmcommerce/img/pdf-header-comp.jpg',10,4,190);
+            $this->Image('pdf-header-comp.jpg',10,4,190);
             $this->setFont('Arial','B',24);
             $this->cell(60,35,strtoupper($this->getDocumentName()),0,1,'C');
             $this->ln(5);
@@ -81,7 +87,7 @@ abstract class CommercialPart extends FPDFext
         {
             	
             // Création
-            $this->Image($_SERVER['DOCUMENT_ROOT'].'/bundles/jlmcommerce/img/pdf-logo-comp.jpg',90,4,30);
+            $this->Image('pdf-logo-comp.jpg',90,4,30);
             $this->setFont('Arial','B',20);
             $this->cell(60,12,strtoupper($this->getDocumentName()),0,0,'L');
             $this->cell(89,6);
@@ -112,7 +118,7 @@ abstract class CommercialPart extends FPDFext
             }
         }
     
-        $this->image($_SERVER['DOCUMENT_ROOT'].'/bundles/jlmcommerce/img/pdf-footer.jpg',50,280,110);
+        $this->image('pdf-footer.jpg',50,280,110);
         $this->showPage();
     }
     
