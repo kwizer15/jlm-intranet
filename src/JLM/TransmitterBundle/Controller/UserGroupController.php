@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\TransmitterBundle\Entity\UserGroup;
 use JLM\TransmitterBundle\Form\Type\UserGroupType;
 use JLM\ModelBundle\Entity\Site;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * UserGroup controller.
@@ -48,14 +49,14 @@ class UserGroupController extends Controller
     {
         $entity  = new UserGroup();
         $form = $this->createForm(new UserGroupType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return new Response('reload');
+            return new JsonResponse(array());
         }
 
         return array(
@@ -112,7 +113,7 @@ class UserGroupController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return new Response('reload');
+            return new JsonResponse(array());
         }
 
         return array(
