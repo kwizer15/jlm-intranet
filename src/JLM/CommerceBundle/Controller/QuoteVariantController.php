@@ -215,7 +215,7 @@ class QuoteVariantController extends Controller
 		}
 		$mail = new Mail();
 		$mail->setSubject('Devis n°'.$entity->getNumber());
-		$mail->setFrom('commerce@jlm-entreprise.fr');
+		$mail->setFrom('contact@aufedis.fr');
 		$mail->setBody($this->renderView('JLMCommerceBundle:QuoteVariant:email.txt.twig', array('intro' => $entity->getIntro(),'door' => $entity->getQuote()->getDoorCp())));
 		$mail->setSignature($this->renderView('JLMCommerceBundle:QuoteVariant:emailsignature.txt.twig', array('name' => $entity->getQuote()->getFollowerCp())));
 		if ($entity->getQuote()->getContact())
@@ -255,10 +255,10 @@ class QuoteVariantController extends Controller
 		 
 		if ($form->isValid())
 		{
-			$mail->setBcc('commerce@jlm-entreprise.fr');
+			$mail->setBcc('contact@aufedis.fr');
 			
 			$message = $mail->getSwift();
-			$message->setReadReceiptTo('commerce@jlm-entreprise.fr');
+			$message->setReadReceiptTo('contact@aufedis.fr');
 			$message->attach(\Swift_Attachment::newInstance(
 					$this->render('JLMCommerceBundle:Quote:quote.pdf.php',array('entities'=>array($entity))),
 					$entity->getNumber().'.pdf','application/pdf'

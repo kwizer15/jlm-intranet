@@ -155,7 +155,7 @@ class QuoteController extends ContainerAware
     	$manager->assertState($entity, array(1,2,3,4,5));
     	$mail = new Mail();
     	$mail->setSubject('Devis n°'.$entity->getNumber());
-    	$mail->setFrom('commerce@jlm-entreprise.fr');
+    	$mail->setFrom('contact@aufedis.fr');
     	$mail->setBody($manager->renderView('JLMCommerceBundle:Quote:email.txt.twig', array('door' => $entity->getDoorCp())));
     	$mail->setSignature($manager->renderView('JLMCommerceBundle:QuoteVariant:emailsignature.txt.twig', array('name' => $entity->getFollowerCp())));
     	if ($entity->getContact())
@@ -193,10 +193,10 @@ class QuoteController extends ContainerAware
     		
     	if ($form->isValid())
     	{
-    		$mail->setBcc('commerce@jlm-entreprise.fr');
+    		$mail->setBcc('contact@aufedis.fr');
     			
     		$message = $mail->getSwift();
-    		$message->setReadReceiptTo('commerce@jlm-entreprise.fr');
+    		$message->setReadReceiptTo('contact@aufedis.fr');
     		foreach ($entity->getVariants() as $variant)
     		{
     			if ($variant->getState() > 0)
