@@ -29,7 +29,7 @@ class BillSubscriber implements EventSubscriberInterface
 	{
 		if (null !== $id = $event->getParam('quote'))
 		{
-			$quote = $this->om->getRepository('JLMCommerceBundle:Quote')->find($id);
+			$quote = $this->om->getRepository('JLMCommerceBundle:QuoteVariant')->find($id);
 			$entity = BillFactory::create(new VariantBillBuilder($quote));
         	$event->getForm()->setData($entity);
 		}

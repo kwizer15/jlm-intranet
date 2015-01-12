@@ -429,36 +429,35 @@ class QuoteVariantController extends Controller
 	 */
 	public function givenAction(QuoteVariant $entity)
 	{
-		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 		if (!$this->changeEntityState($entity, 5))
 		{
-			return $response;
+			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 		}
 		
 		$em = $this->getDoctrine()->getManager();
-		if ($entity->getWork() === null && $entity->getQuote()->getDoor() !== null)
-		{			
-			// Création de la ligne travaux pré-remplie
-			$work = Work::createFromQuoteVariant($entity);
-			//$work->setMustBeBilled(true);
-			$work->setCategory($em->getRepository('JLMDailyBundle:WorkCategory')->find(1));
-			$work->setObjective($em->getRepository('JLMDailyBundle:WorkObjective')->find(1));
-			$order = Order::createFromWork($work);
-			$em->persist($order);
-			$olines = $order->getLines();
-			foreach ($olines as $oline)
-			{
-				$oline->setOrder($order);
-				$em->persist($oline);
-			}
-			$work->setOrder($order);
-			$em->persist($work);
-			$entity->setWork($work);
-		}
+//		if ($entity->getWork() === null && $entity->getQuote()->getDoor() !== null)
+//		{			
+//			// Création de la ligne travaux pré-remplie
+//			$work = Work::createFromQuoteVariant($entity);
+//			//$work->setMustBeBilled(true);
+//			$work->setCategory($em->getRepository('JLMDailyBundle:WorkCategory')->find(1));
+//			$work->setObjective($em->getRepository('JLMDailyBundle:WorkObjective')->find(1));
+//			$order = Order::createFromWork($work);
+//			$em->persist($order);
+//			$olines = $order->getLines();
+//			foreach ($olines as $oline)
+//			{
+//				$oline->setOrder($order);
+//				$em->persist($oline);
+//			}
+//			$work->setOrder($order);
+//			$em->persist($work);
+//			$entity->setWork($work);
+//		}
 		$em->persist($entity);
 		$em->flush();
 		
-		return $response;
+		return $this->redirect($this->generateUrl('bill_new',array('quote'=>$entity->getId())));
 	}
 	
 	private function changeEntityState(QuoteVariant $entity, $state)
