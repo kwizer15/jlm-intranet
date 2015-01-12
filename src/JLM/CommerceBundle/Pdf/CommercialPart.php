@@ -68,10 +68,11 @@ abstract class CommercialPart extends FPDFext
         }
     }
     
-    public function Image($file, $x, $y, $z)
+    public function Image($file, $x = NULL, $y = NULL, $w = 0, $h = 0, $type = '', $link = '')
     {
-    	$path = $_SERVER['DOCUMENT_ROOT'].'/../src/JLM/CommerceBundle/Resources/public/img/' . $file;
-    	return parent::Image($path, $x, $y, $z);
+    	$file = $_SERVER['DOCUMENT_ROOT'].'/../src/JLM/CommerceBundle/Resources/public/img/' . $file;
+    	
+    	return parent::Image($file, $x, $y, $w, $h, $type, $link);
     }
     
     public function header()
