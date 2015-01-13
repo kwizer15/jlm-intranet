@@ -260,7 +260,7 @@ class QuoteVariantController extends Controller
 			$message = $mail->getSwift();
 			$message->setReadReceiptTo('contact@aufedis.fr');
 			$message->attach(\Swift_Attachment::newInstance(
-					$this->render('JLMCommerceBundle:Quote:quote.pdf.php',array('entities'=>array($entity))),
+					\JLM\CommerceBundle\Pdf\Quote::get(array($entity)),
 					$entity->getNumber().'.pdf','application/pdf'
 			))
 			;
@@ -294,7 +294,7 @@ class QuoteVariantController extends Controller
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
-		$response->setContent($this->render('JLMCommerceBundle:Quote:quote.pdf.php',array('entities'=>array($entity))));
+		$response->setContent(\JLM\CommerceBundle\Pdf\Quote::get(array($entity)));
 		 
 		return $response;
 	}

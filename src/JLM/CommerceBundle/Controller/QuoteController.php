@@ -16,6 +16,8 @@ use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Event\QuoteEvent;
+use Symfony\Component\HttpFoundation\Response;
+use JLM\CommerceBundle\Pdf\Quote;
 
 /**
  * Quote controller.
@@ -128,7 +130,11 @@ class QuoteController extends ContainerAware
     	$entity = $manager->getEntity($id);
     	$filename = $entity->getNumber().'.pdf';
     	
-    	return $manager->renderPdf($filename, 'JLMCommerceBundle:Quote:quote.pdf.php', array('entities'=>array($entity->getVariants())));
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/pdf');
+    	$response->headers->set('Content-Disposition', 'inline; filename='.$filename.'.pdf');
+    	
+    	return $response->setContent(Quote::get($entity->getVariants()));
     }
     
     /**
@@ -202,7 +208,7 @@ class QuoteController extends ContainerAware
     			if ($variant->getState() > 0)
     			{
 		    		$message->attach(\Swift_Attachment::newInstance(
-		    				$manager->renderResponse('JLMCommerceBundle:Quote:quote.pdf.php',array('entities'=>array($variant))),
+		    				Quote::get($variant),
 		    				$variant->getNumber().'.pdf','application/pdf'
 		    		))
 		    		;
