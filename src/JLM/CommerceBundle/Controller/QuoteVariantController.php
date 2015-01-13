@@ -22,7 +22,6 @@ use JLM\CommerceBundle\Entity\Quote;
 use JLM\CommerceBundle\Entity\QuoteVariant;
 use JLM\CommerceBundle\Form\Type\QuoteVariantType;
 use JLM\CommerceBundle\Entity\QuoteLine;
-use JLM\OfficeBundle\Entity\Task;
 use JLM\OfficeBundle\Entity\Order;
 use JLM\DailyBundle\Entity\Work;
 
