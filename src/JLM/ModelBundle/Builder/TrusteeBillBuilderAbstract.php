@@ -37,7 +37,7 @@ abstract class TrusteeBillBuilderAbstract extends BillBuilderAbstract
     {
         $this->bill->setTrustee($this->trustee);
         $this->bill->setTrusteeName($this->trustee->getBillLabel());
-        $this->bill->setTrusteeAddress($this->trustee->getBillAddress()->__toString());
+        $this->bill->setTrusteeAddress($this->trustee->getBillAddress()->toString());
         $this->bill->setAccountNumber(($this->trustee->getAccountNumber() == null) ? '411000' : $this->trustee->getAccountNumber());
     }
 }

@@ -84,11 +84,11 @@ class AttributionCourrier extends FPDFext
 	
 	public function header()
 	{
-			$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-header-comp.jpg',10,4,190);
+			$this->Image($_SERVER['DOCUMENT_ROOT'].'/bundles/jlmcommerce/img/pdf-header-comp.jpg',10,4,190);
 	}
 	
 	public function footer()
 	{
-		$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmoffice/img/pdf-footer.jpg',50,280,110);
+		$this->Image($_SERVER['DOCUMENT_ROOT'].'/bundles/jlmcommerce/img/pdf-footer.jpg',50,280,110);
 	}
 }

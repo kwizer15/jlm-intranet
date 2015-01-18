@@ -1,0 +1,9 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+
+{% block content -%}
+    <h1>Stock</h1>
+	<h2><small>{{ entity.productReference }}</small> {{ entity.productName }}</h2>
+    {{ form(form) }}
+    <a href="{{ path('jlm_product_stock') }}">Retour à la liste</a>
+  
+{% endblock %}

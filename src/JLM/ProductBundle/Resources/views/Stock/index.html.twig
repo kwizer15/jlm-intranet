@@ -1,0 +1,32 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+
+{% block content -%}
+    <h1>Stock</h1>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Rèf</th>
+                <th>Produit</th>
+                <th>Qté</th>
+                <th>Min</th>
+                <th>Max</th>
+                <th>Dernière màj</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('jlm_product_product_show', { 'id': entity.product.id }) }}">{{ entity.productReference }}</a></td>
+                <td>{{ entity.productName }}</td>
+                <td><strong>{{ entity.quantity }}</strong></td>
+                <td>{{ entity.minimum }}</td>
+                <td>{{ entity.maximum }}</td>
+                <td>{% if entity.lastModified %}{{ entity.lastModified|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td><a href="{{ path('jlm_product_stock_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

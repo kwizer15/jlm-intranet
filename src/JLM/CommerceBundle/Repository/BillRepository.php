@@ -170,4 +170,21 @@ class BillRepository extends SearchRepository
 	{
 		return array('a.number','f.name','d.street','e.name','a.trusteeName','a.reference','a.site','a.prelabel');
 	}
+	
+	public function getFees($follower)
+	{
+		$qb = $this->createQueryBuilder('a')
+			->select('a')
+			->leftJoin('a.trustee','b')
+				->leftJoin('b.contact','f')
+			->leftJoin('a.siteObject','c')
+				->leftJoin('c.address','d')
+					->leftJoin('d.city','e')
+			->where('a.feesFollower = ?1')
+			->andWhere('a.state >= 0')
+			->orderBy('a.number','ASC')
+			->setParameter(1, $follower);
+		
+		return $qb->getQuery()->getResult();
+	}
 }

@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\TransmitterBundle\Entity\Transmitter;
 use JLM\TransmitterBundle\Entity\Attribution;
 use JLM\TransmitterBundle\Form\Type\TransmitterType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Transmitter controller.
@@ -48,7 +49,7 @@ class TransmitterController extends Controller
     {
         $entity  = new Transmitter();
         $form = $this->createForm(new TransmitterType($attribution->getSite()->getId()), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -56,7 +57,7 @@ class TransmitterController extends Controller
             $em->flush();
 			
             // On met à jour la page de base
-            return new Response('reload');
+            return new JsonResponse(array());
         }
 
         return array(

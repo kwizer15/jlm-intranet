@@ -102,10 +102,14 @@ class FeesFollowerController extends Controller
 			->createQueryBuilder('a')
 			->select('a')
 			->leftJoin('a.contracts','b')
-			->leftJoin('b.door','c')
-			->leftJoin('c.site','d')
-			->leftJoin('d.address','e')
-			->leftJoin('e.city','f')
+				->leftJoin('b.door','c')
+					->leftJoin('c.site','d')
+						->leftJoin('d.address','e')
+							->leftJoin('e.city','f')
+//			->where('b.end is null OR b.end > ?1')
+//			->andWhere('b.begin <= ?1')
+//
+			->setParameter(1, $entity->getActivation())
 			->orderBy('f.name','asc')
 			->getQuery()
 			->getResult();
@@ -114,7 +118,7 @@ class FeesFollowerController extends Controller
 		// @todo Ajouter pas de facture si sous garantie
 		foreach ($fees as $fee)
 		{
-			$contracts = $fee->getContracts();
+			$contracts = $fee->getActiveContracts($entity->getActivation());
 		    if (count($contracts))
 		    {
 				$gf = 'getFrequence'.$fee->getFrequence();
@@ -124,7 +128,6 @@ class FeesFollowerController extends Controller
 					$majoration = $entity->$gf();
 					if ($majoration > 0)
 					{
-						$contracts = $fee->getContracts();
 						foreach ($contracts as $contract)
 						{
 							$amount = $contract->getFee();
@@ -133,21 +136,18 @@ class FeesFollowerController extends Controller
 							$em->persist($contract);
 						}
 					}
-					if (sizeof($fee->getContracts()))
+					$builder = new FeeBillBuilder($fee, $entity, array(
+					    'number' => $number,
+					    'product' => $em->getRepository('JLMProductBundle:Product')->find(284),
+					    'penalty' => (string)$em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
+			            'earlyPayment' => (string)$em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1),
+					    'vatTransmitter' => $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(),
+					));
+					$bill = BillFactory::create($builder);
+					if ($bill->getTotalPrice() > 0)
 					{
-						$builder = new FeeBillBuilder($fee, $entity, array(
-						    'number' => $number,
-						    'product' => $em->getRepository('JLMProductBundle:Product')->find(284),
-						    'penalty' => (string)$em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
-		                    'earlyPayment' => (string)$em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1),
-						    'vatTransmitter' => $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(),
-						));
-						$bill = BillFactory::create($builder);
-						if ($bill->getTotal() != 0)
-						{
-							$em->persist($bill);
-							$number = $bill->getNumber() + 1;
-						}
+						$em->persist($bill);
+						$number = $bill->getNumber() + 1;
 					}
 				}
 			}
@@ -168,7 +168,7 @@ class FeesFollowerController extends Controller
 	public function printAction(FeesFollower $follower)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$entities = $em->getRepository('JLMCommerceBundle:Bill')->findBy(array('feesFollower'=>$follower),array('number'=>'ASC'));
+		$entities = $em->getRepository('JLMCommerceBundle:Bill')->getFees($follower);
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename=redevances-'.$follower->getActivation()->format('m-Y').'.pdf');

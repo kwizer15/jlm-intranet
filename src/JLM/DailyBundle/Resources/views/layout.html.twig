@@ -29,10 +29,6 @@
 $(".interventionForm").intervention({
 	 autoSource:'{{ path('autocomplete') }}'
 });
-$(".standby-new").formModal();
-$(".shift-new").formModal({closure: function(){location.reload();}});
-$(".fixing-new").formModal({closure: function(){location.reload();}});
-$(".shifting-edit").formModal({closure: function(){location.reload();}});
-$(".shifting-new").formModal({closure: function(){location.reload();}});
+$(".standby-new, .shift-new, .fixing-new, .shifting-edit, .shifting-new").formModal({closure: function(){location.reload();}});
 </script>
 {% endblock %}

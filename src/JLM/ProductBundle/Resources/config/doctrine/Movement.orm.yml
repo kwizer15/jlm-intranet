@@ -1,0 +1,17 @@
+JLM\ProductBundle\Entity\Movement:
+  type: entity
+  table: jlm_product_movement
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    quantity:
+      type: integer
+    date:
+      column: move_date
+      type: datetime
+  manyToOne:
+    product:
+      targetEntity: JLM\ProductBundle\Model\ProductInterface

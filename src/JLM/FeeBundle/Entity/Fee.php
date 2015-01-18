@@ -241,6 +241,25 @@ class Fee implements FeeInterface
     }
 
     /**
+     * Get contracts
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getActiveContracts(\DateTime $date)
+    {
+    	$contracts = array();
+    	foreach ($this->contracts as $contract)
+    	{
+    		if ($contract->isInProgress($date))
+    		{
+    			$contracts[] = $contract;
+    		}
+    	}
+    	
+    	return $contracts;
+    }
+    
+    /**
      * Set trustee
      *
      * @param JLM\ModelBundle\Entity\Trustee $trustee

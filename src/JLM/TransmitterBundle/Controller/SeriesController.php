@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\TransmitterBundle\Entity\Series;
 use JLM\TransmitterBundle\Entity\Attribution;
 use JLM\TransmitterBundle\Form\Type\SeriesType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Series controller.
@@ -60,8 +61,7 @@ class SeriesController extends Controller
             $em->flush();
 			
             // On met à jour la page de base
-            return new Response('reload');
-            return $this->redirect($request->headers->get('referer'));
+            return new JsonResponse(array());
         }
 
         return array(

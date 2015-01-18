@@ -217,11 +217,11 @@ class BaseManager extends ContainerAware implements ManagerInterface
 		$repo = $this->getRepository();
 		if (!method_exists($repo,$functionCount))
 		{
-			throw $this->createNotFoundException('Page insexistante (La méthode '.get_class($repo).'#'.$functionCount.' n\'existe pas)');
+			throw $this->createNotFoundException('Page inexistante (La méthode '.get_class($repo).'#'.$functionCount.' n\'existe pas)');
 		}
 		if (!method_exists($repo,$functionDatas))
 		{
-			throw $this->createNotFoundException('Page insexistante (La méthode '.get_class($repo).'#'.$functionDatas.' n\'existe pas)');
+			throw $this->createNotFoundException('Page inexistante (La méthode '.get_class($repo).'#'.$functionDatas.' n\'existe pas)');
 		}
 		$nb = $repo->$functionCount();
 		$nbPages = ceil($nb/$limit);
@@ -229,7 +229,7 @@ class BaseManager extends ContainerAware implements ManagerInterface
 		$offset = ($page-1) * $limit;
 		if ($page < 1 || $page > $nbPages)
 		{
-			throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
+			throw $this->createNotFoundException('Page inexistante (page '.$page.'/'.$nbPages.')');
 		}
 	
 		return array(

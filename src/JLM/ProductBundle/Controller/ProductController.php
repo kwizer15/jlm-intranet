@@ -9,6 +9,8 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ProductBundle\Entity\Product;
 use JLM\ProductBundle\Form\Type\ProductType;
 use Doctrine\ORM\EntityManager;
+use JLM\ProductBundle\JLMProductEvents;
+use JLM\ProductBundle\Event\ProductEvent;
 
 /**
  * Product controller.
@@ -57,11 +59,12 @@ class ProductController extends Controller
     public function showAction($id)
     {
         $entity = $this->getEntity($id);
-        
+        $stock = $this->getDoctrine()->getManager()->getRepository('JLMProductBundle:Stock')->getByProduct($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
+        	'stock'=>$stock,
             'delete_form' => $deleteForm->createView(),        );
     }
 
@@ -107,7 +110,8 @@ class ProductController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            $this->dispatch(JLMProductEvents::PRODUCT_CREATE, new ProductEvent($entity));
+            
             return $this->redirect($this->generateUrl('jlm_product_product_show', array('id' => $entity->getId())));
             
         }
