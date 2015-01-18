@@ -54,4 +54,20 @@ class StockController extends ContainerAware
             'form'   => $form->createView(),
         ));
     }
+    
+    public function inventoryAction()
+    {
+    	$manager = $this->container->get('jlm_product.stock_manager');
+    	$manager->secure('ROLE_USER');
+    	$entity = $manager->getObjectManager()->getRepository('JLMProductBundle:Stock')->getAll(500);
+    	$form = $manager->createForm('inventory', array('entity' => $entity));
+    	
+    	if ($manager->getHandler($form)->process())
+    	{
+    		return $manager->redirect('jlm_product_stock_inventory');
+    	}
+    	return $manager->renderResponse('JLMProductBundle:Stock:inventory.html.twig', array(
+    			'form'   => $form->createView(),
+    	));
+    }
 }

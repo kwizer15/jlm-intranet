@@ -32,3 +32,8 @@ services:
         tags:
             - { name: form.type, alias: jlm_product_product_select }
             
+    jlm_product.type.stock:
+        class: JLM\ProductBundle\Form\Type\StockType
+        tags:
+            - { name: form.type, alias: jlm_product_stock }
+            

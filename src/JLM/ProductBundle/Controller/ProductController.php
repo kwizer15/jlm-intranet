@@ -59,11 +59,12 @@ class ProductController extends Controller
     public function showAction($id)
     {
         $entity = $this->getEntity($id);
-        
+        $stock = $this->getDoctrine()->getManager()->getRepository('JLMProductBundle:Stock')->getByProduct($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
+        	'stock'=>$stock,
             'delete_form' => $deleteForm->createView(),        );
     }
 

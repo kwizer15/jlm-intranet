@@ -11,3 +11,7 @@ jlm_product_stock_update:
     defaults: { _controller: "JLMProductBundle:Stock:edit" }
     requirements: { _method: post|put }
 
+jlm_product_stock_inventory:
+    path:     /inventory
+    defaults: { _controller: "JLMProductBundle:Stock:inventory" }
+    requirements: { _method: get }

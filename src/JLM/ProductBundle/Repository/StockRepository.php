@@ -12,6 +12,7 @@
 namespace JLM\ProductBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use JLM\ProductBundle\Model\ProductInterface;
 
 /**
  * BillRepository
@@ -43,5 +44,16 @@ class StockRepository extends EntityRepository
 		;
 		
 		return $qb->getQuery()->getResult();
+	}
+	
+	public function getByProduct(ProductInterface $product)
+	{
+		$qb = $this->createQueryBuilder('a')
+			->select('a')
+			->where('a.product = ?1')
+			->setParameter(1, $product)
+		;
+		
+		return $qb->getQuery()->getSingleResult();
 	}
 }
