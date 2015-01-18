@@ -19,7 +19,7 @@
 	  constructor: Product
 	  
 	  , listen : function() {
-		  var line = "#product_";
+		  var line = "#jlm_product_product_";
 		  $(line + "purchase, " +
 		    line + "discountSupplier, " + 
 		    line + "expenseRatio, " + 
@@ -34,7 +34,7 @@
    	 , total : function(e) {
    		 e.stopPropagation()
 		 e.preventDefault()
-		 var line = "#product_";
+		 var line = "#jlm_product_product_";
 		   		var p = parseFloat($(line + "purchase").val().replace(',','.').replace(/[\s]{1,}/g,""));
 		   		var d = parseFloat($(line + "discountSupplier").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
 		   		var e = parseFloat($(line + "expenseRatio").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
@@ -52,7 +52,7 @@
    	, totalCoef : function(e) {
   		 e.stopPropagation()
 		 e.preventDefault()
-		 var line = "#product_";
+		 var line = "#jlm_product_product_";
 		   		var p = parseFloat($(line + "purchase").val().replace(',','.').replace(/[\s]{1,}/g,""));
 		   		var d = parseFloat($(line + "discountSupplier").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
 		   		var e = parseFloat($(line + "expenseRatio").val().replace(',','.').replace(/[\s]{1,}/g,""))/100;
