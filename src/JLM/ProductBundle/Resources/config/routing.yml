@@ -118,3 +118,6 @@ supplier_delete:
     defaults: { _controller: "JLMProductBundle:Supplier:delete" }
     methods: [POST]
 
+JLMProductBundle_stock:
+        resource: "@JLMProductBundle/Resources/config/routing/stock.yml"
+        prefix:   /stock

@@ -1,0 +1,16 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+
+{% block content -%}
+    <h1>Stock</h1>
+	<h2><small>{{ entity.productReference }}</small> {{ entity.productName }}</h2>
+	<dl><dt>Quantité</dt><dd>{{ entity.quantity }}</dd></dl>
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('jlm_product_stock') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

@@ -1,0 +1,13 @@
+jlm_product_stock:
+    path:     /
+    defaults: { _controller: "JLMProductBundle:Stock:index" }
+
+jlm_product_stock_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "JLMProductBundle:Stock:edit" }
+
+jlm_product_stock_update:
+    path:     /{id}/update
+    defaults: { _controller: "JLMProductBundle:Stock:edit" }
+    requirements: { _method: post|put }
+

@@ -37,17 +37,26 @@ class Stock implements StockInterface
 	/**
 	 * @var float
 	 */
-	private $quantity;
+	private $quantity = 0;
 	
 	/**
 	 * @var float
 	 */
-	private $minimum;
+	private $minimum = 0;
 	
 	/**
 	 * @var float
 	 */
-	private $maximum;
+	private $maximum = 0;
+	
+	/**
+	 * Constructor
+	 * @param ProductInterface $product
+	 */
+	public function __construct(ProductInterface $product = null)
+	{
+		$this->setProduct($product);
+	}
 	
 	/**
 	 * 
@@ -61,7 +70,7 @@ class Stock implements StockInterface
 	/**
 	 * 
 	 * @param ProductInterface $product
-	 * @return \JLM\ProductBundle\Entity\Movement
+	 * @return self
 	 */
 	public function setProduct(ProductInterface $product)
 	{
@@ -72,7 +81,7 @@ class Stock implements StockInterface
 	
 	/**
 	 * 
-	 * @return \JLM\ProductBundle\Entity\ProductInterface
+	 * @return ProductInterface
 	 */
 	public function getProduct()
 	{
@@ -80,30 +89,45 @@ class Stock implements StockInterface
 	}
 	
 	/**
-	 * 
-	 * @param \DateTime $date
-	 * @return \JLM\ProductBundle\Entity\Movement
+	 * @return string
 	 */
-	public function setLastModified(\DateTime $date = null)
+	public function getProductName()
 	{
-		$this->lastModified = ($date === null) ? new \DateTime : $date;
-		
-		return $this;
+		return $this->getProduct()->getDesignation();
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getProductReference()
+	{
+		return $this->getProduct()->getReference();
 	}
 	
 	/**
 	 * 
 	 * @return DateTime
 	 */
-	public function getDate()
+	public function getLastModified()
 	{
 		return $this->lastModified;
 	}
 	
 	/**
+	 * Update de lastModified date on persist
+	 * @return self
+	 */
+	public function updateLastModified()
+	{
+		$this->lastModified = new \DateTime;
+		
+		return $this;
+	}
+	
+	/**
 	 * 
 	 * @param unknown $quantity
-	 * @return \JLM\ProductBundle\Entity\Movement
+	 * @return self
 	 */
 	public function setQuantity($quantity)
 	{
@@ -123,8 +147,8 @@ class Stock implements StockInterface
 	
 	/**
 	 *
-	 * @param unknown $minimum
-	 * @return \JLM\ProductBundle\Entity\Movement
+	 * @param number $minimum
+	 * @return self
 	 */
 	public function setMinimum($quantity)
 	{
@@ -144,8 +168,8 @@ class Stock implements StockInterface
 	
 	/**
 	 *
-	 * @param unknown $minimum
-	 * @return \JLM\ProductBundle\Entity\Movement
+	 * @param number $minimum
+	 * @return self
 	 */
 	public function setMaximum($quantity)
 	{
@@ -188,5 +212,13 @@ class Stock implements StockInterface
 		$toOrder = $this->maximum - $this->quantity;
 
 		return ($toOrder > 0) ? $toOrder : 0;
+	}
+	
+	/**
+	 * @return boolean
+	 */
+	public function isMinUnderMax()
+	{
+		return $this->minimum <= $this->maximum;
 	}
 }

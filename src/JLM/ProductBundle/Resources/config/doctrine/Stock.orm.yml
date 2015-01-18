@@ -1,0 +1,30 @@
+JLM\ProductBundle\Entity\Stock:
+  type: entity
+  table: jlm_product_stock
+  repositoryClass: JLM\ProductBundle\Repository\StockRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    quantity:
+      type: integer
+    minimum:
+      type: integer
+      options:
+        unsigned: true
+        default: 0
+    maximum:
+      type: integer
+      options:
+        unsigned: true
+        default: 0
+    lastModified:
+      type: datetime
+  oneToOne:
+    product:
+      targetEntity: JLM\ProductBundle\Model\ProductInterface
+  lifecycleCallbacks:
+    prePersist: [ updateLastModified ]
+    preUpdate: [ updateLastModified ]

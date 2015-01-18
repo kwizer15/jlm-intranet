@@ -1,7 +1,18 @@
 <?php
-$db = new mysqli('localhost','root','Hary_99','jlm');
+$db = new mysqli('localhost','root','sslover','jlm');
 
+$productQuery = "SELECT * FROM products";
 
+$products = $db->query($productQuery);
+$query = array();
+
+$date = new \DateTime;
+while ($product = $products->fetch_array())
+{
+	$query[] = 'INSERT INTO jlm_product_stock (product_id, lastModified) VALUES ('.$product['id'].',"'.$date->format('Y-m-d H:i:s').'");';
+}
+
+/*
 $personQuery = "SELECT * FROM persons";
 
 
@@ -191,8 +202,9 @@ $q2 = array(
 'ALTER TABLE suppliers ADD CONSTRAINT FK_AC28B95CE7A1254A FOREIGN KEY (contact_id) REFERENCES jlm_contact_contact (id);',
 'CREATE INDEX IDX_AC28B95CE7A1254A ON suppliers (contact_id);',
 );
-$query = array_merge($query, $q2);
 
+$query = array_merge($query, $q2);
+*/
 foreach ($query as $q)
 {
   if ($db->query($q) == false)
