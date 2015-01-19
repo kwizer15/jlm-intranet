@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\CommerceBundle\EventListener;
+namespace JLM\ProductBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use JLM\ProductBundle\JLMProductEvents;
