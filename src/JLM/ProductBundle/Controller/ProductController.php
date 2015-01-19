@@ -110,7 +110,7 @@ class ProductController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-            $this->dispatch(JLMProductEvents::PRODUCT_CREATE, new ProductEvent($entity));
+            $this->get('event_dispatcher')->dispatch(JLMProductEvents::PRODUCT_CREATE, new ProductEvent($entity));
             
             return $this->redirect($this->generateUrl('jlm_product_product_show', array('id' => $entity->getId())));
             
