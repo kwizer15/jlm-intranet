@@ -24,14 +24,14 @@
 		{% include 'JLMTransmitterBundle:UserGroup:list_li.html.twig' with {'userGroup':userGroup} %}
 	{% endfor %}
 	</ul>
-	<a href="#modalNewUserGroup"  role="button" class="btn btn-success btn-small" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Ajouter un groupe utilisateur</a>
+	<a href="{{ path('transmitter_usergroup_new', {'id': entity.ask.site.id}) }}"  role="button" class="btn btn-success btn-small usergroup-new"><i class="icon-plus-sign icon-white"></i> Ajouter un groupe utilisateur</a>
 </div>
 </div>
 <div class="form-actions">
 	<a href="{{ path('transmitter_attribution_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i> Editer</a>
-	<a href="#modalNewTransmitter" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Ajouter un émetteur</a>
-	<a href="#modalNewTransmitterSeries" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Ajouter une suite d'émetteurs</a>
-	<a href="#modalNewTransmitterReplacement" role="button" class="btn btn-primary" data-toggle="modal"><i class="icon-refresh icon-white"></i> Remplacement d'émetteurs</a>
+	<a href="{{ path('transmitter_new', { 'id': entity.id }) }}" role="button" class="btn btn-success transmitter-new"><i class="icon-plus-sign icon-white"></i> Ajouter un émetteur</a>
+	<a href="{{ path('transmitter_series_new', { 'id': entity.id }) }}" role="button" class="btn btn-success series-new"><i class="icon-plus-sign icon-white"></i> Ajouter une suite d'émetteurs</a>
+	<a href="{{ path('transmitter_replacement_new', { 'id': entity.id }) }}" role="button" class="btn btn-primary replacement-new"><i class="icon-refresh icon-white"></i> Remplacement d'émetteurs</a>
 	<a href="{{ path('transmitter_attribution_printlist', { 'id': entity.id }) }}" role="button" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer la liste</a>
 	<a href="{{ path('transmitter_attribution_printcourrier', { 'id': entity.id }) }}" role="button" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer le courrier</a>
 	{% if entity.bill %}
@@ -48,18 +48,6 @@
 {% endif %}
 {% endblock %}
 
-{% block modals %}{#
-{{ render(controller('JLMTransmitterBundle:Transmitter:new',{'id':entity.id})) }}
-{{ render(controller('JLMTransmitterBundle:Series:new',{'id':entity.id})) }}
-{{ render(controller('JLMTransmitterBundle:Replacement:new',{'id':entity.id})) }}
-{{ render(controller('JLMTransmitterBundle:UserGroup:new',{'id':entity.ask.site.id})) }}
-
-{% for  transmitter in entity.transmitters %}
-{{ render(controller('JLMTransmitterBundle:Transmitter:edit',{'id':transmitter.id})) }}
-{% endfor %}
-#}
-{% endblock %}
-
 {% block javascripts %}
 {{ parent() }}
 <script src="{{ asset('bundles/jlmtransmitter/js/transmitter.js') }}"></script>
@@ -71,39 +59,9 @@
 $("a").tooltip();
 $(".transmitter").transmitter({urlModel:'{{ path('transmitter_usergroup_defaultmodelid', {'id':0}) }}'});
 $(".transmitter_series").transmitterSeries({urlModel:'{{ path('transmitter_usergroup_defaultmodelid', {'id':0}) }}'});
-$(".usergroup").modalForm();
-$(".transmitter_replacement").modalForm();
-$(".editTransmitter").click(function(){
-	var href = $(this).attr('href');
-	var id = href.replace('#modalEditTransmitter','');
-	var linkurl = '{{ path('transmitter_edit',{'id':0}) }}';
-	linkurl = linkurl.replace('/0/','/' + id + '/');
-	$.ajax({
-		url: linkurl, 
-		type: 'get', 
-		success: function(html) {
-			$('footer').after(html);
-			$(href).find(".modal-body > div").transmitter({urlModel:'{{ path('transmitter_usergroup_defaultmodelid', {'id':0}) }}'});
-			$(href).modal({'show':true});
-		}
-	});
-	return false;
-});
 
-$(".editUserGroup").click(function(){
-	var href = $(this).attr('href');
-	var id = href.replace('#modalEditUserGroup','');
-	var linkurl = '{{ path('transmitter_usergroup_edit',{'id':0}) }}';
-	linkurl = linkurl.replace('/0/','/' + id + '/');
-	$.ajax({
-		url: linkurl, 
-		type: 'get', 
-		success: function(html) {
-			$('footer').after(html);
-			$(href).find(".modal-body > div").modalForm();
-			$(href).modal({'show':true});
-		}
-	});
-	return false;
-});
+$(".transmitter-new").formModal({closure: function(){location.reload();}});
+$(".usergroup-new, .usergroup-edit").formModal({closure: function(){location.reload();}});
+$(".series-new").formModal({closure: function(){location.reload();}});
+$(".replacement-new").formModal({closure: function(){location.reload();}});
 {% endblock %}

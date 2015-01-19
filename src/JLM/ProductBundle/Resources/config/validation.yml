@@ -1,7 +1,7 @@
 JLM\ProductBundle\Entity\Product:
   getters:
     coefPositive:
-      - "True" : ~
+      - "True" : { "message": "Le coéficient doit être positif" }
       
 JLM\ProductBundle\Entity\ProductCategory:
   parent:
@@ -17,3 +17,7 @@ JLM\ProductBundle\Entity\Supplier:
   website:
     - Url: ~
     
+JLM\ProductBundle\Entity\Stock:
+  getters:
+    minUnderMax:
+      - "True" : { "message": "Le minimum doit être inférieur ou égal au maximum" }

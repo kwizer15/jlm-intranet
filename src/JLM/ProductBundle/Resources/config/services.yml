@@ -1,6 +1,39 @@
+parameters:
+    jlm_product.model.product.class: JLM\ProductBundle\Entity\Product
+    jlm_product.manager.product.class: JLM\CoreBundle\Manager\BaseManager
+
+    jlm_product.model.stock.class: JLM\ProductBundle\Entity\Stock
+    jlm_product.manager.stock.class: JLM\ProductBundle\Manager\StockManager
+
 services:
+    jlm_product.product_manager:
+        class: "%jlm_product.manager.product.class%"
+        arguments: ["%jlm_product.model.product.class%"]
+        calls:
+            - [ setContainer, ["@service_container"]]
+            - [ setServices ]
+
+    jlm_product.stock_manager:
+        class: "%jlm_product.manager.stock.class%"
+        arguments: ["%jlm_product.model.stock.class%"]
+        calls:
+            - [ setContainer, ["@service_container"]]
+            - [ setServices ]
+
     jlm_product.type.product_hidden:
         class: JLM\ProductBundle\Form\Type\ProductHiddenType
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: jlm_product_product_hidden }
+
+    jlm_product.type.product_select:
+        class: JLM\ProductBundle\Form\Type\ProductSelectType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: jlm_product_product_select }
+            
+    jlm_product.type.stock:
+        class: JLM\ProductBundle\Form\Type\StockType
+        tags:
+            - { name: form.type, alias: jlm_product_stock }
+            

@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\TransmitterBundle\Entity\Replacement;
 use JLM\TransmitterBundle\Entity\Attribution;
 use JLM\TransmitterBundle\Form\Type\ReplacementType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Replacement controller.
@@ -60,7 +61,7 @@ class ReplacementController extends Controller
             $em->flush();
 			
             // On met à jour la page de base
-            return new Response('reload');
+            return new JsonResponse(array());
         }
 
         return array(
