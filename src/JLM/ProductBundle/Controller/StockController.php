@@ -44,12 +44,13 @@ class StockController extends ContainerAware
     	$manager->secure('ROLE_USER');
         $entity = $manager->getEntity($id);
         $form = $manager->createForm('edit', array('entity' => $entity));
-
         if ($manager->getHandler($form)->process())
         {
-        	return $manager->redirect('jlm_product_stock_edit', array('id' => $id));
+        	return $manager->isAjax() ? $manager->renderJson(array()) : $manager->redirect('jlm_product_stock_edit', array('id' => $id));
         }
-        return $manager->renderResponse('JLMProductBundle:Stock:edit.html.twig', array(
+        $template = $manager->isAjax() ? 'modal_edit.html.twig' : 'edit.html.twig';
+        
+        return  $manager->renderResponse('JLMProductBundle:Stock:'.$template, array(
         	'entity' => $entity,
             'form'   => $form->createView(),
         ));

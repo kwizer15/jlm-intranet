@@ -185,6 +185,11 @@ class BaseManager extends ContainerAware implements ManagerInterface
 		return $this->request;
 	}
 	
+	public function isAjax()
+	{
+		return $this->request->isXmlHttpRequest();
+	}
+	
 	public function getRouter()
 	{
 		return $this->router;
