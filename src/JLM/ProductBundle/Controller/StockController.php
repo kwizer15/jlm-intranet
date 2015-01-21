@@ -12,6 +12,8 @@
 namespace JLM\ProductBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
+use JLM\ProductBundle\Pdf\Stock;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Stock controller.
@@ -19,7 +21,6 @@ use Symfony\Component\DependencyInjection\ContainerAware;
  */
 class StockController extends ContainerAware
 {
-
     /**
      * Lists all Stock entities.
      *
@@ -44,12 +45,13 @@ class StockController extends ContainerAware
     	$manager->secure('ROLE_USER');
         $entity = $manager->getEntity($id);
         $form = $manager->createForm('edit', array('entity' => $entity));
-
         if ($manager->getHandler($form)->process())
         {
-        	return $manager->redirect('jlm_product_stock_edit', array('id' => $id));
+        	return $manager->isAjax() ? $manager->renderJson(array()) : $manager->redirect('jlm_product_stock_edit', array('id' => $id));
         }
-        return $manager->renderResponse('JLMProductBundle:Stock:edit.html.twig', array(
+        $template = $manager->isAjax() ? 'modal_edit.html.twig' : 'edit.html.twig';
+        
+        return  $manager->renderResponse('JLMProductBundle:Stock:'.$template, array(
         	'entity' => $entity,
             'form'   => $form->createView(),
         ));
@@ -66,8 +68,25 @@ class StockController extends ContainerAware
     	{
     		return $manager->redirect('jlm_product_stock_inventory');
     	}
+    	
     	return $manager->renderResponse('JLMProductBundle:Stock:inventory.html.twig', array(
     			'form'   => $form->createView(),
     	));
+    }
+    
+    /**
+     * Imprime la liste d'attribution
+     */
+    public function printAction()
+    {
+    	$manager = $this->container->get('jlm_product.stock_manager');
+    	$manager->secure('ROLE_USER');
+    	$stocks = $manager->getRepository()->getAll();
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/pdf');
+		$response->headers->set('Content-Disposition', 'inline; filename=stock.pdf');
+		$response->setContent(Stock::get($stocks));
+    
+    	return $response;
     }
 }

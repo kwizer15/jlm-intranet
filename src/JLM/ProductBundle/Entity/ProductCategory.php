@@ -92,7 +92,7 @@ class ProductCategory implements ProductCategoryInterface
      */
     public function isSmallSupply()
     {
-        return $this->getId() === 1;
+        return $this->getName() == 'Emetteurs';
     }
     
     /**
@@ -100,7 +100,7 @@ class ProductCategory implements ProductCategoryInterface
      */
     public function isService()
     {
-        return $this->getId() === 2;
+        return $this->getName() == 'Service';
     }
 
     /**
