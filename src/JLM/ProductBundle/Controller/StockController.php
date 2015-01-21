@@ -12,6 +12,8 @@
 namespace JLM\ProductBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
+use JLM\ProductBundle\Pdf\Stock;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Stock controller.
@@ -19,7 +21,6 @@ use Symfony\Component\DependencyInjection\ContainerAware;
  */
 class StockController extends ContainerAware
 {
-
     /**
      * Lists all Stock entities.
      *
@@ -67,8 +68,25 @@ class StockController extends ContainerAware
     	{
     		return $manager->redirect('jlm_product_stock_inventory');
     	}
+    	
     	return $manager->renderResponse('JLMProductBundle:Stock:inventory.html.twig', array(
     			'form'   => $form->createView(),
     	));
+    }
+    
+    /**
+     * Imprime la liste d'attribution
+     */
+    public function printAction()
+    {
+    	$manager = $this->container->get('jlm_product.stock_manager');
+    	$manager->secure('ROLE_USER');
+    	$stocks = $manager->getRepository()->getAll();
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/pdf');
+		$response->headers->set('Content-Disposition', 'inline; filename=stock.pdf');
+		$response->setContent(Stock::get($stocks));
+    
+    	return $response;
     }
 }

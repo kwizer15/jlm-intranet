@@ -15,3 +15,8 @@ jlm_product_stock_inventory:
     path:     /inventory
     defaults: { _controller: "JLMProductBundle:Stock:inventory" }
     requirements: { _method: get }
+    
+jlm_product_stock_print:
+    path:     /print
+    defaults: { _controller: "JLMProductBundle:Stock:print" }
+    requirements: { _method: get }
