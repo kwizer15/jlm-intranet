@@ -30,22 +30,23 @@ class DefaultController extends Controller
     			'equipment'=> 0,
     			'total'=> 0,
     	);
-    	$em =$this->getDoctrine()->getManager();
+    	$em = $this->getDoctrine()->getManager();
     	$stats = array_merge(
     			$em->getRepository('JLMDailyBundle:ShiftTechnician')->getStatsByYear($year),
     			$em->getRepository('JLMDailyBundle:ShiftTechnician')->getStatsByMonths($year)
     	);
-    	$numbers = array();
+
+    	$numbers = $times = array();
     	for ($i = 1; $i <= 12; $i++)
     	{
     	    while (strlen($i) < 2)
     	    {
     	        $i = '0'.$i;
     	    }
-    	    $d = new \DateTime('2013-'.$i.'-01 00:00:00');
-    	    $numbers[$d->format('F')] = $times[$d->format('F')] = array('total'=>$base);
+    	    $d = new \DateTime($year.'-'.$i.'-01 00:00:00');
+    	    $numbers[$d->format('F')] = $times[$d->format('F')] = array('total' => $base);
     	}
-    	$numbers['Year'] = array('total'=>$base);
+    	$numbers['Year'] = array('total' => $base);
     	$times = $numbers;
     	foreach ($stats as $stat)
     	{
@@ -60,14 +61,14 @@ class DefaultController extends Controller
     			$numbers[$period][$stat['name']] = $base;
     			$times[$period][$stat['name']] = $base;
     		}
-    		$numbers[$period][$stat['name']][$stat['type']] = $stat['number'];
-    		$numbers[$period][$stat['name']]['total'] += $stat['number'];
-    		$numbers[$period]['total'][$stat['type']] += $stat['number'];
-    		$numbers[$period]['total']['total'] += $stat['number'];
-    		$times[$period][$stat['name']][$stat['type']] = $stat['time'];
-    		$times[$period][$stat['name']]['total'] += $stat['time'];
-    		$times[$period]['total'][$stat['type']] += $stat['time'];
-    		$times[$period]['total']['total'] += $stat['time'];
+    		$numbers[$period][$stat['name']][$stat['type']] = (int)$stat['number'];
+    		$numbers[$period][$stat['name']]['total'] += (int)$stat['number'];
+    		$numbers[$period]['total'][$stat['type']] += (int)$stat['number'];
+    		$numbers[$period]['total']['total'] += (int)$stat['number'];
+    		$times[$period][$stat['name']][$stat['type']] = (int)$stat['time'];
+    		$times[$period][$stat['name']]['total'] += (int)$stat['time'];
+    		$times[$period]['total'][$stat['type']] += (int)$stat['time'];
+    		$times[$period]['total']['total'] += (int)$stat['time'];
     	}
     	foreach ($times as $period => $datas)
     	{

@@ -77,6 +77,11 @@ class ShiftTechnicianRepository extends EntityRepository
 		return $this->getStatesByPeriod('month', $year);
 	}
 	
+	public function getStatsByWeeks($year = null)
+	{
+		return $this->getStatesByPeriod('week', $year);
+	}
+	
 	private function getStatesByPeriod($period = 'year', $year = null)
 	{
 		if ($year === null)
@@ -96,12 +101,20 @@ class ShiftTechnicianRepository extends EntityRepository
 				       COUNT(d.actionType) as number';
 		$query_groupby = ' GROUP BY d.actionType, c.name';
 		
-		if ($period = 'month')
+		if ($period == 'month')
 		{
 			$rsm->addScalarResult('month', 'month');
 			$query_select .= ', MONTH(a.begin) as month';
 			$query_groupby .= ' , MONTH(a.begin)';
 		}
+		
+		if ($period == 'week')
+		{
+			$rsm->addScalarResult('week', 'week');
+			$query_select .= ', WEEK(a.begin) as week';
+			$query_groupby .= ' , WEEK(a.begin)';
+		}
+		
 		$query = $em->createNativeQuery($query_select. '
 				FROM shift_technician a
 				LEFT JOIN technicians b ON a.technician_id = b.id

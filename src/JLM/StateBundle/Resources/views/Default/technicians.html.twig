@@ -1,8 +1,9 @@
 {% extends "JLMStateBundle::layout.html.twig" %}
 
 {% block sidebar %}
-<li><a href="{{ path('state_technicians_year',{'year':2013}) }}">2013</a></li>
-<li><a href="{{ path('state_technicians_year',{'year':2014}) }}">2014</a></li>
+{% for y in 2013..year %}
+<li><a href="{{ path('state_technicians_year',{'year':y}) }}">{{ y }}</a></li>
+{% endfor %}
 {% endblock %}
 
 {% block content %}
