@@ -61,7 +61,7 @@ class StockController extends ContainerAware
     {
     	$manager = $this->container->get('jlm_product.stock_manager');
     	$manager->secure('ROLE_USER');
-    	$entity = $manager->getObjectManager()->getRepository('JLMProductBundle:Stock')->getAll(500);
+    	$entity = $manager->getRepository()->getAll(500);
     	$form = $manager->createForm('inventory', array('entity' => $entity));
     	
     	if ($manager->getHandler($form)->process())
@@ -81,7 +81,7 @@ class StockController extends ContainerAware
     {
     	$manager = $this->container->get('jlm_product.stock_manager');
     	$manager->secure('ROLE_USER');
-    	$stocks = $manager->getRepository()->getAll();
+    	$stocks = $manager->getRepository()->getAll(500);
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename=stock.pdf');
