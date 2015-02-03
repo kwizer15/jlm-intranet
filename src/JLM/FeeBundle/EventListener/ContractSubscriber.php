@@ -27,7 +27,7 @@ class ContractSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            JLMContractEvents::AFTER_CONTRACT_PERSIST => 'feeCreate'
+            JLMContractEvents::AFTER_CONTRACT_CREATE => 'feeCreate'
         );
     }
 

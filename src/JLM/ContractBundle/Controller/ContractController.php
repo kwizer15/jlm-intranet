@@ -58,7 +58,7 @@ class ContractController extends ContainerAware
     	if ($manager->getHandler($form)->process('POST'))
     	{
     		$event = new ContractEvent($form->getData());
-    		$manager->dispatch(JLMContractEvents::AFTER_CONTRACT_PERSIST, $event);
+    		$manager->dispatch(JLMContractEvents::AFTER_CONTRACT_CREATE, $event);
     		
             return $manager->redirect('door_show', array('id' => $form->getData()->getDoor()->getId()));
         }
@@ -86,7 +86,7 @@ class ContractController extends ContainerAware
     	if ($manager->getHandler($form)->process())
     	{
     		$event = new ContractEvent($form->getData());
-    		$manager->dispatch(JLMContractEvents::AFTER_CONTRACT_PERSIST, $event);
+//    		$manager->dispatch(JLMContractEvents::AFTER_CONTRACT_PERSIST, $event);
     		
     		return ($ajax) ? $manager->renderJson(array())
     		               : $manager->redirect($this->generateUrl('door_show', array('id' => $entity->getDoor()->getId())))
