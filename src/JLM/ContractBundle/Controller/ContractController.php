@@ -55,18 +55,22 @@ class ContractController extends ContainerAware
     	$manager = $this->container->get('jlm_contract.contract_manager');
     	$manager->secure('ROLE_USER');
     	$form   = $manager->createForm('new');
+    	$ajax = $manager->isAjax();
     	if ($manager->getHandler($form)->process('POST'))
     	{
     		$event = new ContractEvent($form->getData());
     		$manager->dispatch(JLMContractEvents::AFTER_CONTRACT_CREATE, $event);
-    		
-            return $manager->redirect('door_show', array('id' => $form->getData()->getDoor()->getId()));
+
+            return $ajax
+                ? $manager->renderJson()
+            	: $manager->redirect('door_show', array('id' => $form->getData()->getDoor()->getId()))
+            ;
         }
 
-        $template = $manager->getRequest()->isXmlHttpRequest()
+        $template = $ajax
         		? 'JLMContractBundle:Contract:modal_new.html.twig'
         		: 'JLMContractBundle:Contract:new.html.twig'
-          		;
+        ;
           		
         return $manager->renderResponse($template, array(
             'form'   => $form->createView()
