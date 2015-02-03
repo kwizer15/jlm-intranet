@@ -54,7 +54,7 @@ class ContractController extends ContainerAware
     {
     	$manager = $this->container->get('jlm_contract.contract_manager');
     	$manager->secure('ROLE_USER');
-    	$form   = $manager->createNewForm();
+    	$form   = $manager->createForm('new');
     	if ($manager->getHandler($form)->process('POST'))
     	{
     		$event = new ContractEvent($form->getData());
