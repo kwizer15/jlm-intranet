@@ -7,3 +7,17 @@ $("#{{ id }}_site").on("autocompleteselect", function(event,ui) {
 });
 </script>
 {% endblock %}
+
+{% block _jlm_transmitterbundle_seriestype_javascript %}
+{{ form_javascript(form) }}
+<script>
+$(".transmitter_series").transmitterSeries({urlModel:'{{ path('transmitter_usergroup_defaultmodelid', {'id':0}) }}'});
+</script>
+{% endblock %}
+
+{% block _jlm_transmitterbundle_transmittertype_javascript %}
+{{ form_javascript(form) }}
+<script>
+$(".transmitter").transmitter({urlModel:'{{ path('transmitter_usergroup_defaultmodelid', {'id':0}) }}'});
+</script>
+{% endblock %}
