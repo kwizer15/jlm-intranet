@@ -1,0 +1,38 @@
+{% extends "JLMStateBundle::layout.html.twig" %}
+
+{% block sidebar %}
+{% for y in 2013.."now"|date("Y") %}
+<li><a href="{{ path('state_sells',{'year':y}) }}">{{ y }}</a></li>
+{% endfor %}
+{% endblock %}
+
+{% block content %}
+<h1>Stats Ventes</h1>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Référence</th>
+      <th>Désignation</th>
+      <th>Quantité</th>
+      <th>PU</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for stat in stats %}
+    <tr>
+      <td>{{ stat.reference }}</td>
+      <td>{{ stat.designation }}</td>
+      <td>{{ stat.qty }}</td>
+      <td>{{ stat.pu | number_format(2,',',' ') }}</td>
+      <td>{{ stat.total | number_format(2,',',' ') }} €</td>
+    </tr>
+{% endfor %}
+    <tr>
+      <td colspan=3></td>
+      <td><strong>{{ total | number_format(2,',',' ') }} €</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock %}

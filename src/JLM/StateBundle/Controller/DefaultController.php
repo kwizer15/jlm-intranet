@@ -254,4 +254,32 @@ class DefaultController extends Controller
     	
     	return array('stats'=>$datas);
     }
+    
+    /**
+     * @Route("/sells", name="state_sells")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function sellsAction()
+    {
+    	$year = $this->getRequest()->get('year',null);
+    	$em = $this->getDoctrine()->getManager();
+    	$stats = $em->getRepository('JLMCommerceBundle:Bill')->getSells($year);
+    	$total = 0;
+    	foreach ($stats as $key => $stat)
+    	{
+    		$total += $stat['total'];
+    		if ($stat['qty'] == 0)
+    		{
+    			$stats[$key]['pu'] = 0;
+    		}
+    		else 
+    		{
+    			$stats[$key]['pu'] = $stat['total'] / $stat['qty'];
+    		}
+    	}
+    	
+    	 
+    	return array('stats'=>$stats, 'total'=>$total);
+    }
 }
