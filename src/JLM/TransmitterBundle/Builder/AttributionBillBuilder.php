@@ -112,8 +112,8 @@ class AttributionBillBuilder extends BillBuilderAbstract
     {
         $trustee = $this->attribution->getAsk()->getTrustee();
         $this->getBill()->setTrustee($trustee);
-        $this->getBill()->setTrusteeName($trustee->getBillingLabel());
-        $this->getBill()->setTrusteeAddress($trustee->getAddressForBill()->toString());
+        $this->getBill()->setTrusteeName($trustee->getBillLabel());
+        $this->getBill()->setTrusteeAddress($trustee->getBillAddress()->toString());
         $accountNumber = ($trustee->getAccountNumber() == null) ? '411000' : $trustee->getAccountNumber();
         $this->getBill()->setAccountNumber($accountNumber);
     }
