@@ -269,16 +269,8 @@ class DefaultController extends Controller
     	foreach ($stats as $key => $stat)
     	{
     		$total += $stat['total'];
-    		if ($stat['qty'] == 0)
-    		{
-    			$stats[$key]['pu'] = 0;
-    		}
-    		else 
-    		{
-    			$stats[$key]['pu'] = $stat['total'] / $stat['qty'];
-    		}
+			$stats[$key]['pu'] = ($stat['qty'] == 0) ? 0 : ($stat['total'] / $stat['qty']);
     	}
-    	
     	 
     	return array('stats'=>$stats, 'total'=>$total);
     }
