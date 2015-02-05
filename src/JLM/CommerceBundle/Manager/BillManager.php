@@ -62,7 +62,7 @@ class BillManager extends Manager
 		$params = array(
 				'creation' => new \DateTime,
 				'vat' => $vat,
-				'vatTransmitter' => $vat * 100,
+				'vatTransmitter' => number_format($vat * 100,1,',',' '),
 				'penalty' => $this->om->getRepository('JLMCommerceBundle:PenaltyModel')->find(1).'',
 				'property' => $this->om->getRepository('JLMCommerceBundle:PropertyModel')->find(1).'',
 				'earlyPayment' => $this->om->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1).'',
