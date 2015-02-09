@@ -39,6 +39,7 @@ class Order extends FPDFext
 		$this->cell(0,8,'Référence',0,1);
 		$this->setFont('Arial','',16);
 		$this->multicell(0,8,$this->entity->getWork()->getPlace(),0);
+		$this->cell(0,8,'Code : '.$this->entity->getWork()->getDoor()->getCode(),0);
 		$this->cell(0,8,'Imprimé le '.$date->format('d/m/Y'),0,1,'R');
 		$quote = $this->entity->getWork()->getQuote();
 		if ($quote === null)
