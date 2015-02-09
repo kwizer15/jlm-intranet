@@ -20,7 +20,7 @@
 					{{ door.site.address.street | nl2br }}
 				</a>
 			</td>
-			<td><span class="label label-inverse">{% if door.actualContract is null %}HC{% else %}{{ door.actualContract }}{% endif %}</span><br>
+			<td><span class="label label-{% if door.actualContract is null %}warning">HC{% else %}inverse">{{ door.actualContract }}{% endif %}</span><br>
 			<strong>{{ door.type }} - {{ door.location }}</strong><br>
 			{{ door.street | nl2br }}
 			</td>
