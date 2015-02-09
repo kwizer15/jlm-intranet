@@ -124,6 +124,7 @@ class AutocompleteController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$site = $em->getRepository('JLMModelBundle:Site')->find($id);
     	$results = $em->getRepository('JLMModelBundle:Door')->findBy(array('site'=>$site));
+    	$doors = array();
     	foreach($results as $result)
     	{
     		$doors[] = array(

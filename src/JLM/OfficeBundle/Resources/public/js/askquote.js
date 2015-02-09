@@ -26,7 +26,7 @@
 				var src = this.options.autoSourceDoor;
 				$("#askquote_site").on("autocompleteselect", function(event,ui) {
 					console.log(ui.item);
-					$("#askquote_trustee").val(ui.item.trusteeName);
+					$("#askquote_trustee").val(ui.item.trustee).trigger('change');
 					$.post( src, { id_site : ui.item.id }, function(data){
 						$("#askquote_door").empty().removeAttr('disabled').append('<option value="">Autre</option>');
 						$.each(data, function(key,val) {
