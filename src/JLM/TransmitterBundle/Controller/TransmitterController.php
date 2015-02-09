@@ -115,7 +115,7 @@ class TransmitterController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return new Response('reload');
+            return new JsonResponse();
         }
 
         return array(
