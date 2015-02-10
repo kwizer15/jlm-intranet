@@ -35,10 +35,9 @@ class MaintenanceController extends AbstractInterventionController
 		$manager = $this->container->get('jlm_daily.maintenance_manager');
 		$manager->secure('ROLE_USER');
 		$request = $manager->getRequest();
-		$ajax = $manager->getRequest()->isXmlHttpRequest();
 		$repo = $manager->getRepository();
 
-		return $ajax ? $manager->renderJson(array('entities' => $repo->getArray($request->get('q',''), $request->get('page_limit',10))))
+		return $manager->isAjax() ? $manager->renderJson(array('entities' => $repo->getArray($request->get('q',''), $request->get('page_limit',10))))
 		                  : $manager->renderResponse('JLMDailyBundle:Maintenance:list.html.twig', $manager->pagination('getCountOpened', 'getOpened', 'maintenance_list', array()));
 	}
 	
