@@ -30,7 +30,7 @@ class MaintenanceController extends AbstractInterventionController
 	 *
 	 * @Route("/list", name="maintenance_list")
 	 */
-	public function listAction($page = 1)
+	public function listAction()
 	{
 		$manager = $this->container->get('jlm_daily.maintenance_manager');
 		$manager->secure('ROLE_USER');
