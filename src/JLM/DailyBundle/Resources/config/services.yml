@@ -1,3 +1,7 @@
+parameters:
+  jlm_daily.model.maintenance.class: JLM\DailyBundle\Entity\Maintenance
+  jlm_daily.manager.maintenance.class: JLM\CoreBundle\Manager\BaseManager
+
 services:
   jlm_daily.type.intervention_hidden:
     class: JLM\DailyBundle\Form\Type\InterventionHiddenType
@@ -5,15 +9,15 @@ services:
     tags:
       - { name: form.type, alias: intervention_hidden }
       
-  jlm_daily.eventlistener.action_listener:
-    class: JLM\DailyBundle\EventListener\DateSearchListener
-    arguments: ["@form.factory"]
-    tags:
-      - { name: kernel.event_listener, event: kernel.view, method: onKernelResponse }
-      
   jlm_daily.twig.interventioncount_extension:
     class: JLM\DailyBundle\Twig\Extension\InterventionCountExtension
     arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: twig.extension }
+      
+  jlm_daily.twig.date_search_extension:
+    class: JLM\DailyBundle\Twig\Extension\DateSearchExtension
+    arguments: ["@form.factory"]
     tags:
       - { name: twig.extension }
   
@@ -22,3 +26,10 @@ services:
     arguments: ["@doctrine.orm.entity_manager"]
     tags:
       - { name: kernel.event_subscriber }
+
+  jlm_daily.maintenance_manager:
+    class: "%jlm_daily.manager.maintenance.class%"
+    arguments: ["%jlm_daily.model.maintenance.class%"]
+    calls:
+      - [ setContainer, ["@service_container"]]
+      - [ setServices ]
