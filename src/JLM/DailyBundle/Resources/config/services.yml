@@ -1,6 +1,8 @@
 parameters:
   jlm_daily.model.maintenance.class: JLM\DailyBundle\Entity\Maintenance
   jlm_daily.manager.maintenance.class: JLM\CoreBundle\Manager\BaseManager
+  jlm_daily.model.work.class: JLM\DailyBundle\Entity\Work
+  jlm_daily.manager.work.class: JLM\CoreBundle\Manager\BaseManager
 
 services:
   jlm_daily.type.intervention_hidden:
@@ -30,6 +32,13 @@ services:
   jlm_daily.maintenance_manager:
     class: "%jlm_daily.manager.maintenance.class%"
     arguments: ["%jlm_daily.model.maintenance.class%"]
+    calls:
+      - [ setContainer, ["@service_container"]]
+      - [ setServices ]
+      
+  jlm_daily.work_manager:
+    class: "%jlm_daily.manager.work.class%"
+    arguments: ["%jlm_daily.model.work.class%"]
     calls:
       - [ setContainer, ["@service_container"]]
       - [ setServices ]
