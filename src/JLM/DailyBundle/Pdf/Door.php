@@ -55,6 +55,13 @@ class Door extends FPDFext
 		$datas[2] = $types[$shifting->getType()];
 		$datas[3] = ($shifting->getContract() == 'Hors contrat') ? 'HC' : $shifting->getContract();
 		$datas[4] = $shifting->getReason();
+		if ($shifting instanceof JLM\DailyBundle\Entity\Work)
+		{
+			if ($shifting->getQuote() !== null)
+			{
+				$datas[4] = 'Travaux selon devis n°'.$shifting->getQuote()->getNumber().chr(10).$datas[4];
+			}
+		}
 		$datas[5] = '';
 		if ($entity->getComment())
 		{
