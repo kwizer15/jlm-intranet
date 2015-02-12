@@ -44,7 +44,7 @@
 			<td>
 				<ul class="unstyled">
 				{% for phone in contact.person.phones %}
-				<li>{{ phone.label }} : {% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone' : phone.number } %}</li>{% endif %}
+				<li>{{ phone.label }} : {% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone' : phone.number } %}</li>
 				{% endfor %}
 				</ul>
 			</td>
