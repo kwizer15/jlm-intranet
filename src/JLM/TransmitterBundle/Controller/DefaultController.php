@@ -7,8 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JLM\DefaultBundle\Entity\Search;
-use JLM\DefaultBundle\Form\Type\SearchType;
+use JLM\CoreBundle\Entity\Search;
 
 class DefaultController extends Controller
 {
@@ -24,7 +23,7 @@ class DefaultController extends Controller
     	if (is_array($formData) && array_key_exists('query', $formData))
     	{
     		$em = $this->getDoctrine()->getManager();
-    		$entity = new Search();
+    		$entity = new Search()
     		$query = $formData['query'];
     		$entity->setQuery($query);
     		return array(
