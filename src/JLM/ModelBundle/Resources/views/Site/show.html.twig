@@ -43,7 +43,7 @@
 			<td>{{ contact.role }}</td>
 			<td>
 				<ul class="unstyled">
-				{% foreach phone in contact.person.phones %}
+				{% for phone in contact.person.phones %}
 				<li>{{ phone.label }} : {% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone' : phone.number } %}</li>{% endif %}
 				{% endfor %}
 				</ul>
