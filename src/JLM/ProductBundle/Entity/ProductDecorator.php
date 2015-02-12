@@ -17,7 +17,7 @@ use JLM\ProductBundle\Model\ProductCategoryInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ProductDecorator implements ProductInterface
+abstract class ProductDecorator implements ProductInterface
 {
     /**
      * Id
@@ -182,5 +182,13 @@ class ProductDecorator implements ProductInterface
     public function __toString()
     {
     	return $this->getProduct()->__toString();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getUnitPrice($quantity = null)
+    {
+    	return $this->getProduct()->getUnitPrice($quantity);
     }
 }
