@@ -18,6 +18,7 @@ final class JLMCommerceEvents
 {
 	const QUOTE_FORM_POPULATE = "jlm_commerce.quote_form_populate";
 	const QUOTE_AFTER_PERSIST = "jlm_commerce.quote_after_persist";
+	const QUOTEVARIANT_GIVEN = "jlm_commerce.quotevariant_given";
 	
 	const BILL_FORM_POPULATE = "jlm_commerce.bill_form_populate";
 	const BILL_AFTER_PERSIST = "jlm_commerce.bill_after_persist";

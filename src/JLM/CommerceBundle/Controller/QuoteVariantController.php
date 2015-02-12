@@ -25,6 +25,9 @@ use JLM\CommerceBundle\Entity\QuoteLine;
 use JLM\OfficeBundle\Entity\Task;
 use JLM\OfficeBundle\Entity\Order;
 use JLM\DailyBundle\Entity\Work;
+use JLM\CommerceBundle\Event\QuoteEvent;
+use JLM\CommerceBundle\JLMCommerceEvents;
+use JLM\CommerceBundle\Event\QuoteVariantEvent;
 
 /**
  * QuoteVariant controller.
@@ -436,6 +439,9 @@ class QuoteVariantController extends Controller
 		}
 		
 		$em = $this->getDoctrine()->getManager();
+		// Evenement accord de devis
+		$this->get('event_dispatcher')->dispatch(JLMCommerceEvents::QUOTEVARIANT_GIVEN, new QuoteVariantEvent($entity, $this->getRequest()));
+		
 		if ($entity->getWork() === null && $entity->getQuote()->getDoor() !== null)
 		{			
 			// Création de la ligne travaux pré-remplie
