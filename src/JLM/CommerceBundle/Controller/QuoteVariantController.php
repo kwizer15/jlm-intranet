@@ -112,7 +112,7 @@ class QuoteVariantController extends Controller
 	public function editAction(QuoteVariant $entity)
 	{
 		// Si le devis est déjà validé, on empèche quelconque modification
-		if ($entity->getState())
+		if ($entity->getState() != QuoteVariant::STATE_INSEIZURE)
 		{
 			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 		}
@@ -134,7 +134,7 @@ class QuoteVariantController extends Controller
 	{
 		 
 		// Si le devis est déjà validé, on empèche quelconque odification
-		if ($entity->getState())
+		if ($entity->getState() != QuoteVariant::STATE_INSEIZURE)
 		{
 			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 		}
@@ -190,13 +190,13 @@ class QuoteVariantController extends Controller
 	 */
 	public function readyAction(QuoteVariant $entity)
 	{
-		if ($entity->getState() < 0)
+		if ($entity->getState() < QuoteVariant::STATE_INSEIZURE)
 		{
 			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 		}
-		if ($entity->getState() < 1)
+		if ($entity->getState() < QuoteVariant::STATE_READY)
 		{
-			$entity->setState(1);
+			$entity->setState(QuoteVariant::STATE_READY);
 		}
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
@@ -212,7 +212,7 @@ class QuoteVariantController extends Controller
 	 */
 	public function mailAction(QuoteVariant $entity)
 	{
-		if ($entity->getState() < 1)
+		if ($entity->getState() < QuoteVariant::STATE_READY)
 		{
 			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 		}
@@ -246,7 +246,7 @@ class QuoteVariantController extends Controller
 	 */
 	public function sendmailAction(Request $request, QuoteVariant $entity)
 	{
-		if ($entity->getState() < 1)
+		if ($entity->getState() < QuoteVariant::STATE_READY)
 		{
 			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 		}
@@ -307,7 +307,7 @@ class QuoteVariantController extends Controller
 	 */
 	public function printcodingAction(QuoteVariant $entity)
 	{
-		if ($entity->getState() < 0)
+		if ($entity->getState() == QuoteVariant::STATE_CANCELED)
 		{
 			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 		}
@@ -332,7 +332,7 @@ class QuoteVariantController extends Controller
 	public function unvalidAction(QuoteVariant $entity)
 	{
 		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		if (!$this->changeEntityState($entity, 0))
+		if (!$this->changeEntityState($entity, QuoteVariant::STATE_INSEIZURE))
 		{
 			return $response;
 		}
@@ -351,7 +351,7 @@ class QuoteVariantController extends Controller
 	public function faxAction(QuoteVariant $entity)
 	{
 		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		if (!$this->changeEntityState($entity, 3))
+		if (!$this->changeEntityState($entity, QuoteVariant::STATE_PRINTED))
 		{
 			return $response;
 		}
@@ -369,7 +369,7 @@ class QuoteVariantController extends Controller
 	 */
 	public function cancelAction(QuoteVariant $entity)
 	{
-		$entity->setState(-1);
+		$entity->setState(QuoteVariant::STATE_CANCELED);
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
@@ -385,7 +385,7 @@ class QuoteVariantController extends Controller
 	public function receiptAction(QuoteVariant $entity)
 	{
 		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		if (!$this->changeEntityState($entity, 4))
+		if (!$this->changeEntityState($entity, QuoteVariant::STATE_RECEIPT))
 		{
 			return $response;
 		}
@@ -404,7 +404,7 @@ class QuoteVariantController extends Controller
 	public function givenAction(QuoteVariant $entity)
 	{
 		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		if (!$this->changeEntityState($entity, 5))
+		if (!$this->changeEntityState($entity, QuoteVariant::STATE_GIVEN))
 		{
 			return $response;
 		}

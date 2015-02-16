@@ -23,6 +23,14 @@ use JLM\CommerceBundle\Model\QuoteLineInterface;
  */
 class QuoteVariant implements QuoteVariantInterface
 {
+	const STATE_CANCELED = -1;
+	const STATE_INSEIZURE = 0;
+	const STATE_READY = 1;
+	const STATE_PRINTED = 2;
+	const STATE_SEND = 3;
+	const STATE_RECEIPT = 4;
+	const STATE_GIVEN = 5;
+	
 	/**
 	 * @var int $id
 	 */
@@ -79,7 +87,7 @@ class QuoteVariant implements QuoteVariantInterface
 	 * 5 = accordé
 	 * @var int $state
 	 */
-	private $state = 0;
+	private $state = self::STATE_INSEIZURE;
 	
 	/**
 	 * Lignes
