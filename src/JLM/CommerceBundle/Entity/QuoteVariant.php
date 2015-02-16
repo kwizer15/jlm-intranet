@@ -27,7 +27,7 @@ class QuoteVariant implements QuoteVariantInterface
 	const STATE_INSEIZURE = 0;
 	const STATE_READY = 1;
 	const STATE_PRINTED = 2;
-	const STATE_SEND = 3;
+	const STATE_SENDED = 3;
 	const STATE_RECEIPT = 4;
 	const STATE_GIVEN = 5;
 	
@@ -278,9 +278,25 @@ class QuoteVariant implements QuoteVariantInterface
 	 */
 	public function setState($state)
 	{
-		$this->state = $state;
+		$asserts = array(
+				self::STATE_CANCELED  => array(self::STATE_CANCELED,  self::STATE_GIVEN),
+				self::STATE_INSEIZURE => array(self::STATE_READY,     self::STATE_GIVEN),
+				self::STATE_READY     => array(self::STATE_INSEIZURE, self::STATE_READY),
+				self::STATE_PRINTED   => array(self::STATE_INSEIZURE, self::STATE_PRINTED),
+				self::STATE_SENDED      => array(self::STATE_READY,     self::STATE_SENDED),
+				self::STATE_RECEIPT   => array(self::STATE_SENDED,      self::STATE_RECEIPT),
+				self::STATE_GIVEN     => array(self::STATE_SENDED,      self::STATE_GIVEN),
+		);
+		if ($this->state < $asserts[$state][0])
+		{
+			return false;
+		}
+		if ($this->state < $asserts[$state][1])
+		{
+			$this->state = $state;
+		}
 		
-		return $this;
+		return true;
 	}
 	
 	/**

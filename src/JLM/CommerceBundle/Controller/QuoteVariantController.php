@@ -194,10 +194,7 @@ class QuoteVariantController extends Controller
 		{
 			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 		}
-		if ($entity->getState() < QuoteVariant::STATE_READY)
-		{
-			$entity->setState(QuoteVariant::STATE_READY);
-		}
+		$entity->setState(QuoteVariant::STATE_READY);
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
@@ -276,10 +273,7 @@ class QuoteVariantController extends Controller
 				;
 			} 
 			$this->get('mailer')->send($message);
-			if ($entity->getState() < 3)
-			{
-				$entity->setState(3);
-			}
+			$entity->setState(QuoteVariant::STATE_SENDED);
 			$em->persist($entity);
 			$em->flush();
 		}
@@ -331,16 +325,14 @@ class QuoteVariantController extends Controller
 	 */
 	public function unvalidAction(QuoteVariant $entity)
 	{
-		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		if (!$this->changeEntityState($entity, QuoteVariant::STATE_INSEIZURE))
+		if ($entity->setState(QuoteVariant::STATE_INSEIZURE))
 		{
-			return $response;
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($entity);
+			$em->flush();
 		}
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($entity);
-		$em->flush();
 		
-		return $response;
+		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	}
 	
 	/**
@@ -350,16 +342,14 @@ class QuoteVariantController extends Controller
 	 */
 	public function faxAction(QuoteVariant $entity)
 	{
-		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		if (!$this->changeEntityState($entity, QuoteVariant::STATE_PRINTED))
+		if ($entity->setState(QuoteVariant::STATE_SENDED))
 		{
-			return $response;
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($entity);
+			$em->flush();
 		}
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($entity);
-		$em->flush();
 		
-		return $response;
+		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	}
 	
 	/**
@@ -369,10 +359,12 @@ class QuoteVariantController extends Controller
 	 */
 	public function cancelAction(QuoteVariant $entity)
 	{
-		$entity->setState(QuoteVariant::STATE_CANCELED);
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($entity);
-		$em->flush();
+		if ($entity->setState(QuoteVariant::STATE_CANCELED))
+		{
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($entity);
+			$em->flush();
+		}
 		
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	}
@@ -384,16 +376,14 @@ class QuoteVariantController extends Controller
 	 */
 	public function receiptAction(QuoteVariant $entity)
 	{
-		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		if (!$this->changeEntityState($entity, QuoteVariant::STATE_RECEIPT))
+		if ($entity->setState(QuoteVariant::STATE_RECEIPT))
 		{
-			return $response;
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($entity);
+			$em->flush();
 		}
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($entity);
-		$em->flush();
 		
-		return $response;
+		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));;
 	}
 	
 	/**
@@ -403,39 +393,19 @@ class QuoteVariantController extends Controller
 	 */
 	public function givenAction(QuoteVariant $entity)
 	{
-		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		if (!$this->changeEntityState($entity, QuoteVariant::STATE_GIVEN))
+		if ($entity->setState(QuoteVariant::STATE_GIVEN))
 		{
-			return $response;
+			$this->get('event_dispatcher')->dispatch(JLMCommerceEvents::QUOTEVARIANT_GIVEN, new QuoteVariantEvent($entity, $this->getRequest()));
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($entity);
+			$em->flush();
 		}
 
-		// Evenement accord de devis
-		$this->get('event_dispatcher')->dispatch(JLMCommerceEvents::QUOTEVARIANT_GIVEN, new QuoteVariantEvent($entity, $this->getRequest()));
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($entity);
-		$em->flush();
-		
-		return $response;
+		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	}
 	
 	private function changeEntityState(QuoteVariant $entity, $state)
 	{
-		$asserts = array(
-			0 => array(1,5),
-			3 => array(1,3),
-			4 => array(3,4),
-			5 => array(4,5),
-		);
-		// 0
-		if ($entity->getState() < $asserts[$state][0])
-		{
-			return false;
-		}
-		if ($entity->getState() < $asserts[$state][1])
-		{
-			$entity->setState($state);
-		}
-		
-		return true;
+		$entity->setState($state);
 	}
 }
