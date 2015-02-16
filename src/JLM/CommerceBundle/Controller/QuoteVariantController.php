@@ -84,7 +84,6 @@ class QuoteVariantController extends Controller
     	if ($form->isValid())
     	{
     		$em = $this->getDoctrine()->getManager();
-    		$lines = $entity->getLines();
 			$number = $em->getRepository('JLMCommerceBundle:QuoteVariant')->getCount($entity->getQuote())+1;
 			$entity->setVariantNumber($number);
     		$em->persist($entity);
