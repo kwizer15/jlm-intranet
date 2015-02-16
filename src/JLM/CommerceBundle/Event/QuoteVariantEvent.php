@@ -14,6 +14,7 @@ namespace JLM\CommerceBundle\Event;
 use Symfony\Component\HttpFoundation\Request;
 use JLM\CommerceBundle\Model\QuoteInterface;
 use JLM\CoreBundle\Event\RequestEvent;
+use JLM\CommerceBundle\Model\QuoteVariantInterface;
 
 class QuoteVariantEvent extends RequestEvent
 {

@@ -397,35 +397,6 @@ class QuoteVariantController extends Controller
 	}
 	
 	/**
-	 * Note QuoteVariant as given.
-	 *
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function oldgivenAction(QuoteVariant $entity)
-	{
-		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		if (!$this->changeEntityState($entity, 5))
-		{
-			return $response;
-		}
-		$em = $this->getDoctrine()->getManager();
-		
-		$task = new Task();
-		$task->setDoor($entity->getQuote()->getDoor());
-		$task->setPlace($entity->getQuote()->getDoorCp());
-		$task->setTodo('Accord du devis n°'.$entity->getNumber());
-		$task->setType($em->getRepository('JLMOfficeBundle:TaskType')->find(3));
-		$task->setUrlSource($this->generateUrl('variant_print', array('id' => $entity->getId())));
-		$task->setUrlAction($this->generateUrl('order_new_quotevariant', array('id' => $entity->getId())));
-		
-		$em->persist($entity);
-		$em->persist($task);
-		$em->flush();
-		
-		return $response;
-	}
-	
-	/**
 	 * Accord du devis / Création de l'intervention
 	 *
 	 * @Secure(roles="ROLE_USER")
@@ -437,30 +408,10 @@ class QuoteVariantController extends Controller
 		{
 			return $response;
 		}
-		
-		$em = $this->getDoctrine()->getManager();
+
 		// Evenement accord de devis
 		$this->get('event_dispatcher')->dispatch(JLMCommerceEvents::QUOTEVARIANT_GIVEN, new QuoteVariantEvent($entity, $this->getRequest()));
-		
-		if ($entity->getWork() === null && $entity->getQuote()->getDoor() !== null)
-		{			
-			// Création de la ligne travaux pré-remplie
-			$work = Work::createFromQuoteVariant($entity);
-			//$work->setMustBeBilled(true);
-			$work->setCategory($em->getRepository('JLMDailyBundle:WorkCategory')->find(1));
-			$work->setObjective($em->getRepository('JLMDailyBundle:WorkObjective')->find(1));
-			$order = Order::createFromWork($work);
-			$em->persist($order);
-			$olines = $order->getLines();
-			foreach ($olines as $oline)
-			{
-				$oline->setOrder($order);
-				$em->persist($oline);
-			}
-			$work->setOrder($order);
-			$em->persist($work);
-			$entity->setWork($work);
-		}
+		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
 		
