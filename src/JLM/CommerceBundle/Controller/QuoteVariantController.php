@@ -372,9 +372,4 @@ class QuoteVariantController extends Controller
 
 		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 	}
-	
-	private function changeEntityState(QuoteVariant $entity, $state)
-	{
-		$entity->setState($state);
-	}
 }
