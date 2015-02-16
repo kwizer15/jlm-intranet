@@ -29,13 +29,28 @@ JLM\CommerceBundle\Entity\QuoteVariant:
     quote:
       targetEntity: JLM\CommerceBundle\Entity\Quote
       inversedBy: variants
-  oneToMany:
-    lines:
-      targetEntity: JLM\CommerceBundle\Entity\QuoteLine
-      mappedBy: variant
-      orderBy: { position: ASC }
+#  oneToMany:
+#    lines:
+#      targetEntity: JLM\CommerceBundle\Entity\QuoteLine
+#      mappedBy: variant
+#      orderBy: { position: ASC }
   oneToOne:
     work:
       targetEntity: JLM\DailyBundle\Entity\Work
       inversedBy: quote
+  manyToMany:
+    lines:
+      targetEntity: JLM\CommerceBundle\Entity\QuoteLine
+      joinTable:
+        name: jlm_commerce_quotevariant_join_quote_line
+        joinColumns:
+          quotevariant_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          quoteline_id:
+            referencedColumnName: id
+            unique: true
+      orderBy: { position: ASC }
+      orphanRemoval: true
+      cascade: ["persist"]
       

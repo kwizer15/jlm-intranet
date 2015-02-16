@@ -6,7 +6,7 @@ JLM\ProductBundle\Entity\ProductDecorator:
       generator:
         strategy: AUTO
   manyToOne:
-    contact:
+    product:
       targetEntity: JLM\ProductBundle\Model\ProductInterface
       cascade: ["persist"]
       joinColumn:

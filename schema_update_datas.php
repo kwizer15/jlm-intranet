@@ -1,6 +1,34 @@
 <?php
 $db = new mysqli('localhost','root','sslover','jlm');
+$query = array();
 
+$init = array(
+'CREATE TABLE jlm_daily_product_work (id INT AUTO_INCREMENT NOT NULL, product_id INT DEFAULT NULL, INDEX IDX_9928F3964584665A (product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
+'CREATE TABLE jlm_daily_product_workshop (id INT AUTO_INCREMENT NOT NULL, product_id INT DEFAULT NULL, INDEX IDX_574DBA194584665A (product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
+'CREATE TABLE jlm_transmitter_product_transmitter (id INT AUTO_INCREMENT NOT NULL, product_id INT DEFAULT NULL, INDEX IDX_3EAD03534584665A (product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
+'CREATE TABLE jlm_commerce_quotevariant_join_quote_line (quotevariant_id INT NOT NULL, quoteline_id INT NOT NULL, INDEX IDX_E3936BAF11791C8 (quotevariant_id), UNIQUE INDEX UNIQ_E3936BA8EF03C82 (quoteline_id), PRIMARY KEY(quotevariant_id, quoteline_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
+'CREATE TABLE jlm_commerce_product_order (id INT AUTO_INCREMENT NOT NULL, product_id INT DEFAULT NULL, INDEX IDX_81D967244584665A (product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',);
+$end = array(
+'ALTER TABLE jlm_daily_product_work ADD CONSTRAINT FK_9928F3964584665A FOREIGN KEY (product_id) REFERENCES products (id);',
+'ALTER TABLE jlm_daily_product_workshop ADD CONSTRAINT FK_574DBA194584665A FOREIGN KEY (product_id) REFERENCES products (id);',
+'ALTER TABLE jlm_transmitter_product_transmitter ADD CONSTRAINT FK_3EAD03534584665A FOREIGN KEY (product_id) REFERENCES products (id);',
+'ALTER TABLE jlm_commerce_quotevariant_join_quote_line ADD CONSTRAINT FK_E3936BAF11791C8 FOREIGN KEY (quotevariant_id) REFERENCES quote_variant (id);',
+'ALTER TABLE jlm_commerce_quotevariant_join_quote_line ADD CONSTRAINT FK_E3936BA8EF03C82 FOREIGN KEY (quoteline_id) REFERENCES quote_lines (id);',
+'ALTER TABLE jlm_commerce_product_order ADD CONSTRAINT FK_81D967244584665A FOREIGN KEY (product_id) REFERENCES products (id);',
+'ALTER TABLE quote_lines DROP FOREIGN KEY FK_42FE01F73B69A9AF;',
+'DROP INDEX IDX_42FE01F73B69A9AF ON quote_lines;',
+'ALTER TABLE quote_lines DROP variant_id;',
+);
+
+$quoteLineQuery = "SELECT id, variant_id FROM quote_lines";
+$quoteLines = $db->query($quoteLineQuery);
+while ($quoteLine = $quoteLines->fetch_array())
+{
+	$query[] = 'INSERT INTO jlm_commerce_quotevariant_join_quote_line (quoteline_id, quotevariant_id) VALUES ('.$quoteLine['id'].','.$quoteLine['variant_id'].');';
+}
+
+$query = array_merge($init,$query,$end);
+/*
 $productQuery = "SELECT * FROM products";
 
 $products = $db->query($productQuery);
@@ -12,7 +40,7 @@ while ($product = $products->fetch_array())
 	$query[] = 'INSERT INTO jlm_product_stock (product_id, lastModified) VALUES ('.$product['id'].',"'.$date->format('Y-m-d H:i:s').'");';
 }
 
-/*
+
 $personQuery = "SELECT * FROM persons";
 
 

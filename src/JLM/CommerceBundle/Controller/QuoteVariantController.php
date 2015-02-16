@@ -85,11 +85,6 @@ class QuoteVariantController extends Controller
     	{
     		$em = $this->getDoctrine()->getManager();
     		$lines = $entity->getLines();
-    		foreach ($lines as $line)
-    		{
-    			$line->setVariant($entity);
-    			$em->persist($line);
-    		}
 			$number = $em->getRepository('JLMCommerceBundle:QuoteVariant')->getCount($entity->getQuote())+1;
 			$entity->setVariantNumber($number);
     		$em->persist($entity);
@@ -138,12 +133,7 @@ class QuoteVariantController extends Controller
 		{
 			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 		}
-	
-		$originalLines = array();
-		foreach ($entity->getLines() as $line)
-		{
-			$originalLines[] = $line;
-		}
+
 		$editForm = $this->createEditForm($entity);
 		$editForm->handleRequest($request);
 	
@@ -151,27 +141,6 @@ class QuoteVariantController extends Controller
 		{
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
-			$lines = $entity->getLines();
-			foreach ($lines as $key => $line)
-			{
-	
-				// Nouvelles lignes
-				$line->setVariant($entity);
-				$em->persist($line);
-	
-				// On vire les anciennes
-				foreach ($originalLines as $key => $toDel)
-				{
-					if ($toDel->getId() === $line->getId())
-					{
-						unset($originalLines[$key]);
-					}
-				}
-			}
-			foreach ($originalLines as $line)
-			{
-				$em->remove($line);
-			}
 			$em->flush();
 			
 			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
