@@ -22,7 +22,6 @@ use JLM\CommerceBundle\Entity\Quote;
 use JLM\CommerceBundle\Entity\QuoteVariant;
 use JLM\CommerceBundle\Form\Type\QuoteVariantType;
 use JLM\CommerceBundle\Entity\QuoteLine;
-use JLM\OfficeBundle\Entity\Task;
 use JLM\OfficeBundle\Entity\Order;
 use JLM\DailyBundle\Entity\Work;
 use JLM\CommerceBundle\Event\QuoteEvent;
@@ -48,53 +47,37 @@ class QuoteVariantController extends Controller
 	
 	/**
      * Displays a form to create a new Variant entity.
-     *
-     * @Template()
-     * @Secure(roles="ROLE_USER")
      */
-    public function newAction(Quote $quote)
+    public function newAction()
     {
-        $entity = new QuoteVariant();
-        $entity->setQuote($quote);
-        
-        $entity->setCreation(new \DateTime);
-        $l = new QuoteLine;
-        $l->setVat($quote->getVat());
-        $entity->addLine($l);
-        $form   = $this->createNewForm($entity);
+    	$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+    	$manager->secure('ROLE_USER');
+        $form   = $manager->createForm('new');
 
-        return array(
-            'entity' => $entity,
+        return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:new.html.twig', array(
+            'entity' => $form->getData(),
             'form'   => $form->createView()
-        );
+        ));
     }
     
     /**
      * Creates a new Variant entity.
-     *
-     * @Template("JLMCommerceBundle:QuoteVariant:new.html.twig")
-     * @Secure(roles="ROLE_USER")
      */
     public function createAction(Request $request)
     {
-    	$entity  = new QuoteVariant();
-    	$form    = $this->createNewForm($entity);
+    	$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+    	$manager->secure('ROLE_USER');
+    	$form   = $manager->createForm('new');
     	$form->handleRequest($request);
-    
-    	if ($form->isValid())
+    	
+    	if ($manager->getHandler($form)->process())
     	{
-    		$em = $this->getDoctrine()->getManager();
-			$number = $em->getRepository('JLMCommerceBundle:QuoteVariant')->getCount($entity->getQuote())+1;
-			$entity->setVariantNumber($number);
-    		$em->persist($entity);
-    		$em->flush();
-    		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+    		return $this->redirect($this->generateUrl('quote_show', array('id' => $form->getData()->getQuote()->getId())));
     	}
-    
-    	return array(
-	    	'entity' => $entity,
-	    	'form'   => $form->createView()
-    	);
+    	return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:new.html.twig', array(
+    			'entity' => $form->getData(),
+    			'form'   => $form->createView()
+    	));
     }
     
 	/**

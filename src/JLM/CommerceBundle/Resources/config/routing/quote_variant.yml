@@ -1,5 +1,5 @@
 variant_new:
-    path: /{id}/new
+    path: /new
     defaults: { _controller: "JLMCommerceBundle:QuoteVariant:new" }
     methods: [GET]
     
