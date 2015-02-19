@@ -12,6 +12,7 @@
 namespace JLM\CoreBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class DoctrineEvent extends Event
 {
@@ -24,9 +25,10 @@ class DoctrineEvent extends Event
      * @param FormInterface $form
      * @param Request $request
      */
-    public function __construct($entity)
+    public function __construct($entity, ObjectManager $om)
     {
     	$this->entity = $entity;
+    	$this->om = $om;
     }
     
     /**
@@ -35,5 +37,10 @@ class DoctrineEvent extends Event
     public function getEntity()
     {
     	return $this->entity;
+    }
+    
+    public function getObjectManager()
+    {
+    	return $this->om;
     }
 }
