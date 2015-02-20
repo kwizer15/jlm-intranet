@@ -190,7 +190,7 @@ class QuoteController extends ContainerAware
     	$mail = new Mail;
     	$form = $manager->getFormFactory()->create(new MailType(), $mail);
     	$form->handleRequest($request);
-    		
+    	
     	if ($form->isValid())
     	{
     		$mail->setBcc('commerce@jlm-entreprise.fr');

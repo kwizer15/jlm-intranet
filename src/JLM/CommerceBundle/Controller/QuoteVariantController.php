@@ -45,7 +45,7 @@ class QuoteVariantController extends Controller
         $form   = $manager->createForm('new');
         if ($manager->getHandler($form)->process())
     	{
-    		return $this->redirect($this->generateUrl('quote_show', array('id' => $form->get('quote')->getData()->getId())));
+    		return $manager->redirect('quote_show', array('id' => $form->get('quote')->getData()->getId()));
     	}
     	
     	return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:new.html.twig', array(
@@ -67,7 +67,7 @@ class QuoteVariantController extends Controller
 		$form = $manager->createForm('edit', array('entity' => $entity));
 		if ($manager->getHandler($form)->process())
 		{
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+			return $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()));
 		}
 		
 		return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:edit.html.twig',array(
@@ -78,35 +78,96 @@ class QuoteVariantController extends Controller
 	}
 	
 	/**
-	 * Note QuoteVariant as ready to send.
-	 *
-	 * @Secure(roles="ROLE_USER")
+	 * Change entity state and return the redirect show quote response
+	 * Can send a QuoteVariantEvent if the event name is defined
+	 * @param int $id
+	 * @param int $state
+	 * @param string $event
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
 	 */
-	public function readyAction(QuoteVariant $entity)
+	private function changeState($id, $state, $event = null)
 	{
-		if ($entity->getState() < QuoteVariant::STATE_INSEIZURE)
+		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+		$manager->secure('ROLE_USER');
+		$entity = $manager->getEntity($id);
+		if ($entity->setState($state))
 		{
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+			if ($event !== null)
+			{
+				$manager->dispatch($event, new QuoteVariantEvent($entity, $this->getRequest()));
+			}
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($entity);
+			$em->flush();
 		}
-		$entity->setState(QuoteVariant::STATE_READY);
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($entity);
-		$em->flush();
 		
-		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+		return $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()));
+	}
+	
+	/**
+	 * Note QuoteVariant as ready to send.
+	 */
+	public function readyAction($id)
+	{
+		return $this->changeState($id, QuoteVariant::STATE_READY);
+	}
+
+	/**
+	 * Note QuoteVariant as not ready.
+	 */
+	public function unvalidAction($id)
+	{
+		return $this->changeState($id, QuoteVariant::STATE_INSEIZURE);
+	}
+	
+	/**
+	 * Note QuoteVariant as faxed.
+	 */
+	public function faxAction($id)
+	{
+		return $this->changeState($id, QuoteVariant::STATE_SENDED);
+	}
+	
+	/**
+	 * Note QuoteVariant as canceled.
+	 */
+	public function cancelAction($id)
+	{
+		return $this->changeState($id, QuoteVariant::STATE_CANCELED);
+	}
+	
+	/**
+	 * Note QuoteVariant as receipt.
+	 */
+	public function receiptAction($id)
+	{
+		return $this->changeState($id, QuoteVariant::STATE_RECEIPT);
+	}
+	
+	/**
+	 * Accord du devis / Création de l'intervention
+	 */
+	public function givenAction($id)
+	{
+		return $this->changeState($id, QuoteVariant::STATE_GIVEN, JLMCommerceEvents::QUOTEVARIANT_GIVEN);
 	}
 	
 	/**
 	 * Mail
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
 	 */
-	public function mailAction(QuoteVariant $entity)
+	public function mailAction($id)
 	{
-		if ($entity->getState() < QuoteVariant::STATE_READY)
-		{
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		}
+		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+		$manager->secure('ROLE_USER');
+		$entity = $manager->getEntity($id);
+		$manager->assertState(array(
+				QuoteVariant::STATE_READY,
+				QuoteVariant::STATE_PRINTED,
+				QuoteVariant::STATE_SENDED,
+				QuoteVariant::STATE_RECEIPT,
+				QuoteVariant::STATE_GIVEN
+		));
 		$mail = new Mail();
 		$mail->setSubject('Devis n°'.$entity->getNumber());
 		$mail->setFrom('commerce@jlm-entreprise.fr');
@@ -132,14 +193,16 @@ class QuoteVariantController extends Controller
 	
 	/**
 	 * Send by mail a QuoteVariant entity.
-	 *
-	 * @Secure(roles="ROLE_USER")
 	 */
-	public function sendmailAction(Request $request, QuoteVariant $entity)
+	public function sendmailAction($id)
 	{
+		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+		$manager->secure('ROLE_USER');
+		$request = $manager->getRequest();
+		$entity = $manager->getEntity($id);
 		if ($entity->getState() < QuoteVariant::STATE_READY)
 		{
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+			return $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()));
 		}
 		
 		// Message
@@ -172,129 +235,34 @@ class QuoteVariantController extends Controller
 			$em->flush();
 		}
 		
-		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-	}
-	
-	
-	
-	/**
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function printAction(QuoteVariant $entity)
-	{
-		$response = new Response();
-		$response->headers->set('Content-Type', 'application/pdf');
-		$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
-		$response->setContent($this->render('JLMCommerceBundle:Quote:quote.pdf.php',array('entities'=>array($entity))));
-		 
-		return $response;
+		return $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()));
 	}
 	
 	/**
-	 * @Secure(roles="ROLE_USER")
+	 * Print a Quote
 	 */
-	public function printcodingAction(QuoteVariant $entity)
+	public function printAction($id)
 	{
+		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+		$manager->secure('ROLE_USER');
+		$entity = $manager->getEntity($id);
+		
+		return $manager->renderPdf($entity->getNumber(), 'JLMCommerceBundle:Quote:quote.pdf.php', array('entities'=>array($entity)));
+	}
+	
+	/**
+	 * Print a coding
+	 */
+	public function printcodingAction($id)
+	{
+		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+		$manager->secure('ROLE_USER');
+		$entity = $manager->getEntity($id);
 		if ($entity->getState() == QuoteVariant::STATE_CANCELED)
 		{
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		}
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($entity);
-		$em->flush();
-			
-		$response = new Response();
-		$response->headers->set('Content-Type', 'application/pdf');
-		$response->headers->set('Content-Disposition', 'inline; filename=chiffrage'.$entity->getNumber().'.pdf');
-		$response->setContent($this->render('JLMCommerceBundle:QuoteVariant:coding.pdf.php',array('entity'=>$entity)));
-			
-		return $response;
-	}
-	
-	
-	/**
-	 * Note QuoteVariant as not ready.
-	 *
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function unvalidAction(QuoteVariant $entity)
-	{
-		if ($entity->setState(QuoteVariant::STATE_INSEIZURE))
-		{
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($entity);
-			$em->flush();
+			return $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()));
 		}
 		
-		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-	}
-	
-	/**
-	 * Note QuoteVariant as faxed.
-	 *
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function faxAction(QuoteVariant $entity)
-	{
-		if ($entity->setState(QuoteVariant::STATE_SENDED))
-		{
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($entity);
-			$em->flush();
-		}
-		
-		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-	}
-	
-	/**
-	 * Note QuoteVariant as canceled.
-	 *
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function cancelAction(QuoteVariant $entity)
-	{
-		if ($entity->setState(QuoteVariant::STATE_CANCELED))
-		{
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($entity);
-			$em->flush();
-		}
-		
-		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-	}
-	
-	/**
-	 * Note QuoteVariant as receipt.
-	 *
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function receiptAction(QuoteVariant $entity)
-	{
-		if ($entity->setState(QuoteVariant::STATE_RECEIPT))
-		{
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($entity);
-			$em->flush();
-		}
-		
-		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));;
-	}
-	
-	/**
-	 * Accord du devis / Création de l'intervention
-	 *
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function givenAction(QuoteVariant $entity)
-	{
-		if ($entity->setState(QuoteVariant::STATE_GIVEN))
-		{
-			$this->get('event_dispatcher')->dispatch(JLMCommerceEvents::QUOTEVARIANT_GIVEN, new QuoteVariantEvent($entity, $this->getRequest()));
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($entity);
-			$em->flush();
-		}
-
-		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+		return $manager->renderPdf('chiffrage-'.$entity->getNumber(), 'JLMCommerceBundle:Quote:coding.pdf.php',array('entities'=>array($entity)));
 	}
 }
