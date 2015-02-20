@@ -53,28 +53,13 @@ class QuoteVariantController extends Controller
     	$manager = $this->container->get('jlm_commerce.quotevariant_manager');
     	$manager->secure('ROLE_USER');
         $form   = $manager->createForm('new');
-
-        return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:new.html.twig', array(
-            'entity' => $form->getData(),
-            'form'   => $form->createView()
-        ));
-    }
-    
-    /**
-     * Creates a new Variant entity.
-     */
-    public function createAction(Request $request)
-    {
-    	$manager = $this->container->get('jlm_commerce.quotevariant_manager');
-    	$manager->secure('ROLE_USER');
-    	$form   = $manager->createForm('new');
-    	$form->handleRequest($request);
-    	
-    	if ($manager->getHandler($form)->process())
+        if ($manager->getHandler($form)->process())
     	{
-    		return $this->redirect($this->generateUrl('quote_show', array('id' => $form->getData()->getQuote()->getId())));
+    		return $this->redirect($this->generateUrl('quote_show', array('id' => $form->get('quote')->getData()->getId())));
     	}
+    	
     	return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:new.html.twig', array(
+    			'quote' => $form->get('quote')->getData(),
     			'entity' => $form->getData(),
     			'form'   => $form->createView()
     	));

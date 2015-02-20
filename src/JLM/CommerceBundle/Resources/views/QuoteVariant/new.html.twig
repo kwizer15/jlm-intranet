@@ -1,15 +1,15 @@
 {% extends "JLMCommerceBundle:Quote:layout.html.twig" %}
 
 {% block content %}
-<h1>Nouvelle variante <small>{{ entity.quote.number }}</small></h1>
+<h1>Nouvelle variante <small>{{ quote.number }}</small></h1>
 {% if form_errors(form) %}
 <div class="alert">{{ form_errors(form) }}</div>
 {% endif %}
-{% include 'JLMCommerceBundle:Quote:showheader.html.twig' with {'quote': entity.quote} %}
+{% include 'JLMCommerceBundle:Quote:showheader.html.twig' with {'quote': quote} %}
 <form action="{{ path('variant_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
   <fieldset>
-  <input type="hidden" value="{{ (entity.quote.vat*100) | number_format(1,',',' ') }}" id="quote_vat">
-  <input type="hidden" value="{{ (entity.quote.vatTransmitter*100) | number_format(1,',',' ') }}" id="quote_vatTransmitter">
+  <input type="hidden" value="{{ (quote.vat*100) | number_format(1,',',' ') }}" id="quote_vat">
+  <input type="hidden" value="{{ (quote.vatTransmitter*100) | number_format(1,',',' ') }}" id="quote_vatTransmitter">
     {{ form_widget(form) }}
 	<div class="form-actions">
 	  <a href="{{ path('quote') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>

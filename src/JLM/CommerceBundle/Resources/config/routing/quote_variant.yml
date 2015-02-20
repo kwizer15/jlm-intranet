@@ -5,7 +5,7 @@ variant_new:
     
 variant_create:
     path: /create
-    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:create" }
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:new" }
     methods: [POST]
     
 variant_edit:
@@ -16,7 +16,7 @@ variant_edit:
 variant_update:
     path: /{id}/update
     defaults: { _controller: "JLMCommerceBundle:QuoteVariant:update" }
-    methods: [POST]
+    methods: [POST,PUT]
     
 variant_ready:
     path: /{id}/ready

@@ -9,7 +9,7 @@ use JLM\CommerceBundle\Builder\VariantBillBuilder;
 use JLM\CoreBundle\Event\FormPopulatingEvent;
 use JLM\CoreBundle\Event\DoctrineEvent;
 
-class BillSubscriber implements EventSubscriberInterface
+class QuoteVariantSubscriber implements EventSubscriberInterface
 {	
 	private $om;
 	private $form;

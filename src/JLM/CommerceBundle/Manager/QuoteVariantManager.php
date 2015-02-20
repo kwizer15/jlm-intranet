@@ -57,7 +57,7 @@ class QuoteVariantManager extends Manager
 	{
 		// Appel des évenements de remplissage du formulaire
 		$this->dispatch(JLMCommerceEvents::QUOTEVARIANT_FORM_POPULATE, new FormPopulatingEvent($form, $this->getRequest()));
-  		
+		
 		// On complète avec ce qui reste vide
 		$params = array(
 				'creation' => new \DateTime,
@@ -77,7 +77,7 @@ class QuoteVariantManager extends Manager
 			$l = new QuoteLine();
 			if ($form->get('quote') instanceof Quote)
 			{
-				$l->setVat($form->get('quote')->getVat());
+				$l->setVat($form->get('quote')->getData()->getVat());
 			}
 			$form->get('lines')->setData(array($l));
 		}

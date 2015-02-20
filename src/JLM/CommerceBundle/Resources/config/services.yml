@@ -69,6 +69,12 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_subscriber }
+            
+    jlm_commerce.quotevariant_subscriber:
+        class: JLM\CommerceBundle\EventListener\QuoteVariantSubscriber
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_subscriber }
     
     jlm_commerce.twig.billcount_extension:
         class: JLM\CommerceBundle\Twig\Extension\BillCountExtension
