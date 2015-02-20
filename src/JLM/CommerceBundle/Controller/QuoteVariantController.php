@@ -34,17 +34,7 @@ use JLM\CommerceBundle\Event\QuoteVariantEvent;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class QuoteVariantController extends Controller
-{
-	private function createNewForm(QuoteVariant $entity)
-	{
-		return $this->createForm(new QuoteVariantType(), $entity);
-	}
-	
-	private function createEditForm(QuoteVariant $entity)
-	{
-		return $this->createForm(new QuoteVariantType(), $entity);
-	}
-	
+{		
 	/**
      * Displays a form to create a new Variant entity.
      */
@@ -67,56 +57,24 @@ class QuoteVariantController extends Controller
     
 	/**
 	 * Displays a form to edit an existing QuoteVariant entity.
-	 *
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
 	 */
-	public function editAction(QuoteVariant $entity)
+	public function editAction($id)
 	{
-		// Si le devis est déjà validé, on empèche quelconque modification
-		if ($entity->getState() != QuoteVariant::STATE_INSEIZURE)
+		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+		$manager->secure('ROLE_USER');
+		$entity = $manager->getEntity($id);
+		$manager->assertState($entity, array(QuoteVariant::STATE_INSEIZURE));
+		$form = $manager->createForm('edit', array('entity' => $entity));
+		if ($manager->getHandler($form)->process())
 		{
 			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 		}
-		$editForm = $this->createEditForm($entity);
 		
-		return array(
+		return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:edit.html.twig',array(
+				'quote' => $form->get('quote')->getData(),
 				'entity'      => $entity,
-				'edit_form'   => $editForm->createView(),
-		);
-	}
-	
-	/**
-	 * Edits an existing QuoteVariant entity.
-	 *
-	 * @Template("JLMCommerceBundle:QuoteVariant:edit.html.twig")
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function updateAction(Request $request, QuoteVariant $entity)
-	{
-		 
-		// Si le devis est déjà validé, on empèche quelconque odification
-		if ($entity->getState() != QuoteVariant::STATE_INSEIZURE)
-		{
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		}
-
-		$editForm = $this->createEditForm($entity);
-		$editForm->handleRequest($request);
-	
-		if ($editForm->isValid())
-		{
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($entity);
-			$em->flush();
-			
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		}
-	
-		return array(
-				'entity'      => $entity,
-				'edit_form'   => $editForm->createView(),
-		);
+				'form'   => $form->createView(),
+		));
 	}
 	
 	/**

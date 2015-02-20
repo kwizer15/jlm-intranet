@@ -15,7 +15,7 @@ variant_edit:
     
 variant_update:
     path: /{id}/update
-    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:update" }
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:edit" }
     methods: [POST,PUT]
     
 variant_ready:

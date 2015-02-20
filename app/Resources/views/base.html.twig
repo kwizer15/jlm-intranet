@@ -9,6 +9,8 @@
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+      	{% if form is defined %}{{ form_javascript(form) }}{% endif %}
+		{% if edit_form is defined %}{{ form_javascript(edit_form) }}{% endif %}
         <script>
 		{% block javascripts_script %}{% endblock %}
         {% block javascriptappend %}{% endblock %}

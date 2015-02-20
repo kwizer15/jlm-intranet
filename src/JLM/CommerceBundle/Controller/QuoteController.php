@@ -65,7 +65,7 @@ class QuoteController extends ContainerAware
     }
     
     /**
-     * Nouveau devis depuis un demande de devis 
+     * Nouveau devis
      */
     public function newAction()
     {
