@@ -96,7 +96,7 @@ class QuoteVariantController extends Controller
 			{
 				$manager->dispatch($event, new QuoteVariantEvent($entity, $this->getRequest()));
 			}
-			$em = $this->getDoctrine()->getManager();
+			$em = $manager->getObjectManager();
 			$em->persist($entity);
 			$em->flush();
 		}
