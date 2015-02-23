@@ -188,6 +188,8 @@ class InterventionController extends Controller
 		$entity->setWork($work);
 		$em->persist($entity);
 		$em->flush();
+//		$this->get('event_dispatcher')->dispatch(JLMDailyEvent::INTERVENTION_SCHEDULEWORK, new InterventionEvent($entity));
+		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
@@ -204,6 +206,8 @@ class InterventionController extends Controller
 		$em->remove($work);
 		$em->persist($entity);
 		$em->flush();
+//		$this->get('event_dispatcher')->dispatch(JLMDailyEvent::INTERVENTION_UNSCHEDULEWORK, new InterventionEvent($entity));
+		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
@@ -215,7 +219,7 @@ class InterventionController extends Controller
 	public function cancelAction(Request $request, Intervention $entity)
 	{
 		$form = $this->createForm(new InterventionCancelType(), $entity);
-		$form->bind($request);
+		$form->handleRequest($request);
 		if ($form->isValid())
 		{
 			$entity->cancel();
@@ -250,7 +254,7 @@ class InterventionController extends Controller
 	{
 		//$form = $this->createForm(new ExternalBillType(), $entity);
 		$form = $this->get('form.factory')->createNamed('externalBill'.$entity->getId(),new ExternalBillType(), $entity);
-		$form->bind($request);
+		$form->handleRequest($request);
 		if ($form->isValid())
 		{
 			$em = $this->getDoctrine()->getManager();
