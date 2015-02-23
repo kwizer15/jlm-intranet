@@ -1,0 +1,21 @@
+JLM\FollowBundle\Entity\Thread:
+  type: entity
+  table: jlm_follow_thread
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    startDate:
+      type: datetime
+  oneToOne:
+    starter:
+      targetEntity: JLM\FollowBundle\Model\StarterInterface
+    order:
+      targetEntity: JLM\CommerceBundle\Model\OrderInterface
+    work:
+      targetEntity: JLM\DailyBundle\Model\WorkInterface
+  lifecycleCallbacks:
+    prePersist: [ setStartDate ]
+      

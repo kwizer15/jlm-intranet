@@ -1,0 +1,36 @@
+{% extends 'JLMCoreBundle::layout.html.twig' %}
+
+{% block content %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Syndic</th>
+      <th>Affaire</th>
+      <th>Origine</th>
+      <th>Montant</th>
+      <th>Commande fournisseur</th>
+      <th>Préparation matériel</th>
+      <th>Début des travaux</th>
+      <th>Fin des travaux</th>
+      <th>Facturation</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for thread in threads %}
+    <tr>
+      <td>{{ thread.startDate|date('d/m/Y') }}</td>
+      <td>{{ thread.starter.business.manager|nl2br }}</td>
+      <td>{{ thread.starter.business|nl2br }}</td>
+      <td>{{ thread.starter.name }}</td>
+      <td>{{ thread.amount|number_format(2,',',' ') }}</td>
+      <td>{% if thread.order.state > 0 %}{{ thread.order.creation|date('d/m/Y') }}{% endif %}</td>
+      <td>{% if thread.order.state > 1 %}{{ thread.order.close|date('d/m/Y') }}{% endif %}</td>
+      <td>{% if thread.work.firstDate %}{{ thread.work.firstDate|date('d/m/Y') }}{% endif %}</td>
+      <td>{% if thread.work.close %}{{ thread.work.close|date('d/m/Y') }}{% endif %}</td>
+      <td>{% if thread.work.bill %}{{ thread.work.bill.number }}{% endif %}</td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+{% endblock %}

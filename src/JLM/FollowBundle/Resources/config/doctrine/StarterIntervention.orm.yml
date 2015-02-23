@@ -1,0 +1,7 @@
+JLM\FollowBundle\Entity\StarterIntervention:
+  type: entity
+  table: jlm_follow_starterintervention
+  oneToOne:
+    intervention:
+      targetEntity: JLM\DailyBundle\Model\InterventionInterface
+      

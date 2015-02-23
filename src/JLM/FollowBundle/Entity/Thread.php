@@ -12,9 +12,9 @@
 namespace JLM\FollowBundle\Entity;
 
 use JLM\FollowBundle\Model\ThreadInterface;
+use JLM\FollowBundle\Model\StarterInterface;
 use JLM\CommerceBundle\Model\OrderInterface;
 use JLM\DailyBundle\Model\WorkInterface;
-use JLM\FollowBundle\Model\StarterInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -25,6 +25,11 @@ class Thread implements ThreadInterface
 	 * @var int
 	 */
 	private $id;
+	
+	/**
+	 * @var \DateTime
+	 */
+	private $startDate;
 	
 	/**
 	 * @var StarterInterface
@@ -40,6 +45,13 @@ class Thread implements ThreadInterface
 	 * @var WorkerInterface
 	 */
 	private $work;
+	
+	public function __construct(StarterInterface $starter, OrderInterface $order, WorkInterface $work)
+	{
+		$this->setStarter($starter);
+		$this->setOrder($order);
+		$this->setWork($work);
+	}
 	
 	/**
 	 * @return int
@@ -104,5 +116,55 @@ class Thread implements ThreadInterface
 	public function getWork()
 	{
 		return $this->work;
+	}
+	
+	/**
+	 * @param \DateTime $date
+	 * @return self
+	 */
+	public function setStartDate(\DateTime $date = null)
+	{
+		$this->startDate = ($date === null) ? new \DateTime : $date;
+		
+		return $this;
+	}
+	
+	/**
+	 * @return \DateTime
+	 */
+	public function getStartDate()
+	{
+		return $this->startDate;
+	}
+	
+	public function getSteps()
+	{
+		return array(
+			array(
+					'name' => $this->getStarter()->getName(),
+					'date' => $this->getStartDate(),
+			),
+			array(
+					'name' => 'Commande',
+					'date' => ($this->getOrder()->getState() > 0) ? $this->getOrder()->getCreation() : null,
+			),
+			array(
+					'name' => 'Préparation de matériel',
+					'date' => ($this->getOrder()->getState() > 1) ? $this->getOrder()->getClose() : null,
+			),
+			array(
+					'name' => 'Travaux',
+					'date' => $this->getWork()->getFirstDate(), 
+			),
+			array(
+					'name' => 'Terminé',
+					'date' => $this->getWork()->getClose(),
+			),
+		); 
+	}
+	
+	public function getAmount()
+	{
+		return $this->getStarter()->getAmount();
 	}
 }

@@ -20,4 +20,8 @@ interface OrderInterface
 	 * @return int
 	 */
 	public function getState();
+	
+	public function getCreation();
+	
+	public function getClose();
 }

@@ -28,12 +28,6 @@ services:
     arguments: ["@doctrine.orm.entity_manager"]
     tags:
       - { name: kernel.event_subscriber }
-      
-  jlm_daily.quotevariant_subscriber:
-    class: JLM\DailyBundle\EventListener\QuoteVariantSubscriber
-    arguments: ["@doctrine.orm.entity_manager"]
-    tags:
-      - { name: kernel.event_subscriber }
 
   jlm_daily.maintenance_manager:
     class: "%jlm_daily.manager.maintenance.class%"

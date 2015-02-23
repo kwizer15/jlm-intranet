@@ -11,15 +11,12 @@
 
 namespace JLM\FollowBundle\Entity;
 
-use JLM\FollowBundle\Model\StarterInterface;
 use JLM\DailyBundle\Model\InterventionInterface;
-use JLM\CommerceBundle\Model\BusinessInterface;
-use JLM\InstallationBundle\Model\BayInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class StarterQuote implements StarterInterface
+class StarterIntervention extends Starter
 {
 	/**
 	 * @var InterventionInterface
@@ -61,11 +58,8 @@ class StarterQuote implements StarterInterface
 		return $this->getIntervention()->getDoor();
 	}
 	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getStartDate()
+	public function getAmount()
 	{
-		return $this->getIntervention()->getLastDate();
+		return 'Complet';
 	}
 }

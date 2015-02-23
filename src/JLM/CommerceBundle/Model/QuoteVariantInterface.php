@@ -54,4 +54,6 @@ interface QuoteVariantInterface
 	 * @return string
 	 */
 	public function getNumber();
+	
+	public function getTotalPrice();
 }

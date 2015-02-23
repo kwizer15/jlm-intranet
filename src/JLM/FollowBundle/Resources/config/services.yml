@@ -1,0 +1,6 @@
+services:
+  jlm_follow.quotevariant_subscriber:
+    class: JLM\FollowBundle\EventListener\QuoteVariantSubscriber
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: kernel.event_subscriber }

@@ -2,12 +2,20 @@
 $db = new mysqli('localhost','root','sslover','jlm');
 $query = array();
 
+
+
+
 $init = array(
 'CREATE TABLE jlm_daily_product_work (id INT AUTO_INCREMENT NOT NULL, product_id INT DEFAULT NULL, INDEX IDX_9928F3964584665A (product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
 'CREATE TABLE jlm_daily_product_workshop (id INT AUTO_INCREMENT NOT NULL, product_id INT DEFAULT NULL, INDEX IDX_574DBA194584665A (product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
 'CREATE TABLE jlm_transmitter_product_transmitter (id INT AUTO_INCREMENT NOT NULL, product_id INT DEFAULT NULL, INDEX IDX_3EAD03534584665A (product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
 'CREATE TABLE jlm_commerce_quotevariant_join_quote_line (quotevariant_id INT NOT NULL, quoteline_id INT NOT NULL, INDEX IDX_E3936BAF11791C8 (quotevariant_id), UNIQUE INDEX UNIQ_E3936BA8EF03C82 (quoteline_id), PRIMARY KEY(quotevariant_id, quoteline_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
-'CREATE TABLE jlm_commerce_product_order (id INT AUTO_INCREMENT NOT NULL, product_id INT DEFAULT NULL, INDEX IDX_81D967244584665A (product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',);
+'CREATE TABLE jlm_commerce_product_order (id INT AUTO_INCREMENT NOT NULL, product_id INT DEFAULT NULL, INDEX IDX_81D967244584665A (product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
+'CREATE TABLE jlm_follow_starter (id INT AUTO_INCREMENT NOT NULL, discr VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
+'CREATE TABLE jlm_follow_starterquote (id INT NOT NULL, variant_id INT DEFAULT NULL, UNIQUE INDEX UNIQ_922C43943B69A9AF (variant_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
+'CREATE TABLE jlm_follow_thread (id INT AUTO_INCREMENT NOT NULL, starter_id INT DEFAULT NULL, order_id INT DEFAULT NULL, work_id INT DEFAULT NULL, startDate DATETIME NOT NULL, UNIQUE INDEX UNIQ_CC1FDB58AD5A66CC (starter_id), UNIQUE INDEX UNIQ_CC1FDB588D9F6D38 (order_id), UNIQUE INDEX UNIQ_CC1FDB58BB3453DB (work_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
+'CREATE TABLE jlm_follow_starterintervention (id INT NOT NULL, intervention_id INT DEFAULT NULL, UNIQUE INDEX UNIQ_93A09CAC8EAE3863 (intervention_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
+);
 $end = array(
 'ALTER TABLE jlm_daily_product_work ADD CONSTRAINT FK_9928F3964584665A FOREIGN KEY (product_id) REFERENCES products (id);',
 'ALTER TABLE jlm_daily_product_workshop ADD CONSTRAINT FK_574DBA194584665A FOREIGN KEY (product_id) REFERENCES products (id);',
@@ -16,6 +24,14 @@ $end = array(
 'ALTER TABLE jlm_commerce_quotevariant_join_quote_line ADD CONSTRAINT FK_E3936BA8EF03C82 FOREIGN KEY (quoteline_id) REFERENCES quote_lines (id);',
 'ALTER TABLE jlm_commerce_product_order ADD CONSTRAINT FK_81D967244584665A FOREIGN KEY (product_id) REFERENCES products (id);',
 'ALTER TABLE quote_lines DROP FOREIGN KEY FK_42FE01F73B69A9AF;',
+'ALTER TABLE jlm_follow_starterquote ADD CONSTRAINT FK_922C43943B69A9AF FOREIGN KEY (variant_id) REFERENCES quote_variant (id);',
+'ALTER TABLE jlm_follow_starterquote ADD CONSTRAINT FK_922C4394BF396750 FOREIGN KEY (id) REFERENCES jlm_follow_starter (id) ON DELETE CASCADE;',
+'ALTER TABLE jlm_follow_thread ADD CONSTRAINT FK_CC1FDB58AD5A66CC FOREIGN KEY (starter_id) REFERENCES jlm_follow_starter (id);',
+'ALTER TABLE jlm_follow_thread ADD CONSTRAINT FK_CC1FDB588D9F6D38 FOREIGN KEY (order_id) REFERENCES orders (id);',
+'ALTER TABLE jlm_follow_thread ADD CONSTRAINT FK_CC1FDB58BB3453DB FOREIGN KEY (work_id) REFERENCES shifting_works (id);',
+'ALTER TABLE jlm_follow_starterintervention ADD CONSTRAINT FK_93A09CAC8EAE3863 FOREIGN KEY (intervention_id) REFERENCES shifting_interventions (id);',
+'ALTER TABLE jlm_follow_starterintervention ADD CONSTRAINT FK_93A09CACBF396750 FOREIGN KEY (id) REFERENCES jlm_follow_starter (id) ON DELETE CASCADE;',
+'ALTER TABLE orders ADD close DATETIME DEFAULT NULL;',
 'DROP INDEX IDX_42FE01F73B69A9AF ON quote_lines;',
 'ALTER TABLE quote_lines DROP variant_id;',
 );

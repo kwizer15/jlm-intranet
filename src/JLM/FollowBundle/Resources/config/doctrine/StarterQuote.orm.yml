@@ -1,0 +1,7 @@
+JLM\FollowBundle\Entity\StarterQuote:
+  type: entity
+  table: jlm_follow_starterquote
+  oneToOne:
+    variant:
+      targetEntity: JLM\CommerceBundle\Model\QuoteVariantInterface
+      

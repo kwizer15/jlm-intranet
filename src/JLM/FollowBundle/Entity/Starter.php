@@ -9,25 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\FollowBundle\Model;
+namespace JLM\FollowBundle\Entity;
+
+use JLM\FollowBundle\Model\StarterInterface;
+use JLM\CommerceBundle\Model\QuoteVariantInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-interface StarterInterface
+abstract class Starter implements StarterInterface
 {
-	/**
-	 * @return string
-	 */
-	public function getName();
+	private $id;
 	
-	/**
-	 * @return BayInterface
-	 */
-	public function getBusiness();
-	
-	/**
-	 * @return string
-	 */
-	public function getAmount();
+	public function getId()
+	{
+		return $this->id;
+	}
 }

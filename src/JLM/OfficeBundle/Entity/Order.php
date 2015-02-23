@@ -35,6 +35,12 @@ class Order implements OrderInterface
 	private $creation;
 	
 	/**
+	 * @var DateTime $close
+	 * @ORM\Column(name="close",type="datetime", nullable=true)
+	 */
+	private $close;
+	
+	/**
 	 * Lignes
 	 * @var ArrayCollection $lines
 	 * @ORM\OneToMany(targetEntity="OrderLine", mappedBy="order")
@@ -131,6 +137,29 @@ class Order implements OrderInterface
     public function getCreation()
     {
     	return $this->creation;
+    }
+    
+    /**
+     * Set close
+     *
+     * @param \DateTime $close
+     * @return Document
+     */
+    public function setClose(\DateTime $close = null)
+    {
+    	$this->close = ($close === null) ? new \DateTime : $close;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get close
+     *
+     * @return \DateTime
+     */
+    public function getClose()
+    {
+    	return $this->close;
     }
     
     /**

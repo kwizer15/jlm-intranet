@@ -11,18 +11,22 @@
 
 namespace JLM\FollowBundle\Entity;
 
-use JLM\FollowBundle\Model\StarterInterface;
 use JLM\CommerceBundle\Model\QuoteVariantInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class StarterQuote implements StarterInterface
+class StarterQuote extends Starter
 {
 	/**
 	 * @var QuoteVariantInterface
 	 */
 	private $variant;
+	
+	public function __construct(QuoteVariantInterface $variant)
+	{
+		$this->setVariant($variant);
+	}
 	
 	/**
 	 * @param QuoteVariantInterface $variant
@@ -59,11 +63,8 @@ class StarterQuote implements StarterInterface
 		return $this->getVariant()->getDoor();
 	}
 	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getStartDate()
+	public function getAmount()
 	{
-		return $this->getVariant()->getGivenDate();
+		return $this->getVariant()->getTotalPrice();
 	}
 }
