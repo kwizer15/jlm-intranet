@@ -5,6 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JLM\OfficeBundle\Entity\Order;
 use JLM\CommerceBundle\Model\QuoteVariantInterface;
+use JLM\DailyBundle\Model\WorkInterface;
 
 /**
  * Plannification de travaux
@@ -13,7 +14,7 @@ use JLM\CommerceBundle\Model\QuoteVariantInterface;
  * @ORM\Table(name="shifting_works")
  * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\WorkRepository")
  */
-class Work extends Intervention
+class Work extends Intervention implements WorkInterface
 {
 	/**
 	 * Devis source (pour "selon devis...")

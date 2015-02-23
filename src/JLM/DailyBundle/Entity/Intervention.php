@@ -8,6 +8,7 @@ use JLM\ContractBundle\Model\ContractInterface;
 use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\CommerceBundle\Model\BillInterface;
 use JLM\CommerceBundle\Model\BillSourceInterface;
+use JLM\DailyBundle\Model\InterventionInterface;
 
 /**
  * Plannification d'intervention
@@ -16,7 +17,7 @@ use JLM\CommerceBundle\Model\BillSourceInterface;
  * @ORM\Table(name="shifting_interventions")
  * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\InterventionRepository")
  */
-abstract class Intervention extends Shifting implements BillSourceInterface
+abstract class Intervention extends Shifting implements InterventionInterface, BillSourceInterface
 {
     /**
      * Porte (lien)
@@ -453,6 +454,7 @@ abstract class Intervention extends Shifting implements BillSourceInterface
     public function reOpen()
     {
     	$this->close = null;
+    	
     	return $this;
     }
     

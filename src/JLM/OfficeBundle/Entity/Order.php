@@ -5,6 +5,7 @@ namespace JLM\OfficeBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\DailyBundle\Entity\Work;
+use JLM\CommerceBundle\Model\OrderInterface;
 
 /**
  * JLM\OfficeBundle\Entity\Order
@@ -12,7 +13,7 @@ use JLM\DailyBundle\Entity\Work;
  * @ORM\Table(name="orders")
  * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\OrderRepository")
  */
-class Order
+class Order implements OrderInterface
 {
 	const STATE_INPUT = 0;
 	const STATE_ORDERED = 1;
