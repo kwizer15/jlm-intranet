@@ -35,7 +35,7 @@ class QuoteVariantControllerTest extends WebTestCase
     public function getUrls()
     {
         return array(
-        	array('GET', '/quote/variant/1/new'),
+        	array('GET', '/quote/variant/new?quote=1'),
             array('GET', '/quote/variant/1/edit'),
         );
     }
