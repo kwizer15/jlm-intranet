@@ -1,17 +1,30 @@
 <?php
+
+/*
+ * This file is part of the JLMDailyBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\DailyBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use JLM\CommerceBundle\JLMCommerceEvents;
-use JLM\CommerceBundle\Factory\BillFactory;
 use Doctrine\Common\Persistence\ObjectManager;
-use JLM\DailyBundle\Builder\WorkBillBuilder;
-use JLM\DailyBundle\Builder\InterventionBillBuilder;
-use JLM\DailyBundle\Entity\Work;
+use JLM\CommerceBundle\JLMCommerceEvents;
+use JLM\CommerceBundle\Event\BillEvent;
+use JLM\CommerceBundle\Factory\BillFactory;
 use JLM\CoreBundle\Event\FormPopulatingEvent;
 use JLM\CoreBundle\Event\RequestEvent;
-use JLM\CommerceBundle\Event\BillEvent;
+use JLM\DailyBundle\Builder\WorkBillBuilder;
+use JLM\DailyBundle\Builder\InterventionBillBuilder;
+use JLM\DailyBundle\Entity\Work;	// @todo Change to WorkInterface
 
+/**
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ */
 class BillSubscriber implements EventSubscriberInterface
 {	
 	private $om;

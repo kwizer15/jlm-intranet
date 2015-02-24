@@ -23,13 +23,23 @@ use JLM\DailyBundle\Factory\WorkFactory;
  */
 class InterventionSubscriber implements EventSubscriberInterface
 {	
+	/**
+	 * @var ObjectManager
+	 */
 	private $om;
 	
+	/**
+	 * Constructor
+	 * @param ObjectManager $om
+	 */
 	public function __construct(ObjectManager $om)
 	{
 		$this->om = $om;
 	}
 	
+	/**
+	 * {@inheritdoc}
+	 */
 	public static function getSubscribedEvents()
 	{
 		return array(
@@ -37,6 +47,10 @@ class InterventionSubscriber implements EventSubscriberInterface
 		);
 	}
 	
+	/**
+	 * Create work since intervention
+	 * @param InterventionEvent $event
+	 */
 	public function createWork(InterventionEvent $event)
 	{
 		$interv = $event->getIntervention();
