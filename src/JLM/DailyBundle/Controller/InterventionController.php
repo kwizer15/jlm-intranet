@@ -11,14 +11,17 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Intervention;
 use JLM\DailyBundle\Entity\Work;
 use JLM\DailyBundle\Entity\Shifting;
-use JLM\ModelBundle\Form\Type\DatepickerType;
-use JLM\ModelBundle\Entity\Door;
-use JLM\OfficeBundle\Entity\Task;
-use JLM\CommerceBundle\Entity\Bill;
-use JLM\OfficeBundle\Entity\TaskType;
-use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\DailyBundle\Form\Type\ExternalBillType;
 use JLM\DailyBundle\Form\Type\InterventionCancelType;
+use JLM\DailyBundle\JLMDailyEvents;
+use JLM\DailyBundle\Event\InterventionEvent;
+use JLM\DailyBundle\Factory\WorkFactory;
+use JLM\DailyBundle\Builder\InterventionWorkBuilder;
+
+use JLM\ModelBundle\Form\Type\DatepickerType;
+use JLM\ModelBundle\Entity\Door;
+use JLM\CommerceBundle\Entity\Bill;
+use JLM\OfficeBundle\Entity\AskQuote;
 
 /**
  * Fixing controller.
@@ -177,18 +180,7 @@ class InterventionController extends Controller
 	 */
 	public function toworkAction(Intervention $entity)
 	{
-		$em = $this->getDoctrine()->getManager();
-		$workCat = $em->getRepository('JLMDailyBundle:WorkCategory')->find(1);
-		$workObj = $em->getRepository('JLMDailyBundle:WorkObjective')->find(1);
-		$work = new Work;
-		$work->populateFromIntervention($entity);
-		$work->setCategory($workCat);
-		$work->setObjective($workObj);
-		$em->persist($work);
-		$entity->setWork($work);
-		$em->persist($entity);
-		$em->flush();
-//		$this->get('event_dispatcher')->dispatch(JLMDailyEvent::INTERVENTION_SCHEDULEWORK, new InterventionEvent($entity));
+		$this->get('event_dispatcher')->dispatch(JLMDailyEvents::INTERVENTION_SCHEDULEWORK, new InterventionEvent($entity));
 		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
@@ -206,7 +198,7 @@ class InterventionController extends Controller
 		$em->remove($work);
 		$em->persist($entity);
 		$em->flush();
-//		$this->get('event_dispatcher')->dispatch(JLMDailyEvent::INTERVENTION_UNSCHEDULEWORK, new InterventionEvent($entity));
+//		$this->get('event_dispatcher')->dispatch(JLMDailyEvents::INTERVENTION_UNSCHEDULEWORK, new InterventionEvent($entity));
 		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}

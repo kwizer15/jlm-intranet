@@ -29,6 +29,12 @@ services:
     tags:
       - { name: kernel.event_subscriber }
 
+  jlm_daily.intervention_subscriber:
+    class: JLM\DailyBundle\EventListener\InterventionSubscriber
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: kernel.event_subscriber }
+
   jlm_daily.maintenance_manager:
     class: "%jlm_daily.manager.maintenance.class%"
     arguments: ["%jlm_daily.model.maintenance.class%"]
