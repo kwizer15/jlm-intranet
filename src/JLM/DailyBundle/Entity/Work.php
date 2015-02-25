@@ -51,7 +51,6 @@ class Work extends Intervention implements WorkInterface
 	
 	/**
 	 * Intervention source
-	 * @ORM\OneToOne(targetEntity="Intervention", mappedBy="work")
 	 */
 	private $intervention;
 	

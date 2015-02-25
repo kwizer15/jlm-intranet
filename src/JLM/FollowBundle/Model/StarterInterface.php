@@ -30,4 +30,9 @@ interface StarterInterface
 	 * @return string
 	 */
 	public function getAmount();
+	
+	/**
+	 * @return string
+	 */
+	public function getType();
 }

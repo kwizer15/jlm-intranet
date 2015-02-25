@@ -62,4 +62,12 @@ class StarterIntervention extends Starter
 	{
 		return 'Complet';
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getType()
+	{
+		return 'intervention';
+	}
 }

@@ -18,17 +18,35 @@
   </thead>
   <tbody>
 {% for thread in threads %}
-    <tr>
+    <tr class="
+      {%- if thread.state == 0 -%}danger
+      {%- elseif thread.state == 1 -%}warning
+      {%- elseif thread.state == 2 -%}info
+      {%- elseif thread.state == 3 -%}success
+      {%- elseif thread.state == 4 -%}success
+      {%- endif -%}
+    ">
       <td>{{ thread.startDate|date('d/m/Y') }}</td>
       <td>{{ thread.starter.business.manager|nl2br }}</td>
       <td>{{ thread.starter.business|nl2br }}</td>
-      <td>{{ thread.starter.name }}</td>
+      <td>
+      	{%- if thread.starter.type == 'quote' -%}
+      		<a href="{{ path('quote_show', {'id':thread.starter.variant.quote.id}) }}">
+      	{%- endif -%}
+      	{{ thread.starter.name }}</a></td>
       <td>{{ thread.amount|number_format(2,',',' ') }}</td>
-      <td>{% if thread.order.state > 0 %}{{ thread.order.creation|date('d/m/Y') }}{% endif %}</td>
-      <td>{% if thread.order.state > 1 %}{{ thread.order.close|date('d/m/Y') }}{% endif %}</td>
-      <td>{% if thread.work.firstDate %}{{ thread.work.firstDate|date('d/m/Y') }}{% endif %}</td>
-      <td>{% if thread.work.close %}{{ thread.work.close|date('d/m/Y') }}{% endif %}</td>
-      <td>{% if thread.work.bill %}{{ thread.work.bill.number }}{% endif %}</td>
+      <td>{% if thread.state >= 0 %}{{ thread.order.creation|date('d/m/Y') }}{% endif %}</td>
+      <td>{% if thread.state >= 1 %}{{ thread.order.close|date('d/m/Y') }}{% endif %}</td>
+      <td>{% if thread.state >= 2 %}{{ thread.work.firstDate|date('d/m/Y') }}{% endif %}</td>
+      <td>{% if thread.state >= 3 %}{{ thread.work.close|date('d/m/Y') }}{% endif %}</td>
+      <td>{% if thread.state >= 4 %}
+          {%- if thread.work.bill is not null -%}
+      		<a href="{{ path('bill_show', { 'id':thread.work.bill.id }) }}">{{ thread.work.bill.number }}</a>
+      	  {%- else -%}
+      	  {{ thread.work.externalBill }}
+      	  {%- endif -%}
+      	{%- endif -%}
+      </td>
     </tr>
 {% endfor %}
   </tbody>

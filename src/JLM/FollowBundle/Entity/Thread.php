@@ -21,6 +21,12 @@ use JLM\DailyBundle\Model\WorkInterface;
  */
 class Thread implements ThreadInterface
 {
+	const STATE_WAIT = 0;
+	const STATE_READY = 1;
+	const STATE_INPROGRESS = 2;
+	const STATE_OK = 3;
+	const STATE_CLOSED = 4;
+	
 	/**
 	 * @var int
 	 */
@@ -166,5 +172,29 @@ class Thread implements ThreadInterface
 	public function getAmount()
 	{
 		return $this->getStarter()->getAmount();
+	}
+	
+	public function getState()
+	{
+		if ($this->getWork()->getBill() !== null || $this->getWork()->getExternalBill() !== null)
+		{
+			return self::STATE_CLOSED;
+		}
+		if ($this->getWork()->getClose() !== null)
+		{
+			return self::STATE_OK;
+		}
+		if ($this->getWork()->getFirstDate() !== null)
+		{
+			return self::STATE_INPROGRESS;
+		}
+		if ($this->getOrder()->getState() >= 2)
+		{
+			return self::STATE_READY;
+		}
+		if ($this->getOrder()->getState() < 2)
+		{
+			return self::STATE_WAIT;
+		}
 	}
 }

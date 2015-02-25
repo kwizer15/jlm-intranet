@@ -67,4 +67,12 @@ class StarterQuote extends Starter
 	{
 		return $this->getVariant()->getTotalPrice();
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getType()
+	{
+		return 'quote';
+	}
 }
