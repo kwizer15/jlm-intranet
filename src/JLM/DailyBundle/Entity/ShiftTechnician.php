@@ -2,31 +2,22 @@
 
 namespace JLM\DailyBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JLM\ModelBundle\Entity\Technician;
 
 /**
  * JLM\DailyBundle\Entity\ShiftTechnician
- *
- * @ORM\Table(name="shift_technician")
- * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\ShiftTechnicianRepository")
  */
 class ShiftTechnician
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * Date de transmission au technicien
      * @var \DateTime
-     *
-     * @ORM\Column(name="creation",type="datetime")
      * @Assert\DateTime
      * @Assert\NotNull(message="Date de création n'existe pas")
      */
@@ -35,8 +26,6 @@ class ShiftTechnician
     /**
      * Date du début de l'intervention (prévue)
      * @var \DateTime
-     * 
-     * @ORM\Column(name="begin",type="datetime")
      * @Assert\DateTime
      * @Assert\NotNull(message="Date de début n'existe pas")
      */
@@ -45,24 +34,18 @@ class ShiftTechnician
     /**
      * Date de fin de l'intervention (prévue)
      * @var \DateTime
-     *
-     * @ORM\Column(name="end",type="datetime",nullable=true)
      * @Assert\DateTime
      */
     private $end;
     
     /**
      * @var Shifting $shifting
-     * 
-     * @ORM\ManyToOne(targetEntity="Shifting", inversedBy="shiftTechnicians")
      * @Assert\NotNull(message="Déplacement n'existe pas")
      */
     private $shifting;
     
     /**
      * @var Technician $technician
-     * 
-     * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Technician")
      * @Assert\Valid
      * @Assert\NotNull
      */
@@ -70,8 +53,6 @@ class ShiftTechnician
 
     /**
      * Commentaire
-     * 
-     * @ORM\Column(name="comment",type="text",nullable=true)
      * @Assert\Type(type="string")
      */
     private $comment;
@@ -90,7 +71,7 @@ class ShiftTechnician
      * Set creation
      *
      * @param \DateTime $creation
-     * @return InterventionScheduled
+     * @return self
      */
     public function setCreation($creation)
     {
@@ -113,7 +94,7 @@ class ShiftTechnician
      * Set begin
      *
      * @param \DateTime $scheduledBegin
-     * @return InterventionScheduled
+     * @return self
      */
     public function setBegin($begin)
     {
@@ -136,7 +117,7 @@ class ShiftTechnician
      * Set end
      *
      * @param \DateTime $end
-     * @return InterventionScheduled
+     * @return self
      */
     public function setEnd($end = null)
     {
@@ -161,19 +142,17 @@ class ShiftTechnician
      */
     public function getTime()
     {
-    	if ($this->end === null)
-    		return null;
-    	return $this->end->diff($this->begin);
+    	return ($this->end === null) ? null : $this->end->diff($this->begin);
     	
     }
 
     /**
      * Set intervention
      *
-     * @param JLM\DailyBundle\Entity\InterventionPlanned $intervention
-     * @return InterventionScheduled
+     * @param Shifting $intervention
+     * @return self
      */
-    public function setShifting(\JLM\DailyBundle\Entity\Shifting $shifting = null)
+    public function setShifting(Shifting $shifting = null)
     {
         $this->shifting = $shifting;
     
@@ -183,7 +162,7 @@ class ShiftTechnician
     /**
      * Get shifting
      *
-     * @return JLM\DailyBundle\Entity\Shifting 
+     * @return Shifting 
      */
     public function getShifting()
     {
@@ -193,10 +172,10 @@ class ShiftTechnician
     /**
      * Set technician
      *
-     * @param JLM\ModelBundle\Entity\Technician $technician
-     * @return InterventionScheduled
+     * @param Technician $technician
+     * @return self
      */
-    public function setTechnician(\JLM\ModelBundle\Entity\Technician $technician = null)
+    public function setTechnician(Technician $technician = null)
     {
         $this->technician = $technician;
     
@@ -206,7 +185,7 @@ class ShiftTechnician
     /**
      * Get technician
      *
-     * @return JLM\ModelBundle\Entity\Technician 
+     * @return Technician 
      */
     public function getTechnician()
     {
@@ -227,11 +206,12 @@ class ShiftTechnician
      * Set comment
      * 
      * @param string $comment
-     * @return ShiftTechnician
+     * @return self
      */
     public function setComment($comment)
     {
     	$this->comment = $comment;
+    	
     	return $this;
     }
 }

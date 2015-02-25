@@ -2,53 +2,37 @@
 
 namespace JLM\DailyBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use JLM\ModelBundle\Entity\Door;
 
 /**
  * Ride
- *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\RideRepository")
  */
 class Ride
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var Door
-     * 
-     * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Door")
      */
     private $departure;
     
     /**
      * @var Door
-     *
-     * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Door")
      */
     private $destination;
     
     /**
      * Distance en mètre
      * @var int
-     *
-     * @ORM\Column(name="distance", type="integer")
      */
     private $distance;
 
     /**
      * Durée de trajet en secondes
      * @var int
-     *
-     * @ORM\Column(name="duration", type="integer")
      */
     private $duration;
 
@@ -67,7 +51,7 @@ class Ride
      * Set distance
      *
      * @param int $distance
-     * @return Ride
+     * @return self
      */
     public function setDistance($distance)
     {
@@ -90,7 +74,7 @@ class Ride
      * Set duration
      *
      * @param int $duration
-     * @return Ride
+     * @return self
      */
     public function setDuration($duration)
     {
@@ -112,10 +96,10 @@ class Ride
     /**
      * Set departure
      *
-     * @param \JLM\ModelBundle\Entity\Door $departure
-     * @return Ride
+     * @param Door $departure
+     * @return self
      */
-    public function setDeparture(\JLM\ModelBundle\Entity\Door $departure = null)
+    public function setDeparture(Door $departure = null)
     {
         $this->departure = $departure;
     
@@ -125,7 +109,7 @@ class Ride
     /**
      * Get departure
      *
-     * @return \JLM\ModelBundle\Entity\Door 
+     * @return Door 
      */
     public function getDeparture()
     {
@@ -135,10 +119,10 @@ class Ride
     /**
      * Set destination
      *
-     * @param \JLM\ModelBundle\Entity\Door $destination
-     * @return Ride
+     * @param Door $destination
+     * @return self
      */
-    public function setDestination(\JLM\ModelBundle\Entity\Door $destination = null)
+    public function setDestination(Door $destination = null)
     {
         $this->destination = $destination;
     

@@ -1,31 +1,23 @@
 <?php
 namespace JLM\DailyBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JLM\ModelBundle\Entity\Technician;
 
 /**
  * Astreintes techniciens
  * JLM\DailyBundle\Entity\Stanby
- *
- * @ORM\Table(name="technician_standby")
- * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\StandbyRepository")
  */
 class Standby
 {
 	/**
 	 * Id
 	 * @var int $id
-	 * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	private $id;
 	
 	/**
 	 * @var \DateTime $begin
-	 *
-	 * @ORM\Column(name="begin", type="date")
 	 * @Assert\Date
 	 * @Assert\NotNull
 	 */
@@ -33,8 +25,6 @@ class Standby
 	
 	/**
 	 * @var \DateTime $end
-	 *
-	 * @ORM\Column(name="end", type="date")
 	 * @Assert\Date
 	 * @Assert\NotNull
 	 */
@@ -42,8 +32,6 @@ class Standby
 	
 	/**
 	 * @var Technician $technician
-	 *
-	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Technician")
 	 * @Assert\Valid
 	 * @Assert\NotNull
 	 */
@@ -64,7 +52,7 @@ class Standby
      * Set begin
      *
      * @param \DateTime $begin
-     * @return Standby
+     * @return self
      */
     public function setBegin($begin)
     {
@@ -87,7 +75,7 @@ class Standby
      * Set end
      *
      * @param \DateTime $end
-     * @return Standby
+     * @return self
      */
     public function setEnd($end)
     {
@@ -110,9 +98,9 @@ class Standby
      * Set technician
      *
      * @param \JLM\ModelBundle\Entity\Technician $technician
-     * @return Standby
+     * @return self
      */
-    public function setTechnician(\JLM\ModelBundle\Entity\Technician $technician = null)
+    public function setTechnician(Technician $technician = null)
     {
         $this->technician = $technician;
     

@@ -1,0 +1,17 @@
+JLM\DailyBundle\Entity\Work:
+  type: entity
+  table: shifting_works
+  repositoryClass: JLM\DailyBundle\Entity\WorkRepository
+  oneToOne:
+    quote:
+      targetEntity: JLM\CommerceBundle\Entity\QuoteVariant
+      mappedBy: work
+    order:
+      targetEntity: JLM\OfficeBundle\Entity\Order
+      inversedBy: work
+  manyToOne:
+    category:
+      targetEntity: JLM\DailyBundle\Entity\WorkCategory
+    objective:
+      targetEntity: JLM\DailyBundle\Entity\WorkObjective
+    

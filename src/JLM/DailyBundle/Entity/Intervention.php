@@ -2,41 +2,35 @@
 
 namespace JLM\DailyBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JLM\ContractBundle\Model\ContractInterface;
 use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\CommerceBundle\Model\BillInterface;
 use JLM\CommerceBundle\Model\BillSourceInterface;
 use JLM\DailyBundle\Model\InterventionInterface;
+use JLM\ModelBundle\Entity\Door;
 
 /**
  * Plannification d'intervention
  * JLM\DailyBundle\Entity\InterventionPlanned
- *
- * @ORM\Table(name="shifting_interventions")
- * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\InterventionRepository")
  */
 abstract class Intervention extends Shifting implements InterventionInterface, BillSourceInterface
 {
     /**
      * Porte (lien)
      * @var JLM\ModelBundle\Entity\Door
-     * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Door", inversedBy="interventions")
      * @Assert\NotNull(message="Une intervention doit être liée à une porte")
      */
     private $door;
     
     /**
      * @var string $contactName
-     * @ORM\Column(name="contact_name", type="string", nullable=true)
      * @Assert\Type(type="string")
      */
     private $contactName;
     
     /**
      * @var string $contactPhone
-     * @ORM\Column(name="contact_phones", type="text", nullable=true)
      * @Assert\Type(type="string")
      */
     private $contactPhones;
@@ -44,7 +38,6 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * E-mail pour envoyer le rapport
      * @var string $contactEmail
-     * @ORM\Column(name="contact_email", type="text", nullable=true)
      * @Assert\Email
      */
     private $contactEmail;
@@ -52,7 +45,6 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Report
      * @var string $report
-     * @ORM\Column(name="report",type="text", nullable=true)
      * @Assert\Type(type="string")
      */
     private $report;
@@ -60,8 +52,6 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Commentaires (interne à la société)
      * @var string $comments
-     *
-     * @ORM\Column(name="comments", type="text", nullable=true)
      * @Assert\Type(type="string")
      */
     private $comments;
@@ -72,8 +62,6 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      * 1 - Très Urgent
      * 2 - Urgent
      * ....
-     *
-     * @ORM\Column(name="priority", type="smallint")
      * @Assert\Choice(choices = {1,2,3,4,5,6})
      * @Assert\NotBlank(message="Pas de priorité définie")
      */
@@ -82,8 +70,6 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Closed
      * @var DateTime
-     * 
-     * @ORM\Column(name="close", type="datetime", nullable=true)
      * @Assert\DateTime
      */
     private $close;
@@ -91,8 +77,6 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Reste a faire
      * @var string
-     *
-     * @ORM\Column(name="rest",type="text",nullable=true)
      * @Assert\Type(type="string")
      */
     private $rest;
@@ -100,7 +84,6 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Type de contrat
      * @var string
-     * @ORM\Column(name="contract",type="string",nullable=true)
      * @Assert\Type(type="string")
      * Assert\NotNull(message="Pas de type de contrat défini")
      */
@@ -109,14 +92,12 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Numéro de bon d'intervention
      * @var string
-     * @ORM\Column(name="voucher",type="string",nullable=true)
      */
     private $voucher;
     
     /**
      * Facture
      * @var BillInterface
-     * @ORM\OneToOne(targetEntity="JLM\CommerceBundle\Entity\Bill", inversedBy="intervention")
      * @Assert\Valid
      */
     private $bill;
@@ -124,14 +105,12 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Facture externe
      * @var string
-     * @ORM\Column(name="external_bill", nullable=true)
      */
     private $externalBill;
     
     /**
      * Doit etre facturée
      * @var bool
-     * @ORM\Column(name="mustBeBilled", type="boolean", nullable=true)
      * @Assert\Type(type="bool")
      */
     private $mustBeBilled;
@@ -139,28 +118,24 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Intervention lancée pour le reste à faire
      * @var Work
-     * @ORM\OneToOne(targetEntity="Work", inversedBy="intervention")
      */
     private $work;
     
     /**
      * Demande de devis lancée pour le reste à faire
      * @var AskQuote
-     * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\AskQuote", inversedBy="intervention")
      */
     private $askQuote;
     
     /**
      * Contacter client pour le reste à faire
      * @var bool
-     * @ORM\Column(name="contact_customer", type="boolean", nullable=true)
      */
     private $contactCustomer = null;
     
     /**
      * Annuler l'intervention
      * @var string
-     * @ORM\Column(name="cancel",type="boolean")
      */
     private $cancel = false;
     
@@ -179,15 +154,16 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function getDynContract()
     {
-    	$techs = $this->getShiftTechnicians();
-    	if ($techs === null)
+    	if (null === $techs = $this->getShiftTechnicians())
+    	{
     		return $this->getDoor()->getContract();
+    	}
     	$firstDate = new \DateTime;
     	foreach ($techs as $tech)
     	{
-    		if ($tech->getBegin() < $firstDate)
-    			$firstDate = $tech->getBegin();
+    		$firstDate = ($tech->getBegin() < $firstDate) ? $tech->getBegin() : $firstDate;
     	}
+    	
     	return $this->getDoor()->getContract($firstDate);
     }
     
@@ -199,10 +175,18 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     public function setContract($contract)
     {
     	if ($contract instanceof ContractInterface)
+    	{
     		$this->contract = $contract.'';
+    	}
     	elseif ($contract === null)
+    	{
     		$this->contract = 'Hors contrat';
-    	else $this->contract = ''.$contract;
+    	}
+    	else
+    	{
+    		$this->contract = ''.$contract;
+    	}
+    	
     	return $this;
     }
     
@@ -222,6 +206,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     public function setRest($rest = null)
     {
     	$this->rest = $rest;
+    	
     	return $this;
     }
     
@@ -241,6 +226,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     public function setVoucher($voucher)
     {
     	$this->voucher = $voucher;
+    	
     	return $this;
     }
     
@@ -320,7 +306,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      * @param JLM\DailyBundle\Entity\Door $door
      * @return InterventionPlanned
      */
-    public function setDoor(\JLM\ModelBundle\Entity\Door $door = null)
+    public function setDoor(Door $door = null)
     {
         $this->door = $door;
     
@@ -345,9 +331,8 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     public function isCompleteContract()
     {
     	$contract = $this->getDoor()->getActualContract();
-    	if ($contract === null)
-    		return false;
-    	return $contract->getComplete();
+
+    	return ($contract === null) ? false : $contract->getComplete();
     }
 
     /**
@@ -369,6 +354,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     public function setReport($report = null)
     {
     	$this->report = $report;
+    	
     	return $this;
     }
     
@@ -406,6 +392,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     public function setClosed($closed = true)
     {
     	$this->setClose(new \DateTime);
+    	
        	return $this;
     }
     
@@ -417,9 +404,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function getClosed()
     {
-    	if ($this->getClose() === null)
-    		return false;
-    	return true;
+    	return ($this->getClose() !== null);
     }
     
     /**
@@ -430,9 +415,8 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function setClose(\DateTime $close = null)
     {
-    	if ($close === null)
-    		$close = new \DateTime;
-    	$this->close = $close;
+    	$this->close = ($close === null) ? new \DateTime : $close;
+
     	return $this;
     }
     
@@ -499,13 +483,22 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     {
     
     	if (!$this->hasTechnician() && !$this->getClosed())
+    	{
     		return 0;
+    	}
     	if (!$this->hasTechnician() && $this->getClosed() && !$this->getCancel())
+    	{
     		return -1;
+    	}
     	if (!$this->getClosed())
+    	{
     		return 1;
+    	}
     	if ($this->getMustBeBilled() === null || ($this->getContactCustomer() === null && $this->getAskQuote() === null && $this->getWork() === null && $this->getRest()))
+    	{
     		return 2;
+    	}
+    	
     	return 3;
     }
     
@@ -616,7 +609,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      * @param \JLM\DailyBundle\Entity\Work $work
      * @return Intervention
      */
-    public function setWork(\JLM\DailyBundle\Entity\Work $work = null)
+    public function setWork(Work $work = null)
     {
         $this->work = $work;
     
@@ -639,7 +632,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      * @param \JLM\OfficeBundle\Entity\AskQuote $askQuote
      * @return Intervention
      */
-    public function setAskQuote(\JLM\OfficeBundle\Entity\AskQuote $askQuote = null)
+    public function setAskQuote(AskQuote $askQuote = null)
     {
         $this->askQuote = $askQuote;
     
@@ -662,12 +655,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function isRestActionValid()
     {
-    	if (!$this->getRest())
-    	{
-    		if ($this->getAskQuote() !== null || $this->getWork() !== null || $this->getContactCustomer())
-    			return false;
-    	}
-    	return true;
+    	return !(!$this->getRest() && ($this->getAskQuote() !== null || $this->getWork() !== null || $this->getContactCustomer()));
     }
     
     /**
@@ -675,7 +663,8 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function setCancel($cancel = false)
     {
-    	$this->cancel = $cancel;
+    	$this->cancel = (bool)$cancel;
+    	
     	return $this;
     }
     
@@ -701,11 +690,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function getPlace()
     {
-    	$door = $this->getDoor();
-    	if ($door === null)
-    		return parent::getPlace();
-    	return $door->getType().' - '.$door->getLocation().chr(10).
-    		$door->getAddress()->toString();
+    	return (null === $door = $this->getDoor()) ? parent::getPlace() : $door->getType().' - '.$door->getLocation().chr(10).$door->getAddress()->toString();
     }
     
     /**
@@ -713,13 +698,14 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function cancel()
     {
-    	if ($this->getReport() === null)
-    		return $this;
-    	
-    	$this->setCancel(true);
-    	$this->setMustBeBilled(false);
-    	$this->setRest();
-    	$this->setClosed(new \DateTime);
+    	if ($this->getReport() !== null)
+    	{
+    		$this->setCancel(true);
+    		$this->setMustBeBilled(false);
+    		$this->setRest();
+    		$this->setClosed(new \DateTime);
+    	}
+
     	return $this;
     }
     

@@ -1,0 +1,4 @@
+JLM\DailyBundle\Entity\Equipment:
+  type: entity
+  table: shifting_equipments
+  repositoryClass: JLM\DailyBundle\Entity\EquipmentRepository

@@ -1,0 +1,17 @@
+JLM\DailyBundle\Entity\Standby:
+  type: entity
+  table: technician_standby
+  repositoryClass: JLM\DailyBundle\Entity\StandbyRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    begin:
+      type: date
+    end:
+      type: date
+  manyToOne:
+    technician:
+      targetEntity: JLM\ModelBundle\Entity\Technician

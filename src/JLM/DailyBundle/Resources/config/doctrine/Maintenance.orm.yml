@@ -1,0 +1,5 @@
+JLM\DailyBundle\Entity\Maintenance:
+  type: entity
+  table: shifting_maintenance
+  repositoryClass: JLM\DailyBundle\Entity\MaintenanceRepository
+          

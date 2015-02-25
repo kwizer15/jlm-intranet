@@ -1,0 +1,10 @@
+JLM\DailyBundle\Entity\WorkCategory:
+  type: entity
+  table: work_categories
+  readOnly: true
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+        

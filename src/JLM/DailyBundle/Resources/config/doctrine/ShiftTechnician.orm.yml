@@ -1,0 +1,26 @@
+JLM\DailyBundle\Entity\ShiftTechnician:
+  type: entity
+  table: shift_technician
+  repositoryClass: JLM\DailyBundle\Entity\ShiftTechnicianRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    creation:
+      type: datetime
+    begin:
+      type: datetime
+    end:
+      type: datetime
+      nullable: true
+    comment:
+      type: text
+      nullable: true
+  manyToOne:
+    shifting:
+      targetEntity: JLM\DailyBundle\Entity\Shifting
+      inversedBy: shiftTechnicians
+    technician:
+      targetEntity: JLM\ModelBundle\Entity\Technician

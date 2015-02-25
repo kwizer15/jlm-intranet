@@ -10,24 +10,17 @@ use JLM\DailyBundle\Model\WorkInterface;
 /**
  * Plannification de travaux
  * JLM\DailyBundle\Entity\Work
- *
- * @ORM\Table(name="shifting_works")
- * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\WorkRepository")
  */
 class Work extends Intervention implements WorkInterface
 {
 	/**
 	 * Devis source (pour "selon devis...")
-	 * 
-	 * @ORM\OneToOne(targetEntity="JLM\CommerceBundle\Entity\QuoteVariant", mappedBy="work")
 	 * @Assert\Valid
 	 */
 	private $quote;
 	
 	/**
 	 * Work category
-	 * 
-	 * @ORM\ManyToOne(targetEntity="WorkCategory")
 	 * @Assert\Valid
 	 * @Assert\NotNull
 	 */
@@ -35,8 +28,6 @@ class Work extends Intervention implements WorkInterface
 	
 	/**
 	 * Work objective
-	 *
-	 * @ORM\ManyToOne(targetEntity="WorkObjective")
 	 * @Assert\Valid
 	 * @Assert\NotNull
 	 */
@@ -44,8 +35,6 @@ class Work extends Intervention implements WorkInterface
 	
 	/**
 	 * Fiche travaux
-	 * 
-	 * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Order",inversedBy="work")
 	 * @Assert\Valid
 	 */
 	private $order;
@@ -69,11 +58,12 @@ class Work extends Intervention implements WorkInterface
 	 * Set work category
 	 *
 	 * @param WorkCategory $category
-	 * @return Work
+	 * @return self
 	 */
 	public function setCategory(WorkCategory $category = null)
 	{
 		$this->category = $category;
+		
 		return $this;
 	}
 	
@@ -90,11 +80,12 @@ class Work extends Intervention implements WorkInterface
 	 * Set work objective
 	 *
 	 * @param WorkObjective $objective
-	 * @return Work
+	 * @return self
 	 */
 	public function setObjective(WorkObjective $objective = null)
 	{
 		$this->objective = $objective;
+		
 		return $this;
 	}
 	

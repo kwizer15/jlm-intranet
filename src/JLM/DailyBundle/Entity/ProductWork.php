@@ -13,12 +13,8 @@ namespace JLM\DailyBundle\Entity;
 
 use JLM\ProductBundle\Entity\ProductDecorator;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- * @ORM\Table(name="jlm_daily_product_work")
- * @ORM\Entity()
  */
 class ProductWork extends ProductDecorator
 {
