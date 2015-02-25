@@ -1,6 +1,7 @@
 {% extends 'JLMCoreBundle::layout.html.twig' %}
 
 {% block content %}
+<h1>Suivi de commandes</h1>
 <table class="table">
   <thead>
     <tr>
@@ -66,7 +67,7 @@
 </table>
 {% endblock %}
 
-{% block javascript_scripts %}
+{% block javascripts_script %}
 {{ parent() }}
-$('a').tooltip();
+$('a').tooltip({'placement':'right'});
 {% endblock %}

@@ -23,6 +23,10 @@ use JLM\CommerceBundle\Model\QuoteVariantInterface;
  */
 class Quote extends CommercialPart implements QuoteInterface
 {
+	const EVENT_SEND = 'send';
+	const EVENT_RELANCE = 'send';
+	const EVENT_GIVEN = 'send';
+	
 	/**
 	 * @var int $id
 	 */
@@ -77,6 +81,17 @@ class Quote extends CommercialPart implements QuoteInterface
 	 * @var AskQuote
 	 */
 	private $ask;
+	
+	/**
+	 * Suivi d'évenements
+	 * @var EventFollowerInterface
+	 */
+	private $eventFollower;
+	
+	public function addEvent(\DateTime $date, $type, $comment)
+	{
+		
+	}
 	
 	/**
 	 * Construteur
