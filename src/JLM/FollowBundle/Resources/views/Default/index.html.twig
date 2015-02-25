@@ -28,16 +28,29 @@
     ">
       <td>{{ thread.startDate|date('d/m/Y') }}</td>
       <td>{{ thread.starter.business.manager|nl2br }}</td>
-      <td>{{ thread.starter.business|nl2br }}</td>
+      <td>
+        {%- if thread.starter.business.stopped -%}
+        <span class="label label-important">Mise à l'arrêt</span><br>
+        {%- endif -%}
+        {{ thread.starter.business|nl2br }}
+      </td>
       <td>
       	{%- if thread.starter.type == 'quote' -%}
-      		<a href="{{ path('quote_show', {'id':thread.starter.variant.quote.id}) }}">
+      		<a href="{{ path('quote_show', {'id':thread.starter.variant.quote.id}) }}" data-toggle="tooltip" title="{{ thread.starter.variant.intro }}">
+      	{%- elseif thread.starter.type == 'intervention' -%}
+      	    <a data-toggle="tooltip" title="{{ thread.starter.intervention.rest }}">
       	{%- endif -%}
       	{{ thread.starter.name }}</a></td>
       <td>{{ thread.amount|number_format(2,',',' ') }}</td>
-      <td>{% if thread.state >= 0 %}{{ thread.order.creation|date('d/m/Y') }}{% endif %}</td>
-      <td>{% if thread.state >= 1 %}{{ thread.order.close|date('d/m/Y') }}{% endif %}</td>
-      <td>{% if thread.state >= 2 %}{{ thread.work.firstDate|date('d/m/Y') }}{% endif %}</td>
+      <td>
+        {% if thread.order and thread.state >= 0 %}
+          <a href="{{ path('order_show', {'id': thread.order.id }) }}">{{ thread.order.creation|date('d/m/Y') }}</a>
+        {% else %}
+          <a href="{{ path('order_new', {'id': thread.work.id }) }}" class="btn btn-small">Créer la fiche travaux</a>
+        {% endif %}
+      </td>
+      <td>{% if thread.order and thread.state >= 1 %}{{ thread.order.close|date('d/m/Y') }}{% endif %}</td>
+      <td>{% if thread.state >= 2 %}<a href="{{ path('work_show', {'id': thread.work.id }) }}">{{ thread.work.firstDate|date('d/m/Y') }}</a>{% endif %}</td>
       <td>{% if thread.state >= 3 %}{{ thread.work.close|date('d/m/Y') }}{% endif %}</td>
       <td>{% if thread.state >= 4 %}
           {%- if thread.work.bill is not null -%}
@@ -51,4 +64,9 @@
 {% endfor %}
   </tbody>
 </table>
+{% endblock %}
+
+{% block javascript_scripts %}
+{{ parent() }}
+$('a').tooltip();
 {% endblock %}

@@ -4,3 +4,8 @@ services:
     arguments: ["@doctrine.orm.entity_manager"]
     tags:
       - { name: kernel.event_subscriber }
+  jlm_follow.intervention_subscriber:
+    class: JLM\FollowBundle\EventListener\InterventionSubscriber
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: kernel.event_subscriber }

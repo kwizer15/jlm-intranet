@@ -18,8 +18,9 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+//    	$state = array('unclosed'=>'getUnclosed');
     	$em = $this->getDoctrine()->getManager();
-    	$threads = $em->getRepository('JLMFollowBundle:Thread')->findAll();
+    	$threads = $em->getRepository('JLMFollowBundle:Thread')->findBy(array(),array('startDate'=>'DESC'));
         return array('threads' => $threads);
     }
 }

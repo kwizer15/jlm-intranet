@@ -15,6 +15,7 @@ use JLM\FollowBundle\Model\ThreadInterface;
 use JLM\FollowBundle\Model\StarterInterface;
 use JLM\CommerceBundle\Model\OrderInterface;
 use JLM\DailyBundle\Model\WorkInterface;
+use JLM\OfficeBundle\Entity\Order;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -52,11 +53,9 @@ class Thread implements ThreadInterface
 	 */
 	private $work;
 	
-	public function __construct(StarterInterface $starter, OrderInterface $order, WorkInterface $work)
+	public function __construct(StarterInterface $starter)
 	{
 		$this->setStarter($starter);
-		$this->setOrder($order);
-		$this->setWork($work);
 	}
 	
 	/**
@@ -87,33 +86,11 @@ class Thread implements ThreadInterface
 	}
 	
 	/**
-	 * @param OrderInterface $order
-	 * @return self
-	 */
-	public function setOrder(OrderInterface $order)
-	{
-		$this->order = $order;
-		
-		return $this;
-	}
-	
-	/**
 	 * @return OrderInterface
 	 */
 	public function getOrder()
 	{
-		return $this->order;
-	}
-	
-	/**
-	 * @param WorkInterface $work
-	 * @return self
-	 */
-	public function setWork(WorkInterface $work)
-	{
-		$this->work = $work;
-		
-		return $this;
+		return $this->getWork()->getOrder();
 	}
 	
 	/**
@@ -121,7 +98,7 @@ class Thread implements ThreadInterface
 	 */
 	public function getWork()
 	{
-		return $this->work;
+		return $this->getStarter()->getWork();
 	}
 	
 	/**
@@ -143,32 +120,6 @@ class Thread implements ThreadInterface
 		return $this->startDate;
 	}
 	
-	public function getSteps()
-	{
-		return array(
-			array(
-					'name' => $this->getStarter()->getName(),
-					'date' => $this->getStartDate(),
-			),
-			array(
-					'name' => 'Commande',
-					'date' => ($this->getOrder()->getState() > 0) ? $this->getOrder()->getCreation() : null,
-			),
-			array(
-					'name' => 'Préparation de matériel',
-					'date' => ($this->getOrder()->getState() > 1) ? $this->getOrder()->getClose() : null,
-			),
-			array(
-					'name' => 'Travaux',
-					'date' => $this->getWork()->getFirstDate(), 
-			),
-			array(
-					'name' => 'Terminé',
-					'date' => $this->getWork()->getClose(),
-			),
-		); 
-	}
-	
 	public function getAmount()
 	{
 		return $this->getStarter()->getAmount();
@@ -188,13 +139,14 @@ class Thread implements ThreadInterface
 		{
 			return self::STATE_INPROGRESS;
 		}
+		if (!$this->getOrder() instanceof Order || $this->getOrder()->getState() < 2)
+		{
+			return self::STATE_WAIT;
+		}
 		if ($this->getOrder()->getState() >= 2)
 		{
 			return self::STATE_READY;
 		}
-		if ($this->getOrder()->getState() < 2)
-		{
-			return self::STATE_WAIT;
-		}
+		
 	}
 }

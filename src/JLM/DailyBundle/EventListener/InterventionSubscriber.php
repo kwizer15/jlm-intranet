@@ -17,6 +17,10 @@ use JLM\DailyBundle\JLMDailyEvents;
 use JLM\DailyBundle\Builder\InterventionWorkBuilder;
 use JLM\DailyBundle\Event\InterventionEvent;
 use JLM\DailyBundle\Factory\WorkFactory;
+use JLM\CommerceBundle\Event\QuoteVariantEvent;
+use JLM\DailyBundle\Entity\Work;
+use JLM\OfficeBundle\Entity\Order;
+use JLM\CommerceBundle\JLMCommerceEvents;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -43,7 +47,8 @@ class InterventionSubscriber implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			JLMDailyEvents::INTERVENTION_SCHEDULEWORK => 'createWork',
+			JLMDailyEvents::INTERVENTION_SCHEDULEWORK => 'createWorkFromIntervention',
+			JLMCommerceEvents::QUOTEVARIANT_GIVEN => 'createWorkFromQuote',
 		);
 	}
 	
@@ -51,7 +56,7 @@ class InterventionSubscriber implements EventSubscriberInterface
 	 * Create work since intervention
 	 * @param InterventionEvent $event
 	 */
-	public function createWork(InterventionEvent $event)
+	public function createWorkFromIntervention(InterventionEvent $event)
 	{
 		$interv = $event->getIntervention();
 		$options = array(
@@ -63,5 +68,30 @@ class InterventionSubscriber implements EventSubscriberInterface
 		$interv->setWork($work);
 		$this->om->persist($interv);
 		$this->om->flush();
+	}
+	
+	public function createWorkFromQuote(QuoteVariantEvent $event)
+	{
+		$entity = $event->getQuoteVariant();
+		if ($entity->getWork() === null && $entity->getQuote()->getDoor() !== null)
+		{
+			// Création de la ligne travaux pré-remplie
+			$work = Work::createFromQuoteVariant($entity);
+			//$work->setMustBeBilled(true);
+			$work->setCategory($this->om->getRepository('JLMDailyBundle:WorkCategory')->find(1));
+			$work->setObjective($this->om->getRepository('JLMDailyBundle:WorkObjective')->find(1));
+			$order = Order::createFromWork($work);
+			$this->om->persist($order);
+			$olines = $order->getLines();
+			foreach ($olines as $oline)
+			{
+				$oline->setOrder($order);
+				$this->om->persist($oline);
+			}
+			$work->setOrder($order);
+			$this->om->persist($work);
+			$entity->setWork($work);
+			$this->om->flush();
+		}
 	}
 }

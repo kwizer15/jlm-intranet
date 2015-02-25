@@ -51,4 +51,9 @@ interface InterventionInterface
 	 * @return string
 	 */
 	public function getContactEmail();
+	
+	/**
+	 * @return WorkInterface
+	 */
+	public function getWork();
 }

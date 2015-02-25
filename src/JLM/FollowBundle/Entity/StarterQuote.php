@@ -47,6 +47,11 @@ class StarterQuote extends Starter
 		return $this->variant;
 	}
 	
+	public function getWork()
+	{
+		return $this->getVariant()->getWork();
+	}
+	
 	/**
 	 * {@inheritdoc}
 	 */

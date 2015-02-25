@@ -11,6 +11,7 @@
 
 namespace JLM\FollowBundle\Model;
 
+use JLM\DailyBundle\Model\WorkInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -35,4 +36,9 @@ interface StarterInterface
 	 * @return string
 	 */
 	public function getType();
+	
+	/**
+	 * @return WorkInterface
+	 */
+	public function getWork();
 }

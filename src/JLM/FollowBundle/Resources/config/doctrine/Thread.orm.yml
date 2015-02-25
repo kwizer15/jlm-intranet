@@ -12,10 +12,6 @@ JLM\FollowBundle\Entity\Thread:
   oneToOne:
     starter:
       targetEntity: JLM\FollowBundle\Model\StarterInterface
-    order:
-      targetEntity: JLM\CommerceBundle\Model\OrderInterface
-    work:
-      targetEntity: JLM\DailyBundle\Model\WorkInterface
   lifecycleCallbacks:
     prePersist: [ setStartDate ]
       

@@ -16,5 +16,5 @@ namespace JLM\DailyBundle\Model;
  */
 interface WorkInterface
 {
-
+	public function getOrder();
 }

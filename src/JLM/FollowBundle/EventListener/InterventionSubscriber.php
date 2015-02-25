@@ -12,22 +12,18 @@
 namespace JLM\FollowBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use JLM\CommerceBundle\JLMCommerceEvents;
-use JLM\CommerceBundle\Factory\BillFactory;
 use Doctrine\Common\Persistence\ObjectManager;
-use JLM\CommerceBundle\Builder\VariantBillBuilder;
-use JLM\CoreBundle\Event\FormPopulatingEvent;
-use JLM\CoreBundle\Event\DoctrineEvent;
-use JLM\CommerceBundle\Event\QuoteVariantEvent;
+use JLM\DailyBundle\JLMDailyEvents;
+use JLM\DailyBundle\Builder\InterventionWorkBuilder;
+use JLM\DailyBundle\Event\InterventionEvent;
+use JLM\DailyBundle\Factory\WorkFactory;
+use JLM\FollowBundle\Entity\StarterIntervention;
 use JLM\FollowBundle\Entity\Thread;
-use JLM\FollowBundle\Entity\StarterQuote;
-use JLM\DailyBundle\Entity\Work;
-use JLM\OfficeBundle\Entity\Order;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class QuoteVariantSubscriber implements EventSubscriberInterface
+class InterventionSubscriber implements EventSubscriberInterface
 {	
 	/**
 	 * @var ObjectManager
@@ -49,14 +45,18 @@ class QuoteVariantSubscriber implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			JLMCommerceEvents::QUOTEVARIANT_GIVEN => 'createThread',
+			JLMDailyEvents::INTERVENTION_SCHEDULEWORK => 'createThread',
 		);
 	}
 	
-	public function createThread(QuoteVariantEvent $event)
-	{		
-		$entity = $event->getQuoteVariant();
-		$starter = new StarterQuote($entity);
+	/**
+	 * Create thread since intervention
+	 * @param InterventionEvent $event
+	 */
+	public function createThread(InterventionEvent $event)
+	{
+		$entity = $event->getIntervention();
+		$starter = new StarterIntervention($entity);
 		$this->om->persist($starter);
 		$thread = new Thread($starter);
 		$this->om->persist($thread);

@@ -23,6 +23,11 @@ class StarterIntervention extends Starter
 	 */
 	private $intervention;
 	
+	public function __construct(InterventionInterface $intervention)
+	{
+		$this->setIntervention($intervention);
+	}
+	
 	/**
 	 * @param InterventionInterface $intervention
 	 * @return self
@@ -42,12 +47,17 @@ class StarterIntervention extends Starter
 		return $this->intervention;
 	}
 	
+	public function getWork()
+	{
+		return $this->getIntervention()->getWork();
+	}
+	
 	/**
 	 * {@inheritdoc}
 	 */
 	public function getName()
 	{
-		return 'Intervention du '.$this->getStartDate()->format('d/m/Y');
+		return 'Intervention du '.$this->getIntervention()->getLastDate()->format('d/m/Y');
 	}
 	
 	/**
