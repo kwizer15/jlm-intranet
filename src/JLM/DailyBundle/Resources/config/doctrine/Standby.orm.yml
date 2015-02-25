@@ -1,7 +1,7 @@
 JLM\DailyBundle\Entity\Standby:
   type: entity
   table: technician_standby
-  repositoryClass: JLM\DailyBundle\Entity\StandbyRepository
+  repositoryClass: JLM\DailyBundle\Repository\StandbyRepository
   id:
     id:
       type: integer

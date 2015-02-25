@@ -1,6 +1,6 @@
 JLM\DailyBundle\Entity\Ride:
   type: entity
-  repositoryClass: JLM\DailyBundle\Entity\RideRepository
+  repositoryClass: JLM\DailyBundle\Repository\RideRepository
   id:
     id:
       type: integer

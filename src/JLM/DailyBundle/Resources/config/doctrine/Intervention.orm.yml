@@ -1,7 +1,7 @@
 JLM\DailyBundle\Entity\Intervention:
   type: entity
   table: shifting_interventions
-  repositoryClass: JLM\DailyBundle\Entity\InterventionRepository
+  repositoryClass: JLM\DailyBundle\Repository\InterventionRepository
   fields:
     contactName:
       column: contact_name

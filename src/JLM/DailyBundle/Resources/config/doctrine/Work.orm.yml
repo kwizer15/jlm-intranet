@@ -1,7 +1,7 @@
 JLM\DailyBundle\Entity\Work:
   type: entity
   table: shifting_works
-  repositoryClass: JLM\DailyBundle\Entity\WorkRepository
+  repositoryClass: JLM\DailyBundle\Repository\WorkRepository
   oneToOne:
     quote:
       targetEntity: JLM\CommerceBundle\Entity\QuoteVariant

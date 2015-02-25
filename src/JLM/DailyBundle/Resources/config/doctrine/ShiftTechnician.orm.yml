@@ -1,7 +1,7 @@
 JLM\DailyBundle\Entity\ShiftTechnician:
   type: entity
   table: shift_technician
-  repositoryClass: JLM\DailyBundle\Entity\ShiftTechnicianRepository
+  repositoryClass: JLM\DailyBundle\Repository\ShiftTechnicianRepository
   id:
     id:
       type: integer

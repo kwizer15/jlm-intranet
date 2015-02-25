@@ -1,7 +1,7 @@
 JLM\DailyBundle\Entity\Fixing:
   type: entity
   table: shifting_fixing
-  repositoryClass: JLM\DailyBundle\Entity\FixingRepository
+  repositoryClass: JLM\DailyBundle\Repository\FixingRepository
   fields:
     askDate:
       column: ask_date

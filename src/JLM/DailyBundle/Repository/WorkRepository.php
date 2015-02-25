@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\DailyBundle\Entity;
+namespace JLM\DailyBundle\Repository;
 
 /**
  * WorkRepository
