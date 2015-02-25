@@ -9,9 +9,14 @@ JLM\DailyBundle\Entity\Work:
     order:
       targetEntity: JLM\OfficeBundle\Entity\Order
       inversedBy: work
+    intervention:
+      targetEntity: JLM\DailyBundle\Entity\Intervention
+      mappedBy: work
   manyToOne:
     category:
       targetEntity: JLM\DailyBundle\Entity\WorkCategory
     objective:
       targetEntity: JLM\DailyBundle\Entity\WorkObjective
+
+    
     
