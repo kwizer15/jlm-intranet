@@ -12,4 +12,9 @@ interface EventInterface
 	 * @return string
 	 */
 	public function getName();
+
+	/**
+	 * @return string
+	 */
+	public function getOption($name, $default = null);
 }

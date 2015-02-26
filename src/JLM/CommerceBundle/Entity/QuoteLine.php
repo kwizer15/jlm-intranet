@@ -26,11 +26,6 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
 	private $id;
 	
 	/**
-	 * @var QuoteVariantInterface $variant
-	 */
-	private $variant;
-	
-	/**
 	 * @var float $purchasePrice
 	 */
 	private $purchasePrice = 0;

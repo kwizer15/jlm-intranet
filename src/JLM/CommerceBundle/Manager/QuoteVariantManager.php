@@ -18,6 +18,7 @@ use JLM\ModelBundle\Form\Type\MailType;
 use JLM\CommerceBundle\Form\Type\QuoteVariantType;
 use JLM\CommerceBundle\Entity\QuoteLine;
 use JLM\CommerceBundle\Entity\Quote;
+use Symfony\Component\Form\Exception\LogicException;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -60,7 +61,7 @@ class QuoteVariantManager extends Manager
 		$quote = $form->get('quote')->getData();
 		if (!$quote instanceof Quote)
 		{
-			$this->redirect('quote_new');
+			throw new LogicException('$quote is not a Quote object');
 		}
 		
 		$form->get('vat')->setData(number_format($quote->getVat() * 100,1,',',' '));

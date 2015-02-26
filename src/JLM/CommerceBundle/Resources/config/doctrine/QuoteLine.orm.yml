@@ -21,8 +21,5 @@ JLM\CommerceBundle\Entity\QuoteLine:
     shipping:
       type: decimal
       scale: 2
-#  manyToOne:
-#    variant:
-#      targetEntity: JLM\CommerceBundle\Entity\QuoteVariant
-#      inversedBy: lines
+
     

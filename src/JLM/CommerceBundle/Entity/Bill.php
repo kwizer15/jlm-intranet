@@ -432,6 +432,7 @@ class Bill extends CommercialPart implements BillInterface
      */
     public function __construct()
     {
+    	parent::__construct();
         $this->lines = new ArrayCollection;
     }
     

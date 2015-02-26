@@ -35,4 +35,11 @@ class FormPopulatingEvent extends RequestEvent
     {
     	return $this->form;
     }
+    
+    public function getFormParam($formName, $paramName)
+    {
+    	$id = $this->getParam($formName, array($paramName => $this->getParam($paramName)));
+    
+    	return (isset($id[$paramName]) && $id[$paramName] !== null) ? $id[$paramName] : null;
+    }
 }

@@ -29,7 +29,7 @@ class QuoteVariantSubscriber implements EventSubscriberInterface
 	
 	public function populateFromQuote(FormPopulatingEvent $event)
 	{
-		if (null !== $id = $event->getParam('quote'))
+		if (null !== $id = $event->getFormParam('quote_variant','quote'))
 		{
 			$quote = $this->om->getRepository('JLMCommerceBundle:Quote')->find($id);
         	$event->getForm()->get('quote')->setData($quote);

@@ -16,6 +16,8 @@ namespace JLM\CommerceBundle;
  */
 final class JLMCommerceEvents
 {
+	const QUOTE_PREPERSIST = "jlm_commerce.quote_prepersist";
+	const QUOTE_PREUPDATE = "jlm_commerce.quote_preupdate";
 	const QUOTE_FORM_POPULATE = "jlm_commerce.quote_form_populate";
 	const QUOTE_AFTER_PERSIST = "jlm_commerce.quote_after_persist";
 	

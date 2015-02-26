@@ -1,0 +1,19 @@
+JLM\CommerceBundle\Entity\Event:
+  type: entity
+  table: jlm_commerce_event
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    date:
+      column: creation
+      type: datetime
+    name:
+      type: string
+    options:
+      type: array
+  lifecycleCallbacks:
+    prePersist: ['setDate']
+    

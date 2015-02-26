@@ -1,0 +1,24 @@
+JLM\CommerceBundle\Entity\EventFollower:
+  type: entity
+  table: jlm_commerce_event_follower
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  manyToMany:
+    events:
+      targetEntity: JLM\CommerceBundle\Entity\Event
+      joinTable:
+        name: jlm_commerce_event_follower_join_event
+        joinColumns:
+          event_follower_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          event_id:
+            referencedColumnName: id
+            unique: true
+      orderBy: { date: ASC }
+      orphanRemoval: true
+      cascade: ["all"]
+    
