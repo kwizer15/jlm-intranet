@@ -27,10 +27,10 @@
 		<tr><th>Date</th><th>Évenement</th><th>Commentaire</th>
 		{% if quote.events %}
 		{% for event in quote.events %}
-		  <tr><td>{{ event.date|date('d/m/Y H:i') }}</td><td>{{ event.name|trans }}</td><td>
+		  <tr><td>{{ event.date|date('d/m/Y H:i') }}</td><td>{{ event.name|trans({}, 'QuoteEvents') }}</td><td>
 		  <ul>
 		  {% for name,value in event.options %}
-		  <li>{{ name|trans }} : {{ value }}</li>
+		  <li>{{ name|trans({ '%data%':value }, 'QuoteEvents') }}</li>
 		  {% endfor %}
 		  </ul>
 		  </td></tr>
