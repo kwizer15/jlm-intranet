@@ -3,6 +3,11 @@ quote:
     defaults: { _controller: "JLMCommerceBundle:Quote:index" }
     methods: [GET]
     
+quote_follow:
+    path: /follow
+    defaults: { _controller: "JLMCommerceBundle:Quote:follow" }
+    methods: [GET]
+    
 quote_show:
     path: /{id}
     defaults: { _controller: "JLMCommerceBundle:Quote:show" }

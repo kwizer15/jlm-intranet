@@ -104,6 +104,11 @@ abstract class CommercialPart implements CommercialPartInterface
     	return $this->getEventFollower()->getEvents();
     }
     
+    public function getLastEvent($name)
+    {
+    	return $this->getEventFollower()->getLastEvent($name);
+    }
+    
     /**
      *
      * @return EventFollowerInterface

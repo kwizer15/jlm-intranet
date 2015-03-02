@@ -428,4 +428,19 @@ class Quote extends CommercialPart implements QuoteInterface
     	
     	return $number;
     }
+    
+    public function getLastSend()
+    {
+    	return $this->getLastEvent(self::EVENT_SEND);
+    }
+    
+    public function getLastBoost()
+    {
+    	return $this->getLastEvent(self::EVENT_BOOST);
+    }
+    
+    public function getLastGiven()
+    {
+    	return $this->getLastEvent(self::EVENT_GIVEN);
+    }
 }

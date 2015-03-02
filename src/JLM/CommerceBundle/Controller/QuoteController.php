@@ -49,6 +49,20 @@ class QuoteController extends ContainerAware
     			$manager->pagination('getCount'.$method, 'get'.$method, 'quote', array('state' => $state))
     	);
     }
+    
+    /**
+     * Lists all Quote entities.
+     */
+    public function followAction()
+    {
+    	$manager = $this->container->get('jlm_commerce.quote_manager');
+    	$manager->secure('ROLE_USER');
+    	$method = 'Follow';
+    	
+    	return $manager->renderResponse('JLMCommerceBundle:Quote:follow.html.twig',
+    			$manager->pagination('getCount'.$method, 'get'.$method, 'quote_follow', array())
+    	);
+    }
 
     /**
      * Finds and displays a Quote entity.

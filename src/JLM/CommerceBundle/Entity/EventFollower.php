@@ -45,5 +45,13 @@ class EventFollower implements EventFollowerInterface
 	{
 		return $this->events->removeElement($event);
 	}
-
+	
+	public function getLastEvent($name)
+	{
+		$closure = function($var) use ($name) {
+			return $var->getName() == $name;
+		};
+		
+		return $this->events->filter($closure)->last();
+	}
 }

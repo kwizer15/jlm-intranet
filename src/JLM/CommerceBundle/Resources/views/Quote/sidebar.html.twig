@@ -3,3 +3,4 @@
 <li><a href="{{ path('quote', { 'state' : 'waiting' }) }}"><span class="badge badge-warning">{{ quotecount.wait }}</span> En attente</a></li>
 <li><a href="{{ path('quote', { 'state' : 'sended' }) }}"><span class="badge badge-info">{{ quotecount.send }}</span> Envoyés</a></li>
 <li><a href="{{ path('quote', { 'state' : 'given' }) }}"><span class="badge badge-success">{{ quotecount.given }}</span> Accordés</a></li>
+<li><a href="{{ path('quote_follow') }}">Suivi des devis</a></li>
