@@ -109,7 +109,7 @@ class QuoteVariantController extends Controller
 	 */
 	public function readyAction($id)
 	{
-		return $this->changeState($id, QuoteVariant::STATE_READY);
+		return $this->changeState($id, QuoteVariant::STATE_READY, JLMCommerceEvents::QUOTEVARIANT_READY);
 	}
 
 	/**
@@ -117,7 +117,7 @@ class QuoteVariantController extends Controller
 	 */
 	public function unvalidAction($id)
 	{
-		return $this->changeState($id, QuoteVariant::STATE_INSEIZURE);
+		return $this->changeState($id, QuoteVariant::STATE_INSEIZURE, JLMCommerceEvents::QUOTEVARIANT_INSEIZURE);
 	}
 	
 	/**
@@ -125,7 +125,7 @@ class QuoteVariantController extends Controller
 	 */
 	public function faxAction($id)
 	{
-		return $this->changeState($id, QuoteVariant::STATE_SENDED);
+		return $this->changeState($id, QuoteVariant::STATE_SENDED, JLMCommerceEvents::QUOTEVARIANT_SENDED);
 	}
 	
 	/**
@@ -133,7 +133,7 @@ class QuoteVariantController extends Controller
 	 */
 	public function cancelAction($id)
 	{
-		return $this->changeState($id, QuoteVariant::STATE_CANCELED);
+		return $this->changeState($id, QuoteVariant::STATE_CANCELED, JLMCommerceEvents::QUOTEVARIANT_CANCELED);
 	}
 	
 	/**
@@ -141,7 +141,7 @@ class QuoteVariantController extends Controller
 	 */
 	public function receiptAction($id)
 	{
-		return $this->changeState($id, QuoteVariant::STATE_RECEIPT);
+		return $this->changeState($id, QuoteVariant::STATE_RECEIPT, JLMCommerceEvents::QUOTEVARIANT_RECEIPT);
 	}
 	
 	/**

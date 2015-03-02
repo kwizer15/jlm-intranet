@@ -97,7 +97,7 @@ class QuoteController extends ContainerAware
     	$form = $manager->createForm('edit', array('entity' => $entity));
     	if ($manager->getHandler($form)->process())
     	{
-    		var_dump($form->getData()->getEvents()[2]); exit;
+//    		var_dump($form->getData()->getEvents()[2]); exit;
     		return $manager->redirect('quote_show', array('id' => $form->getData()->getId()));
     	}
     	

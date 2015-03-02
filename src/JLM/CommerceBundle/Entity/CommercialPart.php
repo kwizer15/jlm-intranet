@@ -68,7 +68,7 @@ abstract class CommercialPart implements CommercialPartInterface
     
     public function __construct()
     {
-    	$this->eventFollower = new EventFollower();
+    	$this->setEventFollower(new EventFollower()); // @todo change to create
     }
     
     /**
@@ -81,7 +81,7 @@ abstract class CommercialPart implements CommercialPartInterface
     	if (!$event instanceof Event)
     	{
     		$name = $event;
-    		$event = new Event();
+    		$event = new Event(); // @todo change to create
     		$event->setName($name);
     		$event->setOptions($options);
     	}
@@ -101,7 +101,7 @@ abstract class CommercialPart implements CommercialPartInterface
     
     public function getEvents()
     {
-    	return $this->eventFollower->getEvents();
+    	return $this->getEventFollower()->getEvents();
     }
     
     /**
@@ -110,6 +110,11 @@ abstract class CommercialPart implements CommercialPartInterface
      */
     public function getEventFollower()
     {
+    	if ($this->eventFollower === null)
+    	{
+    		$this->setEventFollower(new EventFollower()); // @todo change to create
+    	}
+    	
     	return $this->eventFollower;
     }
     

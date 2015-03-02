@@ -25,10 +25,13 @@ class Quote extends CommercialPart implements QuoteInterface
 {
 	const EVENT_CREATION = 'creation';
 	const EVENT_NEWVARIANT = 'creation';
+	const EVENT_READY = 'ready';
+	const EVENT_PRINT = 'print';
 	const EVENT_SEND = 'send';
 	const EVENT_BOOST = 'boost';
 	const EVENT_GIVEN = 'given';
 	const EVENT_MODIFIED = 'modified';
+	const EVENT_RETURNINSEIZURE = 'inseizure';
 	
 	/**
 	 * @var int $id
