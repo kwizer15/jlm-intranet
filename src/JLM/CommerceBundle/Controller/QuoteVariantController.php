@@ -231,6 +231,7 @@ class QuoteVariantController extends Controller
 			} 
 			$this->get('mailer')->send($message);
 			$entity->setState(QuoteVariant::STATE_SENDED);
+			$manager->dispatch(JLMCommerceEvents::QUOTEVARIANT_SENDED, new QuoteVariantEvent($entity, $request));
 			$em->persist($entity);
 			$em->flush();
 		}
