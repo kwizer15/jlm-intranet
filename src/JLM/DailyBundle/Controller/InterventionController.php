@@ -580,6 +580,7 @@ class InterventionController extends Controller
 				$row++;
 			}
 		}
+		
 		$phpExcelObject->getActiveSheet()->setTitle('Rapport');
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$phpExcelObject->setActiveSheetIndex(0);
