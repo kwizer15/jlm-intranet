@@ -559,22 +559,24 @@ class InterventionController extends Controller
 				$reason .= $interv->getReason();
 				$constat = ($interv->getType() == 'fixing') ? $interv->getObservation() : '';
 				$report = $interv->getReport();
-				$technicians = '';
+				$techs = array();
 				foreach ($interv->getShiftTechnicians() as $shift)
 				{
-					$technicians .= $shift->getTechnician().' ('.$shift->getBegin()->format('d/m/Y');
+					$tech = $shift->getTechnician().' ('.$shift->getBegin()->format('d/m/Y');
 					if ($shift->getEnd())
 					{
-						$technicians .= ' - '.$shift->getTime()->format('%hh%I');
+						$tech .= ' - '.$shift->getTime()->format('%hh%I');
 					}
-					$technicians .= ')'.chr(10);
+					$tech .= ')';
+					$techs[] = $tech;
 				}
+				
 				$as->setCellValue('A'.$row, $this->get('translator')->trans($interv->getType()))
 				   ->setCellValue('B'.$row, $date)
 				   ->setCellValue('C'.$row, $reason)
 				   ->setCellValue('D'.$row, $constat)
 				   ->setCellValue('E'.$row, $report)
-				   ->setCellValue('F'.$row, $technicians);
+				   ->setCellValue('F'.$row, implode(chr(10),$techs));
 				$row++;
 			}
 		}
