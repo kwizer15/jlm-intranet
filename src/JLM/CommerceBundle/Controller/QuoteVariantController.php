@@ -263,6 +263,6 @@ class QuoteVariantController extends Controller
 			return $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()));
 		}
 		
-		return $manager->renderPdf('chiffrage-'.$entity->getNumber(), 'JLMCommerceBundle:QuoteVariant:coding.pdf.php',array('entities'=>array($entity)));
+		return $manager->renderPdf('chiffrage-'.$entity->getNumber(), 'JLMCommerceBundle:QuoteVariant:coding.pdf.php',array('entity'=>$entity));
 	}
 }
