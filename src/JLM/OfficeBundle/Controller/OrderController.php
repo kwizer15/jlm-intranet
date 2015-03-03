@@ -234,7 +234,10 @@ class OrderController extends Controller
 			return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
 	
 		if ($entity->getState() < 2)
+		{
 			$entity->setState(2);
+			$entity->setClose();
+		}
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();

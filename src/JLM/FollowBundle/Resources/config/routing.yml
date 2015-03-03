@@ -1,0 +1,4 @@
+jlm_follow_default_index:
+    path:   /follow/
+    defaults:  { _controller: "JLMFollowBundle:Default:index" }
+    methods: [GET]

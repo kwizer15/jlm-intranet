@@ -96,6 +96,10 @@ doctrine:
             JLM\CommerceBundle\Model\BillSourceInterface: JLM\DailyBundle\Entity\Intervention
             JLM\CommerceBundle\Model\BusinessInterface: JLM\ModelBundle\Entity\Site
             JLM\CommerceBundle\Model\QuoteRecipientInterface: JLM\ContactBundle\Entity\Person
+            JLM\CommerceBundle\Model\OrderInterface: JLM\OfficeBundle\Entity\Order
+            
+            JLM\DailyBundle\Model\WorkInterface: JLM\DailyBundle\Entity\Work
+            JLM\DailyBundle\Model\InterventionInterface: JLM\DailyBundle\Entity\Intervention
             
             JLM\ProductBundle\Model\ProductInterface: JLM\ProductBundle\Entity\Product
             JLM\ProductBundle\Model\SupplierInterface: JLM\ProductBundle\Entity\Supplier
@@ -108,6 +112,11 @@ doctrine:
 
             JLM\TransmitterBundle\Model\AttributionInterface: JLM\TransmitterBundle\Entity\Attribution
             JLM\TransmitterBundle\Model\TransmitterInterface: JLM\TransmitterBundle\Entity\Transmitter
+            
+            JLM\FollowBundle\Model\ThreadInterface: JLM\FollowBundle\Entity\Thread
+            JLM\FollowBundle\Model\StarterInterface: JLM\FollowBundle\Entity\Starter
+            
+            
 
 # Swiftmailer Configuration
 swiftmailer:

@@ -1,0 +1,62 @@
+JLM\DailyBundle\Entity\Intervention:
+  type: entity
+  table: shifting_interventions
+  repositoryClass: JLM\DailyBundle\Repository\InterventionRepository
+  fields:
+    contactName:
+      column: contact_name
+      nullable: true
+    contactPhones:
+      column: contact_phones
+      type: text
+      nullable: true
+    contactEmail:
+      column: contact_email
+      type: text
+      nullable: true
+    report:
+      type: text
+      nullable: true
+    comments:
+      type: text
+      nullable: true
+    priority:
+      type: smallint
+    close:
+      type: datetime
+      nullable: true
+    rest:
+      type: text
+      nullable: true
+    contract:
+      nullable: true
+    voucher:
+      nullable: true
+    externalBill:
+      column: external_bill
+      nullable: true
+    mustBeBilled:
+      type: boolean
+      nullable: true
+    contactCustomer:
+      column: contact_customer
+      type: boolean
+      nullable: true
+    cancel:
+      type: boolean
+  manyToOne:
+    door:
+      targetEntity: JLM\ModelBundle\Entity\Door
+      inversedBy: interventions
+  oneToOne:
+    bill:
+      targetEntity: JLM\CommerceBundle\Entity\Bill
+      inversedBy: intervention
+    work:
+      targetEntity: JLM\DailyBundle\Entity\Work
+      inversedBy: intervention
+    askQuote:
+      targetEntity: JLM\OfficeBundle\Entity\AskQuote
+      inversedBy: intervention
+      
+    

@@ -1,15 +1,22 @@
 <?php
+
+/*
+ * This file is part of the JLMDailyBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\DailyBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Plannification d'un entretien
  * JLM\DailyBundle\Entity\Maintenance
- *
- * @ORM\Table(name="shifting_maintenance")
- * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\MaintenanceRepository")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class Maintenance extends Intervention
 {

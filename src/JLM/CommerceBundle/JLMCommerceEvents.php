@@ -16,8 +16,19 @@ namespace JLM\CommerceBundle;
  */
 final class JLMCommerceEvents
 {
+	const QUOTE_PREPERSIST = "jlm_commerce.quote_prepersist";
+	const QUOTE_PREUPDATE = "jlm_commerce.quote_preupdate";
 	const QUOTE_FORM_POPULATE = "jlm_commerce.quote_form_populate";
 	const QUOTE_AFTER_PERSIST = "jlm_commerce.quote_after_persist";
+	
+	const QUOTEVARIANT_FORM_POPULATE = "jlm_commerce.quotevariant_form_populate";
+	const QUOTEVARIANT_PREPERSIST = "jlm_commerce.quotevariant_prepersist";
+	const QUOTEVARIANT_GIVEN = "jlm_commerce.quotevariant_given";
+	const QUOTEVARIANT_INSEIZURE = "jlm_commerce.quotevariant_inseizure";
+	const QUOTEVARIANT_READY = "jlm_commerce.quotevariant_ready";
+	const QUOTEVARIANT_PRINTED = "jlm_commerce.quotevariant_printed";
+	const QUOTEVARIANT_SENDED = "jlm_commerce.quotevariant_sended";
+	const QUOTEVARIANT_RECEIPT = "jlm_commerce.quotevariant_receipt";
 	
 	const BILL_FORM_POPULATE = "jlm_commerce.bill_form_populate";
 	const BILL_AFTER_PERSIST = "jlm_commerce.bill_after_persist";

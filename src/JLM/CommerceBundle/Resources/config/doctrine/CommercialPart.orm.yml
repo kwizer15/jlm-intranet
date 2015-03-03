@@ -23,3 +23,7 @@ JLM\CommerceBundle\Entity\CommercialPart:
   manyToOne:
     trustee:
       targetEntity: JLM\ModelBundle\Entity\Trustee
+  oneToOne:
+    eventFollower:
+      targetEntity: JLM\CommerceBundle\Entity\EventFollower
+      cascade: ["all"]

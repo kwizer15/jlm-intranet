@@ -5,6 +5,7 @@ namespace JLM\OfficeBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\DailyBundle\Entity\Work;
+use JLM\CommerceBundle\Model\OrderInterface;
 
 /**
  * JLM\OfficeBundle\Entity\Order
@@ -12,7 +13,7 @@ use JLM\DailyBundle\Entity\Work;
  * @ORM\Table(name="orders")
  * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\OrderRepository")
  */
-class Order
+class Order implements OrderInterface
 {
 	const STATE_INPUT = 0;
 	const STATE_ORDERED = 1;
@@ -32,6 +33,12 @@ class Order
 	 * @ORM\Column(name="creation",type="datetime") 
 	 */
 	private $creation;
+	
+	/**
+	 * @var DateTime $close
+	 * @ORM\Column(name="close",type="datetime", nullable=true)
+	 */
+	private $close;
 	
 	/**
 	 * Lignes
@@ -130,6 +137,29 @@ class Order
     public function getCreation()
     {
     	return $this->creation;
+    }
+    
+    /**
+     * Set close
+     *
+     * @param \DateTime $close
+     * @return Document
+     */
+    public function setClose(\DateTime $close = null)
+    {
+    	$this->close = ($close === null) ? new \DateTime : $close;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get close
+     *
+     * @return \DateTime
+     */
+    public function getClose()
+    {
+    	return $this->close;
     }
     
     /**

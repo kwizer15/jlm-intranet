@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the JLMDailyBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\DailyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -9,33 +18,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Déplacement
  * JLM\DailyBundle\Entity\Shifting
- *
- * @ORM\Table(name="shifting")
- * @ORM\Entity
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="actionType", type="string")
- * @ORM\DiscriminatorMap({
- * 		"equipment" = "Equipment",
- * 		"fixing" = "Fixing",
- * 		"work" = "Work",
- * 		"maintenance" = "Maintenance",
- * })
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 abstract class Shifting
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var \DateTime $creation
-     *
-     * @ORM\Column(name="creation", type="datetime")
      * @Assert\DateTime
      * @Assert\NotNull(message="Pas de date de création du déplacement")
      */
@@ -44,7 +37,6 @@ abstract class Shifting
     /**
      * Lieu du déplacement
      * @var string
-     * @ORM\Column(name="place", type="text")
      * @Assert\Type(type="string")
      * @Assert\NotBlank(message="Pas de lieu pour le déplacement")
      */
@@ -52,8 +44,6 @@ abstract class Shifting
     
     /**
      * @var string $reason
-     *
-     * @ORM\Column(name="reason", type="text")
      * @Assert\Type(type="string")
      * @Assert\NotBlank(message="Pas de raison pour le déplacement")
      */
@@ -61,9 +51,6 @@ abstract class Shifting
     
 	/**
 	 * @var ArrayCollection $shiftTechnicians
-	 * 
-	 * @ORM\OneToMany(targetEntity="ShiftTechnician", mappedBy="shifting")
-	 * @ORM\OrderBy({"begin" = "ASC"})
 	 */
     private $shiftTechnicians;
     
@@ -158,23 +145,22 @@ abstract class Shifting
      * Add shiftTechnicians
      *
      * @param JLM\DailyBundle\Entity\ShiftTechnician $shiftTechnicians
-     * @return Shifting
+     * @return bool
      */
-    public function addShiftTechnician(\JLM\DailyBundle\Entity\ShiftTechnician $shiftTechnicians)
+    public function addShiftTechnician(ShiftTechnician $shiftTechnicians)
     {
-    	$this->shiftTechnicians[] = $shiftTechnicians;
-    
-    	return $this;
+    	return $this->shiftTechnicians->add($shiftTechnicians);
     }
     
     /**
      * Remove shiftTechnicians
      *
-     * @param JLM\DailyBundle\Entity\ShiftTechnician $shiftTechnicians
+     * @param ShiftTechnician $shiftTechnicians
+     * @return bool
      */
-    public function removeShiftTechnician(\JLM\DailyBundle\Entity\ShiftTechnician $shiftTechnicians)
+    public function removeShiftTechnician(ShiftTechnician $shiftTechnicians)
     {
-    	$this->shiftTechnicians->removeElement($shiftTechnicians);
+    	return $this->shiftTechnicians->removeElement($shiftTechnicians);
     }
     
     /**
@@ -208,6 +194,7 @@ abstract class Shifting
     	$min = $minutes % 60;
     	$minutes -= $min;
     	$hours += $minutes / 60;
+    	
     	return new \DateInterval('PT'.$hours.'H'.$min.'M');
     }
     
@@ -221,9 +208,9 @@ abstract class Shifting
     	$shifts = $this->getShiftTechnicians();
     	foreach ($shifts as $shift)
     	{
-    		if ($firstDate === null || $firstDate > $shift->getBegin())
-    			$firstDate = $shift->getBegin();
+    		$firstDate = ($firstDate === null || $firstDate > $shift->getBegin()) ? $shift->getBegin() : $firstDate;
     	}
+    	
     	return $firstDate;
     }
     
@@ -237,9 +224,9 @@ abstract class Shifting
     	$shifts = $this->getShiftTechnicians();
     	foreach ($shifts as $shift)
     	{
-    		if ($lastDate === null || $lastDate < $shift->getBegin())
-    			$lastDate = $shift->getBegin();
+    		$lastDate = ($lastDate === null || $lastDate < $shift->getBegin()) ? $shift->getBegin() : $lastDate;
     	}
+    	
     	return $lastDate;
     }
     
@@ -248,9 +235,7 @@ abstract class Shifting
      */
     public function isInProgress()
     {
-    	if (sizeof($this->shiftTechnicians) > 0)
-    		return true;
-    	return false;
+    	return (sizeof($this->shiftTechnicians) > 0);
     }   
      
     /**

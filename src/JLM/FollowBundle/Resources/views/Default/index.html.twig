@@ -1,0 +1,73 @@
+{% extends 'JLMCoreBundle::layout.html.twig' %}
+
+{% block content %}
+<h1>Suivi de commandes</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Syndic</th>
+      <th>Affaire</th>
+      <th>Origine</th>
+      <th>Montant</th>
+      <th>Commande fournisseur</th>
+      <th>Préparation matériel</th>
+      <th>Début des travaux</th>
+      <th>Fin des travaux</th>
+      <th>Facturation</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for thread in threads %}
+    <tr class="
+      {%- if thread.state == 0 -%}danger
+      {%- elseif thread.state == 1 -%}warning
+      {%- elseif thread.state == 2 -%}info
+      {%- elseif thread.state == 3 -%}success
+      {%- elseif thread.state == 4 -%}success
+      {%- endif -%}
+    ">
+      <td>{{ thread.startDate|date('d/m/Y') }}</td>
+      <td>{{ thread.starter.business.manager|nl2br }}</td>
+      <td>
+        {%- if thread.starter.business.stopped -%}
+        <span class="label label-important">Mise à l'arrêt</span><br>
+        {%- endif -%}
+        {{ thread.starter.business|nl2br }}
+      </td>
+      <td>
+      	{%- if thread.starter.type == 'quote' -%}
+      		<a href="{{ path('quote_show', {'id':thread.starter.variant.quote.id}) }}" data-toggle="tooltip" title="{{ thread.starter.variant.intro }}">
+      	{%- elseif thread.starter.type == 'intervention' -%}
+      	    <a data-toggle="tooltip" title="{{ thread.starter.intervention.rest }}">
+      	{%- endif -%}
+      	{{ thread.starter.name }}</a></td>
+      <td>{{ thread.amount|number_format(2,',',' ') }}</td>
+      <td>
+        {% if thread.order and thread.state >= 0 %}
+          <a href="{{ path('order_show', {'id': thread.order.id }) }}">{{ thread.order.creation|date('d/m/Y') }}</a>
+        {% else %}
+          <a href="{{ path('order_new', {'id': thread.work.id }) }}" class="btn btn-small">Créer la fiche travaux</a>
+        {% endif %}
+      </td>
+      <td>{% if thread.order and thread.state >= 1 %}{{ thread.order.close|date('d/m/Y') }}{% endif %}</td>
+      <td>{% if thread.state >= 2 %}<a href="{{ path('work_show', {'id': thread.work.id }) }}">{{ thread.work.firstDate|date('d/m/Y') }}</a>{% endif %}</td>
+      <td>{% if thread.state >= 3 %}{{ thread.work.close|date('d/m/Y') }}{% endif %}</td>
+      <td>{% if thread.state >= 4 %}
+          {%- if thread.work.bill is not null -%}
+      		<a href="{{ path('bill_show', { 'id':thread.work.bill.id }) }}">{{ thread.work.bill.number }}</a>
+      	  {%- else -%}
+      	  {{ thread.work.externalBill }}
+      	  {%- endif -%}
+      	{%- endif -%}
+      </td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
+{% block javascripts_script %}
+{{ parent() }}
+$('a').tooltip({'placement':'right'});
+{% endblock %}

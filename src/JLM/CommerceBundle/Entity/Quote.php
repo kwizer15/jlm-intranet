@@ -23,6 +23,16 @@ use JLM\CommerceBundle\Model\QuoteVariantInterface;
  */
 class Quote extends CommercialPart implements QuoteInterface
 {
+	const EVENT_CREATION = 'creation';
+	const EVENT_NEWVARIANT = 'creation';
+	const EVENT_READY = 'ready';
+	const EVENT_PRINT = 'print';
+	const EVENT_SEND = 'send';
+	const EVENT_BOOST = 'boost';
+	const EVENT_GIVEN = 'given';
+	const EVENT_MODIFIED = 'modified';
+	const EVENT_RETURNINSEIZURE = 'inseizure';
+	
 	/**
 	 * @var int $id
 	 */
@@ -85,6 +95,7 @@ class Quote extends CommercialPart implements QuoteInterface
 	public function __construct()
 	{
 		$this->variants = new ArrayCollection;
+		parent::__construct();
 	}
 	
     /**
@@ -416,5 +427,20 @@ class Quote extends CommercialPart implements QuoteInterface
     	$this->setNumber($number);
     	
     	return $number;
+    }
+    
+    public function getLastSend()
+    {
+    	return $this->getLastEvent(self::EVENT_SEND);
+    }
+    
+    public function getLastBoost()
+    {
+    	return $this->getLastEvent(self::EVENT_BOOST);
+    }
+    
+    public function getLastGiven()
+    {
+    	return $this->getLastEvent(self::EVENT_GIVEN);
     }
 }

@@ -22,9 +22,11 @@ use JLM\CommerceBundle\Entity\Quote;
 use JLM\CommerceBundle\Entity\QuoteVariant;
 use JLM\CommerceBundle\Form\Type\QuoteVariantType;
 use JLM\CommerceBundle\Entity\QuoteLine;
-use JLM\OfficeBundle\Entity\Task;
 use JLM\OfficeBundle\Entity\Order;
 use JLM\DailyBundle\Entity\Work;
+use JLM\CommerceBundle\Event\QuoteEvent;
+use JLM\CommerceBundle\JLMCommerceEvents;
+use JLM\CommerceBundle\Event\QuoteVariantEvent;
 
 /**
  * QuoteVariant controller.
@@ -32,187 +34,140 @@ use JLM\DailyBundle\Entity\Work;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class QuoteVariantController extends Controller
-{
-	private function createNewForm(QuoteVariant $entity)
-	{
-		return $this->createForm(new QuoteVariantType(), $entity);
-	}
-	
-	private function createEditForm(QuoteVariant $entity)
-	{
-		return $this->createForm(new QuoteVariantType(), $entity);
-	}
-	
+{		
 	/**
      * Displays a form to create a new Variant entity.
-     *
-     * @Template()
-     * @Secure(roles="ROLE_USER")
      */
-    public function newAction(Quote $quote)
+    public function newAction()
     {
-        $entity = new QuoteVariant();
-        $entity->setQuote($quote);
-        
-        $entity->setCreation(new \DateTime);
-        $l = new QuoteLine;
-        $l->setVat($quote->getVat());
-        $entity->addLine($l);
-        $form   = $this->createNewForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        );
-    }
-    
-    /**
-     * Creates a new Variant entity.
-     *
-     * @Template("JLMCommerceBundle:QuoteVariant:new.html.twig")
-     * @Secure(roles="ROLE_USER")
-     */
-    public function createAction(Request $request)
-    {
-    	$entity  = new QuoteVariant();
-    	$form    = $this->createNewForm($entity);
-    	$form->handleRequest($request);
-    
-    	if ($form->isValid())
+    	$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+    	$manager->secure('ROLE_USER');
+        $form   = $manager->createForm('new');
+        if ($manager->getHandler($form)->process())
     	{
-    		$em = $this->getDoctrine()->getManager();
-    		$lines = $entity->getLines();
-    		foreach ($lines as $line)
-    		{
-    			$line->setVariant($entity);
-    			$em->persist($line);
-    		}
-			$number = $em->getRepository('JLMCommerceBundle:QuoteVariant')->getCount($entity->getQuote())+1;
-			$entity->setVariantNumber($number);
-    		$em->persist($entity);
-    		$em->flush();
-    		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+    		return $manager->redirect('quote_show', array('id' => $form->get('quote')->getData()->getId()));
     	}
-    
-    	return array(
-	    	'entity' => $entity,
-	    	'form'   => $form->createView()
-    	);
+    	
+    	return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:new.html.twig', array(
+    			'quote' => $form->get('quote')->getData(),
+    			'entity' => $form->getData(),
+    			'form'   => $form->createView()
+    	));
     }
     
 	/**
 	 * Displays a form to edit an existing QuoteVariant entity.
-	 *
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
 	 */
-	public function editAction(QuoteVariant $entity)
+	public function editAction($id)
 	{
-		// Si le devis est déjà validé, on empèche quelconque modification
-		if ($entity->getState())
+		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+		$manager->secure('ROLE_USER');
+		$entity = $manager->getEntity($id);
+		$manager->assertState($entity, array(QuoteVariant::STATE_INSEIZURE));
+		$form = $manager->createForm('edit', array('entity' => $entity));
+		if ($manager->getHandler($form)->process())
 		{
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+			return $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()));
 		}
-		$editForm = $this->createEditForm($entity);
 		
-		return array(
+		return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:edit.html.twig',array(
+				'quote' => $form->get('quote')->getData(),
 				'entity'      => $entity,
-				'edit_form'   => $editForm->createView(),
-		);
+				'form'   => $form->createView(),
+		));
 	}
 	
 	/**
-	 * Edits an existing QuoteVariant entity.
-	 *
-	 * @Template("JLMCommerceBundle:QuoteVariant:edit.html.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * Change entity state and return the redirect show quote response
+	 * Can send a QuoteVariantEvent if the event name is defined
+	 * @param int $id
+	 * @param int $state
+	 * @param string $event
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
 	 */
-	public function updateAction(Request $request, QuoteVariant $entity)
+	private function changeState($id, $state, $event = null)
 	{
-		 
-		// Si le devis est déjà validé, on empèche quelconque odification
-		if ($entity->getState())
+		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+		$manager->secure('ROLE_USER');
+		$entity = $manager->getEntity($id);
+		if ($entity->setState($state))
 		{
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		}
-	
-		$originalLines = array();
-		foreach ($entity->getLines() as $line)
-		{
-			$originalLines[] = $line;
-		}
-		$editForm = $this->createEditForm($entity);
-		$editForm->handleRequest($request);
-	
-		if ($editForm->isValid())
-		{
-			$em = $this->getDoctrine()->getManager();
+			if ($event !== null)
+			{
+				$manager->dispatch($event, new QuoteVariantEvent($entity, $this->getRequest()));
+			}
+			$em = $manager->getObjectManager();
 			$em->persist($entity);
-			$lines = $entity->getLines();
-			foreach ($lines as $key => $line)
-			{
-	
-				// Nouvelles lignes
-				$line->setVariant($entity);
-				$em->persist($line);
-	
-				// On vire les anciennes
-				foreach ($originalLines as $key => $toDel)
-				{
-					if ($toDel->getId() === $line->getId())
-					{
-						unset($originalLines[$key]);
-					}
-				}
-			}
-			foreach ($originalLines as $line)
-			{
-				$em->remove($line);
-			}
 			$em->flush();
-			
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
 		}
-	
-		return array(
-				'entity'      => $entity,
-				'edit_form'   => $editForm->createView(),
-		);
+		
+		return $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()));
 	}
 	
 	/**
 	 * Note QuoteVariant as ready to send.
-	 *
-	 * @Secure(roles="ROLE_USER")
 	 */
-	public function readyAction(QuoteVariant $entity)
+	public function readyAction($id)
 	{
-		if ($entity->getState() < 0)
-		{
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		}
-		if ($entity->getState() < 1)
-		{
-			$entity->setState(1);
-		}
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($entity);
-		$em->flush();
-		
-		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+		return $this->changeState($id, QuoteVariant::STATE_READY, JLMCommerceEvents::QUOTEVARIANT_READY);
+	}
+
+	/**
+	 * Note QuoteVariant as not ready.
+	 */
+	public function unvalidAction($id)
+	{
+		return $this->changeState($id, QuoteVariant::STATE_INSEIZURE, JLMCommerceEvents::QUOTEVARIANT_INSEIZURE);
+	}
+	
+	/**
+	 * Note QuoteVariant as faxed.
+	 */
+	public function faxAction($id)
+	{
+		return $this->changeState($id, QuoteVariant::STATE_SENDED, JLMCommerceEvents::QUOTEVARIANT_SENDED);
+	}
+	
+	/**
+	 * Note QuoteVariant as canceled.
+	 */
+	public function cancelAction($id)
+	{
+		return $this->changeState($id, QuoteVariant::STATE_CANCELED, JLMCommerceEvents::QUOTEVARIANT_CANCELED);
+	}
+	
+	/**
+	 * Note QuoteVariant as receipt.
+	 */
+	public function receiptAction($id)
+	{
+		return $this->changeState($id, QuoteVariant::STATE_RECEIPT, JLMCommerceEvents::QUOTEVARIANT_RECEIPT);
+	}
+	
+	/**
+	 * Accord du devis / Création de l'intervention
+	 */
+	public function givenAction($id)
+	{
+		return $this->changeState($id, QuoteVariant::STATE_GIVEN, JLMCommerceEvents::QUOTEVARIANT_GIVEN);
 	}
 	
 	/**
 	 * Mail
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
 	 */
-	public function mailAction(QuoteVariant $entity)
+	public function mailAction($id)
 	{
-		if ($entity->getState() < 1)
-		{
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		}
+		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+		$manager->secure('ROLE_USER');
+		$entity = $manager->getEntity($id);
+		$manager->assertState(array(
+				QuoteVariant::STATE_READY,
+				QuoteVariant::STATE_PRINTED,
+				QuoteVariant::STATE_SENDED,
+				QuoteVariant::STATE_RECEIPT,
+				QuoteVariant::STATE_GIVEN
+		));
 		$mail = new Mail();
 		$mail->setSubject('Devis n°'.$entity->getNumber());
 		$mail->setFrom('commerce@jlm-entreprise.fr');
@@ -238,14 +193,16 @@ class QuoteVariantController extends Controller
 	
 	/**
 	 * Send by mail a QuoteVariant entity.
-	 *
-	 * @Secure(roles="ROLE_USER")
 	 */
-	public function sendmailAction(Request $request, QuoteVariant $entity)
+	public function sendmailAction($id)
 	{
-		if ($entity->getState() < 1)
+		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+		$manager->secure('ROLE_USER');
+		$request = $manager->getRequest();
+		$entity = $manager->getEntity($id);
+		if ($entity->getState() < QuoteVariant::STATE_READY)
 		{
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+			return $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()));
 		}
 		
 		// Message
@@ -273,212 +230,39 @@ class QuoteVariantController extends Controller
 				;
 			} 
 			$this->get('mailer')->send($message);
-			if ($entity->getState() < 3)
-			{
-				$entity->setState(3);
-			}
+			$entity->setState(QuoteVariant::STATE_SENDED);
 			$em->persist($entity);
 			$em->flush();
 		}
 		
-		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-	}
-	
-	
-	
-	/**
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function printAction(QuoteVariant $entity)
-	{
-		$response = new Response();
-		$response->headers->set('Content-Type', 'application/pdf');
-		$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getNumber().'.pdf');
-		$response->setContent($this->render('JLMCommerceBundle:Quote:quote.pdf.php',array('entities'=>array($entity))));
-		 
-		return $response;
+		return $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()));
 	}
 	
 	/**
-	 * @Secure(roles="ROLE_USER")
+	 * Print a Quote
 	 */
-	public function printcodingAction(QuoteVariant $entity)
+	public function printAction($id)
 	{
-		if ($entity->getState() < 0)
-		{
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		}
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($entity);
-		$em->flush();
-			
-		$response = new Response();
-		$response->headers->set('Content-Type', 'application/pdf');
-		$response->headers->set('Content-Disposition', 'inline; filename=chiffrage'.$entity->getNumber().'.pdf');
-		$response->setContent($this->render('JLMCommerceBundle:QuoteVariant:coding.pdf.php',array('entity'=>$entity)));
-			
-		return $response;
-	}
-	
-	
-	/**
-	 * Note QuoteVariant as not ready.
-	 *
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function unvalidAction(QuoteVariant $entity)
-	{
-		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		if (!$this->changeEntityState($entity, 0))
-		{
-			return $response;
-		}
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($entity);
-		$em->flush();
+		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+		$manager->secure('ROLE_USER');
+		$entity = $manager->getEntity($id);
 		
-		return $response;
+		return $manager->renderPdf($entity->getNumber(), 'JLMCommerceBundle:Quote:quote.pdf.php', array('entities'=>array($entity)));
 	}
 	
 	/**
-	 * Note QuoteVariant as faxed.
-	 *
-	 * @Secure(roles="ROLE_USER")
+	 * Print a coding
 	 */
-	public function faxAction(QuoteVariant $entity)
+	public function printcodingAction($id)
 	{
-		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		if (!$this->changeEntityState($entity, 3))
+		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+		$manager->secure('ROLE_USER');
+		$entity = $manager->getEntity($id);
+		if ($entity->getState() == QuoteVariant::STATE_CANCELED)
 		{
-			return $response;
-		}
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($entity);
-		$em->flush();
-		
-		return $response;
-	}
-	
-	/**
-	 * Note QuoteVariant as canceled.
-	 *
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function cancelAction(QuoteVariant $entity)
-	{
-		$entity->setState(-1);
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($entity);
-		$em->flush();
-		
-		return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-	}
-	
-	/**
-	 * Note QuoteVariant as receipt.
-	 *
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function receiptAction(QuoteVariant $entity)
-	{
-		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		if (!$this->changeEntityState($entity, 4))
-		{
-			return $response;
-		}
-		$em = $this->getDoctrine()->getManager();
-		$em->persist($entity);
-		$em->flush();
-		
-		return $response;
-	}
-	
-	/**
-	 * Note QuoteVariant as given.
-	 *
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function oldgivenAction(QuoteVariant $entity)
-	{
-		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		if (!$this->changeEntityState($entity, 5))
-		{
-			return $response;
-		}
-		$em = $this->getDoctrine()->getManager();
-		
-		$task = new Task();
-		$task->setDoor($entity->getQuote()->getDoor());
-		$task->setPlace($entity->getQuote()->getDoorCp());
-		$task->setTodo('Accord du devis n°'.$entity->getNumber());
-		$task->setType($em->getRepository('JLMOfficeBundle:TaskType')->find(3));
-		$task->setUrlSource($this->generateUrl('variant_print', array('id' => $entity->getId())));
-		$task->setUrlAction($this->generateUrl('order_new_quotevariant', array('id' => $entity->getId())));
-		
-		$em->persist($entity);
-		$em->persist($task);
-		$em->flush();
-		
-		return $response;
-	}
-	
-	/**
-	 * Accord du devis / Création de l'intervention
-	 *
-	 * @Secure(roles="ROLE_USER")
-	 */
-	public function givenAction(QuoteVariant $entity)
-	{
-		$response = $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		if (!$this->changeEntityState($entity, 5))
-		{
-			return $response;
+			return $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()));
 		}
 		
-		$em = $this->getDoctrine()->getManager();
-		if ($entity->getWork() === null && $entity->getQuote()->getDoor() !== null)
-		{			
-			// Création de la ligne travaux pré-remplie
-			$work = Work::createFromQuoteVariant($entity);
-			//$work->setMustBeBilled(true);
-			$work->setCategory($em->getRepository('JLMDailyBundle:WorkCategory')->find(1));
-			$work->setObjective($em->getRepository('JLMDailyBundle:WorkObjective')->find(1));
-			$order = Order::createFromWork($work);
-			$em->persist($order);
-			$olines = $order->getLines();
-			foreach ($olines as $oline)
-			{
-				$oline->setOrder($order);
-				$em->persist($oline);
-			}
-			$work->setOrder($order);
-			$em->persist($work);
-			$entity->setWork($work);
-		}
-		$em->persist($entity);
-		$em->flush();
-		
-		return $response;
-	}
-	
-	private function changeEntityState(QuoteVariant $entity, $state)
-	{
-		$asserts = array(
-			0 => array(1,5),
-			3 => array(1,3),
-			4 => array(3,4),
-			5 => array(4,5),
-		);
-		// 0
-		if ($entity->getState() < $asserts[$state][0])
-		{
-			return false;
-		}
-		if ($entity->getState() < $asserts[$state][1])
-		{
-			$entity->setState($state);
-		}
-		
-		return true;
+		return $manager->renderPdf('chiffrage-'.$entity->getNumber(), 'JLMCommerceBundle:Quote:coding.pdf.php',array('entities'=>array($entity)));
 	}
 }

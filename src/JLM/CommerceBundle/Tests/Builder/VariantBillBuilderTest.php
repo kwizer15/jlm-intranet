@@ -28,8 +28,10 @@ class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
     {
         
         $door = $this->getMock('JLM\ModelBundle\Entity\Door');
-        $vat = $this->getMock('JLM\Commerce\Bundle\Model\VATInterface');
+        $vat = $this->getMock('JLM\CommerceBundle\Model\VATInterface');
+        $vat->expects($this->any())->method('getRate')->will($this->returnValue('0.20'));
         $address = $this->getMock('JLM\ContactBundle\Model\AddressInterface');
+        $address->expects($this->any())->method('toString')->will($this->returnValue('Foo'));
         $trustee = $this->getMock('JLM\ModelBundle\Entity\Trustee');
         $trustee->expects($this->any())->method('getBillAddress')->will($this->returnValue($address));
         $contract = $this->getMock('JLM\ContractBundle\Model\ContractInterface');

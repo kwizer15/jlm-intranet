@@ -1,0 +1,30 @@
+JLM\DailyBundle\Entity\Shifting:
+  type: entity
+  table: shifting
+  inheritanceType: JOINED
+  discriminatorColumn:
+    name: actionType
+    type: string
+  discriminatorMap:
+    equipment: JLM\DailyBundle\Entity\Equipment
+    fixing: JLM\DailyBundle\Entity\Fixing
+    work: JLM\DailyBundle\Entity\Work
+    maintenance: JLM\DailyBundle\Entity\Maintenance
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    creation:
+      type: datetime
+    place:
+      type: text
+    reason:
+      type: text
+  oneToMany:
+    shiftTechnicians:
+      targetEntity: ShiftTechnician
+      mappedBy: shifting
+      orderBy:
+        begin: ASC

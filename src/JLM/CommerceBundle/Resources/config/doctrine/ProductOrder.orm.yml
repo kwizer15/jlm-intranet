@@ -1,0 +1,4 @@
+JLM\CommerceBundle\Entity\ProductOrder:
+  type: entity
+  table: jlm_commerce_product_order
+    

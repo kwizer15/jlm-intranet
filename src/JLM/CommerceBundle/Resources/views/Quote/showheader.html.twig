@@ -13,3 +13,31 @@
         <br>à l'attention de {{ quote.contactCp }}
     </div>
 </div>
+
+<div class="accordion" id="eventFollower">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#eventFollower" href="#events">
+        Évènements
+      </a>
+    </div>
+    <div id="events" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <table class="table">
+		<tr><th>Date</th><th>Évenement</th><th>Commentaire</th>
+		{% if quote.events %}
+		{% for event in quote.events %}
+		  <tr><td>{{ event.date|date('d/m/Y H:i') }}</td><td>{{ event.name|trans({}, 'QuoteEvents') }}</td><td>
+		  <ul>
+		  {% for name,value in event.options %}
+		  <li>{{ name|trans({ '%data%':value }, 'QuoteEvents') }}</li>
+		  {% endfor %}
+		  </ul>
+		  </td></tr>
+		{% endfor %}
+		{% endif %}
+		</table>
+      </div>
+    </div>
+  </div>
+</div>

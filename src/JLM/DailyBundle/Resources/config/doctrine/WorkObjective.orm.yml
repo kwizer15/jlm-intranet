@@ -1,0 +1,10 @@
+JLM\DailyBundle\Entity\WorkObjective:
+  type: entity
+  table: work_objectives
+  readOnly: true
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+        

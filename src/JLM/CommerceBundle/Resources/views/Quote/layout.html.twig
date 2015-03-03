@@ -10,3 +10,13 @@
 	<li class="nav-header">Derniers devis</li>
 	{% include 'JLMCommerceBundle:Quote:last.html.twig' %}
 {% endblock sidebar %}
+
+
+{% block javascripts %}
+{{ parent() }}
+    {% javascripts
+    	'@JLMCommerceBundle/Resources/public/js/quote.js'
+        filter='yui_js' %}
+    	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+{% endblock %}

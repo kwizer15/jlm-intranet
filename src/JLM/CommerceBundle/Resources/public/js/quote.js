@@ -216,7 +216,7 @@
 		$("#quote_variant_lines_" + this.options.lineCount + "_expenseRatio").val(10);
 		$("#quote_variant_lines_" + this.options.lineCount + "_shipping").val('0,00');
 		$("#quote_variant_lines_" + this.options.lineCount + "_discount").val(0);
-		$("#quote_variant_lines_" + this.options.lineCount + "_vat").val($("#quote_vat").val());
+		$("#quote_variant_lines_" + this.options.lineCount + "_vat").val($("#quote_variant_vat").val());
 		$("#quote_variant_lines_" + this.options.lineCount + "_coef").val('40,00').change();
 		if (!$(".tab-coding").hasClass('active'))
 		{
@@ -349,7 +349,7 @@
 					$(id + 'expenseRatio').val(ui.item.expenseRatio);
 
 					$(id + 'isTransmitter').val(ui.item.transmitter ? '1' : '');
-					$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? $("#quote_vatTransmitter").val() : $("#quote_vat").val());
+					$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? $("#quote_variant_vatTransmitter").val() : $("#quote_variant_vat").val());
 					$(id + 'shipping').val(ui.item.shipping).change();
 					$(id + 'unitPrice').val(ui.item.unitPrice).change();
 
@@ -379,7 +379,7 @@
 					$(id + 'expenseRatio').val(ui.item.expenseRatio);
 
 					$(id + 'isTransmitter').val(ui.item.transmitter ? '1' : '');
-					$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? $("#quote_vatTransmitter").val() : $("#quote_vat").val());
+					$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? $("#quote_variant_vatTransmitter").val() : $("#quote_variant_vat").val());
 					$(id + 'shipping').val(ui.item.shipping).change();
 					$(id + 'unitPrice').val(ui.item.unitPrice).change();
 					return false;
