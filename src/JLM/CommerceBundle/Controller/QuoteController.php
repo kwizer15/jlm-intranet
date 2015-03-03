@@ -43,24 +43,14 @@ class QuoteController extends ContainerAware
     	);
     	$state = $manager->getRequest()->get('state');
     	$state = (!array_key_exists($state, $states)) ? 'all' : $state;
+    	$views = array('index'=>'Liste','follow'=>'Suivi');
+    	$view = $manager->getRequest()->get('view');
+    	$view = (!array_key_exists($view, $views)) ? 'index' : $view;
+    	
     	$method = $states[$state];
     	
-    	return $manager->renderResponse('JLMCommerceBundle:Quote:index.html.twig',
-    			$manager->pagination('getCount'.$method, 'get'.$method, 'quote', array('state' => $state))
-    	);
-    }
-    
-    /**
-     * Lists all Quote entities.
-     */
-    public function followAction()
-    {
-    	$manager = $this->container->get('jlm_commerce.quote_manager');
-    	$manager->secure('ROLE_USER');
-    	$method = 'Follow';
-    	
-    	return $manager->renderResponse('JLMCommerceBundle:Quote:follow.html.twig',
-    			$manager->pagination('getCount'.$method, 'get'.$method, 'quote_follow', array())
+    	return $manager->renderResponse('JLMCommerceBundle:Quote:'.$view.'.html.twig',
+    			$manager->pagination('getCount'.$method, 'get'.$method, 'quote', array('state' => $state, 'view' => $view))
     	);
     }
 
@@ -214,7 +204,7 @@ class QuoteController extends ContainerAware
     		$eventComment = 'Destinataire : '.$mail->getTo();
     		if ($mail->getCc())
     		{
-    			$eventComment = chr(10).'Copie : '.$mail->getCc();
+    			$eventComment .= chr(10).'Copie : '.$mail->getCc();
     		}
     		$eventComment .= chr(10).'Pièces jointes :';
     		foreach ($entity->getVariants() as $variant)
@@ -227,10 +217,7 @@ class QuoteController extends ContainerAware
 		    		))
 		    		;
 		    		$eventComment .= chr(10).'- Devis n°'.$variant->getNumber();
-		    		if ($variant->getState() < 3)
-		    		{
-		    			$variant->setState(3);
-		    		}
+		    		$variant->setState(3);
     			}
     		}
     		if ($entity->getVat() == $entity->getVatTransmitter())
@@ -241,7 +228,7 @@ class QuoteController extends ContainerAware
     			$eventComment .= chr(10).'- Attestation TVA à 10%';
     		}
 
-    		$entity->addEvent(Quote::EVENT_SEND, $eventComment);
+    		//$entity->addEvent(Quote::EVENT_SEND, $eventComment);
     		$manager->getMailer()->send($message);
     		$em = $manager->getObjectManager();
     		$em->persist($entity);
@@ -249,26 +236,5 @@ class QuoteController extends ContainerAware
     	}
     	
     	return $manager->redirect('quote_show', array('id' => $entity->getId()));
-    }
-    
-    public function followerAction()
-    {
-    	$manager = $this->container->get('jlm_commerce.quote_manager');
-    	$manager->secure('ROLE_USER');
-    	$filters = array(
-    			'all' => 'All',
-    			'in_seizure' => 'InSeizure',
-    			'waiting' => 'Waiting',
-    			'sended' => 'Sended',
-    			'given' => 'Given',
-    			'canceled' => 'Canceled'
-    	);
-    	$state = $manager->getRequest()->get('state');
-    	$state = (!array_key_exists($state, $filters)) ? 'all' : $state;
-    	$method = $filters[$state];
-    	
-    	return $manager->renderResponse('JLMCommerceBundle:Quote:follower.html.twig',
-    			$manager->pagination('getCount'.$method, 'get'.$method, 'quote', array('state' => $state))
-    	);
     }
 }
