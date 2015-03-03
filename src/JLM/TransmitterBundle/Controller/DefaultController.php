@@ -23,7 +23,7 @@ class DefaultController extends Controller
     	if (is_array($formData) && array_key_exists('query', $formData))
     	{
     		$em = $this->getDoctrine()->getManager();
-    		$entity = new Search()
+    		$entity = new Search();
     		$query = $formData['query'];
     		$entity->setQuery($query);
     		return array(
