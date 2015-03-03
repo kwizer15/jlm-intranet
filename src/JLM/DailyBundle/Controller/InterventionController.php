@@ -505,7 +505,7 @@ class InterventionController extends Controller
 		}
 		krsort($shifts);
 		$response = new Response();
-		$response->headers->set('Content-Type', 'text/csv; charset=iso-8859-1');
+		$response->headers->set('Content-Type', 'text/csv; charset=utf-8');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$door->getId().'.csv');
 		$response->setContent($this->render('JLMDailyBundle:Intervention:door.csv.twig',array(
 						'entity' => $door,
