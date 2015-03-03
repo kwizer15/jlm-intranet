@@ -1,0 +1,18 @@
+JLM\DailyBundle\Entity\Ride:
+  type: entity
+  repositoryClass: JLM\DailyBundle\Repository\RideRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    distance:
+      type: integer
+    duration:
+      type: integer
+  manyToOne:
+    departure:
+      targetEntity: JLM\ModelBundle\Entity\Door
+    destination:
+      targetEntity: JLM\ModelBundle\Entity\Door

@@ -3,6 +3,8 @@ parameters:
     jlm_commerce.manager.bill.class: JLM\CommerceBundle\Manager\BillManager
     jlm_commerce.model.quote.class: JLM\CommerceBundle\Entity\Quote
     jlm_commerce.manager.quote.class: JLM\CommerceBundle\Manager\QuoteManager
+    jlm_commerce.model.quotevariant.class: JLM\CommerceBundle\Entity\QuoteVariant
+    jlm_commerce.manager.quotevariant.class: JLM\CommerceBundle\Manager\QuoteVariantManager
 
 services:
     jlm_commerce.bill_manager:
@@ -15,6 +17,13 @@ services:
     jlm_commerce.quote_manager:
         class: "%jlm_commerce.manager.quote.class%"
         arguments: ["%jlm_commerce.model.quote.class%"]
+        calls:
+            - [ setContainer, ["@service_container"]]
+            - [ setServices ]
+            
+    jlm_commerce.quotevariant_manager:
+        class: "%jlm_commerce.manager.quotevariant.class%"
+        arguments: ["%jlm_commerce.model.quotevariant.class%"]
         calls:
             - [ setContainer, ["@service_container"]]
             - [ setServices ]
@@ -58,6 +67,17 @@ services:
     jlm_commerce.bill_subscriber:
         class: JLM\CommerceBundle\EventListener\BillSubscriber
         arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_subscriber }
+            
+    jlm_commerce.quotevariant_subscriber:
+        class: JLM\CommerceBundle\EventListener\QuoteVariantSubscriber
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_subscriber }
+            
+    jlm_commerce.event_subscriber:
+        class: JLM\CommerceBundle\EventListener\EventSubscriber
         tags:
             - { name: kernel.event_subscriber }
     

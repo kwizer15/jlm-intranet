@@ -1,0 +1,41 @@
+{% extends "JLMCommerceBundle:Quote:layout.html.twig" %}
+
+{% block title %}
+Suivi des devis
+{% endblock %}
+
+{% block content %}
+<h1>Suivi des devis</h1>
+
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Affaire</th>
+            <th>Demande</th>
+            <th>Envoi</th>
+            <th>Relance</th>
+            <th>Accord</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>
+            	<a href="{{ path('quote_show', { 'id': entity.id }) }}">{{ entity.number }}</a><br>
+            	{% include 'JLMCommerceBundle:Quote:statelabel.html.twig' with {'state': entity.state} %}
+            </td>
+            <td>
+            {% if entity.door %}<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}
+            {% else %}{{ entity.doorCp | nl2br}}
+            {% endif %}
+            </td>
+            <td>{% if entity.ask %}{{ entity.ask.creation|date('d/m/Y') }}{% endif %}</td>
+            <td>{% if entity.lastSend %}{{ entity.lastSend.date|date('d/m/Y') }}{% endif %}</td>
+            <td>{% if entity.lastBoost %}{{ entity.lastBoost.date|date('d/m/Y') }}{% endif %}</td>
+            <td>{% if entity.lastGiven %}{{ entity.lastGiven.date|date('d/m/Y') }}{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

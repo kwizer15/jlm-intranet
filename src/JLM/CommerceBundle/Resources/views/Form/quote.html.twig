@@ -21,6 +21,7 @@
 {% endblock %}
 
 {% block quote_variant_widget %}
+<fieldset>
 {{ form_row(form.creation) }}
 <div class="row_fluid">
     {{ form_widget(form.intro) }}
@@ -51,7 +52,7 @@
     </table>
     <div class="row_fluid">
 	    <div class="span6">
-	    <div class="control-group">
+	    	<div class="control-group">
 	    		<label class="control-label">Total HT avant remise</label>
 	    		<div class="controls">
 	    			<div class="input-append"><span class="input-small uneditable-input" id="quote_variant_total_htbd">0,00</span><span class="add-on">€</span></div>
@@ -98,7 +99,15 @@
 	    	</div>
 	    </div>
     </div>
-{{ form_rest(form) }}
+    {{ form_row(form.paymentRules) }}
+    {{ form_row(form.deliveryRules) }}
+    <div class="form-actions">
+	  <a href="{{ path('quote_show', { 'id' : form.quote.vars.value }) }}" class="btn"><i class="icon-arrow-left"></i> Retour au devis</a>
+	  {{ form_widget(form.submit) }}
+	  {{ form_rest(form) }}
+	</div>
+  </fieldset>
+
 {% endblock %}
 
 {% block quote_line_row %}
@@ -131,3 +140,12 @@
     <td><a href="#" class="btn btn-danger remove-line"><i class="icon-minus-sign icon-white"></i></a></td>
 </tr>
 {% endblock quote_line_row %}
+
+{% block quote_variant_javascript %}
+<script>
+$("body").quotevariant({
+	 autoSource:'{{ path('autocomplete') }}',
+	 lineCount:{{ form.lines | length }}
+});
+</script>
+{% endblock %}

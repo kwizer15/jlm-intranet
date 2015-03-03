@@ -5,9 +5,9 @@
     <div class="span4 well">
         <address>
         <strong>Coordonnées</strong>
-        {% if entity.person.fixedPhone %}<br>Tel fixe : {% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone' : entity.person.fixedPhone } %}{% endif %}
-        {% if entity.person.mobilePhone %}<br>Tel mobile : {% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone' : entity.person.mobilePhone } %}{% endif %}
-        {% if entity.person.fax %}<br>Fax : {% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone' : entity.person.fax } %}{% endif %}
+        {% for phone in entity.person.phones %}
+        <br>{{ phone.label }} : {{ phone.number }}
+        {% endfor %}
         {% if entity.person.email %}<br>e-mail : <a href="mailto:{{ entity.person.email }}">{{ entity.person.email }}</a>{% endif %}
         
         </address>

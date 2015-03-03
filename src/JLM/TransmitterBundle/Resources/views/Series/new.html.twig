@@ -1,7 +1,11 @@
-{% set id = 'modalNewTransmitterSeries' %}
+{#} {% set id = 'modalNewTransmitterSeries' %}
 {% set action = path('transmitter_series_create',{'id':entity.attribution.id}) %}
 {% set title = 'Nouvel séquence d\'émetteur' %}
 {% extends 'JLMDefaultBundle:Helpers:modalform.html.twig' %}
 {% block body %}
 	{% include 'JLMTransmitterBundle:Series:create.html.twig' %}
-{% endblock %}
+{% endblock %} {#}
+
+{% form_theme form 'JLMCoreBundle:Form:modal_fields.html.twig' %}
+
+{{ form(form, {'class':'form-horizontal', 'action' : path('transmitter_series_create',{'id':entity.attribution.id}), 'label': 'Nouvel séquence d\'émetteur' }) }}

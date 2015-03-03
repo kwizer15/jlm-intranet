@@ -165,7 +165,7 @@ class SiteContactController extends Controller
         	{
         		$em->persist($entity->getPerson()->getAddress());
         	}
-        	$entity->getPerson()->formatPhones();
+        	//$entity->getPerson()->formatPhones();
         	$em->persist($entity->getPerson());
             $em->persist($entity);
             $em->flush();

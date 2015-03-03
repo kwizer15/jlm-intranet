@@ -57,10 +57,8 @@
 {% block javascripts_script %}
 {{ parent() }}
 $("a").tooltip();
-$(".transmitter").transmitter({urlModel:'{{ path('transmitter_usergroup_defaultmodelid', {'id':0}) }}'});
-$(".transmitter_series").transmitterSeries({urlModel:'{{ path('transmitter_usergroup_defaultmodelid', {'id':0}) }}'});
-
 $(".transmitter-new").formModal({closure: function(){location.reload();}});
+$(".transmitter-edit").formModal({closure: function(){location.reload();}});
 $(".usergroup-new, .usergroup-edit").formModal({closure: function(){location.reload();}});
 $(".series-new").formModal({closure: function(){location.reload();}});
 $(".replacement-new").formModal({closure: function(){location.reload();}});

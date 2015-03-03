@@ -55,6 +55,13 @@ class Door extends FPDFext
 		$datas[2] = $types[$shifting->getType()];
 		$datas[3] = ($shifting->getContract() == 'Hors contrat') ? 'HC' : $shifting->getContract();
 		$datas[4] = $shifting->getReason();
+		if ($shifting instanceof JLM\DailyBundle\Entity\Work)
+		{
+			if ($shifting->getQuote() !== null)
+			{
+				$datas[4] = 'Travaux selon devis n°'.$shifting->getQuote()->getNumber().chr(10).$datas[4];
+			}
+		}
 		$datas[5] = '';
 		if ($entity->getComment())
 		{
@@ -65,10 +72,10 @@ class Door extends FPDFext
 		    $interv = $entity->getShifting();
 		    if ($interv instanceof JLM\DailyBundle\Entity\Fixing)
 		    {
-		        $datas[5] = 'Constat :'.chr(10).$interv->getObservation();
+		        $datas[5] = 'Constat :'.chr(10).$interv->getObservation().chr(10).chr(10);
 		    }
 			
-			$datas[5] .= 'Rapport :'.chr(10).$interv->getReport();
+			$datas[5] .= 'Action menée :'.chr(10).$interv->getReport();
 			if ($interv->getRest())
 				$datas[5] .= chr(10).chr(10).'Reste à faire :'.chr(10).$interv->getRest();
 		}

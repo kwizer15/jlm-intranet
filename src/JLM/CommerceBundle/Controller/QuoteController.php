@@ -16,8 +16,9 @@ use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Event\QuoteEvent;
-use Symfony\Component\HttpFoundation\Response;
-use JLM\CommerceBundle\Pdf\Quote;
+use JLM\CommerceBundle\Entity\Event;
+use JLM\CommerceBundle\Entity\Quote;
+
 
 /**
  * Quote controller.
@@ -33,7 +34,6 @@ class QuoteController extends ContainerAware
     {
     	$manager = $this->container->get('jlm_commerce.quote_manager');
     	$manager->secure('ROLE_USER');
-    	$request = $manager->getRequest();
     	$states = array(
     			'all' => 'All',
     			'in_seizure' => 'InSeizure',
@@ -42,14 +42,16 @@ class QuoteController extends ContainerAware
     			'given' => 'Given',
     			'canceled' => 'Canceled'
     	);
-    	$state = $request->get('state');
+    	$state = $manager->getRequest()->get('state');
     	$state = (!array_key_exists($state, $states)) ? 'all' : $state;
-    	$method = $states[$state];
-    	$functionCount = 'getCount'.$method;
-    	$functionDatas = 'get'.$method;
+    	$views = array('index'=>'Liste','follow'=>'Suivi');
+    	$view = $manager->getRequest()->get('view');
+    	$view = (!array_key_exists($view, $views)) ? 'index' : $view;
     	
-    	return $manager->renderResponse('JLMCommerceBundle:Quote:index.html.twig',
-    			$manager->pagination($functionCount, $functionDatas, 'quote', array('state' => $state))
+    	$method = $states[$state];
+    	
+    	return $manager->renderResponse('JLMCommerceBundle:Quote:'.$view.'.html.twig',
+    			$manager->pagination('getCount'.$method, 'get'.$method, 'quote', array('state' => $state, 'view' => $view))
     	);
     }
 
@@ -67,7 +69,7 @@ class QuoteController extends ContainerAware
     }
     
     /**
-     * Nouveau devis depuis un demande de devis 
+     * Nouveau devis
      */
     public function newAction()
     {
@@ -100,6 +102,7 @@ class QuoteController extends ContainerAware
     	$form = $manager->createForm('edit', array('entity' => $entity));
     	if ($manager->getHandler($form)->process())
     	{
+//    		var_dump($form->getData()->getEvents()[2]); exit;
     		return $manager->redirect('quote_show', array('id' => $form->getData()->getId()));
     	}
     	
@@ -196,13 +199,19 @@ class QuoteController extends ContainerAware
     	$mail = new Mail;
     	$form = $manager->getFormFactory()->create(new MailType(), $mail);
     	$form->handleRequest($request);
-    		
+    	
     	if ($form->isValid())
     	{
     		$mail->setBcc('contact@aufedis.fr');
     			
     		$message = $mail->getSwift();
     		$message->setReadReceiptTo('contact@aufedis.fr');
+			$eventComment = 'Destinataire : '.$mail->getTo();
+    		if ($mail->getCc())
+    		{
+    			$eventComment .= chr(10).'Copie : '.$mail->getCc();
+    		}
+    		$eventComment .= chr(10).'Pièces jointes :';
     		foreach ($entity->getVariants() as $variant)
     		{
     			if ($variant->getState() > 0)
@@ -212,10 +221,8 @@ class QuoteController extends ContainerAware
 		    				$variant->getNumber().'.pdf','application/pdf'
 		    		))
 		    		;
-		    		if ($variant->getState() < 3)
-		    		{
-		    			$variant->setState(3);
-		    		}
+		    		$eventComment .= chr(10).'- Devis n°'.$variant->getNumber();
+		    		$variant->setState(3);
     			}
     		}
     		if ($entity->getVat() == $entity->getVatTransmitter())
@@ -223,8 +230,10 @@ class QuoteController extends ContainerAware
     			$message->attach(\Swift_Attachment::fromPath(
 					$this->container->get('kernel')->getRootDir().'/../web/bundles/jlmcommerce/pdf/attestation.pdf'
 				));
+    			$eventComment .= chr(10).'- Attestation TVA à 10%';
     		}
-    
+
+    		//$entity->addEvent(Quote::EVENT_SEND, $eventComment);
     		$manager->getMailer()->send($message);
     		$em = $manager->getObjectManager();
     		$em->persist($entity);

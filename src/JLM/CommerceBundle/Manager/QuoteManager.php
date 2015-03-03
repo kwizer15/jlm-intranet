@@ -62,7 +62,7 @@ class QuoteManager extends Manager
 		$params = array(
 				'creation' => new \DateTime,
 				'vat' => $vat,
-				'vatTransmitter' => $vat * 100,
+				'vatTransmitter' => $vat,
 				'followerCp' => $this->getUser()->getContact()->getName(),
 		);
 		foreach ($params as $key => $value)

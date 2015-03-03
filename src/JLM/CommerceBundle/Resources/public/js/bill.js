@@ -140,7 +140,7 @@
 			if ($('#' + $(this).attr('id') + '_isTransmitter').val() == 0)
 				$('#' + $(this).attr('id') + '_vat').val($("#jlm_commerce_bill_vat").val());
 			else
-				$('#' + $(this).attr('id') + '_vat').val(number_format($("#jlm_commerce_bill_vatTransmitter").val() * 100,1,',',' '));
+				$('#' + $(this).attr('id') + '_vat').val(number_format($("#jlm_commerce_bill_vatTransmitter").val()*100,1,',',' '));
 			$('#' + $(this).attr('id')).change();
 		});
 	}
@@ -260,7 +260,7 @@
 					$(id + 'designation').val(ui.item.designation);
 					$(id + 'description').val(ui.item.description);
 					$(id + 'isTransmitter').val(ui.item.transmitter ? '1' : '');
-					$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? number_format($("#jlm_commerce_bill_vatTransmitter").val() * 100,1,',',' ') : $("#jlm_commerce_bill_vat").val());
+					$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? number_format($("#jlm_commerce_bill_vatTransmitter").val()*100,1,',',' ') : $("#jlm_commerce_bill_vat").val());
 					$(id + 'unitPrice').val(ui.item.unitPrice).change();
 
 					return false;
@@ -287,7 +287,7 @@
 
 
 					$(id + 'isTransmitter').val(ui.item.transmitter ? '1' : '');
-					$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? number_format($("#jlm_commerce_bill_vatTransmitter").val() * 100,1,',',' ') : $("#jlm_commerce_bill_vat").val());
+					$(id + 'vat').val(($(id + 'isTransmitter').val() == '1') ? number_format($("#jlm_commerce_bill_vatTransmitter").val()*100,1,',',' ') : $("#jlm_commerce_bill_vat").val());
 					$(id + 'unitPrice').val(ui.item.unitPrice).change();
 					return false;
 				}

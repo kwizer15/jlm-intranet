@@ -1,0 +1,20 @@
+JLM\DailyBundle\Entity\Fixing:
+  type: entity
+  table: shifting_fixing
+  repositoryClass: JLM\DailyBundle\Repository\FixingRepository
+  fields:
+    askDate:
+      column: ask_date
+      type: datetime
+      nullable: true
+    observation:
+      type: text
+      nullable: true
+  manyToOne:
+    askMethod:
+      targetEntity: JLM\AskBundle\Model\CommunicationMeansInterface
+    due:
+      targetEntity: JLM\DailyBundle\Entity\FixingDue
+    done:
+      targetEntity: JLM\DailyBundle\Entity\FixingDone
+    

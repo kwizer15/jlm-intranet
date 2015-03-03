@@ -1,32 +1,36 @@
 <?php
+
+/*
+ * This file is part of the JLMDailyBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\DailyBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JLM\OfficeBundle\Entity\Order;
 use JLM\CommerceBundle\Model\QuoteVariantInterface;
+use JLM\DailyBundle\Model\WorkInterface;
 
 /**
  * Plannification de travaux
  * JLM\DailyBundle\Entity\Work
- *
- * @ORM\Table(name="shifting_works")
- * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\WorkRepository")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Work extends Intervention
+class Work extends Intervention implements WorkInterface
 {
 	/**
 	 * Devis source (pour "selon devis...")
-	 * 
-	 * @ORM\OneToOne(targetEntity="JLM\CommerceBundle\Entity\QuoteVariant", mappedBy="work")
 	 * @Assert\Valid
 	 */
 	private $quote;
 	
 	/**
 	 * Work category
-	 * 
-	 * @ORM\ManyToOne(targetEntity="WorkCategory")
 	 * @Assert\Valid
 	 * @Assert\NotNull
 	 */
@@ -34,8 +38,6 @@ class Work extends Intervention
 	
 	/**
 	 * Work objective
-	 *
-	 * @ORM\ManyToOne(targetEntity="WorkObjective")
 	 * @Assert\Valid
 	 * @Assert\NotNull
 	 */
@@ -43,15 +45,12 @@ class Work extends Intervention
 	
 	/**
 	 * Fiche travaux
-	 * 
-	 * @ORM\OneToOne(targetEntity="JLM\OfficeBundle\Entity\Order",inversedBy="work")
 	 * @Assert\Valid
 	 */
 	private $order;
 	
 	/**
 	 * Intervention source
-	 * @ORM\OneToOne(targetEntity="Intervention", mappedBy="work")
 	 */
 	private $intervention;
 	
@@ -68,11 +67,12 @@ class Work extends Intervention
 	 * Set work category
 	 *
 	 * @param WorkCategory $category
-	 * @return Work
+	 * @return self
 	 */
 	public function setCategory(WorkCategory $category = null)
 	{
 		$this->category = $category;
+		
 		return $this;
 	}
 	
@@ -89,11 +89,12 @@ class Work extends Intervention
 	 * Set work objective
 	 *
 	 * @param WorkObjective $objective
-	 * @return Work
+	 * @return self
 	 */
 	public function setObjective(WorkObjective $objective = null)
 	{
 		$this->objective = $objective;
+		
 		return $this;
 	}
 	

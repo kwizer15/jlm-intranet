@@ -12,6 +12,7 @@
 namespace JLM\CommerceBundle\Repository;
 
 use JLM\DefaultBundle\Entity\SearchRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * BillRepository
@@ -186,5 +187,38 @@ class BillRepository extends SearchRepository
 			->setParameter(1, $follower);
 		
 		return $qb->getQuery()->getResult();
+	}
+	
+	public function getSells($year = null)
+	{
+		$date = new \DateTime;
+		$year = ($year === null) ? $date->format('Y') : $year;
+		
+		
+		
+		$em = $this->getEntityManager();
+		$rsm = new ResultSetMapping();
+		$rsm->addScalarResult('reference', 'reference');
+		$rsm->addScalarResult('designation', 'designation');
+		$rsm->addScalarResult('qty', 'qty');
+		$rsm->addScalarResult('total', 'total');
+		$query_select = 'SELECT
+				a.reference as reference,
+				a.designation as designation,
+				SUM( a.quantity ) AS qty,
+				SUM( a.quantity * a.unit_price) AS total';
+		
+		$query = $em->createNativeQuery($query_select. '
+				FROM bill_lines a
+			LEFT JOIN jlm_commerce_bill_join_bill_line b ON a.id = b.billline_id
+			LEFT JOIN bill c ON b.bill_id = c.id
+			WHERE YEAR( c.creation ) = ?
+			AND c.state > 0
+			GROUP BY a.designation
+			ORDER BY `qty` DESC'
+				, $rsm);
+		$query->setParameter(1,$year);
+		
+		return $query->getArrayResult();
 	}
 }

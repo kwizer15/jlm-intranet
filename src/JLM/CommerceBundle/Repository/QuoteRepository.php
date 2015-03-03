@@ -312,5 +312,21 @@ class QuoteRepository extends SearchRepository
 		
 		return $qb->getQuery()->getResult();
 	}
+	
+	public function getCountFollow()
+	{
+		return $this->getTotal();
+	}
+	
+	public function getFollow($limit = 10, $offset = 0)
+	{
+		$qb = $this->createQueryBuilder('a')
+		    ->select('a,b')
+		    ->leftJoin('a.eventFollower','b')
+		    ->orderBy('a.number','DESC');
+		$qb->setMaxResults(10);
+		
+		return $qb->getQuery()->getResult();
+	}
 
 }

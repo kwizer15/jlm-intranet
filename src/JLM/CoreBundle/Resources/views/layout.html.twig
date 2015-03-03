@@ -77,7 +77,8 @@
 		        			<ul class="dropdown-menu">
 		        				<li><a href="{{ path('fees') }}"><i class="icon-list"></i> Liste</a></li>
 		        			</ul>
-		        		</li>{#}
+		        		</li>
+		        		<li><a href="{{ path('jlm_follow_default_index') }}">Suivi de commandes</a></li>
 		        	</ul>
 		        {#}<li><a href="{{ path('intervention_today') }}">Journal de bord</a></li>
 		        <li class="dropdown">
@@ -96,6 +97,7 @@
 		        		<li><a href="{{ path('state_maintenance') }}">Entretiens</a></li>
 		        		<li><a href="{{ path('state_contracts') }}">Contrats</a></li>
 		        		<li><a href="{{ path('state_transmitters') }}">Émetteurs</a></li>
+		        		<li><a href="{{ path('state_sells') }}">Ventes</a></li>
 		        	</ul>
 		        </li>{#}
 			  {% endblock navigation %}
@@ -180,8 +182,6 @@
     	filter='yui_js' %}
     	<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
-	{% if form is defined %}{{ form_javascript(form) }}{% endif %}
-	{% if edit_form is defined %}{{ form_javascript(edit_form) }}{% endif %}
 {% endblock %}
 
 {% block javascripts_script %}

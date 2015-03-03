@@ -73,7 +73,7 @@ class ContractManager extends Manager
 	 */
 	public function populateForm($form)
 	{
-		if ($form instanceof ContractType)
+		if ($form->getName() == 'jlm_contract_contract')
 		{
 			$door = $this->setterFromRequest('door', 'JLMModelBundle:Door');
 			if ($door)
@@ -88,7 +88,7 @@ class ContractManager extends Manager
 			}
 		}
 		
-		return $form;
+		return parent::populateForm($form);
 	}
 	
 	public function getEditUrl($id)

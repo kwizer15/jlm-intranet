@@ -37,4 +37,11 @@ interface AddressInterface
      */
     public function __toString();
     
+    /**
+     * Alternative to String
+     *
+     * @return string
+     */
+    public function toString();
+    
 }

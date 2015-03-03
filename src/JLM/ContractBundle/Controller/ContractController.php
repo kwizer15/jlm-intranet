@@ -54,19 +54,23 @@ class ContractController extends ContainerAware
     {
     	$manager = $this->container->get('jlm_contract.contract_manager');
     	$manager->secure('ROLE_USER');
-    	$form   = $manager->createNewForm();
+    	$form   = $manager->createForm('new');
+    	$ajax = $manager->isAjax();
     	if ($manager->getHandler($form)->process('POST'))
     	{
     		$event = new ContractEvent($form->getData());
-    		$manager->dispatch(JLMContractEvents::AFTER_CONTRACT_PERSIST, $event);
-    		
-            return $manager->redirect('door_show', array('id' => $form->getData()->getDoor()->getId()));
+    		$manager->dispatch(JLMContractEvents::AFTER_CONTRACT_CREATE, $event);
+
+            return $ajax
+                ? $manager->renderJson()
+            	: $manager->redirect('door_show', array('id' => $form->getData()->getDoor()->getId()))
+            ;
         }
 
-        $template = $manager->getRequest()->isXmlHttpRequest()
+        $template = $ajax
         		? 'JLMContractBundle:Contract:modal_new.html.twig'
         		: 'JLMContractBundle:Contract:new.html.twig'
-          		;
+        ;
           		
         return $manager->renderResponse($template, array(
             'form'   => $form->createView()
@@ -86,7 +90,7 @@ class ContractController extends ContainerAware
     	if ($manager->getHandler($form)->process())
     	{
     		$event = new ContractEvent($form->getData());
-    		$manager->dispatch(JLMContractEvents::AFTER_CONTRACT_PERSIST, $event);
+//    		$manager->dispatch(JLMContractEvents::AFTER_CONTRACT_PERSIST, $event);
     		
     		return ($ajax) ? $manager->renderJson(array())
     		               : $manager->redirect($this->generateUrl('door_show', array('id' => $entity->getDoor()->getId())))

@@ -1,0 +1,3 @@
+JLM\DailyBundle\Entity\ProductWork:
+  type: entity
+  table: jlm_daily_product_work

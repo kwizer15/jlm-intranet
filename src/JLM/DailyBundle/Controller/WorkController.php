@@ -29,13 +29,16 @@ class WorkController extends AbstractInterventionController
 {
 	/**
 	 * @Route("/list", name="work_list")
-	 * @Route("/list/{page}", name="work_list_page")
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
 	 */
-	public function listAction($page = 1)
+	public function listAction()
 	{
-		return $this->pagination('JLMDailyBundle:Work','Opened',$page,10,'work_list_page');
+		$manager = $this->container->get('jlm_daily.work_manager');
+		$manager->secure('ROLE_USER');
+		$request = $manager->getRequest();
+		$repo = $manager->getRepository();
+		
+		return $manager->isAjax() ? $manager->renderJson(array('entities' => $repo->getArray($request->get('q',''), $request->get('page_limit',10))))
+		: $manager->renderResponse('JLMDailyBundle:Work:list.html.twig', $manager->pagination('getCountOpened', 'getOpened', 'work_list', array()));
 	}
 	
 	/**

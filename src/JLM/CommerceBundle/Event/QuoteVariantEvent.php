@@ -19,22 +19,22 @@ use JLM\CommerceBundle\Model\QuoteVariantInterface;
 class QuoteVariantEvent extends RequestEvent
 {
 	/**
-	 * @var BillInterface
+	 * @var QuoteVariantInterface
 	 */
-    private $variant;
+    private $quote;
 
     /**
      * @param FormInterface $form
      * @param Request $request
      */
-    public function __construct(QuoteVariantInterface $variant, Request $request)
+    public function __construct(QuoteVariantInterface $quote, Request $request)
     {
-    	$this->variant = $variant;
+    	$this->quote = $quote;
     	parent::__construct($request);
     }
     
     public function getQuoteVariant()
     {
-    	return $this->variant;
+    	return $this->quote;
     }
 }

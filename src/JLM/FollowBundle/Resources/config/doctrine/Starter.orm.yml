@@ -1,0 +1,17 @@
+JLM\FollowBundle\Entity\Starter:
+  type: entity
+  table: jlm_follow_starter
+  inheritanceType: JOINED
+  discriminatorColumn:
+    name: discr
+    type: string
+  discriminatorMap:
+    variant: JLM\FollowBundle\Entity\StarterQuote
+    intervention: JLM\FollowBundle\Entity\StarterIntervention
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+
+      

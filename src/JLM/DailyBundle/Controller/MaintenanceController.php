@@ -29,14 +29,16 @@ class MaintenanceController extends AbstractInterventionController
 	 * Finds and displays a InterventionPlanned entity.
 	 *
 	 * @Route("/list", name="maintenance_list")
-	 * @Route("/list/{page}", name="maintenance_list_page")
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
 	 */
-	public function listAction($page = 1)
+	public function listAction()
 	{
-		// @todo Trier par ville, date...
-		return $this->pagination('JLMDailyBundle:Maintenance','Opened',$page,10,'maintenance_list_page');
+		$manager = $this->container->get('jlm_daily.maintenance_manager');
+		$manager->secure('ROLE_USER');
+		$request = $manager->getRequest();
+		$repo = $manager->getRepository();
+
+		return $manager->isAjax() ? $manager->renderJson(array('entities' => $repo->getArray($request->get('q',''), $request->get('page_limit',10))))
+		                  : $manager->renderResponse('JLMDailyBundle:Maintenance:list.html.twig', $manager->pagination('getCountOpened', 'getOpened', 'maintenance_list', array()));
 	}
 	
 	/**

@@ -1,36 +1,40 @@
 <?php
+
+/*
+ * This file is part of the JLMDailyBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\DailyBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JLM\AskBundle\Model\CommunicationMeansInterface;
 
 /**
  * Plannification d'une panne
  * JLM\DailyBundle\Entity\Fixing
- *
- * @ORM\Table(name="shifting_fixing")
- * @ORM\Entity(repositoryClass="JLM\DailyBundle\Entity\FixingRepository")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class Fixing extends Intervention
 {
 	/**
 	 * Date de la demande
-	 * @ORM\Column(name="ask_date", type="datetime", nullable=true)
 	 * @Assert\DateTime
 	 */
 	private $askDate;
 	
 	/**
 	 * Méthode de la demande
-	 * @ORM\ManyToOne(targetEntity="JLM\AskBundle\Model\CommunicationMeansInterface")
 	 */
 	private $askMethod;
 	
 	/**
 	 * Cause du dépannage
 	 * @var FixingDue $due;
-	 * @ORM\ManyToOne(targetEntity="FixingDue")
 	 * @Assert\Valid
 	 */
 	private $due;
@@ -38,7 +42,6 @@ class Fixing extends Intervention
 	/**
 	 * Action
 	 * @var FixingDone $done;
-	 * @ORM\ManyToOne(targetEntity="FixingDone")
 	 * @Assert\Valid
 	 */
 	private $done;
@@ -46,8 +49,6 @@ class Fixing extends Intervention
 	/**
 	 * Constat
 	 * @var string $observation
-	 *
-	 * @ORM\Column(name="observation", type="text", nullable=true)
 	 */
 	private $observation;
 	
@@ -80,6 +81,7 @@ class Fixing extends Intervention
 	public function setAskDate(\DateTime $date = null)
 	{
 		$this->askDate = $date;
+		
 		return $this;
 	}
 	
@@ -102,6 +104,7 @@ class Fixing extends Intervention
 	public function setAskMethod(CommunicationMeansInterface $method = null)
 	{
 		$this->askMethod = $method;
+		
 		return $this;
 	}
 	
@@ -124,6 +127,7 @@ class Fixing extends Intervention
 	public function setDue(FixingDue $due = null)
 	{
 		$this->due = $due;
+		
 		return $this;
 	}
 	
@@ -146,6 +150,7 @@ class Fixing extends Intervention
 	public function setDone(FixingDone $done = null)
 	{
 		$this->done = $done;
+		
 		return $this;
 	}
 	
@@ -166,6 +171,7 @@ class Fixing extends Intervention
 	public function setObservation($observation)
 	{
 		$this->observation = (string)$observation;
+		
 		return $this;
 	}
 }

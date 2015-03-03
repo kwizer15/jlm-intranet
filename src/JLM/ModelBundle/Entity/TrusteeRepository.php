@@ -125,6 +125,6 @@ class TrusteeRepository extends SearchRepository
 	        return $res[0];
 	    }
 	
-	    return null;
+	    return array('error'=>'No fond for id '.$id);
 	}
 }

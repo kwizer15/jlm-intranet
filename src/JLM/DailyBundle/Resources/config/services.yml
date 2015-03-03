@@ -1,0 +1,50 @@
+parameters:
+  jlm_daily.model.maintenance.class: JLM\DailyBundle\Entity\Maintenance
+  jlm_daily.manager.maintenance.class: JLM\CoreBundle\Manager\BaseManager
+  jlm_daily.model.work.class: JLM\DailyBundle\Entity\Work
+  jlm_daily.manager.work.class: JLM\CoreBundle\Manager\BaseManager
+
+services:
+  jlm_daily.type.intervention_hidden:
+    class: JLM\DailyBundle\Form\Type\InterventionHiddenType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: intervention_hidden }
+      
+  jlm_daily.twig.interventioncount_extension:
+    class: JLM\DailyBundle\Twig\Extension\InterventionCountExtension
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: twig.extension }
+      
+  jlm_daily.twig.date_search_extension:
+    class: JLM\DailyBundle\Twig\Extension\DateSearchExtension
+    arguments: ["@form.factory"]
+    tags:
+      - { name: twig.extension }
+  
+  jlm_daily.bill_subscriber:
+    class: JLM\DailyBundle\EventListener\BillSubscriber
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: kernel.event_subscriber }
+
+  jlm_daily.intervention_subscriber:
+    class: JLM\DailyBundle\EventListener\InterventionSubscriber
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: kernel.event_subscriber }
+
+  jlm_daily.maintenance_manager:
+    class: "%jlm_daily.manager.maintenance.class%"
+    arguments: ["%jlm_daily.model.maintenance.class%"]
+    calls:
+      - [ setContainer, ["@service_container"]]
+      - [ setServices ]
+      
+  jlm_daily.work_manager:
+    class: "%jlm_daily.manager.work.class%"
+    arguments: ["%jlm_daily.model.work.class%"]
+    calls:
+      - [ setContainer, ["@service_container"]]
+      - [ setServices ]

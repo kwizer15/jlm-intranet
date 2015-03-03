@@ -1,0 +1,15 @@
+JLM\ProductBundle\Entity\ProductDecorator:
+  type: mappedSuperclass
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  manyToOne:
+    product:
+      targetEntity: JLM\ProductBundle\Model\ProductInterface
+      cascade: ["persist"]
+      joinColumn:
+        name: product_id
+        referencedColumnName: id
+    

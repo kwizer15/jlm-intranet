@@ -33,7 +33,6 @@
 			<th>Nom</th>
 			<th>Rôle</th>
 			<th>Téléphone</th>
-			<th>Fax</th>
 			<th>e-mail</th>
 		</tr>
 	</thead>
@@ -44,11 +43,11 @@
 			<td>{{ contact.role }}</td>
 			<td>
 				<ul class="unstyled">
-				{% if contact.person.fixedPhone %}<li>{% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone' : contact.person.fixedPhone } %}</li>{% endif %}
-				{% if contact.person.mobilePhone %}<li>{% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone' :  contact.person.mobilePhone } %}</li>{% endif %}
+				{% for phone in contact.person.phones %}
+				<li>{{ phone.label }} : {% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone' : phone.number } %}</li>
+				{% endfor %}
 				</ul>
 			</td>
-			<td>{% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone' :  contact.person.fax } %}</td>
 			<td><a href="mailto:{{ contact.person.email }}">{{ contact.person.email }}</a></td>
 		</tr>
 		{% endfor %}

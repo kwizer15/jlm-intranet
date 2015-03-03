@@ -1,24 +1,26 @@
 <?php
 
+/*
+ * This file is part of the JLMDailyBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\DailyBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use JLM\ModelBundle\Entity\StringModel;
 
 /**
  * JLM\DailyBundle\Entity\WorkObjective
- *
- * @ORM\Table(name="work_objectives")
- * @ORM\Entity(readOnly=true)
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class WorkObjective extends StringModel
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 

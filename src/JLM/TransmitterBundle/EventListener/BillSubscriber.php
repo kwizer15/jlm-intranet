@@ -34,7 +34,7 @@ class BillSubscriber implements EventSubscriberInterface
 			$options = array(
 					'port' => $this->om->getRepository('JLMProductBundle:Product')->find(134),
 			);
-			$entity = BillFactory::create(new AttributionBillBuilder($attribution, $this->om->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate() * 100, $options));
+			$entity = BillFactory::create(new AttributionBillBuilder($attribution, $this->om->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(), $options));
         	$event->getForm()->setData($entity);
         	$event->getForm()->add('attribution', 'hidden', array('data' => $attribution->getId(), 'mapped' => false));
 		}
