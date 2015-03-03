@@ -218,6 +218,7 @@
 			</tbody>
 		</table>
 		<a href="{{ path('intervention_printdoor',{'id':entity.id}) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer les rapports d'intervention</a>
+		<a href="{{ path('intervention_doorcsv',{'id':entity.id}) }}" class="btn btn-info"><i class="icon-file icon-white"></i> Export Excel</a>
 		{% else %}
 		<h4>Pas d'intervention</h4>
 		{% endif %}

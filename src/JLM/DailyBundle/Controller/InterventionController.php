@@ -486,4 +486,31 @@ class InterventionController extends Controller
 		
 		return $response;
 	}
+	
+	/**
+	 * Export CSV intervs porte
+	 *
+	 * @Route("/doorcsv/{id}", name="intervention_doorcsv")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function doorcsvAction($id)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$door = $em->getRepository('JLMModelBundle:Door')->find($id);
+		$shifts = array();
+		foreach ($door->getInterventions() as $interv)
+		{
+			foreach($interv->getShiftTechnicians() as $shift)
+				$shifts[(string)$shift->getBegin()->getTimestamp()] = $shift;
+		}
+		krsort($shifts);
+		$response = new Response();
+		$response->headers->set('Content-Type', 'text/csv');
+		$response->headers->set('Content-Disposition', 'inline; filename='.$door->getId().'.csv');
+		$response->setContent($this->render('JLMDailyBundle:Intervention:door.csv.twig',array(
+						'entity' => $door,
+				)));
+
+		return $response;
+	}
 }

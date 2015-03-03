@@ -1,0 +1,29 @@
+"Type";"Date";"Raison";"Constat";"Action menée";"Techniciens"
+{% for interv in entity.interventions -%}
+{#}{%- if !interv.canceled -%}{#}
+"{{ interv.type|trans }}";"
+	{%- if interv.firstDate -%}
+		{%- if interv.lastDate != interv.firstDate -%}
+			du {{ interv.firstDate | localizeddate('full', 'none') }}
+			au {{ interv.lastDate | localizeddate('full', 'none') }}
+		{%- else -%}
+			{{ interv.firstDate | localizeddate('full', 'none') }}
+		{%- endif -%}
+	{%- else -%}
+		{{ interv.creation | localizeddate('full', 'none') }}
+	{%- endif -%}
+";"
+{%- if interv.type == 'work' -%}
+  {%- if interv.quote -%}
+    Selon devis n°{{ interv.quote.number }}
+  {% endif -%}
+{%- endif -%}
+{{ interv.reason |raw }}";"
+{%- if interv.type == 'fixing' -%}
+  {{ interv.observation |raw }}
+{%- endif -%}
+";"{{ interv.report |raw }}";"
+{%- for shift in interv.shiftTechnicians -%}
+  {{ shift.technician }} ({{ shift.begin | date('d/m')}}{% if shift.end %} - {{ shift.time.format('%hh%I') }}{% endif %})
+{% endfor -%}"
+{% endfor -%}
