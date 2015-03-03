@@ -513,4 +513,86 @@ class InterventionController extends Controller
 
 		return $response;
 	}
+	
+	/**
+	 * Export CSV intervs porte
+	 *
+	 * @Route("/doorxls/{id}", name="intervention_doorxls")
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function doorxlsAction($id)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$door = $em->getRepository('JLMModelBundle:Door')->find($id);
+		
+		$phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+		
+		$phpExcelObject->getProperties()->setCreator("JLM Entreprise")
+			->setLastModifiedBy("JLM Entreprise")
+			->setTitle("Rapport d'intrevention");
+//			->setSubject("Office 2005 XLSX Test Document")
+//			->setDescription("")
+		$as = $phpExcelObject->setActiveSheetIndex(0);
+		$titles = array('A'=>'Type','B'=>'Date','C'=>'Raison','D'=>'Constat','E'=>'Action menée','F'=>'Techniciens');
+		foreach($titles as $col => $value)
+		{
+			$as->setCellValue($col.'1', $value);
+		}
+		$intervs = $door->getInterventions();
+		$row = 2;
+		foreach ($intervs as $interv)
+		{
+			if (!$interv->isCanceled() && $interv->getFirstDate())
+			{
+				
+				$date = ($interv->getFirstDate() != $interv->getLastDate())
+					? 'du '.$interv->getFirstDate()->format('d/m/Y').chr(10).' au '.$interv->getLastDate()->format('d/m/Y')
+					: $interv->getFirstDate()->format('d/m/Y');
+				$reason = '';
+				if ($interv->getType() == 'work')
+				{
+					if ($interv->getQuote())
+					{
+						$reason = 'Selon devis n°'.$interv->getQuote()->getNumber().chr(10);
+					}
+				}
+				$reason .= $interv->getReason();
+				$constat = ($interv->getType() == 'fixing') ? $interv->getObservation() : '';
+				$report = $interv->getReport();
+				$technicians = '';
+				foreach ($interv->getShiftTechnicians() as $shift)
+				{
+					$technicians .= $shift->getTechnician().' ('.$shift->getBegin()->format('d/m/Y');
+					if ($shift->getEnd())
+					{
+						$technicians .= ' - '.$shift->getTime()->format('%hh%I');
+					}
+					$technicians .= ')';
+				}
+				$as->setCellValue('A'.$row, $this->get('translator')->trans($interv->getType()))
+				   ->setCellValue('B'.$row, $date)
+				   ->setCellValue('C'.$row, $reason)
+				   ->setCellValue('D'.$row, $constat)
+				   ->setCellValue('E'.$row, $report)
+				   ->setCellValue('F'.$row, $technicians);
+				$row++;
+			}
+		}
+		$phpExcelObject->getActiveSheet()->setTitle('Rapport');
+		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+		$phpExcelObject->setActiveSheetIndex(0);
+		
+		// create the writer
+		$writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
+		// create the response
+		$response = $this->get('phpexcel')->createStreamedResponse($writer);
+		// adding headers
+		$response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
+		$response->headers->set('Content-Disposition', 'attachment;filename='.$door->getId().'.xls');
+		$response->headers->set('Pragma', 'public');
+		$response->headers->set('Cache-Control', 'maxage=1');
+		
+		return $response;
+	}
+	
 }

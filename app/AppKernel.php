@@ -21,6 +21,7 @@ class AppKernel extends Kernel
         	new JMS\DiExtraBundle\JMSDiExtraBundle($this),
         	new FOS\UserBundle\FOSUserBundle(),
         	new Genemu\Bundle\FormBundle\GenemuFormBundle(),
+        	new Liuggio\ExcelBundle\LiuggioExcelBundle(),
         	new JLM\UserBundle\JLMUserBundle(),
         	new JLM\ModelBundle\JLMModelBundle(),
         	new JLM\OfficeBundle\JLMOfficeBundle(),
@@ -38,6 +39,7 @@ class AppKernel extends Kernel
             new JLM\AskBundle\JLMAskBundle(),
             new JLM\CoreBundle\JLMCoreBundle(),
             new JLM\FollowBundle\JLMFollowBundle(),
+        	
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
