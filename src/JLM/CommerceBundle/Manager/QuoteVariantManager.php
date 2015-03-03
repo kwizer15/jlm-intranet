@@ -19,6 +19,8 @@ use JLM\CommerceBundle\Form\Type\QuoteVariantType;
 use JLM\CommerceBundle\Entity\QuoteLine;
 use JLM\CommerceBundle\Entity\Quote;
 use Symfony\Component\Form\Exception\LogicException;
+use JLM\CommerceBundle\Model\QuoteVariantInterface;
+use Symfony\Component\Security\Acl\Exception\Exception;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -92,11 +94,11 @@ class QuoteVariantManager extends Manager
 		return parent::populateForm($form);
 	}
 	
-	public function assertState($variant, $states = array())
+	public function assertState(QuoteVariantInterface $variant, $states = array())
 	{
 		if (!in_array($variant->getState(), $states))
 		{
-			return $this->redirect('quote_show', array('id' => $variant->getQuote()->getId()));
+			throw new Exception('This action is impossible with the actual quote state');
 		}
 	}
 }
