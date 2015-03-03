@@ -161,7 +161,7 @@ class QuoteVariantController extends Controller
 		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
 		$manager->secure('ROLE_USER');
 		$entity = $manager->getEntity($id);
-		$manager->assertState(array(
+		$manager->assertState($entity, array(
 				QuoteVariant::STATE_READY,
 				QuoteVariant::STATE_PRINTED,
 				QuoteVariant::STATE_SENDED,
