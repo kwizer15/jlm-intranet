@@ -567,7 +567,7 @@ class InterventionController extends Controller
 					{
 						$technicians .= ' - '.$shift->getTime()->format('%hh%I');
 					}
-					$technicians .= ')';
+					$technicians .= ')'.chr(10);
 				}
 				$as->setCellValue('A'.$row, $this->get('translator')->trans($interv->getType()))
 				   ->setCellValue('B'.$row, $date)
