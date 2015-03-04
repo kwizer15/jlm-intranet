@@ -14,60 +14,62 @@ namespace JLM\DailyBundle\Builder;
 use JLM\DailyBundle\Model\WorkInterface;
 use JLM\OfficeBundle\Builder\OrderBuilderAbstract;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
+use JLM\OfficeBundle\Entity\OrderLine;
+use JLM\OfficeBundle\Factory\OrderLineFactory;
+use JLM\CommerceBundle\Builder\VariantOrderLineBuilder;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class WorkOrderBuilder extends OrderBuilderAbstract
 {
-    private $intervention;
+    private $work;
     
     /**
      * 
      * @param Work $intervention
      * @throws LogicException
      */
-    public function __construct(WorkInterface $intervention, $options = array())
+    public function __construct(WorkInterface $work, $options = array())
     {
-        if ($intervention->getQuote() === null)
-        {
-            throw new LogicException('Aucun devis lié a ces travaux');
-        }
         parent::__construct($options);
-        $this->intervention = $intervention;
+        $this->work = $work;
     }
     
     public function buildLines()
     {
-    	$this->setCreation(new \DateTime);
-    	$this->setWork($work);
-    	if ($variant = $work->getQuote())
+    	if ($variant = $this->work->getQuote())
+    	{
+    		$vlines = $variant->getLines();
+    		foreach ($vlines as $vline)
+    		{
+    			if (!$vline->isService())
+    			{
+    				$this->getOrder()->addLine(OrderLineFactory::create(new VariantOrderLineBuilder($vline)));
+    			}
+    		}
+    	}
+    }
+    
+    public function buildTime()
+    {
+    	parent::buildTime();
+    	if ($variant = $this->work->getQuote())
     	{
     		$vlines = $variant->getLines();
     		$hours = 0;
     		foreach ($vlines as $vline)
     		{
-    			$flag = true;
-    			if ($product = $vline->getProduct())
+    			if ($vline->isService())
     			{
-    				if ($category = $product->getCategory())
-    				{
-    					if ($category->isService())
-    					{
-    						$hours += $vline->getQuantity();
-    						$flag = false;
-    					}
-    				}
-    			}
-    			if ($flag)
-    			{
-    				$oline = new OrderLine;
-    				$oline->setReference($vline->getReference());
-    				$oline->setQuantity($vline->getQuantity());
-    				$oline->setDesignation($vline->getDesignation());
-    				$this->addLine($oline);
+    				$hours += $vline->getQuantity();
     			}
     		}
-    		$this->setTime($hours);
+    		$this->getOrder()->setTime($hours);
     	}
+    }
+    
+    public function buildWork()
+    {
+    	$this->getOrder()->setWork($this->work);
     }
 }

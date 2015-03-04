@@ -21,6 +21,7 @@ use JLM\CommerceBundle\Event\QuoteVariantEvent;
 use JLM\DailyBundle\Entity\Work;
 use JLM\OfficeBundle\Entity\Order;
 use JLM\CommerceBundle\JLMCommerceEvents;
+use JLM\OfficeBundle\Factory\OrderFactory;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -80,7 +81,7 @@ class InterventionSubscriber implements EventSubscriberInterface
 			//$work->setMustBeBilled(true);
 			$work->setCategory($this->om->getRepository('JLMDailyBundle:WorkCategory')->find(1));
 			$work->setObjective($this->om->getRepository('JLMDailyBundle:WorkObjective')->find(1));
-			$order = Order::createFromWork($work);
+			$order = OrderFactory::create(new WorkOrderBuilder($work));
 			$this->om->persist($order);
 			$olines = $order->getLines();
 			foreach ($olines as $oline)

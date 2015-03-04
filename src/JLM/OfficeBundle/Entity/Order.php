@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\DailyBundle\Entity\Work;
 use JLM\CommerceBundle\Model\OrderInterface;
+use JLM\OfficeBundle\Factory\OrderFactory;
+use JLM\DailyBundle\Builder\WorkOrderBuilder;
 
 /**
  * JLM\OfficeBundle\Entity\Order
@@ -199,7 +201,9 @@ class Order implements OrderInterface
     public function setState($state)
     {
     	if ($state >= 0 && $state < 3)
-    	$this->state = $state;
+    	{
+    		$this->state = $state;
+    	}
     
     	return $this;
     }
@@ -237,48 +241,20 @@ class Order implements OrderInterface
     }
     
     /**
-     * Create from QuoteVariant
+     * Populate from Work
+     * @deprecated Use OrderFactory::create(new WorkOrderBuilder($work))
      */
     public function populateFromWork(Work $work)
     {
-    	$this->setCreation(new \DateTime);
-    	$this->setWork($work);
-    	if ($variant = $work->getQuote())
-    	{
-    		$vlines = $variant->getLines();
-    		$hours = 0;
-    		foreach ($vlines as $vline)
-    		{
-    			$flag = true;
-    			if ($product = $vline->getProduct())
-    			{
-    				if ($category = $product->getCategory())
-    				{
-    					if ($category->isService())
-    					{
-    						$hours += $vline->getQuantity();
-    						$flag = false;
-    					}
-    				}
-    			}
-    			if ($flag)
-    			{
-    				$oline = new OrderLine;
-    				$oline->setReference($vline->getReference());
-    				$oline->setQuantity($vline->getQuantity());
-    				$oline->setDesignation($vline->getDesignation());
-    				$this->addLine($oline);
-    			}
-    		}
-    		$this->setTime($hours);
-    	}
-    	return $this;
+    	return self::createFromWork($work);
     }
     
+    /**
+     * Create from Work
+     * @deprecated Use OrderFactory::create(new WorkOrderBuilder($work))
+     */
     public static function createFromWork(Work $work)
     {
-    	$order = new Order;
-    	$order->populateFromWork($work);
-    	return $order;
+    	return OrderFactory::create(new WorkOrderBuilder($work));
     }
 }
