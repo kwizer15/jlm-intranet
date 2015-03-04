@@ -57,6 +57,8 @@ abstract class WorkBuilderAbstract implements WorkBuilderInterface
     	$this->work->setPriority(3);
     }
     
+    public function buildOrder() {}
+    
     /**
      * Constructor
      * @param array $options

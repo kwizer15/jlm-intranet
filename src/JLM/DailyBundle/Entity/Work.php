@@ -15,6 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JLM\OfficeBundle\Entity\Order;
 use JLM\CommerceBundle\Model\QuoteVariantInterface;
 use JLM\DailyBundle\Model\WorkInterface;
+use JLM\DailyBundle\Factory\WorkFactory;
+use JLM\DailyBundle\Builder\InterventionWorkBuilder;
 
 /**
  * Plannification de travaux
@@ -191,26 +193,23 @@ class Work extends Intervention implements WorkInterface
      * 
      * @param Intervention $interv
      * @return void
+     * @deprecated Use WorkFactory::create(new InterventionWorkBuilder($intervention))
      */
     public function populateFromIntervention(Intervention $interv)
     {
-    	$this->setCreation(new \DateTime);
-    	$this->setPlace($interv->getPlace());
-    	$this->setReason($interv->getRest());
-    	$this->setDoor($interv->getDoor());
-    	$this->setContactName($interv->getContactName());
-    	$this->setContactPhones($interv->getContactPhones());
-    	$this->setContactEmail($interv->getContactEmail());
-    	$this->setPriority(3);
-    	$this->setContract($interv->getDoor()->getActualContract().'');
-    	$this->setIntervention($interv);
+    	return self::createFromIntervention($interv);
     }
     
+    /**
+     * Create from intervention
+     *
+     * @param Intervention $interv
+     * @return void
+     * @deprecated Use WorkFactory::create(new InterventionWorkBuilder($intervention))
+     */
     public static function createFromIntervention(Intervention $interv)
     {
-    	$work = new Work;
-    	$work->populateFromIntervention($interv);
-    	return $work;
+    	return WorkFactory::create(new InterventionWorkBuilder($interv))
     }
     
     /**

@@ -33,5 +33,7 @@ interface WorkBuilderInterface
 
     public function buildPriority();
     
+    public function buildOrder();
+    
     public function buildLink();
 }

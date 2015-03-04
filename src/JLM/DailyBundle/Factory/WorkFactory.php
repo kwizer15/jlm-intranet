@@ -31,6 +31,7 @@ class WorkFactory
         $builder->buildReason();
         $builder->buildContact();
         $builder->buildPriority();
+        $builder->buildOrder();
         $builder->buildLink();
         
         return $builder->getWork();
