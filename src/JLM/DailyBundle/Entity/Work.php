@@ -178,6 +178,15 @@ class Work extends Intervention implements WorkInterface
     }
     
     /**
+     * Get expected time
+     * @return number
+     */
+    public function getExpectedTime()
+    {
+    	return  ($order = $this->getOrder()) ? $order->getTime() : 0;
+    }
+    
+    /**
      * Populate from intervention
      * 
      * @param Intervention $interv
