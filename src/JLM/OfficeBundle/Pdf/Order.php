@@ -50,6 +50,11 @@ class Order extends FPDFext
 		{
 		    $this->cell(0,8,'Devis n°'.$quote->getNumber(),0,1,'R');
 		}
+		
+		if ($this->entity->getTime() > 0)
+		{
+			$this->cell(0,8,'Temps prévu (heure/technicien) : '.$this->entity->getTime(),0,1,'R');
+		}
 		$this->ln(12);
 	}
 	

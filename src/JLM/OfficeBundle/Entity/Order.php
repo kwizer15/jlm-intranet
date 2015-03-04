@@ -55,6 +55,13 @@ class Order implements OrderInterface
 	private $work;
 	
 	/**
+	 * Temps technicien prévu (en heure)
+	 * @var int
+	 * @ORM\Column(name="time",type="smallint")
+	 */
+	private $time;
+	
+	/**
 	 * Etat
 	 * @var int
 	 * 0 - en saisie
@@ -140,6 +147,27 @@ class Order implements OrderInterface
     }
     
     /**
+     * Set time
+     * @param unknown $time
+     * @return self
+     */
+    public function setTime($time)
+    {
+    	$this->time = $time;
+    	
+    	return $this;
+    }
+    
+    /**
+     * Get time
+     * @return number
+     */
+    public function getTime()
+    {
+    	return $this->time;
+    }
+    
+    /**
      * Set close
      *
      * @param \DateTime $close
@@ -218,13 +246,21 @@ class Order implements OrderInterface
     	if ($variant = $work->getQuote())
     	{
     		$vlines = $variant->getLines();
+    		$hours = 0;
     		foreach ($vlines as $vline)
     		{
     			$flag = true;
     			if ($product = $vline->getProduct())
-    			if ($category = $product->getCategory())
-    			if ($category->isService())
-    				$flag = false;
+    			{
+    				if ($category = $product->getCategory())
+    				{
+    					if ($category->isService())
+    					{
+    						$hours += $vline->getQuantity();
+    						$flag = false;
+    					}
+    				}
+    			}
     			if ($flag)
     			{
     				$oline = new OrderLine;
@@ -234,6 +270,7 @@ class Order implements OrderInterface
     				$this->addLine($oline);
     			}
     		}
+    		$this->setTime($hours);
     	}
     	return $this;
     }
