@@ -209,7 +209,7 @@ class Work extends Intervention implements WorkInterface
      */
     public static function createFromIntervention(Intervention $interv)
     {
-    	return WorkFactory::create(new InterventionWorkBuilder($interv))
+    	return WorkFactory::create(new InterventionWorkBuilder($interv));
     }
     
     /**
