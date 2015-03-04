@@ -4,7 +4,6 @@
 <h1>Fiche travaux</h1>
 <strong>{{ entity.creation | date('d/m/Y') }}</strong><br><br>
 <strong>{{ entity.work.place |nl2br }}</strong>
-{% if entity.lines|length %}
 <table class="table table-stripped">
 	<thead>
 		<tr>
@@ -14,6 +13,8 @@
 		</tr>
 	</thead>
 	<tbody>
+	<tr><td></td><td>Temps prévu (heure/technicien)</td><td>{{ entity.time }}</td></tr>
+	{% if entity.lines|length %}
 	{% for line in entity.lines %}
 		<tr>
 			<td>{{ line.reference }}</td>
@@ -21,11 +22,12 @@
 			<td>{{ line.quantity }}</td>
 		</tr>
 	{% endfor %}
+	{% else %}
+<tr><td></td><td>Pas de matériel</td><td></td></tr>
+{% endif %}
 	</tbody>
 </table>
-{% else %}
-<h2><small>Pas de matériel</small></h2>
-{% endif %}
+
 <div class="form-actions">
 	<a href="{{ path('work_show',{'id':entity.work.id}) }}" class="btn"><i class="icon-arrow-left"></i> Retour aux travaux</a>
 	<a href="{{ path('order_print',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer</a>

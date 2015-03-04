@@ -2,50 +2,11 @@
 $db = new mysqli('localhost','root','sslover','jlm');
 $query = array();
 
-
-
-
-
 $init = array(
-'CREATE TABLE jlm_transmitter_product_transmitter (id INT AUTO_INCREMENT NOT NULL, product_id INT DEFAULT NULL, INDEX IDX_3EAD03534584665A (product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
-'CREATE TABLE jlm_daily_product_workshop (id INT AUTO_INCREMENT NOT NULL, product_id INT DEFAULT NULL, INDEX IDX_574DBA194584665A (product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
-'CREATE TABLE jlm_daily_product_work (id INT AUTO_INCREMENT NOT NULL, product_id INT DEFAULT NULL, INDEX IDX_9928F3964584665A (product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
-'CREATE TABLE jlm_commerce_event_follower (id INT AUTO_INCREMENT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
-'CREATE TABLE jlm_commerce_event_follower_join_event (event_follower_id INT NOT NULL, event_id INT NOT NULL, INDEX IDX_BCBDF267AD2BD3 (event_follower_id), UNIQUE INDEX UNIQ_BCBDF2671F7E88B (event_id), PRIMARY KEY(event_follower_id, event_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
-'CREATE TABLE jlm_commerce_quotevariant_join_quote_line (quotevariant_id INT NOT NULL, quoteline_id INT NOT NULL, INDEX IDX_E3936BAF11791C8 (quotevariant_id), UNIQUE INDEX UNIQ_E3936BA8EF03C82 (quoteline_id), PRIMARY KEY(quotevariant_id, quoteline_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
-'CREATE TABLE jlm_commerce_product_order (id INT AUTO_INCREMENT NOT NULL, product_id INT DEFAULT NULL, INDEX IDX_81D967244584665A (product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
-'CREATE TABLE jlm_commerce_event (id INT AUTO_INCREMENT NOT NULL, creation DATETIME NOT NULL, name VARCHAR(255) NOT NULL, options LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\', PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
-'CREATE TABLE jlm_follow_starter (id INT AUTO_INCREMENT NOT NULL, discr VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
-'CREATE TABLE jlm_follow_starterquote (id INT NOT NULL, variant_id INT DEFAULT NULL, UNIQUE INDEX UNIQ_922C43943B69A9AF (variant_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
-'CREATE TABLE jlm_follow_thread (id INT AUTO_INCREMENT NOT NULL, starter_id INT DEFAULT NULL, startDate DATETIME NOT NULL, UNIQUE INDEX UNIQ_CC1FDB58AD5A66CC (starter_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
-'CREATE TABLE jlm_follow_starterintervention (id INT NOT NULL, intervention_id INT DEFAULT NULL, UNIQUE INDEX UNIQ_93A09CAC8EAE3863 (intervention_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;',
+'ALTER TABLE orders ADD time SMALLINT NOT NULL',
 );
-$end = array(
-'ALTER TABLE jlm_transmitter_product_transmitter ADD CONSTRAINT FK_3EAD03534584665A FOREIGN KEY (product_id) REFERENCES products (id);',
-'ALTER TABLE jlm_daily_product_workshop ADD CONSTRAINT FK_574DBA194584665A FOREIGN KEY (product_id) REFERENCES products (id);',
-'ALTER TABLE jlm_daily_product_work ADD CONSTRAINT FK_9928F3964584665A FOREIGN KEY (product_id) REFERENCES products (id);',
-'ALTER TABLE jlm_commerce_event_follower_join_event ADD CONSTRAINT FK_BCBDF267AD2BD3 FOREIGN KEY (event_follower_id) REFERENCES jlm_commerce_event_follower (id);',
-'ALTER TABLE jlm_commerce_event_follower_join_event ADD CONSTRAINT FK_BCBDF2671F7E88B FOREIGN KEY (event_id) REFERENCES jlm_commerce_event (id);',
-'ALTER TABLE jlm_commerce_quotevariant_join_quote_line ADD CONSTRAINT FK_E3936BAF11791C8 FOREIGN KEY (quotevariant_id) REFERENCES quote_variant (id);',
-'ALTER TABLE jlm_commerce_quotevariant_join_quote_line ADD CONSTRAINT FK_E3936BA8EF03C82 FOREIGN KEY (quoteline_id) REFERENCES quote_lines (id);',
-'ALTER TABLE jlm_commerce_product_order ADD CONSTRAINT FK_81D967244584665A FOREIGN KEY (product_id) REFERENCES products (id);',
-'ALTER TABLE jlm_follow_starterquote ADD CONSTRAINT FK_922C43943B69A9AF FOREIGN KEY (variant_id) REFERENCES quote_variant (id);',
-'ALTER TABLE jlm_follow_starterquote ADD CONSTRAINT FK_922C4394BF396750 FOREIGN KEY (id) REFERENCES jlm_follow_starter (id) ON DELETE CASCADE;',
-'ALTER TABLE jlm_follow_thread ADD CONSTRAINT FK_CC1FDB58AD5A66CC FOREIGN KEY (starter_id) REFERENCES jlm_follow_starter (id);',
-'ALTER TABLE jlm_follow_starterintervention ADD CONSTRAINT FK_93A09CAC8EAE3863 FOREIGN KEY (intervention_id) REFERENCES shifting_interventions (id);',
-'ALTER TABLE jlm_follow_starterintervention ADD CONSTRAINT FK_93A09CACBF396750 FOREIGN KEY (id) REFERENCES jlm_follow_starter (id) ON DELETE CASCADE;',
-'ALTER TABLE orders ADD close DATETIME DEFAULT NULL;',
-'ALTER TABLE bill ADD eventFollower_id INT DEFAULT NULL;',
-'ALTER TABLE bill ADD CONSTRAINT FK_7A2119E3111D5ED3 FOREIGN KEY (eventFollower_id) REFERENCES jlm_commerce_event_follower (id);',
-'CREATE UNIQUE INDEX UNIQ_7A2119E3111D5ED3 ON bill (eventFollower_id);',
-'ALTER TABLE quote ADD eventFollower_id INT DEFAULT NULL;',
-'ALTER TABLE quote ADD CONSTRAINT FK_6B71CBF4111D5ED3 FOREIGN KEY (eventFollower_id) REFERENCES jlm_commerce_event_follower (id);',
-'CREATE UNIQUE INDEX UNIQ_6B71CBF4111D5ED3 ON quote (eventFollower_id);',
-'ALTER TABLE quote_lines DROP FOREIGN KEY FK_42FE01F73B69A9AF;',
-'DROP INDEX IDX_42FE01F73B69A9AF ON quote_lines;',
-'ALTER TABLE quote_lines DROP variant_id;',
-);
-
+$end = array();
+/*
 $quoteLineQuery = "SELECT id, variant_id FROM quote_lines";
 $quoteLines = $db->query($quoteLineQuery);
 while ($quoteLine = $quoteLines->fetch_array())
@@ -53,8 +14,8 @@ while ($quoteLine = $quoteLines->fetch_array())
 	$query[] = 'INSERT INTO jlm_commerce_quotevariant_join_quote_line (quoteline_id, quotevariant_id) VALUES ('.$quoteLine['id'].','.$quoteLine['variant_id'].');';
 }
 
-$query = array_merge($init,$query,$end);
-/*
+
+
 $productQuery = "SELECT * FROM products";
 
 $products = $db->query($productQuery);
@@ -259,6 +220,8 @@ $q2 = array(
 
 $query = array_merge($query, $q2);
 */
+
+$query = array_merge($init,$query,$end);
 foreach ($query as $q)
 {
   if ($db->query($q) == false)
