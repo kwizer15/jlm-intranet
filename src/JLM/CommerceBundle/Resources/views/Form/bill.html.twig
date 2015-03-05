@@ -31,7 +31,7 @@
     <th>Remise</th>
     <th>TVA</th>
     <th>PT HT</th>
-    <th class="span1"><a href="#" class="btn btn-success newline"><i class="icon-plus-sign icon-white"></i></a></th>
+    <th class="span1"><a href="#" class="btn btn-success newline">{{ 'plus-sign'|icon(true) }}</a></th>
     </tr>
     </thead>
     {{ form_widget(form.lines) }}
@@ -101,7 +101,7 @@
         {{ form_widget(form.isTransmitter) }}
         {{ form_widget(form.reference) }}
     </td>
-    <td><div class="input-append">{{ form_widget(form.designation) }}<a class="add-on show-description" href="#"><i class="icon-plus-sign"></i></a></div>
+    <td><div class="input-append">{{ form_widget(form.designation) }}<a class="add-on show-description" href="#">{{ 'plus-sign'|icon }}</a></div>
 	<br>{{ form_widget(form.showDescription) }}    
 	{{ form_widget(form.description) }}
     </td>
@@ -110,6 +110,6 @@
     <td>{{ form_widget(form.discount) }}</td>
     <td>{{ form_widget(form.vat) }}</td>
     <td><div class="input-append"><span class="input-mini uneditable-input" id="{{ id }}_total">0,00</span><span class="add-on">€</span></div></td>
-    <td><a href="#" class="btn btn-danger remove-line"><i class="icon-minus-sign icon-white"></i></a></td>
+    <td><a href="#" class="btn btn-danger remove-line">{{ 'minus-sign'|icon(true) }}</a></td>
 </tr>
 {% endblock jlm_commerce_bill_line_row %}
