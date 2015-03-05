@@ -2,18 +2,14 @@
 
 namespace JLM\OfficeBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\DailyBundle\Entity\Work;
 use JLM\CommerceBundle\Model\OrderInterface;
 use JLM\OfficeBundle\Factory\OrderFactory;
-use JLM\DailyBundle\Builder\WorkOrderBuilder;
+use JLM\CommerceBundle\Builder\VariantOrderBuilder;
 
 /**
  * JLM\OfficeBundle\Entity\Order
- *
- * @ORM\Table(name="orders")
- * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\OrderRepository")
  */
 class Order implements OrderInterface
 {
@@ -23,43 +19,34 @@ class Order implements OrderInterface
 	
 	/**
 	 * @var int $id
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	private $id;
 	
 	/**
-	 * @var DateTime $creation
-	 * @ORM\Column(name="creation",type="datetime") 
+	 * @var DateTime $creation 
 	 */
 	private $creation;
 	
 	/**
 	 * @var DateTime $close
-	 * @ORM\Column(name="close",type="datetime", nullable=true)
 	 */
 	private $close;
 	
 	/**
 	 * Lignes
 	 * @var ArrayCollection $lines
-	 * @ORM\OneToMany(targetEntity="OrderLine", mappedBy="order")
 	 */
 	private $lines;
 	
 	/**
 	 * Intervention source
 	 * @var Work
-	 * @ORM\OneToOne(targetEntity="JLM\DailyBundle\Entity\Work",mappedBy="order")
 	 */
 	private $work;
 	
 	/**
 	 * Temps technicien prévu (en heure)
 	 * @var int
-	 * @ORM\Column(name="time",type="smallint")
 	 */
 	private $time;
 	
@@ -69,7 +56,6 @@ class Order implements OrderInterface
 	 * 0 - en saisie
 	 * 1 - commandé
 	 * 2 - reçue
-	 * @ORM\Column(name="state",type="integer")
 	 */
 	private $state = 0;
 	
@@ -255,6 +241,6 @@ class Order implements OrderInterface
      */
     public static function createFromWork(Work $work)
     {
-    	return OrderFactory::create(new WorkOrderBuilder($work));
+    	return OrderFactory::create(new VariantOrderBuilder($work->getQuote()));
     }
 }

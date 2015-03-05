@@ -1,0 +1,27 @@
+JLM\OfficeBundle\Entity\Order:
+  type: entity
+  table: orders
+  repositoryClass: JLM\OfficeBundle\Repsitory\OrderRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    creation:
+      type: datetime
+    close:
+      type: datetime
+      nullable: true
+    time:
+      type: smallint
+    state:
+      type: integer
+  oneToMany:
+    lines:
+      targetEntity: JLM\OfficeBundle\Entity\OrderLine
+      mappedBy: order
+  oneToOne:
+    work:
+      targetEntity: JLM\DailyBundle\Entity\Work
+      mappedBy: order

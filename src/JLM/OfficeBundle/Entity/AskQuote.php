@@ -4,7 +4,6 @@ namespace JLM\OfficeBundle\Entity;
 
 use JLM\AskBundle\Entity\Ask;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use JLM\ModelBundle\Entity\Door;
 use JLM\CommerceBundle\Model\QuoteInterface;
@@ -13,35 +12,29 @@ use JLM\DailyBundle\Entity\Intervention;
 /**
  * Demande de devis
  * JLM\OfficeBundle\Entity\AskQuote
- *
- * @ORM\Table(name="askquote")
- * @ORM\Entity(repositoryClass="JLM\OfficeBundle\Entity\AskQuoteRepository")
  */
 class AskQuote extends Ask
 {
 	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
+	 * @var int
 	 */
 	private $id;
 	
 	/**
 	 * Suite à intervention
-	 * @ORM\OneToOne(targetEntity="JLM\DailyBundle\Entity\Intervention", mappedBy="askQuote")
+	 * @var Intervention
 	 */
 	private $intervention;
 	
 	/**
 	 * Intallation
-	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Door")
+	 * @var Door
 	 */
 	private $door;
 	
 	/**
 	 * Devis
-	 * @var QuoteInterface
-	 * @ORM\OneToMany(targetEntity="JLM\CommerceBundle\Entity\Quote", mappedBy="ask")
+	 * @var QuoteInterface[]
 	 */
 	private $quotes;
 	

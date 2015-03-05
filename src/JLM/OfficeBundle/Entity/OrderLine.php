@@ -1,58 +1,40 @@
 <?php
 namespace JLM\OfficeBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * JLM\OfficeBundle\Entity\DocumentLine
- * @ORM\Table(name="order_lines")
- * @ORM\Entity
  */
 class OrderLine
 {
 	/**
 	 * @var integer $id
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	private $id;
 	
 	/**
 	 * Commande a laquelle appartien la ligne
 	 * @var Order $order
-	 * 
-	 * @ORM\ManyToOne(targetEntity="Order", inversedBy="lines")
 	 */
 	private $order;
 	
 	/**
 	 * Position de la ligne dans le devis
 	 * @var position
-	 *
-	 * @ORM\Column(name="position", type="smallint", nullable=true)
 	 */
 	private $position = 0;
 	
 	/**
 	 * @var string $reference
-	 *
-	 * @ORM\Column(name="reference", nullable=true)
 	 */
 	private $reference;
 	
 	/**
 	 * @var string $designation
-	 *
-	 * @ORM\Column(name="designation")
 	 */
 	private $designation;
 	
 	/**
 	 * @var int $quantity
-	 *
-	 * @ORM\Column(name="quantity", type="integer")
 	 */
 	private $quantity = 1;
 
@@ -75,6 +57,7 @@ class OrderLine
     public function setOrder(Order $order)
     {
     	$this->order = $order;
+    	
     	return $this;
     }
     

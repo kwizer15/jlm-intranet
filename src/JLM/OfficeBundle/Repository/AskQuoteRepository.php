@@ -1,6 +1,6 @@
 <?php
 
-namespace JLM\OfficeBundle\Entity;
+namespace JLM\OfficeBundle\Repository;
 
 use JLM\DefaultBundle\Entity\SearchRepository;
 

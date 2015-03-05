@@ -1,0 +1,22 @@
+JLM\OfficeBundle\Entity\AskQuote:
+  type: entity
+  table: askquote
+  repositoryClass: JLM\OfficeBundle\Repository\AskQuoteRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  oneToOne:
+    intervention:
+      targetEntity: JLM\DailyBundle\Entity\Intervention
+      mappedBy: askQuote
+  oneToMany:
+    quotes:
+      targetEntity: JLM\CommerceBundle\Entity\Quote
+      mappedBy: ask
+  manyToOne:
+    door:
+      targetEntity: JLM\ModelBundle\Entity\Door
+  
+  
