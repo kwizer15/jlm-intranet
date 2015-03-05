@@ -62,7 +62,7 @@ class QuoteCountExtension extends \Twig_Extension
     	);
     }
     
-    public function stateLabelFilter(QuoteInterface $quote)
+    public function stateLabelFilter($quote)
     {
     	$class = '';
     	$message = '';

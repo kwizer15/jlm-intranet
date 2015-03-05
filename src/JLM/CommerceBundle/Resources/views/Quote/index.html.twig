@@ -32,7 +32,7 @@
             <td>{{ entity.trusteeName }}</td>
             <td>{{ entity.variants|length }}</td>
             <td>
-                <a href="{{ path('quote_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
+                <a href="{{ path('quote_show', { 'id': entity.id }) }}" class="btn">{{ 'eye-open'|icon }}</a>
             </td>
         </tr>
     {% endfor %}

@@ -7,6 +7,12 @@ services:
         class: JLM\CoreBundle\Twig\Extension\CoreExtension
         tags:
             - { name: twig.extension }
+            
+    jlm_core.twig.bootstrap_extension:
+        class: JLM\CoreBundle\Twig\Extension\BootstrapExtension
+        tags:
+            - { name: twig.extension }
+            
     jlm_core.type.search:
         class: JLM\CoreBundle\Form\Type\SearchType
         tags:

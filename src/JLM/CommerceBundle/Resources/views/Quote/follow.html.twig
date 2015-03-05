@@ -22,8 +22,7 @@ Suivi des devis
     {% for entity in entities %}
         <tr>
             <td>
-            	<a href="{{ path('quote_show', { 'id': entity.id }) }}">{{ entity.number }}</a><br>
-            	{% include 'JLMCommerceBundle:Quote:statelabel.html.twig' with {'state': entity.state} %}
+            	<a href="{{ path('quote_show', { 'id': entity.id }) }}">{{ entity.number }}</a><br>{{ entity|quote_state_label }}
             </td>
             <td>
             {% if entity.door %}<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}

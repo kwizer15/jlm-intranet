@@ -6,19 +6,19 @@
 {% include 'JLMCommerceBundle:Quote:showheader.html.twig' with {'quote': entity} %}
 <div class="form-actions">
 {% if entity.ask %}
-	<a href="{{ path('askquote_show',{'id':entity.ask.id}) }}" class="btn"><i class="icon-arrow-left"></i> Voir la demande</a>
+	<a href="{{ path('askquote_show',{'id':entity.ask.id}) }}" class="btn">{{ 'arrow-left'|icon }} Voir la demande</a>
 {% endif %}
-	<a href="{{ path('quote_jacket',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer la chemise</a>
+	<a href="{{ path('quote_jacket',{ 'id' : entity.id }) }}" class="btn btn-info">{{ 'print'|icon(true) }} Imprimer la chemise</a>
 {% if entity.variants|length > 0 %}	
-	<a href="{{ path('quote_print',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-white icon-print"></i> Imprimer tout</a>	
+	<a href="{{ path('quote_print',{ 'id' : entity.id }) }}" class="btn btn-info">{{ 'print'|icon(true) }} Imprimer tout</a>	
 {% endif %}
 {% if entity.state == 0 %}
-	<a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+	<a href="{{ path('quote_edit', { 'id': entity.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }} Editer</a>
 {% else %}
-<a href="{{ path('quote_mail',{ 'id' : entity.id }) }}" class="btn btn-info"><i class="icon-white icon-envelope"></i> Envoyer tout par mail</a>
+<a href="{{ path('quote_mail',{ 'id' : entity.id }) }}" class="btn btn-info">{{ 'envelope'|icon(true) }} Envoyer tout par mail</a>
 {% endif %}
 
-	<a href="{{ path('variant_new',{ 'quote' : entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter une variante</a>
+	<a href="{{ path('variant_new',{ 'quote' : entity.id }) }}" class="btn btn-success">{{ 'plus-sign'|icon(true) }} Ajouter une variante</a>
 </div>
 
 
@@ -26,7 +26,7 @@
 	{% for variant in entity.variants %}
     <li{% if loop.first %} class="active"{% endif %}>
         <a href="#variant-{{ variant.number }}" data-toggle="tab">{{ variant.number }}
-		{% include 'JLMCommerceBundle:Quote:statelabel.html.twig' with {'state': variant.state} %}
+        {{ variant|quote_state_label }}
          </a>
     </li>
     {% endfor %}
