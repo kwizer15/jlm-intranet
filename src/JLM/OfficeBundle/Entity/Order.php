@@ -3,10 +3,11 @@
 namespace JLM\OfficeBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use JLM\DailyBundle\Entity\Work;
-use JLM\CommerceBundle\Model\OrderInterface;
+use JLM\OfficeBundle\Model\OrderInterface;
 use JLM\OfficeBundle\Factory\OrderFactory;
 use JLM\CommerceBundle\Builder\VariantOrderBuilder;
+use JLM\OfficeBundle\Model\OrderLineInterface;
+use JLM\DailyBundle\Model\WorkInterface;
 
 /**
  * JLM\OfficeBundle\Entity\Order
@@ -81,12 +82,12 @@ class Order implements OrderInterface
     /**
      * Add lines
      *
-     * @param JLM\OfficeBundle\Entity\OrderLine $lines
-     * @return Order
+     * @param OrderLineInterface $lines
+     * @return self
      */
-    public function addLine(\JLM\OfficeBundle\Entity\OrderLine $lines)
+    public function addLine(OrderLineInterface $line)
     {
-        $this->lines[] = $lines;
+        $this->lines->add($line);
     
         return $this;
     }
@@ -94,11 +95,11 @@ class Order implements OrderInterface
     /**
      * Remove lines
      *
-     * @param JLM\OfficeBundle\Entity\OrderLine $lines
+     * @param OrderLineInterface $lines
      */
-    public function removeLine(\JLM\OfficeBundle\Entity\OrderLine $lines)
+    public function removeLine(OrderLineInterface $line)
     {
-        $this->lines->removeElement($lines);
+        $this->lines->removeElement($line);
     }
 
     /**
@@ -115,7 +116,7 @@ class Order implements OrderInterface
      * Set creation
      *
      * @param \DateTime $creation
-     * @return Document
+     * @return self
      */
     public function setCreation($creation)
     {
@@ -159,7 +160,7 @@ class Order implements OrderInterface
      * Set close
      *
      * @param \DateTime $close
-     * @return Document
+     * @return self
      */
     public function setClose(\DateTime $close = null)
     {
@@ -182,7 +183,7 @@ class Order implements OrderInterface
      * Set state
      *
      * @param int $state
-     * @return Order
+     * @return self
      */
     public function setState($state)
     {
@@ -206,10 +207,10 @@ class Order implements OrderInterface
     /**
      * Set work
      *
-     * @param \JLM\DailyBundle\Entity\Work $work
-     * @return Order
+     * @param Work $work
+     * @return self
      */
-    public function setWork(\JLM\DailyBundle\Entity\Work $work = null)
+    public function setWork(WorkInterface $work = null)
     {
         $this->work = $work;
     
@@ -224,23 +225,5 @@ class Order implements OrderInterface
     public function getWork()
     {
         return $this->work;
-    }
-    
-    /**
-     * Populate from Work
-     * @deprecated Use OrderFactory::create(new WorkOrderBuilder($work))
-     */
-    public function populateFromWork(Work $work)
-    {
-    	return self::createFromWork($work);
-    }
-    
-    /**
-     * Create from Work
-     * @deprecated Use OrderFactory::create(new WorkOrderBuilder($work))
-     */
-    public static function createFromWork(Work $work)
-    {
-    	return OrderFactory::create(new VariantOrderBuilder($work->getQuote()));
     }
 }

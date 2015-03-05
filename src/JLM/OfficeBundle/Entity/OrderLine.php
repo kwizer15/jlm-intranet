@@ -1,10 +1,12 @@
 <?php
 namespace JLM\OfficeBundle\Entity;
 
+use JLM\OfficeBundle\Model\OrderLineInterface;
+use JLM\OfficeBundle\Model\OrderInterface;
 /**
  * JLM\OfficeBundle\Entity\DocumentLine
  */
-class OrderLine
+class OrderLine implements OrderLineInterface
 {
 	/**
 	 * @var integer $id
@@ -54,7 +56,7 @@ class OrderLine
      * @param Order $order
      * @return OrderLine
      */
-    public function setOrder(Order $order)
+    public function setOrder(OrderInterface $order)
     {
     	$this->order = $order;
     	

@@ -116,7 +116,8 @@ doctrine:
             JLM\FollowBundle\Model\ThreadInterface: JLM\FollowBundle\Entity\Thread
             JLM\FollowBundle\Model\StarterInterface: JLM\FollowBundle\Entity\Starter
             
-            
+            JLM\OfficeBundle\Model\OrderInterface: JLM\OfficeBundle\Entity\Order
+            JLM\OfficeBundle\Model\OrderLineInterface: JLM\OfficeBundle\Entity\OrderLine
 
 # Swiftmailer Configuration
 swiftmailer:
