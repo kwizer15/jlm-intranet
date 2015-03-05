@@ -1,7 +1,7 @@
 JLM\OfficeBundle\Entity\Order:
   type: entity
   table: orders
-  repositoryClass: JLM\OfficeBundle\Repsitory\OrderRepository
+  repositoryClass: JLM\OfficeBundle\Repository\OrderRepository
   id:
     id:
       type: integer
