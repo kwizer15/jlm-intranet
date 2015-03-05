@@ -17,6 +17,7 @@ use JLM\CommerceBundle\Model\QuoteVariantInterface;
 use JLM\DailyBundle\Model\WorkInterface;
 use JLM\DailyBundle\Factory\WorkFactory;
 use JLM\DailyBundle\Builder\InterventionWorkBuilder;
+use JLM\DailyBundle\Builder\VariantWorkBuilder;
 
 /**
  * Plannification de travaux
@@ -216,27 +217,11 @@ class Work extends Intervention implements WorkInterface
      * Populate from QuoteVariant
      * @param QuoteVariant $variant
      * @return void
+     * @deprecated Use WorkFactory::create(new VariantWorkBuilder($variant))
      */
     public function populateFromQuoteVariant(QuoteVariantInterface $variant)
     {
-    	$quote = $variant->getQuote();
-    	$this->setCreation(new \DateTime);
-    	$this->setDoor($quote->getDoor());
-    	$this->setPlace($quote->getDoor().'');
-    	if ($quote->getAsk() !== null)
-    		$this->setReason($quote->getAsk()->getAsk());
-    	$this->setContactName($quote->getContactCp());
-    	if ($quote->getContact())
-    		$this->setContactPhones(
-    				$quote->getContact()->getPerson()->getFixedPhone().chr(10)
-    				.$quote->getContact()->getPerson()->getMobilePhone()
-    		);
-    	$this->setPriority(3);
-    	$this->setContract($quote->getDoor()->getActualContract().'');
-    	$this->setQuote($variant);
-    	
-    	if ($this->getReason() === null)
-    		$this->setReason($variant->getIntro());	
+    	return self::createFromQuoteVariant($variant);
     }
     
     /**
@@ -244,11 +229,10 @@ class Work extends Intervention implements WorkInterface
      * 
      * @param QuoteVariant $variant
      * @return \JLM\DailyBundle\Entity\Work
+     * @deprecated Use WorkFactory::create(new VariantWorkBuilder($variant))
      */
     public static function createFromQuoteVariant(QuoteVariantInterface $variant)
     {
-    	$work = new Work;
-    	$work->populateFromQuoteVariant($variant);
-    	return $work;
+    	return WorkFactory::create(new VariantWorkBuilder($variant));
     }
 }

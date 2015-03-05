@@ -22,6 +22,7 @@ use JLM\DailyBundle\Entity\Work;
 use JLM\OfficeBundle\Entity\Order;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\OfficeBundle\Factory\OrderFactory;
+use JLM\DailyBundle\Builder\VariantWorkBuilder;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -77,11 +78,15 @@ class InterventionSubscriber implements EventSubscriberInterface
 		if ($entity->getWork() === null && $entity->getQuote()->getDoor() !== null)
 		{
 			// Création de la ligne travaux pré-remplie
-			$work = Work::createFromQuoteVariant($entity);
+			//$work = Work::createFromQuoteVariant($entity);
+			$work = WorkFactory::create(new VariantWorkBuilder($entity), array(
+					'category' => $this->om->getRepository('JLMDailyBundle:WorkCategory')->find(1),
+					'objective' => $this->om->getRepository('JLMDailyBundle:WorkObjective')->find(1),
+			));
 			//$work->setMustBeBilled(true);
-			$work->setCategory($this->om->getRepository('JLMDailyBundle:WorkCategory')->find(1));
-			$work->setObjective($this->om->getRepository('JLMDailyBundle:WorkObjective')->find(1));
-			$order = OrderFactory::create(new WorkOrderBuilder($work));
+			//$work->setCategory($this->om->getRepository('JLMDailyBundle:WorkCategory')->find(1));
+			//$work->setObjective($this->om->getRepository('JLMDailyBundle:WorkObjective')->find(1));
+			$order = $work->getOrder();
 			$this->om->persist($order);
 			$olines = $order->getLines();
 			foreach ($olines as $oline)
@@ -89,7 +94,7 @@ class InterventionSubscriber implements EventSubscriberInterface
 				$oline->setOrder($order);
 				$this->om->persist($oline);
 			}
-			$work->setOrder($order);
+			//$work->setOrder($order);
 			$this->om->persist($work);
 			$entity->setWork($work);
 			$this->om->flush();

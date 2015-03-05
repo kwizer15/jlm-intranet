@@ -28,6 +28,4 @@ interface OrderBuilderInterface
     public function buildTime();
     
     public function buildLines();
-    
-    public function buildWork();
 }

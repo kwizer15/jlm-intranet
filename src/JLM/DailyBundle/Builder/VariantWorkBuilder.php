@@ -14,6 +14,7 @@ namespace JLM\DailyBundle\Builder;
 use JLM\DailyBundle\Model\InterventionInterface;
 use JLM\CommerceBundle\Model\QuoteVariantInterface;
 use JLM\OfficeBundle\Factory\OrderFactory;
+use JLM\CommerceBundle\Builder\VariantOrderBuilder;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -65,7 +66,7 @@ class VariantWorkBuilder extends WorkBuilderAbstract
     
     public function buildOrder()
     {
-    	$order = OrderFactory::create(new WorkOrderBuilder($this->getWork()));
+    	$order = OrderFactory::create(new VariantOrderBuilder($this->variant));
     	$this->getWork()->setOrder($order);
     }
     

@@ -27,7 +27,6 @@ class OrderFactory
     {
         $builder->create();
         $builder->buildCreation();
-        $builder->buildWork();
         $builder->buildTime();
         $builder->buildLines();
      
