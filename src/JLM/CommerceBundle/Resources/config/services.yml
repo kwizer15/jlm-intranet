@@ -88,6 +88,6 @@ services:
             - { name: twig.extension }
     jlm_commerce.twig.quotecount_extension:
         class: JLM\CommerceBundle\Twig\Extension\QuoteCountExtension
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager","@translator"]
         tags:
             - { name: twig.extension }

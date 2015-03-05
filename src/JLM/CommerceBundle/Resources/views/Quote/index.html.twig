@@ -20,7 +20,7 @@
         <tr>
             <td>
             	<a href="{{ path('quote_show', { 'id': entity.id }) }}">{{ entity.number }}</a><br>
-            	{% include 'JLMCommerceBundle:Quote:statelabel.html.twig' with {'state': entity.state} %}
+            	{{ entity|quote_state_label }}
             </td>
             <td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}</td>
             <td>

@@ -1,4 +1,3 @@
 {% for quote in quotelasts %}
-<li><a href="{{ path('quote_show', {'id' : quote.id }) }}">{{ quote.number }}
-{% include 'JLMCommerceBundle:Quote:statelabel.html.twig' with {'state': quote.state} %}</a></li>
+<li><a href="{{ path('quote_show', {'id' : quote.id }) }}">{{ quote.number }} {{ quote|quote_state_label }}</a></li>
 {% endfor %}
