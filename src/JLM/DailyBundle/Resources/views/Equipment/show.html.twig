@@ -29,7 +29,7 @@
 			<td>{% if shift.end %}{{ shift.time.format('%hh%I') }}{% endif %}</td>
 			<td>{{ shift.comment | nl2br}}</td>
 			<td>
-				<a href="#modalEditTech{{ shift.id }}" data-toggle="modal" role="button" class="btn btn-warning"><i class="icon-wrench icon-white"></i></a>
+				<a href="#modalEditTech{{ shift.id }}" data-toggle="modal" role="button" class="btn btn-warning">{{ 'wrench'|icon(true) }}</a>
 				{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shift.id})) }}
 				</td>
 		</tr>
@@ -51,10 +51,10 @@
 {% endif %}
 
 <div class="form-actions">
-    <a href="{{ previous }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
-	<a href="#modalEdit{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+    <a href="{{ previous }}" class="btn">{{ 'arrow-left'|icon }} Retour à la liste</a>
+	<a href="#modalEdit{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-warning">{{ 'pencil'|icon(true) }} Editer</a>
 	{{ render(controller('JLMDailyBundle:Equipment:edit',{'id':entity.id})) }}
-	<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a>
+	<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger">{{ 'remove'|icon(true) }} Supprimer</a>
 	{% include 'JLMDailyBundle:Intervention:delete.html.twig' with {'id':entity.id} %}
 </div>
 {% endblock %}
