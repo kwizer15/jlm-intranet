@@ -1,0 +1,14 @@
+jlm_daily_intervention:
+  resource: "@JLMDailyBundle/Resources/config/routing/InterventionController.yml"
+  prefix:   /intervention
+    
+jlm_daily_defalut:
+  resource: "@JLMDailyBundle/Resources/config/routing/DefaultController.yml"
+    
+jlm_daily_door:
+  resource: "@JLMDailyBundle/Resources/config/routing/DoorController.yml"
+  prefix:   /door
+  
+jlm_daily_equipment:
+  resource: "@JLMDailyBundle/Resources/config/routing/EquipmentController.yml"
+  prefix:   /equipment

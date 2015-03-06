@@ -17,8 +17,6 @@ class DefaultController extends Controller
 {
 	/**
 	 * Search
-	 * @Route("/search", name="daily_search")
-	 * @Method("get")
      * @Secure(roles="ROLE_USER")
 	 * @Template()
 	 */
@@ -34,7 +32,7 @@ class DefaultController extends Controller
 			/*
 			 * Voir aussi
 			* 	DoorController:stoppedAction
-			* 	FixingController:newAction
+			* 	FixingController:newAction -> utiliser formModal
 			* @todo A factoriser de là ...
 			*/
 			$fixingForms = array();
@@ -57,10 +55,8 @@ class DefaultController extends Controller
 	
 	/**
 	 * Search
-	 * @Route("/search", name="daily_search_get")
-	 * @Method("get")
 	 * @Secure(roles="ROLE_USER")
-	 * @Template()
+	 * @deprecated
 	 */
 	public function searchgetAction(Request $request)
 	{
@@ -69,9 +65,9 @@ class DefaultController extends Controller
 	
 	/**
 	 * Sidebar
-	 * @Route("/sidebar", name="daily_sidebar")
      * @Secure(roles="ROLE_USER")
 	 * @Template()
+	 * @deprecated Use the TwigExtension
 	 */
 	public function sidebarAction()
 	{
@@ -87,7 +83,6 @@ class DefaultController extends Controller
 	
 	/**
 	 * Search by date form
-	 * @Route("/datesearch", name="daily_datesearch")
 	 * @Secure(roles="ROLE_USER")
 	 * @Template()
 	 */
@@ -98,13 +93,5 @@ class DefaultController extends Controller
 		return array(
 				'form' => $form->createView(),
 		);
-	}
-	/**
-	 * @Route("/", name="daily")
-	 * @Template()
-	 */
-	public function indexAction()
-	{
-		return $this->redirect($this->generateUrl('intervention_today'));
 	}
 }

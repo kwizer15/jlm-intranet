@@ -1,0 +1,24 @@
+daily:
+  path: /
+  defaults:  { _controller: "JLMDailyBundle:Default:searchget" }
+  methods: [GET]
+
+daily_search:
+  path: /search
+  defaults:  { _controller: "JLMDailyBundle:Default:search" }
+  methods: [GET]
+  
+daily_search_get:
+  path: /search
+  defaults: { _controller: "JLMDailyBundle:Default:searchget" }
+  methods: [GET]
+  
+daily_sidebar:
+  path: /sidebar
+  defaults: { _controller: "JLMDailyBundle:Default:sidebar" }
+  methods: [GET]
+  
+daily_datesearch:
+  path: /datesearch
+  defaults: { _controller: "JLMDailyBundle:Default:datesearch" }
+  methods: [GET]

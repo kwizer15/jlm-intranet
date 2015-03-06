@@ -25,7 +25,6 @@ class DoorController extends Controller
 	/**
 	 * Finds and displays a Door entity.
 	 *
-	 * @Route("/{id}/show", name="daily_door_show")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -54,7 +53,6 @@ class DoorController extends Controller
 	/**
 	 * Displays Doors stopped
 	 *
-	 * @Route("/stopped", name="daily_door_stopped")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -97,7 +95,6 @@ class DoorController extends Controller
 	/**
 	 * Displays Doors stopped
 	 *
-	 * @Route("/printstopped", name="daily_door_printstopped")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -117,7 +114,6 @@ class DoorController extends Controller
 	/**
 	 * Stop door
 	 *
-	 * @Route("/{id}/stop", name="daily_door_stop")
 	 * @Template("JLMDailyBundle:Door:show.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -140,7 +136,6 @@ class DoorController extends Controller
 	/**
 	 * Unstop door
 	 *
-	 * @Route("/{id}/unstop", name="daily_door_unstop")
 	 * @Template("JLMDailyBundle:Door:show.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */

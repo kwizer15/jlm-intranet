@@ -1,0 +1,126 @@
+intervention:
+  path:   /
+  defaults:  { _controller: "JLMDailyBundle:Intervention:index" }
+  methods: [GET]
+    
+intervention_tobill:
+  path:   /{id}/tobill
+  defaults:  { _controller: "JLMDailyBundle:Intervention:tobill" }
+  methods: [GET]
+    
+intervention_dontbill:
+  path:   /{id}/dontbill
+  defaults:  { _controller: "JLMDailyBundle:Intervention:dontbill" }
+  methods: [GET]
+    
+intervention_cancelbill:
+  path:   /{id}/cancelbill
+  defaults:  { _controller: "JLMDailyBundle:Intervention:cancelbill" }
+  methods: [GET]
+    
+intervention_toquote:
+  path:   /{id}/toquote
+  defaults:  { _controller: "JLMDailyBundle:Intervention:toquote" }
+  methods: [GET]
+    
+intervention_cancelquote:
+  path:   /{id}/cancelquote
+  defaults:  { _controller: "JLMDailyBundle:Intervention:cancelquote" }
+  methods: [GET]
+    
+intervention_tocontact:
+  path:   /{id}/tocontact
+  defaults:  { _controller: "JLMDailyBundle:Intervention:tocontact" }
+  methods: [GET]
+    
+intervention_cancelcontact:
+  path:   /{id}/cancelcontact
+  defaults:  { _controller: "JLMDailyBundle:Intervention:cancelcontact" }
+  methods: [GET]
+
+intervention_towork:
+  path:   /{id}/towork
+  defaults:  { _controller: "JLMDailyBundle:Intervention:towork" }
+  methods: [GET]
+
+intervention_cancelwork:
+  path:   /{id}/cancelwork
+  defaults:  { _controller: "JLMDailyBundle:Intervention:cancelwork" }
+  methods: [GET]
+    
+intervention_cancel:
+  path:   /{id}/cancel
+  defaults:  { _controller: "JLMDailyBundle:Intervention:cancel" }
+  methods: [GET]
+    
+intervention_uncancel:
+  path:   /{id}/uncancel
+  defaults:  { _controller: "JLMDailyBundle:Intervention:uncancel" }
+  methods: [GET]
+    
+intervention_externalbill:
+  path:   /{id}/externalbill
+  defaults:  { _controller: "JLMDailyBundle:Intervention:externalbill" }
+  methods: [GET]
+    
+intervention_today:
+  path:   /today
+  defaults:  { _controller: "JLMDailyBundle:Intervention:today" }
+  methods: [GET]
+    
+intervention_list:
+  path:   /list
+  defaults:  { _controller: "JLMDailyBundle:Intervention:report" }
+  methods: [GET]
+ 
+intervention_listdate1:
+  path:   /list/{date1}
+  defaults:  { _controller: "JLMDailyBundle:Intervention:report" }
+  methods: [GET]
+    
+intervention_listdate2:
+  path:   /list/{date1}/{date2}
+  defaults:  { _controller: "JLMDailyBundle:Intervention:report" }
+  methods: [GET]
+    
+intervention_list_post:
+  path:   /listpost
+  defaults:  { _controller: "JLMDailyBundle:Intervention:reportdate" }
+  methods: [POST]
+    
+intervention_delete:
+  path:   /delete/{id}
+  defaults:  { _controller: "JLMDailyBundle:Intervention:delete" }
+  methods: [GET,POST,DELETE]
+    
+intervention_redirect:
+  path: /{id}/{act}
+  defaults:  { _controller: "JLMDailyBundle:Intervention:redirect" }
+  requirements:
+    id: "[0-9]+"
+  methods: [GET]
+    
+intervention_printday:
+  path: /printday/{date1}
+  defaults:  { _controller: "JLMDailyBundle:Intervention:printday" }
+  methods: [GET]
+    
+intervention_printtomorrow:
+  path: /printtomorrow
+  defaults:  { _controller: "JLMDailyBundle:Intervention:printtomorrow" }
+  methods: [GET]
+   
+intervention_printdoor:
+  path: /printdoor/{id}
+  defaults:  { _controller: "JLMDailyBundle:Intervention:printdoor" }
+  methods: [GET]
+    
+intervention_doorcsv:
+  path: /doorcsv/{id}
+  defaults:  { _controller: "JLMDailyBundle:Intervention:doorcsv" }
+  methods: [GET]
+    
+intervention_doorxls:
+  path: /doorxls/{id}
+  defaults:  { _controller: "JLMDailyBundle:Intervention:doorxls" }
+  methods: [GET]
