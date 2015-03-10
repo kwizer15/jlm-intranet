@@ -1,0 +1,29 @@
+maintenance_list:
+  path: /list
+  defaults:  { _controller: "JLMDailyBundle:Maintenance:list" }
+  methods: [GET]
+  
+maintenance_show:
+  path: /{id}/show
+  defaults:  { _controller: "JLMDailyBundle:Maintenance:show" }
+  methods: [GET]
+  
+maintenance_close:
+  path: /{id}/close
+  defaults:  { _controller: "JLMDailyBundle:Maintenance:close" }
+  methods: [GET]
+  
+maintenance_closeupdate:
+  path: /{id}/closeupdate
+  defaults:  { _controller: "JLMDailyBundle:Maintenance:closeupdate" }
+  methods: [PUT,POST]
+  
+maintenance_scan:
+  path: /scan
+  defaults:  { _controller: "JLMDailyBundle:Maintenance:scan" }
+  methods: [GET]
+  
+maintenance_neighbor:
+  path: /neighbor/{id}
+  defaults:  { _controller: "JLMDailyBundle:Maintenance:neighbor" }
+  methods: [GET]

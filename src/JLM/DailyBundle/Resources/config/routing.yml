@@ -12,3 +12,15 @@ jlm_daily_door:
 jlm_daily_equipment:
   resource: "@JLMDailyBundle/Resources/config/routing/EquipmentController.yml"
   prefix:   /equipment
+  
+jlm_daily_fixing:
+  resource: "@JLMDailyBundle/Resources/config/routing/FixingController.yml"
+  prefix:   /fixing
+  
+jlm_daily_maintenance:
+  resource: "@JLMDailyBundle/Resources/config/routing/MaintenanceController.yml"
+  prefix:   /maintenance
+  
+jlm_daily_shifting:
+  resource: "@JLMDailyBundle/Resources/config/routing/ShiftingController.yml"
+  prefix:   /shifting

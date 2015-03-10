@@ -1,0 +1,44 @@
+fixing_list:
+  path: /list
+  defaults:  { _controller: "JLMDailyBundle:Fixing:list" }
+  methods: [GET]
+  
+fixing_show:
+  path: /{id}/show
+  defaults:  { _controller: "JLMDailyBundle:Fixing:show" }
+  methods: [GET]
+  
+fixing_new:
+  path: /new/{id}
+  defaults:  { _controller: "JLMDailyBundle:Fixing:new" }
+  methods: [GET]
+  
+fixing_create:
+  path: /create/{id}
+  defaults:  { _controller: "JLMDailyBundle:Fixing:create" }
+  methods: [POST]
+  
+fixing_edit:
+  path: /{id}/edit
+  defaults:  { _controller: "JLMDailyBundle:Fixing:edit" }
+  methods: [GET]
+  
+fixing_update:
+  path: /{id}/update
+  defaults:  { _controller: "JLMDailyBundle:Fixing:update" }
+  methods: [PUT,POST]
+  
+fixing_close:
+  path: /{id}/close
+  defaults:  { _controller: "JLMDailyBundle:Fixing:close" }
+  methods: [GET]
+  
+fixing_closeupdate:
+  path: /{id}/closeupdate
+  defaults:  { _controller: "JLMDailyBundle:Fixing:closeupdate" }
+  methods: [PUT,POST]
+  
+fixing_printreport:
+  path: /{id}/printreport
+  defaults:  { _controller: "JLMDailyBundle:Fixing:printreport" }
+  methods: [GET]

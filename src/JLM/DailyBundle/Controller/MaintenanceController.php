@@ -20,15 +20,11 @@ use JLM\ModelBundle\Entity\Door;
 
 /**
  * Maintenance controller.
- *
- * @Route("/maintenance")
  */
 class MaintenanceController extends AbstractInterventionController
 {
 	/**
 	 * Finds and displays a InterventionPlanned entity.
-	 *
-	 * @Route("/list", name="maintenance_list")
 	 */
 	public function listAction()
 	{
@@ -44,7 +40,6 @@ class MaintenanceController extends AbstractInterventionController
 	/**
 	 * Finds and displays a Maintenance entity.
 	 *
-	 * @Route("/{id}/show", name="maintenance_show")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -56,7 +51,6 @@ class MaintenanceController extends AbstractInterventionController
 	/**
 	 * Close an existing Fixing entity.
 	 *
-	 * @Route("/{id}/close", name="maintenance_close")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -73,8 +67,6 @@ class MaintenanceController extends AbstractInterventionController
 	/**
 	 * Close an existing Maintenance entity.
 	 *
-	 * @Route("/{id}/closeupdate", name="maintenance_closeupdate")
-	 * @Method("POST")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -103,7 +95,6 @@ class MaintenanceController extends AbstractInterventionController
 	/**
 	 * Creation des entretiens a faire
 	 *
-	 * @Route("/scan", name="maintenance_scan")
 	 * @Template()
 	 */
 	public function scanAction()
@@ -157,7 +148,6 @@ class MaintenanceController extends AbstractInterventionController
 	/**
 	 * Cherche les entretiens les plus proche d'une adresse
 	 *
-	 * @Route("/neighbor/{id}", name="maintenance_neighbor")
 	 * @Template()
 	 */
 	public function neighborAction(Door $door)

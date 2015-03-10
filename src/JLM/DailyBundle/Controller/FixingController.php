@@ -5,8 +5,6 @@ namespace JLM\DailyBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Fixing;
@@ -24,15 +22,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Fixing controller.
- *
- * @Route("/fixing")
  */
 class FixingController extends AbstractInterventionController
 {
 	/**
 	 * Finds and displays a InterventionPlanned entity.
 	 *
-	 * @Route("/list", name="fixing_list")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -48,7 +43,6 @@ class FixingController extends AbstractInterventionController
 	/**
 	 * Finds and displays a InterventionPlanned entity.
 	 *
-	 * @Route("/{id}/show", name="fixing_show")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -60,7 +54,6 @@ class FixingController extends AbstractInterventionController
 	/**
 	 * Displays a form to create a new InterventionPlanned entity.
 	 *
-	 * @Route("/new/{id}", name="fixing_new")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -86,8 +79,6 @@ class FixingController extends AbstractInterventionController
 	/**
 	 * Creates a new InterventionPlanned entity.
 	 *
-	 * @Route("/create/{id}", name="fixing_create")
-	 * @Method("POST")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -124,7 +115,6 @@ class FixingController extends AbstractInterventionController
 	/**
 	 * Displays a form to edit an existing Fixing entity.
 	 *
-	 * @Route("/{id}/edit", name="fixing_edit")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -141,8 +131,6 @@ class FixingController extends AbstractInterventionController
 	/**
 	 * Edits an existing Fixing entity.
 	 *
-	 * @Route("/{id}/update", name="fixing_update")
-	 * @Method("POST")
 	 * @Template("JLMDailyBundle:Fixing:edit.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -168,7 +156,6 @@ class FixingController extends AbstractInterventionController
 	/**
 	 * Close an existing Fixing entity.
 	 *
-	 * @Route("/{id}/close", name="fixing_close")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -185,8 +172,6 @@ class FixingController extends AbstractInterventionController
 	/**
 	 * Close an existing Fixing entity.
 	 *
-	 * @Route("/{id}/closeupdate", name="fixing_closeupdate")
-	 * @Method("POST")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -228,7 +213,6 @@ class FixingController extends AbstractInterventionController
 	/**
 	 * Imprime le rapport d'intervention
 	 *
-	 * @Route("{id}/printreport", name="fixing_printreport")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function printdayAction(Fixing $entity)
