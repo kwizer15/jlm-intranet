@@ -29,6 +29,6 @@ jlm_daily_standby:
   resource: "@JLMDailyBundle/Resources/config/routing/StandbyController.yml"
   prefix:   /standby
   
-jlm_daily_standby:
+jlm_daily_work:
   resource: "@JLMDailyBundle/Resources/config/routing/WorkController.yml"
   prefix:   /work
