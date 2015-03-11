@@ -29,6 +29,7 @@ final class JLMCommerceEvents
 	const QUOTEVARIANT_PRINTED = "jlm_commerce.quotevariant_printed";
 	const QUOTEVARIANT_SENDED = "jlm_commerce.quotevariant_sended";
 	const QUOTEVARIANT_RECEIPT = "jlm_commerce.quotevariant_receipt";
+	const QUOTEVARIANT_CANCELED = "jlm_commerce.quotevariant_canceled";
 	
 	const BILL_FORM_POPULATE = "jlm_commerce.bill_form_populate";
 	const BILL_AFTER_PERSIST = "jlm_commerce.bill_after_persist";
