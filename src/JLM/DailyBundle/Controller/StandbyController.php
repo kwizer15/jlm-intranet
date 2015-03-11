@@ -63,7 +63,6 @@ class StandbyController extends Controller
 
         if ($form->isValid())
         {
-        	$em = $this->getDoctrine()->getManager();
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -84,7 +83,7 @@ class StandbyController extends Controller
      */
     public function editAction(Standby $entity)
     {
-        $form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(),new StandbyType(), $entity);
+        $form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(), new StandbyType(), $entity);
         return array(
             'entity'      => $entity,
             'form'        => $form->createView(),
