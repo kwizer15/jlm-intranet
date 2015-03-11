@@ -15,6 +15,6 @@
 </div>
 {% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : entities} %}
 <div class="form-actions">
-<a href="{{ path('intervention_printday', {'date1' : d1 | date('Ymd')}) }}" class="btn btn-info"><i class="icon-white icon-print"></i> Imprimer</a>
+<a href="{{ path('intervention_printday', {'date1' : d1 | date('Ymd')}) }}" class="btn btn-info">{{ 'print'|icon(true) }} Imprimer</a>
 </div>
 {% endblock %}

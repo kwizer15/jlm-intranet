@@ -23,7 +23,7 @@
 				{% if transmitter.replacedTransmitter %}</a>{% endif %}
 				
 				{% if transmitter.replace %}
-					<i class="icon-refresh"></i>
+					{{ 'refresh'|icon }}
 					<del>{{ transmitter.replace.number }}</del>
 				{% endif %}
 			</td>

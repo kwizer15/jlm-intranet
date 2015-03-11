@@ -24,8 +24,8 @@
       </td>
       <td><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></td>
       <td>
-        <a class="btn btn-warning btn-small edit-corporationcontact" href="{{ path('jlm_contact_corporationcontact_edit', {'id': contact.id} ) }}"><i class="icon-white icon-pencil"></i></a>
-        <a class="btn btn-danger btn-small delete-corporationcontact" href="{{ path('jlm_contact_corporationcontact_confirmdelete', {'id': contact.id} ) }}"><i class="icon-white icon-remove"></i></a>
+        <a class="btn btn-warning btn-small edit-corporationcontact" href="{{ path('jlm_contact_corporationcontact_edit', {'id': contact.id} ) }}">{{ 'pencil'|icon(true) }}</a>
+        <a class="btn btn-danger btn-small delete-corporationcontact" href="{{ path('jlm_contact_corporationcontact_confirmdelete', {'id': contact.id} ) }}">{{ 'remove'|icon(true) }}</a>
       </td>
     </tr>
     {% endfor %}
@@ -50,7 +50,7 @@ $("#add-corporationcontact").formModal({
     	     .append($('<td/>').html(data.position))
     		 .append($('<td/>').html($phones))
     	     .append($('<td/>').html(email))
-    	     .append($('<td/>').html('<a class="btn btn-warning btn-small edit-corporationcontact" href="' + data.edit_link + '"><i class="icon-white icon-pencil"></i></a> <a class="btn btn-danger btn-small delete-corporationcontact" href="' + data.delete_link + '"><i class="icon-white icon-remove"></i></a>'));
+    	     .append($('<td/>').html('<a class="btn btn-warning btn-small edit-corporationcontact" href="' + data.edit_link + '">{{ 'pencil'|icon(true) }}</a> <a class="btn btn-danger btn-small delete-corporationcontact" href="' + data.delete_link + '">{{ 'remove'|icon(true) }}</a>'));
     	$line.find('.edit-corporationcontact').formModal();
     	$line.find('.delete-corporationcontact').formModal({
 			closure: function(data, e) {

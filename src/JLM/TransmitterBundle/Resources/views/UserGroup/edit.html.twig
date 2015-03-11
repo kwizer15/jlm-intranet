@@ -8,6 +8,6 @@
 {% block footer %}
 	{{ parent() }}
 	{% if not hasTransmitter %}
-	<a href="{{ path('transmitter_usergroup_delete',{'id':entity.id}) }}" class="btn btn-danger"><i class="icon-white icon-remove"></i> Supprimer</a>
+	<a href="{{ path('transmitter_usergroup_delete',{'id':entity.id}) }}" class="btn btn-danger">{{ 'remove'|icon(true) }} Supprimer</a>
 	{% endif %}
 {% endblock %}

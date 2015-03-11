@@ -49,7 +49,7 @@
 		        				<li class="dropdown-submenu">
 		        					<a tabindex="-1" href="{{ path('askquote') }}">Demandes</a>
 		        					<ul class="dropdown-menu">
-		        						<li><a href="{{ path('askquote_new') }}"><i class="icon-plus-sign"></i> Nouvelle demande de devis</a></li>
+		        						<li><a href="{{ path('askquote_new') }}">{{ 'plus-sign'|icon }} Nouvelle demande de devis</a></li>
 		        						<li class="divider"></li>
 		        						{% include 'JLMOfficeBundle:Askquote:sidebar.html.twig' %}
 		        					</ul>
@@ -61,7 +61,7 @@
 		        		<li class="dropdown-submenu">
 		        			<a tabindex="-1" href="{{ path('order') }}">Fiches travaux</a>
 		        			<ul class="dropdown-menu">
-		        			{#	<li><a href="{{ path('order_new') }}"><i class="icon-plus-sign"></i> Nouvelle fiche</a></li>
+		        			{#	<li><a href="{{ path('order_new') }}">{{ 'plus-sign'|icon }} Nouvelle fiche</a></li>
 								<li class="divider"></li> #}
 								{% include 'JLMOfficeBundle:Order:sidebar.html.twig' %} 
 		        			</ul>
@@ -69,7 +69,7 @@
                         <li class="dropdown-submenu">
 		        			<a tabindex="-1" href="{{ path('bill') }}">Facture</a>
 		        			<ul class="dropdown-menu">
-				        		<li><a href="{{ path('bill_new') }}"><i class="icon-plus-sign"></i> Nouvelle facture</a></li>
+				        		<li><a href="{{ path('bill_new') }}">{{ 'plus-sign'|icon }} Nouvelle facture</a></li>
 				        		<li class="divider"></li>
 				        		{% include 'JLMCommerceBundle:Bill:sidebar.html.twig' %}
 		        			</ul>
@@ -77,7 +77,7 @@
                         <li class="dropdown-submenu">
 		        			<a tabindex="-1" href="{{ path('fees') }}">Redevances</a>
 		        			<ul class="dropdown-menu">
-		        				<li><a href="{{ path('fees') }}"><i class="icon-list"></i> Liste</a></li>
+		        				<li><a href="{{ path('fees') }}">{{ 'list'|icon }} Liste</a></li>
 		        			</ul>
 		        		</li>
 		        		<li><a href="{{ path('jlm_follow_default_index') }}">Suivi de commandes</a></li>
@@ -112,10 +112,10 @@
 			   
 			   <a href="#" class="btn btn-info navbar-btn dropdown-toggle" data-toggle="dropdown"><i class="icon-user  icon-white"></i> {{ app.user }} <b class="caret"></b></a>
 			   <ul class="dropdown-menu">
-			   		<li><a href="{{ path('fos_user_security_logout') }}"><i class="icon-remove-sign"></i> Déconnexion</a></li>
+			   		<li><a href="{{ path('fos_user_security_logout') }}">{{ 'remove-sign'|icon }} Déconnexion</a></li>
 			   		<li class="divider"></li>
-			   		<li><a href="{{ path('fos_user_profile_show') }}"><i class="icon-user"></i> Mon profil</a></li>
-			   		<li><a href="{{ path('fos_user_change_password') }}"><i class="icon-lock"></i> Changer mon mot de passe</a></li>  		
+			   		<li><a href="{{ path('fos_user_profile_show') }}">{{ 'user'|icon }} Mon profil</a></li>
+			   		<li><a href="{{ path('fos_user_change_password') }}">{{ 'lock'|icon }} Changer mon mot de passe</a></li>  		
 			   </ul>
 			</div>
 			{% endif %}	

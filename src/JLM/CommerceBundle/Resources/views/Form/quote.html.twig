@@ -102,7 +102,7 @@
     {{ form_row(form.paymentRules) }}
     {{ form_row(form.deliveryRules) }}
     <div class="form-actions">
-	  <a href="{{ path('quote_show', { 'id' : form.quote.vars.value }) }}" class="btn"><i class="icon-arrow-left"></i> Retour au devis</a>
+	  <a href="{{ path('quote_show', { 'id' : form.quote.vars.value }) }}" class="btn">{{ 'arrow-left'|icon }} Retour au devis</a>
 	  {{ form_widget(form.submit) }}
 	  {{ form_rest(form) }}
 	</div>

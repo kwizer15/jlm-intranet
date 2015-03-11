@@ -27,10 +27,10 @@
 {% endblock %}
 
 {% block edit_button %}
-<a href="{{ path('fixing_edit', { 'id': entity.id }) }}" class="btn btn-small btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+<a href="{{ path('fixing_edit', { 'id': entity.id }) }}" class="btn btn-small btn-warning">{{ 'pencil'|icon(true) }} Editer</a>
 {% endblock %}
 
 {% block close_button %}
-	<a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-small btn-primary"><i class="icon-ok icon-white"></i> {% if not entity.closed %}Cloturer{% else %}Editer{% endif %}</a>
+	<a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-small btn-primary">{{ 'ok'|icon(true) }} {% if not entity.closed %}Cloturer{% else %}Editer{% endif %}</a>
 	{{ render(controller('JLMDailyBundle:Fixing:close',{'id':entity.id})) }}
 {% endblock %}

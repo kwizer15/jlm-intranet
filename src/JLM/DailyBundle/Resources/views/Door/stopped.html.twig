@@ -52,14 +52,14 @@
 			<td>Depuis le {{ door.lastStop.begin|date('d/m/Y') }}<br>{{ door.lastStop.reason | nl2br }}</td>
 			<td>{{ door.lastStop.state | nl2br }}</td>
 			{% else %}<td></td><td></td>{% endif %}
-			<td><a href="#modalDoorStopEdit{{ door.lastStop.id }}" data-toggle="modal" class="btn btn-warning"><i class="icon-white icon-pencil"></i>Editer</a></td>
+			<td><a href="#modalDoorStopEdit{{ door.lastStop.id }}" data-toggle="modal" class="btn btn-warning">{{ 'pencil'|icon(true) }}Editer</a></td>
 		</tr>
 		{% endfor %}
 	</tbody>
 </table>
 {% endif %}
 	<div class="form-actions">
-<a href="{{ path('daily_door_printstopped') }}" class="btn btn-info"><i class="icon-white icon-print"></i> Imprimer</a>
+<a href="{{ path('daily_door_printstopped') }}" class="btn btn-info">{{ 'print'|icon(true) }} Imprimer</a>
 </div>
 {% endblock %}
 

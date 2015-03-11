@@ -74,7 +74,7 @@
 {% block jlm_contact_contactphone_row %}
   <li id="{{ id }}">{{ form_widget(form.label, {'attr': {'class': 'input-medium', 'placeholder': form.label.vars.label }}) }}&nbsp;
   {{ form_widget(form.phone, {'attr': {'class': 'input-medium', 'placeholder': form.phone.vars.label }}) }}&nbsp;
-  <button class="btn btn-danger btn-small remove-phone"><i class="icon-minus-sign icon-white"></i></button>
+  <button class="btn btn-danger btn-small remove-phone">{{ 'minus-sign'|icon(true) }}</button>
   {{ form_errors(form) }}
   </li>
 {% endblock %}

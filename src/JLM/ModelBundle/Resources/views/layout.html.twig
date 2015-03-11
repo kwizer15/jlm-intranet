@@ -4,11 +4,11 @@
     	<li>{{ form(search.form, { 'action': path('model_search') }) }}
 	    </li>
 	    <li class="nav-header">Contacts</li>
-		<li><a href="{{ path('jlm_contact_contact') }}"><i class="icon-list"></i> Liste contacts</a></li>
+		<li><a href="{{ path('jlm_contact_contact') }}">{{ 'list'|icon }} Liste contacts</a></li>
 		<li>
 	      <div class="dropdown">
 		    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-		      <i class="icon-plus-sign"></i> Ajouter un contact
+		      {{ 'plus-sign'|icon }} Ajouter un contact
 		      <span class="caret"></span>
 		    </a>
 		      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
@@ -19,18 +19,18 @@
 		  </div>
 		</li>
 		<li class="nav-header">Syndics</li>
-		<li><a href="{{ path('trustee') }}"><i class="icon-list"></i> Liste syndics</a></li>
-        <li><a href="{{ path('trustee_new') }}"><i class="icon-plus-sign"></i> Nouveau syndic</a></li>
+		<li><a href="{{ path('trustee') }}">{{ 'list'|icon }} Liste syndics</a></li>
+        <li><a href="{{ path('trustee_new') }}">{{ 'plus-sign'|icon }} Nouveau syndic</a></li>
         <li class="nav-header">Fournisseurs</li>
-        <li><a href="{{ path('supplier') }}"><i class="icon-list"></i> Liste fournisseurs</a></li>
-        <li><a href="{{ path('supplier_new') }}"><i class="icon-plus-sign"></i> Nouveau fournisseur</a></li>
+        <li><a href="{{ path('supplier') }}">{{ 'list'|icon }} Liste fournisseurs</a></li>
+        <li><a href="{{ path('supplier_new') }}">{{ 'plus-sign'|icon }} Nouveau fournisseur</a></li>
         <li class="nav-header">Familles produit</li>
-        <li><a href="{{ path('jlm_product_productcategory') }}"><i class="icon-list"></i> Liste familles</a></li>
-        <li><a href="{{ path('jlm_product_productcategory_new') }}"><i class="icon-plus-sign"></i> Nouvelle famille</a></li>
+        <li><a href="{{ path('jlm_product_productcategory') }}">{{ 'list'|icon }} Liste familles</a></li>
+        <li><a href="{{ path('jlm_product_productcategory_new') }}">{{ 'plus-sign'|icon }} Nouvelle famille</a></li>
         <li class="nav-header">Produits</li>   
-        <li><a href="{{ path('jlm_product_product') }}"><i class="icon-list"></i> Liste produits</a></li>
-        <li><a href="{{ path('jlm_product_product_new') }}"><i class="icon-plus-sign"></i> Nouveau produit</a></li>
-        <li><a href="{{ path('jlm_product_stock_print') }}"><i class="icon-print"></i> Imprimer stock</a></li>
+        <li><a href="{{ path('jlm_product_product') }}">{{ 'list'|icon }} Liste produits</a></li>
+        <li><a href="{{ path('jlm_product_product_new') }}">{{ 'plus-sign'|icon }} Nouveau produit</a></li>
+        <li><a href="{{ path('jlm_product_stock_print') }}">{{ 'print'|icon }} Imprimer stock</a></li>
         <li class="nav-header">Types d'émetteurs</li>   
-        <li><a href="{{ path('transmittertype') }}"><i class="icon-list"></i> Liste types d'émetteurs</a></li>
+        <li><a href="{{ path('transmittertype') }}">{{ 'list'|icon }} Liste types d'émetteurs</a></li>
     {% endblock %}

@@ -24,7 +24,7 @@
                 <td>{{ entity.minimum }}</td>
                 <td>{{ entity.maximum }}</td>
                 <td>{% if entity.lastModified %}{{ entity.lastModified|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td><a href="{{ path('jlm_product_stock_edit', { 'id': entity.id }) }}" class="btn btn-warning edit-stock"><i class="icon-white icon-pencil"></i></a></td>
+                <td><a href="{{ path('jlm_product_stock_edit', { 'id': entity.id }) }}" class="btn btn-warning edit-stock">{{ 'pencil'|icon(true) }}</a></td>
             </tr>
         {% endfor %}
         </tbody>

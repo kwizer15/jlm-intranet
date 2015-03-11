@@ -17,7 +17,7 @@
 			<td>{{ result.nb }}</td>
 			<td><strong>{{ result.type }} - {{ result.location }}</strong><br>{{ result.street |nl2br }}<br>{{ result.zip }} - {{ result.city | upper }}</td>		
 			<td>{{ result.begin | date('d/m/Y') }}</td>
-			<td><a href="{{ path('daily_door_show', {'id': result.id}) }}" class="btn"><i class="icon-eye-open"></i></a>
+			<td><a href="{{ path('daily_door_show', {'id': result.id}) }}" class="btn">{{ 'eye-open'|icon }}</a>
 		</tr>
 		{% endfor %}
 	</tbody>

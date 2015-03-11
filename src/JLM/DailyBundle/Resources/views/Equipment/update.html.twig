@@ -7,8 +7,8 @@
 	<fieldset>
 		{{ form_widget(form) }}
 	    <div class="form-actions">
-		   <a href="{{ previous }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
-		   <button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer</button>
+		   <a href="{{ previous }}" class="btn">{{ 'arrow-left'|icon }} Retour à la liste</a>
+		   <button type="submit" class="btn btn-primary">{{ 'pencil'|icon(true) }} Enregistrer</button>
 		</div>
 	</fieldset>
 </form>
