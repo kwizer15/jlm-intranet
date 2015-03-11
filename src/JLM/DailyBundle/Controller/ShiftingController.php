@@ -3,8 +3,6 @@ namespace JLM\DailyBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Technician;
@@ -17,15 +15,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Fixing controller.
- *
- * @Route("/shifting")
  */
 class ShiftingController extends Controller
 {
 	/**
 	 * List
-	 * @Route("/list/{id}", name="shifting_list")
-	 * @Route("/list/{id}/page/{page}", name="shifting_list_page")
 	 * @Secure(roles="ROLE_USER")
 	 * @Template()
 	 */
@@ -55,7 +49,6 @@ class ShiftingController extends Controller
 	
 	/**
 	 * Ajoute un technicien sur une intervention
-	 * @Route("/new/{id}", name="shifting_new")
 	 * @Secure(roles="ROLE_USER")
 	 * @Template()
 	 */
@@ -77,9 +70,7 @@ class ShiftingController extends Controller
 	/**
 	 * Creates a new ShiftTechnician entity.
 	 *
-	 * @Route("/create/{id}", name="shifting_create")
 	 * @Template()
-	 * @Method("POST")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function createAction(Request $request, Shifting $shifting)
@@ -113,7 +104,6 @@ class ShiftingController extends Controller
 	/**
 	 * Displays a form to edit an existing ShiftTechnician entity.
 	 *
-	 * @Route("/{id}/edit", name="shifting_edit")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -129,24 +119,18 @@ class ShiftingController extends Controller
 	/**
 	 * Displays a form to edit an existing ShiftTechnician entity.
 	 *
-	 * @Route("/{id}/edittable", name="shifting_edittable")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
+	 * @deprecated Modal system
 	 */
 	public function edittableAction(ShiftTechnician $entity)
 	{
-		$editForm = $this->get('form.factory')->createNamed('shiftTechEdit'.$entity->getId(),new ShiftingEditType(), $entity);
-		return array(
-				'entity'      => $entity,
-				'form'   => $editForm->createView(),
-		);
+		return $this->editAction($entity);
 	}
 	
 	/**
 	 * Edits an existing InterventionPlanned entity.
 	 *
-	 * @Route("/{id}/update", name="shifting_update")
-	 * @Method("POST")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -185,7 +169,6 @@ class ShiftingController extends Controller
 	/**
 	 * Delete an existing ShiftTechnician entity.
 	 *
-	 * @Route("/{id}/delete", name="shifting_delete")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */

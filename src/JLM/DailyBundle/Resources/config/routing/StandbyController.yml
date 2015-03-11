@@ -1,0 +1,29 @@
+standby:
+  path: /
+  defaults:  { _controller: "JLMDailyBundle:Standby:index" }
+  methods: [GET]
+
+standby_new:
+  path: /new
+  defaults:  { _controller: "JLMDailyBundle:Standby:new" }
+  methods: [GET]
+  
+standby_create:
+  path: /create
+  defaults:  { _controller: "JLMDailyBundle:Standby:create" }
+  methods: [POST]
+  
+standby_edit:
+  path: /{id}/edit
+  defaults:  { _controller: "JLMDailyBundle:Standby:edit" }
+  methods: [GET]
+  
+standby_update:
+  path: /{id}/update
+  defaults:  { _controller: "JLMDailyBundle:Standby:update" }
+  methods: [PUT,POST]
+
+standby_delete:
+  path: /{id}/delete
+  defaults:  { _controller: "JLMDailyBundle:Standby:delete" }
+  methods: [DELETE,POST]

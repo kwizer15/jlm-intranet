@@ -1,8 +1,8 @@
 jlm_daily_intervention:
-  resource: "@JLMDailyBundle/Resources/config/routing/InterventionController.yml"
+  resource: "@JLMDailyBundle/Resources/config/routing/intervention.yml"
   prefix:   /intervention
     
-jlm_daily_defalut:
+jlm_daily_default:
   resource: "@JLMDailyBundle/Resources/config/routing/DefaultController.yml"
     
 jlm_daily_door:
@@ -24,3 +24,11 @@ jlm_daily_maintenance:
 jlm_daily_shifting:
   resource: "@JLMDailyBundle/Resources/config/routing/ShiftingController.yml"
   prefix:   /shifting
+  
+jlm_daily_standby:
+  resource: "@JLMDailyBundle/Resources/config/routing/StandbyController.yml"
+  prefix:   /standby
+  
+jlm_daily_standby:
+  resource: "@JLMDailyBundle/Resources/config/routing/WorkController.yml"
+  prefix:   /work

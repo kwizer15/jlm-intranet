@@ -1,29 +1,39 @@
-maintenance_list:
-  path: /list
-  defaults:  { _controller: "JLMDailyBundle:Maintenance:list" }
+shifting_list:
+  path: /list/{id}
+  defaults:  { _controller: "JLMDailyBundle:Shifting:list" }
+  methods: [GET]
+
+shifting_list_page:
+  path: /list/{id}/page/{page}
+  defaults:  { _controller: "JLMDailyBundle:Shifting:list" }
+  methods: [GET]
+
+shifting_new:
+  path: /new/{id}
+  defaults:  { _controller: "JLMDailyBundle:Shifting:new" }
   methods: [GET]
   
-maintenance_show:
-  path: /{id}/show
-  defaults:  { _controller: "JLMDailyBundle:Maintenance:show" }
+shifting_create:
+  path: /create/{id}
+  defaults:  { _controller: "JLMDailyBundle:Shifting:create" }
+  methods: [POST]
+  
+shifting_edit:
+  path: /{id}/edit
+  defaults:  { _controller: "JLMDailyBundle:Shifting:edit" }
   methods: [GET]
   
-maintenance_close:
-  path: /{id}/close
-  defaults:  { _controller: "JLMDailyBundle:Maintenance:close" }
+shifting_edittable:
+  path: /{id}/edittable
+  defaults:  { _controller: "JLMDailyBundle:Shifting:edittable" }
   methods: [GET]
   
-maintenance_closeupdate:
-  path: /{id}/closeupdate
-  defaults:  { _controller: "JLMDailyBundle:Maintenance:closeupdate" }
+shifting_update:
+  path: /{id}/update
+  defaults:  { _controller: "JLMDailyBundle:Shifting:update" }
   methods: [PUT,POST]
   
-maintenance_scan:
-  path: /scan
-  defaults:  { _controller: "JLMDailyBundle:Maintenance:scan" }
-  methods: [GET]
-  
-maintenance_neighbor:
-  path: /neighbor/{id}
-  defaults:  { _controller: "JLMDailyBundle:Maintenance:neighbor" }
-  methods: [GET]
+shifting_delete:
+  path: /{id}/delete
+  defaults:  { _controller: "JLMDailyBundle:Shifting:delete" }
+  methods: [DELETE,POST,GET]

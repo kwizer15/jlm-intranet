@@ -4,8 +4,6 @@ namespace JLM\DailyBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Intervention;
@@ -25,8 +23,6 @@ use JLM\OfficeBundle\Entity\AskQuote;
 
 /**
  * Fixing controller.
- *
- * @Route("/intervention")
  */
 class InterventionController extends Controller
 {
@@ -226,7 +222,6 @@ class InterventionController extends Controller
 	
 	/**
 	 * Numéro de facture
-	 * @Method("POST")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function externalbillAction(Request $request, Intervention $entity)

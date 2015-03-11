@@ -1,0 +1,49 @@
+work_list:
+  path: /list
+  defaults:  { _controller: "JLMDailyBundle:Work:list" }
+  methods: [GET]
+  
+work_show:
+  path: /{id}/show
+  defaults:  { _controller: "JLMDailyBundle:Work:show" }
+  methods: [GET]
+
+work_new_door:
+  path: /new/door/{id}
+  defaults:  { _controller: "JLMDailyBundle:Work:newdoor" }
+  methods: [GET]
+
+work_new:
+  path: /new
+  defaults:  { _controller: "JLMDailyBundle:Work:new" }
+  methods: [GET]
+  
+work_new_quote:
+  path: /new/quote/{id}
+  defaults:  { _controller: "JLMDailyBundle:Work:newquote" }
+  methods: [GET]
+  
+work_create:
+  path: /create
+  defaults:  { _controller: "JLMDailyBundle:Work:create" }
+  methods: [POST]
+  
+work_edit:
+  path: /{id}/edit
+  defaults:  { _controller: "JLMDailyBundle:Work:edit" }
+  methods: [GET]
+  
+work_update:
+  path: /{id}/update
+  defaults:  { _controller: "JLMDailyBundle:Work:update" }
+  methods: [PUT,POST]
+  
+work_close:
+  path: /{id}/close
+  defaults:  { _controller: "JLMDailyBundle:Work:close" }
+  methods: [GET]
+  
+work_closeupdate:
+  path: /{id}/closeupdate
+  defaults:  { _controller: "JLMDailyBundle:Work:closeupdate" }
+  methods: [PUT,POST]
