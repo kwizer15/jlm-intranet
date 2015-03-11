@@ -60,6 +60,18 @@ class Jacket extends FPDFext
 			if ($contact->getEmail())
 				$pdf->cell(0,5,'Email : '.$contact->getEmail(),0,1);
 		}
+		
+		$pdf->setXY(30,100);
+		$pdf->setFont('Arial','B',14);
+		$vise = 'Visé par :'.chr(10)
+		.'     Jean-Louis'.chr(10)
+		.'     Yohann'.chr(10)
+		.'     Nadine'.chr(10);
+		$pdf->multicell(0,10,$vise,0);
+		$pdf->rect(30, 112, 5, 5);
+		$pdf->rect(30, 122, 5, 5);
+		$pdf->rect(30, 132, 5, 5);
+		
 		$pdf->setXY(100,230);
 		$pdf->setFont('Arial','B',14);
 		$pdf->multicell(0,7,$entity->getDoorCp(),0);
