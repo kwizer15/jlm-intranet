@@ -37,7 +37,22 @@
             {% if entity.state == 0 %}
             	<a href="{{ path('bill_send',{'id':entity.id}) }}" class="btn btn-primary btn-small">Envoyer</a>
             {% elseif entity.state == 1 %}
-            	<a href="{{ path('bill_payed',{'id':entity.id}) }}" class="btn btn-success btn-small">Régler</a>
+            	<a href="{{ path('bill_payed',{'id':entity.id}) }}" class="btn btn-success btn-small">Régler</a><br>
+            	{% if entity.toBoost %}
+            	<div class="btn-group">
+					    <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+					    	{% if entity.firstBoost is null %}1ère
+            	{% elseif entity.secondBoost is null %}2ème
+            	{% else %}3ème{% endif %} relance
+					    	<span class="caret"></span>
+					    </a>
+					    <ul class="dropdown-menu">
+					        <li><a href="{{ path('bill_printduplicate',{'id':entity.id}) }}"><i class="icon icon-white icon-print"></i> Imprimer duplicata</a></li>
+					    	<li><a href="{{ path('bill_printboost',{'id':entity.id}) }}"><i class="icon icon-white icon-print"></i> Imprimer courrier</a></li>
+					    	<li><a href="{{ path('bill_boostok',{'id':entity.id}) }}"><i class="icon icon-white icon-ok"></i> Relance effectuée</a></li>
+					    </ul>
+					 </div>
+				{% endif %}
             {% elseif entity.state == 2 %}
             	<a href="{{ path('bill_send',{'id':entity.id}) }}" class="btn btn-danger btn-small">Annuler réglé</a>
             {% endif %}
