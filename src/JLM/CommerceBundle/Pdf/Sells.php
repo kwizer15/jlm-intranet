@@ -4,7 +4,7 @@ namespace JLM\ProductBundle\Pdf;
 use JLM\DefaultBundle\Pdf\FPDFext;
 use JLM\ProductBundle\Model\StockInterface;
 
-class Stock extends FPDFext
+class Sells extends FPDFext
 {
 	public static function get($sells)
 	{
