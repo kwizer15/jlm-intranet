@@ -89,7 +89,7 @@ class OrderController extends Controller
 	public function newAction(Work $work)
 	{
 		$entity = new Order();
-		$entity->setWork();
+		$entity->setWork($work);
 		$form  = $this->createForm(new OrderType(), $entity);
 		return array(
 				'entity' => $entity,
