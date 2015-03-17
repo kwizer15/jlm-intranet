@@ -19,6 +19,7 @@ use JLM\OfficeBundle\Entity\Task;
 use JLM\DailyBundle\Entity\Work;
 use JLM\DefaultBundle\Entity\Search;
 use JLM\DefaultBundle\Form\Type\SearchType;
+use JLM\OfficeBundle\Factory\OrderFactory;
 
 
 
@@ -87,7 +88,8 @@ class OrderController extends Controller
 	 */
 	public function newAction(Work $work)
 	{
-		$entity = Order::createFromWork($work);
+		$entity = new Order();
+		$entity->setWork();
 		$form  = $this->createForm(new OrderType(), $entity);
 		return array(
 				'entity' => $entity,
