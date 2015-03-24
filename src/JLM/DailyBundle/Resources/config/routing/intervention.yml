@@ -61,7 +61,7 @@ intervention_uncancel:
 intervention_externalbill:
   path:   /{id}/externalbill
   defaults:  { _controller: "JLMDailyBundle:Intervention:externalbill" }
-  methods: [GET]
+  methods: [GET,POST]
     
 intervention_today:
   path:   /today
