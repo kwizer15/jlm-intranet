@@ -40,5 +40,5 @@ fixing_closeupdate:
   
 fixing_printreport:
   path: /{id}/printreport
-  defaults:  { _controller: "JLMDailyBundle:Fixing:printreport" }
+  defaults:  { _controller: "JLMDailyBundle:Fixing:printday" }
   methods: [GET]
