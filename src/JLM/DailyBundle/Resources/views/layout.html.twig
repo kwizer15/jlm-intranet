@@ -32,3 +32,9 @@ $(".interventionForm").intervention({
 $(".standby-new, .shift-new, .fixing-new, .shifting-edit, .shifting-new").formModal({closure: function(){location.reload();}});
 </script>
 {% endblock %}
+
+
+{% block javascripts_script %}
+{{ parent() }}
+$('[data-toggle=tooltip]').tooltip({'placement':'right'});
+{% endblock %}

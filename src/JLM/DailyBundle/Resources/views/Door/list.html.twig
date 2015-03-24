@@ -20,7 +20,14 @@
 					{{ door.site.address.street | nl2br }}
 				</a>
 			</td>
-			<td><span class="label label-{% if door.actualContract is null %}warning">HC{% else %}inverse">{{ door.actualContract }}{% endif %}</span><br>
+			<td><span data-toggle="tooltip" title="
+			{%- if door.actualContract is null -%}Facturable
+			{%- elseif door.actualContract == 'C1' -%}Complet / 24/24h 7/7j / Tout compris hors vandalisme
+			{%- elseif door.actualContract == 'C2' -%}Complet / lundi au vendredi 8h30-17h30 / Tout compris hors vandalisme
+			{%- elseif door.actualContract == 'N3' -%}Complet / 24/24h 7/7j / Tout facturable
+			{%- elseif door.actualContract == 'N4' -%}Complet / lundi au vendredi 8h30-17h30 / Tout facturable
+			{%- endif -%}
+			" class="label label-{% if door.actualContract is null %}warning">HC{% else %}inverse">{{ door.actualContract }}{% endif %}</span><br>
 			<strong>{{ door.type }} - {{ door.location }}</strong><br>
 			{{ door.street | nl2br }}
 			</td>
