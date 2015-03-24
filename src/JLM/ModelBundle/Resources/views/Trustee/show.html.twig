@@ -11,7 +11,7 @@
               {% endfor %}
 			{% if entity.email %}<br>e-mail : <a href="mailto:{{ entity.email }}">{{ entity.email }}</a>{% endif %}
 		</address>
-		<a href="{{ path('jlm_contact_contact_edit', { 'id': entity.contact.id }) }}" class="btn btn-warning btn-small edit-contact"><i class="icon-pencil icon-white"></i></a>
+		<a href="{{ path('jlm_contact_contact_edit', { 'id': entity.contact.id }) }}" class="btn btn-warning btn-small edit-contact">{{ 'pencil'|icon(true) }}</a>
 	</div>
 	<div class="span8">
 	
@@ -23,7 +23,7 @@
 			{% if entity.billingFax %}<br>Fax : {% include 'JLMModelBundle:Helpers:phone.html.twig' with {'phone':entity.billingFax} %}{% endif %}
 			{% if entity.billingEmail %}<br>e-mail : <a href="mailto:{{ entity.billingEmail }}">{{ entity.billingEmail }}</a>{% endif %}
 		</address>
-		<a href="{{ path('trustee_edit', { 'id': entity.id }) }}" class="btn btn-warning btn-small"><i class="icon-pencil icon-white"></i></a>
+		<a href="{{ path('trustee_edit', { 'id': entity.id }) }}" class="btn btn-warning btn-small">{{ 'pencil'|icon(true) }}</a>
 	</div>
 </div>
 
@@ -55,8 +55,8 @@
       </td>
       <td><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></td>
       <td>
-        <a class="btn btn-warning btn-small edit-corporationcontact" href="{{ path('jlm_contact_corporationcontact_edit', {'id': contact.id} ) }}"><i class="icon-white icon-pencil"></i></a>
-        <a class="btn btn-danger btn-small delete-corporationcontact" href="{{ path('jlm_contact_corporationcontact_confirmdelete', {'id': contact.id} ) }}"><i class="icon-white icon-remove"></i></a>
+        <a class="btn btn-warning btn-small edit-corporationcontact" href="{{ path('jlm_contact_corporationcontact_edit', {'id': contact.id} ) }}">{{ 'pencil'|icon(true) }}</a>
+        <a class="btn btn-danger btn-small delete-corporationcontact" href="{{ path('jlm_contact_corporationcontact_confirmdelete', {'id': contact.id} ) }}">{{ 'remove'|icon(true) }}</a>
       </td>
     </tr>
     {% endfor %}
@@ -66,7 +66,7 @@
 
 </div>
 <div class="tab-pane" id="addresses">
-	<a href="{{ path('site_new', { 'trustee': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Ajouter une affaire</a>
+	<a href="{{ path('site_new', { 'trustee': entity.id }) }}" class="btn btn-success">{{ 'plus-sign'|icon(true) }} Ajouter une affaire</a>
 {% include 'JLMModelBundle:Site:list.html.twig' with {'sites': entity.sites } %}
 </div>
 </div>
@@ -90,7 +90,7 @@ $("#add-corporationcontact").formModal({
     	     .append($('<td/>').html(data.position))
     		 .append($('<td/>').html($phones))
     	     .append($('<td/>').html(email))
-    	     .append($('<td/>').html('<a class="btn btn-warning btn-small edit-corporationcontact" href="' + data.edit_link + '"><i class="icon-white icon-pencil"></i></a> <a class="btn btn-danger btn-small delete-corporationcontact" href="' + data.delete_link + '"><i class="icon-white icon-remove"></i></a>'));
+    	     .append($('<td/>').html('<a class="btn btn-warning btn-small edit-corporationcontact" href="' + data.edit_link + '">{{ 'pencil'|icon(true) }}</a> <a class="btn btn-danger btn-small delete-corporationcontact" href="' + data.delete_link + '">{{ 'remove'|icon(true) }}</a>'));
     	$line.find('.edit-corporationcontact').formModal();
     	$line.find('.delete-corporationcontact').formModal({
 			closure: function(data, e) {

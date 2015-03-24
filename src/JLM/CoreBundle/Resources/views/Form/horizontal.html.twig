@@ -93,7 +93,7 @@
 {% block email_widget %}
 {% spaceless %}
 	<div class="input-prepend">
-<span class="add-on"><i class="icon-envelope"></i></span>{{ block('form_widget_simple') }}</div>
+<span class="add-on">{{ 'envelope'|icon }}</span>{{ block('form_widget_simple') }}</div>
 {% endspaceless %}
 {% endblock email_widget %}
 
@@ -167,7 +167,7 @@
 
 {% block datepicker_widget %}
 {% spaceless %}
-<div class="input-prepend"><span class="add-on"><i class="icon-calendar"></i></span>{{ block('form_widget_simple') }}</div>
+<div class="input-prepend"><span class="add-on">{{ 'calendar'|icon }}</span>{{ block('form_widget_simple') }}</div>
 {% endspaceless %}
 {% endblock datepicker_widget %}
 

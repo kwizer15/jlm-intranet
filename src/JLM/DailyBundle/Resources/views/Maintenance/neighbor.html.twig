@@ -42,7 +42,7 @@
 				</td>
 				<td>{{ entity.distanceKm }}</td>
 				<td>{{ entity.durationM }}</td>
-				<td><a href="#modalAddTech{{ entity.destination.nextMaintenance.id }}" class ="btn btn-small" role="button" data-toggle="modal"><i class="icon-plus-sign"></i> Ajouter</a></td>
+				<td><a href="#modalAddTech{{ entity.destination.nextMaintenance.id }}" class ="btn btn-small" role="button" data-toggle="modal">{{ 'plus-sign'|icon }} Ajouter</a></td>
 			</tr>
 		{% endfor %}
 		</tbody>

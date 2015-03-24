@@ -22,7 +22,7 @@
 			<td><a href="{{ path('transmitter_ask_show',{ 'id':entity.id }) }}">{{ entity.ask | nl2br }}</a></td>
 			<td>
 				{% if entity.path %}
-					<a href="/{{ entity.webPath }}" class="btn btn-small"><i class="icon-file"></i><small>PDF</small></a>
+					<a href="/{{ entity.webPath }}" class="btn btn-small">{{ 'file'|icon }}<small>PDF</small></a>
 				{% endif %}
 			</td>
 			<td>

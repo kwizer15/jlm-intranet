@@ -4,8 +4,6 @@ namespace JLM\DailyBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Work;
@@ -23,12 +21,11 @@ use JLM\CommerceBundle\Entity\QuoteVariant;
 /**
  * Work controller.
  *
- * @Route("/work")
  */
 class WorkController extends AbstractInterventionController
 {
 	/**
-	 * @Route("/list", name="work_list")
+	 * List the works
 	 */
 	public function listAction()
 	{
@@ -44,7 +41,6 @@ class WorkController extends AbstractInterventionController
 	/**
 	 * Finds and displays a Work entity.
 	 *
-	 * @Route("/{id}/show", name="work_show")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -56,7 +52,6 @@ class WorkController extends AbstractInterventionController
 	/**
 	 * Displays a form to create a new Work entity.
 	 *
-	 * @Route("/new/door/{id}", name="work_new_door")
 	 * @Template("JLMDailyBundle:Work:new.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -76,7 +71,6 @@ class WorkController extends AbstractInterventionController
 	/**
 	 * Displays a form to create a new Work entity.
 	 *
-	 * @Route("/new", name="work_new")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -94,7 +88,6 @@ class WorkController extends AbstractInterventionController
 	/**
 	 * Displays a form to create a new Work entity.
 	 *
-	 * @Route("/new/quote/{id}", name="work_new_quote")
 	 * @Template("JLMDailyBundle:Work:new.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -139,8 +132,6 @@ class WorkController extends AbstractInterventionController
 	/**
 	 * Creates a new Work entity.
 	 *
-	 * @Route("/create", name="work_create")
-	 * @Method("POST")
 	 * @Template("JLMDailyBundle:Work:new.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -173,7 +164,6 @@ class WorkController extends AbstractInterventionController
 	/**
 	 * Displays a form to edit an existing Work entity.
 	 *
-	 * @Route("/{id}/edit", name="work_edit")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -190,8 +180,6 @@ class WorkController extends AbstractInterventionController
 	/**
 	 * Edits an existing Work entity.
 	 *
-	 * @Route("/{id}/update", name="work_update")
-	 * @Method("POST")
 	 * @Template("JLMDailyBundle:Work:edit.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -218,7 +206,6 @@ class WorkController extends AbstractInterventionController
 	/**
 	 * Close an existing Work entity.
 	 *
-	 * @Route("/{id}/close", name="work_close")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -235,8 +222,6 @@ class WorkController extends AbstractInterventionController
 	/**
 	 * Close an existing Work entity.
 	 *
-	 * @Route("/{id}/closeupdate", name="work_closeupdate")
-	 * @Method("POST")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */

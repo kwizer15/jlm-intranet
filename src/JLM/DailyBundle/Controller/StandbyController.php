@@ -4,23 +4,18 @@ namespace JLM\DailyBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\DailyBundle\Entity\Standby;
 use JLM\DailyBundle\Form\Type\StandbyType;
 
 /**
  * Standby controller.
- *
- * @Route("/standby")
  */
 class StandbyController extends Controller
 {
     /**
      * Lists all Standby entities.
      *
-     * @Route("/", name="standby")
      * @Template()
      */
     public function indexAction()
@@ -37,7 +32,6 @@ class StandbyController extends Controller
     /**
      * Displays a form to create a new Standby entity.
      *
-     * @Route("/new", name="standby_new")
      * @Template()
      */
     public function newAction()
@@ -58,8 +52,6 @@ class StandbyController extends Controller
     /**
      * Creates a new Standby entity.
      *
-     * @Route("/create", name="standby_create")
-     * @Method("POST")
      * @Template()
      */
     public function createAction(Request $request)
@@ -67,11 +59,10 @@ class StandbyController extends Controller
     	
         $entity  = new Standby();
         $form = $this->createForm(new StandbyType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid())
         {
-        	$em = $this->getDoctrine()->getManager();
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -88,12 +79,11 @@ class StandbyController extends Controller
     /**
      * Displays a form to edit an existing Standby entity.
      *
-     * @Route("/{id}/edit", name="standby_edit")
      * @Template()
      */
     public function editAction(Standby $entity)
     {
-        $form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(),new StandbyType(), $entity);
+        $form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(), new StandbyType(), $entity);
         return array(
             'entity'      => $entity,
             'form'        => $form->createView(),
@@ -103,8 +93,6 @@ class StandbyController extends Controller
     /**
      * Edits an existing Standby entity.
      *
-     * @Route("/{id}/update", name="standby_update")
-     * @Method("POST")
      * @Template()
      */
     public function updateAction(Request $request, Standby $entity)
@@ -112,7 +100,7 @@ class StandbyController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(),new StandbyType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em->persist($entity);
@@ -130,14 +118,12 @@ class StandbyController extends Controller
     /**
      * Deletes a Standby entity.
      *
-     * @Route("/{id}/delete", name="standby_delete")
-     * @Method("POST")
      */
     public function deleteAction(Request $request, Standby $entity)
     {
     	$id = $entity->getId();
         $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();

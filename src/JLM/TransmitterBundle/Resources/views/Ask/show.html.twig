@@ -20,16 +20,16 @@
 	</div>
 </div>
 <div class="form-actions">
-	{% if entity.webPath %}<a href="/{{ entity.webPath }}" class="btn btn-info"><i class="icon-file icon-white"></i> Fichier joint</a>
-	{% else %}<a href="#" class="btn btn-info disabled"><i class="icon-file icon-white"></i> Pas de fichier joint</a>
+	{% if entity.webPath %}<a href="/{{ entity.webPath }}" class="btn btn-info">{{ 'file'|icon(true) }} Fichier joint</a>
+	{% else %}<a href="#" class="btn btn-info disabled">{{ 'file'|icon(true) }} Pas de fichier joint</a>
 	{% endif %}
-	<a href="{{ path('transmitter_attribution_new',{'id':entity.id}) }}" class="btn btn-success"><i class="icon-white icon-plus-sign"></i> Nouvelle attribution</a>
+	<a href="{{ path('transmitter_attribution_new',{'id':entity.id}) }}" class="btn btn-success">{{ 'plus-sign'|icon(true) }} Nouvelle attribution</a>
 	{% if not entity.attributions|length and entity.dontTreat is null %}
-	<a href="#modalDontTreat" data-toggle="modal" class="btn btn-danger"><i class="icon-white icon-remove"></i> Ne pas traiter</a>
+	<a href="#modalDontTreat" data-toggle="modal" class="btn btn-danger">{{ 'remove'|icon(true) }} Ne pas traiter</a>
 	{% elseif entity.dontTreat is not null %}
-	<a href="{{ path('transmitter_ask_canceldonttreat',{'id':entity.id}) }}" class="btn btn-danger active"><i class="icon-white icon-remove"></i> Ne pas traiter</a>
+	<a href="{{ path('transmitter_ask_canceldonttreat',{'id':entity.id}) }}" class="btn btn-danger active">{{ 'remove'|icon(true) }} Ne pas traiter</a>
 	{% else %}
-	<a href="#" class="btn btn-danger disabled"><i class="icon-white icon-remove"></i> Ne pas traiter</a>
+	<a href="#" class="btn btn-danger disabled">{{ 'remove'|icon(true) }} Ne pas traiter</a>
 	{% endif %}
 </div>
 {% if entity.attributions|length %}

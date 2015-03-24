@@ -36,7 +36,7 @@
 				
 			</td>
 			<td>{{ contract.fee|number_format(2,',',' ') }} €</td>
-			<td><a href="{{ path('jlm_contract_contract_edit',{'id':contract.id, 'formName':'edit'}) }}" class="btn btn-warning contract-edit"><i class="icon-pencil icon-white"></i></a>
+			<td><a href="{{ path('jlm_contract_contract_edit',{'id':contract.id, 'formName':'edit'}) }}" class="btn btn-warning contract-edit">{{ 'pencil'|icon(true) }}</a>
 			{# <td><a href="#modalContractEdit" class="btn btn-warning" role="button" data-toggle="modal">Editer</a> #}
 			{#}<td><a href="#modalEdit{{ contract.id }}" class="btn btn-warning" role="button" data-toggle="modal">Editer</a>{#}
 			

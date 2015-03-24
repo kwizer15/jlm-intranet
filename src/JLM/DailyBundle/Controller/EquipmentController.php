@@ -4,8 +4,6 @@ namespace JLM\DailyBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\ShiftTechnician;
@@ -18,15 +16,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Fixing controller.
- *
- * @Route("/equipment")
  */
 class EquipmentController extends Controller
 {
 	/**
 	 * Displays a form to create a new InterventionPlanned entity.
 	 *
-	 * @Route("/new", name="equipment_new")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -48,8 +43,6 @@ class EquipmentController extends Controller
 	/**
 	 * Creates a new ShiftTechnician entity.
 	 *
-	 * @Route("/create", name="equipment_create")
-	 * @Method("POST")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -81,7 +74,6 @@ class EquipmentController extends Controller
 	
 	/**
 	 * Show
-	 * @Route("/show/{id}", name="equipment_show")
 	 * @Secure(roles="ROLE_USER")
 	 * @Template()
 	 */
@@ -96,7 +88,6 @@ class EquipmentController extends Controller
 	/**
 	 * Edit a form to edit an existing Equipment entity.
 	 *
-	 * @Route("/{id}/edit", name="equipment_edit")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -113,8 +104,6 @@ class EquipmentController extends Controller
 	/**
 	 * Edits an existing Equipment entity.
 	 *
-	 * @Route("/{id}/update", name="equipment_update")
-	 * @Method("POST")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */

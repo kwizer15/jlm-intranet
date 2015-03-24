@@ -1,0 +1,24 @@
+equipment_new:
+  path: /new
+  defaults:  { _controller: "JLMDailyBundle:Equipment:new" }
+  methods: [GET]
+  
+equipment_create:
+  path: /create
+  defaults:  { _controller: "JLMDailyBundle:Equipment:create" }
+  methods: [POST]
+  
+equipment_show:
+  path: /{id}/show
+  defaults:  { _controller: "JLMDailyBundle:Equipment:show" }
+  methods: [GET]
+  
+equipment_edit:
+  path: /{id}/edit
+  defaults:  { _controller: "JLMDailyBundle:Equipment:edit" }
+  methods: [GET]
+  
+equipment_update:
+  path: /{id}/update
+  defaults:  { _controller: "JLMDailyBundle:Equipment:update" }
+  methods: [PUT,POST]

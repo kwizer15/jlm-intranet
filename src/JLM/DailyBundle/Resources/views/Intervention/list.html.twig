@@ -80,7 +80,7 @@
 					 </div>
 				{% endif %}
 			{% else %}
-				<a href="{{ path('shifting_new',{'id':entity.id}) }}" role="button" data-toggle="modal" class="btn btn-small shifting-new"><i class="icon-plus-sign"></i> Ajouter</a>
+				<a href="{{ path('shifting_new',{'id':entity.id}) }}" role="button" data-toggle="modal" class="btn btn-small shifting-new">{{ 'plus-sign'|icon }} Ajouter</a>
 			{% endif %}
 			</td>
 		</tr>
@@ -108,7 +108,7 @@
 						<a class="shifting-edit" href="{{ path('shifting_edit',{'id':shift.id}) }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a><br>
 					{% endfor %}
 				{% else %}
-					<a href="{{ path('shifting_new',{'id':entity.id}) }}" role="button" data-toggle="modal" class="btn shifting-new"><i class="icon-plus-sign"></i> Ajouter</a>
+					<a href="{{ path('shifting_new',{'id':entity.id}) }}" role="button" data-toggle="modal" class="btn shifting-new">{{ 'plus-sign'|icon }} Ajouter</a>
 				{% endif %}
 			</td>
 		</tr>

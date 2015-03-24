@@ -7,18 +7,18 @@
     	<li><h4>Journal de bord</h4></li>
     	<li>{{ form(search.form, {'action': path('daily_search')}) }}</li>
 	    <li class="nav-header">Techniciens</li>
-	    <li><a href="{{ path('shifting_list', {'id':6}) }}"><i class="icon-user"></i> Cyrille</a></li>
-	    <li><a href="{{ path('shifting_list', {'id':5}) }}"><i class="icon-user"></i> Christophe</a></li>
-	    <li><a href="{{ path('shifting_list', {'id':4}) }}"><i class="icon-user"></i> Oscar</a></li>
+	    <li><a href="{{ path('shifting_list', {'id':6}) }}">{{ 'user'|icon }} Cyrille</a></li>
+	    <li><a href="{{ path('shifting_list', {'id':5}) }}">{{ 'user'|icon }} Christophe</a></li>
+	    <li><a href="{{ path('shifting_list', {'id':4}) }}">{{ 'user'|icon }} Oscar</a></li>
 	    <li class="nav-header">Ajouter</li>
-	    <li><a class="shift-new" href="{{ path('equipment_new') }}"><i class="icon-plus-sign"></i> Récupération matériel</a></li>
-	    <li><a class="standby-new" href="{{ path('standby_new') }}"><i class="icon-plus-sign"></i> Astreinte</a></li>
-		<li><a href="{{ path('standby') }}"><i class="icon-list"></i> Liste des astreintes</a>
+	    <li><a class="shift-new" href="{{ path('equipment_new') }}">{{ 'plus-sign'|icon }} Récupération matériel</a></li>
+	    <li><a class="standby-new" href="{{ path('standby_new') }}">{{ 'plus-sign'|icon }} Astreinte</a></li>
+		<li><a href="{{ path('standby') }}">{{ 'list'|icon }} Liste des astreintes</a>
 	    <li class="nav-header">Interventions</li>
 		{% include 'JLMDailyBundle:Default:datesearch.html.twig' with {'form':date_search.form} %}
 		{% include 'JLMDailyBundle:Default:sidebar.html.twig' %}
 		<li class="nav-header">Imprimer</li>
-		<li><a href="{{ path('intervention_printtomorrow') }}"><i class="icon-print"></i> Demain</a></li>
+		<li><a href="{{ path('intervention_printtomorrow') }}">{{ 'print'|icon }} Demain</a></li>
 	{% endblock sidebar %}
 
 {% block javascripts %}

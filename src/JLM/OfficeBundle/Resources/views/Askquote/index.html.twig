@@ -34,7 +34,7 @@
 				{% else %}demande{% endif %}</strong><br>
 				{{ entity.ask | nl2br }}</a>
 			</td>
-			<td>{% if entity.path %}<a href="/{{ entity.webPath }}" class="btn btn-small"><i class="icon-file"></i><small>PDF</small></a>{% endif %}</td>
+			<td>{% if entity.path %}<a href="/{{ entity.webPath }}" class="btn btn-small">{{ 'file'|icon }}<small>PDF</small></a>{% endif %}</td>
 			<td>
 				{% if entity.quotes | length %}
 				<ul>

@@ -5,8 +5,6 @@ namespace JLM\DailyBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Door;
@@ -17,15 +15,12 @@ use JLM\ModelBundle\Form\Type\DoorStopEditType;
 
 /**
  * Fixing controller.
- *
- * @Route("/door")
  */
 class DoorController extends Controller
 {
 	/**
 	 * Finds and displays a Door entity.
 	 *
-	 * @Route("/{id}/show", name="daily_door_show")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -54,7 +49,6 @@ class DoorController extends Controller
 	/**
 	 * Displays Doors stopped
 	 *
-	 * @Route("/stopped", name="daily_door_stopped")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -76,7 +70,6 @@ class DoorController extends Controller
 	/**
 	 * Displays Doors stopped
 	 *
-	 * @Route("/stop/update/{id}", name="daily_door_stopupdate")
 	 * @Template("JLMDailyBundle:Door:stopped.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -97,7 +90,6 @@ class DoorController extends Controller
 	/**
 	 * Displays Doors stopped
 	 *
-	 * @Route("/printstopped", name="daily_door_printstopped")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -117,7 +109,6 @@ class DoorController extends Controller
 	/**
 	 * Stop door
 	 *
-	 * @Route("/{id}/stop", name="daily_door_stop")
 	 * @Template("JLMDailyBundle:Door:show.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -140,7 +131,6 @@ class DoorController extends Controller
 	/**
 	 * Unstop door
 	 *
-	 * @Route("/{id}/unstop", name="daily_door_unstop")
 	 * @Template("JLMDailyBundle:Door:show.html.twig")
 	 * @Secure(roles="ROLE_USER")
 	 */

@@ -20,7 +20,7 @@
             <td><a href="{{ path('transmitter_attribution_show', { 'id': entity.id }) }}">{{ entity.ask.site.address |nl2br }}</a></td>
             <td>{{ entity.transmitters|length }}</td>
             <td>{{ entity.contact }}</td>
-            <td>{% if entity.individual %}<i class="icon-ok"></i>{% endif %}</td>
+            <td>{% if entity.individual %}{{ 'ok'|icon }}{% endif %}</td>
             <td>
             	{% if entity.bill %}
             	{% include 'JLMCommerceBundle:Bill:statelabel.html.twig' with {'state': entity.bill.state} %}

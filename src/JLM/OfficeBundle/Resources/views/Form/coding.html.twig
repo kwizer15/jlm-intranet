@@ -30,7 +30,7 @@
     <th>Port</th>
     <th>T.V.A.</th>
     <th>PV HT</th>
-    <th class="span1"><a href="#" class="btn btn-success newline"><i class="icon-plus-sign icon-white"></i></a></th>
+    <th class="span1"><a href="#" class="btn btn-success newline">{{ 'plus-sign'|icon(true) }}</a></th>
     </tr>
     </thead>
     {{ form_widget(form.lines) }}
@@ -55,6 +55,6 @@
     <td>{{ form_widget(form.shipping) }}</td>
     <td>{{ form_widget(form.vat) }}</td>
     <td><div class="input-append"><span class="input-mini uneditable-input" id="{{ id }}_total">0,00</span><span class="add-on">€</span></div></td>
-    <td><a href="#" class="btn btn-danger remove-line"><i class="icon-minus-sign icon-white"></i></a></td>
+    <td><a href="#" class="btn btn-danger remove-line">{{ 'minus-sign'|icon(true) }}</a></td>
 </tr>
 {% endblock coding_line_row %}

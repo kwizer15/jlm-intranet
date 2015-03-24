@@ -15,7 +15,7 @@
     {% for entity in products %}
         <tr>
         	<td>
-            	<a href="{{ path('jlm_product_product_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a>
+            	<a href="{{ path('jlm_product_product_show', { 'id': entity.id }) }}" class="btn">{{ 'eye-open'|icon }}</a>
             </td>
             <td>{{ entity.reference }}</td>
             <td>{{ entity.designation }}</td>

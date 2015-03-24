@@ -3,11 +3,11 @@
 {% block sidebar %}
 	<li><h4>Factures</h4></li>
 	<li>{{ form(search.form, {'action': path('bill_search')}) }}</li>
-    <li><a href="{{ path('bill_new') }}"><i class="icon-plus-sign"></i> Nouvelle facture</a></li>
+    <li><a href="{{ path('bill_new') }}">{{ 'plus-sign'|icon }} Nouvelle facture</a></li>
     <li class="divider"></li>
     <li class="nav-header">Etats</li>
     {% include 'JLMCommerceBundle:Bill:sidebar.html.twig' %}
     <li class="divider"></li>
-    <li><a href="{{ path('bill_toboost') }}"><i class="icon-list"></i> Liste des relances</a></li>
-    <li><a href="{{ path('bill_printlist') }}"><i class="icon-print"></i> Imprimer les factures à faire</a></li>
+    <li><a href="{{ path('bill_toboost') }}">{{ 'list'|icon }} Liste des relances</a></li>
+    <li><a href="{{ path('bill_printlist') }}">{{ 'print'|icon }} Imprimer les factures à faire</a></li>
 {% endblock sidebar %}

@@ -5,8 +5,8 @@
 <form action="{{ path('trustee_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
     {{ form_widget(form) }}
 	<div class="form-actions">
-	   <a href="{{ path('trustee') }}" class="btn"><i class="icon-arrow-left"></i> Retour à la liste</a>
-	   <button type="submit" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Enregistrer les modifications</button>
+	   <a href="{{ path('trustee') }}" class="btn">{{ 'arrow-left'|icon }} Retour à la liste</a>
+	   <button type="submit" class="btn btn-primary">{{ 'pencil'|icon(true) }} Enregistrer les modifications</button>
 	</div>
 </form>
 {% endblock %}

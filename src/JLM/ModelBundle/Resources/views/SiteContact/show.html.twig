@@ -21,7 +21,7 @@
 </div>
 
 <div class="form-actions">
-	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche affaire</a>
-	<a href="{{ path('sitecontact_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn">{{ 'arrow-left'|icon }} Retour à la fiche affaire</a>
+	<a href="{{ path('sitecontact_edit', { 'id': entity.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }} Editer</a>
 </div>
 {% endblock %}

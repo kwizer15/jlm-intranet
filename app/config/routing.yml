@@ -55,8 +55,7 @@ jlm_default:
     prefix:   /
 
 jlm_daily:
-    resource: "@JLMDailyBundle/Controller/"
-    type:     annotation
+    resource: "@JLMDailyBundle/Resources/config/routing.yml"
     prefix:   /daily
 
 jlm_office:

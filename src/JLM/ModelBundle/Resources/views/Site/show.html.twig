@@ -24,7 +24,7 @@
 	</div>
 </div>
 {% include 'JLMModelBundle:Door:list.html.twig' with {'doors': entity.doors } %}
-<a href="{{ path('door_new_id', { 'id': entity.id }) }}" class="btn btn-success"><i class="icon-plus-sign icon-white"></i> Nouvelle porte</a>
+<a href="{{ path('door_new_id', { 'id': entity.id }) }}" class="btn btn-success">{{ 'plus-sign'|icon(true) }} Nouvelle porte</a>
 {% if entity.contacts|length > 0 %}
 <h2>Interlocuteurs</h2>
 <table class="table table-stripped">
@@ -56,10 +56,10 @@
 {% else %}
 <h2><small>Aucun interlocuteur</small></h2>
 {% endif %}
-	<a href="{{ path('sitecontact_new_id', { 'id': entity.id }) }}" class="btn btn-info"><i class="icon-user icon-white"></i> Nouvel interlocuteur</a>
+	<a href="{{ path('sitecontact_new_id', { 'id': entity.id }) }}" class="btn btn-info">{{ 'user'|icon(true) }} Nouvel interlocuteur</a>
 
 <div class="form-actions">
-	<a href="{{ path('trustee_show', { 'id': entity.trustee.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche syndic</a>
-	<a href="{{ path('site_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>
+	<a href="{{ path('trustee_show', { 'id': entity.trustee.id }) }}" class="btn">{{ 'arrow-left'|icon }} Retour à la fiche syndic</a>
+	<a href="{{ path('site_edit', { 'id': entity.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }} Editer</a>
 </div>
 {% endblock %}

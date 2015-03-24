@@ -1,0 +1,29 @@
+daily_door_show:
+  path: /{id}/show
+  defaults:  { _controller: "JLMDailyBundle:Door:show" }
+  methods: [GET]
+  
+daily_door_stopped:
+  path: /stopped
+  defaults:  { _controller: "JLMDailyBundle:Door:stopped" }
+  methods: [GET]
+  
+daily_door_stopupdate:
+  path: /stop/update/{id}
+  defaults:  { _controller: "JLMDailyBundle:Door:stopupdate" }
+  methods: [GET,POST,PUT]
+  
+daily_door_printstopped:
+  path: /printstopped
+  defaults:  { _controller: "JLMDailyBundle:Door:printstopped" }
+  methods: [GET,POST,PUT]
+  
+daily_door_stop:
+  path: /{id}/stop
+  defaults:  { _controller: "JLMDailyBundle:Door:stop" }
+  methods: [GET]
+  
+daily_door_unstop:
+  path: /{id}/unstop
+  defaults:  { _controller: "JLMDailyBundle:Door:unstop" }
+  methods: [GET]

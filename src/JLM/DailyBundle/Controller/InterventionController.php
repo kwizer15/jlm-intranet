@@ -4,8 +4,6 @@ namespace JLM\DailyBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Intervention;
@@ -25,15 +23,12 @@ use JLM\OfficeBundle\Entity\AskQuote;
 
 /**
  * Fixing controller.
- *
- * @Route("/intervention")
  */
 class InterventionController extends Controller
 {
 	/**
 	 * Finds and displays a Intervention entity.
 	 *
-	 * @Route("/", name="intervention")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -50,7 +45,6 @@ class InterventionController extends Controller
 	/**
 	 * Bill intervention
 	 *
-	 * @Route("/{id}/tobill", name="intervention_tobill")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function tobillAction(Intervention $entity)
@@ -65,7 +59,6 @@ class InterventionController extends Controller
 	/**
 	 * Don't Bill intervention
 	 *
-	 * @Route("/{id}/dontbill", name="intervention_dontbill")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function dontbillAction(Intervention $entity)
@@ -80,7 +73,6 @@ class InterventionController extends Controller
 	/**
 	 * Cancel Bill action
 	 *
-	 * @Route("/{id}/cancelbill", name="intervention_cancelbill")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function cancelbillAction(Intervention $entity)
@@ -111,7 +103,6 @@ class InterventionController extends Controller
 	
 	/**
 	 * Crée une demande de devis
-	 * @Route("/{id}/toquote", name="intervention_toquote")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function toquoteAction(Intervention $entity)
@@ -128,7 +119,6 @@ class InterventionController extends Controller
 	
 	/**
 	 * Supprime une demande de devis
-	 * @Route("/{id}/cancelquote", name="intervention_cancelquote")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function cancelquoteAction(Intervention $entity)
@@ -147,7 +137,6 @@ class InterventionController extends Controller
 	
 	/**
 	 * Active contacter client
-	 * @Route("/{id}/tocontact", name="intervention_tocontact")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function tocontactAction(Intervention $entity)
@@ -161,7 +150,6 @@ class InterventionController extends Controller
 	
 	/**
 	 * Supprime une demande de devis
-	 * @Route("/{id}/cancelcontact", name="intervention_cancelcontact")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function cancelcontactAction(Intervention $entity)
@@ -175,7 +163,6 @@ class InterventionController extends Controller
 	
 	/**
 	 * Créer un ligne travaux
-	 * @Route("/{id}/towork", name="intervention_towork")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function toworkAction(Intervention $entity)
@@ -187,7 +174,6 @@ class InterventionController extends Controller
 	
 	/**
 	 * Supprime une ligne travaux
-	 * @Route("/{id}/cancelwork", name="intervention_cancelwork")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function cancelworkAction(Intervention $entity)
@@ -205,7 +191,6 @@ class InterventionController extends Controller
 	
 	/**
 	 * Annule l'intervention
-	 * @Route("/{id}/cancel", name="intervention_cancel")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function cancelAction(Request $request, Intervention $entity)
@@ -224,7 +209,6 @@ class InterventionController extends Controller
 	
 	/**
 	 * Désannule l'intervention
-	 * @Route("/{id}/uncancel", name="intervention_uncancel")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function uncancelAction(Request $request, Intervention $entity)
@@ -238,8 +222,6 @@ class InterventionController extends Controller
 	
 	/**
 	 * Numéro de facture
-	 * @Route("/{id}/externalbill", name="intervention_externalbill")
-	 * @Method("POST")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function externalbillAction(Request $request, Intervention $entity)
@@ -253,11 +235,7 @@ class InterventionController extends Controller
 			$em->persist($entity);
 			$em->flush();
 		}
-		else 
-		{
-			print_r($form->getErrorsAsString());
-			exit;
-		}
+
 		return $this->redirect($request->headers->get('referer'));
 		//return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
@@ -266,7 +244,6 @@ class InterventionController extends Controller
 	/**
 	 * Liste des interventions par date(s)
 	 *
-	 * @Route("/today", name="intervention_today")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -316,9 +293,6 @@ class InterventionController extends Controller
 	/**
 	 * Liste des interventions par date(s)
 	 *
-	 * @Route("/list", name="intervention_list")
-	 * @Route("/list/{date1}", name="intervention_listdate1")
-	 * @Route("/list/{date1}/{date2}", name="intervention_listdate2")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -354,8 +328,6 @@ class InterventionController extends Controller
 	/**
 	 * Liste des interventions par date(s)
 	 *
-	 * @Route("/listpost", name="intervention_list_post")
-	 * @Method("post")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function reportdateAction(Request $request)
@@ -369,7 +341,6 @@ class InterventionController extends Controller
 	/**
 	 * Supprimer une intervention
 	 *
-	 * @Route("/delete/{id}", name="intervention_delete")
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
@@ -388,7 +359,6 @@ class InterventionController extends Controller
 	/**
 	 * Finds and displays a Intervention entity.
 	 *
-	 * @Route("/{id}/{act}", name="intervention_redirect", requirements={"id"="[0-9]+"})
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function redirectAction(Intervention $entity, $act)
@@ -401,7 +371,6 @@ class InterventionController extends Controller
 	/**
 	 * Imprime les intervs de la prochaine journée
 	 *
-	 * @Route("/printday/{date1}", name="intervention_printday")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function printdayAction($date1)
@@ -430,7 +399,6 @@ class InterventionController extends Controller
 	/**
 	 * Imprime les intervs de la prochaine journée
 	 *
-	 * @Route("/printtomorrow", name="intervention_printtomorrow")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function printtomorrowAction()
@@ -460,7 +428,6 @@ class InterventionController extends Controller
 	/**
 	 * Imprime les intervs d'une intallation
 	 *
-	 * @Route("/printdoor/{id}", name="intervention_printdoor")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function printdoorAction($id)
@@ -490,7 +457,6 @@ class InterventionController extends Controller
 	/**
 	 * Export CSV intervs porte
 	 *
-	 * @Route("/doorcsv/{id}", name="intervention_doorcsv")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function doorcsvAction($id)
@@ -517,7 +483,6 @@ class InterventionController extends Controller
 	/**
 	 * Export CSV intervs porte
 	 *
-	 * @Route("/doorxls/{id}", name="intervention_doorxls")
 	 * @Secure(roles="ROLE_USER")
 	 */
 	public function doorxlsAction($id)

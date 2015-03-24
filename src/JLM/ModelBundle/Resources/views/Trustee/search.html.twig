@@ -12,7 +12,7 @@
     <tbody>
     {% for entity in trustees %}
         <tr>
-        	<td><a href="{{ path('trustee_show', { 'id': entity.id }) }}" class="btn"><i class="icon-eye-open"></i></a></td>
+        	<td><a href="{{ path('trustee_show', { 'id': entity.id }) }}" class="btn">{{ 'eye-open'|icon }}</a></td>
             <td>{{ entity.name }}</td>
             <td>{{ entity.address|nl2br }}</td>
             <td><ul>

@@ -1,0 +1,34 @@
+jlm_daily_intervention:
+  resource: "@JLMDailyBundle/Resources/config/routing/intervention.yml"
+  prefix:   /intervention
+    
+jlm_daily_default:
+  resource: "@JLMDailyBundle/Resources/config/routing/DefaultController.yml"
+    
+jlm_daily_door:
+  resource: "@JLMDailyBundle/Resources/config/routing/DoorController.yml"
+  prefix:   /door
+  
+jlm_daily_equipment:
+  resource: "@JLMDailyBundle/Resources/config/routing/EquipmentController.yml"
+  prefix:   /equipment
+  
+jlm_daily_fixing:
+  resource: "@JLMDailyBundle/Resources/config/routing/FixingController.yml"
+  prefix:   /fixing
+  
+jlm_daily_maintenance:
+  resource: "@JLMDailyBundle/Resources/config/routing/MaintenanceController.yml"
+  prefix:   /maintenance
+  
+jlm_daily_shifting:
+  resource: "@JLMDailyBundle/Resources/config/routing/ShiftingController.yml"
+  prefix:   /shifting
+  
+jlm_daily_standby:
+  resource: "@JLMDailyBundle/Resources/config/routing/StandbyController.yml"
+  prefix:   /standby
+  
+jlm_daily_work:
+  resource: "@JLMDailyBundle/Resources/config/routing/WorkController.yml"
+  prefix:   /work

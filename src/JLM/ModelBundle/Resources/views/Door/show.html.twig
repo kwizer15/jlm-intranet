@@ -40,13 +40,13 @@
 </div>
 
 <div class="form-actions">
-	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn"><i class="icon-arrow-left"></i> Retour à la fiche affaire</a>
-	<a href="{{ path('door_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a>	
+	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn">{{ 'arrow-left'|icon }} Retour à la fiche affaire</a>
+	<a href="{{ path('door_edit', { 'id': entity.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }} Editer</a>	
 </div>
 <h2><small>Contrats</small></h2>
 {% include 'JLMContractBundle:Contract:list.html.twig' with { 'contracts':contracts } %}
 <div class="form-actions">
-	<a id="contract-new" href="{{ path('jlm_contract_contract_new', {'door':entity.id}) }}" class="btn btn-success" role="button"><i class="icon-plus-sign icon-white"></i> Ajouter un contrat</a>
+	<a id="contract-new" href="{{ path('jlm_contract_contract_new', {'door':entity.id}) }}" class="btn btn-success" role="button">{{ 'plus-sign'|icon(true) }} Ajouter un contrat</a>
 </div>
 {% endblock %}
 

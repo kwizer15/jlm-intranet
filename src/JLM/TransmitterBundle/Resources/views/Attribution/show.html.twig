@@ -12,7 +12,7 @@
     <dt>Affaire</dt>
     <dd>{{ entity.ask.site.address.street | nl2br }}</dd>
     <dd><strong>{{ entity.ask.site.address.city.name | upper }}</strong> <small>{{ entity.ask.site.address.city.zip }}</small></dd>
-    <dd><a href="{{ path('transmitter_site_printlist',{'id':entity.ask.site.id}) }}" class="btn btn-info btn-mini"><i class="icon-white icon-print"></i> Imprimer la liste complète</a>
+    <dd><a href="{{ path('transmitter_site_printlist',{'id':entity.ask.site.id}) }}" class="btn btn-info btn-mini">{{ 'print'|icon(true) }} Imprimer la liste complète</a>
     <dt>Demande</dt>
     <dd>{{ entity.ask.ask | nl2br }}</dd>
 </dl>
@@ -24,20 +24,20 @@
 		{% include 'JLMTransmitterBundle:UserGroup:list_li.html.twig' with {'userGroup':userGroup} %}
 	{% endfor %}
 	</ul>
-	<a href="{{ path('transmitter_usergroup_new', {'id': entity.ask.site.id}) }}"  role="button" class="btn btn-success btn-small usergroup-new"><i class="icon-plus-sign icon-white"></i> Ajouter un groupe utilisateur</a>
+	<a href="{{ path('transmitter_usergroup_new', {'id': entity.ask.site.id}) }}"  role="button" class="btn btn-success btn-small usergroup-new">{{ 'plus-sign'|icon(true) }} Ajouter un groupe utilisateur</a>
 </div>
 </div>
 <div class="form-actions">
-	<a href="{{ path('transmitter_attribution_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="icon-white icon-pencil"></i> Editer</a>
-	<a href="{{ path('transmitter_new', { 'id': entity.id }) }}" role="button" class="btn btn-success transmitter-new"><i class="icon-plus-sign icon-white"></i> Ajouter un émetteur</a>
-	<a href="{{ path('transmitter_series_new', { 'id': entity.id }) }}" role="button" class="btn btn-success series-new"><i class="icon-plus-sign icon-white"></i> Ajouter une suite d'émetteurs</a>
-	<a href="{{ path('transmitter_replacement_new', { 'id': entity.id }) }}" role="button" class="btn btn-primary replacement-new"><i class="icon-refresh icon-white"></i> Remplacement d'émetteurs</a>
-	<a href="{{ path('transmitter_attribution_printlist', { 'id': entity.id }) }}" role="button" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer la liste</a>
-	<a href="{{ path('transmitter_attribution_printcourrier', { 'id': entity.id }) }}" role="button" class="btn btn-info"><i class="icon-print icon-white"></i> Imprimer le courrier</a>
+	<a href="{{ path('transmitter_attribution_edit', { 'id': entity.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }} Editer</a>
+	<a href="{{ path('transmitter_new', { 'id': entity.id }) }}" role="button" class="btn btn-success transmitter-new">{{ 'plus-sign'|icon(true) }} Ajouter un émetteur</a>
+	<a href="{{ path('transmitter_series_new', { 'id': entity.id }) }}" role="button" class="btn btn-success series-new">{{ 'plus-sign'|icon(true) }} Ajouter une suite d'émetteurs</a>
+	<a href="{{ path('transmitter_replacement_new', { 'id': entity.id }) }}" role="button" class="btn btn-primary replacement-new">{{ 'refresh'|icon(true) }} Remplacement d'émetteurs</a>
+	<a href="{{ path('transmitter_attribution_printlist', { 'id': entity.id }) }}" role="button" class="btn btn-info">{{ 'print'|icon(true) }} Imprimer la liste</a>
+	<a href="{{ path('transmitter_attribution_printcourrier', { 'id': entity.id }) }}" role="button" class="btn btn-info">{{ 'print'|icon(true) }} Imprimer le courrier</a>
 	{% if entity.bill %}
-	<a href="{{ path('bill_print', {'id': entity.bill.id}) }}" role="button" class="btn btn-primary"><i class="icon-print icon-white"></i> Facture</a>
+	<a href="{{ path('bill_print', {'id': entity.bill.id}) }}" role="button" class="btn btn-primary">{{ 'print'|icon(true) }} Facture</a>
 	{% else %}
-	<a href="{{ path('bill_new', { 'attribution': entity.id }) }}" role="button" class="btn btn-primary"><i class="icon-print icon-white"></i> Facturer</a>
+	<a href="{{ path('bill_new', { 'attribution': entity.id }) }}" role="button" class="btn btn-primary">{{ 'print'|icon(true) }} Facturer</a>
 	{% endif %}
 </div>
 {% if entity.transmitters|length > 0 %}
