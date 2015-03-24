@@ -66,9 +66,15 @@
 						</div>
 						<div class="span4 text-right">
 						<a href="{{ path('daily_door_show',{'id':entity.door.id}) }}" class="btn btn-small">{{ 'eye-open'|icon }} Voir la fiche installation</a>
-							<h1>{% if entity.dynContract is null %}HC
+							<h2>{% if entity.dynContract is null %}Hors contrat
 								{% if entity.door.lastContract %}<br><small>Débute le {{ entity.door.lastContract.begin|date('d/m/Y') }}</small>{% endif %}
-							{% else %}{{ entity.dynContract }}{% endif %}</h1>
+							{% else %}
+							{% if entity.dynContract == 'C1' %}Complet<br>24/24h 7/7j<br><small>Tout compris<br>hors vandalisme</small>
+							{% elseif entity.dynContract == 'C2' %}Complet<br>L/V 8h30-17h30<br><small>Tout compris<br>hors vandalisme</small>
+							{% elseif entity.dynContract == 'N3' %}Normal<br>24/24h 7/7j<br><small>Tout facturable</small>
+							{% elseif entity.dynContract == 'N4' %}Normal<br>L/V 8h30-17h30<br><small>Tout facturable</small>
+							{% endif %}
+							{% endif %}</h2>
 						<a href="{{ path('maintenance_neighbor',{'id':entity.door.id}) }}" class="btn btn-info btn-small">{{ 'zoom-in'|icon(true) }} Entretiens à proximité</a>
 						</div>
 					</div>
