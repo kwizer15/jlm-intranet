@@ -63,10 +63,15 @@
 								</dl>
 							</div>
 							<div class="span4 text-right">
-								<h1>
-									{{ entity.actualContract }}
-									{% if entity.lastContract %}<br><small>Débute le {{ entity.lastContract.begin|date('d/m/Y') }}</small>{% endif %}
-								</h1>
+							<h2>{% if entity.actualContract is null %}Hors contrat
+								{% if entity.lastContract %}<br><small>Débute le {{ entity.lastContract.begin|date('d/m/Y') }}</small>{% endif %}
+							{% else %}
+							{% if entity.actualContract == 'C1' %}Complet<br>24/24h 7/7j<br><small>Tout compris<br>hors vandalisme</small>
+							{% elseif entity.actualContract == 'C2' %}Complet<br>L/V 8h30-17h30<br><small>Tout compris<br>hors vandalisme</small>
+							{% elseif entity.actualContract == 'N3' %}Normal<br>24/24h 7/7j<br><small>Tout facturable</small>
+							{% elseif entity.actualContract == 'N4' %}Normal<br>L/V 8h30-17h30<br><small>Tout facturable</small>
+							{% endif %}
+							{% endif %}</h2>
 								<a href="{{ path('maintenance_neighbor',{'id':entity.id}) }}" class="btn btn-info btn-small">{{ 'zoom-in'|icon(true) }} Entretiens à proximité</a>
 							</div>
 						</div>	
