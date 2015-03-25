@@ -113,21 +113,22 @@ class CodingPDF extends \fpdf\FPDF
 		
 		foreach ($content as $key=>$c)
 		{
-			$this->setFont('Arial','',10);
-			$this->setFillColor($fill[$key][0],$fill[$key][1],$fill[$key][2]);
-			$this->cell(10,6,$c[0],1,0,'R',1);
-			$this->cell(80,6,$c[1],1,0,'L',1);
-			$this->cell(20,6,$c[2],1,0,($key < 4 ? 'L':'R'),1);
-			$this->cell(10,6,$c[3],1,0,($key < 4 ? 'L':'R'),1);
-			$this->cell(20,6,$c[4],1,0,($key < 4 ? 'L':'R'),1);
-			$this->cell(20,6,$c[5],1,0,($key < 4 ? 'L':'R'),1);
-			$this->cell(10,6,$c[6],1,0,($key < 4 ? 'L':'R'),1);
-			$this->cell(15,6,$c[7],1,0,($key < 4 ? 'L':'R'),1);
-			$this->cell(20,6,$c[8],1,0,($key < 4 ? 'L':'R'),1);
-			$this->cell(15,6,$c[9],1,0,($key < 4 ? 'L':'R'),1);
-			$this->cell(20,6,$c[10],1,0,($key < 4 ? 'L':'R'),1);
-			$this->cell(20,6,$c[11],1,0,($key < 4 ? 'L':'R'),1);
-			$this->cell(20,6,$c[12],1,1,($key < 4 ? 'L':'R'),1);
+			$col = ($key < 4 ? 'L':'R');
+			$this->setFont('Arial', '', 10);
+			$this->setFillColor($fill[$key][0], $fill[$key][1], $fill[$key][2]);
+			$this->cell(10, 6, $c[0], 1, 0, 'R', 1);
+			$this->cell(80, 6, $c[1], 1, 0, 'L', 1);
+			$this->cell(20, 6, $c[2], 1, 0, $col, 1);
+			$this->cell(10, 6, $c[3], 1, 0, $col, 1);
+			$this->cell(20, 6, $c[4], 1, 0, $col, 1);
+			$this->cell(20, 6, $c[5], 1, 0, $col, 1);
+			$this->cell(10, 6, $c[6], 1, 0, $col, 1);
+			$this->cell(15, 6, $c[7], 1, 0, $col, 1);
+			$this->cell(20, 6, $c[8], 1, 0, $col, 1);
+			$this->cell(15, 6, $c[9], 1, 0, $col, 1);
+			$this->cell(20, 6, $c[10], 1, 0, $col, 1);
+			$this->cell(20, 6, $c[11], 1, 0, $col, 1);
+			$this->cell(20, 6, $c[12], 1, 1, $col, 1);
 		}
 		
 	}

@@ -92,8 +92,8 @@ class Quote extends CommercialPart
 			$this->ln(6);
 		}
 		$this->ln(6);
-		$this->multiCell(0,5,$this->entity->getIntro(),0,1);
-		$this->ln(3);
+//		$this->multiCell(0,5,$this->entity->getIntro(),0,1);
+//		$this->ln(3);
 	}
 	
 	/**
