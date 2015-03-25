@@ -12,6 +12,7 @@
 namespace JLM\CommerceBundle\Pdf;
 
 use JLM\CommerceBundle\Pdf\CommercialPart;
+use JLM\ModelBundle\Entity\Door;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -57,6 +58,14 @@ class Quote extends CommercialPart
 		$this->setFont('Arial','B',10);
 		$this->cell(22,6,'Date','LRT',0,'C',true);
 		$this->cell(22,6,'Devis n°','LRT',0,'C',true);
+		$door = $this->entity->getQuote()->getDoor();
+		if ($door instanceof Door)
+		{
+			if ($door->getCode())
+			{
+				$this->cell(22,6,'Code JLM','LRT',0,'C',true);
+			}
+		}
 		
 		// Contact
 		$this->setFont('Arial','',10);
@@ -67,8 +76,21 @@ class Quote extends CommercialPart
 		// Création bas
 		$this->setFont('Arial','',10);
 		$this->cell(22,6,$this->entity->getCreation()->format('d/m/Y'),'LRB',0,'C');
-		$this->cell(22,6,$this->entity->getNumber(),'LRB',1,'C');
-			
+		$this->cell(22,6,$this->entity->getNumber(),'LRB',0,'C');
+		$hasCode = false;
+		if ($door instanceof Door)
+		{
+			if ($door->getCode())
+			{
+				$this->cell(22,6,$door->getCode(),'LRB',1,'C');
+				$hasCode = true;
+			}
+		}
+		
+		if (!$hasCode)
+		{
+			$this->ln(6);
+		}
 		$this->ln(6);
 		$this->multiCell(0,5,$this->entity->getIntro(),0,1);
 		$this->ln(3);
