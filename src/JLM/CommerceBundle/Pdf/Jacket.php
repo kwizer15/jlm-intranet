@@ -83,7 +83,7 @@ class Jacket extends FPDFext
 		if ($entity->getDoor() !== null)
 		{
 			$city = strtoupper($entity->getDoor()->getAddress()->getCity()->getName());
-			$street = $entity->getDoor()->getStreet();
+			$street = $entity->getDoor()->getCode().chr(10).$entity->getDoor()->getStreet();
 		}
 		else
 		{
