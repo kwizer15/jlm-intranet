@@ -72,8 +72,15 @@ class Jacket extends FPDFext
 		$pdf->rect(30, 122, 5, 5);
 		$pdf->rect(30, 132, 5, 5);
 		
-		$pdf->setXY(100,230);
+		$pdf->setXY(100,224);
 		$pdf->setFont('Arial','B',14);
+		if ($entity->getDoor() !== null)
+		{
+			if ($entity->getDoor()->getCode())
+			{
+				$pdf->cell(0,7,$entity->getDoor()->getCode(),0);
+			}
+		}
 		$pdf->multicell(0,7,$entity->getDoorCp(),0);
 		$pdf->setXY(0,263);
 		$pdf->setFont('Arial','B',16);
@@ -83,7 +90,7 @@ class Jacket extends FPDFext
 		if ($entity->getDoor() !== null)
 		{
 			$city = strtoupper($entity->getDoor()->getAddress()->getCity()->getName());
-			$street = $entity->getDoor()->getCode().chr(10).$entity->getDoor()->getStreet();
+			$street = $entity->getDoor()->getStreet();
 		}
 		else
 		{
