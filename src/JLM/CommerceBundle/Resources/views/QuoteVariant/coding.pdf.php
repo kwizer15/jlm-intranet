@@ -111,6 +111,10 @@ class CodingPDF extends \fpdf\FPDF
 			);
 		$fill[] = array(184,204,228);
 		
+		$this->setFont('Arial', '', 10);
+		$this->cell(0, 6, 'Texte mail :', 0, 1);
+		$this->multicell(0, 6, utf8_decode($this->entity->getIntro()));
+		$this->ln(10);
 		foreach ($content as $key=>$c)
 		{
 			$col = ($key < 4 ? 'L':'R');
