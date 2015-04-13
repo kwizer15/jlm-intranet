@@ -127,6 +127,10 @@ class Thread implements ThreadInterface
 	
 	public function getState()
 	{
+		if ($this->getWork() === null)
+		{
+			return self::STATE_CLOSED;
+		}
 		if ($this->getWork()->getBill() !== null || $this->getWork()->getExternalBill() !== null)
 		{
 			return self::STATE_CLOSED;
