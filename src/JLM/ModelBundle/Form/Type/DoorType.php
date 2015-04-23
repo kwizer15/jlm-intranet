@@ -14,6 +14,8 @@ class DoorType extends AbstractType
         	->add('location',null,array('label'=>'Localisation'))
         	->add('street',null,array('label'=>'Adresses d\'accès','required'=>false))
 			->add('billingPrelabel',null,array('label'=>'Libélé de facturation', 'required'=>false))
+			->add('model', null, array('label'=>'Modèle de porte'))
+			->add('ceNumber', null, array('label'=>'Identification CE'))
         	->add('type',null,array('label'=>'Type de porte'))
         	->add('width','distance',array('label'=>'Largeur','required'=>false))
         	->add('height','distance',array('label'=>'Hauteur','required'=>false))

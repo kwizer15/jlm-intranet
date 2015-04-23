@@ -13,6 +13,12 @@
 		<h4><span class="text-info">{{ entity.type }} - {{ entity.location }}</span>
 		<br>{{ entity.street|nl2br }}
 		<br>{{ entity.site.address.city}}</h4>
+				<dl>
+		<dt>Modèle</dt>
+		<dd>{{ entity.modelName }}</dd>
+		<dt>Marquage CE</dt>
+		<dd>{{ entity.ceNumber }}</dd>
+		</dl>
 		<hr>
 		{% if entity.transmitters|length > 0 %}
 		<h5>Types d'emetteurs

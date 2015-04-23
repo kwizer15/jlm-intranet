@@ -196,6 +196,22 @@ class Door implements BayInterface, InstallationInterface
     private $code;
     
     /**
+     * Modèle / Marque
+     * @var DoorModel
+     * 
+     * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\DoorModel")
+     */
+    private $model;
+    
+    /**
+     * Numéro de plaque
+     * @var string
+     * 
+     * @ORM\Column(name="ceNumber", type="string", nullable=true)
+     */
+    private $ceNumber;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -206,6 +222,34 @@ class Door implements BayInterface, InstallationInterface
     	$this->interventions = new ArrayCollection;
     }
 
+    public function getCeNumber()
+    {
+    	return $this->ceNumber;
+    }
+    
+    public function setCeNumber($number)
+    {
+    	$this->ceNumber = $number;
+    	
+    	return $this;
+    }
+    
+    public function getModel()
+    {
+    	return $this->model;
+    }
+    
+    public function getModelName()
+    {
+    	return ($this->getModel() !== null) ? $this->getModel()->getName() : null;
+    }
+    
+    public function setModel(DoorModel $model = null)
+    {
+    	$this->model = $model;
+    	
+    	return $this;
+    }
 
     /**
      * Get id
@@ -456,7 +500,12 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getType()
     {
-        return $this->type;
+        return ($this->getModelType() === null) ? $this->type : $this->getModelType();
+    }
+    
+    public function getModelType()
+    {
+    	return ($this->getModel() === null) ? null : $this->getModel()->getType();
     }
 
     /**
