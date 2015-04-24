@@ -1,14 +1,17 @@
-{% extends "::base.html.twig" %}
-
-{% block title %}JLM{% endblock %}
-
-{% block stylesheets %}
-	{% stylesheets
-		'bundles/jlmdefault/css/bootstrap.css'
-		'bundles/jlmdefault/css/bootstrap-responsive.css'
-		'bundles/jlmdefault/js/select2-3.4.5/select2.css'
-		filter='cssrewrite'
-		 %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>
+      {%- block title -%}JLM{%- endblock -%}
+      </title>
+      {% block stylesheets %}
+	    {% stylesheets
+	      '@bootstrap_css'
+		  'bundles/jlmdefault/js/select2-3.4.5/select2.css'
+		  filter='cssrewrite'
+		%}
     <link rel="stylesheet" href="{{ asset_url }}" />
 	{% endstylesheets %}
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css">
@@ -18,12 +21,14 @@
 	{% if form is defined %}{{ form_stylesheet(form) }}{% endif %}
 	{% if edit_form is defined %}{{ form_stylesheet(edit_form) }}{% endif %}
 {% endblock %}
-
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
 {% block body %}
 	<div id="modals">
       {% block modals %}
       {% endblock modals %}
-      </div>
+    </div>
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
 	        <div class="container">
@@ -168,13 +173,12 @@
           {% endblock footer %}
       </footer>
 {% endblock body%}
-
 {% block javascripts %}
     {% javascripts
-    	'../app/Resources/public/js/jquery-2.0.3.js'
+    	'@jquery_js'
     	'../app/Resources/public/js/jquery-ui-1.10.3/jquery-ui.js'
     	'../app/Resources/public/js/hinclude.js'
-    	'../app/Resources/public/js/bootstrap.js'
+    	'@bootstrap_js'
     	'../app/Resources/public/js/jquery-ui-1.10.3/i18n/jquery.ui.datepicker-fr.js'
     	'../app/Resources/public/js/number_format.js'
     	'../app/Resources/public/js/modalform.js'
@@ -186,7 +190,9 @@
     	<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
 {% endblock %}
-
+      	{% if form is defined %}{{ form_javascript(form) }}{% endif %}
+		{% if edit_form is defined %}{{ form_javascript(edit_form) }}{% endif %}
+        <script>
 {% block javascripts_script %}
 $('.autocompletion').autocomplete({
 	source : function(request,response){
@@ -201,8 +207,21 @@ $('.autocompletion').autocomplete({
 });
 
 {% endblock %}
-
 {% block javascriptappend %}
 {# z-index pour appartition dans une modal #}
 $('.ui-autocomplete, .ui-datepicker').css('z-index','15000');
 {% endblock %}
+        </script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
