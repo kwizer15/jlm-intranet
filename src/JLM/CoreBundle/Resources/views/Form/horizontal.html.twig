@@ -2,7 +2,6 @@
 
 {% block form_label %}
 {% spaceless %}
-	{% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' control-label')|trim}) %}
     {% if not compound %}
         {% set label_attr = label_attr|merge({'for': id}) %}
     {% endif %}
@@ -34,12 +33,12 @@
 {% block form_row %}
 {% spaceless %}
     {% set type = type|default('text') %}
-	<div class="control-group{% if form_errors(form) %} error{% endif %}">
+	<div class="form-group{% if form_errors(form) %} error{% endif %}">
 		{{ form_label(form, label|default(null)) }}
-		<div class="controls">
-            {{ form_widget(form) }}
-            {% if form_errors(form) %}<span class="help-inline">{{ form_errors(form) }}</span>{% endif %}
-        </div>
+        {{ form_widget(form) }}
+        {% if form_errors(form) %}
+        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+        <span class="sr-only">{{ form_errors(form) }}</span>
     </div>
 {% endspaceless %}
 {% endblock form_row %}

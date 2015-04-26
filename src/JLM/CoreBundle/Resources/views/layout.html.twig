@@ -29,17 +29,16 @@
       {% block modals %}
       {% endblock modals %}
     </div>
-    <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-	        <div class="container">
+    <div class="navbar navbar-default navbar-fixed-top">
+	   <div class="container-fluid">
 	        {# Responsive #}
-		        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+		        <a class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse">
 		           <span class="icon-bar"></span>
 		           <span class="icon-bar"></span>
 		           <span class="icon-bar"></span>
 	         	</a>
-	         	<a href="{{ path('default') }}" class="brand">JLM</a>
-	         	<div class="nav-collapse collapse">
+	         	<a href="{{ path('default') }}" class="navbar-brand">JLM</a>
+	         	<div id="nav-collapse" class="collapse">
 	      {% block header %}
 	      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 	      	
