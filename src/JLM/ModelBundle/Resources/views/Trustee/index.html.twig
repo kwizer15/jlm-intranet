@@ -25,7 +25,7 @@
             </td>
             <td>{{ entity.contractsSum | number_format(2,',',' ') }} €</td>
             <td>
-                <a href="{{ path('trustee_show', { 'id': entity.id }) }}" class="btn">{{ 'eye-open'|icon }}</a>
+                <a href="{{ path('trustee_show', { 'id': entity.id }) }}" class="btn btn-default">{{ 'eye-open'|icon }}</a>
                 <a href="{{ path('trustee_edit', { 'id': entity.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }}</a>
            </td>
         </tr>

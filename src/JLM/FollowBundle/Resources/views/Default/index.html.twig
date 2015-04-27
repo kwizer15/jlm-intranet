@@ -31,7 +31,7 @@
       <td>{{ thread.starter.business.manager|nl2br }}</td>
       <td>
         {%- if thread.starter.business.stopped -%}
-        <span class="label label-important">Mise à l'arrêt</span><br>
+        <span class="label label-danger">Mise à l'arrêt</span><br>
         {%- endif -%}
         {{ thread.starter.business|nl2br }}
       </td>

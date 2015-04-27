@@ -1,17 +1,17 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
 {% block content %}
 <h1>Fiche affaire</h1>
-<div class="row-fluid">
-	<div class="span4">
+<div class="row">
+	<div class="col-md-4">
 		<h4>{% include 'JLMModelBundle:Helpers:address.html.twig' with {'address':entity.address} %}</h4>
 	</div>
-	<div class="span4">
+	<div class="col-md-4">
 		{% if entity.accession %}Accession
 		{% else %}Social
 		{% endif %}
 		<br>TVA : {{ entity.vat }}
 	</div>
-	<div class="span4 well">
+	<div class="col-md-4 well">
 		<address>
 			<strong>Adresse de facturation</strong>
 			 <br>{{ entity.trustee }}
@@ -59,7 +59,7 @@
 	<a href="{{ path('sitecontact_new_id', { 'id': entity.id }) }}" class="btn btn-info">{{ 'user'|icon(true) }} Nouvel interlocuteur</a>
 
 <div class="form-actions">
-	<a href="{{ path('trustee_show', { 'id': entity.trustee.id }) }}" class="btn">{{ 'arrow-left'|icon }} Retour à la fiche syndic</a>
+	<a href="{{ path('trustee_show', { 'id': entity.trustee.id }) }}" class="btn btn-default">{{ 'arrow-left'|icon }} Retour à la fiche syndic</a>
 	<a href="{{ path('site_edit', { 'id': entity.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }} Editer</a>
 </div>
 {% endblock %}

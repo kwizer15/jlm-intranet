@@ -2,8 +2,8 @@
 {% block container %}
 		<div class="container">
 		{% block content %}
-			<div class="span3"></div>
-			<div class="span6">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
 				<div class="page-header text-center">
 				{% if door is defined %}<h3>Cette installation est maintenue par</h3>{% endif %}
 					<h1><img src="{{ asset('bundles/jlmuser/img/jlm-logo.png') }}"></h1>
@@ -14,7 +14,7 @@
             <p>E-mail : <a href="mailto:secretariat@jlm-entreprise.fr?subject=Installation {{ door.code }}">secretariat@jlm-entreprise.fr</a>
         </div>{% endif %}
         </div>
-	        <div class="span3"></div>
+	        <div class="col-md-3"></div>
         </div>
         {% endblock %}
 {% endblock %}

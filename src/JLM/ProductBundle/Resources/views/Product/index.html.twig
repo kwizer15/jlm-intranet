@@ -25,7 +25,7 @@
             <td>{{ entity.purchasePrice|number_format(2, ',', ' ') }} €</td>
             <td>{{ entity.unitPrice|number_format(2, ',', ' ') }} €</td>
             <td>
-            	<a href="{{ path('jlm_product_product_show', { 'id': entity.id }) }}" class="btn">{{ 'eye-open'|icon }}</a>
+            	<a href="{{ path('jlm_product_product_show', { 'id': entity.id }) }}" class="btn btn-default">{{ 'eye-open'|icon }}</a>
                 <a href="{{ path('jlm_product_product_edit', { 'id': entity.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }}</a>
             </td>
         </tr>

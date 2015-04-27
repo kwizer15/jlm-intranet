@@ -19,7 +19,7 @@
             <td>{{ entity.fax }}</td>
             <td><a href="mailto:{{ entity.email }}">{{ entity.email }}</a></td>
             <td>
-                <a href="{{ path('supplier_show', { 'id': entity.id }) }}" class="btn">{{ 'eye-open'|icon }}</a>
+                <a href="{{ path('supplier_show', { 'id': entity.id }) }}" class="btn btn-default">{{ 'eye-open'|icon }}</a>
                 <a href="{{ path('supplier_edit', { 'id': entity.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }}</a>
             </td>
         </tr>

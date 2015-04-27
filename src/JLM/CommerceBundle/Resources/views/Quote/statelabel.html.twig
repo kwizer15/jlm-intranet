@@ -1,5 +1,5 @@
 {% if state == 0 %}
-	<span class="label">En saisie</span>
+	<span class="label label-default">En saisie</span>
 {% elseif state == 1 %}
 	<span class="label label-warning">En attente</span>
 {% elseif state == 2 %}
@@ -11,5 +11,5 @@
 {% elseif state == 5 %}
 	<span class="label label-success">Accordé</span>
 {% else %}
-	<span class="label label-important">Annulé</span>
+	<span class="label label-danger">Annulé</span>
 {% endif %}

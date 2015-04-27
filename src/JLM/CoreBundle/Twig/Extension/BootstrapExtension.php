@@ -30,24 +30,9 @@ class BootstrapExtension extends \Twig_Extension
         );
     }
     
-    public function iconFilter($iconName, $white = false, $version = '2.3.2')
+    public function iconFilter($iconName, $white = false, $version = '3.3.4')
     {
-    	$v = explode('.', $version);
-    	if ($v[0] == 2)
-    	{
-    		$return = '<i class="';
-    		if ($white)
-    		{
-    			$return .= 'icon-white ';
-    		} 
-    		$return .= 'icon-'.$iconName.'"></i>';
-    		
-    		return $return;
-    	}
-    	if ($v[0] == 3)
-    	{
-    		return '<spab class="glyphicon glyphicon-'.$iconName.'"></i>';
-    	}
+    	return '<span class="glyphicon glyphicon-'.$iconName.'"></span>';
     }
     
     public function badgeFilter($content, $class = null)

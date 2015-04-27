@@ -1,11 +1,11 @@
-<div class="row-fluid">
-    <div class="span5">
+<div class="row">
+    <div class="col-md-5">
     	<strong>Créé le {{ quote.creation|date('d/m/Y') }}
     	<br>par {{ quote.followerCp }}</strong>
         <br><br>{{ quote.doorCp | nl2br }}
 
     </div>
-    <div class="span5 offset2 well">
+    <div class="col-md-5 offset2 well">
     	<strong>Facturation</strong>
         <br>{{ quote.trusteeName }}
         <br>{{ quote.trusteeAddress | nl2br  }}

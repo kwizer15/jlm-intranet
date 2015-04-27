@@ -30,64 +30,31 @@
       {% endblock modals %}
     </div>
     <div class="navbar navbar-default navbar-fixed-top">
-	   <div class="container-fluid">
-	        {# Responsive #}
-		        <a class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse">
-		           <span class="icon-bar"></span>
-		           <span class="icon-bar"></span>
-		           <span class="icon-bar"></span>
-	         	</a>
-	         	<a href="{{ path('default') }}" class="navbar-brand">JLM</a>
-	         	<div id="nav-collapse" class="collapse">
+	   <div class="container">
+	     <div class="navbar-header">
+		   <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse">
+		     <span class="icon-bar"></span>
+		     <span class="icon-bar"></span>
+		     <span class="icon-bar"></span>
+	       </button>
+	       <a href="{{ path('default') }}" class="navbar-brand">JLM</a>
+	     </div>
+	     <div id="nav-collapse" class="collapse navbar-collapse">
 	      {% block header %}
 	      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-	      	
 			{% block navigation %}
 			<ul class="nav navbar-nav">
 			    <li><a href="{{ path('trustee') }}">Saisie</a></li>
-		        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Bureau <b class="caret"></b></a>
-		        	<ul class="dropdown-menu">
-                        <li class="dropdown-submenu">
-		        			<a tabindex="-1" href="{{ path('quote') }}">Devis</a>
-		        			<ul class="dropdown-menu">
-		        				<li class="dropdown-submenu">
-		        					<a tabindex="-1" href="{{ path('askquote') }}">Demandes</a>
-		        					<ul class="dropdown-menu">
-		        						<li><a href="{{ path('askquote_new') }}">{{ 'plus-sign'|icon }} Nouvelle demande de devis</a></li>
-		        						<li class="divider"></li>
-		        						{% include 'JLMOfficeBundle:Askquote:sidebar.html.twig' %}
-		        					</ul>
-		        				</li>
-		        				<li class="divider"></li>
-		        			{% include 'JLMCommerceBundle:Quote:sidebar.html.twig' %}
-		        			</ul>
-		        		</li>
-		        		<li class="dropdown-submenu">
-		        			<a tabindex="-1" href="{{ path('order') }}">Fiches travaux</a>
-		        			<ul class="dropdown-menu">
-		        			{#	<li><a href="{{ path('order_new') }}">{{ 'plus-sign'|icon }} Nouvelle fiche</a></li>
-								<li class="divider"></li> #}
-								{% include 'JLMOfficeBundle:Order:sidebar.html.twig' %} 
-		        			</ul>
-		        		</li>
-                        <li class="dropdown-submenu">
-		        			<a tabindex="-1" href="{{ path('bill') }}">Facture</a>
-		        			<ul class="dropdown-menu">
-				        		<li><a href="{{ path('bill_new') }}">{{ 'plus-sign'|icon }} Nouvelle facture</a></li>
-				        		<li class="divider"></li>
-				        		{% include 'JLMCommerceBundle:Bill:sidebar.html.twig' %}
-		        			</ul>
-		        		</li>
-                        <li class="dropdown-submenu">
-		        			<a tabindex="-1" href="{{ path('fees') }}">Redevances</a>
-		        			<ul class="dropdown-menu">
-		        				<li><a href="{{ path('fees') }}">{{ 'list'|icon }} Liste</a></li>
-		        			</ul>
-		        		</li>
-		        		<li><a href="{{ path('jlm_follow_default_index') }}">Suivi de commandes</a></li>
-		        	</ul>
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Bureau <span class="caret"></span></a>
+		          <ul class="dropdown-menu" role="menu">
+		            <li><a href="{{ path('quote') }}">Devis</a></li>
+		            <li><a href="{{ path('order') }}">Fiches travaux</a></li>
+                    <li><a href="{{ path('bill') }}">Facture</a></li>
+                    <li><a href="{{ path('fees') }}">Redevances</a></li>
+		        	<li><a href="{{ path('jlm_follow_default_index') }}">Suivi de commandes</a></li>
+		          </ul>
 		        <li><a href="{{ path('intervention_today') }}">Journal de bord</a></li>
-		        {# Emetteurs #}
 		        <li class="dropdown">
 		            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestion JCM <b class="caret"></b></a>
 		        	<ul class="dropdown-menu">
@@ -109,12 +76,11 @@
 		        </li>
 			  {% endblock navigation %}
 			</ul>
-			<ul class="nav navbar-nav pull-right">
+			<ul class="nav navbar-nav navbar-right">
 				<li><a href="https://github.com/jlm-entreprise/jlm-intranet/issues?state=open">Signaler un bug</a></li>
 			</ul>
-			<div class="btn-group pull-right">
-			   
-			   <a href="#" class="btn btn-info navbar-btn dropdown-toggle" data-toggle="dropdown"><i class="icon-user  icon-white"></i> {{ app.user }} <b class="caret"></b></a>
+			<div class="btn-group navbar-right">
+			   <a href="#" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">{{ 'user'|icon }} {{ app.user }} <span class="caret"></span></a>
 			   <ul class="dropdown-menu">
 			   		<li><a href="{{ path('fos_user_security_logout') }}">{{ 'remove-sign'|icon }} Déconnexion</a></li>
 			   		<li class="divider"></li>
@@ -124,27 +90,26 @@
 			</div>
 			{% endif %}	
 	      {% endblock header %}
-	          </div>
 	      	</div>
 	     </div>
       </div>   
       <div class="container-fluid">
 		  {% block container %}
-			<div class="row-fluid">
-			    <div class="span2">    
+			<div class="row">
+			    <div class="col-md-2">    
 				    <ul class="nav nav-list">
 					    {% block sidebar %}
 					  	{% endblock sidebar %}
 					</ul>
 			    </div>
-			    <div class="span10">
+			    <div class="col-md-10">
 		            {% block content %}
 		            {% endblock content %}
 		            {% block pagination %}
 		            	{% if pagination is defined %}
 		            	{% set flag = true %}
-							<div class="pagination pagination-centered">
-							    <ul>
+							<nav>
+							    <ul class="pagination">
 							        <li{% if pagination.current == 1 %} class="disabled"{% endif %}><a href="{{ path(pagination.route,pagination.params|merge({'page' : pagination.current-1 })) }}">«</a></li>
 									{% for p in range(1,pagination.total) %}
 									{% if (p > pagination.current - 3 and p < pagination.current + 3) or p == 1 or p == pagination.total or (p < 6 and pagination.current < 6) %}
@@ -160,6 +125,7 @@
 									{% endfor %}
 									<li{% if pagination.current == pagination.total %} class="disabled"{% endif %}><a href="{{ path(pagination.route,pagination.params|merge({ 'page' : pagination.current+1 })) }}">»</a></li>
 								</ul>
+								</nav>
 							</div>
 		            	{% endif %}
 		            {% endblock pagination %}

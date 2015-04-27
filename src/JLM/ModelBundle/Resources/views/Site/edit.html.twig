@@ -6,7 +6,7 @@
     <fieldset>
     {{ form_widget(edit_form) }}
     <div class="form-actions">
-	   <a href="{{ path('trustee_show',{'id':entity.trustee.id}) }}" class="btn">{{ 'arrow-left'|icon }} Retour à la fiche syndic</a>
+	   <a href="{{ path('trustee_show',{'id':entity.trustee.id}) }}" class="btn btn-default">{{ 'arrow-left'|icon }} Retour à la fiche syndic</a>
 	   <button type="submit" class="btn btn-primary">{{ 'pencil'|icon(true) }} Enregistrer les modifications</button>
 	</div>
 </fieldset>

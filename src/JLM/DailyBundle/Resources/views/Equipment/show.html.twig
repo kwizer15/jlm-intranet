@@ -51,7 +51,7 @@
 {% endif %}
 
 <div class="form-actions">
-    <a href="{{ previous }}" class="btn">{{ 'arrow-left'|icon }} Retour à la liste</a>
+    <a href="{{ previous }}" class="btn btn-default">{{ 'arrow-left'|icon }} Retour à la liste</a>
 	<a href="#modalEdit{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-warning">{{ 'pencil'|icon(true) }} Editer</a>
 	{{ render(controller('JLMDailyBundle:Equipment:edit',{'id':entity.id})) }}
 	<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger">{{ 'remove'|icon(true) }} Supprimer</a>

@@ -2,8 +2,8 @@
 {% block content %}
 <h1>Facture <small>{{ entity.number }}</small></h1>
 {% include 'JLMCommerceBundle:Bill:stateheader.html.twig' with {'state': entity.state} %}
-<div class="row-fluid">
-    <div class="span5">
+<div class="row">
+    <div class="col-md-5">
     	<strong>{{ entity.reference | nl2br }}</strong>
         <br><strong>Affaire :</strong><br>{{ entity.site | nl2br }}
         <br><em>{{ entity.details | nl2br }}</em>
@@ -24,7 +24,7 @@
 	</tbody>
 </table>
     </div>
-    <div class="span5 offset2 well">
+    <div class="col-md-5 col-md-2-offset well">
     	<small>{{ entity.prelabel | nl2br }}</small>
         <br><strong>{{ entity.trusteeName }}</strong>
         <br>{{ entity.trusteeAddress | nl2br  }}
@@ -64,8 +64,8 @@
     {% endfor %}
     </tbody>
 </table>
-<div class="row-fluid">
-	<div class="span8">
+<div class="row">
+	<div class="col-md-8">
 		<dl>
 			<dt>Echéance</dt>
 			<dd>{{ entity.maturityDate | date('d/m/Y') }}
@@ -79,7 +79,7 @@
 			<dd>{{ entity.penalty }}</dd>
 		</dl>
 	</div>
-   <div class="span4">
+   <div class="col-md-4">
     <table class="table table-bordered">
     	<tbody>
     		<tr>

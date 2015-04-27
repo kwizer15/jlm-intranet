@@ -35,7 +35,7 @@
 				{% elseif entity.dontTreat %}
 					<small>{{ entity.dontTreat }}</small>
 				{% else %}
-					<span class="label label-important">Non traitée</span>
+					<span class="label label-danger">Non traitée</span>
 					{% if entity.maturity %}
 						<br><small>{{ entity.maturity | date('d/m/Y') }}</small>
 					{% endif %}

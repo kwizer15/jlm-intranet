@@ -1,8 +1,8 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
 {% block content %}
 <h1>{{ entity.person.name }} <small>{{ entity.role }}</small></h1>
-<div class="row-fluid">
-    <div class="span4 well">
+<div class="row">
+    <div class="col-md-4 well">
         <address>
         <strong>Coordonnées</strong>
         {% for phone in entity.person.phones %}
@@ -13,7 +13,7 @@
         </address>
     </div>
     {% if entity.person.address %}
-    <div class="span6 well">
+    <div class="col-md-6 well">
 		<strong>Adresse : </strong>
 		<br>{{ entity.person.address.toString | nl2br }}
     </div>
@@ -21,7 +21,7 @@
 </div>
 
 <div class="form-actions">
-	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn">{{ 'arrow-left'|icon }} Retour à la fiche affaire</a>
+	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn btn-default">{{ 'arrow-left'|icon }} Retour à la fiche affaire</a>
 	<a href="{{ path('sitecontact_edit', { 'id': entity.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }} Editer</a>
 </div>
 {% endblock %}

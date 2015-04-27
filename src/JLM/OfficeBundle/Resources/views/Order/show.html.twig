@@ -29,7 +29,7 @@
 </table>
 
 <div class="form-actions">
-	<a href="{{ path('work_show',{'id':entity.work.id}) }}" class="btn">{{ 'arrow-left'|icon }} Retour aux travaux</a>
+	<a href="{{ path('work_show',{'id':entity.work.id}) }}" class="btn btn-default">{{ 'arrow-left'|icon }} Retour aux travaux</a>
 	<a href="{{ path('order_print',{ 'id' : entity.id }) }}" class="btn btn-info">{{ 'print'|icon(true) }} Imprimer</a>
 {% if entity.state < 1 %}
 	<a href="{{ path('order_edit', { 'id': entity.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }} Editer</a>

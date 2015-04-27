@@ -10,8 +10,8 @@
 </div>
 {% endif %}
 {% if entity.width and entity.height %}{{ entity.width }}x{{ entity.height }}mm</small>{% endif %}</h1>
-<div class="row-fluid">
-	<div class="span5">
+<div class="row">
+	<div class="col-md-5">
 		<h4>{{ entity.type }} - {{ entity.location }}</h4>
 		<em>
 			<dl>
@@ -25,7 +25,7 @@
 			{{ entity.site.address.street | nl2br }}
 		</address>
 	</div>
-	<div class="span7">
+	<div class="col-md-7">
 		<div class="tabbable tabs-left">
 	    		<ul class="nav nav-tabs">
 	    			<li class="active"><a href="#door" data-toggle="tab">Installation</a></li>
@@ -36,8 +36,8 @@
 	    		</ul>
 	    		<div class="tab-content">
 	    			<div class="tab-pane active" id="door">
-	    				<div class="row-fluid">
-	    					<div class="span8">
+	    				<div class="row">
+	    					<div class="col-md-8">
 	    					{% if entity.underWarranty %}<span class="label label-success">Sous garantie jusqu'au {{ entity.endWarranty | date('d/m/Y') }}</span>{% endif %}
 								<dl>
 								<dt>{% if entity.code %}Code étiquette</dt><dd>{{ entity.code }}</dd>{% else %}{{ form(codeForm) }}</dt>{% endif %}
@@ -62,7 +62,7 @@
 								{% endif %}
 								</dl>
 							</div>
-							<div class="span4 text-right">
+							<div class="col-md-4 text-right">
 							<h2>{% if entity.actualContract is null %}Hors contrat
 								{% if entity.lastContract %}<br><small>Débute le {{ entity.lastContract.begin|date('d/m/Y') }}</small>{% endif %}
 							{% else %}
@@ -129,7 +129,7 @@
 <a href="#modalNewFixing{{ entity.id }}" class="btn btn-warning" role="button" data-toggle="modal">{{ 'wrench'|icon(true) }} Dépannage</a>
 {{ render(controller('JLMDailyBundle:Fixing:new',{'id':entity.id})) }}
 	<a href="{{ path('work_new_door',{'id': entity.id}) }}" class="btn btn-primary">{{ 'wrench'|icon(true) }} Travaux</a>
-	{% if false %}<a href="{{ path('maintenance_generate', { 'id':entity.id } ) }}" class="btn">{{ 'wrench'|icon }} Entretien</a>{% endif %}
+	{% if false %}<a href="{{ path('maintenance_generate', { 'id':entity.id } ) }}" class="btn btn-default">{{ 'wrench'|icon }} Entretien</a>{% endif %}
 	{% if entity.stopped %}<a href="{{ path('daily_door_unstop',{'id': entity.id}) }}" class="btn btn-success">{{ 'ok'|icon(true) }} Mettre en service</a>
 	{% else %}<a href="{{ path('daily_door_stop',{'id': entity.id}) }}" class="btn btn-danger">{{ 'remove'|icon(true) }} Mettre à l'arrêt</a>{% endif %}
 </div>
@@ -189,7 +189,7 @@
 					</td>
 					<td>
 						{% if interv.canceled %}
-						<span class="label label-important">Annulée</span><br>
+						<span class="label label-danger">Annulée</span><br>
 						{% endif %}
 						{% if interv.shiftTechnicians|length %}
 							{% if interv.shiftTechnicians|length < 4%}

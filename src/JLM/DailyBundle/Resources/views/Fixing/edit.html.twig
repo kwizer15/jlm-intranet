@@ -7,7 +7,7 @@
 <fieldset>
 {{ form_widget(form) }}
     <div class="form-actions">
-	   <a href="{{ path('fixing_show',{'id':entity.id}) }}" class="btn">{{ 'arrow-left'|icon }} Retour à la fiche</a>
+	   <a href="{{ path('fixing_show',{'id':entity.id}) }}" class="btn btn-default">{{ 'arrow-left'|icon }} Retour à la fiche</a>
 	   <button type="submit" class="btn btn-primary">{{ 'pencil'|icon(true) }} Enregistrer les modifications</button>
 	</div>
 	</fieldset>

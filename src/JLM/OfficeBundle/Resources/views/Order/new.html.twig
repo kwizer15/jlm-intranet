@@ -3,8 +3,8 @@
 {% block content %}
 <h1>Nouvelle commande</h1>
 <div class="row_fluid clearfix">
-<div class="span6 well">{{ entity.work.place | nl2br }}</div>
-<div class="span6">Créée le {{ entity.creation|date('d/m/Y') }}</div>
+<div class="col-md-6 well">{{ entity.work.place | nl2br }}</div>
+<div class="col-md-6">Créée le {{ entity.creation|date('d/m/Y') }}</div>
 </div>
 {% if form_errors(form) %}
 <div class="alert">{{ form_errors(form) }}</div>
@@ -13,7 +13,7 @@
     <fieldset>
     {{ form_widget(form) }}
 	<div class="form-actions">
-	  <a href="{{ path('order_todo') }}" class="btn">{{ 'arrow-left'|icon }} Retour à la liste</a>
+	  <a href="{{ path('order_todo') }}" class="btn btn-default">{{ 'arrow-left'|icon }} Retour à la liste</a>
 	  <button type="submit" class="btn btn-primary">{{ 'pencil'|icon(true) }} Enregistrer les modifications</button>
 	</div>
 </fieldset>

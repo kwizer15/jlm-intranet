@@ -33,7 +33,7 @@
             <td>{{ product.purchasePrice|number_format(2, ',', ' ') }} €</td>
             <td>{{ product.unitPrice|number_format(2, ',', ' ') }} €</td>
             <td>
-            	<a href="{{ path('jlm_product_product_show', { 'id': product.id }) }}" class="btn">{{ 'eye-open'|icon }}</a>
+            	<a href="{{ path('jlm_product_product_show', { 'id': product.id }) }}" class="btn btn-default">{{ 'eye-open'|icon }}</a>
                 <a href="{{ path('jlm_product_product_edit', { 'id': product.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }}</a>
             </td>
     </tr>
@@ -41,7 +41,7 @@
     </tbody>
 </table>
 <div class="form-actions">
-	<a href="{{ path('supplier') }}" class="btn">{{ 'arrow-left'|icon }} Retour à la liste</a>
+	<a href="{{ path('supplier') }}" class="btn btn-default">{{ 'arrow-left'|icon }} Retour à la liste</a>
 	<a href="{{ path('supplier_edit', { 'id': entity.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }} Editer</a>
 </div>
  {% endblock %}

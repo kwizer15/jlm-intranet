@@ -12,7 +12,7 @@
     {% for entity in suppliers %}
         <tr>
         	<td>
-                <a href="{{ path('supplier_show', { 'id': entity.id }) }}" class="btn">{{ 'eye-open'|icon }}</a>
+                <a href="{{ path('supplier_show', { 'id': entity.id }) }}" class="btn btn-default">{{ 'eye-open'|icon }}</a>
             </td>
             <td>{{ entity.name }}</td>
             <td><ul>

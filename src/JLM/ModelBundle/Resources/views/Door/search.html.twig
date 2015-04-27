@@ -12,7 +12,7 @@
 	<tbody>
 		{% for door in doors %}
 		<tr>
-			<td><a href="{{ path('door_show',{'id': door.id}) }}" class="btn">{{ 'eye-open'|icon }}</a></td>
+			<td><a href="{{ path('door_show',{'id': door.id}) }}" class="btn btn-default">{{ 'eye-open'|icon }}</a></td>
 			<td>{{ door.trustee }}</td>
 			<td>{{ door.site | nl2br }}</td>
 			<td>{{ door.location }}</td>

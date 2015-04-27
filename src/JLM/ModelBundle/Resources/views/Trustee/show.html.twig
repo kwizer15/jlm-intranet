@@ -1,8 +1,8 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
 {% block content %}
 <h1>{{ entity.name }}</h1>
-<div class="row-fluid">
-	<div class="span4">
+<div class="row">
+	<div class="col-md-4">
 	
 		<address>
             {% include 'JLMModelBundle:Helpers:address.html.twig' with {'address':entity.address} %}
@@ -13,7 +13,7 @@
 		</address>
 		<a href="{{ path('jlm_contact_contact_edit', { 'id': entity.contact.id }) }}" class="btn btn-warning btn-small edit-contact">{{ 'pencil'|icon(true) }}</a>
 	</div>
-	<div class="span8">
+	<div class="col-md-8">
 	
 		<address>
 			<strong>Facturation</strong>
@@ -33,7 +33,7 @@
 </ul>
 <div class="tab-content">
 <div class="tab-pane active" id="contacts">
-<button class="btn" id="add-corporationcontact" href="{{ path('jlm_contact_corporationcontact_new', {'corporation': entity.contact.id }) }}">Nouvelle</button>
+<button class="btn btn-default" id="add-corporationcontact" href="{{ path('jlm_contact_corporationcontact_new', {'corporation': entity.contact.id }) }}">Nouvelle</button>
 <table class="table table-bordered table-hover" id="contacts-list">
   <thead>
     <tr>

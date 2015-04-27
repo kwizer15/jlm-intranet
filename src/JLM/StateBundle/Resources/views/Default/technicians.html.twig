@@ -22,8 +22,8 @@
     	<div class="tab-content">
     	{% for key, onumbers in numbers %}
 			<div class="tab-pane{% if loop.first %} active{% endif %}" id="quantity-{{ key|lower }}">
-				<div class="row-fluid">
-					<div class="span6">
+				<div class="row">
+					<div class="col-md-6">
 						<table class="table table-bordered">
 							<thead>
 								<tr>
@@ -59,7 +59,7 @@
 							</tfoot>
 						</table>
 					</div>
-					<div class="span6"></div>
+					<div class="col-md-6"></div>
 				</div>
 			</div>
 			{% endfor %}
@@ -74,8 +74,8 @@
 			    		<div class="tab-content">
 			    		{% for key, otimes in times %}
 			<div class="tab-pane{% if loop.first %} active{% endif %}" id="times-{{ key|lower }}">
-				<div class="row-fluid">
-					<div class="span6">
+				<div class="row">
+					<div class="col-md-6">
 						<table class="table table-bordered">
 							<thead>
 								<tr>
@@ -111,7 +111,7 @@
 							</tfoot>
 						</table>
 					</div>
-					<div id="graphTech-{{ key|lower }}" class="span6"></div>
+					<div id="graphTech-{{ key|lower }}" class="col-md-6"></div>
 				</div>
 			</div>
 			{% endfor %}

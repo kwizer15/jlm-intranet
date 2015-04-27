@@ -1,6 +1,6 @@
 {% block coding_widget %}
 <div class="row_fluid">
-    	<div class="span6 well">
+    	<div class="col-md-6 well">
     	{{ form_row(form.follower) }}
     	{{ form_row(form.followerCp) }}
     	{{ form_row(form.door) }}
@@ -8,7 +8,7 @@
     	{{ form_row(form.vat) }}
     	{{ form_row(form.vatTransmitter) }}
     	</div>
-    	<div class="span6">
+    	<div class="col-md-6">
     	{{ form_row(form.creation) }}
     	{{ form_row(form.trustee) }}
     	{{ form_row(form.trusteeName) }}
@@ -30,7 +30,7 @@
     <th>Port</th>
     <th>T.V.A.</th>
     <th>PV HT</th>
-    <th class="span1"><a href="#" class="btn btn-success newline">{{ 'plus-sign'|icon(true) }}</a></th>
+    <th class="col-md-1"><a href="#" class="btn btn-success newline">{{ 'plus-sign'|icon(true) }}</a></th>
     </tr>
     </thead>
     {{ form_widget(form.lines) }}

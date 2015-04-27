@@ -6,7 +6,7 @@
 {% include 'JLMCommerceBundle:Quote:showheader.html.twig' with {'quote': entity} %}
 <div class="form-actions">
 {% if entity.ask %}
-	<a href="{{ path('askquote_show',{'id':entity.ask.id}) }}" class="btn">{{ 'arrow-left'|icon }} Voir la demande</a>
+	<a href="{{ path('askquote_show',{'id':entity.ask.id}) }}" class="btn btn-default">{{ 'arrow-left'|icon }} Voir la demande</a>
 {% endif %}
 	<a href="{{ path('quote_jacket',{ 'id' : entity.id }) }}" class="btn btn-info">{{ 'print'|icon(true) }} Imprimer la chemise</a>
 {% if entity.variants|length > 0 %}	

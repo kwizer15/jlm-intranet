@@ -30,7 +30,7 @@
 <h2>Porte</h2>
 
 <div class="form-actions">
-	<a href="{{ path('trustee_show',{'id':entity.trustee.id}) }}" class="btn">{{ 'arrow-left'|icon }} Retour à la fiche {{ entity.trustee }}</a>
+	<a href="{{ path('trustee_show',{'id':entity.trustee.id}) }}" class="btn btn-default">{{ 'arrow-left'|icon }} Retour à la fiche {{ entity.trustee }}</a>
 	<a href="{{ path('jlm_contract_contract_edit', { 'id': entity.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }} Editer</a>
 </div>
 {% endblock %}

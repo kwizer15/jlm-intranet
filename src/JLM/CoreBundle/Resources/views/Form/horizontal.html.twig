@@ -39,6 +39,7 @@
         {% if form_errors(form) %}
         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
         <span class="sr-only">{{ form_errors(form) }}</span>
+        {% endif %}
     </div>
 {% endspaceless %}
 {% endblock form_row %}

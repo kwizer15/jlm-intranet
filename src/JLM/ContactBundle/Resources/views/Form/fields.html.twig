@@ -9,7 +9,7 @@
 
 {% block jlm_contact_person_select_widget %}
   {% spaceless %}
-    {{ form_widget(form, { 'attr': {'placeholder': 'Personne', 'class': 'input-large'}}) }} <button class="btn" id="{{ id }}_add-person" href="{{ path('jlm_contact_contact_new', {'id': 'person'}) }}">Nouvelle</button>
+    {{ form_widget(form, { 'attr': {'placeholder': 'Personne', 'class': 'input-large'}}) }} <button class="btn btn-default" id="{{ id }}_add-person" href="{{ path('jlm_contact_contact_new', {'id': 'person'}) }}">Nouvelle</button>
   {% endspaceless %}
 {% endblock %}
 
@@ -93,7 +93,7 @@
 		{{ block('jlm_contact_contactphonecollection_rows') }}
     </ul>
 	{{ form_rest(form) }}
-    <button id="add-another-phone" class="btn">Ajouter un numéro</button>
+    <button id="add-another-phone" class="btn btn-default">Ajouter un numéro</button>
 {% endspaceless %}
 {% endblock %}
 
