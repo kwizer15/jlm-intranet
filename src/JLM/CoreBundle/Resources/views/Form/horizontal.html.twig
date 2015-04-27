@@ -29,6 +29,21 @@
 {% endspaceless %}
 {% endblock form_widget_compound %}
 
+{%- block form_widget_simple -%}
+{% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim }) %}
+{{ parent() }}
+{%- endblock form_widget_simple -%}
+
+
+{%- block textarea_widget -%}
+{% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim }) %}
+{{ parent() }}
+{%- endblock textarea_widget -%}
+
+{%- block choice_widget -%}
+{% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim }) %}
+{{ parent() }}
+{%- endblock choice_widget -%}
 
 {% block form_row %}
 {% spaceless %}
@@ -72,7 +87,7 @@
 {% block money_widget %}
 {% spaceless %}
 	{% set attr = attr|merge({'class': attr.class|default('') ~ ' input-money' }) %}
-    <div class="input-append">{{ block('form_widget_simple') }}<span class="add-on">€</span></div>
+    <div class="input-group">{{ block('form_widget_simple') }}<div class="input-group-addon">&euro;</div></div>
 {% endspaceless %}
 {% endblock money_widget %}
 
@@ -86,19 +101,18 @@
 {% block percent_widget %}
 {% spaceless %}
     {% set type = type|default('text') %}
-    <div class="input-append">{{ block('form_widget_simple') }}<span class="add-on">%</span></div>
+    <div class="input-group">{{ block('form_widget_simple') }}<div class="input-group-addon">%</div></div>
 {% endspaceless %}
 {% endblock percent_widget %}
 
 {% block email_widget %}
 {% spaceless %}
-	<div class="input-prepend">
-<span class="add-on">{{ 'envelope'|icon }}</span>{{ block('form_widget_simple') }}</div>
+	<div class="input-group"><div class="input-group-addon">{{ 'envelope'|icon }}</div>{{ block('form_widget_simple') }}</div>
 {% endspaceless %}
 {% endblock email_widget %}
 
 {% block button_widget %}
-  {% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn')|trim}) %}
+  {% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn btn-default')|trim}) %}
   {{ parent() }}
 {% endblock %}
 
@@ -114,7 +128,7 @@
 
 {% block distance_widget %}
 {% spaceless %}
-<div class="input-append">{{ block('field_widget') }}<span class="add-on">mm</span></div>
+<div class="input-group">{{ block('field_widget') }}<div class="input-group-addon">mm</div></div>
 {% endspaceless %}
 {% endblock distance_widget %}
 
@@ -167,7 +181,7 @@
 
 {% block datepicker_widget %}
 {% spaceless %}
-<div class="input-prepend"><span class="add-on">{{ 'calendar'|icon }}</span>{{ block('form_widget_simple') }}</div>
+<div class="input-group"><div class="input-group-addon">{{ 'calendar'|icon }}</div>{{ block('form_widget_simple') }}</div>
 {% endspaceless %}
 {% endblock datepicker_widget %}
 

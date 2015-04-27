@@ -1,24 +1,21 @@
 {% extends "::layout.html.twig" %}
 
     {% block sidebar %}
-    	<li>{{ form(search.form, { 'action': path('model_search') }) }}
-	    </li>
+    	<li>{{ form(search.form, { 'action': path('model_search') }) }}</li>
 	    <li class="nav-header">Contacts</li>
 		<li><a href="{{ path('jlm_contact_contact') }}">{{ 'list'|icon }} Liste contacts</a></li>
-		<li>
-	      <div class="dropdown">
+		<li class="dropdown">
 		    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
 		      {{ 'plus-sign'|icon }} Ajouter un contact
 		      <span class="caret"></span>
 		    </a>
 		      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-		        <li><a tabindex="-1" href="{{ path('jlm_contact_contact_new', {'id': 'person'}) }}">Personne</a></li>
-		        <li><a tabindex="-1" href="{{ path('jlm_contact_contact_new', {'id': 'company'}) }}">Société</a></li>
-		        <li><a tabindex="-1" href="{{ path('jlm_contact_contact_new', {'id': 'association'}) }}">Association</a></li>
+		        <li><a href="{{ path('jlm_contact_contact_new', {'id': 'person'}) }}">Personne</a></li>
+		        <li><a href="{{ path('jlm_contact_contact_new', {'id': 'company'}) }}">Société</a></li>
+		        <li><a href="{{ path('jlm_contact_contact_new', {'id': 'association'}) }}">Association</a></li>
 		      </ul>
-		  </div>
 		</li>
-		<li class="nav-header">Syndics</li>
+		<li>Syndics</li>
 		<li><a href="{{ path('trustee') }}">{{ 'list'|icon }} Liste syndics</a></li>
         <li><a href="{{ path('trustee_new') }}">{{ 'plus-sign'|icon }} Nouveau syndic</a></li>
         <li class="nav-header">Fournisseurs</li>

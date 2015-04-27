@@ -10,6 +10,7 @@
 	    {% stylesheets
 	      '@bootstrap_css'
 		  'bundles/jlmdefault/js/select2-3.4.5/select2.css'
+		  'bundles/jlmdefault/js/select2-3.4.5/select2-bootstrap.css'
 		  filter='cssrewrite'
 		%}
     <link rel="stylesheet" href="{{ asset_url }}" />
@@ -97,7 +98,7 @@
 		  {% block container %}
 			<div class="row">
 			    <div class="col-md-2">    
-				    <ul class="nav nav-list">
+				    <ul class="nav nav-stacked">
 					    {% block sidebar %}
 					  	{% endblock sidebar %}
 					</ul>
