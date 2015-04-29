@@ -51,7 +51,7 @@ intervention_cancelwork:
 intervention_cancel:
   path:   /{id}/cancel
   defaults:  { _controller: "JLMDailyBundle:Intervention:cancel" }
-  methods: [GET]
+  methods: [GET,POST]
     
 intervention_uncancel:
   path:   /{id}/uncancel

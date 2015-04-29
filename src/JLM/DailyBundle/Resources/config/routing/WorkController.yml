@@ -47,3 +47,4 @@ work_closeupdate:
   path: /{id}/closeupdate
   defaults:  { _controller: "JLMDailyBundle:Work:closeupdate" }
   methods: [PUT,POST]
+
