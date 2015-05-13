@@ -1,13 +1,13 @@
 {% extends "JLMUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-{% if error %}
-    <div class="alert alert-error">
-    	<button type="button" class="close" data-dismiss="alert">×</button>
-		{{ error|trans({}, 'FOSUserBundle') }}
-	</div>
-{% endif %}
-<form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
+  {% if error %}
+<div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  {{ error|trans({}, 'FOSUserBundle') }}
+</div>
+  {% endif %}
+<form action="{{ path("fos_user_security_check") }}" method="post">
   <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
   <div class="form-group">
     <input type="text" id="username" name="_username" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}" value="{{ last_username }}" class="form-control input-lg" required="required">
@@ -17,7 +17,7 @@
   </div>
   <div class="checkbox">
       <label class="checkbox" for="remember_me">
-       <input type="checkbox" id="remember_me" name="_remember_me" value="on"> {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+        <input type="checkbox" id="remember_me" name="_remember_me" value="on"> {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
       </label>
   </div>
   <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-block btn-lg btn-primary">
