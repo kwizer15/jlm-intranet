@@ -1,18 +1,26 @@
 {% extends "JLMDefaultBundle::layout.html.twig" %}
 
 {% block content %}
-<h1>Tableau de bord (beta)</h1>
 <div class="row">
-<h2>Contrats</h2>
-{{ contracts_numbers }} contrats en cours sur {{ contracts_doors }} installations.<br>
-{{ contracts_complete }} installations en contrats complet<br>
-{{ contracts_normal }} installations en contrats normal<br>
-
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Contrats
+      </div>
+      <div class="panel-body">
+        {{ contracts_numbers }} contrats en cours sur {{ contracts_doors }} installations.<br>
+        {{ contracts_complete }} installations en contrats complet<br>
+        {{ contracts_normal }} installations en contrats normal<br>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="row">
-	<div class="col-md-6">
-		<h2>Quantité</h2>
-		
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Quantité
+      </div>
 		<table class="table table-bordered">
 			<thead>
 				<tr>
@@ -47,7 +55,11 @@
 				</tr>
 			</tfoot>
 		</table>
-		<h2>Temps</h2>
+	</div>
+	 <div class="panel panel-default">
+      <div class="panel-heading">
+        Temps
+      </div>
 		<table class="table table-bordered">
 			<thead>
 				<tr>
@@ -82,17 +94,34 @@
 				</tr>
 			</tfoot>
 		</table>
+		</div>
 	</div>
-	<div class="col-md-5 well" id="graphTech">
-	</div>
+	<div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Entretiens
+      </div>
+	  <div id="graphTech"></div>
+    </div>
+  </div>
 </div>
 <div class="row">
-<div class="col-md-6">
-	<h2>Entretiens</h2>
-	<div id="graphEvolution"></div>
-	</div>
-	<div class="col-md-5 well" id="graphMaintenance">
-	</div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Entretiens
+      </div>
+	  <div id="graphEvolution"></div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Entretiens
+      </div>
+	  <div id="graphMaintenance"></div>
+    </div>
+  </div>
 </div>
 {% endblock %}
 
