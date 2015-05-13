@@ -78,18 +78,21 @@
 		        </li>
 			  {% endblock navigation %}
 			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="https://github.com/jlm-entreprise/jlm-intranet/issues?state=open">Signaler un bug</a></li>
-			</ul>
-			<div class="btn-group navbar-right">
-			   <a href="#" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">{{ 'user'|icon }} {{ app.user }} <span class="caret"></span></a>
+			{% form_theme search.form 'JLMCoreBundle:Form:search.html.twig' %}
+			{% block search %}
+			{% endblock %}
+			<ul class="nav navbar-nav">
+			<li class="dropdown">
+			   <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'user'|icon }} {{ app.user }} <span class="caret"></span></a>
 			   <ul class="dropdown-menu">
 			   		<li><a href="{{ path('fos_user_security_logout') }}">{{ 'remove-sign'|icon }} Déconnexion</a></li>
 			   		<li class="divider"></li>
 			   		<li><a href="{{ path('fos_user_profile_show') }}">{{ 'user'|icon }} Mon profil</a></li>
-			   		<li><a href="{{ path('fos_user_change_password') }}">{{ 'lock'|icon }} Changer mon mot de passe</a></li>  		
+			   		<li><a href="{{ path('fos_user_change_password') }}">{{ 'lock'|icon }} Changer mon mot de passe</a></li>
+			   		<li><a href="https://github.com/jlm-entreprise/jlm-intranet/issues?state=open">Signaler un bug</a></li>  		
 			   </ul>
-			</div>
+			</li>
+			</ul>
 			{% endif %}	
 	      {% endblock header %}
 	      	</div>
@@ -99,7 +102,7 @@
 		  {% block container %}
 			<div class="row">
 			    <div class="col-md-2">    
-				    <ul class="nav nav-stacked">
+				    <ul class="nav nav-pills nav-stacked">
 					    {% block sidebar %}
 					  	{% endblock sidebar %}
 					</ul>

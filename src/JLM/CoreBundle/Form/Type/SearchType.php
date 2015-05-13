@@ -11,7 +11,7 @@ class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('query','text',array('required'=>true,'attr'=>array('placeholder'=>'Recherche...','class'=>'search-query input-medium')))
+        	->add('query','text',array('required'=>true,'attr'=>array('placeholder'=>'Recherche...')))
         ;
     }
 
@@ -20,6 +20,7 @@ class SearchType extends AbstractType
     	$resolver->setDefaults(array(
     		'data_class' => 'JLM\CoreBundle\Entity\Search',
     		'method' => 'GET',
+    	   // 'attr' => array('class' => 'navbar-form navbar-left', 'role'=>'search'),
     		'csrf_protection'   => false,
     	));
     }

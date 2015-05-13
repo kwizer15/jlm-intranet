@@ -1,7 +1,10 @@
 {% extends "::layout.html.twig" %}
 
+    {% block search %}
+    {{ form(search.form, { 'action': path('model_search') }) }}
+    {% endblock %}
+
     {% block sidebar %}
-    	<li>{{ form(search.form, { 'action': path('model_search') }) }}</li>
 	    <li class="nav-header">Contacts</li>
 		<li><a href="{{ path('jlm_contact_contact') }}">{{ 'list'|icon }} Liste contacts</a></li>
 		<li class="dropdown">

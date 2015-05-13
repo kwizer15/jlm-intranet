@@ -1,0 +1,15 @@
+{% extends 'JLMCoreBundle:Form:horizontal.html.twig' %}
+
+{% block form %}
+{{ form_start(form, {'attr': {'id': form.vars.id,
+							  'class': 'navbar-form navbar-left',
+							  'role': 'search'
+                    } } ) }}
+    {{ form_widget(form) }}
+{{ form_end(form) }}
+{{ form_javascript(form) }}
+{% endblock %}
+
+{% block _jlm_core_search_query_row %}
+{{ form_widget(form) }}
+{% endblock %}

@@ -186,6 +186,6 @@
 {% endblock datepicker_widget %}
 
 {% block form_start -%}
-    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-horizontal')|trim }) %}
+    {% set attr = attr|merge({'class': (attr.class|default('form-horizontal')) }) %}
     {{ parent() }}
 {%- endblock form_start %}

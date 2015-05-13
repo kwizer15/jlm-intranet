@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the JLMOfficeBundle package.
+ * This file is part of the JLMCoreBundle package.
  *
  * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *
@@ -22,7 +22,7 @@ use JLM\CoreBundle\Entity\Search;
 class SearchExtension extends \Twig_Extension
 {
 	private $formFactory;
-	private $request;
+//	private $request;
 	
 	public function __construct(Container $container)
 	{
