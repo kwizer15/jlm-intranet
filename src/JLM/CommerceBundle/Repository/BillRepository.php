@@ -117,6 +117,39 @@ class BillRepository extends SearchRepository
 		return $this->getCount(1);
 	}
 	
+	public function get45Sended($limit = 10, $offset = 0)
+	{
+		$date = new \DateTime();
+		$date->sub(new \DateInterval('P45D'));
+		$qb = $this->createQueryBuilder('t');
+		$qb->where('t.state = ?1')
+			->andWhere('t.creation > ?2')
+			->setParameter(1,1)
+			->setParameter(2,$date->format('Y-m-d'))
+			
+			;
+		$qb->orderBy('t.number','desc');
+		
+		return $qb->getQuery()->getResult();
+	}
+	
+	public function getCount45Sended()
+	{
+		$date = new \DateTime();
+		$date->sub(new \DateInterval('P45D'));
+		$qb = $this->createQueryBuilder('t')
+		->select('count(t)')
+		->where('t.state = ?1')
+			->andWhere('t.creation > ?2')
+			->setParameter(1,1)
+			->setParameter(2,$date->format('Y-m-d'))
+			
+			;
+		$qb->orderBy('t.number','desc');
+		
+		return $qb->getQuery()->getResult();
+	}
+	
 	public function getPayed($limit = 10, $offset = 0)
 	{
 		return $this->getByState(2,$limit,$offset);

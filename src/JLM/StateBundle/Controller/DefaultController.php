@@ -274,4 +274,24 @@ class DefaultController extends Controller
     	 
     	return array('stats'=>$stats, 'total'=>$total);
     }
+    
+    /**
+     * @Route("/lastbill", name="state_lastbill")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function lastbillAction()
+    {
+    	$manager = $this->get('jlm_commerce.bill_manager');
+		$manager->secure('ROLE_USER');
+		$datas['entities'] = $manager->getRepository()->get45Sended();
+		$datas['ca'] = 0;
+		foreach($datas['entities'] as $entity)
+		{
+			$datas['ca'] += $entity->getTotalPrice();
+		}
+		return $manager->renderResponse('JLMStateBundle:Default:lastbill.html.twig',
+				$datas
+		);
+    }
 }
