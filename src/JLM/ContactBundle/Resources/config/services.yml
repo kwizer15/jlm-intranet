@@ -86,4 +86,8 @@ services:
         class: JLM\ContactBundle\Form\Type\CorporationContactType
         tags:
             - { name: form.type, alias: jlm_contact_corporation_contact }
-            
+    
+    jlm_contact.twig.address_extension:
+        class: JLM\ContactBundle\Twig\Extension\AddressExtension
+        tags:
+            - { name: twig.extension }
