@@ -1,9 +1,10 @@
 {% extends "JLMCommerceBundle:Bill:layout.html.twig" %}
-{% block content %}
+
+{% block page_header %}
 <h1>Facture <small>{{ entity.number }}</small></h1>
-{% if form_errors(edit_form) %}
-<div class="alert">{{ form_errors(edit_form) }}</div>
-{% endif %}
+{% endblock %}
+
+{% block content %}
 {{ form(edit_form) }}
 {% endblock %}
 

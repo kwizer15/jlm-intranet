@@ -64,7 +64,7 @@ class QuoteCountExtension extends \Twig_Extension
     
     public function stateLabelFilter($quote)
     {
-    	$class = '';
+    	$class = 'default';
     	$message = '';
     	$state = $quote->getState();
     	switch ($state)
@@ -91,13 +91,7 @@ class QuoteCountExtension extends \Twig_Extension
     			$class = 'danger';
     			$message = 'canceled';
     	}
-    	$out = '<span class="label';
-    	if ($class != '')
-    	{
-    		$out .= ' label-'.$class;
-    	}
-    	$out .= '">'.$this->translator->trans($message,array(),'QuoteStates').'</span>';
     	
-    	return $out;
+    	return '<span class="label label-'.$class.'">'.$this->translator->trans($message,array(),'QuoteStates').'</span>';
     }
 }

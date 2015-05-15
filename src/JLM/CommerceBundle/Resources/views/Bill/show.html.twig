@@ -1,7 +1,12 @@
 {% extends "JLMCommerceBundle:Bill:layout.html.twig" %}
-{% block content %}
+
+{% block page_header %}
 <h1>Facture <small>{{ entity.number }}</small></h1>
-{% include 'JLMCommerceBundle:Bill:stateheader.html.twig' with {'state': entity.state} %}
+{% endblock %}
+
+{% block content %}
+{{ entity|bill_state_header }}
+{# {% include 'JLMCommerceBundle:Bill:stateheader.html.twig' with {'state': entity.state} %} #}
 <div class="row">
     <div class="col-md-5">
     	<strong>{{ entity.reference | nl2br }}</strong>

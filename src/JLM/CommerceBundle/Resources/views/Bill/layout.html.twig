@@ -5,12 +5,16 @@
 {% endblock %}
 
 {% block sidebar %}
-	<li><h4>Factures</h4></li>
-    <li><a href="{{ path('bill_new') }}">{{ 'plus-sign'|icon }} Nouvelle facture</a></li>
-    <li class="divider"></li>
-    <li class="nav-header">Etats</li>
+<div class="panel panel-default">
+  <div class="panel-heading">Factures</div>
+  <div class="list-group">
+    <a href="{{ path('bill_new') }}" class="list-group-item">{{ 'plus-sign'|icon }} Nouvelle facture</a>
+    <a href="{{ path('bill_toboost') }}" class="list-group-item">{{ 'list'|icon }} Liste des relances</a>
+    <a href="{{ path('bill_printlist') }}" class="list-group-item">{{ 'print'|icon }} Imprimer les factures à faire</a>
+  </div>
+</div>
+<div class="panel panel-info">
+  <div class="panel-heading">Etats</div>
     {% include 'JLMCommerceBundle:Bill:sidebar.html.twig' %}
-    <li class="divider"></li>
-    <li><a href="{{ path('bill_toboost') }}">{{ 'list'|icon }} Liste des relances</a></li>
-    <li><a href="{{ path('bill_printlist') }}">{{ 'print'|icon }} Imprimer les factures à faire</a></li>
+</div>
 {% endblock sidebar %}

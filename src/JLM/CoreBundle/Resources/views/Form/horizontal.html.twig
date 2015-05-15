@@ -161,7 +161,7 @@
 {% block date_widget %}
 {% spaceless %}
     {% if widget == 'single_text' %}
-    	{% set attr = attr|merge({'class': attr.class|default('') ~ ' input-small datepicker' }) %}
+    	{% set attr = attr|merge({'class': attr.class|default('') ~ ' datepicker' }) %}
         {{ block('form_widget_simple') }}
     {% else %}
         <div {{ block('widget_container_attributes') }}>
@@ -180,7 +180,7 @@
     {% if widget == 'single_text' %}
         {{ block('form_widget_simple') }}
     {% else %}
-            {{ form_widget(form.hour, { 'attr': { 'size': '1', 'class' : 'input-mini' } }) }} h {{ form_widget(form.minute, { 'attr': { 'size': '1', 'class' : 'input-mini' } }) }}{% if with_seconds %}:{{ form_widget(form.second, { 'attr': { 'size': '1' } }) }}{% endif %}
+            {{ form_widget(form.hour, { 'attr': { 'size': '1' } }) }} h {{ form_widget(form.minute, { 'attr': { 'size': '1' } }) }}{% if with_seconds %}:{{ form_widget(form.second, { 'attr': { 'size': '1' } }) }}{% endif %}
     {% endif %}
 {% endspaceless %}
 {% endblock time_widget %}

@@ -38,7 +38,7 @@ class BootstrapExtension extends \Twig_Extension
     
     public function labelFilter($content, $labelType = 'default')
     {
-    	$labelType = (in_array(array('default','primary','success','info','warning','danger'),$labelType)) ? $labelType : 'default';
+    	$labelType = (in_array($labelType, array('default','primary','success','info','warning','danger'))) ? $labelType : 'default';
     	
     	return '<span class="label label-'.$labelType.'">' . $content . '</span>';
     }

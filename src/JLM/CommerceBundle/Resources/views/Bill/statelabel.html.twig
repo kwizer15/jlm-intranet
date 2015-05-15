@@ -1,11 +1,6 @@
-{% if state == 0 %}
-	<span class="label label-default">En saisie</span>
-{% elseif state == 1 %}
-	<span class="label label-info">Envoyée</span>
-{% elseif state == 2 %}
-	<span class="label label-success">Réglée</span>
-{% elseif state == -1 %}
-	<span class="label label-danger">Annulée</span>
-{% else %}
-	<span class="label label-default">Etat incorrect</span>
+{% if state == 0 %}{{ 'En saisie'|label }}
+{% elseif state == 1 %}{{ 'Envoyée'|label('primary') }}
+{% elseif state == 2 %}{{ 'Réglée'|label('success') }}
+{% elseif state == -1 %}{{ 'Annulée'|label('danger') }}
+{% else %}{{ 'État incorrect'|label('default') }}
 {% endif %}
