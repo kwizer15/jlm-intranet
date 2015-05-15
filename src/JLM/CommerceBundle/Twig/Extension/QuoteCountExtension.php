@@ -70,6 +70,7 @@ class QuoteCountExtension extends \Twig_Extension
     	switch ($state)
     	{
     		case 0:
+    			$class = 'default';
     			$message = 'in_seizure';
     			break;
     		case 1:
@@ -79,7 +80,7 @@ class QuoteCountExtension extends \Twig_Extension
     			break;
     		case 3:
     		case 4:
-    			$class = 'info';
+    			$class = 'primary';
     			$message = 'sended';
     			break;
     		case 5:
@@ -87,7 +88,7 @@ class QuoteCountExtension extends \Twig_Extension
     			$message = 'given';
     			break;
     		default:
-    			$class = 'important';
+    			$class = 'danger';
     			$message = 'canceled';
     	}
     	$out = '<span class="label';
