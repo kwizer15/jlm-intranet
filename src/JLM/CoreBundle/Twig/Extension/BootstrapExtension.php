@@ -26,6 +26,7 @@ class BootstrapExtension extends \Twig_Extension
     {
         return array(
         		new \Twig_SimpleFilter('icon', array($this, 'iconFilter'), array('is_safe' => array('html'))),
+        		new \Twig_SimpleFilter('label', array($this, 'labelFilter'), array('is_safe' => array('html'))),
         		new \Twig_SimpleFilter('badge', array($this, 'badgeFilter'), array('is_safe' => array('html'))),
         );
     }
@@ -33,6 +34,13 @@ class BootstrapExtension extends \Twig_Extension
     public function iconFilter($iconName)
     {
     	return '<span class="glyphicon glyphicon-'.$iconName.'"></span>';
+    }
+    
+    public function iconFilter($content, $labelType = 'default')
+    {
+    	$labelType = (in_array(array('default','primary','success','info','warning','danger'),$labelType)) ? $labelType : 'default';
+    	
+    	return '<span class="label label-'.$labelType.'">' . $content . '</span>';
     }
     
     public function badgeFilter($content)
