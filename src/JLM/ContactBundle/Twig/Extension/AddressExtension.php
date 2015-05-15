@@ -35,6 +35,7 @@ class AddressExtension extends \Twig_Extension
     	$cityName = strtoupper($address->getCity()->getName());
     	$cityZip = $address->getCity()->getZip();
     	$street = nl2br($address->getStreet());
+    	
     	return '<strong>' . $cityName
     	     . '</strong> <small>' . $cityZip
     	     . '</small><br>' . $street;
