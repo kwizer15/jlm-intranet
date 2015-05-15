@@ -36,7 +36,7 @@ class BootstrapExtension extends \Twig_Extension
     	return '<span class="glyphicon glyphicon-'.$iconName.'"></span>';
     }
     
-    public function iconFilter($content, $labelType = 'default')
+    public function labelFilter($content, $labelType = 'default')
     {
     	$labelType = (in_array(array('default','primary','success','info','warning','danger'),$labelType)) ? $labelType : 'default';
     	
