@@ -4,6 +4,7 @@
 {% spaceless %}
     {% if not compound %}
         {% set label_attr = label_attr|merge({'for': id}) %}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' control-label')|trim}) %}
     {% endif %}
     {% if required %}
         {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
@@ -30,10 +31,11 @@
 {% endblock form_widget_compound %}
 
 {%- block form_widget_simple -%}
-{% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim }) %}
-{{ parent() }}
+  {% if type is not defined or type != 'file' %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim }) %}
+  {% endif %}
+  {{ parent() }}
 {%- endblock form_widget_simple -%}
-
 
 {%- block textarea_widget -%}
 {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim }) %}
@@ -48,16 +50,25 @@
 {% block form_row %}
 {% spaceless %}
     {% set type = type|default('text') %}
+    {% set labelColSize = labelColSize|default('col-md-2') %}
+    {% set widgetColSize = widgetColSize|default('col-md-10') %}
 	<div class="form-group{% if form_errors(form) %} error{% endif %}">
-		{{ form_label(form, label|default(null)) }}
-        {{ form_widget(form) }}
-        {% if form_errors(form) %}
-        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-        <span class="sr-only">{{ form_errors(form) }}</span>
-        {% endif %}
+		{{ form_label(form, label|default(null), {'label_attr' : {'class': labelColSize }}) }}
+		<div class="{{ widgetColSize }}">
+          {{ form_widget(form) }}
+          {% if form_errors(form) %}
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+          <span class="sr-only">{{ form_errors(form) }}</span>
+          {% endif %}
+       </div>
     </div>
 {% endspaceless %}
 {% endblock form_row %}
+
+{% block date_row %}
+    {% set widgetColSize = widgetColSize|default('col-md-2') %}
+    {{ block('form_row') }}
+{% endblock date_row %}
 
 {% block collection_widget %}
 {% spaceless %}
