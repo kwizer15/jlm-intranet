@@ -1,16 +1,32 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
-{% block content %}
+
+{% block page_header %}
 <h1>Liste des Syndics</h1>
+{% endblock %}
+
+{% block content %}
 <table class="table table-stripped">
     <thead>
         <tr>
-            <th>Nom</th>
+            <th>Nom <a href="#">{{ 'triangle-top'|icon }}</a> {{ 'triangle-bottom'|icon }}</th>
             <th>Adresse</th>
             <th>Téléphone</th>
             <th>CA</th>
             <th></th>
         </tr>
-    </thead>
+    
+    <tr class="bg-info">
+            <td><input type="text" class="form-control"></td>
+            <td><input type="text" class="form-control"></td>
+            <td>
+            <input type="text" class="form-control">
+            </td>
+            <td>--</td>
+            <td>
+                <button class="btn btn-default">{{ 'search'|icon }} Rechecher</button>
+           </td>
+        </tr>
+        </thead>
     <tbody>
     {% for entity in entities %}
         <tr>

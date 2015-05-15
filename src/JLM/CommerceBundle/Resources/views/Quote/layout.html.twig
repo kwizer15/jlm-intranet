@@ -1,7 +1,11 @@
-{% extends "JLMOfficeBundle::layout.html.twig" %} 
+{% extends "JLMOfficeBundle::layout.html.twig" %}
+
+{% block search %}
+  {{ form(search.form, {'action': path('quote_search')}) }}
+{% endblock %}
+
 {% block sidebar %}
 	<li><h4>Devis</h4></li>
-	<li>{{ form(search.form, {'action': path('quote_search')}) }}</li>
 	<li><a href="{{ path('askquote_new') }}">{{ 'plus-sign'|icon }} Nouvelle demande de devis</a></li>
 	<li class="divider"></li>
 	<li class="nav-header">États</li>

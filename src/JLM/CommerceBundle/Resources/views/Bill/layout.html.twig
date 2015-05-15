@@ -1,8 +1,11 @@
 {% extends "JLMOfficeBundle::layout.html.twig" %}
 
+{% block search %}
+  {{ form(search.form, {'action': path('bill_search')}) }}
+{% endblock %}
+
 {% block sidebar %}
 	<li><h4>Factures</h4></li>
-	<li>{{ form(search.form, {'action': path('bill_search')}) }}</li>
     <li><a href="{{ path('bill_new') }}">{{ 'plus-sign'|icon }} Nouvelle facture</a></li>
     <li class="divider"></li>
     <li class="nav-header">Etats</li>

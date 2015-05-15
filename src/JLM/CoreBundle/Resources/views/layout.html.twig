@@ -108,6 +108,18 @@
 					</ul>
 			    </div>
 			    <div class="col-md-10">
+			    {% block breadcrumb %}
+			        <ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#">Library</a></li>
+  <li class="active">Data</li>
+</ol>
+			        {% endblock breadcrumb %}
+			      <div class="page-header">
+			      
+			        {% block page_header %}
+			        {% endblock page_header%}
+			      </div>
 		            {% block content %}
 		            {% endblock content %}
 		            {% block pagination %}
