@@ -25,20 +25,18 @@ class BootstrapExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-        		new \Twig_SimpleFilter('icon', array($this, 'iconFilter'), array('is_safe' => array('all'))),
-        		new \Twig_SimpleFilter('badge', array($this, 'badgeFilter'), array('is_safe' => array('all'))),
+        		new \Twig_SimpleFilter('icon', array($this, 'iconFilter'), array('is_safe' => array('html'))),
+        		new \Twig_SimpleFilter('badge', array($this, 'badgeFilter'), array('is_safe' => array('html'))),
         );
     }
     
-    public function iconFilter($iconName, $white = false, $version = '3.3.4')
+    public function iconFilter($iconName)
     {
     	return '<span class="glyphicon glyphicon-'.$iconName.'"></span>';
     }
     
-    public function badgeFilter($content, $class = null)
+    public function badgeFilter($content)
     {
-    	$class = ($class === null) ? 'badge' : 'badge badge-'.$class;
-    	
-    	return '<span class="'.$class.'">'.$content.'</span>';
+    	return '<span class="badge">'.$content.'</span>';
     }
 }

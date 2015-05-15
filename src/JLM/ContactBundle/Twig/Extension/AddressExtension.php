@@ -26,7 +26,7 @@ class AddressExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-        		new \Twig_SimpleFilter('address', array($this, 'addressFilter'), array('is_safe' => array('all'))),
+        		new \Twig_SimpleFilter('address', array($this, 'addressFilter'), array('is_safe' => array('html'))),
         );
     }
     
