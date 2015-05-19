@@ -50,6 +50,7 @@ class InterventionSubscriber implements EventSubscriberInterface
 	{
 		return array(
 			JLMDailyEvents::INTERVENTION_SCHEDULEWORK => 'createWorkFromIntervention',
+			JLMDailyEvents::INTERVENTION_UNSCHEDULEWORK => 'deleteWorkFromIntervention',
 			JLMCommerceEvents::QUOTEVARIANT_GIVEN => 'createWorkFromQuote',
 		);
 	}
@@ -68,6 +69,20 @@ class InterventionSubscriber implements EventSubscriberInterface
 		$work = WorkFactory::create(new InterventionWorkBuilder($interv, $options));
 		$this->om->persist($work);
 		$interv->setWork($work);
+		$this->om->persist($interv);
+		$this->om->flush();
+	}
+	
+	/**
+	 * Create work since intervention
+	 * @param InterventionEvent $event
+	 */
+	public function deleteWorkFromIntervention(InterventionEvent $event)
+	{
+		$interv = $event->getIntervention();
+		$work = $interv->getWork();
+		$interv->setWork();
+		$this->om->remove($work);
 		$this->om->persist($interv);
 		$this->om->flush();
 	}

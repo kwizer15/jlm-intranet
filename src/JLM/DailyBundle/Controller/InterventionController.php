@@ -178,13 +178,7 @@ class InterventionController extends Controller
 	 */
 	public function cancelworkAction(Intervention $entity)
 	{
-		$work = $entity->getWork();
-		$entity->setWork();
-		$em = $this->getDoctrine()->getManager();
-		$em->remove($work);
-		$em->persist($entity);
-		$em->flush();
-//		$this->get('event_dispatcher')->dispatch(JLMDailyEvents::INTERVENTION_UNSCHEDULEWORK, new InterventionEvent($entity));
+		$this->get('event_dispatcher')->dispatch(JLMDailyEvents::INTERVENTION_UNSCHEDULEWORK, new InterventionEvent($entity));
 		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}

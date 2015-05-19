@@ -17,4 +17,5 @@ namespace JLM\DailyBundle;
 final class JLMDailyEvents
 {
 	const INTERVENTION_SCHEDULEWORK = "jlm_daily.intervention_schedulework";
+	const INTERVENTION_UNSCHEDULEWORK = "jlm_daily.intervention_unschedulework";
 }

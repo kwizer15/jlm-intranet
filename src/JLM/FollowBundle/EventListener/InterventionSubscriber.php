@@ -46,6 +46,7 @@ class InterventionSubscriber implements EventSubscriberInterface
 	{
 		return array(
 			JLMDailyEvents::INTERVENTION_SCHEDULEWORK => 'createThread',
+			JLMDailyEvents::INTERVENTION_UNSCHEDULEWORK => 'deleteThread',
 		);
 	}
 	
@@ -60,6 +61,20 @@ class InterventionSubscriber implements EventSubscriberInterface
 		$this->om->persist($starter);
 		$thread = new Thread($starter);
 		$this->om->persist($thread);
+		$this->om->flush();
+	}
+	
+	/**
+	 * Create thread since intervention
+	 * @param InterventionEvent $event
+	 */
+	public function deleteThread(InterventionEvent $event)
+	{
+		$entity = $event->getIntervention();
+		$starter = $this->om->getRepository('JLMFollowBundle:StarterIntervention')->findOneBy(array('intervention'=>$entity));
+		$thread = $this->om->getRepository('JLMFollowBundle:Thread')->findOneBy(array('starter'=>$starter));
+		$this->om->remove($thread);
+		$this->om->remove($starter);
 		$this->om->flush();
 	}
 }
