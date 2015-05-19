@@ -87,6 +87,9 @@ class InterventionSubscriber implements EventSubscriberInterface
 		$this->om->flush();
 	}
 	
+	/**
+	 * @param QuoteVariantEvent $event
+	 */
 	public function createWorkFromQuote(QuoteVariantEvent $event)
 	{
 		$entity = $event->getQuoteVariant();
@@ -94,10 +97,10 @@ class InterventionSubscriber implements EventSubscriberInterface
 		{
 			// Création de la ligne travaux pré-remplie
 			//$work = Work::createFromQuoteVariant($entity);
-			$work = WorkFactory::create(new VariantWorkBuilder($entity), array(
+			$work = WorkFactory::create(new VariantWorkBuilder($entity, array(
 					'category' => $this->om->getRepository('JLMDailyBundle:WorkCategory')->find(1),
 					'objective' => $this->om->getRepository('JLMDailyBundle:WorkObjective')->find(1),
-			));
+			)));
 			//$work->setMustBeBilled(true);
 			//$work->setCategory($this->om->getRepository('JLMDailyBundle:WorkCategory')->find(1));
 			//$work->setObjective($this->om->getRepository('JLMDailyBundle:WorkObjective')->find(1));
