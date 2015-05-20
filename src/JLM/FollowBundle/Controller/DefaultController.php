@@ -29,4 +29,24 @@ class DefaultController extends Controller
     	$threads = $em->getRepository('JLMFollowBundle:Thread')->findBy(array(),array('startDate'=>'DESC'));
         return array('threads' => $threads);
     }
+    
+    /**
+     * @Template()
+     */
+    public function quoteAction()
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$threads = $em->getRepository('JLMFollowBundle:Thread')->findBy(array(),array('startDate'=>'DESC'));
+    	return array('threads' => $threads);
+    }
+    
+    /**
+     * @Template()
+     */
+    public function interventionAction()
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$threads = $em->getRepository('JLMFollowBundle:Thread')->findBy(array(),array('startDate'=>'DESC'));
+    	return array('threads' => $threads);
+    }
 }

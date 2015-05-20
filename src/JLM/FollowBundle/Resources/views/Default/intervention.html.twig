@@ -2,8 +2,7 @@
 
 {% block content %}
 <h1>Suivi de commandes</h1>
-<a href="{{ path('jlm_follow_default_quote' }}">Devis</a>
-<a href="{{ path('jlm_follow_default_intervention' }}">Interventions</a>
+
 <table class="table">
   <thead>
     <tr>
@@ -21,6 +20,7 @@
   </thead>
   <tbody>
 {% for thread in threads %}
+  {%- if thread.starter.type == 'intervention' -%}
     <tr class="
       {%- if thread.state == 0 -%}danger
       {%- elseif thread.state == 1 -%}warning
@@ -64,6 +64,7 @@
       	{%- endif -%}
       </td>
     </tr>
+    {% endif %}
 {% endfor %}
   </tbody>
 </table>
