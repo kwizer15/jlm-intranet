@@ -177,7 +177,7 @@ class MaintenanceController extends AbstractInterventionController
 			}
 		}
 		$em->flush();
-		$entities = $repo->getMaintenanceNeighbor($door,15);
+		$entities = $repo->getMaintenanceNeighbor($door,30);
 		$forms = array();
 		foreach ($entities as $entity)
 		{

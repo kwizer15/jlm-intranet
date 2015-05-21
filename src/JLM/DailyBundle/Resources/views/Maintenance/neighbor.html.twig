@@ -19,6 +19,7 @@
 			<tr>
 				<td>
 					{% if entity.destination.site.blocked %}<span class="label label-important">Facture en retard</span><br>{% endif %}
+					{% if entity.destination.waitMaintenance %}<span class="label">{% if entity.destination.numberWaitMaintenance == 1 %}1er{% else %}2ème{% endif %} entretien à faire</span>{% endif %}
 					<a href="{{ path('maintenance_show',{'id':entity.destination.nextMaintenance.id}) }}">
 					<strong>{{ entity.destination.site.address.city.name | upper }}</strong> <small>{{ entity.destination.site.address.city.zip }}</small><br>{{ entity.destination.site.address.street | nl2br }}
 					</a>
