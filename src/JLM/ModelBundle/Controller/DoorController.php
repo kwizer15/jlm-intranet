@@ -261,7 +261,7 @@ class DoorController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     
-    	$entities = $em->getRepository('JLMModelBundle:Door')->findAll();
+    	$entities = $em->getRepository('JLMModelBundle:Door')->findBy(array('latitude'=>null));
     	$count = 0;
     	$logs = array();
     	foreach ($entities as $entity)
