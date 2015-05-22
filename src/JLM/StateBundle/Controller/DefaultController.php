@@ -284,6 +284,7 @@ class DefaultController extends Controller
     {
     	$manager = $this->get('jlm_commerce.bill_manager');
 		$manager->secure('ROLE_USER');
+		$datas = array();
 		$datas['entities'] = $manager->getRepository()->get45Sended();
 		$datas['ca'] = 0;
 		foreach($datas['entities'] as $entity)
@@ -293,5 +294,22 @@ class DefaultController extends Controller
 		return $manager->renderResponse('JLMStateBundle:Default:lastbill.html.twig',
 				$datas
 		);
+    }
+    
+    /**
+     * @Route("/doortypes", name="state_doortypes")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function doortypesAction()
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$datas = $em->getRepository('JLMModelBundle:Door')->getCountByType();
+    	$tot = 0;
+		foreach ($datas as $data)
+		{
+			$tot += $data['nb'];
+		}
+    	return array('datas' => $datas, 'tot'=>$tot);
     }
 }

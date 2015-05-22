@@ -1,0 +1,25 @@
+{% extends "JLMStateBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Types d'installation sous contrat</h1>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Type de porte</th>
+			<th>Nombre sous contrat</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for data in datas %}
+		<tr>
+			<td>{{ data.name }}</td>
+			<td>{{ data.nb }}</td>
+		</tr>
+		{% endfor %}
+		<tr>
+			<th>Total</td>
+			<th>{{ tot }}</td>
+		</tr>
+	</tbody>
+</table>
+{% endblock %}

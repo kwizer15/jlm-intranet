@@ -126,4 +126,18 @@ class DoorRepository extends SearchRepository
 		->select('COUNT(d)');
 		return $qb->getQuery()->getSingleScalarResult();
 	}
+	
+	public function getCountByType()
+	{
+		$qb = $this->createQueryBuilder('a')
+		->select('i.name as name,COUNT(a) as nb')
+		->leftJoin('a.contracts','g')
+		->leftJoin('a.type','i')
+		->where('g is not null and g.end is null')
+		->groupBy('i.name')
+		->orderBy('nb','DESC')
+		;
+		
+		return $qb->getQuery()->getResult();
+	}
 }
