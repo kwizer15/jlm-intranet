@@ -34,16 +34,21 @@ class SearchRepository extends EntityRepository implements SearchRepositoryInter
 			foreach ($params as $param)
 				$wheres[$param][] = $param . ' LIKE ?'.$key;
 			$qb->setParameter($key,'%'.$keyword.'%');
+			//$qb->orWhere($param . ' LIKE ?'.$key);
 		}
 		
 		foreach ($params as $param)
-			$qb->orWhere(implode(' AND ',$wheres[$param]));
+		{
+			$qb->orWhere(implode(' OR ',$wheres[$param]));
+		}
+		
 		$orderBys = $this->getSearchOrderBy();
-		foreach ($orderBys as $champ=>$order)
+		foreach ($orderBys as $champ => $order)
 		{
 			/* Vérifier $order = 'asc' ou 'desc' */
 			$qb->addOrderBy($champ,$order);
 		}
+		
 		return $qb->getQuery()->getResult();
 	}
 	

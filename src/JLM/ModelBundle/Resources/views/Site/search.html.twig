@@ -2,10 +2,9 @@
     <thead>
         <tr>
         	<th></th>
-        	<th>Syndic</th>
             <th>Adresse</th>
-            <th>Code postal</th>
-            <th>Ville</th>
+            <th>Syndic</th>
+            <th>Téléphone syndic</th>
             <th>TVA</th>
             <th>Nb portes</th>
         </tr>
@@ -16,10 +15,25 @@
         	<td>
                 <a href="{{ path('site_show', { 'id': entity.id }) }}" class="btn">{{ 'eye-open'|icon }}</a>
            </td>
-        	<td>{{ entity.trustee }}</td>
-            <td>{{ entity.address.street | nl2br}}</td>
-            <td>{{ entity.address.city.zip }}</td>
-            <td>{{ entity.address.city.name }}</td>
+            <td>{{ entity.address.street | nl2br}}
+            <br>{{ entity.address.city.zip }} {{ entity.address.city.name|upper }}</td>
+            <td>{{ entity.trustee }}</td>
+            <td>
+              <ul>
+              <li>{{ entity.trustee }}<ul>
+              {% for phone in entity.trustee.phones %}
+                <li>{{ phone.label }} : {{ phone.number }}</li>
+              {% endfor %}
+              </ul></li>
+              {% for contact in entity.contacts %}
+              <li>{{ contact.name }} ({{ contact.role }})
+                  <ul>
+                {% for phone in contact.person.phones %}
+                  <li>{{ phone.label }} : {{ phone.number }}</li>
+                {% endfor %}
+                </ul></li>
+              {% endfor %}
+              </ul></td>
             <td>{{ entity.vat }}</td>
             <td>{{ entity.doors|length }}</td>
         </tr>

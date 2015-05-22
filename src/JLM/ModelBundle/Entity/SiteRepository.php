@@ -38,9 +38,11 @@ class SiteRepository extends SearchRepository
 	protected function getSearchQb()
 	{
 		return $this->createQueryBuilder('a')
-			->select('a,b,c')
+			->select('a,b,c,d')
 			->leftJoin('a.address','b')
-			->leftJoin('b.city','c');
+			->leftJoin('b.city','c')
+			->leftJoin('a.trustee','d')
+			->leftJoin('d.contact','e');
 	}
 	
 	/**
@@ -48,7 +50,7 @@ class SiteRepository extends SearchRepository
 	 */
 	protected function getSearchParams()
 	{
-		return array('b.street','c.name');
+		return array('b.street','c.name','e.name');
 	}
 	
 	public function searchResult($query, $limit = 8)
