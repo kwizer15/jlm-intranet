@@ -314,7 +314,13 @@ class DefaultController extends Controller
 			{
 				if ($door['name'] == $interv['name'])
 				{
-					$data[$door['name']] = array('nb' => $door['nb'], 'intervs' => $interv['nb'], 'moyintervs' => $interv['nb'] / $door['nb']);
+					$data[$door['name']] = array(
+							'nb' => $door['nb'],
+							'intervs' => $interv['nb'],
+							'moyintervs' => $interv['nb'] / $door['nb'],
+							'time' => $interv['time'],
+							'moytime' => $interv['time'] / $door['nb'],
+					);
 					$tot += $door['nb'];
 					$totinter += $interv['nb'];
 				}
