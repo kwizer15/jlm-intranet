@@ -7,18 +7,24 @@
 		<tr>
 			<th>Type de porte</th>
 			<th>Nombre sous contrat</th>
+			<th>Nombre d'interventions</th>
+			<th>Moyenne</th>
 		</tr>
 	</thead>
 	<tbody>
-		{% for data in datas %}
+		{% for name,data in datas %}
 		<tr>
-			<td>{{ data.name }}</td>
+			<td>{{ name }}</td>
 			<td>{{ data.nb }}</td>
+			<td>{{ data.intervs }}</td>
+			<td>{{ data.moyintervs}}</td>
 		</tr>
 		{% endfor %}
 		<tr>
-			<th>Total</td>
-			<th>{{ tot }}</td>
+			<th>Total</th>
+			<th>{{ tot }}</th>
+			<th>{{ totinter }}</th>
+			<th>{{ moytot|number_format(2, ',', ' ') }}</th>
 		</tr>
 	</tbody>
 </table>

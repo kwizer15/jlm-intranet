@@ -304,12 +304,24 @@ class DefaultController extends Controller
     public function doortypesAction()
     {
     	$em = $this->getDoctrine()->getManager();
-    	$datas = $em->getRepository('JLMModelBundle:Door')->getCountByType();
-    	$tot = 0;
-		foreach ($datas as $data)
+    	$doors = $em->getRepository('JLMModelBundle:Door')->getCountByType();
+    	$intervs = $em->getRepository('JLMModelBundle:Door')->getCountIntervsByType();
+    	$tot = $totinter = 0;
+    	$data = array();
+		foreach ($doors as $door)
 		{
-			$tot += $data['nb'];
+			foreach ($intervs as $interv)
+			{
+				if ($door['name'] == $interv['name'])
+				{
+					$data[$door['name']] = array('nb' => $door['nb'], 'intervs' => $interv['nb'], 'moyintervs' => $interv['nb'] / $door['nb']);
+					$tot += $door['nb'];
+					$totinter += $interv['nb'];
+				}
+			}
 		}
-    	return array('datas' => $datas, 'tot'=>$tot);
+		
+    	return array('datas' => $data, 'tot'=>$tot, 'totinter'=>$totinter, 'moytot' => $totinter / $tot);
     }
+
 }

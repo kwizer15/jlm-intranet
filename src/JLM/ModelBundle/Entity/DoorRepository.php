@@ -140,4 +140,19 @@ class DoorRepository extends SearchRepository
 		
 		return $qb->getQuery()->getResult();
 	}
+	
+	public function getCountIntervsByType()
+	{
+		$qb = $this->createQueryBuilder('a')
+		->select('i.name as name,COUNT(b) as nb')
+		->leftJoin('a.contracts','g')
+		->leftJoin('a.type','i')
+		->leftJoin('a.interventions','b')
+		->where('g is not null and g.end is null')
+		->groupBy('i.name')
+		->orderBy('nb','DESC')
+		;
+	
+		return $qb->getQuery()->getResult();
+	}
 }
