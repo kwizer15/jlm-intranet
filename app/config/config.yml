@@ -60,10 +60,9 @@ doctrine:
         user:     %database_user%
         password: %database_password%
         charset:  UTF8
-
     orm:
-        auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        auto_generate_proxy_classes: %kernel.debug%
         resolve_target_entities:
             JLM\AskBundle\Model\AskInterface: JLM\AskBundle\Entity\AskQuote
             JLM\AskBundle\Model\PayerInterface: JLM\ModelBundle\Entity\Trustee
@@ -119,6 +118,13 @@ doctrine:
             JLM\OfficeBundle\Model\OrderInterface: JLM\OfficeBundle\Entity\Order
             JLM\OfficeBundle\Model\OrderLineInterface: JLM\OfficeBundle\Entity\OrderLine
 
+        dql:
+            datetime_functions:
+                datediff: JLM\CoreBundle\DQL\DateDiffFunction
+                sec_to_time: JLM\CoreBundle\DQL\SecToTimeFunction
+                time_to_sec: JLM\CoreBundle\DQL\TimeToSecFunction
+
+                        
 # Swiftmailer Configuration
 swiftmailer:
     transport: %mailer_transport%
