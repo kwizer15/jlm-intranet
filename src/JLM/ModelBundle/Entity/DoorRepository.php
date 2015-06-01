@@ -141,15 +141,20 @@ class DoorRepository extends SearchRepository
 		return $qb->getQuery()->getResult();
 	}
 	
-	public function getCountIntervsByType($year = 2015)
+	public function getCountIntervsByType($year = 2015, $type = 'fixing')
 	{
+		$types = array(
+				'fixing'=>'JLM\DailyBundle\Entity\Fixing',
+				'maintenance'=>'JLM\DailyBundle\Entity\Maintenance',
+				'work'=>'JLM\DailyBundle\Entity\Work',	
+		);
 		$qb = $this->createQueryBuilder('a')
-		->select('i.name as name,COUNT(b) as nb, sum(c.end - c.begin) as time')
+		->select('i.name as name,COUNT(b) as nb, sum(time_to_sec(c.end) - time_to_sec(c.begin)) as time')
 		->leftJoin('a.contracts','g')
 		->leftJoin('a.type','i')
 		->leftJoin('a.interventions','b')
 		->leftJoin('b.shiftTechnicians','c')
-		->where('g is not null and g.end is null and b INSTANCE OF JLM\DailyBundle\Entity\Fixing and c.begin BETWEEN \''.$year.'-01-01 00:00:00\' AND \''.$year.'-12-31 23:59:59\'')
+		->where('g is not null and g.end is null and b INSTANCE OF '.$types[$type].' and c.end BETWEEN \''.$year.'-01-01 00:00:00\' AND \''.$year.'-12-31 23:59:59\'')
 		->groupBy('i.name')
 		->orderBy('nb','DESC')
 		;

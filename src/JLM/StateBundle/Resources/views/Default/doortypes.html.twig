@@ -8,7 +8,9 @@
 			<th>Type de porte</th>
 			<th>Nombre sous contrat</th>
 			<th>Nombre d'interventions</th>
-			<th>Moyenne</th>
+			<th>Moyenne d'intervention / install.</th>
+			<th>Temps passé total</th>
+			<th>Temps moyen passé / install.</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -17,7 +19,7 @@
 			<td>{{ name }}</td>
 			<td>{{ data.nb }}</td>
 			<td>{{ data.intervs }}</td>
-			<td>{{ data.moyintervs}}</td>
+			<td>{{ data.moyintervs|number_format(2, ',', ' ')}}</td>
 			<td>{{ data.time}}</td>
 			<td>{{ data.moytime}}</td>
 		</tr>
@@ -27,6 +29,7 @@
 			<th>{{ tot }}</th>
 			<th>{{ totinter }}</th>
 			<th>{{ moytot|number_format(2, ',', ' ') }}</th>
+			<th>{{ tottime|date('H:i') }}</th>
 		</tr>
 	</tbody>
 </table>
