@@ -323,7 +323,7 @@ class DefaultController extends Controller
 							'intervs' => (int)$interv['nb'],
 							'moyintervs' => (float)($interv['nb'] / $door['nb']),
 							'time' => $this->secondsToInterval($interv['time']),
-							'moytime' => $this->secondsToInterval(floor($interv['time']/$door['nb'])),
+							'moytime' => $this->secondsToInterval($interv['time']/$door['nb']),
 					);
 					$tot += $door['nb'];
 					$totinter += $interv['nb'];
@@ -338,7 +338,7 @@ class DefaultController extends Controller
     			'totinter'=>$totinter,
     			'tottime' => $this->secondsToInterval($tottime),
     			'moytot' => (float)($totinter / $tot),
-    			'moytime' => $this->secondsToInterval(floor($tottime/$tot)),
+    			'moytime' => $this->secondsToInterval($tottime/$tot),
     			'year' => $year,
     			'maxyear' => $maxyear,
     	);
@@ -346,9 +346,26 @@ class DefaultController extends Controller
 
     private function secondsToInterval($seconds)
     {
+    	$seconds = floor($seconds);
     	$hours = floor($seconds / 3600);
     	$minutes = floor($seconds / 60) - $hours * 60;
     	
     	return new \DateInterval('PT'.$hours.'H'.$minutes.'M');
+    }
+    
+    /**
+     * @Route("/quotes/{year}", name="state_quotes")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function quotesAction($year = null)
+    {
+    	$date = new \DateTime();
+    	$maxyear = $date->format('Y');
+    	$year = ($year === null) ? $maxyear : $year;
+    	$em = $this->getDoctrine()->getManager();
+    	$sends = $em->getRepository('JLMCommerceBundle:Quote')->getSends($year);
+    	$givens = $em->getRepository('JLMCommerceBundle:Quote')->getGivens($year);
+    	return array('sends'=>$sends,'givens'=>$givens,'percent'=>($givens/$sends)*100);
     }
 }

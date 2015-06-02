@@ -329,4 +329,30 @@ class QuoteRepository extends SearchRepository
 		return $qb->getQuery()->getResult();
 	}
 
+	public function getSends($year)
+	{
+		$qb = $this->createQueryBuilder('a')
+			->select('COUNT(DISTINCT a) as nb')
+			->leftJoin('a.variants','c')
+			->where('c.state > 2')
+			->andWhere('a.creation BETWEEN ?1 AND ?2')
+			->setParameter(1,new \DateTime($year.'-01-01 00:00:00'))
+			->setParameter(2,new \DateTime($year.'-12-31 23:59:59'));
+			
+		return $qb->getQuery()->getSingleScalarResult();
+	}
+	
+	public function getGivens($year)
+	{
+		$qb = $this->createQueryBuilder('a')
+		->select('COUNT(DISTINCT a) as nb')
+		->leftJoin('a.variants','c')
+		->leftJoin('c.work','d')
+		->where('c.state = 5')
+		->andWhere('d.creation BETWEEN ?1 AND ?2')
+		->setParameter(1, new \DateTime($year.'-01-01 00:00:00'))
+		->setParameter(2, new \DateTime($year.'-12-31 23:59:59'));
+			
+		return $qb->getQuery()->getSingleScalarResult();
+	}
 }
