@@ -20,8 +20,8 @@
 			<td>{{ data.nb }}</td>
 			<td>{{ data.intervs }}</td>
 			<td>{{ data.moyintervs|number_format(2, ',', ' ')}}</td>
-			<td>{{ data.time}}</td>
-			<td>{{ data.moytime}}</td>
+			<td>{{ data.time|date('%hh%I') }}</td>
+			<td>{{ data.moytime|date('%hh%I') }}</td>
 		</tr>
 		{% endfor %}
 		<tr>
@@ -29,7 +29,8 @@
 			<th>{{ tot }}</th>
 			<th>{{ totinter }}</th>
 			<th>{{ moytot|number_format(2, ',', ' ') }}</th>
-			<th>{{ tottime|date('H:i') }}</th>
+			<th>{{ tottime|date('%hh%I') }}</th>
+			<th>{{ moytime|date('%hh%I') }}</th>
 		</tr>
 	</tbody>
 </table>

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Default controller.
@@ -297,16 +298,20 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/doortypes", name="state_doortypes")
+     * @Route("/doortypes/{year}", name="state_doortypes")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function doortypesAction()
+    public function doortypesAction($year = null)
     {
+    	if ($year === null)
+    	{
+    		$date = new \DateTime();
+    		$year = $date->format('Y');
+    	}
     	$em = $this->getDoctrine()->getManager();
-    	$doors = $em->getRepository('JLMModelBundle:Door')->getCountByType();
-    	$intervs = $em->getRepository('JLMModelBundle:Door')->getCountIntervsByType();
-  //  	var_dump($intervs[2]['time']); exit;
+    	$doors = $em->getRepository('JLMModelBundle:Door')->getCountByType($year);
+    	$intervs = $em->getRepository('JLMModelBundle:Door')->getCountIntervsByType($year);
     	$tot = $totinter = $tottime = 0;
     	$data = array();
 		foreach ($doors as $door)
@@ -315,42 +320,35 @@ class DefaultController extends Controller
 			{
 				if ($door['name'] == $interv['name'])
 				{
-					$hours = floor($interv['time']/3600);
-					$minutes = ($interv['time']/60) - ($hours*60);
-					if ($minutes < 10)
-					{
-						$minutes = '0'.$minutes;
-					}
-					$m = floor($interv['time']/$door['nb']);
-					$mhours = floor($m/3600);
-					$mminutes = floor($m/60) - ($mhours*60);
-					if ($mminutes < 10)
-					{
-						$mminutes = '0'.$mminutes;
-					}
 					$data[$door['name']] = array(
 							'nb' => (int)$door['nb'],
 							'intervs' => (int)$interv['nb'],
 							'moyintervs' => (float)($interv['nb'] / $door['nb']),
-							'time' => $hours.'h'.$minutes,
-							//'moytime' => (float)($interv['time'] / $door['nb']),
-							'moytime' => $mhours.'h'.$mminutes,
+							'time' => $this->secondsToInterval($interv['time']),
+							'moytime' => $this->secondsToInterval(floor($interv['time']/$door['nb'])),
 					);
 					$tot += $door['nb'];
 					$totinter += $interv['nb'];
-					$tottime += (float)($interv['time']);
+					$tottime += $interv['time'];
 				}
 			}
 		}
-		$hours = floor($interv['time']/3600);
-		$minutes = ($interv['time']/60) - ($hours*60);
+		
     	return array(
     			'datas' => $data,
     			'tot'=>$tot,
     			'totinter'=>$totinter,
-    			'tottime' => $tottime,
-    			'moytot' => (float)($totinter / $tot)
+    			'tottime' => $this->secondsToInterval($tottime),
+    			'moytot' => (float)($totinter / $tot),
+    			'moytime' => $this->secondsToInterval(floor($tottime/$tot)),
     	);
     }
 
+    private function secondsToInterval($seconds)
+    {
+    	$hours = floor($seconds / 3600);
+    	$minutes = floor($seconds / 60) - $hours * 60;
+    	
+    	return new \DateInterval('PT'.$hours.'H'.$minutes.'M');
+    }
 }

@@ -127,7 +127,7 @@ class DoorRepository extends SearchRepository
 		return $qb->getQuery()->getSingleScalarResult();
 	}
 	
-	public function getCountByType()
+	public function getCountByType($year = 2015)
 	{
 		$qb = $this->createQueryBuilder('a')
 		->select('i.name as name,COUNT(a) as nb')
