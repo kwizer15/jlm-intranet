@@ -367,6 +367,8 @@ class DefaultController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$sends = $em->getRepository('JLMCommerceBundle:Quote')->getSends($year);
     	$givens = $em->getRepository('JLMCommerceBundle:Quote')->getGivens($year);
-    	return array('sends'=>$sends,'givens'=>$givens,'percent'=>($givens/$sends)*100);
+//    	var_dump($sends); exit;
+    	return array('sends'=>$sends,'givens'=>$givens,'year' => $year,
+    			'maxyear' => $maxyear,);
     }
 }

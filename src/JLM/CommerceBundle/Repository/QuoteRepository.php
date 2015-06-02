@@ -13,6 +13,7 @@ namespace JLM\CommerceBundle\Repository;
 
 use JLM\ModelBundle\Entity\Door;
 use JLM\DefaultBundle\Entity\SearchRepository;
+use JLM\CommerceBundle\Entity\QuoteVariant;
 
 /**
  * QuoteRepository
@@ -332,27 +333,31 @@ class QuoteRepository extends SearchRepository
 	public function getSends($year)
 	{
 		$qb = $this->createQueryBuilder('a')
-			->select('COUNT(DISTINCT a) as nb')
+			->select('MONTH(a.creation) AS month, COUNT(DISTINCT a) AS nb, SUM(l.unitPrice*l.quantity*(1-l.discount)) AS val')
 			->leftJoin('a.variants','c')
-			->where('c.state > 2')
-			->andWhere('a.creation BETWEEN ?1 AND ?2')
-			->setParameter(1,new \DateTime($year.'-01-01 00:00:00'))
-			->setParameter(2,new \DateTime($year.'-12-31 23:59:59'));
+			->leftJoin('c.lines','l')
+			->where('c.state >= ?1')
+			->andWhere('YEAR(a.creation) = ?2')
+			->groupBy('month')
+			->setParameter(1, QuoteVariant::STATE_SENDED)
+			->setParameter(2, $year);
 			
-		return $qb->getQuery()->getSingleScalarResult();
+		return $qb->getQuery()->getResult();
 	}
 	
 	public function getGivens($year)
 	{
 		$qb = $this->createQueryBuilder('a')
-		->select('COUNT(DISTINCT a) as nb')
-		->leftJoin('a.variants','c')
-		->leftJoin('c.work','d')
-		->where('c.state = 5')
-		->andWhere('d.creation BETWEEN ?1 AND ?2')
-		->setParameter(1, new \DateTime($year.'-01-01 00:00:00'))
-		->setParameter(2, new \DateTime($year.'-12-31 23:59:59'));
+			->select('MONTH(d.creation) AS month, COUNT(DISTINCT a) AS nb, SUM(l.unitPrice*l.quantity*(1-l.discount)) AS val')
+			->leftJoin('a.variants','c')
+			->leftJoin('c.lines','l')
+			->leftJoin('c.work','d')
+			->where('c.state = ?1')
+			->andWhere('YEAR(d.creation) = ?2')
+			->groupBy('month')
+			->setParameter(1, QuoteVariant::STATE_GIVEN)
+			->setParameter(2, $year);
 			
-		return $qb->getQuery()->getSingleScalarResult();
+		return $qb->getQuery()->getResult();
 	}
 }

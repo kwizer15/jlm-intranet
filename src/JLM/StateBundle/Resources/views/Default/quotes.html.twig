@@ -1,7 +1,48 @@
 {% extends "JLMStateBundle::layout.html.twig" %}
 
+{% block sidebar %}
+<ul class="nav nav-pills nav-stacked">
+{% for y in 2013..maxyear %}
+<li{%- if y == year %} class="active"{%- endif -%}>
+  <a href="{{ path('state_quotes',{'year':y}) }}">{{ y }}</a>
+</li>
+{% endfor %}
+</ul>
+{% endblock %}
+
 {% block content %}
 <h1>Devis</h1>
-<p>{{ givens }} / {{ sends }}</p>
-<p>soit {{ percent }} %</p>
+<table class="table table-stripped">
+<tr>
+<th>Mois</th>
+<th>Envoyé</th>
+<th>Accordé</th>
+<th>Envoyé</th>
+<th>Accordé</th>
+</tr>
+{% set totalgivennb = 0 %}
+{% set totalgivenval = 0 %}
+{% set totalsendnb = 0 %}
+{% set totalsendval = 0 %}
+{% for key,given in givens %}
+<tr>
+<th>{{ given.month }}</th>
+<td>{{ sends[key].nb }}</td>
+<td>{{ given.nb }}</td>
+<td>{{ sends[key].val|number_format(2,',',' ') }} €</td>
+<td>{{ given.val|number_format(2,',',' ') }} €</td>
+<tr>
+{% set totalgivennb = totalgivennb + given.nb %}
+{% set totalgivenval = totalgivenval + given.val %}
+{% set totalsendnb = totalsendnb + sends[key].nb %}
+{% set totalsendval = totalsendval + sends[key].val %}
+{% endfor %}
+<tr>
+<th>Total</th>
+<th>{{ totalsendnb }}</td>
+<th>{{ totalgivennb }}</td>
+<th>{{ totalsendval|number_format(2,',',' ') }} €</td>
+<th>{{ totalgivenval|number_format(2,',',' ') }} €</td>
+<tr>
+</table>
 {% endblock %}
