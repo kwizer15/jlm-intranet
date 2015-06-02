@@ -40,7 +40,9 @@ class BillBoost extends FPDFext
 		$this->cell(0,5,$entity->getTrusteeName(),0,2);
 		$this->setFont($this->police,'',12);
 		$this->multiCell(0,5,$entity->getTrusteeAddress());
-		$this->ln(20);
+		$this->ln(5);
+		$this->cell(0,5,'à l\'attention du gestionnaire et du service comptabilité');
+		$this->ln(17);
 		$this->setFont($this->police,'B',14);
 		$this->cell(0,8,(($entity->getFirstBoost() === null) ? '1er' : '2ème').' RAPPEL',1,1,'C',1);
 		$this->ln(6);
