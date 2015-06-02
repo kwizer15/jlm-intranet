@@ -120,6 +120,9 @@ doctrine:
 
         dql:
             datetime_functions:
+                week: JLM\CoreBundle\DQL\WeekFunction
+                month: JLM\CoreBundle\DQL\MonthFunction
+                year: JLM\CoreBundle\DQL\YearFunction
                 datediff: JLM\CoreBundle\DQL\DateDiffFunction
                 sec_to_time: JLM\CoreBundle\DQL\SecToTimeFunction
                 time_to_sec: JLM\CoreBundle\DQL\TimeToSecFunction
