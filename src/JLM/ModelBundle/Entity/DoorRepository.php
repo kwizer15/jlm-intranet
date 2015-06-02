@@ -130,17 +130,16 @@ class DoorRepository extends SearchRepository
 	public function getCountByType($year = 2015)
 	{
 		$qb = $this->createQueryBuilder('a')
-		->select('i.name as name,COUNT(a) as nb')
+		->select('i.name AS name,COUNT(a) AS nb')
 		->leftJoin('a.contracts','g')
 		->leftJoin('a.type','i')
-		->where('g is not null')
-		->andWhere('g.end is null or (g.begin < ?1 and g.end > ?2)')
-		->setParameter(1, new \DateTime($year.'-01-01 00:00:00'))
-		->setParameter(2, new \DateTime($year.'-12-31 23:59:59'))
+		->where('g IS NOT NULL')
+		->andWhere('g.end IS NULL OR (YEAR(g.begin) < ?1 AND YEAR(g.end) > ?1)')
+		->setParameter(1, $year)
 		->groupBy('i.name')
 		->orderBy('nb','DESC')
 		;
-		// Calculer un prorata des perte de contrat sur la période
+		// Calculer un prorata des pertes de contrat sur la période
 		
 		return $qb->getQuery()->getResult();
 	}
@@ -153,18 +152,17 @@ class DoorRepository extends SearchRepository
 				'work'=>'JLM\DailyBundle\Entity\Work',	
 		);
 		$qb = $this->createQueryBuilder('a')
-		->select('i.name as name,COUNT(b) as nb, sum(time_to_sec(c.end) - time_to_sec(c.begin)) as time')
+		->select('i.name AS name,COUNT(b) AS nb, SUM(TIME_TO_SEC(c.end) - TIME_TO_SEC(c.begin)) as time')
 		->leftJoin('a.contracts','g')
 		->leftJoin('a.type','i')
 		->leftJoin('a.interventions','b')
 		->leftJoin('b.shiftTechnicians','c')
-		->where('g is not null')
-		->andWhere('g.end is null')
-		->andWhere('g.end is null or (g.begin < ?1 and g.end > ?2)')
+		->where('g IS NOT NULL')
+		->andWhere('g.end IS NULL')
+		->andWhere('g.end IS NULL OR (YEAR(g.begin) < ?1 AND YEAR(g.end) > ?1)')
 		->andWhere('b INSTANCE OF '.$types[$type])
-		->andWhere('c.end BETWEEN ?1 AND ?2')
-		->setParameter(1, new \DateTime($year.'-01-01 00:00:00'))
-		->setParameter(2, new \DateTime($year.'-12-31 23:59:59'))
+		->andWhere('YEAR(c.end) = ?1')
+		->setParameter(1, $year)
 		->groupBy('i.name')
 		->orderBy('nb','DESC')
 		;

@@ -101,6 +101,7 @@ class DefaultController extends Controller
     	$maintenanceTotal = $repo->getCountTotal(false);
     	$date1 = \DateTime::createFromFormat('Y-m-d H:i:s','2013-01-01 00:00:00');
     	$now = new \DateTime;
+    	$evolutionBase = array();
     	for ($i = 1; $i <= 365 && $date1 < $now  ; $i++)
     	{
 	    	$evolutionBase[$date1->getTimestamp()*1000] = (int)($maintenanceTotal*($i/182));
