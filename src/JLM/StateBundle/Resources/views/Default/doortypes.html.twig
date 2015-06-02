@@ -1,5 +1,15 @@
 {% extends "JLMStateBundle::layout.html.twig" %}
 
+{% block sidebar %}
+<ul class="nav nav-pills nav-stacked">
+{% for y in 2013..maxyear %}
+<li{%- if y == year %} class="active"{%- endif -%}>
+  <a href="{{ path('state_doortypes',{'year':y}) }}">{{ y }}</a>
+</li>
+{% endfor %}
+</ul>
+{% endblock %}
+
 {% block content %}
 <h1>Types d'installation sous contrat</h1>
 <table class="table">

@@ -304,11 +304,9 @@ class DefaultController extends Controller
      */
     public function doortypesAction($year = null)
     {
-    	if ($year === null)
-    	{
-    		$date = new \DateTime();
-    		$year = $date->format('Y');
-    	}
+    	$date = new \DateTime();
+    	$maxyear = $date->format('Y');
+    	$year = ($year === null) ? $maxyear : $year;
     	$em = $this->getDoctrine()->getManager();
     	$doors = $em->getRepository('JLMModelBundle:Door')->getCountByType($year);
     	$intervs = $em->getRepository('JLMModelBundle:Door')->getCountIntervsByType($year);
@@ -341,6 +339,8 @@ class DefaultController extends Controller
     			'tottime' => $this->secondsToInterval($tottime),
     			'moytot' => (float)($totinter / $tot),
     			'moytime' => $this->secondsToInterval(floor($tottime/$tot)),
+    			'year' => $year,
+    			'maxyear' => $maxyear,
     	);
     }
 

@@ -133,7 +133,8 @@ class DoorRepository extends SearchRepository
 		->select('i.name as name,COUNT(a) as nb')
 		->leftJoin('a.contracts','g')
 		->leftJoin('a.type','i')
-		->where('g is not null and g.end is null')
+		->where('g is not null')
+		->andWhere('g.end is null')
 		->groupBy('i.name')
 		->orderBy('nb','DESC')
 		;
@@ -154,7 +155,10 @@ class DoorRepository extends SearchRepository
 		->leftJoin('a.type','i')
 		->leftJoin('a.interventions','b')
 		->leftJoin('b.shiftTechnicians','c')
-		->where('g is not null and g.end is null and b INSTANCE OF '.$types[$type].' and c.end BETWEEN \''.$year.'-01-01 00:00:00\' AND \''.$year.'-12-31 23:59:59\'')
+		->where('g is not null')
+		->andWhere('g.end is null')
+		->andWhere('b INSTANCE OF '.$types[$type])
+		->andWhere('c.end BETWEEN \''.$year.'-01-01 00:00:00\' AND \''.$year.'-12-31 23:59:59\'')
 		->groupBy('i.name')
 		->orderBy('nb','DESC')
 		;
