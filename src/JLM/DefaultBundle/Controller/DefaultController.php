@@ -65,28 +65,29 @@ class DefaultController extends Controller
 		}
 		// Nombre de contrats en cours
 		$repocon = $em->getRepository('JLMContractBundle:Contract');
+	//	$now = new \DateTime('2015-12-31');
 		$contracts_numbers = $repocon
 			->createQueryBuilder('a')
 			->select('COUNT(DISTINCT a.number)')
 			->where('?1 BETWEEN a.begin AND a.end')
-			->orWhere('a.end IS NULL')
-			->setParameter(1,new \DateTime)
+			->orWhere('?1 > a.begin AND a.end IS NULL')
+			->setParameter(1,$now)
 			->getQuery()
 			->getSingleScalarResult();
 		$contracts_doors = $repocon
 			->createQueryBuilder('a')
 			->select('COUNT(DISTINCT a.door)')
 			->where('?1 BETWEEN a.begin AND a.end')
-			->orWhere('a.end IS NULL')
-			->setParameter(1,new \DateTime)
+			->orWhere('?1 >= a.begin AND a.end IS NULL')
+			->setParameter(1,$now)
 			->getQuery()
 			->getSingleScalarResult();
 		$contracts_complete = $repocon
 			->createQueryBuilder('a')
 			->select('COUNT(DISTINCT a.door)')
 			->where('?1 BETWEEN a.begin AND a.end AND a.complete = 1')
-			->orWhere('a.end IS NULL AND a.complete = 1')
-			->setParameter(1,new \DateTime)
+			->orWhere('?1 >= a.begin AND a.end IS NULL AND a.complete = 1')
+			->setParameter(1,$now)
 			->getQuery()
 			->getSingleScalarResult();
         return array(

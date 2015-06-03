@@ -315,18 +315,23 @@ class DefaultController extends Controller
     	$data = array();
 		foreach ($doors as $door)
 		{
+			$data[$door['name']] = array(
+					'nb' => (int)$door['nb'],
+					'intervs' => 0,
+					'moyintervs' => 0,
+					'time' => new \DateInterval('PT0S'),
+					'moytime' => new \DateInterval('PT0S'),
+			);
+			$tot += $door['nb'];
 			foreach ($intervs as $interv)
 			{
 				if ($door['name'] == $interv['name'])
 				{
-					$data[$door['name']] = array(
-							'nb' => (int)$door['nb'],
-							'intervs' => (int)$interv['nb'],
-							'moyintervs' => (float)($interv['nb'] / $door['nb']),
-							'time' => $this->secondsToInterval($interv['time']),
-							'moytime' => $this->secondsToInterval($interv['time']/$door['nb']),
-					);
-					$tot += $door['nb'];
+					$data[$door['name']]['intervs'] = (int)$interv['nb'];
+					$data[$door['name']]['moyintervs'] = (float)($interv['nb'] / $door['nb']);
+					$data[$door['name']]['time'] = $this->secondsToInterval($interv['time']);
+					$data[$door['name']]['moytime'] = $this->secondsToInterval($interv['time']/$door['nb']);
+					
 					$totinter += $interv['nb'];
 					$tottime += $interv['time'];
 				}
