@@ -164,7 +164,8 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function getDynContract()
     {
-    	if (null === $techs = $this->getShiftTechnicians())
+    	$techs = $this->getShiftTechnicians();
+    	if (sizeof($techs) == 0)
     	{
     		return $this->getDoor()->getContract();
     	}

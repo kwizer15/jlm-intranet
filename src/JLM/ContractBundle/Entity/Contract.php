@@ -278,7 +278,7 @@ class Contract implements ContractInterface
      *
      * @return bool
      */
-    public function getInProgress($date = null)
+    public function getInProgress(\DateTime $date = null)
     {
     	$date = ($date === null) ? new \DateTime : $date;
     	

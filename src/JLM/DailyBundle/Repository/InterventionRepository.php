@@ -215,12 +215,12 @@ class InterventionRepository extends EntityRepository
 	public function getOpened($limit = null, $offset = null)
 	{
 		$qb = $this->createQueryBuilder('a')
-		->select('a,b,c,d,e,f,g,h,i')
+		->select('distinct a,b,c,d,e,g,h,i')
 		->leftJoin('a.shiftTechnicians','b')
 		->leftJoin('a.door','c')
 		->leftJoin('c.site','d')
 		->leftJoin('c.type','e')
-		->leftJoin('c.contracts','f')
+//		->leftJoin('c.contracts','f')
 		->leftJoin('d.trustee','g')
 		->leftJoin('d.address','h')
 		->leftJoin('h.city','i')
@@ -248,7 +248,6 @@ class InterventionRepository extends EntityRepository
 		
 		->leftJoin('c.site','d')
 		->leftJoin('c.type','e')
-		->leftJoin('c.contracts','f')
 		->leftJoin('d.trustee','g')
 		->leftJoin('d.address','h')
 		->leftJoin('h.city','i');
@@ -256,6 +255,6 @@ class InterventionRepository extends EntityRepository
 	
 	protected function getSelect()
 	{
-		return 'a,b,c,d,e,f,g,h,i';
+		return 'a,b,c,d,e,g,h,i';
 	}
 }
