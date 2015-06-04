@@ -11,12 +11,11 @@
 
 namespace JLM\TransmitterBundle\Builder;
 
-use JLM\TransmitterBundle\Entity\Ask;
 use JLM\CommerceBundle\Model\QuoteVariantInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-abstract class AskBuilderAbstract implements AskBuilderInterface
+class VariantAskBuilder extends AskBuilderAbstract
 {
 	private $variant;
 	
@@ -43,7 +42,7 @@ abstract class AskBuilderAbstract implements AskBuilderInterface
      */
     public function buildSite()
     {
-    	$this->getAsk()->setSite($this->variant->getQuote()->getSite());
+    	$this->getAsk()->setSite($this->variant->getQuote()->getAsk()->getSite());
     }
     
     /**

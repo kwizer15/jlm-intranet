@@ -15,6 +15,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Event\QuoteVariantEvent;
+use JLM\TransmitterBundle\Factory\AskFactory;
+use JLM\TransmitterBundle\Builder\VariantAskBuilder;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>

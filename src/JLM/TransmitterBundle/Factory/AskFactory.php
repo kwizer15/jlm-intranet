@@ -33,6 +33,6 @@ class AskFactory
         $builder->buildPerson();
         $builder->buildAsk();
         
-        return $builder->getQuote();
+        return $builder->getAsk();
     }
 }

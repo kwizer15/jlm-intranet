@@ -56,10 +56,13 @@ class QuoteVariantSubscriber implements EventSubscriberInterface
 	public function createThread(QuoteVariantEvent $event)
 	{		
 		$entity = $event->getQuoteVariant();
-		$starter = new StarterQuote($entity);
-		$this->om->persist($starter);
-		$thread = new Thread($starter);
-		$this->om->persist($thread);
-		$this->om->flush();
+		if ($entity->getQuote()->getDoor() !== null)
+		{
+			$starter = new StarterQuote($entity);
+			$this->om->persist($starter);
+			$thread = new Thread($starter);
+			$this->om->persist($thread);
+			$this->om->flush();
+		}
 	}
 }
