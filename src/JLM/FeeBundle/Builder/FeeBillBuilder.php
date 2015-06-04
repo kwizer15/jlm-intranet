@@ -35,26 +35,11 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
     {
         $this->fee = $fee;
         $this->follower = $follower;
-        parent::__construct($this->_getSite(), $options);
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    protected function _getTrustee()
-    {
-        return $this->fee->getTrustee();
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    protected function _getSite()
-    {
         $contrats = $this->fee->getContracts();
-        
-        return $contrats[0]->getDoor()->getSite();
+        parent::__construct($contrats[0]->getDoor()->getSite(), $options);
+        $this->trustee = $this->fee->getTrustee();
     }
+
     
     /**
      * {@inheritdoc}

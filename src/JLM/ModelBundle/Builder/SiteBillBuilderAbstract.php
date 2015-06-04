@@ -25,7 +25,7 @@ abstract class SiteBillBuilderAbstract extends TrusteeBillBuilderAbstract
     public function __construct(Site $site, $options = array())
     {
         $this->site = $site;
-        parent::__construct($this->site->getTrustee(), $options);
+        parent::__construct($this->site->getManager(), $options);
     }
    
     /**
