@@ -284,7 +284,17 @@ class Contract implements ContractInterface
     	
     	return (($this->end > $date || $this->end === null) && ($this->begin <= $date));
     }
-
+    
+    /**
+     * Is in progress
+     * 
+     * @return bool
+     */
+    public function isInProgress(\DateTime $date = null)
+    {
+    	return $this->getInProgress($date);
+    }
+    
     /**
      * Set fee
      *

@@ -109,7 +109,7 @@ class FeesFollowerController extends Controller
 //			->where('b.end is null OR b.end > ?1')
 //			->andWhere('b.begin <= ?1')
 //
-			->setParameter(1, $entity->getActivation())
+//			->setParameter(1, $entity->getActivation())
 			->orderBy('f.name','asc')
 			->getQuery()
 			->getResult();
