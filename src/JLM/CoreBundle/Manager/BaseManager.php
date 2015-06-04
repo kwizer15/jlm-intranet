@@ -118,7 +118,7 @@ class BaseManager extends ContainerAware implements ManagerInterface
 			// @todo Temporaire, mauvaise gestion des methodes en prod
 			if ($param['method'] != 'GET')
 			{
-				$param['method'] != 'POST';
+				$param['method'] = 'POST';
 			}
 			$form = $this->getFormFactory()->create($param['type'], $param['entity'],
 					array(
