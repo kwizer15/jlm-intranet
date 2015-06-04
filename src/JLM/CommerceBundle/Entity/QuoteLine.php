@@ -20,6 +20,9 @@ use JLM\CommerceBundle\Model\QuoteVariantInterface;
  */
 class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
 {
+	
+	const TYPE_UNKNOWN = 'UNKNOWN';
+	
 	/**
 	 * @var integer $id
 	 */
@@ -221,5 +224,18 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
     public function getTotalMargin()
     {
     	return $this->getMargin()*$this->getQuantity();
+    }
+    
+    /**
+     * @todo modify
+     */
+    public function getType()
+    {
+    	if ($this->getIsTransmitter())
+    	{
+    		return 'TRANSMITTER';
+    	} 
+    	
+    	return self::TYPE_UNKNOWN;
     }
 }

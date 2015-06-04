@@ -23,7 +23,7 @@ class VariantOrderBuilder extends OrderBuilderAbstract
     
     /**
      * 
-     * @param QuoteVariantInterface $intervention
+     * @param QuoteVariantInterface $variant
      * @throws LogicException
      */
     public function __construct(QuoteVariantInterface $variant, $options = array())

@@ -40,7 +40,7 @@ abstract class QuoteBuilderAbstract implements QuoteBuilderInterface
      */
     public function create()
     {
-        $this->bill = new Quote;
+        $this->quote = new Quote;
     }
     
     /**
@@ -48,7 +48,7 @@ abstract class QuoteBuilderAbstract implements QuoteBuilderInterface
      */
     public function buildCreation()
     {
-        $this->bill->setCreation(new \DateTime);
+        $this->quote->setCreation(new \DateTime);
     }
     
     /**

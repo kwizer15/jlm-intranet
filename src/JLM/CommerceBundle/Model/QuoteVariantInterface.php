@@ -56,4 +56,16 @@ interface QuoteVariantInterface
 	public function getNumber();
 	
 	public function getTotalPrice();
+	
+	/**
+	 * @param string $type
+	 * @return bool
+	 */
+	public function hasLineType($type);
+	
+	/**
+	 * @param string $type
+	 * @return QuoteLineInterface[]
+	 */
+	public function	getLinesByType($type);
 }

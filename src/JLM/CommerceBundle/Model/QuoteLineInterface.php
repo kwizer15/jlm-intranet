@@ -43,4 +43,9 @@ interface QuoteLineInterface
      */
     public function getVatValue();
     
+    /**
+     * Get line type
+     * @return string
+     */
+    public function getType();
 }

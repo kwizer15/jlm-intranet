@@ -477,4 +477,33 @@ class QuoteVariant implements QuoteVariantInterface
     {
     	return $this->getDoor()->getSite();
     }
+    
+    public function hasLineType($type)
+    {
+    	$lines = $this->getLines();
+    	foreach ($lines as $line)
+    	{
+    		if ($line->getType() == $type)
+    		{
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
+    public function getLinesByType($type)
+    {
+    	$lines = $this->getLines();
+    	$out = array();
+    	foreach ($lines as $line)
+    	{
+    		if ($line->getType() == $type)
+    		{
+    			$out[] = $line;
+    		}
+    	}
+    	 
+    	return $out;
+    }
 }
