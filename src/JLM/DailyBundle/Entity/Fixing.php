@@ -14,13 +14,14 @@ namespace JLM\DailyBundle\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use JLM\AskBundle\Model\CommunicationMeansInterface;
 use JLM\DailyBundle\Model\PartFamilyInterface;
+use JLM\DailyBundle\Model\FixingInterface;
 
 /**
  * Plannification d'une panne
  * JLM\DailyBundle\Entity\Fixing
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Fixing extends Intervention
+class Fixing extends Intervention implements FixingInterface
 {
 	/**
 	 * Date de la demande
