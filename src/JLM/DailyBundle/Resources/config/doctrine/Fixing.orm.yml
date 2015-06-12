@@ -17,4 +17,6 @@ JLM\DailyBundle\Entity\Fixing:
       targetEntity: JLM\DailyBundle\Entity\FixingDue
     done:
       targetEntity: JLM\DailyBundle\Entity\FixingDone
+    partFamily:
+      targetEntity: JLM\DailyBundle\Model\PartFamilyInterface
     

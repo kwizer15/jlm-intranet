@@ -13,6 +13,7 @@ namespace JLM\DailyBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use JLM\AskBundle\Model\CommunicationMeansInterface;
+use JLM\DailyBundle\Model\PartFamilyInterface;
 
 /**
  * Plannification d'une panne
@@ -45,6 +46,12 @@ class Fixing extends Intervention
 	 * @Assert\Valid
 	 */
 	private $done;
+	
+	/**
+	 * Famille de pièce
+	 * @var PartFamilyInterface
+	 */
+	private $partFamily;
 	
 	/**
 	 * Constat
@@ -151,6 +158,29 @@ class Fixing extends Intervention
 	{
 		$this->done = $done;
 		
+		return $this;
+	}
+	
+	/**
+	 * Get part family
+	 *
+	 * @return PartFamilyInterface
+	 */
+	public function getPartFamily()
+	{
+		return $this->partFamily;
+	}
+	
+	/**
+	 * Set part family
+	 *
+	 * @param PartFamilyInterface $partFamily
+	 * @return self
+	 */
+	public function setPartFamily(PartFamilyInterface $partFamily = null)
+	{
+		$this->partFamily = $partFamily;
+	
 		return $this;
 	}
 	

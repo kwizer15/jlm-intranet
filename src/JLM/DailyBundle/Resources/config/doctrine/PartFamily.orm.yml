@@ -1,0 +1,11 @@
+JLM\DailyBundle\Entity\PartFamily:
+  type: entity
+  table: jlm_daily_partfamily
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name: ~
+        
