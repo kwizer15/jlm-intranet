@@ -57,4 +57,10 @@ abstract class FixingMailBuilder extends MailBuilderAbstract
 	{
 		$this->addBcc('secretariat@jlm-entreprise.fr', 'Secretariat (JLM Entreprise)');
 	}
+	
+
+	public function buildAttachements()
+	{
+	
+	}
 }

@@ -15,7 +15,7 @@ use JLM\DailyBundle\Model\FixingInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class FixingEndMailBuilder extends FixingMailBuilder
+class FixingReportMailBuilder extends FixingMailBuilder
 {
 
 	public function buildSubject()

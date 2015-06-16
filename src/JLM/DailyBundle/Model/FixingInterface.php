@@ -19,4 +19,6 @@ interface FixingInterface
 	public function getManagerContacts();
 	
 	public function getAdministratorContacts();
+	
+	public function getPlace();
 }

@@ -23,6 +23,7 @@ use JLM\CoreBundle\Form\Type\MailType;
 use JLM\CoreBundle\Factory\MailFactory;
 use JLM\DailyBundle\Builder\FixingTakenMailBuilder;
 use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Fixing controller.
@@ -50,9 +51,21 @@ class FixingController extends AbstractInterventionController
 	 * @Template()
 	 * @Secure(roles="ROLE_USER")
 	 */
-	public function emailAction(Fixing $entity)
+	public function emailAction(Fixing $entity, $step)
 	{
-		$mail = MailFactory::create(new FixingTakenMailBuilder($entity));
+		$steps = array(
+			'taken' => 'JLM\DailyBundle\Builder\FixingTakenMailBuilder',
+			'distributed' => 'JLM\DailyBundle\Builder\FixingDistributedMailBuilder',
+			'onSite' => 'JLM\DailyBundle\Builder\FixingOonSiteMailBuilder',
+			'end' => 'JLM\DailyBundle\Builder\FixingEndMailBuilder',
+			'report' => 'JLM\DailyBundle\Builder\FixingReportMailBuilder',
+		);
+		$class = (array_key_exists($step, $steps)) ? $steps[$step] : null;
+		if (null === $class)
+		{
+			throw new NotFoundHttpException('Page inexistante');
+		}
+		$mail = MailFactory::create(new $class($entity));
 		$editForm = $this->createForm(new MailType(), $mail);
 		$editForm->handleRequest($this->getRequest());
 		if ($editForm->isValid())
@@ -62,6 +75,7 @@ class FixingController extends AbstractInterventionController
 		return array(
 				'entity'      => $entity,
 				'form'   => $editForm->createView(),
+				'step' => $step,
 		);
 	}
 	

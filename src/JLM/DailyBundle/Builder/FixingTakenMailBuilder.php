@@ -26,14 +26,11 @@ class FixingTakenMailBuilder extends FixingMailBuilder
 	public function buildBody()
 	{
 		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'La demande d\'intervention pour l\'affaire :'.chr(10)
-		.'à bien été prise en compte par nos service'.chr(10)
+		.'La demande d\'intervention pour l\'installation : '.chr(10)
+		.$this->getFixing()->getInstallationCode().chr(10)
+		.$this->getFixing()->getPlace().chr(10).chr(10)
+		.'à bien été prise en compte par nos services'.chr(10).chr(10)
 		.'Cordialement'
 		);
-	}
-	
-	public function buildAttachements()
-	{
-		
 	}
 }

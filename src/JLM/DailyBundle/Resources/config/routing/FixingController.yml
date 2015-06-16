@@ -9,7 +9,7 @@ fixing_show:
   methods: [GET]
   
 fixing_email:
-  path: /{id}/email
+  path: /{id}/email/{step}
   defaults:  { _controller: "JLMDailyBundle:Fixing:email" }
   methods: [GET,POST]
   
