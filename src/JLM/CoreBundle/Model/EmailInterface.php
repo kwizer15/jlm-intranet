@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the JLMDailyBundle package.
+ * This file is part of the JLMContactBundle package.
  *
  * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *
@@ -9,14 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\DailyBundle\Model;
+namespace JLM\CoreBundle\Model;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-interface FixingInterface
+interface EmailInterface
 {
-	public function getManagerContacts();
-	
-	public function getAdministratorContacts();
+
 }

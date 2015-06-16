@@ -12,10 +12,11 @@
 namespace JLM\DailyBundle\Builder;
 
 use JLM\DailyBundle\Model\FixingInterface;
+use JLM\CoreBundle\Builder\MailBuilderAbstract;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class FixingMailBuilder extends SwiftMailBuilderAbstract
+abstract class FixingMailBuilder extends MailBuilderAbstract
 {
 	private $fixing;
 	
@@ -23,15 +24,15 @@ class FixingMailBuilder extends SwiftMailBuilderAbstract
 	{
 		$this->fixing = $fixing;
 	}
-	
-	public function buildSubject()
-	{
-		$this->setSubject('Demande d\'intervention prise en compte');
-	}
 
+	public function getFixing()
+	{
+		return $this->fixing;
+	}
+	
 	public function buildFrom()
 	{
-		$this->addBcc('secretariat@jlm-entreprise.fr', 'Secrétariat (JLM Entreprise)');
+		$this->addFrom('secretariat@jlm-entreprise.fr', 'Secretariat (JLM Entreprise)');
 	}
 	
 	public function buildTo()
@@ -54,16 +55,6 @@ class FixingMailBuilder extends SwiftMailBuilderAbstract
 	
 	public function buildBcc()
 	{
-		$this->addBcc('secretariat@jlm-entreprise.fr', 'Secrétariat (JLM Entreprise)');
-	}
-	
-	public function buildBody()
-	{
-		
-	}
-	
-	public function buildAttachements()
-	{
-		
+		$this->addBcc('secretariat@jlm-entreprise.fr', 'Secretariat (JLM Entreprise)');
 	}
 }

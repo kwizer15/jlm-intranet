@@ -9,32 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\DailyBundle\Builder;
+namespace JLM\CoreBundle\Builder;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-abstract class SwiftMailBuilderAbstract implements MailBuilderInterface
+abstract class SwiftMailBuilderAbstract extends MailBuilderAbstract
 {
-	private $mail;
-	
-    public function getMail()
-    {
-    	return $this->mail;
-    }
-    
     public function create()
     {
     	$this->mail = \Swift_Message::newInstance();
-    }
-    
-    public function setSubject($subject)
-    {
-    	$this->mail->setSubject($subject);
-    }
-    
-    public function addFrom($address, $name = null)
-    {
-    	$this->mail->addFrom($address, $name);
     }
 }

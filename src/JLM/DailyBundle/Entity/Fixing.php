@@ -205,4 +205,14 @@ class Fixing extends Intervention implements FixingInterface
 		
 		return $this;
 	}
+	
+	public function getAdministratorContacts()
+	{
+		return array();
+	}
+	
+	public function getManagerContacts()
+	{
+		return array();
+	}
 }

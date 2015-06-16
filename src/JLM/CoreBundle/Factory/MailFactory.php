@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\DailyBundle\Factory;
+namespace JLM\CoreBundle\Factory;
 
-use JLM\DailyBundle\Builder\MailBuilderInterface;
+use JLM\CoreBundle\Builder\MailBuilderInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -26,14 +26,14 @@ class MailFactory
     public static function create(MailBuilderInterface $builder)
     {
         $builder->create();
-//        $builder->buildCreation();
-//        $builder->buildBusiness();
-//        $builder->buildReason();
-//        $builder->buildContact();
-//        $builder->buildPriority();
-//        $builder->buildOrder();
-//        $builder->buildLink();
+        $builder->buildSubject();
+    	$builder->buildFrom();
+    	$builder->buildTo();
+    	$builder->buildCc();
+    	$builder->buildBcc();
+    	$builder->buildBody();
+    	$builder->buildAttachements();
         
-        return $builder->getReport();
+        return $builder->getMail();
     }
 }

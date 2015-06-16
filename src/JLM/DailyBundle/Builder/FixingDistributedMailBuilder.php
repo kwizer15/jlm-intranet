@@ -11,26 +11,27 @@
 
 namespace JLM\DailyBundle\Builder;
 
+use JLM\DailyBundle\Model\FixingInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-interface MailBuilderInterface
+class FixingDistributedMailBuilder extends FixingMailBuilder
 {
-    public function getMail();
 
-    public function create();
-    
-    public function buildSubject();
-    
-    public function buildFrom();
-    
-    public function buildTo();
-    
-    public function buildCc();
-    
-    public function buildBcc();
-    
-    public function buildBody();
-    
-    public function buildAttachements();
+	public function buildSubject()
+	{
+		$this->setSubject('Technicien sur place');
+	}
+	
+	public function buildBody()
+	{
+		$this->setBody('Bonjour,'.chr(10).chr(10)
+		.'Le technicien est sur place'.chr(10)
+		);
+	}
+	
+	public function buildAttachements()
+	{
+		
+	}
 }

@@ -8,6 +8,11 @@ fixing_show:
   defaults:  { _controller: "JLMDailyBundle:Fixing:show" }
   methods: [GET]
   
+fixing_email:
+  path: /{id}/email
+  defaults:  { _controller: "JLMDailyBundle:Fixing:email" }
+  methods: [GET,POST]
+  
 fixing_new:
   path: /new/{id}
   defaults:  { _controller: "JLMDailyBundle:Fixing:new" }

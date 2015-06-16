@@ -19,6 +19,10 @@ use JLM\DailyBundle\Form\Type\InterventionCancelType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Entity\DoorStop;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use JLM\CoreBundle\Form\Type\MailType;
+use JLM\CoreBundle\Factory\MailFactory;
+use JLM\DailyBundle\Builder\FixingTakenMailBuilder;
+use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
 
 /**
  * Fixing controller.
@@ -37,6 +41,27 @@ class FixingController extends AbstractInterventionController
 		$entities = $em->getRepository('JLMDailyBundle:Fixing')->getPrioritary();
 		return array(
 				'entities'      => $entities,
+		);
+	}
+	
+	/**
+	 * Finds and displays a InterventionPlanned entity.
+	 *
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function emailAction(Fixing $entity)
+	{
+		$mail = MailFactory::create(new FixingTakenMailBuilder($entity));
+		$editForm = $this->createForm(new MailType(), $mail);
+		$editForm->handleRequest($this->getRequest());
+		if ($editForm->isValid())
+		{
+			$this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
+		}
+		return array(
+				'entity'      => $entity,
+				'form'   => $editForm->createView(),
 		);
 	}
 	
@@ -91,7 +116,7 @@ class FixingController extends AbstractInterventionController
 		$entity->setPlace($door.'');
 		$entity->setPriority(2);
 		$form = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(),new FixingType(), $entity);
-		$form->bind($request);
+		$form->handleRequest($request);
 	
 		if ($form->isValid())
 		{
