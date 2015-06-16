@@ -54,11 +54,11 @@ class FixingController extends AbstractInterventionController
 	public function emailAction(Fixing $entity, $step)
 	{
 		$steps = array(
-			'taken' => 'JLM\DailyBundle\Builder\FixingTakenMailBuilder',
-			'distributed' => 'JLM\DailyBundle\Builder\FixingDistributedMailBuilder',
-			'onSite' => 'JLM\DailyBundle\Builder\FixingOonSiteMailBuilder',
-			'end' => 'JLM\DailyBundle\Builder\FixingEndMailBuilder',
-			'report' => 'JLM\DailyBundle\Builder\FixingReportMailBuilder',
+			'taken' => 'JLM\DailyBundle\Builder\Email\FixingTakenMailBuilder',
+			'distributed' => 'JLM\DailyBundle\Builder\Email\FixingDistributedMailBuilder',
+			'onSite' => 'JLM\DailyBundle\Builder\Email\FixingOonSiteMailBuilder',
+			'end' => 'JLM\DailyBundle\Builder\Email\FixingEndMailBuilder',
+			'report' => 'JLM\DailyBundle\Builder\Email\FixingReportMailBuilder',
 		);
 		$class = (array_key_exists($step, $steps)) ? $steps[$step] : null;
 		if (null === $class)
@@ -73,8 +73,8 @@ class FixingController extends AbstractInterventionController
 			$this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
 		}
 		return array(
-				'entity'      => $entity,
-				'form'   => $editForm->createView(),
+				'entity' => $entity,
+				'form' => $editForm->createView(),
 				'step' => $step,
 		);
 	}

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\DailyBundle\Builder;
+namespace JLM\DailyBundle\Builder\Email;
 
 use JLM\DailyBundle\Model\FixingInterface;
 use JLM\CoreBundle\Builder\MailBuilderAbstract;

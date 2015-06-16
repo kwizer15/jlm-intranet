@@ -9,9 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\DailyBundle\Builder;
+namespace JLM\DailyBundle\Builder\Email;
 
-use JLM\DailyBundle\Model\FixingInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -20,13 +19,13 @@ class FixingDistributedMailBuilder extends FixingMailBuilder
 
 	public function buildSubject()
 	{
-		$this->setSubject('Intervention distribuée');
+		$this->setSubject('Technicien sur place');
 	}
 	
 	public function buildBody()
 	{
 		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Le technicien est en route'.chr(10)
+		.'Le technicien est sur place'.chr(10)
 		);
 	}
 	

@@ -9,28 +9,30 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\DailyBundle\Builder;
+namespace JLM\DailyBundle\Builder\Email;
 
-use JLM\DailyBundle\Model\FixingInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class FixingTakenMailBuilder extends FixingMailBuilder
+class FixingEndMailBuilder extends FixingMailBuilder
 {
 
 	public function buildSubject()
 	{
-		$this->setSubject('Demande d\'intervention prise en compte');
+		$this->setSubject('Intervention terminée');
 	}
 	
 	public function buildBody()
 	{
 		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'La demande d\'intervention pour l\'installation : '.chr(10)
-		.$this->getFixing()->getInstallationCode().chr(10)
-		.$this->getFixing()->getPlace().chr(10).chr(10)
-		.'à bien été prise en compte par nos services'.chr(10).chr(10)
+		.'Le technicien à terminé son intervention'.chr(10)
+		.'Vous recevrez le compte-rendu dans les plus-bref délais'.chr(10).chr(10)
 		.'Cordialement'
 		);
+	}
+	
+	public function buildAttachements()
+	{
+		
 	}
 }
