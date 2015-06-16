@@ -28,6 +28,19 @@
 
 {% block edit_button %}
 <a href="{{ path('fixing_edit', { 'id': entity.id }) }}" class="btn btn-small btn-warning">{{ 'pencil'|icon(true) }} Editer</a>
+<div class="btn-group">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        E-mails client
+        <span class="caret"></span>
+      </a>
+          <ul class="dropdown-menu">
+      	    <li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'taken'}) }}">Prise en compte</a></li>
+      		<li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'distributed'}) }}">Technicien en route</a></li>
+            <li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'onSite'}) }}">Technicien sur site</a></li>
+            <li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'end'}) }}">Fin de l'intervention</a></li>
+            <li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'report'}) }}">Rapport d'intervention</a></li>
+         </ul>
+    </div>
 {% endblock %}
 
 {% block close_button %}

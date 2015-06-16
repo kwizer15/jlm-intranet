@@ -218,7 +218,7 @@ class Fixing extends Intervention implements FixingInterface
 	
 	public function getInstallationCode()
 	{
-		if ($this->getDoor === null)
+		if ($this->getDoor() === null)
 		{
 			return null;
 		}
