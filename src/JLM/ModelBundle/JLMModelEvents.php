@@ -9,13 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\DailyBundle;
+namespace JLM\ModelBundle;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-final class JLMDailyEvents
+final class JLMModelEvents
 {
-	const INTERVENTION_SCHEDULEWORK = 'jlm_daily.intervention_schedulework';
-	const INTERVENTION_UNSCHEDULEWORK = 'jlm_daily.intervention_unschedulework';
+	const DOOR_SENDMAIL = 'jlm_model.door_sendmail';
 }

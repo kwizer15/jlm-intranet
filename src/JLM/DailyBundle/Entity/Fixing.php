@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JLM\AskBundle\Model\CommunicationMeansInterface;
 use JLM\DailyBundle\Model\PartFamilyInterface;
 use JLM\DailyBundle\Model\FixingInterface;
+use JLM\ContactBundle\Entity\Company;
 
 /**
  * Plannification d'une panne
@@ -208,12 +209,30 @@ class Fixing extends Intervention implements FixingInterface
 	
 	public function getAdministratorContacts()
 	{
-		return array();
+		return $this->_createContactFromEmail($this->getDoor()->getAdministratorEmails());
 	}
 	
 	public function getManagerContacts()
 	{
-		return array();
+		return $this->_createContactFromEmail($this->getDoor()->getManagerEmails());
+	}
+	
+	private function _createContactFromEmail($emails)
+	{
+		$c = array();
+		if ($emails === null)
+		{
+			return $c;
+		}
+		
+		foreach ($emails as $email)
+		{
+			$temp = new Company();
+			$temp->setEmail($email);
+			$c[] = $temp;
+		}
+		
+		return $c;
 	}
 	
 	public function getInstallationCode()

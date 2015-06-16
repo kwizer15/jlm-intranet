@@ -24,6 +24,9 @@ use JLM\CoreBundle\Factory\MailFactory;
 use JLM\DailyBundle\Builder\FixingTakenMailBuilder;
 use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use JLM\DailyBundle\JLMDailyBundle;
+use JLM\ModelBundle\JLMModelEvents;
+use JLM\ModelBundle\Event\DoorEvent;
 
 /**
  * Fixing controller.
@@ -53,6 +56,7 @@ class FixingController extends AbstractInterventionController
 	 */
 	public function emailAction(Fixing $entity, $step)
 	{
+		$request = $this->getRequest();
 		$steps = array(
 			'taken' => 'JLM\DailyBundle\Builder\Email\FixingTakenMailBuilder',
 			'distributed' => 'JLM\DailyBundle\Builder\Email\FixingDistributedMailBuilder',
@@ -67,10 +71,11 @@ class FixingController extends AbstractInterventionController
 		}
 		$mail = MailFactory::create(new $class($entity));
 		$editForm = $this->createForm(new MailType(), $mail);
-		$editForm->handleRequest($this->getRequest());
+		$editForm->handleRequest($request);
 		if ($editForm->isValid())
 		{
 			$this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
+			$this->get('event_dispatcher')->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request));
 		}
 		return array(
 				'entity' => $entity,

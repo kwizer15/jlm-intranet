@@ -40,6 +40,7 @@ abstract class FixingMailBuilder extends MailBuilderAbstract
 		$managerContacts = $this->fixing->getManagerContacts();
 		foreach ($managerContacts as $contact)
 		{
+			//$this->addTo($contact);
 			$this->addTo($contact->getEmail(), $contact->getName());
 		}
 	}
@@ -49,6 +50,7 @@ abstract class FixingMailBuilder extends MailBuilderAbstract
 		$administratorContacts = $this->fixing->getAdministratorContacts();
 		foreach ($administratorContacts as $contact)
 		{
+			//$this->addCc($contact);
 			$this->addCc($contact->getEmail(), $contact->getName());
 		}
 	}

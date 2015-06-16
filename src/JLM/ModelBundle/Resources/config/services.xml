@@ -39,6 +39,10 @@
 	    <argument type="service" id="doctrine.orm.entity_manager"/>
 	    <tag name="form.type" alias="site_hidden" />
 	</service>
+	<service id="jlm_model.email_subscriber" class="JLM\ModelBundle\EventListener\EmailSubscriber">
+    	<argument type="service" id="doctrine.orm.entity_manager"/>
+        <tag name="kernel.event_subscriber" />
+    </service>
 	<service id="jlm_model.bill_subscriber" class="JLM\ModelBundle\EventListener\BillSubscriber">
     	<argument type="service" id="doctrine.orm.entity_manager"/>
         <tag name="kernel.event_subscriber" />

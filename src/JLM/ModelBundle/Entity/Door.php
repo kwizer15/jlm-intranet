@@ -212,6 +212,22 @@ class Door implements BayInterface, InstallationInterface
     private $ceNumber;
     
     /**
+     * Numéro de plaque
+     * @var string
+     *
+     * @ORM\Column(name="managerEmails", type="array", nullable=true)
+     */
+    private $managerEmails;
+    
+    /**
+     * Numéro de plaque
+     * @var string
+     *
+     * @ORM\Column(name="administratorEmails", type="array", nullable=true)
+     */
+    private $administratorEmails;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -1216,5 +1232,29 @@ class Door implements BayInterface, InstallationInterface
     	$this->code = strtoupper($code);
     	
     	return $this;
+    }
+    
+    public function setAdministratorEmails($emails)
+    {
+    	$this->administratorEmails = $emails;
+    	
+    	return $this;
+    }
+    
+    public function getAdministratorEmails()
+    {
+    	return $this->administratorEmails;
+    }
+    
+    public function setManagerEmails($emails)
+    {
+    	$this->managerEmails = $emails;
+    	 
+    	return $this;
+    }
+    
+    public function getManagerEmails()
+    {
+    	return $this->managerEmails;
     }
 }
