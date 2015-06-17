@@ -2,3 +2,46 @@
 {{ form_widget(form) }}
 {{ form_rest(form) }}
 {% endblock %}
+
+{% block _jlm_core_mail_from_widget %}
+{% spaceless %}
+    {% if prototype is defined %}
+        {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
+    {% endif %}
+    {% set attr = attr|merge({'class':(attr.class|default('') ~ ' unstyled')|trim}) %}
+    <ul {{ block('widget_container_attributes') }}>
+		{{ block('form_rows') }}
+    </ul>
+	{{ form_rest(form) }}
+{% endspaceless %}
+{% endblock %}
+
+{% block _jlm_core_mail_to_widget %}
+{% spaceless %}
+    {% if prototype is defined %}
+        {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
+    {% endif %}
+{% set attr = attr|merge({'class':(attr.class|default('') ~ ' unstyled')|trim}) %}
+    <ul {{ block('widget_container_attributes') }}>
+		{{ block('form_rows') }}
+    </ul>
+	{{ form_rest(form) }}
+{% endspaceless %}
+{% endblock %}
+
+{% block _jlm_core_mail_cc_widget %}
+{% spaceless %}
+    {% if prototype is defined %}
+        {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
+    {% endif %}
+{% set attr = attr|merge({'class':(attr.class|default('') ~ ' unstyled')|trim}) %}
+    <ul {{ block('widget_container_attributes') }}>
+		{{ block('form_rows') }}
+    </ul>
+	{{ form_rest(form) }}
+{% endspaceless %}
+{% endblock %}
+
+{% block email_row %}
+<li>{{ form_widget(form) }}</li>
+{% endblock %}

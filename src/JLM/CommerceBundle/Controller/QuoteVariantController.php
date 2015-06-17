@@ -159,10 +159,7 @@ class QuoteVariantController extends Controller
 	}
 	
 	/**
-	 * Finds and displays a InterventionPlanned entity.
-	 *
-	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * Email de confirmation d'accord de devis
 	 */
 	public function emailAction($id)
 	{

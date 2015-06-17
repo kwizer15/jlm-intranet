@@ -1,4 +1,4 @@
-{% extends "JLMDailyBundle:Intervention:email.html.twig" %}
+{% extends "JLMDailyBundle::layout.html.twig" %}
 
 {% block content %}
 <h1>Envoyer un e-mail</h1>
@@ -17,4 +17,5 @@
 	   <button type="submit" class="btn btn-primary">{{ 'share-alt'|icon(true) }} Envoyer</button>
 	</div>
 </fieldset>
+</form>
 {% endblock %}

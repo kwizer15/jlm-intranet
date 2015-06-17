@@ -1,0 +1,60 @@
+
+{% block _jlm_core_mail_from_javascript %}
+<script>
+var collectionHolderFrom = $('#{{ id }}');
+var $addFromLink = $('<button class="btn btn-success btn-small">{{ 'plus-sign'|icon(true) }}</button>');
+var $newLinkLiFrom = $('<li></li>').append($addFromLink);
+jQuery(document).ready(function() {
+	collectionHolderFrom.find('li').append('<button class="btn btn-danger btn-small">{{ 'minus-sign'|icon(true) }}</button>');
+	collectionHolderFrom.find('.btn-danger').on('click', function(e) {
+		e.preventDefault();
+		$(this).parent().remove();
+	});
+    collectionHolderFrom.append($newLinkLiFrom);
+    $addFromLink.on('click', function(e) {
+        e.preventDefault();
+        addForm(collectionHolderFrom, $newLinkLiFrom);
+    });
+});
+</script>
+{% endblock %}
+
+{% block _jlm_core_mail_to_javascript %}
+<script>
+var collectionHolderTo = $('#{{ id }}');
+var $addLinkTo = $('<button class="btn btn-success btn-small">{{ 'plus-sign'|icon(true) }}</button>');
+var $newLinkLiTo = $('<li></li>').append($addLinkTo);
+jQuery(document).ready(function() {
+	collectionHolderTo.find('li').append('<button class="btn btn-danger btn-small">{{ 'minus-sign'|icon(true) }}</button>');
+	collectionHolderTo.find('.btn-danger').on('click', function(e) {
+		e.preventDefault();
+		$(this).parent().remove();
+	});
+    collectionHolderTo.append($newLinkLiTo);
+    $addLinkTo.on('click', function(e) {
+        e.preventDefault();
+        addForm(collectionHolderTo, $newLinkLiTo);
+    });
+});
+</script>
+{% endblock %}
+
+{% block _jlm_core_mail_cc_javascript %}
+<script>
+var collectionHolderCc = $('#{{ id }}');
+var $addLinkCc = $('<button class="btn btn-success btn-small">{{ 'plus-sign'|icon(true) }}</button>');
+var $newLinkLiCc = $('<li></li>').append($addLinkCc);
+jQuery(document).ready(function() {
+	collectionHolderCc.find('li').append('<button class="btn btn-danger btn-small">{{ 'minus-sign'|icon(true) }}</button>');
+	collectionHolderCc.find('.btn-danger').on('click', function(e) {
+		e.preventDefault();
+		$(this).parent().remove();
+	});
+    collectionHolderCc.append($newLinkLiCc);
+    $addLinkCc.on('click', function(e) {
+        e.preventDefault();
+        addForm(collectionHolderCc, $newLinkLiCc);
+    });
+});
+</script>
+{% endblock %}

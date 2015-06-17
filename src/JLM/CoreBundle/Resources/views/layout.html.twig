@@ -195,6 +195,16 @@ $('.autocompletion').autocomplete({
     items:12,
 });
 
+function addForm(collectionHolder, $newLinkLi) {
+    var prototype = collectionHolder.attr('data-prototype');
+    var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
+    var $newFormLi = $(newForm).append('<button class="btn btn-danger btn-small">{{ 'minus-sign'|icon(true) }}</button>');
+    $newFormLi.find('button').on('click', function(e) {
+    	e.preventDefault();
+    	$(this).parent().remove();
+    });
+    $newLinkLi.before($newFormLi);
+}
 {% endblock %}
 
 {% block javascriptappend %}
