@@ -72,7 +72,7 @@ services:
             
     jlm_commerce.quotevariant_subscriber:
         class: JLM\CommerceBundle\EventListener\QuoteVariantSubscriber
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager","@mailer"]
         tags:
             - { name: kernel.event_subscriber }
             

@@ -17,6 +17,7 @@ use JLM\DailyBundle\Entity\Work;
 use JLM\CommerceBundle\Model\QuoteVariantInterface;
 use JLM\CommerceBundle\Model\QuoteInterface;
 use JLM\CommerceBundle\Model\QuoteLineInterface;
+use JLM\ContactBundle\Entity\Company;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -468,6 +469,34 @@ class QuoteVariant implements QuoteVariantInterface
     public function getDoor()
     {
     	return $this->getQuote()->getDoor();
+    }
+    
+	public function getAdministratorContacts()
+    {
+    	return $this->_createContactFromEmail($this->getDoor()->getAdministratorEmails());
+    }
+    
+    public function getManagerContacts()
+    {
+    	return $this->_createContactFromEmail($this->getDoor()->getManagerEmails());
+    }
+    
+    private function _createContactFromEmail($emails)
+    {
+    	$c = array();
+    	if ($emails === null)
+    	{
+    		return $c;
+    	}
+    
+    	foreach ($emails as $email)
+    	{
+    		$temp = new Company();
+    		$temp->setEmail($email);
+    		$c[] = $temp;
+    	}
+    
+    	return $c;
     }
     
     /**
