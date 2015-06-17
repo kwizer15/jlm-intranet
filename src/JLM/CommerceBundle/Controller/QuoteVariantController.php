@@ -163,6 +163,7 @@ class QuoteVariantController extends Controller
 	 */
 	public function emailAction($id)
 	{
+		// @todo Passer par un service de formPopulate et créer un controller unique dans CoreBundle
 		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
 		$manager->secure('ROLE_USER');
 		$entity = $manager->getEntity($id);
