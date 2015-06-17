@@ -11,58 +11,21 @@
 
 namespace JLM\DailyBundle\Builder\Email;
 
-use JLM\DailyBundle\Model\FixingInterface;
 use JLM\CoreBundle\Builder\MailBuilderAbstract;
+use JLM\DailyBundle\Model\InterventionInterface;
+use JLM\DailyBundle\Model\FixingInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-abstract class FixingMailBuilder extends MailBuilderAbstract
+abstract class FixingMailBuilder extends InterventionMailBuilder
 {
-	private $fixing;
-	
 	public function __construct(FixingInterface $fixing)
 	{
-		$this->fixing = $fixing;
+		parent::__construct($fixing);
 	}
-
+	
 	public function getFixing()
 	{
-		return $this->fixing;
-	}
-	
-	public function buildFrom()
-	{
-		$this->addFrom('secretariat@jlm-entreprise.fr', 'Secretariat (JLM Entreprise)');
-	}
-	
-	public function buildTo()
-	{
-		$managerContacts = $this->fixing->getManagerContacts();
-		foreach ($managerContacts as $contact)
-		{
-			//$this->addTo($contact);
-			$this->addTo($contact->getEmail(), $contact->getName());
-		}
-	}
-	
-	public function buildCc()
-	{
-		$administratorContacts = $this->fixing->getAdministratorContacts();
-		foreach ($administratorContacts as $contact)
-		{
-			//$this->addCc($contact);
-			$this->addCc($contact->getEmail(), $contact->getName());
-		}
-	}
-	
-	public function buildBcc()
-	{
-		$this->addBcc('secretariat@jlm-entreprise.fr', 'Secretariat (JLM Entreprise)');
-	}
-	
-
-	public function buildAttachements()
-	{
-	
+		return $this->getIntervention();
 	}
 }

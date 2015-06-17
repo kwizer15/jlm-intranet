@@ -14,23 +14,19 @@ namespace JLM\DailyBundle\Builder\Email;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class FixingOnSiteMailBuilder extends FixingMailBuilder
+class MaintenanceEndMailBuilder extends MaintenanceMailBuilder
 {
 
 	public function buildSubject()
 	{
-		$this->setSubject('Technicien sur place');
+		$this->setSubject('Visite d\'entretien terminée');
 	}
 	
 	public function buildBody()
 	{
 		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Le technicien est sur place'.chr(10)
+		.'Le technicien à terminé la visite d\'entretien'.chr(10)
+		.'Cordialement'
 		);
-	}
-	
-	public function buildAttachements()
-	{
-		
 	}
 }

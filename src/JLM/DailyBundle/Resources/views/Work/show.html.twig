@@ -23,6 +23,17 @@
 		{% else %}<a href="{{ path('order_new',{'id': entity.id }) }}" class="btn btn-info btn-small">Créer la fiche matériel</a>
 		{% endif %}
 	{% endif %}
+<div class="btn-group">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        E-mails client
+        <span class="caret"></span>
+      </a>
+          <ul class="dropdown-menu">
+      		<li><a tabindex="-1" href="{{ path('work_email',{'id':entity.id,'step':'planned'}) }}">Travaux plannifiés</a></li>
+            <li><a tabindex="-1" href="{{ path('work_email',{'id':entity.id,'step':'onsite'}) }}">Technicien sur site</a></li>
+            <li><a tabindex="-1" href="{{ path('work_email',{'id':entity.id,'step':'end'}) }}">Fin des travaux</a></li>
+         </ul>
+    </div>
 {% endblock %}
 
 {% block close_button %}

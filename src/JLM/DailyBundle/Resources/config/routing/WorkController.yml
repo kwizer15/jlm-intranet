@@ -8,6 +8,11 @@ work_show:
   defaults:  { _controller: "JLMDailyBundle:Work:show" }
   methods: [GET]
 
+work_email:
+  path: /{id}/email/{step}
+  defaults:  { _controller: "JLMDailyBundle:Work:email" }
+  methods: [GET,POST]
+
 work_new_door:
   path: /new/door/{id}
   defaults:  { _controller: "JLMDailyBundle:Work:newdoor" }

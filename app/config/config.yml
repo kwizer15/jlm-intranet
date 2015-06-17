@@ -99,6 +99,8 @@ doctrine:
             
             JLM\DailyBundle\Model\WorkInterface: JLM\DailyBundle\Entity\Work
             JLM\DailyBundle\Model\InterventionInterface: JLM\DailyBundle\Entity\Intervention
+            JLM\DailyBundle\Model\FixingInterface: JLM\DailyBundle\Entity\Fixing
+            JLM\DailyBundle\Model\MaintenanceInterface: JLM\DailyBundle\Entity\Maintenance
             JLM\DailyBundle\Model\PartFamilyInterface: JLM\DailyBundle\Entity\PartFamily
             
             JLM\ProductBundle\Model\ProductInterface: JLM\ProductBundle\Entity\Product

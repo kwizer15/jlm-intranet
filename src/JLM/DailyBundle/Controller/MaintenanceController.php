@@ -14,6 +14,12 @@ use JLM\DailyBundle\Form\Type\ExternalBillType;
 use JLM\DailyBundle\Form\Type\InterventionCancelType;
 use JLM\DailyBundle\Form\Type\ShiftingEditType;
 use JLM\ModelBundle\Entity\Door;
+use JLM\CoreBundle\Factory\MailFactory;
+use JLM\ModelBundle\JLMModelEvents;
+use JLM\ModelBundle\Event\DoorEvent;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use JLM\CoreBundle\Form\Type\MailType;
+use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
 
 
 /**
@@ -87,6 +93,42 @@ class MaintenanceController extends AbstractInterventionController
 		return array(
 				'entity'      => $entity,
 				'form'   => $form->createView(),
+		);
+	}
+	
+	/**
+	 * Finds and displays a InterventionPlanned entity.
+	 *
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function emailAction(Maintenance $entity, $step)
+	{
+		$request = $this->getRequest();
+		$steps = array(
+				'planned' => 'JLM\DailyBundle\Builder\Email\MaintenancePlannedMailBuilder',
+				'onsite' => 'JLM\DailyBundle\Builder\Email\MaintenanceOnSiteMailBuilder',
+				'end' => 'JLM\DailyBundle\Builder\Email\MaintenanceEndMailBuilder',
+				'report' => 'JLM\DailyBundle\Builder\Email\MaintenanceReportMailBuilder',
+		);
+		$class = (array_key_exists($step, $steps)) ? $steps[$step] : null;
+		if (null === $class)
+		{
+			throw new NotFoundHttpException('Page inexistante');
+		}
+		$mail = MailFactory::create(new $class($entity));
+		$editForm = $this->createForm(new MailType(), $mail);
+		$editForm->handleRequest($request);
+		if ($editForm->isValid())
+		{
+			$this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
+			$this->get('event_dispatcher')->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request));
+			return $this->redirect($this->generateUrl('maintenance_show', array('id' => $entity->getId())));
+		}
+		return array(
+				'entity' => $entity,
+				'form' => $editForm->createView(),
+				'step' => $step,
 		);
 	}
 	

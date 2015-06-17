@@ -8,6 +8,11 @@ maintenance_show:
   defaults:  { _controller: "JLMDailyBundle:Maintenance:show" }
   methods: [GET]
   
+maintenance_email:
+  path: /{id}/email/{step}
+  defaults:  { _controller: "JLMDailyBundle:Maintenance:email" }
+  methods: [GET,POST]
+  
 maintenance_close:
   path: /{id}/close
   defaults:  { _controller: "JLMDailyBundle:Maintenance:close" }

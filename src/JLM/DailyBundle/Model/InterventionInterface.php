@@ -56,4 +56,8 @@ interface InterventionInterface
 	 * @return WorkInterface
 	 */
 	public function getWork();
+	
+	public function getManagerContacts();
+	
+	public function getAdministratorContacts();
 }

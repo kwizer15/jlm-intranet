@@ -9,12 +9,24 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\DailyBundle\Model;
+namespace JLM\DailyBundle\Builder\Email;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-interface FixingInterface extends InterventionInterface
+class WorkEndMailBuilder extends WorkMailBuilder
 {
 
+	public function buildSubject()
+	{
+		$this->setSubject('Travaux terminés');
+	}
+	
+	public function buildBody()
+	{
+		$this->setBody('Bonjour,'.chr(10).chr(10)
+		.'Le technicien à terminé les travaux'.chr(10)
+		.'Cordialement'
+		);
+	}
 }

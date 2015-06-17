@@ -19,13 +19,13 @@ class FixingDistributedMailBuilder extends FixingMailBuilder
 
 	public function buildSubject()
 	{
-		$this->setSubject('Technicien sur place');
+		$this->setSubject('Intervention distribuée');
 	}
 	
 	public function buildBody()
 	{
 		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Le technicien est sur place'.chr(10)
+		.'Le technicien est en route'.chr(10)
 		);
 	}
 	

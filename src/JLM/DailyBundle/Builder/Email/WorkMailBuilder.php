@@ -11,26 +11,21 @@
 
 namespace JLM\DailyBundle\Builder\Email;
 
+use JLM\CoreBundle\Builder\MailBuilderAbstract;
+use JLM\DailyBundle\Model\WorkInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class FixingOnSiteMailBuilder extends FixingMailBuilder
+abstract class WorkMailBuilder extends InterventionMailBuilder
 {
-
-	public function buildSubject()
+	public function __construct(WorkInterface $work)
 	{
-		$this->setSubject('Technicien sur place');
+		parent::__construct($work);
 	}
 	
-	public function buildBody()
+	public function getWork()
 	{
-		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Le technicien est sur place'.chr(10)
-		);
-	}
-	
-	public function buildAttachements()
-	{
-		
+		return $this->getIntervention();
 	}
 }

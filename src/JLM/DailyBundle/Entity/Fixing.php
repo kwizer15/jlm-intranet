@@ -207,41 +207,5 @@ class Fixing extends Intervention implements FixingInterface
 		return $this;
 	}
 	
-	public function getAdministratorContacts()
-	{
-		return $this->_createContactFromEmail($this->getDoor()->getAdministratorEmails());
-	}
 	
-	public function getManagerContacts()
-	{
-		return $this->_createContactFromEmail($this->getDoor()->getManagerEmails());
-	}
-	
-	private function _createContactFromEmail($emails)
-	{
-		$c = array();
-		if ($emails === null)
-		{
-			return $c;
-		}
-		
-		foreach ($emails as $email)
-		{
-			$temp = new Company();
-			$temp->setEmail($email);
-			$c[] = $temp;
-		}
-		
-		return $c;
-	}
-	
-	public function getInstallationCode()
-	{
-		if ($this->getDoor() === null)
-		{
-			return null;
-		}
-		
-		return $this->getDoor()->getCode();
-	}
 }

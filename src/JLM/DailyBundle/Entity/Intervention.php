@@ -18,6 +18,7 @@ use JLM\CommerceBundle\Model\BillInterface;
 use JLM\CommerceBundle\Model\BillSourceInterface;
 use JLM\DailyBundle\Model\InterventionInterface;
 use JLM\ModelBundle\Entity\Door;
+use JLM\ContactBundle\Entity\Company;
 
 /**
  * Plannification d'intervention
@@ -730,5 +731,43 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     	$this->setMustBeBilled();
     	$this->reOpen();
     	return $this;
+    }
+    
+    public function getAdministratorContacts()
+    {
+    	return $this->_createContactFromEmail($this->getDoor()->getAdministratorEmails());
+    }
+    
+    public function getManagerContacts()
+    {
+    	return $this->_createContactFromEmail($this->getDoor()->getManagerEmails());
+    }
+    
+    private function _createContactFromEmail($emails)
+    {
+    	$c = array();
+    	if ($emails === null)
+    	{
+    		return $c;
+    	}
+    
+    	foreach ($emails as $email)
+    	{
+    		$temp = new Company();
+    		$temp->setEmail($email);
+    		$c[] = $temp;
+    	}
+    
+    	return $c;
+    }
+    
+    public function getInstallationCode()
+    {
+    	if ($this->getDoor() === null)
+    	{
+    		return null;
+    	}
+    
+    	return $this->getDoor()->getCode();
     }
 }

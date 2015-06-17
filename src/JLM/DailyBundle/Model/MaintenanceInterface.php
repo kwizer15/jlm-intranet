@@ -14,7 +14,7 @@ namespace JLM\DailyBundle\Model;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-interface FixingInterface extends InterventionInterface
+interface MaintenanceInterface extends InterventionInterface
 {
 
 }

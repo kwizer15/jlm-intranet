@@ -12,13 +12,14 @@
 namespace JLM\DailyBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use JLM\DailyBundle\Model\MaintenanceInterface;
 
 /**
  * Plannification d'un entretien
  * JLM\DailyBundle\Entity\Maintenance
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Maintenance extends Intervention
+class Maintenance extends Intervention implements MaintenanceInterface
 {
 	/**
 	 * Get Type

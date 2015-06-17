@@ -17,6 +17,12 @@ use JLM\DailyBundle\Form\Type\ExternalBillType;
 use JLM\DailyBundle\Form\Type\InterventionCancelType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\CommerceBundle\Entity\QuoteVariant;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use JLM\CoreBundle\Factory\MailFactory;
+use JLM\CoreBundle\Form\Type\MailType;
+use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
+use JLM\ModelBundle\JLMModelEvents;
+use JLM\ModelBundle\Event\DoorEvent;
 
 /**
  * Work controller.
@@ -253,6 +259,41 @@ class WorkController extends AbstractInterventionController
 		return array(
 				'entity'      => $entity,
 				'form'   => $form->createView(),
+		);
+	}
+	
+	/**
+	 * Finds and displays a InterventionPlanned entity.
+	 *
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function emailAction(Work $entity, $step)
+	{
+		$request = $this->getRequest();
+		$steps = array(
+				'planned' => 'JLM\DailyBundle\Builder\Email\WorkPlannedMailBuilder',
+				'onsite' => 'JLM\DailyBundle\Builder\Email\WorkOnSiteMailBuilder',
+				'end' => 'JLM\DailyBundle\Builder\Email\WorkEndMailBuilder',
+		);
+		$class = (array_key_exists($step, $steps)) ? $steps[$step] : null;
+		if (null === $class)
+		{
+			throw new NotFoundHttpException('Page inexistante');
+		}
+		$mail = MailFactory::create(new $class($entity));
+		$editForm = $this->createForm(new MailType(), $mail);
+		$editForm->handleRequest($request);
+		if ($editForm->isValid())
+		{
+			$this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
+			$this->get('event_dispatcher')->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request));
+			return $this->redirect($this->generateUrl('work_show', array('id' => $entity->getId())));
+		}
+		return array(
+				'entity' => $entity,
+				'form' => $editForm->createView(),
+				'step' => $step,
 		);
 	}
 }

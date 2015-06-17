@@ -60,7 +60,7 @@ class FixingController extends AbstractInterventionController
 		$steps = array(
 			'taken' => 'JLM\DailyBundle\Builder\Email\FixingTakenMailBuilder',
 			'distributed' => 'JLM\DailyBundle\Builder\Email\FixingDistributedMailBuilder',
-			'onSite' => 'JLM\DailyBundle\Builder\Email\FixingOonSiteMailBuilder',
+			'onsite' => 'JLM\DailyBundle\Builder\Email\FixingOnSiteMailBuilder',
 			'end' => 'JLM\DailyBundle\Builder\Email\FixingEndMailBuilder',
 			'report' => 'JLM\DailyBundle\Builder\Email\FixingReportMailBuilder',
 		);
@@ -76,6 +76,7 @@ class FixingController extends AbstractInterventionController
 		{
 			$this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
 			$this->get('event_dispatcher')->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request));
+			return $this->redirect($this->generateUrl('fixing_show', array('id' => $entity->getId())));
 		}
 		return array(
 				'entity' => $entity,

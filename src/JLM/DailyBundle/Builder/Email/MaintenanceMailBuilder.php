@@ -11,26 +11,21 @@
 
 namespace JLM\DailyBundle\Builder\Email;
 
+use JLM\CoreBundle\Builder\MailBuilderAbstract;
+use JLM\DailyBundle\Model\InterventionInterface;
+use JLM\DailyBundle\Model\MaintenanceInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class FixingOnSiteMailBuilder extends FixingMailBuilder
+abstract class MaintenanceMailBuilder extends InterventionMailBuilder
 {
-
-	public function buildSubject()
+	public function __construct(MaintenanceInterface $maintenance)
 	{
-		$this->setSubject('Technicien sur place');
+		parent::__construct($maintenance);
 	}
 	
-	public function buildBody()
+	public function getMaintenance()
 	{
-		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Le technicien est sur place'.chr(10)
-		);
-	}
-	
-	public function buildAttachements()
-	{
-		
+		return $this->getIntervention();
 	}
 }
