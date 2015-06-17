@@ -1,0 +1,16 @@
+
+{% block jlm_daily_partfamilytype_widget %}
+{% set s = '[' %}
+{% for part in source %}
+{% set s = s ~ '"' ~ part ~ '"' %}
+{% if not loop.last %}
+{% set s = s ~ ',' %}
+{% endif %}
+{% endfor %}
+{% set s = s ~ ']' %}
+{{ form_widget(form, {'attr':{
+    'data-provide':'typeahead',
+    'data-source':s,
+    'autocomplete':'off'
+}}) }}
+{% endblock jlm_daily_partfamilytype_widget %}

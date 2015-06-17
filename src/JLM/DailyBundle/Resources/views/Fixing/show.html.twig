@@ -19,7 +19,7 @@
 
 {% block report %}
 <a href="{{ path('fixing_printreport',{'id':entity.id}) }}" class="btn btn-mini">Imprimer</a>
-	 <small>{{ entity.due }} - {{ entity.done }}</small>
+	 <small>{{ entity.partFamily }} - {{ entity.due }} - {{ entity.done }}</small>
 	 <h5>Constat</h5>
 	 {{ entity.observation | nl2br }}
 	 <h5>Action menée</h5>

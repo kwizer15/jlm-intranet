@@ -11,6 +11,12 @@ services:
     tags:
       - { name: form.type, alias: intervention_hidden }
       
+  jlm_daily.type.partfamilytype:
+    class: JLM\DailyBundle\Form\Type\PartFamilyType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: jlm_daily_partfamilytype }
+      
   jlm_daily.twig.interventioncount_extension:
     class: JLM\DailyBundle\Twig\Extension\InterventionCountExtension
     arguments: ["@doctrine.orm.entity_manager"]

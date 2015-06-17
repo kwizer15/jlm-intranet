@@ -11,9 +11,9 @@ class FixingCloseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+        	->add('partFamily','jlm_daily_partfamilytype',array('label'=>'Famille de pièce','attr'=>array('class'=>'input-large')))
 	        ->add('due',null,array('label'=>'Cause','attr'=>array('class'=>'input-large')))
 	        ->add('done',null,array('label'=>'Action','attr'=>array('class'=>'input-large')))
-	        ->add('partFamily',null,array('label'=>'Famille de pièce','attr'=>array('class'=>'input-large')))
 	        ->add('observation',null,array('label'=>'Constat','attr'=>array('class'=>'input-xlarge')))
 	        ->add('report','textarea',array('label'=>'Action menée','required'=>false,'attr'=>array('class'=>'input-xlarge')))
 	        ->add('rest','textarea',array('label'=>'Reste à faire','required'=>false,'attr'=>array('class'=>'input-xlarge')))
