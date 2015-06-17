@@ -27,6 +27,9 @@ use JLM\DailyBundle\Entity\Work;
 use JLM\CommerceBundle\Event\QuoteEvent;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Event\QuoteVariantEvent;
+use JLM\CoreBundle\Factory\MailFactory;
+use JLM\CommerceBundle\Builder\Email\QuoteVariantConfirmGivenMailBuilder;
+use JLM\ModelBundle\JLMModelEvents;
 
 /**
  * QuoteVariant controller.
@@ -149,7 +152,38 @@ class QuoteVariantController extends Controller
 	 */
 	public function givenAction($id)
 	{
-		return $this->changeState($id, QuoteVariant::STATE_GIVEN, JLMCommerceEvents::QUOTEVARIANT_GIVEN);
+		$this->changeState($id, QuoteVariant::STATE_GIVEN, JLMCommerceEvents::QUOTEVARIANT_GIVEN);
+		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+		
+		return $manager->redirect('variant_email', array('id' => $id));
+	}
+	
+	/**
+	 * Finds and displays a InterventionPlanned entity.
+	 *
+	 * @Template()
+	 * @Secure(roles="ROLE_USER")
+	 */
+	public function emailAction($id)
+	{
+		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+		$manager->secure('ROLE_USER');
+		$entity = $manager->getEntity($id);
+		$request = $manager->getRequest();
+		$mail = MailFactory::create(new QuoteVariantConfirmGivenMailBuilder($entity));
+		$editForm = $this->createForm(new \JLM\CoreBundle\Form\Type\MailType(), $mail);
+		$editForm->handleRequest($request);
+		if ($editForm->isValid())
+		{
+			$this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
+			//$this->get('event_dispatcher')->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request));
+			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
+		}
+		
+		return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:email.html.twig',array(
+				'entity' => $entity,
+				'form' => $editForm->createView(),
+		));
 	}
 	
 	/**
