@@ -53,6 +53,7 @@
 								{% endif %}
 								{% if  entity.site.observations or entity.observations %}
 							 		<dt>Notes</dt>
+							 	 {% if entity.model %}<dd>Modèle : {{ entity.model }}</dd>{% endif %}
 							 		{% if entity.site.observations %}
 							 			<dd>{{ entity.site.observations | nl2br }}</dd>
 							 		{% endif %}
