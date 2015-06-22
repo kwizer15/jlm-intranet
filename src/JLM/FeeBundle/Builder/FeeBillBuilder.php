@@ -127,7 +127,7 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
                 }
             }
             $product = $this->getOption('product');
-            $rapport = ($end->diff($begin)->format('%m') + 1) / 12;
+            $rapport = ($end->diff($begin)->format('%m')) / 12;
             $fee = $contract->getFee() * $rapport;
             $line = BillLineFactory::create(new ProductBillLineBuilder($product, $this->fee->getVat()->getRate(), 1, array(
                 'price' => $fee,
