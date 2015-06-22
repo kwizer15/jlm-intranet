@@ -117,12 +117,12 @@ class Quote extends CommercialPart
 		elseif ($line->getReference() == 'TITLE')
 		{
 			$this->setFont('Arial','B',10);
-			$this->cell($this->colsize[0],8,$line->getDesignation(),'RTL',0,'R');
-			$this->cell($this->colsize[1],8,'','RTL',0,'R');
-			$this->cell($this->colsize[2],8,'','RTL',0,'R');
-			$this->cell($this->colsize[3],8,'','RTL',0,'R');
-			$this->cell($this->colsize[4],8,'','RTL',0,'R');
-			$this->cell($this->colsize[5],8,'','RTL',1,'R');
+			$this->cell($this->colsize[0],8,$line->getDesignation(),'RTL',0,'L');
+			$this->cell($this->colsize[1],8,'','RTL',0);
+			$this->cell($this->colsize[2],8,'','RTL',0);
+			$this->cell($this->colsize[3],8,'','RTL',0);
+			$this->cell($this->colsize[4],8,'','RTL',0);
+			$this->cell($this->colsize[5],8,'','RTL',1);
 		}
 		else {
 			$this->setFont('Arial','',10);
