@@ -106,13 +106,23 @@ class Quote extends CommercialPart
 		if ($line->getReference() == 'ST')
 		{
 			$this->setFont('Arial','BI',10);
-			$this->cell($this->colsize[0],8,'Sous-total '.$line->getDesignation(),'RBL',0,'R');
-			$this->cell($this->colsize[1],8,'','RBL',0,'R');
-			$this->cell($this->colsize[2],8,'','RBL',0,'R');
-			$this->cell($this->colsize[3],8,number_format($this->st['price'],2,',',' ').' €','RBL',0,'R');
-			$this->cell($this->colsize[4],8,'','RBL',0,'R');
-			$this->cell($this->colsize[5],8,number_format($this->st['ati'],2,',',' ').' €','RBL',1,'R');
+			$this->cell($this->colsize[0],8,'Sous-total '.$line->getDesignation(),'RL',0,'R');
+			$this->cell($this->colsize[1],8,'','RL',0,'R');
+			$this->cell($this->colsize[2],8,'','RL',0,'R');
+			$this->cell($this->colsize[3],8,number_format($this->st['price'],2,',',' ').' €','RL',0,'R');
+			$this->cell($this->colsize[4],8,'','RL',0,'R');
+			$this->cell($this->colsize[5],8,number_format($this->st['ati'],2,',',' ').' €','RL',1,'R');
 			$this->st = array('price'=> 0.0, 'ati'=> 0.0);
+		}
+		elseif ($line->getReference() == 'TITLE')
+		{
+			$this->setFont('Arial','B',10);
+			$this->cell($this->colsize[0],8,$line->getDesignation(),'RTL',0,'R');
+			$this->cell($this->colsize[1],8,'','RTL',0,'R');
+			$this->cell($this->colsize[2],8,'','RTL',0,'R');
+			$this->cell($this->colsize[3],8,'','RTL',0,'R');
+			$this->cell($this->colsize[4],8,'','RTL',0,'R');
+			$this->cell($this->colsize[5],8,'','RTL',1,'R');
 		}
 		else {
 			$this->setFont('Arial','',10);
