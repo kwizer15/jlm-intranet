@@ -218,6 +218,10 @@ abstract class CommercialPartLineProduct extends CommercialPartLine implements C
 	 */
 	public function getQuantity()
 	{
+		if ($this->getReference() == 'ST')
+		{
+			return 0;
+		}
 		return $this->quantity;
 	}
 	
