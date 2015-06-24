@@ -116,7 +116,7 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
             $endContract = $contract->getEnd();
             $end = clone $this->follower->getActivation();
             $end->add(new \DateInterval($periods[$this->fee->getFrequence()]));
-            $end->sub(new \DateInterval('P1D'));
+            
             $frequenceString = ' '.$this->fee->getFrequenceString();
             if ($endContract !== null)
             {
@@ -127,8 +127,10 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
                 }
             }
             $product = $this->getOption('product');
-            $rapport = ($end->diff($begin)->format('%m')) / 12;
+            $diff = $end->diff($begin);
+            $rapport = ($diff->format('%m') + 12 * $diff->format('%y')) / 12;
             $fee = $contract->getFee() * $rapport;
+            $end->sub(new \DateInterval('P1D'));
             $line = BillLineFactory::create(new ProductBillLineBuilder($product, $this->fee->getVat()->getRate(), 1, array(
                 'price' => $fee,
                 'designation' => $product->getDesignation().$frequenceString.' du '.$begin->format('d/m/Y').' au '.$end->format('d/m/Y'),
