@@ -11,9 +11,9 @@ class MailType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('from','collection',array('type'=>'email','allow_add' => true,'allow_delete' => true, 'prototype' => true, 'label'=>'De'))
-            ->add('to','collection',array('type'=>'email','allow_add' => true,'allow_delete' => true, 'prototype' => true, 'label'=>'Destinataire'))
-            ->add('cc','collection',array('type'=>'email','allow_add' => true,'allow_delete' => true, 'prototype' => true, 'label'=>'Copie à','required'=>false))
+            ->add('from','collection',array('type'=>'jlm_core_email','allow_add' => true,'allow_delete' => true, 'prototype' => true, 'label'=>'De'))
+            ->add('to','collection',array('type'=>'jlm_core_email','allow_add' => true,'allow_delete' => true, 'prototype' => true, 'label'=>'Destinataire'))
+            ->add('cc','collection',array('type'=>'jlm_core_email','allow_add' => true,'allow_delete' => true, 'prototype' => true, 'label'=>'Copie à','required'=>false))
             ->add('subject','text',array('label'=>'Sujet','attr'=>array('class'=>'input-xxlarge')))
             ->add('body','textarea',array('label'=>'Message','attr'=>array('class'=>'input-xxlarge','rows'=>7)))
     	;

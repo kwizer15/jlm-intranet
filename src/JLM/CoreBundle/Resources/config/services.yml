@@ -17,6 +17,12 @@ services:
         class: JLM\CoreBundle\Form\Type\SearchType
         tags:
             - { name: form.type, alias: jlm_core_search }
+            
+    jlm_core.type.email:
+        class: JLM\CoreBundle\Form\Type\EmailType
+        tags:
+            - { name: form.type, alias: jlm_core_email }
+            
     jlm_core.twig.search_extension:
         class: JLM\CoreBundle\Twig\Extension\SearchExtension
         arguments: ["@service_container"]
