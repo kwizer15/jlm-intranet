@@ -18,11 +18,17 @@ use Symfony\Component\Form\AbstractType;
  */
 class EmailType extends AbstractType
 {
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getParent()
 	{
 		return 'email';
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getName()
 	{
 		return 'jlm_core_email';

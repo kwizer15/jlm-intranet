@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the JLMDailyBundle package.
+ * This file is part of the JLMCoreBundle package.
  *
  * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *
@@ -12,6 +12,7 @@
 namespace JLM\CoreBundle\Factory;
 
 use JLM\CoreBundle\Builder\MailBuilderInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -19,9 +20,8 @@ class MailFactory
 {
     /**
      * 
-     * @param WorkBuilderInterface $bill
-     * 
-     * @return WorkInterface
+     * @param MailBuilderInterface $builder
+     * @return mixed
      */
     public static function create(MailBuilderInterface $builder)
     {

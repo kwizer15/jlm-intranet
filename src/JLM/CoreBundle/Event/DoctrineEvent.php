@@ -14,14 +14,23 @@ namespace JLM\CoreBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ */
 class DoctrineEvent extends Event
 {
     /**
-     * @var Request
+     * @var mixed
      */
     private $entity;
+    
+    /**
+     * @var ObjectManager
+     */
+    private $om;
 
     /**
+     * Constructor
      * @param FormInterface $form
      * @param Request $request
      */
@@ -32,13 +41,18 @@ class DoctrineEvent extends Event
     }
     
     /**
-     * @return string
+     * Get the entity
+     * @return mixed
      */
     public function getEntity()
     {
     	return $this->entity;
     }
     
+    /**
+     * Get thje object manager
+     * @return ObjectManager
+     */
     public function getObjectManager()
     {
     	return $this->om;

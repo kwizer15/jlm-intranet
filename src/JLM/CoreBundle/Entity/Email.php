@@ -1,40 +1,51 @@
 <?php
 
+/*
+ * This file is part of the JLMCoreBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\CoreBundle\Entity;
 
 use JLM\CoreBundle\Model\EmailInterface;
+use JLM\CoreBundle\Model\AttachementInterface;
+
 /**
- * JLM\CoreBundle\Entity\Mail
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class Email implements EmailInterface
 {
 	/**
-	 * @var string $subject
+	 * @var string
 	 */
 	private $subject;
 	
 	/**
-	 * @var array $from
+	 * @var array
 	 */
 	private $from;
 	
 	/**
-	 * @var array $to
+	 * @var array
 	 */
 	private $to;
 	
 	/**
-	 * @var array $cc
+	 * @var array
 	 */
 	private $cc;
 	
 	/**
-	 * @var array $bcc
+	 * @var array
 	 */
 	private $bcc;
 	
 	/**
-	 * @var string $body
+	 * @var string
 	 */
 	private $body;
 	
@@ -43,6 +54,9 @@ class Email implements EmailInterface
 	 */
 	private $attachements;
 	
+	/**
+	 * Constructor
+	 */
 	public function __construct()
 	{
 		$this->from = array();
@@ -54,7 +68,7 @@ class Email implements EmailInterface
 	/**
 	 * Set Subject
 	 * @param string $subject
-	 * @return Mail
+	 * @return self
 	 */
 	public function setSubject($subject)
 	{
@@ -73,21 +87,21 @@ class Email implements EmailInterface
 	}
 
 	/**
-	 * Set From
-	 * @param string $from
-	 * @return Mail
+	 * Add from
+	 * @param string $email
+	 * @return bool
 	 */
 	public function addFrom($email, $name = null)
 	{
 		$this->from[] = $email;
 		
-		return $this;
+		return true;
 	}
 	
 	/**
-	 * Set From
-	 * @param string $from
-	 * @return Mail
+	 * Remove from
+	 * @param string $email
+	 * @return bool
 	 */
 	public function removeFrom($email)
 	{
@@ -105,8 +119,8 @@ class Email implements EmailInterface
 	}
 	
 	/**
-	 * Get from
-	 * @return string
+	 * Get from emails
+	 * @return array
 	 */
 	public function getFrom()
 	{
@@ -114,21 +128,21 @@ class Email implements EmailInterface
 	}
 	
 	/**
-	 * Set From
-	 * @param string $from
-	 * @return Mail
+	 * Add To
+	 * @param string $email
+	 * @return bool
 	 */
 	public function addTo($email, $name = null)
 	{
 		$this->to[] = $email;
 		
-		return $this;
+		return true;
 	}
 	
 	/**
-	 * Set From
-	 * @param string $from
-	 * @return Mail
+	 * Remove To
+	 * @param string $email
+	 * @return bool
 	 */
 	public function removeTo($email)
 	{
@@ -146,7 +160,7 @@ class Email implements EmailInterface
 	}
 	
 	/**
-	 * Get to
+	 * Get to emails
 	 * @return string
 	 */
 	public function getTo()
@@ -155,21 +169,21 @@ class Email implements EmailInterface
 	}
 	
 	/**
-	 * Set From
-	 * @param string $from
-	 * @return Mail
+	 * Add Cc
+	 * @param string $email
+	 * @return bool
 	 */
 	public function addCc($email, $name = null)
 	{
 		$this->cc[] = $email;
 		
-		return $this;
+		return true;
 	}
 	
 	/**
-	 * Set From
-	 * @param string $from
-	 * @return Mail
+	 * Remove Cc
+	 * @param string $email
+	 * @return bool
 	 */
 	public function removeCc($email)
 	{
@@ -187,7 +201,7 @@ class Email implements EmailInterface
 	}
 	
 	/**
-	 * Get cc
+	 * Get cc emails
 	 * @return array
 	 */
 	public function getCc()
@@ -196,21 +210,21 @@ class Email implements EmailInterface
 	}
 	
 	/**
-	 * Set From
-	 * @param string $from
-	 * @return Mail
+	 * Add Bcc
+	 * @param string $email
+	 * @return bool
 	 */
 	public function addBcc($email, $name = null)
 	{
 		$this->bcc[] = $email;
 		
-		return $this;
+		return true;
 	}
 	
 	/**
-	 * Set From
-	 * @param string $from
-	 * @return Mail
+	 * Remove Bcc
+	 * @param string $email
+	 * @return bool
 	 */
 	public function removeBcc($email)
 	{
@@ -228,8 +242,8 @@ class Email implements EmailInterface
 	}
 	
 	/**
-	 * Get bcc
-	 * @return string
+	 * Get bcc emails
+	 * @return array
 	 */
 	public function getBcc()
 	{
@@ -240,7 +254,7 @@ class Email implements EmailInterface
 	/**
 	 * Set body
 	 * @param string $body
-	 * @return Mail
+	 * @return self
 	 */
 	public function setBody($body)
 	{
@@ -259,21 +273,21 @@ class Email implements EmailInterface
 	}
 	
 	/**
-	 * Set From
-	 * @param string $from
-	 * @return Mail
+	 * Add attachement
+	 * @param AttachementInterface $attach
+	 * @return bool
 	 */
-	public function addAttachement($attach)
+	public function addAttachement(AttachementInterface $attach)
 	{
 		$this->attachements[] = $attach;
 	
-		return $this;
+		return true;
 	}
 	
 	/**
-	 * Set From
-	 * @param string $from
-	 * @return Mail
+	 * Remove attachement
+	 * @param AttachementInterface $attach
+	 * @return bool
 	 */
 	public function removeAttachement(AttachementInterface $attach)
 	{
@@ -288,5 +302,14 @@ class Email implements EmailInterface
 		}
 	
 		return false;
+	}
+	
+	/**
+	 * Get attahcements
+	 * @return array
+	 */
+	public function getAttachements()
+	{
+		return $this->attachements;
 	}
 }

@@ -15,6 +15,9 @@ use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ */
 class RequestEvent extends Event
 {
     /**
@@ -23,6 +26,7 @@ class RequestEvent extends Event
     private $request;
 
     /**
+     * Constructor
      * @param FormInterface $form
      * @param Request $request
      */
@@ -32,6 +36,7 @@ class RequestEvent extends Event
     }
     
     /**
+     * Get request parameter
      * @return string
      */
     public function getParam($param, $default = null, $deep = false)

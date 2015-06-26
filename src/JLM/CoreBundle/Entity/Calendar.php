@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the JLMContactBundle package.
+ * This file is part of the JLMCoreBundle package.
  *
  * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  *
@@ -12,6 +12,7 @@
 namespace JLM\CoreBundle\Entity;
 
 use JLM\CoreBundle\Model\CalendarInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
