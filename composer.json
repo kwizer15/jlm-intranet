@@ -25,7 +25,8 @@
         "genemu/form-bundle": "2.2.*",
         "itbz/fpdf": "1.7.1",
         "friendsofsymfony/rest-bundle": "1.3.*",
-        "liuggio/excelbundle": "~2.0"
+        "liuggio/excelbundle": "~2.0",
+        "jlm-entreprise/installation-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
