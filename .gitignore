@@ -77,3 +77,6 @@ dbfinal.sql
 out.txt
 csv2php.php
 
+# App
+src/JLM/InstallationBundle
+
