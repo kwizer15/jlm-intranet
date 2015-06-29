@@ -30,6 +30,7 @@ use JLM\CommerceBundle\Event\QuoteVariantEvent;
 use JLM\CoreBundle\Factory\MailFactory;
 use JLM\CommerceBundle\Builder\Email\QuoteVariantConfirmGivenMailBuilder;
 use JLM\ModelBundle\JLMModelEvents;
+use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
 
 /**
  * QuoteVariant controller.
