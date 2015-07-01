@@ -27,6 +27,7 @@ class WorkEndMailBuilder extends WorkMailBuilder
 		$this->setBody('Bonjour,'.chr(10).chr(10)
 		.'Le technicien à terminé les travaux'.chr(10)
 		.'Cordialement'
+		.$this->_getSignature()
 		);
 	}
 }

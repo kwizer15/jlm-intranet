@@ -25,7 +25,8 @@ class FixingDistributedMailBuilder extends FixingMailBuilder
 	public function buildBody()
 	{
 		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Le technicien est en route'.chr(10)
+		.'Le technicien est en route'
+		.$this->_getSignature()
 		);
 	}
 	

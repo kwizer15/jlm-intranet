@@ -25,7 +25,8 @@ class FixingOnSiteMailBuilder extends FixingMailBuilder
 	public function buildBody()
 	{
 		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Le technicien est sur place'.chr(10)
+		.'Le technicien est sur place'
+		.$this->_getSignature()
 		);
 	}
 	

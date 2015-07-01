@@ -28,6 +28,7 @@ class FixingEndMailBuilder extends FixingMailBuilder
 		.'Le technicien à terminé son intervention'.chr(10)
 		.'Vous recevrez le compte-rendu dans les plus-bref délais'.chr(10).chr(10)
 		.'Cordialement'
+		.$this->_getSignature()
 		);
 	}
 	

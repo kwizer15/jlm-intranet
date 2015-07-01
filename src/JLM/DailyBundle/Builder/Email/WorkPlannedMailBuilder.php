@@ -27,6 +27,7 @@ class WorkPlannedMailBuilder extends WorkMailBuilder
 		$this->setBody('Bonjour,'.chr(10).chr(10)
 		.'Les travaux sont plannifiés pour le ...'.chr(10)
 		.'Cordialement'
+		.$this->_getSignature()
 		);
 	}
 }
