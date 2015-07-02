@@ -309,15 +309,22 @@ class DefaultController extends Controller
     	$maxyear = $date->format('Y');
     	$year = ($year === null) ? $maxyear : $year;
     	$em = $this->getDoctrine()->getManager();
-    	$doors = $em->getRepository('JLMModelBundle:Door')->getCountByType($year);
-    	$intervs = $em->getRepository('JLMModelBundle:Door')->getCountIntervsByType($year);
-    	$tot = $totinter = $tottime = 0;
+    	$repo = $em->getRepository('JLMModelBundle:Door');
+    	$doors = $repo->getCountByType($year);
+    	$intervs = $repo->getCountIntervsByType($year);
+    	$complets = $repo->getCountIntervsByTypeAndContract(array('C1','C2'),$year);
+    	$normaux = $repo->getCountIntervsByTypeAndContract(array('N3','N4'),$year);
+    	$hc = $repo->getCountIntervsByTypeAndContract(array('HC','Hors contrat'),$year);
+    	$tot = $totinter = $tottime = $totC = $totN = $totHC = 0;
     	$data = array();
 		foreach ($doors as $door)
 		{
 			$data[$door['name']] = array(
 					'nb' => (int)$door['nb'],
 					'intervs' => 0,
+					'intC' => 0,
+					'intN' => 0,
+					'intHC' => 0,
 					'moyintervs' => 0,
 					'time' => new \DateInterval('PT0S'),
 					'moytime' => new \DateInterval('PT0S'),
@@ -336,6 +343,33 @@ class DefaultController extends Controller
 					$tottime += $interv['time'];
 				}
 			}
+			
+			foreach ($complets as $interv)
+			{
+				if ($door['name'] == $interv['name'])
+				{
+					$data[$door['name']]['intC'] = (int)$interv['nb'];
+					$totC += $interv['nb'];
+				}
+			}
+			
+			foreach ($normaux as $interv)
+			{
+				if ($door['name'] == $interv['name'])
+				{
+					$data[$door['name']]['intN'] = (int)$interv['nb'];
+					$totN += $interv['nb'];
+				}
+			}
+			
+			foreach ($hc as $interv)
+			{
+				if ($door['name'] == $interv['name'])
+				{
+					$data[$door['name']]['intHC'] = (int)$interv['nb'];
+					$totHC += $interv['nb'];
+				}
+			}
 		}
 		
     	return array(
@@ -347,6 +381,9 @@ class DefaultController extends Controller
     			'moytime' => $this->secondsToInterval($tottime/$tot),
     			'year' => $year,
     			'maxyear' => $maxyear,
+    			'totC' => $totC,
+    			'totN' => $totN,
+    			'totHC' => $totHC,
     	);
     }
 

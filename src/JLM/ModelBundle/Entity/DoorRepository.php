@@ -170,4 +170,31 @@ class DoorRepository extends SearchRepository
 	
 		return $qb->getQuery()->getResult();
 	}
+	
+	public function getCountIntervsByTypeAndContract($contract = array(), $year = 2015, $type = 'fixing')
+	{
+		$types = array(
+				'fixing'=>'JLM\DailyBundle\Entity\Fixing',
+				'maintenance'=>'JLM\DailyBundle\Entity\Maintenance',
+				'work'=>'JLM\DailyBundle\Entity\Work',
+		);
+		$qb = $this->createQueryBuilder('a')
+		->select('i.name AS name,COUNT(b) AS nb, SUM(TIME_TO_SEC(c.end) - TIME_TO_SEC(c.begin)) as time')
+		->leftJoin('a.contracts','g')
+		->leftJoin('a.type','i')
+		->leftJoin('a.interventions','b')
+		->leftJoin('b.shiftTechnicians','c')
+		->where('g IS NOT NULL')
+		->andWhere('g.end IS NULL OR (YEAR(g.begin) < ?1 AND YEAR(g.end) > ?1)')
+		->andWhere('b INSTANCE OF '.$types[$type])
+		->andWhere('YEAR(c.end) = ?1')
+		->andWhere('b.contract IN (?2)')
+		->setParameter(1, $year)
+		->setParameter(2, $contract)
+		->groupBy('i.name')
+		->orderBy('nb','DESC')
+		;
+	
+		return $qb->getQuery()->getResult();
+	}
 }

@@ -18,6 +18,9 @@
 			<th>Type de porte</th>
 			<th>Nombre sous contrat</th>
 			<th>Nombre d'interventions</th>
+			<th>Complet</th>
+			<th>Normaux</th>
+			<th>HC</th>
 			<th>Moyenne d'intervention / install.</th>
 			<th>Temps passé total</th>
 			<th>Temps moyen passé / install.</th>
@@ -29,6 +32,9 @@
 			<td>{{ name }}</td>
 			<td>{{ data.nb }}</td>
 			<td>{{ data.intervs }}</td>
+			<td>{{ data.intC }}</td>
+			<td>{{ data.intN }}</td>
+			<td>{{ data.intHC }}</td>
 			<td>{{ data.moyintervs|number_format(2, ',', ' ')}}</td>
 			<td>{{ data.time|date('%hh%I') }}</td>
 			<td>{{ data.moytime|date('%hh%I') }}</td>
