@@ -19,14 +19,21 @@ class FixingOnSiteMailBuilder extends FixingMailBuilder
 
 	public function buildSubject()
 	{
-		$this->setSubject('Technicien sur place');
+		$this->setSubject('Intervention #'.$this->getFixing()->getId().' - Technicien sur place');
 	}
 	
 	public function buildBody()
 	{
-		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Le technicien est sur place'
-		.$this->_getSignature()
+		$this->setBody(
+			'Bonjour,'.chr(10)
+			.chr(10)
+			.'Nous vous informons que notre technicien est actuellement sur place et qu\'il procède au dépannage de l\'installation'.chr(10)
+			.chr(10)
+			.$this->getFixing()->getInstallationCode().chr(10)
+			.$this->getFixing()->getPlace().chr(10)
+			.chr(10)
+			.'Cordialement'
+			.$this->_getSignature()
 		);
 	}
 	

@@ -637,6 +637,16 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     {
         return $this->work;
     }
+    
+    /**
+     * Has work
+     *
+     * @return bool
+     */
+    public function hasWork()
+    {
+    	return $this->work !== null;
+    }
 
     /**
      * Set askQuote
@@ -659,6 +669,16 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     public function getAskQuote()
     {
         return $this->askQuote;
+    }
+    
+    /**
+     * Has ask quote
+     * 
+     * @return bool
+     */
+    public function hasAskQuote()
+    {
+    	return $this->askQuote !== null;
     }
     
     /**

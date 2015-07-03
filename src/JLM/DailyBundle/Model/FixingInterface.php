@@ -16,5 +16,15 @@ namespace JLM\DailyBundle\Model;
  */
 interface FixingInterface extends InterventionInterface
 {
-
+	public function getId();
+	
+	public function getInstallationCode();
+	
+	public function getPlace();
+	
+	public function getAskDate();
+	
+	public function getDoor();
+	
+	public function getDue();
 }

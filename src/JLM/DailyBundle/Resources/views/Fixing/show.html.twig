@@ -35,10 +35,12 @@
       </a>
           <ul class="dropdown-menu">
       	    <li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'taken'}) }}">Prise en compte</a></li>
-      		<li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'distributed'}) }}">Technicien en route</a></li>
+      		{#}<li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'distributed'}) }}">Technicien en route</a></li>{#}
             <li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'onsite'}) }}">Technicien sur site</a></li>
+            {% if entity.closed %}
             <li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'end'}) }}">Fin de l'intervention</a></li>
             <li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'report'}) }}">Rapport d'intervention</a></li>
+            {% endif %}
          </ul>
     </div>
 {% endblock %}

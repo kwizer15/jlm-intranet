@@ -19,14 +19,19 @@ class FixingReportMailBuilder extends FixingMailBuilder
 
 	public function buildSubject()
 	{
-		$this->setSubject('Compte-rendu de l\'intervention');
+		$this->setSubject('Intervention #'.$this->getFixing()->getId().' Compte-rendu');
 	}
 	
 	public function buildBody()
 	{
 		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Le technicien à terminé son intervention'.chr(10)
-		.'Vous recevrez le compte-rendu'.chr(10)
+		.'Suite à notre intervention du .'.$this->getFixing()->getLastDate()->format('d/m/Y').' sur l\'installation :'.chr(10)
+		.chr(10)
+		.$this->getFixing()->getInstallationCode().chr(10)
+		.$this->getFixing()->getPlace().chr(10)
+		.chr(10)
+		.'nous avous constaté '.$this->_getConstat().chr(10)
+		.chr(10)
 		.'Cordialement'
 		.$this->_getSignature()
 		);
@@ -35,5 +40,26 @@ class FixingReportMailBuilder extends FixingMailBuilder
 	public function buildAttachements()
 	{
 		
+	}
+	
+	protected function _getConstat()
+	{
+		$part = ($this->getFixing()->getPartFamily() === null) ? 'aucun' : strtolower($this->getFixing()->getPartFamily()->getName());
+		if ($part == 'aucun')
+		{
+			return 'après plusieurs essais que l\'intallation était fonctionnelle.';
+		}
+		$out = 'un';
+		$due = $this->getFixing()->getDue();
+		if ($due !== null)
+		{
+			$cause = ($due->getId() != 4) ? 'e '.strtolower($due->getName()) : ' dysfonctionnement';
+			$out .= $cause.' sur les élements d';
+			$suite = (in_array(substr($part,0,1),array('a','e','i','o','u'))) ? '\'' : 'e ';
+			
+			return $out.$suite.$part.'.';
+		}
+		
+		return 'après plusieurs essais que l\'intallation était fonctionnelle.';
 	}
 }
