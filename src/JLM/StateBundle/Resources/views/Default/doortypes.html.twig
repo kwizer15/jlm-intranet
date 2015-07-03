@@ -39,7 +39,9 @@
 			<td>{{ data.time|date('%hh%I') }}</td>
 			<td>{{ data.moytime|date('%hh%I') }}</td>
 		</tr>
+	</tbody>
 		{% endfor %}
+	<tfoot>
 		<tr>
 			<th>Total</th>
 			<th>{{ tot }}</th>
@@ -51,6 +53,6 @@
 			<th>{{ tottime|date('%hh%I') }}</th>
 			<th>{{ moytime|date('%hh%I') }}</th>
 		</tr>
-	</tbody>
+	</tfoot>
 </table>
 {% endblock %}
