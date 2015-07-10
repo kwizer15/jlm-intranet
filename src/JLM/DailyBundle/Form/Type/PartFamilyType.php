@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use JLM\TransmitterBundle\Entity\UserGroupRepository;
-use JLM\DailyBundle\Form\DataTransformer\PartFamilyToStringTransformer;
+use JLM\CoreBundle\Form\DataTransformer\ObjectToStringAutocreateTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
@@ -33,7 +33,7 @@ class PartFamilyType extends AbstractType
 	 */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-    	$transformer = new PartFamilyToStringTransformer($this->om);
+    	$transformer = new ObjectToStringAutocreateTransformer($this->om, 'JLM\DailyBundle\Entity\PartFamily', 'name');
     	$builder->addModelTransformer($transformer);
     	
     }
