@@ -89,6 +89,12 @@ class Quote extends CommercialPart implements QuoteInterface
 	private $ask;
 	
 	/**
+	 * Description du devis
+	 * @var string
+	 */
+	private $description;
+	
+	/**
 	 * Construteur
 	 *
 	 */
@@ -383,6 +389,7 @@ class Quote extends CommercialPart implements QuoteInterface
     /**
      * Creation depuis une demande de devis
      * @todo Create a builder
+     * @deprecated
      */
     public static function createFromAskQuote(AskQuote $askquote)
     {
@@ -427,6 +434,18 @@ class Quote extends CommercialPart implements QuoteInterface
     	$this->setNumber($number);
     	
     	return $number;
+    }
+    
+    public function getDescription()
+    {
+    	return $this->description;
+    }
+    
+    public function setDescription($description = null)
+    {
+    	$this->description = $description;
+    	
+    	return $this;
     }
     
     public function getLastSend()

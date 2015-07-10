@@ -17,6 +17,9 @@ JLM\CommerceBundle\Entity\Quote:
       type: text
     contactCp:
       column: contact_cp
+    description:
+      type: text
+      nullable: true
   manyToOne:
     door:
       targetEntity: JLM\ModelBundle\Entity\Door

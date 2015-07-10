@@ -1,0 +1,1 @@
+ALTER TABLE quote ADD description LONGTEXT DEFAULT NULL;
