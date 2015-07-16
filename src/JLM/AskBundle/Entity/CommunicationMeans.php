@@ -14,8 +14,6 @@ namespace JLM\AskBundle\Entity;
 use JLM\AskBundle\Model\CommunicationMeansInterface;
 
 /**
- * JLM\OfficeBundle\Entity\AskMethod
- *
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class CommunicationMeans implements CommunicationMeansInterface
