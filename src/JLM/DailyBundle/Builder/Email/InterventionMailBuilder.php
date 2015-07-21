@@ -65,15 +65,4 @@ abstract class InterventionMailBuilder extends MailBuilderAbstract
 	{
 	
 	}
-	
-	protected function _getSignature()
-	{
-		return chr(10).chr(10)
-		.'--'.chr(10)
-		.'JLM Entreprise'.chr(10)
-		.'17 avenue de Montboulon'.chr(10)
-		.'77165 SAINT-SOUPPLETS'.chr(10)
-		.'Tel : 01 64 33 77 70'.chr(10)
-		.'Fax : 01 64 33 78 45';
-	}
 }

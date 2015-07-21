@@ -35,12 +35,13 @@ class BillBoostMailBuilder extends BillMailBuilder
 		$this->setBody('Bonjour,'.chr(10).chr(10)
 		.''
 		.'Cordialement'
+		.$this->_getSignature()
 		);
 	}
 	
 	public function buildPreAttachements()
 	{
-		$name = 'uploads/FAC'.$this->getBill()->getNumber().'.pdf';
+		$name = 'uploads/FAC'.$this->getBill()->getNumber().'-duplicata.pdf';
 		Bill::save(array($this->getBill()), true, $name );
 		$file = new UploadedFile($name, 'FAC'.$this->getBill()->getNumber().'.pdf','application/pdf');
 		$this->getMail()->addPreAttachement($file);
