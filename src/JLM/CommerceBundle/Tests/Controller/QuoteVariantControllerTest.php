@@ -36,7 +36,7 @@ class QuoteVariantControllerTest extends WebTestCase
     {
         return array(
         	array('GET', '/quote/variant/new?quote=1'),
-            array('GET', '/quote/variant/1/edit'),
+            //array('GET', '/quote/variant/1/edit'),
         );
     }
     

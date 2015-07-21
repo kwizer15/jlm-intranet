@@ -13,8 +13,7 @@ namespace JLM\DailyBundle\Builder;
 
 use JLM\ModelBundle\Builder\DoorBillBuilderAbstract;
 use JLM\DailyBundle\Entity\Intervention;
-use JLM\DailyBundle\Entity\Work;
-use JLM\OfficeBundle\Builder\VariantBillBuilder;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
