@@ -119,4 +119,12 @@ bill_search:
     path:   /search
     defaults:  { _controller: "JLMCommerceBundle:Bill:search" }
     methods: [GET]
+ 
+jlm_commerce_bill_boostemail:
+    path: /boost/{id}/email
+    defaults:
+        _controller: JLMCommerceBundle:Bill:boostemail
+    methods: [GET,POST]
+
+    
     

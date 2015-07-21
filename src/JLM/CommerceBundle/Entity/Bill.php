@@ -807,4 +807,58 @@ class Bill extends CommercialPart implements BillInterface
     	
     	return false;
     }
+    
+    public function getSrc()
+    {
+    	if ($this->intervention !== null)
+    	{
+    		return $this->intervention->getDoor();
+    	}
+    	if ($this->fee !== null)
+    	{
+    		return $this->fee;
+    	}
+    	
+    	return null;
+    }
+    
+	public function getManagerContacts()
+    {
+    	$src = $this->getSrc();
+    	if ($src === null)
+    	{
+    		return array();
+    	}
+    	
+    	return $this->_createContactFromEmail($this->getSrc()->getManagerEmails());
+    }
+    
+    public function getBoostContacts()
+    {
+    	$src = $this->getSrc();
+    	if ($src === null)
+    	{
+    		return array();
+    	}
+    	
+    	return $this->_createContactFromEmail($this->getSrc()->getAccountingEmails());
+    }
+    
+    private function _createContactFromEmail($emails)
+    {
+    	$c = array();
+    	if ($emails === null)
+    	{
+    		return $c;
+    	}
+    
+    	foreach ($emails as $email)
+    	{
+    		$temp = new Company();
+    		$temp->setEmail($email);
+    		$c[] = $temp;
+    	}
+    
+    	return $c;
+    }
 }

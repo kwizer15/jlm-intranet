@@ -42,6 +42,40 @@
 {% endspaceless %}
 {% endblock %}
 
+{% block _jlm_core_mail_attachements_widget %}
+{% spaceless %}
+    {% if prototype is defined %}
+        {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
+    {% endif %}
+{% set attr = attr|merge({'class':(attr.class|default('') ~ ' unstyled')|trim}) %}
+    <ul {{ block('widget_container_attributes') }}>
+		{{ block('form_rows') }}
+    </ul>
+	{{ form_rest(form) }}
+{% endspaceless %}
+{% endblock %}
+
+{% block _jlm_core_mail_preattachements_widget %}
+{% spaceless %}
+    {% if prototype is defined %}
+        {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
+    {% endif %}
+{% set attr = attr|merge({'class':(attr.class|default('') ~ ' unstyled')|trim}) %}
+    <ul {{ block('widget_container_attributes') }}>
+		{{ block('form_rows') }}
+    </ul>
+	{{ form_rest(form) }}
+{% endspaceless %}
+{% endblock %}
+
 {% block jlm_core_email_row %}
 <li>{{ form_widget(form) }}</li>
+{% endblock %}
+
+{% block jlm_core_attachement_row %}
+<li>{{ form_widget(form) }}</li>
+{% endblock %}
+
+{% block jlm_core_preattachement_row %}
+<li><div class="input-prepend"><span class="add-on">{{ 'file'|icon }}</span><span class="input-xlarge uneditable-input">{{ form.vars.data.pathname }}</span></div></li>
 {% endblock %}

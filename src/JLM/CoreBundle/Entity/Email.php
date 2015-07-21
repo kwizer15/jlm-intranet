@@ -12,7 +12,8 @@
 namespace JLM\CoreBundle\Entity;
 
 use JLM\CoreBundle\Model\EmailInterface;
-use JLM\CoreBundle\Model\AttachementInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile as AttachementInterface;
+//use JLM\CoreBundle\Model\AttachementInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -48,6 +49,11 @@ class Email implements EmailInterface
 	 * @var string
 	 */
 	private $body;
+	
+	/**
+	 * @var array
+	 */
+	private $preAttachements;
 	
 	/**
 	 * @var array
@@ -289,11 +295,11 @@ class Email implements EmailInterface
 	 * @param AttachementInterface $attach
 	 * @return bool
 	 */
-	public function removeAttachement(AttachementInterface $attach)
+	public function removeAttachement(AttachementInterface $attachr)
 	{
 		foreach ($this->attachements as $key => $attach)
 		{
-			if (attach === $attach)
+			if ($attachr === $attach)
 			{
 				unset($this->attachements[$key]);
 	
@@ -311,5 +317,46 @@ class Email implements EmailInterface
 	public function getAttachements()
 	{
 		return $this->attachements;
+	}
+	
+	/**
+	 * Add attachement
+	 * @param AttachementInterface $attach
+	 * @return bool
+	 */
+	public function addPreAttachement(AttachementInterface $attach)
+	{
+		$this->preAttachements[] = $attach;
+	
+		return true;
+	}
+	
+	/**
+	 * Remove attachement
+	 * @param AttachementInterface $attach
+	 * @return bool
+	 */
+	public function removePreAttachement(AttachementInterface $attachr)
+	{
+		foreach ($this->preAttachements as $key => $attach)
+		{
+			if ($attachr === $attach)
+			{
+				unset($this->preAttachements[$key]);
+	
+				return true;
+			}
+		}
+	
+		return false;
+	}
+	
+	/**
+	 * Get attahcements
+	 * @return array
+	 */
+	public function getPreAttachements()
+	{
+		return $this->preAttachements;
 	}
 }

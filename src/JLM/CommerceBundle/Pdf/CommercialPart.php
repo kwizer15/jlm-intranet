@@ -24,7 +24,19 @@ abstract class CommercialPart extends FPDFext
     protected $variantpage = 0;
     protected $colsize;
     
-    public static function get($entities, $options = false)
+    public static function save($entities, $options = false, $name = 'default.pdf')
+    {
+    	$pdf = new static();
+    	$pdf->_init();
+    	foreach ($entities as $entity)
+    	{
+    		$pdf->addEntity($entity, $options);
+    	}
+    	
+    	return $pdf->Output($name,'F');
+    }
+    
+    public static function get($entities, $options = false, $output = 'S')
     {
     
         $pdf = new static();

@@ -58,3 +58,23 @@ jQuery(document).ready(function() {
 });
 </script>
 {% endblock %}
+
+{% block _jlm_core_mail_attachements_javascript %}
+<script>
+var collectionHolderAtt = $('#{{ id }}');
+var $addLinkAtt = $('<button class="btn btn-success btn-small">{{ 'plus-sign'|icon(true) }}</button>');
+var $newLinkLiAtt = $('<li></li>').append($addLinkAtt);
+jQuery(document).ready(function() {
+	collectionHolderAtt.find('li').append('<button class="btn btn-danger btn-small">{{ 'minus-sign'|icon(true) }}</button>');
+	collectionHolderAtt.find('.btn-danger').on('click', function(e) {
+		e.preventDefault();
+		$(this).parent().remove();
+	});
+    collectionHolderAtt.append($newLinkLiAtt);
+    $addLinkAtt.on('click', function(e) {
+        e.preventDefault();
+        addForm(collectionHolderAtt, $newLinkLiAtt);
+    });
+});
+</script>
+{% endblock %}

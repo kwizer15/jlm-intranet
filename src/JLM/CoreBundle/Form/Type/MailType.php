@@ -31,6 +31,8 @@ class MailType extends AbstractType
             ->add('cc','collection',array('type'=>'jlm_core_email','allow_add' => true,'allow_delete' => true, 'prototype' => true, 'label'=>'Copie à','required'=>false))
             ->add('subject','text',array('label'=>'Sujet','attr'=>array('class'=>'input-xxlarge')))
             ->add('body','textarea',array('label'=>'Message','attr'=>array('class'=>'input-xxlarge','rows'=>7)))
+            ->add('preAttachements','collection',array('type'=>'jlm_core_preattachement', 'label'=>'Fichiers joints'))
+            //->add('attachements','collection',array('type'=>'jlm_core_attachement','allow_add' => true,'allow_delete' => true, 'prototype' => true, 'label'=>'Fichiers joints'))
     	;
     }
 

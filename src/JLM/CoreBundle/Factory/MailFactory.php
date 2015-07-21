@@ -32,6 +32,7 @@ class MailFactory
     	$builder->buildCc();
     	$builder->buildBcc();
     	$builder->buildBody();
+    	$builder->buildPreAttachements();
     	$builder->buildAttachements();
         
         return $builder->getMail();

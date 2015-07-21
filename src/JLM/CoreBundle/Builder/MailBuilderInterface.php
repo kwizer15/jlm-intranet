@@ -32,5 +32,7 @@ interface MailBuilderInterface
     
     public function buildBody();
     
+    public function buildPreAttachements();
+    
     public function buildAttachements();
 }

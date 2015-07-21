@@ -16,6 +16,9 @@ use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Event\BillEvent;
 use JLM\DailyBundle\Form\Type\ExternalBillType;
 use JLM\CoreBundle\Entity\Search;
+use JLM\CommerceBundle\Builder\Email\BillBoostMailBuilder;
+use JLM\CoreBundle\Factory\MailFactory;
+use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -263,6 +266,33 @@ class BillController extends ContainerAware
     	$manager->secure('ROLE_USER');
     	
     	return $manager->renderResponse('JLMCommerceBundle:Bill:toboost.html.twig', array('entities' => $manager->getRepository()->getToBoost()));
+    }
+    
+    /**
+     * Email de relance facture
+     */
+    public function boostemailAction($id)
+    {
+    	// @todo Passer par un service de formPopulate et créer un controller unique dans CoreBundle
+    	$manager = $this->container->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_USER');
+    	$entity = $manager->getEntity($id);
+    	$request = $manager->getRequest();
+    	$mail = MailFactory::create(new BillBoostMailBuilder($entity));
+    	$editForm = $this->container->get('form.factory')->create(new \JLM\CoreBundle\Form\Type\MailType(), $mail);
+    	$editForm->handleRequest($request);
+    	if ($editForm->isValid())
+    	{
+    		$this->container->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
+    		$this->container->get('event_dispatcher')->dispatch(JLMCommerceEvents::BILL_BOOST_SENDMAIL, new BillEvent($entity, $request));
+    		
+    		return $manager->redirectReferer();
+    	}
+    
+    	return $manager->renderResponse('JLMCommerceBundle:Bill:boostemail.html.twig',array(
+    			'entity' => $entity,
+    			'form' => $editForm->createView(),
+    	));
     }
     
     /**

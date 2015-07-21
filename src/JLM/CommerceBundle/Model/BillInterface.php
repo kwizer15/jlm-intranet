@@ -86,4 +86,14 @@ interface BillInterface
      */
     public function setTrusteeAddress($address);
     
+    /**
+     * @return string
+     */
+    public function getNumber();
+    
+    /**
+     * @return array
+     */
+    public function getBoostContacts();
+    
 }

@@ -212,7 +212,7 @@ class Door implements BayInterface, InstallationInterface
     private $ceNumber;
     
     /**
-     * Numéro de plaque
+     * E-mails syndic
      * @var string
      *
      * @ORM\Column(name="managerEmails", type="array", nullable=true)
@@ -220,7 +220,15 @@ class Door implements BayInterface, InstallationInterface
     private $managerEmails;
     
     /**
-     * Numéro de plaque
+     * E-mails comptabilité
+     * @var string
+     *
+     * @ORM\Column(name="accountingEmails", type="array", nullable=true)
+     */
+    private $accountingEmails;
+    
+    /**
+     * E-mails copro
      * @var string
      *
      * @ORM\Column(name="administratorEmails", type="array", nullable=true)
@@ -1256,5 +1264,17 @@ class Door implements BayInterface, InstallationInterface
     public function getManagerEmails()
     {
     	return $this->managerEmails;
+    }
+    
+    public function setAccountingEmails($emails)
+    {
+    	$this->accountingEmails = $emails;
+    
+    	return $this;
+    }
+    
+    public function getAccountingEmails()
+    {
+    	return $this->accountingEmails;
     }
 }

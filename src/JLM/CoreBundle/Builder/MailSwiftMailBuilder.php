@@ -71,8 +71,19 @@ class MailSwiftMailBuilder extends SwiftMailBuilderAbstract
     	$this->setBody($this->email->getBody(), 'text/plain', 'utf-8');
     }
     
+    public function buildPreAttachements()
+    {
+    	if (is_array($this->email->getPreAttachements()))
+    	{
+    		foreach ($this->email->getPreAttachements() as $attach)
+    		{
+    			$this->getMail()->attach(\Swift_Attachment::fromPath($attach->getPathname()));
+    		}
+    	}
+    }
+    
     public function buildAttachements()
     {
-    	
+
     }
 }

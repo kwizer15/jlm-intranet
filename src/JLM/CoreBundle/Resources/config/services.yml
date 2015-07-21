@@ -23,6 +23,16 @@ services:
         tags:
             - { name: form.type, alias: jlm_core_email }
             
+    jlm_core.type.preattachement:
+        class: JLM\CoreBundle\Form\Type\PreAttachementType
+        tags:
+            - { name: form.type, alias: jlm_core_preattachement }            
+            
+    jlm_core.type.attachement:
+        class: JLM\CoreBundle\Form\Type\AttachementType
+        tags:
+            - { name: form.type, alias: jlm_core_attachement }
+            
     jlm_core.twig.search_extension:
         class: JLM\CoreBundle\Twig\Extension\SearchExtension
         arguments: ["@service_container"]

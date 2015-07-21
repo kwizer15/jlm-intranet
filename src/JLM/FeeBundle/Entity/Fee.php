@@ -373,4 +373,68 @@ class Fee implements FeeInterface
     	
     	return trim($group);
     }
+    
+    /**
+     * 
+     * @return array
+     */
+    public function getManagerEmails()
+    {
+    	$emails = array();
+    	foreach ($this->contracts as $contract)
+    	{
+    		$mails = $contract->getDoor()->getManagerEmails();
+    		$mails = ($mails === null) ? array() : $mails;
+    		foreach($mails as $mail)
+    		{
+    			if (!in_array($mail, $emails))
+    			{
+    				$emails[] = $mail;
+    			}
+    		}
+    	}
+    	
+    	return $emails;
+    }
+    
+    /**
+     *
+     * @return array
+     */
+    public function setManagerEmails($emails)
+    {
+    	return $this;
+    }
+    
+    /**
+     * 
+     * @return array
+     */
+    public function getAccountingEmails()
+    {
+    	$emails = array();
+    	foreach ($this->contracts as $contract)
+    	{
+    		$mails = $contract->getDoor()->getAccountingEmails();
+    		$mails = ($mails === null) ? array() : $mails;
+    		foreach($mails as $mail)
+    		{
+    			if (!in_array($mail, $emails))
+    			{
+    				$emails[] = $mail;
+    			}
+    		}
+    	}
+    	
+    	return $emails;
+    }
+    
+    /**
+     *
+     * @return array
+     */
+    public function setAccountingEmails($emails)
+    {
+    	return $this;
+    }
 }
