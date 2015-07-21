@@ -19,6 +19,7 @@ use JLM\CoreBundle\Entity\Search;
 use JLM\CommerceBundle\Builder\Email\BillBoostMailBuilder;
 use JLM\CoreBundle\Factory\MailFactory;
 use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
+use JLM\CommerceBundle\Builder\Email\BillBoostBusinessMailBuilder;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -278,7 +279,9 @@ class BillController extends ContainerAware
     	$manager->secure('ROLE_USER');
     	$entity = $manager->getEntity($id);
     	$request = $manager->getRequest();
-    	$mail = MailFactory::create(new BillBoostMailBuilder($entity));
+    	$site = $entity->getSiteObject();
+    	$builder = ($site === null) ? new BillBoostMailBuilder($entity) : new BillBoostBusinessMailBuilder($site);
+    	$mail = MailFactory::create($builder);
     	$editForm = $this->container->get('form.factory')->create(new \JLM\CoreBundle\Form\Type\MailType(), $mail);
     	$editForm->handleRequest($request);
     	if ($editForm->isValid())

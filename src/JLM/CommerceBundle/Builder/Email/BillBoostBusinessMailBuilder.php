@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class BillBoostMailBuilder extends BillMailBuilder
+class BillBoostBusinessMailBuilder extends BusinessMailBuilder
 {
 
 	/**
@@ -24,7 +24,8 @@ class BillBoostMailBuilder extends BillMailBuilder
 	 */
 	public function buildSubject()
 	{
-		$this->setSubject('Relance facture n°'.$this->getBill()->getNumber());
+		$s = ($this->getBusiness()->getUnpayedBills() > 1) ? 's' : '';
+		$this->setSubject('Relance facture'.$s.' non payée'.$s);
 	}
 	
 	/**
@@ -32,13 +33,26 @@ class BillBoostMailBuilder extends BillMailBuilder
 	 */
 	public function buildBody()
 	{
-		$tot = $this->getBill()->getTotalPriceAti();
-		$numbers = $this->getBill()->getNumber().' - '.$tot.' €';
+		$s = '';
+		$la = 'la';
+		if ($this->getBusiness()->getUnpayedBills() > 1)
+		{
+			$s .= 's';
+			$la = 'les';
+		}
+		$tot = 0;
+		$numbers = '';
+		foreach ($this->getBusiness()->getUnpayedBills() as $bill)
+		{
+			$p = $bill->getTotalPriceAti();
+			$tot += $p;
+			$numbers .= 'n°'.$bill->getNumber().' - '.$p.' €'.chr(10);
+		}	
 		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Suite à nos relances restées sans réponse de votre part concernant la facture ci-jointe'
-		.' dont le réglement ne nous est pas encore parvenue à ce jour et dont l\'échéance est '
+		.'Suite à nos relances restées sans réponse de votre part concernant '.$la.' facture'.$s.' ci-jointe'.$s
+		.' dont la totalité des réglements ne nous est pas encore parvenue à ce jour et dont l\'échéance est '
 		.'dépassée, le montant global restant à payer s\'élevant à : '.$tot.' €'.chr(10).chr(10)
-		.'n°'.$numbers.chr(10).chr(10)
+		.$numbers.chr(10)
 		.'Nous vous prions de nous faire parvenir ce règlement sous 72 heures, en cas de retard de paiement,'
 		.' une indémnité légale forfaitaire pour frais de recouvrement de 40 € sera appliquée.'.chr(10).chr(10)
 		.'Nous vous prions d\'agréer, Madame, Monsieur, l\'expression de nos salutations distinguées.'
@@ -48,9 +62,13 @@ class BillBoostMailBuilder extends BillMailBuilder
 	
 	public function buildPreAttachements()
 	{
-		$name = 'uploads/FAC'.$this->getBill()->getNumber().'.pdf';
-		Bill::save(array($this->getBill()), true, $name );
-		$file = new UploadedFile($name, 'FAC'.$this->getBill()->getNumber().'.pdf','application/pdf');
-		$this->getMail()->addPreAttachement($file);
+		foreach ($this->getBusiness()->getUnpayedBills() as $bill)
+		{
+			$name = 'uploads/FAC'.$bill->getNumber().'.pdf';
+			Bill::save(array($bill), true, $name );
+			$file = new UploadedFile($name, 'FAC'.$bill->getNumber().'.pdf','application/pdf');
+			$this->getMail()->addPreAttachement($file);
+		}
+		
 	}
 }

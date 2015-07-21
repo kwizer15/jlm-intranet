@@ -490,6 +490,76 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     	return false;
     }
     
+    /**
+     * Blocage des nouvelles intervs pour cause de retard de paiement
+     *
+     * @return array
+     */
+    public function getUnpayedBills()
+    {
+    	$bills = $this->getBills();
+    	$unpayed = array();
+    	foreach ($bills as $bill)
+    	{
+    		if ($bill->getState() == 1 && $bill->getSecondBoost() !== null)
+    		{
+    			$unpayed[] = $bill;
+    		}
+    	}
+    	
+    	return $unpayed;
+    }
+    
+    public function getManagerContacts()
+    {
+    	$c = array();
+    	$doors = $this->getDoors();
+    	if ($doors === null)
+    	{
+    		return array();
+    	}
+    	foreach ($doors as $door)
+    	{
+    		$c = array_merge($c,$this->_createContactFromEmail($door->getManagerEmails()));
+    	}
+    	
+    	return $c;
+    }
+    
+    public function getBoostContacts()
+    {
+    	$c = array();
+    	$doors = $this->getDoors();
+    	if ($doors === null)
+    	{
+    		return array();
+    	}
+    	foreach ($doors as $door)
+    	{
+    		$c = array_merge($c,$this->_createContactFromEmail($door->getAccountingEmails()));
+    	}
+    	
+    	return $c;
+    }
+    
+    private function _createContactFromEmail($emails)
+    {
+    	$c = array();
+    	if ($emails === null)
+    	{
+    		return $c;
+    	}
+    
+    	foreach ($emails as $email)
+    	{
+    		$temp = new Company();
+    		$temp->setEmail($email);
+    		$c[] = $temp;
+    	}
+    
+    	return $c;
+    }
+    
     
     // New
     
