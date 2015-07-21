@@ -34,6 +34,7 @@
 			<th>Rôle</th>
 			<th>Téléphone</th>
 			<th>e-mail</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -49,6 +50,7 @@
 				</ul>
 			</td>
 			<td><a href="mailto:{{ contact.person.email }}">{{ contact.person.email }}</a></td>
+			<td><form method="post" action="{{ path('sitecontact_delete', { 'id':contact.id }) }}"><button type="submit" class="btn btn-danger">{{ 'remove'|icon(true) }}</button></form></td>
 		</tr>
 		{% endfor %}
 	</tbody>

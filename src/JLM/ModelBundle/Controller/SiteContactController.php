@@ -11,6 +11,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\SiteContact;
 use JLM\ModelBundle\Form\Type\SiteContactType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * SiteContact controller.
@@ -189,24 +190,16 @@ class SiteContactController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('JLMModelBundle:SiteContact')->find($id);
 
-        if ($form->isValid())
+        if ($entity !== null)
         {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('JLMModelBundle:SiteContact')->find($id);
-
-            if (!$entity)
-            {
-                throw $this->createNotFoundException('Unable to find SiteContact entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        	$em->remove($entity);
+        	$em->flush();
         }
-
-        return $this->redirect($this->generateUrl('sitecontact'));
+        
+        return new RedirectResponse($request->headers->get('referer'));
     }
 
     private function createDeleteForm($id)
