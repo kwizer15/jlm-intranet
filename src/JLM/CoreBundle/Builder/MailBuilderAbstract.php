@@ -69,4 +69,14 @@ abstract class MailBuilderAbstract implements MailBuilderInterface
     	.'Tel : 01 64 33 77 70'.chr(10)
     	.'Fax : 01 64 33 78 45';
     }
+    
+    public function buildAttachements()
+    {
+    
+    }
+    
+    public function buildPreAttachements()
+    {
+    
+    }
 }
