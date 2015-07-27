@@ -1,8 +1,11 @@
 Bonjour,
 
 Affaire :
-{{ door | raw }}
+{{ entity.doorCp | raw }}
 
-{{ text }}
+{{ entity.description | raw }}
+{%- for variant in entity.variants %}
+Devis n°{{ variant.number }} : {{ variant.intro | raw }}
+{% endfor %}
 
 Cordialement.

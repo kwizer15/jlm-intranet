@@ -160,7 +160,7 @@ class QuoteController extends ContainerAware
     	$mail = new Mail();
     	$mail->setSubject('Devis n°'.$entity->getNumber());
     	$mail->setFrom('commerce@jlm-entreprise.fr');
-    	$mail->setBody($manager->renderView('JLMCommerceBundle:Quote:email.txt.twig', array('door' => $entity->getDoorCp(), 'text'=>$entity->getDescription())));
+    	$mail->setBody($manager->renderView('JLMCommerceBundle:Quote:email.txt.twig', array('entity' => $entity)));
     	$mail->setSignature($manager->renderView('JLMCommerceBundle:QuoteVariant:emailsignature.txt.twig', array('name' => $entity->getFollowerCp())));
     	if ($entity->getContact())
     	{
