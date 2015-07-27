@@ -4,7 +4,7 @@ Affaire :
 {{ entity.doorCp | raw }}
 
 {{ entity.description | raw }}
-{%- for variant in entity.variants %}
+{% for variant in entity.variants %}
 Devis n°{{ variant.number }} : {{ variant.intro | raw }}
 {% endfor %}
 
