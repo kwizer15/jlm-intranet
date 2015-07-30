@@ -278,6 +278,29 @@ class DefaultController extends Controller
     }
     
     /**
+     * @Route("/daybill", name="state_daybill")
+     * @Template()
+     * @Secure(roles="ROLE_USER")
+     */
+    public function daybillAction()
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$stats = $em->getRepository('JLMCommerceBundle:Bill')->getDayBill();
+    	$datas = array();
+    	foreach ($stats as $stat)
+    	{
+    		$key = $stat->getCreation()->format('d/m/Y');
+    		if (!isset($datas[$key]))
+    		{
+    			$datas[$key] = array('bills' => array(), 'amount' => 0);
+    		}
+    		$datas[$key]['bills'][] = $stat;
+    		$datas[$key]['amount'] += $stat->getTotalPrice();
+    	}
+    	return array('datas'=>$datas);
+    }
+    
+    /**
      * @Route("/lastbill", name="state_lastbill")
      * @Template()
      * @Secure(roles="ROLE_USER")

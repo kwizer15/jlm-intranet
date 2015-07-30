@@ -1,0 +1,30 @@
+{% extends "JLMStateBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Stats Facturation</h1>
+{% for key,data in datas %}
+<table class="table table-hover">
+  <thead>
+  	<caption>{{ key }}</caption>
+    <tr>
+      <th>Numéro</th>
+      <th>Montant</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for bill in data.bills %}
+    <tr>
+      <td>{{ bill.number }}</td>
+      <td>{{ bill.totalPrice | number_format(2,',',' ') }} €</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <th>Total {{ key }}</th>
+      <th>{{ data.amount | number_format(2,',',' ') }} €</th>
+    </tr>
+  </tbody>
+</table>
+{% endfor %}
+    
+
+{% endblock %}

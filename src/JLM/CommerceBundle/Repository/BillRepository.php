@@ -226,9 +226,7 @@ class BillRepository extends SearchRepository
 	{
 		$date = new \DateTime;
 		$year = ($year === null) ? $date->format('Y') : $year;
-		
-		
-		
+
 		$em = $this->getEntityManager();
 		$rsm = new ResultSetMapping();
 		$rsm->addScalarResult('reference', 'reference');
@@ -253,5 +251,20 @@ class BillRepository extends SearchRepository
 		$query->setParameter(1,$year);
 		
 		return $query->getArrayResult();
+	}
+	
+	public function getDayBill()
+	{
+		$date = new \DateTime;
+		$date->sub(new \DateInterval('P2M'));
+		$qb = $this->createQueryBuilder('a')
+			->select('a')
+			->where('a.creation > ?1')
+			//->andWhere('a.state >= 0')
+			->orderBy('a.creation','ASC')
+			->setParameter(1, $date)
+		;
+		
+		return $qb->getQuery()->getResult();
 	}
 }
