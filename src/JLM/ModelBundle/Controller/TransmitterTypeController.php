@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the JLMModelBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -9,17 +18,14 @@ use JLM\ModelBundle\Entity\TransmitterType;
 use JLM\ModelBundle\Form\Type\TransmitterTypeType;
 
 /**
- * TransmitterType controller.
- *
- * Route("/transmittertype")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class TransmitterTypeController extends Controller
 {
     /**
      * Lists all TransmitterType entities.
      *
-     * Route("/", name="transmittertype")
-     * Template()
+     * @Template()
      * @Secure(roles="ROLE_USER")
      */
     public function indexAction()
@@ -34,7 +40,6 @@ class TransmitterTypeController extends Controller
     /**
      * Displays a form to create a new TransmitterType entity.
      *
-     * Route("/new", name="transmittertype_new")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -52,8 +57,6 @@ class TransmitterTypeController extends Controller
     /**
      * Creates a new TransmitterType entity.
      *
-     * Route("/create", name="transmittertype_create")
-     * Method("post")
      * @Template("JLMModelBundle:TransmitterType:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -82,7 +85,6 @@ class TransmitterTypeController extends Controller
     /**
      * Displays a form to edit an existing TransmitterType entity.
      *
-     * Route("/{id}/edit", name="transmittertype_edit")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -98,8 +100,6 @@ class TransmitterTypeController extends Controller
     /**
      * Edits an existing TransmitterType entity.
      *
-     * Route("/{id}/update", name="transmittertype_update")
-     * Method("post")
      * @Template("JLMModelBundle:TransmitterType:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */

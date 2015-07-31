@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the JLMModelBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -11,16 +20,13 @@ use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Form\Type\SiteType;
 
 /**
- * Site controller.
- *
- * Route("/site")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class SiteController extends Controller
 {
     /**
      * Lists all Site entities.
      *
-     * Route("/", name="site")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -38,7 +44,6 @@ class SiteController extends Controller
     /**
      * Finds and displays a Site entity.
      *
-     * Route("/{id}/show", name="site_show")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -63,7 +68,6 @@ class SiteController extends Controller
     /**
      * Displays a form to create a new Site entity.
      *
-     * Route("/new", name="site_new")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -84,8 +88,6 @@ class SiteController extends Controller
     /**
      * Creates a new Site entity.
      *
-     * Route("/create", name="site_create")
-     * Method("POST")
      * @Template("JLMModelBundle:Site:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -114,7 +116,6 @@ class SiteController extends Controller
     /**
      * Displays a form to edit an existing Site entity.
      *
-     * Route("/{id}/edit", name="site_edit")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -130,8 +131,6 @@ class SiteController extends Controller
     /**
      * Edits an existing Site entity.
      *
-     * Route("/{id}/update", name="site_update")
-     * Method("POST")
      * @Template("JLMModelBundle:Site:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -158,8 +157,6 @@ class SiteController extends Controller
     /**
      * Deletes a Site entity.
      *
-     * Route("/{id}/delete", name="site_delete")
-     * Method("POST")
      * @Secure(roles="ROLE_USER")
      */
     public function deleteAction(Request $request, $id)

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the JLMModelBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -14,16 +23,13 @@ use JLM\ModelBundle\Form\Type\SiteContactType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * SiteContact controller.
- *
- * Route("/sitecontact")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class SiteContactController extends Controller
 {
     /**
      * Lists all SiteContact entities.
      *
-     * Route("/", name="sitecontact")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -41,7 +47,6 @@ class SiteContactController extends Controller
     /**
      * Finds and displays a SiteContact entity.
      *
-     * Route("/{id}/show", name="sitecontact_show")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -55,8 +60,6 @@ class SiteContactController extends Controller
     /**
      * Displays a form to create a new SiteContact entity.
      *
-     * Route("/new", name="sitecontact_new")
-     * Route("/new/{id}", name="sitecontact_new_id")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -79,9 +82,6 @@ class SiteContactController extends Controller
     /**
      * Creates a new SiteContact entity.
      *
-     * Route("/create", name="sitecontact_create")
-     * Route("/create/{id}", name="sitecontact_create_id")
-     * Method("POST")
      * @Template("JLMModelBundle:SiteContact:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -116,7 +116,6 @@ class SiteContactController extends Controller
     /**
      * Displays a form to edit an existing SiteContact entity.
      *
-     * Route("/{id}/edit", name="sitecontact_edit")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -143,8 +142,6 @@ class SiteContactController extends Controller
     /**
      * Edits an existing SiteContact entity.
      *
-     * Route("/{id}/update", name="sitecontact_update")
-     * Method("POST")
      * @Template("JLMModelBundle:SiteContact:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -186,8 +183,6 @@ class SiteContactController extends Controller
     /**
      * Deletes a SiteContact entity.
      *
-     * Route("/{id}/delete", name="sitecontact_delete")
-     * Method("POST")
      * @Secure(roles="ROLE_USER")
      */
     public function deleteAction(Request $request, $id)

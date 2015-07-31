@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the JLMModelBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,16 +23,13 @@ use JLM\ContractBundle\Form\Type\ContractType;
 use JLM\ContractBundle\Form\Type\ContractStopType;
 
 /**
- * Door controller.
- *
- * Route("/door")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class DoorController extends Controller
 {
     /**
      * Lists all Door entities.
      *
-     * Route("/", name="door")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -39,7 +45,6 @@ class DoorController extends Controller
     /**
      * Finds and displays a Door entity.
      *
-     * Route("/{id}/show", name="door_show")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -75,9 +80,7 @@ class DoorController extends Controller
 
     /**
      * Displays a form to create a new Door entity.
-     *
-     * Route("/new", name="door_new")
-     * Route("/new/{id}", name="door_new_id")
+     * 
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -101,8 +104,6 @@ class DoorController extends Controller
     /**
      * Creates a new Door entity.
      *
-     * Route("/create", name="door_create")
-     * Method("post")
      * @Template("JLMModelBundle:Door:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -129,7 +130,6 @@ class DoorController extends Controller
     /**
      * Displays a form to edit an existing Door entity.
      *
-     * Route("/{id}/edit", name="door_edit")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -150,8 +150,6 @@ class DoorController extends Controller
     /**
      * Edits an existing Door entity.
      *
-     * Route("/{id}/update", name="door_update")
-     * Method("post")
      * @Template("JLMModelBundle:Door:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -181,8 +179,6 @@ class DoorController extends Controller
     /**
      * Edits an existing Door entity.
      *
-     * Route("/{id}/updatecode", name="model_door_update_code")
-     * Method("POST")
      * @Secure(roles="ROLE_USER")
      */
     public function updateCodeAction(Request $request, Door $entity)
@@ -219,8 +215,6 @@ class DoorController extends Controller
     /**
      * Deletes a Door entity.
      *
-     * Route("/{id}/delete", name="door_delete")
-     * Method("post")
      * @Secure(roles="ROLE_USER")
      */
     public function deleteAction(Door $entity)
@@ -250,7 +244,6 @@ class DoorController extends Controller
     /**
      * Lists all Door entities.
      *
-     * Route("/geocode", name="door_geocode")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -300,7 +293,6 @@ class DoorController extends Controller
     /**
      * Maps Door entities.
      *
-     * Route("/map", name="door_map")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */

@@ -11,7 +11,6 @@
 
 namespace JLM\ModelBundle\Builder;
 
-use JLM\ModelBundle\Entity\Door;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

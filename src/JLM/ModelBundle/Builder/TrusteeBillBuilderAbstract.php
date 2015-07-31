@@ -12,8 +12,8 @@
 namespace JLM\ModelBundle\Builder;
 
 use JLM\CommerceBundle\Builder\BillBuilderAbstract;
-use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\Trustee;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

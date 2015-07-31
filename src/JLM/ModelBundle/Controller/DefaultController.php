@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the JLMModelBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -9,13 +18,14 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\CoreBundle\Entity\Search;
 use JLM\CoreBundle\Form\Type\SearchType;
 
+/**
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ */
 class DefaultController extends Controller
 {
     /**
      * Resultats de la barre de recherche.
      *
-     * Route("/search", name="model_search")
-     * Method("get")
      * @Secure(roles="ROLE_USER")
      * @Template()
      */
@@ -43,8 +53,6 @@ class DefaultController extends Controller
     /**
      * Upgrade contacts
      * 
-     * Route("/upgrade", name="model_upgrade")
-     * Secure(roles="ROLE_USER")
      * @Template()
      */
     public function upgradeAction()

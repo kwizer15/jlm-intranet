@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the JLMModelBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -13,16 +22,13 @@ use JLM\FeeBundle\Entity\Fee;
 use JLM\ContractBundle\Form\Type\ContractType;
 
 /**
- * Contract controller.
- *
- * Route("/contract")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class ContractController extends Controller
 {
     /**
      * Lists all Contract entities.
      *
-     * Route("/", name="contract")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -38,7 +44,6 @@ class ContractController extends Controller
     /**
      * Finds and displays a Contract entity.
      *
-     * Route("/{id}/show", name="contract_show")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -52,7 +57,6 @@ class ContractController extends Controller
     /**
      * Displays a form to create a new Contract entity.
      *
-     * Route("/new/{id}", name="contract_new")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -77,8 +81,6 @@ class ContractController extends Controller
     /**
      * Creates a new Contract entity.
      *
-     * Route("/create", name="contract_create")
-     * Method("post")
      * @Template("JLMModelBundle:Contract:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -122,7 +124,6 @@ class ContractController extends Controller
     /**
      * Stop a contract
      * 
-     * Route("/{id}/stopupdate", name="contract_stopupdate")
      * @Template("JLMModelBundle:Contract:stop.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -150,7 +151,6 @@ class ContractController extends Controller
     /**
      * Stop a contract
      *
-     * Route("/{id}/stop", name="contract_stop")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -165,8 +165,7 @@ class ContractController extends Controller
     
     /**
      * Displays a form to edit an existing Contract entity.
-     *
-     * @Route("/{id}/edit", name="contract_edit")
+     * 
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -182,8 +181,6 @@ class ContractController extends Controller
     /**
      * Edits an existing Contract entity.
      *
-     * Route("/{id}/update", name="contract_update")
-     * Method("post")
      * @Template("JLMModelBundle:Contract:edit.old.html.twig")
      * @Secure(roles="ROLE_USER")
      */

@@ -12,6 +12,7 @@
 namespace JLM\ModelBundle\Tests\Builder;
 
 use JLM\ModelBundle\Builder\ProductBillLineBuilder;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
