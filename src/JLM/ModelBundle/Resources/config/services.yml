@@ -1,0 +1,66 @@
+services:
+  jlm_model.type.distance:
+    class: JLM\ModelBundle\Form\Type\DistanceType
+    tags:
+      - { name: form.type, alias: distance }
+      
+  jlm_model.type.datepicker:
+    class: JLM\ModelBundle\Form\Type\DatepickerType
+    tags:
+      - { name: form.type, alias: datepicker }
+      
+  jlm_model.type.trustee_select:
+    class: JLM\ModelBundle\Form\Type\TrusteeSelectType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: trustee_select }
+      
+  jlm_model.type.site_select:
+    class: JLM\ModelBundle\Form\Type\SiteSelectType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: site_select }
+      
+  jlm_model.type.door_hidden:
+    class: JLM\ModelBundle\Form\Type\DoorHiddenType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: door_hidden }
+      
+  jlm_model.type.sitecontact_hidden:
+    class: JLM\ModelBundle\Form\Type\SiteContactHiddenType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: sitecontact_hidden }
+      
+  jlm_model.type.trustee_hidden:
+    class: JLM\ModelBundle\Form\Type\TrusteeHiddenType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: trustee_hidden }
+      
+  jlm_model.type.door_select:
+    class: JLM\ModelBundle\Form\Type\DoorSelectType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: door_select }
+      
+  jlm_model.type.site_hidden:
+    class: JLM\ModelBundle\Form\Type\SiteHiddenType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: site_hidden }
+      
+  jlm_model.email_subscriber:
+    class: JLM\ModelBundle\EventListener\EmailSubscriber
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: kernel.event_subscriber }
+      
+  jlm_model.bill_subscriber:
+    class: JLM\ModelBundle\EventListener\BillSubscriber
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: kernel.event_subscriber }
+      
+  

@@ -4,8 +4,6 @@ namespace JLM\ModelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Trustee;
@@ -15,14 +13,14 @@ use JLM\ModelBundle\Form\Type\SiteType;
 /**
  * Site controller.
  *
- * @Route("/site")
+ * Route("/site")
  */
 class SiteController extends Controller
 {
     /**
      * Lists all Site entities.
      *
-     * @Route("/", name="site")
+     * Route("/", name="site")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -40,7 +38,7 @@ class SiteController extends Controller
     /**
      * Finds and displays a Site entity.
      *
-     * @Route("/{id}/show", name="site_show")
+     * Route("/{id}/show", name="site_show")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -65,7 +63,7 @@ class SiteController extends Controller
     /**
      * Displays a form to create a new Site entity.
      *
-     * @Route("/new", name="site_new")
+     * Route("/new", name="site_new")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -86,8 +84,8 @@ class SiteController extends Controller
     /**
      * Creates a new Site entity.
      *
-     * @Route("/create", name="site_create")
-     * @Method("POST")
+     * Route("/create", name="site_create")
+     * Method("POST")
      * @Template("JLMModelBundle:Site:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -116,7 +114,7 @@ class SiteController extends Controller
     /**
      * Displays a form to edit an existing Site entity.
      *
-     * @Route("/{id}/edit", name="site_edit")
+     * Route("/{id}/edit", name="site_edit")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -132,8 +130,8 @@ class SiteController extends Controller
     /**
      * Edits an existing Site entity.
      *
-     * @Route("/{id}/update", name="site_update")
-     * @Method("POST")
+     * Route("/{id}/update", name="site_update")
+     * Method("POST")
      * @Template("JLMModelBundle:Site:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -160,8 +158,8 @@ class SiteController extends Controller
     /**
      * Deletes a Site entity.
      *
-     * @Route("/{id}/delete", name="site_delete")
-     * @Method("POST")
+     * Route("/{id}/delete", name="site_delete")
+     * Method("POST")
      * @Secure(roles="ROLE_USER")
      */
     public function deleteAction(Request $request, $id)

@@ -1,0 +1,35 @@
+autocomplete_city:
+  path: /city
+  defaults:
+    _controller: "JLMModelBundle:Autocomplete:city"
+  methods: [POST]
+  
+autocomplete_trustee:
+  path: /trustee
+  defaults:
+    _controller: "JLMModelBundle:Autocomplete:trustee"
+  methods: [POST]
+  
+autocomplete_site:
+  path: /site
+  defaults:
+    _controller: "JLMModelBundle:Autocomplete:site"
+  methods: [POST]
+  
+autocomplete_contract:
+  path: /contract
+  defaults:
+    _controller: "JLMModelBundle:Autocomplete:contract"
+  methods: [POST]
+  
+autocomplete:
+  path: /
+  defaults:
+    _controller: "JLMModelBundle:Autocomplete:index"
+  methods: [POST]
+  
+autocomplete_doorsite:
+  path: /doorsite
+  defaults:
+    _controller: "JLMModelBundle:Autocomplete:doorsite"
+  methods: [POST]

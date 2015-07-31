@@ -1,0 +1,30 @@
+jlm_model_autocomplete:
+  resource: "@JLMModelBundle/Resources/config/routing/autocomplete.yml"
+  prefix:   /autocomplete
+  
+jlm_model_contract:
+  resource: "@JLMModelBundle/Resources/config/routing/contract.yml"
+  prefix:   /contract
+  
+jlm_model_default:
+  resource: "@JLMModelBundle/Resources/config/routing/default.yml"
+  
+jlm_model_door:
+  resource: "@JLMModelBundle/Resources/config/routing/door.yml"
+  prefix:   /door
+  
+jlm_model_sitecontact:
+  resource: "@JLMModelBundle/Resources/config/routing/sitecontact.yml"
+  prefix:   /sitecontact
+  
+jlm_model_site:
+  resource: "@JLMModelBundle/Resources/config/routing/site.yml"
+  prefix:   /site
+  
+jlm_model_transmittertype:
+  resource: "@JLMModelBundle/Resources/config/routing/transmittertype.yml"
+  prefix:   /transmittertype
+  
+jlm_model_trustee:
+  resource: "@JLMModelBundle/Resources/config/routing/trustee.yml"
+  prefix:   /trustee

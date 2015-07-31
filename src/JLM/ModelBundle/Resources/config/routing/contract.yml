@@ -1,0 +1,47 @@
+contract:
+  path: /
+  defaults:
+    _controller: "JLMModelBundle:Contract:index"
+  methods: [GET]
+  
+contract_show:
+  path: /{id}/show
+  defaults:
+    _controller: "JLMModelBundle:Contract:show"
+  methods: [GET]
+  
+contract_new:
+  path: /new/{id}
+  defaults:
+    _controller: "JLMModelBundle:Contract:new"
+  methods: [GET]
+  
+contract_create:
+  path: /create
+  defaults:
+    _controller: "JLMModelBundle:Contract:create"
+  methods: [POST]
+  
+contract_stopupdate:
+  path: /{id}/stopupdate
+  defaults:
+    _controller: "JLMModelBundle:Contract:stopupdate"
+  methods: [GET]
+  
+contract_stop:
+  path: /{id}/stop
+  defaults:
+    _controller: "JLMModelBundle:Contract:stop"
+  methods: [GET]
+
+contract_edit:
+  path: /{id}/edit
+  defaults:
+    _controller: "JLMModelBundle:Contract:edit"
+  methods: [GET]
+  
+contract_update:
+  path: /{id}/update
+  defaults:
+    _controller: "JLMModelBundle:Contract:update"
+  methods: [PUT,POST]

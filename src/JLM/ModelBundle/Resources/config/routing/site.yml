@@ -1,0 +1,41 @@
+site:
+  path: /
+  defaults:
+    _controller: "JLMModelBundle:Site:index"
+  methods: [GET]
+  
+site_show:
+  path: /{id}/show
+  defaults:
+    _controller: "JLMModelBundle:Site:show"
+  methods: [GET]
+  
+site_new:
+  path: /new
+  defaults:
+    _controller: "JLMModelBundle:Site:new"
+  methods: [GET]
+  
+site_create:
+  path: /create
+  defaults:
+    _controller: "JLMModelBundle:Site:create"
+  methods: [POST]
+  
+site_edit:
+  path: /{id}/edit
+  defaults:
+    _controller: "JLMModelBundle:Site:edit"
+  methods: [GET]
+  
+site_update:
+  path: /{id}/update
+  defaults:
+    _controller: "JLMModelBundle:Site:update"
+  methods: [PUT,POST]
+  
+site_delete:
+  path: /{id}/delete
+  defaults:
+    _controller: "JLMModelBundle:Site:delete"
+  methods: [DELETE,POST]

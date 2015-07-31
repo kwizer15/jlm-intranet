@@ -4,8 +4,6 @@ namespace JLM\ModelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\CoreBundle\Entity\Search;
@@ -16,8 +14,8 @@ class DefaultController extends Controller
     /**
      * Resultats de la barre de recherche.
      *
-     * @Route("/search", name="model_search")
-     * @Method("get")
+     * Route("/search", name="model_search")
+     * Method("get")
      * @Secure(roles="ROLE_USER")
      * @Template()
      */
@@ -45,8 +43,8 @@ class DefaultController extends Controller
     /**
      * Upgrade contacts
      * 
-     * @Route("/upgrade", name="model_upgrade")
-     * @Secure(roles="ROLE_USER")
+     * Route("/upgrade", name="model_upgrade")
+     * Secure(roles="ROLE_USER")
      * @Template()
      */
     public function upgradeAction()

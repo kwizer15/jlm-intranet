@@ -16,14 +16,14 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 /**
  * SiteContact controller.
  *
- * @Route("/sitecontact")
+ * Route("/sitecontact")
  */
 class SiteContactController extends Controller
 {
     /**
      * Lists all SiteContact entities.
      *
-     * @Route("/", name="sitecontact")
+     * Route("/", name="sitecontact")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -41,7 +41,7 @@ class SiteContactController extends Controller
     /**
      * Finds and displays a SiteContact entity.
      *
-     * @Route("/{id}/show", name="sitecontact_show")
+     * Route("/{id}/show", name="sitecontact_show")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -55,8 +55,8 @@ class SiteContactController extends Controller
     /**
      * Displays a form to create a new SiteContact entity.
      *
-     * @Route("/new", name="sitecontact_new")
-     * @Route("/new/{id}", name="sitecontact_new_id")
+     * Route("/new", name="sitecontact_new")
+     * Route("/new/{id}", name="sitecontact_new_id")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -64,7 +64,9 @@ class SiteContactController extends Controller
     {
         $entity = new SiteContact();
         if ($site)
+        {
         	$entity->setAdministrator($site);
+        }
         $form   = $this->createForm(new SiteContactType(), $entity);
 
         return array(
@@ -77,9 +79,9 @@ class SiteContactController extends Controller
     /**
      * Creates a new SiteContact entity.
      *
-     * @Route("/create", name="sitecontact_create")
-     * @Route("/create/{id}", name="sitecontact_create_id")
-     * @Method("POST")
+     * Route("/create", name="sitecontact_create")
+     * Route("/create/{id}", name="sitecontact_create_id")
+     * Method("POST")
      * @Template("JLMModelBundle:SiteContact:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -114,7 +116,7 @@ class SiteContactController extends Controller
     /**
      * Displays a form to edit an existing SiteContact entity.
      *
-     * @Route("/{id}/edit", name="sitecontact_edit")
+     * Route("/{id}/edit", name="sitecontact_edit")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -141,8 +143,8 @@ class SiteContactController extends Controller
     /**
      * Edits an existing SiteContact entity.
      *
-     * @Route("/{id}/update", name="sitecontact_update")
-     * @Method("POST")
+     * Route("/{id}/update", name="sitecontact_update")
+     * Method("POST")
      * @Template("JLMModelBundle:SiteContact:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -184,8 +186,8 @@ class SiteContactController extends Controller
     /**
      * Deletes a SiteContact entity.
      *
-     * @Route("/{id}/delete", name="sitecontact_delete")
-     * @Method("POST")
+     * Route("/{id}/delete", name="sitecontact_delete")
+     * Method("POST")
      * @Secure(roles="ROLE_USER")
      */
     public function deleteAction(Request $request, $id)

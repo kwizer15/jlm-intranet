@@ -64,8 +64,7 @@ jlm_office:
     prefix:   /office
 
 jlm_model:
-    resource: "@JLMModelBundle/Controller/"
-    type:     annotation
+    resource: "@JLMModelBundle/Resources/config/routing.yml"
     prefix:   /model
 
 fos_user_security:

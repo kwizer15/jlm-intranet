@@ -5,8 +5,6 @@ namespace JLM\ModelBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ContactBundle\Entity\Address;
@@ -17,8 +15,8 @@ class AutocompleteController extends Controller
     /**
      * Displays a form to create a new Product entity.
      *
-     * @Route("/autocomplete/city", name="autocomplete_city")
-     * @Method("post")
+     * Route("/autocomplete/city", name="autocomplete_city")
+     * Method("post")
      */
     public function cityAction()
     {
@@ -37,8 +35,8 @@ class AutocompleteController extends Controller
     /**
      * Displays a form to create a new Product entity.
      *
-     * @Route("/autocomplete/trustee", name="autocomplete_trustee")
-     * @Method("post")
+     * Route("/autocomplete/trustee", name="autocomplete_trustee")
+     * Method("post")
      */
     public function trusteeAction()
     {
@@ -57,8 +55,8 @@ class AutocompleteController extends Controller
     /**
      * Displays a form to create a new Product entity.
      *
-     * @Route("/autocomplete/site", name="autocomplete_site")
-     * @Method("post")
+     * Route("/autocomplete/site", name="autocomplete_site")
+     * Method("post")
      */
     public function siteAction()
     {
@@ -77,8 +75,8 @@ class AutocompleteController extends Controller
     /**
      * Displays a form to create a new Product entity.
      *
-     * @Route("/autocomplete/contract", name="autocomplete_contract")
-     * @Method("post")
+     * Route("/autocomplete/contract", name="autocomplete_contract")
+     * Method("post")
      */
     public function contractAction()
     {
@@ -95,8 +93,8 @@ class AutocompleteController extends Controller
     }
     
     /**
-     * @Route("/autocomplete", name="autocomplete")
-     * @Method("post")
+     * Route("/autocomplete", name="autocomplete")
+     * Method("post")
      */
     public function indexAction(Request $request)
     {
@@ -115,10 +113,12 @@ class AutocompleteController extends Controller
     }
     
     /**
-     * @Route("/autocomplete/doorsite", name="autocomplete_doorsite")
-     * @Method("post")
+     * Route("/autocomplete/doorsite", name="autocomplete_doorsite")
+     * Method("post")
+     * 
+     * @todo Voir si cette action est utile car pas de "Action" dans le nom de la fonction quand j'ai réécrit le routage en yml
      */
-    public function doorsite(Request $request)
+    public function doorsiteAction(Request $request)
     {
     	$id = $request->request->get('id_site');
     	$em = $this->getDoctrine()->getManager();

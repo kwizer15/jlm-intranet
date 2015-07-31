@@ -1,0 +1,53 @@
+sitecontact:
+  path: /
+  defaults:
+    _controller: "JLMModelBundle:SiteContact:index"
+  methods: [GET]
+
+sitecontact_show:
+  path: /{id}/show
+  defaults:
+    _controller: "JLMModelBundle:SiteContact:show"
+  methods: [GET]
+
+sitecontact_new:
+  path: /new
+  defaults:
+    _controller: "JLMModelBundle:SiteContact:new"
+  methods: [GET]
+
+sitecontact_new_id:
+  path: /new/{id}
+  defaults:
+    _controller: "JLMModelBundle:SiteContact:new"
+  methods: [GET]
+
+sitecontact_create:
+  path: /create
+  defaults:
+    _controller: "JLMModelBundle:SiteContact:create"
+  methods: [PUT,POST]
+  
+sitecontact_create_id:
+  path: /create/{id}
+  defaults:
+    _controller: "JLMModelBundle:SiteContact:create"
+  methods: [PUT,POST]
+
+sitecontact_edit:
+  path: /{id}/edit
+  defaults:
+    _controller: "JLMModelBundle:SiteContact:edit"
+  methods: [GET]
+  
+sitecontact_update:
+  path: /{id}/update
+  defaults:
+    _controller: "JLMModelBundle:SiteContact:update"
+  methods: [PUT,POST]
+  
+sitecontact_delete:
+  path: /{id}/delete
+  defaults:
+    _controller: "JLMModelBundle:SiteContact:delete"
+  methods: [DELETE,POST]

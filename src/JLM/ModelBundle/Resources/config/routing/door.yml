@@ -1,0 +1,65 @@
+door:
+  path: /
+  defaults:
+    _controller: "JLMModelBundle:Door:index"
+  methods: [GET]
+  
+door_show:
+  path: /{id}/show
+  defaults:
+    _controller: "JLMModelBundle:Door:show"
+  methods: [GET]
+  
+door_new:
+  path: /new
+  defaults:
+    _controller: "JLMModelBundle:Door:new"
+  methods: [GET]
+  
+door_new_id:
+  path: /new/{id}
+  defaults:
+    _controller: "JLMModelBundle:Door:new"
+  methods: [GET]
+  
+door_create:
+  path: /create
+  defaults:
+    _controller: "JLMModelBundle:Door:create"
+  methods: [POST]
+  
+door_edit:
+  path: /{id}/edit
+  defaults:
+    _controller: "JLMModelBundle:Door:edit"
+  methods: [GET]
+  
+door_update:
+  path: /{id}/update
+  defaults:
+    _controller: "JLMModelBundle:Door:update"
+  methods: [PUT,POST]
+  
+model_door_update_code:
+  path: /{id}/updatecode
+  defaults:
+    _controller: "JLMModelBundle:Door:updateCode"
+  methods: [PUT,POST]
+  
+door_delete:
+  path: /{id}/delete
+  defaults:
+    _controller: "JLMModelBundle:Door:delete"
+  methods: [DELETE,POST]
+  
+door_geocode:
+  path: /geocode
+  defaults:
+    _controller: "JLMModelBundle:Door:geocode"
+  methods: [GET]
+  
+door_map:
+  path: /map
+  defaults:
+    _controller: "JLMModelBundle:Door:map"
+  methods: [GET]

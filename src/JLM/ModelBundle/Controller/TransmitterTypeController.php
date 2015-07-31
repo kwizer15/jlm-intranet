@@ -3,8 +3,6 @@
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\TransmitterType;
@@ -13,15 +11,15 @@ use JLM\ModelBundle\Form\Type\TransmitterTypeType;
 /**
  * TransmitterType controller.
  *
- * @Route("/transmittertype")
+ * Route("/transmittertype")
  */
 class TransmitterTypeController extends Controller
 {
     /**
      * Lists all TransmitterType entities.
      *
-     * @Route("/", name="transmittertype")
-     * @Template()
+     * Route("/", name="transmittertype")
+     * Template()
      * @Secure(roles="ROLE_USER")
      */
     public function indexAction()
@@ -36,7 +34,7 @@ class TransmitterTypeController extends Controller
     /**
      * Displays a form to create a new TransmitterType entity.
      *
-     * @Route("/new", name="transmittertype_new")
+     * Route("/new", name="transmittertype_new")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -54,8 +52,8 @@ class TransmitterTypeController extends Controller
     /**
      * Creates a new TransmitterType entity.
      *
-     * @Route("/create", name="transmittertype_create")
-     * @Method("post")
+     * Route("/create", name="transmittertype_create")
+     * Method("post")
      * @Template("JLMModelBundle:TransmitterType:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -84,7 +82,7 @@ class TransmitterTypeController extends Controller
     /**
      * Displays a form to edit an existing TransmitterType entity.
      *
-     * @Route("/{id}/edit", name="transmittertype_edit")
+     * Route("/{id}/edit", name="transmittertype_edit")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -100,8 +98,8 @@ class TransmitterTypeController extends Controller
     /**
      * Edits an existing TransmitterType entity.
      *
-     * @Route("/{id}/update", name="transmittertype_update")
-     * @Method("post")
+     * Route("/{id}/update", name="transmittertype_update")
+     * Method("post")
      * @Template("JLMModelBundle:TransmitterType:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */

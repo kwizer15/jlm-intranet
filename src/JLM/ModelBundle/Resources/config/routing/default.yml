@@ -1,0 +1,5 @@
+model_search:
+  path: /search
+  defaults:
+    _controller: "JLMModelBundle:Default:search"
+  methods: [GET]

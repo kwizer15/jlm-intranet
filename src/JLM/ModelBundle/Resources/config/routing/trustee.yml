@@ -1,0 +1,71 @@
+trustee:
+  path: /
+  defaults:
+    _controller: "JLMModelBundle:Trustee:index"
+  methods: [GET]
+
+trustee_page:
+  path: /page/{page}
+  defaults:
+    _controller: "JLMModelBundle:Trustee:index"
+  methods: [GET]
+
+trustee_show:
+  path: /{id}/show
+  defaults:
+    _controller: "JLMModelBundle:Trustee:show"
+  methods: [GET]
+
+trustee_new:
+  path: /new
+  defaults:
+    _controller: "JLMModelBundle:Trustee:new"
+  methods: [GET]
+
+trustee_create:
+  path: /create
+  defaults:
+    _controller: "JLMModelBundle:Trustee:create"
+  methods: [PUT,POST]
+
+trustee_edit:
+  path: /{id}/edit
+  defaults:
+    _controller: "JLMModelBundle:Trustee:edit"
+  methods: [GET]
+  
+trustee_update:
+  path: /{id}/update
+  defaults:
+    _controller: "JLMModelBundle:Trustee:update"
+  methods: [PUT,POST]
+  
+trustee_delete:
+  path: /{id}/delete
+  defaults:
+    _controller: "JLMModelBundle:Trustee:delete"
+  methods: [DELETE,POST]
+  
+trustee_contact_new:
+  path: /{id}/contact/new
+  defaults:
+    _controller: "JLMModelBundle:Trustee:contactnew"
+  methods: [GET]
+  
+trustee_contact_create:
+  path: /{id}/contact/create
+  defaults:
+    _controller: "JLMModelBundle:Trustee:contactcreate"
+  methods: [POST]
+  
+jlm_model_trusteesearch_json:
+  path: /trustees.json
+  defaults:
+    _controller: "JLMModelBundle:Trustee:search"
+  methods: [GET]
+  
+jlm_model_trustee_json:
+  path: /trustee.json
+  defaults:
+    _controller: "JLMModelBundle:Trustee:json"
+  methods: [GET]

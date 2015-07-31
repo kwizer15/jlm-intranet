@@ -4,28 +4,25 @@ namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ContractBundle\Entity\Contract;
 use JLM\ModelBundle\Entity\Door;
 use JLM\FeeBundle\Entity\Fee;
-use JLM\ModelBundle\Form\Type\ContractType;
-use JLM\ModelBundle\Form\Type\ContractStopType;
+use JLM\ContractBundle\Form\Type\ContractType;
 
 /**
  * Contract controller.
  *
- * @Route("/contract")
+ * Route("/contract")
  */
 class ContractController extends Controller
 {
     /**
      * Lists all Contract entities.
      *
-     * @Route("/", name="contract")
+     * Route("/", name="contract")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -41,7 +38,7 @@ class ContractController extends Controller
     /**
      * Finds and displays a Contract entity.
      *
-     * @Route("/{id}/show", name="contract_show")
+     * Route("/{id}/show", name="contract_show")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -55,7 +52,7 @@ class ContractController extends Controller
     /**
      * Displays a form to create a new Contract entity.
      *
-     * @Route("/new/{id}", name="contract_new")
+     * Route("/new/{id}", name="contract_new")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -80,8 +77,8 @@ class ContractController extends Controller
     /**
      * Creates a new Contract entity.
      *
-     * @Route("/create", name="contract_create")
-     * @Method("post")
+     * Route("/create", name="contract_create")
+     * Method("post")
      * @Template("JLMModelBundle:Contract:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -125,7 +122,7 @@ class ContractController extends Controller
     /**
      * Stop a contract
      * 
-     * @Route("/{id}/stopupdate", name="contract_stopupdate")
+     * Route("/{id}/stopupdate", name="contract_stopupdate")
      * @Template("JLMModelBundle:Contract:stop.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -153,7 +150,7 @@ class ContractController extends Controller
     /**
      * Stop a contract
      *
-     * @Route("/{id}/stop", name="contract_stop")
+     * Route("/{id}/stop", name="contract_stop")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -185,8 +182,8 @@ class ContractController extends Controller
     /**
      * Edits an existing Contract entity.
      *
-     * @Route("/{id}/update", name="contract_update")
-     * @Method("post")
+     * Route("/{id}/update", name="contract_update")
+     * Method("post")
      * @Template("JLMModelBundle:Contract:edit.old.html.twig")
      * @Secure(roles="ROLE_USER")
      */

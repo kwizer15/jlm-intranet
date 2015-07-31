@@ -1,0 +1,30 @@
+transmittertype:
+  path: /
+  defaults:
+    _controller: "JLMModelBundle:TransmitterType:index"
+  methods: [GET]
+  
+transmittertype_new:
+  path: /new
+  defaults:
+    _controller: "JLMModelBundle:TransmitterType:new"
+  methods: [GET]
+  
+transmittertype_create:
+  path: /create
+  defaults:
+    _controller: "JLMModelBundle:TransmitterType:create"
+  methods: [PUT,POST]
+
+transmittertype_edit:
+  path: /{id}/edit
+  defaults:
+    _controller: "JLMModelBundle:TransmitterType:edit"
+  methods: [GET]
+  
+transmittertype_update:
+  path: /{id}/update
+  defaults:
+    _controller: "JLMModelBundle:TransmitterType:update"
+  methods: [PUT,POST]
+  

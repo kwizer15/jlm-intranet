@@ -18,15 +18,15 @@ use JLM\ContactBundle\Manager\ContactManager;
 /**
  * Trustee controller.
  *
- * @Route("/trustee")
+ * Route("/trustee")
  */
 class TrusteeController extends Controller
 {
     /**
      * Lists all Trustee entities.
      *
-     * @Route("/", name="trustee")
-     * @Route("/page/{page}", name="trustee_page")
+     * Route("/", name="trustee")
+     * Route("/page/{page}", name="trustee_page")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -56,7 +56,7 @@ class TrusteeController extends Controller
     /**
      * Finds and displays a Trustee entity.
      *
-     * @Route("/{id}/show", name="trustee_show")
+     * Route("/{id}/show", name="trustee_show")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -70,7 +70,7 @@ class TrusteeController extends Controller
     /**
      * Displays a form to create a new Trustee entity.
      *
-     * @Route("/new", name="trustee_new")
+     * Route("/new", name="trustee_new")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -99,8 +99,8 @@ class TrusteeController extends Controller
     /**
      * Creates a new Trustee entity.
      *
-     * @Route("/create", name="trustee_create")
-     * @Method("post")
+     * Route("/create", name="trustee_create")
+     * Method("post")
      * @Template("JLMModelBundle:Trustee:new.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -134,7 +134,7 @@ class TrusteeController extends Controller
     /**
      * Displays a form to edit an existing Trustee entity.
      *
-     * @Route("/{id}/edit", name="trustee_edit")
+     * Route("/{id}/edit", name="trustee_edit")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -153,8 +153,8 @@ class TrusteeController extends Controller
     /**
      * Edits an existing Trustee entity.
      *
-     * @Route("/{id}/update", name="trustee_update")
-     * @Method("post")
+     * Route("/{id}/update", name="trustee_update")
+     * Method("post")
      * @Template("JLMModelBundle:Trustee:edit.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -191,8 +191,8 @@ class TrusteeController extends Controller
     /**
      * Deletes a Trustee entity.
      *
-     * @Route("/{id}/delete", name="trustee_delete")
-     * @Method("post")
+     * Route("/{id}/delete", name="trustee_delete")
+     * Method("post")
      * @Secure(roles="ROLE_USER")
      */
     public function deleteAction(Trustee $entity)
@@ -223,7 +223,7 @@ class TrusteeController extends Controller
     /**
      * Formulaire d'ajout d'un contact au syndic.
      *
-     * @Route("/{id}/contact/new", name="trustee_contact_new")
+     * Route("/{id}/contact/new", name="trustee_contact_new")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
@@ -242,8 +242,8 @@ class TrusteeController extends Controller
     /**
      * Creates a new Trustee entity.
      *
-     * @Route("/{id}/contact/create", name="trustee_contact_create")
-     * @Method("post")
+     * Route("/{id}/contact/create", name="trustee_contact_create")
+     * Method("post")
      * @Template("JLMModelBundle:Trustee:contactnew.html.twig")
      * @Secure(roles="ROLE_USER")
      */
@@ -277,8 +277,8 @@ class TrusteeController extends Controller
     /**
      * City json
      *
-     * @Route("/trustees.json", name="jlm_model_trusteesearch_json")
-     * @Method("get")
+     * Route("/trustees.json", name="jlm_model_trusteesearch_json")
+     * Method("get")
      * @Secure(roles="ROLE_USER")
      */
     public function searchAction(Request $request)
@@ -296,8 +296,8 @@ class TrusteeController extends Controller
     /**
      * City json
      *
-     * @Route("/trustee.json", name="jlm_model_trustee_json")
-     * @Method("get")
+     * Route("/trustee.json", name="jlm_model_trustee_json")
+     * Method("get")
      * @Secure(roles="ROLE_USER")
      */
     public function jsonAction(Request $request)
