@@ -1,22 +1,27 @@
 <?php
 
+/*
+ * This file is part of the JLMModelBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\ModelBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 /**
- * JLM\ModelBundle\Entity\UploadDocument
- *
- * @ORM\MappedSuperclass
- * @ORM\HasLifecycleCallbacks
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 abstract class UploadDocument
 {
 	/**
-	 * @ORM\Column(type="string", length=255, nullable=true)
+	 * @var string
 	 */
 	private $path;
 	
@@ -43,10 +48,6 @@ abstract class UploadDocument
 	
 	abstract protected function getUploadDir();
 	
-	/**
-	 * @ORM\PrePersist()
-	 * @ORM\PreUpdate()
-	 */
 	public function preUpload()
 	{
 		if (null !== $this->file)
@@ -56,10 +57,6 @@ abstract class UploadDocument
 		}
 	}
 	
-	/**
-	 * @ORM\PostPersist()
-	 * @ORM\PostUpdate()
-	 */
 	public function upload()
 	{
 		// la propriété « file » peut être vide si le champ n'est pas requis
@@ -70,9 +67,6 @@ abstract class UploadDocument
 		unset($this->file);
 	}
 	
-	/**
-	 * @ORM\PostRemove()
-	 */
 	public function removeUpload()
 	{
 		if ($file = $this->getAbsolutePath()) {

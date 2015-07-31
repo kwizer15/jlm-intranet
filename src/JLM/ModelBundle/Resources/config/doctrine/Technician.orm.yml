@@ -1,0 +1,9 @@
+JLM\ModelBundle\Entity\Technician:
+  type: entity
+  table: technicians
+  fields:
+    internalPhone:
+      length: 20
+      nullable: true
+
+      

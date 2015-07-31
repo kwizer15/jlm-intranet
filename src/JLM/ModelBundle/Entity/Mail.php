@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This file is part of the JLMModelBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\ModelBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * JLM\OfficeBundle\Entity\Mail
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class Mail
 {
@@ -64,6 +73,7 @@ class Mail
 	public function setSubject($subject)
 	{
 		$this->subject = $subject;
+		
 		return $this;
 	}
 	
@@ -84,6 +94,7 @@ class Mail
 	public function setFrom($from)
 	{
 		$this->from = $from;
+		
 		return $this;
 	}
 	
@@ -104,6 +115,7 @@ class Mail
 	public function setTo($to)
 	{
 		$this->to = $to;
+		
 		return $this;
 	}
 	
@@ -124,6 +136,7 @@ class Mail
 	public function setCc($cc)
 	{
 		$this->cc = $cc;
+		
 		return $this;
 	}
 	
@@ -144,6 +157,7 @@ class Mail
 	public function setBcc($bcc)
 	{
 		$this->bcc = $bcc;
+		
 		return $this;
 	}
 	
@@ -165,6 +179,7 @@ class Mail
 	public function setBody($body)
 	{
 		$this->body = $body;
+		
 		return $this;
 	}
 	
@@ -185,6 +200,7 @@ class Mail
 	public function setSignature($signature)
 	{
 		$this->signature = $signature;
+		
 		return $this;
 	}
 	
@@ -209,7 +225,10 @@ class Mail
 			->setBcc($this->getBcc())
 			->setBody($this->getBody().chr(10).chr(10).'--'.chr(10).$this->getSignature());
 		if ($this->getCc() !== null)
+		{
 			$swift->setCc($this->getCc());
+		}
+		
 		return $swift;
 	}
 	

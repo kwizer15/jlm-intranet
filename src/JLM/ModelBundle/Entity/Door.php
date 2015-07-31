@@ -1,8 +1,16 @@
 <?php
 
+/*
+ * This file is part of the JLMModelBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\ModelBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\InstallationBundle\Model\BayInterface;
@@ -17,27 +25,18 @@ use JLM\DailyBundle\Entity\Intervention;
 use JLM\DailyBundle\Entity\Work;
 
 /**
- * JLM\ModelBundle\Entity\Door
- *
- * @ORM\Table(name="doors")
- * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\DoorRepository")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class Door implements BayInterface, InstallationInterface
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
      * Batiment "officiel"
      * @var Site $site
-     * 
-     * @ORM\ManyToOne(targetEntity="Site",inversedBy="doors")
      */
     private $site;
     
@@ -45,7 +44,6 @@ class Door implements BayInterface, InstallationInterface
      * Indications internes
      * @var string $street
      * 
-     * @ORM\Column(name="street",type="text")
      * @Assert\Type(type="string")
      */
     private $street;
@@ -53,8 +51,6 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Type de porte
      * @var DoorType $type
-     * 
-     * @ORM\ManyToOne(targetEntity="DoorType")
      */
     private $type;
     
@@ -62,7 +58,6 @@ class Door implements BayInterface, InstallationInterface
      * Localisation (ex: Entrée, façade...)
      * @var string $location
      *
-     * @ORM\Column(name="location", type="string", length=255)
      * @Assert\Type(type="string")
      */
     private $location;
@@ -70,33 +65,18 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Pièces de la porte (cellules, bp...)
      * @var Product[] $parts
-     * 
-     * @ORM\ManyToMany(targetEntity="JLM\ProductBundle\Entity\Product")
-     * @ORM\JoinTable(name="doors_parts",
-     *      joinColumns={@ORM\JoinColumn(name="door_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="part_id", referencedColumnName="id")}
-     *      )
-     * 
      */
     private $parts;
     
     /**
      * Emeteurs
      * @var TransmitterType $transmitters
-     * 
-     * @ORM\ManyToMany(targetEntity="TransmitterType")
-     * @ORM\JoinTable(name="doors_transmitters",
-     * 		joinColumns={@ORM\JoinColumn(name="door_id", referencedColumnName="id")},
-     * 		inverseJoinColumns={@ORM\JoinColumn(name="transmitters_id", referencedColumnName="id")}
-     * 		)
-     * 
      */
     private $transmitters;
     
     /**
      * @var string $observations
      *
-     * @ORM\Column(name="observations", type="text", nullable=true)
      * @Assert\Type(type="string")
      */
     private $observations;
@@ -104,7 +84,6 @@ class Door implements BayInterface, InstallationInterface
     /**
      * @var string Google Maps (Street)
      * 
-     * @ORM\Column(name="googlemaps", type="text", nullable=true)
      * @Assert\Url
      */
     private $googlemaps;
@@ -112,14 +91,12 @@ class Door implements BayInterface, InstallationInterface
     /**
      * @var int largeur en mm
      * 
-     * @ORM\Column(name="width", type="integer", nullable=true)
      */
     private $width;
     
     /**
      * @var int hauteur en mm
      *
-     * @ORM\Column(name="height", type="integer", nullable=true)
      */
     private $height;
     
@@ -128,7 +105,6 @@ class Door implements BayInterface, InstallationInterface
      * @var bool $stoped
      * @deprecated
      * 
-     * @ORM\Column(name="stopped", type="boolean")
      * @Assert\Type(type="bool")
      */
     private $stopped = false;
@@ -136,9 +112,6 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Liste des mises à l'arrêt
      * @var ArrayCollection
-     * 
-     * @ORM\OneToMany(targetEntity="DoorStop", mappedBy="door")
-     * @ORM\OrderBy({"begin" = "DESC"})
      */
     private $stops;
     
@@ -146,7 +119,6 @@ class Door implements BayInterface, InstallationInterface
      * Prélibellé de factration
      * @var string $billingPrelabel
      * 
-     * @ORM\Column(name="billing_prelabel", type="text", nullable=true)
      * @Assert\Type(type="string")
      */
     private $billingPrelabel;
@@ -154,35 +126,24 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Contrats
      * @var Contract $contracts
-     * 
-     * @ORM\OneToMany(targetEntity="JLM\ContractBundle\Entity\Contract",mappedBy="door")
-     *
      */
     private $contracts;
     
     /**
      * Interventions
      * @var ArrayCollection
-     * 
-     * @ORM\OneToMany(targetEntity="JLM\DailyBundle\Entity\Intervention",mappedBy="door")
-     * @ORM\OrderBy({"creation" = "DESC"})
-     * 
      */
     private $interventions;
     
     /**
      * Latitude
      * @var float
-     * 
-     * @ORM\Column(name="latitude", type="float",nullable=true)
      */
     private $latitude;
     
     /**
      * Longitude
      * @var float
-     *
-     * @ORM\Column(name="longitude", type="float",nullable=true)
      */
     private $longitude;
     
@@ -190,7 +151,6 @@ class Door implements BayInterface, InstallationInterface
      * Code installation
      * @var string
      * 
-     * @ORM\Column(name="code", type="string", length=10, nullable=true)
      * @Assert\Regex(pattern="#[AZERTY][0-9]{4}#")
      */
     private $code;
@@ -198,40 +158,30 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Modèle / Marque
      * @var DoorModel
-     * 
-     * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\DoorModel")
      */
     private $model;
     
     /**
      * Numéro de plaque
      * @var string
-     * 
-     * @ORM\Column(name="ceNumber", type="string", nullable=true)
      */
     private $ceNumber;
     
     /**
      * E-mails syndic
      * @var string
-     *
-     * @ORM\Column(name="managerEmails", type="array", nullable=true)
      */
     private $managerEmails;
     
     /**
      * E-mails comptabilité
      * @var string
-     *
-     * @ORM\Column(name="accountingEmails", type="array", nullable=true)
      */
     private $accountingEmails;
     
     /**
      * E-mails copro
      * @var string
-     *
-     * @ORM\Column(name="administratorEmails", type="array", nullable=true)
      */
     private $administratorEmails;
     

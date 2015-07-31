@@ -1,8 +1,16 @@
 <?php
 
+/*
+ * This file is part of the JLMModelBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\ModelBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\ContactBundle\Model\AddressInterface;
@@ -14,43 +22,31 @@ use JLM\ContactBundle\Entity\ContactDecorator;
 use JLM\ContactBundle\Model\ContactInterface;
 
 /**
- * JLM\ModelBundle\Entity\Trustee
- *
- * @ORM\Table(name="trustees")
- * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\TrusteeRepository")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class Trustee extends ContactDecorator implements ManagerInterface, CustomerInterface, PayerInterface
 {
-
-
     /**
      * @var integer $accountNumber
-     *
-     * @ORM\Column(name="accountNumber", type="integer", nullable=true)
+     * 
      * @Assert\Regex(pattern="/^411\d{3,5}$/",message="Ce n'est pas un numéro de compte valide.")
      */
     private $accountNumber;
 
     /**
      * @var ArrayCollection $contracts
-     * 
-     * @ORM\OneToMany(targetEntity="JLM\ContractBundle\Entity\Contract", mappedBy="trustee")
      */
     private $contracts;
 
     /**
      * @var ArrayCollection $sites
-     * 
-     * @ORM\OneToMany(targetEntity="Site",mappedBy="trustee")
      */
-    private $sites;
-    
+    private $sites;   
 
     /**
      * Libelé de facturation
      * @var string $billingLabel
      * 
-     * @ORM\Column(name="billingLabel", type="string", nullable=true)
      * @Assert\Type(type="string")
      */
     private $billingLabel;
@@ -58,31 +54,26 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
     /**
      * Adresse de facturation (si differente)
      * @var AddressInterface $billingAddress
-     *
-     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
      */
     private $billingAddress;
     
     /**
      * @var string $phone
-     *
-     * @ORM\Column(name="billingPhone",type="string",length=20, nullable=true)
+     * 
      * @Assert\Regex(pattern="/^0[1-9]\d{8}$/",message="Ce n'est pas un numéro de téléphone fixe valide")
      */
     private $billingPhone;
     
     /**
      * @var string $fax
-     *
-     * @ORM\Column(name="billingFax",type="string",length=20, nullable=true)
+     * 
      * @Assert\Regex(pattern="/^0[1-9]\d{8}$/",message="Ce n'est pas un numéro de fax valide")
      */
     private $billingFax;
     
     /**
-     * @var email $email
-     *
-     * @ORM\Column(name="billingEmail",type="string",length=255, nullable=true)
+     * @var string $email
+     * 
      * @Assert\Email
      */
     private $billingEmail;

@@ -1,58 +1,50 @@
 <?php
 
+/*
+ * This file is part of the JLMModelBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\ModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * DoorStop
- *
- * @ORM\Table(name="door_stops")
- * @ORM\Entity
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class DoorStop
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="begin", type="datetime")
      */
     private $begin;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="end", type="datetime", nullable=true)
      */
     private $end;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="reason", type="string", length=255)
      */
     private $reason;
     
     /**
      * @var string
-     *
-     * @ORM\Column(name="state", type="string", length=255)
      */
     private $state;
 
     /**
      * @var Door
-     * 
-     * @ORM\ManyToOne(targetEntity="Door", inversedBy="stops")
      */
     private $door;
 
@@ -75,6 +67,7 @@ class DoorStop
     public function setBegin(\DateTime $begin = null)
     {
         $this->begin = $begin;
+        
         return $this;
     }
 
@@ -97,6 +90,7 @@ class DoorStop
     public function setEnd(\DateTime $end = null)
     {
         $this->end = $end;
+        
         return $this;
     }
 

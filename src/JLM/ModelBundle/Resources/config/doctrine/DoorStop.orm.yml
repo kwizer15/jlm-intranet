@@ -1,0 +1,21 @@
+JLM\ModelBundle\Entity\DoorStop:
+  type: entity
+  table: door_stops
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    begin:
+      type: datetime
+    end:
+      type: datetime
+      nullable: true
+    reason: ~
+    state: ~
+  manyToOne:
+    door:
+      targetEntity: JLM\ModelBundle\Entity\Door
+      inversedBy: stops
+      

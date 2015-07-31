@@ -1,0 +1,44 @@
+JLM\ModelBundle\Entity\Site:
+  type: entity
+  table: sites
+  repositoryClass: JLM\ModelBundle\Repository\SiteRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    accession:
+      type: boolean
+    groupNumber:
+      length: 6
+      nullable: true
+    observations:
+      type: text
+      nullable: true
+  oneToOne:
+    address:
+      targetEntity: JLM\ContactBundle\Model\AddressInterface
+    lodge:
+      targetEntity: JLM\ContactBundle\Model\AddressInterface
+  oneToMany:
+    doors:
+      targetEntity: JLM\ModelBundle\Entity\Door
+      mappedBy: site
+    contacts:
+      targetEntity: JLM\ModelBundle\Entity\SiteContact
+      mappedBy: site
+    userGroups:
+      targetEntity: JLM\TransmitterBundle\Entity\UserGroup
+      mappedBy: site
+      orderBy: { name: ASC }
+    bills:
+      targetEntity: JLM\CommerceBundle\Entity\Bill
+      mappedBy: siteObject
+  manyToOne:
+    trustee:
+      targetEntity: JLM\ModelBundle\Entity\Trustee
+      inversedBy: sites
+    vat:
+      targetEntity: JLM\CommerceBundle\Model\VATInterface
+      

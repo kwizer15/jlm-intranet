@@ -1,0 +1,12 @@
+JLM\ModelBundle\Entity\TransmitterType:
+  type: entity
+  table: transmitter_types
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name: ~
+
+      

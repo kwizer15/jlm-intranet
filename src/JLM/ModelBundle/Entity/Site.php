@@ -1,16 +1,22 @@
 <?php
 
+/*
+ * This file is part of the JLMModelBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\ModelBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use JLM\ContactBundle\Model\AddressInterface;
 use JLM\CondominiumBundle\Model\ManagerInterface;
 use JLM\CondominiumBundle\Model\CondominiumInterface;
-use JLM\CondominiumBundle\Model\UnionCouncilMemberInterface;
-use JLM\CondominiumBundle\Model\UnionCouncilInterface;
 use JLM\CondominiumBundle\Model\AdministratorInterface;
 use JLM\CondominiumBundle\Model\AdministratorMemberInterface;
 use JLM\TransmitterBundle\Entity\UserGroup;
@@ -20,19 +26,12 @@ use JLM\CommerceBundle\Model\BusinessInterface;
 use JLM\AskBundle\Model\SubjectInterface;
 
 /**
- * JLM\ModelBundle\Entity\Site
- *
- * @ORM\Table(name="sites")
- * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SiteRepository")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class Site implements AdministratorInterface, BusinessInterface, SubjectInterface
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
@@ -40,8 +39,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * @var boolean $accession
      * true = accession
      * false = social
-     * null = unknown
-     * @ORM\Column(name="accession", type="boolean")
+     * 
      * @Assert\Choice(choices={0,1})
      * @Assert\NotNull
      */
@@ -50,7 +48,6 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     /**
      * @var Address $address
      * 
-     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
      * @Assert\Valid
      * @Assert\NotNull
      */
@@ -59,31 +56,23 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     /**
      * @var string $groupnumber
      * 
-     * @ORM\Column(name="groupNumber", type="string", length=6, nullable=true)
      * @Assert\Length(min=4,max=6)
      */
     private $groupNumber;
     
     /**
      * @var ArrayCollection $doors
-     * 
-     * @ORM\OneToMany(targetEntity="Door", mappedBy="site")
-     * 
      */
     private $doors;
     
     /**
      * @var ArrayCollection $contacts
-     *
-     * @ORM\OneToMany(targetEntity="SiteContact", mappedBy="site")
-     * 
      */
     private $contacts;
     
     /**
      * @var ManagerInterface $trustee
      * 
-     * @ORM\ManyToOne(targetEntity="Trustee",inversedBy="sites")
      * @Assert\Valid
      * @Assert\NotNull
      */
@@ -92,7 +81,6 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     /**
      * @var VAT $vat
      * 
-     * @ORM\ManyToOne(targetEntity="JLM\CommerceBundle\Model\VATInterface")
      * @Assert\Valid
      * @Assert\NotNull
      */
@@ -101,7 +89,6 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     /**
      * @var Address $lodge
      *
-     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\AddressInterface")
      * @Assert\Valid
      */
     private $lodge;
@@ -109,23 +96,17 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     /**
      * @var string $observations
      *
-     * @ORM\Column(name="observations", type="text", nullable=true)
      * @Assert\Type(type="string")
      */
     private $observations;
     
     /**
      * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="JLM\TransmitterBundle\Entity\UserGroup", mappedBy="site")
-     * @ORM\OrderBy({"name" = "ASC"})
      */
     private $userGroups;
     
     /**
      * @var ArrayColection
-     * 
-     * @ORM\OneToMany(targetEntity="JLM\CommerceBundle\Entity\Bill", mappedBy="siteObject")
      */
     private $bills;
     

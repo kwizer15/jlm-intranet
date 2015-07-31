@@ -1,0 +1,6 @@
+JLM\ModelBundle\Entity\StringModel:
+  type: mappedSuperclass
+  fields:
+    name: ~
+
+      

@@ -1,6 +1,6 @@
 <?php
 
-namespace JLM\ModelBundle\Entity;
+namespace JLM\ModelBundle\Repository;
 
 use JLM\DefaultBundle\Entity\SearchRepository;
 use Doctrine\DBAL\LockMode;

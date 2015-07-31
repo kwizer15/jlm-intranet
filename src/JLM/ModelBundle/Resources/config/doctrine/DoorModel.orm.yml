@@ -1,0 +1,14 @@
+JLM\ModelBundle\Entity\DoorModel:
+  type: entity
+  table: door_models
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name: ~
+  manyToOne:
+    type:
+      targetEntity: JLM\ModelBundle\Entity\DoorType
+      

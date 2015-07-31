@@ -1,0 +1,28 @@
+JLM\ModelBundle\Entity\Trustee:
+  type: entity
+  table: trustees
+  repositoryClass: JLM\ModelBundle\Repository\TrusteeRepository
+  fields:
+    accountNumber:
+      type: integer
+      nullable: true
+    billingLabel:
+      nullable: true
+    billingPhone:
+      length: 20
+      nullable: true
+    billingFax:
+      length: 20
+      nullable: true
+    billingEmail:
+      nullable: true
+  oneToOne:
+    billingAddress:
+      targetEntity: JLM\ContactBundle\Model\AddressInterface
+  oneToMany:
+    contracts:
+      targetEntity: JLM\ContractBundle\Entity\Contract
+      mappedBy: trustee
+    sites:
+      targetEntity: JLM\ModelBundle\Entity\Site
+      mappedBy: trustee

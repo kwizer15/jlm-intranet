@@ -1,8 +1,16 @@
 <?php
 
+/*
+ * This file is part of the JLMModelBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\ModelBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\ContactBundle\Model\PersonInterface;
@@ -10,34 +18,25 @@ use JLM\CondominiumBundle\Model\AdministratorMemberInterface;
 use JLM\CondominiumBundle\Model\AdministratorInterface;
 
 /**
- * JLM\ModelBundle\Entity\SiteContact
- *
- * @ORM\Table(name="site_contacts")
- * @ORM\Entity(repositoryClass="JLM\ModelBundle\Entity\SiteContactRepository")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class SiteContact implements AdministratorMemberInterface, PersonInterface
 {
 	/**
      * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 	
 	/**
 	 * @var $sites
 	 * 
-	 * @ORM\ManyToOne(targetEntity="Site", inversedBy="contacts")
 	 * @Assert\NotNull
 	 */
 	private $site;
 	
 	/**
 	 * @var $person
-	 *
-	 * @ORM\ManyToOne(targetEntity="JLM\ContactBundle\Model\PersonInterface")
+	 * 
 	 * @Assert\Valid
 	 * @Assert\NotNull
 	 */
@@ -46,7 +45,6 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
 	/**
 	 * @var $role
 	 * 
-	 * @ORM\Column(name="role",type="string",length=255,nullable=true)
 	 * @Assert\Type(type="string")
 	 */
 	private $role;

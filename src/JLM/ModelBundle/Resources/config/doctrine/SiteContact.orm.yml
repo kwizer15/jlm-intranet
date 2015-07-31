@@ -1,0 +1,18 @@
+JLM\ModelBundle\Entity\SiteContact:
+  type: entity
+  table: site_contacts
+  repositoryClass: JLM\ModelBundle\Repository\SiteContactRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    role:
+      nullable: true
+  manyToOne:
+    site:
+      targetEntity: JLM\ModelBundle\Entity\Site
+      inversedBy: contacts
+    person:
+      targetEntity: JLM\ContactBundle\Model\PersonInterface

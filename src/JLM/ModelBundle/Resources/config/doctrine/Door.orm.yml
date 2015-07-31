@@ -1,0 +1,92 @@
+JLM\ModelBundle\Entity\Door:
+  type: entity
+  table: doors
+  repositoryClass: JLM\ModelBundle\Repository\DoorRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    street:
+      type: text
+    location: ~
+    observations:
+      type: text
+      nullable: true
+    googlemaps:
+      type: text
+      nullable: true
+    width:
+      type: integer
+      nullable: true
+    height:
+      type: integer
+      nullable: true
+    stopped:
+      type: boolean
+    billingPrelabel:
+      column: billing_prelabel
+      type: text
+      nullable: true
+    latitude:
+      type: float
+      nullable: true
+    longitude:
+      type: float
+      nullable: true
+    code:
+      length: 10
+      nullable: true
+    ceNumber:
+      nullable: true
+    managerEmails:
+      type: array
+      nullable: true
+    accountingEmails:
+      type: array
+      nullable: true
+    administratorEmails:
+      type: array
+      nullable: true
+  manyToOne:
+    site:
+      targetEntity: JLM\ModelBundle\Entity\Site
+      inversedBy: doors
+    type:
+      targetEntity: JLM\ModelBundle\Entity\DoorType
+    model:
+      targetEntity: JLM\ModelBundle\Entity\DoorModel
+  oneToMany:
+    stops:
+      targetEntity: JLM\ModelBundle\Entity\DoorStop
+      mappedBy: door
+      orderBy: { begin: DESC }
+    contracts:
+      targetEntity: JLM\ContractBundle\Entity\Contract
+      mappedBy: door
+    interventions:
+      targetEntity: JLM\DailyBundle\Entity\Intervention
+      mappedBy: door
+      orderBy: { creation: DESC }
+  manyToMany:
+    parts:
+      targetEntity: JLM\ProductBundle\Entity\Product
+      joinTable:
+        name: doors_parts
+        joinColumns:
+          door_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          part_id:
+            referencedColumnName: id
+    transmitters:
+      targetEntity: JLM\ModelBundle\Entity\TransmitterType
+      joinTable:
+        name: doors_transmitters
+        joinColumns:
+          door_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          transmitters_id:
+            referencedColumnName: id

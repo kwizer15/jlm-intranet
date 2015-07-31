@@ -1,0 +1,12 @@
+JLM\ModelBundle\Entity\DoorType:
+  type: entity
+  table: door_types
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name: ~
+
+      
