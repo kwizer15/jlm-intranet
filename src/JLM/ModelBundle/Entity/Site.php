@@ -24,6 +24,7 @@ use JLM\CommerceBundle\Model\BillInterface;
 use JLM\CommerceBundle\Model\VATInterface;
 use JLM\CommerceBundle\Model\BusinessInterface;
 use JLM\AskBundle\Model\SubjectInterface;
+use JLM\ContactBundle\Entity\Company;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
