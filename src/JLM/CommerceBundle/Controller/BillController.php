@@ -331,6 +331,8 @@ class BillController extends ContainerAware
     	$em->persist($entity);
     	$em->flush();
     	
+    	$this->container->get('event_dispatcher')->dispatch(JLMCommerceEvents::BILL_BOOST, new BillEvent($entity, $this->getRequest()));
+    	
     	return $manager->redirect('bill_toboost');
     }
     
