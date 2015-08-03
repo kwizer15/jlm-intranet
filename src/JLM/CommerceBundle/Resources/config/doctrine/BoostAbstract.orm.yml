@@ -1,4 +1,4 @@
-JLM\CommerceBundle\Entity\BoostMethod:
+JLM\CommerceBundle\Entity\BoostAbstract:
   type: mappedSuperclass
   table: jlm_commerce_boost
   fields:
@@ -7,6 +7,7 @@ JLM\CommerceBundle\Entity\BoostMethod:
       type: datetime
     comment:
       type: text
+      nullable: true
   manyToOne:
     method:
       targetEntity: JLM\CommerceBundle\Model\BoostMethodInterface

@@ -6,5 +6,6 @@ jlm_commerce_quote:
     resource: "@JLMCommerceBundle/Resources/config/routing/quote.yml"
     prefix:   /quote
 
-
-
+JLMCommerceBundle_boostmethod:
+    resource: "@JLMCommerceBundle/Resources/config/routing/boostmethod.yml"
+    prefix:   /boostmethod

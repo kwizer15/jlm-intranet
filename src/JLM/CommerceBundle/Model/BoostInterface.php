@@ -16,23 +16,5 @@ namespace JLM\CommerceBundle\Model;
  */
 interface BoostInterface
 {
-    /**
-	 * @return BusinessInterface
-     */
-    public function getBusiness(); 
-
-    /**
-     * @return string
-     */
-    public function getCommercialPartNumber();
-    
-    /**
-     * @return CommercialPartInterface
-     */
-    public function getCommercialPart();
-    
-    /**
-     * @return array
-     */
-    public function getContacts();   
+  
 }

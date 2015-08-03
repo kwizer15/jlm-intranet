@@ -1,4 +1,4 @@
-JLM\CommerceBundle\Entity\BoostMethod:
+JLM\CommerceBundle\Entity\BillBoost:
   type: mappedSuperclass
   table: jlm_commerce_boost_bill
   repository: JLM\CommerceBundle\Repository\BillBoostRepository

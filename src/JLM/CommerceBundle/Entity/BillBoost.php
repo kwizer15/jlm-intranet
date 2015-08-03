@@ -11,9 +11,8 @@
 
 namespace JLM\CommerceBundle\Entity;
 
-use JLM\CommerceBundle\Model\BoostInterface;
-use JLM\CommerceBundle\Model\BoostMethodInterface;
 use JLM\CommerceBundle\Model\BillInterface;
+use JLM\CommerceBundle\Model\BillBoostInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>

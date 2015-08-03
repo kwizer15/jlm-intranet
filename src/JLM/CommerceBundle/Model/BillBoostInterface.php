@@ -14,7 +14,7 @@ namespace JLM\CommerceBundle\Model;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-interface BillBoostInterface
+interface BillBoostInterface extends BoostInterface
 {
     /**
 	 * @return BusinessInterface

@@ -1,0 +1,15 @@
+{% extends "JLMCommerceBundle:BoostMethod:layout.html.twig" %}
+
+{% block content -%}
+    <h1>{{ 'BoostMethod creation'|trans }}</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('boostmethod') }}">
+            {{ 'Back to the list'|trans }}
+        </a>
+    </li>
+</ul>
+{% endblock %}

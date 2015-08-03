@@ -30,6 +30,11 @@ abstract class BoostAbstract implements BoostInterface
 	private $comment;
 	
 	/**
+	 * @var BoostMethodInterface
+	 */
+	private $method;
+	
+	/**
 	 * Set the boost date
 	 * @param \DateTime $date
 	 * @return self
@@ -87,7 +92,7 @@ abstract class BoostAbstract implements BoostInterface
 	 * Get the boost method
 	 * @return BoostMethodInterface
 	 */
-	public function setMethod()
+	public function getMethod()
 	{
 		return $this->method;
 	}

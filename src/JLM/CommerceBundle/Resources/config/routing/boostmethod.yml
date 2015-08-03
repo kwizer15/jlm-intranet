@@ -1,0 +1,35 @@
+boostmethod:
+  path:     /
+  defaults:
+    _controller: "JLMCommerceBundle:BoostMethod:index"
+  requirements:
+    _method: get
+
+boostmethod_show:
+  path:     /{id}
+  defaults:
+    _controller: "JLMCommerceBundle:BoostMethod:show"
+  requirements:
+    _method: get
+
+boostmethod_new:
+  path:     /new
+  defaults:
+    _controller: "JLMCommerceBundle:BoostMethod:new"
+  requirements:
+    _method: get|post
+
+boostmethod_edit:
+  path:     /{id}/edit
+  defaults:
+    _controller: "JLMCommerceBundle:BoostMethod:edit"
+  requirements:
+    _method: get|post|put
+
+boostmethod_delete:
+  path:     /{id}/delete
+  defaults:
+    _controller: "JLMCommerceBundle:BoostMethod:delete"
+  requirements:
+    _method: post|delete
+   
