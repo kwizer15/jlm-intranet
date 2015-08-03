@@ -1,0 +1,14 @@
+JLM\CommerceBundle\Entity\BoostMethod:
+  type: entity
+  table: jlm_commerce_boostmethod
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: ~
+
+
+    

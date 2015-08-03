@@ -1,0 +1,13 @@
+JLM\CommerceBundle\Entity\BoostMethod:
+  type: mappedSuperclass
+  table: jlm_commerce_boost_bill
+  repository: JLM\CommerceBundle\Repository\BillBoostRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  oneToOne:
+    bill:
+      targetEntity: JLM\CommerceBundle\Model\BillInterface
+          
