@@ -481,9 +481,10 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
     	$bills = $this->getBills();
     	$unpayed = array();
+    	$date = new \DateTime;
     	foreach ($bills as $bill)
     	{
-    		if ($bill->getState() == 1 && $bill->getSecondBoost() !== null)
+    		if ($bill->getState() == 1 && $bill->getMaturityDate() > $date)
     		{
     			$unpayed[] = $bill;
     		}

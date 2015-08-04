@@ -97,6 +97,7 @@ doctrine:
             JLM\CommerceBundle\Model\QuoteRecipientInterface: JLM\ContactBundle\Entity\Person
             JLM\CommerceBundle\Model\OrderInterface: JLM\OfficeBundle\Entity\Order
             JLM\CommerceBundle\Model\BoostMethodInterface : JLM\CommerceBundle\Entity\BoostMethod
+            JLM\CommerceBundle\Model\BillBoostInterface : JLM\CommerceBundle\Entity\BillBoost
             
             JLM\DailyBundle\Model\WorkInterface: JLM\DailyBundle\Entity\Work
             JLM\DailyBundle\Model\InterventionInterface: JLM\DailyBundle\Entity\Intervention

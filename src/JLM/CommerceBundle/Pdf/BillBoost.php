@@ -18,18 +18,29 @@ class BillBoost extends FPDFext
 {
 	private $police;
 	
-	public static function get($entities)
+	private $number;
+	
+	public static function get($entities,$number)
 	{
 		$pdf = new self();
+		
 		foreach ($entities as $entity)
 		{
-			$pdf->_init($entity);
-			$pdf->_show($entity);
+			if ($number === null)
+			{
+				$number = 2;
+				if ($entity->getFirstBoost() === null)
+				{
+					$number = 1;
+				}
+			}
+			$pdf->_init($entity, $number);
+			$pdf->_show($entity, $number);
 		}
 		return $pdf->Output('','S');
 	}
 	
-	private function _init(BillInterface $entity)
+	private function _init(BillInterface $entity, $number)
 	{
 		$this->police = 'Times';
 		$this->addPage('P');
@@ -44,7 +55,7 @@ class BillBoost extends FPDFext
 		$this->cell(0,5,'à l\'attention du gestionnaire et du service comptabilité');
 		$this->ln(17);
 		$this->setFont($this->police,'B',14);
-		$this->cell(0,8,(($entity->getFirstBoost() === null) ? '1er' : '2ème').' RAPPEL',1,1,'C',1);
+		$this->cell(0,8,(($number == 1) ? '1er' : $number.'ème').' RAPPEL',1,1,'C',1);
 		$this->ln(6);
 		$this->setFont($this->police,'',12);
 		$this->setX(100);
@@ -57,13 +68,14 @@ class BillBoost extends FPDFext
 	}
 	
 	
-	private function _show(BillInterface $entity)
+	private function _show(BillInterface $entity, $number = null)
 	{
+		
 		$this->setFont($this->police,'',13);
 		$this->cell(0,5,'Madame, Monsieur,',0,1);
 		$this->ln(5);
 		
-		if ($entity->getFirstBoost() === null)
+		if ($number == 1)
 		{
 			// Texte 1er Rappel
 			$this->cell(0,5,'Nous nous permettons de vous signaler qu\'à ce jour nous n\'avons toujours pas enregistré le',0,1,'FJ');
@@ -101,19 +113,15 @@ class BillBoost extends FPDFext
 		}
 		$this->ln(20);
 		$this->cell(0,5,'Service comptabilité',0,0,'R');
-		if ($entity->getFirstBoost() !== null)
-		{
-			
-		}
 	}
 	
 	public function header()
 	{
-		$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmcommerce/img/pdf-header-comp.jpg',10,4,190);
+		$this->Image($_SERVER['DOCUMENT_ROOT'].'/bundles/jlmcommerce/img/pdf-header-comp.jpg',10,4,190);
 	}
 	
 	public function footer()
 	{
-		$this->Image($_SERVER['DOCUMENT_ROOT'].'bundles/jlmcommerce/img/pdf-footer.jpg',50,280,110);
+		$this->Image($_SERVER['DOCUMENT_ROOT'].'/bundles/jlmcommerce/img/pdf-footer.jpg',50,280,110);
 	}
 }

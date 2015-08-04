@@ -51,12 +51,12 @@ bill_printlist:
     defaults:  { _controller: "JLMCommerceBundle:Bill:printlist" }
     methods: [GET]
     
-bill_printboost:
-    path:   /{id}/printboost
-    defaults:  { _controller: "JLMCommerceBundle:Bill:printboost" }
-    requirements:
-        id: \d+
-    methods: [GET]
+#bill_printboost:
+#    path:   /{id}/printboost
+#    defaults:  { _controller: "JLMCommerceBundle:Bill:printboost" }
+#    requirements:
+#        id: \d+
+#    methods: [GET]
     
 bill_ready:
     path:   /{id}/ready
@@ -103,28 +103,28 @@ bill_todo:
     defaults:  { _controller: "JLMCommerceBundle:Bill:todo" }
     methods: [GET]
     
-bill_toboost:
-    path:   /toboost
-    defaults:  { _controller: "JLMCommerceBundle:Bill:toboost" }
-    methods: [GET]
-    
-bill_boostok:
-    path:   /{id}/boostok
-    defaults:  { _controller: "JLMCommerceBundle:Bill:boostok" }
-    requirements:
-        id: \d+
-    methods: [GET]
+#bill_toboost:
+#    path:   /toboost
+#    defaults:  { _controller: "JLMCommerceBundle:Bill:toboost" }
+#    methods: [GET]
+#    
+#bill_boostok:
+#    path:   /{id}/boostok
+#    defaults:  { _controller: "JLMCommerceBundle:Bill:boostok" }
+#    requirements:
+#        id: \d+
+#    methods: [GET]
     
 bill_search:
     path:   /search
     defaults:  { _controller: "JLMCommerceBundle:Bill:search" }
     methods: [GET]
  
-jlm_commerce_bill_boostemail:
-    path: /boost/{id}/email
-    defaults:
-        _controller: JLMCommerceBundle:Bill:boostemail
-    methods: [GET,POST]
+#jlm_commerce_bill_boostemail:
+#    path: /boost/{id}/email
+#    defaults:
+#        _controller: JLMCommerceBundle:Bill:boostemail
+#    methods: [GET,POST]
 
     
     

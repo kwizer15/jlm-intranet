@@ -13,3 +13,31 @@ Delete: Supprimer
 Id: "#"
 Name: Nom
 Actions: Actions
+
+boost:
+  number: "%count%ère relance|%count%ème relance"
+  label: "{1}info|{2}warning|[3,Inf]important"
+  lastBoost: Dernier envoi
+  action:
+    print:
+      courrier: Imprimer courrier
+    send:
+      email: Envoyer un e-mail
+    mark:
+      sended: Relance effectuée
+  
+bill:
+  attribute:
+    number: "#"
+    date: Date
+    customer: Syndic
+    business: Affaire
+    totalPriceAti: Total
+  action:
+    print:
+      duplicate: Imprimer duplicata
+    mark:
+      payed: Déjà réglée
+      
+
+ 

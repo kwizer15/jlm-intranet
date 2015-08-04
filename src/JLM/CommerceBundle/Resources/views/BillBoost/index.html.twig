@@ -1,0 +1,43 @@
+{% extends "JLMCommerceBundle:Bill:layout.html.twig" %}
+{% block content %}
+<h1>Liste des relances factures à faire</h1>
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>{{ 'bill.attribute.number'|trans }}</th>
+            <th>{{ 'bill.attribute.date'|trans }}</th>
+            <th>{{ 'bill.attribute.customer'|trans }}</th>
+            <th>{{ 'bill.attribute.business'|trans }}</th>
+            <th>{{ 'boost.lastBoost'|trans }}</th>
+            <th>{{ 'bill.attribute.totalPriceAti'|trans }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><span class="label label-{{ 'boost.label'|transchoice(entity.nb) }}">{{ 'boost.number'|transchoice(entity.nb) }}</span>
+            	<br><a href="{{ path('bill_show', { 'id': entity.boost.bill.id }) }}">{{ entity.boost.bill.number }}</a><br>
+            	<a href="{{ path('bill_printduplicate',{'id':entity.boost.bill.id}) }}" class="btn btn-info btn-small">{{ 'print'|icon(true) }} {{ 'bill.action.print.duplicate'|trans }}</a>
+            </td>
+            <td>{% if entity.boost.bill.creation %}{{ entity.boost.bill.creation|date('d/m/Y') }}{% endif %}</td>
+            <td>{{ entity.boost.bill.trusteeName }}</td>
+            <td>{{ entity.boost.bill.site | nl2br}}</td>
+            <td>
+            	{{ entity.lastBoost | date('d/m/Y') }}<br>
+            	{% if entity.nb < 3 %}<a href="{{ path('jlm_commerce_billboost_print',{'id':entity.boost.bill.id}) }}" class="btn btn-info btn-small">{{ 'print'|icon(true) }} {{ 'boost.action.print.courrier'|trans }}</a>
+            	{% else %}<a href="{{ path('jlm_commerce_billboost_email',{'id':entity.boost.bill.id}) }}" class="btn btn-info btn-small">{{ 'envelope'|icon(true) }} {{ 'boost.action.send.email'|trans }}</a>
+            	{% endif %}
+            </td>
+            <td>
+            	{{ entity.boost.bill.totalPrice | number_format(2,',',' ')}} €
+            	<br><a href="{{ path('bill_payed',{'id':entity.boost.bill.id}) }}" class="btn btn-success btn-small">{{ 'ok'|icon(true) }} {{ 'bill.action.mark.payed'|trans }}</a>
+            </td>
+            <td>
+            	{% if entity.nb < 3 %}<a href="{{ path('jlm_commerce_billboost_sended',{'id':entity.boost.bill.id}) }}" class="btn btn-primary btn-small">{{ 'ok'|icon(true) }} {{ 'boost.action.mark.sended'|trans }}</a>{% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

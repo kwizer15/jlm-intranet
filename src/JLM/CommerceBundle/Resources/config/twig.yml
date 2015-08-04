@@ -1,0 +1,12 @@
+services: 
+    jlm_commerce.twig.billcount_extension:
+        class: JLM\CommerceBundle\Twig\Extension\BillCountExtension
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: twig.extension }
+            
+    jlm_commerce.twig.quotecount_extension:
+        class: JLM\CommerceBundle\Twig\Extension\QuoteCountExtension
+        arguments: ["@doctrine.orm.entity_manager","@translator"]
+        tags:
+            - { name: twig.extension }

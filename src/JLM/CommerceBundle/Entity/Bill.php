@@ -134,18 +134,21 @@ class Bill extends CommercialPart implements BillInterface
 	/**
 	 * Date première relance
 	 * @var \DateTime $firstBoost
+	 * @deprecated Use BillBoost
 	 */
 	private $firstBoost;
 	
 	/**
 	 * Date deuxième relance
 	 * @var \DateTime $secondBoost
+	 * @deprecated Use BillBoost
 	 */
 	private $secondBoost;
 	
 	/**
 	 * Commentaire deuxième relance
 	 * @var string $secondBoostComment
+	 * @deprecated Use BillBoost
 	 */
 	private $secondBoostComment;
 
@@ -675,6 +678,7 @@ class Bill extends CommercialPart implements BillInterface
      *
      * @param \DateTime $firstBoost
      * @return self
+     * @deprecated Use BillBoost
      */
     public function setFirstBoost(\DateTime $firstBoost = null)
     {
@@ -686,7 +690,8 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get firstBoost
      *
-     * @return \DateTime 
+     * @return \DateTime
+     * @deprecated Use BillBoost
      */
     public function getFirstBoost()
     {
@@ -698,6 +703,7 @@ class Bill extends CommercialPart implements BillInterface
      *
      * @param \DateTime $secondBoost
      * @return self
+     * @deprecated Use BillBoost
      */
     public function setSecondBoost(\DateTime $secondBoost = null)
     {
@@ -709,7 +715,8 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get secondBoost
      *
-     * @return \DateTime 
+     * @return \DateTime
+     * @deprecated Use BillBoost
      */
     public function getSecondBoost()
     {
@@ -721,6 +728,7 @@ class Bill extends CommercialPart implements BillInterface
      *
      * @param string $secondBoostComment
      * @return self
+     * @deprecated Use BillBoost
      */
     public function setSecondBoostComment($secondBoostComment)
     {
@@ -732,7 +740,8 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get secondBoostComment
      *
-     * @return string 
+     * @return string
+     * @deprecated Use BillBoost
      */
     public function getSecondBoostComment()
     {

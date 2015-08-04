@@ -1,6 +1,5 @@
 JLM\CommerceBundle\Entity\BoostAbstract:
   type: mappedSuperclass
-  table: jlm_commerce_boost
   fields:
     date:
       column: boostDate

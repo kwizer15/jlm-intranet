@@ -39,8 +39,18 @@ class BillBoostSubscriber implements EventSubscriberInterface
 	{
 		return array(
 			JLMCommerceEvents::BILL_BOOST => 'persistBoostCourrier',
-			JLMCommerceEvents::BILL_BOOST_EMAIL => 'persistBoostEmail',
+			JLMCommerceEvents::BILL_SEND => 'persistSendCourrier',
+			JLMCommerceEvents::BILL_BOOST_SENDMAIL => 'persistBoostEmail',
 		);
+	}
+	
+	public function persistSendCourrier(BillEvent $event)
+	{
+		$isSend = $this->om->getRepository('JLMCommerceBundle:BillBoost')->isSend($event->getBill());
+		if (!$isSend);
+		{
+			$this->_peristsBoost($event, self::BOOSTMETHOD_COURRIER, 'Envoi');
+		}
 	}
 	
 	public function persistBoostCourrier(BillEvent $event)
@@ -53,13 +63,13 @@ class BillBoostSubscriber implements EventSubscriberInterface
 		$this->_peristsBoost($event, self::BOOSTMETHOD_EMAIL);
 	}
 	
-	protected function _peristsBoost(BillEvent $event, $methodId)
+	protected function _peristsBoost(BillEvent $event, $methodId, $comment = null)
 	{
 		$bill = $event->getBill();
 		$date = new \DateTime;
-		$method = $this->om->getRepository('JLMCommerce:BoostMethod')->find($methodId);
+		$method = $this->om->getRepository('JLMCommerceBundle:BoostMethod')->find($methodId);
 		$boost = new BillBoost();
-		$boost->setBill($bill)->setDate($date)->setMethod($method);
+		$boost->setBill($bill)->setDate($date)->setMethod($method)->setComment($comment);
 		
 		$this->om->persist($boost);
 		$this->om->flush();

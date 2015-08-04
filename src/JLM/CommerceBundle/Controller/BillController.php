@@ -169,10 +169,13 @@ class BillController extends ContainerAware
     	if ($entity->getState() != 1)
     	{
     		$entity->setState(1);
+    		$this->container->get('event_dispatcher')->dispatch(JLMCommerceEvents::BILL_SEND, new BillEvent($entity, $manager->getRequest()));
     	}
     	$em = $manager->getObjectManager();
     	$em->persist($entity);
     	$em->flush();
+    	
+    	
     	
     	return $manager->redirectReferer();
     }
@@ -265,8 +268,16 @@ class BillController extends ContainerAware
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
     	$manager->secure('ROLE_USER');
-    	
-    	return $manager->renderResponse('JLMCommerceBundle:Bill:toboost.html.twig', array('entities' => $manager->getRepository()->getToBoost()));
+    	$repo = $manager->getObjectManager()->getRepository('JLMCommerceBundle:BillBoost');
+
+    	return $manager->renderResponse('JLMCommerceBundle:BillBoost:toboost.html.twig', array(
+    			'entities' => array_merge(
+    					$repo->getBillsToBoost(3, 15),
+    					$repo->getBillsToBoost(2, 30),
+    					$repo->getBillsToBoost(1, 30)
+    					)
+    			//'entities' => $manager->getRepository()->getToBoost()
+    	));
     }
     
     /**
