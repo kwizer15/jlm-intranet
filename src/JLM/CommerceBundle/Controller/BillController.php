@@ -128,10 +128,7 @@ class BillController extends ContainerAware
     	$manager->secure('ROLE_USER');
     	$entity = $manager->getEntity($id);
         $filename = $entity->getNumber();
-        if ($duplicate)
-        {
-            $filename .= '-duplicata';
-        }
+        $filename = ($duplicate) ? $filename.'-duplicata' : $filename;
         $filename .= '.pdf';
         
         return $manager->renderPdf($filename, 'JLMCommerceBundle:Bill:print.pdf.php',array('entities'=>array($entity),'duplicate'=>$duplicate));
@@ -174,8 +171,6 @@ class BillController extends ContainerAware
     	$em = $manager->getObjectManager();
     	$em->persist($entity);
     	$em->flush();
-    	
-    	
     	
     	return $manager->redirectReferer();
     }
@@ -259,92 +254,6 @@ class BillController extends ContainerAware
     			'entities'=>$list,
     			'forms_externalbill' => $forms_externalBill,
     	));
-    }
-    
-    /**
-     * Display bills to boost
-     */
-    public function toboostAction()
-    {
-    	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
-    	$repo = $manager->getObjectManager()->getRepository('JLMCommerceBundle:BillBoost');
-
-    	return $manager->renderResponse('JLMCommerceBundle:BillBoost:toboost.html.twig', array(
-    			'entities' => array_merge(
-    					$repo->getBillsToBoost(3, 15),
-    					$repo->getBillsToBoost(2, 30),
-    					$repo->getBillsToBoost(1, 30)
-    					)
-    			//'entities' => $manager->getRepository()->getToBoost()
-    	));
-    }
-    
-    /**
-     * Email de relance facture
-     */
-    public function boostemailAction($id)
-    {
-    	// @todo Passer par un service de formPopulate et créer un controller unique dans CoreBundle
-    	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
-    	$entity = $manager->getEntity($id);
-    	$request = $manager->getRequest();
-    	$site = $entity->getSiteObject();
-    	$builder = ($site === null) ? new BillBoostMailBuilder($entity) : new BillBoostBusinessMailBuilder($site);
-    	$mail = MailFactory::create($builder);
-    	$editForm = $this->container->get('form.factory')->create(new \JLM\CoreBundle\Form\Type\MailType(), $mail);
-    	$editForm->handleRequest($request);
-    	if ($editForm->isValid())
-    	{
-    		$this->container->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
-    		$this->container->get('event_dispatcher')->dispatch(JLMCommerceEvents::BILL_BOOST_SENDMAIL, new BillEvent($entity, $request));
-    		
-    		return $manager->redirectReferer();
-    	}
-    
-    	return $manager->renderResponse('JLMCommerceBundle:Bill:boostemail.html.twig',array(
-    			'entity' => $entity,
-    			'form' => $editForm->createView(),
-    	));
-    }
-    
-    /**
-     * Imprimer le courrier de relance 
-     */
-    public function printboostAction($id)
-    {
-    	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
-    	$entity = $manager->getEntity($id);
-    	
-    	return $manager->renderPdf($entity->getNumber(), 'JLMCommerceBundle:Bill:printboost.pdf.php',array('entities'=>array($entity)));
-    }
-    
-    /**
-     * Noter relance effectuée
-     */
-    public function boostokAction($id)
-    {
-    	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
-    	$entity = $manager->getEntity($id);
-        $date = new \DateTime;
-    	if ($entity->getFirstBoost() === null)
-    	{
-    		$entity->setFirstBoost($date);
-    	}
-    	else
-    	{
-    		$entity->setSecondBoost($date);
-    	}
-    	$em = $manager->getObjectManager();
-    	$em->persist($entity);
-    	$em->flush();
-    	
-    	$this->container->get('event_dispatcher')->dispatch(JLMCommerceEvents::BILL_BOOST, new BillEvent($entity, $this->getRequest()));
-    	
-    	return $manager->redirect('bill_toboost');
     }
     
     /**
