@@ -31,7 +31,7 @@ services:
   
   jlm_daily.bill_subscriber:
     class: JLM\DailyBundle\EventListener\BillSubscriber
-    arguments: ["@doctrine.orm.entity_manager"]
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
     tags:
       - { name: kernel.event_subscriber }
 

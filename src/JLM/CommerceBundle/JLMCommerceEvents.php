@@ -33,5 +33,6 @@ final class JLMCommerceEvents
 	
 	const BILL_FORM_POPULATE = "jlm_commerce.bill_form_populate";
 	const BILL_AFTER_PERSIST = "jlm_commerce.bill_after_persist";
+	const BILL_POSTPERSIST = "jlm_commerce.bill_postpersist";
 	const BILL_BOOST_SENDMAIL = "jlm_commerce.bill_boost_sendmail";
 }

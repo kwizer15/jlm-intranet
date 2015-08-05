@@ -9,21 +9,26 @@ use Doctrine\Common\Persistence\ObjectManager;
 use JLM\TransmitterBundle\Builder\AttributionBillBuilder;
 use JLM\CoreBundle\Event\FormPopulatingEvent;
 use JLM\CoreBundle\Event\RequestEvent;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use JLM\CoreBundle\Event\DoctrineEvent;
 
 class BillSubscriber implements EventSubscriberInterface
 {	
 	private $om;
 	
-	public function __construct(ObjectManager $om)
+	private $request;
+	
+	public function __construct(ObjectManager $om, ContainerInterface $container)
 	{
 		$this->om = $om;
+		$this->request = $container->get('request');
 	}
 	
 	public static function getSubscribedEvents()
 	{
 		return array(
 			JLMCommerceEvents::BILL_FORM_POPULATE => 'populateFromAttribution',
-			JLMCommerceEvents::BILL_AFTER_PERSIST => 'setBillToAttribution',
+			JLMCommerceEvents::BILL_POSTPERSIST => 'setBillToAttribution',
 		);
 	}
 	
@@ -40,19 +45,20 @@ class BillSubscriber implements EventSubscriberInterface
 		}
 	}
 	
-	public function setBillToAttribution(BillEvent $event)
+	public function setBillToAttribution(DoctrineEvent $event)
 	{
 		if (null !== $entity = $this->getAttribution($event))
 		{
-			$entity->setBill($event->getBill());
-			$this->om->persist($entity);
-			$this->om->flush();
+			$om = $event->getObjectManager();
+			$entity->setBill($event->getEntity());
+			$om->persist($entity);
+			$om->flush();
 		}
 	}
 	
 	private function getAttribution(RequestEvent $event)
 	{
-		$id = $event->getParam('jlm_commerce_bill', array('attribution'=>$event->getParam('attribution')));
+		$id = $this->request->get('jlm_commerce_bill', array('attribution'=>$this->request->get('attribution')));
 		
 		return (isset($id['attribution']) && $id['attribution'] !== null) ? $this->om->getRepository('JLMTransmitterBundle:Attribution')->find($id['attribution']) : null;
 	}

@@ -14,12 +14,22 @@ namespace JLM\CommerceBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use JLM\CommerceBundle\EventListener\BillTypeSubscriber;
+use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class BillType extends AbstractType
 {
+	private $om;
+	
+	public function __construct(ObjectManager $om)
+	{
+		$this->om = $om;
+	}
+
+	
     /**
      * {@inheritdoc}
      */
@@ -51,6 +61,8 @@ class BillType extends AbstractType
             
             ->add('vat','percent',array('precision'=>1,'label'=>'TVA applicable','attr'=>array('class'=>'input-mini')))
             ->add('vatTransmitter','hidden')
+            
+            ->addEventSubscriber(new BillTypeSubscriber($this->om))
          ;
     }
 

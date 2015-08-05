@@ -20,6 +20,7 @@ use JLM\CommerceBundle\Builder\Email\BillBoostMailBuilder;
 use JLM\CoreBundle\Factory\MailFactory;
 use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
 use JLM\CommerceBundle\Builder\Email\BillBoostBusinessMailBuilder;
+use Symfony\Component\HttpFoundation\Request;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -65,15 +66,16 @@ class BillController extends ContainerAware
     /**
      * Displays a form to create a new Bill entity.
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
     	$manager->secure('ROLE_USER');
     	$form = $manager->createForm('new');
-		if ($manager->getHandler($form)->process())
+    	$form->handleRequest($request);
+		if ($form->isValid())
 		{
 			$entity = $form->getData();
-			$manager->dispatch(JLMCommerceEvents::BILL_AFTER_PERSIST, new BillEvent($entity, $manager->getRequest()));
+//			$manager->dispatch(JLMCommerceEvents::BILL_AFTER_PERSIST, new BillEvent($entity, $manager->getRequest()));
 
 			return $manager->redirect('bill_show', array('id' => $form->getData()->getId()));
 		}

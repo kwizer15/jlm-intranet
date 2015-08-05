@@ -8,11 +8,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 use JLM\CommerceBundle\Builder\VariantBillBuilder;
 use JLM\CoreBundle\Event\FormPopulatingEvent;
 use JLM\CommerceBundle\Event\BillEvent;
+use JLM\CoreBundle\Event\DoctrineEvent;
 
 class BillSubscriber implements EventSubscriberInterface
 {	
 	private $om;
-	private $form;
 	
 	public function __construct(ObjectManager $om)
 	{

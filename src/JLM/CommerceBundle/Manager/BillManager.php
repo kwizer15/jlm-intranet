@@ -32,7 +32,7 @@ class BillManager extends Manager
 					'route' => 'bill_create',
 					'params' => array(),
 					'label' => 'Créer',
-					'type'  => new BillType(),
+					'type'  => 'jlm_commerce_bill',
 					'entity' => null,
 				);
 			case 'edit' :
@@ -41,7 +41,7 @@ class BillManager extends Manager
 					'route' => 'bill_update',
 					'params' => array('id' => $options['entity']->getId()),
 					'label' => 'Modifier',
-					'type'  => new BillType(),
+					'type'  => 'jlm_commerce_bill',
 					'entity' => $options['entity']
 				);
 		}

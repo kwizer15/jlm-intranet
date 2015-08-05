@@ -22,6 +22,10 @@ use JLM\DailyBundle\Builder\WorkBillBuilder;
 use JLM\DailyBundle\Builder\InterventionBillBuilder;
 use JLM\DailyBundle\Entity\Work;	// @todo Change to WorkInterface
 
+use JLM\CoreBundle\Event\DoctrineEvent;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -29,10 +33,12 @@ class BillSubscriber implements EventSubscriberInterface
 {	
 	private $om;
 	private $form;
+	private $request;
 	
-	public function __construct(ObjectManager $om)
+	public function __construct(ObjectManager $om, ContainerInterface $container)
 	{
 		$this->om = $om;
+		$this->request = $container->get('request');
 	}
 	
 	public static function getSubscribedEvents()
@@ -55,19 +61,20 @@ class BillSubscriber implements EventSubscriberInterface
 		}
 	}
 	
-	public function setBillToIntervention(BillEvent $event)
+	public function setBillToIntervention(DoctrineEvent $event)
 	{
-		if (null !== $entity = $this->getIntervention($event))
+		if (null !== $entity = $this->getIntervention())
 		{
-			$entity->setBill($event->getBill());
-			$this->om->persist($entity);
-			$this->om->flush();
+			$om = $event->getObjectManager();
+			$entity->setBill($event->getEntity());
+			$om->persist($entity);
+			$om->flush();
 		}
 	}
 	
-	private function getIntervention(RequestEvent $event)
+	private function getIntervention()
 	{
-		$id = $event->getParam('jlm_commerce_bill', array('intervention'=>$event->getParam('intervention')));
+		$id = $this->request->get('jlm_commerce_bill', array('intervention'=>$this->request->get('intervention')));
 	
 		return (isset($id['intervention']) && $id['intervention'] !== null) ? $this->om->getRepository('JLMDailyBundle:Intervention')->find($id['intervention']) : null;
 	}
