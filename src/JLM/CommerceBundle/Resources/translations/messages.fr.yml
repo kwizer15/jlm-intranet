@@ -1,0 +1,56 @@
+jlm_commerce_bill:
+  labels:
+    creation: Date de création
+    prelabel: Libellé de facturation
+    trusteeName: Syndic
+    trusteeAddress: Adresse de facturation
+    accountNumber: Numéro de compte
+    reference: Références
+    site: Affaire
+    details: Détails
+    discount: Remise
+    maturity: Échéance
+    property: Clause de propriété
+    earlyPayment: Escompte
+    penalty: Penalités
+    intro: Introduction
+    vat: TVA applicable
+    totalPriceBeforeDiscount: Total HT avant remise
+    discountAmount: Montant remisé
+    totalPrice: Total HT
+    totalVat: Total TVA
+    totalAti: Total TTC
+    addon.maturity: jour(s)
+    
+
+jlm_commerce_bill_line:
+  labels:
+    reference: Référence
+    designation: Désignation
+    quantity: Qté
+    unitPrice: PU HT
+    discount: Remise
+    vat: TVA
+    totalPrice: PT HT
+
+quote:
+  labels:
+    creation: Date de création
+    trusteeName: Syndic
+    trusteeAddress: Adresse de facturation
+    contactCp: A l'attention de
+    followerCp: Suivi par
+    doorCp: Affaire
+    vat: TVA applicable
+    description: Description
+    
+quote_variant:
+  labels:
+    creation: Date de création
+    discount: Remise
+    paymentRules: Réglement
+    deliveryRules: Délai
+    intro: Introduction
+    
+
+    

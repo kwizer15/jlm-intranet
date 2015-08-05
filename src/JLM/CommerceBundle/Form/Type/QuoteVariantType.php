@@ -27,11 +27,11 @@ class QuoteVariantType extends AbstractType
 	{
 		$builder
 			->add('quote','quote_hidden')
-			->add('creation','datepicker',array('label'=>'Date de création'))
-			->add('discount','percent',array('label'=>'Remise','attr'=>array('class'=>'input-mini')))
-			->add('paymentRules',null,array('label'=>'Réglement','attr'=>array('class'=>'input-xxlarge')))
-			->add('deliveryRules',null,array('label'=>'Délai','attr'=>array('class'=>'input-xxlarge')))
-			->add('intro',null,array('label'=>'Introduction','attr'=>array('class'=>'span12','placeholder'=>'Suite à ...')))
+			->add('creation','datepicker')
+			->add('discount','percent',array('attr'=>array('class'=>'input-mini')))
+			->add('paymentRules',null,array('attr'=>array('class'=>'input-xxlarge')))
+			->add('deliveryRules',null,array('attr'=>array('class'=>'input-xxlarge')))
+			->add('intro',null,array('attr'=>array('class'=>'span12','placeholder'=>'Suite à ...')))
 			->add('lines','collection',array('prototype'=>true,'allow_add'=>true,'allow_delete'=>true,'type'=>'quote_line'))
 			->add('vat', 'hidden', array('mapped' => false))
 			->add('vatTransmitter', 'hidden', array('mapped' => false))

@@ -2,6 +2,7 @@
 
 {% block form_label %}
 {% spaceless %}
+	{% import _self as macros %}
 	{% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' control-label')|trim}) %}
     {% if not compound %}
         {% set label_attr = label_attr|merge({'for': id}) %}
@@ -9,12 +10,32 @@
     {% if required %}
         {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
     {% endif %}
-    {% if label is empty %}
-        {% set label = name|humanize %}
+	{% if label is empty %}
+        {% set label = macros.form_parent_name(form) %}
     {% endif %}
     <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
 {% endspaceless %}
 {% endblock form_label %}
+
+{% macro form_parent_name(form, prefix) %}
+{% spaceless %}
+
+    {% import _self as macros %}
+
+    {% set prefix = prefix|default(false) %}
+
+    {% if form.parent is empty %}
+        {{ form.vars.name }}.labels
+    {% else %}
+        {% if form.vars.compound and not prefix %}
+            {{ macros.form_parent_name(form.parent) }}.{{ form.vars.name }}.label
+        {% else %}
+            {{ macros.form_parent_name(form.parent, true) }}.{{ form.vars.name }}
+        {% endif %}
+    {% endif %}
+
+{% endspaceless %}
+{% endmacro %}
 
 {% block form_widget_compound %}
 {% spaceless %}
