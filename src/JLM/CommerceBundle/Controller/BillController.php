@@ -21,6 +21,7 @@ use JLM\CoreBundle\Factory\MailFactory;
 use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
 use JLM\CommerceBundle\Builder\Email\BillBoostBusinessMailBuilder;
 use Symfony\Component\HttpFoundation\Request;
+use JLM\CommerceBundle\Entity\Bill;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -72,71 +73,51 @@ class BillController extends ContainerAware
     	$manager->secure('ROLE_USER');
     	$form = $manager->createForm('new');
     	$form->handleRequest($request);
-		if ($form->isValid())
-		{
-			$entity = $form->getData();
-//			$manager->dispatch(JLMCommerceEvents::BILL_AFTER_PERSIST, new BillEvent($entity, $manager->getRequest()));
 
-			return $manager->redirect('bill_show', array('id' => $form->getData()->getId()));
-		}
-		
-        return $manager->renderResponse('JLMCommerceBundle:Bill:new.html.twig', array(
-            'form'   => $form->createView()
-        ));
+        return ($form->isValid())
+        	? $manager->redirect('bill_show', array('id' => $form->getData()->getId()))
+        	: $manager->renderResponse('JLMCommerceBundle:Bill:new.html.twig', array(
+            	'form'   => $form->createView()
+        	));
     }
 
     /**
      * Displays a form to edit an existing Bill entity.
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
     	$manager->secure('ROLE_USER');
     	$entity = $manager->getEntity($id);
     	$manager->assertState($entity, array(0));
         $editForm = $manager->createForm('edit', array('entity'=> $entity));
+        $editForm->handleRequest($request);
         
-        if ($manager->getHandler($editForm, $entity)->process())
-        {
-        	return $manager->redirect('bill_show', array('id' => $entity->getId()));
-        }
-        
-        return $manager->renderResponse('JLMCommerceBundle:Bill:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        ));
-
+        return ($editForm->isValid())
+        	? $manager->redirect('bill_show', array('id' => $entity->getId()))
+        	: $manager->renderResponse('JLMCommerceBundle:Bill:edit.html.twig', array(
+	            'entity'      => $entity,
+	            'edit_form'   => $editForm->createView(),
+	        ));
     }
 
     /**
      * Imprimer la facture
      */
-    public function printAction($id)
+    public function printAction($id, $duplicate = 'normal')
     {
-        return $this->printer($id);
-    }
-    
-    /**
-     * Imprimer un duplicata de facture
-     */
-    public function printduplicateAction($id)
-    {
-    	return $this->printer($id, true);
-    }
-    
-    private function printer($id, $duplicate = false)
-    {
+    	$isDuplicate = $duplicate == 'duplicata';
     	$manager = $this->container->get('jlm_commerce.bill_manager');
     	$manager->secure('ROLE_USER');
     	$entity = $manager->getEntity($id);
         $filename = $entity->getNumber();
-        if ($duplicate)
+        if ($isDuplicate)
         {
             $filename .= '-duplicata';
         }
         $filename .= '.pdf';
         
-        return $manager->renderPdf($filename, 'JLMCommerceBundle:Bill:print.pdf.php',array('entities'=>array($entity),'duplicate'=>$duplicate));
+        return $manager->renderPdf($filename, 'JLMCommerceBundle:Bill:print.pdf.php', array('entities' => array($entity),'duplicate' => $isDuplicate));
     }
     
     /**

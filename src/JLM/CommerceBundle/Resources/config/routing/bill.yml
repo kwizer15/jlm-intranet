@@ -35,15 +35,23 @@ bill_update:
     methods: [PUT,POST]
     
 bill_print:
-    path:   /{id}/print
-    defaults:  { _controller: "JLMCommerceBundle:Bill:print" }
+    path:   /{id}/print/{duplicate}
+    defaults:
+      _controller: "JLMCommerceBundle:Bill:print"
+      duplicate: normal
     requirements:
-        id: \d+
+      id: \d+
+      duplicate: normal|duplicata
     methods: [GET]
     
 bill_printduplicate:
-    path:   /{id}/printduplicate
-    defaults:  { _controller: "JLMCommerceBundle:Bill:printduplicate" }
+    path:   /{id}/printduplicate/{duplicate}
+    defaults:
+      _controller: "JLMCommerceBundle:Bill:print"
+      duplicate: duplicata
+    requirements:
+      id: \d+
+      duplicate: normal|duplicata
     methods: [GET]
     
 bill_printlist:
