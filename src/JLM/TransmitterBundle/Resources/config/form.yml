@@ -1,0 +1,14 @@
+services:
+  jlm_transmitter.type.ask_hidden:
+    class: JLM\TransmitterBundle\Form\Type\AskHiddenType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: transmitter_ask_hidden }
+      
+  jlm_transmitter.type.attribution_hidden:
+    class: JLM\TransmitterBundle\Form\Type\AttributionHiddenType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: transmitter_attribution_hidden }
+    
+  

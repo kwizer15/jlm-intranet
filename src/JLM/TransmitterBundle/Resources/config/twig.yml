@@ -1,0 +1,13 @@
+services:
+  jlm_transmitter.twig.attributioncount_extension:
+    class: JLM\TransmitterBundle\Twig\Extension\AttributionCountExtension
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: twig.extension }
+      
+  jlm_transmitter.twig.askcount_extension:
+    class: JLM\TransmitterBundle\Twig\Extension\AskCountExtension
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: twig.extension }
+  

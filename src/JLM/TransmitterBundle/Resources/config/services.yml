@@ -1,0 +1,12 @@
+services:
+  jlm_transmitter.bill_subscriber:
+    class: JLM\TransmitterBundle\EventListener\BillSubscriber
+    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+    tags:
+      - { name: kernel.event_subscriber }
+      
+  jlm_transmitter.ask_subscriber:
+    class: JLM\TransmitterBundle\EventListener\AskSubscriber
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: kernel.event_subscriber }
