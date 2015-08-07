@@ -53,15 +53,20 @@ class BillSubscriber implements EventSubscriberInterface
 		$this->request = $container->get('request');
 	}
 	
+	/**
+	 * @return array
+	 */
 	public static function getSubscribedEvents()
 	{
 		return array(
-			//JLMCommerceEvents::BILL_FORM_POPULATE => 'populateFromIntervention',
-				JLMCommerceEvents::BILLFORM_PRE_SET_DATA => 'onPreSetData',
-			JLMCommerceEvents::BILL_AFTER_PERSIST => 'setBillToIntervention',
+			JLMCommerceEvents::BILLFORM_PRE_SET_DATA => 'onPreSetData',
+			JLMCommerceEvents::BILL_POSTPERSIST => 'setBillToIntervention',
 		);
 	}
 	
+	/**
+	 * @param FormEvent $event
+	 */
 	public function onPreSetData(FormEvent $event)
 	{
 		if (null !== $interv = $this->getIntervention())
@@ -75,22 +80,8 @@ class BillSubscriber implements EventSubscriberInterface
 	}
 	
 	/**
-	 * 
-	 * @param FormPopulatingEvent $event
-	 * @deprecated
+	 * @param DoctrineEvent $event
 	 */
-	public function populateFromIntervention(FormPopulatingEvent $event)
-	{
-		if (null !== $interv = $this->getIntervention($event))
-		{
-			$builder = ($interv instanceof Work) ? (($interv->getQuote() !== null) ? new WorkBillBuilder($interv) : null) : null;
-        	$builder = ($builder === null) ? new InterventionBillBuilder($interv) : $builder;
-        	$entity = BillFactory::create($builder);
-        	$event->getForm()->setData($entity);
-			$event->getForm()->add('intervention', 'hidden', array('data' => $interv->getId(), 'mapped' => false));
-		}
-	}
-	
 	public function setBillToIntervention(DoctrineEvent $event)
 	{
 		if (null !== $entity = $this->getIntervention())
@@ -102,6 +93,9 @@ class BillSubscriber implements EventSubscriberInterface
 		}
 	}
 	
+	/**
+	 * @return NULL | Intervention
+	 */
 	private function getIntervention()
 	{
 		$id = $this->request->get('jlm_commerce_bill', array('intervention'=>$this->request->get('intervention')));
