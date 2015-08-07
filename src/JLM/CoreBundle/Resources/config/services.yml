@@ -32,7 +32,13 @@ services:
         class: JLM\CoreBundle\Form\Type\AttachementType
         tags:
             - { name: form.type, alias: jlm_core_attachement }
-            
+    
+    jlm_core.type.mail:
+        class: JLM\CoreBundle\Form\Type\MailType
+        arguments: ["@mailer", "@event_dispatcher"]
+        tags:
+            - { name: form.type, alias: jlm_core_mail }
+    
     jlm_core.twig.search_extension:
         class: JLM\CoreBundle\Twig\Extension\SearchExtension
         arguments: ["@service_container"]

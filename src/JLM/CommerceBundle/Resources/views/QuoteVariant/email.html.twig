@@ -1,7 +1,7 @@
 {% extends "JLMCommerceBundle:Quote:layout.html.twig" %}
 
 {% block content %}
-<h1>Envoyer un e-mail</h1>
+<h1>Envoyer la confirmation d'accord e-mail</h1>
 <form action="{{ path('variant_email',{'id': entity.id}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
     <fieldset>
       {{ form_widget(form) }}

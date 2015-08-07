@@ -57,17 +57,10 @@ quote_jacket:
     
 quote_mail:
     path: /{id}/mail
-    defaults: { _controller: "JLMCommerceBundle:Quote:mail" }
+    defaults: { _controller: "JLMCommerceBundle:Quote:sendByMail" }
     requirements:
         id: \d+
-    methods: [GET]
-    
-quote_sendmail:
-    path: /{id}/sendmail
-    defaults: { _controller: "JLMCommerceBundle:Quote:sendmail" }
-    requirements:
-        id: \d+
-    methods: [POST]
+    methods: [GET|POST]
     
 jlm_commerce_quote_variant:
     resource: "@JLMCommerceBundle/Resources/config/routing/quote_variant.yml"

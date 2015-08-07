@@ -34,6 +34,18 @@ services:
         tags:
             - { name: form.type, alias: jlm_commerce_bill }
             
+    jlm_commerce.type.quote:
+        class: JLM\CommerceBundle\Form\Type\QuoteType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: quote }
+            
+    jlm_commerce.type.quote_variant:
+        class: JLM\CommerceBundle\Form\Type\QuoteVariantType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: quote_variant }
+            
     jlm_commerce.type.bill_line:
         class: JLM\CommerceBundle\Form\Type\BillLineType
         tags:
@@ -79,6 +91,7 @@ services:
             
     jlm_commerce.event_subscriber:
         class: JLM\CommerceBundle\EventListener\EventSubscriber
+        arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_subscriber }
     

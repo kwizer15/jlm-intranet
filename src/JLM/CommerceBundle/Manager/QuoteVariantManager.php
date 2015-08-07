@@ -36,7 +36,7 @@ class QuoteVariantManager extends Manager
 					'route' => 'variant_create',
 					'params' => array(),
 					'label' => 'Créer',
-					'type'  => new QuoteVariantType(),
+					'type'  => 'quote_variant',
 					'entity' => null,
 				);
 			case 'edit' :
@@ -45,7 +45,7 @@ class QuoteVariantManager extends Manager
 					'route' => 'variant_update',
 					'params' => array('id' => $options['entity']->getId()),
 					'label' => 'Modifier',
-					'type'  => new QuoteVariantType(),
+					'type'  => 'quote_variant',
 					'entity' => $options['entity']
 				);
 		}

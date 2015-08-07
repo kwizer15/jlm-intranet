@@ -24,9 +24,8 @@ class FormEntitySubscriber implements EventSubscriberInterface
 	
 	public function onPostSubmit(FormEvent $event)
 	{
-		//var_dump($event->getData()); exit;
-		$bill = $event->getData();
-		$this->om->persist($bill);
+		$entity = $event->getData();
+		$this->om->persist($entity);
 		$this->om->flush();
 	}
 }

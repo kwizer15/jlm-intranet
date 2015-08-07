@@ -362,6 +362,53 @@ class Quote extends CommercialPart implements QuoteInterface
     {
     	return $this->variants;
     }
+    
+    public function getAdministratorContacts()
+    {
+    	return $this->_createContactFromEmail($this->getDoor()->getAdministratorEmails());
+    }
+    
+    public function getManagerContacts()
+    {
+    	return $this->_createContactFromEmail($this->getDoor()->getManagerEmails());
+    }
+    
+    private function _createContactFromEmail($emails)
+    {
+    	$c = array();
+    	if ($emails === null)
+    	{
+    		return $c;
+    	}
+    
+    	foreach ($emails as $email)
+    	{
+    		$temp = new Company();
+    		$temp->setEmail($email);
+    		$c[] = $temp;
+    	}
+    
+    	return $c;
+    }
+    
+    /**
+     * Get sendable variant
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getSendableVariants()
+    {
+    	$sendables = array();
+    	foreach ($this->variants as $variant)
+    	{
+    		if ($variant->getState() > 0)
+    		{
+    			$sendables[] = $variant;
+    		}
+    	}
+    	
+    	return $sendables;
+    }
 
     /**
      * Set ask

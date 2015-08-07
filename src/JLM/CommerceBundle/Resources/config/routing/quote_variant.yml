@@ -25,13 +25,8 @@ variant_ready:
     
 variant_mail:
     path: /{id}/mail
-    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:mail" }
-    methods: [GET]
-    
-variant_sendmail:
-    path: /{id}/sendmail
-    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:sendmail" }
-    methods: [POST]
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:sendByMail" }
+    methods: [GET|POST]
     
 variant_print:
     path: /{id}/print

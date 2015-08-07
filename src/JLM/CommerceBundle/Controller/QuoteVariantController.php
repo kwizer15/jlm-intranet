@@ -31,6 +31,7 @@ use JLM\CoreBundle\Factory\MailFactory;
 use JLM\CommerceBundle\Builder\Email\QuoteVariantConfirmGivenMailBuilder;
 use JLM\ModelBundle\JLMModelEvents;
 use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
+use JLM\CommerceBundle\Builder\Email\QuoteVariantSendMailBuilder;
 
 /**
  * QuoteVariant controller.
@@ -42,17 +43,15 @@ class QuoteVariantController extends Controller
 	/**
      * Displays a form to create a new Variant entity.
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
     	$manager = $this->container->get('jlm_commerce.quotevariant_manager');
     	$manager->secure('ROLE_USER');
-        $form   = $manager->createForm('new');
-        if ($manager->getHandler($form)->process())
-    	{
-    		return $manager->redirect('quote_show', array('id' => $form->get('quote')->getData()->getId()));
-    	}
-    	
-    	return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:new.html.twig', array(
+        $form = $manager->createForm('new');
+        $form->handleRequest($request);
+    	return ($form->isValid())
+    		? $manager->redirect('quote_show', array('id' => $form->get('quote')->getData()->getId()))
+	    	: $manager->renderResponse('JLMCommerceBundle:QuoteVariant:new.html.twig', array(
     			'quote' => $form->get('quote')->getData(),
     			'entity' => $form->getData(),
     			'form'   => $form->createView()
@@ -62,23 +61,21 @@ class QuoteVariantController extends Controller
 	/**
 	 * Displays a form to edit an existing QuoteVariant entity.
 	 */
-	public function editAction($id)
+	public function editAction(Request $request, $id)
 	{
 		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
 		$manager->secure('ROLE_USER');
 		$entity = $manager->getEntity($id);
 		$manager->assertState($entity, array(QuoteVariant::STATE_INSEIZURE));
 		$form = $manager->createForm('edit', array('entity' => $entity));
-		if ($manager->getHandler($form)->process())
-		{
-			return $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()));
-		}
-		
-		return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:edit.html.twig',array(
-				'quote' => $form->get('quote')->getData(),
-				'entity'      => $entity,
-				'form'   => $form->createView(),
-		));
+		$form->handleRequest($request);
+		return ($form->isValid())
+			? $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()))
+			: $manager->renderResponse('JLMCommerceBundle:QuoteVariant:edit.html.twig',array(
+					'quote' => $form->get('quote')->getData(),
+					'entity'      => $entity,
+					'form'   => $form->createView(),
+				));
 	}
 	
 	/**
@@ -162,114 +159,50 @@ class QuoteVariantController extends Controller
 	/**
 	 * Email de confirmation d'accord de devis
 	 */
-	public function emailAction($id)
+	public function emailAction(Request $request, $id)
 	{
 		// @todo Passer par un service de formPopulate et créer un controller unique dans CoreBundle
 		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
 		$manager->secure('ROLE_USER');
 		$entity = $manager->getEntity($id);
-		$request = $manager->getRequest();
-		$mail = MailFactory::create(new QuoteVariantConfirmGivenMailBuilder($entity));
-		$editForm = $this->createForm(new \JLM\CoreBundle\Form\Type\MailType(), $mail);
+		$editForm = $this->createForm('jlm_core_mail', MailFactory::create(new QuoteVariantConfirmGivenMailBuilder($entity)));
 		$editForm->handleRequest($request);
-		if ($editForm->isValid())
-		{
-			$this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
-			//$this->get('event_dispatcher')->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request));
-			return $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())));
-		}
-		
-		return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:email.html.twig',array(
+
+		return ($editForm->isValid())
+				? $this->redirect($this->generateUrl('quote_show', array('id' => $entity->getQuote()->getId())))
+				: $manager->renderResponse('JLMCommerceBundle:QuoteVariant:email.html.twig',array(
 				'entity' => $entity,
 				'form' => $editForm->createView(),
-		));
+			));
+		// $this->get('event_dispatcher')->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request));
 	}
-	
-	/**
-	 * Mail
-	 * @Template()
-	 */
-	public function mailAction($id)
-	{
-		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
-		$manager->secure('ROLE_USER');
-		$entity = $manager->getEntity($id);
-		$manager->assertState($entity, array(
-				QuoteVariant::STATE_READY,
-				QuoteVariant::STATE_PRINTED,
-				QuoteVariant::STATE_SENDED,
-				QuoteVariant::STATE_RECEIPT,
-				QuoteVariant::STATE_GIVEN
-		));
-		$mail = new Mail();
-		$mail->setSubject('Devis n°'.$entity->getNumber());
-		$mail->setFrom('commerce@jlm-entreprise.fr');
-		$mail->setBody($this->renderView('JLMCommerceBundle:QuoteVariant:email.txt.twig', array('intro' => $entity->getIntro(),'door' => $entity->getQuote()->getDoorCp())));
-		$mail->setSignature($this->renderView('JLMCommerceBundle:QuoteVariant:emailsignature.txt.twig', array('name' => $entity->getQuote()->getFollowerCp())));
-		if ($entity->getQuote()->getContact())
-		{
-			if ($entity->getQuote()->getContact()->getPerson())
-			{
-				if ($entity->getQuote()->getContact()->getPerson()->getEmail())
-				{
-					$mail->setTo($entity->getQuote()->getContact()->getPerson()->getEmail());
-				}
-			}
-		}
-		$form   = $this->createForm(new MailType(), $mail);
-	
-		return array(
-				'entity' => $entity,
-				'form'   => $form->createView()
-		);
-	}
-	
+
 	/**
 	 * Send by mail a QuoteVariant entity.
 	 */
-	public function sendmailAction($id)
+	public function sendByMailAction(Request $request, $id)
 	{
 		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
 		$manager->secure('ROLE_USER');
-		$request = $manager->getRequest();
 		$entity = $manager->getEntity($id);
 		if ($entity->getState() < QuoteVariant::STATE_READY)
 		{
 			return $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()));
 		}
 		
-		// Message
-		$mail = new Mail;
-		$form = $this->createForm(new MailType(), $mail);
+		$form = $this->createForm('jlm_core_mail', MailFactory::create(new QuoteVariantSendMailBuilder($entity)));
 		$form->handleRequest($request);
-		 
 		if ($form->isValid())
-		{
-			$mail->setBcc('commerce@jlm-entreprise.fr');
-			
-			$message = $mail->getSwift();
-			$message->setReadReceiptTo('commerce@jlm-entreprise.fr');
-			$message->attach(\Swift_Attachment::newInstance(
-					$this->render('JLMCommerceBundle:Quote:quote.pdf.php',array('entities'=>array($entity))),
-					$entity->getNumber().'.pdf','application/pdf'
-			))
-			;
-			$em = $this->getDoctrine()->getManager();
-			if ($entity->getQuote()->getVat() == $entity->getQuote()->getVatTransmitter())
-			{
-				$message->attach(\Swift_Attachment::fromPath(
-						$this->get('kernel')->getRootDir().'/../web/bundles/jlmcommerce/pdf/attestation.pdf'
-				))
-				;
-			} 
-			$this->get('mailer')->send($message);
-			$entity->setState(QuoteVariant::STATE_SENDED);
+		{			
 			$manager->dispatch(JLMCommerceEvents::QUOTEVARIANT_SENDED, new QuoteVariantEvent($entity, $request));
-			$em->persist($entity);
-			$em->flush();
+				
+			return $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()));
 		}
 		
-		return $manager->redirect('quote_show', array('id' => $entity->getQuote()->getId()));
+		return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:mail.html.twig',array(
+				'entity' => $entity,
+				'form' => $form->createView(),
+			));
 	}
 	
 	/**

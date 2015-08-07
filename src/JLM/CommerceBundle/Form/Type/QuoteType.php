@@ -14,12 +14,23 @@ namespace JLM\CommerceBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use JLM\CoreBundle\EventListener\FormEntitySubscriber;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class QuoteType extends AbstractType
 {
+	private $om;
+	
+	/**
+	 * @param ObjectManager $om
+	 */
+	public function __construct(ObjectManager $om)
+	{
+		$this->om = $om;
+	}
+	
     /**
      * {@inheritdoc}
      */
@@ -40,6 +51,7 @@ class QuoteType extends AbstractType
             ->add('description', 'textarea',array('required' => false))
             ->add('vatTransmitter','hidden')
             ->add('ask','askquote_hidden')
+            ->addEventSubscriber(new FormEntitySubscriber($this->om))
          ;
     }
 

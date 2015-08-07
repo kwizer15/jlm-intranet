@@ -55,7 +55,7 @@
 {% endspaceless %}
 {% endblock %}
 
-{% block _jlm_core_mail_preattachements_widget %}
+{% block _jlm_core_mail_preAttachements_widget %}
 {% spaceless %}
     {% if prototype is defined %}
         {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
@@ -77,5 +77,5 @@
 {% endblock %}
 
 {% block jlm_core_preattachement_row %}
-<li><div class="input-prepend"><span class="add-on">{{ 'file'|icon }}</span><span class="input-xlarge uneditable-input">{{ form.vars.data.pathname }}</span></div></li>
+<li><div class="input-prepend"><span class="add-on">{{ 'file'|icon }}</span><span class="input-xlarge uneditable-input">{{ form.vars.data.filename }}</span></div></li>
 {% endblock %}

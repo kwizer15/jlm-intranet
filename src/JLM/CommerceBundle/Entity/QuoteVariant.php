@@ -473,30 +473,12 @@ class QuoteVariant implements QuoteVariantInterface
     
 	public function getAdministratorContacts()
     {
-    	return $this->_createContactFromEmail($this->getDoor()->getAdministratorEmails());
+    	return $this->getQuote()->getAdministratorContacts();
     }
     
     public function getManagerContacts()
     {
-    	return $this->_createContactFromEmail($this->getDoor()->getManagerEmails());
-    }
-    
-    private function _createContactFromEmail($emails)
-    {
-    	$c = array();
-    	if ($emails === null)
-    	{
-    		return $c;
-    	}
-    
-    	foreach ($emails as $email)
-    	{
-    		$temp = new Company();
-    		$temp->setEmail($email);
-    		$c[] = $temp;
-    	}
-    
-    	return $c;
+    	return $this->getQuote()->getManagerContacts();
     }
     
     /**

@@ -12,6 +12,9 @@ use JLM\CommerceBundle\Event\QuoteVariantEvent;
 use JLM\CoreBundle\Factory\MailFactory;
 use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
 use JLM\CommerceBundle\Builder\Email\QuoteVariantConfirmGivenMailBuilder;
+use JLM\CoreBundle\JLMCoreEvents;
+use Symfony\Component\Form\FormEvent;
+use JLM\CommerceBundle\Entity\QuoteVariant;
 
 class QuoteVariantSubscriber implements EventSubscriberInterface
 {	
@@ -29,6 +32,7 @@ class QuoteVariantSubscriber implements EventSubscriberInterface
 		return array(
 			JLMCommerceEvents::QUOTEVARIANT_FORM_POPULATE => 'populateFromQuote',
 			JLMCommerceEvents::QUOTEVARIANT_PREPERSIST => 'generateNumber',
+			JLMCommerceEvents::QUOTEVARIANT_SENDED => 'markQuoteVariantSended'
 //			JLMCommerceEvents::QUOTEVARIANT_GIVEN => 'sendGivenConfirmMail',
 		);
 	}
@@ -53,5 +57,13 @@ class QuoteVariantSubscriber implements EventSubscriberInterface
 		$mail = MailFactory::create(new QuoteVariantConfirmGivenMailBuilder($event->getQuoteVariant()));
 		$swift = MailFactory::create(new MailSwiftMailBuilder($mail));
 		$this->mailer->send($swift);
+	}
+	
+	public function markQuoteVariantSended(QuoteVariantEvent $event)
+	{
+		$entity = $event->getQuoteVariant();
+		$entity->setState(QuoteVariant::STATE_SENDED);
+		$this->om->persist($entity);
+		$this->om->flush();
 	}
 }

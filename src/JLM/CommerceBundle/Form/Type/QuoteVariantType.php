@@ -14,12 +14,24 @@ namespace JLM\CommerceBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use JLM\CoreBundle\EventListener\FormEntitySubscriber;
+use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class QuoteVariantType extends AbstractType
 {
+	private $om;
+	
+	/**
+	 * @param ObjectManager $om
+	 */
+	public function __construct(ObjectManager $om)
+	{
+		$this->om = $om;
+	}
+	
     /**
      * {@inheritdoc}
      */
@@ -35,6 +47,7 @@ class QuoteVariantType extends AbstractType
 			->add('lines','collection',array('prototype'=>true,'allow_add'=>true,'allow_delete'=>true,'type'=>'quote_line'))
 			->add('vat', 'hidden', array('mapped' => false))
 			->add('vatTransmitter', 'hidden', array('mapped' => false))
+			->addEventSubscriber(new FormEntitySubscriber($this->om))
 		;
 	}
 
