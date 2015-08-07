@@ -41,7 +41,7 @@ class BillTypeSubscriber implements EventSubscriberInterface
 	 */
 	public function __construct(ObjectManager $om, EventDispatcherInterface $dispatcher)
 	{
-		$this->$om = $om;
+		$this->om = $om;
 		$this->dispatcher = $dispatcher;
 	}
 	
