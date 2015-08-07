@@ -29,7 +29,7 @@
 			<td>{{ transmitter.endGuaranteeDate|date('t/m/Y') }}</td>
 			<td>{{ transmitter.userName }}</td>
 			<td>
-				<a href="{{ path('transmitter_edit', {'id': transmitter.id }) }}" role="button" class="btn btn-warning  btn-mini transmitter-edit" data-toggle="modal tooltip" title="Éditer">{{ wrench|icon(true) }}</a>
+				<a href="{{ path('transmitter_edit', {'id': transmitter.id }) }}" role="button" class="btn btn-warning  btn-mini transmitter-edit" data-toggle="modal tooltip" title="Éditer">{{ 'wrench'|icon(true) }}</a>
 			</td>
 		</tr>
 	{% endfor %}
