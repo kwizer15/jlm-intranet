@@ -12,6 +12,7 @@
 namespace JLM\CommerceBundle\Factory;
 
 use JLM\CommerceBundle\Builder\BillBuilderInterface;
+use JLM\CommerceBundle\Model\BillInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -23,9 +24,9 @@ class BillFactory
      * 
      * @return BillInterface
      */
-    public static function create(BillBuilderInterface $builder)
+    public static function create(BillBuilderInterface $builder, BillInterface $bill = null)
     {
-        $builder->create();
+        $builder->create($bill);
         $builder->buildCreation();
         $builder->buildLines();
         $builder->buildCustomer();

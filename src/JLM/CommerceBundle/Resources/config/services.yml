@@ -30,7 +30,7 @@ services:
             
     jlm_commerce.type.bill:
         class: JLM\CommerceBundle\Form\Type\BillType
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager", "@event_dispatcher"]
         tags:
             - { name: form.type, alias: jlm_commerce_bill }
             

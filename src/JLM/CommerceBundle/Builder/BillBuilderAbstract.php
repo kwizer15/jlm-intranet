@@ -38,9 +38,9 @@ abstract class BillBuilderAbstract implements BillBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function create()
+    public function create($bill = null)
     {
-        $this->bill = new Bill;
+        $this->bill = ($bill === null) ? new Bill : $bill;
     }
     
     /**

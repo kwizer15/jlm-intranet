@@ -52,7 +52,7 @@ class BillManager extends Manager
 	/**
 	 * {@inheritdoc}
 	 */
-	public function populateForm($form)
+	public function populateFormOld($form)
 	{
 		// Appel des évenements de remplissage du formulaire
 		$this->dispatch(JLMCommerceEvents::BILL_FORM_POPULATE, new FormPopulatingEvent($form, $this->getRequest()));

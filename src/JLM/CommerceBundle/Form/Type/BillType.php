@@ -16,6 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use JLM\CommerceBundle\EventListener\BillTypeSubscriber;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -23,10 +24,13 @@ use Doctrine\Common\Persistence\ObjectManager;
 class BillType extends AbstractType
 {
 	private $om;
+	private $dispatcher;
 	
-	public function __construct(ObjectManager $om)
+	public function __construct(ObjectManager $om, EventDispatcherInterface $dispatcher)
 	{
 		$this->om = $om;
+		$this->dispatcher = $dispatcher;
+		
 	}
 
 	
@@ -62,7 +66,7 @@ class BillType extends AbstractType
             ->add('vat','percent',array('precision'=>1,'attr'=>array('class'=>'input-mini')))
             ->add('vatTransmitter','hidden')
             
-            ->addEventSubscriber(new BillTypeSubscriber($this->om))
+            ->addEventSubscriber(new BillTypeSubscriber($this->om, $this->dispatcher))
          ;
     }
 

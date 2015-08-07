@@ -32,6 +32,7 @@ final class JLMCommerceEvents
 	const QUOTEVARIANT_CANCELED = "jlm_commerce.quotevariant_canceled";
 	
 	const BILL_FORM_POPULATE = "jlm_commerce.bill_form_populate";
+	const BILLFORM_PRE_SET_DATA = "jlm_commerce.billform_pre_set_data";
 	const BILL_AFTER_PERSIST = "jlm_commerce.bill_after_persist";
 	const BILL_POSTPERSIST = "jlm_commerce.bill_postpersist";
 	const BILL_BOOST_SENDMAIL = "jlm_commerce.bill_boost_sendmail";

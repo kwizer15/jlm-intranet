@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormEvent;
 
 class FormEntitySubscriber implements EventSubscriberInterface
 {	
-	private $om;
+	protected $om;
 	
 	public function __construct(ObjectManager $om)
 	{

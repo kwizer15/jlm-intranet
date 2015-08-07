@@ -25,16 +25,28 @@ use JLM\DailyBundle\Entity\Work;	// @todo Change to WorkInterface
 use JLM\CoreBundle\Event\DoctrineEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class BillSubscriber implements EventSubscriberInterface
 {	
+	/**
+	 * @var ObjectManager
+	 */
 	private $om;
-	private $form;
+	
+	/**
+	 * @var Request
+	 */
 	private $request;
 	
+	/**
+	 * @param ObjectManager $om
+	 * @param ContainerInterface $container
+	 */
 	public function __construct(ObjectManager $om, ContainerInterface $container)
 	{
 		$this->om = $om;
@@ -44,11 +56,29 @@ class BillSubscriber implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			JLMCommerceEvents::BILL_FORM_POPULATE => 'populateFromIntervention',
+			//JLMCommerceEvents::BILL_FORM_POPULATE => 'populateFromIntervention',
+				JLMCommerceEvents::BILLFORM_PRE_SET_DATA => 'onPreSetData',
 			JLMCommerceEvents::BILL_AFTER_PERSIST => 'setBillToIntervention',
 		);
 	}
 	
+	public function onPreSetData(FormEvent $event)
+	{
+		if (null !== $interv = $this->getIntervention())
+		{
+			$builder = ($interv instanceof Work) ? (($interv->getQuote() !== null) ? new WorkBillBuilder($interv) : null) : null;
+			$builder = ($builder === null) ? new InterventionBillBuilder($interv) : $builder;
+			$entity = BillFactory::create($builder, $event->getData());
+			$event->setData($entity);
+			$event->getForm()->add('intervention', 'hidden', array('data' => $interv->getId(), 'mapped' => false));
+		}
+	}
+	
+	/**
+	 * 
+	 * @param FormPopulatingEvent $event
+	 * @deprecated
+	 */
 	public function populateFromIntervention(FormPopulatingEvent $event)
 	{
 		if (null !== $interv = $this->getIntervention($event))
