@@ -230,11 +230,13 @@ class BillController extends ContainerAware
     	$manager->secure('ROLE_USER');
     	$om = $manager->getObjectManager();
     	$list = $om->getRepository('JLMDailyBundle:Intervention')->getToBilled();
+    	// @todo Passer ne modal js 
     	$forms_externalBill = array();
     	foreach ($list as $interv)
     	{
     		$forms_externalBill[] = $manager->getFormFactory()->createNamed('externalBill'.$interv->getId(),new ExternalBillType(), $interv)->createView();
     	}
+    	
     	return $manager->renderResponse('JLMCommerceBundle:Bill:todo.html.twig', array(
     			'entities'=>$list,
     			'forms_externalbill' => $forms_externalBill,
