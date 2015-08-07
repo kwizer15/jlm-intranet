@@ -1,0 +1,32 @@
+{% extends "JLMCommerceBundle:BoostMethod:layout.html.twig" %}
+
+{% block content -%}
+    <h1>{{ 'BoostMethod'|trans }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'Id'|trans }}</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Name'|trans }}</th>
+                <td>{{ entity.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('boostmethod') }}">
+            {{ 'Back to the list'|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('boostmethod_edit', { 'id': entity.id }) }}">
+            {{ 'Edit'|trans }}
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

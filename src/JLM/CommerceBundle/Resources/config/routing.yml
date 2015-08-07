@@ -1,10 +1,15 @@
-jlm_commerce_bill:
+JLMCommerceBundle_bill:
     resource: "@JLMCommerceBundle/Resources/config/routing/bill.yml"
     prefix:   /bill
 
-jlm_commerce_quote:
+JLMCommerceBundle_quote:
     resource: "@JLMCommerceBundle/Resources/config/routing/quote.yml"
     prefix:   /quote
 
-
-
+JLMCommerceBundle_boostmethod:
+    resource: "@JLMCommerceBundle/Resources/config/routing/boostmethod.yml"
+    prefix:   /boostmethod
+    
+JLMCommerceBundle_billboost:
+    resource: "@JLMCommerceBundle/Resources/config/routing/billboost.yml"
+    prefix:   /bill/boost

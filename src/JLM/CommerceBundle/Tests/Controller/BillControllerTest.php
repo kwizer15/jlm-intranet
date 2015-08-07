@@ -48,7 +48,7 @@ class BillControllerTest extends WebTestCase
             array('GET', '/bill/new'),
             array('GET', '/bill/1/edit'),
             array('GET', '/bill/todo'),
-            array('GET', '/bill/toboost'),
+           // array('GET', '/bill/toboost'),
         );
     }
     
@@ -78,6 +78,7 @@ class BillControllerTest extends WebTestCase
         // définit certaines valeurs
         $form['_username'] = 'kwizer';
         $form['_password'] = 'sslover';
+        
         return $this->client->submit($form);
     }
 }

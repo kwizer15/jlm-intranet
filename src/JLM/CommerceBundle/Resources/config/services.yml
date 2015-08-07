@@ -1,72 +1,4 @@
-parameters:
-    jlm_commerce.model.bill.class: JLM\CommerceBundle\Entity\Bill
-    jlm_commerce.manager.bill.class: JLM\CommerceBundle\Manager\BillManager
-    jlm_commerce.model.quote.class: JLM\CommerceBundle\Entity\Quote
-    jlm_commerce.manager.quote.class: JLM\CommerceBundle\Manager\QuoteManager
-    jlm_commerce.model.quotevariant.class: JLM\CommerceBundle\Entity\QuoteVariant
-    jlm_commerce.manager.quotevariant.class: JLM\CommerceBundle\Manager\QuoteVariantManager
-
-services:
-    jlm_commerce.bill_manager:
-        class: "%jlm_commerce.manager.bill.class%"
-        arguments: ["%jlm_commerce.model.bill.class%"]
-        calls:
-            - [ setContainer, ["@service_container"]]
-            - [ setServices ]
-    
-    jlm_commerce.quote_manager:
-        class: "%jlm_commerce.manager.quote.class%"
-        arguments: ["%jlm_commerce.model.quote.class%"]
-        calls:
-            - [ setContainer, ["@service_container"]]
-            - [ setServices ]
-            
-    jlm_commerce.quotevariant_manager:
-        class: "%jlm_commerce.manager.quotevariant.class%"
-        arguments: ["%jlm_commerce.model.quotevariant.class%"]
-        calls:
-            - [ setContainer, ["@service_container"]]
-            - [ setServices ]
-            
-    jlm_commerce.type.bill:
-        class: JLM\CommerceBundle\Form\Type\BillType
-        arguments: ["@doctrine.orm.entity_manager", "@event_dispatcher"]
-        tags:
-            - { name: form.type, alias: jlm_commerce_bill }
-            
-    jlm_commerce.type.quote:
-        class: JLM\CommerceBundle\Form\Type\QuoteType
-        arguments: ["@doctrine.orm.entity_manager"]
-        tags:
-            - { name: form.type, alias: quote }
-            
-    jlm_commerce.type.quote_variant:
-        class: JLM\CommerceBundle\Form\Type\QuoteVariantType
-        arguments: ["@doctrine.orm.entity_manager"]
-        tags:
-            - { name: form.type, alias: quote_variant }
-            
-    jlm_commerce.type.bill_line:
-        class: JLM\CommerceBundle\Form\Type\BillLineType
-        tags:
-            - { name: form.type, alias: jlm_commerce_bill_line }
-    
-    jlm_commerce.type.quote_line:
-        class: JLM\CommerceBundle\Form\Type\QuoteLineType
-        tags:
-            - { name: form.type, alias: quote_line }
-            
-    jlm_commerce.type.quote_hidden:
-        class: JLM\CommerceBundle\Form\Type\QuoteHiddenType
-        arguments: ["@doctrine.orm.entity_manager"]
-        tags:
-            - { name: form.type, alias: quote_hidden }
-    jlm_commerce.type.quotevariant_hidden:
-        class: JLM\CommerceBundle\Form\Type\QuoteVariantHiddenType
-        arguments: ["@doctrine.orm.entity_manager"]
-        tags:
-            - { name: form.type, alias: quotevariant_hidden }
-    
+services:   
     jlm_commerce.listener.billnumbergenerator_listener:
         class: JLM\CommerceBundle\EventListener\BillNumberGenerator
         tags:
@@ -94,15 +26,10 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_subscriber }
-    
-    jlm_commerce.twig.billcount_extension:
-        class: JLM\CommerceBundle\Twig\Extension\BillCountExtension
+      
+    jlm_commerce.event_subscriber:
+        class: JLM\CommerceBundle\EventListener\BillBoostSubscriber
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
-            - { name: twig.extension }
-            
-    jlm_commerce.twig.quotecount_extension:
-        class: JLM\CommerceBundle\Twig\Extension\QuoteCountExtension
-        arguments: ["@doctrine.orm.entity_manager","@translator"]
-        tags:
-            - { name: twig.extension }
+            - { name: kernel.event_subscriber }
+

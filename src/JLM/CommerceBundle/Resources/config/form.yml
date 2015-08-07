@@ -1,0 +1,45 @@
+services:
+    jlm_commerce.type.bill:
+        class: JLM\CommerceBundle\Form\Type\BillType
+        arguments: ["@doctrine.orm.entity_manager", "@event_dispatcher"]
+        tags:
+            - { name: form.type, alias: jlm_commerce_bill }
+            
+    jlm_commerce.type.quote:
+        class: JLM\CommerceBundle\Form\Type\QuoteType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: quote }
+            
+    jlm_commerce.type.quote_variant:
+        class: JLM\CommerceBundle\Form\Type\QuoteVariantType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: quote_variant }
+            
+    jlm_commerce.type.bill_line:
+        class: JLM\CommerceBundle\Form\Type\BillLineType
+        tags:
+            - { name: form.type, alias: jlm_commerce_bill_line }
+    
+    jlm_commerce.type.quote_line:
+        class: JLM\CommerceBundle\Form\Type\QuoteLineType
+        tags:
+            - { name: form.type, alias: quote_line }
+            
+    jlm_commerce.type.quote_hidden:
+        class: JLM\CommerceBundle\Form\Type\QuoteHiddenType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: quote_hidden }
+            
+    jlm_commerce.type.quotevariant_hidden:
+        class: JLM\CommerceBundle\Form\Type\QuoteVariantHiddenType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: quotevariant_hidden }
+            
+    jlm_commerce.type.boostmethod:
+        class: JLM\CommerceBundle\Form\Type\BoostMethodType
+        tags:
+            - { name: form.type, alias: jlm_commerce_boostmethod }

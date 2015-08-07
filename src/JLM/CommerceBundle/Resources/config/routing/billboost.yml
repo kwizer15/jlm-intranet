@@ -1,0 +1,29 @@
+jlm_commerce_billboost:
+    path:   /
+    defaults:  { _controller: "JLMCommerceBundle:BillBoost:index" }
+    methods: [GET]
+
+jlm_commerce_billboost_print:
+    path:   /{id}/print
+    defaults:  { _controller: "JLMCommerceBundle:BillBoost:print" }
+    requirements:
+        id: \d+
+    methods: [GET]
+    
+jlm_commerce_billboost_sended:
+    path:   /{id}/sended
+    defaults:  { _controller: "JLMCommerceBundle:BillBoost:sended" }
+    requirements:
+        id: \d+
+    methods: [GET]
+ 
+jlm_commerce_billboost_email:
+    path: /{id}/email
+    defaults:
+        _controller: JLMCommerceBundle:BillBoost:email
+    requirements:
+        id: \d+
+    methods: [GET,POST]
+
+    
+    

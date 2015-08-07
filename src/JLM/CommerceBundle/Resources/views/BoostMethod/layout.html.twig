@@ -1,0 +1,7 @@
+{% extends "JLMOfficeBundle::layout.html.twig" %}
+
+{% block sidebar %}
+	<li><h4>{{ 'BoostMethod'|trans }}</h4></li>
+	<li><a href="{{ path('boostmethod') }}">{{ 'BoostMethod list'|trans }}</a></li>
+	<li><a href="{{ path('boostmethod_new') }}">{{ 'BoostMethod creation'|trans }}</a></li>
+{% endblock sidebar %}

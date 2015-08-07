@@ -1,0 +1,13 @@
+JLM\CommerceBundle\Entity\BoostAbstract:
+  type: mappedSuperclass
+  fields:
+    date:
+      column: boostDate
+      type: datetime
+    comment:
+      type: text
+      nullable: true
+  manyToOne:
+    method:
+      targetEntity: JLM\CommerceBundle\Model\BoostMethodInterface
+          

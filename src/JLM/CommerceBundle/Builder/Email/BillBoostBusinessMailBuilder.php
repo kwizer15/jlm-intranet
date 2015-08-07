@@ -13,18 +13,30 @@ namespace JLM\CommerceBundle\Builder\Email;
 
 use JLM\CommerceBundle\Pdf\Bill;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Doctrine\Common\Persistence\ObjectManager;
+use JLM\CommerceBundle\Model\BusinessInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class BillBoostBusinessMailBuilder extends BusinessMailBuilder
 {
+	private $unpayedBills;
+	
+	public function __construct(BusinessInterface $business, ObjectManager $om)
+	{
+		parent::__construct($business);
+		$this->unpayedBills = $om->getRepository('JLMCommerceBundle:BillBoost')->getBillsToBoostByBusiness($business, 3, 15, false);
+		//$this->unpayedBills = $this->getBusiness()->getUnpayedBills();
+		$this->hasManyUnpayedBills = sizeof($this->unpayedBills) > 1;
+	}
 
+	
 	/**
 	 * {@inheritdoc}
 	 */
 	public function buildSubject()
 	{
-		$s = ($this->getBusiness()->getUnpayedBills() > 1) ? 's' : '';
+		$s = ($this->hasManyUnpayedBills) ? 's' : '';
 		$this->setSubject('Relance facture'.$s.' non payée'.$s);
 	}
 	
@@ -35,14 +47,14 @@ class BillBoostBusinessMailBuilder extends BusinessMailBuilder
 	{
 		$s = '';
 		$la = 'la';
-		if ($this->getBusiness()->getUnpayedBills() > 1)
+		if ($this->hasManyUnpayedBills)
 		{
 			$s .= 's';
 			$la = 'les';
 		}
 		$tot = 0;
 		$numbers = '';
-		foreach ($this->getBusiness()->getUnpayedBills() as $bill)
+		foreach ($this->unpayedBills as $bill)
 		{
 			$p = $bill->getTotalPriceAti();
 			$tot += $p;
@@ -62,7 +74,7 @@ class BillBoostBusinessMailBuilder extends BusinessMailBuilder
 	
 	public function buildPreAttachements()
 	{
-		foreach ($this->getBusiness()->getUnpayedBills() as $bill)
+		foreach ($this->unpayedBills as $bill)
 		{
 			$name = 'uploads/FAC'.$bill->getNumber().'.pdf';
 			Bill::save(array($bill), true, $name );
