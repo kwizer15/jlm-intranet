@@ -87,6 +87,7 @@ class MaintenanceController extends AbstractInterventionController
 			$entity->setMustBeBilled(false);
 			$em->persist($entity);
 			$em->flush();
+			
 			return $this->redirect($this->generateUrl('maintenance_show', array('id' => $entity->getId())));
 		}
 	
@@ -117,12 +118,12 @@ class MaintenanceController extends AbstractInterventionController
 			throw new NotFoundHttpException('Page inexistante');
 		}
 		$mail = MailFactory::create(new $class($entity));
-		$editForm = $this->createForm(new MailType(), $mail);
+		$editForm = $this->createForm('jlm_core_mail', $mail);
 		$editForm->handleRequest($request);
 		if ($editForm->isValid())
 		{
-			$this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
 			$this->get('event_dispatcher')->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request));
+			
 			return $this->redirect($this->generateUrl('maintenance_show', array('id' => $entity->getId())));
 		}
 		return array(

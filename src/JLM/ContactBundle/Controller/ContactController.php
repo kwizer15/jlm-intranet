@@ -42,7 +42,7 @@ class ContactController extends ContainerAware
 		$form = $manager->createForm($formName, array('type' => $type, 'entity' => $entity));
 		$process = $manager->getHandler($form, $entity)->process();
 		
-		return $manager->getRequest()->isXmlHttpRequest()
+		return $manager->isAjax()
 			? ($process ? $manager->renderJson(array('ok'=>true))
 						: $manager->renderResponse('JLMContactBundle:Contact:modal_new.html.twig', array('form'=>$form->createView()))) 
 			: ($process ? $manager->redirect('jlm_contact_contact_show', array('id' => $form->getData()->getId()))
@@ -55,7 +55,7 @@ class ContactController extends ContainerAware
 		$manager = $this->container->get('jlm_contact.contact_manager');
 		$manager->secure('ROLE_USER');
 		$request = $manager->getRequest();
-		$ajax = $manager->getRequest()->isXmlHttpRequest();
+		$ajax = $manager->isAjax();
 		$repo = $manager->getRepository();
 
 		return $ajax ? $manager->renderJson(array('contacts' => $repo->getArray($request->get('q',''), $request->get('page_limit',10))))
@@ -68,7 +68,7 @@ class ContactController extends ContainerAware
     	$manager->secure('ROLE_USER');
     	$entity = $manager->getEntity($id);
     	
-		return $manager->getRequest()->isXmlHttpRequest()
+		return $manager->isAjax()
 			? $manager->renderJson($manager->getRepository()->getByIdToArray($id))
 		    : $manager->renderResponse('JLMContactBundle:Contact:show_'.$entity->getType().'.html.twig', array('entity'=>$entity));
     }

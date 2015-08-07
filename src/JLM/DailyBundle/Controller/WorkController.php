@@ -144,17 +144,15 @@ class WorkController extends AbstractInterventionController
 	public function createAction(Request $request)
 	{
 		$entity  = new Work();
-		
-		$form = $this->createForm(new WorkType(), $entity);
 		$entity->setCreation(new \DateTime);
 		$entity->setPriority(4);
-		$form->handleRequest($request);
 		$entity->setContract($entity->getDoor()->getActualContract());
-
-		if ($form->isValid()) {
+		
+		$form = $this->createForm(new WorkType(), $entity);
+		$form->handleRequest($request);
+		if ($form->isValid())
+		{
 			$em = $this->getDoctrine()->getManager();
-
-	
 			$em->persist($entity);
 			$em->flush();
 	
@@ -200,6 +198,7 @@ class WorkController extends AbstractInterventionController
 		{
 			$em->persist($entity);
 			$em->flush();
+			
 			return $this->redirect($this->generateUrl('work_show', array('id' => $entity->getId())));
 		}
 	
@@ -282,11 +281,10 @@ class WorkController extends AbstractInterventionController
 			throw new NotFoundHttpException('Page inexistante');
 		}
 		$mail = MailFactory::create(new $class($entity));
-		$editForm = $this->createForm(new MailType(), $mail);
+		$editForm = $this->createForm('jlm_core_mail', $mail);
 		$editForm->handleRequest($request);
 		if ($editForm->isValid())
 		{
-			$this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
 			$this->get('event_dispatcher')->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request));
 			return $this->redirect($this->generateUrl('work_show', array('id' => $entity->getId())));
 		}
