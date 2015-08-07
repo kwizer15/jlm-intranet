@@ -12,9 +12,9 @@ class AttributionType extends AbstractType
     {
         $builder
         	->add('ask','transmitter_ask_hidden')
-            ->add('creation','datepicker',array('label'=>'Date'))
+            ->add('creation','datepicker')
             ->add('contact')
-            ->add('individual',null,array('label'=>'Particulier','required'=>false))
+            ->add('individual',null,array('required'=>false))
         ;
     }
 
