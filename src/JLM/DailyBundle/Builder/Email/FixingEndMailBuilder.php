@@ -25,8 +25,12 @@ class FixingEndMailBuilder extends FixingMailBuilder
 	public function buildBody()
 	{
 		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Nous vous informons que le technicien à terminé son intervention.'.chr(10)
-		.'L\'installation est '.$this->_getStringState().$this->_getStringTodo().chr(10)
+		.'Nous vous informons que le technicien a terminé son intervention.'.chr(10)
+		.'L\'installation : '.chr(10)
+		.$this->getFixing()->getInstallationCode().chr(10)
+		.$this->getFixing()->getPlace().chr(10)
+		.chr(10)
+		.'est '.$this->_getStringState().$this->_getStringTodo().chr(10)
 		.chr(10)
 		.'Cordialement'
 		.$this->_getSignature()

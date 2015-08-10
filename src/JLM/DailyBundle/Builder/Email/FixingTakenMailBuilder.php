@@ -31,7 +31,7 @@ class FixingTakenMailBuilder extends FixingMailBuilder
 			.$this->getFixing()->getInstallationCode().chr(10)
 			.$this->getFixing()->getPlace().chr(10)
 			.chr(10)
-			.'à bien été prise en compte par nos services'.chr(10)
+			.'a bien été prise en compte par nos services'.chr(10)
 			.chr(10)
 			.'Nous vous tiendrons informé de l\'arrivée du technicien sur le site'.chr(10)
 			.chr(10)
