@@ -14,7 +14,7 @@ namespace JLM\ContractBundle\Model;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-interface Contractable
+interface ContractableInterface
 {
     
 }
