@@ -40,8 +40,9 @@ class WorkController extends AbstractInterventionController
 		$request = $manager->getRequest();
 		$repo = $manager->getRepository();
 		
-		return $manager->isAjax() ? $manager->renderJson(array('entities' => $repo->getArray($request->get('q',''), $request->get('page_limit',10))))
-		: $manager->renderResponse('JLMDailyBundle:Work:list.html.twig', $manager->pagination('getCountOpened', 'getOpened', 'work_list', array()));
+		return $manager->isAjax()
+			? $manager->renderJson(array('entities' => $repo->getArray($request->get('q',''), $request->get('page_limit',10))))
+			: $manager->renderResponse('JLMDailyBundle:Work:list.html.twig', $manager->pagination('getCountOpened', 'getOpened', 'work_list', array()));
 	}
 	
 	/**
@@ -107,7 +108,9 @@ class WorkController extends AbstractInterventionController
 		$entity->setReason($quote->getIntro());
 		$contact = $quote->getQuote()->getContact();
 		if ($contact === null)
+		{
 			$entity->setContactName($quote->getQuote()->getContactCp());
+		}
 		else
 		{
 			$entity->setContactName($contact->getPerson()->getName().' ('.$contact->getRole().')');
@@ -116,15 +119,21 @@ class WorkController extends AbstractInterventionController
 			$email = $contact->getPerson()->getEmail();
 			$phones = '';
 			if ($mobilePhone != null)
+			{
 				$phones .= $mobilePhone;
+			}
 			if ($fixedPhone != null)
 			{
 				if ($phones != '')
+				{
 					$phones .= chr(10);
+				}
 				$phones .= $fixedPhone;
 			}
 			if ($email != null)
+			{
 				$entity->setContactEmail($email);
+			}
 			$entity->setContactPhones($phones);
 		}
 		$form   = $this->createForm(new WorkType(), $entity);
@@ -286,8 +295,10 @@ class WorkController extends AbstractInterventionController
 		if ($editForm->isValid())
 		{
 			$this->get('event_dispatcher')->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request));
+			
 			return $this->redirect($this->generateUrl('work_show', array('id' => $entity->getId())));
 		}
+		
 		return array(
 				'entity' => $entity,
 				'form' => $editForm->createView(),
