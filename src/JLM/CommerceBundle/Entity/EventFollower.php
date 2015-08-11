@@ -11,10 +11,13 @@
 
 namespace JLM\CommerceBundle\Entity;
 
-use JLM\CommerceBundle\Model\EventInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use JLM\CommerceBundle\Model\EventInterface;
 use JLM\CommerceBundle\Model\EventFollowerInterface;
 
+/**
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ */
 class EventFollower implements EventFollowerInterface
 {	
 	private $id;

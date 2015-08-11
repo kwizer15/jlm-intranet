@@ -11,8 +11,9 @@
 
 namespace JLM\CommerceBundle\Entity;
 
-use JLM\ProductBundle\Model\ProductInterface;
 use JLM\CommerceBundle\Model\CommercialPartLineInterface;
+use JLM\ProductBundle\Model\ProductInterface;
+
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>

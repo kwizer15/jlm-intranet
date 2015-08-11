@@ -11,7 +11,6 @@
 
 namespace JLM\AskBundle\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use JLM\ModelBundle\Entity\UploadDocument;
 use JLM\AskBundle\Model\PayerInterface;
 use JLM\AskBundle\Model\SubjectInterface;

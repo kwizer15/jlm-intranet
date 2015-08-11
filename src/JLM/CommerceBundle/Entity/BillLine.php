@@ -11,8 +11,8 @@
 
 namespace JLM\CommerceBundle\Entity;
 
-use JLM\CommerceBundle\Model\BillLineInterface;
 use JLM\CommerceBundle\Entity\CommercialPartLineProduct;
+use JLM\CommerceBundle\Model\BillLineInterface;
 use JLM\CommerceBundle\Model\BillInterface;
 
 /**

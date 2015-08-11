@@ -13,6 +13,9 @@ namespace JLM\CommerceBundle\Entity;
 
 use JLM\CommerceBundle\Model\EventInterface;
 
+/**
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ */
 class Event implements EventInterface
 {	
 	/**

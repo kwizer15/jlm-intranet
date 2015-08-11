@@ -14,12 +14,11 @@ namespace JLM\CommerceBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use JLM\CommerceBundle\Model\BillInterface;
 use JLM\CommerceBundle\Model\BillLineInterface;
-
+use JLM\CommerceBundle\Model\BillSourceInterface;
+use JLM\CommerceBundle\Model\BusinessInterface;
 use JLM\FeeBundle\Model\FeeInterface;
 use JLM\FeeBundle\Model\FeesFollowerInterface;
 
-use JLM\CommerceBundle\Model\BillSourceInterface;
-use JLM\CommerceBundle\Model\BusinessInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
