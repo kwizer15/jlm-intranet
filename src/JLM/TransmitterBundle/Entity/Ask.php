@@ -1,32 +1,35 @@
 <?php
 
+/*
+ * This file is part of the JLMTransmitterBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\TransmitterBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use JLM\AskBundle\Entity\Ask as BaseAsk;
 use JLM\TransmitterBundle\Model\AttributionInterface;
 
 /**
- * Commande d'émetteurs
- * JLM\TransmitterBundle\Entity\Ask
- *
- * @ORM\Table(name="transmitters_ask")
- * @ORM\Entity(repositoryClass="JLM\TransmitterBundle\Entity\AskRepository")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class Ask extends BaseAsk
 {
 	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
+	 * Id
+	 * @var int
 	 */
 	private $id;
 	
 	/**
 	 * Propositions de contrat
-	 * @ORM\OneToMany(targetEntity="Attribution",mappedBy="ask")
+	 * @var AttributionInterface
 	 */
 	private $attributions;
 	

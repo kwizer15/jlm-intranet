@@ -1,47 +1,43 @@
 <?php
 
+/*
+ * This file is part of the JLMTransmitterBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\TransmitterBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JLM\ModelBundle\Entity\Site;
 
 /**
- * UserGroup
- *
- * @ORM\Table(name="transmitters_usergroups")
- * @ORM\Entity(repositoryClass="JLM\TransmitterBundle\Entity\UserGroupRepository")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class UserGroup
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank
      */
     private $name;
 
     /**
      * @var ArrayCollection
-     * 
-     * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Site", inversedBy="userGroups")
      * @Assert\NotNull
      */
     private $site;
 
     /**
      * @var Model
-     *
-     * @ORM\ManyToOne(targetEntity="Model")
      * @Assert\NotNull
      */
     private $model;
@@ -82,10 +78,10 @@ class UserGroup
     /**
      * Set site
      *
-     * @param \JLM\ModelBundle\Entity\Site $site
+     * @param Site $site
      * @return UserGroup
      */
-    public function setSite(\JLM\ModelBundle\Entity\Site $site = null)
+    public function setSite(Site $site = null)
     {
         $this->site = $site;
     
@@ -108,7 +104,7 @@ class UserGroup
      * @param \JLM\TransmitterBundle\Entity\Model $model
      * @return Transmitter
      */
-    public function setModel(\JLM\TransmitterBundle\Entity\Model $model = null)
+    public function setModel(Model $model = null)
     {
     	$this->model = $model;
     

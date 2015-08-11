@@ -1,0 +1,6 @@
+JLM\TransmitterBundle\Entity\Model:
+  type: entity
+  table: transmitters_model
+  oneToOne:
+    product:
+      targetEntity: JLM\ProductBundle\Model\ProductInterface

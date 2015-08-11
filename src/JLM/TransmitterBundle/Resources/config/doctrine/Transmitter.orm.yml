@@ -1,0 +1,33 @@
+JLM\TransmitterBundle\Entity\Transmitter:
+  type: entity
+  table: transmitters_transmitters
+  repositoryClass: JLM\TransmitterBundle\Repository\TransmitterRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    number:
+      length: 6
+    guarantee:
+      length: 4
+    userName:
+      nullable: true
+    isActive:
+      type: boolean
+  manyToOne:
+    attribution:
+      targetEntity: JLM\TransmitterBundle\Entity\Attribution
+      inversedBy: transmitters
+    userGroup:
+      targetEntity: JLM\TransmitterBundle\Entity\UserGroup
+    model:
+      targetEntity: JLM\TransmitterBundle\Entity\Model
+  oneToOne:
+    replacedTransmitter:
+      targetEntity: JLM\TransmitterBundle\Entity\Transmitter
+      inversedBy: replace
+    replace:
+      targetEntity: JLM\TransmitterBundle\Entity\Transmitter
+      mappedBy: replacedTransmitter

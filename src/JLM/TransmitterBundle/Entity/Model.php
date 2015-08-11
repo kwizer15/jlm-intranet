@@ -1,22 +1,26 @@
 <?php
 
+/*
+ * This file is part of the JLMTransmitterBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\TransmitterBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use JLM\ProductBundle\Model\ProductInterface;
+use JLM\CommerceBundle\Entity\TextModel;
 
 /**
- * Model
- *
- * @ORM\Table(name="transmitters_model")
- * @ORM\Entity
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Model extends \JLM\CommerceBundle\Entity\TextModel
+class Model extends TextModel
 {
     /**
-     * @var Product
-     * 
-     * @ORM\OneToOne(targetEntity="JLM\ProductBundle\Model\ProductInterface")
+     * @var ProductInterface
      */
     private $product;
 

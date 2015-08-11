@@ -1,0 +1,17 @@
+JLM\TransmitterBundle\Entity\UserGroup:
+  type: entity
+  table: transmitters_usergroups
+  repositoryClass: JLM\TransmitterBundle\Repository\UserGroupRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name: ~
+  manyToOne:
+    site:
+      targetEntity: JLM\ModelBundle\Entity\Site
+      inversedBy: userGroups
+    model:
+      targetEntity: JLM\TransmitterBundle\Entity\Model

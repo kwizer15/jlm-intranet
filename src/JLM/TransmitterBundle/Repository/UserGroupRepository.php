@@ -1,6 +1,6 @@
 <?php
 
-namespace JLM\TransmitterBundle\Entity;
+namespace JLM\TransmitterBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

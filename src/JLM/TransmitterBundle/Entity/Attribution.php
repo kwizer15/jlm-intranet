@@ -1,70 +1,59 @@
 <?php
 
+/*
+ * This file is part of the JLMTransmitterBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\TransmitterBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use JLM\CommerceBundle\Model\BillInterface;
 use JLM\CommerceBundle\Model\BillLineInterface;
 use JLM\ProductBundle\Model\ProductInterface;
 use JLM\TransmitterBundle\Model\AttributionInterface;
 use JLM\TransmitterBundle\Model\TransmitterInterface;
+
 /**
- * Attribution
- *
- * @ORM\Table(name="transmitters_attributions")
- * @ORM\Entity(repositoryClass="JLM\TransmitterBundle\Entity\AttributionRepository")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class Attribution implements AttributionInterface
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="creation", type="date")
      */
     private $creation;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="contact", type="string", length=255)
      */
     private $contact;
 
     /**
      * @var boolean
-     *
-     * @ORM\Column(name="individual", type="boolean")
      */
     private $individual;
 
 	/**
 	 * @var ArrayCollection
-	 * 
-	 * @ORM\OneToMany(targetEntity="Transmitter", mappedBy="attribution")
-	 * @ORM\OrderBy({"number" = "ASC"})
 	 */
     private $transmitters;
     
     /**
      * @var AskTransmitter
-     *
-     * @ORM\ManyToOne(targetEntity="Ask", inversedBy="attributions")
      */
     private $ask;
     
     /**
      * @var Bill
-     *
-     * @ORM\ManyToOne(targetEntity="\JLM\CommerceBundle\Model\BillInterface")
      */
     private $bill;
     

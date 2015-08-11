@@ -13,12 +13,8 @@ namespace JLM\TransmitterBundle\Entity;
 
 use JLM\ProductBundle\Entity\ProductDecorator;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- * @ORM\Table(name="jlm_transmitter_product_transmitter")
- * @ORM\Entity()
  */
 class ProductTransmitter extends ProductDecorator
 {

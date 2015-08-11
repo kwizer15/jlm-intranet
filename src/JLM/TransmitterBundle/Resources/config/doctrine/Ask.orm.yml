@@ -1,0 +1,13 @@
+JLM\TransmitterBundle\Entity\Ask:
+  type: entity
+  table: transmitters_ask
+  repositoryClass: JLM\TransmitterBundle\Repository\AskRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  oneToMany:
+    attributions:
+      targetEntity: JLM\TransmitterBundle\Entity\Attribution
+      mappedBy: ask

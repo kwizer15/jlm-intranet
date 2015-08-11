@@ -1,9 +1,10 @@
 <?php
 
-namespace JLM\TransmitterBundle\Entity;
+namespace JLM\TransmitterBundle\Repository;
 
 use JLM\DefaultBundle\Entity\SearchRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
+use JLM\TransmitterBundle\Entity\UserGroup;
 
 /**
  * TransmitterRepository

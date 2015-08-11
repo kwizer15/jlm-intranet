@@ -1,91 +1,74 @@
 <?php
 
+/*
+ * This file is part of the JLMTransmitterBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\TransmitterBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JLM\TransmitterBundle\Model\TransmitterInterface;
 
 /**
- * Transmitter
- *
- * @ORM\Table(name="transmitters_transmitters")
- * @ORM\Entity(repositoryClass="JLM\TransmitterBundle\Entity\TransmitterRepository")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class Transmitter implements TransmitterInterface
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="number", type="string", length=6)
      */
     private $number = null;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="guarantee", type="string",length=4)
  	 * @Assert\Regex(pattern="/^(0[1-9]|1[0-2])[0-9][0-9]$/", message="Garantie au mauvais format")
      */
     private $guarantee = null;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="userName", type="string", length=255, nullable=true)
      */
     private $userName;
 
     /**
      * @var boolean
-     *
-     * @ORM\Column(name="isActive", type="boolean")
      */
     private $isActive = true;
 
     /**
      * @var Attribution
-     *
-     * @ORM\ManyToOne(targetEntity="Attribution", inversedBy="transmitters")
      */
     private $attribution;
     
     /**
      * @var UserGroup
-     *
-     * @ORM\ManyToOne(targetEntity="UserGroup")
      */
     private $userGroup;
     
     /**
      * @var Model
-     * 
-     * @ORM\ManyToOne(targetEntity="Model")
      */
     private $model;
     
     /**
      * $this remplace $replacedTransmitter 
-     * @var Tranmitter replacedTransmitter
-     *
-     * @ORM\OneToOne(targetEntity="Transmitter", inversedBy="replace")
+     * @var Transmitter replacedTransmitter
      */
     private $replacedTransmitter;
     
     /**
      * $replace replace $this
-     * @var Tranmitter replace
-     *
-     * @ORM\OneToOne(targetEntity="Transmitter",mappedBy="replacedTransmitter")
+     * @var Transmitter replace
      */
     private $replace;
     
@@ -257,7 +240,7 @@ class Transmitter implements TransmitterInterface
      * @param \JLM\TransmitterBundle\Entity\Attribution $attribution
      * @return Transmitter
      */
-    public function setAttribution(\JLM\TransmitterBundle\Entity\Attribution $attribution = null)
+    public function setAttribution(Attribution $attribution = null)
     {
         $this->attribution = $attribution;
     
@@ -280,7 +263,7 @@ class Transmitter implements TransmitterInterface
      * @param \JLM\TransmitterBundle\Entity\UserGroup $userGroup
      * @return Transmitter
      */
-    public function setUserGroup(\JLM\TransmitterBundle\Entity\UserGroup $userGroup = null)
+    public function setUserGroup(UserGroup $userGroup = null)
     {
         $this->userGroup = $userGroup;
     
@@ -303,7 +286,7 @@ class Transmitter implements TransmitterInterface
      * @param \JLM\TransmitterBundle\Entity\Model $model
      * @return Transmitter
      */
-    public function setModel(\JLM\TransmitterBundle\Entity\Model $model = null)
+    public function setModel(Model $model = null)
     {
     	$this->model = $model;
     
@@ -348,7 +331,7 @@ class Transmitter implements TransmitterInterface
      * @param \JLM\TransmitterBundle\Entity\Transmitter $replacedTransmitter
      * @return Transmitter
      */
-    public function setReplacedTransmitter(\JLM\TransmitterBundle\Entity\Transmitter $replacedTransmitter = null)
+    public function setReplacedTransmitter(Transmitter $replacedTransmitter = null)
     {
         $this->replacedTransmitter = $replacedTransmitter;
         $this->replacedTransmitter->setReplace($this);
@@ -371,7 +354,7 @@ class Transmitter implements TransmitterInterface
      * @param \JLM\TransmitterBundle\Entity\Transmitter $replace
      * @return Transmitter
      */
-    public function setReplace(\JLM\TransmitterBundle\Entity\Transmitter $replace = null)
+    public function setReplace(Transmitter $replace = null)
     {
         $this->replace = $replace;
     

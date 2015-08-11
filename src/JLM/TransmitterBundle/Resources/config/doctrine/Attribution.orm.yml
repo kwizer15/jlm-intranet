@@ -1,0 +1,27 @@
+JLM\TransmitterBundle\Entity\Attribution:
+  type: entity
+  table: transmitters_attributions
+  repositoryClass: JLM\TransmitterBundle\Repository\AttributionRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    creation:
+      type: date
+    contact: ~
+    individual:
+      type: boolean
+  oneToMany:
+    transmitters:
+      targetEntity: JLM\TransmitterBundle\Entity\Transmitter
+      mappedBy: attribution
+      orderBy:
+        number: ASC
+  manyToOne:
+    ask:
+      targetEntity: JLM\TransmitterBundle\Entity\Ask
+      inversedBy: attributions
+    bill:
+      targetEntity: JLM\CommerceBundle\Model\BillInterface

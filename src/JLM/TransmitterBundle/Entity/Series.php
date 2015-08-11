@@ -1,13 +1,20 @@
 <?php
 
+/*
+ * This file is part of the JLMTransmitterBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\TransmitterBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Serie d'émetteurs
- * @author Emmanuel Bernaszuk <kwizer15@wanadoo.fr>
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class Series
 {
@@ -52,8 +59,6 @@ class Series
 	
 	/**
 	 * @var Model
-	 *
-	 * @ORM\ManyToOne(targetEntity="Model")
 	 */
 	private $model;
 	
