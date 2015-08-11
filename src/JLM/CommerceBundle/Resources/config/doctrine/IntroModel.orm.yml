@@ -1,8 +1,0 @@
-JLM\CommerceBundle\Entity\IntroModel:
-  type: entity
-  table: intromodel
-  readOnly: true
-  repositoryClass: JLM\CommerceBundle\Repository\TextModelRepository
-
-
-    

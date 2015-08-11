@@ -16,7 +16,7 @@
 	{% endjavascripts %}
 <script>
 $("body").bill({
-	 autoSource:'{{ path('autocomplete') }}',
+	 autoSource:'{{ path('autocomplete_textmodel') }}',
 	 lineCount:{{ form.lines | length }},
 });
 </script>

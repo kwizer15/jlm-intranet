@@ -1,8 +1,0 @@
-JLM\CommerceBundle\Entity\DelayModel:
-  type: entity
-  table: delaymodel
-  readOnly: true
-  repositoryClass: JLM\CommerceBundle\Repository\TextModelRepository
-
-
-    

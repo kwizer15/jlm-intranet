@@ -63,13 +63,14 @@ class BillTypeSubscriber implements EventSubscriberInterface
 		$bill = $event->getData();
 		$bill = ($bill === null) ? new Bill() : $bill;
 		$vat = $this->om->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
+		$repo = $this->om->getRepository('JLMCommerceBundle:TextModel');
 		$bill
 			->setCreation(new \DateTime)
 			->setVat($vat)
 			->setVatTransmitter($vat)
-			->setPenalty((string)$this->om->getRepository('JLMCommerceBundle:PenaltyModel')->find(1))
-			->setProperty((string)$this->om->getRepository('JLMCommerceBundle:PropertyModel')->find(1))
-			->setEarlyPayment((string)$this->om->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1))
+			->setPenalty((string)$repo->getOneByNamespace('bill_penalty'))
+			->setProperty((string)$repo->getOneByNamespace('bill_property'))
+			->setEarlyPayment((string)$repo->getOneByNamespace('bill_earlypayment'))
 			->setMaturity(30)
 			->setDiscount(0)
 		;

@@ -1,6 +1,14 @@
 JLM\TransmitterBundle\Entity\Model:
   type: entity
   table: transmitters_model
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    text:
+      type: text
   oneToOne:
     product:
       targetEntity: JLM\ProductBundle\Model\ProductInterface

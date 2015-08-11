@@ -149,7 +149,7 @@
 {% block quote_variant_javascript %}
 <script>
 $("body").quotevariant({
-	 autoSource:'{{ path('autocomplete') }}',
+	 autoSource:'{{ path('autocomplete_textmodel') }}',
 	 lineCount:{{ form.lines | length }}
 });
 </script>

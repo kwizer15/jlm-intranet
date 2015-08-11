@@ -112,6 +112,22 @@ class AutocompleteController extends Controller
     }
     
     /**
+     *
+     */
+    public function textModelAction(Request $request)
+    {
+    	$query = $request->request->get('term');
+    	$em = $this->getDoctrine()->getManager();
+    	$namespace = $request->request->get('namespace');
+    	$results = $em->getRepository('JLMCommerceBundle:TextModel')->getByNamespace($namespace, $query);
+    	$json = json_encode($results);
+    	$response = new Response();
+    	$response->headers->set('Content-Type', 'application/json');
+    	$response->setContent($json);
+    	return $response;
+    }
+    
+    /**
      * @todo Voir si cette action est utile car pas de "Action" dans le nom de la fonction quand j'ai réécrit le routage en yml
      */
     public function doorsiteAction(Request $request)

@@ -21,7 +21,13 @@ autocomplete_contract:
   defaults:
     _controller: "JLMModelBundle:Autocomplete:contract"
   methods: [POST]
-  
+
+autocomplete_textmodel:
+  path: /textmodel
+  defaults:
+    _controller: "JLMModelBundle:Autocomplete:textModel"
+  methods: [POST]
+
 autocomplete:
   path: /
   defaults:

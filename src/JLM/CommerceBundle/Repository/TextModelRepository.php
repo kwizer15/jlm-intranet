@@ -23,9 +23,39 @@ use Doctrine\ORM\EntityRepository;
  */
 class TextModelRepository extends EntityRepository
 {
+	public function getByNamespace($namespace, $query)
+	{
+		$results = $this->createQueryBuilder('a')
+			->where('a.namespace = ?1')
+			->andWhere('a.text LIKE ?2')
+			->setParameter(1, $namespace)
+			->setParameter(2,'%'.$query.'%')
+			->getQuery()
+			->getResult();
+		$out = array();
+		foreach($results as $result)
+		{
+			$out[] = $result->getText();
+		}
+		 
+		return $out;
+	}
+	
+	public function getOneByNamespace($namespace)
+	{
+		$result = $this->createQueryBuilder('a')
+			->where('a.namespace = ?1')
+			->setParameter(1, $namespace)
+			->getQuery()
+			->getSingleResult();
+
+		return $result->getText();
+	}
+	
 	public function searchResult($query, $limit = 8)
 	{
-		
+		$class = $this->getClassName();
+		var_dump($class); exit;
 		$results = $this->createQueryBuilder('m')
 	   		->where('m.text LIKE :term')
 	   		->setParameter('term','%'.$query.'%')

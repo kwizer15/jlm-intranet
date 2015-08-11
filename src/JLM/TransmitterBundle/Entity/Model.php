@@ -12,18 +12,66 @@
 namespace JLM\TransmitterBundle\Entity;
 
 use JLM\ProductBundle\Model\ProductInterface;
-use JLM\CommerceBundle\Entity\TextModel;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class Model extends TextModel
+class Model
 {
+    /**
+     * @var integer $id
+     */
+    private $id;
+    
+    /**
+     * @var string
+     */
+    private $text;
+    
     /**
      * @var ProductInterface
      */
     private $product;
-
+    
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+    	return $this->id;
+    }
+    
+    /**
+     * Set text
+     *
+     * @param string $text
+     * @return self
+     */
+    public function setText($text)
+    {
+    	$this->text = $text;
+    }
+    
+    /**
+     *
+     * @return string
+     */
+    public function getText()
+    {
+    	return $this->text;
+    }
+    
+    /**
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+    	return $this->getText();
+    }
+    
     /**
      * Set product
      *

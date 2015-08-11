@@ -96,23 +96,23 @@
 				});
 				$("#jlm_commerce_bill_property").attr('data-source',this.options.autoSource).autocomplete({
 					source: function(request,response){
-						request.repository = 'JLMCommerceBundle:PropertyModel';
+						request.namespace = 'bill_property';
 						return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
 					}});
 				$("#jlm_commerce_bill_earlyPayment").attr('data-source',this.options.autoSource).autocomplete({
 					source: function(request,response){
-						request.repository = 'JLMCommerceBundle:EarlyPaymentModel';
+						request.namespace = 'bill_earlypayment';
 						return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
 					}});
 				$("#jlm_commerce_bill_penalty").attr('data-source',this.options.autoSource).autocomplete({
 					source: function(request,response){
-						request.repository = 'JLMCommerceBundle:PenaltyModel';
+						request.namespace = 'bill_penalty';
 						return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
 					}});
 
 				$("#jlm_commerce_bill_intro").attr('data-source',this.options.autoSource).autocomplete({
 					source: function(request,response){
-						request.repository = 'JLMCommerceBundle:IntroBillModel';
+						request.namespace = 'bill_intro';
 						return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
 					}});
 				this.$element.find("#jlm_commerce_bill_lines > tr").on('change',$.proxy(this.total,this)).billline({

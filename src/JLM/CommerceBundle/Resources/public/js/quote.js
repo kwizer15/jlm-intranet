@@ -164,18 +164,18 @@
 
 				$("#quote_variant_paymentRules").attr('data-source',this.options.autoSource).autocomplete({
 					source: function(request,response){
-						request.repository = 'JLMCommerceBundle:PaymentModel';
+						request.namespace = 'quotevariant_payment';
 						return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
 					}});
 				$("#quote_variant_deliveryRules").attr('data-source',this.options.autoSource).autocomplete({
 					source: function(request,response){
-						request.repository = 'JLMCommerceBundle:DelayModel';
+						request.namespace = 'quotevariant_delay';
 						return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
 					}});
 
 				$("#quote_variant_intro").attr('data-source',this.options.autoSource).autocomplete({
 					source: function(request,response){
-						request.repository = 'JLMCommerceBundle:IntroModel';
+						request.namespace = 'quotevariant_intro';
 						return $.post(this.element.attr('data-source'),request,function( data ) { response( data ); },'json');
 					}});
 

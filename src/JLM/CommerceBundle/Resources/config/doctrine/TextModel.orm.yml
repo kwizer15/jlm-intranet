@@ -1,10 +1,13 @@
 JLM\CommerceBundle\Entity\TextModel:
-  type: mappedSuperclass
+  type: entity
+  table: jlm_commerce_textmodel
+  repositoryClass: JLM\CommerceBundle\Repository\TextModelRepository
   id:
     id:
       type: integer
       generator:
         strategy: AUTO
   fields:
+    namespace: ~
     text:
       type: text
