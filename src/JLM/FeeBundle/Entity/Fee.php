@@ -1,55 +1,48 @@
 <?php
+
+/*
+ * This file is part of the JLMFeeBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\FeeBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
 use JLM\CommerceBundle\Model\VATInterface;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ProductBundle\Model\ProductInterface;
-
 use JLM\FeeBundle\Model\FeesFollowerInterface;
 use JLM\ContractBundle\Model\ContractInterface;
 use JLM\FeeBundle\Model\FeeInterface;
 
 /**
- * 
- * @author kwizer
- * @ORM\Table(name="fees")
- * @ORM\Entity
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class Fee implements FeeInterface
 {
 	/**
 	 * @var int $id
-	 *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 	
 	/**
 	 * @var ArrayCollection $contracts
-	 * @ORM\ManyToMany(targetEntity="JLM\ContractBundle\Model\ContractInterface")
-	 * @ORM\JoinTable(name="fees_contracts",
-	 * 				  joinColumns={@ORM\JoinColumn(name="fee_id", referencedColumnName="id")},
-	 * 				  inverseJoinColumns={@ORM\JoinColumn(name="contract_id", referencedColumnName="id")}
-	 * )
 	 * @Assert\Valid(traverse=true)
 	 */
 	private $contracts;
 	
 	/**
 	 * @var Trustee $trustee
-	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Trustee")
 	 * @Assert\Valid
 	 */
 	private $trustee;
 	
 	/**
 	 * @var string $address
-	 * @ORM\Column(name="address",type="text")
 	 * @Assert\Type(type="string")
 	 * @Assert\NotNull
 	 */
@@ -57,14 +50,12 @@ class Fee implements FeeInterface
 	
 	/**
 	 * @var string $prelabel
-	 * @ORM\Column(name="prelabel",type="text", nullable=true)
 	 * @Assert\Type(type="string")
 	 */
 	private $prelabel;
 	
 	/**
 	 * @var int $frequence
-	 * @ORM\Column(name="frequence",type="integer")
 	 * @Assert\Choice(choices={1,2,3,4})
 	 * @Assert\NotNull
 	 */
@@ -72,7 +63,6 @@ class Fee implements FeeInterface
 	
 	/**
 	 * @var Vat $vat
-	 * @ORM\ManyToOne(targetEntity="JLM\CommerceBundle\Model\VATInterface")
 	 * @Assert\Valid
 	 */
 	private $vat;

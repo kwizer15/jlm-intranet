@@ -1,57 +1,53 @@
 <?php
-namespace JLM\FeeBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+/*
+ * This file is part of the JLMFeeBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace JLM\FeeBundle\Entity;
 
 use JLM\FeeBundle\Model\FeesFollowerInterface;
 
 /**
- * 
- * @author kwizer
- * @ORM\Table(name="fees_follower")
- * @ORM\Entity
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class FeesFollower implements FeesFollowerInterface
 {
 	/**
 	 * @var int $id
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	private $id;
 	
 	/**
 	 * @var DateTime
-	 * @ORM\Column(name="activation", type="datetime")
 	 */
 	private $activation;
 	
 	/**
 	 * @var DateTime
-	 * @ORM\Column(name="generation", type="datetime", nullable=true)
 	 */
 	private $generation = null;
 	
 	/**
 	 * Augmentation annuelle (1)
 	 * @var float
-	 * @ORM\Column(name="frequence1", type="decimal", scale=3, precision=3, nullable=true)
 	 */
 	private $frequence1;
 	
 	/**
-	 * Augmntation semestrielle (2)
+	 * Augmentation semestrielle (2)
 	 * @var float
-	 * @ORM\Column(name="frequence2", type="decimal", scale=3, precision=3, nullable=true)
 	 */
 	private $frequence2;
 	
 	/**
-	 * Augmntation trimestrielle (4)
+	 * Augmentation trimestrielle (4)
 	 * @var float
-	 * @ORM\Column(name="frequence4", type="decimal", scale=3, precision=3, nullable=true)
 	 */
 	private $frequence4;
 	

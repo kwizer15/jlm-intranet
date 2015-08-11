@@ -1,0 +1,34 @@
+JLM\FeeBundle\Entity\Fee:
+  type: entity
+  table: fees
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    address:
+      type: text
+    prelabel:
+      type: text
+      nullable: true
+    frequence:
+      type: integer
+    
+  manyToOne:
+    trustee:
+      targetEntity: JLM\ModelBundle\Entity\Trustee
+    vat:
+      targetEntity: JLM\CommerceBundle\Model\VATInterface
+  manyToMany:
+    contracts:
+      targetEntity: JLM\ContractBundle\Model\ContractInterface
+      joinTable:
+        name: fees_contracts
+        joinColumns:
+          fee_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          contract_id:
+            referencedColumnName: id
+      

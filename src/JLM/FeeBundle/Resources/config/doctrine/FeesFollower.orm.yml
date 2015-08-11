@@ -1,0 +1,29 @@
+JLM\FeeBundle\Entity\FeesFollower:
+  type: entity
+  table: fees_follower
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    activation:
+      type: datetime
+    generation:
+      type: datetime
+      nullable: true
+    frequence1:
+      type: decimal
+      scale: 3
+      precision: 3
+      nullable: true
+    frequence2:
+      type: decimal
+      scale: 3
+      precision: 3
+      nullable: true
+    frequence4:
+      type: decimal
+      scale: 3
+      precision: 3
+      nullable: true
