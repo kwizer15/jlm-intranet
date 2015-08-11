@@ -154,7 +154,8 @@ class MaintenanceController extends AbstractInterventionController
 			{
 				if ($door->getLastMaintenance() < $date 
 						&& $maint === null 
-						&& $door->getCountMaintenance() < 2)
+						&& $door->getCountMaintenance() < 2
+						&& !$door->isStopped())
 				{
 					$main = new Maintenance;
 					$main->setCreation(new \DateTime);
@@ -169,7 +170,7 @@ class MaintenanceController extends AbstractInterventionController
 				}
 			}
 			// On retire les entretiens plus sous contrat
-			elseif ($contract === null && $maint !== null)
+			elseif (($contract === null) && $maint !== null)
 			{
 				$shifts = $maint->getShiftTechnicians();
 				if (sizeof($shifts) > 0)
@@ -178,9 +179,21 @@ class MaintenanceController extends AbstractInterventionController
 					$maint->setReport('Cloturé pour rupture de contrat');
 				}
 				else
+				{
 					$em->remove($maint);
+				}
 				$removed++;
 			}
+			elseif ($door->isStopped() && $maint !== null)
+			{
+				$shifts = $maint->getShiftTechnicians();
+				if (sizeof($shifts) == 0)
+				{
+					$em->remove($maint);
+				}
+				$removed++;
+			}
+			
 		}
 		$em->flush();
 		return array('count' => $count,'removed' => $removed);
