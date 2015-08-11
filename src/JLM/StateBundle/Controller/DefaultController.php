@@ -284,8 +284,9 @@ class DefaultController extends Controller
      */
     public function daybillAction()
     {
-    	$em = $this->getDoctrine()->getManager();
-    	$stats = $em->getRepository('JLMCommerceBundle:Bill')->getDayBill();
+    	$manager = $this->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_USER');
+    	$stats = $manager->getRepository('JLMCommerceBundle:Bill')->getDayBill();
     	$datas = array();
     	foreach ($stats as $stat)
     	{
@@ -297,6 +298,7 @@ class DefaultController extends Controller
     		$datas[$key]['bills'][] = $stat;
     		$datas[$key]['amount'] += $stat->getTotalPrice();
     	}
+    	
     	return array('datas'=>$datas);
     }
     
@@ -316,6 +318,7 @@ class DefaultController extends Controller
 		{
 			$datas['ca'] += $entity->getTotalPrice();
 		}
+		
 		return $manager->renderResponse('JLMStateBundle:Default:lastbill.html.twig',
 				$datas
 		);
@@ -366,7 +369,7 @@ class DefaultController extends Controller
 					$tottime += $interv['time'];
 				}
 			}
-			
+
 			foreach ($complets as $interv)
 			{
 				if ($door['name'] == $interv['name'])
@@ -409,7 +412,7 @@ class DefaultController extends Controller
     			'totHC' => $totHC,
     	);
     }
-
+    
     private function secondsToInterval($seconds)
     {
     	$seconds = floor($seconds);
@@ -429,9 +432,9 @@ class DefaultController extends Controller
     	$date = new \DateTime();
     	$maxyear = $date->format('Y');
     	$year = ($year === null) ? $maxyear : $year;
-    	$em = $this->getDoctrine()->getManager();
-    	$sends = $em->getRepository('JLMCommerceBundle:Quote')->getSends($year);
-    	$givens = $em->getRepository('JLMCommerceBundle:Quote')->getGivens($year);
+    	$repo = $this->getDoctrine()->getManager()->getRepository('JLMCommerceBundle:Quote');
+    	$sends = $repo->getSends($year);
+    	$givens = $repo->getGivens($year);
 //    	var_dump($sends); exit;
     	return array('sends'=>$sends,'givens'=>$givens,'year' => $year,
     			'maxyear' => $maxyear,);

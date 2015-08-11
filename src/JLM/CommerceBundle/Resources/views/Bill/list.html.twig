@@ -48,8 +48,8 @@
 					    </a>
 					    <ul class="dropdown-menu">
 					        <li><a href="{{ path('bill_printduplicate',{'id':entity.id}) }}"><i class="icon icon-white icon-print"></i> Imprimer duplicata</a></li>
-					    	<li><a href="{{ path('bill_printboost',{'id':entity.id}) }}"><i class="icon icon-white icon-print"></i> Imprimer courrier</a></li>
-					    	<li><a href="{{ path('bill_boostok',{'id':entity.id}) }}"><i class="icon icon-white icon-ok"></i> Relance effectuée</a></li>
+					    	<li><a href="{{ path('jlm_commerce_billboost_print',{'id':entity.id}) }}"><i class="icon icon-white icon-print"></i> Imprimer courrier</a></li>
+					    	<li><a href="{{ path('jlm_commerce_billboost_sended',{'id':entity.id}) }}"><i class="icon icon-white icon-ok"></i> Relance effectuée</a></li>
 					    </ul>
 					 </div>
 				{% endif %}

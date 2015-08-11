@@ -42,6 +42,11 @@ class DefaultControllerTest extends WebTestCase
             array('GET', '/state/contracts'),
             array('GET', '/state/quotes/2015'),
             array('GET', '/state/transmitters'),
+        	array('GET', '/state/sells'),
+        	array('GET', '/state/daybill'),
+        	array('GET', '/state/lastbill'),
+        	array('GET', '/state/doortypes/2014'),
+        	array('GET', '/state/quotes/2014'),
         );
     }
     
