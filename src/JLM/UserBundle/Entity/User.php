@@ -1,25 +1,33 @@
 <?php
+
+/*
+ * This file is part of the JLMUserBundle package.
+ *
+ * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace JLM\UserBundle\Entity;
 
 use FOS\UserBundle\Entity\User as BaseUser;
-use Doctrine\ORM\Mapping as ORM;
 use JLM\ContactBundle\Model\ContactInterface;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="users")
+ * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class User extends BaseUser implements ContactInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * ORM\Id
+     * ORM\Column(type="integer")
+     * ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="JLM\ContactBundle\Model\ContactInterface")
+     * @var ContactInterface
      */
     private $contact;
 
