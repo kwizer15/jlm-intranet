@@ -23,12 +23,16 @@ class ProductTest extends \PHPUnit_Framework_TestCase
      */
     protected $entity;
     
+    protected $supplierPrice;
+    
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
         $this->entity = new Product;
+        $this->supplierPrice = $this->getMock('JLM\ProductBundle\Model\SupplierPurchasePriceInterface');
+		$this->entity->addSupplierPurchasePrice($this->supplierPrice);
     }
     
     /**
@@ -147,28 +151,28 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     public function testPurchase()
     {
         $price = 12.34;
-        $this->assertSame($this->entity, $this->entity->setPurchase($price));
+        $this->supplierPrice->expects($this->once())->method('getUnitPrice')->will($this->returnValue($price));
         $this->assertSame($price, $this->entity->getPurchase());
     }
     
     public function testDiscountSupplier()
     {
         $discount = 12.34;
-        $this->assertSame($this->entity, $this->entity->setDiscountSupplier($discount));
+        $this->supplierPrice->expects($this->once())->method('getDiscount')->will($this->returnValue($discount));
         $this->assertSame($discount, $this->entity->getDiscountSupplier());
     }
     
     public function testExpenseRatio()
     {
         $ratio = 12.34;
-        $this->assertSame($this->entity, $this->entity->setExpenseRatio($ratio));
+        $this->supplierPrice->expects($this->once())->method('getExpenseRatio')->will($this->returnValue($ratio));
         $this->assertSame($ratio, $this->entity->getExpenseRatio());
     }
     
     public function testShipping()
     {
         $shipping = 12.34;
-        $this->assertSame($this->entity, $this->entity->setShipping($shipping));
+        $this->supplierPrice->expects($this->once())->method('getDelivery')->will($this->returnValue($shipping));
         $this->assertSame($shipping, $this->entity->getShipping());
     }
     
@@ -182,12 +186,23 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function getPurchases()
+    public function getPurchasesc()
     {
         return array(
-        	array(100, 20, 10, 2, 90, 99, 9, 225/22),
-            array(  0, 20, 10, 2,  2, 99, 97, 0),
+        	array(90, 99, 9, 225/22),
+            array(2, 99, 97, 0),
         );
+    }
+    
+    /**
+     * @return array
+     */
+    public function getPurchases()
+    {
+    	return array(
+    			array(2, 90, 99, 9, 225/22),
+    			array(2,  2, 99, 97, 0),
+    	);
     }
     
     /**
@@ -198,14 +213,10 @@ class ProductTest extends \PHPUnit_Framework_TestCase
      * @param float $s
      * @param float $res
      */
-    public function testCalcs($p, $ds, $er, $s, $pp, $up, $m, $c)
+    public function testCalcs($s,$pp, $up, $m, $c)
     {
-        $this->entity->setPurchase($p);
-        $this->entity->setDiscountSupplier($ds);
-        $this->entity->setExpenseRatio($er);
-        $this->entity->setShipping($s);
-        $this->assertEquals($pp, $this->entity->getPurchasePrice());
-        
+    	$this->supplierPrice->expects($this->any())->method('getTotalPrice')->will($this->returnValue($pp));
+    	$this->supplierPrice->expects($this->any())->method('getDelivery')->will($this->returnValue($s));
         $this->entity->setUnitPrice($up);
         $this->assertEquals($m, $this->entity->getMargin());
         $this->assertEquals($c, $this->entity->getCoef());
@@ -214,8 +225,8 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     
     public function testSupplier()
     {
-        $supplier = $this->getMock('JLM\ProductBundle\model\SupplierInterface');
-        $this->assertSame($this->entity, $this->entity->setSupplier($supplier));
+    	$supplier = $this->getMock('JLM\ProductBundle\Model\SupplierInterface');
+    	$this->supplierPrice->expects($this->any())->method('getSupplier')->will($this->returnValue($supplier));
         $this->assertSame($supplier, $this->entity->getSupplier());
     }
 

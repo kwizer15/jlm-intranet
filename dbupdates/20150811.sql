@@ -1,3 +1,10 @@
+CREATE TABLE jlm_product_product_join_supplierpurchaseprice (prooduct_id INT NOT NULL, supplierpurchaseprice_id INT NOT NULL, INDEX IDX_E8B6E2C06AD19828 (prooduct_id), UNIQUE INDEX UNIQ_E8B6E2C0AD5EDB7B (supplierpurchaseprice_id), PRIMARY KEY(prooduct_id, supplierpurchaseprice_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE jlm_product_supplierpurchaseprice (id INT AUTO_INCREMENT NOT NULL, supplier_id INT DEFAULT NULL, reference VARCHAR(255) NOT NULL, unitPrice NUMERIC(10, 2) NOT NULL, publicPrice NUMERIC(10, 2) NOT NULL, discount SMALLINT NOT NULL, expenseRatio SMALLINT NOT NULL, delivery NUMERIC(10, 2) NOT NULL, INDEX IDX_1821A5472ADD6D8C (supplier_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+ALTER TABLE jlm_product_product_join_supplierpurchaseprice ADD CONSTRAINT FK_E8B6E2C06AD19828 FOREIGN KEY (prooduct_id) REFERENCES products (id);
+ALTER TABLE jlm_product_product_join_supplierpurchaseprice ADD CONSTRAINT FK_E8B6E2C0AD5EDB7B FOREIGN KEY (supplierpurchaseprice_id) REFERENCES jlm_product_supplierpurchaseprice (id);
+ALTER TABLE jlm_product_supplierpurchaseprice ADD CONSTRAINT FK_1821A5472ADD6D8C FOREIGN KEY (supplier_id) REFERENCES suppliers (id)
+
+
 INSERT INTO `jlm`.`jlm_commerce_textmodel` (`id`, `namespace`, `text`) VALUES
 (NULL, 'bill_earlypayment', '0.00% pour paiement antcipé.'),
 (NULL, 'bill_penalty', 'pour non respect de la date d\'échéance: 1,3%/mois. Loi n° 92-144 du 31/12/92'),

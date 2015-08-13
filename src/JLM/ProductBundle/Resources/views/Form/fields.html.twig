@@ -4,31 +4,42 @@
 {{ form_row(form.category) }}
 {{ form_row(form.designation) }}
 {{ form_row(form.description) }}
-{{ form_row(form.supplier) }}
+{# form_row(form.supplier) #}
 {{ form_row(form.unity) }}
+{{ form_row(form.supplierPurchasePrices) }}
+
+{{ form_rest(form) }}
+{% endblock jlm_product_product_widget %}
+
+{% block jlm_product_supplierpurchaseprices_row %}
 <table class="table">
 	<thead>
 		<tr>
-			<th>{{ form.purchase.vars.label }}</th>
-			<th>{{ form.discountSupplier.vars.label }}</th>
-			<th>{{ form.expenseRatio.vars.label }}</th>
-			<th>{{ form.shipping.vars.label }}</th>
+			<th>Prix d'achat</th>
+			<th>Remise</th>
+			<th>Frais</th>
+			<th>Port</th>
 			<th>Coef.</th>
-			<th>{{ form.unitPrice.vars.label }}</th>
 		</tr>
 	</thead>
-	<tbody>
-		<tr>
-			<td>{{ form_widget(form.purchase) }}</td>
-			<td>{{ form_widget(form.discountSupplier) }}</td>
-			<td>{{ form_widget(form.expenseRatio) }}</td>
-			<td>{{ form_widget(form.shipping) }}</td>
-			<td>
-	    		<div class="input-append"><input type="text" class="input-mini" id="jlm_product_product_margin" value="40,00"><span class="add-on">%</span></div>
-	    	</td>
-			<td>{{ form_widget(form.unitPrice) }}</td>
-		</tr>
+	<tbody {{ block('widget_container_attributes') }}>
+	{%- if form.parent is empty -%}
+            {{ form_errors(form) }}
+        {%- endif -%}
+        {{- block('form_rows') -}}
+        {{- form_rest(form) -}}
 	</tbody>
 </table>
-{{ form_rest(form) }}
-{% endblock jlm_product_product_widget %}
+{% endblock %}
+
+{% block jlm_product_supplierpurchaseprice_row %}
+	<tr>
+		<td>{{ form_widget(form.unitPrice) }}</td>
+		<td>{{ form_widget(form.discount) }}</td>
+		<td>{{ form_widget(form.expenseRatio) }}</td>
+		<td>{{ form_widget(form.delivery) }}</td>
+		<td>
+	    	<div class="input-append"><input type="text" class="input-mini" id="jlm_product_product_margin" value="40,00"><span class="add-on">%</span></div>
+	    </td>
+	</tr>
+{% endblock %}

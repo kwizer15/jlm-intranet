@@ -15,6 +15,8 @@ use JLM\ProductBundle\Model\ProductInterface;
 use JLM\ProductBundle\Model\ProductPriceInterface;
 use JLM\ProductBundle\Model\ProductCategoryInterface;
 use JLM\ProductBundle\Model\SupplierInterface;
+use JLM\ProductBundle\Model\SupplierPurchasePriceInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -42,6 +44,7 @@ class Product implements ProductInterface
     /**
      * Fournisseur principal
      * @var SupplierInterface $supplier
+     * @deprecated Replaced by $supplierPurchasePrices
      */
     private $supplier;
     
@@ -70,26 +73,37 @@ class Product implements ProductInterface
     private $category;
     
     /**
+     * Prix d'achats fournisseurs
+     * @var SupplierPurchasePriceInterface[]
+     * @since 2.0.0
+     */
+    private $supplierPurchasePrices;
+    
+    /**
      * Prix d'achat HT
      * @var float $purchase
+     * @deprecated Replaced by $supplierPurchasePrices
      */
     private $purchase;
     
     /**
      * Taux de remise fournisseur (en %)
      * @var float $discountSupplier
+     * @deprecated Replaced by $supplierPurchasePrices
      */
     private $discountSupplier;
     
     /**
      * Taux de frais (en %)
      * @var float $expenseRatio
+     * @deprecated Replaced by $supplierPurchasePrices
      */
     private $expenseRatio;
     
     /**
      * Frais de port (en €)
      * @var float $shipping
+     * @deprecated Replaced by $supplierPurchasePrices
      */
     private $shipping;
     
@@ -278,10 +292,53 @@ class Product implements ProductInterface
     }
 
     /**
+     * Add a supplier purchase price
+     * @param SupplierPurchasePriceInterface $price
+     * @since 2.0.0
+     */
+    public function addSupplierPurchasePrice(SupplierPurchasePriceInterface $price)
+    {
+    	return $this->supplierPurchasePrices->add($price);
+    }
+    
+    /**
+     * Remove a supplier purchase price
+     * @param SupplierPurchasePriceInterface $price
+     * @since 2.0.0
+     */
+    public function removeSupplierPurchasePrice(SupplierPurchasePriceInterface $price)
+    {
+    	return $this->supplierPurchasePrices->removeElement($price);
+    }
+    
+    /**
+     * Get supplier purchase prices
+     * @return multitype:\JLM\ProductBundle\Entity\SupplierPurchasePriceInterface
+     * @since 2.0.0
+     */
+    public function getSupplierPurchasePrices()
+    {
+    	return $this->supplierPurchasePrices;
+    }
+    
+    /**
+     * Get minimum supplier purchase prices
+     * @return SupplierPurchasePriceInterface
+     * @since 2.0.0
+     */
+    public function getMinimumPurchasePrice()
+    {
+    	return array_reduce($this->supplierPurchasePrices->toArray(), function ($carry, $item) {
+    		return ($carry === null || $carry->getUnitPrice() > $item->getUnitPrice()) ? $item : $carry;
+    	});
+    }
+    
+    /**
      * Set purchase
      *
      * @param decimal $purchase
      * @return self
+     * @deprecated Replaced by SupplierPurchasePrice::setUnitPrice
      */
     public function setPurchase($purchase)
     {
@@ -293,11 +350,11 @@ class Product implements ProductInterface
     /**
      * Get purchase
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getPurchase()
     {
-        return $this->purchase;
+        return ($this->getMinimumPurchasePrice() === null) ? 0.0 : $this->getMinimumPurchasePrice()->getUnitPrice();
     }
 
     /**
@@ -305,6 +362,7 @@ class Product implements ProductInterface
      *
      * @param decimal $discountSupplier
      * @return self
+     * @deprecated Replaced by SupplierPurchasePrice::setDiscount
      */
     public function setDiscountSupplier($discountSupplier)
     {
@@ -316,11 +374,11 @@ class Product implements ProductInterface
     /**
      * Get discountSupplier
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getDiscountSupplier()
     {
-        return $this->discountSupplier;
+        return ($this->getMinimumPurchasePrice() === null) ? 0.0 : $this->getMinimumPurchasePrice()->getDiscount();
     }
 
     /**
@@ -328,6 +386,7 @@ class Product implements ProductInterface
      *
      * @param decimal $expenseRatio
      * @return self
+     * @deprecated Replaced by SupplierPurchasePrice::setExpenseRatio
      */
     public function setExpenseRatio($expenseRatio)
     {
@@ -343,7 +402,7 @@ class Product implements ProductInterface
      */
     public function getExpenseRatio()
     {
-        return $this->expenseRatio;
+        return ($this->getMinimumPurchasePrice() === null) ? 0.0 : $this->getMinimumPurchasePrice()->getExpenseRatio();
     }
 
     /**
@@ -351,6 +410,7 @@ class Product implements ProductInterface
      *
      * @param decimal $shipping
      * @return self
+     * @deprecated Replaced by SupplierPurchasePrice::setDelivery
      */
     public function setShipping($shipping)
     {
@@ -366,7 +426,7 @@ class Product implements ProductInterface
      */
     public function getShipping()
     {
-        return $this->shipping;
+        return ($this->getMinimumPurchasePrice() === null) ? 0.0 :$this->getMinimumPurchasePrice()->getDelivery();
     }
 
     /**
@@ -395,14 +455,7 @@ class Product implements ProductInterface
     
     public function getPurchasePrice()
     {
-    	$pa = $this->getPurchase();
-    	$remise_fournisseur = $pa * ($this->getDiscountSupplier()/100);
-    	$pa -= $remise_fournisseur;
-    	$frais = $pa * ($this->getExpenseRatio()/100);
-    	$pa += $frais;
-    	$pa += $this->getShipping();
-    	
-    	return $pa;
+    	return ($this->getMinimumPurchasePrice() === null) ? 0.0 : $this->getMinimumPurchasePrice()->getTotalPrice();
     }
     
     public function getMargin()
@@ -412,8 +465,9 @@ class Product implements ProductInterface
     
     public function getCoef()
     {
-    	$d = $this->getPurchasePrice() - $this->getShipping();
-    	$n = $this->getUnitPrice() - $this->getShipping();
+    	$shipping = $this->getShipping();
+    	$d = $this->getPurchasePrice() - $shipping;
+    	$n = $this->getUnitPrice() - $shipping;
     	if ($d == 0)
     	{
     		return 0;
@@ -427,6 +481,7 @@ class Product implements ProductInterface
      *
      * @param SupplierInterface $supplier
      * @return self
+     * @deprecated Replaced by SupplierPurchasePrice::setSupplier
      */
     public function setSupplier(SupplierInterface $supplier)
     {
@@ -442,7 +497,7 @@ class Product implements ProductInterface
      */
     public function getSupplier()
     {
-        return $this->supplier;
+        return ($this->getMinimumPurchasePrice() === null) ? null : $this->getMinimumPurchasePrice()->getSupplier();
     }
 
     /**
@@ -488,7 +543,8 @@ class Product implements ProductInterface
      */
     public function __construct()
     {
-        $this->unitPrices = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->unitPrices = new ArrayCollection();
+        $this->supplierPurchasePrices = new ArrayCollection();
         //$this->files = new \Doctrine\Common\Collections\ArrayCollection();
         //$this->children = new \Doctrine\Common\Collections\ArrayCollection();
     }

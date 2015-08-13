@@ -36,6 +36,16 @@ services:
         class: JLM\ProductBundle\Form\Type\StockType
         tags:
             - { name: form.type, alias: jlm_product_stock }
+    
+    jlm_product.type.supplierPurchasePrice:
+        class: JLM\ProductBundle\Form\Type\SupplierPurchasePriceType
+        tags:
+            - { name: form.type, alias: jlm_product_supplierpurchaseprice }
+            
+    jlm_product.type.supplierPurchasePrices:
+        class: JLM\ProductBundle\Form\Type\SupplierPurchasePricesType
+        tags:
+            - { name: form.type, alias: jlm_product_supplierpurchaseprices }
             
     jlm_product.product_subscriber:
         class: JLM\ProductBundle\EventListener\ProductSubscriber

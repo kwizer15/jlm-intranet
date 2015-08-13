@@ -49,6 +49,20 @@ JLM\ProductBundle\Entity\Product:
       targetEntity: JLM\ProductBundle\Entity\ProductPrice
       mappedBy: product
       orderBy: { quantity : ASC }
+  manyToMany:
+    supplierPurchasePrices:
+      targetEntity: JLM\ProductBundle\Entity\SupplierPurchasePrice
+      joinTable:
+        name: jlm_product_product_join_supplierpurchaseprice
+        joinColumns:
+          prooduct_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          supplierpurchaseprice_id:
+            referencedColumnName: id
+            unique: true
+      orphanRemoval: true
+      cascade: ["persist"]
 #    children:
 #      targetEntity: JLM\ProductBundle\Entity\Product
 #      mappedBy: parent

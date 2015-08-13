@@ -1,0 +1,40 @@
+JLM\ProductBundle\Entity\SupplierPurchasePrice:
+  type: entity
+  table: jlm_product_supplierpurchaseprice
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    reference: ~
+    unitPrice:
+      type: decimal
+      scale: 2
+    publicPrice:
+      type: decimal
+      scale: 2
+    discount:
+      type: smallint
+    expenseRatio:
+      type: smallint
+    delivery:
+      type: decimal
+      scale: 2
+  manyToOne:
+    supplier:
+      targetEntity: JLM\ProductBundle\Model\SupplierInterface
+      joinTable:
+        name: jlm_product_product_join_supplierpurchaseprice
+        joinColumns:
+          product_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          supplierpurchaseprice_id:
+            referencedColumnName: id
+            unique: true
+      orphanRemoval: true
+      cascade: ["persist"]
+   
+
+ 
