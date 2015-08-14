@@ -42,13 +42,8 @@ services:
         tags:
             - { name: form.type, alias: jlm_product_supplierpurchaseprice }
             
-    jlm_product.type.supplierPurchasePrices:
-        class: JLM\ProductBundle\Form\Type\SupplierPurchasePricesType
-        tags:
-            - { name: form.type, alias: jlm_product_supplierpurchaseprices }
-            
-    jlm_product.product_subscriber:
-        class: JLM\ProductBundle\EventListener\ProductSubscriber
+    jlm_product.stock_subscriber:
+        class: JLM\ProductBundle\EventListener\StockSubscriber
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_subscriber }

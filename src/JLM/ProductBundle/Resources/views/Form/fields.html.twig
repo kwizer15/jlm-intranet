@@ -1,4 +1,5 @@
 {% block jlm_product_product_widget %}
+<fieldset>
 {{ form_row(form.reference) }}
 {# form_row(form.barcode) #}
 {{ form_row(form.category) }}
@@ -6,40 +7,53 @@
 {{ form_row(form.description) }}
 {# form_row(form.supplier) #}
 {{ form_row(form.unity) }}
-{{ form_row(form.supplierPurchasePrices) }}
-
-{{ form_rest(form) }}
-{% endblock jlm_product_product_widget %}
-
-{% block jlm_product_supplierpurchaseprices_row %}
+{{ form_row(form.unitPrice) }}
 <table class="table">
 	<thead>
 		<tr>
-			<th>Prix d'achat</th>
+			<th>Fournisseur</th>
+			<th>Référence</th>
+			<th>Prix public</th>
 			<th>Remise</th>
+			<th>Prix net</th>
 			<th>Frais</th>
 			<th>Port</th>
 			<th>Coef.</th>
+			<th class="span1"><a href="#" class="btn btn-success" id="{{ id }}_addSupplierPurchasePrice">{{ 'plus-sign'|icon(true) }}</a></th>
 		</tr>
 	</thead>
-	<tbody {{ block('widget_container_attributes') }}>
-	{%- if form.parent is empty -%}
-            {{ form_errors(form) }}
-        {%- endif -%}
-        {{- block('form_rows') -}}
-        {{- form_rest(form) -}}
-	</tbody>
+{{ form_row(form.supplierPurchasePrices) }}
 </table>
-{% endblock %}
+<div class="form-actions">
+<a href="{{ path('jlm_product_product') }}" class="btn">{{ 'arrow-left'|icon }} Retour à la liste</a>
+{{ form_rest(form) }}
+</div>
+</fieldset>
+{% endblock jlm_product_product_widget %}
 
 {% block jlm_product_supplierpurchaseprice_row %}
-	<tr>
-		<td>{{ form_widget(form.unitPrice) }}</td>
+	<tr id="{{ id }}">
+		<td>{{ form_widget(form.supplier) }}</td>
+		<td>{{ form_widget(form.reference) }}</td>
+		<td>{{ form_widget(form.publicPrice) }}</td>
 		<td>{{ form_widget(form.discount) }}</td>
+		<td>{{ form_widget(form.unitPrice) }}</td>
 		<td>{{ form_widget(form.expenseRatio) }}</td>
 		<td>{{ form_widget(form.delivery) }}</td>
 		<td>
-	    	<div class="input-append"><input type="text" class="input-mini" id="jlm_product_product_margin" value="40,00"><span class="add-on">%</span></div>
+	    	<div class="input-append"><input type="text" class="input-mini" id="{{ id }}_margin" value="40,00"><span class="add-on">%</span></div>
 	    </td>
+	    <td><a href="#" class="btn btn-danger" id="{{ id }}_remove">{{ 'minus-sign'|icon(true) }}</a></td>
 	</tr>
+{% endblock %}
+
+{% block jlm_product_product_javascript %}
+{% javascripts
+    	'@JLMProductBundle/Resources/public/js/product.js'
+    	filter='yui_js' %}
+    	<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+<script>
+$(function() {$('#{{ id }}').product();});
+</script>
 {% endblock %}

@@ -21,7 +21,7 @@ use JLM\ProductBundle\Entity\Stock;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ProductSubscriber implements EventSubscriberInterface
+class StockSubscriber implements EventSubscriberInterface
 {	
 	/**
 	 * @var ObjectManager

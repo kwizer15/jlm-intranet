@@ -28,8 +28,9 @@ class SupplierPurchasePriceType extends AbstractType
         $builder
         	->add('supplier',null,array('label'=>'Fournisseur')) // Typeahead
        		->add('reference',null,array('label'=>'Référence','attr'=>array('class'=>'input-small')))
-			->add('unitPrice','money',array('label'=>'Prix d\'achat HT','grouping'=>true,'attr'=>array('class'=>'input-small')))
+			->add('publicPrice','money',array('label'=>'Prix d\'achat HT','grouping'=>true,'attr'=>array('class'=>'input-small')))
             ->add('discount','percent',array('type'=>'integer','label'=>'Remise fournisseur','attr'=>array('class'=>'input-mini')))
+            ->add('unitPrice','money',array('label'=>'Prix d\'achat HT','grouping'=>true,'attr'=>array('class'=>'input-small')))
             ->add('expenseRatio','percent',array('type'=>'integer','label'=>'Frais','attr'=>array('class'=>'input-mini')))
             ->add('delivery','money',array('label'=>'Port','grouping'=>true,'attr'=>array('class'=>'input-mini')))
         ;

@@ -14,6 +14,7 @@ namespace JLM\ProductBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use JLM\ProductBundle\EventListener\ProductTypeSubscriber;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -38,8 +39,15 @@ class ProductType extends AbstractType
 //            ->add('expenseRatio','percent',array('type'=>'integer','label'=>'Frais','attr'=>array('class'=>'input-mini')))
 //            ->add('shipping','money',array('label'=>'Port','grouping'=>true,'attr'=>array('class'=>'input-mini')))
             ->add('unitPrice','money',array('label'=>'PVHT','grouping'=>true,'attr'=>array('class'=>'input-mini')))
-            ->add('supplierPurchasePrices', 'jlm_product_supplierpurchaseprices')
-            
+            ->add('supplierPurchasePrices', 'collection', array(
+            		'type' => 'jlm_product_supplierpurchaseprice',
+            		'prototype' => true,
+            		'allow_add' => true,
+            		'allow_delete' => true,
+            		
+            ))
+//            ->addEventSubscriber(new FormEntitySubscriber($this->om))
+            ->addEventSubscriber(new ProductTypeSubscriber())
         ;
     }
 
