@@ -95,17 +95,6 @@
 							value: inputToFloat,
 							calcul: function() { return this.value() },
 							dec: 2
-						},   
-						discount: {
-							$element: this.$element.find(prefix + "discount"),
-							value: inputToInt,
-							that: this,
-							calcul: function() {
-								var unitPrice = this.that.datas.unitPrice.value(),
-								publicPrice = this.that.datas.publicPrice.value();
-								return (1 - (unitPrice / publicPrice)) * 100;
-							},
-							dec: 0
 						},
 						unitPrice: {
 							$element: this.$element.find(prefix + "unitPrice"),
@@ -118,11 +107,42 @@
 							},
 							dec: 2
 						},
+						discount: {
+							$element: this.$element.find(prefix + "discount"),
+							value: inputToInt,
+							that: this,
+							calcul: function() {
+								var unitPrice = this.that.datas.unitPrice.value(),
+								publicPrice = this.that.datas.publicPrice.value();
+								return (1 - (unitPrice / publicPrice)) * 100;
+							},
+							dec: 0
+						},
 						expenseRatio: {
 							$element: this.$element.find(prefix + "expenseRatio"),
 							value: inputToInt,
-							calcul: function() { return this.value() },
+							that: this,
+							calcul: function() {
+								return this.value();
+								var unitPrice = this.that.datas.unitPrice.value(),
+								expense = this.that.datas.expense.value();
+								if (unitPrice == 0) {
+									return 0;
+								}
+								return (expense * 100) / unitPrice;
+							},
 							dec: 0
+						},
+						expense: {
+							$element: this.$element.find(prefix + "expense"),
+							value: inputToFloat,
+							that: this,
+							calcul: function() {
+								var unitPrice = this.that.datas.unitPrice.value(),
+								expenseRatio = this.that.datas.expenseRatio.value();
+								return unitPrice * (expenseRatio / 100 );
+							},
+							dec: 2
 						},
 						delivery: {
 							$element: this.$element.find(prefix + "delivery"),
@@ -130,31 +150,50 @@
 							calcul: function() { return this.value() },
 							dec: 2
 						},
+						totalPrice: {
+							$element: this.$element.find(prefix + "totalPrice"),
+							value: inputToFloat,
+							that: this,
+							calcul: function() {
+								var unitPrice = this.that.datas.unitPrice.value(),
+								expense = this.that.datas.expense.value(),
+								delivery = this.that.datas.delivery.value();
+								return unitPrice + expense + delivery;
+							},
+							dec: 2
+						},
 						sellPrice: {
 							$element: this.options.sellPriceElement,
 							value: inputToFloat,
 							that: this,
 							calcul: function() {
-								var unitPrice = this.that.datas.unitPrice.value(),
-								expenseRatio = this.that.datas.expenseRatio.value(),
-								delivery = this.that.datas.delivery.value(),
+								var totalPrice = this.that.datas.totalPrice.value(),
 								margin = this.that.datas.margin.value();
-								return (unitPrice * (1 + expenseRatio / 100) + delivery) * (1 + margin / 100);
+								return totalPrice + margin;
 							},
 							dec: 2
 						},
-						margin: {
-							$element: this.$element.find(prefix + "margin"),
+						coef: {
+							$element: this.$element.find(prefix + "coef"),
 							value: inputToInt,
 							that : this,
 							calcul: function() {
 								var sellPrice = this.that.datas.sellPrice.value(),
-								unitPrice = this.that.datas.unitPrice.value(),
-								expenseRatio = this.that.datas.expenseRatio.value(),
-								delivery = this.that.datas.delivery.value();
-								return ((sellPrice / (unitPrice * (1 + expenseRatio / 100) + delivery)) - 1) * 100;
+								totalPrice = this.that.datas.totalPrice.value();
+								return ((sellPrice / totalPrice) - 1) * 100;
 							},
 							dec: 0
+						},
+						margin: {
+							$element: this.$element.find(prefix + "margin"),
+							value: inputToFloat,
+							that : this,
+							calcul: function() {
+								var coef = this.that.datas.coef.value(),
+								totalPrice = this.that.datas.totalPrice.value();
+								return totalPrice * (coef / 100);
+							},
+							dec: 2
 						}
 				};
 
@@ -163,6 +202,7 @@
 				that = this;
 				$.each(this.datas, function(index, data) {
 					data.$element.on('keyup', $.proxy(that.calcul, that))
+					data.$element.keyup();
 				})		
 			}
 
@@ -183,6 +223,10 @@
 			if ($(e.target).attr('id') != data.$element.attr('id')) {
 				toInput(data.$element, data.calcul(), data.dec);
 			}
+		$ctrlgrp = data.$element.parent().parent();
+		$ctrlgrp.toggleClass('warning', (index == 'coef' || index == 'expenseRatio') && data.value() < 10 && data.value() >= 0);
+		$ctrlgrp.toggleClass('error', data.value() < 0);
+
 		});
 
 		return this;
