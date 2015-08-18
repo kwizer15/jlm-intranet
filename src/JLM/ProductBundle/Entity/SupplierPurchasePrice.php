@@ -41,11 +41,6 @@ class SupplierPurchasePrice implements SupplierPurchasePriceInterface
 	/**
 	 * @var float
 	 */
-	private $discount;
-	
-	/**
-	 * @var float
-	 */
 	private $publicPrice;
 	
 	/**
@@ -56,7 +51,7 @@ class SupplierPurchasePrice implements SupplierPurchasePriceInterface
 	/**
 	 * @var float
 	 */
-	private $expenseRatio;
+	private $expense;
 	
 	/**
 	 * Get id
@@ -117,7 +112,12 @@ class SupplierPurchasePrice implements SupplierPurchasePriceInterface
 	 */
 	public function setUnitPrice($unitPrice)
 	{
-		$this->unitPrice = (!is_numeric($unitPrice) || $unitPrice < 0) ? 0.0 : (float)$unitPrice;
+		$unitPrice = $this->_filterPrice($unitPrice);;
+		$this->unitPrice = $unitPrice;
+		if ($this->publicPrice < $unitPrice)
+		{
+			$this->setPublicPrice($unitPrice);
+		}
 		
 		return $this;
 	}
@@ -138,7 +138,9 @@ class SupplierPurchasePrice implements SupplierPurchasePriceInterface
 	 */
 	public function setDiscount($discount)
 	{
-		$this->discount = (!is_numeric($discount) || $discount < 0 || $discount > 100) ? 0.0 : (float)$discount;
+		$discount = self::_filterPrice($discount);
+		$discount = ($discount > 100) ? 0.0 : $discount;
+		$this->unitPrice = $this->publicPrice * (1 - $discount / 100);
 		
 		return $this;
 	}
@@ -148,7 +150,7 @@ class SupplierPurchasePrice implements SupplierPurchasePriceInterface
 	 */
 	public function getDiscount()
 	{
-		return $this->discount;
+		return ($this->publicPrice == 0) ? 0 : (1 - ($this->unitPrice / $this->publicPrice)) * 100;
 	}
 	
 	/**
@@ -159,7 +161,12 @@ class SupplierPurchasePrice implements SupplierPurchasePriceInterface
 	 */
 	public function setPublicPrice($publicPrice)
 	{
+		$publicPrice = self::_filterPrice($publicPrice);
 		$this->publicPrice = $publicPrice;
+		if ($this->unitPrice == 0 || $this->unitPrice > $publicPrice)
+		{
+			$this->unitPrice = $publicPrice;
+		}
 		
 		return $this;
 	}
@@ -180,7 +187,7 @@ class SupplierPurchasePrice implements SupplierPurchasePriceInterface
 	 */
 	public function setDelivery($delivery)
 	{
-		$this->delivery = (!is_numeric($delivery) || $delivery < 0) ? 0.0 : (float)$delivery;
+		$this->delivery = self::_filterPrice($delivery);
 		
 		return $this;
 	}
@@ -201,7 +208,9 @@ class SupplierPurchasePrice implements SupplierPurchasePriceInterface
 	 */
 	public function setExpenseRatio($expenseRatio)
 	{
-		$this->expenseRatio = (!is_numeric($expenseRatio) || $expenseRatio < 0) ? 0.0 : (float)$expenseRatio;
+		// @todo change with ratio
+		$expenseRatio = self::_filterPrice($expenseRatio);
+		$this->expense = $this->unitPrice * ($expenseRatio / 100);
 		
 		return $this;
 	}
@@ -211,7 +220,28 @@ class SupplierPurchasePrice implements SupplierPurchasePriceInterface
 	 */
 	public function getExpenseRatio()
 	{
-		return $this->expenseRatio;
+		return ($this->unitPrice == 0) ? 0 : ($this->expense * 100) / $this->unitPrice;
+	}
+	
+	/**
+	 * Set the expense
+	 *
+	 * @param float $expense
+	 * @return self
+	 */
+	public function setExpense($expense)
+	{
+		$this->expense = self::_filterPrice($expense);
+	
+		return $this;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getExpense()
+	{
+		return $this->expense;
 	}
 	
 	/**
@@ -219,6 +249,11 @@ class SupplierPurchasePrice implements SupplierPurchasePriceInterface
 	 */
 	public function getTotalPrice()
 	{
-		return $this->getUnitPrice() * (1 - $this->getDiscount() / 100) * (1 + $this->getExpenseRatio() / 100) + $this->getDelivery();
+		return $this->getUnitPrice() + $this->getExpense() + $this->getDelivery();
+	}
+	
+	private static function _filterPrice($price)
+	{
+		return (!is_numeric($price) || $price < 0) ? 0.0 : (float)$price;
 	}
 }

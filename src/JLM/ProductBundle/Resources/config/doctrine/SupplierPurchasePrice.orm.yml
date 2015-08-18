@@ -14,10 +14,9 @@ JLM\ProductBundle\Entity\SupplierPurchasePrice:
     publicPrice:
       type: decimal
       scale: 2
-    discount:
-      type: smallint
-    expenseRatio:
-      type: smallint
+    expense:
+      type: decimal
+      scale: 2
     delivery:
       type: decimal
       scale: 2

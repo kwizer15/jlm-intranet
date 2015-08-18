@@ -75,12 +75,12 @@ class SupplierPurchasePriceTest extends \PHPUnit_Framework_TestCase
     public function getValidDiscounts()
     {
     	return array(
-    			array(0),
-    			array(0.0),
-    			array(50.5),
-    			array(45.58),
-    			array(99.9999),
-    			array(100.00),
+    			array(  100,   0   , 100  ),
+    			array(   50,   0.0 ,  50  ),
+    			array(  100,  50.5 ,  49.5),
+    			array( 1000,  45.58, 544.2),
+    			array(20000,  99.99,   2  ),
+    			array(   80, 100.00,   0  ),
     	);
     }
 
@@ -144,7 +144,8 @@ class SupplierPurchasePriceTest extends \PHPUnit_Framework_TestCase
     public function testValidUnitPrice($price)
     {
         $this->assertSame($this->entity, $this->entity->setUnitPrice($price));
-        $this->assertSame($price, $this->entity->getUnitPrice());
+        $this->assertEquals($price, $this->entity->getUnitPrice());
+        $this->assertEquals($price, $this->entity->getPublicPrice());
     }
 
     /**
@@ -155,14 +156,53 @@ class SupplierPurchasePriceTest extends \PHPUnit_Framework_TestCase
     	$this->assertSame($this->entity, $this->entity->setUnitPrice($price));
     	$this->assertEquals(0, $this->entity->getUnitPrice());
     }
-      
+    
+    /**
+     * @dataProvider getValidPrices
+     */
+    public function testValidPublicPrice($price)
+    {
+    	$this->assertSame($this->entity, $this->entity->setPublicPrice($price));
+    	$this->assertEquals($price, $this->entity->getPublicPrice());
+    	$this->assertEquals($price, $this->entity->getUnitPrice());
+    }
+    
+    /**
+     * @dataProvider getBadPrices
+     */
+    public function testBadPublicPrice($price)
+    {
+    	$this->assertSame($this->entity, $this->entity->setPublicPrice($price));
+    	$this->assertEquals(0, $this->entity->getPublicPrice());
+    }
+    
+    /**
+     * @dataProvider getValidPrices
+     */
+    public function testValidExpense($price)
+    {
+    	$this->assertSame($this->entity, $this->entity->setExpense($price));
+    	$this->assertEquals($price, $this->entity->getExpense());
+    }
+    
+    /**
+     * @dataProvider getBadPrices
+     */
+    public function testBadExpense($price)
+    {
+    	$this->assertSame($this->entity, $this->entity->setExpense($price));
+    	$this->assertEquals(0, $this->entity->getExpense());
+    }
+    
     /**
      * @dataProvider getValidDiscounts
      */
-    public function testValidDiscount($discount)
+    public function testValidDiscount($publicPrice, $discount, $unitPrice)
     {
+    	$this->entity->setPublicPrice($publicPrice);
         $this->assertSame($this->entity, $this->entity->setDiscount($discount));
         $this->assertEquals($discount, $this->entity->getDiscount());
+        $this->assertEquals($unitPrice, $this->entity->getUnitPrice());
     }
  
     /**
@@ -179,6 +219,7 @@ class SupplierPurchasePriceTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidExpenseRatio($ratio)
     {
+    	$this->entity->setPublicPrice(1000.0);
     	$this->assertSame($this->entity, $this->entity->setExpenseRatio($ratio));
     	$this->assertEquals($ratio, $this->entity->getExpenseRatio());
     }
@@ -229,9 +270,9 @@ class SupplierPurchasePriceTest extends \PHPUnit_Framework_TestCase
      * @param float $delivery
      * @param float $totalPrice
      */
-    public function testTotalPrice($unitPrice, $discount, $expenseRatio, $delivery, $totalPrice)
+    public function testTotalPrice($publicPrice, $discount, $expenseRatio, $delivery, $totalPrice)
     {
-        $this->entity->setUnitPrice($unitPrice);
+        $this->entity->setPublicPrice($publicPrice);
         $this->entity->setDiscount($discount);
         $this->entity->setExpenseRatio($expenseRatio);
         $this->entity->setDelivery($delivery);
