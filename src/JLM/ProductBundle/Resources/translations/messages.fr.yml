@@ -1,0 +1,30 @@
+jlm_product_product:
+  labels:
+    reference: Référence
+    barcode: Code barre
+    category: Famille de produit
+    designation: Désignation
+    description: Description longue
+    unity: Unité
+    unitPrice: PVHT
+    supplierPurchasePrices:
+      label: Offres fournisseurs
+Sumbit: Enregistrer
+
+jlm_product_supplierPurchasePrice:
+  labels:
+    priority: "#"
+    supplier: Fournisseur
+    reference: Référence
+    publicPrice: Prix pubilc
+    discount: Remise
+    unitPrice: Prix net
+    expenseRatio: "Frais %"
+    expense: Frais
+    delivery: Port
+    totalPrice: Total achat
+    coeficient: Coef.
+    margin: Marge
+    sellPrice: PV HT
+
+

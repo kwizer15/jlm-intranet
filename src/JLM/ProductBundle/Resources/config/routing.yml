@@ -12,7 +12,7 @@ jlm_product_productcategory_show:
     
 jlm_product_productcategory_new:
     path:   /productcategory/new
-    defaults:  { _controller: "JLMProductBundle:ProductCategory:new" }
+    defaults:  { _controller: "JLMProductBundle:ProductCategory:create" }
     methods: [GET]
     
 jlm_product_productcategory_create:
@@ -22,7 +22,7 @@ jlm_product_productcategory_create:
     
 jlm_product_productcategory_edit:
     path:   /productcategory/{id}/edit
-    defaults:  { _controller: "JLMProductBundle:ProductCategory:edit" }
+    defaults:  { _controller: "JLMProductBundle:ProductCategory:update" }
     methods: [GET]
 
 jlm_product_productcategory_update:
@@ -60,7 +60,7 @@ jlm_product_product_show:
     
 jlm_product_product_new:
     path:   /product/new
-    defaults:  { _controller: "JLMProductBundle:Product:new" }
+    defaults:  { _controller: "JLMProductBundle:Product:create" }
     methods: [GET]
     
 jlm_product_product_create:
@@ -70,7 +70,7 @@ jlm_product_product_create:
     
 jlm_product_product_edit:
     path:   /product/{id}/edit
-    defaults:  { _controller: "JLMProductBundle:Product:edit" }
+    defaults:  { _controller: "JLMProductBundle:Product:update" }
     methods: [GET]
     
 jlm_product_product_update:

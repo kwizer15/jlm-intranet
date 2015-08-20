@@ -11,46 +11,36 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>Fournisseur</th>
-			<th>Référence</th>
-			<th>Prix public</th>
-			<th>Remise</th>
-			<th>Prix net</th>
-			<th>Frais %</th>
-			<th>Frais</th>
-			<th>Port</th>
-			<th>Total achat</th>
-			<th>Coef.</th>
-			<th>Marge</th>
+			<th>{{ 'jlm_product_supplierPurchasePrice.labels.priority'|trans }}</th>
+			<th>{{ 'jlm_product_supplierPurchasePrice.labels.supplier'|trans }}</th>
+			<th>{{ 'jlm_product_supplierPurchasePrice.labels.reference'|trans }}</th>
+			<th>{{ 'jlm_product_supplierPurchasePrice.labels.publicPrice'|trans }}</th>
+			<th>{{ 'jlm_product_supplierPurchasePrice.labels.discount'|trans }}</th>
+			<th>{{ 'jlm_product_supplierPurchasePrice.labels.unitPrice'|trans }}</th>
+			<th>{{ 'jlm_product_supplierPurchasePrice.labels.expenseRatio'|trans }}</th>
+			<th>{{ 'jlm_product_supplierPurchasePrice.labels.expense'|trans }}</th>
+			<th>{{ 'jlm_product_supplierPurchasePrice.labels.delivery'|trans }}</th>
+			<th>{{ 'jlm_product_supplierPurchasePrice.labels.totalPrice'|trans }}</th>
+			<th>{{ 'jlm_product_supplierPurchasePrice.labels.coeficient'|trans }}</th>
+			<th>{{ 'jlm_product_supplierPurchasePrice.labels.margin'|trans }}</th>
+			<th>{{ 'jlm_product_supplierPurchasePrice.labels.sellPrice'|trans }}</th>
 			<th class="span1"><a href="#" class="btn btn-success" id="{{ id }}_addSupplierPurchasePrice">{{ 'plus-sign'|icon(true) }}</a></th>
 		</tr>
 	</thead>
 {{ form_row(form.supplierPurchasePrices) }}
 </table>
 <div class="form-actions">
-<a href="{{ path('jlm_product_product') }}" class="btn">{{ 'arrow-left'|icon }} Retour à la liste</a>
 {{ form_rest(form) }}
+<a href="{{ path('jlm_product_product') }}" class="btn">{{ 'arrow-left'|icon }} Retour à la liste</a>
 </div>
 </fieldset>
 {% endblock jlm_product_product_widget %}
 
 {% block jlm_product_supplierpurchaseprice_row %}
 	<tr id="{{ id }}">
-		<td class="control-group">{{ form_widget(form.supplier) }}</td>
-		<td class="control-group">{{ form_widget(form.reference) }}</td>
-		<td class="control-group">{{ form_widget(form.publicPrice) }}</td>
-		<td class="control-group">{{ form_widget(form.discount) }}</td>
-		<td class="control-group">{{ form_widget(form.unitPrice) }}</td>
-		<td class="control-group">{{ form_widget(form.expenseRatio) }}</td>
-		<td class="control-group">{{ form_widget(form.expense) }}</td>
-		<td class="control-group">{{ form_widget(form.delivery) }}</td>
-		<td class="control-group">{{ form_widget(form.totalPrice, {'disabled':true}) }}</td>
-		<td class="control-group">
-	    	<div class="input-append"><input type="text" class="input-mini" id="{{ id }}_coef"><span class="add-on">%</span></div>
-	    </td>
-	    <td class="control-group">
-	    	<div class="input-append"><input type="text" class="input-mini" id="{{ id }}_margin"><span class="add-on">€</span></div>
-	    </td>
+		{% for child in form %}
+		<td class="control-group">{{ form_widget(child) }}</td>
+		{% endfor %}
 	    <td><a href="#" class="btn btn-danger" id="{{ id }}_remove">{{ 'minus-sign'|icon(true) }}</a></td>
 	</tr>
 {% endblock %}

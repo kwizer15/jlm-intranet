@@ -334,6 +334,18 @@ class Product implements ProductInterface
     }
     
     /**
+     * Get main supplier purchase prices
+     * @return SupplierPurchasePriceInterface
+     * @since 2.0.0
+     */
+    public function getMainPurchasePrice()
+    {
+    	return array_reduce($this->supplierPurchasePrices->toArray(), function ($carry, $item) {
+    		return ($carry === null || $carry->getPriority() > $item->getPriority()) ? $item : $carry;
+    	});
+    }
+    
+    /**
      * Set purchase
      *
      * @param decimal $purchase

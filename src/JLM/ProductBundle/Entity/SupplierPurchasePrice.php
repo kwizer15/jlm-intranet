@@ -54,6 +54,11 @@ class SupplierPurchasePrice implements SupplierPurchasePriceInterface
 	private $expense;
 	
 	/**
+	 * @var int
+	 */
+	private $priority;
+	
+	/**
 	 * Get id
 	 * @return int
 	 */
@@ -250,6 +255,18 @@ class SupplierPurchasePrice implements SupplierPurchasePriceInterface
 	public function getTotalPrice()
 	{
 		return $this->getUnitPrice() + $this->getExpense() + $this->getDelivery();
+	}
+	
+	public function getPriority()
+	{
+		return $this->priority;
+	}
+	
+	public function setPriority($priority)
+	{
+		$this->priority = $priority;
+		
+		return $this;
 	}
 	
 	private static function _filterPrice($price)

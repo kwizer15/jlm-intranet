@@ -55,7 +55,7 @@ JLM\ProductBundle\Entity\Product:
       joinTable:
         name: jlm_product_product_join_supplierpurchaseprice
         joinColumns:
-          prooduct_id:
+          product_id:
             referencedColumnName: id
         inverseJoinColumns:
           supplierpurchaseprice_id:

@@ -26,16 +26,20 @@ class SupplierPurchasePriceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('supplier',null,array('label'=>'Fournisseur')) // Typeahead
-       		->add('reference',null,array('label'=>'Référence','attr'=>array('class'=>'input-small')))
-			->add('publicPrice','money',array('label'=>'Prix d\'achat HT','grouping'=>true,'attr'=>array('class'=>'input-small')))
-            ->add('discount','percent',array('mapped'=>false, 'type'=>'integer','label'=>'Remise fournisseur','attr'=>array('class'=>'input-mini')))
+        	->add('priority','hidden')
+        	->add('supplier') // Typeahead
+       		->add('reference',null,array('attr'=>array('class'=>'input-mini')))
+			->add('publicPrice','money',array('grouping'=>true,'attr'=>array('class'=>'input-mini')))
+            ->add('discount','percent',array('mapped'=>false,'attr'=>array('class'=>'input-mini')))
             //->add('discountAmount','money',array('mapped'=>false, 'label'=>'Montant remise','attr'=>array('class'=>'input-mini')))
-            ->add('unitPrice','money',array('label'=>'Prix d\'achat HT','grouping'=>true,'attr'=>array('class'=>'input-small')))
-            ->add('expense','money',array('label'=>'Frais','attr'=>array('class'=>'input-mini')))
-            ->add('expenseRatio','percent',array('mapped'=>false, 'type'=>'integer','label'=>'Frais','attr'=>array('class'=>'input-mini')))
-            ->add('delivery','money',array('label'=>'Port','grouping'=>true,'attr'=>array('class'=>'input-mini')))
-            ->add('totalPrice','money',array('mapped'=>false, 'label'=>'Total','grouping'=>true,'attr'=>array('class'=>'input-mini')))
+            ->add('unitPrice','money',array('grouping'=>true,'attr'=>array('class'=>'input-small')))
+            ->add('expenseRatio','percent',array('mapped'=>false,'attr'=>array('class'=>'input-mini')))
+            ->add('expense','money',array('grouping'=>true,'attr'=>array('class'=>'input-mini')))
+            ->add('delivery','money',array('grouping'=>true,'attr'=>array('class'=>'input-mini')))
+            ->add('totalPrice','money',array('mapped'=>false,'grouping'=>true,'attr'=>array('class'=>'input-mini')))
+            ->add('coeficient','percent',array('mapped'=>false,'attr'=>array('class'=>'input-mini')))
+            ->add('margin','money',array('mapped'=>false,'grouping'=>true,'attr'=>array('class'=>'input-mini')))
+            ->add('sellPrice','money',array('mapped'=>false,'grouping'=>true,'attr'=>array('class'=>'input-mini')))
         ;
     }
 

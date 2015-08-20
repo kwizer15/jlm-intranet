@@ -64,31 +64,8 @@ class ProductController extends Controller
 
         return array(
             'entity'      => $entity,
-        	'stock'=>$stock,
-            'delete_form' => $deleteForm->createView(),        );
-    }
-
-    /**
-     * Displays a form to create a new Product entity.
-     *
-     * @Template()
-     * @Secure(roles="ROLE_USER")
-     */
-    public function newAction()
-    {
-        $entity = new Product();
-        $entity->setUnity('pièce');
-        $entity->setDiscountSupplier(0);
-        $entity->setExpenseRatio(10);
-        $entity->setShipping(0);
-        $entity->setUnitPrice(0);
-        
-        $form   = $this->createNewForm($entity);
-        	
-        	
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
+        	'stock' => $stock,
+            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -100,42 +77,19 @@ class ProductController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity  = new Product();
-
-        $form    = $this->createNewForm($entity);
+        $form = $this->createForm('jlm_product_product');
         $form->handleRequest($request);
-
         if ($form->isValid())
         {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+        	$entity = $form->getData();
             $this->get('event_dispatcher')->dispatch(JLMProductEvents::PRODUCT_CREATE, new ProductEvent($entity));
             
-            return $this->redirect($this->generateUrl('jlm_product_product_show', array('id' => $entity->getId())));
-            
+            return $this->redirect($this->generateUrl('jlm_product_product_show', array('id' => $entity->getId())));            
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $form->getData(),
             'form'   => $form->createView()
-        );
-    }
-
-    /**
-     * Displays a form to edit an existing Product entity.
-     *
-     * @Template()
-     * @Secure(roles="ROLE_USER")
-     */
-    public function editAction($id)
-    {
-        $entity = $this->getEntity($id);
-        $editForm = $this->createEditForm($entity);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
         );
     }
 
@@ -148,22 +102,16 @@ class ProductController extends Controller
     public function updateAction(Request $request, $id)
     {
         $entity = $this->getEntity($id);
-        $editForm   = $this->createEditForm($entity);
+        $form = $this->createForm('jlm_product_product', $entity);
 
-        $editForm->handleRequest($request);
+        $form->handleRequest($request);
 
-        if ($editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('jlm_product_product_show', array('id' => $entity->getId())));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        );
+        return $form->isValid()
+        	? $this->redirect($this->generateUrl('jlm_product_product_show', array('id' => $entity->getId())))
+            : array(
+            	'entity'      => $entity,
+            	'form'   => $form->createView(),
+        	);
     }
 
     /**
@@ -218,25 +166,5 @@ class ProductController extends Controller
         ->add('id', 'hidden')
         ->getForm()
         ;
-    }
-    
-    /**
-     * Get the edit form
-     * @param ProductCategory $entity
-     * @return \Symfony\Component\Form\Form
-     */
-    private function createEditForm(Product $entity)
-    {
-        return $this->createForm(new ProductType(), $entity);
-    }
-    
-    /**
-     * Get the new form
-     * @param ProductCategory $entity
-     * @return \Symfony\Component\Form\Form
-     */
-    private function createNewForm(Product $entity)
-    {
-        return $this->createForm(new ProductType(), $entity);
     }
 }

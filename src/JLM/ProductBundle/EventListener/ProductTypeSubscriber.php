@@ -15,6 +15,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvents;
 use JLM\ProductBundle\Entity\SupplierPurchasePrice;
 use Symfony\Component\Form\FormEvent;
+use JLM\ProductBundle\Entity\Product;
 
 
 /**
@@ -37,9 +38,16 @@ class ProductTypeSubscriber implements EventSubscriberInterface
 	 */
 	public function onPreSetData(FormEvent $event)
 	{
-		if (!sizeof($event->getData()->getSupplierPurchasePrices()))
+		$entity = ($event->getData() instanceof Product) ? $event->getData() : new Product();
+		$entity->setUnity('pièce');
+		$entity->setDiscountSupplier(0);
+		$entity->setExpenseRatio(10);
+		$entity->setShipping(0);
+		$entity->setUnitPrice(0);
+		if (!sizeof($entity->getSupplierPurchasePrices()))
 		{
-			$event->getData()->addSupplierPurchasePrice(new SupplierPurchasePrice());
+			$entity->addSupplierPurchasePrice(new SupplierPurchasePrice());
 		}
+		$event->setData($entity);
 	}
 }
