@@ -30,7 +30,7 @@ class FixingReportMailBuilder extends FixingMailBuilder
 		.$this->getFixing()->getInstallationCode().chr(10)
 		.$this->getFixing()->getPlace().chr(10)
 		.chr(10)
-		.'nous avous constaté '.$this->_getConstat().chr(10)
+		.'nous avons constaté '.$this->_getConstat().chr(10)
 		.chr(10)
 		.'Cordialement'
 		.$this->_getSignature()

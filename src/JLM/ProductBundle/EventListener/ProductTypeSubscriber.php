@@ -40,13 +40,10 @@ class ProductTypeSubscriber implements EventSubscriberInterface
 	{
 		$entity = ($event->getData() instanceof Product) ? $event->getData() : new Product();
 		$entity->setUnity('pièce');
-		$entity->setDiscountSupplier(0);
-		$entity->setExpenseRatio(10);
-		$entity->setShipping(0);
-		$entity->setUnitPrice(0);
 		if (!sizeof($entity->getSupplierPurchasePrices()))
 		{
-			$entity->addSupplierPurchasePrice(new SupplierPurchasePrice());
+			$spp = new SupplierPurchasePrice();
+			$entity->addSupplierPurchasePrice($spp);
 		}
 		$event->setData($entity);
 	}

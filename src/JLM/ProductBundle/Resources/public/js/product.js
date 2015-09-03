@@ -23,7 +23,7 @@
 				this.$unitPrice = this.$element.find(prefix + "unitPrice");
 				this.$btnAddSPP = this.$element.find(prefix + "addSupplierPurchasePrice");
 				this.$supplierPurchasePrice = this.$element.find(prefix + "supplierPurchasePrices");
-				this.$supplierPurchasePrice.children().supplierpurchaseprice({'sellPriceElement':this.$unitPrice});
+				this.$supplierPurchasePrice.children().supplierpurchaseprice({sellPriceElement: this.$unitPrice});
 				this.lastLineNumber = this.$supplierPurchasePrice.children().size();		  
 				this.$btnAddSPP.on('click', $.proxy(this.addSupplierLine,this));
 			}
@@ -32,8 +32,9 @@
 		e.stopPropagation()
 		e.preventDefault()
 		$line = $(this.$supplierPurchasePrice.attr('data-prototype').replace(/__name__/g, this.lastLineNumber));
+		$line.supplierpurchaseprice({'sellPriceElement':this.$unitPrice,'priority':this.lastLineNumber});
 		this.$supplierPurchasePrice.append($line);
-		$line.supplierpurchaseprice({'sellPriceElement':this.$unitPrice});
+		
 
 		this.lastLineNumber++;
 		return this;
@@ -85,91 +86,175 @@
 			constructor: SupplierPurchasePrice
 
 			, listen : function() {
-				var stdInput = function(context, name, calcul) {
+				var stdInput = function(context, name, calculMe, listen) {
 					return {
-						$element: context.$element.find("#" + context.$element.attr('id') + "_" + name),
-						value: function() { return parseFloat(this.$element.val().replace(',','.').replace(/[\s]{1,}/g,"")); },
 						context: context,
-						calcul: calcul
+						updated: false,
+						$element: (typeof name == "string") ? context.$element.find("#" + context.$element.attr('id') + "_" + name) : name,
+						value: function() { return parseFloat(this.$element.val().replace(',','.').replace(/[\s]{1,}/g,"")) },
+						valueUpdated: function() { if (!this.updated) { this.ud()}; return this.value(); },
+						onType: function() {
+							this.updated = true;
+							$ctrlgrp = this.$element.parent().parent();
+							$ctrlgrp.toggleClass('error', this.value() < 0);
+							//console.log('Change ' + this.$element.attr('id'))
+							this.$element.trigger({
+								type: "update"
+							});
+							//this.$element.change();
+							
+						},
+						init: function() { this.$element.val(number_format(this.value(),2,',',' ')); },
+						ud: function() {
+							if (!this.updated) {
+								this.updated = true;
+								var calc = calculMe();
+								calc = (calc === undefined) ? this.value() : calc;
+								this.$element.val(number_format(calc,2,',',' '));
+								
+							}
+						},
+						update: function(e) { 
+							e.stopPropagation()
+							e.preventDefault()
+							//console.log('Call ' + this.$element.attr('id'))
+							if (!this.updated) {
+								this.ud();
+								this.onType();
+							}
+							return this;
+						},
+						reset: function() { this.updated = false },
+						listen: listen
 					}
 				};
+				/* @todo Améliorer avec des evenements sur chaques case
+				 * Exemple :
+				 * unitPrice : change si keyup sur publicPrice ou discount
+				 * discount : publicPrice ou unitPrice
+				 * expense : unitPrice ou expenseRatio
+				 * expenseRatio : expense
+				 * delivery : jamais
+				 * totalPrice : unitPrice, expense ou delivery
+				 * coef : margin ou sellPrice
+				 * margin : coef ou sellPrice
+				 * sellPrice : coef, margin, totalPrice ou globalPrice(priority=0)
+				 * globalPrice : sellPrice(priority=0)
+				 * + drapeau sur chaque case pour la signaler à jour (anti-récursivité)
+				 */
 				context = this;
 				this.datas = {
-						publicPrice: stdInput(context, "publicPrice", function() {
-								return this.value()
-							}),
+						priority: stdInput(context, "priority", function() {}, function() {}),
+						publicPrice: stdInput(context, "publicPrice", function() {}, function() {}),
+						unitPrice: stdInput(context, "unitPrice", function() {
+							var publicPrice = context.datas.publicPrice.valueUpdated(),
+							discount = context.datas.discount.valueUpdated();
+							return publicPrice * (1 - discount / 100);
+						}, function() {
+							context.datas.discount.$element.on('update', $.proxy(this.update, this))
+						}),
+						
 						discount: stdInput(context, "discount", function() {
-							var unitPrice = context.datas.unitPrice.value(),
-							publicPrice = context.datas.publicPrice.value();
+							var unitPrice = context.datas.unitPrice.valueUpdated(),
+							publicPrice = context.datas.publicPrice.valueUpdated();
 							if (publicPrice == 0) {
 								return 0;
 							}
 							return (1 - (unitPrice / publicPrice)) * 100;
+						}, function() {
+							context.datas.unitPrice.$element.on('update', $.proxy(this.update, this))
 						}), 
-						unitPrice: stdInput(context, "unitPrice", function() {
-							var publicPrice = context.datas.publicPrice.value(),
-							discount = context.datas.discount.value();
-							return publicPrice * (1 - discount / 100);
-						}),
-						expenseRatio: stdInput(context, "expenseRatio", function() {
-							return this.value();
-						}),
+						
 						expense: stdInput(context, "expense", function() {
-							var unitPrice = context.datas.unitPrice.value(),
-							expenseRatio = context.datas.expenseRatio.value();
+							var unitPrice = context.datas.unitPrice.valueUpdated(),
+							expenseRatio = context.datas.expenseRatio.valueUpdated();
 							return unitPrice * (expenseRatio / 100 );
+						}, function() {
+							context.datas.expenseRatio.$element.on('update', $.proxy(this.update, this))
+							//context.datas.unitPrice.$element.on('update', $.proxy(this.update, this))
 						}),
 						
-						delivery: stdInput(context, "delivery", function() {
-							return this.value();
+						expenseRatio: stdInput(context, "expenseRatio", function() {}, function() {
+							context.datas.unitPrice.$element.on('update', $.proxy(this.update, this))
 						}),
+						delivery: stdInput(context, "delivery", function() {}, function() {}),
 						totalPrice: stdInput(context, "totalPrice", function() {
-							var unitPrice = context.datas.unitPrice.value(),
-							expense = context.datas.expense.value(),
-							delivery = context.datas.delivery.value();
+							var unitPrice = context.datas.unitPrice.valueUpdated(),
+							expense = context.datas.expense.valueUpdated(),
+							delivery = context.datas.delivery.valueUpdated();
 							return unitPrice + expense + delivery;
+						}, function() {
+							context.datas.expense.$element.on('update', $.proxy(this.update, this))
+							context.datas.delivery.$element.on('update', $.proxy(this.update, this))
 						}),
 						coef: stdInput(context, "coeficient", function() {
-							var sellPrice = context.datas.sellPrice.value(),
-							totalPrice = context.datas.totalPrice.value();
-							if (totalPrice == 0) {
-								return 0;
-							}
-							return ((sellPrice / totalPrice) - 1) * 100;
+							console.log('COEF : ' + context.datas.coef.$element.attr('id'))
+							var totalPrice = context.datas.totalPrice.valueUpdated(),
+							margin = context.datas.margin.valueUpdated()
+							return (totalPrice == 0) ? 0 : (margin / totalPrice) * 100;
+						}, function() {
+							context.datas.margin.$element.on('update', $.proxy(this.update, this))
 						}),
 						margin: stdInput(context, "margin", function() {
-							var coef = context.datas.coef.value(),
-							totalPrice = context.datas.totalPrice.value();
-							return totalPrice * (coef / 100);
+							console.log('MARGIN : ' + context.datas.margin.$element.attr('id'))
+							var totalPrice = context.datas.totalPrice.valueUpdated()
+							if (context.datas.priority.value() != 0 || context.datas.sellPrice.updated) {
+								var sellPrice = context.datas.sellPrice.valueUpdated()
+								return sellPrice - totalPrice;
+							}
+							if (context.datas.coef.updated) {
+								var coef = context.datas.coef.valueUpdated()
+								return (coef / 100) * totalPrice;
+							}
+							
+						}, function() {
+							context.datas.totalPrice.$element.on('update', $.proxy(this.update, this))
+							context.datas.sellPrice.$element.on('update', $.proxy(this.update, this))
+							context.datas.coef.$element.on('update', $.proxy(this.update, this))
 						}),
 						sellPrice: stdInput(context, "sellPrice", function() {
-							var totalPrice = context.datas.totalPrice.value(),
-							margin = context.datas.margin.value();
-							return totalPrice + margin;
-						}),
-						priority: stdInput(context, "priority", function() {
-							return this.value();
-						}),							
-						globalSellPrice: {
-							$element: this.options.sellPriceElement,
-							value: function() { return parseFloat(this.$element.val().replace(',','.').replace(/[\s]{1,}/g,"")); },
-							that: this,
-							calcul: function() {
-								if (this.that.datas.priority.value() == 1) {
-									return this.that.datas.sellPrice.value();									
-								}
-								
-								return this.value();
+							console.log('SELL : ' + context.datas.sellPrice.$element.attr('id'))
+							if (context.datas.priority.value() != 0 || context.datas.globalSellPrice.updated) {
+								return context.datas.globalSellPrice.valueUpdated();
 							}
-						}
+							var totalPrice = context.datas.totalPrice.valueUpdated(),
+							margin = context.datas.margin.valueUpdated();
+							return totalPrice + margin;									
+						}, function() {
+							context.datas.globalSellPrice.$element.on('update', $.proxy(this.update, this))
+							if (context.datas.priority.value() == 0) {
+								console.log('UPDATE GLOBAL PRICE')
+								context.datas.coef.$element.on('update', $.proxy(this.update, this))
+								context.datas.margin.$element.on('update', $.proxy(this.update, this))
+							}
+						}),
+													
+						globalSellPrice: stdInput(context, context.options.sellPriceElement, function() {
+							if (context.datas.priority.value() == 0 && context.datas.sellPrice.updated) {
+								return context.datas.sellPrice.valueUpdated();
+							}
+							
+						}, function() {
+							if (context.datas.priority.value() == 0) {
+								context.datas.sellPrice.$element.on('update', $.proxy(this.update, this))
+							}
+						})
+						
 				};
 
 				this.$btnRemove    = this.$element.find("#" + this.$element.attr('id') + "_" + "remove");
 				this.$btnRemove.on('click', $.proxy(this.remove,this));
+				this.datas.priority.$element.val(this.options.priority);
+				if (this.datas.priority.value() != 0) {
+					this.datas.coef.$element.attr('disabled','disabled');
+				}
 				that = this;
 				$.each(this.datas, function(index, data) {
+					data.init();
+					data.listen();
 					data.$element.on('keyup', $.proxy(that.calcul, that))
-					data.$element.keyup();
+					data.$element.on('change', $.proxy(data.init, data))
+					data.$element.trigger({type:'update'})
 				})		
 			}
 
@@ -180,23 +265,22 @@
 			$(this).remove();
 		});
 		return this;
-	}
-
+		}
 	, calcul : function(e) {
 		e.stopPropagation()
 		e.preventDefault()
-		$.each(this.datas, function(index, data) {
-			if ($(e.target).attr('id') != data.$element.attr('id')) {
-				data.$element.val(number_format(data.calcul(),2,',',' '));
-			}
-		$ctrlgrp = data.$element.parent().parent();
-		$ctrlgrp.toggleClass('warning', (index == 'coef' || index == 'expenseRatio') && data.value() < 10 && data.value() >= 0);
-		$ctrlgrp.toggleClass('error', data.value() < 0);
-
+		elem = undefined;
+		that = this;
+		$.each(that.datas, function(index, data) {
+			data.reset();
+			elem = ($(e.target).attr('id') == data.$element.attr('id')) ? data : elem;
 		});
-
+		if (elem != undefined) {
+			elem.onType();
+		}
+		
 		return this;
-	}
+		}
 	}
 
 
@@ -217,9 +301,10 @@
 			remove: {
 				animation: function($line, action) {
 					$line.fadeOut(500, action);
-				},
-				sellPriceElement: $('div')
-			}
+				}
+			},
+			sellPriceElement: $('div'),
+			priority: 0
 	}
 
 	$.fn.supplierpurchaseprice.Constructor = SupplierPurchasePrice

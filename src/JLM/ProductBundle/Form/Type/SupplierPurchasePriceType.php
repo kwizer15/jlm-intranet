@@ -27,19 +27,19 @@ class SupplierPurchasePriceType extends AbstractType
     {
         $builder
         	->add('priority','hidden')
-        	->add('supplier') // Typeahead
+        	->add('supplier',null,array('attr'=>array('class'=>'input-small'))) // Typeahead
        		->add('reference',null,array('attr'=>array('class'=>'input-mini')))
 			->add('publicPrice','money',array('grouping'=>true,'attr'=>array('class'=>'input-mini')))
             ->add('discount','percent',array('mapped'=>false,'attr'=>array('class'=>'input-mini')))
             //->add('discountAmount','money',array('mapped'=>false, 'label'=>'Montant remise','attr'=>array('class'=>'input-mini')))
-            ->add('unitPrice','money',array('grouping'=>true,'attr'=>array('class'=>'input-small')))
+            ->add('unitPrice','money',array('grouping'=>true,'attr'=>array('class'=>'input-mini')))
             ->add('expenseRatio','percent',array('mapped'=>false,'attr'=>array('class'=>'input-mini')))
-            ->add('expense','money',array('grouping'=>true,'attr'=>array('class'=>'input-mini')))
+            ->add('expense','money',array('grouping'=>true,'disabled'=>true,'attr'=>array('class'=>'input-mini')))
             ->add('delivery','money',array('grouping'=>true,'attr'=>array('class'=>'input-mini')))
-            ->add('totalPrice','money',array('mapped'=>false,'grouping'=>true,'attr'=>array('class'=>'input-mini')))
+            ->add('totalPrice','money',array('mapped'=>false,'grouping'=>true,'disabled'=>true,'attr'=>array('class'=>'input-mini')))
             ->add('coeficient','percent',array('mapped'=>false,'attr'=>array('class'=>'input-mini')))
-            ->add('margin','money',array('mapped'=>false,'grouping'=>true,'attr'=>array('class'=>'input-mini')))
-            ->add('sellPrice','money',array('mapped'=>false,'grouping'=>true,'attr'=>array('class'=>'input-mini')))
+            ->add('margin','money',array('mapped'=>false,'grouping'=>true,'disabled'=>true,'attr'=>array('class'=>'input-mini')))
+            ->add('sellPrice','money',array('mapped'=>false,'grouping'=>true,'disabled'=>true,'attr'=>array('class'=>'input-mini')))
         ;
     }
 
