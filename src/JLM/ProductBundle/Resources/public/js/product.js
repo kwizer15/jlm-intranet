@@ -198,8 +198,8 @@
 						margin: stdInput(context, "margin", function() {
 							console.log('MARGIN : ' + context.datas.margin.$element.attr('id'))
 							var totalPrice = context.datas.totalPrice.valueUpdated()
-							if (context.datas.priority.value() != 0 || context.datas.sellPrice.updated) {
-								var sellPrice = context.datas.sellPrice.valueUpdated()
+							if (parseInt(context.datas.priority.value()) != 0 || context.datas.globalSellPrice.updated) {
+								var sellPrice = context.datas.globalSellPrice.valueUpdated()
 								return sellPrice - totalPrice;
 							}
 							if (context.datas.coef.updated) {
@@ -222,7 +222,7 @@
 							return totalPrice + margin;									
 						}, function() {
 							context.datas.globalSellPrice.$element.on('update', $.proxy(this.update, this))
-							if (context.datas.priority.value() == 0) {
+							if (parseInt(context.datas.priority.value()) == 0) {
 								console.log('UPDATE GLOBAL PRICE')
 								context.datas.coef.$element.on('update', $.proxy(this.update, this))
 								context.datas.margin.$element.on('update', $.proxy(this.update, this))
@@ -230,12 +230,12 @@
 						}),
 													
 						globalSellPrice: stdInput(context, context.options.sellPriceElement, function() {
-							if (context.datas.priority.value() == 0 && context.datas.sellPrice.updated) {
+							if (parseInt(context.datas.priority.value()) == 0 && context.datas.sellPrice.updated) {
 								return context.datas.sellPrice.valueUpdated();
 							}
 							
 						}, function() {
-							if (context.datas.priority.value() == 0) {
+							if (parseInt(context.datas.priority.value()) == 0) {
 								context.datas.sellPrice.$element.on('update', $.proxy(this.update, this))
 							}
 						})
