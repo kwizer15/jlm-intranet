@@ -1,0 +1,21 @@
+{% extends 'JLMFrontBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="container">
+	<div class="page-header text-center">
+	{% if door is defined %}
+		<h3>Cette installation est maintenue par</h3>
+	{% endif %}
+	{% image '@JLMFrontBundle/Resources/public/img/logo.png' output='/images/jlm-entreprise.png' %}
+    	<h1><img src="{{ asset_url }}" alt="JLM Entreprise"/></h1>
+	{% endimage %}
+	</div>
+	<div class="row">
+		<div class="col-lg-12 text-center">
+			<p>En cas de panne, appelez le 01 64 33 77 70<br>et signalez le numéro d'installation</p>
+        	<h1>{{ door.code }}</h1>
+        	<p>E-mail : <a href="mailto:secretariat@jlm-entreprise.fr?subject=Installation {{ door.code }}">secretariat@jlm-entreprise.fr</a>
+		</div>
+	</div>
+</div>
+{% endblock %}

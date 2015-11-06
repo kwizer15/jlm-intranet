@@ -1,0 +1,21 @@
+jlm_front_contacttype:
+  labels:
+    subject: Sujet
+    content: Votre message
+    company: Société
+    firstName: Prénom
+    lastName: Nom
+    address: Adresse
+    zip: Code postal
+    city: Ville
+    country: Pays
+    phone: Téléphone
+    email: Courriel
+Submit: Envoyer
+
+jlm_front_askquotetype:
+  labels:
+    firstName: Prénom
+    lastName: Nom
+    phone: Téléphone
+    email: Courriel

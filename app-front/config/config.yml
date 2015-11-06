@@ -1,0 +1,139 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+
+framework:
+    #esi:             ~
+    translator:      { fallbacks: ["%locale%"] }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_proxies: ~
+    session:         ~
+    fragments:       ~
+    http_method_override: true
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form:
+        resources: ['JLMFrontBundle:Form:translations.html.twig']
+
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    #bundles:        [ ]
+    #java: /usr/bin/java
+    filters:
+        cssrewrite: ~
+        #closure:
+        #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
+        #yui_css:
+        #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+        resolve_target_entities:
+            JLM\InstallationBundle\Model\InstallationInterface: JLM\FrontBundle\Entity\Door
+
+            JLM\AskBundle\Model\AskInterface: JLM\AskBundle\Entity\AskQuote
+            JLM\AskBundle\Model\PayerInterface: JLM\ModelBundle\Entity\Trustee
+            JLM\AskBundle\Model\SubjectInterface: JLM\ModelBundle\Entity\Site
+            JLM\AskBundle\Model\ContactInterface: JLM\ContactBundle\Entity\Person
+            JLM\AskBundle\Model\CommunicationMeansInterface: JLM\AskBundle\Entity\CommunicationMeans
+        
+            JLM\ContactBundle\Model\CountryInterface: JLM\ContactBundle\Entity\Country
+            JLM\ContactBundle\Model\CityInterface: JLM\ContactBundle\Entity\City
+            JLM\ContactBundle\Model\AddressInterface: JLM\ContactBundle\Entity\Address
+            JLM\ContactBundle\Model\ContactInterface: JLM\ContactBundle\Entity\Contact
+            JLM\ContactBundle\Model\CorporationContactInterface: JLM\ContactBundle\Entity\CorporationContact
+            JLM\ContactBundle\Model\PersonInterface: JLM\ContactBundle\Entity\Person
+            JLM\ContactBundle\Model\CorporationInterface: JLM\ContactBundle\Entity\Corporation
+            JLM\ContactBundle\Model\AssociationInterface: JLM\ContactBundle\Entity\Association
+            JLM\ContactBundle\Model\CompanyInterface: JLM\ContactBundle\Entity\Company
+            JLM\ContactBundle\Model\PhoneInterface: JLM\ContactBundle\Entity\Phone
+            
+            JLM\CondominiumBundle\Model\ManagerInterface: JLM\ModelBundle\Entity\Trustee            
+            JLM\CondominiumBundle\Model\AdministratorInterface: JLM\ModelBundle\Entity\Site
+            JLM\CondominiumBundle\Model\AdministratorMemberInterface: JLM\ModelBundle\Entity\SiteContact
+            
+            JLM\CommerceBundle\Model\BillInterface: JLM\CommerceBundle\Entity\Bill
+            JLM\CommerceBundle\Model\BillLineInterface: JLM\CommerceBundle\Entity\BillLine
+            JLM\CommerceBundle\Model\QuoteInterface: JLM\CommerceBundle\Entity\Quote
+            JLM\CommerceBundle\Model\QuoteVariantInterface: JLM\CommerceBundle\Entity\QuoteVariant
+            JLM\CommerceBundle\Model\QuoteLineInterface: JLM\CommerceBundle\Entity\QuoteLine
+            JLM\CommerceBundle\Model\CustomerInterface: JLM\ModelBundle\Entity\Trustee
+            JLM\CommerceBundle\Model\VATInterface: JLM\CommerceBundle\Entity\VAT
+            JLM\CommerceBundle\Model\BillSourceInterface: JLM\DailyBundle\Entity\Intervention
+            JLM\CommerceBundle\Model\BusinessInterface: JLM\ModelBundle\Entity\Site
+            JLM\CommerceBundle\Model\QuoteRecipientInterface: JLM\ContactBundle\Entity\Person
+            JLM\CommerceBundle\Model\OrderInterface: JLM\OfficeBundle\Entity\Order
+            
+            JLM\DailyBundle\Model\WorkInterface: JLM\DailyBundle\Entity\Work
+            JLM\DailyBundle\Model\InterventionInterface: JLM\DailyBundle\Entity\Intervention
+            JLM\DailyBundle\Model\FixingInterface: JLM\DailyBundle\Entity\Fixing
+            JLM\DailyBundle\Model\MaintenanceInterface: JLM\DailyBundle\Entity\Maintenance
+            JLM\DailyBundle\Model\PartFamilyInterface: JLM\DailyBundle\Entity\PartFamily
+            
+            JLM\ProductBundle\Model\ProductInterface: JLM\ProductBundle\Entity\Product
+            JLM\ProductBundle\Model\SupplierInterface: JLM\ProductBundle\Entity\Supplier
+            JLM\ProductBundle\Model\ProductCategoryInterface: JLM\ProductBundle\Entity\ProductCategory
+            JLM\ProductBundle\Model\ProductPriceInterface: JLM\ProductBundle\Entity\ProductPrice
+            
+            JLM\InstallationBundle\Model\BayInterface: JLM\ModelBundle\Entity\Site
+            
+            JLM\ContractBundle\Model\ContractInterface: JLM\ContractBundle\Entity\Contract
+
+            JLM\TransmitterBundle\Model\AttributionInterface: JLM\TransmitterBundle\Entity\Attribution
+            JLM\TransmitterBundle\Model\TransmitterInterface: JLM\TransmitterBundle\Entity\Transmitter
+            
+            JLM\FollowBundle\Model\ThreadInterface: JLM\FollowBundle\Entity\Thread
+            JLM\FollowBundle\Model\StarterInterface: JLM\FollowBundle\Entity\Starter
+            
+            JLM\OfficeBundle\Model\OrderInterface: JLM\OfficeBundle\Entity\Order
+            JLM\OfficeBundle\Model\OrderLineInterface: JLM\OfficeBundle\Entity\OrderLine
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+    
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: JLM\UserBundle\Entity\User
+    
+genemu_form:
+    date: ~
+    select2: ~

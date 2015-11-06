@@ -1,0 +1,175 @@
+{% extends 'JLMFrontBundle::layout.html.twig' %}
+
+{% block caroussel %}
+    <div class="container">
+    <div class="jumbotron text-center">
+    {% image '@JLMFrontBundle/Resources/public/img/logo.png' output='images/jlm-entreprise.png' %}
+    			<h1><img src="{{ asset_url }}" alt="JLM Entreprise"/></h1>
+			{% endimage %}
+<p>Porte automatique &middot; Portail automatique &middot; Barrière levante &middot; Contrôle d'accès</p>
+</div>
+</div>{#}
+<div class="container">
+<!-- Carousel
+        ================================================== -->
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="item active">
+            <img src="http://lorempixel.com/g/500/500/">
+              <div class="container">
+                <div class="carousel-caption">
+                  <h1>Installation</h1>
+                  <p>JLM Entreprise propose des solutions de porte et portail automatique adaptées à vos besoin. Toutes les installations sont conforme à la normes européenne et possèdent un PV du CSTB.</p>
+                  <a href="#" class="btn btn-primary btn-lg">En savoir plus...</a>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="container">
+                <div class="carousel-caption">
+                  <h1>Maintenance</h1>
+                  <p>JLM Entreprise propose des contrats de maintenance pour porte et portail automatique. Ces contrats incluent
+                  les deux visites d'entretiens annuelles obligatoire ainsi que la prise en charge des pannes 7/7j et 24/24h.
+                  </p>
+                  <a href="#" class="btn btn-primary btn-lg">En savoir plus...</a>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="container">
+                <div class="carousel-caption">
+                  <h1>Rénovation</h1>
+                  <p>JLM Entreprise vous aide à donner une nouvelle jeunesse à vos portes automatiques.</p>
+                  <a href="#" class="btn btn-primary btn-lg">En savoir plus...</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+          <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+        </div><!-- /.carousel -->
+      </div>{#}
+      {% endblock %}
+
+{% block content %}
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+      <!-- Three columns of text below the carousel -->
+      <div class="row">
+      <div class="col-lg-4">
+          {% image '@JLMFrontBundle/Resources/public/img/carton.png' output='images/carton.png' %}
+    			<img class="img-circle" src="{{ asset_url }}" alt="Installation"/>
+			{% endimage %}
+          <h2>Installation</h2>
+          <p>JLM Entreprise propose des solutions de portes et portails automatiques adaptées à vos besoins. Toutes les installations sont conformes à la norme européenne et possèdent un PV du CSTB.</p>
+          {#}<p><a class="btn btn-default" href="{{ path('jlm_front_installation') }}" role="button">Plus de détails &raquo;</a></p>{#}
+        </div>
+        <div class="col-lg-4">
+        {% image '@JLMFrontBundle/Resources/public/img/roue.png' output='images/roue.png' %}
+    			<img class="img-circle" src="{{ asset_url }}" alt="Maintenance"/>
+			{% endimage %}
+          <h2>Maintenance</h2>
+          <p>JLM Entreprise propose des contrats de maintenance pour portes, portails et barrières automatiques. Ces contrats incluent
+                  les deux visites d'entretiens annuelles obligatoires ainsi que la prise en charge des pannes 7/7j et 24/24h.</p>
+          {#}<p><a class="btn btn-default" href="{{ path('jlm_front_maintenance') }}" role="button">Plus de détails &raquo;</a></p>{#}
+        </div><!-- /.col-lg-4 -->
+        <!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          {% image '@JLMFrontBundle/Resources/public/img/cle.png' output='images/cle.png' %}
+    			<img class="img-circle" src="{{ asset_url }}" alt="Rénovation"/>
+			{% endimage %}
+          <h2>Rénovation</h2>
+          <p>JLM Entreprise vous aide à donner une nouvelle jeunesse à vos portes automatiques.</p>
+          {#}<p><a class="btn btn-default" href="{{ path('jlm_front_renovation') }}" role="button">Plus de détails &raquo;</a></p>{#}
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+
+
+      <!-- START THE FEATURETTES -->
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Porte basculante</h2>
+          <p class="lead">Habillage plein</p>
+        </div>
+        <div class="col-md-5">
+        {% image '@JLMFrontBundle/Resources/public/img/basculante.jpg' output='images/basculante.jpg' %}
+    			<img class="featurette-image img-responsive" src="{{ asset_url }}" alt="Porte basculante"/>
+			{% endimage %}
+		</div>
+			<div class="col-md-7">
+          <h2 class="featurette-heading">Porte basculante</h2>
+          <p class="lead">Habillage barreaudé</p>
+        </div>
+        <div class="col-md-5">
+			{% image '@JLMFrontBundle/Resources/public/img/basculante-barreaude.jpg' output='images/basculante-barreaudee.jpg' %}
+    			<img class="featurette-image img-responsive" src="{{ asset_url }}" alt="Porte basculante barreaudée"/>
+			{% endimage %}
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-5">
+        {% image '@JLMFrontBundle/Resources/public/img/portail.jpg' output='images/portail.jpg' %}
+    			<img class="featurette-image img-responsive" src="{{ asset_url }}" alt="Portail automatique"/>
+			{% endimage %}
+        </div>
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Portail pivotant <small>2 vantaux</small></h2>
+          <p class="lead">Habillage barreaudé</p>
+        </div>
+      </div>
+      <hr class="featurette-divider">
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Porte accordéon <small>2 vantaux</small></h2>
+          <p class="lead">Habillage plein bois</p>
+        </div>
+        <div class="col-md-5">
+        {% image '@JLMFrontBundle/Resources/public/img/accordeon.jpg' output='images/accordeon.jpg' %}
+    			<img class="featurette-image img-responsive" src="{{ asset_url }}" alt="Porte accordéon"/>
+			{% endimage %}
+        </div>
+      </div>
+          <hr class="featurette-divider">
+          <div class="row featurette">
+        <div class="col-md-5">
+        {% image '@JLMFrontBundle/Resources/public/img/coulissante.jpg' output='images/coulissante.jpg' %}
+    			<img class="featurette-image img-responsive" src="{{ asset_url }}" alt="Porte coulissant"/>
+			{% endimage %}
+        </div>
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Porte coulissante</h2>
+          <p class="lead">Habillage bardage</p>
+        </div>
+      </div>
+      <hr class="featurette-divider">
+      
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Barrière levante</h2>
+        </div>
+        <div class="col-md-5">
+        {% image '@JLMFrontBundle/Resources/public/img/barriere-levante.jpg' output='images/barriere-levante.jpg' %}
+    			<img class="featurette-image img-responsive" src="{{ asset_url }}" alt="Barière levante"/>
+			{% endimage %}
+        </div>
+      </div>
+          <hr class="featurette-divider">
+      </div>
+
+
+      <!-- /END THE FEATURETTES -->
+{% endblock content %}

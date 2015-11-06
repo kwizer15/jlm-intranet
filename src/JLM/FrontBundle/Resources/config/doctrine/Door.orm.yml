@@ -1,0 +1,12 @@
+JLM\FrontBundle\Entity\Door:
+  type: entity
+  table: doors
+  repositoryClass: JLM\FrontBundle\Repository\DoorRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    code:
+      type: string

@@ -1,0 +1,26 @@
+parameters:
+  jlm_front.contact.email.template: "JLMFrontBundle:email:contact.txt.twig"
+  jlm_front.contact.email.template_confirm: "JLMFrontBundle:email:contact_confirm.txt.twig"
+  jlm_front.contact.email.from_email: "secretariat@jlm-entreprise.fr"
+  jlm_front.askquote.email.template: "JLMFrontBundle:email:askquote.txt.twig"
+  jlm_front.askquote.email.template_confirm: "JLMFrontBundle:email:askquote_confirm.txt.twig"
+  jlm_front.askquote.email.from_email: "commerce@jlm-entreprise.fr"
+
+services:
+  jlm_front.mailer.default:
+    class: JLM\FrontBundle\Mailer\TwigSwiftMailer
+    public: false
+    arguments:
+      - "@mailer"
+      - "@router"
+      - "@twig"
+      - template:
+          contact: "%jlm_front.contact.email.template%"
+          contact_confirm: "%jlm_front.contact.email.template_confirm%"
+          askquote: "%jlm_front.askquote.email.template%"
+          askquote_confirm: "%jlm_front.askquote.email.template_confirm%"
+        from_email:
+          contact: "%jlm_front.contact.email.from_email%"
+          askquote: "%jlm_front.askquote.email.from_email%"
+
+      

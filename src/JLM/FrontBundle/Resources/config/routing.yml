@@ -1,0 +1,81 @@
+jlm_front_homepage:
+    path:     /
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    @JLMFrontBundle/Resources/views/static/index.html.twig
+    methods: [GET]
+
+jlm_front_about:
+    path:     /presentation
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    @JLMFrontBundle/Resources/views/static/about.html.twig
+    methods: [GET]
+        
+jlm_front_imprint:
+    path:     /mentions-legales
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    @JLMFrontBundle/Resources/views/static/imprint.html.twig
+    methods: [GET]
+        
+jlm_front_termsofuse:
+    path:     /conditions-d-utilisations
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    @JLMFrontBundle/Resources/views/static/terms-of-use.html.twig
+    methods: [GET]
+        
+jlm_front_contact:
+    path:     /contactez-nous
+    defaults:
+        _controller: JLMFrontBundle:Default:contact
+    methods: [GET,POST]
+        
+jlm_front_faq:
+    path:     /faq
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    @JLMFrontBundle/Resources/views/static/faq.html.twig
+    methods: [GET]
+        
+jlm_front_installation:
+    path:     /installation
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    @JLMFrontBundle/Resources/views/static/installation.html.twig
+    methods: [GET]
+        
+jlm_front_installation_code:
+    path:     /installation/{code}
+    defaults:
+        _controller: JLMFrontBundle:Default:installation
+    requirements:
+        code: (A|Z|E|R|T|Y)\d{4}
+    methods: [GET]
+        
+jlm_front_maintenance:
+    path:     /maintenance
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    @JLMFrontBundle/Resources/views/static/maintenance.html.twig
+    methods: [GET]
+        
+jlm_front_renovation:
+    path:     /renovation
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    @JLMFrontBundle/Resources/views/static/renovation.html.twig
+    methods: [GET]
+    
+jlm_front_business_list:
+    path: /affaires
+    defaults:
+        _controller: JLMFrontBundle:Business:list
+    methods: [GET]
+    
+jlm_front_business_askquote:
+    path: /demande-devis/
+    defaults:
+        _controller: JLMFrontBundle:Business:askquote
+    methods: [POST]

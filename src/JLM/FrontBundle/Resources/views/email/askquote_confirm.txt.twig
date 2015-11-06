@@ -1,0 +1,21 @@
+{% block subject %}
+{% autoescape false %}
+Demande de renvoi devis n°{{ contact.quoteNumber }}
+{% endautoescape %}
+{% endblock subject %}
+{% block body_text %}
+{% autoescape false %}
+Nous avons bien pris en compte votre demande de renvoi de devis.
+Celle-ci a été envoyée au service concerné qui vous répondra dans les plus brefs délais.
+
+--
+JLM Entreprise
+17 avenue de Montboulon
+77165 SAINT-SOUPPLETS
+Tel: 01.64.33.77.70
+Fax: 01.64.33.78.45
+http://jlm-entreprise.fr
+{% endautoescape %}
+{% endblock body_text %}
+{% block body_html %}
+{% endblock body_html %}

@@ -37,21 +37,32 @@ local.properties
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 
+/app-front/cache/*
+/app-front/logs/*
+!app-front/cache/.gitkeep
+!app-front/logs/.gitkeep
+
 # Parameters
 /app/config/parameters.yml
 /app/config/parameters.ini
+/app-front/config/parameters.yml
+/app-front/config/parameters.ini
 
 # Managed by Composer
 /app/bootstrap.php.cache
+/app-front/bootstrap.php.cache
 /bin/
 /vendor/
 
 # Assets and user uploads
 /web/bundles/
 /web/uploads/
+/web-front/bundles/
+/web-front/uploads/
 
 # PHPUnit
 /app/phpunit.xml
+/app-front/phpunit.xml
 
 # Composer PHAR
 /composer.phar
@@ -70,6 +81,12 @@ web/css/*
 web/fonts/*
 web/images/*
 web/js/*
+
+web-front/assetic/*
+web-front/css/*
+web-front/fonts/*
+web-front/images/*
+web-front/js/*
 
 # SQL
 structure.sql

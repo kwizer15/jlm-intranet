@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/ico/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    <title>{% block title %}JLM Entreprise{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    {% block stylesheets %}
+    <link href="/css/" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+      {% stylesheets
+	  	'bundles/jlmfront/css/bootstrap.flatly.min.css'
+		'bundles/jlmfront/css/caroussel.css'
+		'bundles/jlmfront/css/style.css'
+		filter='cssrewrite'
+		 %}
+      <link rel="stylesheet" href="{{ asset_url }}" />
+	  {% endstylesheets %}
+    {% endblock %}
+  </head>
+<!-- NAVBAR
+================================================== -->
+  <body>
+  {% block body %}
+    {% block navbar %}
+    <div class="navbar-wrapper">
+      <div class="container">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="{{ path('jlm_front_homepage') }}">JLM Entreprise{#}
+              {%- image '@JLMFrontBundle/Resources/public/img/jlm3.png' output='/images/jlm.png' -%}
+    			<img src="{{ asset_url }}" alt="JLM Entreprise"/>
+			{%- endimage -%}{#}</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li{%- if app.request.attributes.alnum('_route') == 'jlmfronthomepage' %} class="active"{%- endif -%}><a href="{{ path('jlm_front_homepage') }}">Accueil</a></li>
+                {#}<li{%- if app.request.attributes.alnum('_route') == 'jlmfrontabout' %} class="active"{%- endif -%}><a href="{{ path('jlm_front_about') }}">Présentation</a></li>{#}
+                {#}<li{%- if app.request.attributes.alnum('_route') == 'jlmfrontfaq' %} class="active"{%- endif -%}><a href="{{ path('jlm_front_faq') }}">FAQ</a></li>{#}
+                <li{%- if app.request.attributes.alnum('_route') == 'jlmfrontcontact' %} class="active"{%- endif -%}><a href="{{ path('jlm_front_contact') }}">Contactez-nous</a></li>
+              </ul>
+             {#} <ul class="nav navbar-nav navbar-right">
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Mon compte <b class="caret"></b></a>
+		          <ul class="dropdown-menu">
+		            <li><a href="#"><span class="glyphicon glyphicon-book"></span> Mon e-carnet</a></li>
+		            <li><a href="#"><span class="badge pull-right">2</span><span class="glyphicon glyphicon-envelope"></span> Messages</a></li>
+		            <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Paramètres</a></li>
+		            <li class="divider"></li>
+					<li><a href="#"><span class="glyphicon glyphicon-remove"></span> Déconnexion</a></li>
+		          </ul>
+		        </li>
+		      </ul>{#}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endblock navbar %}
+    {% block caroussel %}
+    {% endblock %}
+    {% block content %}
+        
+    {% endblock content %}
+
+
+      {% block footer %}
+      <footer>
+      <div class="container">
+	    <div class="row">
+	      <dl class="col-lg-3">
+	        <dt>Qui sommes-nous</dt>
+	        {#}<dd><a href="{{ path('jlm_front_about') }}">Présentation</a></dd>{#}
+	        {#}<dd><a href="{{ path('jlm_front_faq') }}">FAQ</a></dd>{#}
+	        <dd><a href="{{ path('jlm_front_contact') }}">Contactez-nous</a></dd>
+	      </dl>
+	      <dl class="col-lg-3">
+	        <dt>Mentions légales</dt>
+	        <dd><a href="{{ path('jlm_front_imprint') }}">Mentions légales</a></dd>
+	      </dl>
+	      <dl class="col-lg-3">
+	        {#}<dt>Confidentalité</dt>
+	        <dd><a href="{{ path('jlm_front_termsofuse') }}">Conditions d'utilisation générales du site</a></dd>{#}
+	      </dl>
+      	</div>
+      	<p class="pull-right"><a href="#">Retour en haut</a></p>
+	        <p>&copy; 2015 JLM Entreprise</p>
+      </div>
+      </footer>
+	  {% endblock footer %}
+
+    {% endblock body %}
+    
+    
+    {% block debug %}
+    {% endblock %}
+    
+    {% block javascripts %}
+     {% javascripts
+    	'@JLMFrontBundle/Resources/public/js/jquery-2.1.0.min.js'
+    	'@JLMFrontBundle/Resources/public/js/bootstrap.min.js' %}
+    	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	{% if app.environment == 'prod' %}
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64607462-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+	{% endif %}
+    {% endblock javascripts %}
+  </body>
+</html>

@@ -1,0 +1,94 @@
+{% extends 'JLMFrontBundle::layout.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block form_row %}
+<div class="col-lg-12 form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{% endblock %}
+
+{% block _jlm_front_contacttype_content_widget %}
+   {{- form_widget(form, {'attr':{'rows':10}}) -}}
+{% endblock %}
+
+{% block _jlm_front_contacttype_firstName_row %}
+<div class="col-lg-6 form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{% endblock %}
+
+{% block _jlm_front_contacttype_lastName_row %}
+<div class="col-lg-6 form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{% endblock %}
+
+{% block _jlm_front_contacttype_zip_row %}
+<div class="col-lg-3 form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{% endblock %}
+
+{% block _jlm_front_contacttype_city_row %}
+<div class="col-lg-5 form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{% endblock %}
+
+{% block _jlm_front_contacttype_country_row %}
+<div class="col-lg-4 form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{% endblock %}
+
+{% block _jlm_front_contacttype_phone_row %}
+<div class="col-lg-4 form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{% endblock %}
+
+{% block _jlm_front_contacttype_email_row %}
+<div class="col-lg-8 form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{% endblock %}
+
+{% block _jlm_front_contacttype_submit_row %}
+<div class="form-group col-lg-12">
+{{- form_widget(form, {'attr':{'class':'btn-primary btn-lg btn-block'}}) -}}
+</div>  
+{% endblock %}
+
+{% block title %}Contactez-nous | {{ parent() }}{% endblock title %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1>Contactez-nous</h1>
+    <p>Merci de compléter ce formulaire pour toute demande d’information.</p>
+    <p><small>Les champs notés * sont obligatoires</small></p>
+  </div>
+  <div class="row">
+  <div class="col-lg-12">
+  {{ form(form) }}
+  </div>
+  </div>
+</div>
+{% endblock content %}

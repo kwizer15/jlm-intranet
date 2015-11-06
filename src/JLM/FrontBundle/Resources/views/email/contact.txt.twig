@@ -1,0 +1,20 @@
+{% block subject %}
+{% autoescape false %}
+[jlm-entreprise.fr] {{ contact.subject }}
+{% endautoescape %}
+{% endblock subject %}
+{% block body_text %}
+{% autoescape false %}
+{{ contact.content }}
+
+--
+{{ contact.company }}
+{{ contact.firstName }} {{ contact.lastName }}
+{{ contact.address }}
+{{ contact.zip }} {{ contact.city|upper }}
+Tel : {{ contact.phone }}
+E-mail : {{ contact.email }}
+{% endautoescape %}
+{% endblock body_text %}
+{% block body_html %}
+{% endblock body_html %}

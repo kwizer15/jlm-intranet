@@ -1,0 +1,4 @@
+jlm_front:
+    resource: "@JLMFrontBundle/Resources/config/routing.yml"
+    prefix:   /
+
