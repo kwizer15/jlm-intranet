@@ -30,19 +30,23 @@ class BusinessController extends Controller
     	$request = $this->get('request');
     	
     	$om = $this->get('doctrine')->getManager();
-		$manager = $om->getRepository('JLMModelBundle:Trustee')->find(4);
+		$manager = $om->getRepository('JLMModelBundle:Trustee')->find(111);
 		
 		$repo = $om->getRepository('JLMModelBundle:Site');
 		$sites = $repo->getByManager($manager);
-		$activeBusinessId = sizeof($sites) ? $request->get('business',$sites[0]) : 0;
-		$activeBusiness = $repo->find($activeBusinessId);
+		$activeBusinessId = sizeof($sites) ? $request->get('business', reset($sites)->getId()) : null;
+		try {
+			$activeBusiness = $repo->find($activeBusinessId);
+		} catch (\Doctrine\ORM\NoResultException $e) {
+			throw $this->createNotFoundException('Cette affaire n\'existe pas');
+		}
 		
 		// Filtre pour les contrats actuels
 		$doors = $activeBusiness->getDoors();
-		$businessDoors = array();
-		$lastsMaintenance = array();
-		$lastsFixing = array();
-		$askQuoteForms = array();
+		$businessDoors    = [];
+		$lastsMaintenance = [];
+		$lastsFixing      = [];
+		$askQuoteForms    = [];
 		$qs = array();
 		foreach ($doors as $key => $door)
 		{
@@ -53,7 +57,7 @@ class BusinessController extends Controller
 				$lastsMaintenance[] = $om->getRepository('JLMDailyBundle:Maintenance')->getLastsByDoor($door, 2);
 				$lastsFixing[] = $om->getRepository('JLMDailyBundle:Fixing')->getLastsByDoor($door, 2);
 				$quotes = $om->getRepository('JLMCommerceBundle:Quote')->getSendedByDoor($door);
-				$askQuoteForms[] = array();
+				$askQuoteForms[] = [];
 				foreach ($quotes as $quote)
 				{
 					$form = $this->createAskQuoteForm();

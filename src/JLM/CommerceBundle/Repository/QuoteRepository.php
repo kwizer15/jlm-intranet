@@ -14,6 +14,7 @@ namespace JLM\CommerceBundle\Repository;
 use JLM\ModelBundle\Entity\Door;
 use JLM\DefaultBundle\Entity\SearchRepository;
 use JLM\CommerceBundle\Entity\QuoteVariant;
+use JLM\CommerceBundle\Entity\Quote;
 
 /**
  * QuoteRepository
@@ -73,10 +74,8 @@ class QuoteRepository extends SearchRepository
 			->setMaxResults(1)
 			->setParameter('year',$year);
 		$result = $qb->getQuery()->getResult();
-		if (!$result)
-			return 0;
-		else
-			return $result[0]['num'];
+		
+		return (!$result) ? 0 : $result[0]['num'];
 	}
 	
 	/**
@@ -150,28 +149,30 @@ class QuoteRepository extends SearchRepository
 						$this->countState[$year][$r->getState()]++;
 				}
 				if ($r->getState() >= 0)	// On retire les devis annulés
+				{
 					$this->uncanceled[$year]++;
+				}
 				$this->total[$year]++;
 			}
 		}
-		if ($state === 'uncanceled')
-			return $this->uncanceled[$year];
-		if ($state === null)
-			return $this->total[$year];
-		return $this->countState[$year][$state];
+		
+		return ($state === 'uncanceled') ? $this->uncanceled[$year] : (($state === null) ? $this->total[$year] : $this->countState[$year][$state]);
 	}
 	
 	/**
 	 * 
-	 * @param unknown $state
-	 * @param unknown $limit
-	 * @param unknown $offset
+	 * @param int $state
+	 * @param int $limit
+	 * @param int $offset
 	 * @return Ambigous <multitype:, \Doctrine\ORM\mixed, \Doctrine\ORM\Internal\Hydration\mixed, \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
 	 */
 	public function getByState($state, $limit = 10, $offset = 0)
 	{
 		if (isset($this->byState))
+		{
 			return $this->byState;
+		}
+			
 		$state = ($state == 1 || $state == 2) ? array(1,2) : (($state == 3 || $state == 4) ? array(3,4) : array($state));
 		$qb = $this->createQueryBuilder('a')
 				->select('a,b,c,d,e,f,g,h')
@@ -185,7 +186,6 @@ class QuoteRepository extends SearchRepository
 				->orderBy('a.number','desc')
 		;
 		$results = $qb->getQuery()->getResult();
-		$quotes = array();
 		foreach ($results as $key=>$r)
 		{
 			if (in_array($r->getState(),$state))
@@ -312,6 +312,27 @@ class QuoteRepository extends SearchRepository
 			->setParameter(1,$door->getId());
 		
 		return $qb->getQuery()->getResult();
+	}
+	
+	/**
+	 * Get lasts sended quotes
+	 * @param Door $door
+	 * @since 1.4.0
+	 * @todo Create a direct request
+	 */
+	public function getSendedByDoor(Door $door)
+	{
+		$quotes = $this->getByDoor($door);
+		$final = [];
+		foreach ($quotes as $quote)
+		{
+			if ($quote->getState() == QuoteVariant::STATE_SENDED)
+			{
+				$final[] = $quote;
+			}
+		}
+		
+		return $final;
 	}
 	
 	public function getCountFollow()

@@ -207,5 +207,30 @@ class Fixing extends Intervention implements FixingInterface
 		return $this;
 	}
 	
-	
+	/**
+	 * Get customer report
+	 * @return string
+	 */
+	public function getCustomerReport()
+	{
+		$out = 'Nous avons constaté ';
+		$nothing = $out.'après plusieurs essais que l\'intallation était fonctionnelle.';
+		$part = ($this->getPartFamily() === null) ? 'aucun' : strtolower($this->getPartFamily()->getName());
+		if ($part == 'aucun')
+		{
+			return $nothing;
+		}
+		$out.= 'un';
+		$due = $this->getDue();
+		if ($due !== null)
+		{
+			$cause = ($due->getId() != 4) ? 'e '.strtolower($due->getName()) : ' dysfonctionnement';
+			$out .= $cause.' sur les élements d';
+			$suite = (in_array(substr($part,0,1),array('a','e','i','o','u'))) ? '\'' : 'e ';
+				
+			return $out.$suite.$part.'.';
+		}
+		
+		return $nothing;
+	}
 }

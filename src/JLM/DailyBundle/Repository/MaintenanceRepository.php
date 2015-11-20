@@ -11,6 +11,7 @@
 
 namespace JLM\DailyBundle\Repository;
 
+use JLM\ModelBundle\Entity\Door;
 /**
  * MaintenanceRepository
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>

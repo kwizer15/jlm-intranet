@@ -12,6 +12,7 @@
 namespace JLM\DailyBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use JLM\ModelBundle\Entity\Door;
 
 /**
  * InterventionRepository
@@ -256,5 +257,23 @@ class InterventionRepository extends EntityRepository
 	protected function getSelect()
 	{
 		return 'a,b,c,d,e,g,h,i';
+	}
+	
+	/**
+	 * Get $limit lasts interventions on a $door
+	 * @param Door $door
+	 * @param int $limit
+	 * @return array|null
+	 * @since 1.4.0
+	 */
+	public function getLastsByDoor(Door $door, $limit = 2)
+	{
+		$qb = $this->createQueryBuilder('a')
+			->where('a.door = ?1')
+			->orderBy('a.creation','DESC')
+			->setParameter(1, $door)
+			->setMaxResults($limit);
+	
+		return $qb->getQuery()->getResult();
 	}
 }

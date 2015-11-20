@@ -2,6 +2,7 @@
 
 namespace JLM\ModelBundle\Repository;
 
+use JLM\ModelBundle\Entity\Trustee;
 use JLM\DefaultBundle\Entity\SearchRepository;
 use Doctrine\DBAL\LockMode;
 
@@ -115,5 +116,19 @@ class SiteRepository extends SearchRepository
 			return null;
 		}
 			
+	}
+	
+	public function getByManager(Trustee $manager)
+	{
+		$qb = $this->createQueryBuilder('a')
+			->leftJoin('a.doors','b')
+			->leftJoin('b.contracts','c')
+			->where('c.begin < ?1')
+			->andWhere('c.end >= ?1 or c.end IS NULL')
+			->andWhere('c.trustee = ?2')
+			->setParameter(1, new \DateTime())
+			->setParameter(2, $manager);
+		
+		return $qb->getQuery()->getResult();
 	}
 }
