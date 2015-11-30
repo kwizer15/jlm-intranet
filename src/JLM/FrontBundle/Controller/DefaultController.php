@@ -31,8 +31,10 @@ class DefaultController extends Controller
     	 
     	if ($form->isValid())
     	{
-    		$this->container->get('jlm_front.mailer')->sendContactEmailMessage($form->getData());
-    		$this->container->get('jlm_front.mailer')->sendConfirmContactEmailMessage($form->getData());
+    		$mailer = $this->container->get('jlm_front.mailer'); 
+    		$mailer->sendContactEmailMessage($form->getData());
+    		$mailer->sendConfirmContactEmailMessage($form->getData());
+    		
     		return $this->render('JLMFrontBundle:Default:contact_confirm.html.twig');
     	}
     	
