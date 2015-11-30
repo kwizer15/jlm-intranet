@@ -20,20 +20,30 @@
     <div class="col-md-9">
       <h2>{{ activeBusiness.address|nl2br }}</h2>
       <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-      {% if activeBusiness.doors is not empty%}
+      {% if activeBusiness.doors is not empty %}
       {% for key, door in activeBusiness.doors if door.actualContract and door.actualContract.trustee.id == manager.id %}
         <div class="panel panel-primary">
           <div class="panel-heading" role="tab" id="heading{{ loop.index }}">
             <h4 class="panel-title">
               <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">
                 <strong>{{ door.code }}</strong> &middot; {{ door.type }} / {{ door.location }}
-                <span class="pull-right label {% if door.stopped -%}label-danger{%- elseif door.waitFixing -%}label-warning{%- else -%}label-success{%- endif -%}">
-				  {%- if door.stopped -%}À l'arrêt{%- elseif door.waitFixing -%}Dépannage en cours{%- else -%}En fonction{%- endif -%}
+                <span class="pull-right label
+	                {%- if door.stopped %} label-danger
+	                {%- elseif door.waitFixing %} label-warning
+	                {%- else %} label-success
+	                {%- endif -%}
+                ">
+				  {%- if door.stopped -%}À l'arrêt
+				  {%- elseif door.waitFixing -%}Dépannage en cours
+				  {%- else -%}En fonction
+				  {%- endif -%}
 				</span>
               </a>
             </h4>
           </div>
-          <div id="collapse{{ loop.index }}" class="panel-collapse collapse{% if loop.first %} in{% endif %}" role="tabpanel" aria-labelledby="heading{{ loop.index }}">
+          <div id="collapse{{ loop.index }}" class="panel-collapse collapse
+          	{%- if loop.first %} in{%- endif -%}
+          " role="tabpanel" aria-labelledby="heading{{ loop.index }}">
             <div class="panel-body">
       		  <div class="col-md-12">
       		    <a href="#" class="btn btn-primary btn-sm pull-right">Plus d'historique...</a><h4>Entretiens</h4>
@@ -233,12 +243,7 @@
           </div>
         </div>
         
-        {#}
-        
-        
-        
-        
-        
+        {#}       
       </div>
     </div>
   </div>
