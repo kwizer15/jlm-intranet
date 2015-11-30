@@ -23,3 +23,31 @@
 	        <div class="span3"></div>
         </div>
 {% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+	<div class="col-md-6">
+      <div class="page-header">
+		<h1>Mon compte</h1>
+	  </div>
+      {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+          <div class="{{ type }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endfor %}
+      <div class="jumbotron">
+        {% block fos_user_content_bs3 %}
+        {% endblock fos_user_content_bs3 %}
+      </div>
+    </div>
+    <div class="col-md-6">
+      {#}<div class="page-header">
+		<h1>Demander un compte</h1>
+	  </div>{#}
+    </div>
+  </div>
+</div>
+{% endblock %}
