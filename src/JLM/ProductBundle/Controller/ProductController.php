@@ -21,7 +21,7 @@ class ProductController extends Controller
      * Lists all Product entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction($page = 1, $limit = 15)
     {
@@ -54,7 +54,7 @@ class ProductController extends Controller
      * Finds and displays a Product entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction($id)
     {
@@ -72,7 +72,7 @@ class ProductController extends Controller
      * Displays a form to create a new Product entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction()
     {
@@ -96,7 +96,7 @@ class ProductController extends Controller
      * Creates a new Product entity.
      *
      * @Template("JLMProductBundle:Product:new.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request)
     {
@@ -126,7 +126,7 @@ class ProductController extends Controller
      * Displays a form to edit an existing Product entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction($id)
     {
@@ -143,7 +143,7 @@ class ProductController extends Controller
      * Edits an existing Product entity.
      *
      * @Template("JLMProductBundle:Product:edit.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, $id)
     {
@@ -169,7 +169,7 @@ class ProductController extends Controller
     /**
      * Deletes a Product entity.
      *
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction($id)
     {

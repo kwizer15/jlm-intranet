@@ -18,7 +18,7 @@ class ProductCategoryController extends Controller
      * Lists all ProductCategory entities.
      * 
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
@@ -33,7 +33,7 @@ class ProductCategoryController extends Controller
      * Finds and displays a ProductCategory entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction($id)
     {
@@ -50,7 +50,7 @@ class ProductCategoryController extends Controller
      * Displays a form to create a new ProductCategory entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction()
     {
@@ -67,7 +67,7 @@ class ProductCategoryController extends Controller
      * Creates a new ProductCategory entity.
      *
      * @Template("JLMProductBundle:ProductCategory:new.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request)
     {
@@ -94,7 +94,7 @@ class ProductCategoryController extends Controller
      * Displays a form to edit an existing ProductCategory entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction($id)
     {
@@ -114,7 +114,7 @@ class ProductCategoryController extends Controller
      * Edits an existing ProductCategory entity.
      *
      * @Template("JLMProductBundle:ProductCategory:edit.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, $id)
     {
@@ -144,7 +144,7 @@ class ProductCategoryController extends Controller
     /**
      * Deletes a ProductCategory entity.
      *
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction(Request $request, $id)
     {

@@ -28,7 +28,7 @@ class SupplierController extends Controller
      * Lists all Supplier entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction($page = 1)
     {
@@ -56,7 +56,7 @@ class SupplierController extends Controller
      * Finds and displays a Supplier entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(Supplier $entity)
     {
@@ -76,7 +76,7 @@ class SupplierController extends Controller
      * Displays a form to create a new Supplier entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction()
     {
@@ -93,7 +93,7 @@ class SupplierController extends Controller
      * Creates a new Supplier entity.
      *
      * @Template("JLMProductBundle:Supplier:new.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction()
     {
@@ -122,7 +122,7 @@ class SupplierController extends Controller
      * Displays a form to edit an existing Supplier entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction($id)
     {
@@ -142,7 +142,7 @@ class SupplierController extends Controller
      * Edits an existing Supplier entity.
      *
      * @Template("JLMProductBundle:Supplier:edit.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction($id)
     {
@@ -175,7 +175,7 @@ class SupplierController extends Controller
     /**
      * Deletes a Supplier entity.
      *
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction($id)
     {

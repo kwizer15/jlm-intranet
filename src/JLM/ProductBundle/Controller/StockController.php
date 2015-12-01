@@ -28,7 +28,7 @@ class StockController extends ContainerAware
     public function indexAction()
     {
     	$manager = $this->container->get('jlm_product.stock_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
 
         return $manager->renderResponse('JLMProductBundle:Stock:index.html.twig',
         		$manager->pagination('getCount', 'getAll', 'jlm_product_stock')
@@ -42,7 +42,7 @@ class StockController extends ContainerAware
     public function editAction($id)
     {
     	$manager = $this->container->get('jlm_product.stock_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $form = $manager->createForm('edit', array('entity' => $entity));
         if ($manager->getHandler($form)->process())
@@ -60,7 +60,7 @@ class StockController extends ContainerAware
     public function inventoryAction()
     {
     	$manager = $this->container->get('jlm_product.stock_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getRepository()->getAll(500);
     	$form = $manager->createForm('inventory', array('entity' => $entity));
     	
@@ -80,7 +80,7 @@ class StockController extends ContainerAware
     public function printAction()
     {
     	$manager = $this->container->get('jlm_product.stock_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$stocks = $manager->getRepository()->getAll(500);
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
