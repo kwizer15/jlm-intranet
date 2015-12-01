@@ -29,7 +29,7 @@ class FeesFollowerController extends Controller
 	 *
 	 * @Route("/", name="fees")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function indexAction()
 	{
@@ -50,11 +50,12 @@ class FeesFollowerController extends Controller
 	 *
 	 * @Route("/{id}/edit", name="fees_edit")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function editAction(FeesFollower $entity)
 	{	
 		$editForm = $this->createForm(new FeesFollowerType(), $entity);
+		
 		return array(
 				'entity'      => $entity,
 				'edit_form'   => $editForm->createView(),
@@ -67,7 +68,7 @@ class FeesFollowerController extends Controller
 	 * @Route("/{id}/update", name="fees_update")
 	 * @Method("post")
 	 * @Template("JLMOfficeBundle:Fees:edit.html.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function updateAction(Request $request,FeesFollower $entity)
 	{
@@ -79,6 +80,7 @@ class FeesFollowerController extends Controller
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
 			$em->flush();
+			
 			return $this->redirect($this->generateUrl('fees', array('id' => $entity->getId())));
 		}
 	
@@ -92,7 +94,7 @@ class FeesFollowerController extends Controller
 	 * Edits an existing FeesFollower entity.
 	 *
 	 * @Route("/{id}/generate", name="fees_generate")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function generateAction(FeesFollower $entity)
 	{
@@ -163,7 +165,7 @@ class FeesFollowerController extends Controller
 	/**
 	 * Print bills
 	 * @Route("/{id}/print", name="fees_print")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function printAction(FeesFollower $follower)
 	{
@@ -173,6 +175,7 @@ class FeesFollowerController extends Controller
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename=redevances-'.$follower->getActivation()->format('m-Y').'.pdf');
 		$response->setContent($this->render('JLMCommerceBundle:Bill:print.pdf.php',array('entities'=>$entities,'duplicate'=>false)));
+		
 		return $response;
 	}
 }

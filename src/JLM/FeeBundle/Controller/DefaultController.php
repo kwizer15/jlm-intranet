@@ -14,23 +14,15 @@ use JLM\FeeBundle\Entity\Fee;
  * @Route("/feedefault")
  */
 class DefaultController extends Controller
-{
-    /**
-     * @Route("/hello/{name}")
-     * @Template()
-     */
-    public function indexAction($name)
-    {
-        return array('name' => $name);
-    }
-    
+{   
     /**
      * Action temporaire
      * 
      * Création à la volée des redevances
      * 
-     * @Route("/autocreate")
+     * Route("/autocreate")
      * @Template()
+     * @deprecated
      */
     public function autocreatefeeAction()
     {

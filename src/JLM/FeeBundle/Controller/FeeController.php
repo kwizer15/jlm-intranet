@@ -22,7 +22,7 @@ class FeeController extends Controller
 	 *
 	 * @Route("/", name="fee")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function indexAction()
 	{
@@ -36,7 +36,7 @@ class FeeController extends Controller
 	 *
 	 * @Route("/{id}/show", name="fee_show")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function showAction(Fee $entity)
 	{
@@ -51,7 +51,7 @@ class FeeController extends Controller
 	 *
 	 * @Route("/new", name="fee_new")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function newAction()
 	{
@@ -71,7 +71,7 @@ class FeeController extends Controller
 	 * @Route("/create", name="fee_create")
 	 * @Method("post")
 	 * @Template("JLMModelBundle:Fee:new.html.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function createAction()
 	{
@@ -100,7 +100,7 @@ class FeeController extends Controller
 	 *
 	 * @Route("/{id}/edit", name="fee_edit")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function editAction(Fee $entity)
 	{
@@ -118,7 +118,7 @@ class FeeController extends Controller
 	 * @Route("/{id}/update", name="fee_update")
 	 * @Method("post")
 	 * @Template("JLMModelBundle:Fee:edit.html.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function updateAction(Fee $entity)
 	{
