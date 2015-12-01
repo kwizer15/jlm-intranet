@@ -4,6 +4,8 @@ namespace JLM\ModelBundle\Repository;
 
 use JLM\DefaultBundle\Entity\SearchRepository;
 use Doctrine\DBAL\LockMode;
+use JLM\UserBundle\Entity\User;
+use Doctrine\ORM\NoResultException;
 
 /**
  * TrusteeRepository
@@ -125,6 +127,23 @@ class TrusteeRepository extends SearchRepository
 	        return $res[0];
 	    }
 	
-	    return array('error'=>'No fond for id '.$id);
+	    return array('error'=>'Not found for id '.$id);
+	}
+	
+	public function getByUser(User $user)
+	{
+		if (($contact = $user->getContact()) === null)
+		{
+			throw new NoResultException('Pas de contact lié à l\'utilisateur');
+		}
+		
+		$qb = $this->createQueryBuilder('a')
+		->select('a,b')
+		->leftJoin('a.contact','b')
+		->where('b = ?1')
+		->setParameter(1, $contact)
+		;
+		
+		return $qb->getQuery()->getSingleResult();
 	}
 }
