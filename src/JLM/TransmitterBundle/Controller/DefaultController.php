@@ -15,6 +15,7 @@ class DefaultController extends Controller
      * @Route("/search",name="transmitter_search")
      * @Method("get")
      * @Template()
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function searchAction(Request $request)
     {

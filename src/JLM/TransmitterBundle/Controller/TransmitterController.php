@@ -25,6 +25,7 @@ class TransmitterController extends Controller
      *
      * @Route("/new/{id}", name="transmitter_new")
      * @Template()
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction(Attribution $attribution)
     {
@@ -44,6 +45,7 @@ class TransmitterController extends Controller
      * @Route("/create/{id}", name="transmitter_create")
      * @Method("POST")
      * @Template()
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request, Attribution $attribution)
     {
@@ -71,6 +73,7 @@ class TransmitterController extends Controller
      *
      * @Route("/{id}/edit", name="transmitter_edit")
      * @Template()
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction($id)
     {
@@ -96,6 +99,7 @@ class TransmitterController extends Controller
      * @Route("/{id}/update", name="transmitter_update")
      * @Method("POST")
      * @Template("JLMTransmitterBundle:Transmitter:create.html.twig")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, $id)
     {
@@ -128,6 +132,7 @@ class TransmitterController extends Controller
      * Unactive Transmitter entity.
      *
      * @Route("/{id}/unactive", name="transmitter_unactive")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function unactiveAction(Transmitter $entity)
     {
@@ -143,6 +148,7 @@ class TransmitterController extends Controller
      * Reactive Transmitter entity.
      *
      * @Route("/{id}/reactive", name="transmitter_reactive")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function reactiveAction(Transmitter $entity)
     {

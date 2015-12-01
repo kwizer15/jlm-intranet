@@ -27,6 +27,7 @@ class AttributionController extends Controller
      *
      * @Route("/", name="transmitter_attribution")
      * @Template()
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
@@ -44,6 +45,7 @@ class AttributionController extends Controller
      *
      * @Route("/{id}/show", name="transmitter_attribution_show")
      * @Template()
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(Attribution $entity)
     {
@@ -57,6 +59,7 @@ class AttributionController extends Controller
      *
      * @Route("/new/{id}", name="transmitter_attribution_new")
      * @Template()
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction(Ask $ask)
     {
@@ -77,6 +80,7 @@ class AttributionController extends Controller
      * @Route("/create", name="transmitter_attribution_create")
      * @Method("POST")
      * @Template("JLMTransmitterBundle:Attribution:new.html.twig")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request)
     {
@@ -104,6 +108,7 @@ class AttributionController extends Controller
      *
      * @Route("/{id}/edit", name="transmitter_attribution_edit")
      * @Template()
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction(Attribution $entity)
     {
@@ -121,6 +126,7 @@ class AttributionController extends Controller
      * @Route("/{id}/update", name="transmitter_attribution_update")
      * @Method("POST")
      * @Template("JLMTransmitterBundle:Attribution:edit.html.twig")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, Attribution $entity)
     {
@@ -146,7 +152,7 @@ class AttributionController extends Controller
      * Imprime la liste d'attribution
      *
      * @Route("/{id}/printlist", name="transmitter_attribution_printlist")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function printlistAction(Attribution $entity)
     {   
@@ -202,6 +208,7 @@ class AttributionController extends Controller
      * Generate bill
      *
      * @Route("/{id}/bill", name="transmitter_attribution_bill")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function billAction(Attribution $entity)
     {

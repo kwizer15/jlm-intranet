@@ -25,6 +25,7 @@ class SeriesController extends Controller
      *
      * @Route("/new/{id}", name="transmitter_series_new")
      * @Template()
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction(Attribution $attribution)
     {
@@ -45,6 +46,7 @@ class SeriesController extends Controller
      * @Route("/create/{id}", name="transmitter_series_create")
      * @Method("POST")
      * @Template()
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request, Attribution $attribution)
     {

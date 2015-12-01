@@ -23,7 +23,7 @@ class SiteController extends Controller
     /**
      * @Route("/{id}/show",name="transmitter_site_show")
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(Site $entity)
     {
@@ -32,7 +32,7 @@ class SiteController extends Controller
     
     /**
      * @Route("/{id}/printlist",name="transmitter_site_printlist")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function printlistAction(Site $entity)
     {
