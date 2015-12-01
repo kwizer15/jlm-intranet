@@ -625,8 +625,11 @@ class Door implements BayInterface, InstallationInterface
     	foreach ($this->contracts as $contract)
     	{
     		if ($contract->getBegin() > $date)
+    		{
     			return $contract;
+    		}
     	}
+    	
     	return null;
     }
     
