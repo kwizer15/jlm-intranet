@@ -30,7 +30,7 @@ class AjaxPersonController extends Controller
      * Finds and displays a Person entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function showajaxAction(Person $entity)
     {
@@ -43,7 +43,7 @@ class AjaxPersonController extends Controller
      * Displays a form to create a new Person entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function newajaxAction()
     {
@@ -61,7 +61,7 @@ class AjaxPersonController extends Controller
     /**
      * Creates a new Person entity.
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function createajaxAction(Request $request)
     {

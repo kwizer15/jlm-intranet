@@ -25,7 +25,7 @@ class ContactController extends ContainerAware
 	public function editAction($id)
 	{
 		$manager = $this->container->get('jlm_contact.contact_manager');
-		$manager->secure('ROLE_USER');
+		$manager->secure('ROLE_OFFICE');
 		if (in_array($id, array('person','company','association')))
 		{
 			$type = $id;
@@ -53,7 +53,7 @@ class ContactController extends ContainerAware
 	public function listAction()
 	{
 		$manager = $this->container->get('jlm_contact.contact_manager');
-		$manager->secure('ROLE_USER');
+		$manager->secure('ROLE_OFFICE');
 		$request = $manager->getRequest();
 		$ajax = $manager->getRequest()->isXmlHttpRequest();
 		$repo = $manager->getRepository();
@@ -65,7 +65,7 @@ class ContactController extends ContainerAware
     public function showAction($id)
     {
     	$manager = $this->container->get('jlm_contact.contact_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
     	
 		return $manager->getRequest()->isXmlHttpRequest()
@@ -76,7 +76,7 @@ class ContactController extends ContainerAware
     public function unactiveAction($id)
     {
     	$manager = $this->container->get('jlm_contact.contact_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
     	$entity->setActive(false);
     	
