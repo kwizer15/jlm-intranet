@@ -189,7 +189,7 @@ class AttributionController extends Controller
      * Imprime le courrier
      *
      * @Route("/{id}/printcourrier", name="transmitter_attribution_printcourrier")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function printcourrierAction(Attribution $entity)
     {
