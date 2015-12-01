@@ -46,6 +46,9 @@ JLM\DailyBundle\Entity\Intervention:
       type: boolean
     published:
       type: boolean
+      options:
+        default: 0
+        
   manyToOne:
     door:
       targetEntity: JLM\ModelBundle\Entity\Door
