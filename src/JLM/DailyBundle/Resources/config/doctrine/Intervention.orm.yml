@@ -44,6 +44,8 @@ JLM\DailyBundle\Entity\Intervention:
       nullable: true
     cancel:
       type: boolean
+    published:
+      type: boolean
   manyToOne:
     door:
       targetEntity: JLM\ModelBundle\Entity\Door

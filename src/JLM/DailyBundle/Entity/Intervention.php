@@ -151,6 +151,12 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     private $cancel = false;
     
     /**
+     * Publication
+     * @var bool
+     */
+    private $published;
+    
+    /**
      * Get contract
      * @return string
      */
@@ -789,5 +795,26 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     	}
     
     	return $this->getDoor()->getCode();
+    }
+    
+    /**
+     * Is published
+     * @return boolean
+     */
+    public function isPublished()
+    {
+    	return $this->published;
+    }
+    
+    /**
+     * Set published
+     * @param boolean $published
+     * @return self
+     */
+    public function setPublished($published)
+    {
+    	$this->published = (bool)$published;
+    	
+    	return $this;
     }
 }
