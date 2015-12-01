@@ -57,18 +57,24 @@
                 {#}<li{%- if app.request.attributes.alnum('_route') == 'jlmfrontfaq' %} class="active"{%- endif -%}><a href="{{ path('jlm_front_faq') }}">FAQ</a></li>{#}
                 <li{%- if app.request.attributes.alnum('_route') == 'jlmfrontcontact' %} class="active"{%- endif -%}><a href="{{ path('jlm_front_contact') }}">Contactez-nous</a></li>
               </ul>
-             {#} <ul class="nav navbar-nav navbar-right">
+              {% if app.user and is_granted('ROLE_MANAGER') %}
+              <ul class="nav navbar-nav navbar-right">
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Mon compte <b class="caret"></b></a>
 		          <ul class="dropdown-menu">
-		            <li><a href="#"><span class="glyphicon glyphicon-book"></span> Mon e-carnet</a></li>
-		            <li><a href="#"><span class="badge pull-right">2</span><span class="glyphicon glyphicon-envelope"></span> Messages</a></li>
-		            <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Paramètres</a></li>
+		            <li><a href="{{ path('jlm_front_business_list') }}"><span class="glyphicon glyphicon-book"></span> Mon e-carnet</a></li>
+		         {#}<li><a href="#"><span class="badge pull-right">2</span><span class="glyphicon glyphicon-envelope"></span> Messages</a></li>{#}
+		         {#}<li><a href="#"><span class="glyphicon glyphicon-cog"></span> Paramètres</a></li>{#}
 		            <li class="divider"></li>
-					<li><a href="#"><span class="glyphicon glyphicon-remove"></span> Déconnexion</a></li>
+					<li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-remove"></span> Déconnexion</a></li>
 		          </ul>
 		        </li>
-		      </ul>{#}
+		      </ul>
+		      {% else %}
+		      <ul class="nav navbar-nav navbar-right">
+		        <li{%- if app.request.attributes.alnum('_route') == 'fosusersecuritylogin' %} class="active"{%- endif -%}><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
+		      </ul>
+		      {% endif %}
             </div>
           </div>
         </div>
