@@ -25,8 +25,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    form:
-        resources: ['JLMFrontBundle:Form:translations.html.twig']
+#    form:
+#        resources: ['JLMFrontBundle:Form:translations.html.twig']
 
 # Assetic Configuration
 assetic:
