@@ -14,7 +14,7 @@ class DefaultController extends Controller
     /**
      * @Route("/",name="default")
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
@@ -107,7 +107,7 @@ class DefaultController extends Controller
 	/**
 	 * @Route("/info")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function infoAction()
 	{
@@ -120,7 +120,7 @@ class DefaultController extends Controller
 	/**
 	 * @Route("/robot.txt")
 	 * @Template("JLMDefaultBundle:Default:robot.txt.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function robotAction()
 	{
