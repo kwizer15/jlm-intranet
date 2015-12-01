@@ -15,7 +15,7 @@ class DefaultController extends Controller
 {
 	/**
 	 * Search
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
 	 * @Template()
 	 */
 	public function searchAction(Request $request)
@@ -53,7 +53,7 @@ class DefaultController extends Controller
 	
 	/**
 	 * Search
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 * @deprecated
 	 */
 	public function searchgetAction(Request $request)
@@ -63,7 +63,7 @@ class DefaultController extends Controller
 	
 	/**
 	 * Sidebar
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
 	 * @Template()
 	 * @deprecated Use the TwigExtension
 	 */
@@ -81,7 +81,7 @@ class DefaultController extends Controller
 	
 	/**
 	 * Search by date form
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 * @Template()
 	 */
 	public function datesearchAction()

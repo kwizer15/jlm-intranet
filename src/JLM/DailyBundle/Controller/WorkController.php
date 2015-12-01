@@ -36,7 +36,7 @@ class WorkController extends AbstractInterventionController
 	public function listAction()
 	{
 		$manager = $this->container->get('jlm_daily.work_manager');
-		$manager->secure('ROLE_USER');
+		$manager->secure('ROLE_OFFICE');
 		$request = $manager->getRequest();
 		$repo = $manager->getRepository();
 		
@@ -48,7 +48,7 @@ class WorkController extends AbstractInterventionController
 	 * Finds and displays a Work entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function showAction(Work $entity)
 	{
@@ -59,7 +59,7 @@ class WorkController extends AbstractInterventionController
 	 * Displays a form to create a new Work entity.
 	 *
 	 * @Template("JLMDailyBundle:Work:new.html.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function newdoorAction(Door $door)
 	{
@@ -78,7 +78,7 @@ class WorkController extends AbstractInterventionController
 	 * Displays a form to create a new Work entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function newAction()
 	{
@@ -95,7 +95,7 @@ class WorkController extends AbstractInterventionController
 	 * Displays a form to create a new Work entity.
 	 *
 	 * @Template("JLMDailyBundle:Work:new.html.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function newquoteAction(QuoteVariant $quote)
 	{
@@ -107,7 +107,9 @@ class WorkController extends AbstractInterventionController
 		$entity->setReason($quote->getIntro());
 		$contact = $quote->getQuote()->getContact();
 		if ($contact === null)
+		{
 			$entity->setContactName($quote->getQuote()->getContactCp());
+		}
 		else
 		{
 			$entity->setContactName($contact->getPerson()->getName().' ('.$contact->getRole().')');
@@ -116,15 +118,21 @@ class WorkController extends AbstractInterventionController
 			$email = $contact->getPerson()->getEmail();
 			$phones = '';
 			if ($mobilePhone != null)
+			{
 				$phones .= $mobilePhone;
+			}
 			if ($fixedPhone != null)
 			{
 				if ($phones != '')
+				{
 					$phones .= chr(10);
+				}
 				$phones .= $fixedPhone;
 			}
 			if ($email != null)
+			{
 				$entity->setContactEmail($email);
+			}
 			$entity->setContactPhones($phones);
 		}
 		$form   = $this->createForm(new WorkType(), $entity);
@@ -139,7 +147,7 @@ class WorkController extends AbstractInterventionController
 	 * Creates a new Work entity.
 	 *
 	 * @Template("JLMDailyBundle:Work:new.html.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function createAction(Request $request)
 	{
@@ -171,7 +179,7 @@ class WorkController extends AbstractInterventionController
 	 * Displays a form to edit an existing Work entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function editAction(Work $entity)
 	{
@@ -187,7 +195,7 @@ class WorkController extends AbstractInterventionController
 	 * Edits an existing Work entity.
 	 *
 	 * @Template("JLMDailyBundle:Work:edit.html.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function updateAction(Request $request, Work $entity)
 	{
@@ -213,7 +221,7 @@ class WorkController extends AbstractInterventionController
 	 * Close an existing Work entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function closeAction(Work $entity)
 	{
@@ -229,7 +237,7 @@ class WorkController extends AbstractInterventionController
 	 * Close an existing Work entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function closeupdateAction(Request $request, Work $entity)
 	{	
@@ -253,6 +261,7 @@ class WorkController extends AbstractInterventionController
 			$entity->setMustBeBilled($entity->getQuote() !== null);
 			$em->persist($entity);
 			$em->flush();
+			
 			return $this->redirect($this->generateUrl('work_show', array('id' => $entity->getId())));
 		}
 	
@@ -266,7 +275,7 @@ class WorkController extends AbstractInterventionController
 	 * Finds and displays a InterventionPlanned entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function emailAction(Work $entity, $step)
 	{
@@ -288,8 +297,10 @@ class WorkController extends AbstractInterventionController
 		{
 			$this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
 			$this->get('event_dispatcher')->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request));
+			
 			return $this->redirect($this->generateUrl('work_show', array('id' => $entity->getId())));
 		}
+		
 		return array(
 				'entity' => $entity,
 				'form' => $editForm->createView(),

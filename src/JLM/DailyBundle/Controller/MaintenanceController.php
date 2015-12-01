@@ -33,7 +33,7 @@ class MaintenanceController extends AbstractInterventionController
 	public function listAction()
 	{
 		$manager = $this->container->get('jlm_daily.maintenance_manager');
-		$manager->secure('ROLE_USER');
+		$manager->secure('ROLE_OFFICE');
 		$request = $manager->getRequest();
 		$repo = $manager->getRepository();
 
@@ -45,7 +45,7 @@ class MaintenanceController extends AbstractInterventionController
 	 * Finds and displays a Maintenance entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function showAction(Maintenance $entity)
 	{
@@ -56,7 +56,7 @@ class MaintenanceController extends AbstractInterventionController
 	 * Close an existing Fixing entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function closeAction(Maintenance $entity)
 	{
@@ -72,7 +72,7 @@ class MaintenanceController extends AbstractInterventionController
 	 * Close an existing Maintenance entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function closeupdateAction(Request $request, Maintenance $entity)
 	{
@@ -100,7 +100,7 @@ class MaintenanceController extends AbstractInterventionController
 	 * Finds and displays a InterventionPlanned entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function emailAction(Maintenance $entity, $step)
 	{
@@ -189,6 +189,7 @@ class MaintenanceController extends AbstractInterventionController
 	 * Cherche les entretiens les plus proche d'une adresse
 	 *
 	 * @Template()
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function neighborAction(Door $door)
 	{
@@ -227,6 +228,7 @@ class MaintenanceController extends AbstractInterventionController
 			$shift->setBegin(new \DateTime);
 			$forms[] = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getDestination()->getNextMaintenance()->getId(),new AddTechnicianType(), $shift)->createView();
 		}
+		
 		return array(
 				'door'=>$door,
 				'entities' => $entities,

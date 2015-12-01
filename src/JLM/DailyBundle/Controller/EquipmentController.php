@@ -23,7 +23,7 @@ class EquipmentController extends Controller
 	 * Displays a form to create a new InterventionPlanned entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function newAction()
 	{
@@ -44,7 +44,7 @@ class EquipmentController extends Controller
 	 * Creates a new ShiftTechnician entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function createAction(Request $request)
 	{
@@ -74,7 +74,7 @@ class EquipmentController extends Controller
 	
 	/**
 	 * Show
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 * @Template()
 	 */
 	public function showAction(Request $request, Equipment $entity)
@@ -89,7 +89,7 @@ class EquipmentController extends Controller
 	 * Edit a form to edit an existing Equipment entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function editAction(Equipment $entity)
 	{
@@ -105,7 +105,7 @@ class EquipmentController extends Controller
 	 * Edits an existing Equipment entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function updateAction(Request $request, Equipment $entity)
 	{

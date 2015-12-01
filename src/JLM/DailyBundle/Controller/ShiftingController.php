@@ -20,7 +20,7 @@ class ShiftingController extends Controller
 {
 	/**
 	 * List
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 * @Template()
 	 */
 	public function listAction(Technician $technician, $page = 1)
@@ -49,7 +49,7 @@ class ShiftingController extends Controller
 	
 	/**
 	 * Ajoute un technicien sur une intervention
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 * @Template()
 	 */
 	public function newAction(Shifting $shifting)
@@ -71,7 +71,7 @@ class ShiftingController extends Controller
 	 * Creates a new ShiftTechnician entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function createAction(Request $request, Shifting $shifting)
 	{
@@ -105,7 +105,7 @@ class ShiftingController extends Controller
 	 * Displays a form to edit an existing ShiftTechnician entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function editAction(ShiftTechnician $entity)
 	{
@@ -120,7 +120,7 @@ class ShiftingController extends Controller
 	 * Displays a form to edit an existing ShiftTechnician entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 * @deprecated Modal system
 	 */
 	public function edittableAction(ShiftTechnician $entity)
@@ -132,7 +132,7 @@ class ShiftingController extends Controller
 	 * Edits an existing InterventionPlanned entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function updateAction(Request $request, ShiftTechnician $entity)
 	{
@@ -140,7 +140,8 @@ class ShiftingController extends Controller
 		$editForm = $this->get('form.factory')->createNamed('shiftTechEdit'.$entity->getId(),new ShiftingEditType(), $entity);
 		$editForm->bind($request);
 	
-		if ($editForm->isValid()) {
+		if ($editForm->isValid())
+		{
 			$begin = $entity->getBegin();
 			$end = $entity->getEnd();
 			if ($end->format('Hi') != '0000')
@@ -149,15 +150,13 @@ class ShiftingController extends Controller
 				$entity->setEnd($end);
 			}
 			else
+			{
 				$entity->setEnd();
+			}
 			$em->persist($entity);
 			$em->flush();
-			
-			if ($request->isXmlHttpRequest())
-			{
-				return new JsonResponse(array());
-			}
-			return $this->redirect($request->headers->get('referer'));
+
+			return $request->isXmlHttpRequest() ? new JsonResponse(array()) : $this->redirect($request->headers->get('referer'));
 		}
 	
 		return array(
@@ -170,7 +169,7 @@ class ShiftingController extends Controller
 	 * Delete an existing ShiftTechnician entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function deleteAction(ShiftTechnician $entity)
 	{

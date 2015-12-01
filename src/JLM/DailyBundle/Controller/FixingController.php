@@ -37,7 +37,7 @@ class FixingController extends AbstractInterventionController
 	 * Finds and displays a InterventionPlanned entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function listAction()
 	{
@@ -52,7 +52,7 @@ class FixingController extends AbstractInterventionController
 	 * Finds and displays a InterventionPlanned entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function emailAction(Fixing $entity, $step)
 	{
@@ -89,7 +89,7 @@ class FixingController extends AbstractInterventionController
 	 * Finds and displays a InterventionPlanned entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function showAction(Fixing $entity)
 	{
@@ -100,7 +100,7 @@ class FixingController extends AbstractInterventionController
 	 * Displays a form to create a new InterventionPlanned entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function newAction(Door $door)
 	{
@@ -125,7 +125,7 @@ class FixingController extends AbstractInterventionController
 	 * Creates a new InterventionPlanned entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function createAction(Request $request, Door $door)
 	{
@@ -161,7 +161,7 @@ class FixingController extends AbstractInterventionController
 	 * Displays a form to edit an existing Fixing entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function editAction(Fixing $entity)
 	{
@@ -177,7 +177,7 @@ class FixingController extends AbstractInterventionController
 	 * Edits an existing Fixing entity.
 	 *
 	 * @Template("JLMDailyBundle:Fixing:edit.html.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function updateAction(Request $request, Fixing $entity)
 	{
@@ -202,7 +202,7 @@ class FixingController extends AbstractInterventionController
 	 * Close an existing Fixing entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function closeAction(Fixing $entity)
 	{
@@ -218,7 +218,7 @@ class FixingController extends AbstractInterventionController
 	 * Close an existing Fixing entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function closeupdateAction(Request $request, Fixing $entity)
 	{	
@@ -258,7 +258,7 @@ class FixingController extends AbstractInterventionController
 	/**
 	 * Imprime le rapport d'intervention
 	 *
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function printdayAction(Fixing $entity)
 	{

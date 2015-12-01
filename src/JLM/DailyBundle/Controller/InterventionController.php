@@ -30,7 +30,7 @@ class InterventionController extends Controller
 	 * Finds and displays a Intervention entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function indexAction()
 	{
@@ -45,7 +45,7 @@ class InterventionController extends Controller
 	/**
 	 * Bill intervention
 	 *
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function tobillAction(Intervention $entity)
 	{
@@ -59,7 +59,7 @@ class InterventionController extends Controller
 	/**
 	 * Don't Bill intervention
 	 *
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function dontbillAction(Intervention $entity)
 	{
@@ -73,7 +73,7 @@ class InterventionController extends Controller
 	/**
 	 * Cancel Bill action
 	 *
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function cancelbillAction(Intervention $entity)
 	{
@@ -103,7 +103,7 @@ class InterventionController extends Controller
 	
 	/**
 	 * Crée une demande de devis
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function toquoteAction(Intervention $entity)
 	{
@@ -119,7 +119,7 @@ class InterventionController extends Controller
 	
 	/**
 	 * Supprime une demande de devis
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function cancelquoteAction(Intervention $entity)
 	{
@@ -137,7 +137,7 @@ class InterventionController extends Controller
 	
 	/**
 	 * Active contacter client
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function tocontactAction(Intervention $entity)
 	{
@@ -150,7 +150,7 @@ class InterventionController extends Controller
 	
 	/**
 	 * Supprime une demande de devis
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function cancelcontactAction(Intervention $entity)
 	{
@@ -163,7 +163,7 @@ class InterventionController extends Controller
 	
 	/**
 	 * Créer un ligne travaux
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function toworkAction(Intervention $entity)
 	{
@@ -174,7 +174,7 @@ class InterventionController extends Controller
 	
 	/**
 	 * Supprime une ligne travaux
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function cancelworkAction(Intervention $entity)
 	{
@@ -185,7 +185,7 @@ class InterventionController extends Controller
 	
 	/**
 	 * Annule l'intervention
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function cancelAction(Request $request, Intervention $entity)
 	{
@@ -203,7 +203,7 @@ class InterventionController extends Controller
 	
 	/**
 	 * Désannule l'intervention
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function uncancelAction(Request $request, Intervention $entity)
 	{
@@ -216,7 +216,7 @@ class InterventionController extends Controller
 	
 	/**
 	 * Numéro de facture
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function externalbillAction(Request $request, Intervention $entity)
 	{
@@ -239,7 +239,7 @@ class InterventionController extends Controller
 	 * Liste des interventions par date(s)
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function todayAction()
 	{
@@ -288,7 +288,7 @@ class InterventionController extends Controller
 	 * Liste des interventions par date(s)
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function reportAction($date1 = null,$date2 = null)
 	{
@@ -322,7 +322,7 @@ class InterventionController extends Controller
 	/**
 	 * Liste des interventions par date(s)
 	 *
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function reportdateAction(Request $request)
 	{
@@ -336,7 +336,7 @@ class InterventionController extends Controller
 	 * Supprimer une intervention
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function deleteAction(Shifting $entity)
 	{
@@ -353,7 +353,7 @@ class InterventionController extends Controller
 	/**
 	 * Finds and displays a Intervention entity.
 	 *
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function redirectAction(Intervention $entity, $act)
 	{
@@ -365,7 +365,7 @@ class InterventionController extends Controller
 	/**
 	 * Imprime les intervs de la prochaine journée
 	 *
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function printdayAction($date1)
 	{
@@ -393,7 +393,7 @@ class InterventionController extends Controller
 	/**
 	 * Imprime les intervs de la prochaine journée
 	 *
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function printtomorrowAction()
 	{
@@ -422,7 +422,7 @@ class InterventionController extends Controller
 	/**
 	 * Imprime les intervs d'une intallation
 	 *
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function printdoorAction($id)
 	{
@@ -451,7 +451,7 @@ class InterventionController extends Controller
 	/**
 	 * Export CSV intervs porte
 	 *
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function doorcsvAction($id)
 	{
@@ -477,7 +477,7 @@ class InterventionController extends Controller
 	/**
 	 * Export CSV intervs porte
 	 *
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function doorxlsAction($id)
 	{

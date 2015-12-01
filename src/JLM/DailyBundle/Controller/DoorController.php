@@ -22,7 +22,7 @@ class DoorController extends Controller
 	 * Finds and displays a Door entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function showAction(Door $door)
 	{
@@ -50,7 +50,7 @@ class DoorController extends Controller
 	 * Displays Doors stopped
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function stoppedAction()
 	{
@@ -71,7 +71,7 @@ class DoorController extends Controller
 	 * Displays Doors stopped
 	 *
 	 * @Template("JLMDailyBundle:Door:stopped.html.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function stopupdateAction(Request $request, DoorStop $entity)
 	{
@@ -91,7 +91,7 @@ class DoorController extends Controller
 	 * Displays Doors stopped
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function printstoppedAction()
 	{
@@ -110,7 +110,7 @@ class DoorController extends Controller
 	 * Stop door
 	 *
 	 * @Template("JLMDailyBundle:Door:show.html.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function stopAction(Door $entity)
 	{
@@ -132,7 +132,7 @@ class DoorController extends Controller
 	 * Unstop door
 	 *
 	 * @Template("JLMDailyBundle:Door:show.html.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function unstopAction(Door $entity)
 	{
