@@ -616,4 +616,25 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
         return $this->getManager()->getBillingLabel();
     }
+    
+    /**
+     * @return boolean
+     * @since 1.4.0
+     */
+    public function hasContractWith(ManagerInterface $manager)
+    {
+    	foreach ($this->doors as $door)
+    	{
+    		$contract = $door->getActualContract();
+    		if (null !== $contract)
+    		{
+	    		if ($contract->getManager() == $manager)
+	    		{
+	    			return true;
+	    		}
+    		}
+    	}
+    	
+    	return false;
+    }
 }
