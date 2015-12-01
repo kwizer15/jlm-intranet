@@ -31,7 +31,7 @@ class SiteContactController extends Controller
      * Lists all SiteContact entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
@@ -48,7 +48,7 @@ class SiteContactController extends Controller
      * Finds and displays a SiteContact entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(SiteContact $entity)
     {
@@ -61,7 +61,7 @@ class SiteContactController extends Controller
      * Displays a form to create a new SiteContact entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction(Site $site = null)
     {
@@ -83,7 +83,7 @@ class SiteContactController extends Controller
      * Creates a new SiteContact entity.
      *
      * @Template("JLMModelBundle:SiteContact:new.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request, Site $site = null)
     {
@@ -117,7 +117,7 @@ class SiteContactController extends Controller
      * Displays a form to edit an existing SiteContact entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction($id)
     {
@@ -143,7 +143,7 @@ class SiteContactController extends Controller
      * Edits an existing SiteContact entity.
      *
      * @Template("JLMModelBundle:SiteContact:edit.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, $id)
     {
@@ -183,7 +183,7 @@ class SiteContactController extends Controller
     /**
      * Deletes a SiteContact entity.
      *
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction(Request $request, $id)
     {

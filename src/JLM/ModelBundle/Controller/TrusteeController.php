@@ -33,7 +33,7 @@ class TrusteeController extends Controller
      * Lists all Trustee entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction($page = 1)
     {
@@ -62,7 +62,7 @@ class TrusteeController extends Controller
      * Finds and displays a Trustee entity.
      * 
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(Trustee $entity)
     {
@@ -75,7 +75,7 @@ class TrusteeController extends Controller
      * Displays a form to create a new Trustee entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction()
     {
@@ -103,7 +103,7 @@ class TrusteeController extends Controller
      * Creates a new Trustee entity.
      *
      * @Template("JLMModelBundle:Trustee:new.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction()
     {
@@ -136,7 +136,7 @@ class TrusteeController extends Controller
      * Displays a form to edit an existing Trustee entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction(Trustee $entity)
     {
@@ -154,7 +154,7 @@ class TrusteeController extends Controller
      * Edits an existing Trustee entity.
      *
      * @Template("JLMModelBundle:Trustee:edit.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Trustee $entity)
     {
@@ -189,7 +189,7 @@ class TrusteeController extends Controller
     /**
      * Deletes a Trustee entity.
      *
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction(Trustee $entity)
     {
@@ -220,7 +220,7 @@ class TrusteeController extends Controller
      * Formulaire d'ajout d'un contact au syndic.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function contactnewAction(Trustee $trustee)
     {
@@ -238,7 +238,7 @@ class TrusteeController extends Controller
      * Creates a new Trustee entity.
      *
      * @Template("JLMModelBundle:Trustee:contactnew.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function contactcreateAction(Trustee $trustee)
     {
@@ -270,7 +270,7 @@ class TrusteeController extends Controller
     /**
      * City json
      *
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function searchAction(Request $request)
     {
@@ -287,7 +287,7 @@ class TrusteeController extends Controller
     /**
      * City json
      *
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function jsonAction(Request $request)
     {

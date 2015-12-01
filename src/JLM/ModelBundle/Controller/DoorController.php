@@ -31,7 +31,7 @@ class DoorController extends Controller
      * Lists all Door entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
@@ -46,7 +46,7 @@ class DoorController extends Controller
      * Finds and displays a Door entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(Door $entity)
     {
@@ -57,7 +57,7 @@ class DoorController extends Controller
         // Modal nouveau contrat
         $contractNew = new Contract();
         $contractNew->setDoor($entity);
-        $contractNew->setTrustee($entity->getSite()->getTrustee());
+        $contractNew->setTrustee($entity->getAdministrator()->getTrustee());
         $contractNew->setBegin(new \DateTime);
         $form_contractNew   = $this->createForm(new ContractType(), $contractNew);
 
@@ -82,14 +82,14 @@ class DoorController extends Controller
      * Displays a form to create a new Door entity.
      * 
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction(Site $site = null)
     {
         $entity = new Door();
         if ($site)
         {
-        	$entity->setSite($site);
+        	$entity->setAdministrator($site);
         	$entity->setStreet($site->getAddress()->getStreet());
         }
         $form   = $this->createForm(new DoorType(), $entity);
@@ -105,7 +105,7 @@ class DoorController extends Controller
      * Creates a new Door entity.
      *
      * @Template("JLMModelBundle:Door:new.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request)
     {
@@ -131,7 +131,7 @@ class DoorController extends Controller
      * Displays a form to edit an existing Door entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction(Door $entity)
     {
@@ -151,7 +151,7 @@ class DoorController extends Controller
      * Edits an existing Door entity.
      *
      * @Template("JLMModelBundle:Door:edit.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, Door $entity)
     {
@@ -179,7 +179,7 @@ class DoorController extends Controller
     /**
      * Edits an existing Door entity.
      *
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateCodeAction(Request $request, Door $entity)
     {
@@ -215,7 +215,7 @@ class DoorController extends Controller
     /**
      * Deletes a Door entity.
      *
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction(Door $entity)
     {
@@ -245,7 +245,7 @@ class DoorController extends Controller
      * Lists all Door entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function geocodeAction()
     {
@@ -294,7 +294,7 @@ class DoorController extends Controller
      * Maps Door entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function mapAction()
     {

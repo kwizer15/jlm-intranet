@@ -30,7 +30,7 @@ class ContractController extends Controller
      * Lists all Contract entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
@@ -45,7 +45,7 @@ class ContractController extends Controller
      * Finds and displays a Contract entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(Contract $entity)
     {
@@ -58,7 +58,7 @@ class ContractController extends Controller
      * Displays a form to create a new Contract entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction(Door $door)
     {
@@ -66,7 +66,7 @@ class ContractController extends Controller
         if (!empty($door))
         {
         	$entity->setDoor($door);
-        	$entity->setTrustee($door->getSite()->getTrustee());
+        	$entity->setTrustee($door->getAdministrator()->getTrustee());
         }
   
         $entity->setBegin(new \DateTime);
@@ -82,7 +82,7 @@ class ContractController extends Controller
      * Creates a new Contract entity.
      *
      * @Template("JLMModelBundle:Contract:new.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction()
     {
@@ -101,7 +101,7 @@ class ContractController extends Controller
             {
             	$fee = new Fee();
             	$fee->addContract($entity);
-            	$fee->setTrustee($entity->getTrustee());
+            	$fee->setTrustee($entity->getManager());
             	$fee->setAddress($entity->getDoor()->getSite()->getAddress()->toString());
             	$fee->setPrelabel($entity->getDoor()->getSite()->getBillingPrelabel());
             	$fee->setVat($entity->getDoor()->getSite()->getVat());
@@ -125,7 +125,7 @@ class ContractController extends Controller
      * Stop a contract
      * 
      * @Template("JLMModelBundle:Contract:stop.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function stopupdateAction(Contract $entity)
     {
@@ -152,7 +152,7 @@ class ContractController extends Controller
      * Stop a contract
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function stopAction(Contract $entity)
     {
@@ -167,7 +167,7 @@ class ContractController extends Controller
      * Displays a form to edit an existing Contract entity.
      * 
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction(Contract $entity)
     {
@@ -182,7 +182,7 @@ class ContractController extends Controller
      * Edits an existing Contract entity.
      *
      * @Template("JLMModelBundle:Contract:edit.old.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, Contract $entity)
     {

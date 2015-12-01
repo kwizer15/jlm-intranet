@@ -28,7 +28,7 @@ class SiteController extends Controller
      * Lists all Site entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
@@ -45,7 +45,7 @@ class SiteController extends Controller
      * Finds and displays a Site entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction($id)
     {
@@ -69,7 +69,7 @@ class SiteController extends Controller
      * Displays a form to create a new Site entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction()
     {
@@ -89,7 +89,7 @@ class SiteController extends Controller
      * Creates a new Site entity.
      *
      * @Template("JLMModelBundle:Site:new.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request)
     {
@@ -117,7 +117,7 @@ class SiteController extends Controller
      * Displays a form to edit an existing Site entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction(Site $entity)
     {
@@ -132,7 +132,7 @@ class SiteController extends Controller
      * Edits an existing Site entity.
      *
      * @Template("JLMModelBundle:Site:edit.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, Site $entity)
     {
@@ -157,7 +157,7 @@ class SiteController extends Controller
     /**
      * Deletes a Site entity.
      *
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction(Request $request, $id)
     {

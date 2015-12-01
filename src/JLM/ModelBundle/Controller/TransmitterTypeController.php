@@ -26,7 +26,7 @@ class TransmitterTypeController extends Controller
      * Lists all TransmitterType entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
@@ -41,7 +41,7 @@ class TransmitterTypeController extends Controller
      * Displays a form to create a new TransmitterType entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction()
     {
@@ -58,7 +58,7 @@ class TransmitterTypeController extends Controller
      * Creates a new TransmitterType entity.
      *
      * @Template("JLMModelBundle:TransmitterType:new.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction()
     {
@@ -86,7 +86,7 @@ class TransmitterTypeController extends Controller
      * Displays a form to edit an existing TransmitterType entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction(TransmitterType $entity)
     {
@@ -101,7 +101,7 @@ class TransmitterTypeController extends Controller
      * Edits an existing TransmitterType entity.
      *
      * @Template("JLMModelBundle:TransmitterType:edit.html.twig")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(TransmitterType $entity)
     {

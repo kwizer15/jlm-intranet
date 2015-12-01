@@ -26,7 +26,7 @@ class DefaultController extends Controller
     /**
      * Resultats de la barre de recherche.
      *
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      * @Template()
      */
     public function searchAction(Request $request)
