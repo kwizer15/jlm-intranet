@@ -29,7 +29,7 @@ class ContractController extends ContainerAware
     public function indexAction()
     {
     	$manager = $this->container->get('jlm_contract.contract_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
         $entities = $manager->getRepository()->findAll();
 
         return $manager->renderResponse('JLMContractBundle:Contract:index.html.twig', array('entities' => $entities));
@@ -41,7 +41,7 @@ class ContractController extends ContainerAware
     public function showAction($id)
     {
     	$manager = $this->container->get('jlm_contract.contract_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
     	
         return $manager->renderResponse('JLMContractBundle:Contract:show.html.twig', array('entity' => $entity));
@@ -53,7 +53,7 @@ class ContractController extends ContainerAware
     public function newAction()
     {
     	$manager = $this->container->get('jlm_contract.contract_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$form   = $manager->createForm('new');
     	$ajax = $manager->isAjax();
     	if ($manager->getHandler($form)->process('POST'))
@@ -83,7 +83,7 @@ class ContractController extends ContainerAware
     public function editAction($id, $formName)
     {
     	$manager = $this->container->get('jlm_contract.contract_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
     	$ajax = $manager->getRequest()->isXmlHttpRequest();
     	$form = $manager->createForm($formName, array('entity' => $entity));
