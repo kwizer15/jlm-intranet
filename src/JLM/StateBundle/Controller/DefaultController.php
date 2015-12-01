@@ -17,7 +17,7 @@ class DefaultController extends Controller
      * @Route("/technicians/", name="state_technicians")
      * @Route("/technicians/{year}", name="state_technicians_year")
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function techniciansAction($year = null)
     {
@@ -92,7 +92,7 @@ class DefaultController extends Controller
     /**
      * @Route("/maintenance", name="state_maintenance")
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function maintenanceAction()
     {
@@ -119,7 +119,7 @@ class DefaultController extends Controller
     /**
      * @Route("/top", name="state_top")
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function topAction()
     {
@@ -151,7 +151,7 @@ class DefaultController extends Controller
     /**
      * @Route("/contracts", name="state_contracts")
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function contractsAction()
     {
@@ -203,7 +203,7 @@ class DefaultController extends Controller
     /**
      * @Route("/quote", name="state_quote")
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function quoteAction()
     {
@@ -237,7 +237,7 @@ class DefaultController extends Controller
     /**
      * @Route("/transmitters", name="state_transmitters")
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function transmittersAction()
     {
@@ -260,7 +260,7 @@ class DefaultController extends Controller
     /**
      * @Route("/sells", name="state_sells")
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function sellsAction()
     {
@@ -280,7 +280,7 @@ class DefaultController extends Controller
     /**
      * @Route("/daybill", name="state_daybill")
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function daybillAction()
     {
@@ -303,12 +303,11 @@ class DefaultController extends Controller
     /**
      * @Route("/lastbill", name="state_lastbill")
      * @Template()
-     * @Secure(roles="ROLE_USER")
      */
     public function lastbillAction()
     {
     	$manager = $this->get('jlm_commerce.bill_manager');
-		$manager->secure('ROLE_USER');
+		$manager->secure('ROLE_OFFICE');
 		$datas = array();
 		$datas['entities'] = $manager->getRepository()->get45Sended();
 		$datas['ca'] = 0;
@@ -324,7 +323,7 @@ class DefaultController extends Controller
     /**
      * @Route("/doortypes/{year}", name="state_doortypes")
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function doortypesAction($year = null)
     {
@@ -422,7 +421,7 @@ class DefaultController extends Controller
     /**
      * @Route("/quotes/{year}", name="state_quotes")
      * @Template()
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_OFFICE")
      */
     public function quotesAction($year = null)
     {
