@@ -162,6 +162,7 @@ class MaintenanceController extends AbstractInterventionController
 					$main->setContract($door->getActualContract());
 					$main->setDoor($door);
 					$main->setPriority(5);
+					$main->setPublished(true);
 					//$main->setMustBeBilled(false);
 					$em->persist($main);
 					$count++;
