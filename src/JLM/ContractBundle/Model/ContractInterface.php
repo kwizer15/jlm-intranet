@@ -11,7 +11,7 @@
 
 namespace JLM\ContractBundle\Model;
 
-use JLM\ModelBundle\Entity\Trustee;
+use JLM\CondominiumBundle\Model\ManagerInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -39,11 +39,11 @@ interface ContractInterface
 	public function getFee();
 	
 	/**
-	 * Get trustee
-	 * 
-	 * @return Trustee
+	 * Get manager
+	 *
+	 * @return ManagerInterface
 	 */
-	public function getTrustee();
+	public function getManager();
 	
 	/**
 	 * To String
