@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpKernel\Kernel;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -37,7 +38,8 @@ class BaseManager extends ContainerAware implements ManagerInterface
 
 	public function secure($role)
 	{
-		if (false === $this->container->get('security.context')->isGranted($role))
+		$service = (Kernel::MAJOR_VERSION == 2 && Kernel::MINOR_VERSION > 3) ? 'security.token_storage' : 'security.context';
+		if (false === $this->container->get($service)->isGranted($role))
 		{
 			throw new AccessDeniedException();
 		}
