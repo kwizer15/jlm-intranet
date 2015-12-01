@@ -13,7 +13,7 @@ namespace JLM\ContractBundle\Entity;
 
 use JLM\ContractBundle\Model\ContractInterface;
 use JLM\ModelBundle\Entity\Door as ContractableInterface;
-use JLM\ModelBundle\Entity\Trustee as ThirdPartyInterface;
+use JLM\CondominiumBundle\Model\ManagerInterface as ThirdPartyInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -342,20 +342,40 @@ class Contract implements ContractInterface
      *
      * @param Trustee $trustee
      * @return self
+     * @deprected Use setManager()
      */
-    public function setTrustee(ThirdPartyInterface $trustee = null)
+    public function setTrustee(ManagerInterface $trustee = null)
     {
-        $this->trustee = $trustee;
+        return $this->setManager($trustee);
+    }
     
-        return $this;
+    /**
+     * Set manager
+     *
+     * @param Manager $trustee
+     * @return self
+     */
+    public function setManager(ManagerInterface $manager = null)
+    {
+    	$this->trustee = $manager;
+    
+    	return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * @deprecated Use getManager()
      */
     public function getTrustee()
     {
-        return $this->trustee;
+        return $this->getManager();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getManager()
+    {
+    	return $this->trustee;
     }
     
     /**
