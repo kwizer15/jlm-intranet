@@ -28,7 +28,7 @@ class AskquoteController extends PaginableController
 	public function indexAction()
 	{
 		$manager = $this->container->get('jlm_office.askquote_manager');
-		$manager->secure('ROLE_USER');
+		$manager->secure('ROLE_OFFICE');
 		$request = $manager->getRequest();
 		$states = array(
 				'all' => 'All',
@@ -49,7 +49,7 @@ class AskquoteController extends PaginableController
 	/**
 	 * @Route("/{id}/show", name="askquote_show")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function showAction(AskQuote $entity)
 	{
@@ -60,7 +60,7 @@ class AskquoteController extends PaginableController
 	/**
 	 * @Route("/new", name="askquote_new")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function newAction()
 	{
@@ -73,7 +73,7 @@ class AskquoteController extends PaginableController
 	/**
 	 * @Route("/create", name="askquote_create")
 	 * @Template("JLMOfficeBundle:Askquote:new.html.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function createAction()
 	{
@@ -102,7 +102,7 @@ class AskquoteController extends PaginableController
 	
 	/**
 	 * @Route("/{id}/donttreat", name="askquote_donttreat")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function donttreatAction(AskQuote $entity)
 	{
@@ -123,7 +123,7 @@ class AskquoteController extends PaginableController
 	
 	/**
 	 * @Route("/{id}/canceldonttreat", name="askquote_canceldonttreat")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function canceldonttreatAction(AskQuote $entity)
 	{
@@ -138,7 +138,7 @@ class AskquoteController extends PaginableController
 	 * Imprimer la liste des demande de devis non-traités
 	 *
 	 * @Route("/printlist", name="askquote_printlist")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function printlistAction()
 	{
@@ -161,7 +161,7 @@ class AskquoteController extends PaginableController
 	public function searchAction(Request $request)
 	{
 		$manager = $this->container->get('jlm_office.askquote_manager');
-		$manager->secure('ROLE_USER');
+		$manager->secure('ROLE_OFFICE');
 		$formData = $manager->getRequest()->get('jlm_core_search');
 		$params = array();
 		if (is_array($formData) && array_key_exists('query', $formData))

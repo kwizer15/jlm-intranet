@@ -23,7 +23,7 @@ class ContactController extends Controller
 	/**
 	 * @Route("/", name="tocontact")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function indexAction()
 	{
@@ -34,7 +34,7 @@ class ContactController extends Controller
 	
 	/**
 	 * @Route("/tocontact/contacted/{id}", name="tocontact_contacted")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function contactedAction(Intervention $entity)
 	{

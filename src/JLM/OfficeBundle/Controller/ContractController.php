@@ -21,7 +21,7 @@ class ContractController extends Controller
 	 * @Route("/{id}/print",name="contract_print")
 	 * @Route("/{id}/print/{number}",name="contract_printnumb")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function printAction(Contract $entity,$number = 0)
 	{
@@ -37,7 +37,7 @@ class ContractController extends Controller
 	/**
 	 * @Route("/printall",name="contract_printall")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function printallAction()
 	{

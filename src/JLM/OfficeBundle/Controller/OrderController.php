@@ -37,7 +37,7 @@ class OrderController extends Controller
 	 * @Route("/page/{page}", name="order_page")
 	 * @Route("/page/{page}/state/{state}", name="order_state")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function indexAction($page = 1, $state = null)
 	{
@@ -72,7 +72,7 @@ class OrderController extends Controller
 	 *
 	 * @Route("/{id}/show", name="order_show")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function showAction(Order $entity)
 	{
@@ -84,7 +84,7 @@ class OrderController extends Controller
 	 *
 	 * @Route("/new/{id}", name="order_new")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function newAction(Work $work)
 	{
@@ -103,7 +103,7 @@ class OrderController extends Controller
 	 * @Route("/create", name="order_create")
 	 * @Method("post")
 	 * @Template("JLMOfficeBundle:Order:new.html.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function createAction(Request $request)
 	{
@@ -138,7 +138,7 @@ class OrderController extends Controller
 	 *
 	 * @Route("/{id}/edit", name="order_edit")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function editAction(Order $entity)
 	{
@@ -157,7 +157,7 @@ class OrderController extends Controller
 	 * @Route("/{id}/update", name="order_update")
 	 * @Method("post")
 	 * @Template("JLMOfficeBundle:Order:edit.html.twig")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function updateAction(Request $request, Order $entity)
 	{
@@ -192,7 +192,7 @@ class OrderController extends Controller
 	 * Imprimer la fiche travaux
 	 *
 	 * @Route("/{id}/print", name="order_print")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function printAction(Order $entity)
 	{
@@ -209,7 +209,7 @@ class OrderController extends Controller
 	 * En préparation
 	 * 
 	 * @Route("/{id}/ordered", name="order_ordered")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function orderedAction(Order $entity)
 	{
@@ -228,7 +228,7 @@ class OrderController extends Controller
 	 * En préparation
 	 *
 	 * @Route("/{id}/ready", name="order_ready")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function readyAction(Order $entity)
 	{
@@ -249,7 +249,7 @@ class OrderController extends Controller
 	/**
 	 * @Route("/todo", name="order_todo")
 	 * @Template()
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function todoAction()
 	{
@@ -263,7 +263,7 @@ class OrderController extends Controller
 	 *
 	 * @Route("/search", name="order_search")
 	 * @Method("post")
-	 * @Secure(roles="ROLE_USER")
+	 * @Secure(roles="ROLE_OFFICE")
 	 * @Template()
 	 */
 	public function searchAction(Request $request)
