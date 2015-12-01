@@ -31,7 +31,7 @@ class BillController extends ContainerAware
 	public function indexAction()
 	{
 		$manager = $this->container->get('jlm_commerce.bill_manager');
-		$manager->secure('ROLE_USER');
+		$manager->secure('ROLE_OFFICE');
 		$request = $manager->getRequest();
 		$states = array(
 			'all' => 'All',
@@ -57,7 +57,7 @@ class BillController extends ContainerAware
     public function showAction($id)
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	
         return $manager->renderResponse('JLMCommerceBundle:Bill:show.html.twig',array('entity'=> $manager->getEntity($id)));
     }
@@ -68,7 +68,7 @@ class BillController extends ContainerAware
     public function newAction()
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$form = $manager->createForm('new');
 		if ($manager->getHandler($form)->process())
 		{
@@ -89,7 +89,7 @@ class BillController extends ContainerAware
     public function editAction($id)
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
     	$manager->assertState($entity, array(0));
         $editForm = $manager->createForm('edit', array('entity'=> $entity));
@@ -125,7 +125,7 @@ class BillController extends ContainerAware
     private function printer($id, $duplicate = false)
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
         $filename = $entity->getNumber();
         if ($duplicate)
@@ -143,7 +143,7 @@ class BillController extends ContainerAware
     public function printlistAction()
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	
     	return $manager->renderPdf('factures-a-faire', 'JLMCommerceBundle:Bill:printlist.pdf.php',
     			array('entities' => $manager->getObjectManager()->getRepository('JLMDailyBundle:Intervention')->getToBilled())
@@ -164,7 +164,7 @@ class BillController extends ContainerAware
     public function sendAction($id)
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
     	if ($entity->getState() != 1)
     	{
@@ -204,7 +204,7 @@ class BillController extends ContainerAware
     private function stateChange($id, $newState)
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
         switch ($newState)
         {
@@ -244,7 +244,7 @@ class BillController extends ContainerAware
     public function todoAction()
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$om = $manager->getObjectManager();
     	$list = $om->getRepository('JLMDailyBundle:Intervention')->getToBilled();
     	$forms_externalBill = array();
@@ -264,7 +264,7 @@ class BillController extends ContainerAware
     public function toboostAction()
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	
     	return $manager->renderResponse('JLMCommerceBundle:Bill:toboost.html.twig', array('entities' => $manager->getRepository()->getToBoost()));
     }
@@ -276,7 +276,7 @@ class BillController extends ContainerAware
     {
     	// @todo Passer par un service de formPopulate et créer un controller unique dans CoreBundle
     	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
     	$request = $manager->getRequest();
     	$site = $entity->getSiteObject();
@@ -304,7 +304,7 @@ class BillController extends ContainerAware
     public function printboostAction($id)
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
     	
     	return $manager->renderPdf($entity->getNumber(), 'JLMCommerceBundle:Bill:printboost.pdf.php',array('entities'=>array($entity)));
@@ -316,7 +316,7 @@ class BillController extends ContainerAware
     public function boostokAction($id)
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
         $date = new \DateTime;
     	if ($entity->getFirstBoost() === null)
@@ -340,7 +340,7 @@ class BillController extends ContainerAware
     public function searchAction()
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$formData = $manager->getRequest()->get('jlm_core_search');
     	$params = array();
     	if (is_array($formData) && array_key_exists('query', $formData))

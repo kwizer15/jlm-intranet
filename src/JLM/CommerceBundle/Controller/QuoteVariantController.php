@@ -45,7 +45,7 @@ class QuoteVariantController extends Controller
     public function newAction()
     {
     	$manager = $this->container->get('jlm_commerce.quotevariant_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
         $form   = $manager->createForm('new');
         if ($manager->getHandler($form)->process())
     	{
@@ -65,7 +65,7 @@ class QuoteVariantController extends Controller
 	public function editAction($id)
 	{
 		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
-		$manager->secure('ROLE_USER');
+		$manager->secure('ROLE_OFFICE');
 		$entity = $manager->getEntity($id);
 		$manager->assertState($entity, array(QuoteVariant::STATE_INSEIZURE));
 		$form = $manager->createForm('edit', array('entity' => $entity));
@@ -92,7 +92,7 @@ class QuoteVariantController extends Controller
 	private function changeState($id, $state, $event = null)
 	{
 		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
-		$manager->secure('ROLE_USER');
+		$manager->secure('ROLE_OFFICE');
 		$entity = $manager->getEntity($id);
 		if ($entity->setState($state))
 		{
@@ -166,7 +166,7 @@ class QuoteVariantController extends Controller
 	{
 		// @todo Passer par un service de formPopulate et créer un controller unique dans CoreBundle
 		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
-		$manager->secure('ROLE_USER');
+		$manager->secure('ROLE_OFFICE');
 		$entity = $manager->getEntity($id);
 		$request = $manager->getRequest();
 		$mail = MailFactory::create(new QuoteVariantConfirmGivenMailBuilder($entity));
@@ -192,7 +192,7 @@ class QuoteVariantController extends Controller
 	public function mailAction($id)
 	{
 		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
-		$manager->secure('ROLE_USER');
+		$manager->secure('ROLE_OFFICE');
 		$entity = $manager->getEntity($id);
 		$manager->assertState($entity, array(
 				QuoteVariant::STATE_READY,
@@ -230,7 +230,7 @@ class QuoteVariantController extends Controller
 	public function sendmailAction($id)
 	{
 		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
-		$manager->secure('ROLE_USER');
+		$manager->secure('ROLE_OFFICE');
 		$request = $manager->getRequest();
 		$entity = $manager->getEntity($id);
 		if ($entity->getState() < QuoteVariant::STATE_READY)
@@ -278,7 +278,7 @@ class QuoteVariantController extends Controller
 	public function printAction($id)
 	{
 		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
-		$manager->secure('ROLE_USER');
+		$manager->secure('ROLE_OFFICE');
 		$entity = $manager->getEntity($id);
 		
 		return $manager->renderPdf($entity->getNumber(), 'JLMCommerceBundle:Quote:quote.pdf.php', array('entities'=>array($entity)));
@@ -290,7 +290,7 @@ class QuoteVariantController extends Controller
 	public function printcodingAction($id)
 	{
 		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
-		$manager->secure('ROLE_USER');
+		$manager->secure('ROLE_OFFICE');
 		$entity = $manager->getEntity($id);
 		if ($entity->getState() == QuoteVariant::STATE_CANCELED)
 		{

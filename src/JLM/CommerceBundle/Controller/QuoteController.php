@@ -32,7 +32,7 @@ class QuoteController extends ContainerAware
     public function indexAction()
     {
     	$manager = $this->container->get('jlm_commerce.quote_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$states = array(
     			'all' => 'All',
     			'in_seizure' => 'InSeizure',
@@ -60,7 +60,7 @@ class QuoteController extends ContainerAware
     public function showAction($id)
     {
     	$manager = $this->container->get('jlm_commerce.quote_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	
         return $manager->renderResponse('JLMCommerceBundle:Quote:show.html.twig', 
         		array('entity'=> $manager->getEntity($id))
@@ -73,7 +73,7 @@ class QuoteController extends ContainerAware
     public function newAction()
     {
     	$manager = $this->container->get('jlm_commerce.quote_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$form = $manager->createForm('new');
     	
     	if ($manager->getHandler($form)->process())
@@ -95,7 +95,7 @@ class QuoteController extends ContainerAware
     public function editAction($id)
     {
     	$manager = $this->container->get('jlm_commerce.quote_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
     	$manager->assertState($entity, array(0));
     	$form = $manager->createForm('edit', array('entity' => $entity));
@@ -117,7 +117,7 @@ class QuoteController extends ContainerAware
     public function searchAction()
     {
     	$manager = $this->container->get('jlm_commerce.quote_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	
     	return $manager->renderSearch('JLMCommerceBundle:Quote:search.html.twig');
     }
@@ -128,7 +128,7 @@ class QuoteController extends ContainerAware
     public function printAction($id)
     {
     	$manager = $this->container->get('jlm_commerce.quote_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
     	$filename = $entity->getNumber().'.pdf';
     	
@@ -141,7 +141,7 @@ class QuoteController extends ContainerAware
     public function jacketAction($id)
     {
     	$manager = $this->container->get('jlm_commerce.quote_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
     	$filename = $entity->getNumber().'-jacket.pdf';
     	 
@@ -154,7 +154,7 @@ class QuoteController extends ContainerAware
     public function mailAction($id)
     {
     	$manager = $this->container->get('jlm_commerce.quote_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
     	$manager->assertState($entity, array(1,2,3,4,5));
     	$mail = new Mail();
@@ -186,7 +186,7 @@ class QuoteController extends ContainerAware
     public function sendmailAction($id)
     {
     	$manager = $this->container->get('jlm_commerce.quote_manager');
-    	$manager->secure('ROLE_USER');
+    	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
     	$manager->assertState($entity, array(1,2,3,4,5));
     	$request = $manager->getRequest();
@@ -201,12 +201,12 @@ class QuoteController extends ContainerAware
     			
     		$message = $mail->getSwift();
     		$message->setReadReceiptTo('commerce@jlm-entreprise.fr');
-    		$eventComment = 'Destinataire : '.$mail->getTo();
-    		if ($mail->getCc())
-    		{
-    			$eventComment .= chr(10).'Copie : '.$mail->getCc();
-    		}
-    		$eventComment .= chr(10).'Pièces jointes :';
+//    		$eventComment = 'Destinataire : '.$mail->getTo();
+//    		if ($mail->getCc())
+//    		{
+//    			$eventComment .= chr(10).'Copie : '.$mail->getCc();
+//    		}
+//    		$eventComment .= chr(10).'Pièces jointes :';
     		foreach ($entity->getVariants() as $variant)
     		{
     			if ($variant->getState() > 0)
@@ -216,7 +216,7 @@ class QuoteController extends ContainerAware
 		    				$variant->getNumber().'.pdf','application/pdf'
 		    		))
 		    		;
-		    		$eventComment .= chr(10).'- Devis n°'.$variant->getNumber();
+//		    		$eventComment .= chr(10).'- Devis n°'.$variant->getNumber();
 		    		$variant->setState(3);
     			}
     		}
@@ -225,7 +225,7 @@ class QuoteController extends ContainerAware
     			$message->attach(\Swift_Attachment::fromPath(
 					$this->container->get('kernel')->getRootDir().'/../web/bundles/jlmcommerce/pdf/attestation.pdf'
 				));
-    			$eventComment .= chr(10).'- Attestation TVA à 10%';
+//    			$eventComment .= chr(10).'- Attestation TVA à 10%';
     		}
 
     		//$entity->addEvent(Quote::EVENT_SEND, $eventComment);
