@@ -17,7 +17,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class QuoteCountExtension extends \Twig_Extension
+class QuoteCountExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
     private $om;
     private $translator;
