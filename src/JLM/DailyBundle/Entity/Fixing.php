@@ -214,7 +214,7 @@ class Fixing extends Intervention implements FixingInterface
 	public function getCustomerReport()
 	{
 		$out = 'Nous avons constaté ';
-		$nothing = $out.'après plusieurs essais que l\'intallation était fonctionnelle.';
+		$nothing = $out.'après plusieurs essais que l\'installation était fonctionnelle.';
 		$part = ($this->getPartFamily() === null) ? 'aucun' : strtolower($this->getPartFamily()->getName());
 		if ($part == 'aucun')
 		{
@@ -231,6 +231,43 @@ class Fixing extends Intervention implements FixingInterface
 			return $out.$suite.$part.'.';
 		}
 		
+		return $nothing;
+	}
+	
+	/**
+	 * Get customer actions
+	 * @return string
+	 */
+	public function getCustomerActions()
+	{
+		// null
+		// 		done == constat
+		
+		// Nous avons procédé aux réparations nécessaires
+		//		 done == remplacer || done == réparé || work->isClosed()
+		
+		// Un devis va vous être envoyé
+		// Le devis n°xxxxxx vous a été envoyé le xx/xx/xxxx
+		// 
+		
+		$out = 'Nous avons constaté ';
+		$nothing = $out.'après plusieurs essais que l\'intallation était fonctionnelle.';
+		$part = ($this->getPartFamily() === null) ? 'aucun' : strtolower($this->getPartFamily()->getName());
+		if ($part == 'aucun')
+		{
+			return $nothing;
+		}
+		$out.= 'un';
+		$due = $this->getDue();
+		if ($due !== null)
+		{
+			$cause = ($due->getId() != 4) ? 'e '.strtolower($due->getName()) : ' dysfonctionnement';
+			$out .= $cause.' sur les élements d';
+			$suite = (in_array(substr($part,0,1),array('a','e','i','o','u'))) ? '\'' : 'e ';
+	
+			return $out.$suite.$part.'.';
+		}
+	
 		return $nothing;
 	}
 }
