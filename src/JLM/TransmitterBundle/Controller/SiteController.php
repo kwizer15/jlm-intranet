@@ -9,8 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\DefaultBundle\Entity\Search;
-use JLM\DefaultBundle\Form\Type\SearchType;
 use JLM\ModelBundle\Entity\Site;
 
 /**
