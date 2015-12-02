@@ -1,0 +1,22 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+{% if twbs == 3 %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="page-header">
+	  <h1>Inscription</h1>
+	</div>
+    <div class="jumbotron">
+{% endif %}
+    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>
+    {% if app.session is not empty %}
+        {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+        {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans({}, 'FOSUserBundle') }}</a></p>{% endif %}
+    {% endif %}
+{% if twbs == 3 %}
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock fos_user_content %}

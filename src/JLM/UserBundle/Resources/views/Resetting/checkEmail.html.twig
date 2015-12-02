@@ -1,0 +1,20 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+{% if twbs == 3 %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="page-header">
+	  <h1>Réinitialisation de mot de passe</h1>
+	</div>
+    <div class="jumbotron">
+{% endif %}
+<p>
+{{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}
+</p>
+{% if twbs == 3 %}
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

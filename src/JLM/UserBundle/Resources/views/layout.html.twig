@@ -1,53 +1,34 @@
 {%  extends "::layout.html.twig" %}
 
 {% block container %}
-		<div class="container">
-			<div class="span3"></div>
-			<div class="span6">
-				<div class="page-header">
-					<h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="{{ asset('bundles/jlmuser/img/jlm-logo.png') }}"></h1>
-				</div>
-        {% for type, messages in app.session.flashbag.all() %}
-            {% for message in messages %}
-                <div class="{{ type }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
-
-        <div class="well">
-            {% block fos_user_content %}
-            {% endblock fos_user_content %}
-        </div>
-        </div>
-	        <div class="span3"></div>
-        </div>
-{% endblock %}
-
-{% block content %}
 <div class="container">
-  <div class="row">
-	<div class="col-md-6">
+  {% if twbs == 2 %}
+    <div class="span3"></div>
+    <div class="span6">
       <div class="page-header">
-		<h1>Mon compte</h1>
-	  </div>
+        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="{{ asset('bundles/jlmuser/img/jlm-logo.png') }}"></h1>
+      </div>
+  {% else %}
+    <div class="row">
+	  <div class="col-md-12">
+  {% endif %}
       {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
-          <div class="{{ type }}">
-            {{ message }}
-          </div>
+          <div class="{{ type }}">{{ message }}</div>
         {% endfor %}
       {% endfor %}
-      <div class="jumbotron">
-        {% block fos_user_content_bs3 %}
-        {% endblock fos_user_content_bs3 %}
+   {% if twbs == 2 %}
+      <div class="well">
+     {% else %}
+     </div>
+    </div>
+    {% endif %}
+        {% block fos_user_content %}
+        {% endblock fos_user_content %}
+      
       </div>
+      {% if twbs == 2 %}
     </div>
-    <div class="col-md-6">
-      {#}<div class="page-header">
-		<h1>Demander un compte</h1>
-	  </div>{#}
-    </div>
-  </div>
-</div>
+	<div class="span3"></div>
+	{% endif %}
 {% endblock %}

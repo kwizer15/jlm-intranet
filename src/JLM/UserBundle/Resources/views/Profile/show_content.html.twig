@@ -1,0 +1,22 @@
+{% if twbs == 3 %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="page-header">
+	  <h1>Mon compte</h1>
+	</div>
+    <div class="jumbotron">
+	  <p>Bienvenue {{ user.username }},</p>
+	  <div class="row">
+	    <div class="col-md-4"><a class="btn btn-default" href="{{ path('fos_user_profile_edit') }}">Editer mon profile</a></div>
+        <div class="col-md-4"><a class="btn btn-default" href="{{ path('fos_user_change_password') }}">Changer mon mot de passe</a></div>
+        </div>
+    </div>
+  </div>
+
+</div>
+{% else %}
+<div class="fos_user_user_show">
+    <p>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}: {{ user.username }}</p>
+    <p>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}: {{ user.email }}</p>
+</div>
+{% endif %}
