@@ -61,7 +61,7 @@ class BusinessController extends Controller
 			{
 				$businessDoors[] = $door;
 				$lastsMaintenance[] = $om->getRepository('JLMDailyBundle:Maintenance')->getLastsByDoor($door, 2);
-				$lastsFixing[] = $om->getRepository('JLMDailyBundle:Fixing')->getLastsByDoor($door, 2);
+				$lastsFixing[] = $om->getRepository('JLMDailyBundle:Fixing')->getLastsByDoor($door, 2, true);
 				$quotes = $om->getRepository('JLMCommerceBundle:Quote')->getSendedByDoor($door);
 				$askQuoteForms[] = [];
 				foreach ($quotes as $quote)

@@ -266,13 +266,18 @@ class InterventionRepository extends EntityRepository
 	 * @return array|null
 	 * @since 1.4.0
 	 */
-	public function getLastsByDoor(Door $door, $limit = 2)
+	public function getLastsByDoor(Door $door, $limit = 2, $published = false)
 	{
 		$qb = $this->createQueryBuilder('a')
-			->where('a.door = ?1')
-			->orderBy('a.creation','DESC')
-			->setParameter(1, $door)
-			->setMaxResults($limit);
+			->where('a.door = ?1');
+		if ($published)
+		{
+			$qb->andWhere('a.published = ?2')
+			   ->setParameter(2, true);
+		}
+			$qb->orderBy('a.creation','DESC')
+			   ->setParameter(1, $door)
+			   ->setMaxResults($limit);
 	
 		return $qb->getQuery()->getResult();
 	}
