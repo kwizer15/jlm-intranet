@@ -60,9 +60,11 @@
               {% if app.user and is_granted('ROLE_MANAGER') %}
               <ul class="nav navbar-nav navbar-right">
 		        <li class="dropdown">
-		          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Mon compte <b class="caret"></b></a>
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user.username }} <b class="caret"></b></a>
 		          <ul class="dropdown-menu">
 		            <li><a href="{{ path('jlm_front_business_list') }}"><span class="glyphicon glyphicon-book"></span> Mon e-carnet</a></li>
+		            <li><a href="{{ path('fos_user_profile_show') }}"><span class="glyphicon glyphicon-user"></span> Mon profil</a></li>
+		            
 		         {#}<li><a href="#"><span class="badge pull-right">2</span><span class="glyphicon glyphicon-envelope"></span> Messages</a></li>{#}
 		         {#}<li><a href="#"><span class="glyphicon glyphicon-cog"></span> Paramètres</a></li>{#}
 		            <li class="divider"></li>
@@ -83,11 +85,7 @@
     {% endblock navbar %}
     {% block caroussel %}
     {% endblock %}
-    {% block content %}
-        
-    {% endblock content %}
-
-
+    {% block container %}{% endblock container %}
       {% block footer %}
       <footer>
       <div class="container">
