@@ -41,4 +41,11 @@ class BootstrapExtension extends \Twig_Extension
     	
     	return '<span class="'.$class.'">'.$content.'</span>';
     }
+        
+    public function getGlobals()
+    {
+    	return array(
+    			'twbs' => array('version' => 3),
+    	);
+    }
 }
