@@ -1,5 +1,5 @@
 services:            
-    jlm_bootstrap.twig.bootstrap_extension:
-        class: JLM\CoreBundle\Twig\Extension\BootstrapExtension
-        tags:
-            - { name: twig.extension }
+#    jlm_bootstrap.twig.bootstrap_extension:
+#        class: JLM\CoreBundle\Twig\Extension\BootstrapExtension
+#        tags:
+#            - { name: twig.extension }
