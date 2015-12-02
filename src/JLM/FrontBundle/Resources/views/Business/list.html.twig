@@ -8,7 +8,7 @@
     <h1>{{ manager.name }}</h1>
   </div>
   <div class="row">
-    <div class="col-lg-3">
+    <div class="col-md-3">
     {% for business in businesses %}
       <a href="{{ path('jlm_front_business_list',{'business':business.id}) }}" class="list-group-item{% if business.id == activeBusiness.id %} active{% endif %}">
         <span class="badge">?</span>
@@ -18,10 +18,12 @@
       {% endfor %}
     </div>
     <div class="col-md-9">
+    <div class="jumbotron">
       <h2>{{ activeBusiness.address|nl2br }}</h2>
+      </div>
       <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
       {% if activeBusiness.doors is not empty %}
-      {% for key, door in activeBusiness.doors if door.actualContract and door.actualContract.trustee.id == manager.id %}
+      {% for key, door in activeBusiness.doors if door.actualContract and door.actualContract.manager.id == manager.id %}
         <div class="panel panel-primary">
           <div class="panel-heading" role="tab" id="heading{{ loop.index }}">
             <h4 class="panel-title">
@@ -46,204 +48,20 @@
           " role="tabpanel" aria-labelledby="heading{{ loop.index }}">
             <div class="panel-body">
       		  <div class="col-md-12">
-      		    <a href="#" class="btn btn-primary btn-sm pull-right">Plus d'historique...</a><h4>Entretiens</h4>
-      		    <table class="table table-bordered">
-      		      <tbody>
-      		      {% for maintenance in lastsMaintenance[key] %}
-      		        <tr>
-      		          <th>{% if maintenance.creation|date('m') > 4 %}2ème semestre {{ maintenance.creation|date('Y') }}{% else %}1er semestre {{ maintenance.creation|date('Y') }}{% endif %}</th>
-      		          <td>{% if maintenance.close %}{{ maintenance.close|date('d/m/Y') }}{% endif %}</td>
-      		        </tr>
-      		      {% endfor %}
-      		      </tbody>
-      		    </table>
+      		    {% include 'JLMFrontBundle:Business:list_maintenance.html.twig' with {'maintenances':lastsMaintenance[key]} %}
       		 </div>
       		 <div class="col-md-12">
-      		    <a href="#" class="btn btn-primary btn-sm pull-right">Plus d'historique...</a><h4>Dernières interventions</h4>
-      		    <table class="table table-bordered">
-      		      <tbody>
-      		      {% for fixing in lastsFixing[key] %}
-      		        <tr>
-      		          <th>{{ fixing.close|date('d/m/Y') }}</th>
-      		          <td>{{ fixing.customerReport|nl2br }}
-      		            <br>{%- if fixing.askQuote %}Un devis va vous être envoyé.{%- endif -%}
-      		      </td>
-      		          <td>
-      		            {%- if fixing.done.id == 3 -%}<span class="label label-danger">À l'arrêt</span>
-      		            {%- else  -%}<span class="label label-success">En fonction</span>
-      		            {%- endif -%}
-      		          </td>
-      		          <td><a href="#" class="btn btn-default btn-sm pull-right">Détails...</a></td>
-      		        </tr>
-      		        {% endfor %}
-      		      </tbody>
-      		    </table>
+      		    {% include 'JLMFrontBundle:Business:list_fixing.html.twig' with {'fixings':lastsFixing[key]} %}
       		 </div>
+      		 {# Liste des devis #}
       		 <div class="col-md-12">
-      		    <h4>Devis en attente</h4>
-      		    {% if quotes[key] is not empty %}
-      		    
-      		    <table class="table table-bordered">
-      		      <tbody>
-      		      {% for quote in quotes[key] %}
-      		        <tr>
-      		          <th>{{ quote.creation|date('d/m/Y') }}</th>
-      		          <td>{{ quote.number }}</td>
-      		          <td><a href="#" type="button" data-toggle="modal" data-target="#askQuote{{ quote.id }}" class="btn btn-default btn-sm pull-right">Demander le devis</a></td>
-      		        </tr>
-      		        {% endfor %}
-      		      </tbody>
-      		    </table>
-      		    {% for key2,quote in quotes[key]%}
-      		    <div class="modal fade" id="askQuote{{ quote.id }}" tabindex="-1" role="dialog" aria-labelledby="askQuote{{ quote.id }}Label">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="askQuote{{ quote.id }}Label">Demander le devis n°{{ quote.number }}</h4>
-                      </div>
-                      <div class="modal-body">
-                        {{ form(askQuoteForms[key][key2]) }}
-                      </div>
-{#}                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                        <button type="button" class="btn btn-primary">Demander le devis</button>
-                      </div>{#}
-                    </div>
-                  </div>
-                </div>
-				{% endfor %}
-      		    {% else %}
-      		    <p>Pas de devis en attente pour cette installation</p>
-      		    {% endif %}
+      		    {% include 'JLMFrontBundle:Business:list_quote.html.twig' with {'quotes':quotes[key]} %}
       		 </div>
             </div>
           </div>
         </div>
         {% endfor %}
-        {% endif %}
-        {#}
-        <div class="panel panel-warning">
-          <div class="panel-heading" role="tab" id="headingThree">
-            <h4 class="panel-title">
-              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                <strong>Z8484</strong> &middot; Portail pivotant 2 vantaux / Façade<span class="pull-right label label-warning">En dépannage</span>
-              </a>
-            </h4>
-          </div>
-          <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-            <div class="panel-body">
-      		  <div class="col-md-12">
-      		    <a href="#" class="btn btn-default btn-sm pull-right">Plus d'historique...</a><h4>Entretiens</h4>
-      		    <table class="table table-bordered">
-      		      <tbody>
-      		        <tr>
-      		          <th>2ème semestre 2015</th>
-      		          <td>15/10/2015</td>
-      		        </tr>
-      		        <tr>
-      		          <th>1er semestre 2015</th>
-      		          <td>15/10/2015</td>
-      		        </tr>
-      		      </tbody>
-      		    </table>
-      		 </div>
-      		 <div class="col-md-12">
-      		    <a href="#" class="btn btn-default btn-sm pull-right">Plus d'historique...</a><h4>Dernières interventions</h4>
-      		    <table class="table table-bordered">
-      		      <tbody>
-      		        <tr>
-      		          <th>20/05/2015</th>
-      		          <td>Demande d'intervention prise en compte</td>
-      		          <td><span class="label label-warning">Dépannage</span></td>
-      		          <td><a href="#" class="btn btn-primary btn-sm pull-right">Détails...</a></td>
-      		        </tr>
-      		        <tr>
-      		          <th>16/05/2015</th>
-      		          <td>Le technicien a constaté un problème sur les éléments de signalisation.<br>Le problème a été résolu.</td>
-      		          <td><span class="label label-success">En fonction</span></td>
-      		          <td><a href="#" class="btn btn-primary btn-sm pull-right">Détails...</a></td>
-      		        </tr>
-      		      </tbody>
-      		    </table>
-      		 </div>
-      		 <div class="col-md-12">
-      		    <h4>Devis en attente</h4>
-      		    <p>Pas de devis en attente pour cette installation</p>
-      		    </table>
-      		 </div>
-            </div>
-          </div>
-        </div>
-        <div class="panel panel-success">
-          <div class="panel-heading" role="tab" id="headingTwo">
-            <h4 class="panel-title">
-              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                <strong>E7458</strong> &middot; Portail pivotant 2 vantaux / Façade</small><span class="pull-right label label-success">En fonction</span>
-              </a>
-            </h4>
-          </div>
-          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-            <div class="panel-body">
-      		  <div class="col-md-12">
-      		    <a href="#" class="btn btn-default btn-sm pull-right">Plus d'historique...</a><h4>Entretiens</h4>
-      		    <table class="table table-bordered">
-      		      <tbody>
-      		        <tr>
-      		          <th>2ème semestre 2015</th>
-      		          <td></td>
-      		        </tr>
-      		        <tr>
-      		          <th>1er semestre 2015</th>
-      		          <td>15/10/2015</td>
-      		        </tr>
-      		      </tbody>
-      		    </table>
-      		 </div>
-      		 <div class="col-md-12">
-      		    <a href="#" class="btn btn-default btn-sm pull-right">Plus d'historique...</a><h4>Dernières interventions</h4>
-      		    <table class="table table-bordered">
-      		      <tbody>
-      		        <tr>
-      		          <th>20/05/2015</th>
-      		          <td>Travaux suite à votre accord sur notre devis n°14080251-1</td>
-      		          <td><span class="label label-success">En fonction</span></td>
-      		          <td><a href="#" class="btn btn-info btn-sm pull-right">Détails...</a></td>
-      		        </tr>
-      		        <tr>
-      		          <th>16/05/2015</th>
-      		          <td>Le technicien a constaté un problème sur les éléments de sécurité.<br>Le devis n°14080251-1 vous a été adressé.</td>
-      		          <td><span class="label label-danger">À l'arrêt</span></td>
-      		          <td><a href="#" class="btn btn-info btn-sm pull-right">Détails...</a></td>
-      		        </tr>
-      		      </tbody>
-      		    </table>
-      		 </div>
-      		 <div class="col-md-12">
-      		    <h4>Devis en attente</h4>
-      		    <p>Pas de devis en attente pour cette installation</p>
-      		    </table>
-      		 </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="panel panel-success">
-          <div class="panel-heading" role="tab" id="headingTwo">
-            <h4 class="panel-title">
-              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                <strong>E7458</strong> &middot; Portail pivotant 2 vantaux / Façade</small><span class="pull-right label label-success">En fonction</span>
-              </a>
-            </h4>
-          </div>
-          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-            <div class="panel-body">
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-            </div>
-          </div>
-        </div>
-        
-        {#}       
+        {% endif %}     
       </div>
     </div>
   </div>

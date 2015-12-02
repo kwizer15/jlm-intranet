@@ -1,0 +1,56 @@
+{% if fixings is not empty %}<a href="#" class="btn btn-primary btn-sm pull-right">Plus d'historique...</a>{% endif %}
+<h4>Dernières interventions</h4>
+{% if fixings is not empty %}
+<table class="table table-bordered">
+  <tbody>
+    <tr>
+      <th>Demande</th>
+      <th>Intervention</th>
+      <th>État après intervention</th>
+    </tr>
+  {% for fixing in fixings %}
+    <tr>
+      <th>{{ fixing.creation|date('d/m/Y') }}</th>
+      {#}<td>{{ fixing.customerReport|nl2br }}
+        <br>{%- if fixing.askQuote %}Un devis va vous être envoyé.{%- endif -%}
+  </td>{#}
+  <td>{{ fixing.lastDate|date('d/m/Y') }}</td>
+      <td>
+        {%- if fixing.done.id == 3 -%}<span class="label label-danger">À l'arrêt</span>
+        {%- else  -%}<span class="label label-success">En fonction</span>
+        {%- endif -%}
+      </td>
+      <td><a href="#detailFixing{{ fixing.id }}" type="button" data-toggle="modal" class="btn btn-default btn-sm pull-right">Détails...</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% for key2,fixing in fixings%}
+      		    <div class="modal fade" id="detailFixing{{ fixing.id }}" tabindex="-1" role="dialog" aria-labelledby="detailFixing{{ fixing.id }}Label">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="detailFixing{{ fixing.id }}Label">Détails de l'intervention</h4>
+                      </div>
+                      <div class="modal-body">
+                      
+                        <p>Demande {% if fixing.contactName is not empty %}de {{ fixing.contactName }}{% endif %} faites le {{ fixing.askDate|date('d/m/Y') }} par {{ fixing.askMethod|lower }}</p>
+                        <h4>Rapport</h4>
+                        <p>{{ fixing.customerReport|nl2br }}</p>
+{#}                        {% if fixing.customerActions is not null %}
+                        <p>{{ fixing.customerActions|nl2br }}</p>
+                        {% endif %}
+{#}
+                      </div>
+                      <div class="modal-footer">
+ {#}                       <a href="#" class="btn btn-info"><span class="glyphicon glyphicon-print"></span> Imprimer</a>
+ {#}                       <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+{% endfor %}
+{% else %}
+<p>Pas d'intervention sur cette installation</p>
+{% endif %}

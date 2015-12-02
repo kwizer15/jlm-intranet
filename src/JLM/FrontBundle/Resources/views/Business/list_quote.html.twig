@@ -1,0 +1,38 @@
+<h4>Devis en attente</h4>
+      		    {% if quotes is not empty %}
+      		    
+      		    <table class="table table-bordered">
+      		      <tbody>
+      		      {% for quote in quotes %}
+      		        <tr>
+      		          <th>{{ quote.creation|date('d/m/Y') }}</th>
+      		          <td>{{ quote.number }}</td>
+      		          <td><a href="#" type="button" data-toggle="modal" data-target="#askQuote{{ quote.id }}" class="btn btn-default btn-sm pull-right">Demander le devis</a></td>
+      		        </tr>
+      		        {% endfor %}
+      		      </tbody>
+      		    </table>
+      		    
+      		    {# modals #}
+      		    {% for key2,quote in quotes%}
+      		    <div class="modal fade" id="askQuote{{ quote.id }}" tabindex="-1" role="dialog" aria-labelledby="askQuote{{ quote.id }}Label">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="askQuote{{ quote.id }}Label">Demander le devis n°{{ quote.number }}</h4>
+                      </div>
+                      <div class="modal-body">
+                        {{ form(askQuoteForms[key][key2]) }}
+                      </div>
+{#}                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-primary">Demander le devis</button>
+                      </div>{#}
+                    </div>
+                  </div>
+                </div>
+				{% endfor %}
+      		    {% else %}
+      		    <p>Pas de devis en attente pour cette installation</p>
+      		    {% endif %}
