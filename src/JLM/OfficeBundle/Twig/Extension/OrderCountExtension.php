@@ -15,7 +15,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class OrderCountExtension extends \Twig_Extension
+class OrderCountExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
     private $om;
     

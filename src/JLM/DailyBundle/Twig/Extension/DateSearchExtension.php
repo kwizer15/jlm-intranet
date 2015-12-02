@@ -15,7 +15,7 @@ use JLM\ModelBundle\Form\Type\DatepickerType;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class DateSearchExtension extends \Twig_Extension
+class DateSearchExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
     private $formService;
     

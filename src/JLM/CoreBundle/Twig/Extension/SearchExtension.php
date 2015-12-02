@@ -19,7 +19,7 @@ use JLM\CoreBundle\Entity\Search;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class SearchExtension extends \Twig_Extension
+class SearchExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
 	private $formFactory;
 	private $request;
