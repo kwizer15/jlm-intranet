@@ -46,7 +46,7 @@ class BootstrapExtension extends \Twig_Extension
     	}
     	if ($v[0] == 3)
     	{
-    		return '<spab class="glyphicon glyphicon-'.$iconName.'"></i>';
+    		return '<span class="glyphicon glyphicon-'.$iconName.'"></span>';
     	}
     }
     
