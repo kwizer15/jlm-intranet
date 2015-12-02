@@ -11,7 +11,6 @@
 
 namespace JLM\FrontBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -29,29 +28,9 @@ class BusinessController extends Controller
 	
     public function listAction()
     {
-    	//return $this->render('JLMFrontBundle:Business:list.html.twig', array());
     	$request = $this->get('request');
-
-    	$service = (Kernel::MINOR_VERSION > 3) ? 'security.token_storage' : 'security.context';
-    	$securityTokenStorage = $this->container->get($service);
-    	
-    	if (false === $securityTokenStorage->isGranted('ROLE_MANAGER'))
-    	{
-    		throw new AccessDeniedException();
-    	}
-    	
     	$om = $this->get('doctrine')->getManager();
-    	$repoManager = $om->getRepository('JLMModelBundle:Trustee');
-    	
-    	try {
-			$manager = $repoManager->getByUser($securityTokenStorage->getToken()->getUser());
-    	} catch (NoResultException $e) {
-    		if (false === $securityTokenStorage->isGranted('ROLE_ADMIN'))
-    		{
-    			throw new AccessDeniedException('Pas de contact lié à ce compte');
-    		}
-    		$manager = $repoManager->find(111); // Pour tests
-    	}
+    	$manager = $this->getConnectedManager();
 		$repoSite = $om->getRepository('JLMModelBundle:Site');
 		$sites = $repoSite->getByManager($manager);
 		$activeBusinessId = sizeof($sites) ? $request->get('business', reset($sites)->getId()) : null;
