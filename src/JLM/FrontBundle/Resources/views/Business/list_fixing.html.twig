@@ -38,10 +38,13 @@
                         <p>Demande {% if fixing.contactName is not empty %}de {{ fixing.contactName }}{% endif %} faites le {{ fixing.askDate|date('d/m/Y') }} par {{ fixing.askMethod|lower }}</p>
                         <h4>Rapport</h4>
                         <p>{{ fixing.customerReport|nl2br }}</p>
-{#}                        {% if fixing.customerActions is not null %}
-                        <p>{{ fixing.customerActions|nl2br }}</p>
+                        {% if fixing.customerActions is not null %}
+                        	<p>{{ fixing.customerActions|nl2br }}</p>
                         {% endif %}
-{#}
+                        <p>{{ fixing.customerState|nl2br }}</p>
+						{% if fixing.customerProcess is not null %}
+                        	<p>{{ fixing.customerProcess|nl2br }}</p>
+                        {% endif %}
                       </div>
                       <div class="modal-footer">
  {#}                       <a href="#" class="btn btn-info"><span class="glyphicon glyphicon-print"></span> Imprimer</a>
