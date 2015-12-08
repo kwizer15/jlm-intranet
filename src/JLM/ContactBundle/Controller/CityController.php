@@ -25,7 +25,6 @@ class CityController extends ContainerAware
 	public function searchAction()
 	{
 		$manager = $this->container->get('jlm_contact.city_manager');
-		$manager->secure('ROLE_OFFICE');
 		$request = $manager->getRequest();
 		$term = $request->get('q');
 		$page_limit = $request->get('page_limit');;
@@ -40,7 +39,6 @@ class CityController extends ContainerAware
 	public function jsonAction()
 	{
 		$manager = $this->container->get('jlm_contact.city_manager');
-		$manager->secure('ROLE_OFFICE');
 		$id = $manager->getRequest()->get('id');
 		$city = $manager->getRepository()->getByIdToArray($id);
 		
