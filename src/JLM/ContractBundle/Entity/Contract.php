@@ -342,9 +342,9 @@ class Contract implements ContractInterface
      *
      * @param Trustee $trustee
      * @return self
-     * @deprected Use setManager()
+     * @deprecated Use setManager()
      */
-    public function setTrustee(ManagerInterface $trustee = null)
+    public function setTrustee(ThirdPartyInterface $trustee = null)
     {
         return $this->setManager($trustee);
     }
@@ -355,7 +355,7 @@ class Contract implements ContractInterface
      * @param Manager $trustee
      * @return self
      */
-    public function setManager(ManagerInterface $manager = null)
+    public function setManager(ThirdPartyInterface $manager = null)
     {
     	$this->trustee = $manager;
     
