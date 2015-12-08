@@ -35,15 +35,18 @@ class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
         $trustee = $this->getMock('JLM\ModelBundle\Entity\Trustee');
         $trustee->expects($this->any())->method('getBillAddress')->will($this->returnValue($address));
         $contract = $this->getMock('JLM\ContractBundle\Model\ContractInterface');
-        $contract->expects($this->any())->method('getTrustee')->will($this->returnValue($trustee));
+        $contract->expects($this->any())->method('getManager')->will($this->returnValue($trustee));
+        $contract->expects($this->any())->method('getTrustee')->will($this->returnValue($trustee));   // @deprecated
         $site = $this->getMock('JLM\ModelBundle\Entity\Site');
-        $site->expects($this->any())->method('getTrustee')->will($this->returnValue($trustee));
+        $site->expects($this->any())->method('getTrustee')->will($this->returnValue($trustee));  // @deprecated
         $site->expects($this->any())->method('getManager')->will($this->returnValue($trustee));
         $site->expects($this->any())->method('getVat')->will($this->returnValue($vat));
-        $door->expects($this->any())->method('getSite')->will($this->returnValue($site));
+        $door->expects($this->any())->method('getSite')->will($this->returnValue($site));  // @deprecated
+        $door->expects($this->any())->method('getAdministrator')->will($this->returnValue($site));  
         $door->expects($this->any())->method('getActualContract')->will($this->returnValue($contract));
         $ask = $this->getMock('JLM\OfficeBundle\Entity\AskQuote');
-        $ask->expects($this->any())->method('getSite')->will($this->returnValue($site));
+        $ask->expects($this->any())->method('getSite')->will($this->returnValue($site));  // @deprecated
+        $ask->expects($this->any())->method('getAdministrator')->will($this->returnValue($site));  
         $ask->expects($this->any())->method('getDoor')->will($this->returnValue($door));
         $quote = $this->getMock('JLM\CommerceBundle\Model\QuoteInterface');
         $quote->expects($this->any())->method('getAsk')->will($this->returnValue($ask));

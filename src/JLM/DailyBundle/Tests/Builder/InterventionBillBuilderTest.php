@@ -33,11 +33,13 @@ class InterventionBillBuilderTest extends \PHPUnit_Framework_TestCase
         $trustee = $this->getMock('JLM\ModelBundle\Entity\Trustee');
         $trustee->expects($this->any())->method('getBillAddress')->will($this->returnValue($address));
         $contract = $this->getMock('JLM\ContractBundle\Model\ContractInterface');
-        $contract->expects($this->any())->method('getTrustee')->will($this->returnValue($trustee));
+        $contract->expects($this->any())->method('getTrustee')->will($this->returnValue($trustee));  // @deprecated
+        $contract->expects($this->any())->method('getManager')->will($this->returnValue($trustee));
         $site = $this->getMock('JLM\ModelBundle\Entity\Site');
         $site->expects($this->any())->method('getManager')->will($this->returnValue($trustee));
         $site->expects($this->any())->method('getVat')->will($this->returnValue($vat));
-        $door->expects($this->any())->method('getSite')->will($this->returnValue($site));
+        $door->expects($this->any())->method('getSite')->will($this->returnValue($site));  // @deprecated
+        $door->expects($this->any())->method('getAdministrator')->will($this->returnValue($site));
         $door->expects($this->any())->method('getActualContract')->will($this->returnValue($contract));
         
         $this->intervention = $this->getMock('JLM\DailyBundle\Entity\Intervention');

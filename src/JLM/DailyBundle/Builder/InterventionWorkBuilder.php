@@ -27,29 +27,32 @@ class InterventionWorkBuilder extends WorkBuilderAbstract
     
     public function buildBusiness()
     {
-	    $this->getWork()->setPlace($this->intervention->getPlace());
-	    $this->getWork()->setDoor($this->intervention->getDoor());
-	    $this->getWork()->setContract($this->intervention->getDoor()->getActualContract().'');
+    	$work = $this->getWork();
+	    $work->setPlace($this->intervention->getPlace());
+	    $work->setDoor($this->intervention->getDoor());
+	    $work->setContract($this->intervention->getDoor()->getActualContract().'');
     }
     
     public function buildReason()
     {
-    	$this->getWork()->setReason($this->intervention->getRest());
+    	$work = $this->getWork();
+    	$work->setReason($this->intervention->getRest());
     	if (isset($this->options['category']))
     	{
-    		$this->getWork()->setCategory($this->options['category']);
+    		$work->setCategory($this->options['category']);
     	}
     	if (isset($this->options['objective']))
     	{
-    		$this->getWork()->setObjective($this->options['objective']);
+    		$work->setObjective($this->options['objective']);
     	}
     }
     
     public function buildContact()
     {
-    	$this->getWork()->setContactName($this->intervention->getContactName());
-    	$this->getWork()->setContactPhones($this->intervention->getContactPhones());
-    	$this->getWork()->setContactEmail($this->intervention->getContactEmail());
+    	$work = $this->getWork();
+    	$work->setContactName($this->intervention->getContactName());
+    	$work->setContactPhones($this->intervention->getContactPhones());
+    	$work->setContactEmail($this->intervention->getContactEmail());
     }
     
     public function buildLink()
