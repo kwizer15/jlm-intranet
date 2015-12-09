@@ -5,6 +5,8 @@ namespace JLM\DailyBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 
 class ShiftingEditType extends AbstractType
 {
@@ -27,6 +29,17 @@ class ShiftingEditType extends AbstractType
       				)
       			)
       		)
+      		->get('end')->addEventListener(
+      				FormEvents::POST_SUBMIT,
+      				function (FormEvent $event) {
+      					$end = $event->getForm()->getData();
+      					$begin = $event->getForm()->getParent()->get('begin')->getData();
+      					if ($end->format('Hi') != '0000')
+      					{
+      						$end->setDate($begin->format('Y'),$begin->format('m'),$begin->format('d'));
+      					}
+      				}
+      		);
         ;
     }
 

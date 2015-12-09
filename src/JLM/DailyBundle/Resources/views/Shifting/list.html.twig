@@ -17,8 +17,7 @@
 			<td>{% include "JLMDailyBundle:Intervention:labeltype.html.twig" with {'type' : shifting.shifting.type} %}<br>{{ shifting.begin | date('d/m/Y')}}</td>
 			<td>{{ shifting.shifting.place | nl2br}}</td>
 			<td>{{ shifting.shifting.reason | nl2br}}</td>
-			<td><a href="#modalEditTech{{ shifting.id }}" data-toggle="modal" role="button" class="btn btn-warning">{{ 'wrench'|icon(true) }}</a>
-				{{ render(controller('JLMDailyBundle:Shifting:edit',{'id':shifting.id})) }}</td>
+			<td><a href="{{ path('shifting_edit',{'id':shifting.id}) }}" data-toggle="modal" role="button" class="btn btn-warning shifting-edit">{{ 'wrench'|icon(true) }}</a></td>
 		</tr>
 	{% endfor %}
 	</tbody>

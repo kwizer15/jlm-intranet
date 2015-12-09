@@ -49,7 +49,9 @@ class DefaultController extends Controller
     	{
     		foreach($tech as $key2 => $type)
     		{
-    			$times[$key][$key2] = new \DateInterval('PT'.round($type/60,0,PHP_ROUND_HALF_ODD).'H'.($type%60).'M');
+    			$h = abs(round($type/60,0,PHP_ROUND_HALF_ODD));
+    			$m = abs($type%60);
+    			$times[$key][$key2] = new \DateInterval('PT'.$h.'H'.$m.'M');
     		}
     	}
 		$repo = $em->getRepository('JLMDailyBundle:Maintenance');

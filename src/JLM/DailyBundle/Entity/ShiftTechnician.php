@@ -224,4 +224,14 @@ class ShiftTechnician
     	
     	return $this;
     }
+    
+    /**
+     * Time validation
+     * 
+     * @return bool
+     */
+    public function isTimeValid()
+    {
+    	return $this->end === null || $this->end > $this->begin;
+    }
 }

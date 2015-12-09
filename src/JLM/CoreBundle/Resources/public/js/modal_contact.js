@@ -26,7 +26,6 @@
 				
 			, load: function(e) {
 				e.preventDefault();
-				console.log(e.data.options.urlModal);
 				$.get(e.data.options.urlModal, function(data) {
 					$newContent = $('<div/>').html(data);
 					$('#modals').append($newContent);
@@ -53,8 +52,20 @@
 					dataType: 'json',
 					data: $(this).serialize(),
 					success: function(data) {
-						e.data.options.closure(data, e);
-						e.data.$modal.modal('hide').parent().remove();
+						if (data.errors)
+						{
+							$errors = $('<ul/>').addClass('alert alert-warning');
+							$.each(data.errors, function(key, val) {
+								$errors.append('<li>' + val + '</li>');
+							})
+							
+							e.data.$modal.find('.modal-body').prepend($errors);
+						}
+						else
+						{
+							e.data.options.closure(data, e);
+							e.data.$modal.modal('hide').parent().remove();
+						}	
 					}
 				});
 				

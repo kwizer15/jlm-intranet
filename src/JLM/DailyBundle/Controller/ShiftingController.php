@@ -137,29 +137,25 @@ class ShiftingController extends Controller
 	public function updateAction(Request $request, ShiftTechnician $entity)
 	{
 		$em = $this->getDoctrine()->getManager();
-		$editForm = $this->get('form.factory')->createNamed('shiftTechEdit'.$entity->getId(),new ShiftingEditType(), $entity);
-		$editForm->bind($request);
+		$editForm = $this->get('form.factory')->createNamed('shiftTechEdit'.$entity->getId(), new ShiftingEditType(), $entity);
+		$editForm->handleRequest($request);
 	
 		if ($editForm->isValid())
 		{
-			$begin = $entity->getBegin();
-			$end = $entity->getEnd();
-			if ($end->format('Hi') != '0000')
-			{
-				$end->setDate($begin->format('Y'),$begin->format('m'),$begin->format('d'));
-				$entity->setEnd($end);
-			}
-			else
-			{
-				$entity->setEnd();
-			}
 			$em->persist($entity);
 			$em->flush();
 
 			return $request->isXmlHttpRequest() ? new JsonResponse(array()) : $this->redirect($request->headers->get('referer'));
 		}
-	
-		return array(
+		
+		$errors = array_reduce($editForm->getErrors(), function($carry, $item) {
+			$carry[] = $item->getMessage();
+			return $carry;
+		}, array());
+		
+		return $request->isXmlHttpRequest()
+		    ? new JsonResponse(array('errors' => $errors))
+			: array(
 				'entity'      => $entity,
 				'form'   => $editForm->createView(),
 		);
