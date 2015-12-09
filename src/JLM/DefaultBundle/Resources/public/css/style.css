@@ -11,7 +11,8 @@ body {
         overflow-y: auto;
         /* prevent horizontal scrollbar */
         overflow-x: hidden;
+        z-index: 15000 !important;
     }
 .ui-datepicker {
-	z-index: 1500 !important;
+	z-index: 15000 !important;
 }

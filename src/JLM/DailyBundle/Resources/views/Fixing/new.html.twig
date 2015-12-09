@@ -11,3 +11,8 @@
 		<button type="submit" class="btn btn-primary">{{ 'pencil'|icon(true) }} Valider</button>
 	</div>
 </form>
+<script>
+$("#fixingNew{{ door.id }}").intervention({
+	 autoSource:'{{ path('autocomplete') }}'
+});
+</script>
