@@ -1,4 +1,15 @@
+parameters:
+    jlm_core.model.mail.class: JLM\CoreBundle\Entity\Email
+    jlm_core.manager.mail.class: JLM\CoreBundle\Manager\BaseManager
+    
 services:
+    jlm_core.mail_manager:
+        class: "%jlm_core.manager.mail.class%"
+        arguments: ["%jlm_core.model.mail.class%"]
+        calls:
+            - [ setContainer, ["@service_container"]]
+            - [ setServices ]
+            
     jlm_core.type.uploaddocument:
         class: JLM\CoreBundle\Form\Type\UploadDocumentType
         tags:
@@ -22,6 +33,11 @@ services:
         class: JLM\CoreBundle\Form\Type\EmailType
         tags:
             - { name: form.type, alias: jlm_core_email }
+            
+    jlm_core.type.mail:
+        class: JLM\CoreBundle\Form\Type\MailType
+        tags:
+            - { name: form.type, alias: jlm_core_mail }
             
     jlm_core.type.preattachement:
         class: JLM\CoreBundle\Form\Type\PreAttachementType
