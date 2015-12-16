@@ -109,7 +109,7 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
      */
     public function buildLines()
     {
-        $periods = array('1'=>'P1Y','2'=>'P6M','4'=>'P3M');
+        $periods = array('1'=>'P1YT2H','2'=>'P6MT2H','4'=>'P3MT2H');
         foreach ($this->fee->getContracts() as $key=>$contract)
         {
             $begin = clone $this->follower->getActivation();
