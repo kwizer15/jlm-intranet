@@ -109,6 +109,7 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
      */
     public function buildLines()
     {
+    	$nbMonthsInYear = 12;
         $periods = array('1'=>'P1YT2H','2'=>'P6MT2H','4'=>'P3MT2H');
         foreach ($this->fee->getContracts() as $key=>$contract)
         {
@@ -128,7 +129,7 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
             }
             $product = $this->getOption('product');
             $diff = $end->diff($begin);
-            $rapport = ($diff->format('%m') + 12 * $diff->format('%y')) / 12;
+            $rapport = ($diff->format('%m') + $nbMonthsInYear * $diff->format('%y')) / $nbMonthsInYear;
             $fee = $contract->getFee() * $rapport;
             $end->sub(new \DateInterval('P1D'));
             $line = BillLineFactory::create(new ProductBillLineBuilder($product, $this->fee->getVat()->getRate(), 1, array(
