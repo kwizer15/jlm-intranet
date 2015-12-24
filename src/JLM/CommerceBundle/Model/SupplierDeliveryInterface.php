@@ -9,16 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace JLM\CommerceBundle\Entity;
-
-use JLM\ProductBundle\Model\ProductInterface;
-use JLM\CommerceBundle\Model\CommercialPartLineInterface;
-use JLM\CommerceBundle\Model\DocumentLineInterface;
+namespace JLM\CommerceBundle\Model;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-abstract class CommercialPartLine extends DocumentLine implements CommercialPartLineInterface
+interface SupplierDeliveryInterface
 {
-
+	/**
+	 * @return SupplierInterface
+	 */
+	public function getSupplier();
+	
+    /**
+     * @return string
+     */
+    public function getNumber();
 }

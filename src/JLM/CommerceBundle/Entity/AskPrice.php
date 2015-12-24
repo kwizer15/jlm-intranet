@@ -11,14 +11,20 @@
 
 namespace JLM\CommerceBundle\Entity;
 
-use JLM\ProductBundle\Model\ProductInterface;
-use JLM\CommerceBundle\Model\CommercialPartLineInterface;
-use JLM\CommerceBundle\Model\DocumentLineInterface;
+use JLM\CommerceBundle\Model\AskPriceInterface;
+use JLM\CommerceBundle\Model\AskPriceLineInterface;
+use JLM\CoreBundle\Model\UploadDocumentInterface;
+use JLM\CommerceBundle\Model\SupplierInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-abstract class CommercialPartLine extends DocumentLine implements CommercialPartLineInterface
+class AskPrice extends DocumentAbstract implements AskPriceInterface
 {
+	/**
+	 * 
+	 * @var SupplierInterface
+	 */
+	private $supplier;
 
 }
