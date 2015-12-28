@@ -129,9 +129,8 @@ class DefaultController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$repo = $em->getRepository('JLMDailyBundle:Fixing');
     	$date = new \DateTime();
-    	$result = $repo->getTop50($date->format('Y').'-01-01');
     	
-    	return array('results' => $result);
+    	return array('results' => $repo->getTop50($date->format('Y').'-01-01'));
     }
     
     /**
@@ -184,7 +183,6 @@ class DefaultController extends Controller
      */
     public function transmittersAction()
     {
-    	$base = array(1=>0,0,0,0,0,0,0,0,0,0,0,0);
     	$em = $this->getDoctrine()->getManager();
     	$stats = $em->getRepository('JLMTransmitterBundle:Transmitter')->getStatsByMonth();
     	$datas = array();
@@ -192,7 +190,7 @@ class DefaultController extends Controller
     	{
     		if (!isset($datas[$stat['year']]))
     		{
-    			$datas[$stat['year']] = $base;
+    			$datas[$stat['year']] = array_fill(1,12,0);
     		}
     		$datas[$stat['year']][$stat['month']] = $stat['number'];
     	}
@@ -353,11 +351,13 @@ class DefaultController extends Controller
     	$date = new \DateTime();
     	$maxyear = $date->format('Y');
     	$year = ($year === null) ? $maxyear : $year;
-    	$em = $this->getDoctrine()->getManager();
-    	$sends = $em->getRepository('JLMCommerceBundle:Quote')->getSends($year);
-    	$givens = $em->getRepository('JLMCommerceBundle:Quote')->getGivens($year);
-//    	var_dump($sends); exit;
-    	return array('sends'=>$sends,'givens'=>$givens,'year' => $year,
-    			'maxyear' => $maxyear,);
+    	$repo = $this->getDoctrine()->getManager()->getRepository('JLMCommerceBundle:Quote');
+    	
+    	return array(
+    			'sends' => $repo->getSends($year),
+    			'givens'=> $repo->getGivens($year),
+    			'year' => $year,
+    			'maxyear' => $maxyear,
+    	);
     }
 }
