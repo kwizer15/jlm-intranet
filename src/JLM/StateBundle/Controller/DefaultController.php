@@ -101,8 +101,9 @@ class DefaultController extends Controller
     	$em =$this->getDoctrine()->getManager();
     	$repo = $em->getRepository('JLMDailyBundle:Maintenance');
     	$maintenanceTotal = $repo->getCountTotal(false);
-    	$date1 = \DateTime::createFromFormat('Y-m-d H:i:s','2013-01-01 00:00:00');
     	$now = new \DateTime;
+    	$date1 = \DateTime::createFromFormat('Y-m-d H:i:s',$now->format('Y').'-01-01 00:00:00');
+    	
     	$evolutionBase = array();
     	for ($i = 1; $i <= 365 && $date1 < $now  ; $i++)
     	{
@@ -127,25 +128,8 @@ class DefaultController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     	$repo = $em->getRepository('JLMDailyBundle:Fixing');
-    	
-    	// @todo Into repsitory class
-    	$result = $repo->createQueryBuilder('a')
-    		->select('b.id, f.name as type, b.location, d.street, e.name as city, e.zip, g.begin,  COUNT(g) as nb')
-    		->leftJoin('a.door','b')
-    		->leftJoin('b.site','c')
-    		->leftJoin('c.address','d')
-    		->leftJoin('d.city','e')
-    		->leftJoin('b.type','f')
-    		->leftJoin('a.shiftTechnicians','g')
-    		->orderBy('nb','desc')
-    		->addOrderBy('g.begin','desc')
-    		->where('g.begin > ?1')
-    		->groupBy('b')
-    		->setParameter(1,'2013-01-01')
-    		->setMaxResults(50)
-    		->getQuery()
-    		->getResult();
-    	;
+    	$date = new \DateTime();
+    	$result = $repo->getTop50($date->format('Y').'-01-01');
     	
     	return array('results' => $result);
     }
@@ -157,7 +141,6 @@ class DefaultController extends Controller
      */
     public function contractsAction()
     {
-    	
     	$em = $this->getDoctrine()->getManager();
     	$results = $em->getRepository('JLMContractBundle:Contract')->getStatsByDates();
 	   	$stats = array();
@@ -171,35 +154,10 @@ class DefaultController extends Controller
 	   						'normal'=>0
 	   						
 	   				),'social'=>array('complete'=>0,'normal'=>0));
-	   		
-	   		if ($result['accession'])
-	   		{
-	   			if ($result['complete'])
-	   			{
-	   				$stats[$fd]['accession']['complete'] = $result['number'];
-	   			}
-	   			else
-	   			{ 
-	   				$stats[$fd]['accession']['normal'] = $result['number'];
-	   			}
-	   		}
-	   		else
-	   		{
-	   			if ($result['complete'])
-	   			{
-	   				$stats[$fd]['social']['complete'] = $result['number'];
-	   			}
-	   			else
-	   			{ 
-	   				$stats[$fd]['social']['normal'] = $result['number'];
-	   			}
-	   		}
+	   		$stats[$fd][$result['accession'] ? 'accession' : 'social'][$result['complete'] ? 'complete' : 'normal'] = $result['number'];
 	   	}
 	   	
-    	return array(
-    			'stats'=> $stats,
-    			
-    	);
+    	return array('stats'=> $stats);
     }
     
     /**
@@ -211,29 +169,12 @@ class DefaultController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     	$repo = $em->getRepository('JLMCommerceBundle:QuoteVariant');
+    	$add = function($carry, $item){ return $carry + $item->getTotalPrice(); };
     	
-    	// @todo Into Repository class
-    	$res = $repo->createQueryBuilder('a')
-    		->where('a.state = 5')
-    		->getQuery()->getResult();
-    	$total = 0;
-    	foreach($res as $r)
-    	{
-    		$total += $r->getTotalPrice();
-    	}
-    	$given = $total;
-    	
-    	// @todo Into Repository class
-    	$res = $repo->createQueryBuilder('a')
-    	            ->where('a.state > 2')
-    	            ->getQuery()->getResult();
-    	$total = 0;
-    	foreach($res as $r)
-    	{
-    		$total += $r->getTotalPrice();
-    	}
-    	
-    	return array('given' => $given, 'total' => $total);
+    	return array(
+    			'given' => array_reduce($repo->getCountGiven(), $add, 0),
+    			'total' => array_reduce($repo->getCountSended(), $add, 0)
+    	);
     }
     
     /**
@@ -310,16 +251,13 @@ class DefaultController extends Controller
     {
     	$manager = $this->get('jlm_commerce.bill_manager');
 		$manager->secure('ROLE_OFFICE');
-		$datas = array();
-		$datas['entities'] = $manager->getRepository()->get45Sended();
-		$datas['ca'] = 0;
-		foreach($datas['entities'] as $entity)
-		{
-			$datas['ca'] += $entity->getTotalPrice();
-		}
+		$entities = $manager->getRepository()->get45Sended();
+
 		return $manager->renderResponse('JLMStateBundle:Default:lastbill.html.twig',
-				$datas
-		);
+				array('entities' => $entities,
+					  'ca' =>array_reduce($entities, function($carry, $item) { return $carry + $item->getTotalPrice(); }, 0),
+					)
+				);
     }
     
     /**
@@ -339,7 +277,8 @@ class DefaultController extends Controller
     	$complets = $repo->getCountIntervsByTypeAndContract(array('C1','C2'),$year);
     	$normaux = $repo->getCountIntervsByTypeAndContract(array('N3','N4'),$year);
     	$hc = $repo->getCountIntervsByTypeAndContract(array('HC','Hors contrat'),$year);
-    	$tot = $totinter = $tottime = $totC = $totN = $totHC = 0;
+    	$tot = $totinter = $tottime = 0;
+    	$total = array('C'=>0,'N'=>0,'HC'=>0);
     	$data = array();
 		foreach ($doors as $door)
 		{
@@ -367,31 +306,15 @@ class DefaultController extends Controller
 					$tottime += $interv['time'];
 				}
 			}
-			
-			foreach ($complets as $interv)
+			foreach (array('C'=> $complets, 'N'=>$normaux, 'HC'=>$hc ) as $type => $contracts)
 			{
-				if ($door['name'] == $interv['name'])
+				foreach ($contracts as $interv)
 				{
-					$data[$door['name']]['intC'] = (int)$interv['nb'];
-					$totC += $interv['nb'];
-				}
-			}
-			
-			foreach ($normaux as $interv)
-			{
-				if ($door['name'] == $interv['name'])
-				{
-					$data[$door['name']]['intN'] = (int)$interv['nb'];
-					$totN += $interv['nb'];
-				}
-			}
-			
-			foreach ($hc as $interv)
-			{
-				if ($door['name'] == $interv['name'])
-				{
-					$data[$door['name']]['intHC'] = (int)$interv['nb'];
-					$totHC += $interv['nb'];
+					if ($door['name'] == $interv['name'])
+					{
+						$data[$door['name']]['int'.$type] = (int)$interv['nb'];
+						$total[$type] += $interv['nb'];
+					}
 				}
 			}
 		}
@@ -405,9 +328,9 @@ class DefaultController extends Controller
     			'moytime' => $this->secondsToInterval($tottime/$tot),
     			'year' => $year,
     			'maxyear' => $maxyear,
-    			'totC' => $totC,
-    			'totN' => $totN,
-    			'totHC' => $totHC,
+    			'totC' => $total['C'],
+    			'totN' => $total['N'],
+    			'totHC' => $total['HC'],
     	);
     }
 
