@@ -31,6 +31,28 @@ class InterventionRepository extends EntityRepository
 		
 	}
 	
+	public function getTop50($since = null)
+	{
+		$since = ($since === null) ? '2013-01-01' : $since;
+		return $this->createQueryBuilder('a')
+		->select('b.id, f.name as type, b.location, d.street, e.name as city, e.zip, g.begin,  COUNT(g) as nb')
+		->leftJoin('a.door','b')
+		->leftJoin('b.site','c')
+		->leftJoin('c.address','d')
+		->leftJoin('d.city','e')
+		->leftJoin('b.type','f')
+		->leftJoin('a.shiftTechnicians','g')
+		->orderBy('nb','desc')
+		->addOrderBy('g.begin','desc')
+		->where('g.begin > ?1')
+		->groupBy('b')
+		->setParameter(1, $since)
+		->setMaxResults(50)
+		->getQuery()
+		->getResult();
+		;
+	}
+	
 	/**
 	 * @return int
 	 */
