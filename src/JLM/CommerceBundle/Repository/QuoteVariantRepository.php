@@ -13,6 +13,8 @@ namespace JLM\CommerceBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use JLM\CommerceBundle\Model\QuoteInterface;
+use JLM\CommerceBundle\Entity\Quote;
+use JLM\CommerceBundle\Entity\QuoteVariant;
 
 /**
  * QuoteRepository
@@ -35,4 +37,19 @@ class QuoteVariantRepository extends EntityRepository
 		->getSingleScalarResult();
 	}
 	
+	public function getCountGiven()
+	{
+		return $this->createQueryBuilder('a')
+		->where('a.state = ?1')
+		->setParameter(1, QuoteVariant::STATE_GIVEN)
+		->getQuery()->getResult();
+	}
+	
+	public function getCountSended()
+	{
+		return $this->createQueryBuilder('a')
+		->where('a.state >= ?1')
+		->setParameter(1, QuoteVariant::STATE_SENDED)
+		->getQuery()->getResult();
+	}
 }
