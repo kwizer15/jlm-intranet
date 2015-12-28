@@ -46,9 +46,9 @@ class ContractRepository extends EntityRepository
 			LEFT JOIN sites d ON c.site_id = d.id
 			WHERE b.dt < ?  GROUP BY b.dt,d.accession,a.complete';
 		$query = $em->createNativeQuery($q, $rsm);
-		$query->setParameter(1,$today->format('Y-m-d H:i:s'));
-		return $query->getResult();
+		$query->setParameter(1, $today);
 		
+		return $query->getResult();
 	}
 	
 	public function getStatsByMonth()
