@@ -13,6 +13,8 @@ security:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
                 remember_me: true
+                default_target_path: jlm_front_business_list
+                always_use_default_target_path: true
             remember_me:
                 key: %secret%
             logout:       true
