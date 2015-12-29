@@ -93,15 +93,13 @@ class BusinessController extends Controller
     	$form = $this->createAskQuoteForm();
     	$form->handleRequest($request);
     
-    	if ($form->isValid())
+    	if ($success = $form->isValid())
     	{
     		$this->container->get('jlm_front.mailer')->sendAskQuoteEmailMessage($form->getData());
     		$this->container->get('jlm_front.mailer')->sendConfirmAskQuoteEmailMessage($form->getData());
-    		
-    		return new JsonResponse(array('success' => true));
     	}
     	 
-    	return new JsonResponse(array('success' => false));
+    	return new JsonResponse(array('success' => $success));
     }
     
     private function createAskQuoteForm()
