@@ -23,6 +23,8 @@ use JLM\ContractBundle\Model\ContractInterface;
 use JLM\ContactBundle\Entity\Address;
 use JLM\DailyBundle\Entity\Intervention;
 use JLM\DailyBundle\Entity\Work;
+use JLM\DailyBundle\Entity\Fixing;
+use JLM\DailyBundle\Entity\Maintenance;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -651,12 +653,8 @@ class Door implements BayInterface, InstallationInterface
     public function getManager()
     {
         $contract = $this->getActualContract();
-        if ($contract === null)
-        {
-            return $this->getAdministrator()->getManager();
-        }
         
-        return $contract->getTrustee();
+        return ($contract === null) ? $this->getAdministrator()->getManager() : $contract->getTrustee();
     }
     
     /**
@@ -700,6 +698,7 @@ class Door implements BayInterface, InstallationInterface
     public function setWidth($width)
     {
     	$this->width = $width;
+    	
     	return $this;
     }
     
@@ -721,6 +720,7 @@ class Door implements BayInterface, InstallationInterface
     public function setHeight($height)
     {
     	$this->height = $height;
+    	
     	return $this;
     }
     
@@ -762,6 +762,7 @@ class Door implements BayInterface, InstallationInterface
     public function setStopped($stopped = true)
     {
     	$this->stopped = (bool)$stopped;
+    	
     	return $this;
     }
     
@@ -783,15 +784,19 @@ class Door implements BayInterface, InstallationInterface
     public function getNumberWaitMaintenance()
     {
     	if (!$this->getWaitMaintenance())
+    	{
     		return null;
-    	if ($this->getLastMaintenance() === null)
+    	}
+    	$lastMaintenance = $this->getLastMaintenance();
+    	if ($lastMaintenance === null)
+    	{
     		return 1;
-    	$yearLast = $this->getLastMaintenance()->format('Y');
+    	}
+    	$yearLast = $lastMaintenance->format('Y');
     	$today = new \DateTime;
     	$year = $today->format('Y');
-    	if ($yearLast == $year)
-    		return 2;
-    	return 1;
+    	
+    	return ($yearLast == $year) ? 2 : 1;
     }
     
     /**
@@ -799,21 +804,9 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getWorkInProgress()
     {
-    	foreach($this->interventions as $interv)
-    	{
-    		if ($interv instanceof \JLM\DailyBundle\Entity\Work)
-    		{
-    			if (!$interv->getClosed())
-    			{
-    				if (sizeof($interv->getShiftTechnicians()))
-    				{
-    					return true;
-    				}
-    			}
-    		}
-    	}
-    	
-    	return false;
+    	return !empty(array_filter($this->interventions->toArray(), function($var) {
+    		return ($var instanceof Work) && (!$var->getClosed()) && sizeof($var->getShiftTechnicians());
+    	}));
     }
     
     /**
@@ -821,20 +814,58 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getWaitWork()
     {
-    	foreach($this->interventions as $interv)
-    	{
-    		if ($interv instanceof Work)
-    		{
-    			if (!$interv->getClosed())
-    			{
-    				if (!sizeof($interv->getShiftTechnicians()))
-    				{
-    					return true;
-    				}
-    			}
-    		}
-    	}
-    	return false;
+    	return !empty(array_filter($this->interventions->toArray(), function($var) {
+    		return ($var instanceof Work) && (!$var->getClosed()) && !sizeof($var->getShiftTechnicians());
+    	}));
+    }
+    
+    public function getFixings()
+    {
+    	return array_filter($this->interventions->toArray(), function($interv) {
+    		return ($interv instanceof Fixing);
+    	});
+    }
+    
+    public function getWorks()
+    {
+    	return array_filter($this->interventions->toArray(), function($interv) {
+    		return ($interv instanceof Work);
+    	});
+    }
+    
+    public function getMaintenances()
+    {
+    	return array_filter($this->interventions->toArray(), function($interv) {
+    		return ($interv instanceof Maintenance);
+    	});
+    }
+    
+    public function getInterventionsNotClosed()
+    {
+    	return array_filter($this->interventions->toArray(), function($interv) {
+    		return (!$interv->getClosed());
+    	});
+    }
+    
+    public function getInterventionsClosed()
+    {
+    	return array_filter($this->interventions->toArray(), function($interv) {
+    		return ($interv->getClosed());
+    	});
+    }
+    
+    public function getFixingsClosed()
+    {
+    	return array_filter($this->interventions->toArray(), function($interv) {
+    		return ($interv instanceof Fixing) && ($interv->getClosed());
+    	});
+    }
+    
+    public function getFixingsNotClosed()
+    {
+    	return array_filter($this->interventions->toArray(), function($interv) {
+    		return ($interv instanceof Fixing) && (!$interv->getClosed());
+    	});
     }
     
     /**
@@ -843,21 +874,9 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getFixingInProgress()
     {
-    	foreach($this->interventions as $interv)
-    	{
-    		if ($interv instanceof \JLM\DailyBundle\Entity\Fixing)
-    		{
-    			if (!$interv->getClosed())
-    			{
-    				if (sizeof($interv->getShiftTechnicians()))
-    				{
-    					return true;
-    				}
-    			}
-    		}
-    	}
-    	
-    	return false;
+    	return !empty(array_filter($this->getFixingsNotClosed(), function($var) {
+    		return sizeof($var->getShiftTechnicians());
+    	}));
     }
     
     /**
@@ -866,21 +885,9 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getWaitFixing()
     {
-    	foreach($this->interventions as $interv)
-    	{
-    		if ($interv instanceof \JLM\DailyBundle\Entity\Fixing)
-    		{
-    			if (!$interv->getClosed())
-    			{
-    				if (!sizeof($interv->getShiftTechnicians()))
-    				{
-    					return true;
-    				}
-    			}
-    		}
-    	}
-    	
-    	return false;
+    	return !empty(array_filter($this->getFixingsNotClosed(), function($var) {
+    		return !sizeof($var->getShiftTechnicians());
+    	}));
     }
     
     /**
@@ -889,30 +896,28 @@ class Door implements BayInterface, InstallationInterface
      * @return \DateTime | null
      */
     public function getLastMaintenance()
+    {	
+    	return array_reduce($this->getMaintenancesClosed(), function($last, $interv) {
+    		$dt = array_reduce($interv->getShiftTechnicians()->toArray(), function ($date, $shift) {
+    			$dateShift = ($shift->getEnd() === null) ? $shift->getBegin() : $shift->getEnd();
+    			return ($date === null || $date < $dateShift) ? $dateShift : $date;
+    		}, null);
+    		return ($last === null || $last < $dt) ? $dt : $last;
+    	}, null);
+    }
+    
+    public function getMaintenancesClosed()
     {
-    	$last = null;
-    	foreach($this->interventions as $interv)
-    	{
-    		if ($interv instanceof \JLM\DailyBundle\Entity\Maintenance)
-    		{
-    			if ($interv->getClosed())
-    			{
-    				$shifts = $interv->getShiftTechnicians();
-    				$date = null;
-    				foreach ($shifts as $shift)
-    				{
-    					$dateShift = ($shift->getEnd() === null) ? $shift->getBegin() : $shift->getEnd();
-    					if ($date === null || $date < $dateShift)
-    						$date = $dateShift;
-    				}
-    				if ($last === null || $last < $date)
-    				{
-    					$last = $date;
-    				}
-    			}
-    		}
-    	}
-    	return $last;
+    	return array_filter($this->interventions->toArray(), function($interv) {
+    		return ($interv instanceof Maintenance && $interv->getClosed());
+    	});
+    }
+    
+    public function getMaintenancesNotClosed()
+    {
+    	return array_filter($this->interventions->toArray(), function($interv) {
+    		return ($interv instanceof Maintenance && !$interv->getClosed());
+    	});
     }
     
     /**
@@ -922,17 +927,9 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getNextMaintenance()
     {
-    	foreach($this->interventions as $interv)
-    	{
-    		if ($interv instanceof \JLM\DailyBundle\Entity\Maintenance)
-    		{
-    			if (!$interv->getClosed())
-    			{
-    				return $interv;
-    			}
-    		}
-    	}
-    	return null;
+    	return array_reduce($this->getMaintenancesNotClosed(), function($next, $interv) {
+    		return $next === null ? $interv : null;
+    	}, null);
     }
     
     /**
@@ -948,28 +945,22 @@ class Door implements BayInterface, InstallationInterface
     		$year  = $d->format('Y');
     		unset($d);
     	}
-    	$count = 0;
-    	foreach($this->interventions as $interv)
-    	{
-    		if ($interv instanceof \JLM\DailyBundle\Entity\Maintenance)
+    	$counter = function($count, $interv) use ($year) {
+    		$shifts = $interv->getShiftTechnicians();
+    		$flag = false;
+    		foreach ($shifts as $shift)
     		{
-    			if ($interv->getClosed())
+    			$dateShift = ($shift->getEnd() === null) ? $shift->getBegin() : $shift->getEnd();
+    			if ($dateShift->format('Y') == $year && !$flag)
     			{
-    				$shifts = $interv->getShiftTechnicians();
-    				$flag = false;
-    				foreach ($shifts as $shift)
-    				{
-    					$dateShift = ($shift->getEnd() === null) ? $shift->getBegin() : $shift->getEnd();
-    					if ($dateShift->format('Y') == $year && !$flag)
-    					{
-    						$count++;
-    						$flag = true;
-    					}
-    				}
+    				$count++;
+    				$flag = true;
     			}
     		}
-    	}
-    	return $count;
+    		return $count;
+    	};
+    	
+    	return array_reduce($this->getMaintenancesClosed(), $counter, 0);
     }
     
     /**
@@ -1080,7 +1071,7 @@ class Door implements BayInterface, InstallationInterface
      */
     public function isBlocked()
     {
-    	return $this->getSite()->isBlocked();
+    	return $this->getAdministrator()->isBlocked();
     }
 
     /**
@@ -1089,7 +1080,7 @@ class Door implements BayInterface, InstallationInterface
      * @param \JLM\ModelBundle\Entity\DoorStop $stops
      * @return Door
      */
-    public function addStop(\JLM\ModelBundle\Entity\DoorStop $stops)
+    public function addStop(DoorStop $stops)
     {
     	$stops->setDoor($this);
         $this->stops[] = $stops;
@@ -1102,7 +1093,7 @@ class Door implements BayInterface, InstallationInterface
      *
      * @param \JLM\ModelBundle\Entity\DoorStop $stops
      */
-    public function removeStop(\JLM\ModelBundle\Entity\DoorStop $stops)
+    public function removeStop(DoorStop $stops)
     {
     	$stops->setDoor();
         $this->stops->removeElement($stops);
