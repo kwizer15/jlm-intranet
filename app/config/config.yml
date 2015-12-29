@@ -147,6 +147,8 @@ fos_user:
     user_class: JLM\UserBundle\Entity\User
     
 services:
+    assets.packages:
+        synthetic: true
     twig.extension.intl:
         class: Twig_Extensions_Extension_Intl
         tags:
