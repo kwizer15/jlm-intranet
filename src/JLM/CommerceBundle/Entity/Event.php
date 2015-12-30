@@ -36,6 +36,14 @@ class Event implements EventInterface
 	private $options = array();
 
 	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+		$this->date = new \DateTime();
+	}
+	
+	/**
 	 * @return int
 	 */
 	public function getId()
