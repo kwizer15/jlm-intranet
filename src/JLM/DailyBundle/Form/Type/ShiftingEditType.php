@@ -34,10 +34,7 @@ class ShiftingEditType extends AbstractType
       				function (FormEvent $event) {
       					$end = $event->getForm()->getData();
       					$begin = $event->getForm()->getParent()->get('begin')->getData();
-      					if ($end->format('Hi') != '0000')
-      					{
-      						$end->setDate($begin->format('Y'),$begin->format('m'),$begin->format('d'));
-      					}
+      					$end->setDate($begin->format('Y'),$begin->format('m'),$begin->format('d'));
       				}
       		);
         ;

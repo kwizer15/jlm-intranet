@@ -131,7 +131,7 @@ class ShiftTechnician
      */
     public function setEnd($end = null)
     {
-        $this->end = $end;
+        $this->end = ($end == $this->begin) ? null : $end;
     
         return $this;
     }
@@ -232,6 +232,6 @@ class ShiftTechnician
      */
     public function isTimeValid()
     {
-    	return $this->end === null || $this->end > $this->begin;
+    	return $this->end === null || $this->end > $this->begin || $this->end->format('Hi') == '0000';
     }
 }
