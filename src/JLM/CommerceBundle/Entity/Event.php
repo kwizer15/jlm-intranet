@@ -40,7 +40,7 @@ class Event implements EventInterface
 	 */
 	public function __construct()
 	{
-		$this->date = new \DateTime();
+		$this->setDate();
 	}
 	
 	/**
