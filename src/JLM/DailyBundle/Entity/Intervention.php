@@ -154,7 +154,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      * Publication
      * @var bool
      */
-    private $published;
+    private $published = false;
     
     /**
      * Get contract
