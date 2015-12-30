@@ -55,6 +55,7 @@ class Thread implements ThreadInterface
 	
 	public function __construct(StarterInterface $starter)
 	{
+		$this->setStartDate();
 		$this->setStarter($starter);
 	}
 	

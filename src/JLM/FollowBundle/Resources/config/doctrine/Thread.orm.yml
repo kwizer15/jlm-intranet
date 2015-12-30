@@ -12,6 +12,5 @@ JLM\FollowBundle\Entity\Thread:
   oneToOne:
     starter:
       targetEntity: JLM\FollowBundle\Model\StarterInterface
-  lifecycleCallbacks:
-    prePersist: [ setStartDate ]
+      
       
