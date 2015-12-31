@@ -141,21 +141,16 @@ class DefaultController extends Controller
     public function contractsAction()
     {
     	$em = $this->getDoctrine()->getManager();
-    	$results = $em->getRepository('JLMContractBundle:Contract')->getStatsByDates();
+    	$results = $em->getRepository('JLMContractBundle:Contract')->getStatsByMonth();
 	   	$stats = array();
 	   	foreach ($results as $result)
 	   	{
-	   		$d = new \DateTime($result['date']);
-	   		$fd = $d->format('U')*1000;
-	   		$stats[$fd] = array(
-	   				'accession'=>array(
-	   						'complete'=>0,
-	   						'normal'=>0
-	   						
-	   				),'social'=>array('complete'=>0,'normal'=>0));
-	   		$stats[$fd][$result['accession'] ? 'accession' : 'social'][$result['complete'] ? 'complete' : 'normal'] = $result['number'];
+	   		if (!isset($stats[$result['year']][$result['month']]))
+	   		{
+		   		$stats[$result['year']][$result['month']] = 0;
+	   		}
+	   		$stats[$result['year']][$result['month']] = $result['number'];
 	   	}
-	   	
     	return array('stats'=> $stats);
     }
     
@@ -185,17 +180,21 @@ class DefaultController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     	$stats = $em->getRepository('JLMTransmitterBundle:Transmitter')->getStatsByMonth();
-    	$datas = array();
+    	$datas = [];
+    	$byYear = [];
     	foreach ($stats as $stat)
     	{
     		if (!isset($datas[$stat['year']]))
     		{
     			$datas[$stat['year']] = array_fill(1,12,0);
+    			$byYear[$stat['year']] = 0;
+    			
     		}
     		$datas[$stat['year']][$stat['month']] = $stat['number'];
+    		$byYear[$stat['year']] += $stat['number'];
     	}
     	
-    	return array('stats'=>$datas);
+    	return array('stats'=>$datas, 'byYear' => $byYear);
     }
     
     /**

@@ -2,8 +2,8 @@
 
 {% block content %}
 <h1>Stats Emetteurs</h1>
-<div id="graphTransmitters">
-	</div>
+<div id="graphTransmitters"></div>
+<div id="graphTransmittersByYear"></div>
 {% endblock %}
 
 {% block javascripts %}
@@ -56,6 +56,43 @@ $(function () {
 		}
 		{% if not loop.last %},{% endif %}
 		{% endfor %}
+		]
+    });
+});
+
+$(function () {
+    $('#graphTransmittersByYear').highcharts({
+    	chart: {
+	        alignTicks: false
+	    },
+    	rangeSelector : {
+			selected : 1
+		},
+		xAxis: {
+            categories: [
+                {% for year,number in byYear %}{{ year }}{% if not loop.last %},{% endif %}{% endfor %}
+            ]
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Nombre d\'émetteurs'
+            }
+        },
+		title : {
+			text : 'Nombre d\'émetteurs vendus à l\'année'
+		},
+        tooltip: {
+            shared: true,
+            valueSuffix: ' émetteurs'
+        },
+        
+		series : [
+		{
+			name : 'Nombre d\'émetteurs',
+			data : [{% for year,number in byYear %}{{ number }}{% if not loop.last %},{% endif %}{% endfor %} ],
+			type : 'column'
+		}
 		]
     });
 });

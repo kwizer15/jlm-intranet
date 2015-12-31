@@ -101,7 +101,7 @@ class TransmitterRepository extends SearchRepository
 					LEFT JOIN transmitters_attributions ON transmitters_attributions.id = transmitters_transmitters.attribution_id
 					LEFT JOIN jlm_core_calendar ON jlm_core_calendar.dt = transmitters_attributions.creation
 					GROUP BY MONTH( jlm_core_calendar.dt ),YEAR(jlm_core_calendar.dt)
-					ORDER BY m,y
+					ORDER BY y,m
     		', $rsm);
 		return $query->getResult();
 	}

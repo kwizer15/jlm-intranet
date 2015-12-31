@@ -10,54 +10,44 @@
 {{ parent() }}
 <script>
 $(function () {
-    $('#graphContracts').highcharts('StockChart', {
-    	rangeSelector : {
-			selected : 1
-		},
-
-		title : {
+    $('#graphContracts').highcharts({
+    	chart: {
+            type: 'column'
+        },
+        title : {
 			text : 'Evolution des contrats'
 		},
-        tooltip: {
-            shared: true,
-            valueSuffix: ' contrats'
-        },
-        plotOptions: {
-            area: {
-                stacking: 'normal',
-                lineColor: '#666666',
-                lineWidth: 1,
-                marker: {
-                    lineWidth: 1,
-                    lineColor: '#666666'
-                }
-            }
-        },
+		xAxis: {
+			categories: [
+				'Jan',
+				'Fev',
+				'Mar',
+				'Avr',
+				'Mai',
+				'Jui',
+				'Jui',
+				'Aoû',
+				'Sep',
+				'Oct',
+				'Nov',
+				'Déc'
+			],
+			crosshair: true
+		},
+		yAxis: {
+			min: 0,
+			title: {
+				text: 'Nombre de contrat'
+			}
+		},
 		series : [
-		{
-			name : 'Contrats social normal',
-			data : [{% for d,data in stats %}{% if not loop.first %},{% endif %}{x:{{ d }},y:{{ data.social.normal }}}{% endfor %} ],
-			type : 'area',
-			step : true,
-		},
-		{
-			name : 'Contrats social complet',
-			data : [{% for d,data in stats %}{% if not loop.first %},{% endif %}{x:{{ d }},y:{{ data.social.complete }}}{% endfor %} ],
-			type : 'area',
-			step : true,
-		},
-		{
-			name : 'Contrats accession normal',
-			data : [{% for d,data in stats %}{% if not loop.first %},{% endif %}{x:{{ d }},y:{{ data.accession.normal }}}{% endfor %} ],
-			type : 'area',
-			step : true,
-		},
-		{
-			name : 'Contrats accession complet',
-			data : [{% for d,data in stats %}{% if not loop.first %},{% endif %}{x:{{ d }},y:{{ data.accession.complete }}}{% endfor %} ],
-			type : 'area',
-			step : true
+{% for year,datas in stats %}		  		
+{% if not loop.first %},{% endif %}
+	    {
+			name : 'Contrats {{ year }}',
+			data : [{% for d,data in datas %}{% if not loop.first %},{% endif %}{{ data }}{% endfor %} ],
 		}
+{% endfor %}
 		]
     });
 });

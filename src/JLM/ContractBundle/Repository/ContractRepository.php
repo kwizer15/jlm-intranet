@@ -51,24 +51,31 @@ class ContractRepository extends EntityRepository
 		return $query->getResult();
 	}
 	
-	public function getStatsByMonth()
+	public function getStatsByMonth($year = null)
 	{
-		$today = new \DateTime;
 		$em = $this->getEntityManager();
 		$rsm = new ResultSetMapping();
-		$rsm->addScalarResult('dt', 'date');
+		$rsm->addScalarResult('year', 'year');
+		$rsm->addScalarResult('month', 'month');
 		$rsm->addScalarResult('number', 'number');
-		$rsm->addScalarResult('acc', 'accession');
-		$rsm->addScalarResult('comp', 'complete');
 		$q = '
-			SELECT b.dt, COUNT(a.id) as number,d.accession as acc,a.complete as comp
+			SELECT YEAR(b.dt) as year, MONTH(b.dt) as month, COUNT(DISTINCT a.id) as number
 			FROM jlm_core_calendar b
-			LEFT JOIN contracts a ON b.dt > a.begin AND (b.dt < a.end_contract OR a.end_contract IS NULL)
-			LEFT JOIN doors c ON a.door_id = c.id
-			LEFT JOIN sites d ON c.site_id = d.id
-			WHERE b.dt < ?  GROUP BY b.dt,d.accession,a.complete';
+			LEFT JOIN contracts a ON 
+				(
+					(YEAR(b.dt) = YEAR(a.begin) AND MONTH(b.dt) >= MONTH(a.begin))
+					OR (YEAR(b.dt) > YEAR(a.begin))
+				)
+				AND (
+					(YEAR(b.dt) = YEAR(a.end_contract) AND MONTH(b.dt) <= MONTH(a.end_contract))
+					OR (YEAR(b.dt) < YEAR(a.end_contract))
+					OR a.end_contract IS NULL
+				)
+			WHERE b.dt < ? GROUP BY YEAR(b.dt), MONTH(b.dt)
+			ORDER BY YEAR(b.dt) ASC, MONTH(b.dt) ASC	
+				';
 		$query = $em->createNativeQuery($q, $rsm);
-		$query->setParameter(1,$today->format('Y-m-d H:i:s'));
+		$query->setParameter(1, new \DateTime);
 		
 		return $query->getResult();
 	}
