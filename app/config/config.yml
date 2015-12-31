@@ -125,6 +125,7 @@ doctrine:
 
         dql:
             datetime_functions:
+                date: JLM\CoreBundle\DQL\DateFunction
                 week: JLM\CoreBundle\DQL\WeekFunction
                 month: JLM\CoreBundle\DQL\MonthFunction
                 year: JLM\CoreBundle\DQL\YearFunction
