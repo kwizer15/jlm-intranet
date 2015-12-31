@@ -18,6 +18,7 @@ class FixingEditType extends AbstractType
 	        		'date_widget'=>'single_text',
 	        		'date_format'=>'dd/MM/yyyy',
 	        ))
+	        ->add('askMethod',null,array('label'=>'Méthode de la demande','attr'=>array('class'=>'input-small')))
         	->add('reason',null,array('label'=>'Raison de l\'intervention','attr'=>array('class'=>'input-xxlarge')))
             ->add('contactName',null,array('label'=>'Nom du contact','required'=>false))
             ->add('contactPhones',null,array('label'=>'Téléphones','required'=>false))
