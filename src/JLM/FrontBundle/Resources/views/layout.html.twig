@@ -106,7 +106,7 @@
 	      </dl>
       	</div>
       	<p class="pull-right"><a href="#">Retour en haut</a></p>
-	        <p>&copy; 2015 JLM Entreprise</p>
+	        <p>&copy; 2015,2016 JLM Entreprise</p>
       </div>
       </footer>
 	  {% endblock footer %}
@@ -123,6 +123,8 @@
     	'@JLMFrontBundle/Resources/public/js/bootstrap.min.js' %}
     	<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
+	{% block javascript_scripts %}
+	{% endblock javascript_scripts %}
 	{% if app.environment == 'prod' %}
 	<script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

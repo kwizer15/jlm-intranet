@@ -1,4 +1,5 @@
 {% extends 'JLMFrontBundle::layout.html.twig' %}
+{% set forms = {} %}
 
 {% block title %}Liste des affaires | {{ parent() }}{% endblock title %}
 
@@ -22,6 +23,7 @@
       <h2>{{ activeBusiness.address|nl2br }}</h2>
       </div>
       <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      
       {% if activeBusiness.doors is not empty %}
       {% for key, door in activeBusiness.doors if door.actualContract and door.actualContract.manager.id == manager.id %}
         <div class="panel panel-primary">
@@ -67,3 +69,11 @@
   </div>
 </div>
 {% endblock container %}
+
+{% block javascript_scripts %}
+{% if activeBusiness.doors is not empty %}
+{% for key, door in activeBusiness.doors if door.actualContract and door.actualContract.manager.id == manager.id %}
+{% include 'JLMFrontBundle:Business:list_quote_script.html.twig' with {'quotes':quotes[key]} %}
+{% endfor %}
+{% endif %}
+{% endblock %}

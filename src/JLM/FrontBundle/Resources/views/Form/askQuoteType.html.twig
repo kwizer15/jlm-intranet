@@ -1,0 +1,21 @@
+{% block jlm_front_askquotetype_javascript %}
+{% spaceless %}
+<script>
+$('#{{ id }}').parent().on('submit',function(e) {
+	e.preventDefault();
+	$modal = $(this).parent().parent().parent().parent();
+	$.ajax({
+		url: $(this).attr('action'),
+		type: $(this).attr('method'),
+		dataType: 'json',
+		data: $(this).serialize(),
+		success: function(data) {
+			$modal.modal('hide');
+		}
+	});
+	
+	return false;
+});
+</script>
+{% endspaceless %}
+{% endblock %}

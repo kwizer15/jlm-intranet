@@ -1,0 +1,5 @@
+{% if quotes is not empty %}
+{% for key2,quote in quotes%}
+{{ form_javascript(askQuoteForms[key][key2]) }}
+{% endfor %}
+{% endif %}
