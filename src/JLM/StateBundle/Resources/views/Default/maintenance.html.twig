@@ -15,73 +15,82 @@
 {{ parent() }}
 <script>
 $(function () {
-    $('#graphMaintenance').highcharts({
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false
-        },
-        title: {
-            text: 'Entretiens'
-        },
-        tooltip: {
-        	formatter : function(){
-                return this.point.name + ': <b>' + this.point.y + '</b>';
-            }  
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    color: '#000000',
-                    connectorColor: '#000000',
-                    formatter: function() {
-                    	return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage*100)/100 +' %';
-                    }
-                }
-            }
-        },
-        series: [{
-            type: 'pie',
-            name: 'Temps passé',
-            data: [
-                {
-                    name : 'Fait',
-                    color : '#468847', 
-                    y : {{ maintenanceDoes }}
-                },
-                {
-                    name : 'Pas fait',
-					color : '#b94a48',
-                    y : {{ maintenanceTotal - maintenanceDoes }}
-                }
-            ]
-        }]
-    });
+//    $('#graphMaintenance').highcharts({
+//        chart: {
+//            plotBackgroundColor: null,
+//            plotBorderWidth: null,
+//            plotShadow: false
+//        },
+//        title: {
+//            text: 'Entretiens'
+//        },
+//        tooltip: {
+//        	formatter : function(){
+//                return this.point.name + ': <b>' + this.point.y + '</b>';
+//            }  
+//        },
+//        plotOptions: {
+//            pie: {
+//                allowPointSelect: true,
+//                cursor: 'pointer',
+//                dataLabels: {
+//                    enabled: true,
+//                    color: '#000000',
+//                    connectorColor: '#000000',
+//                    formatter: function() {
+//                    	return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage*100)/100 +' %';
+//                    }
+//                }
+//            }
+//        },
+//        series: [{
+//            type: 'pie',
+//            name: 'Temps passé',
+//            data: [
+//                {
+//                    name : 'Fait',
+//                    color : '#468847', 
+//                    y : {{ maintenanceDoes }}
+//                },
+//                {
+//                    name : 'Pas fait',
+//					color : '#b94a48',
+//                    y : {{ maintenanceTotal - maintenanceDoes }}
+//                }
+//            ]
+//        }]
+//    });
 
     $('#graphEvolution').highcharts('StockChart', {
-    	rangeSelector : {
-			selected : 1
-		},
-
+        chart: {
+        	alignTicks: false
+        },
+        rangeSelector: {
+            selected: 1
+        },
 		title : {
 			text : 'Evolution des entretiens'
 		},
 
 		series : [{
-			name : 'Evolution des entretiens',
-			data : [{% for d,data in evolution %}{% if not loop.first %},{% endif %}{ x:{{ d }},y:{{ data }} }{% endfor %} ],
-			type : 'area',
-			step : true,
-		},
-		{
-			name : 'Objectifs d\'entretiens',
-			data : [{% for d,data in evolutionBase %}{% if not loop.first %},{% endif %}{ x:{{ d }},y:{{ data }} }{% endfor %} ],
-			type : 'line',
-			
-		},
+			    type: 'column',
+				name : 'Evolution des entretiens',
+				data : [{% for d,data in evolution %}{% if not loop.first %},{% endif %}{ x:{{ d * 1000 }},y:{{ data }} }{% endfor %} ],
+				dataGrouping: {
+					units: [[
+		                        'week', // unit name
+		                        [2] // allowed multiples
+		                    ], [
+		                        'month',
+		                        [1, 2, 3, 4, 6]
+		                    ]]
+                }
+			}
+	//	,
+	//		{
+	//			name : 'Objectifs d\'entretiens',
+	//			data : [{% for d,data in evolutionBase %}{% if not loop.first %},{% endif %}{ x:{{ d }},y:{{ data }} }{% endfor %} ],
+	//		}
 		]
     });
 });

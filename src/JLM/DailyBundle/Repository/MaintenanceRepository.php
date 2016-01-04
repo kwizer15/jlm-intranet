@@ -61,15 +61,44 @@ class MaintenanceRepository extends InterventionRepository
 		$date1 = ($secondSemestre) ? $year.'-07-01 00:00:00' : $year.'-01-01 00:00:00';
 		$date2 = ($secondSemestre) ? $year.'-12-31 23:59:59' : $year.'-06-30 23:59:59';
 		$qb = $this->createQueryBuilder('a')
-			->select('b.begin')
+			->select('DATE(b.begin) as dt, COUNT(a) as number')
 			->leftJoin('a.shiftTechnicians','b')
 			->andWhere('a.creation > ?1')
 			->andWhere('a.creation <= ?2')
 			->andWhere('a.close is not null')
-			->orderBy('b.begin','ASC')
-			->groupBy('a')
+			->orderBy('dt','ASC')
+			->groupBy('dt')
 			->setParameter(1, $date1)
-			->setParameter(2, $date2);
+			->setParameter(2, $date2)
+			;
+		$results = $qb->getQuery()->getResult();
+		$datas = array();
+		
+		foreach ($results as $result)
+		{
+			$datas[\DateTime::createFromFormat('Y-m-d', $result['dt'])->getTimestamp()] = $result['number'];
+		}
+		
+		//print_r($datas); exit;
+		return $datas;
+	}
+	
+	public function getCountDoesByDayOld($secondSemestre, $year = null)
+	{
+		$today = new \DateTime;
+		$year = ($year === null) ? $today->format('Y') : $year;
+		$date1 = ($secondSemestre) ? $year.'-07-01 00:00:00' : $year.'-01-01 00:00:00';
+		$date2 = ($secondSemestre) ? $year.'-12-31 23:59:59' : $year.'-06-30 23:59:59';
+		$qb = $this->createQueryBuilder('a')
+		->select('b.begin')
+		->leftJoin('a.shiftTechnicians','b')
+		->andWhere('a.creation > ?1')
+		->andWhere('a.creation <= ?2')
+		->andWhere('a.close is not null')
+		->orderBy('b.begin','ASC')
+		->groupBy('a')
+		->setParameter(1, $date1)
+		->setParameter(2, $date2);
 		$results = $qb->getQuery()->getResult();
 		$previousDate = null;
 		$datas = array();
