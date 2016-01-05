@@ -320,15 +320,23 @@ class QuoteRepository extends SearchRepository
 	 * @since 1.4.0
 	 * @todo Create a direct request
 	 */
-	public function getSendedByDoor(Door $door)
+	public function getSendedByDoor(Door $door, $lastsMonth = null)
 	{
 		$quotes = $this->getByDoor($door);
 		$final = [];
+		$expiration = new \DateTime();
+		if ($lastsMonth === null)
+		{
+			$expiration->sub(new \DateInterval('P'.$lastsMonth.'M'));
+		}
 		foreach ($quotes as $quote)
 		{
 			if ($quote->getState() == QuoteVariant::STATE_SENDED)
 			{
-				$final[] = $quote;
+				if ($lastsMonth === null || $quote->getCreation() > $expiration)
+				{
+					$final[] = $quote;
+				}
 			}
 		}
 		

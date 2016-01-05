@@ -61,13 +61,13 @@ class BusinessController extends Controller
 			{
 				$businessDoors[$key] = $door;
 				$lastsMaintenance[$key] = $om->getRepository('JLMDailyBundle:Maintenance')->getLastsByDoor($door, 2);
-				$lastsFixing[$key] = array_merge($om->getRepository('JLMDailyBundle:Fixing')->getLastsByDoor($door, 2, true), $om->getRepository('JLMDailyBundle:Work')->getLastsByDoor($door, 2, true));
+				$lastsFixing[$key] = $om->getRepository('JLMDailyBundle:Intervention')->getLastsByDoor($door, 5, true);
 				usort($lastsFixing[$key],
 						function($a, $b) {
 							return ($a->getLastDate() < $b->getLastDate()) ? 1 : (($a->getLastDate() == $b->getLastDate()) ? 0 : -1);
 						}
 				);
-				$qs[$key] = $om->getRepository('JLMCommerceBundle:Quote')->getSendedByDoor($door);
+				$qs[$key] = $om->getRepository('JLMCommerceBundle:Quote')->getSendedByDoor($door,12);
 				$askQuoteForms[$key] = [];
 				foreach ($qs[$key] as $quote)
 				{

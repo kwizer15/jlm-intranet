@@ -12,7 +12,11 @@
     <div class="col-md-3">
     {% for business in businesses %}
       <a href="{{ path('jlm_front_business_list',{'business':business.id}) }}" class="list-group-item{% if business.id == activeBusiness.id %} active{% endif %}">
-        <span class="badge">?</span>
+      {% set nb = 0 %}
+		{% for key, door in business.doors if door.actualContract and door.actualContract.manager.id == manager.id %}
+		{% if door.stopped or door.waitFixing %}{% set nb = nb + 1 %}{% endif %}
+		{% endfor %}
+		{% if nb > 0 %}<span class="badge">{{ nb }}</span>{% endif %}
   	    {#}<h4 class="list-group-item-heading">Résidence les Marglats</h4>{#}
   	    <p class="list-group-item-text">{{ business.address|nl2br }}</p>
       </a>

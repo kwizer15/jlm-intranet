@@ -41,7 +41,7 @@ class Controller extends BaseController
 			{
 				throw new AccessDeniedException('Pas de contact lié à ce compte');
 			}
-			$manager = $repoManager->find(111); // Pour tests
+			$manager = $repoManager->find($this->getRequest()->get('managerId',48)); // Pour tests
 		}
 		
 		return $manager;
