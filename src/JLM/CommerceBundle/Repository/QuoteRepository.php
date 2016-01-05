@@ -325,7 +325,7 @@ class QuoteRepository extends SearchRepository
 		$quotes = $this->getByDoor($door);
 		$final = [];
 		$expiration = new \DateTime();
-		if ($lastsMonth === null)
+		if ($lastsMonth !== null)
 		{
 			$expiration->sub(new \DateInterval('P'.$lastsMonth.'M'));
 		}
