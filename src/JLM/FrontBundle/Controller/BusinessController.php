@@ -59,18 +59,22 @@ class BusinessController extends Controller
 			$contract = $door->getActualContract();
 			if ($contract !== null && $contract->getTrustee() == $manager)
 			{
-				$businessDoors[] = $door;
-				$lastsMaintenance[] = $om->getRepository('JLMDailyBundle:Maintenance')->getLastsByDoor($door, 2);
-				$lastsFixing[] = $om->getRepository('JLMDailyBundle:Fixing')->getLastsByDoor($door, 2, true);
-				$quotes = $om->getRepository('JLMCommerceBundle:Quote')->getSendedByDoor($door);
-				$askQuoteForms[] = [];
-				foreach ($quotes as $quote)
+				$businessDoors[$key] = $door;
+				$lastsMaintenance[$key] = $om->getRepository('JLMDailyBundle:Maintenance')->getLastsByDoor($door, 2);
+				$lastsFixing[$key] = array_merge($om->getRepository('JLMDailyBundle:Fixing')->getLastsByDoor($door, 2, true), $om->getRepository('JLMDailyBundle:Work')->getLastsByDoor($door, 2, true));
+				usort($lastsFixing[$key],
+						function($a, $b) {
+							return ($a->getLastDate() < $b->getLastDate()) ? 1 : (($a->getLastDate() == $b->getLastDate()) ? 0 : -1);
+						}
+				);
+				$qs[$key] = $om->getRepository('JLMCommerceBundle:Quote')->getSendedByDoor($door);
+				$askQuoteForms[$key] = [];
+				foreach ($qs[$key] as $quote)
 				{
 					$form = $this->createAskQuoteForm();
 					$form->get('quoteNumber')->setData($quote->getNumber());
 					$askQuoteForms[$key][] = $form->createView();
 				}
-				$qs[] = $quotes;
 			}
 			
 		}

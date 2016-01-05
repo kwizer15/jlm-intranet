@@ -817,4 +817,6 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     	
     	return $this;
     }
+    
+    abstract public function getCustomerDesignation();
 }

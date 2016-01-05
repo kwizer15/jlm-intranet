@@ -275,4 +275,16 @@ class Fixing extends Intervention implements FixingInterface
 		
 		return null;
 	}
+	
+	public function getCustomerDesignation()
+	{
+		$out = 'Demande ';
+		if (!empty($this->getContactName()))
+		{
+			$out .= 'de '.$this->getContactName();
+		}
+		$out .= ' faites le '. $this->getAskDate()->format('d/m/Y').' par '. strtolower($this->getAskMethod());
+		
+		return $out;
+	}
 }

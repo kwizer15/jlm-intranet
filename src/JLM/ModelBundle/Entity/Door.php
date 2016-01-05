@@ -854,6 +854,13 @@ class Door implements BayInterface, InstallationInterface
     	});
     }
     
+    public function getNotMaintenancePublishedClosed()
+    {
+    	return array_filter($this->interventions->toArray(), function($interv) {
+    		return ($interv->getClosed() && !$interv instanceof Maintenance && $interv->isPublished());
+    	});
+    }
+    
     public function getFixingsClosed()
     {
     	return array_filter($this->interventions->toArray(), function($interv) {

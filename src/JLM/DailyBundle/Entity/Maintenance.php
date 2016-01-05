@@ -41,4 +41,10 @@ class Maintenance extends Intervention implements MaintenanceInterface
 	}
 	*/
 	
+	public function getCustomerDesignation()
+	{
+		return 'Entretien';
+		
+	}
+	
 }

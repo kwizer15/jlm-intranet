@@ -235,4 +235,23 @@ class Work extends Intervention implements WorkInterface
     {
     	return WorkFactory::create(new VariantWorkBuilder($variant));
     }
+    
+    public function getCustomerDesignation()
+    {
+    	$out = 'Travaux ';
+    	if ($this->getQuote() !== null)
+    	{
+    		$out .= 'selon devis n°'. $this->getQuote()->getNumber();
+    	}
+    	elseif ($this->getIntervention() !== null)
+    	{
+    		if ($this->getMustBeBilled())
+    		{
+    			$out .= 'compris dans le contrat d\'entretien ';
+    		}
+    		$out .= 'selon intervention du '.$this->getIntervention()->getLastDate();
+    	}
+    
+    	return $out;
+    }
 }

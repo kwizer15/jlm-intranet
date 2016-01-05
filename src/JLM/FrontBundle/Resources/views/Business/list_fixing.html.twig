@@ -16,7 +16,7 @@
   </td>{#}
   <td>{{ fixing.lastDate|date('d/m/Y') }}</td>
       <td>
-        {%- if fixing.done.id == 3 -%}<span class="label label-danger">À l'arrêt</span>
+        {%- if fixing.done is defined and fixing.done.id == 3 -%}<span class="label label-danger">À l'arrêt</span>
         {%- else  -%}<span class="label label-success">En fonction</span>
         {%- endif -%}
       </td>
@@ -34,8 +34,9 @@
                         <h4 class="modal-title" id="detailFixing{{ fixing.id }}Label">Détails de l'intervention</h4>
                       </div>
                       <div class="modal-body">
-                      
-                        <p>Demande {% if fixing.contactName is not empty %}de {{ fixing.contactName }}{% endif %} faites le {{ fixing.askDate|date('d/m/Y') }} par {{ fixing.askMethod|lower }}</p>
+                      	<p>{{ fixing.customerDesignation }}</p>
+                        {#}<p>Demande {% if fixing.contactName is not empty %}de {{ fixing.contactName }}{% endif %} faites le {{ fixing.askDate|date('d/m/Y') }} par {{ fixing.askMethod|lower }}</p>{#}
+                        {% if fixing.type == 'fixing' %}
                         <h4>Rapport</h4>
                         <p>{{ fixing.customerReport|nl2br }}</p>
                         {% if fixing.customerActions is not null %}
@@ -44,6 +45,7 @@
                         <p>{{ fixing.customerState|nl2br }}</p>
 						{% if fixing.customerProcess is not null %}
                         	<p>{{ fixing.customerProcess|nl2br }}</p>
+                        {% endif %}
                         {% endif %}
                       </div>
                       <div class="modal-footer">
