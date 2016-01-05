@@ -41,7 +41,12 @@ class Controller extends BaseController
 			{
 				throw new AccessDeniedException('Pas de contact lié à ce compte');
 			}
-			$manager = $repoManager->find($this->getRequest()->get('managerId',48)); // Pour tests
+			$session = $this->getRequest()->getSession();
+			if ($managerId = $this->getRequest()->get('managerId'))
+			{
+				$session->set('managerId', $managerId);
+			}
+			$manager = $repoManager->find($session->get('managerId', 48)); // Pour tests
 		}
 		
 		return $manager;
