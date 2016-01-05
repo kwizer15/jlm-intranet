@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Doctrine\ORM\NoResultException;
+use JLM\DailyBundle\Entity\Maintenance;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -67,6 +68,7 @@ class BusinessController extends Controller
 							return ($a->getLastDate() < $b->getLastDate()) ? 1 : (($a->getLastDate() == $b->getLastDate()) ? 0 : -1);
 						}
 				);
+				$lastsFixing[$key] = array_filter($lastsFixing[$key], function($item){ return !$item instanceof Maintenance; });
 				$qs[$key] = $om->getRepository('JLMCommerceBundle:Quote')->getSendedByDoor($door,12);
 				$askQuoteForms[$key] = [];
 				foreach ($qs[$key] as $quote)
