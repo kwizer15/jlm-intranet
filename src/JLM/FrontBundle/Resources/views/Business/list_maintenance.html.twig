@@ -5,7 +5,7 @@
       		      {% for maintenance in maintenances %}
       		        <tr>
       		          <th>{% if maintenance.creation|date('m') > 4 %}2ème semestre {{ maintenance.creation|date('Y') }}{% else %}1er semestre {{ maintenance.creation|date('Y') }}{% endif %}</th>
-      		          <td>{% if maintenance.close %}{{ maintenance.close|date('d/m/Y') }}{% else %}{% endif %}</td>
+      		          <td>{% if maintenance.close %}{{ maintenance.lastDate|date('d/m/Y') }}{% else %}{% endif %}</td>
       		        </tr>
       		      {% endfor %}
       		      </tbody>
