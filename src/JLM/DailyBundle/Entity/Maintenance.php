@@ -33,7 +33,7 @@ class Maintenance extends Intervention implements MaintenanceInterface
 	
 	/**
 	 * Un entretien ne sera jamais facturé
-	 * @Assert\False
+	 * Assert\False
 	 *
 	public function isBilled()
 	{
