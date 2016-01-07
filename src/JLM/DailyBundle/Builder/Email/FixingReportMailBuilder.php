@@ -24,15 +24,17 @@ class FixingReportMailBuilder extends FixingMailBuilder
 	
 	public function buildBody()
 	{
+		$fixing = $this->getFixing();
 		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Suite à notre intervention du .'.$this->getFixing()->getLastDate()->format('d/m/Y').' sur l\'installation :'.chr(10)
+		.'Suite à notre intervention du '.$fixing->getLastDate()->format('d/m/Y').' sur l\'installation :'.chr(10)
 		.chr(10)
-		.$this->getFixing()->getInstallationCode().chr(10)
-		.$this->getFixing()->getPlace().chr(10)
+		.$fixing->getInstallationCode().chr(10)
+		.$fixing->getPlace().chr(10)
 		.chr(10)
-		.'nous avons constaté '.$this->_getConstat().chr(10)
-		.chr(10)
-		.'Cordialement'
+		.$fixing->getCustomerReport().chr(10)
+		.$fixing->getCustomerActions().chr(10)
+		.$fixing->getCustomerState().chr(10)
+		.$fixing->getCustomerProcess().chr(10)
 		.$this->_getSignature()
 		);
 	}
@@ -40,26 +42,5 @@ class FixingReportMailBuilder extends FixingMailBuilder
 	public function buildAttachements()
 	{
 		
-	}
-	
-	protected function _getConstat()
-	{
-		$part = ($this->getFixing()->getPartFamily() === null) ? 'aucun' : strtolower($this->getFixing()->getPartFamily()->getName());
-		if ($part == 'aucun')
-		{
-			return 'après plusieurs essais que l\'intallation était fonctionnelle.';
-		}
-		$out = 'un';
-		$due = $this->getFixing()->getDue();
-		if ($due !== null)
-		{
-			$cause = ($due->getId() != 4) ? 'e '.strtolower($due->getName()) : ' dysfonctionnement';
-			$out .= $cause.' sur les élements d';
-			$suite = (in_array(substr($part,0,1),array('a','e','i','o','u'))) ? '\'' : 'e ';
-			
-			return $out.$suite.$part.'.';
-		}
-		
-		return 'après plusieurs essais que l\'intallation était fonctionnelle.';
 	}
 }
