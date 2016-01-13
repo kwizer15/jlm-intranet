@@ -16,6 +16,7 @@ use JLM\AskBundle\Model\CommunicationMeansInterface;
 use JLM\DailyBundle\Model\PartFamilyInterface;
 use JLM\DailyBundle\Model\FixingInterface;
 use JLM\ContactBundle\Entity\Company;
+use JLM\CommerceBundle\Entity\QuoteVariant;
 
 /**
  * Plannification d'une panne
@@ -263,9 +264,20 @@ class Fixing extends Intervention implements FixingInterface
 	
 	public function getCustomerProcess()
 	{
-		if ($this->getAskQuote() !== null)
+		if (!empty($askQuote = $this->getAskQuote()))
 		{
-			return 'Un devis concernant les réparations à effectuer va vous être transmis.';
+			if (!empty($quotes = $askQuote->getQuotes()))
+			{
+				foreach ($quotes as $quote)
+				{
+					if ($quote->getState() == QuoteVariant::STATE_SENDED)
+					{
+						return 'Un devis concernant les réparations à effectuer vous a été transmis.';
+					}
+				}
+			}
+			return null;
+			
 		}
 		if ($this->getWork() !== null)
 		{
