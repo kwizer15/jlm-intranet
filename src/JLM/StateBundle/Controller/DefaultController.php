@@ -258,6 +258,23 @@ class DefaultController extends Controller
     }
     
     /**
+     * @Route("/latebill", name="state_latebill")
+     * @Template()
+     */
+    public function latebillAction()
+    {
+    	$manager = $this->get('jlm_commerce.bill_manager');
+    	$manager->secure('ROLE_OFFICE');
+    	$entities = $manager->getRepository()->getSendedMore45();
+    
+    	return $manager->renderResponse('JLMStateBundle:Default:lastbill.html.twig',
+    			array('entities' => $entities,
+    					'ca' =>array_reduce($entities, function($carry, $item) { return $carry + $item->getTotalPrice(); }, 0),
+    			)
+    	);
+    }
+    
+    /**
      * @Route("/doortypes/{year}", name="state_doortypes")
      * @Template()
      * @Secure(roles="ROLE_OFFICE")
