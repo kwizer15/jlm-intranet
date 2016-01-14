@@ -9,7 +9,7 @@ framework:
 
 web_profiler:
     toolbar: true
-    intercept_redirects: false
+    intercept_redirects: true
 
 monolog:
     handlers:
@@ -28,4 +28,5 @@ assetic:
     use_controller: true
 
 swiftmailer:
+    disable_delivery: true
     delivery_address: emmanuel.bernaszuk@jlm-entreprise.fr

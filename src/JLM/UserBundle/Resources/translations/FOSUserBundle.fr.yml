@@ -1,0 +1,116 @@
+# Group
+group:
+    edit:
+        submit: Mettre à jour le groupe
+    show:
+        name: Nom du groupe
+    new:
+        submit: Créer le groupe
+    flash:
+        updated: Le groupe a été mis à jour
+        created: Le groupe a été créé
+        deleted: Le groupe a été supprimé
+
+# Security
+"Bad credentials": Nom d'utilisateur ou mot de passe incorrect
+
+security:
+    login:
+        username: "Nom d'utilisateur :"
+        password: "Mot de passe :"
+        remember_me: Se souvenir de moi
+        submit: Connexion
+
+# Profile
+profile:
+    show:
+        username: Nom d'utilisateur
+        email: Adresse e-mail
+    edit:
+        submit: Mettre à jour
+    flash:
+        updated: Le profil a été mis à jour
+
+# Password change
+change_password:
+    submit: Modifier le mot de passe
+    flash:
+        success: Le mot de passe a été modifié
+
+# Registration
+registration:
+    check_email: Un e-mail a été envoyé à l'adresse %email%. Il contient un lien d'activation sur lequel il vous faudra cliquer afin d'activer votre compte.
+    confirmed: Félicitations %username%, votre compte est maintenant activé.
+    back: Retour à la page d'origine.
+    submit: Enregistrer
+    flash:
+        user_created: L'utilisateur a été créé avec succès
+    email:
+        subject: Votre accès à l'espace client JLM
+        message: |
+            Bonjour,
+
+            Avant tout, nous tenons à vous souhaiter une bonne et heureuse année 2016.
+            
+            Nous avons mis en place un espace client en ligne accessible depuis notre site internet à l'adresse suivante : http://jlm-entreprise.fr/login
+            Vous avez la possibilité de consulter le carnet d'entretien, les interventions ainsi que les devis en cours.
+            
+            Voici vos identifiants qui vous permettent d'accéder à votre compte.
+            
+            Nom d'utilisateur : %username%
+            Mot de passe : uB78xFh2
+            
+            Il est conseillé de modifier votre mot de passe lors de votre première connexion.
+
+            Vous trouverez en pièce jointe un mini-guide d'utilisation.
+            En espérant que ce nouvel outil vous apportera satisfation.
+
+            Cordialement,
+            Toute l'équipe de JLM Entreprise.
+            
+            --
+            JLM Entreprise
+            17 avenue de Montboulon
+            77165 SAINT-SOUPPLETS
+            Tel. 01 64 33 77 70
+            Fax. 01 64 33 78 45
+
+# Password resetting
+resetting:
+    password_already_requested: Un nouveau mot de passe a déjà été demandé pour cet utilisateur dans les dernières 24 heures.
+    check_email: Un e-mail a été envoyé à l'adresse %email%. Il contient un lien sur lequel il vous faudra cliquer afin de réinitialiser votre mot de passe.
+    request:
+        invalid_username: Le nom d'utilisateur ou l'adresse e-mail "%username%" n'existe pas.
+        username: "Nom d'utilisateur ou adresse e-mail :"
+        submit: Réinitialiser le mot de passe
+    reset:
+        submit: Modifier le mot de passe
+    flash:
+        success: Le mot de passe a été réinitialisé avec succès
+    email:
+        subject: Réinitialisation de votre mot de passe
+        message: |
+            Bonjour %username% !
+
+            Pour réinitialiser votre mot de passe, merci de vous rendre sur %confirmationUrl%
+
+            Cordialement,
+            L'équipe.
+
+# Global strings
+layout:
+    logout: Déconnexion
+    login: Connexion
+    register: Inscription
+    logged_in_as: Connecté en tant que %username%
+
+# Form field labels
+form:
+    group_name: "Nom du groupe :"
+    username: "Nom d'utilisateur :"
+    email: "Adresse e-mail :"
+    current_password: "Mot de passe actuel :"
+    password: "Mot de passe :"
+    password_confirmation: "Vérification :"
+    new_password: "Nouveau mot de passe :"
+    new_password_confirmation: "Vérification :"

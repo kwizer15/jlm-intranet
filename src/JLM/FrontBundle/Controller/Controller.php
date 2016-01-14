@@ -46,7 +46,7 @@ class Controller extends BaseController
 			{
 				$session->set('managerId', $managerId);
 			}
-			$manager = $repoManager->find($session->get('managerId', 48)); // Pour tests
+			$manager = $repoManager->find($session->get('managerId', 316)); // Pour tests
 		}
 		
 		return $manager;
