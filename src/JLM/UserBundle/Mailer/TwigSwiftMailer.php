@@ -75,7 +75,7 @@ class TwigSwiftMailer implements MailerInterface
             ->setTo($toEmail);
         if ($addMiniguide)
         {
-        	$message->attach(\Swift_Attachment::fromPath(__DIR__ .'/../../../../web/bundles/jlmfront/pdf/jlm-mini-guide.jpg'));
+        	$message->attach(\Swift_Attachment::fromPath(__DIR__ .'/../../../../../web/bundles/jlmfront/pdf/jlm-mini-guide.jpg'));
         }
         
         if (!empty($htmlBody)) {
