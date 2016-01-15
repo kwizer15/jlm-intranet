@@ -252,7 +252,8 @@ class DefaultController extends Controller
 
 		return $manager->renderResponse('JLMStateBundle:Default:lastbill.html.twig',
 				array('entities' => $entities,
-					  'ca' =>array_reduce($entities, function($carry, $item) { return $carry + $item->getTotalPrice(); }, 0),
+					  'ca' => array_reduce($entities, function($carry, $item) { return $carry + $item->getTotalPrice(); }, 0),
+					  'title' => 'Factures en cours',
 					)
 				);
     }
@@ -270,6 +271,7 @@ class DefaultController extends Controller
     	return $manager->renderResponse('JLMStateBundle:Default:lastbill.html.twig',
     			array('entities' => $entities,
     					'ca' =>array_reduce($entities, function($carry, $item) { return $carry + $item->getTotalPrice(); }, 0),
+    					'title' => 'Factures à 45 jours et plus',
     			)
     	);
     }

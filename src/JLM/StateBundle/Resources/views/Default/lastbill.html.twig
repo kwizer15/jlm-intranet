@@ -1,6 +1,6 @@
 {% extends "JLMCommerceBundle:Bill:layout.html.twig" %}
 {% block content %}
-<h1>Liste des factures à 45 jours</h1>
+<h1>{{ title }}</h1>
 <h2>Chiffre d'affaire : {{ ca }} €</h2>
 {% include 'JLMCommerceBundle:Bill:list.html.twig' with {'entities':entities} %}
 {% endblock %}
