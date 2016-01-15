@@ -69,8 +69,8 @@ abstract class InterventionMailBuilder extends MailBuilderAbstract
 	protected function _getSignature()
 	{
 		return chr(10).chr(10)
-				.'Vous pouvez consulter l\'état de vos installations en contrat en vous connectant à votre espace client : http://jlm-entreprise.fr/login'
-				.chr(10).chr(10)
+//				.'Vous pouvez consulter l\'état de vos installations en contrat en vous connectant à votre espace client : http://jlm-entreprise.fr/login'
+//				.chr(10).chr(10)
 				.'Cordialement'
 				.parent::_getSignature();
 	}
