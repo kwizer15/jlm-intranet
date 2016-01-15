@@ -10,7 +10,7 @@
     </tr>
   {% for fixing in fixings %}
     <tr>
-      <th>{{ fixing.creation|date('d/m/Y') }}</th>
+      <th>{{ fixing.askDate|date('d/m/Y') }}</th>
       {#}<td>{{ fixing.customerReport|nl2br }}
         <br>{%- if fixing.askQuote %}Un devis va vous être envoyé.{%- endif -%}
   </td>{#}
