@@ -28,4 +28,20 @@ abstract class WorkMailBuilder extends InterventionMailBuilder
 	{
 		return $this->getIntervention();
 	}
+	
+	protected function _getSource()
+	{
+		$source = '';
+		$quote = $this->getWork()->getQuote();
+		if ($quote = $this->getWork()->getQuote() !== null)
+		{
+			$source = ' selon devis n°'.$quote->getNumber();
+		}
+		elseif ($intervention = $this->getWork()->getIntervention() !== null)
+		{
+			$source = ' selon intervention du '.$intervention->getLastDate()->format('d/m/Y');
+		}
+	
+		return $source;
+	}
 }
