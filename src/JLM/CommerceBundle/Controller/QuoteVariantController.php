@@ -299,4 +299,24 @@ class QuoteVariantController extends Controller
 		
 		return $manager->renderPdf('chiffrage-'.$entity->getNumber(), 'JLMCommerceBundle:QuoteVariant:coding.pdf.php',array('entity'=>$entity));
 	}
+	
+	public function boostAction()
+	{
+		$manager = $this->container->get('jlm_commerce.quotevariant_manager');
+		$manager->secure('ROLE_OFFICE');
+		
+		$quotes = $manager->getRepository()->getToBoost();
+		usort($quotes, function($a, $b) {
+			if ($a->getTotalPrice() > $b->getTotalPrice())
+				return -1;
+			elseif ($a->getTotalPrice() == $b->getTotalPrice())
+				return 0;
+			else 
+				return 1;
+		});
+		
+		return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:boost.html.twig',array(
+				'quotes' => $quotes,
+		));
+	}
 }

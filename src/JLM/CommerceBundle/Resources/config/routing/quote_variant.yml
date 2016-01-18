@@ -77,3 +77,8 @@ variant_email:
     path: /{id}/email
     defaults: { _controller: "JLMCommerceBundle:QuoteVariant:email" }
     methods: [GET,POST]
+    
+variant_boost:
+    path: /boost
+    defaults: { _controller: "JLMCommerceBundle:QuoteVariant:boost" }
+    methods: [GET]

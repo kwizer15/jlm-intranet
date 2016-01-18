@@ -52,4 +52,21 @@ class QuoteVariantRepository extends EntityRepository
 		->setParameter(1, QuoteVariant::STATE_SENDED)
 		->getQuery()->getResult();
 	}
+	
+	public function getToBoost($numberOfMonth = 3)
+	{
+		$minDate = new \DateTime();
+		$minDate->sub(new \DateInterval('P'.$numberOfMonth.'M'));
+		$qb = $this->createQueryBuilder('a')
+			->select('a,b')
+			->leftJoin('a.quote', 'b')
+			->where('a.creation > ?1')
+			->andWhere('a.state IN (?2, ?3)')
+			->setParameter(1, $minDate)
+			->setParameter(2, QuoteVariant::STATE_SENDED)
+			->setParameter(3, QuoteVariant::STATE_RECEIPT)
+		;
+		
+		return $qb->getQuery()->getResult();
+	}
 }
