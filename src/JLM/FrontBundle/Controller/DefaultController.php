@@ -45,7 +45,7 @@ class DefaultController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     
-    	$entity = $em->getRepository('JLMFrontBundle:Door')->getByCode($code);
+    	$entity = $em->getRepository('JLMModelBundle:Door')->getByCode($code);
     	if ($entity === null)
     	{
     		throw $this->createNotFoundException('Cette installation n\'existe pas');
