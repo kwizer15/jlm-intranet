@@ -31,17 +31,18 @@ abstract class WorkMailBuilder extends InterventionMailBuilder
 	
 	protected function _getSource()
 	{
-		$source = '';
 		$quote = $this->getWork()->getQuote();
-		if ($quote = $this->getWork()->getQuote() !== null)
+		if (!empty($quote))
 		{
-			$source = ' selon devis n°'.$quote->getNumber();
+			return ' selon devis n°'.$quote->getNumber();
 		}
-		elseif ($intervention = $this->getWork()->getIntervention() !== null)
+		
+		$intervention = $this->getWork()->getIntervention();
+		if (!empty($intervention))
 		{
-			$source = ' selon intervention du '.$intervention->getLastDate()->format('d/m/Y');
+			return ' selon intervention du '.$intervention->getLastDate()->format('d/m/Y');
 		}
 	
-		return $source;
+		return null;
 	}
 }
