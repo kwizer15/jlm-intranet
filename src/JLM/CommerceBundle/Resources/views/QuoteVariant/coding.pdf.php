@@ -43,10 +43,14 @@ class CodingPDF extends \fpdf\FPDF
 		$totalsell = 0;
 		foreach ($this->entity->getLines() as $line)
 		{
-			if (!$line->isService())
+			if (!$line->isService() && $line->getReference() !== 'TITLE' && $line->getReference() !== 'ST' )
 			{
-				try { $p =(($line->getUnitPrice()-$line->getShipping())/($line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1))-1)*100; }
-				catch (Exception $e) { $p= 0; }
+				$denom = ($line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1));
+				$p = 0;
+				if ($denom != 0)
+				{
+					$p =(($line->getUnitPrice()-$line->getShipping())/$denom-1)*100;
+				}
 				$content[] = array(
 						number_format($line->getQuantity(),0,',',' '),
 						utf8_decode($line->getDesignation()),
