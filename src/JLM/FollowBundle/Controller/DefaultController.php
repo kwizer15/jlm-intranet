@@ -7,6 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\FeeBundle\Entity\FeesFollower;
 use JLM\FeeBundle\Entity\Fee;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Contract controller.
@@ -16,18 +18,29 @@ class DefaultController extends Controller
     /**
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-//    	$date = new \DateTime;
-//    	$request = $this->getRequest();
-//    	$month = $request->get('month',$date->format('n'));
-//    	$year = $request->get('year',$date->format('Y'));
-//    	$begin = \DateTime::createFromFormat('d/n/Y H:i:s','01/'.$month.'/'.$year.' 00:00:00');
-//    	$end = \DateTime::createFromFormat('d/n/Y H:i:s',$begin->format('').'/'.$month.'/'.$year.' 00:00:00');
-//    	$state = array('unclosed'=>'getUnclosed');
-    	$em = $this->getDoctrine()->getManager();
-    	$threads = $em->getRepository('JLMFollowBundle:Thread')->findBy(array(),array('startDate'=>'DESC'));
-        return array('threads' => $threads);
+    	$page = $request->get('page',1);
+    	$resultsByPage = $request->get('resultsByPage',10);
+    	$route_params = array();
+    	if ($resultsByPage != 10)
+    	{
+    		$route_params['resultsByPage'] = $resultsByPage;
+    	}
+
+    	$threads = $this->getDoctrine()->getManager()->getRepository('JLMFollowBundle:Thread')->getThreads($page, $resultsByPage);
+
+    	$pagination = array(
+            'page' => $page,
+            'route' => 'jlm_follow_default_index',
+            'pages_count' => ceil(count($threads) / $resultsByPage),
+            'route_params' => $route_params,
+        );
+   	
+        return array(
+        	'threads' => $threads,
+        	'pagination' => $pagination,
+        );
     }
     
     /**
