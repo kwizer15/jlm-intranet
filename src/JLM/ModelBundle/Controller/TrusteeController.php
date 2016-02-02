@@ -23,6 +23,7 @@ use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Form\Type\TrusteeType;
 use JLM\ContactBundle\Form\Type\PersonType;
 use JLM\ContactBundle\Manager\ContactManager;
+use JLM\ContractBundle\Excel\ListManager;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -296,5 +297,22 @@ class TrusteeController extends Controller
         $entity = $em->getRepository('JLMModelBundle:Trustee')->getByIdToArray($id);
     
         return new JsonResponse($entity);
+    }
+    
+
+    /**
+     *
+     * @param Request $request
+     * @return multitype:unknown
+     * @Secure(roles="ROLE_OFFICE")
+     */
+    public function listExcelAction(Request $request)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$list = $em->getRepository('JLMContractBundle:Contract')->getForRDV();
+    	 
+    	$excelBuilder = new ListManager($this->get('phpexcel'));
+    	
+    	return $excelBuilder->createList($list)->getResponse();
     }
 }

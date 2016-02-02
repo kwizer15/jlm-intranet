@@ -5,6 +5,7 @@ namespace JLM\ContractBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use JLM\StateBundle\Entity\Calendar;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * CityRepository
@@ -78,5 +79,29 @@ class ContractRepository extends EntityRepository
 		$query->setParameter(1, new \DateTime);
 		
 		return $query->getResult();
+	}
+	
+	public function getForRDV()
+	{
+		$qb = $this->createQueryBuilder('a')
+			->select('f.name as manager, COUNT(a) as count_installs, g.name as gestionnaire')
+				->leftJoin('a.door','b')
+					->leftJoin('b.site','c')
+						->leftJoin('c.contacts','d')
+							->leftJoin('d.person','g')
+				->leftJoin('a.trustee','e')
+					->leftJoin('e.contact','f')
+			->where('a.begin <= ?1')
+			->andWhere('a.end IS NULL OR a.end > ?1')
+			//->andWhere('d.role LIKE ?2 OR d IS NULL')
+			->groupBy('e')
+
+			->setParameter(1, new \DateTime())
+			->setParameter(2, 'gestionnaire')
+		;
+		
+		$query = $qb->getQuery();
+		
+		return $query->getArrayResult();
 	}
 }

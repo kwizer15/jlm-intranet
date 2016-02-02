@@ -69,3 +69,9 @@ jlm_model_trustee_json:
   defaults:
     _controller: "JLMModelBundle:Trustee:json"
   methods: [GET]
+
+jlm_model_trustee_listexcel:
+  path: /xls
+  defaults:  { _controller: "JLMModelBundle:Trustee:listExcel" }
+  methods: [GET]
+  
