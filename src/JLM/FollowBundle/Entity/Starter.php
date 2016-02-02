@@ -21,8 +21,19 @@ abstract class Starter implements StarterInterface
 {
 	private $id;
 	
+	private $work;
+	
 	public function getId()
 	{
 		return $this->id;
 	}
+	
+	final public function getWork()
+	{
+		$this->work = $this->_getWork();
+		
+		return $this->work;
+	}
+	
+	protected abstract function _getWork();
 }

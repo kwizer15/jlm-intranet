@@ -3,12 +3,7 @@ jlm_follow_default_index:
     defaults:  { _controller: "JLMFollowBundle:Default:index" }
     methods: [GET]
     
-jlm_follow_default_quote:
-    path:   /follow/quote
-    defaults:  { _controller: "JLMFollowBundle:Default:quote" }
-    methods: [GET]
- 
-jlm_follow_default_intervention:
-    path:   /follow/intervention
-    defaults:  { _controller: "JLMFollowBundle:Default:intervention" }
+jlm_follow_default_update:
+    path: /follow/update
+    defaults:  { _controller: "JLMFollowBundle:Default:update" }
     methods: [GET]

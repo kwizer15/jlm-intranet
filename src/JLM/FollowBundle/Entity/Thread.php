@@ -44,14 +44,24 @@ class Thread implements ThreadInterface
 	private $starter;
 	
 	/**
-	 * @var OrderInterface
+	 * @var float
+	 */
+	private $amount;
+	
+	/**
+	 * @var Work
+	 */
+	private $work;
+	
+	/**
+	 * @var Order
 	 */
 	private $order;
 	
 	/**
-	 * @var WorkerInterface
+	 * @var int
 	 */
-	private $work;
+	private $state;
 	
 	public function __construct(StarterInterface $starter)
 	{
@@ -74,6 +84,7 @@ class Thread implements ThreadInterface
 	public function setStarter(StarterInterface $starter)
 	{
 		$this->starter = $starter;
+		$this->work = $this->starter->getWork();
 		
 		return $this;
 	}
@@ -91,7 +102,9 @@ class Thread implements ThreadInterface
 	 */
 	public function getOrder()
 	{
-		return $this->getWork()->getOrder();
+		$this->order = isset($this->order) ? $this->order : $this->getWork()->getOrder();
+		
+		return $this->order;
 	}
 	
 	/**
@@ -99,7 +112,9 @@ class Thread implements ThreadInterface
 	 */
 	public function getWork()
 	{
-		return $this->getStarter()->getWork();
+		$this->work = isset($this->work) ? $this->work : $this->getStarter()->getWork();
+		
+		return $this->work;
 	}
 	
 	/**
@@ -123,10 +138,19 @@ class Thread implements ThreadInterface
 	
 	public function getAmount()
 	{
-		return $this->getStarter()->getAmount();
+		$this->amount = isset($this->amount) ? $this->amount : $this->getStarter()->getAmount();
+		
+		return $this->amount;
 	}
 	
 	public function getState()
+	{
+		$this->state = $this->_defineState();
+		
+		return $this->state;
+	}
+	
+	private function _defineState()
 	{
 		if ($this->getWork() === null)
 		{
@@ -152,6 +176,5 @@ class Thread implements ThreadInterface
 		{
 			return self::STATE_READY;
 		}
-		
 	}
 }

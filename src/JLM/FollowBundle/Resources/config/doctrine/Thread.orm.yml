@@ -1,5 +1,6 @@
 JLM\FollowBundle\Entity\Thread:
   type: entity
+  repositoryClass: JLM\FollowBundle\Repository\ThreadRepository
   table: jlm_follow_thread
   id:
     id:
@@ -9,6 +10,8 @@ JLM\FollowBundle\Entity\Thread:
   fields:
     startDate:
       type: datetime
+    state:
+      type: smallint
   oneToOne:
     starter:
       targetEntity: JLM\FollowBundle\Model\StarterInterface

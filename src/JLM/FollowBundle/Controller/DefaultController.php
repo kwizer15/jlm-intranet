@@ -20,16 +20,24 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+    	$defaultResultsByPage = 10;
+    	
     	$page = $request->get('page',1);
-    	$resultsByPage = $request->get('resultsByPage',10);
-    	$route_params = array();
-    	if ($resultsByPage != 10)
+    	$resultsByPage = $request->get('resultsByPage', $defaultResultsByPage);
+    	$route_params = [];
+    	foreach (array('type', 'sort', 'state') as $param)
+    	{
+    		if ($value = $request->get($param, null))
+    		{
+    			$route_params[$param] = $value;
+    		}
+    	}
+    	$threads = $this->getDoctrine()->getManager()->getRepository('JLMFollowBundle:Thread')->getThreads($page, $resultsByPage, $route_params);
+
+    	if ($resultsByPage != $defaultResultsByPage)
     	{
     		$route_params['resultsByPage'] = $resultsByPage;
     	}
-
-    	$threads = $this->getDoctrine()->getManager()->getRepository('JLMFollowBundle:Thread')->getThreads($page, $resultsByPage);
-
     	$pagination = array(
             'page' => $page,
             'route' => 'jlm_follow_default_index',
@@ -43,23 +51,19 @@ class DefaultController extends Controller
         );
     }
     
-    /**
-     * @Template()
-     */
-    public function quoteAction()
+    public function updateAction()
     {
-    	$em = $this->getDoctrine()->getManager();
-    	$threads = $em->getRepository('JLMFollowBundle:Thread')->findBy(array(),array('startDate'=>'DESC'));
-    	return array('threads' => $threads);
-    }
-    
-    /**
-     * @Template()
-     */
-    public function interventionAction()
-    {
-    	$em = $this->getDoctrine()->getManager();
-    	$threads = $em->getRepository('JLMFollowBundle:Thread')->findBy(array(),array('startDate'=>'DESC'));
-    	return array('threads' => $threads);
+    	$om = $this->getDoctrine()->getManager();
+    	$threads = $this->getDoctrine()->getManager()->getRepository('JLMFollowBundle:Thread')->findAll();
+    	foreach ($threads as $thread)
+    	{
+    		$thread->getState();
+    		$thread->getAmount();
+    		$om->persist($thread);
+    	}
+    	
+    	$om->flush();
+    	
+    	return 'Mise à jour OK';
     }
 }

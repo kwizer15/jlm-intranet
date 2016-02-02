@@ -13,5 +13,7 @@ JLM\FollowBundle\Entity\Starter:
       type: integer
       generator:
         strategy: AUTO
-
+  oneToOne:
+    work:
+      targetEntity: JLM\DailyBundle\Entity\Work
       

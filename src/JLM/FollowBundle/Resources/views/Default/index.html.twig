@@ -2,8 +2,13 @@
 
 {% block content %}
 <h1>Suivi de commandes</h1>
-<a href="{{ path('jlm_follow_default_quote') }}">Devis</a>
-<a href="{{ path('jlm_follow_default_intervention') }}">Interventions</a>
+<a class="btn btn-primary" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'type' : 'variant' })) }}">Devis</a>
+<a class="btn btn-primary" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'type' : 'intervention' })) }}">Interventions</a>
+<a class="btn btn-default" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'state' : 0 })) }}">Non traités</a>
+<a class="btn btn-default" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'state' : 1 })) }}">Matériel prêt</a>
+<a class="btn btn-default" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'state' : 2 })) }}">Travaux commencés</a>
+<a class="btn btn-default" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'state' : 3 })) }}">Terminés</a>
+<a class="btn btn-default" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'state' : 3 })) }}">Cloturé</a>
 <table class="table">
   <thead>
     <tr>

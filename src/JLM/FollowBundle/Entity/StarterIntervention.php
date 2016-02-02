@@ -47,7 +47,7 @@ class StarterIntervention extends Starter
 		return $this->intervention;
 	}
 	
-	public function getWork()
+	protected function _getWork()
 	{
 		return $this->getIntervention()->getWork();
 	}

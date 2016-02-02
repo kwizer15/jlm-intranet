@@ -47,7 +47,7 @@ class StarterQuote extends Starter
 		return $this->variant;
 	}
 	
-	public function getWork()
+	protected function _getWork()
 	{
 		return $this->getVariant()->getWork();
 	}
