@@ -557,4 +557,23 @@ class InterventionController extends Controller
 		return $response;
 	}
 	
+	public function publishAction(Intervention $entity)
+	{
+		$entity->setPublished(true);
+		$em = $this->getDoctrine()->getManager();
+		$em->persist($entity);
+		$em->flush();
+		
+		return $this->redirect($request->headers->get('referer'));
+	}
+	
+	public function unpublishAction(Intervention $entity)
+	{
+		$entity->setPublished(false);
+		$em = $this->getDoctrine()->getManager();
+		$em->persist($entity);
+		$em->flush();
+		
+		return $this->redirect($request->headers->get('referer'));
+	}
 }

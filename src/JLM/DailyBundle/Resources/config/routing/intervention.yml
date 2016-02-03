@@ -124,3 +124,13 @@ intervention_doorxls:
   path: /doorxls/{id}
   defaults:  { _controller: "JLMDailyBundle:Intervention:doorxls" }
   methods: [GET]
+  
+intervention_publish:
+  path:   /{id}/publish
+  defaults:  { _controller: "JLMDailyBundle:Intervention:publish" }
+  methods: [GET]
+  
+intervention_unpublish:
+  path:   /{id}/unpublish
+  defaults:  { _controller: "JLMDailyBundle:Intervention:unpublish" }
+  methods: [GET]
