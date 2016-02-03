@@ -29,14 +29,36 @@ class AttributionController extends Controller
      * @Template()
      * @Secure(roles="ROLE_OFFICE")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+    	$route_params = [];
+    	$db_params = array(
+    			'page' => 1,
+    			'resultsByPage' => 10,
+    			'sort' => '!date',
+    	);
+    	foreach ($db_params as $param => $defaultValue)
+    	{
+    		$db_params[$param] = $request->get($param, $defaultValue);
+    		if ($db_params[$param] != $defaultValue)
+    		{
+    			$route_params[$param] = $db_params[$param];
+    		}
+    	}
 
-        $entities = $em->getRepository('JLMTransmitterBundle:Attribution')->findAll();
-
+    	$em = $this->getDoctrine()->getManager();
+    	$entities = $em->getRepository('JLMTransmitterBundle:Attribution')->getAttributions($db_params);
+    	
+    	$pagination = array(
+    			'page' => $db_params['page'],
+    			'route' => $request->attributes->get('_route'),
+    			'pages_count' => ceil(count($entities) / $db_params['resultsByPage']),
+    			'route_params' => $route_params,
+    	);
+        
         return array(
             'entities' => $entities,
+        	'pagination' => $pagination,
         );
     }
 

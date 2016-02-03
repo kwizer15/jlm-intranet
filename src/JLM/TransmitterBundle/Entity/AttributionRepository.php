@@ -3,6 +3,7 @@
 namespace JLM\TransmitterBundle\Entity;
 
 use JLM\DefaultBundle\Entity\SearchRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * AttributionRepository
@@ -66,5 +67,35 @@ class AttributionRepository extends SearchRepository
 	protected function getSearchOrderBy()
 	{
 		return array('a.creation'=>'DESC');
+	}
+	
+	public function getAttributions(array $filters = array())
+	{
+		$qb = $this->createQueryBuilder('a')
+			->select('a');
+		if (array_key_exists('sort', $filters))
+		{
+			$sortsValid = array(
+					'date'=>'a.creation',
+					
+			);
+			$sort = str_replace('!', '', $filters['sort']);
+			if (array_key_exists($sort, $sortsValid))
+			{
+				$qb->orderBy($sortsValid[$sort], substr($filters['sort'], 0, 1) == '!' ? 'DESC' : 'ASC');
+			}
+		}
+		if (array_key_exists('resultsByPage', $filters))
+		{
+			if (array_key_exists('page', $filters))
+			{
+				$qb->setFirstResult(($filters['page'] - 1) * $filters['resultsByPage']);
+			}
+			$qb->setMaxResults($filters['resultsByPage']);
+		}
+		
+		$query = $qb->getQuery();
+		
+		return new Paginator($query);			
 	}
 }
