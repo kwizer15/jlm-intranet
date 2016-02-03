@@ -93,7 +93,7 @@ class ContractRepository extends EntityRepository
 					->leftJoin('e.contact','f')
 			->where('a.begin <= ?1')
 			->andWhere('a.end IS NULL OR a.end > ?1')
-			//->andWhere('d.role LIKE ?2 OR d IS NULL')
+			->andWhere('d.role LIKE ?2 OR d IS NULL')
 			->groupBy('e')
 
 			->setParameter(1, new \DateTime())
