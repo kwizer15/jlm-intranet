@@ -119,6 +119,12 @@ class BillRepository extends SearchRepository implements PaginableInterface
 			}
 		}
 		
+		if (key_exists('year', $filters) && $filters['year'] !== null)
+		{
+			$qb->andWhere('YEAR(a.creation) = :year');
+			$qb->setParameter('year', $filters['year']);
+		}
+		
 		if (key_exists('sort', $filters))
 		{
 			$sort = str_replace('!', '', $filters['sort']);

@@ -35,7 +35,7 @@ class BillController extends ContainerAware
 		$manager->secure('ROLE_OFFICE');
 		
 		return $manager->renderResponse('JLMCommerceBundle:Bill:index.html.twig',
-				$manager->paginator('JLMCommerceBundle:Bill', $request, array('sort' => '!number' ,'state' => null))
+				$manager->paginator('JLMCommerceBundle:Bill', $request, array('sort' => '!number' ,'state' => null, 'year' => null))
 		);
 	}
     

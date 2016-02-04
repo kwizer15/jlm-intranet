@@ -8,6 +8,11 @@
     <li class="nav-header">Etats</li>
     {% include 'JLMCommerceBundle:Bill:sidebar.html.twig' %}
     <li class="divider"></li>
+    <li class="nav-header">Année</li>
+    {% for year in 2016..2013 %}
+    <li><a href="{{ path('bill', {'year':year}) }}">{{ year }}</a></li>
+    {% endfor %}
+    <li class="divider"></li>
     <li><a href="{{ path('bill_toboost') }}">{{ 'list'|icon }} Liste des relances</a></li>
     <li><a href="{{ path('bill_printlist') }}">{{ 'print'|icon }} Imprimer les factures à faire</a></li>
 {% endblock sidebar %}
