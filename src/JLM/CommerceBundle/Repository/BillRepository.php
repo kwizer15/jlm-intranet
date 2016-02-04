@@ -106,7 +106,10 @@ class BillRepository extends SearchRepository implements PaginableInterface
 		);
 		
 		$qb = $this->createQueryBuilder('a')
-			->select('a')
+			->select('a,b,c')
+				->leftJoin('a.intervention','b')
+					->having('b INSTANCE OF work')
+				->leftJoin('a.lines','c')
 			->setFirstResult(($page - 1) * $resultsByPage)
 			->setMaxResults($resultsByPage);
 		if (key_exists('state', $filters) && $filters['state'] !== null)
