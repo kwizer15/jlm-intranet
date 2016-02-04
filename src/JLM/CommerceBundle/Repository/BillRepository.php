@@ -13,6 +13,8 @@ namespace JLM\CommerceBundle\Repository;
 
 use JLM\DefaultBundle\Entity\SearchRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
+use JLM\CoreBundle\Model\Repository\PaginableInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * BillRepository
@@ -22,7 +24,7 @@ use Doctrine\ORM\Query\ResultSetMapping;
  * 
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class BillRepository extends SearchRepository
+class BillRepository extends SearchRepository implements PaginableInterface
 {
 	
 	public function getTotal()
@@ -67,9 +69,9 @@ class BillRepository extends SearchRepository
 				$this->count[$result['state']] = $result['c'];
 			}
 		}
-		if ($state === null)
-			return $this->total;
-		return $this->count[$state];
+		
+		return ($state === null) ? $this->total : $this->count[$state];
+		
 	}
 	
 	public function getByState($state = null,$limit = 10, $offset = 0)
@@ -78,13 +80,58 @@ class BillRepository extends SearchRepository
 		if ($state !== null)
 		{
 			$qb->where('t.state = ?1')
-			->setParameter(1,$state)
+				->setParameter(1,$state)
 			;
 		}
 		$qb->orderBy('t.number','desc')
 		->setFirstResult($offset)
 		->setMaxResults($limit);
-		return $qb->getQuery()->getResult();
+		
+		$query = $qb->getQuery();
+		
+		return $query->getResult();
+	}
+	
+	public function getPaginable($page, $resultsByPage, array $filters = array())
+	{
+		$sorts = array(
+			'number' => 'a.number',
+//			'date' => 'a.creation',	
+		);
+		$states = array(
+			'in_seizure' => 0,
+			'sended' => 1,
+			'payed' => 2,
+			'canceled' => -1, 
+		);
+		
+		$qb = $this->createQueryBuilder('a')
+			->select('a')
+			->setFirstResult(($page - 1) * $resultsByPage)
+			->setMaxResults($resultsByPage);
+		if (key_exists('state', $filters) && $filters['state'] !== null)
+		{
+			$state = str_replace('*', '', $filters['state']);
+			if (key_exists($state, $states))
+			{
+				$qb->andWhere('a.state = :state');
+			   	$qb->setParameter('state', $states[$state]);
+			}
+		}
+		
+		if (key_exists('sort', $filters))
+		{
+			$sort = str_replace('!', '', $filters['sort']);
+			if (key_exists($sort, $sorts))
+			{
+				$order = (substr($filters['sort'], 0, 1) == '!') ? 'DESC' : 'ASC';
+				$qb->orderBy($sorts[$sort], $order);
+			}
+		}
+	
+		$query = $qb->getQuery();
+	
+		return new Paginator($query);
 	}
 	
 	public function getAll($limit = 10, $offset = 0)

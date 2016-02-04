@@ -20,6 +20,7 @@ use JLM\CommerceBundle\Builder\Email\BillBoostMailBuilder;
 use JLM\CoreBundle\Factory\MailFactory;
 use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
 use JLM\CommerceBundle\Builder\Email\BillBoostBusinessMailBuilder;
+use Symfony\Component\HttpFoundation\Request;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -28,26 +29,13 @@ class BillController extends ContainerAware
 	/**
 	 * List bills
 	 */
-	public function indexAction()
+	public function indexAction(Request $request)
 	{
 		$manager = $this->container->get('jlm_commerce.bill_manager');
 		$manager->secure('ROLE_OFFICE');
-		$request = $manager->getRequest();
-		$states = array(
-			'all' => 'All',
-			'in_seizure' => 'InSeizure',
-			'sended' => 'Sended',
-			'payed' => 'Payed',
-			'canceled' => 'Canceled'
-		);
-		$state = $request->get('state');
-		$state = (!array_key_exists($state, $states)) ? 'all' : $state;
-		$method = $states[$state];
-		$functionCount = 'getCount'.$method;
-		$functionDatas = 'get'.$method;
 		
 		return $manager->renderResponse('JLMCommerceBundle:Bill:index.html.twig',
-				$manager->pagination($functionCount, $functionDatas, 'bill', array('state' => $state))
+				$manager->paginator('JLMCommerceBundle:Bill', $request, array('sort' => '!number' ,'state' => null))
 		);
 	}
     
