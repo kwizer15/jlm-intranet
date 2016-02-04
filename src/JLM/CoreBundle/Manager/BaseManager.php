@@ -23,6 +23,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use JLM\CoreBundle\Model\Repository\PaginableInterface;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -273,5 +276,38 @@ class BaseManager extends ContainerAware implements ManagerInterface
 		}
 		 
 		return $this->renderResponse($template, array('results' => array(), 'query' => ''));
+	}
+	
+	public function paginator($entityClass, Request $request, array $defaultParams = array())
+	{
+		$repo = $this->getObjectManager()->getRepository($entityClass);
+		if (!$repo instanceof PaginableInterface)
+		{
+			throw new \Exception(get_class($repo).' doesn\'t implement JLM\CoreBundle\Model\Repository\PaginableInterface interface.');
+		}
+		$route_params = [];
+		$db_params = array_merge(array(
+				'page' => 1,
+				'resultsByPage' => 10,
+		), $defaultParams);
+		foreach ($db_params as $param => $defaultValue)
+		{
+			$db_params[$param] = $request->get($param, $defaultValue);
+			if ($db_params[$param] != $defaultValue)
+			{
+				$route_params[$param] = $db_params[$param];
+			}
+		}
+		
+		$entities = $repo->getPaginable($db_params['page'], $db_params['resultsByPage'], $db_params);
+		 
+		return array(
+				'entities' => $entities,
+				'pagination' => array(
+					'page' => $db_params['page'],
+					'route' => $request->attributes->get('_route'),
+					'pages_count' => ceil(count($entities) / $db_params['resultsByPage']),
+					'route_params' => $route_params,
+		));
 	}
 }

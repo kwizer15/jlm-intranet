@@ -20,35 +20,10 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-    	$defaultResultsByPage = 10;
+    	$manager = $this->container->get('jlm_core.mail_manager');
+    	$manager->secure('ROLE_OFFICE');
     	
-    	$page = $request->get('page',1);
-    	$resultsByPage = $request->get('resultsByPage', $defaultResultsByPage);
-    	$route_params = [];
-    	foreach (array('type', 'sort', 'state') as $param)
-    	{
-    		if ($value = $request->get($param, null))
-    		{
-    			$route_params[$param] = $value;
-    		}
-    	}
-    	$threads = $this->getDoctrine()->getManager()->getRepository('JLMFollowBundle:Thread')->getThreads($page, $resultsByPage, $route_params);
-
-    	if ($resultsByPage != $defaultResultsByPage)
-    	{
-    		$route_params['resultsByPage'] = $resultsByPage;
-    	}
-    	$pagination = array(
-            'page' => $page,
-            'route' => 'jlm_follow_default_index',
-            'pages_count' => ceil(count($threads) / $resultsByPage),
-            'route_params' => $route_params,
-        );
-   	
-        return array(
-        	'threads' => $threads,
-        	'pagination' => $pagination,
-        );
+    	return $manager->paginator('JLMFollowBundle:Thread', $request, array('type' => null, 'sort' => '!date', 'state' => null));
     }
     
     public function updateAction()

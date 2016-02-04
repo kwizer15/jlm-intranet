@@ -17,12 +17,13 @@ use JLM\DailyBundle\Entity\Work;
 use JLM\FollowBundle\Entity\Thread;
 use JLM\FollowBundle\Model\ThreadInterface;
 use JLM\OfficeBundle\Entity\Order;
+use JLM\CoreBundle\Model\Repository\PaginableInterface;
 
 /**
  * EquipmentRepository
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ThreadRepository extends EntityRepository
+class ThreadRepository extends EntityRepository implements PaginableInterface
 {
 	/**
 	 * 
@@ -31,36 +32,40 @@ class ThreadRepository extends EntityRepository
 	 * @param string $filter
 	 * @return \Doctrine\ORM\Tools\Pagination\Paginator
 	 */
-	public function getThreads($page, $resultsByPage, $filter = array())
+	public function getPaginable($page, $resultsByPage, array $filters = array())
 	{
 		$types = array('variant', 'intervention');
 		$states = array(0,1,2,3,4);
+		$sorts = array('date' => 'a.startDate');
 		
 		$qb = $this->createQueryBuilder('a')
 			->select('a,b')
 			->leftJoin('a.starter','b')
-			->orderBy('a.startDate','DESC')
 			->setFirstResult(($page - 1) * $resultsByPage)
 			->setMaxResults($resultsByPage)
 		;
 
-		if (key_exists('type', $filter) && in_array($filter['type'], $types))
+		if (key_exists('type', $filters) && in_array($filters['type'], $types) && $filters['type'] !== null)
 		{
 			$qb->andWhere('b INSTANCE OF :type')
-				->setParameter('type', $filter['type']);
+			   ->setParameter('type', $filters['type']);
 		}
 		
-		if (key_exists('state', $filter) && in_array($filter['state'], $states))
+		if (key_exists('state', $filters) && in_array($filters['state'], $states) && $filters['state'] !== null)
 		{
 			$qb->andWhere('a.state = :state')
-			->setParameter('state', $filter['state']);
+			   ->setParameter('state', $filters['state']);
 		}
 		
-		$filter['sort'] = isset($filter['sort']) ? $filter['sort'] : '!startDate';
-		$sort = str_replace('!', '', $filter['sort']);
-		$sort = in_array($sort, array('startDate')) ? $sort : 'startDate';
-		$order = (substr($filter['sort'], 0, 1) == '!') ? 'DESC' : 'ASC';
-		$qb->orderBy('a.'.$sort, $order);
+		if (key_exists('sort', $filters))
+		{
+			$sort = str_replace('!', '', $filters['sort']);
+			if (key_exists($sort, $sorts))
+			{
+				$order = (substr($filters['sort'], 0, 1) == '!') ? 'DESC' : 'ASC';
+				$qb->orderBy($sorts[$sort], $order);
+			}
+		}
 		
 		$query = $qb->getQuery();
 		

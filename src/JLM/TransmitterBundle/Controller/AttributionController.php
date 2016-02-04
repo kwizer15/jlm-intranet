@@ -27,39 +27,13 @@ class AttributionController extends Controller
      *
      * @Route("/", name="transmitter_attribution")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction(Request $request)
     {
-    	$route_params = [];
-    	$db_params = array(
-    			'page' => 1,
-    			'resultsByPage' => 10,
-    			'sort' => '!date',
-    	);
-    	foreach ($db_params as $param => $defaultValue)
-    	{
-    		$db_params[$param] = $request->get($param, $defaultValue);
-    		if ($db_params[$param] != $defaultValue)
-    		{
-    			$route_params[$param] = $db_params[$param];
-    		}
-    	}
-
-    	$em = $this->getDoctrine()->getManager();
-    	$entities = $em->getRepository('JLMTransmitterBundle:Attribution')->getAttributions($db_params);
+    	$manager = $this->container->get('jlm_core.mail_manager'); //@todo To change : rewrite services as yaml and include a manager service
+    	$manager->secure('ROLE_OFFICE');
     	
-    	$pagination = array(
-    			'page' => $db_params['page'],
-    			'route' => $request->attributes->get('_route'),
-    			'pages_count' => ceil(count($entities) / $db_params['resultsByPage']),
-    			'route_params' => $route_params,
-    	);
-        
-        return array(
-            'entities' => $entities,
-        	'pagination' => $pagination,
-        );
+    	return $manager->paginator('JLMTransmitterBundle:Attribution', $request, array('sort' => '!date'));
     }
 
     /**

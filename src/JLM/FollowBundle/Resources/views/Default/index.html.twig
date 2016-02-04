@@ -25,7 +25,7 @@
     </tr>
   </thead>
   <tbody>
-{% for thread in threads %}
+{% for thread in entities %}
     <tr class="
       {%- if thread.state == 0 -%}danger
       {%- elseif thread.state == 1 -%}warning
