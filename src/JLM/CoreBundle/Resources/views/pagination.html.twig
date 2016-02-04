@@ -6,7 +6,7 @@
 		{% if (p > pagination.page - 3 and p < pagination.page + 3) or p == 1 or p == pagination.pages_count or (p < 6 and pagination.page < 6) %}
 		<li{% if p == pagination.page %} class="active"{% endif %}><a href="{{ path(pagination.route,pagination.route_params|merge({ 'page' : p })) }}">{{ p }}</a></li>
 		{% set flag = true %}
-		{% elseif p % 10 == 0 %}
+		{% elseif (p % 10 == 0 and (p > pagination.page - 30 and p < pagination.page + 30)) or p % 100 == 0 %}
 		<li><a href="{{ path(pagination.route,pagination.route_params|merge({ 'page' : p })) }}">{{ p }}</a><li>
 		{% set flag = true %}
 		{% elseif flag %}
