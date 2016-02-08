@@ -20,4 +20,5 @@ final class JLMDailyEvents
 	const INTERVENTION_UNSCHEDULEWORK = 'jlm_daily.intervention_unschedulework';
 	const WORK_POSTPERSIST = 'jlm_daily.work_postpersist';
 	const WORK_POSTUPDATE = 'jlm_daily.work_postupdate';
+	const WORK_PREREMOVE = 'jlm_daily.work_preremove';
 }
