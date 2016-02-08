@@ -43,7 +43,7 @@ class WorkSubscriber implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			JLMDailyEvents::WORK_POSTPERSIST => 'updateThread',
+			JLMDailyEvents::WORK_PREREMOVE => 'removeThread',
 			JLMDailyEvents::WORK_POSTUPDATE => 'updateThread',
 		);
 	}
@@ -54,10 +54,41 @@ class WorkSubscriber implements EventSubscriberInterface
 	 */
 	public function updateThread(DoctrineEvent $event)
 	{
-		$entity = $event->getEntity();
-		$thread = $this->om->getRepository('JLMFollowBundle:Thread')->getByWork($entity);
-		$thread->getState();
-		$this->om->persist($thread);
-		$this->om->flush();
+		if ($thread = $this->__getThread($event))
+		{
+			$thread->getState();
+			$this->om->persist($thread);
+			$this->om->flush();
+		}
+	}
+	
+	/**
+	 * Update thread since work update
+	 * @param InterventionEvent $event
+	 */
+	public function removeThread(DoctrineEvent $event)
+	{
+		if ($thread = $this->__getThread($event))
+		{
+			$this->om->remove($thread->getStater());
+			$this->om->remove($thread);
+			$this->om->flush();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param DoctrineEvent $event
+	 * @return mixed|NULL
+	 */
+	private function __getThread(DoctrineEvent $event)
+	{
+		try {
+			$this->om->getRepository('JLMFollowBundle:Thread')->getByWork($event->getEntity());
+		} catch (NoResultException $e) {
+			return null;
+		} catch (NonUniqueResultException $e) {
+			return null;
+		}
 	}
 }
