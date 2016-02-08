@@ -47,6 +47,7 @@ class DoctrineSubscriber implements EventSubscriber
 	 */
 	public function dispatch($eventName, LifecycleEventArgs $args)
 	{
+		echo '#'.$this->getSymfonyEventName($args).'_'.$eventName.'#';
 		$this->dispatcher->dispatch($this->getSymfonyEventName($args).'_'.$eventName, new DoctrineEvent($args->getEntity(), $args->getEntityManager()));
 	}
 	
@@ -84,6 +85,7 @@ class DoctrineSubscriber implements EventSubscriber
     	$class = strtolower($class);
     	$class = str_replace('bundle\\entity\\', '.', $class);
     	$class = str_replace('\\', '_', $class);
+    	$class = str_replace('proxies___cg___', '', $class);
     
     	return $class;
     }
