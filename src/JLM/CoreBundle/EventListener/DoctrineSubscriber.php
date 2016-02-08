@@ -47,7 +47,8 @@ class DoctrineSubscriber implements EventSubscriber
 	 */
 	public function dispatch($eventName, LifecycleEventArgs $args)
 	{
-		echo '#'.$this->getSymfonyEventName($args).'_'.$eventName.'#';
+		// Debuging line :
+		//echo '#'.$this->getSymfonyEventName($args).'_'.$eventName.'#';
 		$this->dispatcher->dispatch($this->getSymfonyEventName($args).'_'.$eventName, new DoctrineEvent($args->getEntity(), $args->getEntityManager()));
 	}
 	
