@@ -61,7 +61,7 @@ class Thread implements ThreadInterface
 	/**
 	 * @var int
 	 */
-	private $state;
+	private $state = 0;
 	
 	public function __construct(StarterInterface $starter)
 	{
