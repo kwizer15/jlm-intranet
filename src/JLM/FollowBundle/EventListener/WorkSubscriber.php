@@ -16,6 +16,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use JLM\DailyBundle\JLMDailyEvents;
 use JLM\CoreBundle\Event\DoctrineEvent;
 use JLM\OfficeBundle\JLMOfficeEvents;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\NonUniqueResultException;
 
 
 /**
@@ -70,7 +72,8 @@ class WorkSubscriber implements EventSubscriberInterface
 	{
 		if ($thread = $this->__getThread($event))
 		{
-			$this->om->remove($thread->getStater());
+			echo 'Finded'; exit;
+			//$this->om->remove($thread->getStater());
 			$this->om->remove($thread);
 			$this->om->flush();
 		}
