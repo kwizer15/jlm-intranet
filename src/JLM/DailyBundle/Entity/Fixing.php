@@ -217,7 +217,7 @@ class Fixing extends Intervention implements FixingInterface
 		$out = 'Nous avons constaté ';
 		$nothing = $out.'après plusieurs essais que l\'installation était fonctionnelle.';
 		$part = ($this->getPartFamily() === null) ? 'aucun' : strtolower($this->getPartFamily()->getName());
-		if ($part == 'aucun')
+		if (substr($part,0,5) == 'aucun')
 		{
 			return $nothing;
 		}
@@ -226,7 +226,7 @@ class Fixing extends Intervention implements FixingInterface
 		if ($due !== null)
 		{
 			$cause = ($due->getId() != 4) ? 'e '.strtolower($due->getName()) : ' dysfonctionnement';
-			$out .= $cause.' sur les élements d';
+			$out .= $cause.' sur les éléments d';
 			$suite = (in_array(substr($part,0,1),array('a','e','i','o','u'))) ? '\'' : 'e ';
 				
 			return $out.$suite.$part.'.';
@@ -246,11 +246,11 @@ class Fixing extends Intervention implements FixingInterface
 		$out = 'Nous avons procédé ';
 		switch ($this->getDone()->getId())
 		{
-			case 1 : return $out . 'au remplacement des pièces nécessaires';
-			case 2 : return $out . 'à la réparation des pièces nécessaires';
-			case 3 : return $out . 'à la mise à l\'arrêt et à la sécurisation de l\'installation';
-			case 4 : return $out . 'à de multiples essais';
-			case 6 : return $out . 'à la dépose des pièces concernées pour analyse en atelier';
+			case 1 : return $out . 'au remplacement des pièces nécessaires.';
+			case 2 : return $out . 'à la réparation des pièces nécessaires.';
+			case 3 : return $out . 'à la mise à l\'arrêt et à la sécurisation de l\'installation.';
+			case 4 : return $out . 'à de multiples essais.';
+			case 6 : return $out . 'à la dépose des pièces concernées pour analyse en atelier.';
 			default : return null;
 		}
 	}
@@ -258,8 +258,8 @@ class Fixing extends Intervention implements FixingInterface
 	public function getCustomerState()
 	{
 		return $this->getDone()->getId() == 3
-			? 'Suite à l\'intervention, l\'installation est à l\'arrêt'
-			: 'Suite à l\'intervention, l\'installation est en fonction';
+			? 'Suite à l\'intervention, l\'installation est à l\'arrêt.'
+			: 'Suite à l\'intervention, l\'installation est en fonction.';
 	}
 	
 	public function getCustomerProcess()

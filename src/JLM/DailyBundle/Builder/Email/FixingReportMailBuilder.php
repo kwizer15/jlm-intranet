@@ -31,10 +31,10 @@ class FixingReportMailBuilder extends FixingMailBuilder
 		.$fixing->getInstallationCode().chr(10)
 		.$fixing->getPlace().chr(10)
 		.chr(10)
-		.$fixing->getCustomerReport().chr(10)
+		.trim($fixing->getCustomerReport().chr(10)
 		.$fixing->getCustomerActions().chr(10)
 		.$fixing->getCustomerState().chr(10)
-		.$fixing->getCustomerProcess().chr(10)
+		.$fixing->getCustomerProcess().chr(10))
 		.$this->_getSignature()
 		);
 	}
