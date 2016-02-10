@@ -249,7 +249,8 @@ class Fixing extends Intervention implements FixingInterface
 			case 1 : return $out . 'au remplacement des pièces nécessaires.';
 			case 2 : return $out . 'à la réparation des pièces nécessaires.';
 			case 3 : return $out . 'à la mise à l\'arrêt et à la sécurisation de l\'installation.';
-			case 4 : return $out . 'à de multiples essais.';
+			case 4 :
+			case 5 : return $out . 'à de multiples réglages et essais sur l\'installation. Merci de nous tenir informé si le problème persiste.';
 			case 6 : return $out . 'à la dépose des pièces concernées pour analyse en atelier.';
 			default : return null;
 		}
