@@ -37,6 +37,7 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$entities = $em->getRepository('JLMDailyBundle:Intervention')
 					   ->getPrioritary();
+		
 		return array(
 				'entities'      => $entities,
 		);
@@ -53,6 +54,7 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
+		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
@@ -67,6 +69,7 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
+		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
@@ -98,6 +101,7 @@ class InterventionController extends Controller
 		$entity->setMustBeBilled(null);
 		$em->persist($entity);
 		$em->flush();
+		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
@@ -114,6 +118,7 @@ class InterventionController extends Controller
 		$entity->setAskQuote($ask);
 		$em->persist($entity);
 		$em->flush();
+		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
@@ -132,6 +137,7 @@ class InterventionController extends Controller
 			$em->persist($entity);
 			$em->flush();
 		}
+		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
@@ -145,6 +151,7 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
+		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
@@ -158,6 +165,7 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
+		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
@@ -198,6 +206,7 @@ class InterventionController extends Controller
 			$em->persist($entity);
 			$em->flush();
 		}
+		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
@@ -211,6 +220,7 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
+		
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
@@ -231,7 +241,6 @@ class InterventionController extends Controller
 		}
 
 		return $this->redirect($request->headers->get('referer'));
-		//return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
 	
 	
@@ -309,6 +318,7 @@ class InterventionController extends Controller
 			\DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000'),
 			\DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000'),
 		);
+		
 		return array(
 				'standby' => $em->getRepository('JLMDailyBundle:Standby')->getByDate($date1),
 				'd1' => $d1,
@@ -342,8 +352,9 @@ class InterventionController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		foreach ($entity->getShiftTechnicians() as $tech)
+		{
 			$em->remove($tech);
-			
+		}	
 		$em->remove($entity);
 		$em->flush();
 	
@@ -357,9 +368,12 @@ class InterventionController extends Controller
 	 */
 	public function redirectAction(Intervention $entity, $act)
 	{
-		if (in_array($act,array('show','edit','close')))
-			return $this->redirect($this->generateUrl($entity->getType() . '_' . $act,array('id'=>$entity->getId())));
-		throw $this->createNotFoundException('Page inexistante');
+		if (!in_array($act,array('show','edit','close')))
+		{
+			throw $this->createNotFoundException('Page inexistante');
+		}
+		
+		return $this->redirect($this->generateUrl($entity->getType() . '_' . $act,array('id'=>$entity->getId())));
 	}
 	
 	/**
@@ -432,7 +446,9 @@ class InterventionController extends Controller
 		foreach ($door->getInterventions() as $interv)
 		{
 			foreach($interv->getShiftTechnicians() as $shift)
+			{
 				$shifts[(string)$shift->getBegin()->getTimestamp()] = $shift;
+			}
 		}
 		krsort($shifts);
 		
@@ -461,7 +477,9 @@ class InterventionController extends Controller
 		foreach ($door->getInterventions() as $interv)
 		{
 			foreach($interv->getShiftTechnicians() as $shift)
+			{
 				$shifts[(string)$shift->getBegin()->getTimestamp()] = $shift;
+			}
 		}
 		krsort($shifts);
 		$response = new Response();
@@ -557,7 +575,7 @@ class InterventionController extends Controller
 		return $response;
 	}
 	
-	public function publishAction(Intervention $entity)
+	public function publishAction(Request $request, Intervention $entity)
 	{
 		$entity->setPublished(true);
 		$em = $this->getDoctrine()->getManager();
@@ -567,7 +585,7 @@ class InterventionController extends Controller
 		return $this->redirect($request->headers->get('referer'));
 	}
 	
-	public function unpublishAction(Intervention $entity)
+	public function unpublishAction(Request $request, Intervention $entity)
 	{
 		$entity->setPublished(false);
 		$em = $this->getDoctrine()->getManager();

@@ -70,10 +70,13 @@ class WorkSubscriber implements EventSubscriberInterface
 	 */
 	public function removeThread(DoctrineEvent $event)
 	{
-		if ($thread = $this->__getThread($event))
+		$thread = $this->__getThread($event);
+		if ($thread)
 		{
-			echo 'Finded'; exit;
-			//$this->om->remove($thread->getStater());
+			if ($thread->getStarter() !== null)
+			{
+				$this->om->remove($thread->getStarter());
+			}
 			$this->om->remove($thread);
 			$this->om->flush();
 		}
@@ -87,7 +90,7 @@ class WorkSubscriber implements EventSubscriberInterface
 	private function __getThread(DoctrineEvent $event)
 	{
 		try {
-			$this->om->getRepository('JLMFollowBundle:Thread')->getByWork($event->getEntity());
+			return $this->om->getRepository('JLMFollowBundle:Thread')->getByWork($event->getEntity());
 		} catch (NoResultException $e) {
 			return null;
 		} catch (NonUniqueResultException $e) {

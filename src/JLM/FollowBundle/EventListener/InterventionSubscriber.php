@@ -45,8 +45,8 @@ class InterventionSubscriber implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			JLMDailyEvents::INTERVENTION_SCHEDULEWORK => 'createThread',
-			JLMDailyEvents::INTERVENTION_UNSCHEDULEWORK => 'deleteThread',
+//			JLMDailyEvents::INTERVENTION_SCHEDULEWORK => 'createThread',
+//			JLMDailyEvents::INTERVENTION_UNSCHEDULEWORK => 'deleteThread',
 		);
 	}
 	

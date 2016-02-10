@@ -82,9 +82,12 @@ class InterventionSubscriber implements EventSubscriberInterface
 		$interv = $event->getIntervention();
 		$work = $interv->getWork();
 		$interv->setWork();
-		$this->om->remove($work);
-		$this->om->persist($interv);
-		$this->om->flush();
+		if ($work !== null)
+		{
+			$this->om->remove($work);
+			$this->om->persist($interv);
+			$this->om->flush();
+		}
 	}
 	
 	/**
