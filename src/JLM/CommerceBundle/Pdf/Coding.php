@@ -110,6 +110,7 @@ class Coding extends \fpdf\FPDF
 			}
 		}
 		$total = array_fill(0, 13, '');
+		$totalpurchaseFourniture = $totalpurchase;
 		$total[1] = 'total';
 		$total[8] = number_format($totalpurchase,2,',',' ').' '.chr(128);
 		$total[12] = number_format($totalsell,2,',',' ').' '.chr(128);
@@ -154,6 +155,7 @@ class Coding extends \fpdf\FPDF
 			$this->cell(20, 6, $c[11], 1, 0, $col, 1);
 			$this->cell(20, 6, $c[12], 1, 1, $col, 1);
 		}
-
+		$this->ln(10);
+		$this->cell(0,6,'Taux de marque : '.number_format($totalsell/$totalpurchaseFourniture,2,',',' '));
 	}
 }
