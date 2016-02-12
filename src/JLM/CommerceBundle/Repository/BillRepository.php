@@ -341,6 +341,15 @@ class BillRepository extends SearchRepository implements PaginableInterface
 	
 	public function getTurnover($hash, \DateTime $begin = null, \DateTime $end = null, array $options = array())
 	{
-		$qb = $this->createQueryBuilder('a');
+		$qb = $this->createQueryBuilder('a')
+			->select('YEAR(a.creation) as year, MONTH(a.creation) as month, SUM(a.amount) as amount')
+			->where('a.fee IS NULL')
+			->groupBy('year, month')
+			->addOrderBy('year','ASC')
+			->addOrderBy('month','ASC');
+		
+		$query = $qb->getQuery();
+		
+		return $query->getArrayResult();
 	}
 }

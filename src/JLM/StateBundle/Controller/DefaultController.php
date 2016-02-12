@@ -221,20 +221,17 @@ class DefaultController extends Controller
      */
     public function daybillAction()
     {
-    	$em = $this->getDoctrine()->getManager();
-    	$stats = $em->getRepository('JLMCommerceBundle:Bill')->getDayBill();
-    	$datas = array();
-    	foreach ($stats as $stat)
+    	$datas = $this->getDoctrine()->getManager()->getRepository('JLMCommerceBundle:Bill')->getTurnover('month');
+    	$stats = [];
+    	foreach ($datas as $data)
     	{
-    		$key = $stat->getCreation()->format('d/m/Y');
-    		if (!isset($datas[$key]))
+    		if (!isset($stats[$data['year']]))
     		{
-    			$datas[$key] = array('bills' => array(), 'amount' => 0);
+    			$stats[$data['year']] = array_fill(1,12,0);
     		}
-    		$datas[$key]['bills'][] = $stat;
-    		$datas[$key]['amount'] += $stat->getTotalPrice();
+    		$stats[$data['year']][$data['month']] = $data['amount'];
     	}
-    	return array('datas'=>$datas);
+    	return array('stats' => $stats);
     }
     
     /**
