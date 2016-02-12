@@ -126,5 +126,9 @@ jlm_commerce_bill_boostemail:
         _controller: JLMCommerceBundle:Bill:boostemail
     methods: [GET,POST]
 
-    
+jlm_commerce_bill_update:
+    path: /update
+    defaults:
+        _controller: JLMCommerceBundle:Bill:update
+    methods: [GET]
     

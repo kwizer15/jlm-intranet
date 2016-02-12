@@ -156,6 +156,12 @@ class Bill extends CommercialPart implements BillInterface
 	 */
 	private $siteObject;
 	
+	/**
+	 * Montant de la facture (HT)
+	 * @var float $amount
+	 */
+	private $amount = 0;
+	
     /**
      * Get id
      *
@@ -427,6 +433,7 @@ class Bill extends CommercialPart implements BillInterface
     {
         return $this->feesFollower;
     }
+    
     /**
      * Constructor
      */
@@ -492,7 +499,8 @@ class Bill extends CommercialPart implements BillInterface
     	$line->setPosition(sizeof($this->lines));
     	$line->setBill($this);
         $this->lines[] = $line;
-    
+    	$this->amount += $line->getPrice() * (1-$this->getDiscount());
+        
         return $this;
     }
 
@@ -528,7 +536,13 @@ class Bill extends CommercialPart implements BillInterface
     public function setDiscount($discount)
     {
     	$this->discount = $discount;
-    
+    	$this->amount = 0;
+    	foreach ($this->getLines() as $line)
+    	{
+    	    $this->amount += $line->getPrice();
+    	}
+    	$this->amount *= (1-$discount); 
+    	
     	return $this;
     }
     
@@ -554,8 +568,18 @@ class Bill extends CommercialPart implements BillInterface
     	    $total += $line->getPrice();
     	}
     	$total *= (1-$this->getDiscount());
+    	$this->amount = $total;
     	
     	return $total;
+    }
+    
+    /**
+     * Get Total HT
+     * @return float
+     */
+    public function getAmount()
+    {
+    	return $this->amount;
     }
     
     /**

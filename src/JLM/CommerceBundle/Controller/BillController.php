@@ -338,4 +338,19 @@ class BillController extends ContainerAware
     	 
     	return $manager->renderResponse('JLMCommerceBundle:Bill:search.html.twig', $params);
     }
+    
+    public function updateAction()
+    {
+    	$manager = $this->container->get('jlm_commerce.bill_manager');
+    	$om = $manager->getObjectManager();
+    	$bills = $manager->getRepository()->findAll();
+    	foreach ($bills as $bill)
+    	{
+    		$bill->getTotalPrice();
+    		$om->persist($bill);
+    	}
+    	$om->flush();
+    	
+    	return $manager->redirectReferer();
+    }
 }

@@ -338,4 +338,9 @@ class BillRepository extends SearchRepository implements PaginableInterface
 		
 		return $qb->getQuery()->getResult();
 	}
+	
+	public function getTurnover($hash, \DateTime $begin = null, \DateTime $end = null, array $options = array())
+	{
+		$qb = $this->createQueryBuilder('a');
+	}
 }

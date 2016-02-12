@@ -45,6 +45,9 @@ JLM\CommerceBundle\Entity\Bill:
     secondBoostComment:
       column: second_boost_comment
       nullable: true
+    amount:
+      type: decimal
+      scale: 2
   manyToOne:
     fee:
       targetEntity: JLM\FeeBundle\Entity\Fee

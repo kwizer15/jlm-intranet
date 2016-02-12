@@ -12,6 +12,7 @@
 namespace JLM\CommerceBundle\Tests\Entity;
 
 use JLM\CommerceBundle\Entity\Bill;
+use JLM\CommerceBundle\Entity\BillLine;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -37,6 +38,7 @@ class BillTest extends \PHPUnit_Framework_TestCase
 	{
 		 $this->assertInstanceOf('JLM\CommerceBundle\Model\BillInterface', $this->entity);
 		 $this->assertNull($this->entity->getId());
+		 $this->assertEquals(0, $this->entity->getAmount());
 	}
 	
 	public function getAttributes()
@@ -76,5 +78,26 @@ class BillTest extends \PHPUnit_Framework_TestCase
 	    $setter = 'set'.$attribute;
 	    $this->assertSame($this->entity, $this->entity->$setter($value));
 	    $this->assertSame($value, $this->entity->$getter());
+	}
+	
+	public function testAddLine()
+	{
+		$this->entity->addLine($this->_getLine(100));
+		$this->assertEquals(100, $this->entity->getAmount());
+		
+		$this->entity->setDiscount(0.2);
+		$this->assertEquals(80, $this->entity->getAmount());
+		
+		$this->entity->addLine($this->_getLine(50,2));
+		$this->assertEquals(160, $this->entity->getAmount());
+	}
+	
+	protected function _getLine($amount, $qty = 1)
+	{
+		$line = new BillLine();
+		$line->setUnitPrice($amount);
+		$line->setQuantity($qty);
+		
+		return $line;
 	}
 }
