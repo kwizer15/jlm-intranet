@@ -40,10 +40,7 @@ class DefaultController extends Controller
     	$numbers = $times = array();
     	for ($i = 1; $i <= 12; $i++)
     	{
-    	    while (strlen($i) < 2)
-    	    {
-    	        $i = '0'.$i;
-    	    }
+    		$i = str_pad($i, 2, '0', STR_PAD_LEFT);
     	    $d = new \DateTime($year.'-'.$i.'-01 00:00:00');
     	    $numbers[$d->format('F')] = $times[$d->format('F')] = array('total' => $base);
     	}
