@@ -51,7 +51,7 @@ class Coding extends \fpdf\FPDF
 		$content[1][1] = $this->entity->getQuote()->getCreation()->format('d/m/Y');
 		$content[2] = array('Q','fourniture','PA','taux','remise','PU','frais','port','PAHT','coef','marge','PU HT','PVHT');
 
-		$totalpurchase = 0;
+		$totalpurchase = $totalpurchaseFourniture = 0;
 		$totalsell = 0;
 		foreach ($this->entity->getLines() as $line)
 		{
@@ -76,6 +76,7 @@ class Coding extends \fpdf\FPDF
 				);
 				$totalpurchase += $line->getQuantity()*$line->getPurchasePrice()*(1-$line->getDiscountSupplier())*($line->getExpenseRatio()+1)+$line->getShipping();
 				$totalsell += $line->getQuantity()*$line->getUnitPrice();
+				$totalpurchaseFourniture += $line->getQuantity()*$line->getPurchasePrice()*(1-$line->getDiscountSupplier());
 				$fill[] = array(255,255,255);
 			}
 		}
@@ -110,7 +111,6 @@ class Coding extends \fpdf\FPDF
 			}
 		}
 		$total = array_fill(0, 13, '');
-		$totalpurchaseFourniture = $totalpurchase;
 		$total[1] = 'total';
 		$total[8] = number_format($totalpurchase,2,',',' ').' '.chr(128);
 		$total[12] = number_format($totalsell,2,',',' ').' '.chr(128);
