@@ -231,6 +231,7 @@ class DefaultController extends Controller
     		}
     		$stats[$data['year']][$data['month']] = $data['amount'];
     	}
+    	
     	return array('stats' => $stats);
     }
     
@@ -247,7 +248,7 @@ class DefaultController extends Controller
 		return $manager->renderResponse('JLMStateBundle:Default:lastbill.html.twig',
 				array('entities' => $entities,
 					  'ca' => array_reduce($entities, function($carry, $item) { return $carry + $item->getTotalPrice(); }, 0),
-					  'title' => 'Factures en cours',
+					  'title' => 'Factures en cours (moins de 45 jours)',
 					)
 				);
     }

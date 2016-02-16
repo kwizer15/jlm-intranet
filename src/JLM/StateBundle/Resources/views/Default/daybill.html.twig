@@ -1,7 +1,7 @@
 {% extends "JLMStateBundle::layout.html.twig" %}
 
 {% block content %}
-<h1>Stats Facturation</h1>
+<h1>Stats chiffre d'affaire hors redevance</h1>
 <div id="graphCA"></div>
 {% endblock %}
 
@@ -35,11 +35,11 @@ $(function () {
         yAxis: {
             min: 0,
             title: {
-                text: 'Chiffre d\'affaire'
+                text: 'Chiffre d\'affaire hors redevances'
             }
         },
 		title : {
-			text : 'Chiffre d\'affaire au mois'
+			text : 'Chiffre d\'affaire au mois hors redevances'
 		},
         tooltip: {
             shared: true,
