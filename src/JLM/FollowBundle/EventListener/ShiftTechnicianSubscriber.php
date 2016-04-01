@@ -16,12 +16,14 @@ use Doctrine\Common\Persistence\ObjectManager;
 use JLM\DailyBundle\JLMDailyEvents;
 use JLM\CoreBundle\Event\DoctrineEvent;
 use JLM\OfficeBundle\JLMOfficeEvents;
-use JLM\FollowBundle\Factory\ThreadFactory;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\NonUniqueResultException;
+
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class OrderSubscriber implements EventSubscriberInterface
+class ShiftTechnicianSubscriber implements EventSubscriberInterface
 {	
 	/**
 	 * @var ObjectManager
@@ -43,35 +45,38 @@ class OrderSubscriber implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			// JLMOfficeEvents::ORDER_POSTPERSIST => 'createThread',
-			JLMOfficeEvents::ORDER_POSTUPDATE => 'updateThread',
+			JLMDailyEvents::SHIFTTECHNICIAN_POSTPERSIST => 'updateThread',
+			JLMDailyEvents::SHIFTTECHNICIAN_POSTREMOVE => 'updateThread',
 		);
 	}
 	
 	/**
-	 * Update thread since order update
-	 * @param InterventionEvent $event
-	 */
-	public function createThread(DoctrineEvent $event)
-	{
-		$entity = $event->getEntity();
-		$thread = ThreadFactory::create($entity->getWork());
-		$thread->getState();
-		$this->om->persist($thread);
-		$this->om->flush();
-	}
-	
-	/**
-	 * Update thread since order update
+	 * Update thread since work update
 	 * @param InterventionEvent $event
 	 */
 	public function updateThread(DoctrineEvent $event)
 	{
-		$entity = $event->getEntity();
-		$thread = $this->om->getRepository('JLMFollowBundle:Thread')->getByOrder($entity);
-		var_dump($thread->getOrder()->getState());
-		var_dump($thread->getState());// exit;
-		$this->om->persist($thread);
-		$this->om->flush();
+		if ($thread = $this->__getThread($event))
+		{
+			$thread->getState();
+			$this->om->persist($thread);
+			$this->om->flush();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param DoctrineEvent $event
+	 * @return mixed|NULL
+	 */
+	private function __getThread(DoctrineEvent $event)
+	{
+		try {
+			return $this->om->getRepository('JLMFollowBundle:Thread')->getByShiftTechnician($event->getEntity());
+		} catch (NoResultException $e) {
+			return null;
+		} catch (NonUniqueResultException $e) {
+			return null;
+		}
 	}
 }

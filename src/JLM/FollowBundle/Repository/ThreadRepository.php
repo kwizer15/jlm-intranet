@@ -18,6 +18,7 @@ use JLM\FollowBundle\Entity\Thread;
 use JLM\FollowBundle\Model\ThreadInterface;
 use JLM\OfficeBundle\Entity\Order;
 use JLM\CoreBundle\Model\Repository\PaginableInterface;
+use JLM\DailyBundle\Entity\ShiftTechnician;
 
 /**
  * EquipmentRepository
@@ -99,10 +100,30 @@ class ThreadRepository extends EntityRepository implements PaginableInterface
 	{
 		$qb = $this->createQueryBuilder('a')
 			->select('a')
-			->letfJoin('a.starter','b')
+			->leftJoin('a.starter','b')
 			->leftJoin('b.work','c')
 			->where('c.order = ?1')
 			->setParameter(1, $order)
+		;
+		$query = $qb->getQuery();
+	
+		return $query->getSingleResult();
+	}
+	
+	/**
+	 * Get Thread from ShiftTechnician linked
+	 * @param ShiftTechnician $st
+	 * @return Thread
+	 */
+	public function getByShiftTechnician(ShiftTechnician $st)
+	{
+		$qb = $this->createQueryBuilder('a')
+		->select('a')
+		->leftJoin('a.starter','b')
+		->leftJoin('b.work','c')
+		->leftJoin('c.shiftTechnicians','d')
+		->where('d = ?1')
+		->setParameter(1, $st)
 		;
 		$query = $qb->getQuery();
 	

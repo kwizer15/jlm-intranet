@@ -20,7 +20,7 @@ use JLM\CoreBundle\Event\FormPopulatingEvent;
 use JLM\CoreBundle\Event\DoctrineEvent;
 use JLM\CommerceBundle\Event\QuoteVariantEvent;
 use JLM\FollowBundle\Entity\Thread;
-use JLM\FollowBundle\Entity\StarterQuote;
+use JLM\FollowBundle\Factory\ThreadFactory;
 use JLM\DailyBundle\Entity\Work;
 use JLM\OfficeBundle\Entity\Order;
 
@@ -58,9 +58,7 @@ class QuoteVariantSubscriber implements EventSubscriberInterface
 		$entity = $event->getQuoteVariant();
 		if ($entity->getQuote()->getDoor() !== null)
 		{
-			$starter = new StarterQuote($entity);
-			$this->om->persist($starter);
-			$thread = new Thread($starter);
+			$thread = ThreadFactory::create($entity);
 			$this->om->persist($thread);
 			$this->om->flush();
 		}

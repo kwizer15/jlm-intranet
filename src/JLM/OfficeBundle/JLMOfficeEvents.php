@@ -16,6 +16,6 @@ namespace JLM\OfficeBundle;
  */
 final class JLMOfficeEvents
 {
-	const ORDER_POSTPERSIST = 'jlm_commerce.order_postpersist';
-	const ORDER_POSTUPDATE = 'jlm_commerce.order_postupdate';
+	const ORDER_POSTPERSIST = 'jlm_office.order_postpersist';
+	const ORDER_POSTUPDATE = 'jlm_office.order_postupdate';
 }

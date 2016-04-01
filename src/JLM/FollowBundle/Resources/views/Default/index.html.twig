@@ -2,13 +2,13 @@
 
 {% block content %}
 <h1>Suivi de commandes</h1>
-<a class="btn btn-primary" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'type' : 'variant' })) }}">Devis</a>
-<a class="btn btn-primary" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'type' : 'intervention' })) }}">Interventions</a>
-<a class="btn btn-default" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'state' : 0 })) }}">Non traités</a>
-<a class="btn btn-default" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'state' : 1 })) }}">Matériel prêt</a>
-<a class="btn btn-default" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'state' : 2 })) }}">Travaux commencés</a>
-<a class="btn btn-default" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'state' : 3 })) }}">Terminés</a>
-<a class="btn btn-default" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'state' : 3 })) }}">Cloturé</a>
+<a class="btn btn-primary" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'page':1, 'type' : 'variant' })) }}">Devis</a>
+<a class="btn btn-primary" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'page':1, 'type' : 'intervention' })) }}">Interventions</a>
+<a class="btn btn-default" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'page':1, 'state' : 0 })) }}">Non traités</a>
+<a class="btn btn-default" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'page':1, 'state' : 1 })) }}">Matériel prêt</a>
+<a class="btn btn-default" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'page':1, 'state' : 2 })) }}">Travaux commencés</a>
+<a class="btn btn-default" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'page':1, 'state' : 3 })) }}">Terminés</a>
+<a class="btn btn-default" href="{{ path('jlm_follow_default_index',pagination.route_params|merge({ 'page':1, 'state' : 3 })) }}">Cloturé</a>
 <table class="table">
   <thead>
     <tr>
@@ -36,11 +36,11 @@
     ">
       <td>{{ thread.startDate|date('d/m/Y') }}</td>
       <td>{% if thread.starter.business %}{{ thread.starter.business.manager|nl2br }}{% endif %}</td>
-      <td>
+      <td>{% if thread.starter.business %}
         {%- if thread.starter.business.stopped -%}
         <span class="label label-important">Mise à l'arrêt</span><br>
         {%- endif -%}
-        {{ thread.starter.business|nl2br }}
+        {{ thread.starter.business|nl2br }}{% endif %}
       </td>
       <td>
       	{%- if thread.starter.type == 'quote' -%}

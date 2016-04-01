@@ -22,3 +22,9 @@ services:
     arguments: ["@doctrine.orm.entity_manager"]
     tags:
       - { name: kernel.event_subscriber }
+      
+  jlm_follow.shifttechnician_subscriber:
+    class: JLM\FollowBundle\EventListener\ShiftTechnicianSubscriber
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: kernel.event_subscriber }

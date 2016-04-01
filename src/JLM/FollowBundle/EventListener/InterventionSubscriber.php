@@ -19,6 +19,8 @@ use JLM\DailyBundle\Event\InterventionEvent;
 use JLM\DailyBundle\Factory\WorkFactory;
 use JLM\FollowBundle\Entity\StarterIntervention;
 use JLM\FollowBundle\Entity\Thread;
+use JLM\FollowBundle\Factory\ThreadFactory;
+use JLM\DailyBundle\Entity\Intervention;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -45,8 +47,8 @@ class InterventionSubscriber implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-//			JLMDailyEvents::INTERVENTION_SCHEDULEWORK => 'createThread',
-//			JLMDailyEvents::INTERVENTION_UNSCHEDULEWORK => 'deleteThread',
+			JLMDailyEvents::INTERVENTION_SCHEDULEWORK => 'createThread',
+			JLMDailyEvents::INTERVENTION_UNSCHEDULEWORK => 'deleteThread',
 		);
 	}
 	
@@ -57,9 +59,7 @@ class InterventionSubscriber implements EventSubscriberInterface
 	public function createThread(InterventionEvent $event)
 	{
 		$entity = $event->getIntervention();
-		$starter = new StarterIntervention($entity);
-		$this->om->persist($starter);
-		$thread = new Thread($starter);
+		$thread = ThreadFactory::create($entity);
 		$this->om->persist($thread);
 		$this->om->flush();
 	}
@@ -71,10 +71,11 @@ class InterventionSubscriber implements EventSubscriberInterface
 	public function deleteThread(InterventionEvent $event)
 	{
 		$entity = $event->getIntervention();
-		$starter = $this->om->getRepository('JLMFollowBundle:StarterIntervention')->findOneBy(array('intervention'=>$entity));
-		$thread = $this->om->getRepository('JLMFollowBundle:Thread')->findOneBy(array('starter'=>$starter));
-		$this->om->remove($thread);
-		$this->om->remove($starter);
-		$this->om->flush();
+		try {
+			$starter= $this->om->getRepository('JLMFollowBundle:StarterIntervention')->findOneBy(array('intervention' => $entity));
+			$thread = $this->om->getRepository('JLMFollowBundle:Thread')->findOneBy(array('starter' => $starter));
+			$this->om->remove($thread);
+			$this->om->flush();
+		} catch (\Exception $e) {}
 	}
 }
