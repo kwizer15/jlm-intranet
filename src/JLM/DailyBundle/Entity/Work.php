@@ -249,7 +249,7 @@ class Work extends Intervention implements WorkInterface
     		{
     			$out .= 'compris dans le contrat d\'entretien ';
     		}
-    		$out .= 'selon intervention du '.$this->getIntervention()->getLastDate();
+    		$out .= 'selon intervention du '.$this->getIntervention()->getLastDate()->format('d/m/Y');
     	}
     
     	return $out;
