@@ -122,8 +122,8 @@ class ThreadRepository extends EntityRepository implements PaginableInterface
 		->leftJoin('a.starter','b')
 		->leftJoin('b.work','c')
 		->leftJoin('c.shiftTechnicians','d')
-		->where('d = ?1')
-		->setParameter(1, $st)
+		->where('d.id = ?1')
+		->setParameter(1, $st->getId())
 		;
 		$query = $qb->getQuery();
 	
