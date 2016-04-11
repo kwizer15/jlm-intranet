@@ -16,6 +16,7 @@ namespace JLM\CommerceBundle\Pdf;
  */
 class Bill extends CommercialPart
 { 
+	private $st = array('price'=> 0.0,'ati'=>0.0);
 	
     protected function getColsize()
     {
@@ -110,14 +111,38 @@ class Bill extends CommercialPart
 	
 	public function _line($line)
 	{
-		
-		$this->cell($this->colsize[0],8,$line->getDesignation(),'RL',0);
-		$this->cell($this->colsize[1],8,$line->getQuantity(),'RL',0,'R');
-		$this->cell($this->colsize[2],8,number_format($line->getUnitPrice()*(1-$line->getDiscount()),2,',',' ').' €','RL',0,'R');
-		$this->cell($this->colsize[3],8,number_format($line->getPrice(),2,',',' ').' €','RL',0,'R');
-		$this->cell($this->colsize[4],8,number_format($line->getVat()*100,1,',',' ').' %','RL',1,'R');
-//		$this->cell(22,8,number_format($line->getPriceAti(),2,',',' ').' €','RL',1,'R');
-		
+		if ($line->getReference() == 'ST')
+		{
+			$this->setFont('Arial','BI',10);
+			$this->cell($this->colsize[0],8,'Sous-total '.$line->getDesignation(),'RL',0,'R');
+			$this->cell($this->colsize[1],8,'','RL',0,'R');
+			$this->cell($this->colsize[2],8,'','RL',0,'R');
+			$this->cell($this->colsize[3],8,number_format($this->st['price'],2,',',' ').' €','RL',0,'R');
+			$this->cell($this->colsize[4],8,'','RL',0,'R');
+			$this->cell($this->colsize[5],8,number_format($this->st['ati'],2,',',' ').' €','RL',1,'R');
+			$this->st = array('price'=> 0.0, 'ati'=> 0.0);
+		}
+		elseif ($line->getReference() == 'TITLE')
+		{
+			$this->setFont('Arial','B',10);
+			$this->cell($this->colsize[0],8,$line->getDesignation(),'RTL',0,'L');
+			$this->cell($this->colsize[1],8,'','RTL',0);
+			$this->cell($this->colsize[2],8,'','RTL',0);
+			$this->cell($this->colsize[3],8,'','RTL',0);
+			$this->cell($this->colsize[4],8,'','RTL',0);
+			$this->cell($this->colsize[5],8,'','RTL',1);
+		}
+		else
+		{
+			$this->cell($this->colsize[0],8,$line->getDesignation(),'RL',0);
+			$this->cell($this->colsize[1],8,$line->getQuantity(),'RL',0,'R');
+			$this->cell($this->colsize[2],8,number_format($line->getUnitPrice()*(1-$line->getDiscount()),2,',',' ').' €','RL',0,'R');
+			$this->cell($this->colsize[3],8,number_format($line->getPrice(),2,',',' ').' €','RL',0,'R');
+			$this->cell($this->colsize[4],8,number_format($line->getVat()*100,1,',',' ').' %','RL',1,'R');
+	//		$this->cell(22,8,number_format($line->getPriceAti(),2,',',' ').' €','RL',1,'R');
+			$this->st['price'] += $line->getPrice();
+			$this->st['ati'] += $line->getPriceAti();
+		}
 		
 		
 		if ($line->getShowDescription())
