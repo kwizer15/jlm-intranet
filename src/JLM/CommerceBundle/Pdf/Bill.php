@@ -118,8 +118,7 @@ class Bill extends CommercialPart
 			$this->cell($this->colsize[1],8,'','RL',0,'R');
 			$this->cell($this->colsize[2],8,'','RL',0,'R');
 			$this->cell($this->colsize[3],8,number_format($this->st['price'],2,',',' ').' €','RL',0,'R');
-			$this->cell($this->colsize[4],8,'','RL',0,'R');
-			$this->cell($this->colsize[5],8,number_format($this->st['ati'],2,',',' ').' €','RL',1,'R');
+			$this->cell($this->colsize[4],8,'','RL',1,'R');
 			$this->st = array('price'=> 0.0, 'ati'=> 0.0);
 		}
 		elseif ($line->getReference() == 'TITLE')
@@ -129,11 +128,11 @@ class Bill extends CommercialPart
 			$this->cell($this->colsize[1],8,'','RTL',0);
 			$this->cell($this->colsize[2],8,'','RTL',0);
 			$this->cell($this->colsize[3],8,'','RTL',0);
-			$this->cell($this->colsize[4],8,'','RTL',0);
-			$this->cell($this->colsize[5],8,'','RTL',1);
+			$this->cell($this->colsize[4],8,'','RTL',1);
 		}
 		else
 		{
+			$this->setFont('Arial','',10);
 			$this->cell($this->colsize[0],8,$line->getDesignation(),'RL',0);
 			$this->cell($this->colsize[1],8,$line->getQuantity(),'RL',0,'R');
 			$this->cell($this->colsize[2],8,number_format($line->getUnitPrice()*(1-$line->getDiscount()),2,',',' ').' €','RL',0,'R');
