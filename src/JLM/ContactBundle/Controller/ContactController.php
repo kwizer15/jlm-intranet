@@ -26,15 +26,13 @@ class ContactController extends ContainerAware
 	{
 		$manager = $this->container->get('jlm_contact.contact_manager');
 		$manager->secure('ROLE_OFFICE');
-		if (in_array($id, array('person','company','association')))
-		{
+		if (in_array($id, array('person','company','association'))) {
 			$type = $id;
 			$id = null;
 			$formName = 'new';
 			$entity = null;
 		}
-		else 
-		{
+		else {
 			$entity = $manager->getEntity($id);
 			$formName = 'edit';
 			$type = $entity->getType();
@@ -44,9 +42,9 @@ class ContactController extends ContainerAware
 		
 		return $manager->getRequest()->isXmlHttpRequest()
 			? ($process ? $manager->renderJson(array('ok'=>true))
-						: $manager->renderResponse('JLMContactBundle:Contact:modal_new.html.twig', array('form'=>$form->createView()))) 
+						: $manager->renderResponse('JLMContactBundle:Contact:modal_new.html.twig', array('form' => $form->createView()))) 
 			: ($process ? $manager->redirect('jlm_contact_contact_show', array('id' => $form->getData()->getId()))
-			            : $manager->renderResponse('JLMContactBundle:Contact:new.html.twig', array('form'=>$form->createView())))
+			            : $manager->renderResponse('JLMContactBundle:Contact:new.html.twig', array('form' => $form->createView())))
 			;
 	}
 	
@@ -70,7 +68,7 @@ class ContactController extends ContainerAware
     	
 		return $manager->getRequest()->isXmlHttpRequest()
 			? $manager->renderJson($manager->getRepository()->getByIdToArray($id))
-		    : $manager->renderResponse('JLMContactBundle:Contact:show_'.$entity->getType().'.html.twig', array('entity'=>$entity));
+		    : $manager->renderResponse('JLMContactBundle:Contact:show_' . $entity->getType() . '.html.twig', array('entity'=>$entity));
     }
     
     public function unactiveAction($id)
@@ -84,7 +82,7 @@ class ContactController extends ContainerAware
     	$em->persist($entity);
     	$em->flush();
     	
-    	$manager->getSession()->setFlash('notice', 'Contact '.$entity->getName().' désactivé');
+    	$manager->getSession()->setFlash('notice', 'Contact ' . $entity->getName() . ' désactivé');
     	
     	return $manager->redirectReferer();
     }
