@@ -17,7 +17,7 @@
     </thead>
     <tbody>
     {% for entity in entities %}
-        <tr>
+        <tr{%- if not entity.active %} class="error"{% endif %}>
             <td><a href="{{ path('jlm_product_product_show', { 'id': entity.id }) }}">{{ entity.reference }}</a></td>
             <td>{{ entity.designation }}</td>
             <td>{% if entity.category %}<a href="{{ path('jlm_product_productcategory_show', { 'id': entity.category.id }) }}">{{ entity.category }}</a>{% endif %}</td>
@@ -34,11 +34,11 @@
 </table>
 <div class="pagination pagination-centered">
 	<ul>
-	    <li{% if page == 1 %} class="disabled"{% endif %}><a href="{{ path('jlm_product_product_page',{ 'page' : page-1 }) }}">«</a></li>
+	    <li{% if page == 1 %} class="disabled"{% endif %}><a href="{{ path('jlm_product_product',{ 'page' : page-1 }) }}">«</a></li>
 		{% for p in range(1,nbPages) %}
-		<li{% if p == page %} class="active"{% endif %}><a href="{{ path('jlm_product_product_page',{ 'page' : p }) }}">{{ p }}</a></li>
+		<li{% if p == page %} class="active"{% endif %}><a href="{{ path('jlm_product_product',{ 'page' : p }) }}">{{ p }}</a></li>
 		{% endfor %}
-		<li{% if page == nbPages %} class="disabled"{% endif %}><a href="{{ path('jlm_product_product_page',{ 'page' : page+1 }) }}">»</a></li>
+		<li{% if page == nbPages %} class="disabled"{% endif %}><a href="{{ path('jlm_product_product',{ 'page' : page+1 }) }}">»</a></li>
 	</ul>
 </div>
 <div class="form-actions">

@@ -1,5 +1,6 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
 {% block content %}
+{% if not entity.active %}<div class="alert alert-danger"><h4>Désactivé</h4></div>{% endif %}
 <h1><small>{{ entity.reference }}</small></h1>
 <h2>{{ entity.designation }}</h2>
 <p>{{ entity.description|nl2br }}</p>

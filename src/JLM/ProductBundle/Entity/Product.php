@@ -107,6 +107,8 @@ class Product implements ProductInterface
     
     private $publicPrice;
     
+    private $active = true;
+    
     /**
      * Fichiers liés (plans, docs...)
      * @var LinkedFile[] $files
@@ -523,5 +525,26 @@ class Product implements ProductInterface
     public function getUnitPrices()
     {
         return $this->unitPrices;
+    }
+    
+    /**
+     * Is active
+     * @return bool
+     */
+    public function isActive()
+    {
+    	return $this->active;
+    }
+    
+    /**
+     * Set active
+     * @param bool $active
+     * @return self
+     */
+    public function setActive($active)
+    {
+    	$this->active = (bool) $active;
+    	
+    	return $this;
     }
 }

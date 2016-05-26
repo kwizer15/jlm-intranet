@@ -23,11 +23,15 @@ class ProductController extends Controller
      * @Template()
      * @Secure(roles="ROLE_OFFICE")
      */
-    public function indexAction($page = 1, $limit = 15)
+    public function indexAction()
     {
+    	$request = $this->getRequest();
+    	$page = $request->get('page', 1);
+    	$limit = $request->get('limit', 15);
+    	$all = $request->get('all', 0);
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('JLMProductBundle:Product');
-        $nb = $repo->getTotal();
+        $nb = $repo->getTotal(!$all);
         $nbPages = ceil($nb/$limit);
         $nbPages = ($nbPages < 1) ? 1 : $nbPages;
         $offset = ($page-1) * $limit;
@@ -36,12 +40,7 @@ class ProductController extends Controller
         	throw $this->createNotFoundException('Page inexistante (page '.$page.'/'.$nbPages.')');
         }
 
-        $entities = $repo->findBy(
-        		array(),
-        		array('reference' => 'asc'),
-        		$limit,
-        		$offset
-        		);
+        $entities = $repo->getAll($limit, $offset, !$all);
 
         return array(
         	'entities' => $entities,
@@ -65,7 +64,8 @@ class ProductController extends Controller
         return array(
             'entity'      => $entity,
         	'stock'=>$stock,
-            'delete_form' => $deleteForm->createView(),        );
+            'delete_form' => $deleteForm->createView(),
+        );
     }
 
     /**
@@ -85,7 +85,6 @@ class ProductController extends Controller
         
         $form   = $this->createNewForm($entity);
         	
-        	
         return array(
             'entity' => $entity,
             'form'   => $form->createView()
@@ -100,9 +99,9 @@ class ProductController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity  = new Product();
+        $entity = new Product();
 
-        $form    = $this->createNewForm($entity);
+        $form = $this->createNewForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid())
@@ -148,7 +147,7 @@ class ProductController extends Controller
     public function updateAction(Request $request, $id)
     {
         $entity = $this->getEntity($id);
-        $editForm   = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($entity);
 
         $editForm->handleRequest($request);
 
@@ -215,8 +214,8 @@ class ProductController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
-        ->add('id', 'hidden')
-        ->getForm()
+        	->add('id', 'hidden')
+        	->getForm()
         ;
     }
     

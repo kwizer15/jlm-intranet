@@ -32,9 +32,11 @@ class ProductRepository extends SearchRepository
 	public function searchDesignation($query)
 	{
 		
-		$qb = $this->createQueryBuilder('p')
-			   ->where('p.designation LIKE :query')
+		$qb = $this->createQueryBuilder('a')
+			   ->where('a.designation LIKE :query')
+			   ->andWhere('a.active = :active')
 			   ->setParameter('query', '%'.$query.'%')
+			   ->setParameter('active', true)
 		;
 
 		$res = $qb->getQuery()->getResult();
@@ -45,9 +47,12 @@ class ProductRepository extends SearchRepository
 	public function searchReference($query)
 	{
 	
-		$qb = $this->createQueryBuilder('p')
-		->where('p.reference LIKE :query')
+		$qb = $this->createQueryBuilder('a')
+		->where('a.reference LIKE :query')
+		->andWhere('a.active = :active')
 		->setParameter('query', '%'.$query.'%')
+		->setParameter('active', true)
+		
 		;
 	
 		$res = $qb->getQuery()->getResult();
@@ -71,18 +76,36 @@ class ProductRepository extends SearchRepository
 					'discountSupplier'=>$r->getDiscountSupplier(),
 					'expenseRatio'=>$r->getExpenseRatio(),
 					'shipping'=>$r->getShipping(),
-					'transmitter'=> ($r->getCategory()->getId() == 1)
+					'transmitter'=> ($r->getCategory()->getId() == 1),
+					'active' => $r->isActive(),
 				);
 		}
 		return $r2;
 	}
 	
-	public function getTotal()
+	public function getTotal($activeOnly = true)
 	{
-		$qb = $this->createQueryBuilder('p')
-		->select('COUNT(p)');
+		$qb = $this->createQueryBuilder('a')
+			->select('COUNT(a)');
+		if ($activeOnly) {
+			$qb->where('a.active = :active')
+				->setParameter('active', true);
+		}
+		;
 		
 		return (int) $qb->getQuery()
-		->getSingleScalarResult();
+			->getSingleScalarResult();
+	}
+	
+	public function getAll($limit, $offset, $activeOnly = true)
+	{
+		$crtieria = $activeOnly ? array('active' => true) : array();
+		
+		return $this->findBy(
+				$crtieria,
+				array('reference' => 'asc'),
+				$limit,
+				$offset
+		);
 	}
 }

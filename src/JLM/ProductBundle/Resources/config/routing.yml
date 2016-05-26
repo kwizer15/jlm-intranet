@@ -43,16 +43,6 @@ jlm_product_product:
     defaults:  { _controller: "JLMProductBundle:Product:index" }
     methods: [GET]
 
-jlm_product_product_page:
-    path:   /product/page/{page}
-    defaults:  { _controller: "JLMProductBundle:Product:index" }
-    methods: [GET]
-    
-jlm_product_product_page_limit:
-    path:   /product/page/{page}/{limit}
-    defaults:  { _controller: "JLMProductBundle:Product:index" }
-    methods: [GET]
-    
 jlm_product_product_show:
     path:   /product/{id}/show
     defaults:  { _controller: "JLMProductBundle:Product:show" }

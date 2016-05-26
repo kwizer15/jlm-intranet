@@ -38,7 +38,7 @@ class ProductType extends AbstractType
             ->add('expenseRatio','percent',array('type'=>'integer','label'=>'Frais','attr'=>array('class'=>'input-mini')))
             ->add('shipping','money',array('label'=>'Port','grouping'=>true,'attr'=>array('class'=>'input-mini')))
             ->add('unitPrice','money',array('label'=>'PVHT','grouping'=>true,'attr'=>array('class'=>'input-mini')))
-            
+            ->add('active', 'checkbox', array('required' => false))
         ;
     }
 
