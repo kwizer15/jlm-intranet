@@ -105,8 +105,16 @@ class Product implements ProductInterface
      */
     private $unitPrices;
     
+    /**
+     * Prix public
+     * @var decimal
+     */
     private $publicPrice;
     
+    /**
+     * Produit actif
+     * @var bool
+     */
     private $active = true;
     
     /**
@@ -269,7 +277,7 @@ class Product implements ProductInterface
     	while ($quantity >= $q)
     	{
     		// Quand on arrive au bout du tableau
-    		if (!isset($this->unitPrices[$index+1]))
+    		if (!isset($this->unitPrices[$index + 1]))
     		{
     			return $this->unitPrices[$index]->getUnitPrice();
     		}
@@ -394,17 +402,9 @@ class Product implements ProductInterface
         return $this->unity;
     }
 
-    
     public function getPurchasePrice()
     {
-    	$pa = $this->getPurchase();
-    	$remise_fournisseur = $pa * ($this->getDiscountSupplier()/100);
-    	$pa -= $remise_fournisseur;
-    	$frais = $pa * ($this->getExpenseRatio()/100);
-    	$pa += $frais;
-    	$pa += $this->getShipping();
-    	
-    	return $pa;
+    	return ($this->getPurchase() * (1 - ($this->getDiscountSupplier() / 100))) * (1 + ($this->getExpenseRatio() / 100)) + $this->getShipping();
     }
     
     public function getMargin()
