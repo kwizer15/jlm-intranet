@@ -40,9 +40,8 @@ class BillRepository extends SearchRepository implements PaginableInterface
 			$year = $date->format('Y');
 		}
 		$qb = $this->createQueryBuilder('q')
-			->select('SUBSTRING(q.number,5) as num')
+			->select('MAX(SUBSTRING(q.number,5)) as num')
 			->where('SUBSTRING(q.creation, 1, 4) = :year')
-			->orderBy('num','DESC')
 			->setMaxResults(1)
 			->setParameter('year',$year);
 		$result = $qb->getQuery()->getResult();
