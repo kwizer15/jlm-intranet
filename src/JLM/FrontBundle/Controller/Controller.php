@@ -26,13 +26,13 @@ class Controller extends BaseController
 		$service = (Kernel::MINOR_VERSION > 3) ? 'security.token_storage' : 'security.context';
 		$securityTokenStorage = $this->container->get($service);
 		 
-		if (false === $securityTokenStorage->isGranted('ROLE_MANAGER'))
+		if (false === $securityTokenStorage->isGranted('ROLE_MANAGER') && false === $securityTokenStorage->isGranted('ROLE_BUSINESS'))
 		{
 			throw new AccessDeniedException();
 		}
-		 
+		
 		$om = $this->get('doctrine')->getManager();
-		$repoManager = $om->getRepository('JLMModelBundle:Trustee');
+		$repoManager = $securityTokenStorage->isGranted('ROLE_MANAGER') ? $om->getRepository('JLMModelBundle:Trustee') : $om->getRepository('JLMModelBundle:Site');
 		 
 		try {
 			$manager = $repoManager->getByUser($securityTokenStorage->getToken()->getUser());

@@ -16,6 +16,8 @@ use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Doctrine\ORM\NoResultException;
 use JLM\DailyBundle\Entity\Maintenance;
+use JLM\ModelBundle\Entity\Trustee;
+use JLM\ModelBundle\Entity\Site;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -32,22 +34,30 @@ class BusinessController extends Controller
     	$request = $this->get('request');
     	$om = $this->get('doctrine')->getManager();
     	$manager = $this->getConnectedManager();
-		$repoSite = $om->getRepository('JLMModelBundle:Site');
-		$sites = $repoSite->getByManager($manager);
-		$activeBusinessId = sizeof($sites) ? $request->get('business', reset($sites)->getId()) : null;
-		
-		try {
-			$activeBusiness = $repoSite->find($activeBusinessId);
-			if (!$activeBusiness->hasContractWith($manager))
-			{
-				$activeBusinessId = sizeof($sites) ? reset($sites)->getId() : null;
+    	$repoSite = $om->getRepository('JLMModelBundle:Site');
+    	if ($manager instanceof Trustee)
+    	{
+			$sites = $repoSite->getByManager($manager);
+			$activeBusinessId = sizeof($sites) ? $request->get('business', reset($sites)->getId()) : null;
+			try {
 				$activeBusiness = $repoSite->find($activeBusinessId);
+				if (!$activeBusiness->hasContractWith($manager))
+				{
+					$activeBusinessId = sizeof($sites) ? reset($sites)->getId() : null;
+					$activeBusiness = $repoSite->find($activeBusinessId);
+				}
+				// Vérifier si l'affaire fait partie du syndic
+			} catch (\Doctrine\ORM\NoResultException $e) {
+				throw $this->createNotFoundException('Cette affaire n\'existe pas');
 			}
-			// Vérifier si l'affaire fait partie du syndic
-		} catch (\Doctrine\ORM\NoResultException $e) {
-			throw $this->createNotFoundException('Cette affaire n\'existe pas');
-		}
-		
+    	}
+    	if ($manager instanceof Site)
+    	{
+    		$activeBusiness = $manager;
+    		$sites = array($activeBusiness);
+    		$manager = $activeBusiness->getTrustee();
+    	}
+
 		// Filtre pour les contrats actuels
 		$doors = $activeBusiness->getDoors();
 		$businessDoors    = [];

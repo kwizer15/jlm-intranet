@@ -57,7 +57,7 @@
                 {#}<li{%- if app.request.attributes.alnum('_route') == 'jlmfrontfaq' %} class="active"{%- endif -%}><a href="{{ path('jlm_front_faq') }}">FAQ</a></li>{#}
                 <li{%- if app.request.attributes.alnum('_route') == 'jlmfrontcontact' %} class="active"{%- endif -%}><a href="{{ path('jlm_front_contact') }}">Contactez-nous</a></li>
               </ul>
-              {% if app.user and is_granted('ROLE_MANAGER') %}
+              {% if app.user and (is_granted('ROLE_MANAGER') or is_granted('ROLE_BUSINESS'))%}
               <ul class="nav navbar-nav navbar-right">
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user.username }} <b class="caret"></b></a>

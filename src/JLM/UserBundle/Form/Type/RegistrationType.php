@@ -12,7 +12,8 @@ class RegistrationType extends AbstractType
 			->add('contact','jlm_contact_contact_select',array('label'=>'Contact','attr'=>array('class'=>'input-large')))
 			->add('roles', 'collection', array('type'=>'choice','options'=> array(
 	            'choices' => array(
-	                'ROLE_MANAGER' => 'Syndic'
+	                'ROLE_MANAGER' => 'Syndic',
+	            	'ROLE_BUSINESS' => 'Copro',
 	            ),
 	            'required'    => true,
 	            'empty_value' => 'Choisir le role',
