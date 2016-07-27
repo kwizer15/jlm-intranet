@@ -360,6 +360,8 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getMapsUrl()
     {
+    	return $this->googlemaps;
+    	/*
     	list($url,$params) = explode('?',$this->googlemaps);
     	$parms = explode('&',$params);
     	$arg = array();
@@ -379,6 +381,7 @@ class Door implements BayInterface, InstallationInterface
     	}
     	
     	return $url;
+    	*/
     }
     
     /**
