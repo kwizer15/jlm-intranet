@@ -260,7 +260,7 @@ class InterventionController extends Controller
 				$em->getRepository('JLMDailyBundle:Work')->getToday(),
 				$em->getRepository('JLMDailyBundle:Maintenance')->getToday()
 			);
-		$inprogress = $notclosed = $closed = array();
+		$inprogress = $notclosed = $closed = $ago = array();
 		foreach ($intervs as $interv)
 		{
 			$flag = false;
@@ -278,10 +278,17 @@ class InterventionController extends Controller
 						$inprogress[] = $interv;
 						$flag = true;
 					}
+					elseif ($tech->getBegin()->getTimestamp() >= $today->getTimestamp() && !$flag)
+					{
+						$ago[] = $interv;
+						$flag = true;
+					}
 				}
 			}
 			if (!$flag)
+			{
 				$notclosed[] = $interv;
+			}
 		}
 
 		return array(
@@ -290,6 +297,7 @@ class InterventionController extends Controller
 				'equipment' => $em->getRepository('JLMDailyBundle:Equipment')->getToday(),
 				'notclosed' => $notclosed,
 				'closed' => $closed,
+				'ago' => $ago,
 		);	
 	}
 	

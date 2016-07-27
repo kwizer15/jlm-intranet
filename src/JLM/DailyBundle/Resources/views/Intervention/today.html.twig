@@ -15,4 +15,7 @@
 {% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : notclosed} %}
 <h2><small>Terminé aujourd'hui</small></h2>
 {% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : closed} %}
+<h2><small>Prévus plus tard</small></h2>
+{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : ago} %}
+
 {% endblock %}
