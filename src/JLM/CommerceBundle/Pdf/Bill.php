@@ -73,6 +73,14 @@ class Bill extends CommercialPart
 		$this->setX(120);
 		$this->setFont('Arial','',11);
 		$this->multiCell(0,5,$this->entity->getTrusteeAddress());
+		if ($this->entity->getVat() == 0)
+		{
+			$this->setFont('Arial','B',11);
+			$this->ln(5);
+			$this->setX(120);
+			$this->cell(0,5,'AUTOLIQUIDATION DE TVA',0,2);
+		}
+		
 		
 		$this->setY($y);
 		// Création haut
