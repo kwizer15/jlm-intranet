@@ -361,6 +361,10 @@ class Door implements BayInterface, InstallationInterface
     public function getMapsUrl()
     {
     	return $this->googlemaps;
+    	$matches = array();
+    	preg_match('#^<iframe src="(.+)" .+>#',$this->googlemaps, $matches);
+    	
+    	return isset($matches[1]) ? $matches[1] : '';
     	/*
     	list($url,$params) = explode('?',$this->googlemaps);
     	$parms = explode('&',$params);
