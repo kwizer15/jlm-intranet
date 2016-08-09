@@ -310,7 +310,7 @@ class DoorController extends Controller
     	$entities = $em->getRepository('JLMModelBundle:Door')->findAll();
     	foreach ($entities as $key => $entity)
     	{
-    		if ($entity->getLastMaintenance() !== null && $entity->getActualContract() != null && $entity->getLatitude() !== null && $entity->getLongitude() !== null)
+    		if ($entity->getNextMaintenance() !== null && $entity->getActualContract() != null && $entity->getLatitude() !== null && $entity->getLongitude() !== null)
     		{
     			$latMin = min($latMin,$entity->getLatitude());
     			$latMax = max($latMax,$entity->getLatitude());
