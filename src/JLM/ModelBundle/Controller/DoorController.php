@@ -21,6 +21,7 @@ use JLM\ContractBundle\Entity\Contract;
 use JLM\ModelBundle\Form\Type\DoorType;
 use JLM\ContractBundle\Form\Type\ContractType;
 use JLM\ContractBundle\Form\Type\ContractStopType;
+use JLM\CoreBundle\Event\DoctrineEvent;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -258,35 +259,40 @@ class DoorController extends Controller
     	{
     		if ($entity->getLatitude() === null)
     		{
-	    		$address = str_replace(array(' - ',' ',chr(10)),'+',$entity->getAddress()->toString());
-	    		$url = 'http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address='.$address;
-	    		$string = file_get_contents($url);
-	    		$json = json_decode($string);
-	    	//	var_dump($json); exit;
-	    	
-	    		if ($json->status == "OK")
-	    		{
-	    			if (sizeof($json->results) > 1)
-	    				$logs[] = 'multi : '.$address.'<br>';
-	
-	    			else
-	    			{
+    			$em->persist($entity);
+//	    		$address = str_replace(array(' - ',' ',chr(10)),'+',$entity->getAddress()->toString());
+//	    		$url = 'http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address='.$address;
+//	    		$string = file_get_contents($url);
+//	    		$json = json_decode($string);
+//	    	//	var_dump($json); exit;
+//	    	
+//	    		if ($json->status == "OK")
+//	    		{
+//	    			if (sizeof($json->results) > 1)
+//	    			{
+//	    				$logs[] = 'multi : '.$address.'<br>';
+//	    			}
+//	    			else
+//	    			{
 	    				$count++;
-		    			foreach ($json->results as $result)
-		    			{
-		    				$lat = $result->geometry->location->lat;
-		    				$lng = $result->geometry->location->lng;
-		    				$entity->setLatitude($lat);
-		    				$entity->setLongitude($lng);
-		    				$em->persist($entity);
-		    			}
-	    			}
-	    		}
-	    		else 
-	    			$logs[] = $json->status.' : '.$address.'<br>';
+//		    			foreach ($json->results as $result)
+//		    			{
+//		    				$lat = $result->geometry->location->lat;
+//		    				$lng = $result->geometry->location->lng;
+//		    				$entity->setLatitude($lat);
+//		    				$entity->setLongitude($lng);
+//		    				$em->persist($entity);
+//		    			}
+//	    			}
+//	    		}
+//	    		else
+//	    		{
+//	    			$logs[] = $json->status.' : '.$address.'<br>';
+//	    		}
     		}
 		}
     	$em->flush();
+    	
     	return array('count' => $count,'logs' => $logs);
     }
     
@@ -298,20 +304,24 @@ class DoorController extends Controller
      */
     public function mapAction()
     {
+    	$latMin = $lonMin = 40000;
+    	$latMax = $lonMax = -40000;
     	$em = $this->getDoctrine()->getManager();
     	$entities = $em->getRepository('JLMModelBundle:Door')->findAll();
-    	$url = 'http://maps.googleapis.com/maps/api/staticmap?center=Paris&zoom=10&size=1800x1800&sensor=false';
-    	$i = 0;
-    	foreach ($entities as $entity)
+    	foreach ($entities as $key => $entity)
     	{
-    		if ($i > 46)
-    		return array('url'=>$url);
-    		if ($entity->getActualContract() !== null)
+    		if ($entity->getLastMaintenance() !== null && $entity->getActualContract() != null && $entity->getLatitude() !== null && $entity->getLongitude() !== null)
     		{
-    			$url .= '&markers=color:blue%7C'.$entity->getCoordinates();
-    			$i++;
+    			$latMin = min($latMin,$entity->getLatitude());
+    			$latMax = max($latMax,$entity->getLatitude());
+    			$lonMin = min($lonMin,$entity->getLongitude());
+    			$lonMax = max($lonMax,$entity->getLongitude());
     		}
+    		else {unset($entities[$key]);}
     	}
-    	return array('url'=>$url);
+    	$latCentre = ($latMin + $latMax)/2;
+    	$lonCentre = ($lonMin + $lonMax)/2;
+    	return array('entities'=>$entities,
+    			'latCenter' => $latCentre, 'lngCenter' => $lonCentre,);
     }
 }
