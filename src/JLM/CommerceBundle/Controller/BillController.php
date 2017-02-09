@@ -21,6 +21,7 @@ use JLM\CoreBundle\Factory\MailFactory;
 use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
 use JLM\CommerceBundle\Builder\Email\BillBoostBusinessMailBuilder;
 use Symfony\Component\HttpFoundation\Request;
+use JLM\CommerceBundle\Excel\BillState;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -352,5 +353,21 @@ class BillController extends ContainerAware
     	$om->flush();
     	
     	return $manager->redirectReferer();
+    }
+    
+    /**
+     *
+     * @param Request $request
+     * @return multitype:unknown
+     * @Secure(roles="ROLE_OFFICE")
+     */
+    public function stateExcelAction(Request $request)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$list = $em->getRepository('JLMCommerceBundle:Bill')->getStateBill($request->get('fee', 11));
+    
+    	$excelBuilder = new BillState($this->container->get('phpexcel'));
+    	 
+    	return $excelBuilder->createList($list)->getResponse();
     }
 }

@@ -351,4 +351,32 @@ class BillRepository extends SearchRepository implements PaginableInterface
 		
 		return $query->getArrayResult();
 	}
+	
+	public function getStateBill($fee)
+	{
+		$qb = $this->createQueryBuilder('a')
+			->select('a')
+			->where('a.fee = ?1')
+			->orderBy('a.number')
+			->setParameter(1, $fee);
+		
+		$query = $qb->getQuery();
+		$results = $query->getResult();
+		
+		$return = array();
+		foreach ($results as $result) {
+			$return[] = array(
+					'date' => $result->getCreation()->format('d/m/Y'),
+					'number' => $result->getNumber(),
+					'manager' => $result->getTrusteeName(),
+					'ht' => $result->getTotalPrice(),
+					'tva' => $result->getTotalVat(),
+					'ttc' => $result->getTotalPriceAti() 
+					
+			);
+		}
+		
+		
+		return $return;
+	}
 }
