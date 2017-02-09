@@ -356,7 +356,7 @@ class BillRepository extends SearchRepository implements PaginableInterface
 	{
 		$qb = $this->createQueryBuilder('a')
 			->select('a')
-			->where('a.fee = ?1')
+			->where('a.feesFollower = ?1')
 			->orderBy('a.number')
 			->setParameter(1, $fee);
 		
