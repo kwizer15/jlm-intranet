@@ -114,7 +114,7 @@ class BillController extends ContainerAware
     private function printer($id, $duplicate = false)
     {
     	$manager = $this->container->get('jlm_commerce.bill_manager');
-    	$manager->secure('ROLE_OFFICE');
+    	//$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
         $filename = $entity->getNumber();
         if ($duplicate)
