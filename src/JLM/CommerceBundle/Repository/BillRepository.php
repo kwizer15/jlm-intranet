@@ -356,10 +356,12 @@ class BillRepository extends SearchRepository implements PaginableInterface
 	{
 		$qb = $this->createQueryBuilder('a')
 			->select('a')
-			->where('a.feesFollower = ?1')
+			//->where('a.feesFollower = ?1')
+			->where('a.creation between ?1 and ?2')
 			->andWhere('a.state > 0')
 			->orderBy('a.number')
-			->setParameter(1, $fee);
+			->setParameter(1, \DateTime::createFromFormat('Y-m-d H:i:s', '2017-01-01 00:00:00'))
+			->setParameter(2, \DateTime::createFromFormat('Y-m-d H:i:s', '2017-02-01 00:00:00'));
 		
 		$query = $qb->getQuery();
 		$results = $query->getResult();
