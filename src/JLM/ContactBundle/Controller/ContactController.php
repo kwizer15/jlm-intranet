@@ -39,15 +39,15 @@ class ContactController extends ContainerAware
 		}
 		$form = $manager->createForm($formName, array('type' => $type, 'entity' => $entity));
 		$process = $manager->getHandler($form, $entity)->process();
-		
+
 		return $manager->getRequest()->isXmlHttpRequest()
 			? ($process ? $manager->renderJson(array('ok'=>true))
-						: $manager->renderResponse('JLMContactBundle:Contact:modal_new.html.twig', array('form' => $form->createView()))) 
+						: $manager->renderResponse('JLMContactBundle:Contact:modal_new.html.twig', array('form' => $form->createView())))
 			: ($process ? $manager->redirect('jlm_contact_contact_show', array('id' => $form->getData()->getId()))
 			            : $manager->renderResponse('JLMContactBundle:Contact:new.html.twig', array('form' => $form->createView())))
 			;
 	}
-	
+
 	public function listAction()
 	{
 		$manager = $this->container->get('jlm_contact.contact_manager');
@@ -56,34 +56,34 @@ class ContactController extends ContainerAware
 		$ajax = $manager->getRequest()->isXmlHttpRequest();
 		$repo = $manager->getRepository();
 
-		return $ajax ? $manager->renderJson(array('contacts' => $repo->getArray($request->get('q',''), $request->get('page_limit',10))))
+		return $ajax || $request->get('format') == 'json' ? $manager->renderJson(array('contacts' => $repo->getArray($request->get('q',''), $request->get('page_limit',10))))
 		                  : $manager->renderResponse('JLMContactBundle:Contact:list.html.twig', $manager->pagination('getCountAll', 'getAll', 'jlm_contact_contact', array()));
 	}
-    
+
     public function showAction($id)
     {
     	$manager = $this->container->get('jlm_contact.contact_manager');
     	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
-    	
+
 		return $manager->getRequest()->isXmlHttpRequest()
 			? $manager->renderJson($manager->getRepository()->getByIdToArray($id))
 		    : $manager->renderResponse('JLMContactBundle:Contact:show_' . $entity->getType() . '.html.twig', array('entity'=>$entity));
     }
-    
+
     public function unactiveAction($id)
     {
     	$manager = $this->container->get('jlm_contact.contact_manager');
     	$manager->secure('ROLE_OFFICE');
     	$entity = $manager->getEntity($id);
     	$entity->setActive(false);
-    	
+
     	$em = $manager->getObjectManager();
     	$em->persist($entity);
     	$em->flush();
-    	
+
     	$manager->getSession()->setFlash('notice', 'Contact ' . $entity->getName() . ' désactivé');
-    	
+
     	return $manager->redirectReferer();
     }
 }
