@@ -631,7 +631,7 @@ class InterventionController extends Controller
 		$row = 2;
 		foreach ($intervs as $interv)
 		{
-			if (!$interv->isCanceled() && $interv->getFirstDate() && $intervs->getClose())
+			if (!$interv->isCanceled() && $interv->getFirstDate() && $interv->isClose())
 			{
 				// A
 				$date = ($interv->getFirstDate() != $interv->getLastDate())
