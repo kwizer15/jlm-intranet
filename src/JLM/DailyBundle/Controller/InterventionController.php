@@ -603,7 +603,7 @@ class InterventionController extends Controller
 	//			->setDescription("")
 		$as = $phpExcelObject->setActiveSheetIndex(0);
 		$titles = array(
-			'A' => 'date'
+			'A' => 'date',
 			'B' => 'code installation',
 			'C' => 'rue',
 			'D' => 'cp',
