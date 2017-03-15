@@ -40,7 +40,7 @@ class MaintenanceController extends AbstractInterventionController
 		return $manager->isAjax() ? $manager->renderJson(array('entities' => $repo->getArray($request->get('q',''), $request->get('page_limit',10))))
 		                  : $manager->renderResponse('JLMDailyBundle:Maintenance:list.html.twig', $manager->pagination('getCountOpened', 'getOpened', 'maintenance_list', array()));
 	}
-	
+
 	/**
 	 * Finds and displays a Maintenance entity.
 	 *
@@ -51,7 +51,7 @@ class MaintenanceController extends AbstractInterventionController
 	{
 		return $this->show($entity);
 	}
-	
+
 	/**
 	 * Close an existing Fixing entity.
 	 *
@@ -61,13 +61,13 @@ class MaintenanceController extends AbstractInterventionController
 	public function closeAction(Maintenance $entity)
 	{
 		$form = $this->createForm(new MaintenanceCloseType(), $entity);
-	
+
 		return array(
 				'entity'      => $entity,
 				'form'   => $form->createView(),
 		);
 	}
-	
+
 	/**
 	 * Close an existing Maintenance entity.
 	 *
@@ -77,10 +77,10 @@ class MaintenanceController extends AbstractInterventionController
 	public function closeupdateAction(Request $request, Maintenance $entity)
 	{
 		$em = $this->getDoctrine()->getManager();
-			
+
 		$form = $this->createForm(new MaintenanceCloseType(), $entity);
 		$form->handleRequest($request);
-	
+
 		if ($form->isValid())
 		{
 			$entity->setClose(new \DateTime);
@@ -89,13 +89,13 @@ class MaintenanceController extends AbstractInterventionController
 			$em->flush();
 			return $this->redirect($this->generateUrl('maintenance_show', array('id' => $entity->getId())));
 		}
-	
+
 		return array(
 				'entity'      => $entity,
 				'form'   => $form->createView(),
 		);
 	}
-	
+
 	/**
 	 * Finds and displays a InterventionPlanned entity.
 	 *
@@ -123,7 +123,7 @@ class MaintenanceController extends AbstractInterventionController
 		{
 			$this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
 			$this->get('event_dispatcher')->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request));
-			
+
 			return $this->redirect($this->generateUrl('maintenance_show', array('id' => $entity->getId())));
 		}
 		return array(
@@ -132,7 +132,7 @@ class MaintenanceController extends AbstractInterventionController
 				'step' => $step,
 		);
 	}
-	
+
 	/**
 	 * Creation des entretiens a faire
 	 *
@@ -141,7 +141,7 @@ class MaintenanceController extends AbstractInterventionController
 	public function scanAction()
 	{
 		$date = new \DateTime;
-		$date->sub(new \DateInterval('P2M'));
+		$date->sub(new \DateInterval('P6M'));
 		$em = $this->getDoctrine()->getManager();
 		$doors = $em->getRepository('JLMModelBundle:Door')->findAll();
 		$count = 0;
@@ -152,8 +152,8 @@ class MaintenanceController extends AbstractInterventionController
 			$contract = $door->getActualContract();
 			if ($contract !== null)
 			{
-				if ($door->getLastMaintenance() < $date 
-						&& $maint === null 
+				if ($door->getLastMaintenance() < $date
+						&& $maint === null
 						&& $door->getCountMaintenance() < 2)
 				{
 					$main = new Maintenance;
@@ -184,10 +184,10 @@ class MaintenanceController extends AbstractInterventionController
 			}
 		}
 		$em->flush();
-		
+
 		return array('count' => $count,'removed' => $removed);
 	}
-	
+
 	/**
 	 * Cherche les entretiens les plus proche d'une adresse
 	 *
@@ -197,7 +197,7 @@ class MaintenanceController extends AbstractInterventionController
 	public function neighborAction(Door $door)
 	{
 		$em = $this->getDoctrine()->getManager();
-		
+
 		// Choper les entretiens à faire
 		$repo = $em->getRepository('JLMDailyBundle:Maintenance');
 		$maints = $repo->getOpened();
@@ -231,7 +231,7 @@ class MaintenanceController extends AbstractInterventionController
 			$shift->setBegin(new \DateTime);
 			$forms[] = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getDestination()->getNextMaintenance()->getId(),new AddTechnicianType(), $shift)->createView();
 		}
-		
+
 		return array(
 				'door'=>$door,
 				'entities' => $entities,
