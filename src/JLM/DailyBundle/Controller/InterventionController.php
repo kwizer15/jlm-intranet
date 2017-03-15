@@ -706,7 +706,7 @@ class InterventionController extends Controller
 		$response = $this->get('phpexcel')->createStreamedResponse($writer);
 		// adding headers
 		$response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
-		$response->headers->set('Content-Disposition', 'attachment;filename='.$door->getId().'.xls');
+		$response->headers->set('Content-Disposition', 'attachment;filename=export_interventions.xls');
 		$response->headers->set('Pragma', 'public');
 		$response->headers->set('Cache-Control', 'maxage=1');
 
