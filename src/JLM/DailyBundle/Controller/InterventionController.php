@@ -650,11 +650,11 @@ class InterventionController extends Controller
 				$as->setCellValue('C'.$row, $street);
 
 				// D
-				$cp = $door ? $door->getAddress()->getZip() : '';
+				$cp = $door ? $door->getAddress()->getCity()->getZip() : '';
 				$as->setCellValue('C'.$row, $cp);
 
 				// E
-				$city = $door ? $door->getAddress()->getCity() : '';
+				$city = $door ? $door->getAddress()->getCity()->getName() : '';
 				$as->setCellValue('C'.$row, $city);
 
 				// F
