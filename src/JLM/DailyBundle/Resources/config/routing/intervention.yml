@@ -125,7 +125,7 @@ intervention_doorxls:
   defaults:  { _controller: "JLMDailyBundle:Intervention:doorxls" }
   methods: [GET]
 
-intervention_doorxls:
+intervention_doorsxls:
   path: /doorsxls/
   defaults:  { _controller: "JLMDailyBundle:Intervention:doorsxls" }
   methods: [GET]
