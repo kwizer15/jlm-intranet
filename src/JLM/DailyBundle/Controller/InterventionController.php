@@ -37,7 +37,7 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$entities = $em->getRepository('JLMDailyBundle:Intervention')
 					   ->getPrioritary();
-		
+
 		return array(
 				'entities'      => $entities,
 		);
@@ -54,10 +54,10 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
-		
+
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
-	
+
 	/**
 	 * Don't Bill intervention
 	 *
@@ -69,10 +69,10 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
-		
+
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
-	
+
 	/**
 	 * Cancel Bill action
 	 *
@@ -83,7 +83,7 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		if ($entity->getMustBeBilled())
 		{
-			
+
 			if ($entity->getBill() !== null)
 			{
 				// 	annuler la facture existante
@@ -101,10 +101,10 @@ class InterventionController extends Controller
 		$entity->setMustBeBilled(null);
 		$em->persist($entity);
 		$em->flush();
-		
+
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
-	
+
 	/**
 	 * Crée une demande de devis
 	 * @Secure(roles="ROLE_OFFICE")
@@ -118,10 +118,10 @@ class InterventionController extends Controller
 		$entity->setAskQuote($ask);
 		$em->persist($entity);
 		$em->flush();
-		
+
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
-	
+
 	/**
 	 * Supprime une demande de devis
 	 * @Secure(roles="ROLE_OFFICE")
@@ -137,10 +137,10 @@ class InterventionController extends Controller
 			$em->persist($entity);
 			$em->flush();
 		}
-		
+
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
-	
+
 	/**
 	 * Active contacter client
 	 * @Secure(roles="ROLE_OFFICE")
@@ -151,10 +151,10 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
-		
+
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
-	
+
 	/**
 	 * Supprime une demande de devis
 	 * @Secure(roles="ROLE_OFFICE")
@@ -165,10 +165,10 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
-		
+
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
-	
+
 	/**
 	 * Créer un ligne travaux
 	 * @Secure(roles="ROLE_OFFICE")
@@ -176,10 +176,10 @@ class InterventionController extends Controller
 	public function toworkAction(Intervention $entity)
 	{
 		$this->get('event_dispatcher')->dispatch(JLMDailyEvents::INTERVENTION_SCHEDULEWORK, new InterventionEvent($entity));
-		
+
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
-	
+
 	/**
 	 * Supprime une ligne travaux
 	 * @Secure(roles="ROLE_OFFICE")
@@ -187,10 +187,10 @@ class InterventionController extends Controller
 	public function cancelworkAction(Intervention $entity)
 	{
 		$this->get('event_dispatcher')->dispatch(JLMDailyEvents::INTERVENTION_UNSCHEDULEWORK, new InterventionEvent($entity));
-		
+
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
-	
+
 	/**
 	 * Annule l'intervention
 	 * @Secure(roles="ROLE_OFFICE")
@@ -206,10 +206,10 @@ class InterventionController extends Controller
 			$em->persist($entity);
 			$em->flush();
 		}
-		
+
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
-	
+
 	/**
 	 * Désannule l'intervention
 	 * @Secure(roles="ROLE_OFFICE")
@@ -220,10 +220,10 @@ class InterventionController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
-		
+
 		return $this->redirect($this->generateUrl('intervention_redirect',array('id'=>$entity->getId(),'act'=>'show')));
 	}
-	
+
 	/**
 	 * Numéro de facture
 	 * @Secure(roles="ROLE_OFFICE")
@@ -242,8 +242,8 @@ class InterventionController extends Controller
 
 		return $this->redirect($request->headers->get('referer'));
 	}
-	
-	
+
+
 	/**
 	 * Liste des interventions par date(s)
 	 *
@@ -298,9 +298,9 @@ class InterventionController extends Controller
 				'notclosed' => $notclosed,
 				'closed' => $closed,
 				'ago' => $ago,
-		);	
+		);
 	}
-	
+
 	/**
 	 * Liste des interventions par date(s)
 	 *
@@ -315,7 +315,7 @@ class InterventionController extends Controller
 		$d2 = ($date2 === null) ? \DateTime::createFromFormat('YmdHis',$d1->format('Ymd').'235959') : \DateTime::createFromFormat('YmdHis',$date2.'235959');
 		$em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('JLMDailyBundle:Intervention');
-		
+
 		$intervs = $repo->getWithDate($d1,$d2);
 		$equipment = $em->getRepository('JLMDailyBundle:Equipment')->getWithDate($d1,$d2);
 		$now->sub(new \DateInterval('P4D'));
@@ -326,7 +326,7 @@ class InterventionController extends Controller
 			\DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000'),
 			\DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000'),
 		);
-		
+
 		return array(
 				'standby' => $em->getRepository('JLMDailyBundle:Standby')->getByDate($date1),
 				'd1' => $d1,
@@ -336,7 +336,7 @@ class InterventionController extends Controller
 				'layout' => array('form_searchByDate_date' => $d1)
 		);
 	}
-	
+
 	/**
 	 * Liste des interventions par date(s)
 	 *
@@ -348,8 +348,8 @@ class InterventionController extends Controller
 
 		return $this->redirect($this->generateUrl('intervention_listdate1',array('date1'=>$date->format('Ymd'))));
 	}
-	
-	
+
+
 	/**
 	 * Supprimer une intervention
 	 *
@@ -362,13 +362,13 @@ class InterventionController extends Controller
 		foreach ($entity->getShiftTechnicians() as $tech)
 		{
 			$em->remove($tech);
-		}	
+		}
 		$em->remove($entity);
 		$em->flush();
-	
+
 		return $this->redirect($this->generateUrl('intervention_today'));
 	}
-	
+
 	/**
 	 * Finds and displays a Intervention entity.
 	 *
@@ -380,10 +380,10 @@ class InterventionController extends Controller
 		{
 			throw $this->createNotFoundException('Page inexistante');
 		}
-		
+
 		return $this->redirect($this->generateUrl($entity->getType() . '_' . $act,array('id'=>$entity->getId())));
 	}
-	
+
 	/**
 	 * Imprime les intervs de la prochaine journée
 	 *
@@ -397,7 +397,7 @@ class InterventionController extends Controller
 		$d2 =  \DateTime::createFromFormat('YmdHis',$d1->format('Ymd').'235959');
 		$em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('JLMDailyBundle:Intervention');
-		
+
 		$intervs = $repo->getWithDate($d1,$d2);
 		$equipment = $em->getRepository('JLMDailyBundle:Equipment')->getWithDate($d1,$d2);
 		$response = new Response();
@@ -408,10 +408,10 @@ class InterventionController extends Controller
 						'entities' => array_merge($equipment,$intervs),
 						'standby' => $em->getRepository('JLMDailyBundle:Standby')->getByDate($date1),
 				)));
-		
+
 		return $response;
 	}
-	
+
 	/**
 	 * Imprime les intervs de la prochaine journée
 	 *
@@ -421,15 +421,15 @@ class InterventionController extends Controller
 	{
 		$now = new \DateTime;
 		$em = $this->getDoctrine()->getManager();
-		
+
 		do {
 			$tomorrow = \DateTime::createFromFormat('YmdHis',$now->add(new \DateInterval('P1D'))->format('Ymd').'000000');
 			$results = $em->getRepository('JLMDailyBundle:Standby')->getCountByDate($tomorrow);
 		} while ($results);
-		
+
 		$intervs = $em->getRepository('JLMDailyBundle:Intervention')->getWithDate($tomorrow,$tomorrow);
 		$equipment = $em->getRepository('JLMDailyBundle:Equipment')->getWithDate($tomorrow,$tomorrow);
-		$fixing = $em->getRepository('JLMDailyBundle:Fixing')->getToGive();	
+		$fixing = $em->getRepository('JLMDailyBundle:Fixing')->getToGive();
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$tomorrow->format('Y-m-d').'.pdf');
@@ -437,10 +437,10 @@ class InterventionController extends Controller
 				array('date' => $tomorrow,
 					'entities' => array_merge($equipment,$intervs,$fixing),
 		)));
-		
+
 		return $response;
 	}
-	
+
 	/**
 	 * Imprime les intervs d'une intallation
 	 *
@@ -459,7 +459,7 @@ class InterventionController extends Controller
 			}
 		}
 		krsort($shifts);
-		
+
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$door->getId().'.pdf');
@@ -468,10 +468,10 @@ class InterventionController extends Controller
 					  'door' => $door,
 					  'entities' => $shifts,
 				)));
-		
+
 		return $response;
 	}
-	
+
 	/**
 	 * Export CSV intervs porte
 	 *
@@ -499,7 +499,7 @@ class InterventionController extends Controller
 
 		return $response;
 	}
-	
+
 	/**
 	 * Export CSV intervs porte
 	 *
@@ -509,9 +509,9 @@ class InterventionController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$door = $em->getRepository('JLMModelBundle:Door')->find($id);
-		
+
 		$phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
-		
+
 		$phpExcelObject->getProperties()->setCreator("JLM Entreprise")
 			->setLastModifiedBy("JLM Entreprise")
 			->setTitle("Rapport d'intrevention");
@@ -529,7 +529,7 @@ class InterventionController extends Controller
 		{
 			if (!$interv->isCanceled() && $interv->getFirstDate())
 			{
-				
+
 				$date = ($interv->getFirstDate() != $interv->getLastDate())
 					? 'du '.$interv->getFirstDate()->format('d/m/Y').chr(10).' au '.$interv->getLastDate()->format('d/m/Y')
 					: $interv->getFirstDate()->format('d/m/Y');
@@ -555,7 +555,7 @@ class InterventionController extends Controller
 					$tech .= ')';
 					$techs[] = $tech;
 				}
-				
+
 				$as->setCellValue('A'.$row, $this->get('translator')->trans($interv->getType()))
 				   ->setCellValue('B'.$row, $date)
 				   ->setCellValue('C'.$row, $reason)
@@ -565,11 +565,11 @@ class InterventionController extends Controller
 				$row++;
 			}
 		}
-		
+
 		$phpExcelObject->getActiveSheet()->setTitle('Rapport');
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$phpExcelObject->setActiveSheetIndex(0);
-		
+
 		// create the writer
 		$writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
 		// create the response
@@ -579,27 +579,158 @@ class InterventionController extends Controller
 		$response->headers->set('Content-Disposition', 'attachment;filename='.$door->getId().'.xls');
 		$response->headers->set('Pragma', 'public');
 		$response->headers->set('Cache-Control', 'maxage=1');
-		
+
 		return $response;
 	}
-	
+
+	/**
+	 * Export CSV intervs porte
+	 *
+	 * @Secure(roles="ROLE_OFFICE")
+	 */
+	public function doorsxlsAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$intervs = $em->getRepository('JLMModelBundle:Intervention')->findAll();
+
+
+		$phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+
+		$phpExcelObject->getProperties()->setCreator("JLM Entreprise")
+			->setLastModifiedBy("JLM Entreprise")
+			->setTitle("Rapport d'intrevention");
+	//			->setSubject("Office 2005 XLSX Test Document")
+	//			->setDescription("")
+		$as = $phpExcelObject->setActiveSheetIndex(0);
+		$titles = array(
+			'A' => 'date'
+			'B' => 'code installation',
+			'C' => 'rue',
+			'D' => 'cp',
+			'E' => 'ville',
+			'F' => 'contrat',
+			'G' => 'interlocuteur',
+			'H' => 'tel interlocuteur',
+			'I' => 'demande',
+			'J' => 'type',
+			'K' => 'raison',
+			'L' => 'action menée',
+			'M' => 'type de\'install',
+			'N' => 'constat',
+			'O' => 'action menée',
+			'P' => 'reste a faire',
+			'Q' => 'n° bon d\'intervention',
+			'R' => 'devis',
+			'S' => 'facture',
+			'T' => 'technicien(s)'
+		);
+		foreach($titles as $col => $value)
+		{
+			$as->setCellValue($col.'1', $value);
+		}
+		$row = 2;
+		foreach ($intervs as $interv)
+		{
+			if (!$interv->isCanceled() && $interv->getFirstDate() && $intervs->getClose())
+			{
+				// A
+				$date = ($interv->getFirstDate() != $interv->getLastDate())
+					? 'du '.$interv->getFirstDate()->format('d/m/Y').chr(10).' au '.$interv->getLastDate()->format('d/m/Y')
+					: $interv->getFirstDate()->format('d/m/Y');
+				$as->setCellValue('A'.$row, $date);
+
+				// B
+				// C
+				// D
+				// E
+				// F
+				// G
+				// H
+				// I
+				// J
+				$as->setCellValue('J'.$row, $this->get('translator')->trans($interv->getType()));
+
+				// K
+				$reason = '';
+				if ($interv->getType() == 'work')
+				{
+					if ($interv->getQuote())
+					{
+						$reason = 'Selon devis n°'.$interv->getQuote()->getNumber().chr(10);
+					}
+				}
+				$reason .= $interv->getReason();
+				$as->setCellValue('K'.$row, $reason);
+
+				// L
+				// M
+				// N
+				$constat = ($interv->getType() == 'fixing') ? $interv->getObservation() : '';
+				$as->setCellValue('N'.$row, $constat);
+
+				// O
+				$report = $interv->getReport();
+				$as->setCellValue('O'.$row, $constat);
+
+				// P
+
+				// Q
+				// R
+				// S
+
+				// T
+				$techs = array();
+				foreach ($interv->getShiftTechnicians() as $shift)
+				{
+					$tech = $shift->getTechnician().' ('.$shift->getBegin()->format('d/m/Y');
+					if ($shift->getEnd())
+					{
+						$tech .= ' - '.$shift->getTime()->format('%hh%I');
+					}
+					$tech .= ')';
+					$techs[] = $tech;
+				}
+				$as->setCellValue('T'.$row, implode(chr(10),$techs));
+
+				$row++;
+			}
+		}
+
+		$phpExcelObject->getActiveSheet()->setTitle('Rapport');
+		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+		$phpExcelObject->setActiveSheetIndex(0);
+
+		// create the writer
+		$writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
+		// create the response
+		$response = $this->get('phpexcel')->createStreamedResponse($writer);
+		// adding headers
+		$response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
+		$response->headers->set('Content-Disposition', 'attachment;filename='.$door->getId().'.xls');
+		$response->headers->set('Pragma', 'public');
+		$response->headers->set('Cache-Control', 'maxage=1');
+
+		return $response;
+	}
+
+
 	public function publishAction(Request $request, Intervention $entity)
 	{
 		$entity->setPublished(true);
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
-		
+
 		return $this->redirect($request->headers->get('referer'));
 	}
-	
+
 	public function unpublishAction(Request $request, Intervention $entity)
 	{
 		$entity->setPublished(false);
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
 		$em->flush();
-		
+
 		return $this->redirect($request->headers->get('referer'));
 	}
 }
