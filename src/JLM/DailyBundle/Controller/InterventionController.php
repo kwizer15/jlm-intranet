@@ -591,7 +591,7 @@ class InterventionController extends Controller
 	public function doorsxlsAction()
 	{
 		$em = $this->getDoctrine()->getManager();
-		$intervs = $em->getRepository('JLMModelBundle:Intervention')->findAll();
+		$intervs = $em->getRepository('JLMDailyBundle:Intervention')->findAll();
 
 
 		$phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
