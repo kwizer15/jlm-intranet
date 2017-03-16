@@ -608,7 +608,7 @@ class InterventionController extends Controller
 			'C' => 'rue',
 			'D' => 'cp',
 			'E' => 'ville',
-			'F' => 'contrat',
+			'F' => 'type contrat',
 			'G' => 'interlocuteur',
 			'H' => 'tel interlocuteur',
 			'I' => 'demande',
@@ -658,13 +658,18 @@ class InterventionController extends Controller
 				$as->setCellValue('E'.$row, $city);
 
 				// F
-				// G
-				// H
-				// I
-				// J
-				$as->setCellValue('J'.$row, $this->get('translator')->trans($interv->getType()));
+				$contrat = $interv->getDynCOntract();
+				$as->setCellValue('F'.$row, $contrat);
 
-				// K
+				// G
+				$contact = $interv->getContactName();
+				$as->setCellValue('G'.$row, $contact);
+
+				// H
+				$contactTel = $interv->getContactPhones();
+				$as->setCellValue('H'.$row, $contactTel);
+
+				// I
 				$reason = '';
 				if ($interv->getType() == 'work')
 				{
@@ -674,13 +679,19 @@ class InterventionController extends Controller
 					}
 				}
 				$reason .= $interv->getReason();
-				$as->setCellValue('K'.$row, $reason);
+				$as->setCellValue('I'.$row, $reason);
+
+				// J
+				$as->setCellValue('J'.$row, $this->get('translator')->trans($interv->getType()));
+
+				// K
+				$constat = ($interv->getType() == 'fixing') ? $interv->getObservation() : '';
+				$as->setCellValue('K'.$row, $constat);
 
 				// L
 				// M
 				// N
-				$constat = ($interv->getType() == 'fixing') ? $interv->getObservation() : '';
-				$as->setCellValue('N'.$row, $constat);
+
 
 				// O
 				$report = $interv->getReport();
