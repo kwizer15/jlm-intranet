@@ -8,11 +8,13 @@
 {{ contracts_complete }} installations en contrats complet<br>
 {{ contracts_normal }} installations en contrats normal<br>
 
+<a href="{{ path('intervention_doorsxls') }}" class="btn">Export interventions</a>
+
 </div>
 <div class="row">
 	<div class="span6">
 		<h2>Quantité</h2>
-		
+
 		<table class="table table-bordered">
 			<thead>
 				<tr>
@@ -113,7 +115,7 @@ $(function () {
         tooltip: {
         	formatter : function(){
                 return this.point.name + ': <b>' + Math.round(this.point.y/60) + 'h' + this.point.y%60 + '</b>';
-            }  
+            }
         },
         plotOptions: {
             pie: {
@@ -135,7 +137,7 @@ $(function () {
             data: [
                 {
                     name : 'Dépannages',
-                    color : '#f89406', 
+                    color : '#f89406',
                     y : {{ times.total.fixing.format('%h')*60+times.total.fixing.format('%i') }}
                 },
                 {
@@ -169,7 +171,7 @@ $(function () {
         tooltip: {
         	formatter : function(){
                 return this.point.name + ': <b>' + this.point.y + '</b>';
-            }  
+            }
         },
         plotOptions: {
             pie: {
@@ -191,7 +193,7 @@ $(function () {
             data: [
                 {
                     name : 'Fait',
-                    color : '#468847', 
+                    color : '#468847',
                     y : {{ maintenanceDoes }}
                 },
                 {
@@ -224,7 +226,7 @@ $(function () {
 			data : [{% for d,data in evolutionBase %}{% if not loop.first %},{% endif %}{ x:{{ d }},y:{{ data }} }{% endfor %} ],
 			type : 'line',
 			threshold : null
-			
+
 		},
 		]
     });
