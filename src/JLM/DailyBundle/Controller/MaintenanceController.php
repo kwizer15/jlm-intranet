@@ -168,7 +168,8 @@ class MaintenanceController extends AbstractInterventionController
 					$em->persist($main);
 					$count++;
 				}
-				elseif ($door->getLastMaintenance() > new DateTime::createFromFormat('Y-m-d H:i:s','2017-01-01 00:00:00') && $maint !== null) {
+				$limi = new \DateTime::createFromFormat('Y-m-d H:i:s','2017-01-01 00:00:00')
+				elseif ($door->getLastMaintenance() > $limi && $maint !== null) {
 					$em->remove($maint);
 					$removed++;
 				}
