@@ -168,7 +168,7 @@ class MaintenanceController extends AbstractInterventionController
 					$em->persist($main);
 					$count++;
 				}
-				elseif ($door->getLastMaintenance()->format('Y') == 2017 && $maint !== null) {
+				elseif ($door->getLastMaintenance()->getCreation()->format('Y') == 2017 && $maint !== null) {
 					$em->remove($maint);
 					$removed++;
 				}
