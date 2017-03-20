@@ -168,7 +168,7 @@ class MaintenanceController extends AbstractInterventionController
 					$em->persist($main);
 					$count++;
 				}
-				elseif ($door->getLastMaintenance()->getCreation()->format('Y') == 2017 && $maint !== null) {
+				elseif ($door->getLastMaintenance() > new DateTime::createFromFormat('Y-m-d H:i:s','2017-01-01 00:00:00') && $maint !== null) {
 					$em->remove($maint);
 					$removed++;
 				}
