@@ -168,9 +168,13 @@ class MaintenanceController extends AbstractInterventionController
 					$em->persist($main);
 					$count++;
 				}
+				elseif ($door->getLastMaintenance()->format('Y') == 2017 && $maint !== null) {
+					$em->remove($maint);
+					$removed++;
+				}
 			}
 			// On retire les entretiens plus sous contrat
-			elseif (($contract === null || $door->getLastMaintenance()->format('Y') == 2016) && $maint !== null)
+			elseif ($contract === null && $maint !== null)
 			{
 				$shifts = $maint->getShiftTechnicians();
 				if (sizeof($shifts) > 0)
