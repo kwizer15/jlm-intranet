@@ -591,7 +591,9 @@ class InterventionController extends Controller
 	public function doorsxlsAction()
 	{
 		$em = $this->getDoctrine()->getManager();
-		$intervs = $em->getRepository('JLMDailyBundle:Intervention')->findAll();
+		$page = $this->getRequest()->get('page', 1);
+		$limit = $this->getRequest()->get('limit', 500);
+		$intervs = $em->getRepository('JLMDailyBundle:Intervention')->findBy(array(), array('id'=>'ASC'), $limit, ($page - 1) * $limit );
 
 
 		$phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
@@ -685,23 +687,38 @@ class InterventionController extends Controller
 				$as->setCellValue('J'.$row, $this->get('translator')->trans($interv->getType()));
 
 				// K
-				$constat = ($interv->getType() == 'fixing') ? $interv->getObservation() : '';
-				$as->setCellValue('K'.$row, $constat);
+				$due = ($interv->getType() == 'fixing') ? $interv->getDue() : '';
+				$as->setCellValue('K'.$row, $due);
 
 				// L
-				// M
-				// N
+				$done = ($interv->getType() == 'fixing') ? $interv->getDone() : '';
+				$as->setCellValue('L'.$row, $done);
 
+				// M
+				$installtype = $door->getType();
+				$as->setCellValue('M'.$row, $installtype);
+
+				// N
+				$constat = ($interv->getType() == 'fixing') ? $interv->getObservation() : '';
+				$as->setCellValue('N'.$row, $constat);
 
 				// O
 				$report = $interv->getReport();
-				$as->setCellValue('O'.$row, $constat);
+				$as->setCellValue('O'.$row, $report);
 
 				// P
+				$rest = $interv->getRest();
+				$as->setCellValue('P'.$row, $rest);
 
 				// Q
+				$voucher = $interv->getVoucher();
+				$as->setCellValue('Q'.$row, $voucher);
+
 				// R
 				// S
+				$bill = $interv->getBill();
+				$bill = $bill === null ? $interv->getExternalBill() : $bill;
+				$as->setCellValue('S'.$row, $bill);
 
 				// T
 				$techs = array();
