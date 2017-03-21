@@ -604,6 +604,7 @@ class InterventionController extends Controller
 	//			->setSubject("Office 2005 XLSX Test Document")
 	//			->setDescription("")
 		$as = $phpExcelObject->setActiveSheetIndex(0);
+
 		$titles = array(
 			'A' => 'date',
 			'B' => 'code installation',
@@ -717,7 +718,7 @@ class InterventionController extends Controller
 				// R
 				// S
 				$bill = $interv->getBill();
-				$bill = $bill === null ? $interv->getExternalBill() : $bill;
+				$bill = $bill === null ? $interv->getExternalBill() : $bill->getNumber();
 				$as->setCellValue('S'.$row, $bill);
 
 				// T
