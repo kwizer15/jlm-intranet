@@ -38,12 +38,12 @@ class FixingRepository extends InterventionRepository
 			->leftJoin('j.trustee','m')
 			->leftJoin('c.type','n')
 			//->leftJoin('d.shiftTechnicians','o')
-			->where('b is null')
+			->where('b.id is null')
 			->orderBy('a.creation','asc')
 			;
 		return $qb->getQuery()->getResult();
 	}
-	
+
 	public function getToday()
 	{
 		$today = new \DateTime;
@@ -69,8 +69,8 @@ class FixingRepository extends InterventionRepository
 		//			->orWhere('b is null')
 		//			->orWhere('a.close is null')
 		//			->orWhere('a.report is null')
-		->orWhere('a.mustBeBilled is null and b is not null')
-		->orWhere('l is null and k is null and a.contactCustomer is null and a.rest is not null and b is not null')
+		->orWhere('a.mustBeBilled is null and b.id is not null')
+		->orWhere('l.id is null and k.id is null and a.contactCustomer is null and a.rest is not null and b.id is not null')
 		->orderBy('a.creation','asc')
 		->setParameter(1,$todaystring)
 		;

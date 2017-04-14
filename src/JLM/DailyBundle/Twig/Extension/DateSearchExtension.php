@@ -18,25 +18,25 @@ use JLM\ModelBundle\Form\Type\DatepickerType;
 class DateSearchExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
     private $formService;
-    
+
     public function __construct($formService)
     {
         $this->formService = $formService;
     }
-    
+
     public function getName()
     {
         return 'date_search_extension';
     }
-    
+
     public function getGlobals()
     {
     	$entity = new \DateTime();
     	$form = $this->formService->create(new DatepickerType(), $entity);
         return array(
             'date_search' => array(
-			    'form' => $form->createView(),
-			),
+			           'form' => $form->createView(),
+               ),
         );
     }
 }

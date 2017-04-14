@@ -24,7 +24,7 @@ class MaintenanceRepository extends InterventionRepository
 		$year = ($year === null) ? $today->format('Y') : $year;
 		$date1 = ($secondSemestre) ? $year.'-07-01 00:00:00' : $year.'-01-01 00:00:00';
 		$date2 = ($secondSemestre) ? $year.'-12-31 23:59:59' : $year.'-06-30 23:59:59';
-		
+
 		$qb = $this->createQueryBuilder('a')
 			->select('COUNT(a)')
 			->andWhere('a.creation > ?1')
@@ -34,16 +34,16 @@ class MaintenanceRepository extends InterventionRepository
 			->setParameter(2, $date2)
 		;
 		return $qb->getQuery()->getSingleScalarResult();
-		
+
 	}
-	
+
 	public function getCountTotal($secondSemestre, $year = null)
 	{
 		$today = new \DateTime;
 		$year = ($year === null) ? $today->format('Y') : $year;
 		$date1 = ($secondSemestre) ? $year.'-07-01 00:00:00' : $year.'-01-01 00:00:00';
 		$date2 = ($secondSemestre) ? $year.'-12-31 23:59:59' : $year.'-06-30 23:59:59';
-		
+
 		$qb = $this->createQueryBuilder('a')
 			->select('COUNT(a)')
 			->andWhere('a.creation > ?1')
@@ -53,7 +53,7 @@ class MaintenanceRepository extends InterventionRepository
 		;
 		return $qb->getQuery()->getSingleScalarResult();
 	}
-	
+
 	public function getCountDoesByDay($secondSemestre, $year = null)
 	{
 		$today = new \DateTime;
@@ -73,17 +73,17 @@ class MaintenanceRepository extends InterventionRepository
 			;
 		$results = $qb->getQuery()->getResult();
 		$datas = array();
-		
+
 		foreach ($results as $result)
 		{
 			// @TODO Bug si pas de tech sur un entretien cloturé
 			$datas[\DateTime::createFromFormat('Y-m-d', $result['dt'])->getTimestamp()] = $result['number'];
 		}
-		
+
 		//print_r($datas); exit;
 		return $datas;
 	}
-	
+
 	public function getCountDoesByDayOld($secondSemestre, $year = null)
 	{
 		$today = new \DateTime;
@@ -115,10 +115,10 @@ class MaintenanceRepository extends InterventionRepository
 		}
 		return $datas;
 	}
-	
+
 	public function getToday()
 	{
-	    $today = new \DateTime;
+	  $today = new \DateTime;
 		$todaystring =  $today->format('Y-m-d');
 		$tomorrowstring = $today->add(new \DateInterval('P1D'))->format('Y-m-d');
 		// Interventions en cours
@@ -142,8 +142,8 @@ class MaintenanceRepository extends InterventionRepository
 //			->orWhere('b is null')
 //			->orWhere('a.close is null')
 //			->orWhere('a.report is null')
-			->orWhere('a.mustBeBilled is null and b is not null')
-			->orWhere('l is null and k is null and a.contactCustomer is null and a.rest is not null and b is not null')
+			->orWhere('a.mustBeBilled is null and b.id is not null')
+			->orWhere('l.id is null and k.id is null and a.contactCustomer is null and a.rest is not null and b.id is not null')
 			->orderBy('a.creation','asc')
 			->setParameter(1,$todaystring)
 			->setParameter(2,$tomorrowstring)

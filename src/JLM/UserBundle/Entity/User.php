@@ -1,7 +1,7 @@
 <?php
 namespace JLM\UserBundle\Entity;
 
-use FOS\UserBundle\Entity\User as BaseUser;
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use JLM\ContactBundle\Model\ContactInterface;
 
@@ -32,7 +32,7 @@ class User extends BaseUser implements ContactInterface
     public function setContact(ContactInterface $contact = null)
     {
         $this->contact = $contact;
-    
+
         return $this;
     }
 
@@ -45,7 +45,7 @@ class User extends BaseUser implements ContactInterface
     {
         return $this->contact;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -55,10 +55,10 @@ class User extends BaseUser implements ContactInterface
         {
             return parent::__toString();
         }
-        
+
         return $this->getContact()->__toString();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -66,7 +66,7 @@ class User extends BaseUser implements ContactInterface
     {
         return $this->contact->getFax();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -74,7 +74,7 @@ class User extends BaseUser implements ContactInterface
     {
         return $this->contact->getAddress();
     }
-    
+
     /**
      * {@inheritdoc}
      */

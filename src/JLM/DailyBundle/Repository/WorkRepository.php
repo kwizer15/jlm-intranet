@@ -20,9 +20,9 @@ class WorkRepository extends InterventionRepository
 	protected function leftJoins()
 	{
 		return parent::leftJoins();
-			
+
 	}
-	
+
 	public function getToday()
 	{
 		$today = new \DateTime;
@@ -51,14 +51,14 @@ class WorkRepository extends InterventionRepository
 //			->orWhere('b is null')
 //			->orWhere('a.close is null')
 //			->orWhere('a.report is null')
-			->orWhere('a.mustBeBilled is null and b is not null')
-			->orWhere('l is null and k is null and a.contactCustomer is null and a.rest is not null and b is not null')
+			->orWhere('a.mustBeBilled is null and b.id is not null')
+			->orWhere('l.id is null and k.id is null and a.contactCustomer is null and a.rest is not null and b.id is not null')
 			->orderBy('a.creation','asc')
 			->setParameter(1,$todaystring)
 			;
 		return $qb->getQuery()->getResult();
 	}
-	
+
 	public function getOrderTodo()
 	{
 		$qb = $this->createQueryBuilder('a')
@@ -87,7 +87,7 @@ class WorkRepository extends InterventionRepository
 		;
 		return $qb->getQuery()->getResult();
 	}
-	
+
 	public function getCountOrderTodo()
 	{
 		$qb = $this->createQueryBuilder('a')

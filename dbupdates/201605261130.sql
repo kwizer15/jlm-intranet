@@ -1,1 +1,0 @@
-ALTER TABLE products ADD active TINYINT(1) DEFAULT '1' NOT NULL

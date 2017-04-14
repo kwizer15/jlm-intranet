@@ -1,2 +1,0 @@
-ALTER TABLE quote ADD description LONGTEXT DEFAULT NULL;
-ALTER TABLE doors ADD accountingEmails LONGTEXT DEFAULT NULL COMMENT '(DC2Type:array)';

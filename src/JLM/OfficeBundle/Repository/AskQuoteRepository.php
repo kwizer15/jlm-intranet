@@ -36,7 +36,7 @@ class AskQuoteRepository extends SearchRepository
 		;
 		return $qb->getQuery()->getResult();
 	}
-	
+
 	public function getCountAll()
 	{
 		if (!isset($this->total))
@@ -48,7 +48,7 @@ class AskQuoteRepository extends SearchRepository
 		}
 		return $this->total;
 	}
-	
+
 	/**
 	 * @deprecated
 	 */
@@ -56,31 +56,29 @@ class AskQuoteRepository extends SearchRepository
 	{
 		return $this->getCountAll();
 	}
-	
+
 	public function getCountUntreated()
 	{
 		$qb = $this->createQueryBuilder('a')
 			->select('COUNT(a)')
 			->leftJoin('a.quotes','b')
-			->where('b is null')
+			->where('b.id is null')
 			->andWhere('a.dontTreat is null')
 		;
-
 		return $qb->getQuery()->getSingleScalarResult();
 	}
-	
+
 	public function getCountTreated()
 	{
 		$qb = $this->createQueryBuilder('a')
 			->select('COUNT(a)')
 			->leftJoin('a.quotes','b')
-			->where('b is not null')
+			->where('b.id is not null')
 			->orWhere('a.dontTreat is not null')
 		;
-
 		return $qb->getQuery()->getSingleScalarResult();
 	}
-	
+
 	public function getUntreated($limit = 10, $offset = 0)
 	{
 		$qb = $this->createQueryBuilder('a')
@@ -88,7 +86,7 @@ class AskQuoteRepository extends SearchRepository
 			->leftJoin('a.quotes','b')
 			->leftJoin('a.intervention','c')
 			->leftJoin('c.door','d')
-			->where('b is null')
+			->where('b.id is null')
 			->andWhere('a.dontTreat is null')
 			->orderBy('a.creation','asc')
 			->setFirstResult($offset)
@@ -96,7 +94,7 @@ class AskQuoteRepository extends SearchRepository
 			;
 		return $qb->getQuery()->getResult();
 	}
-	
+
 	public function getTreated($limit = 10, $offset = 0)
 	{
 		$qb = $this->createQueryBuilder('a')
@@ -104,7 +102,7 @@ class AskQuoteRepository extends SearchRepository
 			->leftJoin('a.quotes','b')
 			->leftJoin('a.intervention','c')
 			->leftJoin('c.door','d')
-			->where('b is not null')
+			->where('b.id is not null')
 			->orWhere('a.dontTreat is not null')
 			->orderBy('a.creation','asc')
 			->setFirstResult($offset)
@@ -113,7 +111,7 @@ class AskQuoteRepository extends SearchRepository
 		;
 		return $qb->getQuery()->getResult();
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -129,7 +127,7 @@ class AskQuoteRepository extends SearchRepository
 			->leftJoin('f.city','g')
 		;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -137,7 +135,7 @@ class AskQuoteRepository extends SearchRepository
 	{
 		return array('d.street','f.street','g.name');
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -145,5 +143,5 @@ class AskQuoteRepository extends SearchRepository
 	{
 		return array('a.creation'=>'asc');
 	}
-	
+
 }
