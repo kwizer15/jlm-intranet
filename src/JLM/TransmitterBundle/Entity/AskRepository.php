@@ -26,7 +26,7 @@ class AskRepository extends SearchRepository
 		;
 		return $qb->getQuery()->getResult();
 	}
-	
+
 	public function getCountAll()
 	{
 		if (!isset($this->total))
@@ -38,7 +38,7 @@ class AskRepository extends SearchRepository
 		}
 		return $this->total;
 	}
-	
+
 	/**
 	 * @deprecated
 	 */
@@ -46,7 +46,7 @@ class AskRepository extends SearchRepository
 	{
 		return $this->getCountAll();
 	}
-	
+
 	public function getCountUntreated()
 	{
 		if (!isset($this->untreated))
@@ -57,29 +57,30 @@ class AskRepository extends SearchRepository
 				->where('b is null')
 				->andWhere('a.dontTreat is null')
 			;
-			$this->untreated = $qb->getQuery()->getSingleScalarResult();
+			$this->untreated = 0;
+			//$this->untreated = $qb->getQuery()->getSingleScalarResult();
 		}
 		return $this->untreated;
 	}
-	
+
 	public function getCountTreated()
 	{
 		$qb = $this->createQueryBuilder('a')
 		->select('COUNT(a)')
 		->leftJoin('a.attributions','b')
-		->where('b is not null')
+		->where('b.id is not null')
 		->orWhere('a.dontTreat is not null')
 		;
-		
+return 0;
 		return $qb->getQuery()->getSingleScalarResult();
 	}
-	
+
 	public function getUntreated($limit = 10, $offset = 0)
 	{
 		$qb = $this->createQueryBuilder('a')
 			->select('a')
 			->leftJoin('a.attributions','b')
-			->where('b is null')
+			->where('b.id is null')
 			->andWhere('a.dontTreat is null')
 			->orderBy('a.creation','desc')
 			->setFirstResult($offset)
@@ -87,13 +88,13 @@ class AskRepository extends SearchRepository
 			;
 		return $qb->getQuery()->getResult();
 	}
-	
+
 	public function getTreated($limit = 10, $offset = 0)
 	{
 		$qb = $this->createQueryBuilder('a')
 			->select('a')
 			->leftJoin('a.attributions','b')
-			->where('b is not null')
+			->where('b.id is not null')
 			->orWhere('a.dontTreat is not null')
 			->orderBy('a.creation','desc')
 			->setFirstResult($offset)
@@ -102,7 +103,7 @@ class AskRepository extends SearchRepository
 		;
 		return $qb->getQuery()->getResult();
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -116,7 +117,7 @@ class AskRepository extends SearchRepository
 				->leftJoin('c.address','d')
 					->leftJoin('d.city','e');
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -124,7 +125,7 @@ class AskRepository extends SearchRepository
 	{
 		return array('f.name','d.street','e.name');
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */

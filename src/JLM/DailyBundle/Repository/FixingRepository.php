@@ -38,12 +38,12 @@ class FixingRepository extends InterventionRepository
 			->leftJoin('j.trustee','m')
 			->leftJoin('c.type','n')
 			//->leftJoin('d.shiftTechnicians','o')
-			->where('b is null')
+			->where('b.id is null')
 			->orderBy('a.creation','asc')
 			;
 		return $qb->getQuery()->getResult();
 	}
-	
+
 	public function getToday()
 	{
 		$today = new \DateTime;

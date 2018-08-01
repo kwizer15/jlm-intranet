@@ -36,7 +36,7 @@ class AskQuoteRepository extends SearchRepository
 		;
 		return $qb->getQuery()->getResult();
 	}
-	
+
 	public function getCountAll()
 	{
 		if (!isset($this->total))
@@ -48,7 +48,7 @@ class AskQuoteRepository extends SearchRepository
 		}
 		return $this->total;
 	}
-	
+
 	/**
 	 * @deprecated
 	 */
@@ -56,7 +56,7 @@ class AskQuoteRepository extends SearchRepository
 	{
 		return $this->getCountAll();
 	}
-	
+
 	public function getCountUntreated()
 	{
 		$qb = $this->createQueryBuilder('a')
@@ -65,10 +65,10 @@ class AskQuoteRepository extends SearchRepository
 			->where('b is null')
 			->andWhere('a.dontTreat is null')
 		;
-
+		return 1;
 		return $qb->getQuery()->getSingleScalarResult();
 	}
-	
+
 	public function getCountTreated()
 	{
 		$qb = $this->createQueryBuilder('a')
@@ -77,10 +77,10 @@ class AskQuoteRepository extends SearchRepository
 			->where('b is not null')
 			->orWhere('a.dontTreat is not null')
 		;
-
+		return 1;
 		return $qb->getQuery()->getSingleScalarResult();
 	}
-	
+
 	public function getUntreated($limit = 10, $offset = 0)
 	{
 		$qb = $this->createQueryBuilder('a')
@@ -96,7 +96,7 @@ class AskQuoteRepository extends SearchRepository
 			;
 		return $qb->getQuery()->getResult();
 	}
-	
+
 	public function getTreated($limit = 10, $offset = 0)
 	{
 		$qb = $this->createQueryBuilder('a')
@@ -113,7 +113,7 @@ class AskQuoteRepository extends SearchRepository
 		;
 		return $qb->getQuery()->getResult();
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -129,7 +129,7 @@ class AskQuoteRepository extends SearchRepository
 			->leftJoin('f.city','g')
 		;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -137,7 +137,7 @@ class AskQuoteRepository extends SearchRepository
 	{
 		return array('d.street','f.street','g.name');
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -145,5 +145,5 @@ class AskQuoteRepository extends SearchRepository
 	{
 		return array('a.creation'=>'asc');
 	}
-	
+
 }
