@@ -19,29 +19,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class CityController extends ContainerAware
 {
-	/**
-	 * City json
-	 */
-	public function searchAction()
-	{
-		$manager = $this->container->get('jlm_contact.city_manager');
-		$request = $manager->getRequest();
-		$term = $request->get('q');
-		$page_limit = $request->get('page_limit');;
-		$cities = $manager->getRepository()->getArray($term, $page_limit);
-		
-		return $manager->renderJson(array('cities' => $cities));
-	}
-	
-	/**
-	 * City json
-	 */
-	public function jsonAction()
-	{
-		$manager = $this->container->get('jlm_contact.city_manager');
-		$id = $manager->getRequest()->get('id');
-		$city = $manager->getRepository()->getByIdToArray($id);
-		
-		return $manager->renderJson($city);
-	}
+    /**
+     * City json
+     */
+    public function searchAction()
+    {
+        $manager = $this->container->get('jlm_contact.city_manager');
+        $request = $manager->getRequest();
+        $term = $request->get('q');
+        $page_limit = $request->get('page_limit');
+        ;
+        $cities = $manager->getRepository()->getArray($term, $page_limit);
+        
+        return $manager->renderJson(['cities' => $cities]);
+    }
+    
+    /**
+     * City json
+     */
+    public function jsonAction()
+    {
+        $manager = $this->container->get('jlm_contact.city_manager');
+        $id = $manager->getRequest()->get('id');
+        $city = $manager->getRepository()->getByIdToArray($id);
+        
+        return $manager->renderJson($city);
+    }
 }

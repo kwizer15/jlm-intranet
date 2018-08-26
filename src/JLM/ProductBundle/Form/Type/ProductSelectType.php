@@ -17,14 +17,15 @@ use JLM\CoreBundle\Form\Type\AbstractSelectType;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class ProductSelectType extends AbstractSelectType
-{ 
+{
+
     protected function getTransformerClass()
     {
-    	return '\JLM\ProductBundle\Form\DataTransformer\ProductToIntTransformer';
+        return '\JLM\ProductBundle\Form\DataTransformer\ProductToIntTransformer';
     }
     
     protected function getTypeName()
     {
-    	return 'jlm_product_product';
+        return 'jlm_product_product';
     }
 }

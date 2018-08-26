@@ -20,38 +20,38 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class MailType extends AbstractType
 {
-	/**
-	 * {@inheritdoc}
-	 */
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('from','collection',array('type'=>'jlm_core_email','allow_add' => true,'allow_delete' => true, 'prototype' => true, 'label'=>'De'))
-            ->add('to','collection',array('type'=>'jlm_core_email','allow_add' => true,'allow_delete' => true, 'prototype' => true, 'label'=>'Destinataire'))
-            ->add('cc','collection',array('type'=>'jlm_core_email','allow_add' => true,'allow_delete' => true, 'prototype' => true, 'label'=>'Copie à','required'=>false))
-            ->add('subject','text',array('label'=>'Sujet','attr'=>array('class'=>'input-xxlarge')))
-            ->add('body','textarea',array('label'=>'Message','attr'=>array('class'=>'input-xxlarge','rows'=>7)))
-            ->add('preAttachements','collection',array('type'=>'jlm_core_preattachement', 'label'=>'Fichiers joints','disabled'=>true))
+            ->add('from', 'collection', ['type'=>'jlm_core_email','allow_add' => true,'allow_delete' => true, 'prototype' => true, 'label'=>'De'])
+            ->add('to', 'collection', ['type'=>'jlm_core_email','allow_add' => true,'allow_delete' => true, 'prototype' => true, 'label'=>'Destinataire'])
+            ->add('cc', 'collection', ['type'=>'jlm_core_email','allow_add' => true,'allow_delete' => true, 'prototype' => true, 'label'=>'Copie à','required'=>false])
+            ->add('subject', 'text', ['label'=>'Sujet','attr'=>['class'=>'input-xxlarge']])
+            ->add('body', 'textarea', ['label'=>'Message','attr'=>['class'=>'input-xxlarge','rows'=>7]])
+            ->add('preAttachements', 'collection', ['type'=>'jlm_core_preattachement', 'label'=>'Fichiers joints','disabled'=>true])
             //->add('attachements','collection',array('type'=>'jlm_core_attachement','allow_add' => true,'allow_delete' => true, 'prototype' => true, 'label'=>'Fichiers joints'))
-    	;
+        ;
     }
 
     /**
-	 * {@inheritdoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
         return 'jlm_core_mail';
     }
     
-	/**
-	 * {@inheritdoc}
-	 */
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-    	$resolver->setDefaults(array(
-    			'data_class' => 'JLM\CoreBundle\Entity\Email',
-    			'csrf_protection'   => false,
-    	));
+        $resolver->setDefaults([
+                'data_class' => 'JLM\CoreBundle\Entity\Email',
+                'csrf_protection'   => false,
+        ]);
     }
 }

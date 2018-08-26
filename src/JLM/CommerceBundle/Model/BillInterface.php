@@ -19,25 +19,25 @@ use JLM\CommerceBundle\Model\CustomerInterface;
  */
 interface BillInterface
 {
-	/**
-	 * 
-	 * @param BusinessInterface $siteObject
-	 * @return self
-	 * 
-	 * @deprecated Use setBusiness
-	 */
+    /**
+     *
+     * @param BusinessInterface $siteObject
+     * @return self
+     *
+     * @deprecated Use setBusiness
+     */
     public function setSiteObject(BusinessInterface $siteObject = null);
     
     /**
      * @param BusinessInterface $siteObject
-	 * @return self
+     * @return self
      */
-    public function setBusiness(BusinessInterface $business = null); 
+    public function setBusiness(BusinessInterface $business = null);
     
     /**
-     * 
+     *
      * @param string $site
-	 * @return self
+     * @return self
      */
     public function setSite($site);
     
@@ -63,26 +63,26 @@ interface BillInterface
     public function setCustomerAddress($address);
     
     /**
-     * 
+     *
      * @param CustomerInterface $customer
-	 * @return self
-	 * @deprecated Use setCustomer
+     * @return self
+     * @deprecated Use setCustomer
      */
     public function setTrustee(CustomerInterface $customer = null);
     
     /**
-     * 
+     *
      * @param string $name
-	 * @return self
-	 * @deprecated Use setCustomerName
+     * @return self
+     * @deprecated Use setCustomerName
      */
     public function setTrusteeName($name);
     
     /**
-     * 
+     *
      * @param string $address
-	 * @return self
-	 * @deprecated Use setCustomerAddress
+     * @return self
+     * @deprecated Use setCustomerAddress
      */
     public function setTrusteeAddress($address);
     
@@ -95,5 +95,4 @@ interface BillInterface
      * @return array
      */
     public function getBoostContacts();
-    
 }

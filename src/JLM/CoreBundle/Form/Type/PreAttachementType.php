@@ -18,19 +18,19 @@ use Symfony\Component\Form\AbstractType;
  */
 class PreAttachementType extends AbstractType
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getParent()
-	{
-		return 'file';
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function getParent()
+    {
+        return 'file';
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getName()
-	{
-		return 'jlm_core_preattachement';
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'jlm_core_preattachement';
+    }
 }

@@ -3,47 +3,48 @@ namespace JLM\OfficeBundle\Entity;
 
 use JLM\OfficeBundle\Model\OrderLineInterface;
 use JLM\OfficeBundle\Model\OrderInterface;
+
 /**
  * JLM\OfficeBundle\Entity\DocumentLine
  */
 class OrderLine implements OrderLineInterface
 {
-	/**
-	 * @var integer $id
-	 */
-	private $id;
-	
-	/**
-	 * Commande a laquelle appartien la ligne
-	 * @var Order $order
-	 */
-	private $order;
-	
-	/**
-	 * Position de la ligne dans le devis
-	 * @var position
-	 */
-	private $position = 0;
-	
-	/**
-	 * @var string $reference
-	 */
-	private $reference;
-	
-	/**
-	 * @var string $designation
-	 */
-	private $designation;
-	
-	/**
-	 * @var int $quantity
-	 */
-	private $quantity = 1;
+    /**
+     * @var integer $id
+     */
+    private $id;
+    
+    /**
+     * Commande a laquelle appartien la ligne
+     * @var Order $order
+     */
+    private $order;
+    
+    /**
+     * Position de la ligne dans le devis
+     * @var position
+     */
+    private $position = 0;
+    
+    /**
+     * @var string $reference
+     */
+    private $reference;
+    
+    /**
+     * @var string $designation
+     */
+    private $designation;
+    
+    /**
+     * @var int $quantity
+     */
+    private $quantity = 1;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -58,9 +59,9 @@ class OrderLine implements OrderLineInterface
      */
     public function setOrder(OrderInterface $order)
     {
-    	$this->order = $order;
-    	
-    	return $this;
+        $this->order = $order;
+        
+        return $this;
     }
     
     /**
@@ -70,7 +71,7 @@ class OrderLine implements OrderLineInterface
      */
     public function getOrder()
     {
-    	return $this->order;
+        return $this->order;
     }
     
     /**
@@ -89,7 +90,7 @@ class OrderLine implements OrderLineInterface
     /**
      * Get position
      *
-     * @return integer 
+     * @return integer
      */
     public function getPosition()
     {
@@ -112,7 +113,7 @@ class OrderLine implements OrderLineInterface
     /**
      * Get reference
      *
-     * @return string 
+     * @return string
      */
     public function getReference()
     {
@@ -135,7 +136,7 @@ class OrderLine implements OrderLineInterface
     /**
      * Get designation
      *
-     * @return string 
+     * @return string
      */
     public function getDesignation()
     {
@@ -158,7 +159,7 @@ class OrderLine implements OrderLineInterface
     /**
      * Get quantity
      *
-     * @return integer 
+     * @return integer
      */
     public function getQuantity()
     {

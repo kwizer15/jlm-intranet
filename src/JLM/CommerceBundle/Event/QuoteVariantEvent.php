@@ -18,9 +18,9 @@ use JLM\CommerceBundle\Model\QuoteVariantInterface;
 
 class QuoteVariantEvent extends RequestEvent
 {
-	/**
-	 * @var QuoteVariantInterface
-	 */
+    /**
+     * @var QuoteVariantInterface
+     */
     private $quote;
 
     /**
@@ -29,12 +29,12 @@ class QuoteVariantEvent extends RequestEvent
      */
     public function __construct(QuoteVariantInterface $quote, Request $request)
     {
-    	$this->quote = $quote;
-    	parent::__construct($request);
+        $this->quote = $quote;
+        parent::__construct($request);
     }
     
     public function getQuoteVariant()
     {
-    	return $this->quote;
+        return $this->quote;
     }
 }

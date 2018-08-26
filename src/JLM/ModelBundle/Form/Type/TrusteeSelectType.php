@@ -10,22 +10,22 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TrusteeSelectType extends AbstractType
 {
-	/**
-	 * @var ObjectManager
-	 */
-	private $om;
-	
-	/**
-	 * @param ObjectManager $om
-	 */
-	public function __construct(ObjectManager $om)
-	{
-		$this->om = $om;
-	}
+    /**
+     * @var ObjectManager
+     */
+    private $om;
+    
+    /**
+     * @param ObjectManager $om
+     */
+    public function __construct(ObjectManager $om)
+    {
+        $this->om = $om;
+    }
 
     public function getParent()
     {
-    	return 'genemu_jqueryselect2_hidden';
+        return 'genemu_jqueryselect2_hidden';
     }
     
     public function getName()
@@ -33,10 +33,10 @@ class TrusteeSelectType extends AbstractType
         return 'trustee_select';
     }
     
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'transformer' => new TrusteeToIntTransformer($this->om),
-        ));
+        ]);
     }
 }

@@ -20,20 +20,20 @@ use JLM\CommerceBundle\Model\BillInterface;
  */
 class BillLine extends CommercialPartLineProduct implements BillLineInterface
 {
-	/**
-	 * @var integer $id
-	 */
-	private $id;
-	
-	/**
-	 * @var BillInterface $bill
-	 */
-	private $bill;
+    /**
+     * @var integer $id
+     */
+    private $id;
+    
+    /**
+     * @var BillInterface $bill
+     */
+    private $bill;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {

@@ -14,6 +14,7 @@ namespace JLM\CommerceBundle\Builder;
 use JLM\OfficeBundle\Builder\OrderBuilderAbstract;
 use JLM\CommerceBundle\Model\QuoteVariantInterface;
 use JLM\OfficeBundle\Factory\OrderLineFactory;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -22,11 +23,11 @@ class VariantOrderBuilder extends OrderBuilderAbstract
     private $variant;
     
     /**
-     * 
+     *
      * @param QuoteVariantInterface $variant
      * @throws LogicException
      */
-    public function __construct(QuoteVariantInterface $variant, $options = array())
+    public function __construct(QuoteVariantInterface $variant, $options = [])
     {
         parent::__construct($options);
         $this->variant = $variant;
@@ -34,28 +35,24 @@ class VariantOrderBuilder extends OrderBuilderAbstract
     
     public function buildLines()
     {
-    	$vlines = $this->variant->getLines();
-    	foreach ($vlines as $vline)
-    	{
-    		if (!$vline->isService())
-    		{
-    			$this->getOrder()->addLine(OrderLineFactory::create(new VariantOrderLineBuilder($vline)));
-    		}
-    	}
+        $vlines = $this->variant->getLines();
+        foreach ($vlines as $vline) {
+            if (!$vline->isService()) {
+                $this->getOrder()->addLine(OrderLineFactory::create(new VariantOrderLineBuilder($vline)));
+            }
+        }
     }
     
     public function buildTime()
     {
-    	parent::buildTime();
-    	$vlines = $this->variant->getLines();
-    	$hours = 0;
-    	foreach ($vlines as $vline)
-    	{
-    		if ($vline->isService())
-    		{
-    			$hours += $vline->getQuantity();
-    		}
-    	}
-    	$this->getOrder()->setTime($hours);
+        parent::buildTime();
+        $vlines = $this->variant->getLines();
+        $hours = 0;
+        foreach ($vlines as $vline) {
+            if ($vline->isService()) {
+                $hours += $vline->getQuantity();
+            }
+        }
+        $this->getOrder()->setTime($hours);
     }
 }

@@ -23,91 +23,91 @@ use JLM\CommerceBundle\Model\QuoteVariantInterface;
  */
 class Quote extends CommercialPart implements QuoteInterface
 {
-	const EVENT_CREATION = 'creation';
-	const EVENT_NEWVARIANT = 'creation';
-	const EVENT_READY = 'ready';
-	const EVENT_PRINT = 'print';
-	const EVENT_SEND = 'send';
-	const EVENT_BOOST = 'boost';
-	const EVENT_GIVEN = 'given';
-	const EVENT_MODIFIED = 'modified';
-	const EVENT_RETURNINSEIZURE = 'inseizure';
-	
-	/**
-	 * @var int $id
-	 */
-	private $id;
-	
-	/**
-	 * Suiveur (pour le suivi)
-	 * @var string $follower
-	 */
-	private $follower;
-	
-	/**
-	 * Suiveur (pour le devis)
-	 * @var string $followerCp
-	 */
-	private $followerCp;
-	
-	/**
-	 * Porte concernée (pour le suivi)
-	 * @var Door $door
-	 */
-	private $door;
-	
-	/**
-	 * Porte concernée (pour le devis)
-	 * @var string $doorCp
-	 */
-	private $doorCp;
-	
-	/**
-	 * @var JLM\ModelBundle\Entity\SiteContact $contact
-	 */
-	private $contact;
-	
-	/**
-	 * @var JLM\ContactBundle\Model\PersonInterface $contactPerson
-	 */
-	private $contactPerson;
-	
-	/**
-	 * @var string $contactCp
-	 */
-	private $contactCp;
-	
-	/**
-	 * @var ArrayCollection $variants
-	 */
-	private $variants;
-	
-	/**
-	 * Demande de devis liée
-	 * @var AskQuote
-	 */
-	private $ask;
-	
-	/**
-	 * Description du devis
-	 * @var string
-	 */
-	private $description;
-	
-	/**
-	 * Construteur
-	 *
-	 */
-	public function __construct()
-	{
-		$this->variants = new ArrayCollection;
-		parent::__construct();
-	}
-	
+    const EVENT_CREATION = 'creation';
+    const EVENT_NEWVARIANT = 'creation';
+    const EVENT_READY = 'ready';
+    const EVENT_PRINT = 'print';
+    const EVENT_SEND = 'send';
+    const EVENT_BOOST = 'boost';
+    const EVENT_GIVEN = 'given';
+    const EVENT_MODIFIED = 'modified';
+    const EVENT_RETURNINSEIZURE = 'inseizure';
+    
+    /**
+     * @var int $id
+     */
+    private $id;
+    
+    /**
+     * Suiveur (pour le suivi)
+     * @var string $follower
+     */
+    private $follower;
+    
+    /**
+     * Suiveur (pour le devis)
+     * @var string $followerCp
+     */
+    private $followerCp;
+    
+    /**
+     * Porte concernée (pour le suivi)
+     * @var Door $door
+     */
+    private $door;
+    
+    /**
+     * Porte concernée (pour le devis)
+     * @var string $doorCp
+     */
+    private $doorCp;
+    
+    /**
+     * @var JLM\ModelBundle\Entity\SiteContact $contact
+     */
+    private $contact;
+    
+    /**
+     * @var JLM\ContactBundle\Model\PersonInterface $contactPerson
+     */
+    private $contactPerson;
+    
+    /**
+     * @var string $contactCp
+     */
+    private $contactCp;
+    
+    /**
+     * @var ArrayCollection $variants
+     */
+    private $variants;
+    
+    /**
+     * Demande de devis liée
+     * @var AskQuote
+     */
+    private $ask;
+    
+    /**
+     * Description du devis
+     * @var string
+     */
+    private $description;
+    
+    /**
+     * Construteur
+     *
+     */
+    public function __construct()
+    {
+        $this->variants = new ArrayCollection;
+        parent::__construct();
+    }
+    
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -130,7 +130,7 @@ class Quote extends CommercialPart implements QuoteInterface
     /**
      * Get follower
      *
-     * @return string 
+     * @return string
      */
     public function getFollower()
     {
@@ -153,7 +153,7 @@ class Quote extends CommercialPart implements QuoteInterface
     /**
      * Get followerCp
      *
-     * @return string 
+     * @return string
      */
     public function getFollowerCp()
     {
@@ -176,7 +176,7 @@ class Quote extends CommercialPart implements QuoteInterface
     /**
      * Get doorCp
      *
-     * @return string 
+     * @return string
      */
     public function getDoorCp()
     {
@@ -190,16 +190,14 @@ class Quote extends CommercialPart implements QuoteInterface
      */
     public function getState()
     {
-    	$state = (sizeof($this->variants)  > 0) ? -1 : 0;
-    	foreach ($this->variants as $variant)
-    	{
-    		if ($variant->getState() > $state)
-    		{
-    			$state = $variant->getState();
-    		}
-    	}
-    	
-    	return $state;
+        $state = (sizeof($this->variants)  > 0) ? -1 : 0;
+        foreach ($this->variants as $variant) {
+            if ($variant->getState() > $state) {
+                $state = $variant->getState();
+            }
+        }
+        
+        return $state;
     }
 
     /**
@@ -218,7 +216,7 @@ class Quote extends CommercialPart implements QuoteInterface
     /**
      * Get door
      *
-     * @return Door 
+     * @return Door
      */
     public function getDoor()
     {
@@ -234,9 +232,9 @@ class Quote extends CommercialPart implements QuoteInterface
      */
     public function setContact($contact)
     {
-    	$this->contact = $contact;
+        $this->contact = $contact;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -246,7 +244,7 @@ class Quote extends CommercialPart implements QuoteInterface
      */
     public function getContact()
     {
-    	return $this->contact;
+        return $this->contact;
     }
     
     /**
@@ -258,7 +256,7 @@ class Quote extends CommercialPart implements QuoteInterface
      */
     public function setContactPerson(QuoteRecipientInterface $contact)
     {
-    	return $this->setRecipient($contact);
+        return $this->setRecipient($contact);
     }
     
     /**
@@ -268,7 +266,7 @@ class Quote extends CommercialPart implements QuoteInterface
      */
     public function getContactPerson()
     {
-    	return $this->getRecipient();
+        return $this->getRecipient();
     }
     
     /**
@@ -286,7 +284,7 @@ class Quote extends CommercialPart implements QuoteInterface
     
     /**
      * Get recipient
-     * 
+     *
      * @return QuoteRecipientInterface
      */
     public function getRecipient()
@@ -302,9 +300,9 @@ class Quote extends CommercialPart implements QuoteInterface
      */
     public function setContactCp($contactCp)
     {
-    	$this->contactCp = $contactCp;
+        $this->contactCp = $contactCp;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -314,7 +312,7 @@ class Quote extends CommercialPart implements QuoteInterface
      */
     public function getContactCp()
     {
-    	return $this->contactCp;
+        return $this->contactCp;
     }
 
 
@@ -327,11 +325,11 @@ class Quote extends CommercialPart implements QuoteInterface
      */
     public function addVariant(QuoteVariantInterface $variant)
     {
-    	$variant->setQuote($this);
-    	$variant->setVariantNumber(sizeof($this->variants)+1);
-    	$this->variants[] = $variant;
-    		
-    	return true;
+        $variant->setQuote($this);
+        $variant->setVariantNumber(sizeof($this->variants)+1);
+        $this->variants[] = $variant;
+            
+        return true;
     }
     
     /**
@@ -342,15 +340,14 @@ class Quote extends CommercialPart implements QuoteInterface
      */
     public function removeVariant(QuoteVariantInterface $variant)
     {
-    	$variant->setQuote();
-    	$return = $this->variants->removeElement($variant);
-    	$i = 0;
-    	foreach ($this->variants as $v)
-    	{
-    		$v->setVariantNumber(++$i);
-    	}
-    	
-    	return $return;
+        $variant->setQuote();
+        $return = $this->variants->removeElement($variant);
+        $i = 0;
+        foreach ($this->variants as $v) {
+            $v->setVariantNumber(++$i);
+        }
+        
+        return $return;
     }
     
     /**
@@ -360,7 +357,7 @@ class Quote extends CommercialPart implements QuoteInterface
      */
     public function getVariants()
     {
-    	return $this->variants;
+        return $this->variants;
     }
 
     /**
@@ -379,7 +376,7 @@ class Quote extends CommercialPart implements QuoteInterface
     /**
      * Get ask
      *
-     * @return AskQuote 
+     * @return AskQuote
      */
     public function getAsk()
     {
@@ -393,28 +390,25 @@ class Quote extends CommercialPart implements QuoteInterface
      */
     public static function createFromAskQuote(AskQuote $askquote)
     {
-    	$quote = new self();
-    	$quote->setCreation(new \DateTime);
-    	if (($door = $askquote->getDoor()) !== null)
-    	{
-    		$quote->setDoor($door);
-    		$quote->setDoorCp($door->toString());
-    		$quote->setVat($door->getSite()->getVat()->getRate());
-    	}
-    	else
-    	{
-    		$site = $askquote->getSite();
-    		$quote->setDoorCp($site->toString());
-    		$quote->setVat($site->getVat()->getRate());
-    	}
-    	$quote->setTrustee($trustee = $askquote->getTrustee());
-    	$quote->setTrusteeName($trustee->getName());
-    	$quote->setTrusteeAddress($trustee->getAddress().'');
-    	$quote->setContact($askquote->getPerson());
-    	$quote->setContactCp($askquote->getPerson().'');
-    	$quote->setAsk($askquote);
-    	
-    	return $quote;
+        $quote = new self();
+        $quote->setCreation(new \DateTime);
+        if (($door = $askquote->getDoor()) !== null) {
+            $quote->setDoor($door);
+            $quote->setDoorCp($door->toString());
+            $quote->setVat($door->getSite()->getVat()->getRate());
+        } else {
+            $site = $askquote->getSite();
+            $quote->setDoorCp($site->toString());
+            $quote->setVat($site->getVat()->getRate());
+        }
+        $quote->setTrustee($trustee = $askquote->getTrustee());
+        $quote->setTrusteeName($trustee->getName());
+        $quote->setTrusteeAddress($trustee->getAddress().'');
+        $quote->setContact($askquote->getPerson());
+        $quote->setContactCp($askquote->getPerson().'');
+        $quote->setAsk($askquote);
+        
+        return $quote;
     }
     
     /**
@@ -424,42 +418,41 @@ class Quote extends CommercialPart implements QuoteInterface
      */
     public function generateNumber($lastnumber)
     {
-    	$n = $lastnumber + 1;
-    	$number = $this->getCreation()->format('ym');
-    	for ($i = strlen($n); $i < 4 ; $i++)
-    	{
-    		$number.= '0';
-    	}
-    	$number.= $n;
-    	$this->setNumber($number);
-    	
-    	return $number;
+        $n = $lastnumber + 1;
+        $number = $this->getCreation()->format('ym');
+        for ($i = strlen($n); $i < 4; $i++) {
+            $number.= '0';
+        }
+        $number.= $n;
+        $this->setNumber($number);
+        
+        return $number;
     }
     
     public function getDescription()
     {
-    	return $this->description;
+        return $this->description;
     }
     
     public function setDescription($description = null)
     {
-    	$this->description = $description;
-    	
-    	return $this;
+        $this->description = $description;
+        
+        return $this;
     }
     
     public function getLastSend()
     {
-    	return $this->getLastEvent(self::EVENT_SEND);
+        return $this->getLastEvent(self::EVENT_SEND);
     }
     
     public function getLastBoost()
     {
-    	return $this->getLastEvent(self::EVENT_BOOST);
+        return $this->getLastEvent(self::EVENT_BOOST);
     }
     
     public function getLastGiven()
     {
-    	return $this->getLastEvent(self::EVENT_GIVEN);
+        return $this->getLastEvent(self::EVENT_GIVEN);
     }
 }

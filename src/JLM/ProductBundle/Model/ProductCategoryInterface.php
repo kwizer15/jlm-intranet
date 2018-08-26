@@ -27,5 +27,4 @@ interface ProductCategoryInterface
      * @return boolean
      */
     public function isService();
-    
 }

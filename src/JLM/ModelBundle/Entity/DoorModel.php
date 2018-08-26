@@ -85,9 +85,9 @@ class DoorModel
      */
     public function setType(DoorType $type = null)
     {
-    	$this->type = $type;
+        $this->type = $type;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -97,6 +97,6 @@ class DoorModel
      */
     public function getType()
     {
-    	return $this->type;
+        return $this->type;
     }
 }

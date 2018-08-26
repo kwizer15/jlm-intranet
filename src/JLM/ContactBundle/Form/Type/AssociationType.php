@@ -26,8 +26,8 @@ class AssociationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('name', null, array('label'=>'Nom'))
-            ->add('contact', new ContactType(), array('data_class' => 'JLM\ContactBundle\Entity\Association'))
+            ->add('name', null, ['label'=>'Nom'])
+            ->add('contact', new ContactType(), ['data_class' => 'JLM\ContactBundle\Entity\Association'])
         ;
     }
 
@@ -45,9 +45,9 @@ class AssociationType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-        ->setDefaults(array(
+        ->setDefaults([
             'data_class' => 'JLM\ContactBundle\Entity\Association',
-        	'label' => 'Association',
-        ));
+            'label' => 'Association',
+        ]);
     }
 }

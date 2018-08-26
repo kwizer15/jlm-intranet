@@ -32,7 +32,7 @@ class RequestEvent extends Event
      */
     public function __construct(Request $request)
     {
-    	$this->request = $request;
+        $this->request = $request;
     }
     
     /**
@@ -41,6 +41,6 @@ class RequestEvent extends Event
      */
     public function getParam($param, $default = null, $deep = false)
     {
-    	return $this->request->get($param, $default, $deep);
+        return $this->request->get($param, $default, $deep);
     }
 }

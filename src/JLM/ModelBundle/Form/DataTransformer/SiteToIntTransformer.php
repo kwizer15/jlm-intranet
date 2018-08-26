@@ -5,13 +5,13 @@ use JLM\ModelBundle\Form\DataTransformer\ObjectToIntTransformer;
 
 class SiteToIntTransformer extends ObjectToIntTransformer
 {
-	public function getClass()
-	{
-		return 'JLMModelBundle:Site';
-	}
-	
-	protected function getErrorMessage()
-	{
-		return 'A site with id "%s" does not exist!';
-	}
+    public function getClass()
+    {
+        return 'JLMModelBundle:Site';
+    }
+    
+    protected function getErrorMessage()
+    {
+        return 'A site with id "%s" does not exist!';
+    }
 }

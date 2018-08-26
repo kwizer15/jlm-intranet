@@ -43,9 +43,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     
     public function getNames()
     {
-        return array(
-            array('Foo', 'Foo'),
-        );
+        return [
+            ['Foo', 'Foo'],
+        ];
     }
     
     /**

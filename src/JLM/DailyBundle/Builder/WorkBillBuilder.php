@@ -14,6 +14,7 @@ namespace JLM\DailyBundle\Builder;
 use JLM\DailyBundle\Entity\Work;
 use JLM\CommerceBundle\Builder\VariantBillBuilder;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -22,14 +23,13 @@ class WorkBillBuilder extends VariantBillBuilder
     private $intervention;
     
     /**
-     * 
+     *
      * @param Work $intervention
      * @throws LogicException
      */
-    public function __construct(Work $intervention, $options = array())
+    public function __construct(Work $intervention, $options = [])
     {
-        if ($intervention->getQuote() === null)
-        {
+        if ($intervention->getQuote() === null) {
             throw new LogicException('Aucun devis lié a ces travaux');
         }
         parent::__construct($intervention->getQuote(), $options);
@@ -44,7 +44,7 @@ class WorkBillBuilder extends VariantBillBuilder
         parent::buildReference();
         $ref = $this->getBill()->getReference();
         $this->getBill()->setReference($ref.' et notre intervention du '.$this->intervention->getLastDate()->format('d/m/Y'));
-		$this->getBill()->setIntervention($this->intervention);
+        $this->getBill()->setIntervention($this->intervention);
     }
     
     /**

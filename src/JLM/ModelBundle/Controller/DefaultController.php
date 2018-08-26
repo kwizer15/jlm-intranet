@@ -31,51 +31,49 @@ class DefaultController extends Controller
      */
     public function searchAction(Request $request)
     {
-    	$formData = $request->get('jlm_core_search');
+        $formData = $request->get('jlm_core_search');
 
-    	if (is_array($formData) && array_key_exists('query', $formData))
-    	{
-    		$em = $this->getDoctrine()->getManager();
-    		$query = $formData['query'];
-    		return array(
-    				'query' => $query,
-    				'contacts' => $em->getRepository('JLMContactBundle:Contact')->search($query),
-    				'doors'   => $em->getRepository('JLMModelBundle:Door')->search($query),
-    				'sites'   => $em->getRepository('JLMModelBundle:Site')->search($query),
-    				'trustees'=> $em->getRepository('JLMModelBundle:Trustee')->search($query),
-    				'suppliers'=> $em->getRepository('JLMProductBundle:Supplier')->search($query),
-    				'products' => $em->getRepository('JLMProductBundle:Product')->search($query),
-    		);
-    	}
-    	return array();
+        if (is_array($formData) && array_key_exists('query', $formData)) {
+            $em = $this->getDoctrine()->getManager();
+            $query = $formData['query'];
+            return [
+                    'query' => $query,
+                    'contacts' => $em->getRepository('JLMContactBundle:Contact')->search($query),
+                    'doors'   => $em->getRepository('JLMModelBundle:Door')->search($query),
+                    'sites'   => $em->getRepository('JLMModelBundle:Site')->search($query),
+                    'trustees'=> $em->getRepository('JLMModelBundle:Trustee')->search($query),
+                    'suppliers'=> $em->getRepository('JLMProductBundle:Supplier')->search($query),
+                    'products' => $em->getRepository('JLMProductBundle:Product')->search($query),
+            ];
+        }
+        return [];
     }
     
     /**
      * Upgrade contacts
-     * 
+     *
      * @Template()
      */
     public function upgradeAction()
     {
-    	$em = $this->getDoctrine()->getManager();
-    	$repo = $em->getRepository('JLMModelBundle:SiteContact');
-    	$contacts = $repo->findAll();
-    	foreach ($contacts as $contact)
-    	{
-    		$role = $contact->getOldRole();
-    		$person = $contact->getPerson();
-    		$person->setRole($role);
-    		$em->persist($person);
-    	}
-    	$quotes = $em->getRepository('JLMCommerceBundle:Quote')->findAll();
-    	foreach ($quotes as $quote)
-    	{
-    		$contact = $quote->getContact();
-    		if ($contact !== null)
-    			$quote->setContactPerson($contact->getPerson());
-    		$em->persist($quote);
-    	}
-    	$em->flush();
-    	return array();
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('JLMModelBundle:SiteContact');
+        $contacts = $repo->findAll();
+        foreach ($contacts as $contact) {
+            $role = $contact->getOldRole();
+            $person = $contact->getPerson();
+            $person->setRole($role);
+            $em->persist($person);
+        }
+        $quotes = $em->getRepository('JLMCommerceBundle:Quote')->findAll();
+        foreach ($quotes as $quote) {
+            $contact = $quote->getContact();
+            if ($contact !== null) {
+                $quote->setContactPerson($contact->getPerson());
+            }
+            $em->persist($quote);
+        }
+        $em->flush();
+        return [];
     }
 }

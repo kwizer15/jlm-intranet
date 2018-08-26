@@ -66,4 +66,4 @@ class Phone implements PhoneInterface
     {
         return $this->getNumber();
     }
-} 
+}

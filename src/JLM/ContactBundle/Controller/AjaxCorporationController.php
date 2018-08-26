@@ -31,13 +31,13 @@ class AjaxCorporationController extends Controller
      */
     public function searchAction()
     {
-    	$request = $this->get('request');
-    	$term = $request->get('q');
-    	$page_limit = $request->get('page_limit');
-    	$em = $this->getDoctrine()->getManager();
-    	$contacts = $em->getRepository('JLMContactBundle:Corporation')->getArray($term, $page_limit);
-    	
-    	return new JsonResponse(array('corporations' => $contacts));
+        $request = $this->get('request');
+        $term = $request->get('q');
+        $page_limit = $request->get('page_limit');
+        $em = $this->getDoctrine()->getManager();
+        $contacts = $em->getRepository('JLMContactBundle:Corporation')->getArray($term, $page_limit);
+        
+        return new JsonResponse(['corporations' => $contacts]);
     }
     
     /**
@@ -45,11 +45,11 @@ class AjaxCorporationController extends Controller
      */
     public function jsonAction()
     {
-    	$request = $this->get('request');
-    	$id = $request->get('id');
-    	$em = $this->getDoctrine()->getManager();
-    	$contact = $em->getRepository('JLMContactBundle:Corporation')->getByIdToArray($id);
+        $request = $this->get('request');
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $contact = $em->getRepository('JLMContactBundle:Corporation')->getByIdToArray($id);
     
-    	return new JsonResponse($contact);
+        return new JsonResponse($contact);
     }
 }

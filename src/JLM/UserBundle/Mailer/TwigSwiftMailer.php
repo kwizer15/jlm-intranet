@@ -36,11 +36,11 @@ class TwigSwiftMailer implements MailerInterface
     public function sendConfirmationEmailMessage(UserInterface $user)
     {
         $template = $this->parameters['template']['confirmation'];
-        $url = $this->router->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), true);
-        $context = array(
+        $url = $this->router->generate('fos_user_registration_confirm', ['token' => $user->getConfirmationToken()], true);
+        $context = [
             'user' => $user,
             'confirmationUrl' => $url
-        );
+        ];
 
         $this->sendMessage($template, $context, $this->parameters['from_email']['confirmation'], $user->getEmail(), true);
     }
@@ -48,11 +48,11 @@ class TwigSwiftMailer implements MailerInterface
     public function sendResettingEmailMessage(UserInterface $user)
     {
         $template = $this->parameters['template']['resetting'];
-        $url = $this->router->generate('fos_user_resetting_reset', array('token' => $user->getConfirmationToken()), true);
-        $context = array(
+        $url = $this->router->generate('fos_user_resetting_reset', ['token' => $user->getConfirmationToken()], true);
+        $context = [
             'user' => $user,
             'confirmationUrl' => $url
-        );
+        ];
         $this->sendMessage($template, $context, $this->parameters['from_email']['resetting'], $user->getEmail());
     }
 
@@ -73,9 +73,8 @@ class TwigSwiftMailer implements MailerInterface
             ->setSubject($subject)
             ->setFrom($fromEmail)
             ->setTo($toEmail);
-        if ($addMiniguide)
-        {
-        	$message->attach(\Swift_Attachment::fromPath(__DIR__ .'/../../../../web/bundles/jlmfront/pdf/jlm-mini-guide.pdf'));
+        if ($addMiniguide) {
+            $message->attach(\Swift_Attachment::fromPath(__DIR__ .'/../../../../web/bundles/jlmfront/pdf/jlm-mini-guide.pdf'));
         }
         
         if (!empty($htmlBody)) {

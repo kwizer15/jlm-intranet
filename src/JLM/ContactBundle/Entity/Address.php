@@ -37,7 +37,7 @@ class Address implements AddressInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -91,17 +91,17 @@ class Address implements AddressInterface
      */
     public function __toString()
     {
-    	return ($this->getStreet() == '') ? (string)$this->getCity() : $this->getStreet().chr(10).$this->getCity();
+        return ($this->getStreet() == '') ? (string)$this->getCity() : $this->getStreet().chr(10).$this->getCity();
     }
     
     /**
      * To String
-     * 
+     *
      * @deprecated
      * @return string
      */
     public function toString()
     {
-    	return $this->getStreet().chr(10).$this->getCity()->toString();
+        return $this->getStreet().chr(10).$this->getCity()->toString();
     }
 }

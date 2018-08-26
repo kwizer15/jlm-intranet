@@ -21,7 +21,8 @@ use Symfony\Component\Form\PreloadedExtension;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class AddressTypeTest extends TypeTestCase
-{   
+{
+
     /**
      * @var AddressType
      */
@@ -40,10 +41,10 @@ class AddressTypeTest extends TypeTestCase
         $om = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
         $s2 = new \Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type('hidden');
         $city = new CitySelectType($om);
-        return array(new PreloadedExtension(array(
+        return [new PreloadedExtension([
             $city->getName() => $city,
             $s2->getName() => $s2,
-        ), array()));
+        ], [])];
     }
     
     public function testCreateForm()
@@ -54,4 +55,3 @@ class AddressTypeTest extends TypeTestCase
         $this->object = new Address;
     }
 }
- 

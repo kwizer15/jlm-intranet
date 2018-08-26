@@ -10,33 +10,32 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class SiteContactHiddenType extends AbstractType
 {
-	/**
-	 * @var ObjectManager
-	 */
-	private $om;
-	
-	/**
-	 * @param ObjectManager $om
-	 */
-	public function __construct(ObjectManager $om)
-	{
-		$this->om = $om;
-	}
-	
-	/**
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
+    /**
+     * @var ObjectManager
+     */
+    private $om;
+    
+    /**
+     * @param ObjectManager $om
+     */
+    public function __construct(ObjectManager $om)
+    {
+        $this->om = $om;
+    }
+    
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-    	$transformer = new SiteContactToIntTransformer($this->om);
-    	$builder->addModelTransformer($transformer);
-    	
+        $transformer = new SiteContactToIntTransformer($this->om);
+        $builder->addModelTransformer($transformer);
     }
 
     public function getParent()
     {
-    	return 'hidden';
+        return 'hidden';
     }
     
     public function getName()
@@ -44,10 +43,10 @@ class SiteContactHiddenType extends AbstractType
         return 'sitecontact_hidden';
     }
     
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'invalid_message' => 'The selected contact does not exist',
-        ));
+        ]);
     }
 }

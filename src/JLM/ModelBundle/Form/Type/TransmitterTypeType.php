@@ -10,7 +10,7 @@ class TransmitterTypeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',null,array('label'=>'Nom'))
+            ->add('name', null, ['label'=>'Nom'])
         ;
     }
 
@@ -21,8 +21,8 @@ class TransmitterTypeType extends AbstractType
     
     public function getDefaultOptions(array $options)
     {
-    	return array(
-    			'data_class' => 'JLM\ModelBundle\Entity\TransmitterType',
-    	);
+        return [
+                'data_class' => 'JLM\ModelBundle\Entity\TransmitterType',
+        ];
     }
 }

@@ -41,10 +41,10 @@ class StateTest extends \PHPUnit_Framework_TestCase
     
     public function getGetterSetter()
     {
-        return array(
-            array('Dt', new \DateTime),
-            array('Date', new \DateTime),
-        );
+        return [
+            ['Dt', new \DateTime],
+            ['Date', new \DateTime],
+        ];
     }
     
     /**

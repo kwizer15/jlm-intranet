@@ -43,11 +43,11 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
 
     public function getAttributes()
     {
-        return array(
-            array('Name', 'Foo'),
-            array('Email', 'commerce@jlm-entreprise.fr'),
-            array('Address', $this->getMock('JLM\ContactBundle\Model\AddressInterface')),
-        );
+        return [
+            ['Name', 'Foo'],
+            ['Email', 'commerce@jlm-entreprise.fr'],
+            ['Address', $this->getMock('JLM\ContactBundle\Model\AddressInterface')],
+        ];
     }
     
     /**
@@ -66,10 +66,10 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
     
     public function getAdderRemover()
     {
-        return array(
-            array('Phone', 'Phones', $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface')),
-            array('Contact', 'Contacts', $this->getMock('JLM\ContactBundle\Model\CorporationContactInterface')),
-        );
+        return [
+            ['Phone', 'Phones', $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface')],
+            ['Contact', 'Contacts', $this->getMock('JLM\ContactBundle\Model\CorporationContactInterface')],
+        ];
     }
     
     /**

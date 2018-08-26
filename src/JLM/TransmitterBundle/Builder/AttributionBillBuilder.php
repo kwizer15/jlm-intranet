@@ -15,29 +15,30 @@ use JLM\CommerceBundle\Builder\BillBuilderAbstract;
 use JLM\TransmitterBundle\Model\AttributionInterface;
 use JLM\ModelBundle\Builder\ProductBillLineBuilder;
 use JLM\CommerceBundle\Factory\BillLineFactory;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class AttributionBillBuilder extends BillBuilderAbstract
 {
     /**
-     * 
+     *
      * @var AttributionInterface
      */
     private $attribution;
     
     /**
-     * 
+     *
      * @var float
      */
     private $vat;
     
     /**
-     * 
+     *
      * @param AttributionInterface $attribution
      * @param array $options
      */
-    public function __construct(AttributionInterface $attribution, $vat, $options = array())
+    public function __construct(AttributionInterface $attribution, $vat, $options = [])
     {
         $this->attribution = $attribution;
         $this->vat = $vat;
@@ -50,17 +51,15 @@ class AttributionBillBuilder extends BillBuilderAbstract
     public function buildLines()
     {
         $transmitters = $this->attribution->getTransmitters();
-        $models = array();
-        foreach ($transmitters as $transmitter)
-        {
+        $models = [];
+        foreach ($transmitters as $transmitter) {
             $key = $transmitter->getModel()->getId();
-            if (!isset($models[$key]))
-            {
-            	$models[$key] = array(
-            		'quantity' => 0,
-            		'product' => $transmitter->getModel()->getProduct(),
-            		'numbers' => array(),
-            	);
+            if (!isset($models[$key])) {
+                $models[$key] = [
+                    'quantity' => 0,
+                    'product' => $transmitter->getModel()->getProduct(),
+                    'numbers' => [],
+                ];
             }
             $models[$key]['quantity']++;
             $models[$key]['numbers'][] = $transmitter->getNumber();
@@ -68,8 +67,7 @@ class AttributionBillBuilder extends BillBuilderAbstract
         //$position = 0;
         
         // Description des numéros d'émetteurs
-        foreach ($models as $key=>$values)
-        {
+        foreach ($models as $key => $values) {
             asort($values['numbers']);
              
             $description = '';
@@ -88,17 +86,15 @@ class AttributionBillBuilder extends BillBuilderAbstract
                 } while ($i < $size);
                 $add = ($n1 == $temp) ? 'n°'.$n1 : 'du n°'.$n1.' au n°'.$temp;
                 $description .= $add;
-            }
-            else {
+            } else {
                 $description .= 'n°'.$n1;
             }
             
-            $line = BillLineFactory::create(new ProductBillLineBuilder($values['product'], $this->vat, $values['quantity'],array('description' => $description)));
+            $line = BillLineFactory::create(new ProductBillLineBuilder($values['product'], $this->vat, $values['quantity'], ['description' => $description]));
             $this->getBill()->addLine($line);
         }
         
-        if (null !== $this->getOption('port'))
-        {
+        if (null !== $this->getOption('port')) {
             $line = BillLineFactory::create(new ProductBillLineBuilder($this->getOption('port'), $this->vat, sizeof($transmitters)));
             $line->setQuantity(1);
             $this->getBill()->addLine($line);
@@ -146,5 +142,4 @@ class AttributionBillBuilder extends BillBuilderAbstract
         parent::buildConditions();
         $this->getBill()->setVatTransmitter($this->vat);
     }
-    
 }

@@ -16,5 +16,5 @@ namespace JLM\CoreBundle;
  */
 final class JLMCoreEvents
 {
-	const MAIL_PRE_SET = "jlm_core.mail_pre_set";
+    const MAIL_PRE_SET = "jlm_core.mail_pre_set";
 }

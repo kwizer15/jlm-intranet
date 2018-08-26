@@ -12,6 +12,7 @@
 namespace JLM\CoreBundle\Twig\Extension;
 
 use Doctrine\Common\Persistence\ObjectManager;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -24,8 +25,8 @@ class CoreExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
     
     public function getGlobals()
     {
-        return array(
-        	'today' => new \DateTime()
-        );
+        return [
+            'today' => new \DateTime()
+        ];
     }
 }

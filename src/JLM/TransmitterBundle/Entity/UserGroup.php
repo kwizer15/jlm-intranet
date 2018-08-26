@@ -32,7 +32,7 @@ class UserGroup
 
     /**
      * @var ArrayCollection
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Site", inversedBy="userGroups")
      * @Assert\NotNull
      */
@@ -49,7 +49,7 @@ class UserGroup
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -72,7 +72,7 @@ class UserGroup
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -95,7 +95,7 @@ class UserGroup
     /**
      * Get site
      *
-     * @return \JLM\ModelBundle\Entity\Site 
+     * @return \JLM\ModelBundle\Entity\Site
      */
     public function getSite()
     {
@@ -110,9 +110,9 @@ class UserGroup
      */
     public function setModel(\JLM\TransmitterBundle\Entity\Model $model = null)
     {
-    	$this->model = $model;
+        $this->model = $model;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -122,7 +122,7 @@ class UserGroup
      */
     public function getModel()
     {
-    	return $this->model;
+        return $this->model;
     }
     
     /**
@@ -131,6 +131,6 @@ class UserGroup
      */
     public function __toString()
     {
-    	return $this->getName();
+        return $this->getName();
     }
 }

@@ -20,7 +20,8 @@ use Symfony\Component\Form\PreloadedExtension;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class CitySelectTypeTest extends TypeTestCase
-{   
+{
+
     /**
      * @var CitySelectType
      */
@@ -45,9 +46,9 @@ class CitySelectTypeTest extends TypeTestCase
     protected function getExtensions()
     {
         $childType = new \Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type('hidden');
-        return array(new PreloadedExtension(array(
+        return [new PreloadedExtension([
             $childType->getName() => $childType,
-        ), array()));
+        ], [])];
     }
     
     public function testCreateForm()
@@ -59,4 +60,3 @@ class CitySelectTypeTest extends TypeTestCase
         $form = $this->factory->create($this->type);
     }
 }
- 

@@ -25,53 +25,54 @@ use Doctrine\Common\Persistence\Event\OnClearEventArgs;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class DoctrineSubscriber implements EventSubscriber
-{	
-	/**
-	 * @var EventDispatcherInterface
-	 */
-	private $dispatcher;
-	
-	/**
-	 * Constructor
-	 * @param EventDispatcherInterface $dispatcher
-	 */
-	public function __construct(EventDispatcherInterface $dispatcher)
-	{
-		$this->dispatcher = $dispatcher;
-	}
-	
-	/**
-	 * Dispatch an event
-	 * @param string $eventName
-	 * @param LifecycleEventArgs $args
-	 */
-	public function dispatch($eventName, LifecycleEventArgs $args)
-	{
-		// Debuging line :
-		//echo '#'.$this->getSymfonyEventName($args).'_'.$eventName.'#';
-		$this->dispatcher->dispatch($this->getSymfonyEventName($args).'_'.$eventName, new DoctrineEvent($args->getEntity(), $args->getEntityManager()));
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getSubscribedEvents()
+{
+   
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $dispatcher;
+    
+    /**
+     * Constructor
+     * @param EventDispatcherInterface $dispatcher
+     */
+    public function __construct(EventDispatcherInterface $dispatcher)
     {
-        return array(
-        	'preRemove',
-        	'postRemove',
-        	'prePersist',
+        $this->dispatcher = $dispatcher;
+    }
+    
+    /**
+     * Dispatch an event
+     * @param string $eventName
+     * @param LifecycleEventArgs $args
+     */
+    public function dispatch($eventName, LifecycleEventArgs $args)
+    {
+        // Debuging line :
+        //echo '#'.$this->getSymfonyEventName($args).'_'.$eventName.'#';
+        $this->dispatcher->dispatch($this->getSymfonyEventName($args).'_'.$eventName, new DoctrineEvent($args->getEntity(), $args->getEntityManager()));
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getSubscribedEvents()
+    {
+        return [
+            'preRemove',
+            'postRemove',
+            'prePersist',
             'postPersist',
-        	'preUpdate',
+            'preUpdate',
             'postUpdate',
-        	'postLoad',
-//        	'loadClassMetadata',
-//        	'onClassMetadataNotFound',
-//        	'preFlush',
-//        	'onFlush',
-//        	'postFlush',
-//        	'onClear'
-        );
+            'postLoad',
+//          'loadClassMetadata',
+//          'onClassMetadataNotFound',
+//          'preFlush',
+//          'onFlush',
+//          'postFlush',
+//          'onClear'
+        ];
     }
 
     /**
@@ -81,14 +82,14 @@ class DoctrineSubscriber implements EventSubscriber
      */
     public function getSymfonyEventName(LifecycleEventArgs $args)
     {
-    	$entity = $args->getEntity();
-    	$class = get_class($entity);
-    	$class = strtolower($class);
-    	$class = str_replace('bundle\\entity\\', '.', $class);
-    	$class = str_replace('\\', '_', $class);
-    	$class = str_replace('proxies___cg___', '', $class);
+        $entity = $args->getEntity();
+        $class = get_class($entity);
+        $class = strtolower($class);
+        $class = str_replace('bundle\\entity\\', '.', $class);
+        $class = str_replace('\\', '_', $class);
+        $class = str_replace('proxies___cg___', '', $class);
     
-    	return $class;
+        return $class;
     }
 
     /**
@@ -97,7 +98,7 @@ class DoctrineSubscriber implements EventSubscriber
      */
     public function preRemove(LifecycleEventArgs $args)
     {
-    	return $this->dispatch('preremove', $args);
+        return $this->dispatch('preremove', $args);
     }
     
     /**
@@ -106,7 +107,7 @@ class DoctrineSubscriber implements EventSubscriber
      */
     public function postRemove(LifecycleEventArgs $args)
     {
-    	return $this->dispatch('postremove', $args);
+        return $this->dispatch('postremove', $args);
     }
     
     /**
@@ -115,7 +116,7 @@ class DoctrineSubscriber implements EventSubscriber
      */
     public function prePersist(LifecycleEventArgs $args)
     {
-    	return $this->dispatch('prepersist', $args);
+        return $this->dispatch('prepersist', $args);
     }
     
     /**
@@ -124,7 +125,7 @@ class DoctrineSubscriber implements EventSubscriber
      */
     public function postPersist(LifecycleEventArgs $args)
     {
-    	return $this->dispatch('postpersist', $args);
+        return $this->dispatch('postpersist', $args);
     }
     
     /**
@@ -133,7 +134,7 @@ class DoctrineSubscriber implements EventSubscriber
      */
     public function preUpdate(LifecycleEventArgs $args)
     {
-    	return $this->dispatch('preupdate', $args);
+        return $this->dispatch('preupdate', $args);
     }
     
     /**

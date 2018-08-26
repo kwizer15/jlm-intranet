@@ -28,17 +28,17 @@ class Configuration implements ConfigurationInterface
     
     private function addServiceSection(ArrayNodeDefinition $node)
     {
-    	$node
-    		->addDefaultsIfNotSet()
-    			->children()
-    				->arrayNode('service')
-    				->addDefaultsIfNotSet()
-    					->children()
-    						->scalarNode('mailer')->defaultValue('jlm_front.mailer.default')->end()
-    					->end()
-    				->end()
-    			->end()
-    		->end()
-    	;
+        $node
+            ->addDefaultsIfNotSet()
+                ->children()
+                    ->arrayNode('service')
+                    ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('mailer')->defaultValue('jlm_front.mailer.default')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 }

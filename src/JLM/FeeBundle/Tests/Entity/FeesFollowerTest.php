@@ -42,13 +42,13 @@ class FeesFollowerTest extends \PHPUnit_Framework_TestCase
     
     public function getGetterSetter()
     {
-        return array(
-            array('Activation', new \DateTime()),
-            array('Generation', new \DateTime()),
-            array('Frequence1', 0.2),
-        	array('Frequence2', 0.2),
-        	array('Frequence4', 0.2),
-        );
+        return [
+            ['Activation', new \DateTime()],
+            ['Generation', new \DateTime()],
+            ['Frequence1', 0.2],
+            ['Frequence2', 0.2],
+            ['Frequence4', 0.2],
+        ];
     }
     
     /**
@@ -64,11 +64,11 @@ class FeesFollowerTest extends \PHPUnit_Framework_TestCase
     
     public function getFrequences()
     {
-        return array(
-        	array(1),
-            array(2),
-            array(4),
-        );
+        return [
+            [1],
+            [2],
+            [4],
+        ];
     }
     
     /**
@@ -76,24 +76,24 @@ class FeesFollowerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetFrequence($freq)
     {
-    	$setter = 'setFrequence' . $freq;
+        $setter = 'setFrequence' . $freq;
         $this->entity->$setter(0.2);
         $this->assertSame(0.2, $this->entity->getFrequence($freq));
     }
     
     public function testIsNotActive()
     {
-    	$date = new \DateTime();
-    	$date->add(new \DateInterval('P1D'));
-    	$this->entity->setActivation($date);
-    	$this->assertFalse($this->entity->isActive());
+        $date = new \DateTime();
+        $date->add(new \DateInterval('P1D'));
+        $this->entity->setActivation($date);
+        $this->assertFalse($this->entity->isActive());
     }
     
     public function testIsActive()
     {
-    	$date = new \DateTime();
-    	$date->sub(new \DateInterval('P1D'));
-    	$this->entity->setActivation($date);
-    	$this->assertTrue($this->entity->isActive());
+        $date = new \DateTime();
+        $date->sub(new \DateInterval('P1D'));
+        $this->entity->setActivation($date);
+        $this->assertTrue($this->entity->isActive());
     }
 }

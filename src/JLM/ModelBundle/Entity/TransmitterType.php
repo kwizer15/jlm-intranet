@@ -25,7 +25,7 @@ class TransmitterType
 
     /**
      * @var string
-     * 
+     *
      * @Assert\NotNull
      * @Assert\Type(type="string")
      * @Assert\NotBlank

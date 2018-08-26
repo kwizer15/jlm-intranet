@@ -13,118 +13,114 @@ use JLM\DailyBundle\Form\Type\RecuperationEquipmentType;
 use JLM\DailyBundle\Form\Type\RecuperationEquipmentEditType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-
 /**
  * Fixing controller.
  */
 class EquipmentController extends Controller
 {
-	/**
-	 * Displays a form to create a new InterventionPlanned entity.
-	 *
-	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
-	 */
-	public function newAction()
-	{
-		$entity = new ShiftTechnician();
-		$entity->setBegin(new \DateTime);
-		$shifting = new Equipment();
-		$shifting->setPlace('Saint-Soupplets (Bureau)');
-		$shifting->setReason('Récupération matériel');
-		$entity->setShifting($shifting);
-		$form   = $this->createForm(new RecuperationEquipmentType(), $entity);
-		return array(
-				'entity' => $entity,
-				'form'   => $form->createView(),
-		);
-	}
+    /**
+     * Displays a form to create a new InterventionPlanned entity.
+     *
+     * @Template()
+     * @Secure(roles="ROLE_OFFICE")
+     */
+    public function newAction()
+    {
+        $entity = new ShiftTechnician();
+        $entity->setBegin(new \DateTime);
+        $shifting = new Equipment();
+        $shifting->setPlace('Saint-Soupplets (Bureau)');
+        $shifting->setReason('Récupération matériel');
+        $entity->setShifting($shifting);
+        $form   = $this->createForm(new RecuperationEquipmentType(), $entity);
+        return [
+                'entity' => $entity,
+                'form'   => $form->createView(),
+        ];
+    }
 
-	/**
-	 * Creates a new ShiftTechnician entity.
-	 *
-	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
-	 */
-	public function createAction(Request $request)
-	{
-		$entity  = new ShiftTechnician();
-		$entity->setCreation(new \DateTime);
-		$form = $this->createForm(new RecuperationEquipmentType(), $entity);
-		$form->handleRequest($request);
-		if ($form->isValid())
-		{
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($entity->getShifting()->setCreation(new \DateTime));
-			$em->persist($entity);
-			$em->flush();
-			if ($this->getRequest()->isXmlHttpRequest())
-			{
-				return new JsonResponse(array());
-			}
-			
-			return $this->redirect($request->headers->get('referer'));
-		}
-		return array(
-				'entity' => $entity,
-				'form'   => $form->createView(),
-				'previous'=> $request->headers->get('referer'),
-		);
-	}
-	
-	/**
-	 * Show
-	 * @Secure(roles="ROLE_OFFICE")
-	 * @Template()
-	 */
-	public function showAction(Request $request, Equipment $entity)
-	{
-		return array(
-				'previous'=> $request->headers->get('referer'),
-				'entity' => $entity,
-		);
-	}
-	
-	/**
-	 * Edit a form to edit an existing Equipment entity.
-	 *
-	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
-	 */
-	public function editAction(Equipment $entity)
-	{
-		$editForm = $this->createForm(new EquipmentType(), $entity);
-	
-		return array(
-				'entity'      => $entity,
-				'form'   => $editForm->createView(),
-		);
-	}
-	
-	/**
-	 * Edits an existing Equipment entity.
-	 *
-	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
-	 */
-	public function updateAction(Request $request, Equipment $entity)
-	{
-		$em = $this->getDoctrine()->getManager();
-	
-		$editForm = $this->createForm(new EquipmentType(), $entity);
-		$editForm->handleRequest($request);
-	
-		if ($editForm->isValid())
-		{
-			$em->persist($entity);
-			$em->flush();
-			return $this->redirect($request->headers->get('referer'));
-		}
-	
-		return array(
-				'entity'      => $entity,
-				'form'   => $editForm->createView(),
-				'previous'=> $request->headers->get('referer'),
-		);
-	}
+    /**
+     * Creates a new ShiftTechnician entity.
+     *
+     * @Template()
+     * @Secure(roles="ROLE_OFFICE")
+     */
+    public function createAction(Request $request)
+    {
+        $entity  = new ShiftTechnician();
+        $entity->setCreation(new \DateTime);
+        $form = $this->createForm(new RecuperationEquipmentType(), $entity);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity->getShifting()->setCreation(new \DateTime));
+            $em->persist($entity);
+            $em->flush();
+            if ($this->getRequest()->isXmlHttpRequest()) {
+                return new JsonResponse([]);
+            }
+            
+            return $this->redirect($request->headers->get('referer'));
+        }
+        return [
+                'entity' => $entity,
+                'form'   => $form->createView(),
+                'previous'=> $request->headers->get('referer'),
+        ];
+    }
+    
+    /**
+     * Show
+     * @Secure(roles="ROLE_OFFICE")
+     * @Template()
+     */
+    public function showAction(Request $request, Equipment $entity)
+    {
+        return [
+                'previous'=> $request->headers->get('referer'),
+                'entity' => $entity,
+        ];
+    }
+    
+    /**
+     * Edit a form to edit an existing Equipment entity.
+     *
+     * @Template()
+     * @Secure(roles="ROLE_OFFICE")
+     */
+    public function editAction(Equipment $entity)
+    {
+        $editForm = $this->createForm(new EquipmentType(), $entity);
+    
+        return [
+                'entity'      => $entity,
+                'form'   => $editForm->createView(),
+        ];
+    }
+    
+    /**
+     * Edits an existing Equipment entity.
+     *
+     * @Template()
+     * @Secure(roles="ROLE_OFFICE")
+     */
+    public function updateAction(Request $request, Equipment $entity)
+    {
+        $em = $this->getDoctrine()->getManager();
+    
+        $editForm = $this->createForm(new EquipmentType(), $entity);
+        $editForm->handleRequest($request);
+    
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+            return $this->redirect($request->headers->get('referer'));
+        }
+    
+        return [
+                'entity'      => $entity,
+                'form'   => $editForm->createView(),
+                'previous'=> $request->headers->get('referer'),
+        ];
+    }
 }

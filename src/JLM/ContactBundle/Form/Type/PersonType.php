@@ -26,10 +26,10 @@ class PersonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('title','choice',array('label'=>'Titre', 'choices'=>array('M.'=>'M.','Mme'=>'Mme','Mlle'=>'Mlle')))
-        	->add('lastName',null,array('label'=>'Nom'))
-            ->add('firstName',null,array('label'=>'Prénom', 'required'=>false))
-            ->add('contact', 'jlm_contact_contact', array('data_class' => 'JLM\ContactBundle\Entity\Person'))
+            ->add('title', 'choice', ['label'=>'Titre', 'choices'=>['M.'=>'M.','Mme'=>'Mme','Mlle'=>'Mlle']])
+            ->add('lastName', null, ['label'=>'Nom'])
+            ->add('firstName', null, ['label'=>'Prénom', 'required'=>false])
+            ->add('contact', 'jlm_contact_contact', ['data_class' => 'JLM\ContactBundle\Entity\Person'])
         ;
     }
 
@@ -47,9 +47,9 @@ class PersonType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-        ->setDefaults(array(
+        ->setDefaults([
             'data_class' => 'JLM\ContactBundle\Entity\Person',
-        	'label' => 'Personne',
-        ));
+            'label' => 'Personne',
+        ]);
     }
 }

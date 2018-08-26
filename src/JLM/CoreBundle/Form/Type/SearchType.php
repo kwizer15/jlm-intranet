@@ -20,13 +20,13 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class SearchType extends AbstractType
 {
-	/**
-	 * {@inheritdoc}
-	 */
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('query','text',array('required'=>true,'attr'=>array('placeholder'=>'Recherche...','class'=>'search-query input-medium')))
+            ->add('query', 'text', ['required'=>true,'attr'=>['placeholder'=>'Recherche...','class'=>'search-query input-medium']])
         ;
     }
 
@@ -35,11 +35,11 @@ class SearchType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-    	$resolver->setDefaults(array(
-    		'data_class' => 'JLM\CoreBundle\Entity\Search',
-    		'method' => 'GET',
-    		'csrf_protection'   => false,
-    	));
+        $resolver->setDefaults([
+            'data_class' => 'JLM\CoreBundle\Entity\Search',
+            'method' => 'GET',
+            'csrf_protection'   => false,
+        ]);
     }
     
     /**

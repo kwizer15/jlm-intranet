@@ -11,21 +11,21 @@ class SiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('trustee','trustee_select',array('label'=>'Syndic','attr'=>array('class'=>'input-large')))
-            ->add('address','jlm_contact_address',array('label'=>'Adresse'))
-            ->add('observations',null,array('label'=>'Observations','attr'=>array('class'=>'input-xlarge')))
-            ->add('groupNumber',null,array('label'=>'Groupe (RIVP)','required'=>false,'attr'=>array('class'=>'input-mini')))
-            ->add('accession','choice',array('label'=>'Accession/Social','choices'=>array('1'=>'Accession','0'=>'Social'),'expanded'=>true,'multiple'=>false))
-            ->add('vat',null,array('label'=>'TVA','attr'=>array('class'=>'input-small')))    
-            ->add('lodge','jlm_contact_address',array('label'=>'Loge gardien','required'=>false))
+            ->add('trustee', 'trustee_select', ['label'=>'Syndic','attr'=>['class'=>'input-large']])
+            ->add('address', 'jlm_contact_address', ['label'=>'Adresse'])
+            ->add('observations', null, ['label'=>'Observations','attr'=>['class'=>'input-xlarge']])
+            ->add('groupNumber', null, ['label'=>'Groupe (RIVP)','required'=>false,'attr'=>['class'=>'input-mini']])
+            ->add('accession', 'choice', ['label'=>'Accession/Social','choices'=>['1'=>'Accession','0'=>'Social'],'expanded'=>true,'multiple'=>false])
+            ->add('vat', null, ['label'=>'TVA','attr'=>['class'=>'input-small']])
+            ->add('lodge', 'jlm_contact_address', ['label'=>'Loge gardien','required'=>false])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'JLM\ModelBundle\Entity\Site'
-        ));
+        ]);
     }
 
     public function getName()

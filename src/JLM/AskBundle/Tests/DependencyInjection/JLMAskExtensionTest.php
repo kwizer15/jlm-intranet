@@ -33,6 +33,6 @@ class JLMAskExtensionTest extends \PHPUnit_Framework_TestCase
     
     public function testLoad()
     {
-        $this->ext->load(array(), $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder'));
+        $this->ext->load([], $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder'));
     }
 }

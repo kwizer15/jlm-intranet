@@ -17,16 +17,15 @@ namespace JLM\DailyBundle\Builder\Email;
 class WorkPlannedMailBuilder extends WorkMailBuilder
 {
 
-	public function buildSubject()
-	{
-		$this->setSubject('Travaux plannifiés');
-	}
-	
-	public function buildBody()
-	{
-		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Les travaux'.$this->_getSource().' sont plannifiés pour le ...'.chr(10)
-		.$this->_getSignature()
-		);
-	}
+    public function buildSubject()
+    {
+        $this->setSubject('Travaux plannifiés');
+    }
+    
+    public function buildBody()
+    {
+        $this->setBody('Bonjour,'.chr(10).chr(10)
+        .'Les travaux'.$this->_getSource().' sont plannifiés pour le ...'.chr(10)
+        .$this->_getSignature());
+    }
 }

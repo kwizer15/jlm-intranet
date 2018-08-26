@@ -16,5 +16,5 @@ namespace JLM\FrontBundle\Model;
  */
 interface ContactInterface
 {
-	public function getEmail();
+    public function getEmail();
 }

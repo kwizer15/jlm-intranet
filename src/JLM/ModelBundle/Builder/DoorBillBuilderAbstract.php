@@ -21,7 +21,7 @@ abstract class DoorBillBuilderAbstract extends SiteBillBuilderAbstract
 {
     protected $door;
     
-    public function __construct(Door $door, $options = array())
+    public function __construct(Door $door, $options = [])
     {
         $this->door = $door;
         parent::__construct($this->door->getAdministrator(), $options);

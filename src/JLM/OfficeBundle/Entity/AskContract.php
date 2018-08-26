@@ -19,35 +19,35 @@
 // */
 //class AskContract extends Ask
 //{
-//	/**
-//	 * @ORM\Id
-//	 * @ORM\Column(type="integer")
-//	 * @ORM\GeneratedValue(strategy="AUTO")
-//	 */
-//	private $id;
-//	
-//	/**
-//	 * Propositions de contrat
-//	 * @ORM\OneToMany(targetEntity="ProposalContract",mappedBy="ask")
-//	 */
-//	private $proposals;
-//	
-//	/**
-//	 * Get Id
-//	 * @return int
-//	 */
-//	public function getId()
-//	{
-//		return $this->id;
-//	}
-//	
-//	/**
-//	 * Dossier de stockage des documents uploadés
-//	 */
-//	protected function getUploadDir()
-//	{
-//		return 'uploads/documents/askcontract';
-//	}
+//  /**
+//   * @ORM\Id
+//   * @ORM\Column(type="integer")
+//   * @ORM\GeneratedValue(strategy="AUTO")
+//   */
+//  private $id;
+//
+//  /**
+//   * Propositions de contrat
+//   * @ORM\OneToMany(targetEntity="ProposalContract",mappedBy="ask")
+//   */
+//  private $proposals;
+//
+//  /**
+//   * Get Id
+//   * @return int
+//   */
+//  public function getId()
+//  {
+//      return $this->id;
+//  }
+//
+//  /**
+//   * Dossier de stockage des documents uploadés
+//   */
+//  protected function getUploadDir()
+//  {
+//      return 'uploads/documents/askcontract';
+//  }
 //
 //    /**
 //     * Constructor
@@ -56,7 +56,7 @@
 //    {
 //        $this->proposals = new \Doctrine\Common\Collections\ArrayCollection();
 //    }
-//    
+//
 //    /**
 //     * Add proposal
 //     *
@@ -66,7 +66,7 @@
 //    public function addProposal(\JLM\OfficeBundle\Entity\Proposal $proposal)
 //    {
 //        $this->proposals[] = $proposal;
-//    
+//
 //        return $this;
 //    }
 //
@@ -83,7 +83,7 @@
 //    /**
 //     * Get proposals
 //     *
-//     * @return \Doctrine\Common\Collections\Collection 
+//     * @return \Doctrine\Common\Collections\Collection
 //     */
 //    public function getProposals()
 //    {

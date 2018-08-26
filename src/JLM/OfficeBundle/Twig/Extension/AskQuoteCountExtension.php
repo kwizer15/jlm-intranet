@@ -12,6 +12,7 @@
 namespace JLM\OfficeBundle\Twig\Extension;
 
 use Doctrine\Common\Persistence\ObjectManager;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -33,10 +34,10 @@ class AskQuoteCountExtension extends \Twig_Extension implements \Twig_Extension_
     {
         $repo = $this->om->getRepository('JLMOfficeBundle:AskQuote');
         
-        return array('askquotecount' => array(
-				'all' => $repo->getTotal(),
-				'untreated' => $repo->getCountUntreated(),
-				'treated' => $repo->getCountTreated(),
-		));
+        return ['askquotecount' => [
+                'all' => $repo->getTotal(),
+                'untreated' => $repo->getCountUntreated(),
+                'treated' => $repo->getCountTreated(),
+        ]];
     }
 }

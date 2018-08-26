@@ -11,30 +11,31 @@ use JLM\ModelBundle\JLMModelEvents;
 use JLM\ModelBundle\Event\DoorEvent;
 
 class EmailSubscriber implements EventSubscriberInterface
-{	
-	private $om;
-	
-	public function __construct(ObjectManager $om)
-	{
-		$this->om = $om;
-	}
-	
-	public static function getSubscribedEvents()
-	{
-		return array(
-			JLMModelEvents::DOOR_SENDMAIL => 'persistEmailsOnDoor',
-		);
-	}
-	
-	public function persistEmailsOnDoor(DoorEvent $event)
-	{
-		$door = $event->getDoor();
-		$mail = $event->getParam('jlm_core_mail');
-		$to = (isset($mail['to'])) ? $mail['to'] : array();
-		$cc = (isset($mail['cc'])) ? $mail['cc'] : array();
-		$door->setManagerEmails($to);
-		$door->setAdministratorEmails($cc);
-		$this->om->persist($door);
-		$this->om->flush();
-	}
+{
+   
+    private $om;
+    
+    public function __construct(ObjectManager $om)
+    {
+        $this->om = $om;
+    }
+    
+    public static function getSubscribedEvents()
+    {
+        return [
+            JLMModelEvents::DOOR_SENDMAIL => 'persistEmailsOnDoor',
+        ];
+    }
+    
+    public function persistEmailsOnDoor(DoorEvent $event)
+    {
+        $door = $event->getDoor();
+        $mail = $event->getParam('jlm_core_mail');
+        $to = (isset($mail['to'])) ? $mail['to'] : [];
+        $cc = (isset($mail['cc'])) ? $mail['cc'] : [];
+        $door->setManagerEmails($to);
+        $door->setAdministratorEmails($cc);
+        $this->om->persist($door);
+        $this->om->flush();
+    }
 }

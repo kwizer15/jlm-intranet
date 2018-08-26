@@ -8,6 +8,7 @@ use JLM\CommerceBundle\Model\BillLineInterface;
 use JLM\ProductBundle\Model\ProductInterface;
 use JLM\TransmitterBundle\Model\AttributionInterface;
 use JLM\TransmitterBundle\Model\TransmitterInterface;
+
 /**
  * Attribution
  *
@@ -46,12 +47,12 @@ class Attribution implements AttributionInterface
      */
     private $individual;
 
-	/**
-	 * @var ArrayCollection
-	 * 
-	 * @ORM\OneToMany(targetEntity="Transmitter", mappedBy="attribution")
-	 * @ORM\OrderBy({"number" = "ASC"})
-	 */
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Transmitter", mappedBy="attribution")
+     * @ORM\OrderBy({"number" = "ASC"})
+     */
     private $transmitters;
     
     /**
@@ -71,7 +72,7 @@ class Attribution implements AttributionInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -94,7 +95,7 @@ class Attribution implements AttributionInterface
     /**
      * Get creation
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreation()
     {
@@ -117,7 +118,7 @@ class Attribution implements AttributionInterface
     /**
      * Get contact
      *
-     * @return string 
+     * @return string
      */
     public function getContact()
     {
@@ -140,7 +141,7 @@ class Attribution implements AttributionInterface
     /**
      * Get individual
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIndividual()
     {
@@ -180,7 +181,7 @@ class Attribution implements AttributionInterface
     /**
      * Get transmitters
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTransmitters()
     {
@@ -226,7 +227,7 @@ class Attribution implements AttributionInterface
     /**
      * Get bill
      *
-     * @return BillInterface 
+     * @return BillInterface
      */
     public function getBill()
     {
@@ -235,11 +236,11 @@ class Attribution implements AttributionInterface
     
     /**
      * Get Site
-     * 
-     * @return \JLM\ModelBundel\Entity\Site 
+     *
+     * @return \JLM\ModelBundel\Entity\Site
      */
     public function getSite()
     {
-    	return $this->getAsk()->getSite();
+        return $this->getAsk()->getSite();
     }
 }

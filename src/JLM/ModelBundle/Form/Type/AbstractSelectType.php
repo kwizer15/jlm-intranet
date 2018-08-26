@@ -15,6 +15,6 @@ abstract class AbstractSelectType extends AbstractHiddenType
     
     public function getParent()
     {
-    	return 'text';
+        return 'text';
     }
 }

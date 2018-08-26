@@ -21,7 +21,7 @@ class ContractEvent extends Event
 
     public function __construct(Contract $contract)
     {
-    	$this->contract = $contract;
+        $this->contract = $contract;
     }
 
     public function getContract()

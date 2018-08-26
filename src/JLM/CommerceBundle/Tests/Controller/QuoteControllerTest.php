@@ -30,17 +30,17 @@ class QuoteControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->client->followRedirects();
-    } 
+    }
     
     public function getUrls()
     {
-        return array(
-        	array('GET', '/quote/'),
-            array('GET', '/quote/new'),
-        	array('GET', '/quote/new?ask=1'),
-            array('GET', '/quote/1/edit'),
-            array('GET', '/quote/1'),
-        );
+        return [
+            ['GET', '/quote/'],
+            ['GET', '/quote/new'],
+            ['GET', '/quote/new?ask=1'],
+            ['GET', '/quote/1/edit'],
+            ['GET', '/quote/1'],
+        ];
     }
     
     /**

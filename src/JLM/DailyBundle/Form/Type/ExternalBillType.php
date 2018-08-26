@@ -8,22 +8,22 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ExternalBillType extends AbstractType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder
-			->add('externalBill',null,array('label'=>'Numéro de facture'))
-		;
-	}
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('externalBill', null, ['label'=>'Numéro de facture'])
+        ;
+    }
 
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
-	{
-		$resolver->setDefaults(array(
-				'data_class' => 'JLM\DailyBundle\Entity\Intervention'
-		));
-	}
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults([
+                'data_class' => 'JLM\DailyBundle\Entity\Intervention'
+        ]);
+    }
 
-	public function getName()
-	{
-		return 'jlm_dailybundle_externalbilltype';
-	}
+    public function getName()
+    {
+        return 'jlm_dailybundle_externalbilltype';
+    }
 }

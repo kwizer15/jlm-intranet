@@ -21,10 +21,10 @@ abstract class TrusteeBillBuilderAbstract extends BillBuilderAbstract
 {
     /**
      * @var Trustee
-     */   
+     */
     protected $trustee;
     
-    public function __construct(Trustee $trustee, $options = array())
+    public function __construct(Trustee $trustee, $options = [])
     {
         $this->trustee = $trustee;
         parent::__construct($options);

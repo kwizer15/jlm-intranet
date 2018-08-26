@@ -12,6 +12,7 @@
 namespace JLM\CommerceBundle\Tests\Factory;
 
 use JLM\CommerceBundle\Factory\BillLineFactory;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -58,11 +59,11 @@ class BillLineFactoryTest extends \PHPUnit_Framework_TestCase
     
     public function builders()
     {
-        return array(
-        	array('create'),
-            array('buildProduct'),
-            array('buildQuantity'),
-            array('buildPrice'),
-        );
+        return [
+            ['create'],
+            ['buildProduct'],
+            ['buildQuantity'],
+            ['buildPrice'],
+        ];
     }
 }

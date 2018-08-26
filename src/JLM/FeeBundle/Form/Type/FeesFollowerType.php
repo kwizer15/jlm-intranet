@@ -20,34 +20,34 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class FeesFollowerType extends AbstractType
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder
-		->add('activation', 'datepicker' ,array('label'=>'Date d\'activation'))
-		->add('frequence1', null, array('label'=>'Annuelle'))
-		->add('frequence2', null, array('label'=>'Semestriellle'))
-		->add('frequence4', null, array('label'=>'Trimestrielle'))
-		;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+        ->add('activation', 'datepicker', ['label'=>'Date d\'activation'])
+        ->add('frequence1', null, ['label'=>'Annuelle'])
+        ->add('frequence2', null, ['label'=>'Semestriellle'])
+        ->add('frequence4', null, ['label'=>'Trimestrielle'])
+        ;
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getName()
-	{
-		return 'feesfollower';
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'feesfollower';
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
-	{
-		$resolver->setDefaults(array(
-				'data_class' => 'JLM\FeeBundle\Entity\FeesFollower',
-		));
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults([
+                'data_class' => 'JLM\FeeBundle\Entity\FeesFollower',
+        ]);
+    }
 }

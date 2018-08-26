@@ -22,27 +22,26 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class QuoteVariantHiddenType extends AbstractType
 {
-	/**
-	 * @var ObjectManager
-	 */
-	private $om;
-	
-	/**
-	 * @param ObjectManager $om
-	 */
-	public function __construct(ObjectManager $om)
-	{
-		$this->om = $om;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
+    /**
+     * @var ObjectManager
+     */
+    private $om;
+    
+    /**
+     * @param ObjectManager $om
+     */
+    public function __construct(ObjectManager $om)
+    {
+        $this->om = $om;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-    	$transformer = new QuoteVariantToIntTransformer($this->om);
-    	$builder->addModelTransformer($transformer);
-    	
+        $transformer = new QuoteVariantToIntTransformer($this->om);
+        $builder->addModelTransformer($transformer);
     }
 
     /**
@@ -50,7 +49,7 @@ class QuoteVariantHiddenType extends AbstractType
      */
     public function getParent()
     {
-    	return 'hidden';
+        return 'hidden';
     }
     
     /**
@@ -64,10 +63,10 @@ class QuoteVariantHiddenType extends AbstractType
     /**
      * {@inheritdoc}
      */
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'invalid_message' => 'The selected quotevariant does not exist',
-        ));
+        ]);
     }
 }

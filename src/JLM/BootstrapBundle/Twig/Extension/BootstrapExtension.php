@@ -12,6 +12,7 @@
 namespace JLM\BootstrapBundle\Twig\Extension;
 
 use Doctrine\Common\Persistence\ObjectManager;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -24,28 +25,28 @@ class BootstrapExtension extends \Twig_Extension
     
     public function getFilters()
     {
-        return array(
-        		new \Twig_SimpleFilter('icon', array($this, 'iconFilter'), array('is_safe' => array('all'))),
-        		new \Twig_SimpleFilter('badge', array($this, 'badgeFilter'), array('is_safe' => array('all'))),
-        );
+        return [
+                new \Twig_SimpleFilter('icon', [$this, 'iconFilter'], ['is_safe' => ['all']]),
+                new \Twig_SimpleFilter('badge', [$this, 'badgeFilter'], ['is_safe' => ['all']]),
+        ];
     }
     
     public function iconFilter($iconName, $white = false, $version = '3.3.5')
     {
-    	return '<span class="glyphicon glyphicon-'.$iconName.'"></span>';
+        return '<span class="glyphicon glyphicon-'.$iconName.'"></span>';
     }
     
     public function badgeFilter($content, $class = null)
     {
-    	$class = ($class === null) ? 'badge' : 'badge badge-'.$class;
-    	
-    	return '<span class="'.$class.'">'.$content.'</span>';
+        $class = ($class === null) ? 'badge' : 'badge badge-'.$class;
+        
+        return '<span class="'.$class.'">'.$content.'</span>';
     }
         
     public function getGlobals()
     {
-    	return array(
-    			'twbs' => array('version' => 3),
-    	);
+        return [
+                'twbs' => ['version' => 3],
+        ];
     }
 }

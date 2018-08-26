@@ -26,12 +26,12 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
     private $follower;
     
     /**
-     * 
+     *
      * @param Fee $fee
      * @param FeesFollower $follower
      * @param array $options
      */
-    public function __construct(Fee $fee, FeesFollower $follower, $options = array())
+    public function __construct(Fee $fee, FeesFollower $follower, $options = [])
     {
         $this->fee = $fee;
         $this->follower = $follower;
@@ -96,12 +96,11 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
     public function buildConditions()
     {
         parent::buildConditions();
-        if ($this->getOption('number') !== null)
-        {
+        if ($this->getOption('number') !== null) {
             $this->getBill()->setNumber($this->getOption('number'));
         }
         $this->getBill()->setFee($this->fee);
-    	$this->getBill()->setFeesFollower($this->follower);
+        $this->getBill()->setFeesFollower($this->follower);
     }
     
     /**
@@ -109,20 +108,17 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
      */
     public function buildLines()
     {
-    	$nbMonthsInYear = 12;
-        $periods = array('1'=>'P1YT2H','2'=>'P6MT2H','4'=>'P3MT2H');
-        foreach ($this->fee->getContracts() as $key=>$contract)
-        {
+        $nbMonthsInYear = 12;
+        $periods = ['1'=>'P1YT2H','2'=>'P6MT2H','4'=>'P3MT2H'];
+        foreach ($this->fee->getContracts() as $key => $contract) {
             $begin = clone $this->follower->getActivation();
             $endContract = $contract->getEnd();
             $end = clone $this->follower->getActivation();
             $end->add(new \DateInterval($periods[$this->fee->getFrequence()]));
             
             $frequenceString = ' '.$this->fee->getFrequenceString();
-            if ($endContract !== null)
-            {
-                if ($endContract < $end)
-                {
+            if ($endContract !== null) {
+                if ($endContract < $end) {
                     $end = $endContract;
                     $frequenceString = '';
                 }
@@ -132,11 +128,11 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
             $rapport = ($diff->format('%m') + $nbMonthsInYear * $diff->format('%y')) / $nbMonthsInYear;
             $fee = $contract->getFee() * $rapport;
             $end->sub(new \DateInterval('P1D'));
-            $line = BillLineFactory::create(new ProductBillLineBuilder($product, $this->fee->getVat()->getRate(), 1, array(
+            $line = BillLineFactory::create(new ProductBillLineBuilder($product, $this->fee->getVat()->getRate(), 1, [
                 'price' => $fee,
                 'designation' => $product->getDesignation().$frequenceString.' du '.$begin->format('d/m/Y').' au '.$end->format('d/m/Y'),
                 'description' => $contract->getDoor()->getType().' / '.$contract->getDoor()->getLocation(),
-            )));
+            ]));
             $line->setPosition($key);
             $line->setBill($this->getBill());
             $this->getBill()->addLine($line);

@@ -18,19 +18,19 @@ use JLM\CoreBundle\Form\Type\AbstractSelectType;
  */
 class CitySelectType extends AbstractSelectType
 {
-	/**
+    /**
      * {@inheritdoc}
      */
-	protected function getTransformerClass()
-	{
-		return '\JLM\ContactBundle\Form\DataTransformer\CityToIntTransformer';
-	}
-	
-	/**
+    protected function getTransformerClass()
+    {
+        return '\JLM\ContactBundle\Form\DataTransformer\CityToIntTransformer';
+    }
+    
+    /**
      * {@inheritdoc}
      */
-	protected function getTypeName()
-	{
-		return 'jlm_contact_city';
-	}
+    protected function getTypeName()
+    {
+        return 'jlm_contact_city';
+    }
 }

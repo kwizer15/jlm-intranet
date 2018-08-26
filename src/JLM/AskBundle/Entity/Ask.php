@@ -24,54 +24,54 @@ use JLM\AskBundle\Model\ContactInterface;
  */
 abstract class Ask extends UploadDocument implements AskInterface
 {
-	/**
-	 * Syndic
-	 * @var PayerInterface
-	 */
-	private $trustee;
-	
-	/**
-	 * Affaire
-	 * @var SubjectInterface
-	 */
-	private $site;
-	
-	/**
-	 * Méthode de la demande
-	 * @var CommunicationMeansInterface
-	 */
-	private $method;
-	
-	/**
-	 * Date de la demande
-	 * @var \DateTime
-	 */
-	private $creation;
-	
-	/**
-	 * Date d'échéance
-	 * @var \DateTime
-	 */
-	private $maturity;
-	
-	/**
-	 * Contact
-	 * @var ContactInterface
-	 */
-	private $person;
+    /**
+     * Syndic
+     * @var PayerInterface
+     */
+    private $trustee;
+    
+    /**
+     * Affaire
+     * @var SubjectInterface
+     */
+    private $site;
+    
+    /**
+     * Méthode de la demande
+     * @var CommunicationMeansInterface
+     */
+    private $method;
+    
+    /**
+     * Date de la demande
+     * @var \DateTime
+     */
+    private $creation;
+    
+    /**
+     * Date d'échéance
+     * @var \DateTime
+     */
+    private $maturity;
+    
+    /**
+     * Contact
+     * @var ContactInterface
+     */
+    private $person;
 
-	/**
-	 * Ne pas traiter
-	 * @var string
-	 */
-	private $dontTreat;
+    /**
+     * Ne pas traiter
+     * @var string
+     */
+    private $dontTreat;
 
-	/**
-	 * Résumé de la demande
-	 * @var string
-	 */
-	private $ask;
-	
+    /**
+     * Résumé de la demande
+     * @var string
+     */
+    private $ask;
+    
     /**
      * Set creation
      *
@@ -88,7 +88,7 @@ abstract class Ask extends UploadDocument implements AskInterface
     /**
      * Get creation
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreation()
     {
@@ -111,7 +111,7 @@ abstract class Ask extends UploadDocument implements AskInterface
     /**
      * Get maturity
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getMaturity()
     {
@@ -284,7 +284,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      */
     public function isCreationBeforeMaturity()
     {
-    	return $this->creation <= $this->maturity || $this->maturity === null;
+        return $this->creation <= $this->maturity || $this->maturity === null;
     }
     
     /**
@@ -293,9 +293,9 @@ abstract class Ask extends UploadDocument implements AskInterface
      */
     public function setDontTreat($dontTreat = null)
     {
-    	$this->dontTreat = $dontTreat;
-    	
-    	return $this;
+        $this->dontTreat = $dontTreat;
+        
+        return $this;
     }
     
     /**
@@ -304,7 +304,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      */
     public function getDontTreat()
     {
-    	return $this->dontTreat;
+        return $this->dontTreat;
     }
     
     /**
@@ -315,9 +315,9 @@ abstract class Ask extends UploadDocument implements AskInterface
      */
     public function setAsk($ask)
     {
-    	$this->ask = $ask;
+        $this->ask = $ask;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -327,6 +327,6 @@ abstract class Ask extends UploadDocument implements AskInterface
      */
     public function getAsk()
     {
-    	return $this->ask;
+        return $this->ask;
     }
 }

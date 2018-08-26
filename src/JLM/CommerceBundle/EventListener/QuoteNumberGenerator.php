@@ -19,31 +19,28 @@ use JLM\CommerceBundle\Entity\Quote;
  */
 class QuoteNumberGenerator
 {
-	/**
-	 * PrePersist
-	 * @param LifecycleEventArgs $args
-	 */
-	public function prePersist(LifecycleEventArgs $args)
-	{
-		$entity = $args->getEntity();
-		
-		if ($entity instanceof Quote)
-		{
-			$em = $args->getEntityManager();
-			
-			if ($entity->getNumber() === null)
-			{
-				$creation = $entity->getCreation();
-				$year = $creation->format('Y');
-				$number = $creation->format('ym');
-				$n = ($em->getRepository('JLMCommerceBundle:Quote')->getLastNumber($year) + 1);
-				for ($i = strlen($n); $i < 4 ; $i++)
-				{
-					$number.= '0';
-				}
-				$number.= $n;
-				$entity->setNumber($number);
-			}
-		}
-	}
+    /**
+     * PrePersist
+     * @param LifecycleEventArgs $args
+     */
+    public function prePersist(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        
+        if ($entity instanceof Quote) {
+            $em = $args->getEntityManager();
+            
+            if ($entity->getNumber() === null) {
+                $creation = $entity->getCreation();
+                $year = $creation->format('Y');
+                $number = $creation->format('ym');
+                $n = ($em->getRepository('JLMCommerceBundle:Quote')->getLastNumber($year) + 1);
+                for ($i = strlen($n); $i < 4; $i++) {
+                    $number.= '0';
+                }
+                $number.= $n;
+                $entity->setNumber($number);
+            }
+        }
+    }
 }

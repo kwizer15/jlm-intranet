@@ -36,8 +36,8 @@ class DoctrineEvent extends Event
      */
     public function __construct($entity, ObjectManager $om)
     {
-    	$this->entity = $entity;
-    	$this->om = $om;
+        $this->entity = $entity;
+        $this->om = $om;
     }
     
     /**
@@ -46,7 +46,7 @@ class DoctrineEvent extends Event
      */
     public function getEntity()
     {
-    	return $this->entity;
+        return $this->entity;
     }
     
     /**
@@ -55,6 +55,6 @@ class DoctrineEvent extends Event
      */
     public function getObjectManager()
     {
-    	return $this->om;
+        return $this->om;
     }
 }

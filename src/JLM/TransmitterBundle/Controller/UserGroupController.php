@@ -34,10 +34,10 @@ class UserGroupController extends Controller
         $entity->setSite($site);
         $form   = $this->createForm(new UserGroupType(), $entity);
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -59,13 +59,13 @@ class UserGroupController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return new JsonResponse(array());
+            return new JsonResponse([]);
         }
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -84,13 +84,13 @@ class UserGroupController extends Controller
             throw $this->createNotFoundException('Unable to find UserGroup entity.');
         }
         $hasTransmitter = $em->getRepository('JLMTransmitterBundle:Transmitter')->getCountByUserGroup($entity) > 0;
-        $editForm = $this->get('form.factory')->createNamed('userGroupEdit'.$id,new UserGroupType(), $entity);
+        $editForm = $this->get('form.factory')->createNamed('userGroupEdit'.$id, new UserGroupType(), $entity);
 
-        return array(
+        return [
             'entity'      => $entity,
             'form'   => $editForm->createView(),
-        	'hasTransmitter' => $hasTransmitter,
-        );
+            'hasTransmitter' => $hasTransmitter,
+        ];
     }
 
     /**
@@ -111,21 +111,21 @@ class UserGroupController extends Controller
             throw $this->createNotFoundException('Unable to find UserGroup entity.');
         }
         $hasTransmitter = $em->getRepository('JLMTransmitterBundle:Transmitter')->getCountByUserGroup($entity) > 0;
-        $editForm = $this->get('form.factory')->createNamed('userGroupEdit'.$id,new UserGroupType(), $entity);
+        $editForm = $this->get('form.factory')->createNamed('userGroupEdit'.$id, new UserGroupType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return new JsonResponse(array());
+            return new JsonResponse([]);
         }
 
-        return array(
+        return [
             'entity'      => $entity,
             'form'   => $editForm->createView(),
-        	'hasTransmitter' => $hasTransmitter,
-        );
+            'hasTransmitter' => $hasTransmitter,
+        ];
     }
 
     /**
@@ -136,20 +136,17 @@ class UserGroupController extends Controller
      */
     public function deleteAction($id)
     {
-    	$request = $this->getRequest();
-    	$em = $this->getDoctrine()->getManager();
-    	$entity = $em->getRepository('JLMTransmitterBundle:UserGroup')->find($id);
-    	if (!$entity) {
-    		throw $this->createNotFoundException('Unable to find UserGroup entity.');
-    	}
-    	$hasTransmitter = $em->getRepository('JLMTransmitterBundle:Transmitter')->getCountByUserGroup($entity) > 0;
-    	if (!$hasTransmitter)
-    	{
-	        
-	
-	        $em->remove($entity);
-	        $em->flush();
-    	}
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('JLMTransmitterBundle:UserGroup')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find UserGroup entity.');
+        }
+        $hasTransmitter = $em->getRepository('JLMTransmitterBundle:Transmitter')->getCountByUserGroup($entity) > 0;
+        if (!$hasTransmitter) {
+            $em->remove($entity);
+            $em->flush();
+        }
         return $this->redirect($request->headers->get('referer'));
     }
     
@@ -162,11 +159,11 @@ class UserGroupController extends Controller
      */
     public function defaultmodelidAction($id)
     {
-    	$em = $this->getDoctrine()->getManager();
-    	$entity = $em->getRepository('JLMTransmitterBundle:UserGroup')->find($id);
-    	if (!$entity) {
-    		throw $this->createNotFoundException('Unable to find UserGroup entity.');
-    	}
-    	return new Response($entity->getModel()->getId());
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('JLMTransmitterBundle:UserGroup')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find UserGroup entity.');
+        }
+        return new Response($entity->getModel()->getId());
     }
 }

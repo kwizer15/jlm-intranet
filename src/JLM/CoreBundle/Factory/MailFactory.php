@@ -19,7 +19,7 @@ use JLM\CoreBundle\Builder\MailBuilderInterface;
 class MailFactory
 {
     /**
-     * 
+     *
      * @param MailBuilderInterface $builder
      * @return mixed
      */
@@ -27,13 +27,13 @@ class MailFactory
     {
         $builder->create();
         $builder->buildSubject();
-    	$builder->buildFrom();
-    	$builder->buildTo();
-    	$builder->buildCc();
-    	$builder->buildBcc();
-    	$builder->buildBody();
-    	$builder->buildPreAttachements();
-    	$builder->buildAttachements();
+        $builder->buildFrom();
+        $builder->buildTo();
+        $builder->buildCc();
+        $builder->buildBcc();
+        $builder->buildBody();
+        $builder->buildPreAttachements();
+        $builder->buildAttachements();
         
         return $builder->getMail();
     }

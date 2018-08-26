@@ -12,6 +12,7 @@
 namespace JLM\CommerceBundle\Builder;
 
 use JLM\CommerceBundle\Entity\Quote;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -54,33 +55,35 @@ abstract class QuoteBuilderAbstract implements QuoteBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function buildIntro() {}
+    public function buildIntro()
+    {
+    }
     
     /**
      * {@inheritdoc}
      */
-    public function buildDetails() {}
+    public function buildDetails()
+    {
+    }
     
     /**
      * {@inheritdoc}
      */
     public function buildConditions()
     {
-        foreach ($this->options as $key => $value)
-        {
-            switch ($key)
-            {
-            	case 'vatTransmitter':
-            	    $this->quote->setVatTransmitter($value);
-            	    break;
-            	case 'vat':
-            	    $this->quote->setVat($value);
-            	    break;
+        foreach ($this->options as $key => $value) {
+            switch ($key) {
+                case 'vatTransmitter':
+                    $this->quote->setVatTransmitter($value);
+                    break;
+                case 'vat':
+                    $this->quote->setVat($value);
+                    break;
             }
         }
     }
     
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
         $this->options = $options;
     }
@@ -92,8 +95,7 @@ abstract class QuoteBuilderAbstract implements QuoteBuilderInterface
     
     protected function getOption($key)
     {
-        if (isset($this->options[$key]))
-        {
+        if (isset($this->options[$key])) {
             return $this->options[$key];
         }
         

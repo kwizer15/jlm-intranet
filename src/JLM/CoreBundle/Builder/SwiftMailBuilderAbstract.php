@@ -18,6 +18,6 @@ abstract class SwiftMailBuilderAbstract extends MailBuilderAbstract
 {
     public function create()
     {
-    	$this->mail = \Swift_Message::newInstance();
+        $this->mail = \Swift_Message::newInstance();
     }
 }

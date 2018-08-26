@@ -39,7 +39,7 @@ interface CityInterface
     
     /**
      * To string
-     * 
+     *
      * @return string
      */
     public function __toString();

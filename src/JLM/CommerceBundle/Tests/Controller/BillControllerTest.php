@@ -30,26 +30,26 @@ class BillControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->client->followRedirects();
-    } 
+    }
     
     public function getUrls()
     {
-        return array(
-        	array('GET', '/bill/'),
-        	array('GET', '/bill/?state=all'),
-            array('GET', '/bill/?state=in_seizure'),
-            array('GET', '/bill/?state=sended'),
-            array('GET', '/bill/?state=payed'),
-            array('GET', '/bill/?state=canceled'),
-        	array('GET', '/bill/?state=canceled'),
-        	array('GET', '/bill/?page=2'),
-        	array('GET', '/bill/?state=canceled&page=1&limit=5'),
-            array('GET', '/bill/1'),
-            array('GET', '/bill/new'),
-            array('GET', '/bill/1/edit'),
-            array('GET', '/bill/todo'),
-            array('GET', '/bill/toboost'),
-        );
+        return [
+            ['GET', '/bill/'],
+            ['GET', '/bill/?state=all'],
+            ['GET', '/bill/?state=in_seizure'],
+            ['GET', '/bill/?state=sended'],
+            ['GET', '/bill/?state=payed'],
+            ['GET', '/bill/?state=canceled'],
+            ['GET', '/bill/?state=canceled'],
+            ['GET', '/bill/?page=2'],
+            ['GET', '/bill/?state=canceled&page=1&limit=5'],
+            ['GET', '/bill/1'],
+            ['GET', '/bill/new'],
+            ['GET', '/bill/1/edit'],
+            ['GET', '/bill/todo'],
+            ['GET', '/bill/toboost'],
+        ];
     }
     
     /**

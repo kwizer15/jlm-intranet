@@ -33,12 +33,12 @@ class SeriesController extends Controller
         $entity = new Series();
         $entity->setAttribution($attribution);
         $form   = $this->createForm(new SeriesType($attribution->getSite()->getId()), $entity);
-		$form->add('submit','submit',array('label'=>'Enregistrer'));
-		
-        return array(
+        $form->add('submit', 'submit', ['label'=>'Enregistrer']);
+        
+        return [
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -53,25 +53,24 @@ class SeriesController extends Controller
     {
         $entity  = new Series();
         $form = $this->createForm(new SeriesType($attribution->getSite()->getId()), $entity);
-        $form->add('submit','submit',array('label'=>'Enregistrer'));
+        $form->add('submit', 'submit', ['label'=>'Enregistrer']);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $transmitters = $entity->getTransmitters();
-            foreach ($transmitters as $transmitter)
-            {
-            	$em->persist($transmitter);
+            foreach ($transmitters as $transmitter) {
+                $em->persist($transmitter);
             }
             $em->flush();
-			
+            
             // On met à jour la page de base
-            return new JsonResponse(array());
+            return new JsonResponse([]);
         }
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ];
     }
 }

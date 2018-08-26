@@ -18,7 +18,8 @@ use JLM\ContactBundle\Model\CorporationInterface;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class CorporationContact extends PersonDecorator implements CorporationContactInterface
-{   
+{
+
     /**
      * @var CorporationInterface
      */

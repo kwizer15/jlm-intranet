@@ -18,5 +18,5 @@ use JLM\ProductBundle\Entity\ProductDecorator;
  */
 class ProductWork extends ProductDecorator
 {
-	
+    
 }

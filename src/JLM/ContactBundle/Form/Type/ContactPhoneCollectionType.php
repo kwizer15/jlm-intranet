@@ -25,7 +25,7 @@ class ContactPhoneCollectionType extends AbstractType
      */
     public function getParent()
     {
-    	return 'collection';
+        return 'collection';
     }
     
     /**
@@ -41,11 +41,11 @@ class ContactPhoneCollectionType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'type'=>'jlm_contact_contactphone',
             'prototype'=>true,
             'allow_add'=>true,
-        	'allow_delete'=>true,
-        ));
+            'allow_delete'=>true,
+        ]);
     }
 }

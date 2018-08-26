@@ -12,6 +12,7 @@
 namespace JLM\OfficeBundle\Builder;
 
 use JLM\OfficeBundle\Entity\Order;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -54,27 +55,29 @@ abstract class OrderBuilderAbstract implements OrderBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function buildLines() {}
+    public function buildLines()
+    {
+    }
     
     /**
      * {@inheritdoc}
      */
     public function buildTime()
     {
-    	$this->order->setTime(0);
+        $this->order->setTime(0);
     }
     
     /**
-     * 
+     *
      * @param array $options
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         $this->options = $options;
     }
     
     /**
-     * 
+     *
      * @return multitype:
      */
     protected function getOptions()
@@ -84,8 +87,7 @@ abstract class OrderBuilderAbstract implements OrderBuilderInterface
     
     protected function getOption($key)
     {
-        if (isset($this->options[$key]))
-        {
+        if (isset($this->options[$key])) {
             return $this->options[$key];
         }
         

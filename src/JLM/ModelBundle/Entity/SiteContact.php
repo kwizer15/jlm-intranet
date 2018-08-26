@@ -22,51 +22,51 @@ use JLM\CondominiumBundle\Model\AdministratorInterface;
  */
 class SiteContact implements AdministratorMemberInterface, PersonInterface
 {
-	/**
+    /**
      * @var integer $id
      */
     private $id;
-	
-	/**
-	 * @var $sites
-	 * 
-	 * @Assert\NotNull
-	 */
-	private $site;
-	
-	/**
-	 * @var $person
-	 * 
-	 * @Assert\Valid
-	 * @Assert\NotNull
-	 */
-	private $person;
-	
-	/**
-	 * @var $role
-	 * 
-	 * @Assert\Type(type="string")
-	 */
-	private $role;
+    
+    /**
+     * @var $sites
+     *
+     * @Assert\NotNull
+     */
+    private $site;
+    
+    /**
+     * @var $person
+     *
+     * @Assert\Valid
+     * @Assert\NotNull
+     */
+    private $person;
+    
+    /**
+     * @var $role
+     *
+     * @Assert\Type(type="string")
+     */
+    private $role;
    
-	
-//	/**
-//	 * @var string $professionnalPhone
-//	 *
-//	 * ORM\Column(name="professionnalPhone", type="string", length=20, nullable=true)
-//	 */
-//	private $professionnalPhone;
-	
-	/**
-	 * Get id
-	 *
-	 * @return integer
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
-	
+    
+//  /**
+//   * @var string $professionnalPhone
+//   *
+//   * ORM\Column(name="professionnalPhone", type="string", length=20, nullable=true)
+//   */
+//  private $professionnalPhone;
+    
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
     /**
      * Set site
      * @deprecated
@@ -81,7 +81,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
     /**
      * Get site
      * @deprecated
-     * @return JLM\ModelBundle\Entity\Site 
+     * @return JLM\ModelBundle\Entity\Site
      */
     public function getSite()
     {
@@ -165,7 +165,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
      */
     public function getOldRole()
     {
-    	return $this->role;
+        return $this->role;
     }
     
 //    /**
@@ -175,9 +175,9 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
 //     */
 //    public function setProfessionnalPhone($professionnalPhone)
 //    {
-//    	$this->professionnalPhone = $professionnalPhone;
+//      $this->professionnalPhone = $professionnalPhone;
 //    }
-//    
+//
 //    /**
 //     * Get professionnalPhone
 //     *
@@ -185,7 +185,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
 //     */
 //    public function getProfessionnalPhone()
 //    {
-//    	return $this->professionnalPhone;
+//      return $this->professionnalPhone;
 //    }
 
     // Person Decorators

@@ -30,14 +30,14 @@ class QuoteVariantControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->client->followRedirects();
-    } 
+    }
     
     public function getUrls()
     {
-        return array(
-        	array('GET', '/quote/variant/new?quote=1'),
+        return [
+            ['GET', '/quote/variant/new?quote=1'],
             //array('GET', '/quote/variant/1/edit'),
-        );
+        ];
     }
     
     /**

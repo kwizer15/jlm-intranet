@@ -16,11 +16,11 @@ namespace JLM\DailyBundle;
  */
 final class JLMDailyEvents
 {
-	const INTERVENTION_SCHEDULEWORK = 'jlm_daily.intervention_schedulework';
-	const INTERVENTION_UNSCHEDULEWORK = 'jlm_daily.intervention_unschedulework';
-	const WORK_POSTPERSIST = 'jlm_daily.work_postpersist';
-	const WORK_POSTUPDATE = 'jlm_daily.work_postupdate';
-	const WORK_PREREMOVE = 'jlm_daily.work_preremove';
-	const SHIFTTECHNICIAN_POSTPERSIST  = 'jlm_daily.shifttechnician_postpersist';
-	const SHIFTTECHNICIAN_POSTREMOVE  = 'jlm_daily.shifttechnician_postremove';
+    const INTERVENTION_SCHEDULEWORK = 'jlm_daily.intervention_schedulework';
+    const INTERVENTION_UNSCHEDULEWORK = 'jlm_daily.intervention_unschedulework';
+    const WORK_POSTPERSIST = 'jlm_daily.work_postpersist';
+    const WORK_POSTUPDATE = 'jlm_daily.work_postupdate';
+    const WORK_PREREMOVE = 'jlm_daily.work_preremove';
+    const SHIFTTECHNICIAN_POSTPERSIST  = 'jlm_daily.shifttechnician_postpersist';
+    const SHIFTTECHNICIAN_POSTREMOVE  = 'jlm_daily.shifttechnician_postremove';
 }

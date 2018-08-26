@@ -20,12 +20,12 @@ use JLM\AskBundle\Model\ContactInterface;   // @todo to remove, use a decorator 
  */
 class Person extends Contact implements PersonInterface, QuoteRecipientInterface, ContactInterface
 {
-	/**
-	 * M. Mme Mlle
-	 * @var string $title
-	 */
-	private $title;
-	
+    /**
+     * M. Mme Mlle
+     * @var string $title
+     */
+    private $title;
+    
     /**
      * @var string $firstName
      */
@@ -83,7 +83,7 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
      */
     public function getName()
     {
-    	return trim($this->title.' '.trim($this->lastName.' '.$this->firstName));
+        return trim($this->title.' '.trim($this->lastName.' '.$this->firstName));
     }
     
     /**
@@ -134,12 +134,11 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
     }
     
     /**
-     * 
+     *
      * @return self
      */
     public function attributeName()
     {
-    	return $this->setName('');
+        return $this->setName('');
     }
-
 }

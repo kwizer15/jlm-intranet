@@ -15,7 +15,8 @@ namespace JLM\CondominiumBundle\Model;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 interface CondominiumInterface
-{    
+{
+
     /**
      * Get the name
      * ex : Résidence de la Dhuys

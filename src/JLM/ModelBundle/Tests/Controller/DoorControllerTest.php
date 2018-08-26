@@ -30,15 +30,15 @@ class DoorControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->client->followRedirects();
-    } 
+    }
     
     public function getUrls()
     {
-        return array(
-        	array('GET', '/model/door/1/show'),
-            array('GET', '/model/door/1/edit'),
-            array('GET', '/model/door/new/1'),
-        );
+        return [
+            ['GET', '/model/door/1/show'],
+            ['GET', '/model/door/1/edit'],
+            ['GET', '/model/door/new/1'],
+        ];
     }
     
     /**

@@ -92,7 +92,6 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $this->entity->getUnitPrices());
         $this->assertTrue($this->entity->removeUnitPrice($price));
         $this->assertCount(0, $this->entity->getUnitPrices());
-        
     }
     
     public function testOneUnitPrice()
@@ -106,13 +105,13 @@ class ProductTest extends \PHPUnit_Framework_TestCase
      */
     public function getUnitPrices()
     {
-        return array(
-        	array(array(1, 25.0), array(5,22.0), 6, 22.0),
-            array(array(1, 25.0), array(5,22.0), 5, 22.0),
-            array(array(5, 25.0), array(10,22.0), 6, 25.0),
-            array(array(5, 25.0), array(10,22.0), 11, 22.0),
-            array(array(1, 25.0), array(5,22.0), 1, 25.0),
-        );
+        return [
+            [[1, 25.0], [5,22.0], 6, 22.0],
+            [[1, 25.0], [5,22.0], 5, 22.0],
+            [[5, 25.0], [10,22.0], 6, 25.0],
+            [[5, 25.0], [10,22.0], 11, 22.0],
+            [[1, 25.0], [5,22.0], 1, 25.0],
+        ];
     }
     
     /**
@@ -184,10 +183,10 @@ class ProductTest extends \PHPUnit_Framework_TestCase
      */
     public function getPurchases()
     {
-        return array(
-        	array(100, 20, 10, 2, 90, 99, 9, 225/22),
-            array(  0, 20, 10, 2,  2, 99, 97, 0),
-        );
+        return [
+            [100, 20, 10, 2, 90, 99, 9, 225/22],
+            [  0, 20, 10, 2,  2, 99, 97, 0],
+        ];
     }
     
     /**
@@ -218,5 +217,4 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->entity, $this->entity->setSupplier($supplier));
         $this->assertSame($supplier, $this->entity->getSupplier());
     }
-
 }

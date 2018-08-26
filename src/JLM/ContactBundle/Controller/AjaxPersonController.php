@@ -34,9 +34,9 @@ class AjaxPersonController extends Controller
      */
     public function showajaxAction(Person $entity)
     {
-        return array(
+        return [
             'entity'      => $entity,
-        );
+        ];
     }
 
     /**
@@ -47,15 +47,15 @@ class AjaxPersonController extends Controller
      */
     public function newajaxAction()
     {
-    	$manager = $this->container->get('jlm_contact.contact_manager');
-    	$entity = $manager->getEntity('person');
-        $form = $manager->createForm('POST',$entity);
+        $manager = $this->container->get('jlm_contact.contact_manager');
+        $entity = $manager->getEntity('person');
+        $form = $manager->createForm('POST', $entity);
         
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView()
-        );
+        ];
     }
 
     /**
@@ -65,29 +65,26 @@ class AjaxPersonController extends Controller
      */
     public function createajaxAction(Request $request)
     {
-    	$em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $entity  = ContactManager::create('Person');
         $form    = $this->createForm(new PersonType(), $entity);
         $form->handleRequest($request);
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            if ($entity->getAddress() !== null)
-            {
-           		$em->persist($entity->getAddress());
+            if ($entity->getAddress() !== null) {
+                $em->persist($entity->getAddress());
             }
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('jlm_contact_ajax_person_show', array('id' => $entity->getId())));
-            
+            return $this->redirect($this->generateUrl('jlm_contact_ajax_person_show', ['id' => $entity->getId()]));
         }
         
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView()
-        );
+        ];
     }
     
     /**
@@ -112,13 +109,13 @@ class AjaxPersonController extends Controller
      */
     public function searchAction()
     {
-    	$request = $this->get('request');
-    	$term = $request->get('q');
-    	$page_limit = $request->get('page_limit');
-    	$em = $this->getDoctrine()->getManager();
-    	$persons = $em->getRepository('JLMContactBundle:Person')->getArray($term, $page_limit);
-    	
-    	return new JsonResponse(array('persons' => $persons));
+        $request = $this->get('request');
+        $term = $request->get('q');
+        $page_limit = $request->get('page_limit');
+        $em = $this->getDoctrine()->getManager();
+        $persons = $em->getRepository('JLMContactBundle:Person')->getArray($term, $page_limit);
+        
+        return new JsonResponse(['persons' => $persons]);
     }
     
     /**
@@ -126,11 +123,11 @@ class AjaxPersonController extends Controller
      */
     public function jsonAction()
     {
-    	$request = $this->get('request');
-    	$id = $request->get('id');
-    	$em = $this->getDoctrine()->getManager();
-    	$person = $em->getRepository('JLMContactBundle:Person')->getByIdToArray($id);
+        $request = $this->get('request');
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $person = $em->getRepository('JLMContactBundle:Person')->getByIdToArray($id);
     
-    	return new JsonResponse($person);
+        return new JsonResponse($person);
     }
 }

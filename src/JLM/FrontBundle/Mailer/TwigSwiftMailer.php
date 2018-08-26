@@ -33,15 +33,15 @@ class TwigSwiftMailer implements MailerInterface
     }
 
     /**
-     * 
+     *
      * @param ContactInterface $contact
      */
     public function sendContactEmailMessage(ContactInterface $contact)
     {
         $template = $this->parameters['template']['contact'];
-        $context = array(
+        $context = [
             'contact' => $contact
-        );
+        ];
 
         $this->sendMessage($template, $context, $contact->getEmail(), $this->parameters['from_email']['contact']);
     }
@@ -52,12 +52,12 @@ class TwigSwiftMailer implements MailerInterface
      */
     public function sendConfirmContactEmailMessage(ContactInterface $contact)
     {
-    	$template = $this->parameters['template']['contact_confirm'];
-    	$context = array(
-    			'contact' => $contact
-    	);
+        $template = $this->parameters['template']['contact_confirm'];
+        $context = [
+                'contact' => $contact
+        ];
     
-    	$this->sendMessage($template, $context, $this->parameters['from_email']['contact'], $contact->getEmail());
+        $this->sendMessage($template, $context, $this->parameters['from_email']['contact'], $contact->getEmail());
     }
     
     /**
@@ -66,12 +66,12 @@ class TwigSwiftMailer implements MailerInterface
      */
     public function sendAskQuoteEmailMessage(ContactInterface $contact)
     {
-    	$template = $this->parameters['template']['askquote'];
-    	$context = array(
-    			'contact' => $contact
-    	);
+        $template = $this->parameters['template']['askquote'];
+        $context = [
+                'contact' => $contact
+        ];
     
-    	$this->sendMessage($template, $context, $contact->getEmail(), $this->parameters['from_email']['askquote']);
+        $this->sendMessage($template, $context, $contact->getEmail(), $this->parameters['from_email']['askquote']);
     }
     
     /**
@@ -80,12 +80,12 @@ class TwigSwiftMailer implements MailerInterface
      */
     public function sendConfirmAskQuoteEmailMessage(ContactInterface $contact)
     {
-    	$template = $this->parameters['template']['askquote_confirm'];
-    	$context = array(
-    			'contact' => $contact
-    	);
+        $template = $this->parameters['template']['askquote_confirm'];
+        $context = [
+                'contact' => $contact
+        ];
     
-    	$this->sendMessage($template, $context, $this->parameters['from_email']['askquote'], $contact->getEmail());
+        $this->sendMessage($template, $context, $this->parameters['from_email']['askquote'], $contact->getEmail());
     }
 
     /**

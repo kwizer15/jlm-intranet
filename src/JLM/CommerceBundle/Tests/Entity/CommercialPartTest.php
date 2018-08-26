@@ -16,56 +16,56 @@ namespace JLM\CommerceBundle\Tests\Entity;
  */
 class CommercialPartTest extends \PHPUnit_Framework_TestCase
 {
-	/**
-	 * @var Mock CommercialPart
-	 */
-	protected $entity;
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function setUp()
-	{
-		$this->entity = $this->getMockForAbstractClass('JLM\CommerceBundle\Entity\CommercialPart');
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function assertPreConditions()
-	{
-		 $this->assertInstanceOf('JLM\CommerceBundle\Model\CommercialPartInterface', $this->entity);
-	}
-	
-	public function getAttributes()
-	{
-	    return array(
-	    	array('Creation', $this->getMock('DateTime')),
-	        array('Number', '123456'),
-	        array('Customer', $this->getMock('JLM\CommerceBundle\Model\CustomerInterface')),
-	        array('CustomerName', 'Foo'),
-	        array('CustomerAddress', 'Bar'),
-	        array('Vat', 19.6),
-	        
-	        // Deprecated
-	        array('Trustee',  $this->getMock('JLM\CommerceBundle\Model\CustomerInterface')),
-	        array('TrusteeName', 'Foo'),
-	        array('TrusteeAddress', 'Bar'),
-	        array('VatTransmitter', 19.6),
-	    );
-	}
-	
-	/**
-	 * Test getters and setters
-	 * @param string $attribute
-	 * @param mixed $value
-	 * @dataProvider getAttributes
-	 */
-	public function testGettersSetters($attribute, $value)
-	{
-	    $getter = 'get'.$attribute;
-	    $setter = 'set'.$attribute;
-	    $this->assertSame($this->entity, $this->entity->$setter($value));
-	    $this->assertSame($value, $this->entity->$getter());
-	}
+    /**
+     * @var Mock CommercialPart
+     */
+    protected $entity;
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp()
+    {
+        $this->entity = $this->getMockForAbstractClass('JLM\CommerceBundle\Entity\CommercialPart');
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function assertPreConditions()
+    {
+         $this->assertInstanceOf('JLM\CommerceBundle\Model\CommercialPartInterface', $this->entity);
+    }
+    
+    public function getAttributes()
+    {
+        return [
+            ['Creation', $this->getMock('DateTime')],
+            ['Number', '123456'],
+            ['Customer', $this->getMock('JLM\CommerceBundle\Model\CustomerInterface')],
+            ['CustomerName', 'Foo'],
+            ['CustomerAddress', 'Bar'],
+            ['Vat', 19.6],
+            
+            // Deprecated
+            ['Trustee',  $this->getMock('JLM\CommerceBundle\Model\CustomerInterface')],
+            ['TrusteeName', 'Foo'],
+            ['TrusteeAddress', 'Bar'],
+            ['VatTransmitter', 19.6],
+        ];
+    }
+    
+    /**
+     * Test getters and setters
+     * @param string $attribute
+     * @param mixed $value
+     * @dataProvider getAttributes
+     */
+    public function testGettersSetters($attribute, $value)
+    {
+        $getter = 'get'.$attribute;
+        $setter = 'set'.$attribute;
+        $this->assertSame($this->entity, $this->entity->$setter($value));
+        $this->assertSame($value, $this->entity->$getter());
+    }
 }

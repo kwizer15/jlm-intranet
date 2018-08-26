@@ -16,7 +16,7 @@ class ProductCategoryController extends Controller
 {
     /**
      * Lists all ProductCategory entities.
-     * 
+     *
      * @Template()
      * @Secure(roles="ROLE_OFFICE")
      */
@@ -26,7 +26,7 @@ class ProductCategoryController extends Controller
 
         $entities = $em->getRepository('JLMProductBundle:ProductCategory')->findAll();
 
-        return array('entities' => $entities);
+        return ['entities' => $entities];
     }
 
     /**
@@ -41,9 +41,9 @@ class ProductCategoryController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return [
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+            'delete_form' => $deleteForm->createView(),        ];
     }
 
     /**
@@ -57,10 +57,10 @@ class ProductCategoryController extends Controller
         $entity = new ProductCategory();
         $form   = $this->createNewForm($entity);
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView()
-        );
+        ];
     }
 
     /**
@@ -75,19 +75,18 @@ class ProductCategoryController extends Controller
         $form    = $this->createNewForm($entity);
         $form->handleRequest($request);
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('jlm_product_productcategory_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('jlm_product_productcategory_show', ['id' => $entity->getId()]));
         }
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView()
-        );
+        ];
     }
 
     /**
@@ -103,11 +102,11 @@ class ProductCategoryController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return [
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -125,20 +124,19 @@ class ProductCategoryController extends Controller
 
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid())
-        {
+        if ($editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('jlm_product_productcategory_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('jlm_product_productcategory_edit', ['id' => $id]));
         }
 
-        return array(
+        return [
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -151,8 +149,7 @@ class ProductCategoryController extends Controller
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
-        if ($form->isValid())
-        {    
+        if ($form->isValid()) {
             $entity = $this->getEntity($id);
             $em = $this->getDoctrine()->getManager();
             $em->remove($entity);
@@ -187,7 +184,7 @@ class ProductCategoryController extends Controller
      */
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
+        return $this->createFormBuilder(['id' => $id])
         ->add('id', 'hidden')
         ->getForm()
         ;

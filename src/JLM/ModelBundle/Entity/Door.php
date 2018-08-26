@@ -45,7 +45,7 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Indications internes
      * @var string $street
-     * 
+     *
      * @Assert\Type(type="string")
      */
     private $street;
@@ -85,14 +85,14 @@ class Door implements BayInterface, InstallationInterface
     
     /**
      * @var string Google Maps (Street)
-     * 
+     *
      * @Assert\Url
      */
     private $googlemaps;
     
     /**
      * @var int largeur en mm
-     * 
+     *
      */
     private $width;
     
@@ -106,7 +106,7 @@ class Door implements BayInterface, InstallationInterface
      * Porte à l'arrêt
      * @var bool $stoped
      * @deprecated
-     * 
+     *
      * @Assert\Type(type="bool")
      */
     private $stopped = false;
@@ -120,7 +120,7 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Prélibellé de factration
      * @var string $billingPrelabel
-     * 
+     *
      * @Assert\Type(type="string")
      */
     private $billingPrelabel;
@@ -152,7 +152,7 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Code installation
      * @var string
-     * 
+     *
      * @Assert\Regex(pattern="#[AZERTY][0-9]{4}#")
      */
     private $code;
@@ -192,45 +192,45 @@ class Door implements BayInterface, InstallationInterface
      */
     public function __construct()
     {
-    	$this->parts = new ArrayCollection;
-    	$this->transmitters = new ArrayCollection;
-    	$this->contracts = new ArrayCollection;
-    	$this->interventions = new ArrayCollection;
+        $this->parts = new ArrayCollection;
+        $this->transmitters = new ArrayCollection;
+        $this->contracts = new ArrayCollection;
+        $this->interventions = new ArrayCollection;
     }
 
     public function getCeNumber()
     {
-    	return $this->ceNumber;
+        return $this->ceNumber;
     }
     
     public function setCeNumber($number)
     {
-    	$this->ceNumber = $number;
-    	
-    	return $this;
+        $this->ceNumber = $number;
+        
+        return $this;
     }
     
     public function getModel()
     {
-    	return $this->model;
+        return $this->model;
     }
     
     public function getModelName()
     {
-    	return ($this->getModel() !== null) ? $this->getModel()->getName() : null;
+        return ($this->getModel() !== null) ? $this->getModel()->getName() : null;
     }
     
     public function setModel(DoorModel $model = null)
     {
-    	$this->model = $model;
-    	
-    	return $this;
+        $this->model = $model;
+        
+        return $this;
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -239,7 +239,7 @@ class Door implements BayInterface, InstallationInterface
 
     /**
      * Set street
-     * 
+     *
      * @param string $street
      * @return Door
      */
@@ -252,8 +252,8 @@ class Door implements BayInterface, InstallationInterface
 
     /**
      * Get street
-     * 
-     * @return string 
+     *
+     * @return string
      */
     public function getStreet()
     {
@@ -300,7 +300,7 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Get location
      *
-     * @return string 
+     * @return string
      */
     public function getLocation()
     {
@@ -315,9 +315,9 @@ class Door implements BayInterface, InstallationInterface
      */
     public function setObservations($observations)
     {
-    	$this->observations = $observations;
+        $this->observations = $observations;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -327,7 +327,7 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getObservations()
     {
-    	return $this->observations;
+        return $this->observations;
     }
     
     /**
@@ -346,7 +346,7 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Get latitude
      *
-     * @return float 
+     * @return float
      */
     public function getGooglemaps()
     {
@@ -360,32 +360,32 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getMapsUrl()
     {
-    	return $this->googlemaps;
-    	$matches = array();
-    	preg_match('#^<iframe src="(.+)" .+>#',$this->googlemaps, $matches);
-    	
-    	return isset($matches[1]) ? $matches[1] : '';
-    	/*
-    	list($url,$params) = explode('?',$this->googlemaps);
-    	$parms = explode('&',$params);
-    	$arg = array();
-    	foreach ($parms as $p)
-    	{
-    		list($key,$value) = explode('=',$p);
-    		$arg[$key] = $value;
-    	}
+        return $this->googlemaps;
+        $matches = [];
+        preg_match('#^<iframe src="(.+)" .+>#', $this->googlemaps, $matches);
+        
+        return isset($matches[1]) ? $matches[1] : '';
+        /*
+        list($url,$params) = explode('?',$this->googlemaps);
+        $parms = explode('&',$params);
+        $arg = array();
+        foreach ($parms as $p)
+        {
+            list($key,$value) = explode('=',$p);
+            $arg[$key] = $value;
+        }
 
-    	$url .= '?hl=fr&z=17&layer=c&output=svembed';
-    	foreach (array('ll','cbll','cbp') as $key)
-    	{
-	    	if (isset($arg[$key]))
-	    	{
-	    		$url .= '&'.$key.'='.$arg[$key];
-	    	}
-    	}
-    	
-    	return $url;
-    	*/
+        $url .= '?hl=fr&z=17&layer=c&output=svembed';
+        foreach (array('ll','cbll','cbp') as $key)
+        {
+            if (isset($arg[$key]))
+            {
+                $url .= '&'.$key.'='.$arg[$key];
+            }
+        }
+
+        return $url;
+        */
     }
     
     /**
@@ -395,29 +395,27 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getMapsImageUrl()
     {
-    	$tab = explode('?',$this->googlemaps);
-    	if (sizeof($tab) != 2)
-    	{
-    		return null;
-    	}
-    	list($url,$params) = $tab;
-    	$parms = explode('&',$params);
-    	$arg = array();
-    	foreach ($parms as $p)
-    	{
-    		list($key,$value) = explode('=',$p);
-    		$arg[$key] = $value;
-    	}
-    	$url = 'http://maps.googleapis.com/maps/api/streetview';
-    	$url .= '?size=350x300&sensor=false';
-    	if (isset($arg['ll']))
-	   		$url .= '&location='.$arg['ll'];
-    	if (isset($arg['cbp']))
-    	{
-    		$cbp = explode(',',$arg['cbp']);
- 	  		$url .= '&heading='.$cbp[1];
-    	}
-    	return $url;
+        $tab = explode('?', $this->googlemaps);
+        if (sizeof($tab) != 2) {
+            return null;
+        }
+        list($url,$params) = $tab;
+        $parms = explode('&', $params);
+        $arg = [];
+        foreach ($parms as $p) {
+            list($key,$value) = explode('=', $p);
+            $arg[$key] = $value;
+        }
+        $url = 'http://maps.googleapis.com/maps/api/streetview';
+        $url .= '?size=350x300&sensor=false';
+        if (isset($arg['ll'])) {
+            $url .= '&location='.$arg['ll'];
+        }
+        if (isset($arg['cbp'])) {
+            $cbp = explode(',', $arg['cbp']);
+            $url .= '&heading='.$cbp[1];
+        }
+        return $url;
     }
 
     /**
@@ -435,7 +433,7 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Get site
      * @deprecated Use getAdministrator()
-     * @return AdministratorInterface 
+     * @return AdministratorInterface
      */
     public function getSite()
     {
@@ -479,7 +477,7 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Get type
      *
-     * @return JLM\ModelBundle\Entity\DoorType 
+     * @return JLM\ModelBundle\Entity\DoorType
      */
     public function getType()
     {
@@ -488,7 +486,7 @@ class Door implements BayInterface, InstallationInterface
     
     public function getModelType()
     {
-    	return ($this->getModel() === null) ? null : $this->getModel()->getType();
+        return ($this->getModel() === null) ? null : $this->getModel()->getType();
     }
 
     /**
@@ -515,7 +513,7 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Get parts
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getParts()
     {
@@ -538,9 +536,9 @@ class Door implements BayInterface, InstallationInterface
      */
     public function addContract(ContractInterface $contract)
     {
-    	$this->contracts[] = $contract;
-    	
-    	return $this;
+        $this->contracts[] = $contract;
+        
+        return $this;
     }
     
     /**
@@ -550,7 +548,7 @@ class Door implements BayInterface, InstallationInterface
      */
     public function removeContract(ContractInterface $contract)
     {
-    	$this->contracts->removeElement($contract);
+        $this->contracts->removeElement($contract);
     }
     
     /**
@@ -560,7 +558,7 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getContracts()
     {
-    	return $this->contracts;
+        return $this->contracts;
     }
     
     /**
@@ -571,9 +569,9 @@ class Door implements BayInterface, InstallationInterface
      */
     public function addIntervention(Intervention $intervention)
     {
-    	$this->interventions[] = $intervention;
+        $this->interventions[] = $intervention;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -583,7 +581,7 @@ class Door implements BayInterface, InstallationInterface
      */
     public function removeIntervention(Intervention $intervention)
     {
-    	$this->interventions->removeElement($intervention);
+        $this->interventions->removeElement($intervention);
     }
     
     /**
@@ -593,7 +591,7 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getInterventions()
     {
-    	return $this->interventions;
+        return $this->interventions;
     }
     
     /**
@@ -601,45 +599,41 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getActualContract()
     {
-    	return $this->getContract();
+        return $this->getContract();
     }
     
     /**
      * Get contract on date
-     * 
+     *
      * @return ContractInterface
      */
     public function getContract(\DateTime $date = null)
     {
-    	$date = ($date === null) ? new \DateTime : $date;
-    	foreach ($this->contracts as $contract)
-    	{
-    		if ($contract->getInProgress($date))
-    		{
-    			return $contract;
-    		}
-    	}
-    	
-    	return null;
+        $date = ($date === null) ? new \DateTime : $date;
+        foreach ($this->contracts as $contract) {
+            if ($contract->getInProgress($date)) {
+                return $contract;
+            }
+        }
+        
+        return null;
     }
     
     /**
      * Get last contract
-     * 
+     *
      * @return ContractInterface
      */
     public function getLastContract()
     {
-    	$date = new \DateTime;
-    	foreach ($this->contracts as $contract)
-    	{
-    		if ($contract->getBegin() > $date)
-    		{
-    			return $contract;
-    		}
-    	}
-    	
-    	return null;
+        $date = new \DateTime;
+        foreach ($this->contracts as $contract) {
+            if ($contract->getBegin() > $date) {
+                return $contract;
+            }
+        }
+        
+        return null;
     }
     
     /**
@@ -649,7 +643,7 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getTrustee()
     {
-    	return $this->getManager();
+        return $this->getManager();
     }
     
     /**
@@ -690,7 +684,7 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Get transmitters
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getTransmitters()
     {
@@ -699,24 +693,24 @@ class Door implements BayInterface, InstallationInterface
     
     /**
      * Set largeur
-     * 
+     *
      * @param int $width
      */
     public function setWidth($width)
     {
-    	$this->width = $width;
-    	
-    	return $this;
+        $this->width = $width;
+        
+        return $this;
     }
     
     /**
      * Get largeur
-     * 
+     *
      * @return int $width
      */
     public function getWidth()
     {
-    	return $this->width;
+        return $this->width;
     }
     
     /**
@@ -726,9 +720,9 @@ class Door implements BayInterface, InstallationInterface
      */
     public function setHeight($height)
     {
-    	$this->height = $height;
-    	
-    	return $this;
+        $this->height = $height;
+        
+        return $this;
     }
     
     /**
@@ -738,27 +732,27 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getHeight()
     {
-    	return $this->height;
+        return $this->height;
     }
     
     /**
      * Get stopped
-     * 
+     *
      * @return bool $stopped
      */
     public function getStopped()
     {
-    	return $this->getLastStop() != null;
+        return $this->getLastStop() != null;
     }
     
     /**
      * Is stopped
-     * 
+     *
      * @return bool $stopped
      */
     public function isStopped()
     {
-    	return $this->getStopped();
+        return $this->getStopped();
     }
     
     /**
@@ -768,19 +762,19 @@ class Door implements BayInterface, InstallationInterface
      */
     public function setStopped($stopped = true)
     {
-    	$this->stopped = (bool)$stopped;
-    	
-    	return $this;
+        $this->stopped = (bool)$stopped;
+        
+        return $this;
     }
     
     /**
      * Get waitMaintenance
-     * 
+     *
      * @return bool
      */
     public function getWaitMaintenance()
     {
-		return ($this->getNextMaintenance() !== null);
+        return ($this->getNextMaintenance() !== null);
     }
     
     /**
@@ -790,20 +784,18 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getNumberWaitMaintenance()
     {
-    	if (!$this->getWaitMaintenance())
-    	{
-    		return null;
-    	}
-    	$lastMaintenance = $this->getLastMaintenance();
-    	if ($lastMaintenance === null)
-    	{
-    		return 1;
-    	}
-    	$yearLast = $lastMaintenance->format('Y');
-    	$today = new \DateTime;
-    	$year = $today->format('Y');
-    	
-    	return ($yearLast == $year) ? 2 : 1;
+        if (!$this->getWaitMaintenance()) {
+            return null;
+        }
+        $lastMaintenance = $this->getLastMaintenance();
+        if ($lastMaintenance === null) {
+            return 1;
+        }
+        $yearLast = $lastMaintenance->format('Y');
+        $today = new \DateTime;
+        $year = $today->format('Y');
+        
+        return ($yearLast == $year) ? 2 : 1;
     }
     
     /**
@@ -811,9 +803,9 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getWorkInProgress()
     {
-    	return !empty(array_filter($this->interventions->toArray(), function($var) {
-    		return ($var instanceof Work) && (!$var->getClosed()) && sizeof($var->getShiftTechnicians());
-    	}));
+        return !empty(array_filter($this->interventions->toArray(), function ($var) {
+            return ($var instanceof Work) && (!$var->getClosed()) && sizeof($var->getShiftTechnicians());
+        }));
     }
     
     /**
@@ -821,65 +813,65 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getWaitWork()
     {
-    	return !empty(array_filter($this->interventions->toArray(), function($var) {
-    		return ($var instanceof Work) && (!$var->getClosed()) && !sizeof($var->getShiftTechnicians());
-    	}));
+        return !empty(array_filter($this->interventions->toArray(), function ($var) {
+            return ($var instanceof Work) && (!$var->getClosed()) && !sizeof($var->getShiftTechnicians());
+        }));
     }
     
     public function getFixings()
     {
-    	return array_filter($this->interventions->toArray(), function($interv) {
-    		return ($interv instanceof Fixing);
-    	});
+        return array_filter($this->interventions->toArray(), function ($interv) {
+            return ($interv instanceof Fixing);
+        });
     }
     
     public function getWorks()
     {
-    	return array_filter($this->interventions->toArray(), function($interv) {
-    		return ($interv instanceof Work);
-    	});
+        return array_filter($this->interventions->toArray(), function ($interv) {
+            return ($interv instanceof Work);
+        });
     }
     
     public function getMaintenances()
     {
-    	return array_filter($this->interventions->toArray(), function($interv) {
-    		return ($interv instanceof Maintenance);
-    	});
+        return array_filter($this->interventions->toArray(), function ($interv) {
+            return ($interv instanceof Maintenance);
+        });
     }
     
     public function getInterventionsNotClosed()
     {
-    	return array_filter($this->interventions->toArray(), function($interv) {
-    		return (!$interv->getClosed());
-    	});
+        return array_filter($this->interventions->toArray(), function ($interv) {
+            return (!$interv->getClosed());
+        });
     }
     
     public function getInterventionsClosed()
     {
-    	return array_filter($this->interventions->toArray(), function($interv) {
-    		return ($interv->getClosed());
-    	});
+        return array_filter($this->interventions->toArray(), function ($interv) {
+            return ($interv->getClosed());
+        });
     }
     
     public function getNotMaintenancePublishedClosed()
     {
-    	return array_filter($this->interventions->toArray(), function($interv) {
-    		return ($interv->getClosed() && !$interv instanceof Maintenance && $interv->isPublished());
-    	});
+        return array_filter($this->interventions->toArray(), function ($interv) {
+            return ($interv->getClosed() && !$interv instanceof Maintenance && $interv->isPublished());
+        });
     }
     
     public function getFixingsClosed()
     {
-    	return array_filter($this->interventions->toArray(), function($interv) {
-    		return ($interv instanceof Fixing) && ($interv->getClosed());
-    	});
+        return array_filter($this->interventions->toArray(), function ($interv) {
+            return ($interv instanceof Fixing) && ($interv->getClosed());
+        });
     }
     
     public function getFixingsNotClosed()
     {
-    	return array_filter($this->interventions->toArray(), function($interv) {
-    		return ($interv instanceof Fixing) && (!$interv->getClosed());
-    	});
+        return array_filter($this->interventions->toArray(), function ($interv) {
+            return ($interv instanceof Fixing) && (!$interv->getClosed());
+        });
     }
     
     /**
@@ -888,9 +880,9 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getFixingInProgress()
     {
-    	return !empty(array_filter($this->getFixingsNotClosed(), function($var) {
-    		return sizeof($var->getShiftTechnicians());
-    	}));
+        return !empty(array_filter($this->getFixingsNotClosed(), function ($var) {
+            return sizeof($var->getShiftTechnicians());
+        }));
     }
     
     /**
@@ -899,9 +891,9 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getWaitFixing()
     {
-    	return !empty(array_filter($this->getFixingsNotClosed(), function($var) {
-    		return !sizeof($var->getShiftTechnicians());
-    	}));
+        return !empty(array_filter($this->getFixingsNotClosed(), function ($var) {
+            return !sizeof($var->getShiftTechnicians());
+        }));
     }
     
     /**
@@ -910,28 +902,28 @@ class Door implements BayInterface, InstallationInterface
      * @return \DateTime | null
      */
     public function getLastMaintenance()
-    {	
-    	return array_reduce($this->getMaintenancesClosed(), function($last, $interv) {
-    		$dt = array_reduce($interv->getShiftTechnicians()->toArray(), function ($date, $shift) {
-    			$dateShift = ($shift->getEnd() === null) ? $shift->getBegin() : $shift->getEnd();
-    			return ($date === null || $date < $dateShift) ? $dateShift : $date;
-    		}, null);
-    		return ($last === null || $last < $dt) ? $dt : $last;
-    	}, null);
+    {
+        return array_reduce($this->getMaintenancesClosed(), function ($last, $interv) {
+            $dt = array_reduce($interv->getShiftTechnicians()->toArray(), function ($date, $shift) {
+                $dateShift = ($shift->getEnd() === null) ? $shift->getBegin() : $shift->getEnd();
+                return ($date === null || $date < $dateShift) ? $dateShift : $date;
+            }, null);
+            return ($last === null || $last < $dt) ? $dt : $last;
+        }, null);
     }
     
     public function getMaintenancesClosed()
     {
-    	return array_filter($this->interventions->toArray(), function($interv) {
-    		return ($interv instanceof Maintenance && $interv->getClosed());
-    	});
+        return array_filter($this->interventions->toArray(), function ($interv) {
+            return ($interv instanceof Maintenance && $interv->getClosed());
+        });
     }
     
     public function getMaintenancesNotClosed()
     {
-    	return array_filter($this->interventions->toArray(), function($interv) {
-    		return ($interv instanceof Maintenance && !$interv->getClosed());
-    	});
+        return array_filter($this->interventions->toArray(), function ($interv) {
+            return ($interv instanceof Maintenance && !$interv->getClosed());
+        });
     }
     
     /**
@@ -941,9 +933,9 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getNextMaintenance()
     {
-    	return array_reduce($this->getMaintenancesNotClosed(), function($next, $interv) {
-    		return $next === null ? $interv : null;
-    	}, null);
+        return array_reduce($this->getMaintenancesNotClosed(), function ($next, $interv) {
+            return $next === null ? $interv : null;
+        }, null);
     }
     
     /**
@@ -953,50 +945,47 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getCountMaintenance($year = null)
     {
-    	if ($year === null)
-    	{
-    		$d = new \DateTime;
-    		$year  = $d->format('Y');
-    		unset($d);
-    	}
-    	$counter = function($count, $interv) use ($year) {
-    		$shifts = $interv->getShiftTechnicians();
-    		$flag = false;
-    		foreach ($shifts as $shift)
-    		{
-    			$dateShift = ($shift->getEnd() === null) ? $shift->getBegin() : $shift->getEnd();
-    			if ($dateShift->format('Y') == $year && !$flag)
-    			{
-    				$count++;
-    				$flag = true;
-    			}
-    		}
-    		return $count;
-    	};
-    	
-    	return array_reduce($this->getMaintenancesClosed(), $counter, 0);
+        if ($year === null) {
+            $d = new \DateTime;
+            $year  = $d->format('Y');
+            unset($d);
+        }
+        $counter = function ($count, $interv) use ($year) {
+            $shifts = $interv->getShiftTechnicians();
+            $flag = false;
+            foreach ($shifts as $shift) {
+                $dateShift = ($shift->getEnd() === null) ? $shift->getBegin() : $shift->getEnd();
+                if ($dateShift->format('Y') == $year && !$flag) {
+                    $count++;
+                    $flag = true;
+                }
+            }
+            return $count;
+        };
+        
+        return array_reduce($this->getMaintenancesClosed(), $counter, 0);
     }
     
     /**
      * Get billingPrelabel
-     * 
+     *
      * @return string
      */
     public function getBillingPrelabel()
     {
-    	return $this->billingPrelabel;
+        return $this->billingPrelabel;
     }
     
     /**
      * Set billingPrelabel
-     * 
+     *
      * @param string $label
      * @return Door
      */
     public function setBillingPrelabel($label)
     {
-    	$this->billingPrelabel = $label;
-    	return $this;
+        $this->billingPrelabel = $label;
+        return $this;
     }
     
     /**
@@ -1005,7 +994,7 @@ class Door implements BayInterface, InstallationInterface
      */
     public function __toString()
     {
-    	return $this->getType().' - '.$this->getLocation().chr(10).$this->getAdministrator();
+        return $this->getType().' - '.$this->getLocation().chr(10).$this->getAdministrator();
     }
     
     /**
@@ -1013,9 +1002,8 @@ class Door implements BayInterface, InstallationInterface
      * @return string
      */
     public function toString()
-    { 
-        if (!$this->getAdministrator() instanceof Site)
-        {
+    {
+        if (!$this->getAdministrator() instanceof Site) {
             return $this->__toString();
         }
         
@@ -1038,7 +1026,7 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Get latitude
      *
-     * @return float 
+     * @return float
      */
     public function getLatitude()
     {
@@ -1061,7 +1049,7 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Get longitude
      *
-     * @return float 
+     * @return float
      */
     public function getLongitude()
     {
@@ -1070,22 +1058,22 @@ class Door implements BayInterface, InstallationInterface
     
     /**
      * Get coordinates
-     * 
+     *
      * @return string
      */
     public function getCoordinates()
     {
-    	return $this->getLatitude().','.$this->getLongitude();
+        return $this->getLatitude().','.$this->getLongitude();
     }
     
     /**
      * Is blocked
-     * 
+     *
      * @return bool
      */
     public function isBlocked()
     {
-    	return $this->getAdministrator()->isBlocked();
+        return $this->getAdministrator()->isBlocked();
     }
 
     /**
@@ -1096,7 +1084,7 @@ class Door implements BayInterface, InstallationInterface
      */
     public function addStop(DoorStop $stops)
     {
-    	$stops->setDoor($this);
+        $stops->setDoor($this);
         $this->stops[] = $stops;
         
         return $this;
@@ -1109,7 +1097,7 @@ class Door implements BayInterface, InstallationInterface
      */
     public function removeStop(DoorStop $stops)
     {
-    	$stops->setDoor();
+        $stops->setDoor();
         $this->stops->removeElement($stops);
         
         return $this;
@@ -1118,7 +1106,7 @@ class Door implements BayInterface, InstallationInterface
     /**
      * Get stops
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getStops()
     {
@@ -1130,14 +1118,13 @@ class Door implements BayInterface, InstallationInterface
      */
     public function isUnderWarranty()
     {
-    	$guarantee = $this->getEndWarranty();
-    	if ($guarantee === null)
-    	{
-    		return false;
-    	}
-    	$today = new \DateTime;
+        $guarantee = $this->getEndWarranty();
+        if ($guarantee === null) {
+            return false;
+        }
+        $today = new \DateTime;
 
-    	return ($guarantee >= $today);
+        return ($guarantee >= $today);
     }
     
     /**
@@ -1145,30 +1132,27 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getEndWarranty()
     {
-    	$contract = $this->getActualContract();
-    	if ($contract === null)
-    	{
-    		return null;
-    	}
-    	return $contract->getEndWarranty();
+        $contract = $this->getActualContract();
+        if ($contract === null) {
+            return null;
+        }
+        return $contract->getEndWarranty();
     }
     
-	/**
+    /**
      * Get Last Stop
-     * 
+     *
      * @return \JLM\ModelBundle\Entity\DoorStop
      */
     public function getLastStop()
     {
-    	$stops = $this->getStops();
-    	foreach ($stops as $stop)
-    	{
-    		if ($stop->getEnd() === null)
-    		{
-    			return $stop;
-    		}
-    	}
-    	return null;
+        $stops = $this->getStops();
+        foreach ($stops as $stop) {
+            if ($stop->getEnd() === null) {
+                return $stop;
+            }
+        }
+        return null;
     }
     
     /**
@@ -1176,7 +1160,7 @@ class Door implements BayInterface, InstallationInterface
      */
     public function getCode()
     {
-    	return $this->code;
+        return $this->code;
     }
     
     /**
@@ -1184,55 +1168,55 @@ class Door implements BayInterface, InstallationInterface
      */
     public function hasCode()
     {
-    	return $this->getCode() !== null;
+        return $this->getCode() !== null;
     }
     
     /**
      * Set code
-     * 
+     *
      * @param string $code
      * @return this
      */
     public function setCode($code)
     {
-    	$this->code = strtoupper($code);
-    	
-    	return $this;
+        $this->code = strtoupper($code);
+        
+        return $this;
     }
     
     public function setAdministratorEmails($emails)
     {
-    	$this->administratorEmails = $emails;
-    	
-    	return $this;
+        $this->administratorEmails = $emails;
+        
+        return $this;
     }
     
     public function getAdministratorEmails()
     {
-    	return $this->administratorEmails;
+        return $this->administratorEmails;
     }
     
     public function setManagerEmails($emails)
     {
-    	$this->managerEmails = $emails;
-    	 
-    	return $this;
+        $this->managerEmails = $emails;
+         
+        return $this;
     }
     
     public function getManagerEmails()
     {
-    	return $this->managerEmails;
+        return $this->managerEmails;
     }
     
     public function setAccountingEmails($emails)
     {
-    	$this->accountingEmails = $emails;
+        $this->accountingEmails = $emails;
     
-    	return $this;
+        return $this;
     }
     
     public function getAccountingEmails()
     {
-    	return $this->accountingEmails;
+        return $this->accountingEmails;
     }
 }

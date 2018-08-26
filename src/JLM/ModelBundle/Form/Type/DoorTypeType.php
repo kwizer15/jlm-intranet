@@ -21,8 +21,8 @@ class DoorTypeType extends AbstractType
     
     public function getDefaultOptions(array $options)
     {
-    	return array(
-    			'data_class' => 'JLM\ModelBundle\Entity\DoorType',
-    	);
+        return [
+                'data_class' => 'JLM\ModelBundle\Entity\DoorType',
+        ];
     }
 }

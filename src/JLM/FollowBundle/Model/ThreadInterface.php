@@ -16,5 +16,5 @@ namespace JLM\FollowBundle\Model;
  */
 interface ThreadInterface
 {
-	
+    
 }

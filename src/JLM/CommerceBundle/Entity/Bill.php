@@ -26,146 +26,146 @@ use JLM\CommerceBundle\Model\BusinessInterface;
  */
 class Bill extends CommercialPart implements BillInterface
 {
-	/**
-	 * @var int $id
-	 */
-	private $id;
-	
-	/**
-	 * Pré label
-	 * @var string
-	 */
-	private $prelabel;
-	
-	/**
-	 * Reference
-	 * @var string
-	 */
-	private $reference;
-	
-	/**
-	 * Numéro de client
-	 * @var string
-	 */
-	private $accountNumber;
-	
-	/**
-	 * Details
-	 * @var string $details
-	 */
-	private $details;
-	
-	/**
-	 * Affaire concernée
-	 * @var string $site
-	 */
-	private $site;
-	
-	/**
-	 * Redevance
-	 * @var Fee
-	 */
-	private $fee;
-	
-	/**
-	 * Suivi de redevance
-	 * @var FeesFollower
-	 */
-	private $feesFollower;
-	
-	/**
-	 * Texte d'intro
-	 * @var string $intro
-	 */
-	private $intro;
-	
-	/**
-	 * Etat
-	 * -1 = annulé
-	 * 0 = en saisie
-	 * 1 = envoyée
-	 * 2 = réglée
-	 * @var int $state
-	 */
-	private $state = 0;
-	
-	/**
-	 * Clause de propriété
-	 * @var string
-	 */
-	private $property;
-	
-	/**
-	 * Escompte
-	 * @var string
-	 */
-	private $earlyPayment;
-	
-	/**
-	 * Pénalités
-	 * @var string
-	 */
-	private $penalty;
-	
-	/**
-	 * Échéance en jour
-	 * @var int
-	 */
-	private $maturity;
-	
-	/**
-	 * Lignes
-	 * @var ArrayCollection
-	 */
-	private $lines;
+    /**
+     * @var int $id
+     */
+    private $id;
+    
+    /**
+     * Pré label
+     * @var string
+     */
+    private $prelabel;
+    
+    /**
+     * Reference
+     * @var string
+     */
+    private $reference;
+    
+    /**
+     * Numéro de client
+     * @var string
+     */
+    private $accountNumber;
+    
+    /**
+     * Details
+     * @var string $details
+     */
+    private $details;
+    
+    /**
+     * Affaire concernée
+     * @var string $site
+     */
+    private $site;
+    
+    /**
+     * Redevance
+     * @var Fee
+     */
+    private $fee;
+    
+    /**
+     * Suivi de redevance
+     * @var FeesFollower
+     */
+    private $feesFollower;
+    
+    /**
+     * Texte d'intro
+     * @var string $intro
+     */
+    private $intro;
+    
+    /**
+     * Etat
+     * -1 = annulé
+     * 0 = en saisie
+     * 1 = envoyée
+     * 2 = réglée
+     * @var int $state
+     */
+    private $state = 0;
+    
+    /**
+     * Clause de propriété
+     * @var string
+     */
+    private $property;
+    
+    /**
+     * Escompte
+     * @var string
+     */
+    private $earlyPayment;
+    
+    /**
+     * Pénalités
+     * @var string
+     */
+    private $penalty;
+    
+    /**
+     * Échéance en jour
+     * @var int
+     */
+    private $maturity;
+    
+    /**
+     * Lignes
+     * @var ArrayCollection
+     */
+    private $lines;
 
-	/**
-	 * Remise générale
-	 * @var float $discount
-	 */
-	private $discount = 0;
-	
-	/**
-	 * Intervention (si suite à intervention)
-	 * @var BillSourceInterface $intervention
-	 */
-	private $intervention;
-	
-	/**
-	 * Date première relance
-	 * @var \DateTime $firstBoost
-	 */
-	private $firstBoost;
-	
-	/**
-	 * Date deuxième relance
-	 * @var \DateTime $secondBoost
-	 */
-	private $secondBoost;
-	
-	/**
-	 * Commentaire deuxième relance
-	 * @var string $secondBoostComment
-	 */
-	private $secondBoostComment;
+    /**
+     * Remise générale
+     * @var float $discount
+     */
+    private $discount = 0;
+    
+    /**
+     * Intervention (si suite à intervention)
+     * @var BillSourceInterface $intervention
+     */
+    private $intervention;
+    
+    /**
+     * Date première relance
+     * @var \DateTime $firstBoost
+     */
+    private $firstBoost;
+    
+    /**
+     * Date deuxième relance
+     * @var \DateTime $secondBoost
+     */
+    private $secondBoost;
+    
+    /**
+     * Commentaire deuxième relance
+     * @var string $secondBoostComment
+     */
+    private $secondBoostComment;
 
-	/**
-	 * 
-	 * Affaire concernée (Objet)
-	 * @var string $site
-	 */
-	private $siteObject;
-	
-	/**
-	 * Montant de la facture (HT)
-	 * @var float $amount
-	 */
-	private $amount = 0;
-	
+    /**
+     *
+     * Affaire concernée (Objet)
+     * @var string $site
+     */
+    private $siteObject;
+    
+    /**
+     * Montant de la facture (HT)
+     * @var float $amount
+     */
+    private $amount = 0;
+    
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -188,7 +188,7 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get prelabel
      *
-     * @return string 
+     * @return string
      */
     public function getPrelabel()
     {
@@ -211,7 +211,7 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get reference
      *
-     * @return string 
+     * @return string
      */
     public function getReference()
     {
@@ -234,7 +234,7 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get accountNumber
      *
-     * @return string 
+     * @return string
      */
     public function getAccountNumber()
     {
@@ -257,7 +257,7 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get details
      *
-     * @return string 
+     * @return string
      */
     public function getDetails()
     {
@@ -277,7 +277,7 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get site
      *
-     * @return string 
+     * @return string
      */
     public function getSite()
     {
@@ -300,7 +300,7 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get property
      *
-     * @return string 
+     * @return string
      */
     public function getProperty()
     {
@@ -323,7 +323,7 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get earlyPayment
      *
-     * @return string 
+     * @return string
      */
     public function getEarlyPayment()
     {
@@ -346,7 +346,7 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get penalty
      *
-     * @return string 
+     * @return string
      */
     public function getPenalty()
     {
@@ -383,9 +383,9 @@ class Bill extends CommercialPart implements BillInterface
      */
     public function getMaturityDate()
     {
-    	$date = clone $this->getCreation();
-    	$date->add(new \DateInterval('P'.$this->getMaturity().'D'));
-    	return $date;
+        $date = clone $this->getCreation();
+        $date->add(new \DateInterval('P'.$this->getMaturity().'D'));
+        return $date;
     }
 
     /**
@@ -439,7 +439,7 @@ class Bill extends CommercialPart implements BillInterface
      */
     public function __construct()
     {
-    	parent::__construct();
+        parent::__construct();
         $this->lines = new ArrayCollection;
     }
     
@@ -459,7 +459,7 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get intro
      *
-     * @return string 
+     * @return string
      */
     public function getIntro()
     {
@@ -481,7 +481,7 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get state
      *
-     * @return integer 
+     * @return integer
      */
     public function getState()
     {
@@ -496,10 +496,10 @@ class Bill extends CommercialPart implements BillInterface
      */
     public function addLine(BillLineInterface $line)
     {
-    	$line->setPosition(sizeof($this->lines));
-    	$line->setBill($this);
+        $line->setPosition(sizeof($this->lines));
+        $line->setBill($this);
         $this->lines[] = $line;
-    	$this->amount += $line->getPrice() * (1-$this->getDiscount());
+        $this->amount += $line->getPrice() * (1-$this->getDiscount());
         
         return $this;
     }
@@ -511,7 +511,7 @@ class Bill extends CommercialPart implements BillInterface
      */
     public function removeLine(BillLineInterface $line)
     {
-    	$line->setBill(null);
+        $line->setBill(null);
         $this->lines->removeElement($line);
         
         return $this;
@@ -520,7 +520,7 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get lines
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getLines()
     {
@@ -535,15 +535,14 @@ class Bill extends CommercialPart implements BillInterface
      */
     public function setDiscount($discount)
     {
-    	$this->discount = $discount;
-    	$this->amount = 0;
-    	foreach ($this->getLines() as $line)
-    	{
-    	    $this->amount += $line->getPrice();
-    	}
-    	$this->amount *= (1-$discount); 
-    	
-    	return $this;
+        $this->discount = $discount;
+        $this->amount = 0;
+        foreach ($this->getLines() as $line) {
+            $this->amount += $line->getPrice();
+        }
+        $this->amount *= (1-$discount);
+        
+        return $this;
     }
     
     /**
@@ -553,7 +552,7 @@ class Bill extends CommercialPart implements BillInterface
      */
     public function getDiscount()
     {
-    	return $this->discount;
+        return $this->discount;
     }
     
     /**
@@ -562,15 +561,14 @@ class Bill extends CommercialPart implements BillInterface
      */
     public function getTotalPrice()
     {
-    	$total = 0;
-    	foreach ($this->getLines() as $line)
-    	{
-    	    $total += $line->getPrice();
-    	}
-    	$total *= (1-$this->getDiscount());
-    	$this->amount = $total;
-    	
-    	return $total;
+        $total = 0;
+        foreach ($this->getLines() as $line) {
+            $total += $line->getPrice();
+        }
+        $total *= (1-$this->getDiscount());
+        $this->amount = $total;
+        
+        return $total;
     }
     
     /**
@@ -579,7 +577,7 @@ class Bill extends CommercialPart implements BillInterface
      */
     public function getAmount()
     {
-    	return $this->amount;
+        return $this->amount;
     }
     
     /**
@@ -588,14 +586,13 @@ class Bill extends CommercialPart implements BillInterface
      */
     public function getTotalVat()
     {
-    	$total = 0;
-    	foreach ($this->getLines() as $line)
-    	{
-    		$total += $line->getVatValue();
-    	}
-    	$total *= (1-$this->getDiscount());
-    	
-    	return $total;
+        $total = 0;
+        foreach ($this->getLines() as $line) {
+            $total += $line->getVatValue();
+        }
+        $total *= (1-$this->getDiscount());
+        
+        return $total;
     }
     
     /**
@@ -604,23 +601,20 @@ class Bill extends CommercialPart implements BillInterface
      */
     public function getTotalVatByRate()
     {
-    	$total = array();
-    	foreach ($this->getLines() as $line)
-    	{
-    		$index = ''.($line->getVat()*100);
-    		if (!isset($total[$index]))
-    		{
-    			$total[$index] = array('vat'=>0,'base'=>0);
-    		}
-    		$total[$index]['vat'] += $line->getVatValue();
-    		$total[$index]['base'] += $line->getPrice();
-    	}
-    	foreach ($total as $key=>$tot)
-    	{
-    		$total[$key]['vat'] *= (1-$this->getDiscount());
-    	}
-    		
-    	return $total;
+        $total = [];
+        foreach ($this->getLines() as $line) {
+            $index = ''.($line->getVat()*100);
+            if (!isset($total[$index])) {
+                $total[$index] = ['vat'=>0,'base'=>0];
+            }
+            $total[$index]['vat'] += $line->getVatValue();
+            $total[$index]['base'] += $line->getPrice();
+        }
+        foreach ($total as $key => $tot) {
+            $total[$key]['vat'] *= (1-$this->getDiscount());
+        }
+            
+        return $total;
     }
     
     /**
@@ -629,14 +623,13 @@ class Bill extends CommercialPart implements BillInterface
      */
     public function getTotalPriceAti()
     {
-    	$total = 0;
-    	foreach ($this->getLines() as $line)
-    	{
-    		$total += $line->getPriceAti();
-    	}
-    	$total *= (1-$this->getDiscount());
-    	
-    	return $total;
+        $total = 0;
+        foreach ($this->getLines() as $line) {
+            $total += $line->getPriceAti();
+        }
+        $total *= (1-$this->getDiscount());
+        
+        return $total;
     }
     
     /**
@@ -645,7 +638,7 @@ class Bill extends CommercialPart implements BillInterface
      */
     public function isOneSource()
     {
-    	return !(($this->fee !== null) && ($this->getSource() !== null));
+        return !(($this->fee !== null) && ($this->getSource() !== null));
     }
 
     /**
@@ -710,7 +703,7 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get firstBoost
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getFirstBoost()
     {
@@ -733,7 +726,7 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get secondBoost
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getSecondBoost()
     {
@@ -756,7 +749,7 @@ class Bill extends CommercialPart implements BillInterface
     /**
      * Get secondBoostComment
      *
-     * @return string 
+     * @return string
      */
     public function getSecondBoostComment()
     {
@@ -806,83 +799,73 @@ class Bill extends CommercialPart implements BillInterface
     
     /**
      * Is to boost
-     * 
+     *
      * @return bool
      */
     public function isToBoost()
     {
-    	$today = new \DateTime;
-    	if ($this->getState() == 1)
-    	{
-    		if ($this->getMaturityDate() < $today && $this->getFirstBoost() === null)
-    		{
-    			return true;
-    		}
-    		if ($this->getFirstBoost() !== null)
-    		{
-	    		$date = clone $this->getFirstBoost();
-	    		$date->add(new \DateInterval('P'.$this->getMaturity().'D'));
-	    		if ($date < $today && $this->getSecondBoost() === null)
-	    		{
-	    			return true;
-	    		}
-    		}
-    	}
-    	
-    	return false;
+        $today = new \DateTime;
+        if ($this->getState() == 1) {
+            if ($this->getMaturityDate() < $today && $this->getFirstBoost() === null) {
+                return true;
+            }
+            if ($this->getFirstBoost() !== null) {
+                $date = clone $this->getFirstBoost();
+                $date->add(new \DateInterval('P'.$this->getMaturity().'D'));
+                if ($date < $today && $this->getSecondBoost() === null) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
     
     public function getSrc()
     {
-    	if ($this->intervention !== null)
-    	{
-    		return $this->intervention->getDoor();
-    	}
-    	if ($this->fee !== null)
-    	{
-    		return $this->fee;
-    	}
-    	
-    	return null;
+        if ($this->intervention !== null) {
+            return $this->intervention->getDoor();
+        }
+        if ($this->fee !== null) {
+            return $this->fee;
+        }
+        
+        return null;
     }
     
-	public function getManagerContacts()
+    public function getManagerContacts()
     {
-    	$src = $this->getSrc();
-    	if ($src === null)
-    	{
-    		return array();
-    	}
-    	
-    	return $this->_createContactFromEmail($this->getSrc()->getManagerEmails());
+        $src = $this->getSrc();
+        if ($src === null) {
+            return [];
+        }
+        
+        return $this->_createContactFromEmail($this->getSrc()->getManagerEmails());
     }
     
     public function getBoostContacts()
     {
-    	$src = $this->getSrc();
-    	if ($src === null)
-    	{
-    		return array();
-    	}
-    	
-    	return $this->_createContactFromEmail($this->getSrc()->getAccountingEmails());
+        $src = $this->getSrc();
+        if ($src === null) {
+            return [];
+        }
+        
+        return $this->_createContactFromEmail($this->getSrc()->getAccountingEmails());
     }
     
     private function _createContactFromEmail($emails)
     {
-    	$c = array();
-    	if ($emails === null)
-    	{
-    		return $c;
-    	}
+        $c = [];
+        if ($emails === null) {
+            return $c;
+        }
     
-    	foreach ($emails as $email)
-    	{
-    		$temp = new Company();
-    		$temp->setEmail($email);
-    		$c[] = $temp;
-    	}
+        foreach ($emails as $email) {
+            $temp = new Company();
+            $temp->setEmail($email);
+            $c[] = $temp;
+        }
     
-    	return $c;
+        return $c;
     }
 }

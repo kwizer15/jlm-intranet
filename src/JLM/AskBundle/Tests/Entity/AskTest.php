@@ -39,20 +39,20 @@ class AskTest extends \PHPUnit_Framework_TestCase
     
     public function getGetterSetter()
     {
-        return array(
-            array('Creation', new \DateTime),
-            array('Maturity', new \DateTime),
-            array('Ask', 'Foo'),
-            array('DontTreat', 'Foo'),
-        	array('Contact', $this->getMock('JLM\AskBundle\Model\ContactInterface')),
-            array('Payer', $this->getMock('JLM\AskBundle\Model\PayerInterface')),
-            array('Method', $this->getMock('JLM\AskBundle\Model\CommunicationMeansInterface')),
-            array('Subject', $this->getMock('JLM\AskBundle\Model\SubjectInterface')),
+        return [
+            ['Creation', new \DateTime],
+            ['Maturity', new \DateTime],
+            ['Ask', 'Foo'],
+            ['DontTreat', 'Foo'],
+            ['Contact', $this->getMock('JLM\AskBundle\Model\ContactInterface')],
+            ['Payer', $this->getMock('JLM\AskBundle\Model\PayerInterface')],
+            ['Method', $this->getMock('JLM\AskBundle\Model\CommunicationMeansInterface')],
+            ['Subject', $this->getMock('JLM\AskBundle\Model\SubjectInterface')],
             // Deprecateds
-            array('Person', $this->getMock('JLM\ContactBundle\Entity\Person')),
-            array('Trustee', $this->getMock('JLM\ModelBundle\Entity\Trustee')),
-            array('Site', $this->getMock('JLM\ModelBundle\Entity\Site')),
-        );
+            ['Person', $this->getMock('JLM\ContactBundle\Entity\Person')],
+            ['Trustee', $this->getMock('JLM\ModelBundle\Entity\Trustee')],
+            ['Site', $this->getMock('JLM\ModelBundle\Entity\Site')],
+        ];
     }
     
     /**

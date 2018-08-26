@@ -26,17 +26,17 @@ class BillLineType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('position','hidden')
-        	->add('product','jlm_product_product_hidden',array('required'=>false))
-        	->add('reference',null,array('required'=>false,'attr'=>array('class'=>'input-mini')))
-        	->add('designation',null,array('attr'=>array('class'=>'input-xlarge')))
-        	->add('description',null,array('required'=>false,'attr'=>array('class'=>'input-xlarge')))
-        	->add('showDescription','hidden')
-        	->add('quantity',null,array('attr'=>array('class'=>'input-mini')))
-        	->add('unitPrice','money',array('grouping'=>true,'attr'=>array('class'=>'input-mini')))
-        	->add('discount','percent',array('precision'=>0,'attr'=>array('class'=>'input-mini')))
-        	->add('vat','percent',array('precision'=>1,'attr'=>array('class'=>'input-mini')))
-        	->add('isTransmitter','hidden')
+            ->add('position', 'hidden')
+            ->add('product', 'jlm_product_product_hidden', ['required'=>false])
+            ->add('reference', null, ['required'=>false,'attr'=>['class'=>'input-mini']])
+            ->add('designation', null, ['attr'=>['class'=>'input-xlarge']])
+            ->add('description', null, ['required'=>false,'attr'=>['class'=>'input-xlarge']])
+            ->add('showDescription', 'hidden')
+            ->add('quantity', null, ['attr'=>['class'=>'input-mini']])
+            ->add('unitPrice', 'money', ['grouping'=>true,'attr'=>['class'=>'input-mini']])
+            ->add('discount', 'percent', ['precision'=>0,'attr'=>['class'=>'input-mini']])
+            ->add('vat', 'percent', ['precision'=>1,'attr'=>['class'=>'input-mini']])
+            ->add('isTransmitter', 'hidden')
 
         ;
     }
@@ -46,9 +46,9 @@ class BillLineType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-    	$resolver->setDefaults(array(
-    			'data_class' => 'JLM\CommerceBundle\Entity\BillLine'
-    	));
+        $resolver->setDefaults([
+                'data_class' => 'JLM\CommerceBundle\Entity\BillLine'
+        ]);
     }
     
     /**

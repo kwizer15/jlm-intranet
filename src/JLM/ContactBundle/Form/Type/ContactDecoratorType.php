@@ -26,7 +26,7 @@ class ContactDecoratorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contact','jlm_contact_contact_select', array('label'=>'Contact'))
+            ->add('contact', 'jlm_contact_contact_select', ['label'=>'Contact'])
         ;
     }
 
@@ -44,8 +44,8 @@ class ContactDecoratorType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-        ->setDefaults(array(
+        ->setDefaults([
             'inherit_data' => true,
-        ));
+        ]);
     }
 }

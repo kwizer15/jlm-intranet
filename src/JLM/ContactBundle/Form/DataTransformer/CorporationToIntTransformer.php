@@ -21,16 +21,16 @@ class CorporationToIntTransformer extends ObjectToIntTransformer
     /**
      * {@inheritdoc}
      */
-	protected function _getClass()
-	{
-		return 'JLMContactBundle:Corporation';
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function _getErrorMessage()
-	{
-		return 'A corporation with id "%s" does not exist!';
-	}
+    protected function _getClass()
+    {
+        return 'JLMContactBundle:Corporation';
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function _getErrorMessage()
+    {
+        return 'A corporation with id "%s" does not exist!';
+    }
 }

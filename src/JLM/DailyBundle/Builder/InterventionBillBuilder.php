@@ -21,7 +21,7 @@ class InterventionBillBuilder extends DoorBillBuilderAbstract
 {
     private $intervention;
     
-    public function __construct(Intervention $intervention, $options = array())
+    public function __construct(Intervention $intervention, $options = [])
     {
         $this->intervention = $intervention;
         parent::__construct($this->intervention->getDoor(), $options);
@@ -40,7 +40,6 @@ class InterventionBillBuilder extends DoorBillBuilderAbstract
      */
     public function buildLines()
     {
-
     }
     
     /**

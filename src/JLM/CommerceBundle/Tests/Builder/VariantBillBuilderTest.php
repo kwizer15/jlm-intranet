@@ -12,6 +12,7 @@
 namespace JLM\CommerceBundle\Tests\Builder;
 
 use JLM\CommerceBundle\Builder\VariantBillBuilder;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -42,11 +43,11 @@ class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
         $site->expects($this->any())->method('getManager')->will($this->returnValue($trustee));
         $site->expects($this->any())->method('getVat')->will($this->returnValue($vat));
         $door->expects($this->any())->method('getSite')->will($this->returnValue($site));  // @deprecated
-        $door->expects($this->any())->method('getAdministrator')->will($this->returnValue($site));  
+        $door->expects($this->any())->method('getAdministrator')->will($this->returnValue($site));
         $door->expects($this->any())->method('getActualContract')->will($this->returnValue($contract));
         $ask = $this->getMock('JLM\OfficeBundle\Entity\AskQuote');
         $ask->expects($this->any())->method('getSite')->will($this->returnValue($site));  // @deprecated
-        $ask->expects($this->any())->method('getAdministrator')->will($this->returnValue($site));  
+        $ask->expects($this->any())->method('getAdministrator')->will($this->returnValue($site));
         $ask->expects($this->any())->method('getDoor')->will($this->returnValue($door));
         $quote = $this->getMock('JLM\CommerceBundle\Model\QuoteInterface');
         $quote->expects($this->any())->method('getAsk')->will($this->returnValue($ask));
@@ -56,7 +57,7 @@ class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
         $this->variant->expects($this->any())->method('getNumber')->will($this->returnValue('14120001-1'));
         $this->variant->expects($this->any())->method('getQuote')->will($this->returnValue($quote));
         $this->variant->expects($this->any())->method('getDoor')->will($this->returnValue($door));
-        $this->variant->expects($this->any())->method('getLines')->will($this->returnValue(array()));
+        $this->variant->expects($this->any())->method('getLines')->will($this->returnValue([]));
         $this->builder = new VariantBillBuilder($this->variant);
     }
     

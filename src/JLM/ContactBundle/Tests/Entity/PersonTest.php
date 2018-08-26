@@ -39,17 +39,17 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('JLM\ContactBundle\Model\PersonInterface', $this->entity);
         $this->assertNull($this->entity->getId());
     }
-	
+    
     public function getAttributes()
     {
-        return array(
-            array('Title', 'M.'),
-            array('Title', 'Mme'),
-            array('FirstName', 'Foo'),
-            array('LastName', 'Foo'),
-            array('Email', 'commerce@jlm-entreprise.fr'),
-            array('Address', $this->getMock('JLM\ContactBundle\Model\AddressInterface')),
-        );
+        return [
+            ['Title', 'M.'],
+            ['Title', 'Mme'],
+            ['FirstName', 'Foo'],
+            ['LastName', 'Foo'],
+            ['Email', 'commerce@jlm-entreprise.fr'],
+            ['Address', $this->getMock('JLM\ContactBundle\Model\AddressInterface')],
+        ];
     }
     
     /**
@@ -68,9 +68,9 @@ class PersonTest extends \PHPUnit_Framework_TestCase
     
     public function getAdderRemover()
     {
-        return array(
-            array('Phone', 'Phones', $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface')),
-        );
+        return [
+            ['Phone', 'Phones', $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface')],
+        ];
     }
     
     /**
@@ -91,13 +91,13 @@ class PersonTest extends \PHPUnit_Framework_TestCase
     
     public function getNames()
     {
-        return array(
-        	array('M.', 'Emmanuel', 'Bernaszuk', 'M. Bernaszuk Emmanuel'),
-            array('', 'Emmanuel', 'Bernaszuk', 'Bernaszuk Emmanuel'),
-            array('M.', '', 'Bernaszuk', 'M. Bernaszuk'),
-            array('M.', 'Emmanuel', '', 'M. Emmanuel'),
-            array('', '', '', ''),
-        );
+        return [
+            ['M.', 'Emmanuel', 'Bernaszuk', 'M. Bernaszuk Emmanuel'],
+            ['', 'Emmanuel', 'Bernaszuk', 'Bernaszuk Emmanuel'],
+            ['M.', '', 'Bernaszuk', 'M. Bernaszuk'],
+            ['M.', 'Emmanuel', '', 'M. Emmanuel'],
+            ['', '', '', ''],
+        ];
     }
     
     /**

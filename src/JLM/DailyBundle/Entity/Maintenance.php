@@ -21,30 +21,28 @@ use JLM\DailyBundle\Model\MaintenanceInterface;
  */
 class Maintenance extends Intervention implements MaintenanceInterface
 {
-	/**
-	 * Get Type
-	 * @see Shifting
-	 * @return string
-	 */
-	public function getType()
-	{
-		return 'maintenance';
-	}
-	
-	/**
-	 * Un entretien ne sera jamais facturé
-	 * Assert\False
-	 *
-	public function isBilled()
-	{
-		return $this->mustBeBilled;
-	}
-	*/
-	
-	public function getCustomerDesignation()
-	{
-		return 'Entretien';
-		
-	}
-	
+    /**
+     * Get Type
+     * @see Shifting
+     * @return string
+     */
+    public function getType()
+    {
+        return 'maintenance';
+    }
+    
+    /**
+     * Un entretien ne sera jamais facturé
+     * Assert\False
+     *
+    public function isBilled()
+    {
+        return $this->mustBeBilled;
+    }
+    */
+    
+    public function getCustomerDesignation()
+    {
+        return 'Entretien';
+    }
 }

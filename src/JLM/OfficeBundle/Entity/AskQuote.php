@@ -15,45 +15,45 @@ use JLM\DailyBundle\Entity\Intervention;
  */
 class AskQuote extends Ask
 {
-	/**
-	 * @var int
-	 */
-	private $id;
-	
-	/**
-	 * Suite à intervention
-	 * @var Intervention
-	 */
-	private $intervention;
-	
-	/**
-	 * Intallation
-	 * @var Door
-	 */
-	private $door;
-	
-	/**
-	 * Devis
-	 * @var QuoteInterface[]
-	 */
-	private $quotes;
-	
-	/**
-	 * Get Id
-	 * @return int
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
-	
-	/**
-	 * Dossier de stockage des documents uploadés
-	 */
-	protected function getUploadDir()
-	{
-		return 'uploads/documents/askquote';
-	}
+    /**
+     * @var int
+     */
+    private $id;
+    
+    /**
+     * Suite à intervention
+     * @var Intervention
+     */
+    private $intervention;
+    
+    /**
+     * Intallation
+     * @var Door
+     */
+    private $door;
+    
+    /**
+     * Devis
+     * @var QuoteInterface[]
+     */
+    private $quotes;
+    
+    /**
+     * Get Id
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
+     * Dossier de stockage des documents uploadés
+     */
+    protected function getUploadDir()
+    {
+        return 'uploads/documents/askquote';
+    }
 
     /**
      * Set intervention
@@ -72,7 +72,7 @@ class AskQuote extends Ask
     /**
      * Get intervention
      *
-     * @return \JLM\DailyBundle\Entity\Intervention 
+     * @return \JLM\DailyBundle\Entity\Intervention
      */
     public function getIntervention()
     {
@@ -88,9 +88,9 @@ class AskQuote extends Ask
     public function setDoor(Door $door = null)
     {
         $this->door = $door;
-    	$this->site = null;
-    	$this->trustee = null;
-    	
+        $this->site = null;
+        $this->trustee = null;
+        
         return $this;
     }
 
@@ -100,11 +100,10 @@ class AskQuote extends Ask
      */
     public function getDoor()
     {
-    	if ($this->getIntervention() !== null)
-    	{
-    		return $this->getIntervention()->getDoor();
-    	}
-    	
+        if ($this->getIntervention() !== null) {
+            return $this->getIntervention()->getDoor();
+        }
+        
         return $this->door;
     }
     
@@ -113,12 +112,11 @@ class AskQuote extends Ask
      */
     public function getSite()
     {
-    	if ($this->getDoor() !== null)
-    	{
-    		return $this->getDoor()->getSite();
-    	}
-    	
-    	return parent::getSubject();
+        if ($this->getDoor() !== null) {
+            return $this->getDoor()->getSite();
+        }
+        
+        return parent::getSubject();
     }
     
     /**
@@ -126,11 +124,10 @@ class AskQuote extends Ask
      */
     public function getTrustee()
     {
-    	if ($this->getDoor() !== null)
-    	{
-    		return $this->getDoor()->getTrustee();
-    	}
-    	return parent::getPayer();
+        if ($this->getDoor() !== null) {
+            return $this->getDoor()->getTrustee();
+        }
+        return parent::getPayer();
     }
     
     /**
@@ -138,11 +135,10 @@ class AskQuote extends Ask
      */
     public function getMethod()
     {
-    	if ($this->getIntervention() !== null)
-    	{
-    		return null;
-    	}
-    	return parent::getMethod();
+        if ($this->getIntervention() !== null) {
+            return null;
+        }
+        return parent::getMethod();
     }
     
     /**
@@ -180,7 +176,7 @@ class AskQuote extends Ask
     /**
      * Get quotes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getQuotes()
     {
@@ -189,17 +185,17 @@ class AskQuote extends Ask
     
     /**
      * Populate from intervention
-     * 
+     *
      * @param Intervention $interv
      * @return void
      */
     public function populateFromIntervention(Intervention $interv)
     {
-    	$this->setCreation(new \DateTime);
-    	$maturity = new \DateTime;
-    	$maturity->add(new \DateInterval('P15D'));
-    	$this->setMaturity($maturity);
-    	$this->setIntervention($interv);
-    	$this->setAsk($interv->getRest());
+        $this->setCreation(new \DateTime);
+        $maturity = new \DateTime;
+        $maturity->add(new \DateInterval('P15D'));
+        $this->setMaturity($maturity);
+        $this->setIntervention($interv);
+        $this->setAsk($interv->getRest());
     }
 }

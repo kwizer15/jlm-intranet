@@ -12,46 +12,47 @@
 namespace JLM\OfficeBundle\Builder;
 
 use JLM\OfficeBundle\Entity\OrderLine;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 abstract class OrderLineBuilderAbstract implements OrderLineBuilderInterface
 {
-	/**
-	 * 
-	 * @var BillLineInterface $line
-	 */
-	private $line;
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function create()
-	{
-		$this->line = new OrderLine();
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function buildQuantity()
-	{
-		$this->line->setQuantity(1);
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function buildReference()
-	{
-		$this->line->setReference('');
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getLine()
-	{
-		return $this->line;
-	}
+    /**
+     *
+     * @var BillLineInterface $line
+     */
+    private $line;
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function create()
+    {
+        $this->line = new OrderLine();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function buildQuantity()
+    {
+        $this->line->setQuantity(1);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function buildReference()
+    {
+        $this->line->setReference('');
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getLine()
+    {
+        return $this->line;
+    }
 }

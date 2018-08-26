@@ -32,7 +32,7 @@ interface AddressInterface
     
     /**
      * To String
-     * 
+     *
      * @return string
      */
     public function __toString();
@@ -43,5 +43,4 @@ interface AddressInterface
      * @return string
      */
     public function toString();
-    
 }

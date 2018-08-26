@@ -14,18 +14,19 @@ namespace JLM\DailyBundle\Builder\Email;
 use JLM\CoreBundle\Builder\MailBuilderAbstract;
 use JLM\DailyBundle\Model\InterventionInterface;
 use JLM\DailyBundle\Model\MaintenanceInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 abstract class MaintenanceMailBuilder extends InterventionMailBuilder
 {
-	public function __construct(MaintenanceInterface $maintenance)
-	{
-		parent::__construct($maintenance);
-	}
-	
-	public function getMaintenance()
-	{
-		return $this->getIntervention();
-	}
+    public function __construct(MaintenanceInterface $maintenance)
+    {
+        parent::__construct($maintenance);
+    }
+    
+    public function getMaintenance()
+    {
+        return $this->getIntervention();
+    }
 }

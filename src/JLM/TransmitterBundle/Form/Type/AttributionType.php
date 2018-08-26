@@ -11,18 +11,18 @@ class AttributionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('ask','transmitter_ask_hidden')
-            ->add('creation','datepicker',array('label'=>'Date'))
+            ->add('ask', 'transmitter_ask_hidden')
+            ->add('creation', 'datepicker', ['label'=>'Date'])
             ->add('contact')
-            ->add('individual',null,array('label'=>'Particulier','required'=>false))
+            ->add('individual', null, ['label'=>'Particulier','required'=>false])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'JLM\TransmitterBundle\Entity\Attribution'
-        ));
+        ]);
     }
 
     public function getName()

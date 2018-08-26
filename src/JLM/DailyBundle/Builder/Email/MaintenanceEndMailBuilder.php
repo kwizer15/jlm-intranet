@@ -17,16 +17,15 @@ namespace JLM\DailyBundle\Builder\Email;
 class MaintenanceEndMailBuilder extends MaintenanceMailBuilder
 {
 
-	public function buildSubject()
-	{
-		$this->setSubject('Visite d\'entretien terminée');
-	}
-	
-	public function buildBody()
-	{
-		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Le technicien à terminé la visite d\'entretien'.chr(10)
-		.$this->_getSignature()
-		);
-	}
+    public function buildSubject()
+    {
+        $this->setSubject('Visite d\'entretien terminée');
+    }
+    
+    public function buildBody()
+    {
+        $this->setBody('Bonjour,'.chr(10).chr(10)
+        .'Le technicien à terminé la visite d\'entretien'.chr(10)
+        .$this->_getSignature());
+    }
 }

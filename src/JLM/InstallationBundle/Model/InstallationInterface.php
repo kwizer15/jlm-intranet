@@ -15,7 +15,8 @@ namespace JLM\InstallationBundle\Model;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 interface InstallationInterface
-{   
+{
+
     /**
      * Details to access
      * @return string

@@ -30,7 +30,7 @@ class InterventionControllerTest extends WebTestCase
     protected function setUp()
     {
         $this->client = static::createClient();
-    } 
+    }
     
     public function testNew()
     {
@@ -51,12 +51,9 @@ class InterventionControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/daily/intervention/today');
         // Page d'identification (a supprimer plus tard)
         $crawler = $this->login($crawler);
-        if ($profile = $this->client->getProfile())
-        {
+        if ($profile = $this->client->getProfile()) {
             $this->assertEquals(0, $profile->getCollector('db')->getInvalidEntityCount());
-        }
-        else
-        {
+        } else {
             $this->markTestSkipped('Profiler is not activated');
         }
     }

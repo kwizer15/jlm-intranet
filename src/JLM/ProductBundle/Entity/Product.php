@@ -120,7 +120,7 @@ class Product implements ProductInterface
     /**
      * Fichiers liés (plans, docs...)
      * @var LinkedFile[] $files
-     * 
+     *
      * ORM\OneToMany(targetEntity="LinkedFile", mappedBy="product")
      */
     // private $files;
@@ -146,7 +146,7 @@ class Product implements ProductInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -188,7 +188,7 @@ class Product implements ProductInterface
      * Set description
      *
      * @param text $description
-     * 
+     *
      * @return self
      */
     public function setDescription($description)
@@ -243,7 +243,7 @@ class Product implements ProductInterface
     /**
      * Get barcode
      *
-     * @return string 
+     * @return string
      */
     public function getBarcode()
     {
@@ -268,23 +268,20 @@ class Product implements ProductInterface
      */
     public function getUnitPrice($quantity = null)
     {
-    	if ($quantity === null || $this->unitPrices === null)
-    	{
-        	return $this->unitPrice;
-    	}
-    	$index = 0;
-    	$q = $this->unitPrices[$index]->getQuantity();
-    	while ($quantity >= $q)
-    	{
-    		// Quand on arrive au bout du tableau
-    		if (!isset($this->unitPrices[$index + 1]))
-    		{
-    			return $this->unitPrices[$index]->getUnitPrice();
-    		}
-    		$q = $this->unitPrices[++$index]->getQuantity();
-    	}
-    	
-    	return $this->unitPrices[$index-1]->getUnitPrice();
+        if ($quantity === null || $this->unitPrices === null) {
+            return $this->unitPrice;
+        }
+        $index = 0;
+        $q = $this->unitPrices[$index]->getQuantity();
+        while ($quantity >= $q) {
+            // Quand on arrive au bout du tableau
+            if (!isset($this->unitPrices[$index + 1])) {
+                return $this->unitPrices[$index]->getUnitPrice();
+            }
+            $q = $this->unitPrices[++$index]->getQuantity();
+        }
+        
+        return $this->unitPrices[$index-1]->getUnitPrice();
     }
 
     /**
@@ -303,7 +300,7 @@ class Product implements ProductInterface
     /**
      * Get purchase
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getPurchase()
     {
@@ -326,7 +323,7 @@ class Product implements ProductInterface
     /**
      * Get discountSupplier
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getDiscountSupplier()
     {
@@ -349,7 +346,7 @@ class Product implements ProductInterface
     /**
      * Get expenseRatio
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getExpenseRatio()
     {
@@ -372,7 +369,7 @@ class Product implements ProductInterface
     /**
      * Get shipping
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getShipping()
     {
@@ -395,7 +392,7 @@ class Product implements ProductInterface
     /**
      * Get unity
      *
-     * @return string 
+     * @return string
      */
     public function getUnity()
     {
@@ -404,24 +401,23 @@ class Product implements ProductInterface
 
     public function getPurchasePrice()
     {
-    	return ($this->getPurchase() * (1 - ($this->getDiscountSupplier() / 100))) * (1 + ($this->getExpenseRatio() / 100)) + $this->getShipping();
+        return ($this->getPurchase() * (1 - ($this->getDiscountSupplier() / 100))) * (1 + ($this->getExpenseRatio() / 100)) + $this->getShipping();
     }
     
     public function getMargin()
     {
-    	return ($this->getUnitPrice() - $this->getPurchasePrice());
+        return ($this->getUnitPrice() - $this->getPurchasePrice());
     }
     
     public function getCoef()
     {
-    	$d = $this->getPurchasePrice() - $this->getShipping();
-    	$n = $this->getUnitPrice() - $this->getShipping();
-    	if ($d == 0)
-    	{
-    		return 0;
-    	}
-    	
-    	return (($n / $d) - 1)*100;
+        $d = $this->getPurchasePrice() - $this->getShipping();
+        $n = $this->getUnitPrice() - $this->getShipping();
+        if ($d == 0) {
+            return 0;
+        }
+        
+        return (($n / $d) - 1)*100;
     }
 
     /**
@@ -440,7 +436,7 @@ class Product implements ProductInterface
     /**
      * Get supplier
      *
-     * @return SupplierInterface 
+     * @return SupplierInterface
      */
     public function getSupplier()
     {
@@ -473,7 +469,7 @@ class Product implements ProductInterface
      */
     public function __toString()
     {
-    	return $this->getDesignation();
+        return $this->getDesignation();
     }
     
     /**
@@ -482,7 +478,7 @@ class Product implements ProductInterface
      */
     public function isCoefPositive()
     {
-    	return $this->getCoef() >= 0;
+        return $this->getCoef() >= 0;
     }
     
     /**
@@ -533,7 +529,7 @@ class Product implements ProductInterface
      */
     public function isActive()
     {
-    	return $this->active;
+        return $this->active;
     }
     
     /**
@@ -543,8 +539,8 @@ class Product implements ProductInterface
      */
     public function setActive($active)
     {
-    	$this->active = (bool) $active;
-    	
-    	return $this;
+        $this->active = (bool) $active;
+        
+        return $this;
     }
 }

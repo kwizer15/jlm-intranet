@@ -3,5 +3,5 @@ namespace JLM\OfficeBundle\Model;
 
 interface OrderLineInterface
 {
-	
+    
 }

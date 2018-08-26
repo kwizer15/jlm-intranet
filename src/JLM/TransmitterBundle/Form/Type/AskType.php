@@ -11,23 +11,23 @@ class AskType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('creation','datepicker',array('label'=>'Date de la demande'))
-            ->add('trustee','trustee_select',array('label'=>'Syndic','attr'=>array('class'=>'input-xlarge')))
-            ->add('site','site_select',array('label'=>'Affaire','attr'=>array('class'=>'input-xxlarge','rows'=>5)))
-            ->add('method',null,array('label'=>'Arrivée par','attr'=>array('class'=>'input-medium')))
-            ->add('maturity','datepicker',array('label'=>'Date d\'échéance','required'=>false))
-            ->add('ask',null,array('label'=>'Demande','attr'=>array('class'=>'input-xxlarge','rows'=>5)))
-            ->add('file',null,array('label'=>'Fichier joint'))
+            ->add('creation', 'datepicker', ['label'=>'Date de la demande'])
+            ->add('trustee', 'trustee_select', ['label'=>'Syndic','attr'=>['class'=>'input-xlarge']])
+            ->add('site', 'site_select', ['label'=>'Affaire','attr'=>['class'=>'input-xxlarge','rows'=>5]])
+            ->add('method', null, ['label'=>'Arrivée par','attr'=>['class'=>'input-medium']])
+            ->add('maturity', 'datepicker', ['label'=>'Date d\'échéance','required'=>false])
+            ->add('ask', null, ['label'=>'Demande','attr'=>['class'=>'input-xxlarge','rows'=>5]])
+            ->add('file', null, ['label'=>'Fichier joint'])
         //    ->add('person','site_contact',array('label'=>'Contact'))
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'JLM\TransmitterBundle\Entity\Ask',
-        	'attr' => array('class'=>'askForm')
-        ));
+            'attr' => ['class'=>'askForm']
+        ]);
     }
 
     public function getName()

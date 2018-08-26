@@ -16,29 +16,27 @@ namespace JLM\FrontBundle\Entity;
  */
 class Maintenance
 {
-	/**
-	 * @var int
-	 */
-	private $id;
+    /**
+     * @var int
+     */
+private $id;
 
-	/**
-	 * @var Door
-	 */
-	private $door;
-	
-	/**
-	 * @var int
-	 */
-	private $year;
-	
-	/**
-	 * @var int
-	 */
-	private $ranking;
-	
-	/**
-	 * @var DateTime|null
-	 */
-	private $date = null;
-	
-	
+    /**
+     * @var Door
+     */
+private $door;
+    
+    /**
+     * @var int
+     */
+private $year;
+    
+    /**
+     * @var int
+     */
+private $ranking;
+    
+    /**
+     * @var DateTime|null
+     */
+private $date = null;

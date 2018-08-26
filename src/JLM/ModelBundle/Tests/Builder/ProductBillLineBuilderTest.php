@@ -79,7 +79,7 @@ class ProductBillLineBuilderTest extends \PHPUnit_Framework_TestCase
     
     public function testBuildPriceIntoConstruct()
     {
-        $this->builder = new ProductBillLineBuilder($this->product, 0.1, 1, array('price'=>10.2));
+        $this->builder = new ProductBillLineBuilder($this->product, 0.1, 1, ['price'=>10.2]);
         $this->builder->create();
         $this->builder->buildPrice();
         $this->assertEquals(10.2, $this->builder->getLine()->getUnitPrice());

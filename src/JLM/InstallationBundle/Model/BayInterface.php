@@ -19,7 +19,7 @@ interface BayInterface
     /**
      * The address of th bay
      * @return AddressInterface
-     */    
+     */
     public function getAddress();
     
     /**

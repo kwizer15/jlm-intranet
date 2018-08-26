@@ -15,7 +15,7 @@ class StockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('quantity')
+            ->add('quantity')
             ->add('minimum')
             ->add('maximum')
             
@@ -27,9 +27,9 @@ class StockType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'JLM\ProductBundle\Entity\Stock'
-        ));
+        ]);
     }
 
     /**

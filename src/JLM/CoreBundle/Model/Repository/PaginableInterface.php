@@ -12,17 +12,18 @@
 namespace JLM\CoreBundle\Model\Repository;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 interface PaginableInterface
 {
-	/**
-	 * Get entity list paginated
-	 * @param int $page
-	 * @param int $resultsByPage
-	 * @param array $filters
-	 * @return Paginator
-	 */
-	public function getPaginable($page, $resultsByPage, array $filters);
+    /**
+     * Get entity list paginated
+     * @param int $page
+     * @param int $resultsByPage
+     * @param array $filters
+     * @return Paginator
+     */
+    public function getPaginable($page, $resultsByPage, array $filters);
 }

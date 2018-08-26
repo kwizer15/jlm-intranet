@@ -11,18 +11,18 @@ class SiteContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('site','site_select',array('label'=>'Affaire','attr'=>array('class'=>'input-xxlarge')))
-        	->add('person','jlm_contact_person_select',array('label'=>'Contact'))
-        	->add('role',null,array('label'=>'Rôle du contact'))
-        //	->add('professionnalPhone',null,array('label'=>'Téléphone pro','required'=>false))  
+            ->add('site', 'site_select', ['label'=>'Affaire','attr'=>['class'=>'input-xxlarge']])
+            ->add('person', 'jlm_contact_person_select', ['label'=>'Contact'])
+            ->add('role', null, ['label'=>'Rôle du contact'])
+        //  ->add('professionnalPhone',null,array('label'=>'Téléphone pro','required'=>false))
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'JLM\ModelBundle\Entity\SiteContact'
-        ));
+        ]);
     }
 
     public function getName()

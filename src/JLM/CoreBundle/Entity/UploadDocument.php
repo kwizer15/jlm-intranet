@@ -6,9 +6,9 @@ use JLM\CoreBundle\Model\UploadDocumentInterface;
 
 class UploadDocument implements UploadDocumentInterface
 {
-	/**
-	 * @var int
-	 */
+    /**
+     * @var int
+     */
     private $id;
 
     /**
@@ -23,14 +23,14 @@ class UploadDocument implements UploadDocumentInterface
 
     public function getFile()
     {
-    	return $this->file;
+        return $this->file;
     }
     
     public function setFile($file)
     {
-    	$this->file = $file;
-    	
-    	return $this;
+        $this->file = $file;
+        
+        return $this;
     }
     
     /**
@@ -67,34 +67,31 @@ class UploadDocument implements UploadDocumentInterface
     
     public function preUpload()
     {
-    	if (null !== $this->file) 
-    	{
-    		$this->path = sha1(uniqid(mt_rand(), true)).'.'.$this->file->guessExtension();
-    	}
+        if (null !== $this->file) {
+            $this->path = sha1(uniqid(mt_rand(), true)).'.'.$this->file->guessExtension();
+        }
     }
     
     public function upload()
     {
-    	if (null === $this->file)
-    	{
-    		return;
-    	}
+        if (null === $this->file) {
+            return;
+        }
 
-    	$this->file->move($this->getUploadRootDir(), $this->path);
+        $this->file->move($this->getUploadRootDir(), $this->path);
     
-    	unset($this->file);
+        unset($this->file);
     }
     
     public function removeUpload()
     {
-    	if ($file = $this->getAbsolutePath())
-    	{
-    		unlink($file);
-    	}
+        if ($file = $this->getAbsolutePath()) {
+            unlink($file);
+        }
     }
     
     public function __toString()
     {
-    	return $this->getWebPath();
+        return $this->getWebPath();
     }
 }

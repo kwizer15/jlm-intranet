@@ -16,7 +16,7 @@ class InventoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('stocks', 'collection', array('type'=>'jlm_product_stock'))
+            ->add('stocks', 'collection', ['type'=>'jlm_product_stock'])
             
         ;
     }
@@ -26,7 +26,6 @@ class InventoryType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        
     }
 
     /**

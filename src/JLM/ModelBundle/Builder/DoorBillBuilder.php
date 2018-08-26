@@ -15,14 +15,13 @@ namespace JLM\ModelBundle\Builder;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class DoorBillBuilder extends DoorBillBuilderAbstract
-{    
+{
+
     public function buildLines()
     {
-        
     }
     
     public function buildReference()
     {
-        
     }
 }

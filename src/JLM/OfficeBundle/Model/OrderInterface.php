@@ -5,5 +5,5 @@ use JLM\CommerceBundle\Model\OrderInterface as OrderInterfaceBase;
 
 interface OrderInterface extends OrderInterfaceBase
 {
-	
+    
 }

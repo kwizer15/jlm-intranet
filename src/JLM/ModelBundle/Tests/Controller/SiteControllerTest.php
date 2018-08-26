@@ -30,7 +30,7 @@ class SiteControllerTest extends WebTestCase
     protected function setUp()
     {
         $this->client = static::createClient();
-    } 
+    }
     
     public function testShow()
     {
@@ -40,7 +40,6 @@ class SiteControllerTest extends WebTestCase
         // Page d'identification (a supprimer plus tard)
         $crawler = $this->login($crawler);
         $this->assertTrue($this->client->getResponse()->isSuccessful());
-             
     }
     
     public function testEdit()
@@ -51,7 +50,6 @@ class SiteControllerTest extends WebTestCase
         // Page d'identification (a supprimer plus tard)
         $crawler = $this->login($crawler);
         $this->assertTrue($this->client->getResponse()->isSuccessful());
-         
     }
     /**
      * Log the user

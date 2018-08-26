@@ -34,7 +34,7 @@ class TransmitterTypeController extends Controller
 
         $entities = $em->getRepository('JLMModelBundle:TransmitterType')->findAll();
 
-        return array('entities' => $entities);
+        return ['entities' => $entities];
     }
 
     /**
@@ -48,10 +48,10 @@ class TransmitterTypeController extends Controller
         $entity = new TransmitterType();
         $form   = $this->createForm(new TransmitterTypeType(), $entity);
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView()
-        );
+        ];
     }
 
     /**
@@ -73,13 +73,12 @@ class TransmitterTypeController extends Controller
             $em->flush();
 
             return $this->redirect($this->generateUrl('transmittertype'));
-            
         }
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView()
-        );
+        ];
     }
 
     /**
@@ -91,10 +90,10 @@ class TransmitterTypeController extends Controller
     public function editAction(TransmitterType $entity)
     {
         $editForm = $this->createForm(new TransmitterTypeType(), $entity);
-        return array(
+        return [
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -118,9 +117,9 @@ class TransmitterTypeController extends Controller
             return $this->redirect($this->generateUrl('transmittertype'));
         }
 
-        return array(
+        return [
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-        );
+        ];
     }
 }

@@ -17,9 +17,9 @@ use JLM\CoreBundle\Event\RequestEvent;
 
 class BillEvent extends RequestEvent
 {
-	/**
-	 * @var BillInterface
-	 */
+    /**
+     * @var BillInterface
+     */
     private $bill;
 
     /**
@@ -28,12 +28,12 @@ class BillEvent extends RequestEvent
      */
     public function __construct(BillInterface $bill, Request $request)
     {
-    	$this->bill = $bill;
-    	parent::__construct($request);
+        $this->bill = $bill;
+        parent::__construct($request);
     }
     
     public function getBill()
     {
-    	return $this->bill;
+        return $this->bill;
     }
 }

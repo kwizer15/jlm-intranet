@@ -12,6 +12,7 @@
 namespace JLM\DailyBundle\Tests\Builder;
 
 use JLM\DailyBundle\Builder\InterventionBillBuilder;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -44,7 +45,7 @@ class InterventionBillBuilderTest extends \PHPUnit_Framework_TestCase
         
         $this->intervention = $this->getMock('JLM\DailyBundle\Entity\Intervention');
         $this->intervention->expects($this->any())->method('getLastDate')->will($this->returnValue(new \DateTime));
-        $this->intervention->expects($this->any())->method('getReason')->will($this->returnValue(array()));
+        $this->intervention->expects($this->any())->method('getReason')->will($this->returnValue([]));
         $this->intervention->expects($this->any())->method('getDoor')->will($this->returnValue($door));
         $this->builder = new InterventionBillBuilder($this->intervention);
     }

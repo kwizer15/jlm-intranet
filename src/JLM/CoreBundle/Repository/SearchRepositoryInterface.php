@@ -15,5 +15,5 @@ namespace JLM\CoreBundle\Repository;
  */
 interface SearchRepositoryInterface
 {
-	public function search($query);
+    public function search($query);
 }

@@ -49,9 +49,9 @@ abstract class Shifting
      */
     private $reason;
     
-	/**
-	 * @var ArrayCollection $shiftTechnicians
-	 */
+    /**
+     * @var ArrayCollection $shiftTechnicians
+     */
     private $shiftTechnicians;
     
     /**
@@ -59,13 +59,13 @@ abstract class Shifting
      */
     public function __construct()
     {
-    	$this->shiftTechnicians = new ArrayCollection;
+        $this->shiftTechnicians = new ArrayCollection;
     }
     
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -88,7 +88,7 @@ abstract class Shifting
     /**
      * Get creation
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreation()
     {
@@ -111,7 +111,7 @@ abstract class Shifting
     /**
      * Get reason
      *
-     * @return string 
+     * @return string
      */
     public function getReason()
     {
@@ -134,7 +134,7 @@ abstract class Shifting
     /**
      * Get place
      *
-     * @return string 
+     * @return string
      */
     public function getPlace()
     {
@@ -149,7 +149,7 @@ abstract class Shifting
      */
     public function addShiftTechnician(ShiftTechnician $shiftTechnicians)
     {
-    	return $this->shiftTechnicians->add($shiftTechnicians);
+        return $this->shiftTechnicians->add($shiftTechnicians);
     }
     
     /**
@@ -160,7 +160,7 @@ abstract class Shifting
      */
     public function removeShiftTechnician(ShiftTechnician $shiftTechnicians)
     {
-    	return $this->shiftTechnicians->removeElement($shiftTechnicians);
+        return $this->shiftTechnicians->removeElement($shiftTechnicians);
     }
     
     /**
@@ -169,33 +169,31 @@ abstract class Shifting
      * @return Doctrine\Common\Collections\Collection
      */
     public function getShiftTechnicians()
-    {	
-    	return $this->shiftTechnicians;
+    {
+        return $this->shiftTechnicians;
     }
     
     /**
      * Get getTotalTime
-     * 
+     *
      * @return string
      */
     public function getTotalTime()
     {
-    	$hours = 0;
-    	$minutes = 0;
-    	$shifts = $this->getShiftTechnicians();
-    	foreach ($shifts as $shift)
-    	{
-    		if ($shift->getTime())
-    		{
-	    		$hours += (int)$shift->getTime()->format('%h');
-	    		$minutes += (int)$shift->getTime()->format('%i');
-    		}
-    	}
-    	$min = $minutes % 60;
-    	$minutes -= $min;
-    	$hours += $minutes / 60;
-    	
-    	return new \DateInterval('PT'.$hours.'H'.$min.'M');
+        $hours = 0;
+        $minutes = 0;
+        $shifts = $this->getShiftTechnicians();
+        foreach ($shifts as $shift) {
+            if ($shift->getTime()) {
+                $hours += (int)$shift->getTime()->format('%h');
+                $minutes += (int)$shift->getTime()->format('%i');
+            }
+        }
+        $min = $minutes % 60;
+        $minutes -= $min;
+        $hours += $minutes / 60;
+        
+        return new \DateInterval('PT'.$hours.'H'.$min.'M');
     }
     
     /**
@@ -204,14 +202,13 @@ abstract class Shifting
      */
     public function getFirstDate()
     {
-    	$firstDate = null;
-    	$shifts = $this->getShiftTechnicians();
-    	foreach ($shifts as $shift)
-    	{
-    		$firstDate = ($firstDate === null || $firstDate > $shift->getBegin()) ? $shift->getBegin() : $firstDate;
-    	}
-    	
-    	return $firstDate;
+        $firstDate = null;
+        $shifts = $this->getShiftTechnicians();
+        foreach ($shifts as $shift) {
+            $firstDate = ($firstDate === null || $firstDate > $shift->getBegin()) ? $shift->getBegin() : $firstDate;
+        }
+        
+        return $firstDate;
     }
     
     /**
@@ -220,14 +217,13 @@ abstract class Shifting
      */
     public function getLastDate()
     {
-    	$lastDate = null;
-    	$shifts = $this->getShiftTechnicians();
-    	foreach ($shifts as $shift)
-    	{
-    		$lastDate = ($lastDate === null || $lastDate < $shift->getBegin()) ? $shift->getBegin() : $lastDate;
-    	}
-    	
-    	return $lastDate;
+        $lastDate = null;
+        $shifts = $this->getShiftTechnicians();
+        foreach ($shifts as $shift) {
+            $lastDate = ($lastDate === null || $lastDate < $shift->getBegin()) ? $shift->getBegin() : $lastDate;
+        }
+        
+        return $lastDate;
     }
     
     /**
@@ -235,8 +231,8 @@ abstract class Shifting
      */
     public function isInProgress()
     {
-    	return (sizeof($this->shiftTechnicians) > 0);
-    }   
+        return (sizeof($this->shiftTechnicians) > 0);
+    }
      
     /**
      * Get type

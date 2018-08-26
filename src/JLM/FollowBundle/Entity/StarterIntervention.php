@@ -18,66 +18,66 @@ use JLM\DailyBundle\Model\InterventionInterface;
  */
 class StarterIntervention extends Starter
 {
-	/**
-	 * @var InterventionInterface
-	 */
-	private $intervention;
-	
-	public function __construct(InterventionInterface $intervention)
-	{
-		$this->setIntervention($intervention);
-	}
-	
-	/**
-	 * @param InterventionInterface $intervention
-	 * @return self
-	 */
-	public function setIntervention(InterventionInterface $intervention)
-	{
-		$this->intervention = $intervention;
-		
-		return $this;
-	}
-	
-	/**
-	 * @return InterventionInterface
-	 */
-	public function getIntervention()
-	{
-		return $this->intervention;
-	}
-	
-	protected function _getWork()
-	{
-		return $this->getIntervention()->getWork();
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getName()
-	{
-		return 'Intervention du '.$this->getIntervention()->getLastDate()->format('d/m/Y');
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getBusiness()
-	{
-		return $this->getIntervention()->getDoor();
-	}
-	
-	public function getAmount()
-	{
-		return 'Complet';
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getType()
-	{
-		return 'intervention';
-	}
+    /**
+     * @var InterventionInterface
+     */
+    private $intervention;
+    
+    public function __construct(InterventionInterface $intervention)
+    {
+        $this->setIntervention($intervention);
+    }
+    
+    /**
+     * @param InterventionInterface $intervention
+     * @return self
+     */
+    public function setIntervention(InterventionInterface $intervention)
+    {
+        $this->intervention = $intervention;
+        
+        return $this;
+    }
+    
+    /**
+     * @return InterventionInterface
+     */
+    public function getIntervention()
+    {
+        return $this->intervention;
+    }
+    
+    protected function _getWork()
+    {
+        return $this->getIntervention()->getWork();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'Intervention du '.$this->getIntervention()->getLastDate()->format('d/m/Y');
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getBusiness()
+    {
+        return $this->getIntervention()->getDoor();
+    }
+    
+    public function getAmount()
+    {
+        return 'Complet';
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getType()
+    {
+        return 'intervention';
+    }
 }

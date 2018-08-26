@@ -34,7 +34,7 @@ class Transmitter implements TransmitterInterface
      * @var string
      *
      * @ORM\Column(name="guarantee", type="string",length=4)
- 	 * @Assert\Regex(pattern="/^(0[1-9]|1[0-2])[0-9][0-9]$/", message="Garantie au mauvais format")
+     * @Assert\Regex(pattern="/^(0[1-9]|1[0-2])[0-9][0-9]$/", message="Garantie au mauvais format")
      */
     private $guarantee = null;
 
@@ -68,13 +68,13 @@ class Transmitter implements TransmitterInterface
     
     /**
      * @var Model
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="Model")
      */
     private $model;
     
     /**
-     * $this remplace $replacedTransmitter 
+     * $this remplace $replacedTransmitter
      * @var Tranmitter replacedTransmitter
      *
      * @ORM\OneToOne(targetEntity="Transmitter", inversedBy="replace")
@@ -92,7 +92,7 @@ class Transmitter implements TransmitterInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -107,8 +107,9 @@ class Transmitter implements TransmitterInterface
      */
     public function setNumber($number)
     {
-    	while (strlen($number) < 6)
-    		$number = '0'.$number;
+        while (strlen($number) < 6) {
+            $number = '0'.$number;
+        }
         $this->number = $number;
     
         return $this;
@@ -117,11 +118,11 @@ class Transmitter implements TransmitterInterface
     /**
      * Get number
      *
-     * @return integer 
+     * @return integer
      */
     public function getNumber()
     {
-    	return $this->number;
+        return $this->number;
     }
 
     /**
@@ -132,8 +133,9 @@ class Transmitter implements TransmitterInterface
      */
     public function setGuarantee($guarantee)
     {
-    	while (strlen($guarantee) < 4)
-    		$guarantee = '0'.$guarantee;
+        while (strlen($guarantee) < 4) {
+            $guarantee = '0'.$guarantee;
+        }
         $this->guarantee = $guarantee;
     
         return $this;
@@ -142,11 +144,11 @@ class Transmitter implements TransmitterInterface
     /**
      * Get guarantee
      *
-     * @return integer 
+     * @return integer
      */
     public function getGuarantee()
     {
-    	return $this->guarantee;
+        return $this->guarantee;
     }
     
     /**
@@ -156,7 +158,7 @@ class Transmitter implements TransmitterInterface
      */
     public function getGuaranteeDate()
     {
-    	return \DateTime::createFromFormat('my',$this->getGuarantee());
+        return \DateTime::createFromFormat('my', $this->getGuarantee());
     }
     
     /**
@@ -166,10 +168,11 @@ class Transmitter implements TransmitterInterface
      */
     public function getEndGuarantee()
     {
-    	$number = $this->guarantee + 2;
-    	while (strlen($number) < 4)
-    		$number = '0'.$number;
-    	return $number;
+        $number = $this->guarantee + 2;
+        while (strlen($number) < 4) {
+            $number = '0'.$number;
+        }
+        return $number;
     }
 
     /**
@@ -179,7 +182,7 @@ class Transmitter implements TransmitterInterface
      */
     public function getEndGuaranteeDate()
     {
-    	return \DateTime::createFromFormat('my',$this->getEndGuarantee());
+        return \DateTime::createFromFormat('my', $this->getEndGuarantee());
     }
     
     /**
@@ -198,7 +201,7 @@ class Transmitter implements TransmitterInterface
     /**
      * Get suffix
      *
-     * @return integer 
+     * @return integer
      */
     public function getSuffix()
     {
@@ -221,7 +224,7 @@ class Transmitter implements TransmitterInterface
     /**
      * Get userName
      *
-     * @return string 
+     * @return string
      */
     public function getUserName()
     {
@@ -244,7 +247,7 @@ class Transmitter implements TransmitterInterface
     /**
      * Get isActive
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsActive()
     {
@@ -290,7 +293,7 @@ class Transmitter implements TransmitterInterface
     /**
      * Get userGroup
      *
-     * @return \JLM\TransmitterBundle\Entity\UserGroup 
+     * @return \JLM\TransmitterBundle\Entity\UserGroup
      */
     public function getUserGroup()
     {
@@ -305,9 +308,9 @@ class Transmitter implements TransmitterInterface
      */
     public function setModel(\JLM\TransmitterBundle\Entity\Model $model = null)
     {
-    	$this->model = $model;
+        $this->model = $model;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -317,7 +320,7 @@ class Transmitter implements TransmitterInterface
      */
     public function getModel()
     {
-    	return $this->model;
+        return $this->model;
     }
     
     /**
@@ -327,11 +330,12 @@ class Transmitter implements TransmitterInterface
      */
     public function isGuaranteeValid()
     {
-    	$today = new \DateTime;
-    	$gar = $this->getGuaranteeDate();
-    	if ($gar <= $today)
-    		return true;
-    	return false;
+        $today = new \DateTime;
+        $gar = $this->getGuaranteeDate();
+        if ($gar <= $today) {
+            return true;
+        }
+        return false;
     }
     
     /**
@@ -339,7 +343,7 @@ class Transmitter implements TransmitterInterface
      */
     public function __toString()
     {
-    	return $this->getNumber();
+        return $this->getNumber();
     }
 
     /**
@@ -358,7 +362,7 @@ class Transmitter implements TransmitterInterface
     /**
      * Get replacedTransmitter
      *
-     * @return \JLM\TransmitterBundle\Entity\Transmitter 
+     * @return \JLM\TransmitterBundle\Entity\Transmitter
      */
     public function getReplacedTransmitter()
     {
@@ -381,7 +385,7 @@ class Transmitter implements TransmitterInterface
     /**
      * Get replace
      *
-     * @return \JLM\TransmitterBundle\Entity\Transmitter 
+     * @return \JLM\TransmitterBundle\Entity\Transmitter
      */
     public function getReplace()
     {

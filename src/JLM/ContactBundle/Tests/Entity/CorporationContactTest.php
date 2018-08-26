@@ -45,10 +45,10 @@ class CorporationContactTest extends \PHPUnit_Framework_TestCase
     
     public function getPositions()
     {
-        return array(
-        	array('Gestionnaire'),
-            array('Assistante'),
-        );
+        return [
+            ['Gestionnaire'],
+            ['Assistante'],
+        ];
     }
     
     /**
@@ -63,15 +63,15 @@ class CorporationContactTest extends \PHPUnit_Framework_TestCase
     
     public function getDecoFunctions()
     {
-        return array(
-        	array('getTitle', 'Foo'),
-            array('getFirstName', 'Foo'),
-            array('getLastName', 'Foo'),
-            array('getName', 'Foo'),
-            array('getAddress', 'Foo'),
-            array('getEmail', 'Foo'),
-            array('__toString', 'Foo'),
-        );
+        return [
+            ['getTitle', 'Foo'],
+            ['getFirstName', 'Foo'],
+            ['getLastName', 'Foo'],
+            ['getName', 'Foo'],
+            ['getAddress', 'Foo'],
+            ['getEmail', 'Foo'],
+            ['__toString', 'Foo'],
+        ];
     }
     
     /**

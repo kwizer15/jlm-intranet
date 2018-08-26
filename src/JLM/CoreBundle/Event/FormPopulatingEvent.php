@@ -19,9 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FormPopulatingEvent extends RequestEvent
 {
-	/**
-	 * @var FormInterface
-	 */
+    /**
+     * @var FormInterface
+     */
     private $form;
 
     /**
@@ -30,8 +30,8 @@ class FormPopulatingEvent extends RequestEvent
      */
     public function __construct(FormInterface $form, Request $request)
     {
-    	$this->form = $form;
-    	parent::__construct($request);
+        $this->form = $form;
+        parent::__construct($request);
     }
     
     /**
@@ -40,7 +40,7 @@ class FormPopulatingEvent extends RequestEvent
      */
     public function getForm()
     {
-    	return $this->form;
+        return $this->form;
     }
     
     /**
@@ -51,8 +51,8 @@ class FormPopulatingEvent extends RequestEvent
      */
     public function getFormParam($formName, $paramName)
     {
-    	$id = $this->getParam($formName, array($paramName => $this->getParam($paramName)));
+        $id = $this->getParam($formName, [$paramName => $this->getParam($paramName)]);
     
-    	return (isset($id[$paramName]) && $id[$paramName] !== null) ? $id[$paramName] : null;
+        return (isset($id[$paramName]) && $id[$paramName] !== null) ? $id[$paramName] : null;
     }
 }

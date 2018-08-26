@@ -6,11 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class StockControllerTest extends WebTestCase
 {
-	public function testTrue()
-	{
-		$this->assertTrue(true);
-	}
-	
+    public function testTrue()
+    {
+        $this->assertTrue(true);
+    }
+    
     /*
     public function testCompleteScenario()
     {

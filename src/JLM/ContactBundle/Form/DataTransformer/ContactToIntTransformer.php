@@ -12,6 +12,7 @@
 namespace JLM\ContactBundle\Form\DataTransformer;
 
 use JLM\CoreBundle\Form\DataTransformer\ObjectToIntTransformer;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -20,16 +21,16 @@ class ContactToIntTransformer extends ObjectToIntTransformer
     /**
      * {@inheritdoc}
      */
-	protected function _getClass()
-	{
-		return 'JLMContactBundle:Contact';
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function _getErrorMessage()
-	{
-		return 'A contact with id "%s" does not exist!';
-	}
+    protected function _getClass()
+    {
+        return 'JLMContactBundle:Contact';
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function _getErrorMessage()
+    {
+        return 'A contact with id "%s" does not exist!';
+    }
 }

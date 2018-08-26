@@ -26,20 +26,20 @@ class QuoteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('creation','datepicker',array('label'=>'Date de création'))
-            ->add('trustee','trustee_hidden',array('required'=>false))
-            ->add('trusteeName',null,array('label'=>'Syndic'))
-            ->add('trusteeAddress',null,array('label'=>'Adresse de facturation','attr'=>array('class'=>'input-xlarge')))
-            ->add('contact','sitecontact_hidden',array('required'=>false))
-            ->add('contactCp',null,array('label'=>'A l\'attention de'))
-            ->add('follower','hidden',array('required'=>false))
-            ->add('followerCp',null,array('label'=>'Suivi par'))
-            ->add('door','door_hidden',array('required'=>false))
-            ->add('doorCp',null,array('label'=>'Affaire','attr'=>array('class'=>'input-xlarge','rows'=>'3')))
-            ->add('vat','percent',array('precision'=>1,'label'=>'TVA applicable','attr'=>array('class'=>'input-mini')))
-            ->add('description', 'textarea',array('required' => false))
-            ->add('vatTransmitter','hidden')
-            ->add('ask','askquote_hidden')
+            ->add('creation', 'datepicker', ['label'=>'Date de création'])
+            ->add('trustee', 'trustee_hidden', ['required'=>false])
+            ->add('trusteeName', null, ['label'=>'Syndic'])
+            ->add('trusteeAddress', null, ['label'=>'Adresse de facturation','attr'=>['class'=>'input-xlarge']])
+            ->add('contact', 'sitecontact_hidden', ['required'=>false])
+            ->add('contactCp', null, ['label'=>'A l\'attention de'])
+            ->add('follower', 'hidden', ['required'=>false])
+            ->add('followerCp', null, ['label'=>'Suivi par'])
+            ->add('door', 'door_hidden', ['required'=>false])
+            ->add('doorCp', null, ['label'=>'Affaire','attr'=>['class'=>'input-xlarge','rows'=>'3']])
+            ->add('vat', 'percent', ['precision'=>1,'label'=>'TVA applicable','attr'=>['class'=>'input-mini']])
+            ->add('description', 'textarea', ['required' => false])
+            ->add('vatTransmitter', 'hidden')
+            ->add('ask', 'askquote_hidden')
          ;
     }
 
@@ -48,9 +48,9 @@ class QuoteType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-    	$resolver->setDefaults(array(
-    			'data_class' => 'JLM\CommerceBundle\Entity\Quote'
-    	));
+        $resolver->setDefaults([
+                'data_class' => 'JLM\CommerceBundle\Entity\Quote'
+        ]);
     }
     
     /**

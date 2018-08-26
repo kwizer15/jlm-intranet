@@ -13,70 +13,70 @@ use JLM\ContractBundle\Model\ContractInterface;
 use JLM\FeeBundle\Model\FeeInterface;
 
 /**
- * 
+ *
  * @author kwizer
  * @ORM\Table(name="fees")
  * @ORM\Entity
  */
 class Fee implements FeeInterface
 {
-	/**
-	 * @var int $id
-	 *
+    /**
+     * @var int $id
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-	
-	/**
-	 * @var ArrayCollection $contracts
-	 * @ORM\ManyToMany(targetEntity="JLM\ContractBundle\Model\ContractInterface")
-	 * @ORM\JoinTable(name="fees_contracts",
-	 * 				  joinColumns={@ORM\JoinColumn(name="fee_id", referencedColumnName="id")},
-	 * 				  inverseJoinColumns={@ORM\JoinColumn(name="contract_id", referencedColumnName="id")}
-	 * )
-	 * @Assert\Valid(traverse=true)
-	 */
-	private $contracts;
-	
-	/**
-	 * @var Trustee $trustee
-	 * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Trustee")
-	 * @Assert\Valid
-	 */
-	private $trustee;
-	
-	/**
-	 * @var string $address
-	 * @ORM\Column(name="address",type="text")
-	 * @Assert\Type(type="string")
-	 * @Assert\NotNull
-	 */
-	private $address;
-	
-	/**
-	 * @var string $prelabel
-	 * @ORM\Column(name="prelabel",type="text", nullable=true)
-	 * @Assert\Type(type="string")
-	 */
-	private $prelabel;
-	
-	/**
-	 * @var int $frequence
-	 * @ORM\Column(name="frequence",type="integer")
-	 * @Assert\Choice(choices={1,2,3,4})
-	 * @Assert\NotNull
-	 */
-	private $frequence = 2;
-	
-	/**
-	 * @var Vat $vat
-	 * @ORM\ManyToOne(targetEntity="JLM\CommerceBundle\Model\VATInterface")
-	 * @Assert\Valid
-	 */
-	private $vat;
-	
+    
+    /**
+     * @var ArrayCollection $contracts
+     * @ORM\ManyToMany(targetEntity="JLM\ContractBundle\Model\ContractInterface")
+     * @ORM\JoinTable(name="fees_contracts",
+     *                joinColumns={@ORM\JoinColumn(name="fee_id", referencedColumnName="id")},
+     *                inverseJoinColumns={@ORM\JoinColumn(name="contract_id", referencedColumnName="id")}
+     * )
+     * @Assert\Valid(traverse=true)
+     */
+    private $contracts;
+    
+    /**
+     * @var Trustee $trustee
+     * @ORM\ManyToOne(targetEntity="JLM\ModelBundle\Entity\Trustee")
+     * @Assert\Valid
+     */
+    private $trustee;
+    
+    /**
+     * @var string $address
+     * @ORM\Column(name="address",type="text")
+     * @Assert\Type(type="string")
+     * @Assert\NotNull
+     */
+    private $address;
+    
+    /**
+     * @var string $prelabel
+     * @ORM\Column(name="prelabel",type="text", nullable=true)
+     * @Assert\Type(type="string")
+     */
+    private $prelabel;
+    
+    /**
+     * @var int $frequence
+     * @ORM\Column(name="frequence",type="integer")
+     * @Assert\Choice(choices={1,2,3,4})
+     * @Assert\NotNull
+     */
+    private $frequence = 2;
+    
+    /**
+     * @var Vat $vat
+     * @ORM\ManyToOne(targetEntity="JLM\CommerceBundle\Model\VATInterface")
+     * @Assert\Valid
+     */
+    private $vat;
+    
     /**
      * Constructor
      */
@@ -88,7 +88,7 @@ class Fee implements FeeInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -111,7 +111,7 @@ class Fee implements FeeInterface
     /**
      * Get address
      *
-     * @return string 
+     * @return string
      */
     public function getAddress()
     {
@@ -134,7 +134,7 @@ class Fee implements FeeInterface
     /**
      * Get prelabel
      *
-     * @return string 
+     * @return string
      */
     public function getPrelabel()
     {
@@ -149,12 +149,11 @@ class Fee implements FeeInterface
      */
     public function setFrequence($frequence)
     {
-    	$values = array(1,2,4);
-    	if (in_array($frequence, $values))
-    	{
-    		$this->frequence = $frequence;
-    	}
-    	return $this;
+        $values = [1,2,4];
+        if (in_array($frequence, $values)) {
+            $this->frequence = $frequence;
+        }
+        return $this;
     }
     
     /**
@@ -164,7 +163,7 @@ class Fee implements FeeInterface
      */
     public function getFrequence()
     {
-    	return $this->frequence;
+        return $this->frequence;
     }
     
     /**
@@ -174,17 +173,16 @@ class Fee implements FeeInterface
      */
     public function getFrequenceString()
     {
-    	switch ($this->getFrequence())
-    	{
-    		case 1:
-    			return 'annuelle';
-    			break;
-    		case 4:
-    			return 'trimestrielle';
-    			break;
-    	}
-    	
-    	return 'semestrielle';
+        switch ($this->getFrequence()) {
+            case 1:
+                return 'annuelle';
+                break;
+            case 4:
+                return 'trimestrielle';
+                break;
+        }
+        
+        return 'semestrielle';
     }
     
     /**
@@ -193,9 +191,9 @@ class Fee implements FeeInterface
      */
     public function setVat(VATInterface $vat)
     {
-    	$this->vat = $vat;
-    	
-    	return $this;
+        $this->vat = $vat;
+        
+        return $this;
     }
     
     /**
@@ -204,7 +202,7 @@ class Fee implements FeeInterface
      */
     public function getVat()
     {
-    	return $this->vat;
+        return $this->vat;
     }
     
     /**
@@ -233,7 +231,7 @@ class Fee implements FeeInterface
     /**
      * Get contracts
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getContracts()
     {
@@ -247,16 +245,14 @@ class Fee implements FeeInterface
      */
     public function getActiveContracts(\DateTime $date)
     {
-    	$contracts = array();
-    	foreach ($this->contracts as $contract)
-    	{
-    		if ($contract->isInProgress($date))
-    		{
-    			$contracts[] = $contract;
-    		}
-    	}
-    	
-    	return $contracts;
+        $contracts = [];
+        foreach ($this->contracts as $contract) {
+            if ($contract->isInProgress($date)) {
+                $contracts[] = $contract;
+            }
+        }
+        
+        return $contracts;
     }
     
     /**
@@ -275,7 +271,7 @@ class Fee implements FeeInterface
     /**
      * Get trustee
      *
-     * @return JLM\ModelBundle\Entity\Trustee 
+     * @return JLM\ModelBundle\Entity\Trustee
      */
     public function getTrustee()
     {
@@ -288,16 +284,14 @@ class Fee implements FeeInterface
      */
     public function getContractNumbers()
     {
-    	$numbers = array();
-    	foreach ($this->contracts as $contract)
-    	{
-    	    $num = $contract->getNumber();
-    		if (!in_array($num, $numbers))
-    		{
-    			$numbers[] = $num;
-    		}
-    	}
-    	return $numbers;
+        $numbers = [];
+        foreach ($this->contracts as $contract) {
+            $num = $contract->getNumber();
+            if (!in_array($num, $numbers)) {
+                $numbers[] = $num;
+            }
+        }
+        return $numbers;
     }
     
     /**
@@ -306,13 +300,12 @@ class Fee implements FeeInterface
      */
     public function getDoorDescription()
     {
-    	$doors = array();
-    	foreach ($this->contracts as $contract)
-    	{
-    		$install = $contract->getDoor();
-    		$doors[] = $install->getType().' / '.$install->getLocation();
-    	}
-    	return $doors;
+        $doors = [];
+        foreach ($this->contracts as $contract) {
+            $install = $contract->getDoor();
+            $doors[] = $install->getType().' / '.$install->getLocation();
+        }
+        return $doors;
     }
     
     /**
@@ -321,16 +314,14 @@ class Fee implements FeeInterface
      */
     public function getBillingAddress()
     {
-    	$trustee = $this->getTrustee();
-		if ($billingaddress = $trustee->getBillingAddress())
-		{
-			if ($billingaddress->getStreet() && $billingaddress->getCity() !== null)
-			{
-				return $billingaddress;
-			}
-		}
-		
-		return $trustee->getAddress();
+        $trustee = $this->getTrustee();
+        if ($billingaddress = $trustee->getBillingAddress()) {
+            if ($billingaddress->getStreet() && $billingaddress->getCity() !== null) {
+                return $billingaddress;
+            }
+        }
+        
+        return $trustee->getAddress();
     }
     
     /**
@@ -339,12 +330,11 @@ class Fee implements FeeInterface
      */
     public function getYearAmount()
     {
-    	$amount = 0;
-    	foreach ($this->contracts as $contract)
-    	{
-    		$amount += $contract->getFee();
-    	}
-    	return $amount;
+        $amount = 0;
+        foreach ($this->contracts as $contract) {
+            $amount += $contract->getFee();
+        }
+        return $amount;
     }
     
     /**
@@ -353,7 +343,7 @@ class Fee implements FeeInterface
      */
     public function getAmount()
     {
-    	return $this->getYearAmount() / $this->getFrequence();
+        return $this->getYearAmount() / $this->getFrequence();
     }
    
     /**
@@ -361,40 +351,35 @@ class Fee implements FeeInterface
      */
     public function getGroup()
     {
-    	$group = '';
-    	foreach ($this->contracts as $contract)
-    	{
-    		$group .= $contract->getDoor()->getSite()->getGroupNumber();
-    		if ($group != '')
-    		{
-    			$group .= ' ';
-    		}
-    	}
-    	
-    	return trim($group);
+        $group = '';
+        foreach ($this->contracts as $contract) {
+            $group .= $contract->getDoor()->getSite()->getGroupNumber();
+            if ($group != '') {
+                $group .= ' ';
+            }
+        }
+        
+        return trim($group);
     }
     
     /**
-     * 
+     *
      * @return array
      */
     public function getManagerEmails()
     {
-    	$emails = array();
-    	foreach ($this->contracts as $contract)
-    	{
-    		$mails = $contract->getDoor()->getManagerEmails();
-    		$mails = ($mails === null) ? array() : $mails;
-    		foreach($mails as $mail)
-    		{
-    			if (!in_array($mail, $emails))
-    			{
-    				$emails[] = $mail;
-    			}
-    		}
-    	}
-    	
-    	return $emails;
+        $emails = [];
+        foreach ($this->contracts as $contract) {
+            $mails = $contract->getDoor()->getManagerEmails();
+            $mails = ($mails === null) ? [] : $mails;
+            foreach ($mails as $mail) {
+                if (!in_array($mail, $emails)) {
+                    $emails[] = $mail;
+                }
+            }
+        }
+        
+        return $emails;
     }
     
     /**
@@ -403,30 +388,27 @@ class Fee implements FeeInterface
      */
     public function setManagerEmails($emails)
     {
-    	return $this;
+        return $this;
     }
     
     /**
-     * 
+     *
      * @return array
      */
     public function getAccountingEmails()
     {
-    	$emails = array();
-    	foreach ($this->contracts as $contract)
-    	{
-    		$mails = $contract->getDoor()->getAccountingEmails();
-    		$mails = ($mails === null) ? array() : $mails;
-    		foreach($mails as $mail)
-    		{
-    			if (!in_array($mail, $emails))
-    			{
-    				$emails[] = $mail;
-    			}
-    		}
-    	}
-    	
-    	return $emails;
+        $emails = [];
+        foreach ($this->contracts as $contract) {
+            $mails = $contract->getDoor()->getAccountingEmails();
+            $mails = ($mails === null) ? [] : $mails;
+            foreach ($mails as $mail) {
+                if (!in_array($mail, $emails)) {
+                    $emails[] = $mail;
+                }
+            }
+        }
+        
+        return $emails;
     }
     
     /**
@@ -435,6 +417,6 @@ class Fee implements FeeInterface
      */
     public function setAccountingEmails($emails)
     {
-    	return $this;
+        return $this;
     }
 }

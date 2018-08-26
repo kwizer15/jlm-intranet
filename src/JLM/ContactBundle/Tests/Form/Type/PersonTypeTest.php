@@ -26,7 +26,8 @@ use JLM\ContactBundle\Form\Type\PhoneType;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class PersonTypeTest extends TypeTestCase
-{   
+{
+
     /**
      * @var AddressType
      */
@@ -50,15 +51,15 @@ class PersonTypeTest extends TypeTestCase
         $contactphonecollection = new ContactPhoneCollectionType();
         $contactphone = new ContactPhoneType();
         $phone = new PhoneType();
-        return array(new PreloadedExtension(array(
+        return [new PreloadedExtension([
             $address->getName() => $address,
             $city->getName() => $city,
             $s2->getName() => $s2,
-        	$contact->getName() => $contact,
-        	$contactphonecollection->getName() => $contactphonecollection,
-        	$contactphone->getName() => $contactphone,
-        	$phone->getName() => $phone,
-        ), array()));
+            $contact->getName() => $contact,
+            $contactphonecollection->getName() => $contactphonecollection,
+            $contactphone->getName() => $contactphone,
+            $phone->getName() => $phone,
+        ], [])];
     }
     
     public function testCreateForm()
@@ -69,4 +70,3 @@ class PersonTypeTest extends TypeTestCase
         $this->object = new Person;
     }
 }
- 

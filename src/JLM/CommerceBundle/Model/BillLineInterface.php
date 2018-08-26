@@ -20,4 +20,4 @@ interface BillLineInterface
     public function getQuantity();
     
     public function getUnitPrice();
-} 
+}

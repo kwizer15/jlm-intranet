@@ -16,11 +16,11 @@ namespace JLM\CommerceBundle\Model;
  */
 interface QuoteLineInterface
 {
-	/**
-	 * 
-	 * @param QuoteVariantInterface|null $variant
-	 * @return bool
-	 */
+    /**
+     *
+     * @param QuoteVariantInterface|null $variant
+     * @return bool
+     */
     public function setVariant(QuoteVariantInterface $variant = null);
     
     /**

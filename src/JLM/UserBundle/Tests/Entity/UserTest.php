@@ -36,7 +36,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('FOS\UserBundle\Model\User', $this->entity); 
+        $this->assertInstanceOf('FOS\UserBundle\Model\User', $this->entity);
     }
     
     public function testGetPerson()

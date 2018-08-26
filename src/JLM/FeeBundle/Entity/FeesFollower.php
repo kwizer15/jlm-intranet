@@ -6,63 +6,63 @@ use Doctrine\ORM\Mapping as ORM;
 use JLM\FeeBundle\Model\FeesFollowerInterface;
 
 /**
- * 
+ *
  * @author kwizer
  * @ORM\Table(name="fees_follower")
  * @ORM\Entity
  */
 class FeesFollower implements FeesFollowerInterface
 {
-	/**
-	 * @var int $id
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	private $id;
-	
-	/**
-	 * @var DateTime
-	 * @ORM\Column(name="activation", type="datetime")
-	 */
-	private $activation;
-	
-	/**
-	 * @var DateTime
-	 * @ORM\Column(name="generation", type="datetime", nullable=true)
-	 */
-	private $generation = null;
-	
-	/**
-	 * Augmentation annuelle (1)
-	 * @var float
-	 * @ORM\Column(name="frequence1", type="decimal", scale=3, precision=3, nullable=true)
-	 */
-	private $frequence1;
-	
-	/**
-	 * Augmntation semestrielle (2)
-	 * @var float
-	 * @ORM\Column(name="frequence2", type="decimal", scale=3, precision=3, nullable=true)
-	 */
-	private $frequence2;
-	
-	/**
-	 * Augmntation trimestrielle (4)
-	 * @var float
-	 * @ORM\Column(name="frequence4", type="decimal", scale=3, precision=3, nullable=true)
-	 */
-	private $frequence4;
-	
-	/**
-	 * Get Id
-	 * @return int
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * @var int $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
+     * @var DateTime
+     * @ORM\Column(name="activation", type="datetime")
+     */
+    private $activation;
+    
+    /**
+     * @var DateTime
+     * @ORM\Column(name="generation", type="datetime", nullable=true)
+     */
+    private $generation = null;
+    
+    /**
+     * Augmentation annuelle (1)
+     * @var float
+     * @ORM\Column(name="frequence1", type="decimal", scale=3, precision=3, nullable=true)
+     */
+    private $frequence1;
+    
+    /**
+     * Augmntation semestrielle (2)
+     * @var float
+     * @ORM\Column(name="frequence2", type="decimal", scale=3, precision=3, nullable=true)
+     */
+    private $frequence2;
+    
+    /**
+     * Augmntation trimestrielle (4)
+     * @var float
+     * @ORM\Column(name="frequence4", type="decimal", scale=3, precision=3, nullable=true)
+     */
+    private $frequence4;
+    
+    /**
+     * Get Id
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * {@inheritdoc}
@@ -98,7 +98,7 @@ class FeesFollower implements FeesFollowerInterface
     /**
      * Get generation
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getGeneration()
     {
@@ -121,7 +121,7 @@ class FeesFollower implements FeesFollowerInterface
     /**
      * Get frequence1
      *
-     * @return float 
+     * @return float
      */
     public function getFrequence1()
     {
@@ -144,7 +144,7 @@ class FeesFollower implements FeesFollowerInterface
     /**
      * Get frequence2
      *
-     * @return float 
+     * @return float
      */
     public function getFrequence2()
     {
@@ -167,7 +167,7 @@ class FeesFollower implements FeesFollowerInterface
     /**
      * Get frequence4
      *
-     * @return float 
+     * @return float
      */
     public function getFrequence4()
     {
@@ -176,23 +176,22 @@ class FeesFollower implements FeesFollowerInterface
     
     /**
      * Get frequence
-     * 
+     *
      * @return float
      */
     public function getFrequence($frequence)
     {
-    	switch ($frequence)
-    	{
-    		case 1:
-    			return $this->getFrequence1();
-    			break;
-    		case 4:
-    			return $this->getFrequence4();
-    			break;
-    		default:
-    			return $this->getFrequence2();
-    	}
-    	return null;
+        switch ($frequence) {
+            case 1:
+                return $this->getFrequence1();
+                break;
+            case 4:
+                return $this->getFrequence4();
+                break;
+            default:
+                return $this->getFrequence2();
+        }
+        return null;
     }
     
     /**
@@ -200,11 +199,10 @@ class FeesFollower implements FeesFollowerInterface
      */
     public function isActive()
     {
-    	$today = new \DateTime();
-    	if ($today > $this->getActivation())
-    	{
-    		return true;
-    	}
-    	return false;
+        $today = new \DateTime();
+        if ($today > $this->getActivation()) {
+            return true;
+        }
+        return false;
     }
 }

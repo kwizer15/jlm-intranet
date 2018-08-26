@@ -11,19 +11,19 @@ class AddTechnicianType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//        	->add('creation','hidden',array('data_class'=>'\DateTime'))
-//        	->add('shifting','shifting_hidden')
-      		->add('technician',null,array('label'=>'Technicien'))
-      		->add('begin','datepicker',array('label'=>'Date'))
-      		->add('comment','textarea',array('label'=>'Commentaire','required'=>false,'attr'=>array('class'=>'input-xlarge')))
+//          ->add('creation','hidden',array('data_class'=>'\DateTime'))
+//          ->add('shifting','shifting_hidden')
+            ->add('technician', null, ['label'=>'Technicien'])
+            ->add('begin', 'datepicker', ['label'=>'Date'])
+            ->add('comment', 'textarea', ['label'=>'Commentaire','required'=>false,'attr'=>['class'=>'input-xlarge']])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'JLM\DailyBundle\Entity\ShiftTechnician'
-        ));
+        ]);
     }
 
     public function getName()

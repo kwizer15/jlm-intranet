@@ -3,6 +3,7 @@
 namespace JLM\ProductBundle\Repository;
 
 use JLM\DefaultBundle\Entity\SearchRepository;
+
 // @todo Voir pour un autre système
 
 /**
@@ -12,100 +13,99 @@ use JLM\DefaultBundle\Entity\SearchRepository;
  * repository methods below.
  */
 class ProductRepository extends SearchRepository
-{	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function getSearchQb()
-	{
-		return $this->createQueryBuilder('a');
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function getSearchParams()
-	{
-		return array('a.designation','a.reference');
-	}
-	
-	public function searchDesignation($query)
-	{
-		
-		$qb = $this->createQueryBuilder('a')
-			   ->where('a.designation LIKE :query')
-			   ->andWhere('a.active = :active')
-			   ->setParameter('query', '%'.$query.'%')
-			   ->setParameter('active', true)
-		;
+{
+   
+    /**
+     * {@inheritdoc}
+     */
+    protected function getSearchQb()
+    {
+        return $this->createQueryBuilder('a');
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function getSearchParams()
+    {
+        return ['a.designation','a.reference'];
+    }
+    
+    public function searchDesignation($query)
+    {
+        
+        $qb = $this->createQueryBuilder('a')
+               ->where('a.designation LIKE :query')
+               ->andWhere('a.active = :active')
+               ->setParameter('query', '%'.$query.'%')
+               ->setParameter('active', true)
+        ;
 
-		$res = $qb->getQuery()->getResult();
-		return $this->returnResult($res);
-		
-	}
-	
-	public function searchReference($query)
-	{
-	
-		$qb = $this->createQueryBuilder('a')
-		->where('a.reference LIKE :query')
-		->andWhere('a.active = :active')
-		->setParameter('query', '%'.$query.'%')
-		->setParameter('active', true)
-		
-		;
-	
-		$res = $qb->getQuery()->getResult();
-	
-		return $this->returnResult($res);
-	}
-	
-	private function returnResult($res)
-	{
-		$r2 = array();
-		foreach ($res as $r)
-		{	
-			$r2[] = array(
-					'label'=>$r->getReference().' | '.$r->getDesignation(),
-					'id'=>$r->getId(),
-					'reference'=>$r->getReference(),
-					'designation'=>$r->getDesignation(),
-					'description'=>$r->getDescription(),
-					'unitPrice'=>$r->getUnitPrice(),
-					'purchase'=>$r->getPurchase(),
-					'discountSupplier'=>$r->getDiscountSupplier(),
-					'expenseRatio'=>$r->getExpenseRatio(),
-					'shipping'=>$r->getShipping(),
-					'transmitter'=> ($r->getCategory()->getId() == 1),
-					'active' => $r->isActive(),
-				);
-		}
-		return $r2;
-	}
-	
-	public function getTotal($activeOnly = true)
-	{
-		$qb = $this->createQueryBuilder('a')
-			->select('COUNT(a)');
-		if ($activeOnly) {
-			$qb->where('a.active = :active')
-				->setParameter('active', true);
-		}
-		;
-		
-		return (int) $qb->getQuery()
-			->getSingleScalarResult();
-	}
-	
-	public function getAll($limit, $offset, $activeOnly = true)
-	{
-		$crtieria = $activeOnly ? array('active' => true) : array();
-		
-		return $this->findBy(
-				$crtieria,
-				array('reference' => 'asc'),
-				$limit,
-				$offset
-		);
-	}
+        $res = $qb->getQuery()->getResult();
+        return $this->returnResult($res);
+    }
+    
+    public function searchReference($query)
+    {
+    
+        $qb = $this->createQueryBuilder('a')
+        ->where('a.reference LIKE :query')
+        ->andWhere('a.active = :active')
+        ->setParameter('query', '%'.$query.'%')
+        ->setParameter('active', true)
+        
+        ;
+    
+        $res = $qb->getQuery()->getResult();
+    
+        return $this->returnResult($res);
+    }
+    
+    private function returnResult($res)
+    {
+        $r2 = [];
+        foreach ($res as $r) {
+            $r2[] = [
+                    'label'=>$r->getReference().' | '.$r->getDesignation(),
+                    'id'=>$r->getId(),
+                    'reference'=>$r->getReference(),
+                    'designation'=>$r->getDesignation(),
+                    'description'=>$r->getDescription(),
+                    'unitPrice'=>$r->getUnitPrice(),
+                    'purchase'=>$r->getPurchase(),
+                    'discountSupplier'=>$r->getDiscountSupplier(),
+                    'expenseRatio'=>$r->getExpenseRatio(),
+                    'shipping'=>$r->getShipping(),
+                    'transmitter'=> ($r->getCategory()->getId() == 1),
+                    'active' => $r->isActive(),
+                ];
+        }
+        return $r2;
+    }
+    
+    public function getTotal($activeOnly = true)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('COUNT(a)');
+        if ($activeOnly) {
+            $qb->where('a.active = :active')
+                ->setParameter('active', true);
+        }
+        ;
+        
+        return (int) $qb->getQuery()
+            ->getSingleScalarResult();
+    }
+    
+    public function getAll($limit, $offset, $activeOnly = true)
+    {
+        $crtieria = $activeOnly ? ['active' => true] : [];
+        
+        return $this->findBy(
+            $crtieria,
+            ['reference' => 'asc'],
+            $limit,
+            $offset
+        );
+    }
 }

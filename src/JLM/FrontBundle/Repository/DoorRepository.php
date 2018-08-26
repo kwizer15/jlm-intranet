@@ -18,24 +18,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class DoorRepository extends EntityRepository
 {
-	/**
-	 * Get by code
-	 * 
-	 * @return Door
-	 */
-	public function getByCode($code)
-	{
-		$qb = $this->createQueryBuilder('a')
-			->select('a')
-			->where('a.code = ?1')
-			->setParameter(1,strtoupper($code))
-		;
-		
-		try {
-			return $qb->getQuery()->getSingleResult();
-		} catch (\Exception $e) {}
-		
-		return null;
-		 
-	}
+    /**
+     * Get by code
+     *
+     * @return Door
+     */
+    public function getByCode($code)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a')
+            ->where('a.code = ?1')
+            ->setParameter(1, strtoupper($code))
+        ;
+        
+        try {
+            return $qb->getQuery()->getSingleResult();
+        } catch (\Exception $e) {
+        }
+        
+        return null;
+    }
 }

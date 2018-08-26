@@ -37,7 +37,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getId()
     {
-    	return $this->id;
+        return $this->id;
     }
     
     /**
@@ -53,9 +53,9 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function setContact(ContactInterface $contact)
     {
-    	$this->contact = $contact;
-    	
-    	return $this;
+        $this->contact = $contact;
+        
+        return $this;
     }
     
     /**
@@ -63,7 +63,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getAddress()
     {
-    	return $this->getContact()->getAddress();
+        return $this->getContact()->getAddress();
     }
     
     /**
@@ -71,7 +71,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function setAddress(AddressInterface $address)
     {
-    	return $this->getContact()->setAddress($address);
+        return $this->getContact()->setAddress($address);
     }
     
     /**
@@ -79,7 +79,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getEmail()
     {
-    	return $this->getContact()->getEmail();
+        return $this->getContact()->getEmail();
     }
     
     /**
@@ -95,7 +95,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getPhones()
     {
-    	return $this->getContact()->getPhones();
+        return $this->getContact()->getPhones();
     }
     
     /**
@@ -103,7 +103,7 @@ abstract class ContactDecorator implements ContactInterface
      */
     public function getName()
     {
-    	return $this->getContact()->getName();
+        return $this->getContact()->getName();
     }
     
     /**
@@ -115,18 +115,17 @@ abstract class ContactDecorator implements ContactInterface
     }
     
     /**
-     * 
+     *
      * @param string $method
      * @param mixed $default
      * @return mixed
      */
     private function decoratedGetMethod($method, $default)
     {
-    	if ($this->getContact() === null)
-    	{
-    		return $default;
-    	}
-    	
-    	return $this->getContact()->$method();
+        if ($this->getContact() === null) {
+            return $default;
+        }
+        
+        return $this->getContact()->$method();
     }
 }

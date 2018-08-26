@@ -23,34 +23,32 @@ use JLM\FollowBundle\Model\ThreadInterface;
  */
 class ThreadFactory
 {
-	/**
-	 * Get thread from source
-	 * @param mixed $source
-	 * @return ThreadInterface
-	 */
-	public static function create($source)
-	{
-		return new Thread(self::createStarter($source));
-	}
-	
-	/**
-	 * Get starter from source
-	 * @param mixed $source
-	 * @throws \LogicException
-	 * @return JLM\FollowBundle\Model\StarterInterface
-	 */
-	public static function createStarter($source)
-	{
-		if ($source instanceof QuoteVariant)
-		{
-			return new StarterQuote($source);
-		}
-		
-		if ($source instanceof InterventionInterface)
-		{
-			return new StarterIntervention($source);
-		}
-		
-		throw new \LogicException('The source of starter is invalid');
-	}
+    /**
+     * Get thread from source
+     * @param mixed $source
+     * @return ThreadInterface
+     */
+    public static function create($source)
+    {
+        return new Thread(self::createStarter($source));
+    }
+    
+    /**
+     * Get starter from source
+     * @param mixed $source
+     * @throws \LogicException
+     * @return JLM\FollowBundle\Model\StarterInterface
+     */
+    public static function createStarter($source)
+    {
+        if ($source instanceof QuoteVariant) {
+            return new StarterQuote($source);
+        }
+        
+        if ($source instanceof InterventionInterface) {
+            return new StarterIntervention($source);
+        }
+        
+        throw new \LogicException('The source of starter is invalid');
+    }
 }

@@ -12,6 +12,7 @@
 namespace JLM\CommerceBundle\Twig\Extension;
 
 use Doctrine\Common\Persistence\ObjectManager;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -33,13 +34,13 @@ class BillCountExtension extends \Twig_Extension implements \Twig_Extension_Glob
     {
         $repo = $this->om->getRepository('JLMCommerceBundle:Bill');
         
-        return array('billcount' => array(
+        return ['billcount' => [
             'todo' => $this->om->getRepository('JLMDailyBundle:Intervention')->getCountToBilled(),
             'all' => $repo->getTotal(),
             'input' => $repo->getCount(0),
             'send' => $repo->getCount(1),
             'payed' => $repo->getCount(2),
             'canceled' => $repo->getCount(-1),
-        ));
+        ]];
     }
 }

@@ -19,7 +19,7 @@ interface PersonInterface extends ContactInterface
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle();
     
@@ -40,7 +40,7 @@ interface PersonInterface extends ContactInterface
     /**
      * Get fixedPhone
      *
-     * @return string 
+     * @return string
      */
     public function getFixedPhone();
     
@@ -50,5 +50,4 @@ interface PersonInterface extends ContactInterface
      * @return string
      */
     public function getMobilePhone();
-    
 }

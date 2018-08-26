@@ -12,29 +12,30 @@
 namespace JLM\TransmitterBundle\Builder;
 
 use JLM\CommerceBundle\Model\QuoteVariantInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class VariantAskBuilder extends AskBuilderAbstract
 {
-	private $variant;
-	
-	/**
-	 *
-	 * @param QuoteVariantInterface $variant
-	 */
-	public function __construct(QuoteVariantInterface $variant, $options = array())
-	{
-		parent::__construct($options);
-		$this->variant = $variant;
-	}
-	
+    private $variant;
+    
+    /**
+     *
+     * @param QuoteVariantInterface $variant
+     */
+    public function __construct(QuoteVariantInterface $variant, $options = [])
+    {
+        parent::__construct($options);
+        $this->variant = $variant;
+    }
+    
     /**
      * {@inheritdoc}
      */
     public function buildTrustee()
     {
-    	$this->getAsk()->setTrustee($this->variant->getQuote()->getTrustee());
+        $this->getAsk()->setTrustee($this->variant->getQuote()->getTrustee());
     }
     
     /**
@@ -42,7 +43,7 @@ class VariantAskBuilder extends AskBuilderAbstract
      */
     public function buildSite()
     {
-    	$this->getAsk()->setSite($this->variant->getQuote()->getAsk()->getSite());
+        $this->getAsk()->setSite($this->variant->getQuote()->getAsk()->getSite());
     }
     
     /**
@@ -50,7 +51,7 @@ class VariantAskBuilder extends AskBuilderAbstract
      */
     public function buildMethod()
     {
-    	$this->getAsk()->setMethod($this->variant->getQuote()->getAsk()->getMethod());
+        $this->getAsk()->setMethod($this->variant->getQuote()->getAsk()->getMethod());
     }
     
     /**
@@ -58,9 +59,9 @@ class VariantAskBuilder extends AskBuilderAbstract
      */
     public function buildMaturity()
     {
-    	$maturity = new \DateTime();
-    	$maturity->add(new \DateInterval('P7D'));
-    	$this->getAsk()->setMaturity($maturity);
+        $maturity = new \DateTime();
+        $maturity->add(new \DateInterval('P7D'));
+        $this->getAsk()->setMaturity($maturity);
     }
     
     /**
@@ -68,7 +69,7 @@ class VariantAskBuilder extends AskBuilderAbstract
      */
     public function buildPerson()
     {
-    	$this->getAsk()->setPerson($this->variant->getQuote()->getAsk()->getPerson());
+        $this->getAsk()->setPerson($this->variant->getQuote()->getAsk()->getPerson());
     }
     
     /**
@@ -76,12 +77,11 @@ class VariantAskBuilder extends AskBuilderAbstract
      */
     public function buildAsk()
     {
-    	$ask = 'Selon accord sur devis n°'. $this->variant->getNumber().chr(10);
-    	$lines = $this->variant->getLinesByType('TRANSMITTER');
-    	foreach ($lines as $line)
-    	{
-    		$ask .= $line->getQuantity(). ' '.$line->getDesignation().chr(10);
-    	}
-    	$this->getAsk()->setAsk($ask);
+        $ask = 'Selon accord sur devis n°'. $this->variant->getNumber().chr(10);
+        $lines = $this->variant->getLinesByType('TRANSMITTER');
+        foreach ($lines as $line) {
+            $ask .= $line->getQuantity(). ' '.$line->getDesignation().chr(10);
+        }
+        $this->getAsk()->setAsk($ask);
     }
 }

@@ -22,42 +22,42 @@ use JLM\TransmitterBundle\Builder\VariantAskBuilder;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class AskSubscriber implements EventSubscriberInterface
-{	
-	/**
-	 * @var ObjectManager
-	 */
-	private $om;
-	
-	/**
-	 * Constructor
-	 * @param ObjectManager $om
-	 */
-	public function __construct(ObjectManager $om)
-	{
-		$this->om = $om;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function getSubscribedEvents()
-	{
-		return array(
-			JLMCommerceEvents::QUOTEVARIANT_GIVEN => 'createAskFromQuote',
-		);
-	}
-	
-	/**
-	 * @param QuoteVariantEvent $event
-	 */
-	public function createAskFromQuote(QuoteVariantEvent $event)
-	{
-		$entity = $event->getQuoteVariant();
-		if ($entity->hasLineType('TRANSMITTER'))
-		{
-			$ask = AskFactory::create(new VariantAskBuilder($entity));
-			$this->om->persist($ask);
-			$this->om->flush();
-		}
-	}
+{
+   
+    /**
+     * @var ObjectManager
+     */
+    private $om;
+    
+    /**
+     * Constructor
+     * @param ObjectManager $om
+     */
+    public function __construct(ObjectManager $om)
+    {
+        $this->om = $om;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            JLMCommerceEvents::QUOTEVARIANT_GIVEN => 'createAskFromQuote',
+        ];
+    }
+    
+    /**
+     * @param QuoteVariantEvent $event
+     */
+    public function createAskFromQuote(QuoteVariantEvent $event)
+    {
+        $entity = $event->getQuoteVariant();
+        if ($entity->hasLineType('TRANSMITTER')) {
+            $ask = AskFactory::create(new VariantAskBuilder($entity));
+            $this->om->persist($ask);
+            $this->om->flush();
+        }
+    }
 }

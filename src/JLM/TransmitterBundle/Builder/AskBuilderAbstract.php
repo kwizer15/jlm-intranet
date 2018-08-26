@@ -12,6 +12,7 @@
 namespace JLM\TransmitterBundle\Builder;
 
 use JLM\TransmitterBundle\Entity\Ask;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -56,7 +57,6 @@ abstract class AskBuilderAbstract implements AskBuilderInterface
      */
     public function buildTrustee()
     {
-    	
     }
     
     /**
@@ -64,7 +64,6 @@ abstract class AskBuilderAbstract implements AskBuilderInterface
      */
     public function buildSite()
     {
-    	
     }
     
     /**
@@ -72,7 +71,6 @@ abstract class AskBuilderAbstract implements AskBuilderInterface
      */
     public function buildMethod()
     {
-    	
     }
     
     /**
@@ -80,7 +78,6 @@ abstract class AskBuilderAbstract implements AskBuilderInterface
      */
     public function buildMaturity()
     {
-    	
     }
     
     /**
@@ -88,7 +85,6 @@ abstract class AskBuilderAbstract implements AskBuilderInterface
      */
     public function buildPerson()
     {
-    	
     }
     
     /**
@@ -96,10 +92,9 @@ abstract class AskBuilderAbstract implements AskBuilderInterface
      */
     public function buildAsk()
     {
-    	
     }
     
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
         $this->options = $options;
     }
@@ -111,8 +106,7 @@ abstract class AskBuilderAbstract implements AskBuilderInterface
     
     protected function getOption($key)
     {
-        if (isset($this->options[$key]))
-        {
+        if (isset($this->options[$key])) {
             return $this->options[$key];
         }
         

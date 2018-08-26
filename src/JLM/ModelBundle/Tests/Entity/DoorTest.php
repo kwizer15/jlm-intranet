@@ -36,7 +36,6 @@ class DoorTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-         
     }
     
     public function testAdministrator()
@@ -48,11 +47,11 @@ class DoorTest extends \PHPUnit_Framework_TestCase
     
     public function testParts()
     {
-    	$product = $this->getMock('JLM\ProductBundle\Model\ProductInterface');
-    	$this->assertCount(0, $this->entity->getParts());
-    	$this->assertTrue($this->entity->addPart($product));
-    	$this->assertCount(1, $this->entity->getParts());
-    	$this->assertTrue($this->entity->removePart($product));
-    	$this->assertCount(0, $this->entity->getParts());
+        $product = $this->getMock('JLM\ProductBundle\Model\ProductInterface');
+        $this->assertCount(0, $this->entity->getParts());
+        $this->assertTrue($this->entity->addPart($product));
+        $this->assertCount(1, $this->entity->getParts());
+        $this->assertTrue($this->entity->removePart($product));
+        $this->assertCount(0, $this->entity->getParts());
     }
 }

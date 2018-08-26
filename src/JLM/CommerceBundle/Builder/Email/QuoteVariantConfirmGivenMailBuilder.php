@@ -17,18 +17,17 @@ namespace JLM\CommerceBundle\Builder\Email;
 class QuoteVariantConfirmGivenMailBuilder extends QuoteVariantMailBuilder
 {
 
-	public function buildSubject()
-	{
-		$this->setSubject('Confirmation de réception de votre accord sur devis n°'.$this->getQuoteVariant()->getNumber());
-	}
-	
-	public function buildBody()
-	{
-		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Nous accusons bonne réception de votre accord sur le devis n°'.$this->getQuoteVariant()->getNumber().'.'.chr(10)
-		.'Nous vous tiendrons informé de la date d\'exécution des travaux.'.chr(10).chr(10)
-		.'Cordialement'
-		.$this->_getSignature()
-		);
-	}
+    public function buildSubject()
+    {
+        $this->setSubject('Confirmation de réception de votre accord sur devis n°'.$this->getQuoteVariant()->getNumber());
+    }
+    
+    public function buildBody()
+    {
+        $this->setBody('Bonjour,'.chr(10).chr(10)
+        .'Nous accusons bonne réception de votre accord sur le devis n°'.$this->getQuoteVariant()->getNumber().'.'.chr(10)
+        .'Nous vous tiendrons informé de la date d\'exécution des travaux.'.chr(10).chr(10)
+        .'Cordialement'
+        .$this->_getSignature());
+    }
 }

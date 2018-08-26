@@ -12,46 +12,47 @@
 namespace JLM\CommerceBundle\Builder;
 
 use JLM\CommerceBundle\Entity\BillLine;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 abstract class BillLineBuilderAbstract implements BillLineBuilderInterface
 {
-	/**
-	 * 
-	 * @var BillLineInterface $line
-	 */
-	private $line;
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function create()
-	{
-		$this->line = new BillLine;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function buildQuantity()
-	{
-		$this->line->setQuantity(1);
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function buildPrice()
-	{
-		$this->line->setUnitPrice(0);
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getLine()
-	{
-		return $this->line;
-	}
+    /**
+     *
+     * @var BillLineInterface $line
+     */
+    private $line;
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function create()
+    {
+        $this->line = new BillLine;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function buildQuantity()
+    {
+        $this->line->setQuantity(1);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function buildPrice()
+    {
+        $this->line->setUnitPrice(0);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getLine()
+    {
+        return $this->line;
+    }
 }

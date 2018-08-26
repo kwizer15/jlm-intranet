@@ -16,55 +16,55 @@ namespace JLM\CommerceBundle\Tests\Entity;
  */
 class CommercialPartLineProductTest extends \PHPUnit_Framework_TestCase
 {
-	/**
-	 * @var Mock CommercialPartLineProduct
-	 */
-	protected $entity;
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function setUp()
-	{
-		$this->entity = $this->getMockForAbstractClass('JLM\CommerceBundle\Entity\CommercialPartLineProduct');
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function assertPreConditions()
-	{
-		 $this->assertInstanceOf('JLM\CommerceBundle\Model\CommercialPartLineInterface', $this->entity);
-	}
-	
-	public function getAttributes()
-	{
-	    return array(
-	    	array('Position', 1),
-	        array('Product', $this->getMock('JLM\ProductBundle\Model\ProductInterface')),
-	        array('Reference', 'Foo'),
-	        array('Designation', 'Foo'),
-	        array('Description', 'Bar'),
-	        array('ShowDescription', true),
-	        array('IsTransmitter', false),
-	        array('Quantity', 2),
-	        array('UnitPrice', 25.50),
-	        array('Discount', 0.1),
-	        array('Vat', 20.0),
-	    );
-	}
-	
-	/**
-	 * Test getters and setters
-	 * @param string $attribute
-	 * @param mixed $value
-	 * @dataProvider getAttributes
-	 */
-	public function testGettersSetters($attribute, $value)
-	{
-	    $getter = 'get'.$attribute;
-	    $setter = 'set'.$attribute;
-	    $this->assertSame($this->entity, $this->entity->$setter($value));
-	    $this->assertSame($value, $this->entity->$getter());
-	}
+    /**
+     * @var Mock CommercialPartLineProduct
+     */
+    protected $entity;
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp()
+    {
+        $this->entity = $this->getMockForAbstractClass('JLM\CommerceBundle\Entity\CommercialPartLineProduct');
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function assertPreConditions()
+    {
+         $this->assertInstanceOf('JLM\CommerceBundle\Model\CommercialPartLineInterface', $this->entity);
+    }
+    
+    public function getAttributes()
+    {
+        return [
+            ['Position', 1],
+            ['Product', $this->getMock('JLM\ProductBundle\Model\ProductInterface')],
+            ['Reference', 'Foo'],
+            ['Designation', 'Foo'],
+            ['Description', 'Bar'],
+            ['ShowDescription', true],
+            ['IsTransmitter', false],
+            ['Quantity', 2],
+            ['UnitPrice', 25.50],
+            ['Discount', 0.1],
+            ['Vat', 20.0],
+        ];
+    }
+    
+    /**
+     * Test getters and setters
+     * @param string $attribute
+     * @param mixed $value
+     * @dataProvider getAttributes
+     */
+    public function testGettersSetters($attribute, $value)
+    {
+        $getter = 'get'.$attribute;
+        $setter = 'set'.$attribute;
+        $this->assertSame($this->entity, $this->entity->$setter($value));
+        $this->assertSame($value, $this->entity->$getter());
+    }
 }

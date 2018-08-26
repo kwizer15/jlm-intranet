@@ -16,5 +16,5 @@ namespace JLM\CommerceBundle\Model;
  */
 interface BillSourceInterface
 {
-	    
+        
 }

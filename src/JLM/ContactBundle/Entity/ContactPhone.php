@@ -71,7 +71,7 @@ class ContactPhone implements ContactPhoneInterface
      */
     public function getPhone()
     {
-    	return $this->phone;
+        return $this->phone;
     }
     
     /**
@@ -81,9 +81,9 @@ class ContactPhone implements ContactPhoneInterface
      */
     public function setPhone(PhoneInterface $phone)
     {
-    	$this->phone = $phone;
-    	
-    	return $this;
+        $this->phone = $phone;
+        
+        return $this;
     }
     
     /**
@@ -111,7 +111,7 @@ class ContactPhone implements ContactPhoneInterface
      */
     public function getNumber()
     {
-    	return $this->phone->getNumber();
+        return $this->phone->getNumber();
     }
     
     /**
@@ -122,4 +122,4 @@ class ContactPhone implements ContactPhoneInterface
     {
         return $this->getLabel() . ' : ' . $this->phone->getNumber();
     }
-} 
+}

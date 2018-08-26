@@ -36,9 +36,9 @@ class SiteController extends Controller
 
         $entities = $em->getRepository('JLMModelBundle:Site')->findAll();
 
-        return array(
+        return [
             'entities' => $entities,
-        );
+        ];
     }
 
     /**
@@ -59,10 +59,10 @@ class SiteController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return [
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -73,16 +73,16 @@ class SiteController extends Controller
      */
     public function newAction()
     {
-    	$trustee = $this->getRequest()->get('trustee', null);
+        $trustee = $this->getRequest()->get('trustee', null);
         $entity = new Site();
         $form   = $this->createForm(new SiteType(), $entity);
         $em = $this->get('doctrine')->getManager();
         $form->get('trustee')->setData($em->getRepository('JLMModelBundle:Trustee')->find($trustee));
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -97,20 +97,19 @@ class SiteController extends Controller
         $form = $this->createForm(new SiteType(), $entity);
         $form->handleRequest($request);
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity->getAddress());
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('site_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('site_show', ['id' => $entity->getId()]));
         }
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -122,10 +121,10 @@ class SiteController extends Controller
     public function editAction(Site $entity)
     {
         $editForm = $this->createForm(new SiteType(), $entity);
-        return array(
+        return [
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -140,18 +139,17 @@ class SiteController extends Controller
         $editForm = $this->createForm(new SiteType(), $entity);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid())
-        {
-        	$em->persist($entity->getAddress());
+        if ($editForm->isValid()) {
+            $em->persist($entity->getAddress());
             $em->persist($entity);
             $em->flush();
-            return $this->redirect($this->generateUrl('site_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('site_show', ['id' => $entity->getId()]));
         }
 
-        return array(
+        return [
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -164,8 +162,7 @@ class SiteController extends Controller
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('JLMModelBundle:Site')->find($id);
 
@@ -182,7 +179,7 @@ class SiteController extends Controller
 
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
+        return $this->createFormBuilder(['id' => $id])
             ->add('id', 'hidden')
             ->getForm()
         ;

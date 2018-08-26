@@ -32,24 +32,23 @@ class SupplierController extends Controller
      */
     public function indexAction($page = 1)
     {
-    	$limit = 15;
+        $limit = 15;
         $em = $this->getDoctrine()->getManager();
         $nb = $em->getRepository('JLMProductBundle:Supplier')->getTotal();
         $nbPages = ceil($nb/$limit);
         $nbPages = ($nbPages < 1) ? 1 : $nbPages;
         $offset = ($page-1) * $limit;
-        if ($page < 1 || $page > $nbPages)
-        {
-        	throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
+        if ($page < 1 || $page > $nbPages) {
+            throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
         }
 
         $entities = $em->getRepository('JLMProductBundle:Supplier')->getAll($limit, $offset);
 
-        return array(
-        	'entities' => $entities,
-        	'page'     => $page,
-        	'nbPages'  => $nbPages,
-        );
+        return [
+            'entities' => $entities,
+            'page'     => $page,
+            'nbPages'  => $nbPages,
+        ];
     }
 
     /**
@@ -62,14 +61,14 @@ class SupplierController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $products = $em->getRepository('JLMProductBundle:Product')->findBy(
-        		array('supplier' => $entity),
-        		array('designation'=>'asc')
+            ['supplier' => $entity],
+            ['designation'=>'asc']
         );
         
-        return array(
+        return [
             'entity'      => $entity,
-        	'products'	  => $products,
-        );
+            'products'    => $products,
+        ];
     }
 
     /**
@@ -83,10 +82,10 @@ class SupplierController extends Controller
         $entity = new Supplier();
         $form   = $this->createNewForm($entity);
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView()
-        );
+        ];
     }
 
     /**
@@ -102,20 +101,18 @@ class SupplierController extends Controller
         $form    = $this->createNewForm($entity);
         $form->handleRequest($request);
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('supplier_show', array('id' => $entity->getId())));
-            
+            return $this->redirect($this->generateUrl('supplier_show', ['id' => $entity->getId()]));
         }
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView()
-        );
+        ];
     }
 
     /**
@@ -131,11 +128,11 @@ class SupplierController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return [
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -155,21 +152,20 @@ class SupplierController extends Controller
 
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid())
-        {
+        if ($editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
-        	$em->persist($entity->getAddress());
+            $em->persist($entity->getAddress());
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('supplier_show', array('id' => $id)));
+            return $this->redirect($this->generateUrl('supplier_show', ['id' => $id]));
         }
 
-        return array(
+        return [
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -202,7 +198,7 @@ class SupplierController extends Controller
      */
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
+        return $this->createFormBuilder(['id' => $id])
             ->add('id', 'hidden')
             ->getForm()
         ;

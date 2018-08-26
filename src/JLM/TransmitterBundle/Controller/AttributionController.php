@@ -30,10 +30,10 @@ class AttributionController extends Controller
      */
     public function indexAction(Request $request)
     {
-    	$manager = $this->container->get('jlm_core.mail_manager'); //@todo To change : rewrite services as yaml and include a manager service
-    	$manager->secure('ROLE_OFFICE');
-    	
-    	return $manager->paginator('JLMTransmitterBundle:Attribution', $request, array('sort' => '!date'));
+        $manager = $this->container->get('jlm_core.mail_manager'); //@todo To change : rewrite services as yaml and include a manager service
+        $manager->secure('ROLE_OFFICE');
+        
+        return $manager->paginator('JLMTransmitterBundle:Attribution', $request, ['sort' => '!date']);
     }
 
     /**
@@ -45,9 +45,9 @@ class AttributionController extends Controller
      */
     public function showAction(Attribution $entity)
     {
-        return array(
+        return [
             'entity'      => $entity,
-        );
+        ];
     }
 
     /**
@@ -64,10 +64,10 @@ class AttributionController extends Controller
         $entity->setAsk($ask);
         $form   = $this->createForm(new AttributionType(), $entity);
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -84,19 +84,18 @@ class AttributionController extends Controller
         $form = $this->createForm(new AttributionType(), $entity);
         $form->handleRequest($request);
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('transmitter_attribution_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('transmitter_attribution_show', ['id' => $entity->getId()]));
         }
 
-        return array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -110,10 +109,10 @@ class AttributionController extends Controller
     {
         $editForm = $this->createForm(new AttributionType(), $entity);
 
-        return array(
+        return [
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -135,13 +134,13 @@ class AttributionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('transmitter_attribution_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('transmitter_attribution_show', ['id' => $entity->getId()]));
         }
 
-        return array(
+        return [
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -151,34 +150,37 @@ class AttributionController extends Controller
      * @Secure(roles="ROLE_OFFICE")
      */
     public function printlistAction(Attribution $entity)
-    {   
+    {
         // Retrier les bips par Groupe puis par numéro
         $transmitters = $entity->getTransmitters();
-        $resort = array();
-        foreach ($transmitters as $transmitter)
-        {
-        	$index = $transmitter->getUserGroup()->getName();
-        	if (!isset($resort[$index]))
-        		$resort[$index] = array();
-        	$resort[$index][] = $transmitter;
+        $resort = [];
+        foreach ($transmitters as $transmitter) {
+            $index = $transmitter->getUserGroup()->getName();
+            if (!isset($resort[$index])) {
+                $resort[$index] = [];
+            }
+            $resort[$index][] = $transmitter;
         }
-        $final = array();
-        foreach ($resort as $list)
-        	$final = array_merge($final,$list);
+        $final = [];
+        foreach ($resort as $list) {
+            $final = array_merge($final, $list);
+        }
         unset($resort);
         
         
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/pdf');
-    	$response->headers->set('Content-Disposition', 'inline; filename=attribution-'.$entity->getId().'.pdf');
-    	$response->setContent($this->render('JLMTransmitterBundle:Attribution:printlist.pdf.php',
-    			array(
-    					'entity' => $entity,
-    					'transmitters' => $final,
-    					'withHeader' => true,
-    			)));
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'inline; filename=attribution-'.$entity->getId().'.pdf');
+        $response->setContent($this->render(
+            'JLMTransmitterBundle:Attribution:printlist.pdf.php',
+            [
+                        'entity' => $entity,
+                        'transmitters' => $final,
+                        'withHeader' => true,
+                ]
+        ));
     
-    	return $response;
+        return $response;
     }
     
     /**
@@ -189,15 +191,17 @@ class AttributionController extends Controller
      */
     public function printcourrierAction(Attribution $entity)
     {
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/pdf');
-    	$response->headers->set('Content-Disposition', 'inline; filename=attribution-courrier-'.$entity->getId().'.pdf');
-    	$response->setContent($this->render('JLMTransmitterBundle:Attribution:printcourrier.pdf.php',
-    			array(
-    					'entity' => $entity,
-    			)));
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'inline; filename=attribution-courrier-'.$entity->getId().'.pdf');
+        $response->setContent($this->render(
+            'JLMTransmitterBundle:Attribution:printcourrier.pdf.php',
+            [
+                        'entity' => $entity,
+                ]
+        ));
     
-    	return $response;
+        return $response;
     }
     
     /**
@@ -208,25 +212,24 @@ class AttributionController extends Controller
      */
     public function billAction(Attribution $entity)
     {
-    	$em = $this->getDoctrine()->getManager();
-    	
-    	if ($entity->getBill() !== null)
-    	{
-    	   return $this->redirect($this->generateUrl('bill_edit', array('id' => $entity->getBill()->getId())));
-    	}
-    	// @todo trouver un autre solution que le codage brut
-    	$options = array(
-    	    'port'         => $em->getRepository('JLMProductBundle:Product')->find(134),
-    	    'earlyPayment' => (string)$em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1),
-    	    'penalty'      => (string)$em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
-    	    'property'     => (string)$em->getRepository('JLMCommerceBundle:PropertyModel')->find(1),
-    	);
-    	$bill = BillFactory::create(new AttributionBillBuilder($entity, $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(), $options));
-    	$em->persist($bill);
-    	$entity->setBill($bill);
-    	$em->persist($entity);
-    	$em->flush();
-    	
-    	return $this->redirect($this->generateUrl('bill_edit', array('id' => $bill->getId())));
+        $em = $this->getDoctrine()->getManager();
+        
+        if ($entity->getBill() !== null) {
+            return $this->redirect($this->generateUrl('bill_edit', ['id' => $entity->getBill()->getId()]));
+        }
+        // @todo trouver un autre solution que le codage brut
+        $options = [
+            'port'         => $em->getRepository('JLMProductBundle:Product')->find(134),
+            'earlyPayment' => (string)$em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1),
+            'penalty'      => (string)$em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
+            'property'     => (string)$em->getRepository('JLMCommerceBundle:PropertyModel')->find(1),
+        ];
+        $bill = BillFactory::create(new AttributionBillBuilder($entity, $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(), $options));
+        $em->persist($bill);
+        $entity->setBill($bill);
+        $em->persist($entity);
+        $em->flush();
+        
+        return $this->redirect($this->generateUrl('bill_edit', ['id' => $bill->getId()]));
     }
 }

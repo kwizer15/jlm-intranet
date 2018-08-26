@@ -51,7 +51,7 @@ class DoorStop
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -74,7 +74,7 @@ class DoorStop
     /**
      * Get begin
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getBegin()
     {
@@ -97,7 +97,7 @@ class DoorStop
     /**
      * Get end
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEnd()
     {
@@ -120,7 +120,7 @@ class DoorStop
     /**
      * Get reason
      *
-     * @return string 
+     * @return string
      */
     public function getReason()
     {
@@ -143,7 +143,7 @@ class DoorStop
     /**
      * Get door
      *
-     * @return \JLM\ModelBundle\Entity\Door 
+     * @return \JLM\ModelBundle\Entity\Door
      */
     public function getDoor()
     {
@@ -166,7 +166,7 @@ class DoorStop
     /**
      * Get state
      *
-     * @return string 
+     * @return string
      */
     public function getState()
     {

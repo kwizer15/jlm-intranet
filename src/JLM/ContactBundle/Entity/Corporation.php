@@ -19,21 +19,22 @@ use JLM\ContactBundle\Model\CorporationContactInterface;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 abstract class Corporation extends Contact implements CorporationInterface
-{ 
-	/**
-	 * @var CorporationContactInterface[] $contacts
-	 *
+{
+
+    /**
+     * @var CorporationContactInterface[] $contacts
+     *
      */
-	private $contacts;
-	
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-	    parent::__construct();
-		$this->contacts = new ArrayCollection;
-	}
+    private $contacts;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->contacts = new ArrayCollection;
+    }
 
     /**
      * Add contacts
@@ -43,7 +44,7 @@ abstract class Corporation extends Contact implements CorporationInterface
      */
     public function addContact(CorporationContactInterface $contact)
     {
-    	return $this->contacts->add($contact);
+        return $this->contacts->add($contact);
     }
     
     /**
@@ -64,7 +65,7 @@ abstract class Corporation extends Contact implements CorporationInterface
      */
     public function getContacts()
     {
-    	return $this->contacts;
+        return $this->contacts;
     }
 
     /**

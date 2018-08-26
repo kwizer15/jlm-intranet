@@ -12,6 +12,7 @@
 namespace JLM\CommerceBundle\Builder;
 
 use JLM\CommerceBundle\Entity\Bill;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -54,50 +55,51 @@ abstract class BillBuilderAbstract implements BillBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function buildIntro() {}
+    public function buildIntro()
+    {
+    }
     
     /**
      * {@inheritdoc}
      */
-    public function buildDetails() {}
+    public function buildDetails()
+    {
+    }
     
     /**
      * {@inheritdoc}
      */
     public function buildConditions()
     {
-        if (!isset($this->options['maturity']))
-        {
+        if (!isset($this->options['maturity'])) {
             $this->options['maturity'] = 30;
         }
         
-        foreach ($this->options as $key => $value)
-        {
-            switch ($key)
-            {
-            	case 'earlyPayment':
-            	    $this->getBill()->setEarlyPayment($value);
-            	    break;
-            	case 'penalty':
-            	    $this->getBill()->setPenalty($value);
-            	    break;
-            	case 'property':
-            	    $this->getBill()->setProperty($value);
-            	    break;
-            	case 'maturity':
-            	    $this->getBill()->setMaturity($value);
-            	    break;
-            	case 'vatTransmitter':
-            	    $this->getBill()->setVatTransmitter($value);
-            	    break;
-            	case 'vat':
-            	    $this->getBill()->setVat($value);
-            	    break;
+        foreach ($this->options as $key => $value) {
+            switch ($key) {
+                case 'earlyPayment':
+                    $this->getBill()->setEarlyPayment($value);
+                    break;
+                case 'penalty':
+                    $this->getBill()->setPenalty($value);
+                    break;
+                case 'property':
+                    $this->getBill()->setProperty($value);
+                    break;
+                case 'maturity':
+                    $this->getBill()->setMaturity($value);
+                    break;
+                case 'vatTransmitter':
+                    $this->getBill()->setVatTransmitter($value);
+                    break;
+                case 'vat':
+                    $this->getBill()->setVat($value);
+                    break;
             }
         }
     }
     
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
         $this->options = $options;
     }
@@ -109,8 +111,7 @@ abstract class BillBuilderAbstract implements BillBuilderInterface
     
     protected function getOption($key)
     {
-        if (isset($this->options[$key]))
-        {
+        if (isset($this->options[$key])) {
             return $this->options[$key];
         }
         

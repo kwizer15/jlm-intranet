@@ -17,14 +17,15 @@ use JLM\CoreBundle\Form\Type\AbstractSelectType;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class PersonSelectType extends AbstractSelectType
-{ 
+{
+
     protected function getTransformerClass()
     {
-    	return '\JLM\ContactBundle\Form\DataTransformer\PersonToIntTransformer';
+        return '\JLM\ContactBundle\Form\DataTransformer\PersonToIntTransformer';
     }
     
     protected function getTypeName()
     {
-    	return 'jlm_contact_person';
+        return 'jlm_contact_person';
     }
 }

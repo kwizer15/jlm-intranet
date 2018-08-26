@@ -16,13 +16,13 @@ namespace JLM\CommerceBundle\Model;
  */
 interface QuoteInterface
 {
-	/**
-	 * @return int
-	 */
-	public function getNumber();
-	
-	/**
-	 * @return Door
-	 */
-	public function getDoor();
+    /**
+     * @return int
+     */
+    public function getNumber();
+    
+    /**
+     * @return Door
+     */
+    public function getDoor();
 }

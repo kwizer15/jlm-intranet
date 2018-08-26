@@ -10,33 +10,32 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class SiteSelectType extends AbstractType
 {
-	/**
-	 * @var ObjectManager
-	 */
-	private $om;
-	
-	/**
-	 * @param ObjectManager $om
-	 */
-	public function __construct(ObjectManager $om)
-	{
-		$this->om = $om;
-	}
-	
-	/**
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
+    /**
+     * @var ObjectManager
+     */
+    private $om;
+    
+    /**
+     * @param ObjectManager $om
+     */
+    public function __construct(ObjectManager $om)
+    {
+        $this->om = $om;
+    }
+    
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-    	$transformer = new SiteToStringTransformer($this->om);
-    	$builder->addModelTransformer($transformer);
-    	
+        $transformer = new SiteToStringTransformer($this->om);
+        $builder->addModelTransformer($transformer);
     }
 
     public function getParent()
     {
-    	return 'textarea';
+        return 'textarea';
     }
     
     public function getName()
@@ -44,10 +43,10 @@ class SiteSelectType extends AbstractType
         return 'site_select';
     }
     
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'invalid_message' => 'The selected site does not exist',
-        ));
+        ]);
     }
 }

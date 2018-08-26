@@ -15,7 +15,8 @@ namespace JLM\ContactBundle\Model;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 interface ContactInterface
-{   
+{
+
     /**
      * Get fax
      *
@@ -50,5 +51,4 @@ interface ContactInterface
      * @return string
     */
     public function __toString();
-    
 }
