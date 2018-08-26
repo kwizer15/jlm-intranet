@@ -29,6 +29,8 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
+# PHPStorm
+.idea
 
 .project
 # Cache and logs
@@ -63,6 +65,8 @@ local.properties
 # PHPUnit
 /app/phpunit.xml
 /app-front/phpunit.xml
+phpunit.xml
+phpcs.xml
 
 # Composer PHAR
 /composer.phar
@@ -95,3 +99,5 @@ out.txt
 csv2php.php
 
 /jlm(2).sql.gz
+
+metrics
