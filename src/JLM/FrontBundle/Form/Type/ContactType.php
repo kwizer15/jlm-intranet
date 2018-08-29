@@ -23,7 +23,7 @@ class ContactType extends AbstractType
     /**
      *
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -48,15 +48,13 @@ class ContactType extends AbstractType
     {
         return 'jlm_front_contacttype';
     }
-    
+
     /**
      *
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-                'data_class' => 'JLM\FrontBundle\Entity\Contact',
-        ]);
+        $resolver->setDefaults(['data_class' => 'JLM\FrontBundle\Entity\Contact']);
     }
 }

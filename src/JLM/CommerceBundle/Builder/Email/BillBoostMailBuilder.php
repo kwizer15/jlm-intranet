@@ -43,7 +43,7 @@ class BillBoostMailBuilder extends BillMailBuilder
         .'Nous vous prions de nous faire parvenir ce règlement sous 72 heures, en cas de retard de paiement,'
         .' une indémnité légale forfaitaire pour frais de recouvrement de 40 € sera appliquée.'.chr(10).chr(10)
         .'Nous vous prions d\'agréer, Madame, Monsieur, l\'expression de nos salutations distinguées.'
-        .$this->_getSignature());
+        .$this->getSignature());
     }
     
     public function buildPreAttachements()

@@ -42,49 +42,51 @@ class Contact implements ContactInterface
      * @var string
      */
     private $lastName;
-    
+
     /**
      * @var string
      */
     private $address;
-    
+
     /**
      * @var string
      */
     private $zip;
-    
+
     /**
      * @var string
      */
     private $city;
-    
+
     /**
      * @var string
      */
     private $country;
-    
+
     /**
      * @var string
      */
     private $phone;
-    
+
     /**
      * @var string
      */
     private $email;
-    
+
     /**
      * Set the subject
+     *
      * @param string $subject
+     *
      * @return self
      */
     public function setSubject($subject)
     {
         $this->subject = $subject;
-        
+
         return $this;
     }
-    
+
     /**
      * Get the subject
      *
@@ -94,19 +96,21 @@ class Contact implements ContactInterface
     {
         return $this->subject;
     }
-    
+
     /**
      * Set the content
+     *
      * @param string $content
+     *
      * @return self
      */
     public function setContent($content)
     {
         $this->content = $content;
-    
+
         return $this;
     }
-    
+
     /**
      * Get the content
      *
@@ -116,19 +120,21 @@ class Contact implements ContactInterface
     {
         return $this->content;
     }
-    
+
     /**
      * Set the company
+     *
      * @param string $company
+     *
      * @return self
      */
     public function setCompany($company)
     {
         $this->company = $company;
-        
+
         return $this;
     }
-    
+
     /**
      * Get the company
      *
@@ -138,19 +144,21 @@ class Contact implements ContactInterface
     {
         return $this->company;
     }
-    
+
     /**
      * Set the first name
+     *
      * @param string $firstName
+     *
      * @return self
      */
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-        
+
         return $this;
     }
-    
+
     /**
      * Get the first name
      *
@@ -160,19 +168,21 @@ class Contact implements ContactInterface
     {
         return $this->firstName;
     }
-    
+
     /**
      * Set the last name
+     *
      * @param string $lastName
+     *
      * @return self
      */
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-        
+
         return $this;
     }
-    
+
     /**
      * Get the lest name
      *
@@ -182,19 +192,21 @@ class Contact implements ContactInterface
     {
         return $this->lastName;
     }
-    
+
     /**
      * Set the address
+     *
      * @param string $address
+     *
      * @return self
      */
     public function setAddress($address)
     {
         $this->address = $address;
-        
+
         return $this;
     }
-    
+
     /**
      * Get the address
      *
@@ -204,19 +216,21 @@ class Contact implements ContactInterface
     {
         return $this->address;
     }
-    
+
     /**
      * Set the zip
+     *
      * @param string $zip
+     *
      * @return self
      */
     public function setZip($zip)
     {
         $this->zip = $zip;
-        
+
         return $this;
     }
-    
+
     /**
      * Get the zip
      *
@@ -226,19 +240,21 @@ class Contact implements ContactInterface
     {
         return $this->zip;
     }
-    
+
     /**
      * Set the city
+     *
      * @param string $city
+     *
      * @return self
      */
     public function setCity($city)
     {
         $this->city = $city;
-        
+
         return $this;
     }
-    
+
     /**
      * Get the city
      *
@@ -248,19 +264,21 @@ class Contact implements ContactInterface
     {
         return $this->city;
     }
-    
+
     /**
      * Set the country
+     *
      * @param string $country
+     *
      * @return self
      */
     public function setCountry($country)
     {
         $this->country = $country;
-        
+
         return $this;
     }
-    
+
     /**
      * Get the country
      *
@@ -270,19 +288,21 @@ class Contact implements ContactInterface
     {
         return $this->country;
     }
-    
+
     /**
      * Set the phone
+     *
      * @param string $phone
+     *
      * @return self
      */
     public function setPhone($phone)
     {
         $this->phone = $phone;
-        
+
         return $this;
     }
-    
+
     /**
      * Get the phone
      *
@@ -292,19 +312,21 @@ class Contact implements ContactInterface
     {
         return $this->phone;
     }
-    
+
     /**
      * Set the email
+     *
      * @param string $email
+     *
      * @return self
      */
     public function setEmail($email)
     {
         $this->email = $email;
-        
+
         return $this;
     }
-    
+
     /**
      * Get the email
      *

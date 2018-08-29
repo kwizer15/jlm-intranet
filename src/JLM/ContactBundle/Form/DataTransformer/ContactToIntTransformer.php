@@ -21,15 +21,15 @@ class ContactToIntTransformer extends ObjectToIntTransformer
     /**
      * {@inheritdoc}
      */
-    protected function _getClass()
+    protected function getClass()
     {
         return 'JLMContactBundle:Contact';
     }
-    
+
     /**
      * {@inheritdoc}
      */
-    protected function _getErrorMessage()
+    protected function getErrorMessage()
     {
         return 'A contact with id "%s" does not exist!';
     }

@@ -34,8 +34,8 @@ class AttributionCountExtension extends \Twig_Extension implements \Twig_Extensi
     {
 //        $repo = $this->om->getRepository('JLMTransmitterBundle:Attribution');
         
-        return ['transmitterattributioncount' => [
-                'all' => 0,
-        ]];
+        return [
+                'transmitterattributioncount' => ['all' => 0],
+               ];
     }
 }

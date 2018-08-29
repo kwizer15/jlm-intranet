@@ -41,8 +41,6 @@ class UploadDocumentType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => 'JLM\CoreBundle\Entity\UploadDocument'
-        ]);
+        $resolver->setDefaults(['data_class' => 'JLM\CoreBundle\Entity\UploadDocument']);
     }
 }

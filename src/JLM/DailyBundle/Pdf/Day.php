@@ -11,40 +11,40 @@ class Day extends FPDFext
     public static function get(\DateTime $date, $entities, $standby)
     {
         $pdf = new self();
-        $pdf->_init();
-        $pdf->_header($date);
+        $pdf->init();
+        $pdf->customHeader($date);
         foreach ($entities as $entity) {
-            $pdf->_show($entity, $date);
+            $pdf->show($entity, $date);
         }
         return $pdf->Output('', 'S');
     }
     
-    private function _init()
+    private function init()
     {
         $this->aliasNbPages();
         $this->setFillColor(200);
         $this->addPage('L');
     }
     
-    private function _header(\DateTime $date)
+    private function customHeader(\DateTime $date)
     {
         $this->setFont('Arial', 'B', 18);
         $this->cell(0, 12, 'Interventions du '.$date->format('d/m/Y'), 1, 1, 'C', true);
         $this->ln(5);
         $this->setFont('Arial', 'B', 11);
-        $this->setWidths([24,77,8,69,70,29]);
-        $this->row(['Type','Affaire','Ctr','Raison','Rapport','Technicien'], 6, 1, true);
+        $this->setWidths([24, 77, 8, 69, 70, 29]);
+        $this->row(['Type', 'Affaire', 'Ctr', 'Raison', 'Rapport', 'Technicien'], 6, 1, true);
         $this->setFont('Arial', '', 10);
     }
     
-    private function _show($entity, $date)
+    private function show($entity, $date)
     {
         $types = [
-                'fixing' => 'Dépannage',
-                'equipment' => 'Matériel',
-                'maintenance' => 'Entretien',
-                'work' => 'Travaux',
-        ];
+                  'fixing'      => 'Dépannage',
+                  'equipment'   => 'Matériel',
+                  'maintenance' => 'Entretien',
+                  'work'        => 'Travaux',
+                 ];
         $datas[0] = $types[$entity->getType()];
         if ($entity->getType() == 'equipment') {
             $datas[1] = $entity->getPlace();

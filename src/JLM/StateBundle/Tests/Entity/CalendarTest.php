@@ -22,7 +22,7 @@ class StateTest extends \PHPUnit_Framework_TestCase
      * @var Country
      */
     protected $entity;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -30,30 +30,36 @@ class StateTest extends \PHPUnit_Framework_TestCase
     {
         $this->entity = new Calendar();
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function assertPreConditions()
     {
-//        $this->assertInstanceOf('JLM\AskBundle\Model\AskInterface', $this->entity);
+        //        $this->assertInstanceOf('JLM\AskBundle\Model\AskInterface', $this->entity);
     }
-    
+
     public function getGetterSetter()
     {
         return [
-            ['Dt', new \DateTime],
-            ['Date', new \DateTime],
+            [
+                'Dt',
+                new \DateTime(),
+            ],
+            [
+                'Date',
+                new \DateTime(),
+            ],
         ];
     }
-    
+
     /**
      * @dataProvider getGetterSetter
      */
     public function testGetterSetter($attribute, $value)
     {
-        $getter = 'get'.$attribute;
-        $setter = 'set'.$attribute;
+        $getter = 'get' . $attribute;
+        $setter = 'set' . $attribute;
         $this->assertSame($this->entity, $this->entity->$setter($value));
         $this->assertSame($value, $this->entity->$getter());
     }

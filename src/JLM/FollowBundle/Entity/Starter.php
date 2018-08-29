@@ -30,10 +30,10 @@ abstract class Starter implements StarterInterface
     
     final public function getWork()
     {
-        $this->work = $this->_getWork();
+        $this->work = $this->getWorkIntervention();
         
         return $this->work;
     }
     
-    abstract protected function _getWork();
+    abstract protected function getWorkIntervention();
 }

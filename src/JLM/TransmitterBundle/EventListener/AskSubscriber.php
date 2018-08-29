@@ -43,9 +43,7 @@ class AskSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return [
-            JLMCommerceEvents::QUOTEVARIANT_GIVEN => 'createAskFromQuote',
-        ];
+        return [JLMCommerceEvents::QUOTEVARIANT_GIVEN => 'createAskFromQuote'];
     }
     
     /**

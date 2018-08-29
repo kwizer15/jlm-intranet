@@ -35,21 +35,63 @@ class BillControllerTest extends WebTestCase
     public function getUrls()
     {
         return [
-            ['GET', '/bill/'],
-            ['GET', '/bill/?state=all'],
-            ['GET', '/bill/?state=in_seizure'],
-            ['GET', '/bill/?state=sended'],
-            ['GET', '/bill/?state=payed'],
-            ['GET', '/bill/?state=canceled'],
-            ['GET', '/bill/?state=canceled'],
-            ['GET', '/bill/?page=2'],
-            ['GET', '/bill/?state=canceled&page=1&limit=5'],
-            ['GET', '/bill/1'],
-            ['GET', '/bill/new'],
-            ['GET', '/bill/1/edit'],
-            ['GET', '/bill/todo'],
-            ['GET', '/bill/toboost'],
-        ];
+                [
+                 'GET',
+                 '/bill/',
+                ],
+                [
+                 'GET',
+                 '/bill/?state=all',
+                ],
+                [
+                 'GET',
+                 '/bill/?state=in_seizure',
+                ],
+                [
+                 'GET',
+                 '/bill/?state=sended',
+                ],
+                [
+                 'GET',
+                 '/bill/?state=payed',
+                ],
+                [
+                 'GET',
+                 '/bill/?state=canceled',
+                ],
+                [
+                 'GET',
+                 '/bill/?state=canceled',
+                ],
+                [
+                 'GET',
+                 '/bill/?page=2',
+                ],
+                [
+                 'GET',
+                 '/bill/?state=canceled&page=1&limit=5',
+                ],
+                [
+                 'GET',
+                 '/bill/1',
+                ],
+                [
+                 'GET',
+                 '/bill/new',
+                ],
+                [
+                 'GET',
+                 '/bill/1/edit',
+                ],
+                [
+                 'GET',
+                 '/bill/todo',
+                ],
+                [
+                 'GET',
+                 '/bill/toboost',
+                ],
+               ];
     }
     
     /**

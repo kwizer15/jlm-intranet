@@ -29,22 +29,22 @@ class BillManager extends Manager
         switch ($name) {
             case 'new':
                 return [
-                    'method' => 'POST',
-                    'route' => 'bill_create',
-                    'params' => [],
-                    'label' => 'Créer',
-                    'type'  => new BillType(),
-                    'entity' => null,
-                ];
+                        'method' => 'POST',
+                        'route'  => 'bill_create',
+                        'params' => [],
+                        'label'  => 'Créer',
+                        'type'   => new BillType(),
+                        'entity' => null,
+                       ];
             case 'edit':
                 return [
-                    'method' => 'POST',
-                    'route' => 'bill_update',
-                    'params' => ['id' => $options['entity']->getId()],
-                    'label' => 'Modifier',
-                    'type'  => new BillType(),
-                    'entity' => $options['entity']
-                ];
+                        'method' => 'POST',
+                        'route'  => 'bill_update',
+                        'params' => ['id' => $options['entity']->getId()],
+                        'label'  => 'Modifier',
+                        'type'   => new BillType(),
+                        'entity' => $options['entity'],
+                       ];
         }
         
         return parent::getFormParam($name, $options);
@@ -61,15 +61,15 @@ class BillManager extends Manager
         // On complète avec ce qui reste vide
         $vat = $this->om->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
         $params = [
-                'creation' => new \DateTime,
-                'vat' => $vat,
-                'vatTransmitter' => $vat,
-                'penalty' => $this->om->getRepository('JLMCommerceBundle:PenaltyModel')->find(1).'',
-                'property' => $this->om->getRepository('JLMCommerceBundle:PropertyModel')->find(1).'',
-                'earlyPayment' => $this->om->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1).'',
-                'maturity' => 30,
-                'discount' => 0,
-        ];
+                   'creation'       => new \DateTime,
+                   'vat'            => $vat,
+                   'vatTransmitter' => $vat,
+                   'penalty'        => $this->om->getRepository('JLMCommerceBundle:PenaltyModel')->find(1).'',
+                   'property'       => $this->om->getRepository('JLMCommerceBundle:PropertyModel')->find(1).'',
+                   'earlyPayment'   => $this->om->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1).'',
+                   'maturity'       => 30,
+                   'discount'       => 0,
+                  ];
         foreach ($params as $key => $value) {
             $param = $form->get($key)->getData();
             if (empty($param)) {

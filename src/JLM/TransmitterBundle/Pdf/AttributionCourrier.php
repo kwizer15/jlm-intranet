@@ -1,4 +1,5 @@
 <?php
+
 namespace JLM\TransmitterBundle\Pdf;
 
 use \JLM\DefaultBundle\Pdf\FPDFext;
@@ -6,16 +7,16 @@ use \JLM\DefaultBundle\Pdf\FPDFext;
 class AttributionCourrier extends FPDFext
 {
     private $police;
-    
+
     public static function get($entity)
     {
         $pdf = new self();
-        $pdf->_init($entity);
-        $pdf->_show($entity);
+        $pdf->init($entity);
+        $pdf->show($entity);
         return $pdf->Output('', 'S');
     }
-    
-    private function _init($entity)
+
+    private function init($entity)
     {
         $this->police = 'Times';
         $this->addPage('P');
@@ -32,10 +33,10 @@ class AttributionCourrier extends FPDFext
             if ($entity->getContact() != null) {
                 $this->ln(5);
                 $this->setX(100);
-                $this->cell(0, 6, 'A l\'attention de '.$entity->getContact(), 0, 2);
+                $this->cell(0, 6, 'A l\'attention de ' . $entity->getContact(), 0, 2);
             }
         }
-        
+
         $this->ln(5);
         $this->setFont($this->police, 'BU', 12);
         $this->cell(0, 6, 'Affaire', 0, 2);
@@ -44,20 +45,53 @@ class AttributionCourrier extends FPDFext
         $this->ln(6);
         $this->setX(100);
         $date = $entity->getCreation();
-        $mois = [1=>'janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+        $mois = [
+            1 => 'janvier',
+            'février',
+            'mars',
+            'avril',
+            'mai',
+            'juin',
+            'juillet',
+            'août',
+            'septembre',
+            'octobre',
+            'novembre',
+            'décembre',
+        ];
         $this->setFont($this->police, '', 10);
-        $this->cell(0, 6, 'Saint-Soupplets, le '.$date->format('j').' '.$mois[$date->format('n')].' '.$date->format('Y'), 0, 2);
+        $this->cell(
+            0,
+            6,
+            'Saint-Soupplets, le ' . $date->format('j') . ' ' . $mois[$date->format('n')] . ' ' . $date->format('Y'),
+            0,
+            2
+        );
         $this->ln(12);
     }
-    
-    
-    private function _show($entity)
+
+
+    private function show($entity)
     {
         $this->setFont($this->police, '', 13);
         $this->cell(0, 5, 'Madame, Monsieur,', 0, 1);
         $this->ln(5);
-        $this->cell(0, 5, 'Veuillez trouver ci-joint les émetteurs commandés pour l\'affaire référencée ci-dessus,', 0, 1, 'FJ');
-        $this->cell(0, 5, 'accompagnés d\'une liste d\'attribution d\'émetteurs à remplir et à garder précieusement. Celle-ci', 0, 1, 'FJ');
+        $this->cell(
+            0,
+            5,
+            'Veuillez trouver ci-joint les émetteurs commandés pour l\'affaire référencée ci-dessus,',
+            0,
+            1,
+            'FJ'
+        );
+        $this->cell(
+            0,
+            5,
+            'accompagnés d\'une liste d\'attribution d\'émetteurs à remplir et à garder précieusement. Celle-ci',
+            0,
+            1,
+            'FJ'
+        );
         $this->cell(53, 5, 'est nécessaire en cas de ', 0, 0, 'FJ');
         $this->setFont($this->police, 'BU', 13);
         $this->cell(12, 5, 'perte', 0, 0);
@@ -71,19 +105,26 @@ class AttributionCourrier extends FPDFext
         $this->ln(5);
         $this->cell(0, 5, 'Nous restons à votre disposition pour tous renseignements complémentaires.', 0, 1);
         $this->ln(5);
-        $this->cell(0, 5, 'Nous vos souhaitons bonne réception et vous prions d\'agréer, Madame, Monsieur,', 0, 1, 'FJ');
+        $this->cell(
+            0,
+            5,
+            'Nous vos souhaitons bonne réception et vous prions d\'agréer, Madame, Monsieur,',
+            0,
+            1,
+            'FJ'
+        );
         $this->cell(0, 5, 'l\'expression de nos salutations distinguées.', 0, 1);
         $this->ln(20);
         $this->cell(0, 5, 'Service secrétariat', 0, 0, 'R');
     }
-    
+
     public function header()
     {
-            $this->Image($_SERVER['DOCUMENT_ROOT'].'/bundles/jlmcommerce/img/pdf-header-comp.jpg', 10, 4, 190);
+        $this->Image($_SERVER['DOCUMENT_ROOT'] . '/bundles/jlmcommerce/img/pdf-header-comp.jpg', 10, 4, 190);
     }
-    
+
     public function footer()
     {
-        $this->Image($_SERVER['DOCUMENT_ROOT'].'/bundles/jlmcommerce/img/pdf-footer.jpg', 50, 280, 110);
+        $this->Image($_SERVER['DOCUMENT_ROOT'] . '/bundles/jlmcommerce/img/pdf-footer.jpg', 50, 280, 110);
     }
 }

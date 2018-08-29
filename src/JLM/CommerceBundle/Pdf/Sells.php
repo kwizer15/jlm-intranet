@@ -9,20 +9,20 @@ class Sells extends FPDFext
     public static function get($sells)
     {
         $pdf = new self();
-        $pdf->_init();
+        $pdf->init();
         foreach ($sells as $sell) {
-            $pdf->_show($sell);
+            $pdf->show($sell);
         }
-        $pdf->_footer();
+        $pdf->customFooter();
         
         return $pdf->Output('', 'S');
     }
     
-    protected function _init()
+    protected function init()
     {
         $this->aliasNbPages();
         
-        $this->setWidths([40,90,15,20,25]); // = 190
+        $this->setWidths([40, 90, 15, 20, 25]); // = 190
         $this->addPage('P');
         $this->tabHeader();
     }
@@ -31,23 +31,23 @@ class Sells extends FPDFext
     {
         $this->setFont('Arial', 'B', 9);
         $this->setFillColor(200);
-        $this->row(['Réference','Designation','Stock','Valeur','Total'], 5, 1, true);
+        $this->row(['Réference', 'Designation', 'Stock', 'Valeur', 'Total'], 5, 1, true);
     }
     
-    protected function _show($entity)
+    protected function show($entity)
     {
         $this->setFont('Arial', '', 8);
         $datas = [
-                $entity->getProductReference(),
-                $entity->getProductName(),
-                $entity->getQuantity(),
-                number_format($entity->getProduct()->getPurchasePrice(), 2, ',', ' ').' €',
-                number_format($entity->getQuantity() * $entity->getProduct()->getPurchasePrice(), 2, ',', ' ').' €',
-        ];
+                  $entity->getProductReference(),
+                  $entity->getProductName(),
+                  $entity->getQuantity(),
+                  number_format($entity->getProduct()->getPurchasePrice(), 2, ',', ' ').' €',
+                  number_format($entity->getQuantity() * $entity->getProduct()->getPurchasePrice(), 2, ',', ' ').' €',
+                 ];
         $this->row($datas, 4, 1);
     }
     
-    public function _footer()
+    public function customFooter()
     {
     }
     

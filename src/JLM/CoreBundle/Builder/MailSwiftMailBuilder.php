@@ -19,17 +19,17 @@ use JLM\CoreBundle\Model\EmailInterface;
 class MailSwiftMailBuilder extends SwiftMailBuilderAbstract
 {
     private $email;
-    
+
     public function __construct(EmailInterface $email)
     {
         $this->email = $email;
     }
-    
+
     public function buildSubject()
     {
         $this->setSubject($this->email->getSubject());
     }
-    
+
     public function buildFrom()
     {
         $flag = false;
@@ -40,33 +40,33 @@ class MailSwiftMailBuilder extends SwiftMailBuilderAbstract
             $this->addFrom($email);
         }
     }
-    
+
     public function buildTo()
     {
         foreach ($this->email->getTo() as $email) {
             $this->addTo($email);
         }
     }
-    
+
     public function buildCc()
     {
         foreach ($this->email->getCc() as $email) {
             $this->addCc($email);
         }
     }
-    
+
     public function buildBcc()
     {
         foreach ($this->email->getBcc() as $email) {
             $this->addBcc($email);
         }
     }
-    
+
     public function buildBody()
     {
         $this->setBody($this->email->getBody(), 'text/plain', 'utf-8');
     }
-    
+
     public function buildPreAttachements()
     {
         if (is_array($this->email->getPreAttachements())) {
@@ -75,7 +75,7 @@ class MailSwiftMailBuilder extends SwiftMailBuilderAbstract
             }
         }
     }
-    
+
     public function buildAttachements()
     {
     }

@@ -23,17 +23,17 @@ class Address implements AddressInterface
      * @var integer $id
      */
     protected $id;
-    
+
     /**
      * @var string $street
      */
     protected $street = '';
-    
+
     /**
      * @var string $city
      */
     protected $city;
-    
+
     /**
      * Get id
      *
@@ -48,12 +48,13 @@ class Address implements AddressInterface
      * Set street
      *
      * @param string $street
+     *
      * @return self
      */
     public function setStreet($street)
     {
-        $this->street = (string)$street;
-        
+        $this->street = (string) $street;
+
         return $this;
     }
 
@@ -69,12 +70,13 @@ class Address implements AddressInterface
      * Set city
      *
      * @param CityInterface $city
+     *
      * @return self
      */
     public function setCity(CityInterface $city = null)
     {
         $this->city = $city;
-        
+
         return $this;
     }
 
@@ -85,15 +87,15 @@ class Address implements AddressInterface
     {
         return $this->city;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function __toString()
     {
-        return ($this->getStreet() == '') ? (string)$this->getCity() : $this->getStreet().chr(10).$this->getCity();
+        return ($this->getStreet() == '') ? (string) $this->getCity() : $this->getStreet() . chr(10) . $this->getCity();
     }
-    
+
     /**
      * To String
      *
@@ -102,6 +104,6 @@ class Address implements AddressInterface
      */
     public function toString()
     {
-        return $this->getStreet().chr(10).$this->getCity()->toString();
+        return $this->getStreet() . chr(10) . $this->getCity()->toString();
     }
 }

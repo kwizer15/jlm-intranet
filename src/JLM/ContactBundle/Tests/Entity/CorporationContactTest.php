@@ -18,6 +18,9 @@ use JLM\ContactBundle\Entity\CorporationContact;
  */
 class CorporationContactTest extends \PHPUnit_Framework_TestCase
 {
+    private $person;
+    private $entity;
+
     /**
      * {@inheritdoc}
      */
@@ -27,7 +30,7 @@ class CorporationContactTest extends \PHPUnit_Framework_TestCase
         $this->entity = new CorporationContact();
         $this->entity->setPerson($this->person);
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -35,14 +38,14 @@ class CorporationContactTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('JLM\ContactBundle\Model\PersonInterface', $this->entity);
     }
-    
+
     public function testCorporation()
     {
         $corpo = $this->getMock('JLM\ContactBundle\Model\CorporationInterface');
         $this->assertSame($this->entity, $this->entity->setCorporation($corpo));
         $this->assertSame($corpo, $this->entity->getCorporation());
     }
-    
+
     public function getPositions()
     {
         return [
@@ -50,9 +53,10 @@ class CorporationContactTest extends \PHPUnit_Framework_TestCase
             ['Assistante'],
         ];
     }
-    
+
     /**
      * @dataProvider getPositions
+     *
      * @param string $position
      */
     public function testPosition($position)
@@ -60,22 +64,44 @@ class CorporationContactTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->entity, $this->entity->setPosition($position));
         $this->assertSame($position, $this->entity->getPosition());
     }
-    
+
     public function getDecoFunctions()
     {
         return [
-            ['getTitle', 'Foo'],
-            ['getFirstName', 'Foo'],
-            ['getLastName', 'Foo'],
-            ['getName', 'Foo'],
-            ['getAddress', 'Foo'],
-            ['getEmail', 'Foo'],
-            ['__toString', 'Foo'],
+            [
+                'getTitle',
+                'Foo',
+            ],
+            [
+                'getFirstName',
+                'Foo',
+            ],
+            [
+                'getLastName',
+                'Foo',
+            ],
+            [
+                'getName',
+                'Foo',
+            ],
+            [
+                'getAddress',
+                'Foo',
+            ],
+            [
+                'getEmail',
+                'Foo',
+            ],
+            [
+                '__toString',
+                'Foo',
+            ],
         ];
     }
-    
+
     /**
      * @dataProvider getDecoFunctions
+     *
      * @param string $func
      * @param string $returnValue
      */

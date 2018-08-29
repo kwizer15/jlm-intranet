@@ -26,9 +26,9 @@ class CorporationContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('person', 'jlm_contact_person_select', ['label'=>'Contact'])
-            ->add('corporation', 'jlm_contact_corporation_select', ['label'=>'Groupement'])
-            ->add('position', null, ['label'=>'Rôle'])
+            ->add('person', 'jlm_contact_person_select', ['label' => 'Contact'])
+            ->add('corporation', 'jlm_contact_corporation_select', ['label' => 'Groupement'])
+            ->add('position', null, ['label' => 'Rôle'])
         ;
     }
 
@@ -39,16 +39,18 @@ class CorporationContactType extends AbstractType
     {
         return 'jlm_contact_corporation_contact';
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-            ->setDefaults([
-                'data_class' => 'JLM\ContactBundle\Entity\CorporationContact',
-                'label' => 'Contacts de groupement',
-            ]);
+            ->setDefaults(
+                [
+                    'data_class' => 'JLM\ContactBundle\Entity\CorporationContact',
+                    'label' => 'Contacts de groupement',
+                ]
+            );
     }
 }

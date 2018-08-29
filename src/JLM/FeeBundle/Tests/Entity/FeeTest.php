@@ -44,12 +44,27 @@ class FeeTest extends \PHPUnit_Framework_TestCase
     public function getGetterSetter()
     {
         return [
-            ['Address', 'Foo'],
-            ['Prelabel', 'Foo'],
-            ['Frequence', 1],
-            ['Vat', $this->getMock('JLM\CommerceBundle\Model\VATInterface')],
-            ['Trustee', $this->getMock('JLM\ModelBundle\Entity\Trustee')],
-        ];
+                [
+                 'Address',
+                 'Foo',
+                ],
+                [
+                 'Prelabel',
+                 'Foo',
+                ],
+                [
+                 'Frequence',
+                 1,
+                ],
+                [
+                 'Vat',
+                 $this->getMock('JLM\CommerceBundle\Model\VATInterface'),
+                ],
+                [
+                 'Trustee',
+                 $this->getMock('JLM\ModelBundle\Entity\Trustee'),
+                ],
+               ];
     }
     
     /**
@@ -66,10 +81,19 @@ class FeeTest extends \PHPUnit_Framework_TestCase
     public function getFrequenceStrings()
     {
         return [
-            [1, 'annuelle'],
-            [2, 'semestrielle'],
-            [4, 'trimestrielle'],
-        ];
+                [
+                 1,
+                 'annuelle',
+                ],
+                [
+                 2,
+                 'semestrielle',
+                ],
+                [
+                 4,
+                 'trimestrielle',
+                ],
+               ];
     }
     
     /**
@@ -84,8 +108,12 @@ class FeeTest extends \PHPUnit_Framework_TestCase
     public function getAdderRemover()
     {
         return [
-            ['Contract', 'Contracts', $this->getMock('JLM\ContractBundle\Model\ContractInterface')],
-        ];
+                [
+                 'Contract',
+                 'Contracts',
+                 $this->getMock('JLM\ContractBundle\Model\ContractInterface'),
+                ],
+               ];
     }
     
     /**
@@ -112,7 +140,7 @@ class FeeTest extends \PHPUnit_Framework_TestCase
         $c2->expects($this->once())->method('getNumber')->will($this->returnValue('6789'));
         $this->entity->addContract($c1);
         $this->entity->addContract($c2);
-        $this->assertSame(['12345','6789'], $this->entity->getContractNumbers());
+        $this->assertSame(['12345', '6789'], $this->entity->getContractNumbers());
     }
     
     public function testGetDoorDescription()

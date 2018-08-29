@@ -14,16 +14,16 @@ class SiteContactRepository extends EntityRepository
 {
     public function searchResult($query, $limit = 8)
     {
-        
+
         $qb = $this->createQueryBuilder('s')
-               ->leftjoin('s.site', 't')
-               ->leftjoin('t.doors', 'd')
-               ->where('d.id = :query')
-               ->setParameter('query', $query)
+            ->leftjoin('s.site', 't')
+            ->leftjoin('t.doors', 'd')
+            ->where('d.id = :query')
+            ->setParameter('query', $query)
         ;
 
         $res = $qb->getQuery()->getResult();
-        
+
         $r2 = [];
         foreach ($res as $r) {
             $phones = '';
@@ -32,13 +32,13 @@ class SiteContactRepository extends EntityRepository
                 $phones .= chr(10);
             }
             $phones .= $r->getPerson()->getFixedPhone();
-            
+
             $r2[] = [
-                'label'=> $r->getPerson().' ('.$r->getRole().')',
-                'name' => $r->getPerson().'',
+                'label' => $r->getPerson() . ' (' . $r->getRole() . ')',
+                'name' => $r->getPerson() . '',
                 'phones' => $phones,
-                'email' => $r->getPerson()->getEmail().'',
-                'id'=> $r->getId()
+                'email' => $r->getPerson()->getEmail() . '',
+                'id' => $r->getId(),
             ];
         }
         return $r2;

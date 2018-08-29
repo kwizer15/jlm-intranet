@@ -120,7 +120,11 @@ class AskRepository extends SearchRepository
      */
     protected function getSearchParams()
     {
-        return ['f.name','d.street','e.name'];
+        return [
+                'f.name',
+                'd.street',
+                'e.name',
+               ];
     }
 
     /**
@@ -128,6 +132,6 @@ class AskRepository extends SearchRepository
      */
     protected function getSearchOrderBy()
     {
-        return ['a.creation'=>'DESC'];
+        return ['a.creation' => 'DESC'];
     }
 }

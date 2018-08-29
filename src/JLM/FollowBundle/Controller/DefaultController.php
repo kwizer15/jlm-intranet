@@ -23,7 +23,11 @@ class DefaultController extends Controller
         $manager = $this->container->get('jlm_core.mail_manager');
         $manager->secure('ROLE_OFFICE');
         
-        return $manager->paginator('JLMFollowBundle:Thread', $request, ['type' => null, 'sort' => '!date', 'state' => null]);
+        return $manager->paginator(
+            'JLMFollowBundle:Thread',
+            $request,
+            ['type' => null, 'sort' => '!date', 'state' => null]
+        );
     }
     
     public function updateAction()

@@ -35,12 +35,27 @@ class QuoteControllerTest extends WebTestCase
     public function getUrls()
     {
         return [
-            ['GET', '/quote/'],
-            ['GET', '/quote/new'],
-            ['GET', '/quote/new?ask=1'],
-            ['GET', '/quote/1/edit'],
-            ['GET', '/quote/1'],
-        ];
+                [
+                 'GET',
+                 '/quote/',
+                ],
+                [
+                 'GET',
+                 '/quote/new',
+                ],
+                [
+                 'GET',
+                 '/quote/new?ask=1',
+                ],
+                [
+                 'GET',
+                 '/quote/1/edit',
+                ],
+                [
+                 'GET',
+                 '/quote/1',
+                ],
+               ];
     }
     
     /**

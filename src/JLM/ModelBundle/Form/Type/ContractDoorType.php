@@ -10,9 +10,9 @@ class ContractDoorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type', null, ['label'=>'Type de porte'])
-            ->add('address', 'address', ['label'=>'Adresse'])
-            ->add('location', 'text', ['label'=>'Localisation'])
+            ->add('type', null, ['label' => 'Type de porte'])
+            ->add('address', 'address', ['label' => 'Adresse'])
+            ->add('location', 'text', ['label' => 'Localisation'])
         ;
     }
 
@@ -20,11 +20,9 @@ class ContractDoorType extends AbstractType
     {
         return 'jlm_modelbundle_contractdoortype';
     }
-    
+
     public function getDefaultOptions(array $options)
     {
-        return [
-                'data_class' => 'JLM\ModelBundle\Entity\Door',
-        ];
+        return ['data_class' => 'JLM\ModelBundle\Entity\Door'];
     }
 }

@@ -42,8 +42,9 @@ class ProductCategoryController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return [
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ];
+                'entity'      => $entity,
+                'delete_form' => $deleteForm->createView(),
+               ];
     }
 
     /**
@@ -58,9 +59,9 @@ class ProductCategoryController extends Controller
         $form   = $this->createNewForm($entity);
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -84,9 +85,9 @@ class ProductCategoryController extends Controller
         }
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -103,10 +104,10 @@ class ProductCategoryController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ];
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+               ];
     }
 
     /**
@@ -133,10 +134,10 @@ class ProductCategoryController extends Controller
         }
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ];
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+               ];
     }
 
     /**

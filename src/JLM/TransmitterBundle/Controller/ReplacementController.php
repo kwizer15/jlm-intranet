@@ -35,9 +35,9 @@ class ReplacementController extends Controller
         $form   = $this->createForm(new ReplacementType($attribution->getSite()->getId()), $entity);
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -68,8 +68,8 @@ class ReplacementController extends Controller
         }
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 }

@@ -32,12 +32,12 @@ class CompanyTypeTest extends TypeTestCase
      * @var AddressType
      */
     protected $type;
-    
+
     /**
      * @var Address
      */
     protected $object;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -50,21 +50,26 @@ class CompanyTypeTest extends TypeTestCase
         $phone = new PhoneType();
         $contactphone = new ContactPhoneType();
         $contactphonecollection = new ContactPhoneCollectionType();
-        return [new PreloadedExtension([
-            $address->getName() => $address,
-            $city->getName() => $city,
-            $s2->getName() => $s2,
-            $phone->getName() => $phone,
-            $contactphone->getName() => $contactphone,
-            $contactphonecollection->getName() => $contactphonecollection,
-        ], [])];
+        return [
+            new PreloadedExtension(
+                [
+                    $address->getName() => $address,
+                    $city->getName() => $city,
+                    $s2->getName() => $s2,
+                    $phone->getName() => $phone,
+                    $contactphone->getName() => $contactphone,
+                    $contactphonecollection->getName() => $contactphonecollection,
+                ],
+                []
+            ),
+        ];
     }
-    
+
     public function testCreateForm()
     {
-        $this->type = new CompanyType;
+        $this->type = new CompanyType();
         $form = $this->factory->create($this->type);
-        
-        $this->object = new Company;
+
+        $this->object = new Company();
     }
 }

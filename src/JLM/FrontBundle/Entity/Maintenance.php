@@ -19,24 +19,25 @@ class Maintenance
     /**
      * @var int
      */
-private $id;
+    private $id;
 
     /**
      * @var Door
      */
-private $door;
-    
+    private $door;
+
     /**
      * @var int
      */
-private $year;
-    
+    private $year;
+
     /**
      * @var int
      */
-private $ranking;
-    
+    private $ranking;
+
     /**
      * @var DateTime|null
      */
-private $date = null;
+    private $date = null;
+}

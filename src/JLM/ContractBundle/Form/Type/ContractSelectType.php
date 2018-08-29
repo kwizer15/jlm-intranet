@@ -65,8 +65,6 @@ class ContractSelectType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'invalid_message' => 'The selected contract does not exist',
-        ]);
+        $resolver->setDefaults(['invalid_message' => 'The selected contract does not exist']);
     }
 }

@@ -23,20 +23,16 @@ class DoorTagType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('code', null, ['label'=>'Code étiquette','attr'=>['class'=>'input-small']])
-
-        ;
+            ->add('code', null, ['label' => 'Code étiquette', 'attr' => ['class' => 'input-small']]);
     }
 
     public function getName()
     {
         return 'jlm_modelbundle_doortagtype';
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => 'JLM\ModelBundle\Entity\Door',
-        ]);
+        $resolver->setDefaults(['data_class' => 'JLM\ModelBundle\Entity\Door']);
     }
 }

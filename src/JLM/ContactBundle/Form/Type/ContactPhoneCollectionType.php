@@ -27,7 +27,7 @@ class ContactPhoneCollectionType extends AbstractType
     {
         return 'collection';
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -35,17 +35,19 @@ class ContactPhoneCollectionType extends AbstractType
     {
         return 'jlm_contact_contactphonecollection';
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'type'=>'jlm_contact_contactphone',
-            'prototype'=>true,
-            'allow_add'=>true,
-            'allow_delete'=>true,
-        ]);
+        $resolver->setDefaults(
+            [
+                'type' => 'jlm_contact_contactphone',
+                'prototype' => true,
+                'allow_add' => true,
+                'allow_delete' => true,
+            ]
+        );
     }
 }

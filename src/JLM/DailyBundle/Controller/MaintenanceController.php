@@ -1,4 +1,5 @@
 <?php
+
 namespace JLM\DailyBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -36,8 +37,16 @@ class MaintenanceController extends AbstractInterventionController
         $request = $manager->getRequest();
         $repo = $manager->getRepository();
 
-        return $manager->isAjax() ? $manager->renderJson(['entities' => $repo->getArray($request->get('q', ''), $request->get('page_limit', 10))])
-                          : $manager->renderResponse('JLMDailyBundle:Maintenance:list.html.twig', $manager->pagination('getCountOpened', 'getOpened', 'maintenance_list', []));
+        return $manager->isAjax()
+            ? $manager->renderJson(
+                [
+                    'entities' => $repo->getArray($request->get('q', ''), $request->get('page_limit', 10)),
+                ]
+            )
+            : $manager->renderResponse(
+                'JLMDailyBundle:Maintenance:list.html.twig',
+                $manager->pagination('getCountOpened', 'getOpened', 'maintenance_list', [])
+            );
     }
 
     /**
@@ -62,8 +71,8 @@ class MaintenanceController extends AbstractInterventionController
         $form = $this->createForm(new MaintenanceCloseType(), $entity);
 
         return [
-                'entity'      => $entity,
-                'form'   => $form->createView(),
+            'entity' => $entity,
+            'form' => $form->createView(),
         ];
     }
 
@@ -81,7 +90,7 @@ class MaintenanceController extends AbstractInterventionController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entity->setClose(new \DateTime);
+            $entity->setClose(new \DateTime());
             $entity->setMustBeBilled(false);
             $em->persist($entity);
             $em->flush();
@@ -89,8 +98,8 @@ class MaintenanceController extends AbstractInterventionController
         }
 
         return [
-                'entity'      => $entity,
-                'form'   => $form->createView(),
+            'entity' => $entity,
+            'form' => $form->createView(),
         ];
     }
 
@@ -104,10 +113,10 @@ class MaintenanceController extends AbstractInterventionController
     {
         $request = $this->getRequest();
         $steps = [
-                'planned' => 'JLM\DailyBundle\Builder\Email\MaintenancePlannedMailBuilder',
-                'onsite' => 'JLM\DailyBundle\Builder\Email\MaintenanceOnSiteMailBuilder',
-                'end' => 'JLM\DailyBundle\Builder\Email\MaintenanceEndMailBuilder',
-                'report' => 'JLM\DailyBundle\Builder\Email\MaintenanceReportMailBuilder',
+            'planned' => 'JLM\DailyBundle\Builder\Email\MaintenancePlannedMailBuilder',
+            'onsite' => 'JLM\DailyBundle\Builder\Email\MaintenanceOnSiteMailBuilder',
+            'end' => 'JLM\DailyBundle\Builder\Email\MaintenanceEndMailBuilder',
+            'report' => 'JLM\DailyBundle\Builder\Email\MaintenanceReportMailBuilder',
         ];
         $class = (array_key_exists($step, $steps)) ? $steps[$step] : null;
         if (null === $class) {
@@ -118,14 +127,18 @@ class MaintenanceController extends AbstractInterventionController
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
-            $this->get('event_dispatcher')->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request));
+            $this->get('event_dispatcher')->dispatch(
+                JLMModelEvents::DOOR_SENDMAIL,
+                new DoorEvent($entity->getDoor(), $request)
+            )
+            ;
 
             return $this->redirect($this->generateUrl('maintenance_show', ['id' => $entity->getId()]));
         }
         return [
-                'entity' => $entity,
-                'form' => $editForm->createView(),
-                'step' => $step,
+            'entity' => $entity,
+            'form' => $editForm->createView(),
+            'step' => $step,
         ];
     }
 
@@ -136,7 +149,7 @@ class MaintenanceController extends AbstractInterventionController
      */
     public function scanAction()
     {
-        $date = new \DateTime;
+        $date = new \DateTime();
         $date->sub(new \DateInterval('P6M'));
         $em = $this->getDoctrine()->getManager();
         $doors = $em->getRepository('JLMModelBundle:Door')->findAll();
@@ -147,11 +160,12 @@ class MaintenanceController extends AbstractInterventionController
             $contract = $door->getActualContract();
             if ($contract !== null) {
                 if ($door->getLastMaintenance() < $date
-                        && $maint === null
-                        && $door->getCountMaintenance() < 2) {
-                    $main = new Maintenance;
-                    $main->setCreation(new \DateTime);
-                    $main->setPlace($door.'');
+                    && $maint === null
+                    && $door->getCountMaintenance() < 2
+                ) {
+                    $main = new Maintenance();
+                    $main->setCreation(new \DateTime());
+                    $main->setPlace($door . '');
                     $main->setReason('Visite d\'entretien');
                     $main->setContract($door->getActualContract());
                     $main->setDoor($door);
@@ -165,9 +179,8 @@ class MaintenanceController extends AbstractInterventionController
                     $em->remove($maint);
                     $removed++;
                 }
-            }
-            // On retire les entretiens plus sous contrat
-            elseif ($contract === null && $maint !== null) {
+            } elseif ($contract === null && $maint !== null) {
+                // On retire les entretiens plus sous contrat
                 $shifts = $maint->getShiftTechnicians();
                 if (sizeof($shifts) > 0) {
                     $maint->setClosed();
@@ -180,7 +193,10 @@ class MaintenanceController extends AbstractInterventionController
         }
         $em->flush();
 
-        return ['count' => $count,'removed' => $removed];
+        return [
+            'count' => $count,
+            'removed' => $removed,
+        ];
     }
 
     /**
@@ -197,15 +213,20 @@ class MaintenanceController extends AbstractInterventionController
         $repo = $em->getRepository('JLMDailyBundle:Maintenance');
         $maints = $repo->getOpened();
         $repo = $em->getRepository('JLMDailyBundle:Ride');
-        $baseUrl = 'http://maps.googleapis.com/maps/api/distancematrix/json?sensor=false&language=fr-FR&origins='.$door->getCoordinates().'&destinations=';
+        $baseUrl = 'http://maps.googleapis.com/maps/api/distancematrix/json?sensor=false&language=fr-FR&origins='
+            . $door->getCoordinates()
+            . '&destinations=';
         foreach ($maints as $maint) {
             $dest = $maint->getDoor();
             if (!$repo->hasRide($door, $dest)) {
-                $url = $baseUrl.$dest->getCoordinates();
+                $url = $baseUrl . $dest->getCoordinates();
                 $string = file_get_contents($url);
                 $json = json_decode($string);
-                if ($json->status == 'OK' && isset($json->rows[0]->elements[0]->duration->value) && isset($json->rows[0]->elements[0]->duration->value)) {
-                    $ride = new Ride;
+                if ($json->status == 'OK'
+                    && isset($json->rows[0]->elements[0]->duration->value)
+                    && isset($json->rows[0]->elements[0]->duration->value)
+                ) {
+                    $ride = new Ride();
                     $ride->setDeparture($door);
                     $ride->setDestination($dest);
                     $ride->setDuration($json->rows[0]->elements[0]->duration->value);
@@ -219,14 +240,19 @@ class MaintenanceController extends AbstractInterventionController
         $forms = [];
         foreach ($entities as $entity) {
             $shift = new ShiftTechnician();
-            $shift->setBegin(new \DateTime);
-            $forms[] = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getDestination()->getNextMaintenance()->getId(), new AddTechnicianType(), $shift)->createView();
+            $shift->setBegin(new \DateTime());
+            $forms[] = $this->get('form.factory')->createNamed(
+                'shiftTechNew' . $entity->getDestination()->getNextMaintenance()->getId(),
+                new AddTechnicianType(),
+                $shift
+            )->createView()
+            ;
         }
 
         return [
-                'door'=>$door,
-                'entities' => $entities,
-                'forms_addTech' => $forms,
+            'door' => $door,
+            'entities' => $entities,
+            'forms_addTech' => $forms,
         ];
     }
 }

@@ -22,22 +22,22 @@ class SiteContactTest extends \PHPUnit_Framework_TestCase
      * @var Country
      */
     protected $entity;
-    
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->entity = new SiteContact;
+        $this->entity = new SiteContact();
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function assertPreConditions()
     {
     }
-    
+
     public function testPerson()
     {
         $person = $this->getMock('JLM\ContactBundle\Model\PersonInterface');

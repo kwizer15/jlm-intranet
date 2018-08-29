@@ -31,10 +31,10 @@ class AskquoteController extends PaginableController
         $manager->secure('ROLE_OFFICE');
         $request = $manager->getRequest();
         $states = [
-                'all' => 'All',
-                'treated' => 'Treated',
-                'untreated' => 'Untreated',
-        ];
+                   'all'       => 'All',
+                   'treated'   => 'Treated',
+                   'untreated' => 'Untreated',
+                  ];
         $state = $request->get('state');
         $state = (!array_key_exists($state, $states)) ? 'all' : $state;
         $method = $states[$state];
@@ -55,7 +55,10 @@ class AskquoteController extends PaginableController
     public function showAction(AskQuote $entity)
     {
         $form = $this->createForm(new AskQuoteDontTreatType, $entity);
-        return ['entity'=>$entity,'form_donttreat'=>$form->createView()];
+        return [
+                'entity'         => $entity,
+                'form_donttreat' => $form->createView(),
+               ];
     }
     
     /**
@@ -68,7 +71,10 @@ class AskquoteController extends PaginableController
         $askquote = new AskQuote;
         $askquote->setCreation(new \DateTime);
         $form = $this->createForm(new AskQuoteType, $askquote);
-        return ['form' => $form->createView(),'entity'=>$askquote];
+        return [
+                'form'   => $form->createView(),
+                'entity' => $askquote,
+               ];
     }
     
     /**
@@ -143,7 +149,7 @@ class AskquoteController extends PaginableController
         $response = new Response();
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', 'inline; filename=devis-a-faire.pdf');
-        $response->setContent($this->render('JLMOfficeBundle:Askquote:printlist.pdf.php', ['entities'=>$entities]));
+        $response->setContent($this->render('JLMOfficeBundle:Askquote:printlist.pdf.php', ['entities' => $entities]));
     
         //   return array('entity'=>$entity);
         return $response;

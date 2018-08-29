@@ -24,13 +24,14 @@ class CorporationContact extends PersonDecorator implements CorporationContactIn
      * @var CorporationInterface
      */
     protected $corporation;
-    
+
     /**
      * Position
+     *
      * @var string
      */
     protected $position;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -38,19 +39,21 @@ class CorporationContact extends PersonDecorator implements CorporationContactIn
     {
         return $this->corporation;
     }
-    
+
     /**
      * Set corporation
+     *
      * @param CorporationInterface $corporation
+     *
      * @return CorporationContactInterface
      */
     public function setCorporation(CorporationInterface $corporation)
     {
         $this->corporation = $corporation;
-        
+
         return $this;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -58,16 +61,18 @@ class CorporationContact extends PersonDecorator implements CorporationContactIn
     {
         return $this->position;
     }
-    
+
     /**
      * Set the position
+     *
      * @param string $position
+     *
      * @return CorporationContactInterface
      */
     public function setPosition($position)
     {
         $this->position = $position;
-        
+
         return $this;
     }
 }

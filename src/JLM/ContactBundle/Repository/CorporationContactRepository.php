@@ -18,28 +18,29 @@ use Doctrine\ORM\EntityRepository;
  */
 class CorporationContactRepository extends EntityRepository
 {
-   
+
     /**
      *
      * @param int $id
+     *
      * @return array|null
      */
     public function getByIdToArray($id)
     {
         $qb = $this->createQueryBuilder('a')
-        ->select('a,b,c,d')
-        ->leftJoin('a.contact', 'b')
-        ->leftJoin('b.phones', 'c')
-        ->leftJoin('c.phone', 'd')
-        ->where('a.id = :id')
-        ->setParameter('id', $id)
+            ->select('a,b,c,d')
+            ->leftJoin('a.contact', 'b')
+            ->leftJoin('b.phones', 'c')
+            ->leftJoin('c.phone', 'd')
+            ->where('a.id = :id')
+            ->setParameter('id', $id)
         ;
         $res = $qb->getQuery()->getArrayResult();
-    
+
         if (isset($res[0])) {
             return $res[0];
         }
-    
+
         return [];
     }
 }

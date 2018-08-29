@@ -26,11 +26,13 @@ abstract class StringModel
      * @Assert\NotBlank
      */
     private $name = '';
-    
+
     /**
      * Set text
      *
-     * @param string $text
+     * @param string $name
+     *
+     * @return StringModel
      */
     public function setName($name)
     {

@@ -35,9 +35,9 @@ class DateSearchExtension extends \Twig_Extension implements \Twig_Extension_Glo
         $entity = new \DateTime();
         $form = $this->formService->create(new DatepickerType(), $entity);
         return [
-            'date_search' => [
-                       'form' => $form->createView(),
-               ],
-        ];
+                'date_search' => [
+                                  'form' => $form->createView(),
+                                 ],
+               ];
     }
 }

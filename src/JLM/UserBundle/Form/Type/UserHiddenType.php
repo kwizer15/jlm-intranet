@@ -45,8 +45,6 @@ class UserHiddenType extends AbstractType
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'invalid_message' => 'The selected trustee does not exist',
-        ]);
+        $resolver->setDefaults(['invalid_message' => 'The selected trustee does not exist']);
     }
 }

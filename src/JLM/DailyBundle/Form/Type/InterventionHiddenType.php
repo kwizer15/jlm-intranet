@@ -45,8 +45,6 @@ class InterventionHiddenType extends AbstractType
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'invalid_message' => 'The selected intervention does not exist',
-        ]);
+        $resolver->setDefaults(['invalid_message' => 'The selected intervention does not exist']);
     }
 }

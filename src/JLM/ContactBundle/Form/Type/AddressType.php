@@ -26,8 +26,8 @@ class AddressType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('street', null, ['label'=>'Adresse'])
-            ->add('city', 'jlm_contact_city_select', ['label'=>'Ville']);
+            ->add('street', null, ['label' => 'Adresse'])
+            ->add('city', 'jlm_contact_city_select', ['label' => 'Ville'])
         ;
     }
 
@@ -38,15 +38,13 @@ class AddressType extends AbstractType
     {
         return 'jlm_contact_address';
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-            ->setDefaults([
-                'data_class' => 'JLM\ContactBundle\Entity\Address',
-            ]);
+            ->setDefaults(['data_class' => 'JLM\ContactBundle\Entity\Address']);
     }
 }

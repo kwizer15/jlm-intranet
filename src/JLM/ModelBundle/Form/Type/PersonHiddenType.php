@@ -11,7 +11,7 @@ class PersonHiddenType extends AbstractHiddenType
     {
         return 'JLM\ContactBundle\Form\DataTransformer\PersonToIntTransformer';
     }
-    
+
     protected function getTypeName()
     {
         return 'person';

@@ -26,14 +26,14 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
      * @var integer $id
      */
     private $id;
-    
+
     /**
      * @var $sites
      *
      * @Assert\NotNull
      */
     private $site;
-    
+
     /**
      * @var $person
      *
@@ -41,22 +41,22 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
      * @Assert\NotNull
      */
     private $person;
-    
+
     /**
      * @var $role
      *
      * @Assert\Type(type="string")
      */
     private $role;
-   
-    
-//  /**
-//   * @var string $professionnalPhone
-//   *
-//   * ORM\Column(name="professionnalPhone", type="string", length=20, nullable=true)
-//   */
-//  private $professionnalPhone;
-    
+
+
+    //  /**
+    //   * @var string $professionnalPhone
+    //   *
+    //   * ORM\Column(name="professionnalPhone", type="string", length=20, nullable=true)
+    //   */
+    //  private $professionnalPhone;
+
     /**
      * Get id
      *
@@ -66,11 +66,14 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
     {
         return $this->id;
     }
-    
+
     /**
      * Set site
+     *
      * @deprecated
+     *
      * @param UnionCouncilInterface $site
+     *
      * @return self
      */
     public function setSite(AdministratorInterface $site = null)
@@ -80,6 +83,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
 
     /**
      * Get site
+     *
      * @deprecated
      * @return JLM\ModelBundle\Entity\Site
      */
@@ -87,7 +91,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
     {
         return $this->getAdministrator();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -100,25 +104,27 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
      * Set union council
      *
      * @param UnionCouncilInterface $unioncouncil
+     *
      * @return SiteContact
      */
     public function setAdministrator(AdministratorInterface $unioncouncil = null)
     {
         $this->site = $unioncouncil;
-    
+
         return $this;
     }
-    
+
     /**
      * Set person
      *
      * @param PersonInterface $person
+     *
      * @return SiteContact
      */
     public function setPerson(PersonInterface $person = null)
     {
         $this->person = $person;
-    
+
         return $this;
     }
 
@@ -136,13 +142,14 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
      * Set role
      *
      * @param string $role
+     *
      * @return SiteContact
      * @deprecated
      */
     public function setRole($role)
     {
         $this->role = $role;
-    
+
         return $this;
     }
 
@@ -156,7 +163,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
     {
         return $this->role;
     }
-    
+
     /**
      * Get old role
      *
@@ -167,29 +174,29 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
     {
         return $this->role;
     }
-    
-//    /**
-//     * Set professionnalPhone
-//     *
-//     * @param string $professionnnalPhone
-//     */
-//    public function setProfessionnalPhone($professionnalPhone)
-//    {
-//      $this->professionnalPhone = $professionnalPhone;
-//    }
-//
-//    /**
-//     * Get professionnalPhone
-//     *
-//     * @return string
-//     */
-//    public function getProfessionnalPhone()
-//    {
-//      return $this->professionnalPhone;
-//    }
+
+    //    /**
+    //     * Set professionnalPhone
+    //     *
+    //     * @param string $professionnnalPhone
+    //     */
+    //    public function setProfessionnalPhone($professionnalPhone)
+    //    {
+    //      $this->professionnalPhone = $professionnalPhone;
+    //    }
+    //
+    //    /**
+    //     * Get professionnalPhone
+    //     *
+    //     * @return string
+    //     */
+    //    public function getProfessionnalPhone()
+    //    {
+    //      return $this->professionnalPhone;
+    //    }
 
     // Person Decorators
-    
+
     /**
      * {@inheritdoc}
      */
@@ -197,7 +204,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
     {
         return $this->getPerson()->getTitle();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -205,7 +212,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
     {
         return $this->getPerson()->getFirstName();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -213,7 +220,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
     {
         return $this->getPerson()->getLastName();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -221,7 +228,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
     {
         return $this->getPerson()->getFixedPhone();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -229,7 +236,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
     {
         return $this->getPerson()->getMobilePhone();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -237,7 +244,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
     {
         return $this->getPerson()->getFax();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -245,7 +252,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
     {
         return $this->getPerson()->getEmail();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -253,7 +260,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
     {
         return $this->getPerson()->getAddress();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -261,7 +268,7 @@ class SiteContact implements AdministratorMemberInterface, PersonInterface
     {
         return $this->getPerson()->getName();
     }
-    
+
     /**
      * {@inheritdoc}
      */

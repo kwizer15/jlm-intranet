@@ -26,6 +26,6 @@ class MaintenanceEndMailBuilder extends MaintenanceMailBuilder
     {
         $this->setBody('Bonjour,'.chr(10).chr(10)
         .'Le technicien à terminé la visite d\'entretien'.chr(10)
-        .$this->_getSignature());
+        .$this->getSignature());
     }
 }

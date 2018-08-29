@@ -30,121 +30,140 @@ class Bill extends CommercialPart implements BillInterface
      * @var int $id
      */
     private $id;
-    
+
     /**
      * Pré label
+     *
      * @var string
      */
     private $prelabel;
-    
+
     /**
      * Reference
+     *
      * @var string
      */
     private $reference;
-    
+
     /**
      * Numéro de client
+     *
      * @var string
      */
     private $accountNumber;
-    
+
     /**
      * Details
+     *
      * @var string $details
      */
     private $details;
-    
+
     /**
      * Affaire concernée
+     *
      * @var string $site
      */
     private $site;
-    
+
     /**
      * Redevance
+     *
      * @var Fee
      */
     private $fee;
-    
+
     /**
      * Suivi de redevance
+     *
      * @var FeesFollower
      */
     private $feesFollower;
-    
+
     /**
      * Texte d'intro
+     *
      * @var string $intro
      */
     private $intro;
-    
+
     /**
      * Etat
      * -1 = annulé
      * 0 = en saisie
      * 1 = envoyée
      * 2 = réglée
+     *
      * @var int $state
      */
     private $state = 0;
-    
+
     /**
      * Clause de propriété
+     *
      * @var string
      */
     private $property;
-    
+
     /**
      * Escompte
+     *
      * @var string
      */
     private $earlyPayment;
-    
+
     /**
      * Pénalités
+     *
      * @var string
      */
     private $penalty;
-    
+
     /**
      * Échéance en jour
+     *
      * @var int
      */
     private $maturity;
-    
+
     /**
      * Lignes
+     *
      * @var ArrayCollection
      */
     private $lines;
 
     /**
      * Remise générale
+     *
      * @var float $discount
      */
     private $discount = 0;
-    
+
     /**
      * Intervention (si suite à intervention)
+     *
      * @var BillSourceInterface $intervention
      */
     private $intervention;
-    
+
     /**
      * Date première relance
+     *
      * @var \DateTime $firstBoost
      */
     private $firstBoost;
-    
+
     /**
      * Date deuxième relance
+     *
      * @var \DateTime $secondBoost
      */
     private $secondBoost;
-    
+
     /**
      * Commentaire deuxième relance
+     *
      * @var string $secondBoostComment
      */
     private $secondBoostComment;
@@ -152,16 +171,18 @@ class Bill extends CommercialPart implements BillInterface
     /**
      *
      * Affaire concernée (Objet)
+     *
      * @var string $site
      */
     private $siteObject;
-    
+
     /**
      * Montant de la facture (HT)
+     *
      * @var float $amount
      */
     private $amount = 0;
-    
+
     /**
      * Get id
      *
@@ -176,12 +197,13 @@ class Bill extends CommercialPart implements BillInterface
      * Set prelabel
      *
      * @param string $prelabel
+     *
      * @return Bill
      */
     public function setPrelabel($prelabel)
     {
         $this->prelabel = $prelabel;
-    
+
         return $this;
     }
 
@@ -199,12 +221,13 @@ class Bill extends CommercialPart implements BillInterface
      * Set reference
      *
      * @param string $reference
+     *
      * @return Bill
      */
     public function setReference($reference)
     {
         $this->reference = $reference;
-    
+
         return $this;
     }
 
@@ -222,12 +245,13 @@ class Bill extends CommercialPart implements BillInterface
      * Set accountNumber
      *
      * @param string $accountNumber
+     *
      * @return Bill
      */
     public function setAccountNumber($accountNumber)
     {
         $this->accountNumber = $accountNumber;
-    
+
         return $this;
     }
 
@@ -245,12 +269,13 @@ class Bill extends CommercialPart implements BillInterface
      * Set details
      *
      * @param string $details
+     *
      * @return Bill
      */
     public function setDetails($details)
     {
         $this->details = $details;
-    
+
         return $this;
     }
 
@@ -270,7 +295,7 @@ class Bill extends CommercialPart implements BillInterface
     public function setSite($site)
     {
         $this->site = $site;
-    
+
         return $this;
     }
 
@@ -288,12 +313,13 @@ class Bill extends CommercialPart implements BillInterface
      * Set property
      *
      * @param string $property
+     *
      * @return Bill
      */
     public function setProperty($property)
     {
         $this->property = $property;
-    
+
         return $this;
     }
 
@@ -311,12 +337,13 @@ class Bill extends CommercialPart implements BillInterface
      * Set earlyPayment
      *
      * @param string $earlyPayment
+     *
      * @return Bill
      */
     public function setEarlyPayment($earlyPayment)
     {
         $this->earlyPayment = $earlyPayment;
-    
+
         return $this;
     }
 
@@ -334,12 +361,13 @@ class Bill extends CommercialPart implements BillInterface
      * Set penalty
      *
      * @param string $penalty
+     *
      * @return Bill
      */
     public function setPenalty($penalty)
     {
         $this->penalty = $penalty;
-    
+
         return $this;
     }
 
@@ -357,12 +385,13 @@ class Bill extends CommercialPart implements BillInterface
      * Set maturity
      *
      * @param int $maturity
+     *
      * @return Bill
      */
     public function setMaturity($maturity)
     {
         $this->maturity = $maturity;
-    
+
         return $this;
     }
 
@@ -375,7 +404,7 @@ class Bill extends CommercialPart implements BillInterface
     {
         return $this->maturity;
     }
-    
+
     /**
      * Get maturity date
      *
@@ -384,7 +413,7 @@ class Bill extends CommercialPart implements BillInterface
     public function getMaturityDate()
     {
         $date = clone $this->getCreation();
-        $date->add(new \DateInterval('P'.$this->getMaturity().'D'));
+        $date->add(new \DateInterval('P' . $this->getMaturity() . 'D'));
         return $date;
     }
 
@@ -392,12 +421,13 @@ class Bill extends CommercialPart implements BillInterface
      * Set fee
      *
      * @param FeeInterface $fee
+     *
      * @return self
      */
     public function setFee(FeeInterface $fee = null)
     {
         $this->fee = $fee;
-    
+
         return $this;
     }
 
@@ -415,12 +445,13 @@ class Bill extends CommercialPart implements BillInterface
      * Set feesFollower
      *
      * @param FeesFollowerInterface $feesFollower
+     *
      * @return self
      */
     public function setFeesFollower(FeesFollowerInterface $feesFollower = null)
     {
         $this->feesFollower = $feesFollower;
-    
+
         return $this;
     }
 
@@ -433,26 +464,27 @@ class Bill extends CommercialPart implements BillInterface
     {
         return $this->feesFollower;
     }
-    
+
     /**
      * Constructor
      */
     public function __construct()
     {
         parent::__construct();
-        $this->lines = new ArrayCollection;
+        $this->lines = new ArrayCollection();
     }
-    
+
     /**
      * Set intro
      *
      * @param string $intro
+     *
      * @return self
      */
     public function setIntro($intro)
     {
         $this->intro = $intro;
-    
+
         return $this;
     }
 
@@ -470,6 +502,7 @@ class Bill extends CommercialPart implements BillInterface
      * Set state
      *
      * @param integer $state
+     *
      * @return self
      */
     public function setState($state)
@@ -492,6 +525,7 @@ class Bill extends CommercialPart implements BillInterface
      * Add lines
      *
      * @param BillLineInterface $line
+     *
      * @return self
      */
     public function addLine(BillLineInterface $line)
@@ -499,8 +533,8 @@ class Bill extends CommercialPart implements BillInterface
         $line->setPosition(sizeof($this->lines));
         $line->setBill($this);
         $this->lines[] = $line;
-        $this->amount += $line->getPrice() * (1-$this->getDiscount());
-        
+        $this->amount += $line->getPrice() * (1 - $this->getDiscount());
+
         return $this;
     }
 
@@ -513,7 +547,7 @@ class Bill extends CommercialPart implements BillInterface
     {
         $line->setBill(null);
         $this->lines->removeElement($line);
-        
+
         return $this;
     }
 
@@ -526,11 +560,12 @@ class Bill extends CommercialPart implements BillInterface
     {
         return $this->lines;
     }
-    
+
     /**
      * Set discount
      *
      * @param float $discount
+     *
      * @return self
      */
     public function setDiscount($discount)
@@ -540,11 +575,11 @@ class Bill extends CommercialPart implements BillInterface
         foreach ($this->getLines() as $line) {
             $this->amount += $line->getPrice();
         }
-        $this->amount *= (1-$discount);
-        
+        $this->amount *= (1 - $discount);
+
         return $this;
     }
-    
+
     /**
      * Get discount
      *
@@ -554,9 +589,10 @@ class Bill extends CommercialPart implements BillInterface
     {
         return $this->discount;
     }
-    
+
     /**
      * Get Total HT
+     *
      * @return float
      */
     public function getTotalPrice()
@@ -565,23 +601,25 @@ class Bill extends CommercialPart implements BillInterface
         foreach ($this->getLines() as $line) {
             $total += $line->getPrice();
         }
-        $total *= (1-$this->getDiscount());
+        $total *= (1 - $this->getDiscount());
         $this->amount = $total;
-        
+
         return $total;
     }
-    
+
     /**
      * Get Total HT
+     *
      * @return float
      */
     public function getAmount()
     {
         return $this->amount;
     }
-    
+
     /**
      * Get Total TVA
+     *
      * @return float
      */
     public function getTotalVat()
@@ -590,35 +628,40 @@ class Bill extends CommercialPart implements BillInterface
         foreach ($this->getLines() as $line) {
             $total += $line->getVatValue();
         }
-        $total *= (1-$this->getDiscount());
-        
+        $total *= (1 - $this->getDiscount());
+
         return $total;
     }
-    
+
     /**
      * Get Total TVA par taux
+     *
      * @return float
      */
     public function getTotalVatByRate()
     {
         $total = [];
         foreach ($this->getLines() as $line) {
-            $index = ''.($line->getVat()*100);
+            $index = '' . ($line->getVat() * 100);
             if (!isset($total[$index])) {
-                $total[$index] = ['vat'=>0,'base'=>0];
+                $total[$index] = [
+                    'vat' => 0,
+                    'base' => 0,
+                ];
             }
             $total[$index]['vat'] += $line->getVatValue();
             $total[$index]['base'] += $line->getPrice();
         }
         foreach ($total as $key => $tot) {
-            $total[$key]['vat'] *= (1-$this->getDiscount());
+            $total[$key]['vat'] *= (1 - $this->getDiscount());
         }
-            
+
         return $total;
     }
-    
+
     /**
      * Get Total TTC
+     *
      * @return float
      */
     public function getTotalPriceAti()
@@ -627,13 +670,14 @@ class Bill extends CommercialPart implements BillInterface
         foreach ($this->getLines() as $line) {
             $total += $line->getPriceAti();
         }
-        $total *= (1-$this->getDiscount());
-        
+        $total *= (1 - $this->getDiscount());
+
         return $total;
     }
-    
+
     /**
      * Vérifie les sources
+     *
      * @return bool
      */
     public function isOneSource()
@@ -645,15 +689,16 @@ class Bill extends CommercialPart implements BillInterface
      * Set source
      *
      * @param BillSourceInterface $source
+     *
      * @return self
      */
     public function setSource(BillSourceInterface $source = null)
     {
         $this->intervention = $source;
-    
+
         return $this;
     }
-    
+
     /**
      * Get intervention
      *
@@ -663,11 +708,12 @@ class Bill extends CommercialPart implements BillInterface
     {
         return $this->intervention;
     }
-    
+
     /**
      * Set intervention
      *
      * @param BillSourceInterface $intervention
+     *
      * @return self
      * @deprecated Use setSource($source)
      */
@@ -691,12 +737,13 @@ class Bill extends CommercialPart implements BillInterface
      * Set firstBoost
      *
      * @param \DateTime $firstBoost
+     *
      * @return self
      */
     public function setFirstBoost(\DateTime $firstBoost = null)
     {
         $this->firstBoost = $firstBoost;
-    
+
         return $this;
     }
 
@@ -714,12 +761,13 @@ class Bill extends CommercialPart implements BillInterface
      * Set secondBoost
      *
      * @param \DateTime $secondBoost
+     *
      * @return self
      */
     public function setSecondBoost(\DateTime $secondBoost = null)
     {
         $this->secondBoost = $secondBoost;
-    
+
         return $this;
     }
 
@@ -737,12 +785,13 @@ class Bill extends CommercialPart implements BillInterface
      * Set secondBoostComment
      *
      * @param string $secondBoostComment
+     *
      * @return self
      */
     public function setSecondBoostComment($secondBoostComment)
     {
         $this->secondBoostComment = $secondBoostComment;
-    
+
         return $this;
     }
 
@@ -762,7 +811,7 @@ class Bill extends CommercialPart implements BillInterface
     public function setSiteObject(BusinessInterface $siteObject = null)
     {
         $this->siteObject = $siteObject;
-    
+
         return $this;
     }
 
@@ -776,17 +825,17 @@ class Bill extends CommercialPart implements BillInterface
     {
         return $this->siteObject;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function setBusiness(BusinessInterface $business = null)
     {
         $this->business = $business;
-    
+
         return $this;
     }
-    
+
     /**
      * Get siteObject
      *
@@ -796,7 +845,7 @@ class Bill extends CommercialPart implements BillInterface
     {
         return $this->business;
     }
-    
+
     /**
      * Is to boost
      *
@@ -804,23 +853,23 @@ class Bill extends CommercialPart implements BillInterface
      */
     public function isToBoost()
     {
-        $today = new \DateTime;
+        $today = new \DateTime();
         if ($this->getState() == 1) {
             if ($this->getMaturityDate() < $today && $this->getFirstBoost() === null) {
                 return true;
             }
             if ($this->getFirstBoost() !== null) {
                 $date = clone $this->getFirstBoost();
-                $date->add(new \DateInterval('P'.$this->getMaturity().'D'));
+                $date->add(new \DateInterval('P' . $this->getMaturity() . 'D'));
                 if ($date < $today && $this->getSecondBoost() === null) {
                     return true;
                 }
             }
         }
-        
+
         return false;
     }
-    
+
     public function getSrc()
     {
         if ($this->intervention !== null) {
@@ -829,43 +878,43 @@ class Bill extends CommercialPart implements BillInterface
         if ($this->fee !== null) {
             return $this->fee;
         }
-        
+
         return null;
     }
-    
+
     public function getManagerContacts()
     {
         $src = $this->getSrc();
         if ($src === null) {
             return [];
         }
-        
-        return $this->_createContactFromEmail($this->getSrc()->getManagerEmails());
+
+        return $this->createContactFromEmail($this->getSrc()->getManagerEmails());
     }
-    
+
     public function getBoostContacts()
     {
         $src = $this->getSrc();
         if ($src === null) {
             return [];
         }
-        
-        return $this->_createContactFromEmail($this->getSrc()->getAccountingEmails());
+
+        return $this->createContactFromEmail($this->getSrc()->getAccountingEmails());
     }
-    
-    private function _createContactFromEmail($emails)
+
+    private function createContactFromEmail($emails)
     {
         $c = [];
         if ($emails === null) {
             return $c;
         }
-    
+
         foreach ($emails as $email) {
             $temp = new Company();
             $temp->setEmail($email);
             $c[] = $temp;
         }
-    
+
         return $c;
     }
 }

@@ -28,22 +28,24 @@ class DoorController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         
-        $codeForm = $this->_createCodeForm($door);
+        $codeForm = $this->createCodeForm($door);
         
         return [
-            'entity' => $door,
-            'quotes' => $em->getRepository('JLMCommerceBundle:Quote')->getByDoor($door),
-            'codeForm' => $codeForm->createView(),
-        ];
+                'entity'   => $door,
+                'quotes'   => $em->getRepository('JLMCommerceBundle:Quote')->getByDoor($door),
+                'codeForm' => $codeForm->createView(),
+               ];
     }
     
-    private function _createCodeForm(Door $door)
+    private function createCodeForm(Door $door)
     {
         $form = $this->createForm(
             new \JLM\ModelBundle\Form\Type\DoorTagType(),
             $door,
-            ['action'=>$this->generateUrl('model_door_update_code', ['id'=>$door->getId()]),
-            'method'=>'POST']
+            [
+             'action' => $this->generateUrl('model_door_update_code', ['id' => $door->getId()]),
+             'method' => 'POST',
+            ]
         );
                     
         return $form;
@@ -62,13 +64,17 @@ class DoorController extends Controller
         $stopForms = [];
         
         foreach ($doors as $door) {
-            $stopForms[] = $this->get('form.factory')->createNamed('doorStopEdit'.$door->getLastStop()->getId(), new DoorStopEditType(), $door->getLastStop())->createView();
+            $stopForms[] = $this->get('form.factory')->createNamed(
+                'doorStopEdit'.$door->getLastStop()->getId(),
+                new DoorStopEditType(),
+                $door->getLastStop()
+            )->createView();
         }
         
         return [
-                'entities' => $doors,
+                'entities'  => $doors,
                 'stopForms' => $stopForms,
-        ];
+               ];
     }
     
     /**
@@ -79,7 +85,11 @@ class DoorController extends Controller
      */
     public function stopupdateAction(Request $request, DoorStop $entity)
     {
-        $form = $this->get('form.factory')->createNamed('doorStopEdit'.$entity->getId(), new DoorStopEditType(), $entity);
+        $form = $this->get('form.factory')->createNamed(
+            'doorStopEdit'.$entity->getId(),
+            new DoorStopEditType(),
+            $entity
+        );
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -106,8 +116,7 @@ class DoorController extends Controller
         $response->headers->set('Content-Disposition', 'inline; filename=portes-arret.pdf');
         $response->setContent($this->render(
             'JLMDailyBundle:Door:printstopped.pdf.php',
-            [  'entities' => $doors,
-                ]
+            ['entities' => $doors]
         ));
         return $response;
     }

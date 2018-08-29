@@ -27,6 +27,6 @@ class MaintenancePlannedMailBuilder extends MaintenanceMailBuilder
         $this->setBody('Bonjour,'.chr(10).chr(10)
         .'La visite d\'entretien est plannifié pour la date du'.chr(10)
         .'Cordialement'
-        .$this->_getSignature());
+        .$this->getSignature());
     }
 }

@@ -26,9 +26,7 @@ class ContractSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return [
-            JLMContractEvents::AFTER_CONTRACT_CREATE => 'feeCreate'
-        ];
+        return [JLMContractEvents::AFTER_CONTRACT_CREATE => 'feeCreate'];
     }
 
     public function feeCreate(ContractEvent $event)

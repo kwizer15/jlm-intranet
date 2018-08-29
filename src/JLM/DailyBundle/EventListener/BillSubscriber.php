@@ -39,15 +39,20 @@ class BillSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            JLMCommerceEvents::BILL_FORM_POPULATE => 'populateFromIntervention',
-            JLMCommerceEvents::BILL_AFTER_PERSIST => 'setBillToIntervention',
-        ];
+                JLMCommerceEvents::BILL_FORM_POPULATE => 'populateFromIntervention',
+                JLMCommerceEvents::BILL_AFTER_PERSIST => 'setBillToIntervention',
+               ];
     }
     
     public function populateFromIntervention(FormPopulatingEvent $event)
     {
         if (null !== $interv = $this->getIntervention($event)) {
-            $builder = ($interv instanceof Work) ? (($interv->getQuote() !== null) ? new WorkBillBuilder($interv) : null) : null;
+            $builder = ($interv instanceof Work)
+                ? (($interv->getQuote() !== null)
+                    ? new WorkBillBuilder($interv)
+                    : null
+                )
+                : null;
             $builder = ($builder === null) ? new InterventionBillBuilder($interv) : $builder;
             $entity = BillFactory::create($builder);
             $event->getForm()->setData($entity);
@@ -66,8 +71,11 @@ class BillSubscriber implements EventSubscriberInterface
     
     private function getIntervention(RequestEvent $event)
     {
-        $id = $event->getParam('jlm_commerce_bill', ['intervention'=>$event->getParam('intervention')]);
+        $id = $event->getParam('jlm_commerce_bill', ['intervention' => $event->getParam('intervention')]);
     
-        return (isset($id['intervention']) && $id['intervention'] !== null) ? $this->om->getRepository('JLMDailyBundle:Intervention')->find($id['intervention']) : null;
+        return (isset($id['intervention']) && $id['intervention'] !== null)
+            ? $this->om->getRepository('JLMDailyBundle:Intervention')->find($id['intervention'])
+            : null
+        ;
     }
 }

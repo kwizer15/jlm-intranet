@@ -27,21 +27,20 @@ class QuoteLineType extends AbstractType
     {
         $builder
             ->add('position', 'hidden')
-            ->add('product', 'jlm_product_product_hidden', ['required'=>false])
-            ->add('reference', null, ['required'=>false,'attr'=>['class'=>'input-mini']])
-            ->add('designation', null, ['attr'=>['class'=>'input-xlarge']])
-            ->add('description', null, ['required'=>false,'attr'=>['class'=>'input-xlarge']])
+            ->add('product', 'jlm_product_product_hidden', ['required' => false])
+            ->add('reference', null, ['required' => false, 'attr' => ['class' => 'input-mini']])
+            ->add('designation', null, ['attr' => ['class' => 'input-xlarge']])
+            ->add('description', null, ['required' => false, 'attr' => ['class' => 'input-xlarge']])
             ->add('showDescription', 'hidden')
-            ->add('quantity', null, ['attr'=>['class'=>'input-mini']])
-            ->add('purchasePrice', 'money', ['grouping'=>true,'attr'=>['class'=>'input-mini']])
-            ->add('discountSupplier', 'percent', ['precision'=>0,'attr'=>['class'=>'input-mini']])
-            ->add('expenseRatio', 'percent', ['precision'=>0,'attr'=>['class'=>'input-mini']])
-            ->add('shipping', 'money', ['grouping'=>true,'attr'=>['class'=>'input-mini']])
-            ->add('unitPrice', 'money', ['grouping'=>true,'attr'=>['class'=>'input-mini']])
-            ->add('discount', 'percent', ['precision'=>0,'attr'=>['class'=>'input-mini']])
-            ->add('vat', 'percent', ['precision'=>1,'attr'=>['class'=>'input-mini']])
+            ->add('quantity', null, ['attr' => ['class' => 'input-mini']])
+            ->add('purchasePrice', 'money', ['grouping' => true, 'attr' => ['class' => 'input-mini']])
+            ->add('discountSupplier', 'percent', ['precision' => 0, 'attr' => ['class' => 'input-mini']])
+            ->add('expenseRatio', 'percent', ['precision' => 0, 'attr' => ['class' => 'input-mini']])
+            ->add('shipping', 'money', ['grouping' => true, 'attr' => ['class' => 'input-mini']])
+            ->add('unitPrice', 'money', ['grouping' => true, 'attr' => ['class' => 'input-mini']])
+            ->add('discount', 'percent', ['precision' => 0, 'attr' => ['class' => 'input-mini']])
+            ->add('vat', 'percent', ['precision' => 1, 'attr' => ['class' => 'input-mini']])
             ->add('isTransmitter', 'hidden')
-
         ;
     }
 
@@ -50,11 +49,9 @@ class QuoteLineType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-                'data_class' => 'JLM\CommerceBundle\Entity\QuoteLine'
-        ]);
+        $resolver->setDefaults(['data_class' => 'JLM\CommerceBundle\Entity\QuoteLine']);
     }
-    
+
     /**
      * {@inheritdoc}
      */

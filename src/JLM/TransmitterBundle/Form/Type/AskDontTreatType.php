@@ -10,9 +10,7 @@ class AskDontTreatType extends \JLM\OfficeBundle\Form\Type\AskDontTreatType
    
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-                'data_class' => 'JLM\TransmitterBundle\Entity\Ask'
-        ]);
+        $resolver->setDefaults(['data_class' => 'JLM\TransmitterBundle\Entity\Ask']);
     }
     
     public function getName()

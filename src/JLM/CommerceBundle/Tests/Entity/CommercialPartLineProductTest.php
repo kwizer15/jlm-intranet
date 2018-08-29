@@ -40,18 +40,51 @@ class CommercialPartLineProductTest extends \PHPUnit_Framework_TestCase
     public function getAttributes()
     {
         return [
-            ['Position', 1],
-            ['Product', $this->getMock('JLM\ProductBundle\Model\ProductInterface')],
-            ['Reference', 'Foo'],
-            ['Designation', 'Foo'],
-            ['Description', 'Bar'],
-            ['ShowDescription', true],
-            ['IsTransmitter', false],
-            ['Quantity', 2],
-            ['UnitPrice', 25.50],
-            ['Discount', 0.1],
-            ['Vat', 20.0],
-        ];
+                [
+                 'Position',
+                 1,
+                ],
+                [
+                 'Product',
+                 $this->getMock('JLM\ProductBundle\Model\ProductInterface'),
+                ],
+                [
+                 'Reference',
+                 'Foo',
+                ],
+                [
+                 'Designation',
+                 'Foo',
+                ],
+                [
+                 'Description',
+                 'Bar',
+                ],
+                [
+                 'ShowDescription',
+                 true,
+                ],
+                [
+                 'IsTransmitter',
+                 false,
+                ],
+                [
+                 'Quantity',
+                 2,
+                ],
+                [
+                 'UnitPrice',
+                 25.50,
+                ],
+                [
+                 'Discount',
+                 0.1,
+                ],
+                [
+                 'Vat',
+                 20.0,
+                ],
+               ];
     }
     
     /**

@@ -23,7 +23,7 @@ class CorporationSelectType extends AbstractSelectType
     {
         return '\JLM\ContactBundle\Form\DataTransformer\CorporationToIntTransformer';
     }
-    
+
     protected function getTypeName()
     {
         return 'jlm_contact_corporation';

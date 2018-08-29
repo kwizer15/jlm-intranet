@@ -1,4 +1,5 @@
 <?php
+
 namespace JLM\CoreBundle\DQL;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
@@ -26,8 +27,8 @@ class DateDiffFunction extends FunctionNode
     public function getSql(\Doctrine\ORM\Query\SqlWalker $sqlWalker)
     {
         return 'DATEDIFF(' .
-                $this->firstDateExpression->dispatch($sqlWalker) . ', ' .
-                $this->secondDateExpression->dispatch($sqlWalker) .
-                ')'; // (7)
+            $this->firstDateExpression->dispatch($sqlWalker) . ', ' .
+            $this->secondDateExpression->dispatch($sqlWalker) .
+            ')'; // (7)
     }
 }

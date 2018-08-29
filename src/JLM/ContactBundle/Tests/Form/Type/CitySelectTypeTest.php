@@ -26,12 +26,12 @@ class CitySelectTypeTest extends TypeTestCase
      * @var CitySelectType
      */
     protected $type;
-    
+
     /**
      * @var City
      */
     protected $object;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -39,18 +39,16 @@ class CitySelectTypeTest extends TypeTestCase
     {
         parent::setUp();
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function getExtensions()
     {
         $childType = new \Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type('hidden');
-        return [new PreloadedExtension([
-            $childType->getName() => $childType,
-        ], [])];
+        return [new PreloadedExtension([$childType->getName() => $childType], [])];
     }
-    
+
     public function testCreateForm()
     {
         $om = $this->getMock('Doctrine\Common\Persistence\ObjectManager');

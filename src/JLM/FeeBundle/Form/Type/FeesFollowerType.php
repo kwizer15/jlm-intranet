@@ -26,10 +26,10 @@ class FeesFollowerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('activation', 'datepicker', ['label'=>'Date d\'activation'])
-        ->add('frequence1', null, ['label'=>'Annuelle'])
-        ->add('frequence2', null, ['label'=>'Semestriellle'])
-        ->add('frequence4', null, ['label'=>'Trimestrielle'])
+        ->add('activation', 'datepicker', ['label' => 'Date d\'activation'])
+        ->add('frequence1', null, ['label' => 'Annuelle'])
+        ->add('frequence2', null, ['label' => 'Semestriellle'])
+        ->add('frequence4', null, ['label' => 'Trimestrielle'])
         ;
     }
 
@@ -46,8 +46,6 @@ class FeesFollowerType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-                'data_class' => 'JLM\FeeBundle\Entity\FeesFollower',
-        ]);
+        $resolver->setDefaults(['data_class' => 'JLM\FeeBundle\Entity\FeesFollower']);
     }
 }

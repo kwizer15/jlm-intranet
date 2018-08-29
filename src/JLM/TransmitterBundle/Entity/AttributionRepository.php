@@ -34,59 +34,66 @@ class AttributionRepository extends SearchRepository implements PaginableInterfa
         $results = $qb->getQuery()->getArrayResult();
         $result = $results[0];
         foreach ($result['transmitters'] as $index => $t) {
-            $result['transmitters'][$index]['endGuaranteeDate'] = \DateTime::createFromFormat('my', $t['guarantee'])->add(new \DateInterval('P2Y'));
+            $result['transmitters'][$index]['endGuaranteeDate'] = \DateTime::createFromFormat('my', $t['guarantee'])
+                ->add(new \DateInterval('P2Y'))
+            ;
         }
         return $result;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function getSearchQb()
     {
         return $this->createQueryBuilder('a')
-        ->select('a')
-        ->leftJoin('a.ask', 'b')
-        ->leftJoin('b.trustee', 'f')
-        ->leftJoin('b.site', 'c')
-        ->leftJoin('c.address', 'd')
-        ->leftJoin('d.city', 'e');
+            ->select('a')
+            ->leftJoin('a.ask', 'b')
+            ->leftJoin('b.trustee', 'f')
+            ->leftJoin('b.site', 'c')
+            ->leftJoin('c.address', 'd')
+            ->leftJoin('d.city', 'e')
+            ;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function getSearchParams()
     {
-        return ['f.name','d.street','e.name'];
+        return [
+            'f.name',
+            'd.street',
+            'e.name',
+        ];
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function getSearchOrderBy()
     {
-        return ['a.creation'=>'DESC'];
+        return ['a.creation' => 'DESC'];
     }
-    
+
     public function getPaginable($page, $resultsByPage, array $filters = [])
     {
         $qb = $this->createQueryBuilder('a')
-            ->select('a');
+            ->select('a')
+        ;
         if (array_key_exists('sort', $filters)) {
-            $sortsValid = [
-                    'date'=>'a.creation',
-            ];
+            $sortsValid = ['date' => 'a.creation'];
             $sort = str_replace('!', '', $filters['sort']);
             if (array_key_exists($sort, $sortsValid)) {
                 $qb->orderBy($sortsValid[$sort], substr($filters['sort'], 0, 1) == '!' ? 'DESC' : 'ASC');
             }
         }
         $qb->setFirstResult(($page - 1) * $resultsByPage)
-           ->setMaxResults($resultsByPage);
-        
+            ->setMaxResults($resultsByPage)
+        ;
+
         $query = $qb->getQuery();
-        
+
         return new Paginator($query);
     }
 }

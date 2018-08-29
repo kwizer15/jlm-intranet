@@ -22,21 +22,21 @@ interface CityInterface
      * @return string
      */
     public function getName();
-    
+
     /**
      * Get zip
      *
      * @return string
      */
     public function getZip();
-    
+
     /**
      * Get zip
      *
      * @return CountryInterface
      */
     public function getCountry();
-    
+
     /**
      * To string
      *

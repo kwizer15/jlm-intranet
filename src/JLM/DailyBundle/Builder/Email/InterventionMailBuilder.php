@@ -64,17 +64,20 @@ abstract class InterventionMailBuilder extends MailBuilderAbstract
     {
     }
 
-    protected function _getSignature()
+    protected function getSignature()
     {
         $str = chr(10).chr(10);
-//              .'Vous pouvez consulter l\'état de vos installations en contrat en vous connectant à votre espace client : http://jlm-entreprise.fr/login'
-//              .chr(10).chr(10);
+        //     . 'Vous pouvez consulter l\'état de vos installations en contrat en vous connectant '
+        //     .'à votre espace client : http://jlm-entreprise.fr/login'
+        //     . chr(10)
+        //     . chr(10)
+        // ;
         $date = new \DateTime;
         if ($date->format('m') == '01') {
             $str .= 'Toute l\'équipe de JLM Entreprise vous souhaite une bonne année '.$date->format('Y').'.'.chr(10);
         }
         $str .= 'Cordialement'
-                .parent::_getSignature();
+                .parent::getSignature();
         return $str;
     }
 }

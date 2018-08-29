@@ -29,7 +29,7 @@ abstract class WorkMailBuilder extends InterventionMailBuilder
         return $this->getIntervention();
     }
     
-    protected function _getSource()
+    protected function getSource()
     {
         $quote = $this->getWork()->getQuote();
         if (!empty($quote)) {

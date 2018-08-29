@@ -19,21 +19,21 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ContactManager extends Manager
 {
-   
+
     protected function getFormType($type = null)
     {
         $objects = [
-                'person' => 'JLM\\ContactBundle\\Form\\Type\\PersonType',
-                'company' => 'JLM\\ContactBundle\\Form\\Type\\CompanyType',
-                'association' => 'JLM\\ContactBundle\\Form\\Type\\AssociationType',
+            'person' => 'JLM\\ContactBundle\\Form\\Type\\PersonType',
+            'company' => 'JLM\\ContactBundle\\Form\\Type\\CompanyType',
+            'association' => 'JLM\\ContactBundle\\Form\\Type\\AssociationType',
         ];
         if (array_key_exists($type, $objects)) {
-            return new $objects[$type];
+            return new $objects[$type]();
         }
-    
+
         return null;
     }
-    
+
     protected function getFormParam($name, $options = [])
     {
         switch ($name) {
@@ -43,7 +43,7 @@ class ContactManager extends Manager
                     'route' => 'jlm_contact_contact_create',
                     'params' => ['id' => $options['type']],
                     'label' => 'Créer',
-                    'type'  => $this->getFormType($options['type']),
+                    'type' => $this->getFormType($options['type']),
                     'entity' => null,
                 ];
             case 'edit':
@@ -52,11 +52,11 @@ class ContactManager extends Manager
                     'route' => 'jlm_contact_contact_update',
                     'params' => ['id' => $options['entity']->getId()],
                     'label' => 'Modifier',
-                    'type'  => $this->getFormType($options['type']),
-                    'entity' => $options['entity']
+                    'type' => $this->getFormType($options['type']),
+                    'entity' => $options['entity'],
                 ];
         }
-        
+
         return parent::getFormParam($name, $options);
     }
 }

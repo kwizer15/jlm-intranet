@@ -23,9 +23,9 @@ class BillSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            JLMCommerceEvents::BILL_FORM_POPULATE => 'populateFromQuote',
-            JLMCommerceEvents::BILL_BOOST_SENDMAIL => 'persistEmails',
-        ];
+                JLMCommerceEvents::BILL_FORM_POPULATE  => 'populateFromQuote',
+                JLMCommerceEvents::BILL_BOOST_SENDMAIL => 'persistEmails',
+               ];
     }
     
     public function populateFromQuote(FormPopulatingEvent $event)

@@ -11,18 +11,16 @@ class TaskType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('type', null, ['label'=>'Type'])
-        ->add('door', 'door_hidden', ['required'=>false])
-        ->add('place', null, ['label'=>'Lieu concerné'])
-        ->add('todo', null, ['label'=>'À faire'])
+        ->add('type', null, ['label' => 'Type'])
+        ->add('door', 'door_hidden', ['required' => false])
+        ->add('place', null, ['label' => 'Lieu concerné'])
+        ->add('todo', null, ['label' => 'À faire'])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-                'data_class' => 'JLM\OfficeBundle\Entity\Task'
-        ]);
+        $resolver->setDefaults(['data_class' => 'JLM\OfficeBundle\Entity\Task']);
     }
 
     public function getName()

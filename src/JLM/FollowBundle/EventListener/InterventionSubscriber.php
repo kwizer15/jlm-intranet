@@ -48,9 +48,9 @@ class InterventionSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            JLMDailyEvents::INTERVENTION_SCHEDULEWORK => 'createThread',
-            JLMDailyEvents::INTERVENTION_UNSCHEDULEWORK => 'deleteThread',
-        ];
+                JLMDailyEvents::INTERVENTION_SCHEDULEWORK   => 'createThread',
+                JLMDailyEvents::INTERVENTION_UNSCHEDULEWORK => 'deleteThread',
+               ];
     }
     
     /**
@@ -73,7 +73,10 @@ class InterventionSubscriber implements EventSubscriberInterface
     {
         $entity = $event->getIntervention();
         try {
-            $starter= $this->om->getRepository('JLMFollowBundle:StarterIntervention')->findOneBy(['intervention' => $entity]);
+            $starter= $this->om
+                ->getRepository('JLMFollowBundle:StarterIntervention')
+                ->findOneBy(['intervention' => $entity])
+            ;
             $thread = $this->om->getRepository('JLMFollowBundle:Thread')->findOneBy(['starter' => $starter]);
             $this->om->remove($thread);
             $this->om->flush();

@@ -145,12 +145,12 @@ class Thread implements ThreadInterface
     
     public function getState()
     {
-        $this->state = $this->_defineState();
+        $this->state = $this->defineState();
         
         return $this->state;
     }
     
-    private function _defineState()
+    private function defineState()
     {
         if ($this->getWork() === null) {
             return self::STATE_CLOSED;

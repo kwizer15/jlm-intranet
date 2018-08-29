@@ -34,10 +34,12 @@ class AskCountExtension extends \Twig_Extension implements \Twig_Extension_Globa
     {
         $repo = $this->om->getRepository('JLMTransmitterBundle:Ask');
         
-        return ['transmitteraskcount' => [
-                'all' => $repo->getTotal(),
-                'untreated' => $repo->getCountUntreated(),
-                'treated' => $repo->getCountTreated(),
-        ]];
+        return [
+                'transmitteraskcount' => [
+                                          'all'       => $repo->getTotal(),
+                                          'untreated' => $repo->getCountUntreated(),
+                                          'treated'   => $repo->getCountTreated(),
+                                         ],
+               ];
     }
 }

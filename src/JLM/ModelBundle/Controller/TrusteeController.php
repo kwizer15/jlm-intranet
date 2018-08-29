@@ -52,10 +52,10 @@ class TrusteeController extends Controller
         $entities = $repo->getList($limit, $offset);
 
         return [
-            'entities' => $entities,
-            'page'     => $page,
-            'nbPages'  => $nbPages,
-        ];
+                'entities' => $entities,
+                'page'     => $page,
+                'nbPages'  => $nbPages,
+               ];
     }
 
     /**
@@ -66,9 +66,7 @@ class TrusteeController extends Controller
      */
     public function showAction(Trustee $entity)
     {
-        return [
-            'entity'      => $entity,
-        ];
+        return ['entity' => $entity];
     }
 
     /**
@@ -92,9 +90,9 @@ class TrusteeController extends Controller
         }
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -122,9 +120,9 @@ class TrusteeController extends Controller
             return $this->redirect($this->generateUrl('trustee_show', ['id' => $entity->getId()]));
         }
         return [
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -139,10 +137,10 @@ class TrusteeController extends Controller
         $deleteForm = $this->createDeleteForm($entity);
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ];
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+               ];
     }
 
     /**
@@ -174,10 +172,10 @@ class TrusteeController extends Controller
         }
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ];
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+               ];
     }
 
     /**
@@ -222,9 +220,9 @@ class TrusteeController extends Controller
         
         return [
                 'trustee' => $trustee,
-                'entity' => $entity,
-                'form'   => $form->createView()
-        ];
+                'entity'  => $entity,
+                'form'    => $form->createView(),
+               ];
     }
     
     /**
@@ -253,9 +251,9 @@ class TrusteeController extends Controller
     
         return [
                 'trustee' => $trustee,
-                'entity' => $entity,
-                'form'   => $form->createView()
-        ];
+                'entity'  => $entity,
+                'form'    => $form->createView(),
+               ];
     }
     
     /**

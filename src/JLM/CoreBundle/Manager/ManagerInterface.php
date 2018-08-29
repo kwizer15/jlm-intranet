@@ -1,4 +1,5 @@
 <?php
+
 namespace JLM\CoreBundle\Manager;
 
 interface ManagerInterface

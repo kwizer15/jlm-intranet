@@ -14,7 +14,7 @@ class SiteContactHiddenType extends AbstractType
      * @var ObjectManager
      */
     private $om;
-    
+
     /**
      * @param ObjectManager $om
      */
@@ -22,10 +22,10 @@ class SiteContactHiddenType extends AbstractType
     {
         $this->om = $om;
     }
-    
+
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -37,16 +37,14 @@ class SiteContactHiddenType extends AbstractType
     {
         return 'hidden';
     }
-    
+
     public function getName()
     {
         return 'sitecontact_hidden';
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'invalid_message' => 'The selected contact does not exist',
-        ]);
+        $resolver->setDefaults(['invalid_message' => 'The selected contact does not exist']);
     }
 }

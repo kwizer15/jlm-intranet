@@ -23,7 +23,7 @@ class AskQuoteType extends AbstractType
     /**
      *
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -42,15 +42,13 @@ class AskQuoteType extends AbstractType
     {
         return 'jlm_front_askquotetype';
     }
-    
+
     /**
      *
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-                'data_class' => 'JLM\FrontBundle\Entity\AskQuote',
-        ]);
+        $resolver->setDefaults(['data_class' => 'JLM\FrontBundle\Entity\AskQuote']);
     }
 }

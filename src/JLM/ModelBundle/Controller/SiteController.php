@@ -36,9 +36,7 @@ class SiteController extends Controller
 
         $entities = $em->getRepository('JLMModelBundle:Site')->findAll();
 
-        return [
-            'entities' => $entities,
-        ];
+        return ['entities' => $entities];
     }
 
     /**
@@ -60,9 +58,9 @@ class SiteController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return [
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        ];
+                'entity'      => $entity,
+                'delete_form' => $deleteForm->createView(),
+               ];
     }
 
     /**
@@ -80,9 +78,9 @@ class SiteController extends Controller
         $form->get('trustee')->setData($em->getRepository('JLMModelBundle:Trustee')->find($trustee));
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -107,9 +105,9 @@ class SiteController extends Controller
         }
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -122,9 +120,9 @@ class SiteController extends Controller
     {
         $editForm = $this->createForm(new SiteType(), $entity);
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        ];
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
 
     /**
@@ -147,9 +145,9 @@ class SiteController extends Controller
         }
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        ];
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
 
     /**

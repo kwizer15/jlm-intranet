@@ -42,9 +42,7 @@ class FeeController extends Controller
     public function showAction(Fee $entity)
     {
     
-        return [
-                'entity'      => $entity,
-            ];
+        return ['entity' => $entity];
     }
     
     /**
@@ -62,8 +60,8 @@ class FeeController extends Controller
     
         return [
                 'entity' => $entity,
-                'form'   => $form->createView()
-        ];
+                'form'   => $form->createView(),
+               ];
     }
     
     /**
@@ -91,8 +89,8 @@ class FeeController extends Controller
     
         return [
                 'entity' => $entity,
-                'form'   => $form->createView()
-        ];
+                'form'   => $form->createView(),
+               ];
     }
     
     /**
@@ -107,9 +105,9 @@ class FeeController extends Controller
         $editForm = $this->createForm(new FeeType(), $entity);
     
         return [
-                'entity'      => $entity,
-                'edit_form'   => $editForm->createView(),
-        ];
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
     
     /**
@@ -135,8 +133,8 @@ class FeeController extends Controller
         }
     
         return [
-                'entity'      => $entity,
-                'edit_form'   => $editForm->createView(),
-        ];
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
 }

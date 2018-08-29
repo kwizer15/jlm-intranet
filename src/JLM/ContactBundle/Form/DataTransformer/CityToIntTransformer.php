@@ -21,15 +21,15 @@ class CityToIntTransformer extends ObjectToIntTransformer
     /**
      * {@inheritdoc}
      */
-    protected function _getClass()
+    protected function getClass()
     {
         return 'JLMContactBundle:City';
     }
-    
+
     /**
      * {@inheritdoc}
      */
-    protected function _getErrorMessage()
+    protected function getErrorMessage()
     {
         return 'A city with id "%s" does not exist!';
     }

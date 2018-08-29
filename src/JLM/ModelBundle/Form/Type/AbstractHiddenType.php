@@ -13,7 +13,7 @@ abstract class AbstractHiddenType extends AbstractType
      * @var ObjectManager
      */
     private $om;
-    
+
     /**
      * @param ObjectManager $om
      */
@@ -21,10 +21,10 @@ abstract class AbstractHiddenType extends AbstractType
     {
         $this->om = $om;
     }
-    
+
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -37,20 +37,22 @@ abstract class AbstractHiddenType extends AbstractType
     {
         return 'hidden';
     }
-    
+
     public function getName()
     {
-        return $this->getTypeName().'_hidden';
+        return $this->getTypeName() . '_hidden';
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'invalid_message' => 'The selected '.$this->getTypeName().' does not exist',
-        ]);
+        $resolver->setDefaults(
+            [
+                'invalid_message' => 'The selected ' . $this->getTypeName() . ' does not exist',
+            ]
+        );
     }
-    
+
     abstract protected function getTransformerClass();
-    
+
     abstract protected function getTypeName();
 }

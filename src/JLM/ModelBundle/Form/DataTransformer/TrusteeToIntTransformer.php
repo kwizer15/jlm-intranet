@@ -1,4 +1,5 @@
 <?php
+
 namespace JLM\ModelBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
@@ -11,7 +12,7 @@ class TrusteeToIntTransformer extends ObjectToIntTransformer
     {
         return 'JLMModelBundle:Trustee';
     }
-    
+
     protected function getErrorMessage()
     {
         return 'A trustee with id "%s" does not exist!';

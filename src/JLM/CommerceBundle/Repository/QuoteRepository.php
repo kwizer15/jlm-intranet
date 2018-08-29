@@ -27,9 +27,11 @@ use JLM\CommerceBundle\Entity\Quote;
 class QuoteRepository extends SearchRepository
 {
     /**
-     *
      * @param int $id
+     *
      * @return Quote
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getById($id)
     {
@@ -45,12 +47,12 @@ class QuoteRepository extends SearchRepository
             ->leftJoin('a.variants', 'i')
             ->leftJoin('i.lines', 'j')
             ->where('a.id = ?1')
-            
-            ->setParameter(1, $id);
-        
+            ->setParameter(1, $id)
+        ;
+
         return $qb->getQuery()->getSingleResult();
     }
-    
+
     /**
      *
      */
@@ -58,26 +60,27 @@ class QuoteRepository extends SearchRepository
     {
         return $this->getCountState();
     }
-    
+
     /**
      *
      * @return number
      */
     public function getLastNumber()
     {
-        $date = new \DateTime;
+        $date = new \DateTime();
         $year = $date->format('Y');
         $qb = $this->createQueryBuilder('q')
             ->select('SUBSTRING(q.number,5) as num')
             ->where('SUBSTRING(q.creation, 1, 4) = :year')
             ->orderBy('q.number', 'DESC')
             ->setMaxResults(1)
-            ->setParameter('year', $year);
+            ->setParameter('year', $year)
+        ;
         $result = $qb->getQuery()->getResult();
-        
+
         return (!$result) ? 0 : $result[0]['num'];
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -85,21 +88,27 @@ class QuoteRepository extends SearchRepository
     {
         return $this->createQueryBuilder('a');
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function getSearchParams()
     {
-        return ['a.number','a.trusteeName','a.trusteeAddress','a.doorCp','a.contactCp'];
+        return [
+            'a.number',
+            'a.trusteeName',
+            'a.trusteeAddress',
+            'a.doorCp',
+            'a.contactCp',
+        ];
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function getSearchOrderBy()
     {
-        return ['a.number'=>'DESC'];
+        return ['a.number' => 'DESC'];
     }
 
     /**
@@ -115,16 +124,23 @@ class QuoteRepository extends SearchRepository
                 ->select('a,b,c')
                 ->leftJoin('a.variants', 'b')
                 ->leftJoin('a.contactPerson', 'c')
-                ;
+            ;
             if ($year !== 'total') {
                 $qb->where('a.creation BETWEEN :fd AND :ld')
-                    ->setParameter('fd', $year.'-01-01')
-                    ->setParameter('ld', $year.'-12-31')
+                    ->setParameter('fd', $year . '-01-01')
+                    ->setParameter('ld', $year . '-12-31')
                 ;
             }
 
             $result = $qb->getQuery()->getResult();
-            $this->countState[$year] = [0=>0, 1=>0, 2=>0, 3=>0, 4=>0, 5=>0];
+            $this->countState[$year] = [
+                0 => 0,
+                1 => 0,
+                2 => 0,
+                3 => 0,
+                4 => 0,
+                5 => 0,
+            ];
             $this->total[$year] = 0;
             $this->uncanceled[$year] = 0;
             foreach ($result as $r) {
@@ -151,34 +167,44 @@ class QuoteRepository extends SearchRepository
                 $this->total[$year]++;
             }
         }
-        
-        return ($state === 'uncanceled') ? $this->uncanceled[$year] : (($state === null) ? $this->total[$year] : $this->countState[$year][$state]);
+
+        return ($state === 'uncanceled')
+            ? $this->uncanceled[$year]
+            : (($state === null)
+                ? $this->total[$year]
+                : $this->countState[$year][$state]
+            );
     }
-    
+
     /**
      *
      * @param int $state
      * @param int $limit
      * @param int $offset
-     * @return Ambigous <multitype:, \Doctrine\ORM\mixed, \Doctrine\ORM\Internal\Hydration\mixed, \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     *
+     * @return Ambigous <multitype:, \Doctrine\ORM\mixed, \Doctrine\ORM\Internal\Hydration\mixed,
+     *                  \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
      */
     public function getByState($state, $limit = 10, $offset = 0)
     {
         if (isset($this->byState)) {
             return $this->byState;
         }
-            
-        $state = ($state == 1 || $state == 2) ? [1,2] : (($state == 3 || $state == 4) ? [3,4] : [$state]);
+
+        $state = ($state == 1 || $state == 2) ? [
+            1,
+            2,
+        ] : (($state == 3 || $state == 4) ? [3, 4] : [$state]);
         $qb = $this->createQueryBuilder('a')
-                ->select('a,b,c,d,e,f,g,h')
-                ->leftJoin('a.door', 'b')
-                ->leftJoin('b.site', 'c')
-                ->leftJoin('c.address', 'd')
-                ->leftJoin('d.city', 'e')
-                ->leftJoin('b.type', 'f')
-                ->leftJoin('a.contact', 'g')
-                ->leftJoin('a.contactPerson', 'h')
-                ->orderBy('a.number', 'desc')
+            ->select('a,b,c,d,e,f,g,h')
+            ->leftJoin('a.door', 'b')
+            ->leftJoin('b.site', 'c')
+            ->leftJoin('c.address', 'd')
+            ->leftJoin('d.city', 'e')
+            ->leftJoin('b.type', 'f')
+            ->leftJoin('a.contact', 'g')
+            ->leftJoin('a.contactPerson', 'h')
+            ->orderBy('a.number', 'desc')
         ;
         $results = $qb->getQuery()->getResult();
         foreach ($results as $key => $r) {
@@ -196,15 +222,17 @@ class QuoteRepository extends SearchRepository
             }
         }
         $this->byState = $results;
-        
+
         return $results;
     }
-    
+
     /**
      *
      * @param string $limit
      * @param string $offset
-     * @return Ambigous <multitype:, \Doctrine\ORM\mixed, \Doctrine\ORM\Internal\Hydration\mixed, \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     *
+     * @return Ambigous <multitype:, \Doctrine\ORM\mixed, \Doctrine\ORM\Internal\Hydration\mixed,
+     *                  \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
      */
     public function getAll($limit = null, $offset = null)
     {
@@ -215,14 +243,15 @@ class QuoteRepository extends SearchRepository
             ->leftJoin('c.address', 'd')
             ->leftJoin('d.city', 'e')
             ->leftJoin('b.type', 'f')
-            ->orderBy('a.number', 'desc');
+            ->orderBy('a.number', 'desc')
+        ;
         if ($limit !== null) {
             $qb->setMaxResults($limit);
         }
         if ($offset !== null) {
             $qb->setFirstResult($offset);
         }
-        
+
         return $qb->getQuery()->getResult();
     }
 
@@ -230,61 +259,63 @@ class QuoteRepository extends SearchRepository
     {
         return $this->getTotal();
     }
-    
+
     public function getCountInSeizure()
     {
         return $this->getCountState(0);
     }
-    
+
     public function getInSeizure($limit = 10, $offset = 0)
     {
         return $this->getByState(0, $limit, $offset);
     }
-    
+
     public function getCountWaiting()
     {
         return $this->getCountState(1);
     }
-    
+
     public function getWaiting($limit = 10, $offset = 0)
     {
         return $this->getByState(1, $limit, $offset);
     }
-    
+
     public function getCountSended()
     {
         return $this->getCountState(3);
     }
-    
+
     public function getSended($limit = 10, $offset = 0)
     {
         return $this->getByState(3, $limit, $offset);
     }
-    
+
     public function getCountGiven()
     {
         return $this->getCountState(5);
     }
-    
+
     public function getGiven($limit = 10, $offset = 0)
     {
         return $this->getByState(5, $limit, $offset);
     }
-    
+
     public function getCountCanceled()
     {
         return $this->getCountState(-1);
     }
-    
+
     public function getCanceled($limit = 10, $offset = 0)
     {
         return $this->getByState(-1, $limit, $offset);
     }
-    
+
     /**
      *
      * @param Door $door
-     * @return Ambigous <multitype:, \Doctrine\ORM\mixed, \Doctrine\ORM\Internal\Hydration\mixed, \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
+     *
+     * @return Ambigous <multitype:, \Doctrine\ORM\mixed, \Doctrine\ORM\Internal\Hydration\mixed,
+     *                  \Doctrine\DBAL\Driver\Statement, \Doctrine\Common\Cache\mixed>
      */
     public function getByDoor(Door $door)
     {
@@ -293,16 +324,19 @@ class QuoteRepository extends SearchRepository
             ->leftJoin('a.door', 'b')
             ->where('b.id = ?1')
             ->orderBy('a.creation', 'desc')
-            ->setParameter(1, $door->getId());
-        
+            ->setParameter(1, $door->getId())
+        ;
+
         return $qb->getQuery()->getResult();
     }
-    
+
     /**
      * Get lasts sended quotes
+     *
      * @param Door $door
+     *
      * @since 1.4.0
-     * @todo Create a direct request
+     * @todo  Create a direct request
      */
     public function getSendedByDoor(Door $door, $lastsMonth = null)
     {
@@ -310,7 +344,7 @@ class QuoteRepository extends SearchRepository
         $final = [];
         $expiration = new \DateTime();
         if ($lastsMonth !== null) {
-            $expiration->sub(new \DateInterval('P'.$lastsMonth.'M'));
+            $expiration->sub(new \DateInterval('P' . $lastsMonth . 'M'));
         }
         foreach ($quotes as $quote) {
             if ($quote->getState() == QuoteVariant::STATE_SENDED) {
@@ -319,45 +353,51 @@ class QuoteRepository extends SearchRepository
                 }
             }
         }
-        
+
         return $final;
     }
-    
+
     public function getCountFollow()
     {
         return $this->getTotal();
     }
-    
+
     public function getFollow($limit = 10, $offset = 0)
     {
         $qb = $this->createQueryBuilder('a')
             ->select('a,b')
             ->leftJoin('a.eventFollower', 'b')
-            ->orderBy('a.number', 'DESC');
+            ->orderBy('a.number', 'DESC')
+        ;
         $qb->setMaxResults(10);
-        
+
         return $qb->getQuery()->getResult();
     }
 
     public function getSends($year)
     {
         $qb = $this->createQueryBuilder('a')
-            ->select('MONTH(a.creation) AS month, COUNT(DISTINCT a) AS nb, SUM(l.unitPrice*l.quantity*(1-l.discount)) AS val')
+            ->select(
+                'MONTH(a.creation) AS month, COUNT(DISTINCT a) AS nb, SUM(l.unitPrice*l.quantity*(1-l.discount)) AS val'
+            )
             ->leftJoin('a.variants', 'c')
             ->leftJoin('c.lines', 'l')
             ->where('c.state >= ?1')
             ->andWhere('YEAR(a.creation) = ?2')
             ->groupBy('month')
             ->setParameter(1, QuoteVariant::STATE_SENDED)
-            ->setParameter(2, $year);
-            
+            ->setParameter(2, $year)
+        ;
+
         return $qb->getQuery()->getResult();
     }
-    
+
     public function getGivens($year)
     {
         $qb = $this->createQueryBuilder('a')
-            ->select('MONTH(d.creation) AS month, COUNT(DISTINCT a) AS nb, SUM(l.unitPrice*l.quantity*(1-l.discount)) AS val')
+            ->select(
+                'MONTH(d.creation) AS month, COUNT(DISTINCT a) AS nb, SUM(l.unitPrice*l.quantity*(1-l.discount)) AS val'
+            )
             ->leftJoin('a.variants', 'c')
             ->leftJoin('c.lines', 'l')
             ->leftJoin('c.work', 'd')
@@ -365,8 +405,9 @@ class QuoteRepository extends SearchRepository
             ->andWhere('YEAR(d.creation) = ?2')
             ->groupBy('month')
             ->setParameter(1, QuoteVariant::STATE_GIVEN)
-            ->setParameter(2, $year);
-            
+            ->setParameter(2, $year)
+        ;
+
         return $qb->getQuery()->getResult();
     }
 }

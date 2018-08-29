@@ -13,17 +13,15 @@ class OrderLineType extends AbstractType
     {
         $builder
         ->add('position', 'hidden')
-        ->add('reference', null, ['required'=>false,'attr'=>['class'=>'input-small']])
-        ->add('designation', null, ['attr'=>['class'=>'input-xxlarge']])
-        ->add('quantity', null, ['attr'=>['class'=>'input-mini']])
+        ->add('reference', null, ['required' => false, 'attr' => ['class' => 'input-small']])
+        ->add('designation', null, ['attr' => ['class' => 'input-xxlarge']])
+        ->add('quantity', null, ['attr' => ['class' => 'input-mini']])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-                'data_class' => 'JLM\OfficeBundle\Entity\OrderLine'
-        ]);
+        $resolver->setDefaults(['data_class' => 'JLM\OfficeBundle\Entity\OrderLine']);
     }
 
     public function getName()

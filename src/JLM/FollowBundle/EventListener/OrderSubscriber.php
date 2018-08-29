@@ -46,7 +46,7 @@ class OrderSubscriber implements EventSubscriberInterface
         return [
             // JLMOfficeEvents::ORDER_POSTPERSIST => 'createThread',
             JLMOfficeEvents::ORDER_POSTUPDATE => 'updateThread',
-        ];
+               ];
     }
     
     /**

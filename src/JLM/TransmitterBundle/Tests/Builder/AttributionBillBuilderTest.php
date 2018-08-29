@@ -71,7 +71,10 @@ class AttributionBillBuilderTest extends \PHPUnit_Framework_TestCase
         $t2->expects($this->any())->method('getModel')->will($this->returnValue($model));
         $t2->expects($this->any())->method('getNumber')->will($this->returnValue(152000));
         
-        $transmitters = [$t1, $t2];
+        $transmitters = [
+                         $t1,
+                         $t2,
+                        ];
         $this->attribution->expects($this->any())->method('getTransmitters')->will($this->returnValue($transmitters));
         $this->builder->buildLines();
     }

@@ -26,49 +26,57 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class BillRepository extends SearchRepository implements PaginableInterface
 {
-    
+
     public function getTotal()
     {
         return $this->getCount();
     }
-    
+
     public function getLastNumber($year = null)
     {
         if ($year === null) {
-            $date = new \DateTime;
+            $date = new \DateTime();
             $year = $date->format('Y');
         }
         $qb = $this->createQueryBuilder('q')
             ->select('MAX(SUBSTRING(q.number,5)) as num')
             ->where('SUBSTRING(q.creation, 1, 4) = :year')
             ->setMaxResults(1)
-            ->setParameter('year', $year);
+            ->setParameter('year', $year)
+        ;
         $result = $qb->getQuery()->getResult();
 
         return (!$result) ? 0 : $result[0]['num'];
     }
-    
+
     public function getCount($state = null)
     {
         if (!isset($this->count)) {
-            $date = new \DateTime;
+            $date = new \DateTime();
             $qb = $this->createQueryBuilder('a')
                 ->select('a.state, COUNT(a) as c')
                 ->orderBy('a.state', 'ASC')
                 ->groupBy('a.state')
             ;
             $results = $qb->getQuery()->getResult();
-            $this->count = [-1=>0,0,0,0,0,0];
+            $this->count = [
+                -1 => 0,
+                0,
+                0,
+                0,
+                0,
+                0,
+            ];
             $this->total = 0;
             foreach ($results as $result) {
                 $this->total += $result['c'];
                 $this->count[$result['state']] = $result['c'];
             }
         }
-        
+
         return ($state === null) ? $this->total : $this->count[$state];
     }
-    
+
     public function getByState($state = null, $limit = 10, $offset = 0)
     {
         $qb = $this->createQueryBuilder('t');
@@ -78,19 +86,20 @@ class BillRepository extends SearchRepository implements PaginableInterface
             ;
         }
         $qb->orderBy('t.number', 'desc')
-        ->setFirstResult($offset)
-        ->setMaxResults($limit);
-        
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+        ;
+
         $query = $qb->getQuery();
-        
+
         return $query->getResult();
     }
-    
+
     public function getPaginable($page, $resultsByPage, array $filters = [])
     {
         $sorts = [
             'number' => 'a.number',
-//          'date' => 'a.creation',
+            //          'date' => 'a.creation',
         ];
         $states = [
             'in_seizure' => 0,
@@ -98,13 +107,14 @@ class BillRepository extends SearchRepository implements PaginableInterface
             'payed' => 2,
             'canceled' => -1,
         ];
-        
+
         $qb = $this->createQueryBuilder('a')
             ->select('a,b,c')
-                ->leftJoin('a.intervention', 'b')
-                ->leftJoin('a.lines', 'c')
+            ->leftJoin('a.intervention', 'b')
+            ->leftJoin('a.lines', 'c')
             ->setFirstResult(($page - 1) * $resultsByPage)
-            ->setMaxResults($resultsByPage);
+            ->setMaxResults($resultsByPage)
+        ;
         if (key_exists('state', $filters) && $filters['state'] !== null) {
             $state = str_replace('*', '', $filters['state']);
             if (key_exists($state, $states)) {
@@ -112,12 +122,12 @@ class BillRepository extends SearchRepository implements PaginableInterface
                 $qb->setParameter('state', $states[$state]);
             }
         }
-        
+
         if (key_exists('year', $filters) && $filters['year'] !== null) {
             $qb->andWhere('YEAR(a.creation) = :year');
             $qb->setParameter('year', $filters['year']);
         }
-        
+
         if (key_exists('sort', $filters)) {
             $sort = str_replace('!', '', $filters['sort']);
             if (key_exists($sort, $sorts)) {
@@ -125,58 +135,57 @@ class BillRepository extends SearchRepository implements PaginableInterface
                 $qb->orderBy($sorts[$sort], $order);
             }
         }
-    
+
         $query = $qb->getQuery();
-    
+
         return new Paginator($query);
     }
-    
+
     public function getAll($limit = 10, $offset = 0)
     {
         return $this->getByState(null, $limit, $offset);
     }
-    
+
     public function getCountAll()
     {
         return $this->getCount();
     }
-    
+
     public function getInSeizure($limit = 10, $offset = 0)
     {
         return $this->getByState(0, $limit, $offset);
     }
-    
+
     public function getCountInSeizure()
     {
         return $this->getCount(0);
     }
-    
+
     public function getSended($limit = 10, $offset = 0)
     {
         return $this->getByState(1, $limit, $offset);
     }
-    
+
     public function getCountSended()
     {
         return $this->getCount(1);
     }
-    
+
     public function getSendedMore45($limit = 10, $offset = 0)
     {
         $date = new \DateTime();
         $date->sub(new \DateInterval('P45D'));
         $qb = $this->createQueryBuilder('t');
         $qb->where('t.state = ?1')
-        ->andWhere('t.creation <= ?2')
-        ->setParameter(1, 1)
-        ->setParameter(2, $date->format('Y-m-d'))
-            
+            ->andWhere('t.creation <= ?2')
+            ->setParameter(1, 1)
+            ->setParameter(2, $date->format('Y-m-d'))
         ;
         $qb->orderBy('t.number', 'desc');
-    
+
         return $qb->getQuery()->getResult();
     }
-    
+
     public function get45Sended($limit = 10, $offset = 0)
     {
         $date = new \DateTime();
@@ -186,105 +195,126 @@ class BillRepository extends SearchRepository implements PaginableInterface
             ->andWhere('t.creation > ?2')
             ->setParameter(1, 1)
             ->setParameter(2, $date->format('Y-m-d'))
-            
-            ;
+        ;
         $qb->orderBy('t.number', 'desc');
-        
+
         return $qb->getQuery()->getResult();
     }
-    
+
     public function getCount45Sended()
     {
         $date = new \DateTime();
         $date->sub(new \DateInterval('P45D'));
         $qb = $this->createQueryBuilder('t')
-        ->select('count(t)')
-        ->where('t.state = ?1')
+            ->select('count(t)')
+            ->where('t.state = ?1')
             ->andWhere('t.creation > ?2')
             ->setParameter(1, 1)
             ->setParameter(2, $date->format('Y-m-d'))
-            
-            ;
+        ;
         $qb->orderBy('t.number', 'desc');
-        
+
         return $qb->getQuery()->getResult();
     }
-    
+
     public function getPayed($limit = 10, $offset = 0)
     {
         return $this->getByState(2, $limit, $offset);
     }
-    
+
     public function getCountPayed()
     {
         return $this->getCount(2);
     }
-    
+
     public function getCanceled($limit = 10, $offset = 0)
     {
         return $this->getByState(-1, $limit, $offset);
     }
-    
+
     public function getCountCanceled()
     {
         return $this->getCount(-1);
     }
-    
+
     public function getToBoost()
     {
         return $this->createQueryBuilder('a')
             ->select('a')
-            ->where('a.state = 1 AND a.firstBoost IS NULL AND DATE_ADD(a.creation, a.maturity, \'day\') < CURRENT_DATE()')
-            ->orWhere('a.state = 1 AND a.firstBoost IS NOT NULL AND a.secondBoost IS NULL AND DATE_ADD(a.firstBoost,a.maturity, \'day\') < CURRENT_DATE()')
-            ->orWhere('a.state = 1 AND a.firstBoost IS NOT NULL AND a.secondBoost IS NOT NULL AND DATE_ADD(a.secondBoost, 15, \'day\') < CURRENT_DATE()')
+            ->where(
+                'a.state = 1 AND a.firstBoost IS NULL AND DATE_ADD(a.creation, a.maturity, \'day\') < CURRENT_DATE()'
+            )
+            ->orWhere(
+                'a.state = 1 '
+                . 'AND a.firstBoost IS NOT NULL '
+                . 'AND a.secondBoost IS NULL '
+                . 'AND DATE_ADD(a.firstBoost,a.maturity, \'day\') < CURRENT_DATE()'
+            )
+            ->orWhere(
+                'a.state = 1 '
+                . 'AND a.firstBoost IS NOT NULL '
+                . 'AND a.secondBoost IS NOT NULL '
+                . 'AND DATE_ADD(a.secondBoost, 15, \'day\') < CURRENT_DATE()'
+            )
             ->orderBy('a.creation', 'ASC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+            ;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function getSearchQb()
     {
         return $this->createQueryBuilder('a')
-        ->select('a')
-        ->leftJoin('a.trustee', 'b')
+            ->select('a')
+            ->leftJoin('a.trustee', 'b')
             ->leftJoin('b.contact', 'f')
-        ->leftJoin('a.siteObject', 'c')
+            ->leftJoin('a.siteObject', 'c')
             ->leftJoin('c.address', 'd')
-                ->leftJoin('d.city', 'e')
-        ;
+            ->leftJoin('d.city', 'e')
+            ;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function getSearchParams()
     {
-        return ['a.number','f.name','d.street','e.name','a.trusteeName','a.reference','a.site','a.prelabel'];
+        return [
+            'a.number',
+            'f.name',
+            'd.street',
+            'e.name',
+            'a.trusteeName',
+            'a.reference',
+            'a.site',
+            'a.prelabel',
+        ];
     }
-    
+
     public function getFees($follower)
     {
         $qb = $this->createQueryBuilder('a')
             ->select('a')
             ->leftJoin('a.trustee', 'b')
-                ->leftJoin('b.contact', 'f')
+            ->leftJoin('b.contact', 'f')
             ->leftJoin('a.siteObject', 'c')
-                ->leftJoin('c.address', 'd')
-                    ->leftJoin('d.city', 'e')
+            ->leftJoin('c.address', 'd')
+            ->leftJoin('d.city', 'e')
             ->where('a.feesFollower = ?1')
             ->andWhere('a.state >= 0')
             ->orderBy('a.number', 'ASC')
-            ->setParameter(1, $follower);
-        
+            ->setParameter(1, $follower)
+        ;
+
         return $qb->getQuery()->getResult();
     }
-    
+
     public function getSells($year = null)
     {
-        $date = new \DateTime;
+        $date = new \DateTime();
         $year = ($year === null) ? $date->format('Y') : $year;
 
         $em = $this->getEntityManager();
@@ -298,9 +328,9 @@ class BillRepository extends SearchRepository implements PaginableInterface
 				a.designation as designation,
 				SUM( a.quantity ) AS qty,
 				SUM( a.quantity * a.unit_price) AS total';
-        
+
         $query = $em->createNativeQuery(
-            $query_select. '
+            $query_select . '
 				FROM bill_lines a
 			LEFT JOIN jlm_commerce_bill_join_bill_line b ON a.id = b.billline_id
 			LEFT JOIN bill c ON b.bill_id = c.id
@@ -311,13 +341,13 @@ class BillRepository extends SearchRepository implements PaginableInterface
             $rsm
         );
         $query->setParameter(1, $year);
-        
+
         return $query->getArrayResult();
     }
-    
+
     public function getDayBill()
     {
-        $date = new \DateTime;
+        $date = new \DateTime();
         $date->sub(new \DateInterval('P2M'));
         $qb = $this->createQueryBuilder('a')
             ->select('a')
@@ -326,10 +356,10 @@ class BillRepository extends SearchRepository implements PaginableInterface
             ->orderBy('a.creation', 'ASC')
             ->setParameter(1, $date)
         ;
-        
+
         return $qb->getQuery()->getResult();
     }
-    
+
     public function getTurnover($hash, \DateTime $begin = null, \DateTime $end = null, array $options = [])
     {
         $qb = $this->createQueryBuilder('a')
@@ -337,13 +367,14 @@ class BillRepository extends SearchRepository implements PaginableInterface
             ->where('a.fee IS NULL')
             ->groupBy('year, month')
             ->addOrderBy('year', 'ASC')
-            ->addOrderBy('month', 'ASC');
-        
+            ->addOrderBy('month', 'ASC')
+        ;
+
         $query = $qb->getQuery();
-        
+
         return $query->getArrayResult();
     }
-    
+
     public function getStateBill($fee)
     {
         $qb = $this->createQueryBuilder('a')
@@ -353,25 +384,26 @@ class BillRepository extends SearchRepository implements PaginableInterface
             ->andWhere('a.state > 0')
             ->orderBy('a.number')
             ->setParameter(1, \DateTime::createFromFormat('Y-m-d H:i:s', '2017-01-01 00:00:00'))
-            ->setParameter(2, \DateTime::createFromFormat('Y-m-d H:i:s', '2017-02-01 00:00:00'));
-        
+            ->setParameter(2, \DateTime::createFromFormat('Y-m-d H:i:s', '2017-02-01 00:00:00'))
+        ;
+
         $query = $qb->getQuery();
         $results = $query->getResult();
-        
+
         $return = [];
         foreach ($results as $result) {
             $return[] = [
-                    'date' => $result->getCreation()->format('d/m/Y'),
-                    'number' => $result->getNumber(),
-                    'manager' => $result->getTrusteeName(),
-                    'ht' => $result->getTotalPrice(),
-                    'tva' => $result->getTotalVat(),
-                    'ttc' => $result->getTotalPriceAti()
-                    
+                'date' => $result->getCreation()->format('d/m/Y'),
+                'number' => $result->getNumber(),
+                'manager' => $result->getTrusteeName(),
+                'ht' => $result->getTotalPrice(),
+                'tva' => $result->getTotalVat(),
+                'ttc' => $result->getTotalPriceAti(),
+
             ];
         }
-        
-        
+
+
         return $return;
     }
 }

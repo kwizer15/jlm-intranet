@@ -149,7 +149,11 @@ class Fee implements FeeInterface
      */
     public function setFrequence($frequence)
     {
-        $values = [1,2,4];
+        $values = [
+                   1,
+                   2,
+                   4,
+                  ];
         if (in_array($frequence, $values)) {
             $this->frequence = $frequence;
         }

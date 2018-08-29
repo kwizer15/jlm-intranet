@@ -34,10 +34,12 @@ class AskQuoteCountExtension extends \Twig_Extension implements \Twig_Extension_
     {
         $repo = $this->om->getRepository('JLMOfficeBundle:AskQuote');
         
-        return ['askquotecount' => [
-                'all' => $repo->getTotal(),
-                'untreated' => $repo->getCountUntreated(),
-                'treated' => $repo->getCountTreated(),
-        ]];
+        return [
+                'askquotecount' => [
+                                    'all'       => $repo->getTotal(),
+                                    'untreated' => $repo->getCountUntreated(),
+                                    'treated'   => $repo->getCountTreated(),
+                                   ],
+               ];
     }
 }

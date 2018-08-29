@@ -12,7 +12,7 @@ class SiteHiddenType extends AbstractHiddenType
     {
         return 'JLM\ModelBundle\Form\DataTransformer\SiteToIntTransformer';
     }
-    
+
     protected function getTypeName()
     {
         return 'site';

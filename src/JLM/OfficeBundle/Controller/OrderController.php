@@ -60,8 +60,8 @@ class OrderController extends Controller
                 'entities' => $entities,
                 'page'     => $page,
                 'nbPages'  => $nbPages,
-                'state' => $state,
-        ];
+                'state'    => $state,
+               ];
     }
     
     /**
@@ -73,7 +73,7 @@ class OrderController extends Controller
      */
     public function showAction(Order $entity)
     {
-        return ['entity'=> $entity];
+        return ['entity' => $entity];
     }
     
     /**
@@ -90,8 +90,8 @@ class OrderController extends Controller
         $form  = $this->createForm(new OrderType(), $entity);
         return [
                 'entity' => $entity,
-                'form'   => $form->createView()
-        ];
+                'form'   => $form->createView(),
+               ];
     }
     
     /**
@@ -123,9 +123,9 @@ class OrderController extends Controller
         }
     
         return [
-        'entity' => $entity,
-        'form'   => $form->createView()
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
     
     /**
@@ -142,9 +142,9 @@ class OrderController extends Controller
         }
         $editForm = $this->createForm(new OrderType(), $entity);
         return [
-                'entity'      => $entity,
-                'edit_form'   => $editForm->createView(),
-        ];
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
     
     /**
@@ -178,9 +178,9 @@ class OrderController extends Controller
         }
     
         return [
-                'entity'      => $entity,
-                'edit_form'   => $editForm->createView(),
-        ];
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
     
     /**
@@ -194,7 +194,7 @@ class OrderController extends Controller
         $response = new Response();
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', 'inline; filename='.$entity->getId().'.pdf');
-        $response->setContent($this->render('JLMOfficeBundle:Order:print.pdf.php', ['entity'=>[$entity]]));
+        $response->setContent($this->render('JLMOfficeBundle:Order:print.pdf.php', ['entity' => [$entity]]));
     
         //   return array('entity'=>$entity);
         return $response;
@@ -252,7 +252,7 @@ class OrderController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $list = $em->getRepository('JLMDailyBundle:Work')->getOrderTodo();
-        return ['entities'=>$list];
+        return ['entities' => $list];
     }
     
     /**
@@ -271,11 +271,14 @@ class OrderController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             return [
-                    'layout'=> ['form_search_query'=>$entity],
+                    'layout'   => ['form_search_query' => $entity],
                     'entities' => $em->getRepository('JLMOfficeBundle:Order')->search($entity),
-                    'query' => $entity->getQuery(),
-            ];
+                    'query'    => $entity->getQuery(),
+                   ];
         }
-        return ['layout'=>['form_search_query'=>$entity],'query' => $entity->getQuery(),];
+        return [
+                'layout' => ['form_search_query' => $entity],
+                'query'  => $entity->getQuery(),
+               ];
     }
 }

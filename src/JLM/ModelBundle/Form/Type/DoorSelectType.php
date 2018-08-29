@@ -14,7 +14,7 @@ class DoorSelectType extends AbstractType
      * @var ObjectManager
      */
     private $om;
-    
+
     /**
      * @param ObjectManager $om
      */
@@ -22,10 +22,10 @@ class DoorSelectType extends AbstractType
     {
         $this->om = $om;
     }
-    
+
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -37,16 +37,14 @@ class DoorSelectType extends AbstractType
     {
         return 'text';
     }
-    
+
     public function getName()
     {
         return 'door_select';
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'invalid_message' => 'The selected door does not exist',
-        ]);
+        $resolver->setDefaults(['invalid_message' => 'The selected door does not exist']);
     }
 }

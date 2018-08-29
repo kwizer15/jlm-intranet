@@ -37,14 +37,18 @@ class DefaultController extends Controller
                 $form = new Fixing();
                 $form->setDoor($door);
                 $form->setAskDate(new \DateTime);
-                $fixingForms[] = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(), new FixingType(), $form)->createView();
+                $fixingForms[] = $this->get('form.factory')->createNamed(
+                    'fixingNew'.$door->getId(),
+                    new FixingType(),
+                    $form
+                )->createView();
             }
             /* à la */
             return [
-                    'query'   => $formData['query'],
-                    'doors'   => $doors,
+                    'query'        => $formData['query'],
+                    'doors'        => $doors,
                     'fixing_forms' => $fixingForms,
-            ];
+                   ];
         }
         return [];
     }
@@ -69,12 +73,12 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         return [
-            'today' => $em->getRepository('JLMDailyBundle:Intervention')->getCountToday(),
-            'stopped' => $em->getRepository('JLMModelBundle:Door')->getCountStopped(),
-            'fixing' => $em->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),
-            'work'   => $em->getRepository('JLMDailyBundle:Work')->getCountOpened(),
-            'maintenance' => $em->getRepository('JLMDailyBundle:Maintenance')->getCountOpened(),
-        ];
+                'today'       => $em->getRepository('JLMDailyBundle:Intervention')->getCountToday(),
+                'stopped'     => $em->getRepository('JLMModelBundle:Door')->getCountStopped(),
+                'fixing'      => $em->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),
+                'work'        => $em->getRepository('JLMDailyBundle:Work')->getCountOpened(),
+                'maintenance' => $em->getRepository('JLMDailyBundle:Maintenance')->getCountOpened(),
+               ];
     }
     
     /**
@@ -88,6 +92,6 @@ class DefaultController extends Controller
         $form   = $this->createForm(new DatepickerType(), $entity);
         return [
                 'form' => $form->createView(),
-        ];
+               ];
     }
 }

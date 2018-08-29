@@ -225,7 +225,7 @@ class Fixing extends Intervention implements FixingInterface
         if ($due !== null) {
             $cause = ($due->getId() != 4) ? 'e '.strtolower($due->getName()) : ' dysfonctionnement';
             $out .= $cause.' sur les éléments d';
-            $suite = (in_array(substr($part, 0, 1), ['a','e','i','o','u'])) ? '\'' : 'e ';
+            $suite = (in_array(substr($part, 0, 1), ['a', 'e', 'i', 'o', 'u'])) ? '\'' : 'e ';
                 
             return $out.$suite.$part.'.';
         }
@@ -251,7 +251,10 @@ class Fixing extends Intervention implements FixingInterface
                 return $out . 'à la mise à l\'arrêt et à la sécurisation de l\'installation.';
             case 4:
             case 5:
-                return $out . 'à de multiples réglages et essais sur l\'installation. Merci de nous tenir informé si le problème persiste.';
+                return $out
+                    . 'à de multiples réglages et essais sur l\'installation.'
+                    . ' Merci de nous tenir informé si le problème persiste.'
+                ;
             case 6:
                 return $out . 'à la dépose des pièces concernées pour analyse en atelier.';
             default:

@@ -26,13 +26,19 @@ class FixingTakenMailBuilder extends FixingMailBuilder
     {
         $this->setBody(
             'Bonjour,'.chr(10)
-            .chr(10)
-            .'La demande d\'intervention du '.$this->getFixing()->getAskDate()->format('d/m/Y à H\hi').' pour l\'installation : '.chr(10)
-            .$this->getFixing()->getInstallationCode().chr(10)
-            .$this->getFixing()->getPlace().chr(10)
-            .chr(10)
-            .'à bien été prise en compte par nos services.'.chr(10)
-            .$this->_getSignature()
+            . chr(10)
+            . 'La demande d\'intervention du '
+            . $this->getFixing()->getAskDate()->format('d/m/Y à H\hi')
+            . ' pour l\'installation : '
+            . chr(10)
+            . $this->getFixing()->getInstallationCode()
+            . chr(10)
+            . $this->getFixing()->getPlace()
+            . chr(10)
+            . chr(10)
+            . 'à bien été prise en compte par nos services.'
+            . chr(10)
+            . $this->getSignature()
         );
     }
 }

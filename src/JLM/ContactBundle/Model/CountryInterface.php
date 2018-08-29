@@ -22,14 +22,14 @@ interface CountryInterface
      * @return string
      */
     public function getCode();
-    
+
     /**
      * Get name
      *
      * @return string
      */
     public function getName();
-    
+
     /**
      * To string
      *

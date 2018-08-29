@@ -14,17 +14,17 @@ class TaskList extends FPDFext
     {
 
         $pdf = new self();
-        $pdf->_init();
+        $pdf->init();
         $pdf->addPage();
 
     //  var_dump($entities); exit;
         foreach ($entities as $entity) {
-            $pdf->_line($entity);
+            $pdf->customLine($entity);
         }
         return $pdf->Output('', 'S');
     }
     
-    public function _init()
+    public function init()
     {
         $this->aliasNbPages();
         $this->setFillColor(200);
@@ -39,7 +39,7 @@ class TaskList extends FPDFext
         $this->cell(30, 6, 'Notes', 1, 1, 'L', 1);
     }
     
-    public function _line(Task $entity)
+    public function customLine(Task $entity)
     {
         $this->setFont('Arial', '', 11);
         $h = 0;

@@ -22,15 +22,15 @@ class CityTest extends \PHPUnit_Framework_TestCase
      * @var City
      */
     protected $entity;
-    
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->entity = new City;
+        $this->entity = new City();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -43,7 +43,7 @@ class CityTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->entity->getCountry());
         $this->assertSame('', $this->entity->__toString());
     }
-    
+
     /**
      * Get names
      *
@@ -52,13 +52,25 @@ class CityTest extends \PHPUnit_Framework_TestCase
     public function getNames()
     {
         return [
-            ['paris', 'Paris'],
-            ['MONTPELLIER', 'Montpellier'],
-            ['bouLOgNe-biLLancOuRt', 'Boulogne-Billancourt'],
-            ['Paris 13 Buttes-Chaumonts', 'Paris 13 Buttes-Chaumonts'],
+            [
+                'paris',
+                'Paris',
+            ],
+            [
+                'MONTPELLIER',
+                'Montpellier',
+            ],
+            [
+                'bouLOgNe-biLLancOuRt',
+                'Boulogne-Billancourt',
+            ],
+            [
+                'Paris 13 Buttes-Chaumonts',
+                'Paris 13 Buttes-Chaumonts',
+            ],
         ];
     }
-    
+
     /**
      * @dataProvider getNames
      */
@@ -67,7 +79,7 @@ class CityTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->entity, $this->entity->setName($in));
         $this->assertSame($out, $this->entity->getName());
     }
-    
+
     /**
      * Get zips
      *
@@ -76,15 +88,33 @@ class CityTest extends \PHPUnit_Framework_TestCase
     public function getZips()
     {
         return [
-            ['77280','77280'],
-            ['2B280','2B280'],
-            ['2a280','2A280'],
-            ['dCg-Pt3','DCG-PT3'],
-            [52364, '52364'],
-            ['?',''],
+            [
+                '77280',
+                '77280',
+            ],
+            [
+                '2B280',
+                '2B280',
+            ],
+            [
+                '2a280',
+                '2A280',
+            ],
+            [
+                'dCg-Pt3',
+                'DCG-PT3',
+            ],
+            [
+                52364,
+                '52364',
+            ],
+            [
+                '?',
+                '',
+            ],
         ];
     }
-    
+
     /**
      * @dataProvider getZips
      */
@@ -93,7 +123,7 @@ class CityTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->entity, $this->entity->setZip($in));
         $this->assertSame($out, $this->entity->getZip());
     }
-    
+
     /**
      * Get countries
      *
@@ -106,7 +136,7 @@ class CityTest extends \PHPUnit_Framework_TestCase
             [$this->getMock('JLM\ContactBundle\Model\CountryInterface')],
         ];
     }
-    
+
     /**
      * @dataProvider getCountries
      */
@@ -115,7 +145,7 @@ class CityTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->entity, $this->entity->setCountry($country));
         $this->assertSame($country, $this->entity->getCountry());
     }
-    
+
     /**
      * Get toStrings
      *
@@ -124,14 +154,18 @@ class CityTest extends \PHPUnit_Framework_TestCase
     public function getToStrings()
     {
         return [
-            [77280, 'othis', '77280 - Othis'],
+            [
+                77280,
+                'othis',
+                '77280 - Othis',
+            ],
         ];
     }
-    
+
     /**
      * @dataProvider getToStrings
      */
-    public function test__toString($zip, $name, $out)
+    public function testToString($zip, $name, $out)
     {
         $this->entity->setZip($zip)->setName($name);
         $this->assertEquals($out, $this->entity->__toString());

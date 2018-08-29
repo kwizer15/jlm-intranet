@@ -22,11 +22,11 @@ class CoreExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
     {
         return 'core_extension';
     }
-    
+
     public function getGlobals()
     {
         return [
-            'today' => new \DateTime()
+            'today' => new \DateTime(),
         ];
     }
 }

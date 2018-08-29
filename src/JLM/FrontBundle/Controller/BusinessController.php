@@ -28,7 +28,7 @@ class BusinessController extends Controller
     public function tabAction()
     {
     }
-    
+
     public function listAction()
     {
         $request = $this->get('request');
@@ -57,10 +57,10 @@ class BusinessController extends Controller
 
         // Filtre pour les contrats actuels
         $doors = $activeBusiness->getDoors();
-        $businessDoors    = [];
+        $businessDoors = [];
         $lastsMaintenance = [];
-        $lastsFixing      = [];
-        $askQuoteForms    = [];
+        $lastsFixing = [];
+        $askQuoteForms = [];
         $qs = [];
         foreach ($doors as $key => $door) {
             $contract = $door->getActualContract();
@@ -71,12 +71,16 @@ class BusinessController extends Controller
                 usort(
                     $lastsFixing[$key],
                     function ($a, $b) {
-                            return ($a->getLastDate() < $b->getLastDate()) ? 1 : (($a->getLastDate() == $b->getLastDate()) ? 0 : -1);
+                        return ($a->getLastDate() < $b->getLastDate()) ? 1
+                            : (($a->getLastDate() == $b->getLastDate()) ? 0 : -1);
                     }
                 );
-                $lastsFixing[$key] = array_filter($lastsFixing[$key], function ($item) {
-                    return !$item instanceof Maintenance;
-                });
+                $lastsFixing[$key] = array_filter(
+                    $lastsFixing[$key],
+                    function ($item) {
+                        return !$item instanceof Maintenance;
+                    }
+                );
                 $qs[$key] = $om->getRepository('JLMCommerceBundle:Quote')->getSendedByDoor($door, 12);
                 $askQuoteForms[$key] = [];
                 foreach ($qs[$key] as $quote) {
@@ -86,8 +90,10 @@ class BusinessController extends Controller
                 }
             }
         }
-        
-        return $this->render('JLMFrontBundle:Business:list.html.twig', [
+
+        return $this->render(
+            'JLMFrontBundle:Business:list.html.twig',
+            [
                 'manager' => $manager,
                 'businesses' => $sites,
                 'activeBusiness' => $activeBusiness,
@@ -96,31 +102,36 @@ class BusinessController extends Controller
                 'lastsFixing' => $lastsFixing,
                 'quotes' => $qs,
                 'askQuoteForms' => $askQuoteForms,
-        ]);
+            ]
+        );
     }
-    
+
     public function askquoteAction()
     {
         $request = $this->getRequest();
         $form = $this->createAskQuoteForm();
         $form->handleRequest($request);
-    
+
         if ($success = $form->isValid()) {
             $this->container->get('jlm_front.mailer')->sendAskQuoteEmailMessage($form->getData());
             $this->container->get('jlm_front.mailer')->sendConfirmAskQuoteEmailMessage($form->getData());
         }
-         
+
         return new JsonResponse(['success' => $success]);
     }
-    
+
     private function createAskQuoteForm()
     {
-        $form = $this->createForm('jlm_front_askquotetype', null, [
-            'action' => $this->generateUrl('jlm_front_business_askquote'),
-            'method' => 'POST',
-        ]);
+        $form = $this->createForm(
+            'jlm_front_askquotetype',
+            null,
+            [
+                'action' => $this->generateUrl('jlm_front_business_askquote'),
+                'method' => 'POST',
+            ]
+        );
         $form->add('submit', 'submit');
-        
+
         return $form;
     }
 }

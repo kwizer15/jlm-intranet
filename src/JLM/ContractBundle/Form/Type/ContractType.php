@@ -27,14 +27,17 @@ class ContractType extends AbstractType
     {
         $builder
             ->add('door', 'door_hidden')
-            ->add('trustee', 'trustee_select', ['label'=>'Syndic'])
-            ->add('number', null, ['label'=>'Numéro'])
-            ->add('complete', 'choice', ['label'=>'Type','choices'=>['0'=>'Normal','1'=>'Complet']])
-            ->add('option', 'choice', ['label'=>'Option','choices'=>['0'=>'24/24h 7/7j','1'=>'8h30-17h30 du lundi au vendredi']])
-            ->add('begin', 'datepicker', ['label'=>'Début du contrat'])
-            ->add('endWarranty', 'datepicker', ['label'=>'Fin de garantie','required'=>false])
-            ->add('fee', 'money', ['label'=>'Redevance annuelle','grouping'=>true])
-            
+            ->add('trustee', 'trustee_select', ['label' => 'Syndic'])
+            ->add('number', null, ['label' => 'Numéro'])
+            ->add('complete', 'choice', ['label' => 'Type', 'choices' => ['0' => 'Normal', '1' => 'Complet']])
+            ->add(
+                'option',
+                'choice',
+                ['label' => 'Option', 'choices' => ['0' => '24/24h 7/7j', '1' => '8h30-17h30 du lundi au vendredi']]
+            )
+            ->add('begin', 'datepicker', ['label' => 'Début du contrat'])
+            ->add('endWarranty', 'datepicker', ['label' => 'Fin de garantie', 'required' => false])
+            ->add('fee', 'money', ['label' => 'Redevance annuelle', 'grouping' => true])
         ;
     }
 
@@ -45,15 +48,17 @@ class ContractType extends AbstractType
     {
         return 'jlm_contract_contract';
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => 'JLM\ContractBundle\Entity\Contract',
-            'label' => 'Contrat',
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => 'JLM\ContractBundle\Entity\Contract',
+                'label' => 'Contrat',
+            ]
+        );
     }
 }

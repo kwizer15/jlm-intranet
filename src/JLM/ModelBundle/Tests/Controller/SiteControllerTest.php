@@ -23,7 +23,7 @@ class SiteControllerTest extends WebTestCase
      * @var Symfony\Bundle\FrameworkBundle\Client
      */
     private $client;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -31,34 +31,36 @@ class SiteControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
     }
-    
+
     public function testShow()
     {
         $this->client->followRedirects();
-        
+
         $crawler = $this->client->request('GET', '/model/site/new?trustee=1');
         // Page d'identification (a supprimer plus tard)
         $crawler = $this->login($crawler);
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
-    
+
     public function testEdit()
     {
         $this->client->followRedirects();
-    
+
         $crawler = $this->client->request('GET', '/model/site/1/edit');
         // Page d'identification (a supprimer plus tard)
         $crawler = $this->login($crawler);
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
+
     /**
      * Log the user
+     *
      * @param Crawler $crawler
      */
     private function login($crawler)
     {
         $form = $crawler->selectButton('_submit')->form();
-        
+
         // définit certaines valeurs
         $form['_username'] = 'kwizer';
         $form['_password'] = 'sslover';

@@ -23,38 +23,38 @@ abstract class UploadDocument
      * @var string
      */
     private $path;
-    
+
     /**
      * @Assert\File(maxSize="6000000")
      */
     private $file;
-    
+
     public function getAbsolutePath()
     {
-        return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
+        return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
     }
-    
+
     public function getWebPath()
     {
-        return null === $this->path ? null : $this->getUploadDir().'/'.$this->path;
+        return null === $this->path ? null : $this->getUploadDir() . '/' . $this->path;
     }
-    
+
     protected function getUploadRootDir()
     {
         // le chemin absolu du répertoire où les documents uploadés doivent être sauvegardés
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
-    
+
     abstract protected function getUploadDir();
-    
+
     public function preUpload()
     {
         if (null !== $this->file) {
             // nom unique
-            $this->path = sha1(uniqid(mt_rand(), true)).'.'.$this->file->guessExtension();
+            $this->path = sha1(uniqid(mt_rand(), true)) . '.' . $this->file->guessExtension();
         }
     }
-    
+
     public function upload()
     {
         // la propriété « file » peut être vide si le champ n'est pas requis
@@ -64,7 +64,7 @@ abstract class UploadDocument
         $this->file->move($this->getUploadRootDir(), $this->path);
         unset($this->file);
     }
-    
+
     public function removeUpload()
     {
         if ($file = $this->getAbsolutePath()) {
@@ -76,12 +76,13 @@ abstract class UploadDocument
      * Set path
      *
      * @param string $path
+     *
      * @return UploadDocument
      */
     public function setPath($path)
     {
         $this->path = $path;
-    
+
         return $this;
     }
 
@@ -94,7 +95,7 @@ abstract class UploadDocument
     {
         return $this->path;
     }
-    
+
     /**
      * Get file
      *
@@ -104,7 +105,7 @@ abstract class UploadDocument
     {
         return $this->file;
     }
-    
+
     /**
      * Get file
      *

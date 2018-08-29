@@ -22,33 +22,46 @@ class CountryTest extends \PHPUnit_Framework_TestCase
      * @var Country
      */
     protected $entity;
-    
+
     protected function setUp()
     {
-        $this->entity = new Country;
+        $this->entity = new Country();
     }
-    
+
     protected function assertPreConditions()
     {
         $this->assertInstanceOf('JLM\ContactBundle\Model\CountryInterface', $this->entity);
         $this->assertNull($this->entity->getCode());
         $this->assertSame('', $this->entity->getName());
     }
-    
+
     /**
      * Valid codes
+     *
      * @return array
      */
     public function getValidCodes()
     {
         return [
-            [' france', 'FR'],
-            ['bElGiQuE', 'BE'],
-            ['LU', 'LU'],
-            ['an?g4ds52', 'AN'],
+            [
+                ' france',
+                'FR',
+            ],
+            [
+                'bElGiQuE',
+                'BE',
+            ],
+            [
+                'LU',
+                'LU',
+            ],
+            [
+                'an?g4ds52',
+                'AN',
+            ],
         ];
     }
-    
+
     /**
      * @dataProvider getValidCodes
      */
@@ -57,9 +70,10 @@ class CountryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->entity, $this->entity->setCode($in));
         $this->assertSame($out, $this->entity->getCode());
     }
-    
+
     /**
      * Unvalid codes
+     *
      * @return array
      */
     public function getUnvalidCodes()
@@ -72,7 +86,7 @@ class CountryTest extends \PHPUnit_Framework_TestCase
             ['e2e'],
         ];
     }
-    
+
     /**
      * @dataProvider getUnvalidCodes
      * @expectedException Exception
@@ -84,20 +98,39 @@ class CountryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Names
+     *
      * @return array
      */
     public function getNames()
     {
         return [
-            ['france', 'France'],
-            ['bElGiQuE', 'Belgique'],
-            ['LU', 'Lu'],
-            ['2', ''],
-            ['M', 'M'],
-            ['n', 'N'],
+            [
+                'france',
+                'France',
+            ],
+            [
+                'bElGiQuE',
+                'Belgique',
+            ],
+            [
+                'LU',
+                'Lu',
+            ],
+            [
+                '2',
+                '',
+            ],
+            [
+                'M',
+                'M',
+            ],
+            [
+                'n',
+                'N',
+            ],
         ];
     }
-    
+
     /**
      * @dataProvider getNames
      */
@@ -106,7 +139,7 @@ class CountryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->entity, $this->entity->setName($in));
         $this->assertSame($out, $this->entity->getName());
     }
-    
+
     /**
      * @dataProvider getNames
      */

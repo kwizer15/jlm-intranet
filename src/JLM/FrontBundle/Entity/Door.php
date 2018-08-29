@@ -22,12 +22,12 @@ class Door implements InstallationInterface
      * @var int
      */
     private $id;
-    
+
     /**
      * @var string
      */
     private $code;
-    
+
     /**
      * @return int
      */
@@ -35,7 +35,7 @@ class Door implements InstallationInterface
     {
         return $this->id;
     }
-    
+
     /**
      * @return string
      */
@@ -43,7 +43,7 @@ class Door implements InstallationInterface
     {
         return $this->code;
     }
-    
+
     /**
      * @return bool
      */
@@ -51,18 +51,17 @@ class Door implements InstallationInterface
     {
         return ($this->code !== null);
     }
-    
-    
-    
+
+
     // Non implementé
     public function getObservations()
     {
     }
-    
+
     public function getEndWarranty()
     {
     }
-    
+
     public function isUnderWarranty()
     {
     }
@@ -70,11 +69,11 @@ class Door implements InstallationInterface
     public function getWidth()
     {
     }
-    
+
     public function getHeight()
     {
     }
-    
+
     public function getActualContract()
     {
     }

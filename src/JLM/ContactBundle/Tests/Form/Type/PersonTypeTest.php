@@ -32,12 +32,12 @@ class PersonTypeTest extends TypeTestCase
      * @var AddressType
      */
     protected $type;
-    
+
     /**
      * @var Address
      */
     protected $object;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -51,22 +51,27 @@ class PersonTypeTest extends TypeTestCase
         $contactphonecollection = new ContactPhoneCollectionType();
         $contactphone = new ContactPhoneType();
         $phone = new PhoneType();
-        return [new PreloadedExtension([
-            $address->getName() => $address,
-            $city->getName() => $city,
-            $s2->getName() => $s2,
-            $contact->getName() => $contact,
-            $contactphonecollection->getName() => $contactphonecollection,
-            $contactphone->getName() => $contactphone,
-            $phone->getName() => $phone,
-        ], [])];
+        return [
+            new PreloadedExtension(
+                [
+                    $address->getName() => $address,
+                    $city->getName() => $city,
+                    $s2->getName() => $s2,
+                    $contact->getName() => $contact,
+                    $contactphonecollection->getName() => $contactphonecollection,
+                    $contactphone->getName() => $contactphone,
+                    $phone->getName() => $phone,
+                ],
+                []
+            ),
+        ];
     }
-    
+
     public function testCreateForm()
     {
-        $this->type = new PersonType;
+        $this->type = new PersonType();
         $form = $this->factory->create($this->type);
-        
-        $this->object = new Person;
+
+        $this->object = new Person();
     }
 }

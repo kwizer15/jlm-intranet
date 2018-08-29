@@ -55,7 +55,7 @@ class ObjectToStringAutocreateTransformer implements DataTransformerInterface
     {
         $class = $this->entityClass;
         if ($entity instanceof $class) {
-            $getter = $this->_getUniqueGetFunction();
+            $getter = $this->getUniqueGetFunction();
             
             if (method_exists($entity, $getter)) {
                 return $entity->$getter();
@@ -83,9 +83,9 @@ class ObjectToStringAutocreateTransformer implements DataTransformerInterface
         $entity = $this->om->getRepository($class)->findOneBy([$param => $name]);
         if (null === $entity) {
             $entity = new $class();
-            $setter = $this->_getUniqueSetFunction();
+            $setter = $this->getUniqueSetFunction();
             $entity->$setter($name);
-            $entity = $this->_initEntity($entity);
+            $entity = $this->initEntity($entity);
             $this->om->persist($entity);
         }
 
@@ -96,7 +96,7 @@ class ObjectToStringAutocreateTransformer implements DataTransformerInterface
      * Get getter method name
      * @return string
      */
-    private function _getUniqueGetFunction()
+    private function getUniqueGetFunction()
     {
         return 'get'.ucwords($this->parameterName);
     }
@@ -105,12 +105,12 @@ class ObjectToStringAutocreateTransformer implements DataTransformerInterface
      * Get setter method name
      * @return string
      */
-    private function _getUniqueSetFunction()
+    private function getUniqueSetFunction()
     {
         return 'set'.ucwords($this->parameterName);
     }
     
-    protected function _initEntity($entity)
+    protected function initEntity($entity)
     {
         return $entity;
     }

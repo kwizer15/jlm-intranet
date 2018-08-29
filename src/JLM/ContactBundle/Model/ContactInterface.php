@@ -23,32 +23,32 @@ interface ContactInterface
      * @return string
      */
     public function getFax();
-    
+
     /**
      * Get email
      *
      * @return string
      */
     public function getEmail();
-    
+
     /**
      * Get address
      *
      * @return AddressInterface
      */
     public function getAddress();
-    
+
     /**
      * Get first name
      *
      * @return string
      */
     public function getName();
-    
+
     /**
      * To String
      *
      * @return string
-    */
+     */
     public function __toString();
 }

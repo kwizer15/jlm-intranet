@@ -19,15 +19,15 @@ use JLM\CommerceBundle\Builder\VariantBillBuilder;
 class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
 {
     private $builder;
-    
+
     private $variant;
-    
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        
+
         $door = $this->getMock('JLM\ModelBundle\Entity\Door');
         $vat = $this->getMock('JLM\CommerceBundle\Model\VATInterface');
         $vat->expects($this->any())->method('getRate')->will($this->returnValue('0.20'));
@@ -52,7 +52,7 @@ class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
         $quote = $this->getMock('JLM\CommerceBundle\Model\QuoteInterface');
         $quote->expects($this->any())->method('getAsk')->will($this->returnValue($ask));
         $quote->expects($this->any())->method('getDoor')->will($this->returnValue($door));
-        
+
         $this->variant = $this->getMock('JLM\CommerceBundle\Model\QuoteVariantInterface');
         $this->variant->expects($this->any())->method('getNumber')->will($this->returnValue('14120001-1'));
         $this->variant->expects($this->any())->method('getQuote')->will($this->returnValue($quote));
@@ -60,7 +60,7 @@ class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
         $this->variant->expects($this->any())->method('getLines')->will($this->returnValue([]));
         $this->builder = new VariantBillBuilder($this->variant);
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -69,7 +69,7 @@ class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('JLM\CommerceBundle\Builder\BillBuilderInterface', $this->builder);
         $this->builder->create();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -77,33 +77,36 @@ class VariantBillBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('JLM\CommerceBundle\Model\BillInterface', $this->builder->getBill());
     }
-    
+
     public function testBuildLines()
     {
         $this->builder->buildLines();
     }
-    
+
     public function testBuildBusiness()
     {
         $this->builder->buildBusiness();
     }
-    
+
     public function testBuildConditions()
     {
         $this->builder->buildConditions();
     }
-    
+
     public function testBuildCustomer()
     {
         $this->builder->buildCustomer();
     }
-    
+
     public function testBuildReference()
     {
         $this->builder->buildReference();
-        $this->assertEquals('Selon votre accord sur notre devis n°14120001-1', $this->builder->getBill()->getReference());
+        $this->assertEquals(
+            'Selon votre accord sur notre devis n°14120001-1',
+            $this->builder->getBill()->getReference()
+        );
     }
-    
+
     public function testBuildDetails()
     {
         $door = $this->getMock('JLM\ModelBundle\Entity\Door');

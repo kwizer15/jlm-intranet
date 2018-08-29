@@ -21,6 +21,7 @@ class MailFactory
     /**
      *
      * @param MailBuilderInterface $builder
+     *
      * @return mixed
      */
     public static function create(MailBuilderInterface $builder)
@@ -34,7 +35,7 @@ class MailFactory
         $builder->buildBody();
         $builder->buildPreAttachements();
         $builder->buildAttachements();
-        
+
         return $builder->getMail();
     }
 }

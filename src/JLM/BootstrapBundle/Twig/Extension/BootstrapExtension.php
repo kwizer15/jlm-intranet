@@ -28,7 +28,7 @@ class BootstrapExtension extends \Twig_Extension
         return [
                 new \Twig_SimpleFilter('icon', [$this, 'iconFilter'], ['is_safe' => ['all']]),
                 new \Twig_SimpleFilter('badge', [$this, 'badgeFilter'], ['is_safe' => ['all']]),
-        ];
+               ];
     }
     
     public function iconFilter($iconName, $white = false, $version = '3.3.5')
@@ -47,6 +47,6 @@ class BootstrapExtension extends \Twig_Extension
     {
         return [
                 'twbs' => ['version' => 3],
-        ];
+               ];
     }
 }

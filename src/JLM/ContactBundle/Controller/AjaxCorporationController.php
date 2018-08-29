@@ -36,10 +36,10 @@ class AjaxCorporationController extends Controller
         $page_limit = $request->get('page_limit');
         $em = $this->getDoctrine()->getManager();
         $contacts = $em->getRepository('JLMContactBundle:Corporation')->getArray($term, $page_limit);
-        
+
         return new JsonResponse(['corporations' => $contacts]);
     }
-    
+
     /**
      * Person json
      */
@@ -49,7 +49,7 @@ class AjaxCorporationController extends Controller
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
         $contact = $em->getRepository('JLMContactBundle:Corporation')->getByIdToArray($id);
-    
+
         return new JsonResponse($contact);
     }
 }

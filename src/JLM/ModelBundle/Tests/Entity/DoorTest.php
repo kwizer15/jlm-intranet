@@ -22,29 +22,29 @@ class DoorTest extends \PHPUnit_Framework_TestCase
      * @var Country
      */
     protected $entity;
-    
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->entity = new Door;
+        $this->entity = new Door();
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function assertPreConditions()
     {
     }
-    
+
     public function testAdministrator()
     {
         $admin = $this->getMock('JLM\CondominiumBundle\Model\AdministratorInterface');
         $this->assertSame($this->entity, $this->entity->setAdministrator($admin));
         $this->assertSame($admin, $this->entity->getAdministrator());
     }
-    
+
     public function testParts()
     {
         $product = $this->getMock('JLM\ProductBundle\Model\ProductInterface');

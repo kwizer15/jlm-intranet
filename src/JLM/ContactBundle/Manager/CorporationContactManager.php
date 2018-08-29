@@ -19,7 +19,7 @@ use JLM\ContactBundle\Form\Type\CorporationContactType;
  */
 class CorporationContactManager extends Manager
 {
-   
+
     /**
      * {@inheritdoc}
      */
@@ -32,7 +32,7 @@ class CorporationContactManager extends Manager
                     'route' => 'jlm_contact_corporationcontact_create',
                     'params' => [],
                     'label' => 'Créer',
-                    'type'  => new CorporationContactType(),
+                    'type' => new CorporationContactType(),
                     'entity' => null,
                 ];
             case 'edit':
@@ -41,7 +41,7 @@ class CorporationContactManager extends Manager
                     'route' => 'jlm_contact_corporationcontact_update',
                     'params' => ['id' => $options['entity']->getId()],
                     'label' => 'Modifier',
-                    'type'  => new CorporationContactType(),
+                    'type' => new CorporationContactType(),
                     'entity' => $options['entity'],
                 ];
             case 'delete':
@@ -50,37 +50,37 @@ class CorporationContactManager extends Manager
                     'route' => 'jlm_contact_corporationcontact_delete',
                     'params' => ['id' => $options['entity']->getId()],
                     'label' => 'Supprimer',
-                    'type'  => 'form',
+                    'type' => 'form',
                     'entity' => $options['entity'],
                 ];
         }
 
         return parent::getFormParam($name, $options);
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function populateForm($form)
     {
         $params = [
-                'corporation' => 'JLMContactBundle:Corporation',
-                'person' => 'JLMContactBundle:Person',
+            'corporation' => 'JLMContactBundle:Corporation',
+            'person' => 'JLMContactBundle:Person',
         ];
         foreach ($params as $param => $repo) {
             if ($data = $this->setterFromRequest($param, $repo)) {
                 $form->get($param)->setData($data);
             }
         }
-    
+
         return $form;
     }
-    
+
     public function getEditUrl($id)
     {
         return $this->router->generate('jlm_contact_corporationcontact_edit', ['id' => $id]);
     }
-    
+
     public function getDeleteUrl($id)
     {
         return $this->router->generate('jlm_contact_corporationcontact_confirmdelete', ['id' => $id]);

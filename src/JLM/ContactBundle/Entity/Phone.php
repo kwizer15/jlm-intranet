@@ -22,44 +22,49 @@ class Phone implements PhoneInterface
      * @var int
      */
     private $id;
-    
+
     /**
      * @var string
      */
     private $number;
-    
+
     /**
      * Get id
+     *
      * @return number
      */
     public function getId()
     {
         return $this->id;
     }
-    
+
     /**
      * Set number
+     *
      * @param string $number
+     *
      * @return self
      */
     public function setNumber($number)
     {
         $this->number = $number;
-    
+
         return $this;
     }
-    
+
     /**
      * Get number
+     *
      * @return string
      */
     public function getNumber()
     {
         return $this->number;
     }
-    
+
     /**
      * To string
+     *
      * @return string
      */
     public function __toString()

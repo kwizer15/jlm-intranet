@@ -11,17 +11,15 @@ class RecuperationEquipmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('technician', null, ['label'=>'Technicien'])
-            ->add('begin', 'datepicker', ['label'=>'Date'])
-            ->add('shifting', new EquipmentType, ['label'=>'Récupération'])
+            ->add('technician', null, ['label' => 'Technicien'])
+            ->add('begin', 'datepicker', ['label' => 'Date'])
+            ->add('shifting', new EquipmentType, ['label' => 'Récupération'])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => 'JLM\DailyBundle\Entity\ShiftTechnician'
-        ]);
+        $resolver->setDefaults(['data_class' => 'JLM\DailyBundle\Entity\ShiftTechnician']);
     }
 
     public function getName()

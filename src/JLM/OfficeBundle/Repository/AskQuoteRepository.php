@@ -132,7 +132,11 @@ class AskQuoteRepository extends SearchRepository
      */
     protected function getSearchParams()
     {
-        return ['d.street','f.street','g.name'];
+        return [
+                'd.street',
+                'f.street',
+                'g.name',
+               ];
     }
 
     /**
@@ -140,6 +144,6 @@ class AskQuoteRepository extends SearchRepository
      */
     protected function getSearchOrderBy()
     {
-        return ['a.creation'=>'asc'];
+        return ['a.creation' => 'asc'];
     }
 }

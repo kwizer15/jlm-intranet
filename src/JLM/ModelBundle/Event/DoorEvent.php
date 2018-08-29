@@ -25,14 +25,14 @@ class DoorEvent extends RequestEvent
 
     /**
      * @param FormInterface $form
-     * @param Request $request
+     * @param Request       $request
      */
     public function __construct(Door $door, Request $request)
     {
         $this->door = $door;
         parent::__construct($request);
     }
-    
+
     public function getDoor()
     {
         return $this->door;

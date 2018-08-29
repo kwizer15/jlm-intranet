@@ -1,4 +1,5 @@
 <?php
+
 namespace JLM\CommerceBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -15,7 +16,7 @@ use JLM\CommerceBundle\Event\QuoteVariantEvent;
 
 class EventSubscriber implements EventSubscriberInterface
 {
-   
+
     public static function getSubscribedEvents()
     {
         return [
@@ -28,44 +29,68 @@ class EventSubscriber implements EventSubscriberInterface
             JLMCommerceEvents::QUOTEVARIANT_GIVEN => 'createQuoteVariantGivenEvent',
         ];
     }
-    
+
     public function createQuoteCreationEvent(DoctrineEvent $event)
     {
         $event->getEntity()->addEvent(Quote::EVENT_CREATION, []);
     }
-    
+
     public function createQuoteModifiedEvent(DoctrineEvent $event)
     {
         $event->getEntity()->addEvent(Quote::EVENT_MODIFIED, []);
     }
-    
+
     public function createQuoteVariantCreationEvent(DoctrineEvent $event)
     {
-        $event->getEntity()->getQuote()->addEvent(Quote::EVENT_CREATION, ['variant'=>$event->getEntity()->getNumber()]);
+        $event->getEntity()->getQuote()->addEvent(
+            Quote::EVENT_CREATION,
+            ['variant' => $event->getEntity()->getNumber()]
+        )
+        ;
     }
-    
+
     public function createQuoteVariantGivenEvent(QuoteVariantEvent $event)
     {
-        $event->getQuoteVariant()->getQuote()->addEvent(Quote::EVENT_GIVEN, ['variant'=>$event->getQuoteVariant()->getNumber()]);
+        $event->getQuoteVariant()->getQuote()->addEvent(
+            Quote::EVENT_GIVEN,
+            ['variant' => $event->getQuoteVariant()->getNumber()]
+        )
+        ;
     }
-    
+
     public function createQuoteVariantSendedEvent(QuoteVariantEvent $event)
     {
-        $event->getQuoteVariant()->getQuote()->addEvent(Quote::EVENT_SEND, ['variant'=>$event->getQuoteVariant()->getNumber()]);
+        $event->getQuoteVariant()->getQuote()->addEvent(
+            Quote::EVENT_SEND,
+            ['variant' => $event->getQuoteVariant()->getNumber()]
+        )
+        ;
     }
-    
+
     public function createQuoteVariantReadyEvent(QuoteVariantEvent $event)
     {
-        $event->getQuoteVariant()->getQuote()->addEvent(Quote::EVENT_READY, ['variant'=>$event->getQuoteVariant()->getNumber()]);
+        $event->getQuoteVariant()->getQuote()->addEvent(
+            Quote::EVENT_READY,
+            ['variant' => $event->getQuoteVariant()->getNumber()]
+        )
+        ;
     }
-    
+
     public function createQuoteVariantInSeizureEvent(QuoteVariantEvent $event)
     {
-        $event->getQuoteVariant()->getQuote()->addEvent(Quote::EVENT_RETURNINSEIZURE, ['variant'=>$event->getQuoteVariant()->getNumber()]);
+        $event->getQuoteVariant()->getQuote()->addEvent(
+            Quote::EVENT_RETURNINSEIZURE,
+            ['variant' => $event->getQuoteVariant()->getNumber()]
+        )
+        ;
     }
-    
+
     public function createQuoteVariantReceiptEvent(QuoteVariantEvent $event)
     {
-        $event->getQuoteVariant()->getQuote()->addEvent(Quote::EVENT_RECEIPT, ['variant'=>$event->getQuoteVariant()->getNumber()]);
+        $event->getQuoteVariant()->getQuote()->addEvent(
+            Quote::EVENT_RECEIPT,
+            ['variant' => $event->getQuoteVariant()->getNumber()]
+        )
+        ;
     }
 }

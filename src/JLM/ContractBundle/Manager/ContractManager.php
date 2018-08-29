@@ -29,40 +29,46 @@ class ContractManager extends Manager
         switch ($name) {
             case 'new':
                 return [
-                    'method' => 'POST',
-                    'route' => 'jlm_contract_contract_create',
-                    'params' => [],
-                    'label' => 'Créer',
-                    'type'  => new ContractType(),
-                    'entity' => null,
-                ];
+                        'method' => 'POST',
+                        'route'  => 'jlm_contract_contract_create',
+                        'params' => [],
+                        'label'  => 'Créer',
+                        'type'   => new ContractType(),
+                        'entity' => null,
+                       ];
             case 'edit':
                 return [
-                    'method' => 'POST',
-                    'route' => 'jlm_contract_contract_update',
-                    'params' => ['id' => $options['entity']->getId(), 'formName'=>'edit'],
-                    'label' => 'Modifier',
-                    'type'  => new ContractType(),
-                    'entity' => $options['entity'],
-                ];
+                        'method' => 'POST',
+                        'route'  => 'jlm_contract_contract_update',
+                        'params' => [
+                                     'id'       => $options['entity']->getId(),
+                                     'formName' => 'edit',
+                                    ],
+                        'label'  => 'Modifier',
+                        'type'   => new ContractType(),
+                        'entity' => $options['entity'],
+                       ];
             case 'delete':
                 return [
-                    'method' => 'DELETE',
-                    'route' => 'jlm_contract_contract_delete',
-                    'params' => ['id' => $options['entity']->getId()],
-                    'label' => 'Supprimer',
-                    'type'  => 'form',
-                    'entity' => $options['entity'],
-                ];
+                        'method' => 'DELETE',
+                        'route'  => 'jlm_contract_contract_delete',
+                        'params' => ['id' => $options['entity']->getId()],
+                        'label'  => 'Supprimer',
+                        'type'   => 'form',
+                        'entity' => $options['entity'],
+                       ];
             case 'stop':
                 return [
                         'method' => 'PUT',
-                        'route' => 'jlm_contract_contract_update',
-                        'params' => ['id' => $options['entity']->getId(), 'formName'=>'stop'],
-                        'label' => 'Arrêter',
-                        'type'  => new ContractStopType(),
+                        'route'  => 'jlm_contract_contract_update',
+                        'params' => [
+                                     'id'       => $options['entity']->getId(),
+                                     'formName' => 'stop',
+                                    ],
+                        'label'  => 'Arrêter',
+                        'type'   => new ContractStopType(),
                         'entity' => $options['entity'],
-                ];
+                       ];
         }
     
         return parent::getFormParam($name, $options);

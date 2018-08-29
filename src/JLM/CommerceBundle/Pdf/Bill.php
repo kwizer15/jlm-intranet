@@ -17,14 +17,23 @@ namespace JLM\CommerceBundle\Pdf;
 class Bill extends CommercialPart
 {
 
-    private $st = ['price'=> 0.0,'ati'=>0.0];
-    
+    private $st = [
+        'price' => 0.0,
+        'ati' => 0.0,
+    ];
+
     protected function getColsize()
     {
-        return [117, 12, 24, 24, 13];
+        return [
+            117,
+            12,
+            24,
+            24,
+            13,
+        ];
     }
-    
-    public function _header($duplicate)
+
+    public function customHeader($duplicate)
     {
         if ($this->entity->getState() == -1) {
             $this->setFont('Arial', 'B', 120);
@@ -37,7 +46,7 @@ class Bill extends CommercialPart
             $this->rotatedText(40, 90, 'Duplicata', -45);
             $this->setTextColor(0);
         }
-        
+
         // Repères
         //$this->setFont('Arial','',8);
         //$this->cell(0,4,'Fee :'.$this->entity->getFee()->getId(),0,1);
@@ -47,8 +56,8 @@ class Bill extends CommercialPart
         //  $txt .= $c->getId().' ';
         //}
         //$this->cell(0,4,$txt,0,1);
-        
-        
+
+
         $this->setFont('Arial', 'BU', 11);
         $this->cell(0, 5, 'Affaire :', 0, 1);
         $this->setFont('Arial', '', 11);
@@ -59,7 +68,7 @@ class Bill extends CommercialPart
         $y = $this->getY();
         $this->setXY(120, 60);
         // Trustee
-    //  $this->rect(86,47,99,39);
+        //  $this->rect(86,47,99,39);
         if ($this->entity->getPrelabel()) {
             $this->setFont('Arial', '', 9);
             $this->multicell(0, 4, $this->entity->getPrelabel(), 0);
@@ -76,24 +85,24 @@ class Bill extends CommercialPart
             $this->setX(120);
             $this->cell(0, 5, 'AUTOLIQUIDATION DE TVA', 0, 2);
         }
-        
-        
+
+
         $this->setY($y);
         // Création haut
         $this->setFont('Arial', 'B', 10);
         $this->cell(25, 6, 'N° Client', 'LRT', 0, 'C', true);
         $this->cell(25, 6, 'Date', 'LRT', 0, 'C', true);
         $this->cell(25, 6, 'N° Facture', 'LRT', 1, 'C', true);
-        
+
         // Création bas
         $this->setFont('Arial', '', 10);
         $this->cell(25, 6, $this->entity->getAccountNumber(), 'LRB', 0, 'C');
         $this->cell(25, 6, $this->entity->getCreation()->format('d/m/Y'), 'LRB', 0, 'C');
         $this->cell(25, 6, $this->entity->getNumber(), 'LRB', 1, 'C');
-            
+
         $this->ln(6);
         $this->setFont('Arial', 'B', 11);
-        $this->multicell(0, 5, 'Ref : '.$this->entity->getReference(), 0);
+        $this->multicell(0, 5, 'Ref : ' . $this->entity->getReference(), 0);
         $this->ln(5);
         $this->setFont('Arial', 'B', 10);
         if ($this->entity->getIntro()) {
@@ -101,7 +110,7 @@ class Bill extends CommercialPart
             $this->ln(3);
         }
     }
-    
+
     public function tabHeader()
     {
         $this->setFont('Arial', 'B', 10);
@@ -111,17 +120,20 @@ class Bill extends CommercialPart
         $this->cell($this->colsize[3], 6, 'Prix H.T', 1, 0, 'C', true);
         $this->cell($this->colsize[4], 6, 'TVA', 1, 1, 'C', true);
     }
-    
-    public function _line($line)
+
+    public function customLine($line)
     {
         if ($line->getReference() == 'ST') {
             $this->setFont('Arial', 'BI', 10);
-            $this->cell($this->colsize[0], 8, 'Sous-total '.$line->getDesignation(), 'RL', 0, 'R');
+            $this->cell($this->colsize[0], 8, 'Sous-total ' . $line->getDesignation(), 'RL', 0, 'R');
             $this->cell($this->colsize[1], 8, '', 'RL', 0, 'R');
             $this->cell($this->colsize[2], 8, '', 'RL', 0, 'R');
-            $this->cell($this->colsize[3], 8, number_format($this->st['price'], 2, ',', ' ').' €', 'RL', 0, 'R');
+            $this->cell($this->colsize[3], 8, number_format($this->st['price'], 2, ',', ' ') . ' €', 'RL', 0, 'R');
             $this->cell($this->colsize[4], 8, '', 'RL', 1, 'R');
-            $this->st = ['price'=> 0.0, 'ati'=> 0.0];
+            $this->st = [
+                'price' => 0.0,
+                'ati' => 0.0,
+            ];
         } elseif ($line->getReference() == 'TITLE') {
             $this->setFont('Arial', 'B', 10);
             $this->cell($this->colsize[0], 8, $line->getDesignation(), 'RTL', 0, 'L');
@@ -133,15 +145,22 @@ class Bill extends CommercialPart
             $this->setFont('Arial', '', 10);
             $this->cell($this->colsize[0], 8, $line->getDesignation(), 'RL', 0);
             $this->cell($this->colsize[1], 8, $line->getQuantity(), 'RL', 0, 'R');
-            $this->cell($this->colsize[2], 8, number_format($line->getUnitPrice()*(1-$line->getDiscount()), 2, ',', ' ').' €', 'RL', 0, 'R');
-            $this->cell($this->colsize[3], 8, number_format($line->getPrice(), 2, ',', ' ').' €', 'RL', 0, 'R');
-            $this->cell($this->colsize[4], 8, number_format($line->getVat()*100, 1, ',', ' ').' %', 'RL', 1, 'R');
-    //      $this->cell(22,8,number_format($line->getPriceAti(),2,',',' ').' €','RL',1,'R');
+            $this->cell(
+                $this->colsize[2],
+                8,
+                number_format($line->getUnitPrice() * (1 - $line->getDiscount()), 2, ',', ' ') . ' €',
+                'RL',
+                0,
+                'R'
+            );
+            $this->cell($this->colsize[3], 8, number_format($line->getPrice(), 2, ',', ' ') . ' €', 'RL', 0, 'R');
+            $this->cell($this->colsize[4], 8, number_format($line->getVat() * 100, 1, ',', ' ') . ' %', 'RL', 1, 'R');
+            //      $this->cell(22,8,number_format($line->getPriceAti(),2,',',' ').' €','RL',1,'R');
             $this->st['price'] += $line->getPrice();
             $this->st['ati'] += $line->getPriceAti();
         }
-        
-        
+
+
         if ($line->getShowDescription()) {
             $text = explode(chr(10), $line->getDescription());
             $y = $this->getY() - 2;
@@ -153,16 +172,16 @@ class Bill extends CommercialPart
                 $this->cell($this->colsize[2], 5, '', 'RL', 0);
                 $this->cell($this->colsize[3], 5, '', 'RL', 0);
                 $this->cell($this->colsize[4], 5, '', 'RL', 1);
-            //  $this->cell(22,5,'','RL',1);
+                //  $this->cell(22,5,'','RL',1);
             }
             $this->setFont('Arial', '', 10);
         }
     }
-    
+
     /**
      * Get PDF content
      */
-    public function _footer()
+    public function customFooter()
     {
         $y = $this->getY();
         if ($y > 220) {
@@ -177,7 +196,7 @@ class Bill extends CommercialPart
         $this->cell($this->colsize[2], $h, '', 'RLB', 0);
         $this->cell($this->colsize[3], $h, '', 'RLB', 0);
         $this->cell($this->colsize[4], $h, '', 'RLB', 1);
-//      $this->cell(22,$h,'','RLB',1);
+        //      $this->cell(22,$h,'','RLB',1);
         $this->ln(6);
         // Réglement
         $this->setFont('Arial', 'B', 10);
@@ -188,14 +207,14 @@ class Bill extends CommercialPart
         $this->cell(5, 6, '', 0, 0);
         $this->cell(35, 6, 'Total HT', 1, 0, 'R', true);
         $this->setFont('Arial', '', 10);
-        $this->cell(38, 6, number_format($this->entity->getTotalPrice(), 2, ',', ' ').' €', 1, 1, 'R');
-        
+        $this->cell(38, 6, number_format($this->entity->getTotalPrice(), 2, ',', ' ') . ' €', 1, 1, 'R');
+
         $y = $this->getY();
         $vats = $this->entity->getTotalVatByRate();
         foreach ($vats as $rate => $vat) {
-            $this->cell(24, 6, number_format($vat['base'], 2, ',', ' ').' €', 'RL', 0, 'R');
-            $this->cell(13, 6, number_format($rate, 1, ',', ' ').' %', 'RL', 0, 'R');
-            $this->cell(24, 6, number_format($vat['vat'], 2, ',', ' ').' €', 'RL', 1, 'R');
+            $this->cell(24, 6, number_format($vat['base'], 2, ',', ' ') . ' €', 'RL', 0, 'R');
+            $this->cell(13, 6, number_format($rate, 1, ',', ' ') . ' %', 'RL', 0, 'R');
+            $this->cell(24, 6, number_format($vat['vat'], 2, ',', ' ') . ' €', 'RL', 1, 'R');
         }
         $this->cell(61, 6, '', 'T', 0);
         $x = $this->getX();
@@ -210,16 +229,16 @@ class Bill extends CommercialPart
         $this->setFont('Arial', 'B', 10);
         $this->cell(35, 6, 'Total TVA', 1, 0, 'R', true);
         $this->setFont('Arial', '', 10);
-        $this->cell(38, 6, number_format($this->entity->getTotalVat(), 2, ',', ' ').' €', 1, 1, 'R');
-        
+        $this->cell(38, 6, number_format($this->entity->getTotalVat(), 2, ',', ' ') . ' €', 1, 1, 'R');
+
         $this->setX($x);
         $this->cell(51, 6, '', 0, 0, 0);
         $this->cell(5, 6, '', 0, 0);
         $this->setFont('Arial', 'B', 10);
         $this->cell(35, 6, 'NET A PAYER', 1, 0, 'R', true);
-        $this->cell(38, 6, number_format($this->entity->getTotalPriceAti(), 2, ',', ' ').' €', 1, 1, 'R');
+        $this->cell(38, 6, number_format($this->entity->getTotalPriceAti(), 2, ',', ' ') . ' €', 1, 1, 'R');
         $this->ln(6);
-        
+
         $this->setFont('Arial', '', 11);
         $this->cell(0, 5, 'En votre aimable réglement - Merci -', 0, 1, 'R');
         $this->ln(6);
@@ -238,12 +257,12 @@ class Bill extends CommercialPart
         $this->setFont('Arial', '', 8);
         $this->cell(0, 4, $this->entity->getEarlyPayment(), 0, 1);
     }
-    
+
     public function getDocumentName()
     {
         return 'Facture';
     }
-    
+
     protected function showPage()
     {
     }

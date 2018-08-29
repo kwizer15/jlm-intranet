@@ -43,8 +43,11 @@ class CommunicationMeansTest extends \PHPUnit_Framework_TestCase
     public function getGetterSetter()
     {
         return [
-            ['Name', 'Foo'],
-        ];
+                [
+                 'Name',
+                 'Foo',
+                ],
+               ];
     }
     
     /**

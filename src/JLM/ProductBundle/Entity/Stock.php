@@ -23,41 +23,42 @@ class Stock implements StockInterface
      * @var int
      */
     private $id;
-    
+
     /**
      * @var ProductInterface
      */
     private $product;
-    
+
     /**
      * @var \DateTime
      */
     private $lastModified;
-    
+
     /**
      * @var float
      */
     private $quantity = 0;
-    
+
     /**
      * @var float
      */
     private $minimum = 0;
-    
+
     /**
      * @var float
      */
     private $maximum = 0;
-    
+
     /**
      * Constructor
+     *
      * @param ProductInterface $product
      */
     public function __construct(ProductInterface $product = null)
     {
         $this->setProduct($product);
     }
-    
+
     /**
      *
      * @return number
@@ -66,19 +67,20 @@ class Stock implements StockInterface
     {
         return $this->id;
     }
-    
+
     /**
      *
      * @param ProductInterface $product
+     *
      * @return self
      */
     public function setProduct(ProductInterface $product)
     {
         $this->product = $product;
-        
+
         return $this;
     }
-    
+
     /**
      *
      * @return ProductInterface
@@ -87,7 +89,7 @@ class Stock implements StockInterface
     {
         return $this->product;
     }
-    
+
     /**
      * @return string
      */
@@ -95,7 +97,7 @@ class Stock implements StockInterface
     {
         return $this->getProduct()->getDesignation();
     }
-    
+
     /**
      * @return string
      */
@@ -103,7 +105,7 @@ class Stock implements StockInterface
     {
         return $this->getProduct()->getReference();
     }
-    
+
     /**
      *
      * @return DateTime
@@ -112,30 +114,32 @@ class Stock implements StockInterface
     {
         return $this->lastModified;
     }
-    
+
     /**
      * Update de lastModified date on persist
+     *
      * @return self
      */
     public function updateLastModified()
     {
-        $this->lastModified = new \DateTime;
-        
+        $this->lastModified = new \DateTime();
+
         return $this;
     }
-    
+
     /**
      *
      * @param unknown $quantity
+     *
      * @return self
      */
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
-        
+
         return $this;
     }
-    
+
     /**
      *
      * @return number
@@ -144,19 +148,20 @@ class Stock implements StockInterface
     {
         return $this->quantity;
     }
-    
+
     /**
      *
      * @param number $minimum
+     *
      * @return self
      */
     public function setMinimum($quantity)
     {
         $this->minimum = $quantity;
-    
+
         return $this;
     }
-    
+
     /**
      *
      * @return number
@@ -165,19 +170,20 @@ class Stock implements StockInterface
     {
         return $this->minimum;
     }
-    
+
     /**
      *
      * @param number $minimum
+     *
      * @return self
      */
     public function setMaximum($quantity)
     {
         $this->maximum = $quantity;
-    
+
         return $this;
     }
-    
+
     /**
      *
      * @return number
@@ -186,7 +192,7 @@ class Stock implements StockInterface
     {
         return $this->maximum;
     }
-    
+
     /**
      *
      * @return boolean
@@ -195,7 +201,7 @@ class Stock implements StockInterface
     {
         return $this->quantity <= 0;
     }
-    
+
     /**
      * @return boolean
      */
@@ -203,7 +209,7 @@ class Stock implements StockInterface
     {
         return $this->quantity < $this->minimum;
     }
-    
+
     /**
      * @return boolean
      */
@@ -213,7 +219,7 @@ class Stock implements StockInterface
 
         return ($toOrder > 0) ? $toOrder : 0;
     }
-    
+
     /**
      * @return boolean
      */

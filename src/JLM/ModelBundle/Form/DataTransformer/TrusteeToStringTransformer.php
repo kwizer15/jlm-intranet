@@ -1,4 +1,5 @@
 <?php
+
 namespace JLM\ModelBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
@@ -12,7 +13,7 @@ class TrusteeToStringTransformer implements DataTransformerInterface
      * @var ObjectManager
      */
     private $om;
-    
+
     /**
      * @param ObjectManager $om
      */
@@ -20,11 +21,12 @@ class TrusteeToStringTransformer implements DataTransformerInterface
     {
         $this->om = $om;
     }
-    
+
     /**
      * Transforms an object (trustee) to a string (name).
      *
      * @param  Trustee|null $entity
+     *
      * @return string
      */
     public function transform($entity)
@@ -32,13 +34,14 @@ class TrusteeToStringTransformer implements DataTransformerInterface
         if (null === $entity) {
             return "";
         }
-        return $entity.'';
+        return $entity . '';
     }
-    
+
     /**
      * Transforms a string (number) to an object (trustee).
      *
      * @param  string $number
+     *
      * @return Trustee|null
      * @throws TransformationFailedException if object (trustee) is not found.
      */
@@ -47,19 +50,21 @@ class TrusteeToStringTransformer implements DataTransformerInterface
         if (!$string) {
             return null;
         }
-            
-        
-            $entity = $this->om
-                ->getRepository('JLMModelBundle:Trustee')
-                ->findOneBy(['name' => trim($string)])
-            ;
+
+
+        $entity = $this->om
+            ->getRepository('JLMModelBundle:Trustee')
+            ->findOneBy(['name' => trim($string)])
+        ;
         if (null === $entity) {
-            throw new TransformationFailedException(sprintf(
-                'A trustee with name "%s" does not exist!',
-                $string
-            ));
+            throw new TransformationFailedException(
+                sprintf(
+                    'A trustee with name "%s" does not exist!',
+                    $string
+                )
+            );
         }
-        
+
         return $entity;
     }
 }

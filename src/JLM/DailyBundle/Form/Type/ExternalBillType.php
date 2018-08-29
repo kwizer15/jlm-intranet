@@ -11,15 +11,13 @@ class ExternalBillType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('externalBill', null, ['label'=>'Numéro de facture'])
+            ->add('externalBill', null, ['label' => 'Numéro de facture'])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-                'data_class' => 'JLM\DailyBundle\Entity\Intervention'
-        ]);
+        $resolver->setDefaults(['data_class' => 'JLM\DailyBundle\Entity\Intervention']);
     }
 
     public function getName()

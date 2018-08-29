@@ -18,7 +18,11 @@ class ListManager
         ->setTitle("Liste des syndics");
         
         $as = $this->object->setActiveSheetIndex(0);
-        $titles = ['A'=>'Syndic','B'=>'Nombre d\'installations','C'=>'Gestionnaire'];
+        $titles = [
+                   'A' => 'Syndic',
+                   'B' => 'Nombre d\'installations',
+                   'C' => 'Gestionnaire',
+                  ];
         foreach ($titles as $col => $value) {
             $as->setCellValue($col.'1', $value);
         }

@@ -45,58 +45,61 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
 
     /**
      * Libelé de facturation
+     *
      * @var string $billingLabel
      *
      * @Assert\Type(type="string")
      */
     private $billingLabel;
-    
+
     /**
      * Adresse de facturation (si differente)
+     *
      * @var AddressInterface $billingAddress
      */
     private $billingAddress;
-    
+
     /**
      * @var string $phone
      *
      * @Assert\Regex(pattern="/^0[1-9]\d{8}$/",message="Ce n'est pas un numéro de téléphone fixe valide")
      */
     private $billingPhone;
-    
+
     /**
      * @var string $fax
      *
      * @Assert\Regex(pattern="/^0[1-9]\d{8}$/",message="Ce n'est pas un numéro de fax valide")
      */
     private $billingFax;
-    
+
     /**
      * @var string $email
      *
      * @Assert\Email
      */
     private $billingEmail;
-    
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->sites = new ArrayCollection;
-        $this->contracts = new ArrayCollection;
+        $this->sites = new ArrayCollection();
+        $this->contracts = new ArrayCollection();
     }
-   
+
     /**
      * Set accountNumber
      *
      * @param integer $accountNumber
+     *
      * @return Trustee
      */
     public function setAccountNumber($accountNumber)
     {
         $this->accountNumber = $accountNumber;
-    
+
         return $this;
     }
 
@@ -114,12 +117,13 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
      * Set billingPhone
      *
      * @param string $billingPhone
+     *
      * @return Trustee
      */
     public function setBillingPhone($billingPhone)
     {
         $this->billingPhone = $billingPhone;
-    
+
         return $this;
     }
 
@@ -137,12 +141,13 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
      * Set billingFax
      *
      * @param string $billingFax
+     *
      * @return Trustee
      */
     public function setBillingFax($billingFax)
     {
         $this->billingFax = $billingFax;
-    
+
         return $this;
     }
 
@@ -160,12 +165,13 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
      * Set billingEmail
      *
      * @param string $billingEmail
+     *
      * @return Trustee
      */
     public function setBillingEmail($billingEmail)
     {
         $this->billingEmail = $billingEmail;
-    
+
         return $this;
     }
 
@@ -183,12 +189,13 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
      * Add contracts
      *
      * @param ContractInterface $contracts
+     *
      * @return Trustee
      */
     public function addContract(ContractInterface $contracts)
     {
         $this->contracts[] = $contracts;
-    
+
         return $this;
     }
 
@@ -216,12 +223,13 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
      * Add sites
      *
      * @param JLM\ModelBundle\Entity\Site $sites
+     *
      * @return Trustee
      */
     public function addSite(\JLM\ModelBundle\Entity\Site $sites)
     {
         $this->sites[] = $sites;
-    
+
         return $this;
     }
 
@@ -249,12 +257,13 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
      * Set billingAddress
      *
      * @param AddressInterface $billingAddress
+     *
      * @return Trustee
      */
     public function setBillingAddress(AddressInterface $billingAddress = null)
     {
         $this->billingAddress = $billingAddress;
-    
+
         return $this;
     }
 
@@ -269,10 +278,10 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
         if ($this->billingAddress === null) {
             return $this->getAddress();
         }
-        
+
         return $this->billingAddress;
     }
-    
+
     /**
      * Get bill address
      *
@@ -285,10 +294,10 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
                 return $this->billingAddress;
             }
         }
-        
+
         return $this->getAddress();
     }
-    
+
     /**
      * @deprecated Use getBillAddress
      * @return AddressInterface
@@ -297,9 +306,10 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
     {
         return $this->getBillAddress();
     }
-    
+
     /**
      * Get BillingLabel
+     *
      * @deprecated Use getBillLabel
      * @return string
      */
@@ -307,31 +317,34 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
     {
         return $this->billingLabel;
     }
-    
+
     /**
      * Set billingLabel
      *
      * @param string $label
+     *
      * @return Trustee
      */
     public function setBillingLabel($label)
     {
         $this->billingLabel = $label;
-        
+
         return $this;
     }
-    
+
     /**
      * Get BillLabel
+     *
      * @return string
      */
     public function getBillLabel()
     {
         return ($this->billingLabel == '') ? $this->getName() : $this->billingLabel;
     }
-    
+
     /**
      * Get Contract Sum
+     *
      * @return float
      */
     public function getContractsSum()
@@ -344,7 +357,7 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
         }
         return $sum;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -352,7 +365,7 @@ class Trustee extends ContactDecorator implements ManagerInterface, CustomerInte
     {
         return $this->getBillingLabel();
     }
-    
+
     /**
      * {@inheritdoc}
      */

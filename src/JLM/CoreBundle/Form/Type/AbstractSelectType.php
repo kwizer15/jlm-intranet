@@ -49,8 +49,8 @@ abstract class AbstractSelectType extends AbstractType
     {
         $transformer = $this->getTransformerClass();
         $resolver->setDefaults([
-                'transformer' => new $transformer($this->om),
-        ]);
+                                'transformer' => new $transformer($this->om),
+                               ]);
     }
     
     /**

@@ -26,22 +26,22 @@ class FixingEndMailBuilder extends FixingMailBuilder
     {
         $this->setBody('Bonjour,'.chr(10).chr(10)
         .'Nous vous informons que le technicien à terminé son intervention.'.chr(10)
-        .'L\'installation est '.$this->_getStringState().$this->_getStringTodo().chr(10)
+        .'L\'installation est '.$this->getStringState().$this->getStringTodo().chr(10)
         .chr(10)
         .'Cordialement'
-        .$this->_getSignature());
+        .$this->getSignature());
     }
     
     public function buildAttachements()
     {
     }
     
-    protected function _getStringState()
+    protected function getStringState()
     {
         return ($this->getFixing()->getDoor()->isStopped()) ? 'à l\'arrêt' : 'en service';
     }
 
-    protected function _getStringTodo()
+    protected function getStringTodo()
     {
         $hasWork = $this->getFixing()->hasWork();
         $hasAskQuote = $this->getFixing()->hasAskQuote();

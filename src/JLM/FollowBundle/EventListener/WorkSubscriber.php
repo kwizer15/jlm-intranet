@@ -45,9 +45,9 @@ class WorkSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            JLMDailyEvents::WORK_PREREMOVE => 'removeThread',
-            JLMDailyEvents::WORK_POSTUPDATE => 'updateThread',
-        ];
+                JLMDailyEvents::WORK_PREREMOVE  => 'removeThread',
+                JLMDailyEvents::WORK_POSTUPDATE => 'updateThread',
+               ];
     }
     
     /**

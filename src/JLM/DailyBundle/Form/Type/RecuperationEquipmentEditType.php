@@ -12,23 +12,71 @@ class RecuperationEquipmentEditType extends AbstractType
     {
         $builder
             ->add('begin', 'datetime', [
-                    'label'=>'Début',
-                    'hours'=>[8,9,10,11,12,13,14,15,16,17,18],
-                    'minutes'=>[0,5,10,15,20,25,30,35,40,45,50,55],
-                ])
+                                        'label'   => 'Début',
+                                        'hours'   => [
+                                                      8,
+                                                      9,
+                                                      10,
+                                                      11,
+                                                      12,
+                                                      13,
+                                                      14,
+                                                      15,
+                                                      16,
+                                                      17,
+                                                      18,
+                                                     ],
+                                        'minutes' => [
+                                                      0,
+                                                      5,
+                                                      10,
+                                                      15,
+                                                      20,
+                                                      25,
+                                                      30,
+                                                      35,
+                                                      40,
+                                                      45,
+                                                      50,
+                                                      55,
+                                                     ],
+                                       ])
             ->add('end', 'time', [
-                    'label'=>'Fin',
-                    'hours'=>[8,9,10,11,12,13,14,15,16,17,18],
-                    'minutes'=>[0,5,10,15,20,25,30,35,40,45,50,55],
-                ])
+                                  'label'   => 'Fin',
+                                  'hours'   => [
+                                                8,
+                                                9,
+                                                10,
+                                                11,
+                                                12,
+                                                13,
+                                                14,
+                                                15,
+                                                16,
+                                                17,
+                                                18,
+                                               ],
+                                  'minutes' => [
+                                                0,
+                                                5,
+                                                10,
+                                                15,
+                                                20,
+                                                25,
+                                                30,
+                                                35,
+                                                40,
+                                                45,
+                                                50,
+                                                55,
+                                               ],
+                                 ])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => 'JLM\DailyBundle\Entity\ShiftTechnician'
-        ]);
+        $resolver->setDefaults(['data_class' => 'JLM\DailyBundle\Entity\ShiftTechnician']);
     }
 
     public function getName()

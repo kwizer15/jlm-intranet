@@ -34,9 +34,7 @@ class AjaxPersonController extends Controller
      */
     public function showajaxAction(Person $entity)
     {
-        return [
-            'entity'      => $entity,
-        ];
+        return ['entity' => $entity];
     }
 
     /**
@@ -50,11 +48,11 @@ class AjaxPersonController extends Controller
         $manager = $this->container->get('jlm_contact.contact_manager');
         $entity = $manager->getEntity('person');
         $form = $manager->createForm('POST', $entity);
-        
+
 
         return [
             'entity' => $entity,
-            'form'   => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
@@ -66,8 +64,8 @@ class AjaxPersonController extends Controller
     public function createajaxAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity  = ContactManager::create('Person');
-        $form    = $this->createForm(new PersonType(), $entity);
+        $entity = ContactManager::create('Person');
+        $form = $this->createForm(new PersonType(), $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -80,13 +78,13 @@ class AjaxPersonController extends Controller
 
             return $this->redirect($this->generateUrl('jlm_contact_ajax_person_show', ['id' => $entity->getId()]));
         }
-        
+
         return [
             'entity' => $entity,
-            'form'   => $form->createView()
+            'form' => $form->createView(),
         ];
     }
-    
+
     /**
      * Return JSON list of Person entity.
      */
@@ -94,7 +92,7 @@ class AjaxPersonController extends Controller
     {
         $request = $this->get('request');
         $query = $request->request->get('term');
-    
+
         $em = $this->getDoctrine()->getManager();
         $results = $em->getRepository('JLMContactBundle:Person')->searchResult($query);
         $json = json_encode($results);
@@ -103,7 +101,7 @@ class AjaxPersonController extends Controller
         $response->setContent($json);
         return $response;
     }
-    
+
     /**
      * Person json
      */
@@ -114,10 +112,10 @@ class AjaxPersonController extends Controller
         $page_limit = $request->get('page_limit');
         $em = $this->getDoctrine()->getManager();
         $persons = $em->getRepository('JLMContactBundle:Person')->getArray($term, $page_limit);
-        
+
         return new JsonResponse(['persons' => $persons]);
     }
-    
+
     /**
      * Person json
      */
@@ -127,7 +125,7 @@ class AjaxPersonController extends Controller
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
         $person = $em->getRepository('JLMContactBundle:Person')->getByIdToArray($id);
-    
+
         return new JsonResponse($person);
     }
 }

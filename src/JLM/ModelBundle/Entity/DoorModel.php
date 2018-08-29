@@ -31,9 +31,10 @@ class DoorModel
      * @Assert\NotBlank
      */
     private $name = '';
-    
+
     /**
      * Type de porte
+     *
      * @var DoorType $type
      */
     private $type;
@@ -47,7 +48,7 @@ class DoorModel
     {
         return $this->id;
     }
-    
+
     /**
      * Set text
      *
@@ -58,7 +59,7 @@ class DoorModel
         $this->name = $name;
         return $this;
     }
-    
+
     /**
      * Get text
      *
@@ -68,7 +69,7 @@ class DoorModel
     {
         return $this->name;
     }
-    
+
     /**
      * To String
      */
@@ -76,20 +77,21 @@ class DoorModel
     {
         return $this->getName();
     }
-    
+
     /**
      * Set type
      *
      * @param JLM\ModelBundle\Entity\DoorType $type
+     *
      * @return Door
      */
     public function setType(DoorType $type = null)
     {
         $this->type = $type;
-    
+
         return $this;
     }
-    
+
     /**
      * Get type
      *

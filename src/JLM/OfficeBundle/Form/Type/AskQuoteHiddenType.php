@@ -45,8 +45,6 @@ class AskQuoteHiddenType extends AbstractType
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'invalid_message' => 'The selected askquote does not exist',
-        ]);
+        $resolver->setDefaults(['invalid_message' => 'The selected askquote does not exist']);
     }
 }

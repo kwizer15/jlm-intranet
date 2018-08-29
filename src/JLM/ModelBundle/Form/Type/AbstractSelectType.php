@@ -10,9 +10,9 @@ abstract class AbstractSelectType extends AbstractHiddenType
 {
     public function getName()
     {
-        return $this->getTypeName().'_select';
+        return $this->getTypeName() . '_select';
     }
-    
+
     public function getParent()
     {
         return 'text';

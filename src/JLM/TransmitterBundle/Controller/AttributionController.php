@@ -30,9 +30,11 @@ class AttributionController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $manager = $this->container->get('jlm_core.mail_manager'); //@todo To change : rewrite services as yaml and include a manager service
+        $manager = $this->container->get(
+            'jlm_core.mail_manager'
+        ); //TODO: rewrite services as yaml and include a manager service
         $manager->secure('ROLE_OFFICE');
-        
+
         return $manager->paginator('JLMTransmitterBundle:Attribution', $request, ['sort' => '!date']);
     }
 
@@ -45,9 +47,7 @@ class AttributionController extends Controller
      */
     public function showAction(Attribution $entity)
     {
-        return [
-            'entity'      => $entity,
-        ];
+        return ['entity' => $entity];
     }
 
     /**
@@ -60,13 +60,13 @@ class AttributionController extends Controller
     public function newAction(Ask $ask)
     {
         $entity = new Attribution();
-        $entity->setCreation(new \DateTime);
+        $entity->setCreation(new \DateTime());
         $entity->setAsk($ask);
-        $form   = $this->createForm(new AttributionType(), $entity);
+        $form = $this->createForm(new AttributionType(), $entity);
 
         return [
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ];
     }
 
@@ -80,7 +80,7 @@ class AttributionController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity  = new Attribution();
+        $entity = new Attribution();
         $form = $this->createForm(new AttributionType(), $entity);
         $form->handleRequest($request);
 
@@ -94,7 +94,7 @@ class AttributionController extends Controller
 
         return [
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ];
     }
 
@@ -110,8 +110,8 @@ class AttributionController extends Controller
         $editForm = $this->createForm(new AttributionType(), $entity);
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
         ];
     }
 
@@ -138,8 +138,8 @@ class AttributionController extends Controller
         }
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
         ];
     }
 
@@ -166,23 +166,25 @@ class AttributionController extends Controller
             $final = array_merge($final, $list);
         }
         unset($resort);
-        
-        
+
+
         $response = new Response();
         $response->headers->set('Content-Type', 'application/pdf');
-        $response->headers->set('Content-Disposition', 'inline; filename=attribution-'.$entity->getId().'.pdf');
-        $response->setContent($this->render(
-            'JLMTransmitterBundle:Attribution:printlist.pdf.php',
-            [
-                        'entity' => $entity,
-                        'transmitters' => $final,
-                        'withHeader' => true,
+        $response->headers->set('Content-Disposition', 'inline; filename=attribution-' . $entity->getId() . '.pdf');
+        $response->setContent(
+            $this->render(
+                'JLMTransmitterBundle:Attribution:printlist.pdf.php',
+                [
+                    'entity' => $entity,
+                    'transmitters' => $final,
+                    'withHeader' => true,
                 ]
-        ));
-    
+            )
+        );
+
         return $response;
     }
-    
+
     /**
      * Imprime le courrier
      *
@@ -193,17 +195,20 @@ class AttributionController extends Controller
     {
         $response = new Response();
         $response->headers->set('Content-Type', 'application/pdf');
-        $response->headers->set('Content-Disposition', 'inline; filename=attribution-courrier-'.$entity->getId().'.pdf');
-        $response->setContent($this->render(
-            'JLMTransmitterBundle:Attribution:printcourrier.pdf.php',
-            [
-                        'entity' => $entity,
-                ]
-        ));
-    
+        $response->headers->set(
+            'Content-Disposition',
+            'inline; filename=attribution-courrier-' . $entity->getId() . '.pdf'
+        );
+        $response->setContent(
+            $this->render(
+                'JLMTransmitterBundle:Attribution:printcourrier.pdf.php',
+                ['entity' => $entity]
+            )
+        );
+
         return $response;
     }
-    
+
     /**
      * Generate bill
      *
@@ -213,23 +218,29 @@ class AttributionController extends Controller
     public function billAction(Attribution $entity)
     {
         $em = $this->getDoctrine()->getManager();
-        
+
         if ($entity->getBill() !== null) {
             return $this->redirect($this->generateUrl('bill_edit', ['id' => $entity->getBill()->getId()]));
         }
         // @todo trouver un autre solution que le codage brut
         $options = [
-            'port'         => $em->getRepository('JLMProductBundle:Product')->find(134),
-            'earlyPayment' => (string)$em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1),
-            'penalty'      => (string)$em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
-            'property'     => (string)$em->getRepository('JLMCommerceBundle:PropertyModel')->find(1),
+            'port' => $em->getRepository('JLMProductBundle:Product')->find(134),
+            'earlyPayment' => (string) $em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1),
+            'penalty' => (string) $em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
+            'property' => (string) $em->getRepository('JLMCommerceBundle:PropertyModel')->find(1),
         ];
-        $bill = BillFactory::create(new AttributionBillBuilder($entity, $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(), $options));
+        $bill = BillFactory::create(
+            new AttributionBillBuilder(
+                $entity,
+                $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(),
+                $options
+            )
+        );
         $em->persist($bill);
         $entity->setBill($bill);
         $em->persist($entity);
         $em->flush();
-        
+
         return $this->redirect($this->generateUrl('bill_edit', ['id' => $bill->getId()]));
     }
 }

@@ -115,17 +115,33 @@ class ContractTest extends \PHPUnit_Framework_TestCase
     public function getOptions()
     {
         return [
-            [true,  false, 'C1'],
-            [true,  true,  'C2'],
-            [false, false, 'N3'],
-            [false, true,  'N4'],
-        ];
+                [
+                 true,
+                 false,
+                 'C1',
+                ],
+                [
+                 true,
+                 true,
+                 'C2',
+                ],
+                [
+                 false,
+                 false,
+                 'N3',
+                ],
+                [
+                 false,
+                 true,
+                 'N4',
+                ],
+               ];
     }
     
     /**
      * @dataProvider getOptions
      */
-    public function test__toString($complete, $option, $out)
+    public function testToString($complete, $option, $out)
     {
         $this->entity->setComplete($complete);
         $this->entity->setOption($option);

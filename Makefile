@@ -1,4 +1,4 @@
-.PHONY: help phpmetrics phpcs tests
+.PHONY: help phpmetrics cs csfix test
 
 .DEFAULT_GOAL = help
 
@@ -7,6 +7,7 @@ BRANCH=$(shell git branch | cut -d ' ' -f 2)
 PHP?=php
 PHPUNIT?=bin/phpunit
 PHPCS?=bin/phpcs
+PHPCSFIX?=bin/phpcbf
 PHPMETRICS?=~/.config/composer/vendor/bin/phpmetrics
 
 -include .env
@@ -31,6 +32,9 @@ test: $(PHPUNIT) phpunit.xml ## Lance les tests
 
 cs: $(PHPCS) phpcs.xml ## Lance le codesniffer
 	$(PHP) $(PHPCS)
+
+csfix: $(PHPCSFIX) phpcs.xml ## Lance les fixs du codesniffer
+	$(PHP) $(PHPCSFIX)
 
 phpunit.xml: phpunit.xml.dist
 	cp phpunit.xml.dist phpunit.xml

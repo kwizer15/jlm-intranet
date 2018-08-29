@@ -20,13 +20,14 @@ class ContactController extends ContainerAware
 {
     /**
      * Edit or add a contact
+     *
      * @param int|string $id The entity identifier or typeof new entity
      */
     public function editAction($id)
     {
         $manager = $this->container->get('jlm_contact.contact_manager');
         $manager->secure('ROLE_OFFICE');
-        if (in_array($id, ['person','company','association'])) {
+        if (in_array($id, ['person', 'company', 'association'])) {
             $type = $id;
             $id = null;
             $formName = 'new';
@@ -40,11 +41,14 @@ class ContactController extends ContainerAware
         $process = $manager->getHandler($form, $entity)->process();
 
         return $manager->getRequest()->isXmlHttpRequest()
-            ? ($process ? $manager->renderJson(['ok'=>true])
-                        : $manager->renderResponse('JLMContactBundle:Contact:modal_new.html.twig', ['form' => $form->createView()]))
+            ? ($process
+                ? $manager->renderJson(['ok' => true])
+                : $manager->renderResponse(
+                    'JLMContactBundle:Contact:modal_new.html.twig',
+                    ['form' => $form->createView()]
+                ))
             : ($process ? $manager->redirect('jlm_contact_contact_show', ['id' => $form->getData()->getId()])
-                        : $manager->renderResponse('JLMContactBundle:Contact:new.html.twig', ['form' => $form->createView()]))
-            ;
+                : $manager->renderResponse('JLMContactBundle:Contact:new.html.twig', ['form' => $form->createView()]));
     }
 
     public function listAction()
@@ -55,8 +59,14 @@ class ContactController extends ContainerAware
         $ajax = $manager->getRequest()->isXmlHttpRequest();
         $repo = $manager->getRepository();
 
-        return $ajax || $request->get('format') == 'json' ? $manager->renderJson(['contacts' => $repo->getArray($request->get('q', ''), $request->get('page_limit', 10))])
-                          : $manager->renderResponse('JLMContactBundle:Contact:list.html.twig', $manager->pagination('getCountAll', 'getAll', 'jlm_contact_contact', []));
+        return $ajax || $request->get('format') == 'json'
+            ? $manager->renderJson(
+                ['contacts' => $repo->getArray($request->get('q', ''), $request->get('page_limit', 10))]
+            )
+            : $manager->renderResponse(
+                'JLMContactBundle:Contact:list.html.twig',
+                $manager->pagination('getCountAll', 'getAll', 'jlm_contact_contact', [])
+            );
     }
 
     public function showAction($id)
@@ -67,7 +77,10 @@ class ContactController extends ContainerAware
 
         return $manager->getRequest()->isXmlHttpRequest()
             ? $manager->renderJson($manager->getRepository()->getByIdToArray($id))
-            : $manager->renderResponse('JLMContactBundle:Contact:show_' . $entity->getType() . '.html.twig', ['entity'=>$entity]);
+            : $manager->renderResponse(
+                'JLMContactBundle:Contact:show_' . $entity->getType() . '.html.twig',
+                ['entity' => $entity]
+            );
     }
 
     public function unactiveAction($id)

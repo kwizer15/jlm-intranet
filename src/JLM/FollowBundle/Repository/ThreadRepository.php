@@ -35,8 +35,17 @@ class ThreadRepository extends EntityRepository implements PaginableInterface
      */
     public function getPaginable($page, $resultsByPage, array $filters = [])
     {
-        $types = ['variant', 'intervention'];
-        $states = [0,1,2,3,4];
+        $types = [
+                  'variant',
+                  'intervention',
+                 ];
+        $states = [
+                   0,
+                   1,
+                   2,
+                   3,
+                   4,
+                  ];
         $sorts = ['date' => 'a.startDate'];
         
         $qb = $this->createQueryBuilder('a')

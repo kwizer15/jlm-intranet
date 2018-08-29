@@ -35,9 +35,9 @@ class UserGroupController extends Controller
         $form   = $this->createForm(new UserGroupType(), $entity);
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -63,9 +63,9 @@ class UserGroupController extends Controller
         }
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -87,10 +87,10 @@ class UserGroupController extends Controller
         $editForm = $this->get('form.factory')->createNamed('userGroupEdit'.$id, new UserGroupType(), $entity);
 
         return [
-            'entity'      => $entity,
-            'form'   => $editForm->createView(),
-            'hasTransmitter' => $hasTransmitter,
-        ];
+                'entity'         => $entity,
+                'form'           => $editForm->createView(),
+                'hasTransmitter' => $hasTransmitter,
+               ];
     }
 
     /**
@@ -122,10 +122,10 @@ class UserGroupController extends Controller
         }
 
         return [
-            'entity'      => $entity,
-            'form'   => $editForm->createView(),
-            'hasTransmitter' => $hasTransmitter,
-        ];
+                'entity'         => $entity,
+                'form'           => $editForm->createView(),
+                'hasTransmitter' => $hasTransmitter,
+               ];
     }
 
     /**

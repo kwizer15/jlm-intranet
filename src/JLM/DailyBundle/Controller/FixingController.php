@@ -43,9 +43,7 @@ class FixingController extends AbstractInterventionController
     {
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('JLMDailyBundle:Fixing')->getPrioritary();
-        return [
-                'entities'      => $entities,
-        ];
+        return ['entities' => $entities];
     }
     
     /**
@@ -58,12 +56,12 @@ class FixingController extends AbstractInterventionController
     {
         $request = $this->getRequest();
         $steps = [
-            'taken' => 'JLM\DailyBundle\Builder\Email\FixingTakenMailBuilder',
-            'distributed' => 'JLM\DailyBundle\Builder\Email\FixingDistributedMailBuilder',
-            'onsite' => 'JLM\DailyBundle\Builder\Email\FixingOnSiteMailBuilder',
-            'end' => 'JLM\DailyBundle\Builder\Email\FixingEndMailBuilder',
-            'report' => 'JLM\DailyBundle\Builder\Email\FixingReportMailBuilder',
-        ];
+                  'taken'       => 'JLM\DailyBundle\Builder\Email\FixingTakenMailBuilder',
+                  'distributed' => 'JLM\DailyBundle\Builder\Email\FixingDistributedMailBuilder',
+                  'onsite'      => 'JLM\DailyBundle\Builder\Email\FixingOnSiteMailBuilder',
+                  'end'         => 'JLM\DailyBundle\Builder\Email\FixingEndMailBuilder',
+                  'report'      => 'JLM\DailyBundle\Builder\Email\FixingReportMailBuilder',
+                 ];
         $class = (array_key_exists($step, $steps)) ? $steps[$step] : null;
         if (null === $class) {
             throw new NotFoundHttpException('Page inexistante');
@@ -73,14 +71,19 @@ class FixingController extends AbstractInterventionController
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
-            $this->get('event_dispatcher')->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request));
+            $this
+                ->get('event_dispatcher')
+                ->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request))
+            ;
+
             return $this->redirect($this->generateUrl('fixing_show', ['id' => $entity->getId()]));
         }
+
         return [
                 'entity' => $entity,
-                'form' => $editForm->createView(),
-                'step' => $step,
-        ];
+                'form'   => $editForm->createView(),
+                'step'   => $step,
+               ];
     }
     
     /**
@@ -114,10 +117,10 @@ class FixingController extends AbstractInterventionController
         $entity->setAskDate(new \DateTime);
         $form = $this->get('form.factory')->createNamed('fixingNew'.$door->getId(), new FixingType(), $entity);
         return [
-                'door' => $door,
+                'door'   => $door,
                 'entity' => $entity,
                 'form'   => $form->createView(),
-        ];
+               ];
     }
     
     /**
@@ -148,10 +151,10 @@ class FixingController extends AbstractInterventionController
         }
     
         return [
-                'door' => $door,
+                'door'   => $door,
                 'entity' => $entity,
                 'form'   => $form->createView(),
-        ];
+               ];
     }
     
     /**
@@ -165,9 +168,9 @@ class FixingController extends AbstractInterventionController
         $editForm = $this->createForm(new FixingEditType(), $entity);
     
         return [
-                'entity'      => $entity,
+                'entity' => $entity,
                 'form'   => $editForm->createView(),
-        ];
+               ];
     }
     
     /**
@@ -189,9 +192,9 @@ class FixingController extends AbstractInterventionController
         }
     
         return [
-                'entity'      => $entity,
+                'entity' => $entity,
                 'form'   => $editForm->createView(),
-        ];
+               ];
     }
     
     /**
@@ -205,9 +208,9 @@ class FixingController extends AbstractInterventionController
         $form = $this->createForm(new FixingCloseType(), $entity);
     
         return [
-                'entity'      => $entity,
+                'entity' => $entity,
                 'form'   => $form->createView(),
-        ];
+               ];
     }
     
     /**
@@ -243,9 +246,9 @@ class FixingController extends AbstractInterventionController
         }
     
         return [
-                'entity'      => $entity,
+                'entity' => $entity,
                 'form'   => $form->createView(),
-        ];
+               ];
     }
     
     /**

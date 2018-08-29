@@ -20,37 +20,40 @@ use JLM\CommerceBundle\Model\QuoteVariantInterface;
  */
 class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
 {
-    
+
     const TYPE_UNKNOWN = 'UNKNOWN';
-    
+
     /**
      * @var integer $id
      */
     private $id;
-    
+
     /**
      * @var float $purchasePrice
      */
     private $purchasePrice = 0;
-    
+
     /**
      * Remise Fournisseur (%)
+     *
      * @var float $discountSupplier
      */
     private $discountSupplier = 0;
-    
+
     /**
      * Frais (%)
+     *
      * @var float $expenseRatio
      */
     private $expenseRatio = .1;
-    
+
     /**
      * Frais de port (€)
+     *
      * @var float $shipping
      */
     private $shipping = 0;
-    
+
     /**
      * Get id
      *
@@ -65,15 +68,16 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
      * Set discountSupplier
      *
      * @param float $discountSupplier
+     *
      * @return self
      */
     public function setDiscountSupplier($discountSupplier)
     {
         $this->discountSupplier = $discountSupplier;
-    
+
         return $this;
     }
-    
+
     /**
      * Get discount
      *
@@ -90,7 +94,7 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
     public function setVariant(QuoteVariantInterface $variant = null)
     {
         $this->variant = $variant;
-    
+
         return $this;
     }
 
@@ -104,21 +108,21 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
         return $this->variant;
     }
 
-    
-    
+
     /**
      * Set purchasePrice
      *
      * @param float $price
+     *
      * @return self
      */
     public function setPurchasePrice($price)
     {
-         $this->purchasePrice = $price;
-         
-         return $this;
+        $this->purchasePrice = $price;
+
+        return $this;
     }
-    
+
     /**
      * Get purchasePrice
      *
@@ -128,11 +132,12 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
     {
         return $this->purchasePrice;
     }
-    
+
     /**
      * Set expenseRatio
      *
      * @param float $ratio
+     *
      * @return self
      */
     public function setExpenseRatio($ratio)
@@ -140,7 +145,7 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
         $this->expenseRatio = $ratio;
         return $this;
     }
-    
+
     /**
      * Get expenseRatio
      *
@@ -150,20 +155,21 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
     {
         return $this->expenseRatio;
     }
-    
+
     /**
      * Set shipping
      *
      * @param float $shipping
+     *
      * @return QuoteLine
      */
     public function setShipping($shipping)
     {
         $this->shipping = $shipping;
-        
+
         return $this;
     }
-    
+
     /**
      * Get shipping
      *
@@ -173,7 +179,7 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
     {
         return $this->shipping;
     }
-    
+
     /**
      * Get totalUnitPurshasePrice (€)
      *
@@ -181,9 +187,10 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
      */
     public function getTotalUnitPurchasePrice()
     {
-        return $this->getPurchasePrice()*(1-$this->getDiscountSupplier())*(1+$this->getExpenseRatio())+$this->getShipping();
+        return $this->getPurchasePrice() * (1 - $this->getDiscountSupplier()) * (1 + $this->getExpenseRatio())
+            + $this->getShipping();
     }
-    
+
     /**
      * Get totalPurshasePrice (€)
      *
@@ -191,9 +198,9 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
      */
     public function getTotalPurchasePrice()
     {
-        return $this->getTotalUnitPurchasePrice()*$this->getQuantity();
+        return $this->getTotalUnitPurchasePrice() * $this->getQuantity();
     }
-    
+
     /**
      * Get marginRate (%)
      *
@@ -201,11 +208,10 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
      */
     public function getMarginRate()
     {
-        return ($this->getSellPrice()/$this->getTotalPurchasePrice())-1;
+        return ($this->getSellPrice() / $this->getTotalPurchasePrice()) - 1;
     }
-    
-    
-    
+
+
     /**
      * Get margin (€)
      *
@@ -213,9 +219,9 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
      */
     public function getMargin()
     {
-        return $this->getSellPrice()-$this->getTotalPurchasePrice();
+        return $this->getSellPrice() - $this->getTotalPurchasePrice();
     }
-    
+
     /**
      * Get totalMargin (€)
      *
@@ -223,9 +229,9 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
      */
     public function getTotalMargin()
     {
-        return $this->getMargin()*$this->getQuantity();
+        return $this->getMargin() * $this->getQuantity();
     }
-    
+
     /**
      * @todo modify
      */
@@ -234,7 +240,7 @@ class QuoteLine extends CommercialPartLineProduct implements QuoteLineInterface
         if ($this->getIsTransmitter()) {
             return 'TRANSMITTER';
         }
-        
+
         return self::TYPE_UNKNOWN;
     }
 }

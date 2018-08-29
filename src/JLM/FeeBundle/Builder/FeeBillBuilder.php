@@ -24,12 +24,12 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
 {
     private $fee;
     private $follower;
-    
+
     /**
      *
-     * @param Fee $fee
+     * @param Fee          $fee
      * @param FeesFollower $follower
-     * @param array $options
+     * @param array        $options
      */
     public function __construct(Fee $fee, FeesFollower $follower, $options = [])
     {
@@ -40,7 +40,7 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
         $this->trustee = $this->fee->getTrustee();
     }
 
-    
+
     /**
      * {@inheritdoc}
      */
@@ -49,7 +49,7 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
         parent::buildCustomer();
         $this->getBill()->setTrusteeAddress($this->fee->getBillingAddress()->toString());
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -60,7 +60,7 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
         $this->getBill()->setPrelabel($this->fee->getPrelabel());
         $this->getBill()->setVat($this->fee->getVat()->getRate());
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -68,19 +68,19 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
     {
         $this->getBill()->setDetails(implode(chr(10), $this->fee->getDoorDescription()));
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function buildReference()
     {
-        $group = ($this->fee->getGroup() != '') ? 'Groupe : '.$this->fee->getGroup().chr(10) : '';
+        $group = ($this->fee->getGroup() != '') ? 'Groupe : ' . $this->fee->getGroup() . chr(10) : '';
         $contrat = 'Contrat';
         $s = (count($this->fee->getContractNumbers()) > 1) ? 's' : '';
-        $ref = $group.$contrat.$s.' n°'.implode(', n°', $this->fee->getContractNumbers());
+        $ref = $group . $contrat . $s . ' n°' . implode(', n°', $this->fee->getContractNumbers());
         $this->getBill()->setReference($ref);
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -89,7 +89,7 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
         $creation = $this->follower->getActivation();
         $this->getBill()->setCreation($creation);
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -102,21 +102,25 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
         $this->getBill()->setFee($this->fee);
         $this->getBill()->setFeesFollower($this->follower);
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function buildLines()
     {
         $nbMonthsInYear = 12;
-        $periods = ['1'=>'P1YT2H','2'=>'P6MT2H','4'=>'P3MT2H'];
+        $periods = [
+            '1' => 'P1YT2H',
+            '2' => 'P6MT2H',
+            '4' => 'P3MT2H',
+        ];
         foreach ($this->fee->getContracts() as $key => $contract) {
             $begin = clone $this->follower->getActivation();
             $endContract = $contract->getEnd();
             $end = clone $this->follower->getActivation();
             $end->add(new \DateInterval($periods[$this->fee->getFrequence()]));
-            
-            $frequenceString = ' '.$this->fee->getFrequenceString();
+
+            $frequenceString = ' ' . $this->fee->getFrequenceString();
             if ($endContract !== null) {
                 if ($endContract < $end) {
                     $end = $endContract;
@@ -128,11 +132,23 @@ class FeeBillBuilder extends SiteBillBuilderAbstract
             $rapport = ($diff->format('%m') + $nbMonthsInYear * $diff->format('%y')) / $nbMonthsInYear;
             $fee = $contract->getFee() * $rapport;
             $end->sub(new \DateInterval('P1D'));
-            $line = BillLineFactory::create(new ProductBillLineBuilder($product, $this->fee->getVat()->getRate(), 1, [
-                'price' => $fee,
-                'designation' => $product->getDesignation().$frequenceString.' du '.$begin->format('d/m/Y').' au '.$end->format('d/m/Y'),
-                'description' => $contract->getDoor()->getType().' / '.$contract->getDoor()->getLocation(),
-            ]));
+            $line = BillLineFactory::create(
+                new ProductBillLineBuilder(
+                    $product,
+                    $this->fee->getVat()->getRate(),
+                    1,
+                    [
+                        'price' => $fee,
+                        'designation' => $product->getDesignation()
+                            . $frequenceString
+                            . ' du '
+                            . $begin->format('d/m/Y')
+                            . ' au '
+                            . $end->format('d/m/Y'),
+                        'description' => $contract->getDoor()->getType() . ' / ' . $contract->getDoor()->getLocation(),
+                    ]
+                )
+            );
             $line->setPosition($key);
             $line->setBill($this->getBill());
             $this->getBill()->addLine($line);

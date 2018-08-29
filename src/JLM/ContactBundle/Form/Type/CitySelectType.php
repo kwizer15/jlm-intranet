@@ -25,7 +25,7 @@ class CitySelectType extends AbstractSelectType
     {
         return '\JLM\ContactBundle\Form\DataTransformer\CityToIntTransformer';
     }
-    
+
     /**
      * {@inheritdoc}
      */

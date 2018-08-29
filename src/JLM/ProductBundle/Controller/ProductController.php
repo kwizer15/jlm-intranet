@@ -42,10 +42,10 @@ class ProductController extends Controller
         $entities = $repo->getAll($limit, $offset, !$all);
 
         return [
-            'entities' => $entities,
-            'page'     => $page,
-            'nbPages'  => $nbPages,
-        ];
+                'entities' => $entities,
+                'page'     => $page,
+                'nbPages'  => $nbPages,
+               ];
     }
 
     /**
@@ -61,10 +61,10 @@ class ProductController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return [
-            'entity'      => $entity,
-            'stock'=>$stock,
-            'delete_form' => $deleteForm->createView(),
-        ];
+                'entity'      => $entity,
+                'stock'       => $stock,
+                'delete_form' => $deleteForm->createView(),
+               ];
     }
 
     /**
@@ -85,9 +85,9 @@ class ProductController extends Controller
         $form   = $this->createNewForm($entity);
             
         return [
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -113,9 +113,9 @@ class ProductController extends Controller
         }
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -130,9 +130,9 @@ class ProductController extends Controller
         $editForm = $this->createEditForm($entity);
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        ];
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
 
     /**
@@ -157,9 +157,9 @@ class ProductController extends Controller
         }
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        ];
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
 
     /**

@@ -27,6 +27,6 @@ class WorkOnSiteMailBuilder extends WorkMailBuilder
         $this->setBody('Bonjour,'.chr(10).chr(10)
         .'Le technicien est sur site'.chr(10)
         .'Cordialement'
-        .$this->_getSignature());
+        .$this->getSignature());
     }
 }

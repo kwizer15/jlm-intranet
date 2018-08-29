@@ -35,11 +35,23 @@ class FeeControllerTest extends WebTestCase
     public function getUrls()
     {
         return [
-            ['GET', '/'],
-            ['GET', '/1/show'],
-            ['GET', '/new'],
-            ['GET', '/1/edit'],
-        ];
+                [
+                 'GET',
+                 '/',
+                ],
+                [
+                 'GET',
+                 '/1/show',
+                ],
+                [
+                 'GET',
+                 '/new',
+                ],
+                [
+                 'GET',
+                 '/1/edit',
+                ],
+               ];
     }
     
     /**

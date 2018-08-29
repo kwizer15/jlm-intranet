@@ -14,7 +14,7 @@ class TrusteeSelectType extends AbstractType
      * @var ObjectManager
      */
     private $om;
-    
+
     /**
      * @param ObjectManager $om
      */
@@ -27,16 +27,18 @@ class TrusteeSelectType extends AbstractType
     {
         return 'genemu_jqueryselect2_hidden';
     }
-    
+
     public function getName()
     {
         return 'trustee_select';
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'transformer' => new TrusteeToIntTransformer($this->om),
-        ]);
+        $resolver->setDefaults(
+            [
+                'transformer' => new TrusteeToIntTransformer($this->om),
+            ]
+        );
     }
 }

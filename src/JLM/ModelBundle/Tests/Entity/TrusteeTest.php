@@ -22,22 +22,22 @@ class TrusteeTest extends \PHPUnit_Framework_TestCase
      * @var Country
      */
     protected $entity;
-    
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->entity = new Trustee;
+        $this->entity = new Trustee();
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function assertPreConditions()
     {
     }
-    
+
     public function testBillingAddressAsNull()
     {
         $this->assertTrue(true);

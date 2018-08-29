@@ -14,7 +14,7 @@ class TrusteeHiddenType extends AbstractType
      * @var ObjectManager
      */
     private $om;
-    
+
     /**
      * @param ObjectManager $om
      */
@@ -22,10 +22,10 @@ class TrusteeHiddenType extends AbstractType
     {
         $this->om = $om;
     }
-    
+
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -37,16 +37,14 @@ class TrusteeHiddenType extends AbstractType
     {
         return 'hidden';
     }
-    
+
     public function getName()
     {
         return 'trustee_hidden';
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'invalid_message' => 'The selected trustee does not exist',
-        ]);
+        $resolver->setDefaults(['invalid_message' => 'The selected trustee does not exist']);
     }
 }

@@ -31,7 +31,7 @@ class TransmitterType
      * @Assert\NotBlank
      */
     private $name = '';
-    
+
     /**
      * Get id
      *
@@ -41,7 +41,7 @@ class TransmitterType
     {
         return $this->id;
     }
-    
+
     /**
      * Set text
      *
@@ -52,7 +52,7 @@ class TransmitterType
         $this->name = $name;
         return $this;
     }
-    
+
     /**
      * Get text
      *
@@ -62,7 +62,7 @@ class TransmitterType
     {
         return $this->name;
     }
-    
+
     /**
      * To String
      */

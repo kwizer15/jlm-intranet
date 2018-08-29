@@ -23,102 +23,119 @@ class Product implements ProductInterface
 {
     /**
      * Id
+     *
      * @var integer $id
      */
     private $id;
 
     /**
      * Designation
+     *
      * @var string $designation
      */
     private $designation;
 
     /**
      * Description longue
+     *
      * @var text $description
      */
     private $description;
-    
+
     /**
      * Fournisseur principal
+     *
      * @var SupplierInterface $supplier
      */
     private $supplier;
-    
+
     /**
      * Reference produit
+     *
      * @var string $reference
      */
     private $reference;
 
     /**
      * Code barre
+     *
      * @var string $barcode
      */
     private $barcode;
 
     /**
      * Prix de vente unitaire (en €)
+     *
      * @var float $unitPrice
      */
     private $unitPrice;
 
     /**
      * Famille de produit
+     *
      * @var ProductCategory $category
      */
     private $category;
-    
+
     /**
      * Prix d'achat HT
+     *
      * @var float $purchase
      */
     private $purchase;
-    
+
     /**
      * Taux de remise fournisseur (en %)
+     *
      * @var float $discountSupplier
      */
     private $discountSupplier;
-    
+
     /**
      * Taux de frais (en %)
+     *
      * @var float $expenseRatio
      */
     private $expenseRatio;
-    
+
     /**
      * Frais de port (en €)
+     *
      * @var float $shipping
      */
     private $shipping;
-    
+
     /**
      * Unité (pièce, mètre...)
+     *
      * @var string $unity
      */
     private $unity;
-    
+
     /**
      * Prix quantitatifs
+     *
      * @var ArrayCollection
      */
     private $unitPrices;
-    
+
     /**
      * Prix public
+     *
      * @var decimal
      */
     private $publicPrice;
-    
+
     /**
      * Produit actif
+     *
      * @var bool
      */
     private $active = true;
-    
+
     /**
      * Fichiers liés (plans, docs...)
+     *
      * @var LinkedFile[] $files
      *
      * ORM\OneToMany(targetEntity="LinkedFile", mappedBy="product")
@@ -127,18 +144,21 @@ class Product implements ProductInterface
 
     /**
      * Photo
+     *
      * @var LinkedFile $picture
      */
     // private $picture;
-    
+
     /**
      * Pour les kits
+     *
      * @var Product[] $children
      */
     // private $children;
-    
+
     /**
      * Pour les kits
+     *
      * @var Product $parent
      */
     // private $parent;
@@ -157,22 +177,23 @@ class Product implements ProductInterface
     {
         return $this->getCategory()->isSmallSupply();
     }
-    
+
     public function isService()
     {
         return $this->getCategory()->isService();
     }
-    
+
     /**
      * Set designation
      *
      * @param string $designation
+     *
      * @return self
      */
     public function setDesignation($designation)
     {
         $this->designation = $designation;
-        
+
         return $this;
     }
 
@@ -194,7 +215,7 @@ class Product implements ProductInterface
     public function setDescription($description)
     {
         $this->description = $description;
-        
+
         return $this;
     }
 
@@ -210,12 +231,13 @@ class Product implements ProductInterface
      * Set reference
      *
      * @param string $reference
+     *
      * @return self
      */
     public function setReference($reference)
     {
         $this->reference = $reference;
-        
+
         return $this;
     }
 
@@ -231,12 +253,13 @@ class Product implements ProductInterface
      * Set barcode
      *
      * @param string $barcode
+     *
      * @return self
      */
     public function setBarcode($barcode)
     {
         $this->barcode = $barcode;
-        
+
         return $this;
     }
 
@@ -254,12 +277,13 @@ class Product implements ProductInterface
      * Set unitPrice
      *
      * @param float $unitPrice
+     *
      * @return self
      */
     public function setUnitPrice($unitPrice)
     {
         $this->unitPrice = $unitPrice;
-        
+
         return $this;
     }
 
@@ -280,20 +304,21 @@ class Product implements ProductInterface
             }
             $q = $this->unitPrices[++$index]->getQuantity();
         }
-        
-        return $this->unitPrices[$index-1]->getUnitPrice();
+
+        return $this->unitPrices[$index - 1]->getUnitPrice();
     }
 
     /**
      * Set purchase
      *
      * @param decimal $purchase
+     *
      * @return self
      */
     public function setPurchase($purchase)
     {
         $this->purchase = $purchase;
-        
+
         return $this;
     }
 
@@ -311,12 +336,13 @@ class Product implements ProductInterface
      * Set discountSupplier
      *
      * @param decimal $discountSupplier
+     *
      * @return self
      */
     public function setDiscountSupplier($discountSupplier)
     {
         $this->discountSupplier = $discountSupplier;
-        
+
         return $this;
     }
 
@@ -334,12 +360,13 @@ class Product implements ProductInterface
      * Set expenseRatio
      *
      * @param decimal $expenseRatio
+     *
      * @return self
      */
     public function setExpenseRatio($expenseRatio)
     {
         $this->expenseRatio = $expenseRatio;
-        
+
         return $this;
     }
 
@@ -357,12 +384,13 @@ class Product implements ProductInterface
      * Set shipping
      *
      * @param decimal $shipping
+     *
      * @return self
      */
     public function setShipping($shipping)
     {
         $this->shipping = $shipping;
-        
+
         return $this;
     }
 
@@ -380,12 +408,13 @@ class Product implements ProductInterface
      * Set unity
      *
      * @param string $unity
+     *
      * @return self
      */
     public function setUnity($unity)
     {
         $this->unity = $unity;
-        
+
         return $this;
     }
 
@@ -401,14 +430,15 @@ class Product implements ProductInterface
 
     public function getPurchasePrice()
     {
-        return ($this->getPurchase() * (1 - ($this->getDiscountSupplier() / 100))) * (1 + ($this->getExpenseRatio() / 100)) + $this->getShipping();
+        return ($this->getPurchase() * (1 - ($this->getDiscountSupplier() / 100))) * (1 + ($this->getExpenseRatio()
+                    / 100)) + $this->getShipping();
     }
-    
+
     public function getMargin()
     {
         return ($this->getUnitPrice() - $this->getPurchasePrice());
     }
-    
+
     public function getCoef()
     {
         $d = $this->getPurchasePrice() - $this->getShipping();
@@ -416,14 +446,15 @@ class Product implements ProductInterface
         if ($d == 0) {
             return 0;
         }
-        
-        return (($n / $d) - 1)*100;
+
+        return (($n / $d) - 1) * 100;
     }
 
     /**
      * Set supplier
      *
      * @param SupplierInterface $supplier
+     *
      * @return self
      */
     public function setSupplier(SupplierInterface $supplier)
@@ -451,7 +482,7 @@ class Product implements ProductInterface
     public function setCategory(ProductCategoryInterface $category)
     {
         $this->category = $category;
-        
+
         return $this;
     }
 
@@ -462,25 +493,27 @@ class Product implements ProductInterface
     {
         return $this->category;
     }
-    
+
     /**
      * To String
+     *
      * @return string
      */
     public function __toString()
     {
         return $this->getDesignation();
     }
-    
+
     /**
      * Vérifie coeficient
+     *
      * @return boolean
      */
     public function isCoefPositive()
     {
         return $this->getCoef() >= 0;
     }
-    
+
     /**
      * Constructor
      */
@@ -490,11 +523,12 @@ class Product implements ProductInterface
         //$this->files = new \Doctrine\Common\Collections\ArrayCollection();
         //$this->children = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add unitPrices
      *
      * @param ProductPriceInterface $unitPrices
+     *
      * @return self
      */
     public function addUnitPrice(ProductPriceInterface $unitPrices)
@@ -506,6 +540,7 @@ class Product implements ProductInterface
      * Remove unitPrices
      *
      * @param ProductPriceInterface $unitPrices
+     *
      * @return boolean
      */
     public function removeUnitPrice(ProductPriceInterface $unitPrices)
@@ -522,25 +557,28 @@ class Product implements ProductInterface
     {
         return $this->unitPrices;
     }
-    
+
     /**
      * Is active
+     *
      * @return bool
      */
     public function isActive()
     {
         return $this->active;
     }
-    
+
     /**
      * Set active
+     *
      * @param bool $active
+     *
      * @return self
      */
     public function setActive($active)
     {
         $this->active = (bool) $active;
-        
+
         return $this;
     }
 }

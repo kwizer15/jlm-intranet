@@ -35,11 +35,23 @@ class ProductControllerTest extends WebTestCase
     public function getUrls()
     {
         return [
-            ['GET', '/product'],
-            ['GET', '/product/1/show'],
-            ['GET', '/product/1/edit'],
-            ['GET', '/product/new'],
-        ];
+                [
+                 'GET',
+                 '/product',
+                ],
+                [
+                 'GET',
+                 '/product/1/show',
+                ],
+                [
+                 'GET',
+                 '/product/1/edit',
+                ],
+                [
+                 'GET',
+                 '/product/new',
+                ],
+               ];
     }
     
     /**

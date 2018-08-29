@@ -24,8 +24,12 @@ class TwigSwiftMailer implements MailerInterface
     protected $twig;
     protected $parameters;
 
-    public function __construct(\Swift_Mailer $mailer, UrlGeneratorInterface $router, \Twig_Environment $twig, array $parameters)
-    {
+    public function __construct(
+        \Swift_Mailer $mailer,
+        UrlGeneratorInterface $router,
+        \Twig_Environment $twig,
+        array $parameters
+    ) {
         $this->mailer = $mailer;
         $this->router = $router;
         $this->twig = $twig;
@@ -39,13 +43,11 @@ class TwigSwiftMailer implements MailerInterface
     public function sendContactEmailMessage(ContactInterface $contact)
     {
         $template = $this->parameters['template']['contact'];
-        $context = [
-            'contact' => $contact
-        ];
+        $context = ['contact' => $contact];
 
         $this->sendMessage($template, $context, $contact->getEmail(), $this->parameters['from_email']['contact']);
     }
-    
+
     /**
      *
      * @param ContactInterface $contact
@@ -53,13 +55,11 @@ class TwigSwiftMailer implements MailerInterface
     public function sendConfirmContactEmailMessage(ContactInterface $contact)
     {
         $template = $this->parameters['template']['contact_confirm'];
-        $context = [
-                'contact' => $contact
-        ];
-    
+        $context = ['contact' => $contact];
+
         $this->sendMessage($template, $context, $this->parameters['from_email']['contact'], $contact->getEmail());
     }
-    
+
     /**
      *
      * @param ContactInterface $contact
@@ -67,13 +67,11 @@ class TwigSwiftMailer implements MailerInterface
     public function sendAskQuoteEmailMessage(ContactInterface $contact)
     {
         $template = $this->parameters['template']['askquote'];
-        $context = [
-                'contact' => $contact
-        ];
-    
+        $context = ['contact' => $contact];
+
         $this->sendMessage($template, $context, $contact->getEmail(), $this->parameters['from_email']['askquote']);
     }
-    
+
     /**
      *
      * @param ContactInterface $contact
@@ -81,10 +79,8 @@ class TwigSwiftMailer implements MailerInterface
     public function sendConfirmAskQuoteEmailMessage(ContactInterface $contact)
     {
         $template = $this->parameters['template']['askquote_confirm'];
-        $context = [
-                'contact' => $contact
-        ];
-    
+        $context = ['contact' => $contact];
+
         $this->sendMessage($template, $context, $this->parameters['from_email']['askquote'], $contact->getEmail());
     }
 
@@ -104,11 +100,13 @@ class TwigSwiftMailer implements MailerInterface
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
             ->setFrom($fromEmail)
-            ->setTo($toEmail);
+            ->setTo($toEmail)
+        ;
 
         if (!empty($htmlBody)) {
             $message->setBody($htmlBody, 'text/html')
-                ->addPart($textBody, 'text/plain');
+                ->addPart($textBody, 'text/plain')
+            ;
         } else {
             $message->setBody($textBody);
         }

@@ -9,16 +9,19 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contact', 'jlm_contact_contact_select', ['label'=>'Contact','attr'=>['class'=>'input-large']])
-            ->add('roles', 'collection', ['type'=>'choice','options'=> [
-                'choices' => [
-                    'ROLE_MANAGER' => 'Syndic',
-                    'ROLE_BUSINESS' => 'Copro',
-                ],
-                'required'    => true,
-                'empty_value' => 'Choisir le role',
-                'empty_data'  => null
-            ]])
+            ->add('contact', 'jlm_contact_contact_select', ['label' => 'Contact', 'attr' => ['class' => 'input-large']])
+            ->add('roles', 'collection', [
+                                          'type'    => 'choice',
+                                          'options' => [
+                                                        'choices'     => [
+                                                                          'ROLE_MANAGER'  => 'Syndic',
+                                                                          'ROLE_BUSINESS' => 'Copro',
+                                                                         ],
+                                                        'required'    => true,
+                                                        'empty_value' => 'Choisir le role',
+                                                        'empty_data'  => null,
+                                                       ],
+                                         ])
         ;
     }
 

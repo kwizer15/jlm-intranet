@@ -1,4 +1,5 @@
 <?php
+
 namespace JLM\CoreBundle\DQL;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
@@ -23,7 +24,7 @@ class MonthFunction extends FunctionNode
     public function getSql(\Doctrine\ORM\Query\SqlWalker $sqlWalker)
     {
         return 'MONTH(' .
-                $this->expression->dispatch($sqlWalker) .
-                ')'; // (7)
+            $this->expression->dispatch($sqlWalker) .
+            ')'; // (7)
     }
 }

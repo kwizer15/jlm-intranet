@@ -20,9 +20,11 @@ interface PaginableInterface
 {
     /**
      * Get entity list paginated
-     * @param int $page
-     * @param int $resultsByPage
+     *
+     * @param int   $page
+     * @param int   $resultsByPage
      * @param array $filters
+     *
      * @return Paginator
      */
     public function getPaginable($page, $resultsByPage, array $filters);

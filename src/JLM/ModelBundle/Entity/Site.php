@@ -35,7 +35,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * @var integer $id
      */
     private $id;
-    
+
     /**
      * @var boolean $accession
      * true = accession
@@ -45,7 +45,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * @Assert\NotNull
      */
     private $accession;
-    
+
     /**
      * @var Address $address
      *
@@ -53,24 +53,24 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * @Assert\NotNull
      */
     private $address;
-    
+
     /**
      * @var string $groupnumber
      *
      * @Assert\Length(min=4,max=6)
      */
     private $groupNumber;
-    
+
     /**
      * @var ArrayCollection $doors
      */
     private $doors;
-    
+
     /**
      * @var ArrayCollection $contacts
      */
     private $contacts;
-    
+
     /**
      * @var ManagerInterface $trustee
      *
@@ -78,7 +78,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * @Assert\NotNull
      */
     private $trustee;
-    
+
     /**
      * @var VAT $vat
      *
@@ -86,31 +86,31 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * @Assert\NotNull
      */
     private $vat;
-    
+
     /**
      * @var Address $lodge
      *
      * @Assert\Valid
      */
     private $lodge;
-    
+
     /**
      * @var string $observations
      *
      * @Assert\Type(type="string")
      */
     private $observations;
-    
+
     /**
      * @var ArrayCollection
      */
     private $userGroups;
-    
+
     /**
      * @var ArrayColection
      */
     private $bills;
-    
+
     /**
      * Constructor
      */
@@ -121,7 +121,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
         $this->userGroups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->bills = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
@@ -136,15 +136,16 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * Set accession
      *
      * @param boolean $accession
+     *
      * @return Trustee
      */
     public function setAccession($accession)
     {
         $this->accession = $accession;
-    
+
         return $this;
     }
-    
+
     /**
      * Get accession
      *
@@ -154,18 +155,19 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
         return $this->accession;
     }
-    
-    
+
+
     /**
      * Set address
      *
      * @param AddressInterface $address
+     *
      * @return Site
      */
     public function setAddress(AddressInterface $address = null)
     {
         $this->address = $address;
-    
+
         return $this;
     }
 
@@ -183,15 +185,16 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * Set lodge
      *
      * @param AddresInterface $lodge
+     *
      * @return self
      */
     public function setLodge(AddressInterface $lodge = null)
     {
         $this->lodge = $lodge;
-    
+
         return $this;
     }
-    
+
     /**
      * Get lodge
      *
@@ -201,20 +204,21 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
         return $this->lodge;
     }
-    
+
     /**
      * Set observations
      *
      * @param string $observations
+     *
      * @return self
      */
     public function setObservations($observations)
     {
         $this->observations = $observations;
-    
+
         return $this;
     }
-    
+
     /**
      * Get observations
      *
@@ -224,32 +228,36 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
         return $this->observations;
     }
-    
+
     /**
      * Set groupnumber
+     *
      * @param string
+     *
      * @return self
      */
     public function setGroupNumber($groupNumber)
     {
         $this->groupNumber = $groupNumber;
-        
+
         return $this;
     }
-    
+
     /**
      * Get groupnumber
+     *
      * @return string
      */
     public function getGroupNumber()
     {
         return $this->groupNumber;
     }
-    
+
     /**
      * Add doors
      *
      * @param Door $doors
+     *
      * @return boolean
      */
     public function addDoor(Door $doors)
@@ -261,6 +269,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * Remove doors
      *
      * @param Door $doors
+     *
      * @return boolean
      */
     public function removeDoor(Door $doors)
@@ -280,8 +289,11 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
 
     /**
      * Add contacts
+     *
      * @deprecated
+     *
      * @param AdministratorMemberInterface $member
+     *
      * @return Site
      */
     public function addContact(AdministratorMemberInterface $member)
@@ -291,7 +303,9 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
 
     /**
      * Remove contacts
+     *
      * @deprecated
+     *
      * @param AdministratorMemberInterface $member
      */
     public function removeContact(AdministratorMemberInterface $member)
@@ -301,6 +315,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
 
     /**
      * Get contacts
+     *
      * @deprecated
      * @return Doctrine\Common\Collections\Collection
      */
@@ -311,17 +326,21 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
 
     /**
      * Set trustee
+     *
      * @deprecated
+     *
      * @param JLM\ModelBundle\Entity\Trustee $trustee
+     *
      * @return Site
      */
     public function setTrustee(ManagerInterface $manager = null)
     {
         return $this->setManager($manager);
     }
-    
+
     /**
      * Get trustee
+     *
      * @deprecated
      * @return JLM\ModelBundle\Entity\Trustee
      */
@@ -334,12 +353,13 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * Set vat
      *
      * @param VATInterface $vat
+     *
      * @return Site
      */
     public function setVat(VATInterface $vat = null)
     {
         $this->vat = $vat;
-    
+
         return $this;
     }
 
@@ -352,7 +372,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
         return $this->vat;
     }
-    
+
     /**
      * To String
      */
@@ -360,7 +380,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
         return $this->getName();
     }
-    
+
     /**
      * To String
      */
@@ -371,9 +391,10 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
         }
         return $this->getAddress()->toString();
     }
-    
+
     /**
      * Get Billing Prelabel
+     *
      * @return string
      */
     public function getBillingPrelabel()
@@ -391,12 +412,13 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * Add userGroups
      *
      * @param \JLM\TransmitterBundle\Entity\UserGroup $userGroups
+     *
      * @return Site
      */
     public function addUserGroup(UserGroup $userGroups)
     {
         $this->userGroups[] = $userGroups;
-    
+
         return $this;
     }
 
@@ -424,12 +446,13 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * Add bills
      *
      * @param BillInterface $bills
+     *
      * @return Site
      */
     public function addBill(BillInterface $bills)
     {
         $this->bills[] = $bills;
-    
+
         return $this;
     }
 
@@ -452,7 +475,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
         return $this->bills;
     }
-    
+
     /**
      * Blocage des nouvelles intervs pour cause de retard de paiement
      *
@@ -468,7 +491,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
         }
         return false;
     }
-    
+
     /**
      * Blocage des nouvelles intervs pour cause de retard de paiement
      *
@@ -483,10 +506,10 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
                 $unpayed[] = $bill;
             }
         }
-        
+
         return $unpayed;
     }
-    
+
     public function getManagerContacts()
     {
         $c = [];
@@ -495,12 +518,12 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
             return [];
         }
         foreach ($doors as $door) {
-            $c = array_merge($c, $this->_createContactFromEmail($door->getManagerEmails()));
+            $c = array_merge($c, $this->createContactFromEmail($door->getManagerEmails()));
         }
-        
+
         return $c;
     }
-    
+
     public function getBoostContacts()
     {
         $c = [];
@@ -509,43 +532,45 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
             return [];
         }
         foreach ($doors as $door) {
-            $c = array_merge($c, $this->_createContactFromEmail($door->getAccountingEmails()));
+            $c = array_merge($c, $this->createContactFromEmail($door->getAccountingEmails()));
         }
-        
+
         return $c;
     }
-    
-    private function _createContactFromEmail($emails)
+
+    private function createContactFromEmail($emails)
     {
         $c = [];
         if ($emails === null) {
             return $c;
         }
-    
+
         foreach ($emails as $email) {
             $temp = new Company();
             $temp->setEmail($email);
             $c[] = $temp;
         }
-    
+
         return $c;
     }
-    
-    
+
+
     // New
-    
+
     /**
      * Set the manager
+     *
      * @param ManagerInterface $manager
+     *
      * @return self
      */
     public function setManager(ManagerInterface $manager = null)
     {
         $this->trustee = $manager;
-    
+
         return $this;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -553,7 +578,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
         return $this->trustee;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -561,29 +586,31 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
         return $this->contacts;
     }
-    
+
     /**
      * Add contacts
      *
      * @param AdministratorMemberInterface $contacts
+     *
      * @return boolean
      */
     public function addMember(AdministratorMemberInterface $member)
     {
         return $this->contacts->add($member);
     }
-    
+
     /**
      * Remove contacts
      *
      * @param AdministratorMemberInterface $contacts
+     *
      * @return boolean
      */
     public function removeMember(AdministratorMemberInterface $member)
     {
         return $this->contacts->removeElement($member);
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -591,7 +618,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
         return $this->getAddress()->__toString();
     }
-    
+
     /**
      *
      * @return number
@@ -600,12 +627,12 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
         return $this->getVat()->getRate();
     }
-    
+
     public function getBillingLabel()
     {
         return $this->getManager()->getBillingLabel();
     }
-    
+
     /**
      * @return boolean
      * @since 1.4.0
@@ -620,7 +647,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
                 }
             }
         }
-        
+
         return false;
     }
 }

@@ -26,13 +26,26 @@ class FeeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('trustee', 'trustee_select', ['label'=>'Syndic','attr'=>['class'=>'input-xlarge']])
-        ->add('address', null, ['label'=>'Adresse','attr'=>['class'=>'input-xlarge']])
-        ->add('prelabel', null, ['label'=>'Libélé','attr'=>['class'=>'input-xlarge']])
-        ->add('frequence', 'choice', ['label'=>'Fréquence','choices'=>[1=>'Annuelle',2=>'Semestrielle',4=>'Trimestrielle'],'attr'=>['class'=>'input-normal']])
-        ->add('vat', 'entity', ['label'=>'TVA','class'=>'JLM\CommerceBundle\Entity\VAT','attr'=>['class'=>'input-small']])
-        ->add('contracts', 'collection', ['prototype'=>true,'allow_add'=>true,'allow_delete'=>true,'type'=>'jlm_contract_contract_select','label'=>'Contrats']);
-        ;
+        ->add('trustee', 'trustee_select', ['label' => 'Syndic', 'attr' => ['class' => 'input-xlarge']])
+        ->add('address', null, ['label' => 'Adresse', 'attr' => ['class' => 'input-xlarge']])
+        ->add('prelabel', null, ['label' => 'Libélé', 'attr' => ['class' => 'input-xlarge']])
+        ->add('frequence', 'choice', ['label' => 'Fréquence', 'choices' => [
+            1 => 'Annuelle',
+            2 => 'Semestrielle',
+            4 => 'Trimestrielle'
+        ], 'attr' => ['class' => 'input-normal']])
+        ->add('vat', 'entity', [
+            'label' => 'TVA',
+            'class' => 'JLM\CommerceBundle\Entity\VAT',
+            'attr' => ['class' => 'input-small']
+        ])
+        ->add('contracts', 'collection', [
+            'prototype' => true,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'type' => 'jlm_contract_contract_select',
+            'label' => 'Contrats'
+        ]);
     }
 
     /**
@@ -48,8 +61,6 @@ class FeeType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-                'data_class' => 'JLM\FeeBundle\Entity\Fee',
-        ]);
+        $resolver->setDefaults(['data_class' => 'JLM\FeeBundle\Entity\Fee']);
     }
 }

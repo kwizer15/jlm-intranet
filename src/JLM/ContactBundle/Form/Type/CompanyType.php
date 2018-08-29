@@ -26,11 +26,11 @@ class CompanyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, ['label'=>'Nom'])
+            ->add('name', null, ['label' => 'Nom'])
             ->add('contact', new ContactType(), ['data_class' => 'JLM\ContactBundle\Entity\Company'])
         ;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -38,16 +38,18 @@ class CompanyType extends AbstractType
     {
         return 'jlm_contact_company';
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-        ->setDefaults([
-            'data_class' => 'JLM\ContactBundle\Entity\Company',
-            'label' => 'Société',
-        ]);
+            ->setDefaults(
+                [
+                    'data_class' => 'JLM\ContactBundle\Entity\Company',
+                    'label' => 'Société',
+                ]
+            );
     }
 }

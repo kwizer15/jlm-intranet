@@ -31,22 +31,22 @@ class StockManager extends Manager
         switch ($name) {
             case 'edit':
                 return [
-                    'method' => 'POST',
-                    'route' => 'jlm_product_stock_update',
-                    'params' => ['id' => $options['entity']->getId()],
-                    'label' => 'Modifier',
-                    'type'  => new StockType(),
-                    'entity' => $options['entity'],
-                ];
+                        'method' => 'POST',
+                        'route'  => 'jlm_product_stock_update',
+                        'params' => ['id' => $options['entity']->getId()],
+                        'label'  => 'Modifier',
+                        'type'   => new StockType(),
+                        'entity' => $options['entity'],
+                       ];
             case 'inventory':
                 return [
-                    'method' => 'POST',
-                    'route' => 'jlm_product_stock_inventory',
-                    'params' => [],
-                    'label' => 'Valider',
-                    'type'  => new InventoryType(),
-                    'entity' => $options['entity'],
-                    ];
+                        'method' => 'POST',
+                        'route'  => 'jlm_product_stock_inventory',
+                        'params' => [],
+                        'label'  => 'Valider',
+                        'type'   => new InventoryType(),
+                        'entity' => $options['entity'],
+                       ];
         }
     
         return parent::getFormParam($name, $options);

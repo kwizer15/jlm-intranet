@@ -42,8 +42,11 @@ class PartFamilyTest extends \PHPUnit_Framework_TestCase
     public function getNames()
     {
         return [
-            ['Guidage', 'Guidage'],
-        ];
+                [
+                 'Guidage',
+                 'Guidage',
+                ],
+               ];
     }
     
     /**

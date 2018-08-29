@@ -22,28 +22,28 @@ interface PersonInterface extends ContactInterface
      * @return string
      */
     public function getTitle();
-    
+
     /**
      * Get first name
      *
      * @return string
      */
     public function getFirstName();
-    
+
     /**
      * Get last name
      *
      * @return string
      */
     public function getLastName();
-    
+
     /**
      * Get fixedPhone
      *
      * @return string
      */
     public function getFixedPhone();
-    
+
     /**
      * Get mobilePhone
      *

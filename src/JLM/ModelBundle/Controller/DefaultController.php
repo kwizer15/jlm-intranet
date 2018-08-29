@@ -37,14 +37,14 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getManager();
             $query = $formData['query'];
             return [
-                    'query' => $query,
-                    'contacts' => $em->getRepository('JLMContactBundle:Contact')->search($query),
-                    'doors'   => $em->getRepository('JLMModelBundle:Door')->search($query),
-                    'sites'   => $em->getRepository('JLMModelBundle:Site')->search($query),
-                    'trustees'=> $em->getRepository('JLMModelBundle:Trustee')->search($query),
-                    'suppliers'=> $em->getRepository('JLMProductBundle:Supplier')->search($query),
-                    'products' => $em->getRepository('JLMProductBundle:Product')->search($query),
-            ];
+                    'query'     => $query,
+                    'contacts'  => $em->getRepository('JLMContactBundle:Contact')->search($query),
+                    'doors'     => $em->getRepository('JLMModelBundle:Door')->search($query),
+                    'sites'     => $em->getRepository('JLMModelBundle:Site')->search($query),
+                    'trustees'  => $em->getRepository('JLMModelBundle:Trustee')->search($query),
+                    'suppliers' => $em->getRepository('JLMProductBundle:Supplier')->search($query),
+                    'products'  => $em->getRepository('JLMProductBundle:Product')->search($query),
+                   ];
         }
         return [];
     }

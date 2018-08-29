@@ -24,11 +24,9 @@ class StandbyController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('JLMDailyBundle:Standby')->findBy([], ['begin'=>'DESC']);
+        $entities = $em->getRepository('JLMDailyBundle:Standby')->findBy([], ['begin' => 'DESC']);
 
-        return [
-            'entities' => $entities,
-        ];
+        return ['entities' => $entities];
     }
 
     /**
@@ -41,15 +39,15 @@ class StandbyController extends Controller
     {
         $entity = new Standby();
         $form   = $this->createForm(new StandbyType(), $entity, [
-                'method'=>'POST',
-                'action'=>$this->generateUrl('standby_create'),
-        ]);
-        $form->add('submit', 'submit', ['label'=>'Enregistrer']);
+                                                                 'method' => 'POST',
+                                                                 'action' => $this->generateUrl('standby_create'),
+                                                                ]);
+        $form->add('submit', 'submit', ['label' => 'Enregistrer']);
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -74,9 +72,9 @@ class StandbyController extends Controller
         }
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -89,9 +87,9 @@ class StandbyController extends Controller
     {
         $form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(), new StandbyType(), $entity);
         return [
-            'entity'      => $entity,
-            'form'        => $form->createView(),
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -115,9 +113,9 @@ class StandbyController extends Controller
         }
 
         return [
-            'entity'      => $entity,
-            'form'        => $form->createView(),
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**

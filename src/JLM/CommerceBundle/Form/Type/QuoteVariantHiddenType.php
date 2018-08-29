@@ -65,8 +65,6 @@ class QuoteVariantHiddenType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'invalid_message' => 'The selected quotevariant does not exist',
-        ]);
+        $resolver->setDefaults(['invalid_message' => 'The selected quotevariant does not exist']);
     }
 }

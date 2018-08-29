@@ -40,8 +40,17 @@ class WorkController extends AbstractInterventionController
         $request = $manager->getRequest();
         $repo = $manager->getRepository();
         
-        return $manager->isAjax() ? $manager->renderJson(['entities' => $repo->getArray($request->get('q', ''), $request->get('page_limit', 10))])
-        : $manager->renderResponse('JLMDailyBundle:Work:list.html.twig', $manager->pagination('getCountOpened', 'getOpened', 'work_list', []));
+        return $manager->isAjax()
+            ? $manager->renderJson([
+                                    'entities' => $repo->getArray(
+                                        $request->get('q', ''),
+                                        $request->get('page_limit', 10)
+                                    ),
+                                   ])
+            : $manager->renderResponse(
+                'JLMDailyBundle:Work:list.html.twig',
+                $manager->pagination('getCountOpened', 'getOpened', 'work_list', [])
+            );
     }
     
     /**
@@ -71,7 +80,7 @@ class WorkController extends AbstractInterventionController
         return [
                 'entity' => $entity,
                 'form'   => $form->createView(),
-        ];
+               ];
     }
     
     /**
@@ -88,7 +97,7 @@ class WorkController extends AbstractInterventionController
         return [
                 'entity' => $entity,
                 'form'   => $form->createView(),
-        ];
+               ];
     }
     
     /**
@@ -133,7 +142,7 @@ class WorkController extends AbstractInterventionController
         return [
                 'entity' => $entity,
                 'form'   => $form->createView(),
-        ];
+               ];
     }
     
     /**
@@ -164,7 +173,7 @@ class WorkController extends AbstractInterventionController
         return [
                 'entity' => $entity,
                 'form'   => $form->createView(),
-        ];
+               ];
     }
     
     /**
@@ -178,9 +187,9 @@ class WorkController extends AbstractInterventionController
         $editForm = $this->createForm(new WorkEditType(), $entity);
     
         return [
-                'entity'      => $entity,
+                'entity' => $entity,
                 'form'   => $editForm->createView(),
-        ];
+               ];
     }
     
     /**
@@ -203,9 +212,9 @@ class WorkController extends AbstractInterventionController
         }
     
         return [
-                'entity'      => $entity,
+                'entity' => $entity,
                 'form'   => $editForm->createView(),
-        ];
+               ];
     }
     
     /**
@@ -219,9 +228,9 @@ class WorkController extends AbstractInterventionController
         $form = $this->createForm(new WorkCloseType(), $entity);
     
         return [
-                'entity'      => $entity,
+                'entity' => $entity,
                 'form'   => $form->createView(),
-        ];
+               ];
     }
     
     /**
@@ -254,11 +263,11 @@ class WorkController extends AbstractInterventionController
         }
     
         return [
-                'entity'      => $entity,
+                'entity' => $entity,
                 'form'   => $form->createView(),
-        ];
+               ];
     }
-    
+
     /**
      * Finds and displays a InterventionPlanned entity.
      *
@@ -269,10 +278,10 @@ class WorkController extends AbstractInterventionController
     {
         $request = $this->getRequest();
         $steps = [
-                'planned' => 'JLM\DailyBundle\Builder\Email\WorkPlannedMailBuilder',
-                'onsite' => 'JLM\DailyBundle\Builder\Email\WorkOnSiteMailBuilder',
-                'end' => 'JLM\DailyBundle\Builder\Email\WorkEndMailBuilder',
-        ];
+                  'planned' => 'JLM\DailyBundle\Builder\Email\WorkPlannedMailBuilder',
+                  'onsite'  => 'JLM\DailyBundle\Builder\Email\WorkOnSiteMailBuilder',
+                  'end'     => 'JLM\DailyBundle\Builder\Email\WorkEndMailBuilder',
+                 ];
         $class = (array_key_exists($step, $steps)) ? $steps[$step] : null;
         if (null === $class) {
             throw new NotFoundHttpException('Page inexistante');
@@ -282,15 +291,18 @@ class WorkController extends AbstractInterventionController
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
-            $this->get('event_dispatcher')->dispatch(JLMModelEvents::DOOR_SENDMAIL, new DoorEvent($entity->getDoor(), $request));
+            $this->get('event_dispatcher')->dispatch(
+                JLMModelEvents::DOOR_SENDMAIL,
+                new DoorEvent($entity->getDoor(), $request)
+            );
             
             return $this->redirect($this->generateUrl('work_show', ['id' => $entity->getId()]));
         }
         
         return [
                 'entity' => $entity,
-                'form' => $editForm->createView(),
-                'step' => $step,
-        ];
+                'form'   => $editForm->createView(),
+                'step'   => $step,
+               ];
     }
 }

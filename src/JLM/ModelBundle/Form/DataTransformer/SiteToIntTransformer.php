@@ -1,7 +1,6 @@
 <?php
-namespace JLM\ModelBundle\Form\DataTransformer;
 
-use JLM\ModelBundle\Form\DataTransformer\ObjectToIntTransformer;
+namespace JLM\ModelBundle\Form\DataTransformer;
 
 class SiteToIntTransformer extends ObjectToIntTransformer
 {
@@ -9,7 +8,7 @@ class SiteToIntTransformer extends ObjectToIntTransformer
     {
         return 'JLMModelBundle:Site';
     }
-    
+
     protected function getErrorMessage()
     {
         return 'A site with id "%s" does not exist!';

@@ -23,7 +23,7 @@ class PersonSelectType extends AbstractSelectType
     {
         return '\JLM\ContactBundle\Form\DataTransformer\PersonToIntTransformer';
     }
-    
+
     protected function getTypeName()
     {
         return 'jlm_contact_person';

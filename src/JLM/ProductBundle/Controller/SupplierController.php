@@ -45,10 +45,10 @@ class SupplierController extends Controller
         $entities = $em->getRepository('JLMProductBundle:Supplier')->getAll($limit, $offset);
 
         return [
-            'entities' => $entities,
-            'page'     => $page,
-            'nbPages'  => $nbPages,
-        ];
+                'entities' => $entities,
+                'page'     => $page,
+                'nbPages'  => $nbPages,
+               ];
     }
 
     /**
@@ -62,13 +62,13 @@ class SupplierController extends Controller
         $em = $this->getDoctrine()->getManager();
         $products = $em->getRepository('JLMProductBundle:Product')->findBy(
             ['supplier' => $entity],
-            ['designation'=>'asc']
+            ['designation' => 'asc']
         );
         
         return [
-            'entity'      => $entity,
-            'products'    => $products,
-        ];
+                'entity'   => $entity,
+                'products' => $products,
+               ];
     }
 
     /**
@@ -83,9 +83,9 @@ class SupplierController extends Controller
         $form   = $this->createNewForm($entity);
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -110,9 +110,9 @@ class SupplierController extends Controller
         }
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -129,10 +129,10 @@ class SupplierController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ];
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+               ];
     }
 
     /**
@@ -162,10 +162,10 @@ class SupplierController extends Controller
         }
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ];
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+               ];
     }
 
     /**

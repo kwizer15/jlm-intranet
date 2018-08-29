@@ -49,9 +49,9 @@ class TransmitterTypeController extends Controller
         $form   = $this->createForm(new TransmitterTypeType(), $entity);
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -76,9 +76,9 @@ class TransmitterTypeController extends Controller
         }
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView()
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -91,9 +91,9 @@ class TransmitterTypeController extends Controller
     {
         $editForm = $this->createForm(new TransmitterTypeType(), $entity);
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        ];
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
 
     /**
@@ -118,8 +118,8 @@ class TransmitterTypeController extends Controller
         }
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        ];
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
 }

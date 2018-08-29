@@ -22,15 +22,15 @@ class BootstrapExtension extends \Twig_Extension
     {
         return 'bootstrap_extension';
     }
-    
+
     public function getFilters()
     {
         return [
-                new \Twig_SimpleFilter('icon', [$this, 'iconFilter'], ['is_safe' => ['all']]),
-                new \Twig_SimpleFilter('badge', [$this, 'badgeFilter'], ['is_safe' => ['all']]),
+            new \Twig_SimpleFilter('icon', [$this, 'iconFilter'], ['is_safe' => ['all']]),
+            new \Twig_SimpleFilter('badge', [$this, 'badgeFilter'], ['is_safe' => ['all']]),
         ];
     }
-    
+
     public function iconFilter($iconName, $white = false, $version = '2.3.2')
     {
         $v = explode('.', $version);
@@ -39,19 +39,19 @@ class BootstrapExtension extends \Twig_Extension
             if ($white) {
                 $return .= 'icon-white ';
             }
-            $return .= 'icon-'.$iconName.'"></i>';
-            
+            $return .= 'icon-' . $iconName . '"></i>';
+
             return $return;
         }
         if ($v[0] == 3) {
-            return '<span class="glyphicon glyphicon-'.$iconName.'"></span>';
+            return '<span class="glyphicon glyphicon-' . $iconName . '"></span>';
         }
     }
-    
+
     public function badgeFilter($content, $class = null)
     {
-        $class = ($class === null) ? 'badge' : 'badge badge-'.$class;
-        
-        return '<span class="'.$class.'">'.$content.'</span>';
+        $class = ($class === null) ? 'badge' : 'badge badge-' . $class;
+
+        return '<span class="' . $class . '">' . $content . '</span>';
     }
 }

@@ -22,7 +22,7 @@ class DoorControllerTest extends WebTestCase
      * @var Symfony\Bundle\FrameworkBundle\Client
      */
     private $client;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -31,18 +31,28 @@ class DoorControllerTest extends WebTestCase
         $this->client = static::createClient();
         $this->client->followRedirects();
     }
-    
+
     public function getUrls()
     {
         return [
-            ['GET', '/model/door/1/show'],
-            ['GET', '/model/door/1/edit'],
-            ['GET', '/model/door/new/1'],
+            [
+                'GET',
+                '/model/door/1/show',
+            ],
+            [
+                'GET',
+                '/model/door/1/edit',
+            ],
+            [
+                'GET',
+                '/model/door/new/1',
+            ],
         ];
     }
-    
+
     /**
      * @dataProvider getUrls
+     *
      * @param string $method
      * @param string $url
      */
@@ -55,15 +65,16 @@ class DoorControllerTest extends WebTestCase
         $crawler = $this->login($crawler);
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
-    
+
     /**
      * Log the user
+     *
      * @param Crawler $crawler
      */
     private function login($crawler)
     {
         $form = $crawler->selectButton('_submit')->form();
-    
+
         // définit certaines valeurs
         $form['_username'] = 'kwizer';
         $form['_password'] = 'sslover';

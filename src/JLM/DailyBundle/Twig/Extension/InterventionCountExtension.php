@@ -34,10 +34,10 @@ class InterventionCountExtension extends \Twig_Extension implements \Twig_Extens
     {
         return [
             'interventioncount' => [
-                'today' => $this->om->getRepository('JLMDailyBundle:Intervention')->getCountToday(),
-                'stopped' => $this->om->getRepository('JLMModelBundle:Door')->getCountStopped(),
-                'fixing' => $this->om->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),
-                'work'   => $this->om->getRepository('JLMDailyBundle:Work')->getCountOpened(),
+                'today'       => $this->om->getRepository('JLMDailyBundle:Intervention')->getCountToday(),
+                'stopped'     => $this->om->getRepository('JLMModelBundle:Door')->getCountStopped(),
+                'fixing'      => $this->om->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),
+                'work'        => $this->om->getRepository('JLMDailyBundle:Work')->getCountOpened(),
                 'maintenance' => $this->om->getRepository('JLMDailyBundle:Maintenance')->getCountOpened(),
             ],
         ];

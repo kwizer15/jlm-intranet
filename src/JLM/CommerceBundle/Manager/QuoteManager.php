@@ -29,22 +29,22 @@ class QuoteManager extends Manager
         switch ($name) {
             case 'new':
                 return [
-                    'method' => 'POST',
-                    'route' => 'quote_create',
-                    'params' => [],
-                    'label' => 'Créer',
-                    'type'  => new QuoteType(),
-                    'entity' => null,
-                ];
+                        'method' => 'POST',
+                        'route'  => 'quote_create',
+                        'params' => [],
+                        'label'  => 'Créer',
+                        'type'   => new QuoteType(),
+                        'entity' => null,
+                       ];
             case 'edit':
                 return [
-                    'method' => 'POST',
-                    'route' => 'quote_update',
-                    'params' => ['id' => $options['entity']->getId()],
-                    'label' => 'Modifier',
-                    'type'  => new QuoteType(),
-                    'entity' => $options['entity']
-                ];
+                        'method' => 'POST',
+                        'route'  => 'quote_update',
+                        'params' => ['id' => $options['entity']->getId()],
+                        'label'  => 'Modifier',
+                        'type'   => new QuoteType(),
+                        'entity' => $options['entity'],
+                       ];
         }
         
         return parent::getFormParam($name, $options);
@@ -61,11 +61,11 @@ class QuoteManager extends Manager
         // On complète avec ce qui reste vide
         $vat = $this->om->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
         $params = [
-                'creation' => new \DateTime,
-                'vat' => $vat,
-                'vatTransmitter' => $vat,
-                'followerCp' => $this->getUser()->getContact()->getName(),
-        ];
+                   'creation'       => new \DateTime,
+                   'vat'            => $vat,
+                   'vatTransmitter' => $vat,
+                   'followerCp'     => $this->getUser()->getContact()->getName(),
+                  ];
         foreach ($params as $key => $value) {
             $param = $form->get($key)->getData();
             if (empty($param)) {

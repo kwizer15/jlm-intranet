@@ -29,21 +29,22 @@ use JLM\DailyBundle\Builder\VariantWorkBuilder;
  */
 class InterventionSubscriber implements EventSubscriberInterface
 {
-   
+
     /**
      * @var ObjectManager
      */
     private $om;
-    
+
     /**
      * Constructor
+     *
      * @param ObjectManager $om
      */
     public function __construct(ObjectManager $om)
     {
         $this->om = $om;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -55,17 +56,18 @@ class InterventionSubscriber implements EventSubscriberInterface
             JLMCommerceEvents::QUOTEVARIANT_GIVEN => 'createWorkFromQuote',
         ];
     }
-    
+
     /**
      * Create work since intervention
+     *
      * @param InterventionEvent $event
      */
     public function createWorkFromIntervention(InterventionEvent $event)
     {
         $interv = $event->getIntervention();
         $options = [
-                'category' => $this->om->getRepository('JLMDailyBundle:WorkCategory')->find(1),
-                'objective' => $this->om->getRepository('JLMDailyBundle:WorkObjective')->find(1),
+            'category' => $this->om->getRepository('JLMDailyBundle:WorkCategory')->find(1),
+            'objective' => $this->om->getRepository('JLMDailyBundle:WorkObjective')->find(1),
         ];
         $work = WorkFactory::create(new InterventionWorkBuilder($interv, $options));
         $this->om->persist($work);
@@ -73,9 +75,10 @@ class InterventionSubscriber implements EventSubscriberInterface
         $this->om->persist($interv);
         $this->om->flush();
     }
-    
+
     /**
      * Create work since intervention
+     *
      * @param InterventionEvent $event
      */
     public function deleteWorkFromIntervention(InterventionEvent $event)
@@ -89,7 +92,7 @@ class InterventionSubscriber implements EventSubscriberInterface
             $this->om->flush();
         }
     }
-    
+
     /**
      * @param QuoteVariantEvent $event
      */
@@ -99,10 +102,15 @@ class InterventionSubscriber implements EventSubscriberInterface
         if ($entity->getWork() === null && $entity->getQuote()->getDoor() !== null) {
             // Création de la ligne travaux pré-remplie
             //$work = Work::createFromQuoteVariant($entity);
-            $work = WorkFactory::create(new VariantWorkBuilder($entity, [
-                    'category' => $this->om->getRepository('JLMDailyBundle:WorkCategory')->find(1),
-                    'objective' => $this->om->getRepository('JLMDailyBundle:WorkObjective')->find(1),
-            ]));
+            $work = WorkFactory::create(
+                new VariantWorkBuilder(
+                    $entity,
+                    [
+                        'category' => $this->om->getRepository('JLMDailyBundle:WorkCategory')->find(1),
+                        'objective' => $this->om->getRepository('JLMDailyBundle:WorkObjective')->find(1),
+                    ]
+                )
+            );
             //$work->setMustBeBilled(true);
             //$work->setCategory($this->om->getRepository('JLMDailyBundle:WorkCategory')->find(1));
             //$work->setObjective($this->om->getRepository('JLMDailyBundle:WorkObjective')->find(1));

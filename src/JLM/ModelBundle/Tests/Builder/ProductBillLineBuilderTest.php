@@ -19,26 +19,26 @@ use JLM\ModelBundle\Builder\ProductBillLineBuilder;
 class ProductBillLineBuilderTest extends \PHPUnit_Framework_TestCase
 {
     private $builder;
-    
+
     private $product;
-    
+
     private $categoryId;
-    
+
     private $vat;
-    
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
         $this->product = $this->getMock('JLM\ProductBundle\Model\ProductInterface');
-        
+
         $this->product->expects($this->any())->method('isSmallSupply')->will($this->returnValue(true));
         $this->vat = 0.2;
         $this->builder = new ProductBillLineBuilder($this->product, $this->vat);
         $this->builder->create();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -46,7 +46,7 @@ class ProductBillLineBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('JLM\CommerceBundle\Builder\BillLineBuilderInterface', $this->builder);
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -54,13 +54,13 @@ class ProductBillLineBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('JLM\CommerceBundle\Model\BillLineInterface', $this->builder->getLine());
     }
-    
+
     public function testBuildQuantity()
     {
         $this->builder->buildQuantity();
         $this->assertSame(1, $this->builder->getLine()->getQuantity());
     }
-    
+
     public function testBuildQuantityIntoConstruct()
     {
         $this->builder = new ProductBillLineBuilder($this->product, $this->vat, 2);
@@ -68,7 +68,7 @@ class ProductBillLineBuilderTest extends \PHPUnit_Framework_TestCase
         $this->builder->buildQuantity();
         $this->assertSame(2, $this->builder->getLine()->getQuantity());
     }
-    
+
     public function testBuildPriceByProduct()
     {
         $this->product->expects($this->once())->method('getUnitPrice')->will($this->returnValue(50.0));
@@ -76,16 +76,16 @@ class ProductBillLineBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(50.0, $this->builder->getLine()->getUnitPrice());
         $this->assertEquals($this->vat, $this->builder->getLine()->getVat());
     }
-    
+
     public function testBuildPriceIntoConstruct()
     {
-        $this->builder = new ProductBillLineBuilder($this->product, 0.1, 1, ['price'=>10.2]);
+        $this->builder = new ProductBillLineBuilder($this->product, 0.1, 1, ['price' => 10.2]);
         $this->builder->create();
         $this->builder->buildPrice();
         $this->assertEquals(10.2, $this->builder->getLine()->getUnitPrice());
         $this->assertEquals(0.1, $this->builder->getLine()->getVat());
     }
-    
+
     public function testBuildProduct()
     {
         $this->builder->buildProduct();

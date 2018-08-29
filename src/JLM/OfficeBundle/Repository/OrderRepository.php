@@ -23,7 +23,11 @@ class OrderRepository extends SearchRepository
                     ->groupBy('a.state')
             ;
             $results = $qb->getQuery()->getResult();
-            $this->count = [0,0,0];
+            $this->count = [
+                            0,
+                            0,
+                            0,
+                           ];
             $this->total = 0;
             foreach ($results as $result) {
                 $this->total += $result['c'];
@@ -70,6 +74,10 @@ class OrderRepository extends SearchRepository
      */
     protected function getSearchParams()
     {
-        return ['d.street','f.street','g.name'];
+        return [
+                'd.street',
+                'f.street',
+                'g.name',
+               ];
     }
 }

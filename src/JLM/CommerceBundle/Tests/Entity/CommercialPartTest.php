@@ -40,19 +40,49 @@ class CommercialPartTest extends \PHPUnit_Framework_TestCase
     public function getAttributes()
     {
         return [
-            ['Creation', $this->getMock('DateTime')],
-            ['Number', '123456'],
-            ['Customer', $this->getMock('JLM\CommerceBundle\Model\CustomerInterface')],
-            ['CustomerName', 'Foo'],
-            ['CustomerAddress', 'Bar'],
-            ['Vat', 19.6],
+                [
+                 'Creation',
+                 $this->getMock('DateTime'),
+                ],
+                [
+                 'Number',
+                 '123456',
+                ],
+                [
+                 'Customer',
+                 $this->getMock('JLM\CommerceBundle\Model\CustomerInterface'),
+                ],
+                [
+                 'CustomerName',
+                 'Foo',
+                ],
+                [
+                 'CustomerAddress',
+                 'Bar',
+                ],
+                [
+                 'Vat',
+                 19.6,
+                ],
             
             // Deprecated
-            ['Trustee',  $this->getMock('JLM\CommerceBundle\Model\CustomerInterface')],
-            ['TrusteeName', 'Foo'],
-            ['TrusteeAddress', 'Bar'],
-            ['VatTransmitter', 19.6],
-        ];
+                [
+                 'Trustee',
+                 $this->getMock('JLM\CommerceBundle\Model\CustomerInterface'),
+                ],
+                [
+                 'TrusteeName',
+                 'Foo',
+                ],
+                [
+                 'TrusteeAddress',
+                 'Bar',
+                ],
+                [
+                 'VatTransmitter',
+                 19.6,
+                ],
+               ];
     }
     
     /**

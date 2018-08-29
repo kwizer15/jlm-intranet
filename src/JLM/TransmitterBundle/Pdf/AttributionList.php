@@ -14,19 +14,19 @@ class AttributionList extends FPDFext
     {
         $pdf = new self();
         $pdf->setWithHeader($withHeader);
-        $pdf->_init($entity);
+        $pdf->init($entity);
         foreach ($transmitters as $transmitter) {
-            $pdf->_show($transmitter);
+            $pdf->show($transmitter);
         }
-        $pdf->_footer();
+        $pdf->customFooter();
         return $pdf->Output('', 'S');
     }
     
-    private function _init($entity)
+    private function init($entity)
     {
         $this->aliasNbPages();
         
-        $this->setWidths([55,14,31,60,15,15]);
+        $this->setWidths([55, 14, 31, 60, 15, 15]);
         $this->addPage('P');
         $this->setY(55);
         $this->setFont('Arial', 'B', 16);
@@ -41,7 +41,7 @@ class AttributionList extends FPDFext
     }
     
     
-    private function _show($entity)
+    private function show($entity)
     {
         if ($this->lastUserGroup != $entity->getUserGroup().'' && $this->countTemp > 0) {
             $this->setFont('Arial', 'B', 10);
@@ -57,13 +57,13 @@ class AttributionList extends FPDFext
             $state = 'Remplacé par le '.$entity->getReplacedTransmitter()->getNumber();
         }
         $datas = [
-                $entity->getUserGroup().'',
-                $entity->getNumber(),
-                $state,
-                $entity->getUserName(),
-                '',
-                '',
-        ];
+                  $entity->getUserGroup().'',
+                  $entity->getNumber(),
+                  $state,
+                  $entity->getUserName(),
+                  '',
+                  '',
+                 ];
         $this->setFillColor(150);
         $this->row($datas, 5, 1, !$entity->getIsActive());
         if ($entity->getIsActive()) {
@@ -85,7 +85,7 @@ class AttributionList extends FPDFext
         }
     }
     
-    public function _footer()
+    public function customFooter()
     {
         if ($this->count != $this->countTemp) {
             $this->setFont('Arial', 'B', 10);
@@ -115,7 +115,7 @@ class AttributionList extends FPDFext
     {
         $this->setFont('Arial', 'B', 11);
         $this->setFillColor(200);
-        $this->row(['Groupe utilisateur','Num.','Type','Nom','Appt.','Place'], 6, 1, true);
+        $this->row(['Groupe utilisateur', 'Num.', 'Type', 'Nom', 'Appt.', 'Place'], 6, 1, true);
     }
     
     public function setWithHeader($with)

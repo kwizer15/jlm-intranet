@@ -26,8 +26,8 @@ class ProductCategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, ['label'=>'Nom'])
-            ->add('parent', null, ['required'=>false,'label'=>'Famille parente'])
+            ->add('name', null, ['label' => 'Nom'])
+            ->add('parent', null, ['required' => false, 'label' => 'Famille parente'])
         ;
     }
 
@@ -45,8 +45,6 @@ class ProductCategoryType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-        ->setDefaults([
-            'data_class' => 'JLM\ProductBundle\Entity\ProductCategory',
-        ]);
+        ->setDefaults(['data_class' => 'JLM\ProductBundle\Entity\ProductCategory']);
     }
 }

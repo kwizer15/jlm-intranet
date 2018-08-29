@@ -28,12 +28,11 @@ class CityController extends ContainerAware
         $request = $manager->getRequest();
         $term = $request->get('q');
         $page_limit = $request->get('page_limit');
-        ;
         $cities = $manager->getRepository()->getArray($term, $page_limit);
-        
+
         return $manager->renderJson(['cities' => $cities]);
     }
-    
+
     /**
      * City json
      */
@@ -42,7 +41,7 @@ class CityController extends ContainerAware
         $manager = $this->container->get('jlm_contact.city_manager');
         $id = $manager->getRequest()->get('id');
         $city = $manager->getRepository()->getByIdToArray($id);
-        
+
         return $manager->renderJson($city);
     }
 }

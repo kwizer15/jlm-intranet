@@ -28,7 +28,10 @@ class ProductRepository extends SearchRepository
      */
     protected function getSearchParams()
     {
-        return ['a.designation','a.reference'];
+        return [
+                'a.designation',
+                'a.reference',
+               ];
     }
     
     public function searchDesignation($query)
@@ -66,19 +69,19 @@ class ProductRepository extends SearchRepository
         $r2 = [];
         foreach ($res as $r) {
             $r2[] = [
-                    'label'=>$r->getReference().' | '.$r->getDesignation(),
-                    'id'=>$r->getId(),
-                    'reference'=>$r->getReference(),
-                    'designation'=>$r->getDesignation(),
-                    'description'=>$r->getDescription(),
-                    'unitPrice'=>$r->getUnitPrice(),
-                    'purchase'=>$r->getPurchase(),
-                    'discountSupplier'=>$r->getDiscountSupplier(),
-                    'expenseRatio'=>$r->getExpenseRatio(),
-                    'shipping'=>$r->getShipping(),
-                    'transmitter'=> ($r->getCategory()->getId() == 1),
-                    'active' => $r->isActive(),
-                ];
+                     'label'            => $r->getReference().' | '.$r->getDesignation(),
+                     'id'               => $r->getId(),
+                     'reference'        => $r->getReference(),
+                     'designation'      => $r->getDesignation(),
+                     'description'      => $r->getDescription(),
+                     'unitPrice'        => $r->getUnitPrice(),
+                     'purchase'         => $r->getPurchase(),
+                     'discountSupplier' => $r->getDiscountSupplier(),
+                     'expenseRatio'     => $r->getExpenseRatio(),
+                     'shipping'         => $r->getShipping(),
+                     'transmitter'      => ($r->getCategory()->getId() == 1),
+                     'active'           => $r->isActive(),
+                    ];
         }
         return $r2;
     }

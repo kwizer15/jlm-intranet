@@ -30,6 +30,6 @@ class MaintenanceReportMailBuilder extends MaintenanceMailBuilder
         .$maintenance->getInstallationCode().chr(10)
         .$maintenance->getPlace().chr(10)
         .'a été effectuée le '.$maintenance->getLastDate()->format('d/m/Y')
-        .$this->_getSignature());
+        .$this->getSignature());
     }
 }

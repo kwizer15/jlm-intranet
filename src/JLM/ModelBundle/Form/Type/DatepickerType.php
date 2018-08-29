@@ -1,4 +1,5 @@
 <?php
+
 namespace JLM\ModelBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -12,12 +13,14 @@ class DatepickerType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-            ->setDefaults([
-                'widget' => 'single_text',
-                'format'=>'dd/MM/yyyy',
-                'years'  => range(date('Y') - 5, date('Y') + 5),
-                'attr'=>['class'=>'input-small datepicker']
-            ]);
+            ->setDefaults(
+                [
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
+                    'years' => range(date('Y') - 5, date('Y') + 5),
+                    'attr' => ['class' => 'input-small datepicker'],
+                ]
+            );
     }
 
     public function getParent()

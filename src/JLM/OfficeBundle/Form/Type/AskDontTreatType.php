@@ -1,4 +1,5 @@
 <?php
+
 namespace JLM\OfficeBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -10,7 +11,10 @@ abstract class AskDontTreatType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('dontTreat', null, ['label'=>'Raison du non-traitement','attr'=>['class'=>'input-xlarge','rows'=>5]])
-        ;
+            ->add(
+                'dontTreat',
+                null,
+                ['label' => 'Raison du non-traitement', 'attr' => ['class' => 'input-xlarge', 'rows' => 5]]
+            );
     }
 }

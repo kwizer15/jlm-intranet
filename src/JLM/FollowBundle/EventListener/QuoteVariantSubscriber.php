@@ -49,9 +49,7 @@ class QuoteVariantSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return [
-            JLMCommerceEvents::QUOTEVARIANT_GIVEN => 'createThread',
-        ];
+        return [JLMCommerceEvents::QUOTEVARIANT_GIVEN => 'createThread'];
     }
     
     public function createThread(QuoteVariantEvent $event)

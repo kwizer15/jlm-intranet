@@ -65,8 +65,6 @@ class ProductHiddenType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'invalid_message' => 'The selected product does not exist',
-        ]);
+        $resolver->setDefaults(['invalid_message' => 'The selected product does not exist']);
     }
 }

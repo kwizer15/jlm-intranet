@@ -1,4 +1,5 @@
 <?php
+
 namespace JLM\ModelBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
@@ -11,7 +12,7 @@ class SiteContactToIntTransformer implements DataTransformerInterface
      * @var ObjectManager
      */
     private $om;
-    
+
     /**
      * @param ObjectManager $om
      */
@@ -19,11 +20,12 @@ class SiteContactToIntTransformer implements DataTransformerInterface
     {
         $this->om = $om;
     }
-    
+
     /**
      * Transforms an object (trustee) to a string (name).
      *
      * @param  Trustee|null $entity
+     *
      * @return string
      */
     public function transform($entity)
@@ -33,11 +35,12 @@ class SiteContactToIntTransformer implements DataTransformerInterface
         }
         return $entity->getId();
     }
-    
+
     /**
      * Transforms a string (number) to an object (trustee).
      *
      * @param  string $number
+     *
      * @return Trustee|null
      * @throws TransformationFailedException if object (trustee) is not found.
      */
@@ -46,19 +49,21 @@ class SiteContactToIntTransformer implements DataTransformerInterface
         if (!$string) {
             return null;
         }
-    
-        
-            $entity = $this->om
-                ->getRepository('JLMModelBundle:SiteContact')
-                ->find($string)
-            ;
+
+
+        $entity = $this->om
+            ->getRepository('JLMModelBundle:SiteContact')
+            ->find($string)
+        ;
         if (null === $entity) {
-            throw new TransformationFailedException(sprintf(
-                'A SiteContact with id "%s" does not exist!',
-                $string
-            ));
+            throw new TransformationFailedException(
+                sprintf(
+                    'A SiteContact with id "%s" does not exist!',
+                    $string
+                )
+            );
         }
-    
+
         return $entity;
     }
 }

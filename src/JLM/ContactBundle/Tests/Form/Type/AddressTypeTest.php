@@ -27,12 +27,12 @@ class AddressTypeTest extends TypeTestCase
      * @var AddressType
      */
     protected $type;
-    
+
     /**
      * @var Address
      */
     protected $object;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -41,17 +41,22 @@ class AddressTypeTest extends TypeTestCase
         $om = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
         $s2 = new \Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type('hidden');
         $city = new CitySelectType($om);
-        return [new PreloadedExtension([
-            $city->getName() => $city,
-            $s2->getName() => $s2,
-        ], [])];
+        return [
+            new PreloadedExtension(
+                [
+                    $city->getName() => $city,
+                    $s2->getName() => $s2,
+                ],
+                []
+            ),
+        ];
     }
-    
+
     public function testCreateForm()
     {
-        $this->type = new AddressType;
+        $this->type = new AddressType();
         $form = $this->factory->create($this->type);
-        
-        $this->object = new Address;
+
+        $this->object = new Address();
     }
 }

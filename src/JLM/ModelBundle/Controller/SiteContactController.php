@@ -39,9 +39,7 @@ class SiteContactController extends Controller
 
         $entities = $em->getRepository('JLMModelBundle:SiteContact')->findAll();
 
-        return [
-            'entities' => $entities,
-        ];
+        return ['entities' => $entities];
     }
 
     /**
@@ -52,9 +50,7 @@ class SiteContactController extends Controller
      */
     public function showAction(SiteContact $entity)
     {
-        return [
-            'entity'      => $entity,
-        ];
+        return ['entity' => $entity];
     }
 
     /**
@@ -72,10 +68,10 @@ class SiteContactController extends Controller
         $form   = $this->createForm(new SiteContactType(), $entity);
 
         return [
-            'entity' => $entity,
-            'site' => $site,
-            'form'   => $form->createView(),
-        ];
+                'entity' => $entity,
+                'site'   => $site,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -104,10 +100,10 @@ class SiteContactController extends Controller
         }
 
         return [
-            'entity' => $entity,
-            'site' => $site,
-            'form'   => $form->createView(),
-        ];
+                'entity' => $entity,
+                'site'   => $site,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -130,10 +126,10 @@ class SiteContactController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ];
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+               ];
     }
 
     /**
@@ -169,10 +165,10 @@ class SiteContactController extends Controller
         }
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ];
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+               ];
     }
 
     /**

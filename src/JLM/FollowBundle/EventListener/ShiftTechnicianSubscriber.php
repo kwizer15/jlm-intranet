@@ -45,9 +45,9 @@ class ShiftTechnicianSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            JLMDailyEvents::SHIFTTECHNICIAN_POSTPERSIST => 'updateThread',
-            JLMDailyEvents::SHIFTTECHNICIAN_POSTREMOVE => 'updateThread',
-        ];
+                JLMDailyEvents::SHIFTTECHNICIAN_POSTPERSIST => 'updateThread',
+                JLMDailyEvents::SHIFTTECHNICIAN_POSTREMOVE  => 'updateThread',
+               ];
     }
     
     /**

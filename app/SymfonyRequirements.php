@@ -140,7 +140,8 @@ class PhpIniRequirement extends Requirement
             $fulfilled = call_user_func($evaluation, $cfgValue);
         } else {
             if (null === $testMessage) {
-                $testMessage = sprintf('%s %s be %s in php.ini',
+                $testMessage = sprintf(
+                    '%s %s be %s in php.ini',
                     $cfgName,
                     $optional ? 'should' : 'must',
                     $evaluation ? 'enabled' : 'disabled'
@@ -148,7 +149,8 @@ class PhpIniRequirement extends Requirement
             }
 
             if (null === $helpHtml) {
-                $helpHtml = sprintf('Set <strong>%s</strong> to <strong>%s</strong> in php.ini<a href="#phpini">*</a>.',
+                $helpHtml = sprintf(
+                    'Set <strong>%s</strong> to <strong>%s</strong> in php.ini<a href="#phpini">*</a>.',
                     $cfgName,
                     $evaluation ? 'on' : 'off'
                 );
@@ -168,7 +170,7 @@ class PhpIniRequirement extends Requirement
  */
 class RequirementCollection implements IteratorAggregate
 {
-    private $requirements = array();
+    private $requirements = [];
 
     /**
      * Gets the current RequirementCollection as an Iterator.
@@ -279,7 +281,7 @@ class RequirementCollection implements IteratorAggregate
      */
     public function getRequirements()
     {
-        $array = array();
+        $array = [];
         foreach ($this->requirements as $req) {
             if (!$req->isOptional()) {
                 $array[] = $req;
@@ -296,7 +298,7 @@ class RequirementCollection implements IteratorAggregate
      */
     public function getFailedRequirements()
     {
-        $array = array();
+        $array = [];
         foreach ($this->requirements as $req) {
             if (!$req->isFulfilled() && !$req->isOptional()) {
                 $array[] = $req;
@@ -313,7 +315,7 @@ class RequirementCollection implements IteratorAggregate
      */
     public function getRecommendations()
     {
-        $array = array();
+        $array = [];
         foreach ($this->requirements as $req) {
             if ($req->isOptional()) {
                 $array[] = $req;
@@ -330,7 +332,7 @@ class RequirementCollection implements IteratorAggregate
      */
     public function getFailedRecommendations()
     {
-        $array = array();
+        $array = [];
         foreach ($this->requirements as $req) {
             if (!$req->isFulfilled() && $req->isOptional()) {
                 $array[] = $req;
@@ -390,9 +392,12 @@ class SymfonyRequirements extends RequirementCollection
         $this->addRequirement(
             version_compare($installedPhpVersion, self::REQUIRED_PHP_VERSION, '>='),
             sprintf('PHP version must be at least %s (%s installed)', self::REQUIRED_PHP_VERSION, $installedPhpVersion),
-            sprintf('You are running PHP version "<strong>%s</strong>", but Symfony needs at least PHP "<strong>%s</strong>" to run.
+            sprintf(
+                'You are running PHP version "<strong>%s</strong>", but Symfony needs at least PHP "<strong>%s</strong>" to run.
                 Before using Symfony, upgrade your PHP installation, preferably to the latest version.',
-                $installedPhpVersion, self::REQUIRED_PHP_VERSION),
+                $installedPhpVersion,
+                self::REQUIRED_PHP_VERSION
+            ),
             sprintf('Install PHP %s or newer (installed version is %s)', self::REQUIRED_PHP_VERSION, $installedPhpVersion)
         );
 
@@ -424,13 +429,15 @@ class SymfonyRequirements extends RequirementCollection
         );
 
         $this->addPhpIniRequirement(
-            'date.timezone', true, false,
+            'date.timezone',
+            true,
+            false,
             'date.timezone setting must be set',
             'Set the "<strong>date.timezone</strong>" setting in php.ini<a href="#phpini">*</a> (like Europe/Paris).'
         );
 
         if (version_compare($installedPhpVersion, self::REQUIRED_PHP_VERSION, '>=')) {
-            $timezones = array();
+            $timezones = [];
             foreach (DateTimeZone::listAbbreviations() as $abbreviations) {
                 foreach ($abbreviations as $abbreviation) {
                     $timezones[$abbreviation['timezone_id']] = true;
@@ -504,11 +511,15 @@ class SymfonyRequirements extends RequirementCollection
 
         if (extension_loaded('xdebug')) {
             $this->addPhpIniRequirement(
-                'xdebug.show_exception_trace', false, true
+                'xdebug.show_exception_trace',
+                false,
+                true
             );
 
             $this->addPhpIniRequirement(
-                'xdebug.scream', false, true
+                'xdebug.scream',
+                false,
+                true
             );
 
             $this->addPhpIniRecommendation(

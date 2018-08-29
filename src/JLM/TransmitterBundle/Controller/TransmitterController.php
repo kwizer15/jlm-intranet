@@ -32,11 +32,11 @@ class TransmitterController extends Controller
     {
         $entity = new Transmitter();
         $entity->setAttribution($attribution);
-        $form   = $this->createForm(new TransmitterType($attribution->getSite()->getId()), $entity);
+        $form = $this->createForm(new TransmitterType($attribution->getSite()->getId()), $entity);
 
         return [
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ];
     }
 
@@ -50,7 +50,7 @@ class TransmitterController extends Controller
      */
     public function createAction(Request $request, Attribution $attribution)
     {
-        $entity  = new Transmitter();
+        $entity = new Transmitter();
         $form = $this->createForm(new TransmitterType($attribution->getSite()->getId()), $entity);
         $form->handleRequest($request);
 
@@ -58,14 +58,14 @@ class TransmitterController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-            
+
             // On met à jour la page de base
             return new JsonResponse([]);
         }
 
         return [
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         ];
     }
 
@@ -85,12 +85,17 @@ class TransmitterController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Transmitter entity.');
         }
-        $editForm = $this->get('form.factory')->createNamed('transmitterEdit'.$id, new TransmitterType($entity->getAttribution()->getSite()->getId()), $entity);
+        $editForm = $this->get('form.factory')->createNamed(
+            'transmitterEdit' . $id,
+            new TransmitterType($entity->getAttribution()->getSite()->getId()),
+            $entity
+        )
+        ;
         //$editForm = $this->createForm(new TransmitterType($entity->getAttribution()->getSite()->getId()), $entity);
 
         return [
-            'entity'      => $entity,
-            'form'   => $editForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         ];
     }
 
@@ -112,7 +117,12 @@ class TransmitterController extends Controller
             throw $this->createNotFoundException('Unable to find Transmitter entity.');
         }
 
-        $editForm = $this->get('form.factory')->createNamed('transmitterEdit'.$id, new TransmitterType($entity->getAttribution()->getSite()->getId()), $entity);
+        $editForm = $this->get('form.factory')->createNamed(
+            'transmitterEdit' . $id,
+            new TransmitterType($entity->getAttribution()->getSite()->getId()),
+            $entity
+        )
+        ;
         //$editForm = $this->createForm(new TransmitterType($entity->getAttribution()->getSite()->getId()), $entity);
         $editForm->bind($request);
 
@@ -124,11 +134,11 @@ class TransmitterController extends Controller
         }
 
         return [
-            'entity'      => $entity,
-            'form'   => $editForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         ];
     }
-    
+
     /**
      * Unactive Transmitter entity.
      *
@@ -141,10 +151,10 @@ class TransmitterController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
         $em->flush();
-        
+
         return $this->redirect($this->get('request')->headers->get('referer'));
     }
-    
+
     /**
      * Reactive Transmitter entity.
      *
@@ -157,7 +167,7 @@ class TransmitterController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
         $em->flush();
-    
+
         return $this->redirect($this->get('request')->headers->get('referer'));
     }
 }

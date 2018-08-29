@@ -37,7 +37,7 @@ class DoorStop
      * @var string
      */
     private $reason;
-    
+
     /**
      * @var string
      */
@@ -62,12 +62,13 @@ class DoorStop
      * Set begin
      *
      * @param \DateTime $begin
+     *
      * @return DoorStop
      */
     public function setBegin(\DateTime $begin = null)
     {
         $this->begin = $begin;
-        
+
         return $this;
     }
 
@@ -85,12 +86,13 @@ class DoorStop
      * Set end
      *
      * @param \DateTime $end
+     *
      * @return DoorStop
      */
     public function setEnd(\DateTime $end = null)
     {
         $this->end = $end;
-        
+
         return $this;
     }
 
@@ -108,12 +110,13 @@ class DoorStop
      * Set reason
      *
      * @param string $reason
+     *
      * @return DoorStop
      */
     public function setReason($reason)
     {
         $this->reason = $reason;
-    
+
         return $this;
     }
 
@@ -131,12 +134,13 @@ class DoorStop
      * Set door
      *
      * @param \JLM\ModelBundle\Entity\Door $door
+     *
      * @return DoorStop
      */
     public function setDoor(\JLM\ModelBundle\Entity\Door $door = null)
     {
         $this->door = $door;
-    
+
         return $this;
     }
 
@@ -154,12 +158,13 @@ class DoorStop
      * Set state
      *
      * @param string $state
+     *
      * @return DoorStop
      */
     public function setState($state)
     {
         $this->state = $state;
-    
+
         return $this;
     }
 

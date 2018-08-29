@@ -22,13 +22,13 @@ class DefaultController extends Controller
         $em =$this->getDoctrine()->getManager();
         $stats = $em->getRepository('JLMDailyBundle:ShiftTechnician')->getStatsByYear();
         $base = [
-                'fixing'=> 0,
-                'work'=> 0,
-                'maintenance'=> 0,
-                'equipment'=> 0,
-                'total'=> 0,
-        ];
-        $numbers = $times = ['total'=>$base];
+                 'fixing'      => 0,
+                 'work'        => 0,
+                 'maintenance' => 0,
+                 'equipment'   => 0,
+                 'total'       => 0,
+                ];
+        $numbers = $times = ['total' => $base];
         foreach ($stats as $stat) {
             if (!isset($numbers[$stat['name']])) {
                 $numbers[$stat['name']] = $base;
@@ -88,17 +88,17 @@ class DefaultController extends Controller
             ->getQuery()
             ->getSingleScalarResult();
         return [
-                'numbers'=>$numbers,
-                'times'=>$times,
-                'maintenanceDoes' => $repo->getCountDoes(false),
-                'maintenanceTotal' => $maintenanceTotal,
-                'evolution' => $repo->getCountDoesByDay(false),
-                'evolutionBase' => $evolutionBase,
-                'contracts_numbers' => $contracts_numbers,
-                'contracts_doors' => $contracts_doors,
+                'numbers'            => $numbers,
+                'times'              => $times,
+                'maintenanceDoes'    => $repo->getCountDoes(false),
+                'maintenanceTotal'   => $maintenanceTotal,
+                'evolution'          => $repo->getCountDoesByDay(false),
+                'evolutionBase'      => $evolutionBase,
+                'contracts_numbers'  => $contracts_numbers,
+                'contracts_doors'    => $contracts_doors,
                 'contracts_complete' => $contracts_complete,
-                'contracts_normal' => ($contracts_doors - $contracts_complete),
-        ];
+                'contracts_normal'   => ($contracts_doors - $contracts_complete),
+               ];
     }
     
     /**
@@ -138,7 +138,7 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Cette installation n\'existe pas');
         }
         
-        return ['door'=>$entity];
+        return ['door' => $entity];
     }
     
     /**

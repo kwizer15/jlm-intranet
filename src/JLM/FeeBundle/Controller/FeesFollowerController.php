@@ -1,4 +1,5 @@
 <?php
+
 namespace JLM\FeeBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -34,17 +35,16 @@ class FeesFollowerController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-    
+
         $entities = $em->getRepository('JLMFeeBundle:FeesFollower')->findBy(
             [],
-            ['activation'=>'desc']
-        );
-    
-        return [
-                'entities' => $entities,
-        ];
+            ['activation' => 'desc']
+        )
+        ;
+
+        return ['entities' => $entities];
     }
-    
+
     /**
      * Edit a FeesFollower entities.
      *
@@ -55,13 +55,13 @@ class FeesFollowerController extends Controller
     public function editAction(FeesFollower $entity)
     {
         $editForm = $this->createForm(new FeesFollowerType(), $entity);
-        
+
         return [
-                'entity'      => $entity,
-                'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
         ];
     }
-    
+
     /**
      * Edits an existing FeesFollower entity.
      *
@@ -74,21 +74,21 @@ class FeesFollowerController extends Controller
     {
         $editForm = $this->createForm(new FeesFollowerType(), $entity);
         $editForm->handleRequest($request);
-    
+
         if ($editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-            
+
             return $this->redirect($this->generateUrl('fees', ['id' => $entity->getId()]));
         }
-    
+
         return [
-                'entity'      => $entity,
-                'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
         ];
     }
-    
+
     /**
      * Edits an existing FeesFollower entity.
      *
@@ -103,24 +103,25 @@ class FeesFollowerController extends Controller
             ->createQueryBuilder('a')
             ->select('a')
             ->leftJoin('a.contracts', 'b')
-                ->leftJoin('b.door', 'c')
-                    ->leftJoin('c.site', 'd')
-                        ->leftJoin('d.address', 'e')
-                            ->leftJoin('e.city', 'f')
-//          ->where('b.end is null OR b.end > ?1')
-//          ->andWhere('b.begin <= ?1')
-//
-//          ->setParameter(1, $entity->getActivation())
+            ->leftJoin('b.door', 'c')
+            ->leftJoin('c.site', 'd')
+            ->leftJoin('d.address', 'e')
+            ->leftJoin('e.city', 'f')
+            //          ->where('b.end is null OR b.end > ?1')
+            //          ->andWhere('b.begin <= ?1')
+            //
+            //          ->setParameter(1, $entity->getActivation())
             ->orderBy('f.name', 'asc')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
 
         $number = null;
         // @todo Ajouter pas de facture si sous garantie
         foreach ($fees as $fee) {
             $contracts = $fee->getActiveContracts($entity->getActivation());
             if (count($contracts)) {
-                $gf = 'getFrequence'.$fee->getFrequence();
+                $gf = 'getFrequence' . $fee->getFrequence();
                 if ($entity->$gf() !== null) {
                     // On fait l'augmentation dans le contrat
                     $majoration = $entity->$gf();
@@ -132,13 +133,20 @@ class FeesFollowerController extends Controller
                             $em->persist($contract);
                         }
                     }
-                    $builder = new FeeBillBuilder($fee, $entity, [
-                        'number' => $number,
-                        'product' => $em->getRepository('JLMProductBundle:Product')->find(284),
-                        'penalty' => (string)$em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
-                        'earlyPayment' => (string)$em->getRepository('JLMCommerceBundle:EarlyPaymentModel')->find(1),
-                        'vatTransmitter' => $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(),
-                    ]);
+                    $builder = new FeeBillBuilder(
+                        $fee,
+                        $entity,
+                        [
+                            'number' => $number,
+                            'product' => $em->getRepository('JLMProductBundle:Product')->find(284),
+                            'penalty' => (string) $em->getRepository('JLMCommerceBundle:PenaltyModel')->find(1),
+                            'earlyPayment' => (string) $em->getRepository('JLMCommerceBundle:EarlyPaymentModel')
+                                ->find(
+                                    1
+                                ),
+                            'vatTransmitter' => $em->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate(),
+                        ]
+                    );
                     $bill = BillFactory::create($builder);
                     if ($bill->getTotalPrice() > 0) {
                         $em->persist($bill);
@@ -148,13 +156,13 @@ class FeesFollowerController extends Controller
             }
         }
 
-        $entity->setGeneration(new \DateTime);
+        $entity->setGeneration(new \DateTime());
         $em->persist($entity);
         $em->flush();
-        
+
         return $this->redirect($this->generateUrl('fees', ['id' => $entity->getId()]));
     }
-    
+
     /**
      * Print bills
      * @Route("/{id}/print", name="fees_print")
@@ -166,9 +174,14 @@ class FeesFollowerController extends Controller
         $entities = $em->getRepository('JLMCommerceBundle:Bill')->getFees($follower);
         $response = new Response();
         $response->headers->set('Content-Type', 'application/pdf');
-        $response->headers->set('Content-Disposition', 'inline; filename=redevances-'.$follower->getActivation()->format('m-Y').'.pdf');
-        $response->setContent($this->render('JLMCommerceBundle:Bill:print.pdf.php', ['entities'=>$entities,'duplicate'=>false]));
-        
+        $response->headers->set(
+            'Content-Disposition',
+            'inline; filename=redevances-' . $follower->getActivation()->format('m-Y') . '.pdf'
+        );
+        $response->setContent(
+            $this->render('JLMCommerceBundle:Bill:print.pdf.php', ['entities' => $entities, 'duplicate' => false])
+        );
+
         return $response;
     }
 }

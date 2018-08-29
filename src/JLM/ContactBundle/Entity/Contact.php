@@ -27,62 +27,63 @@ abstract class Contact implements ContactInterface
      * Ehancement
      */
     private $id;
-    
+
     /**
      * @var string
      */
     protected $name = '';
-    
+
     /**
      * @var Address $address
      */
     private $address;
-    
+
     /**
      * @var ContactPhoneInterface[]
      */
     private $phones;
-    
+
     /**
      * @var email $email
      */
     private $email;
-    
+
     /**
      * @var bool $active
      */
     private $active = true;
-    
+
     /**
      * @var UploadDocument $image
      */
     private $image;
-    
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->phones = new ArrayCollection;
+        $this->phones = new ArrayCollection();
     }
-    
+
     /**
      * Get id
+     *
      * @return int
      */
     public function getId()
     {
         return $this->id;
     }
-    
+
     public function getType()
     {
         $shorts = explode('\\', get_class($this));
         $short = $shorts[sizeof($shorts) - 1];
-     
+
         return strtolower($short);
     }
-    
+
     /**
      * Set text
      *
@@ -91,10 +92,10 @@ abstract class Contact implements ContactInterface
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
-    
+
     /**
      * Get text
      *
@@ -104,9 +105,10 @@ abstract class Contact implements ContactInterface
     {
         return $this->name;
     }
-    
+
     /**
      * To String
+     *
      * @return string
      */
     public function __toString()
@@ -118,43 +120,47 @@ abstract class Contact implements ContactInterface
      * Add a phone
      *
      * @param ContactPhoneInterface $phone
+     *
      * @return bool
      */
     public function addPhone(ContactPhoneInterface $phone)
     {
         return $this->phones->add($phone);
     }
-    
+
     /**
      * Remove a phone
      *
      * @param ContactPhoneInterface
+     *
      * @return bool
      */
     public function removePhone(ContactPhoneInterface $phone)
     {
         return $this->phones->removeElement($phone);
     }
-    
+
     /**
      * Get phones
+     *
      * @return array
      */
     public function getPhones()
     {
         return $this->phones;
     }
-    
+
     /**
      * Set email
      *
      * @param string $email
+     *
      * @return self
      */
     public function setEmail($email)
     {
         $this->email = $email;
-        
+
         return $this;
     }
 
@@ -172,12 +178,13 @@ abstract class Contact implements ContactInterface
      * Set address
      *
      * @param AddressInterface $address
+     *
      * @return self
      */
     public function setAddress(AddressInterface $address = null)
     {
         $this->address = $address;
-        
+
         return $this;
     }
 
@@ -190,63 +197,69 @@ abstract class Contact implements ContactInterface
     {
         return $this->address;
     }
-    
+
     /**
      * Set active
+     *
      * @param bool $active
+     *
      * @return self
      */
     public function setActive($active)
     {
         $this->active = $active;
-        
+
         return $this;
     }
-    
+
     /**
      * Get active
+     *
      * @return bool
      */
     public function getActive()
     {
         return $this->active;
     }
-    
+
     /**
      * Is active
+     *
      * @return bool
      */
     public function isActive()
     {
         return $this->getActive();
     }
-    
+
     public function setImage(UploadDocument $image)
     {
         $this->image = $image;
-        
+
         return $this;
     }
-    
+
     public function getImage()
     {
         return $this->image;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function getFax()
     {
-        return $this->_getPhoneNumber('Fax');
+        return $this->getPhoneNumber('Fax');
     }
 
     /**
      * Get the phone number by label
+     *
      * @param string $type
+     *
      * @return NULL|string
      */
-    protected function _getPhoneNumber($type)
+    protected function getPhoneNumber($type)
     {
         $phones = $this->getPhones();
         foreach ($phones as $phone) {
@@ -254,7 +267,7 @@ abstract class Contact implements ContactInterface
                 return $phone->getNumber();
             }
         }
-    
+
         return null;
     }
 }

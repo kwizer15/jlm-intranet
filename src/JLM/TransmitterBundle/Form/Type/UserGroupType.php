@@ -12,17 +12,17 @@ class UserGroupType extends AbstractType
     {
         $builder
             ->add('site', 'site_hidden')
-            ->add('name', null, ['label'=>'Nom du groupe'])
-            ->add('model', null, ['label'=>'Type d\'émetteurs'])
+            ->add('name', null, ['label' => 'Nom du groupe'])
+            ->add('model', null, ['label' => 'Type d\'émetteurs'])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'JLM\TransmitterBundle\Entity\UserGroup',
-            'attr'=>['class'=>'usergroup'],
-        ]);
+                                'data_class' => 'JLM\TransmitterBundle\Entity\UserGroup',
+                                'attr'       => ['class' => 'usergroup'],
+                               ]);
     }
 
     public function getName()

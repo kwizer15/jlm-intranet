@@ -279,14 +279,35 @@ class QuoteVariant implements QuoteVariantInterface
     public function setState($state)
     {
         $asserts = [
-                self::STATE_CANCELED  => [self::STATE_CANCELED,  self::STATE_GIVEN],
-                self::STATE_INSEIZURE => [self::STATE_READY,     self::STATE_GIVEN],
-                self::STATE_READY     => [self::STATE_INSEIZURE, self::STATE_READY],
-                self::STATE_PRINTED   => [self::STATE_INSEIZURE, self::STATE_PRINTED],
-                self::STATE_SENDED      => [self::STATE_READY,     self::STATE_SENDED],
-                self::STATE_RECEIPT   => [self::STATE_SENDED,      self::STATE_RECEIPT],
-                self::STATE_GIVEN     => [self::STATE_SENDED,      self::STATE_GIVEN],
-        ];
+                    self::STATE_CANCELED  => [
+                                              self::STATE_CANCELED,
+                                              self::STATE_GIVEN,
+                                             ],
+                    self::STATE_INSEIZURE => [
+                                              self::STATE_READY,
+                                              self::STATE_GIVEN,
+                                             ],
+                    self::STATE_READY     => [
+                                              self::STATE_INSEIZURE,
+                                              self::STATE_READY,
+                                             ],
+                    self::STATE_PRINTED   => [
+                                              self::STATE_INSEIZURE,
+                                              self::STATE_PRINTED,
+                                             ],
+                    self::STATE_SENDED    => [
+                                              self::STATE_READY,
+                                              self::STATE_SENDED,
+                                             ],
+                    self::STATE_RECEIPT   => [
+                                              self::STATE_SENDED,
+                                              self::STATE_RECEIPT,
+                                             ],
+                    self::STATE_GIVEN     => [
+                                              self::STATE_SENDED,
+                                              self::STATE_GIVEN,
+                                             ],
+                   ];
         if ($this->state < $asserts[$state][0]) {
             return false;
         }
@@ -466,15 +487,15 @@ class QuoteVariant implements QuoteVariantInterface
     
     public function getAdministratorContacts()
     {
-        return $this->_createContactFromEmail($this->getDoor()->getAdministratorEmails());
+        return $this->createContactFromEmail($this->getDoor()->getAdministratorEmails());
     }
     
     public function getManagerContacts()
     {
-        return $this->_createContactFromEmail($this->getDoor()->getManagerEmails());
+        return $this->createContactFromEmail($this->getDoor()->getManagerEmails());
     }
     
-    private function _createContactFromEmail($emails)
+    private function createContactFromEmail($emails)
     {
         $c = [];
         if ($emails === null) {

@@ -40,19 +40,52 @@ class AskTest extends \PHPUnit_Framework_TestCase
     public function getGetterSetter()
     {
         return [
-            ['Creation', new \DateTime],
-            ['Maturity', new \DateTime],
-            ['Ask', 'Foo'],
-            ['DontTreat', 'Foo'],
-            ['Contact', $this->getMock('JLM\AskBundle\Model\ContactInterface')],
-            ['Payer', $this->getMock('JLM\AskBundle\Model\PayerInterface')],
-            ['Method', $this->getMock('JLM\AskBundle\Model\CommunicationMeansInterface')],
-            ['Subject', $this->getMock('JLM\AskBundle\Model\SubjectInterface')],
+                [
+                 'Creation',
+                 new \DateTime,
+                ],
+                [
+                 'Maturity',
+                 new \DateTime,
+                ],
+                [
+                 'Ask',
+                 'Foo',
+                ],
+                [
+                 'DontTreat',
+                 'Foo',
+                ],
+                [
+                 'Contact',
+                 $this->getMock('JLM\AskBundle\Model\ContactInterface'),
+                ],
+                [
+                 'Payer',
+                 $this->getMock('JLM\AskBundle\Model\PayerInterface'),
+                ],
+                [
+                 'Method',
+                 $this->getMock('JLM\AskBundle\Model\CommunicationMeansInterface'),
+                ],
+                [
+                 'Subject',
+                 $this->getMock('JLM\AskBundle\Model\SubjectInterface'),
+                ],
             // Deprecateds
-            ['Person', $this->getMock('JLM\ContactBundle\Entity\Person')],
-            ['Trustee', $this->getMock('JLM\ModelBundle\Entity\Trustee')],
-            ['Site', $this->getMock('JLM\ModelBundle\Entity\Site')],
-        ];
+                [
+                 'Person',
+                 $this->getMock('JLM\ContactBundle\Entity\Person'),
+                ],
+                [
+                 'Trustee',
+                 $this->getMock('JLM\ModelBundle\Entity\Trustee'),
+                ],
+                [
+                 'Site',
+                 $this->getMock('JLM\ModelBundle\Entity\Site'),
+                ],
+               ];
     }
     
     /**

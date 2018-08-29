@@ -11,17 +11,19 @@ class DistanceType extends AbstractType
     {
         return 'text';
     }
-    
+
     public function getName()
     {
         return 'distance';
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
                 'invalid_message' => 'Distance invalide',
-                'attr'=>['class'=>'input-mini'],
-        ]);
+                'attr' => ['class' => 'input-mini'],
+            ]
+        );
     }
 }

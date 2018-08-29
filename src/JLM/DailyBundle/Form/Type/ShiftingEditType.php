@@ -14,20 +14,16 @@ class ShiftingEditType extends AbstractType
     {
         $builder
             ->add('begin', 'datetime', [
-                    'label'=>'Début',
-                    'date_widget'=>'single_text',
-                    'date_format'=>'dd/MM/yyyy',
-                ])
-            ->add('end', 'time', [
-                    'label'=>'Fin',
-                ])
+                                        'label'       => 'Début',
+                                        'date_widget' => 'single_text',
+                                        'date_format' => 'dd/MM/yyyy',
+                                       ])
+            ->add('end', 'time', ['label' => 'Fin'])
             ->add('comment', 'textarea', [
-                'label' => 'Commentaire',
-                'required' => false,
-                'attr' => [
-                    'class'=>'input-xlarge'
-                    ]
-                ])
+                                          'label'    => 'Commentaire',
+                                          'required' => false,
+                                          'attr'     => ['class' => 'input-xlarge'],
+                                         ])
             ->get('end')->addEventListener(
                 FormEvents::POST_SUBMIT,
                 function (FormEvent $event) {
@@ -41,9 +37,7 @@ class ShiftingEditType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => 'JLM\DailyBundle\Entity\ShiftTechnician',
-        ]);
+        $resolver->setDefaults(['data_class' => 'JLM\DailyBundle\Entity\ShiftTechnician']);
     }
 
     public function getName()

@@ -22,7 +22,7 @@ class Calendar implements CalendarInterface
      * @var \DateTime
      */
     private $dt;
-    
+
     /**
      *
      * @return DateTime
@@ -31,17 +31,18 @@ class Calendar implements CalendarInterface
     {
         return $this->getDate();
     }
-    
+
     /**
      *
      * @param \DateTime $date
+     *
      * @return self
      */
     public function setDt(\DateTime $date)
     {
         return $this->setDate($date);
     }
-    
+
     /**
      *
      * @return DateTime
@@ -50,16 +51,17 @@ class Calendar implements CalendarInterface
     {
         return $this->dt;
     }
-    
+
     /**
      *
      * @param \DateTime $date
+     *
      * @return self
      */
     public function setDate(\DateTime $date)
     {
         $this->dt = $date;
-        
+
         return $this;
     }
 }

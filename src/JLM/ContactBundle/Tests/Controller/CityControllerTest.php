@@ -22,7 +22,7 @@ class CityControllerTest extends WebTestCase
      * @var Symfony\Bundle\FrameworkBundle\Client
      */
     private $client;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -30,7 +30,7 @@ class CityControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
     }
-    
+
     public function testGet()
     {
         $this->client->request(
@@ -45,7 +45,7 @@ class CityControllerTest extends WebTestCase
         );
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
-    
+
     public function testGetBadId()
     {
         $this->client->request(
@@ -60,7 +60,7 @@ class CityControllerTest extends WebTestCase
         );
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
-    
+
     public function testSearch()
     {
         $this->client->request(

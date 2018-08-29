@@ -38,9 +38,9 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
         }
         $form   = $this->createForm(new AskDontTreatType(), $entity);
         return [
-            'entity'      => $entity,
-            'form_donttreat' => $form->createView(),
-        ];
+                'entity'         => $entity,
+                'form_donttreat' => $form->createView(),
+               ];
     }
 
     /**
@@ -57,9 +57,9 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
         $form   = $this->createForm(new AskType(), $entity);
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -85,9 +85,9 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
         }
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -110,9 +110,9 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
         $editForm = $this->createForm(new AskType(), $entity);
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        ];
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
 
     /**
@@ -144,9 +144,9 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
         }
 
         return [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        ];
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
     
     protected function getRepositoryName()

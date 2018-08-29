@@ -31,7 +31,7 @@ class DoorType
      * @Assert\NotBlank
      */
     private $name = '';
-    
+
 
     /**
      * Get id
@@ -42,7 +42,7 @@ class DoorType
     {
         return $this->id;
     }
-    
+
     /**
      * Set text
      *
@@ -53,7 +53,7 @@ class DoorType
         $this->name = $name;
         return $this;
     }
-    
+
     /**
      * Get text
      *
@@ -63,7 +63,7 @@ class DoorType
     {
         return $this->name;
     }
-    
+
     /**
      * To String
      */

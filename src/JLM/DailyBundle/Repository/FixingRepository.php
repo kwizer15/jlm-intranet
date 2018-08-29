@@ -28,7 +28,6 @@ class FixingRepository extends InterventionRepository
             ->leftJoin('a.askQuote', 'k')
             ->leftJoin('a.work', 'l')
             ->leftJoin('a.door', 'c')
-            //->leftJoin('c.interventions','d')
             ->leftJoin('c.site', 'e')
             ->leftJoin('e.address', 'f')
             ->leftJoin('f.city', 'g')
@@ -37,7 +36,6 @@ class FixingRepository extends InterventionRepository
             ->leftJoin('c.contracts', 'j')
             ->leftJoin('j.trustee', 'm')
             ->leftJoin('c.type', 'n')
-            //->leftJoin('d.shiftTechnicians','o')
             ->where('b.id is null')
             ->orderBy('a.creation', 'asc')
             ;
@@ -55,7 +53,6 @@ class FixingRepository extends InterventionRepository
         ->leftJoin('a.askQuote', 'k')
         ->leftJoin('a.work', 'l')
         ->leftJoin('a.door', 'c')
-        //->leftJoin('c.interventions','d')
         ->leftJoin('c.site', 'e')
         ->leftJoin('e.address', 'f')
         ->leftJoin('f.city', 'g')
@@ -64,13 +61,15 @@ class FixingRepository extends InterventionRepository
         ->leftJoin('c.contracts', 'j')
         ->leftJoin('j.trustee', 'm')
         ->leftJoin('c.type', 'n')
-        //->leftJoin('d.shiftTechnicians','o')
         ->where('b.begin = ?1')
-        //          ->orWhere('b is null')
-        //          ->orWhere('a.close is null')
-        //          ->orWhere('a.report is null')
         ->orWhere('a.mustBeBilled is null and b.id is not null')
-        ->orWhere('l.id is null and k.id is null and a.contactCustomer is null and a.rest is not null and b.id is not null')
+        ->orWhere(
+            'l.id is null '
+            . 'and k.id is null '
+            . 'and a.contactCustomer is null '
+            . 'and a.rest is not null '
+            . 'and b.id is not null'
+        )
         ->orderBy('a.creation', 'asc')
         ->setParameter(1, $todaystring)
         ;

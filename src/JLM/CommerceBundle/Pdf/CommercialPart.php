@@ -27,7 +27,7 @@ abstract class CommercialPart extends FPDFext
     public static function save($entities, $options = false, $name = 'default.pdf')
     {
         $pdf = new static();
-        $pdf->_init();
+        $pdf->init();
         foreach ($entities as $entity) {
             $pdf->addEntity($entity, $options);
         }
@@ -39,7 +39,7 @@ abstract class CommercialPart extends FPDFext
     {
     
         $pdf = new static();
-        $pdf->_init();
+        $pdf->init();
         foreach ($entities as $entity) {
             $pdf->addEntity($entity, $options);
         }
@@ -52,28 +52,28 @@ abstract class CommercialPart extends FPDFext
         $this->entity = $entity;
         $this->variantpage = $this->pageNo() + 1;
         $this->addPage();
-        $this->_header($options);
-        $this->_content();
-        $this->_footer();
+        $this->customHeader($options);
+        $this->content();
+        $this->customFooter();
         
         return $this;
     }
     
-    public function _init()
+    public function init()
     {
         $this->aliasNbPages();
         $this->setFillColor(200);
         $this->colsize = $this->getColsize();
     }
     
-    public function _content()
+    public function content()
     {
         // En tête lignes
         $this->tabHeader();
         $this->setFont('Arial', '', 10);
         $lines = $this->entity->getLines();
         foreach ($lines as $line) {
-            $this->_line($line);
+            $this->customLine($line);
         }
     }
     
@@ -130,8 +130,8 @@ abstract class CommercialPart extends FPDFext
     
     abstract public function getDocumentName();
     abstract protected function getColsize();
-    abstract public function _header($options);
+    abstract public function customHeader($options);
     abstract public function tabHeader();
-    abstract public function _line($line);
-    abstract public function _footer();
+    abstract public function customLine($line);
+    abstract public function customFooter();
 }

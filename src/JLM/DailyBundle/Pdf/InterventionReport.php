@@ -6,11 +6,11 @@ use JLM\DailyBundle\Entity\Intervention;
 
 abstract class InterventionReport extends FPDFext
 {
-    abstract protected function _getTitle();
+    abstract protected function getTitle();
     
-    abstract protected function _report(Intervention $entity);
+    abstract protected function report(Intervention $entity);
     
-    protected function _show(Intervention $entity)
+    protected function show(Intervention $entity)
     {
         $trustee = $entity->getDoor()->getTrustee();
         $this->setX(120);
@@ -20,7 +20,7 @@ abstract class InterventionReport extends FPDFext
         $this->setFont('Arial', '', 11);
         $this->multiCell(0, 5, $trustee->getAddress());
         $this->ln(10);
-        $this->cellTitle($this->_getTitle());
+        $this->cellTitle($this->getTitle());
         $this->cellIntro('Nous vous transmettons le rapport d\'intervention du '
                 .$entity->getLastDate()->format('d/m/Y')
                 .' qui fait suite à votre demande par '
@@ -33,9 +33,9 @@ abstract class InterventionReport extends FPDFext
     public static function get(Intervention $entity)
     {
         $pdf = new static();
-        $pdf->_init();
-        $pdf->_show($entity);
-        $pdf->_report($entity);
+        $pdf->init();
+        $pdf->show($entity);
+        $pdf->report($entity);
         return $pdf->Output('', 'S');
     }
     
@@ -98,7 +98,7 @@ abstract class InterventionReport extends FPDFext
         $this->multiCell(0, 5, $txt, 0, 'L', false);
     }
     
-    private function _formatLi($txt)
+    private function formatLi($txt)
     {
         $txt = '*'.$txt;
         $txt = str_replace(chr(10), chr(10).'*', $txt);
@@ -114,7 +114,7 @@ abstract class InterventionReport extends FPDFext
     {
         $this->setTextColor(0, 0, 0);
         $this->setFont($this->getStandardFontName(), '', 10);
-        $this->multiCell(0, 5, $this->_formatLi($txt), 0, 'L', false);
+        $this->multiCell(0, 5, $this->formatLi($txt), 0, 'L', false);
     }
     
     protected function cellStrong($txt)
@@ -128,10 +128,10 @@ abstract class InterventionReport extends FPDFext
     {
         $this->setTextColor(0, 0, 0);
         $this->setFont($this->getStandardFontName(), 'B', 10);
-        $this->multiCell(0, 5, $this->_formatLi($txt), 0, 'L', false);
+        $this->multiCell(0, 5, $this->formatLi($txt), 0, 'L', false);
     }
     
-    private function _init()
+    private function init()
     {
         $this->aliasNbPages();
         $this->addPage('P');

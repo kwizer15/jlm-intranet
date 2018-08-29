@@ -1,4 +1,5 @@
 <?php
+
 namespace JLM\ModelBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -12,21 +13,19 @@ use JLM\ModelBundle\Event\DoorEvent;
 
 class EmailSubscriber implements EventSubscriberInterface
 {
-   
+
     private $om;
-    
+
     public function __construct(ObjectManager $om)
     {
         $this->om = $om;
     }
-    
+
     public static function getSubscribedEvents()
     {
-        return [
-            JLMModelEvents::DOOR_SENDMAIL => 'persistEmailsOnDoor',
-        ];
+        return [JLMModelEvents::DOOR_SENDMAIL => 'persistEmailsOnDoor'];
     }
-    
+
     public function persistEmailsOnDoor(DoorEvent $event)
     {
         $door = $event->getDoor();

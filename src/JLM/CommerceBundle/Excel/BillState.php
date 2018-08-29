@@ -18,7 +18,14 @@ class BillState
         ->setTitle("Etat des factures");
         
         $as = $this->object->setActiveSheetIndex(0);
-        $titles = ['A'=>'Date','B'=>'Numéro','C'=>'Client','D'=>'HT','E'=>'TVA','F'=>'TTC'];
+        $titles = [
+                   'A' => 'Date',
+                   'B' => 'Numéro',
+                   'C' => 'Client',
+                   'D' => 'HT',
+                   'E' => 'TVA',
+                   'F' => 'TTC',
+                  ];
         foreach ($titles as $col => $value) {
             $as->setCellValue($col.'1', $value);
         }

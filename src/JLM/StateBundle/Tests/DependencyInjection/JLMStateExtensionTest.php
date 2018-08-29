@@ -25,12 +25,12 @@ class JLMStateExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $this->ext = new JLMStateExtension();
     }
-    
+
     public function assertPreConditions()
     {
         $this->assertInstanceOf('Symfony\Component\HttpKernel\DependencyInjection\Extension', $this->ext);
     }
-    
+
     public function testLoad()
     {
         $this->ext->load([], $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder'));

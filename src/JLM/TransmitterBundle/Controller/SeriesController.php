@@ -33,12 +33,12 @@ class SeriesController extends Controller
         $entity = new Series();
         $entity->setAttribution($attribution);
         $form   = $this->createForm(new SeriesType($attribution->getSite()->getId()), $entity);
-        $form->add('submit', 'submit', ['label'=>'Enregistrer']);
+        $form->add('submit', 'submit', ['label' => 'Enregistrer']);
         
         return [
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -53,7 +53,7 @@ class SeriesController extends Controller
     {
         $entity  = new Series();
         $form = $this->createForm(new SeriesType($attribution->getSite()->getId()), $entity);
-        $form->add('submit', 'submit', ['label'=>'Enregistrer']);
+        $form->add('submit', 'submit', ['label' => 'Enregistrer']);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -69,8 +69,8 @@ class SeriesController extends Controller
         }
 
         return [
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ];
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 }

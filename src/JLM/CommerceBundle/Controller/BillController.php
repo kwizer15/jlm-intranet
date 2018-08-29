@@ -35,13 +35,17 @@ class BillController extends ContainerAware
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
         $manager->secure('ROLE_OFFICE');
-        
+
         return $manager->renderResponse(
             'JLMCommerceBundle:Bill:index.html.twig',
-            $manager->paginator('JLMCommerceBundle:Bill', $request, ['sort' => '!number' ,'state' => null, 'year' => null])
+            $manager->paginator(
+                'JLMCommerceBundle:Bill',
+                $request,
+                ['sort' => '!number', 'state' => null, 'year' => null]
+            )
         );
     }
-    
+
     /**
      * Finds and displays a Bill entity.
      */
@@ -49,10 +53,13 @@ class BillController extends ContainerAware
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
         $manager->secure('ROLE_OFFICE');
-        
-        return $manager->renderResponse('JLMCommerceBundle:Bill:show.html.twig', ['entity'=> $manager->getEntity($id)]);
+
+        return $manager->renderResponse(
+            'JLMCommerceBundle:Bill:show.html.twig',
+            ['entity' => $manager->getEntity($id)]
+        );
     }
-    
+
     /**
      * Displays a form to create a new Bill entity.
      */
@@ -67,10 +74,13 @@ class BillController extends ContainerAware
 
             return $manager->redirect('bill_show', ['id' => $form->getData()->getId()]);
         }
-        
-        return $manager->renderResponse('JLMCommerceBundle:Bill:new.html.twig', [
-            'form'   => $form->createView()
-        ]);
+
+        return $manager->renderResponse(
+            'JLMCommerceBundle:Bill:new.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -82,16 +92,19 @@ class BillController extends ContainerAware
         $manager->secure('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $manager->assertState($entity, [0]);
-        $editForm = $manager->createForm('edit', ['entity'=> $entity]);
-        
+        $editForm = $manager->createForm('edit', ['entity' => $entity]);
+
         if ($manager->getHandler($editForm, $entity)->process()) {
             return $manager->redirect('bill_show', ['id' => $entity->getId()]);
         }
-        
-        return $manager->renderResponse('JLMCommerceBundle:Bill:edit.html.twig', [
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        ]);
+
+        return $manager->renderResponse(
+            'JLMCommerceBundle:Bill:edit.html.twig',
+            [
+                'entity' => $entity,
+                'edit_form' => $editForm->createView(),
+            ]
+        );
     }
 
     /**
@@ -101,7 +114,7 @@ class BillController extends ContainerAware
     {
         return $this->printer($id);
     }
-    
+
     /**
      * Imprimer un duplicata de facture
      */
@@ -109,7 +122,7 @@ class BillController extends ContainerAware
     {
         return $this->printer($id, true);
     }
-    
+
     private function printer($id, $duplicate = false)
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
@@ -120,10 +133,14 @@ class BillController extends ContainerAware
             $filename .= '-duplicata';
         }
         $filename .= '.pdf';
-        
-        return $manager->renderPdf($filename, 'JLMCommerceBundle:Bill:print.pdf.php', ['entities'=>[$entity],'duplicate'=>$duplicate]);
+
+        return $manager->renderPdf(
+            $filename,
+            'JLMCommerceBundle:Bill:print.pdf.php',
+            ['entities' => [$entity], 'duplicate' => $duplicate]
+        );
     }
-    
+
     /**
      * Imprimer la liste des factures à faire
      */
@@ -131,14 +148,14 @@ class BillController extends ContainerAware
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
         $manager->secure('ROLE_OFFICE');
-        
+
         return $manager->renderPdf(
             'factures-a-faire',
             'JLMCommerceBundle:Bill:printlist.pdf.php',
             ['entities' => $manager->getObjectManager()->getRepository('JLMDailyBundle:Intervention')->getToBilled()]
         );
     }
-    
+
     /**
      * Note Bill as ready to send.
      */
@@ -146,7 +163,7 @@ class BillController extends ContainerAware
     {
         return $this->stateChange($id, 1);
     }
-    
+
     /**
      * Note Bill as been send.
      */
@@ -161,10 +178,10 @@ class BillController extends ContainerAware
         $em = $manager->getObjectManager();
         $em->persist($entity);
         $em->flush();
-        
+
         return $manager->redirectReferer();
     }
-    
+
     /**
      * Note Bill as been canceled.
      */
@@ -172,7 +189,7 @@ class BillController extends ContainerAware
     {
         return $this->stateChange($id, -1);
     }
-    
+
     /**
      * Note Bill retour à la saisie.
      */
@@ -180,7 +197,7 @@ class BillController extends ContainerAware
     {
         return $this->stateChange($id, 0);
     }
-    
+
     /**
      * Note Bill réglée.
      */
@@ -188,7 +205,7 @@ class BillController extends ContainerAware
     {
         return $this->stateChange($id, 2);
     }
-    
+
     private function stateChange($id, $newState)
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
@@ -218,10 +235,10 @@ class BillController extends ContainerAware
         $em = $manager->getObjectManager();
         $em->persist($entity);
         $em->flush();
-         
+
         return $manager->redirectReferer();
     }
-    
+
     /**
      * Display bills to do
      */
@@ -233,14 +250,22 @@ class BillController extends ContainerAware
         $list = $om->getRepository('JLMDailyBundle:Intervention')->getToBilled();
         $forms_externalBill = [];
         foreach ($list as $interv) {
-            $forms_externalBill[] = $manager->getFormFactory()->createNamed('externalBill'.$interv->getId(), new ExternalBillType(), $interv)->createView();
+            $forms_externalBill[] = $manager->getFormFactory()->createNamed(
+                'externalBill' . $interv->getId(),
+                new ExternalBillType(),
+                $interv
+            )->createView()
+            ;
         }
-        return $manager->renderResponse('JLMCommerceBundle:Bill:todo.html.twig', [
-                'entities'=>$list,
+        return $manager->renderResponse(
+            'JLMCommerceBundle:Bill:todo.html.twig',
+            [
+                'entities' => $list,
                 'forms_externalbill' => $forms_externalBill,
-        ]);
+            ]
+        );
     }
-    
+
     /**
      * Display bills to boost
      */
@@ -248,10 +273,13 @@ class BillController extends ContainerAware
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
         $manager->secure('ROLE_OFFICE');
-        
-        return $manager->renderResponse('JLMCommerceBundle:Bill:toboost.html.twig', ['entities' => $manager->getRepository()->getToBoost()]);
+
+        return $manager->renderResponse(
+            'JLMCommerceBundle:Bill:toboost.html.twig',
+            ['entities' => $manager->getRepository()->getToBoost()]
+        );
     }
-    
+
     /**
      * Email de relance facture
      */
@@ -269,17 +297,24 @@ class BillController extends ContainerAware
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $this->container->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
-            $this->container->get('event_dispatcher')->dispatch(JLMCommerceEvents::BILL_BOOST_SENDMAIL, new BillEvent($entity, $request));
-            
+            $this->container->get('event_dispatcher')->dispatch(
+                JLMCommerceEvents::BILL_BOOST_SENDMAIL,
+                new BillEvent($entity, $request)
+            )
+            ;
+
             return $manager->redirectReferer();
         }
-    
-        return $manager->renderResponse('JLMCommerceBundle:Bill:boostemail.html.twig', [
+
+        return $manager->renderResponse(
+            'JLMCommerceBundle:Bill:boostemail.html.twig',
+            [
                 'entity' => $entity,
                 'form' => $editForm->createView(),
-        ]);
+            ]
+        );
     }
-    
+
     /**
      * Imprimer le courrier de relance
      */
@@ -288,10 +323,14 @@ class BillController extends ContainerAware
         $manager = $this->container->get('jlm_commerce.bill_manager');
         $manager->secure('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
-        
-        return $manager->renderPdf($entity->getNumber(), 'JLMCommerceBundle:Bill:printboost.pdf.php', ['entities'=>[$entity]]);
+
+        return $manager->renderPdf(
+            $entity->getNumber(),
+            'JLMCommerceBundle:Bill:printboost.pdf.php',
+            ['entities' => [$entity]]
+        );
     }
-    
+
     /**
      * Noter relance effectuée
      */
@@ -300,7 +339,7 @@ class BillController extends ContainerAware
         $manager = $this->container->get('jlm_commerce.bill_manager');
         $manager->secure('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
-        $date = new \DateTime;
+        $date = new \DateTime();
         if ($entity->getFirstBoost() === null) {
             $entity->setFirstBoost($date);
         } else {
@@ -309,10 +348,10 @@ class BillController extends ContainerAware
         $em = $manager->getObjectManager();
         $em->persist($entity);
         $em->flush();
-        
+
         return $manager->redirect('bill_toboost');
     }
-    
+
     /**
      * Search
      */
@@ -325,10 +364,10 @@ class BillController extends ContainerAware
         if (is_array($formData) && array_key_exists('query', $formData)) {
             $params = ['results' => $manager->getRepository()->search($formData['query'])];
         }
-         
+
         return $manager->renderResponse('JLMCommerceBundle:Bill:search.html.twig', $params);
     }
-    
+
     public function updateAction()
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
@@ -339,13 +378,14 @@ class BillController extends ContainerAware
             $om->persist($bill);
         }
         $om->flush();
-        
+
         return $manager->redirectReferer();
     }
-    
+
     /**
      *
      * @param Request $request
+     *
      * @return multitype:unknown
      */
     public function stateExcelAction(Request $request)
@@ -353,9 +393,9 @@ class BillController extends ContainerAware
         $manager = $this->container->get('jlm_commerce.bill_manager');
         $manager->secure('ROLE_OFFICE');
         $list = $manager->getRepository()->getStateBill($request->get('fee', 11));
-    
+
         $excelBuilder = new BillState($this->container->get('phpexcel'));
-         
+
         return $excelBuilder->createList($list)->getResponse();
     }
 }

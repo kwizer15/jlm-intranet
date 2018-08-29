@@ -25,7 +25,7 @@ class Technician extends BasePerson
      * @Assert\Regex(pattern="/^\d{3,4}$/",message="Ce numéro ne contient pas uniquement 10 chiffres")
      */
     private $internalPhone;
-    
+
     public function __toString()
     {
         return $this->getFirstName();

@@ -28,7 +28,7 @@ class ContactController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $list = $em->getRepository('JLMDailyBundle:Intervention')->getToContact();
-        return ['entities'=>$list];
+        return ['entities' => $list];
     }
     
     /**

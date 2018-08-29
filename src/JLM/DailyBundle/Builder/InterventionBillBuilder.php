@@ -32,7 +32,9 @@ class InterventionBillBuilder extends DoorBillBuilderAbstract
      */
     public function buildReference()
     {
-        $this->getBill()->setReference('Selon notre intervention du '.$this->intervention->getLastDate()->format('d/m/Y'));
+        $this->getBill()->setReference(
+            'Selon notre intervention du '.$this->intervention->getLastDate()->format('d/m/Y')
+        );
     }
     
     /**

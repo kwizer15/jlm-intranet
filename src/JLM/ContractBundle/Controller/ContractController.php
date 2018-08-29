@@ -43,10 +43,10 @@ class ContractController extends ContainerAware
         $manager = $this->container->get('jlm_contract.contract_manager');
         $manager->secure('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
-        
+
         return $manager->renderResponse('JLMContractBundle:Contract:show.html.twig', ['entity' => $entity]);
     }
-    
+
     /**
      * Creates a new Contract entity.
      */
@@ -54,7 +54,7 @@ class ContractController extends ContainerAware
     {
         $manager = $this->container->get('jlm_contract.contract_manager');
         $manager->secure('ROLE_OFFICE');
-        $form   = $manager->createForm('new');
+        $form = $manager->createForm('new');
         $ajax = $manager->isAjax();
         if ($manager->getHandler($form)->process('POST')) {
             $event = new ContractEvent($form->getData());
@@ -62,20 +62,21 @@ class ContractController extends ContainerAware
 
             return $ajax
                 ? $manager->renderJson()
-                : $manager->redirect('door_show', ['id' => $form->getData()->getDoor()->getId()])
-            ;
+                : $manager->redirect('door_show', ['id' => $form->getData()->getDoor()->getId()]);
         }
 
         $template = $ajax
-                ? 'JLMContractBundle:Contract:modal_new.html.twig'
-                : 'JLMContractBundle:Contract:new.html.twig'
-        ;
-                
-        return $manager->renderResponse($template, [
-            'form'   => $form->createView()
-        ]);
+            ? 'JLMContractBundle:Contract:modal_new.html.twig'
+            : 'JLMContractBundle:Contract:new.html.twig';
+
+        return $manager->renderResponse(
+            $template,
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
-    
+
     /**
      * Edits an existing Contract entity.
      */
@@ -88,16 +89,19 @@ class ContractController extends ContainerAware
         $form = $manager->createForm($formName, ['entity' => $entity]);
         if ($manager->getHandler($form)->process()) {
             $event = new ContractEvent($form->getData());
-//          $manager->dispatch(JLMContractEvents::AFTER_CONTRACT_PERSIST, $event);
-            
+            //          $manager->dispatch(JLMContractEvents::AFTER_CONTRACT_PERSIST, $event);
+
             return ($ajax) ? $manager->renderJson([])
-                           : $manager->redirect($this->generateUrl('door_show', ['id' => $entity->getDoor()->getId()]))
-            ;
+                : $manager->redirect($this->generateUrl('door_show', ['id' => $entity->getDoor()->getId()]));
         }
-        $template = ($ajax) ? 'JLMContractBundle:Contract:modal_edit.html.twig' : 'JLMContractBundle:Contract:edit.html.twig';
-        
-        return $manager->renderResponse($template, [
-                    'form'   => $form->createView(),
-            ]);
+        $template = ($ajax) ? 'JLMContractBundle:Contract:modal_edit.html.twig'
+            : 'JLMContractBundle:Contract:edit.html.twig';
+
+        return $manager->renderResponse(
+            $template,
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
 }

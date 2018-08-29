@@ -24,56 +24,60 @@ class ContactRepository extends EntityRepository
             ->select('a')
             //->leftJoin('a.phones','b')
             //->leftJoin('b.phone','c')
-        ;
+            ;
     }
-    
+
     /**
      *
      * @param string $query
-     * @param int $limit
+     * @param int    $limit
+     *
      * @return array
      */
     public function getArray($query, $limit = 10)
     {
         return $this->getByQuery($query)->getQuery()->getArrayResult();
     }
-    
+
     public function search($query)
     {
         return $this->getByQuery($query)->getQuery()->getResult();
     }
-    
+
     public function getByQuery($query)
     {
         return $this->getQueryBuilder()
             ->where('a.name LIKE :query')
             ->orderBy('a.name', 'ASC')
-            ->setParameter('query', '%'.$query.'%')
-        ;
+            ->setParameter('query', '%' . $query . '%')
+            ;
     }
-    
+
     public function getAll($limit = 10, $offset = 0)
     {
         $qb = $this->getQueryBuilder()
             ->orderBy('a.name')
             ->setFirstResult($offset)
-            ->setMaxResults($limit);
+            ->setMaxResults($limit)
+        ;
         $res = $qb->getQuery()->getResult();
-        
+
         return $res;
     }
-    
+
     public function getCountAll()
     {
         $qb = $this->createQueryBuilder('a')
-            ->select('COUNT(a)');
-        
+            ->select('COUNT(a)')
+        ;
+
         return $qb->getQuery()->getSingleScalarResult();
     }
 
     /**
      *
      * @param int $id
+     *
      * @return array|null
      */
     public function getByIdToArray($id)

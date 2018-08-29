@@ -24,7 +24,7 @@ abstract class ObjectToIntTransformer implements DataTransformerInterface
      * @var ObjectManager
      */
     private $om;
-    
+
     /**
      * @param ObjectManager $om
      */
@@ -32,7 +32,7 @@ abstract class ObjectToIntTransformer implements DataTransformerInterface
     {
         $this->om = $om;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -40,7 +40,7 @@ abstract class ObjectToIntTransformer implements DataTransformerInterface
     {
         return (null === $entity) ? '' : $entity->getId();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -50,30 +50,30 @@ abstract class ObjectToIntTransformer implements DataTransformerInterface
             return null;
         }
         $entity = $this->om
-          ->getRepository($this->_getClass())
-          ->find($id)
+            ->getRepository($this->getClass())
+            ->find($id)
         ;
         if (null === $entity) {
-            throw new TransformationFailedException(sprintf($this->_getErrorMessage(), $id));
+            throw new TransformationFailedException(sprintf($this->getErrorMessage(), $id));
         }
-    
+
         return $entity;
     }
-    
+
     /**
      * Return class name
      *
      * @return string
      */
-    abstract protected function _getClass();
-    
+    abstract protected function getClass();
+
     /**
      * Get error message
      *
      * @return string
      */
-    protected function _getErrorMessage()
+    protected function getErrorMessage()
     {
-        return 'A '.$this->_getClass().' object with id "%s" does not exist!';
+        return 'A ' . $this->getClass() . ' object with id "%s" does not exist!';
     }
 }

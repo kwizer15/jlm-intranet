@@ -27,12 +27,20 @@ class QuoteVariantType extends AbstractType
     {
         $builder
             ->add('quote', 'quote_hidden')
-            ->add('creation', 'datepicker', ['label'=>'Date de création'])
-            ->add('discount', 'percent', ['label'=>'Remise','attr'=>['class'=>'input-mini']])
-            ->add('paymentRules', null, ['label'=>'Réglement','attr'=>['class'=>'input-xxlarge']])
-            ->add('deliveryRules', null, ['label'=>'Délai','attr'=>['class'=>'input-xxlarge']])
-            ->add('intro', null, ['label'=>'Introduction','attr'=>['class'=>'span12','placeholder'=>'Suite à ...']])
-            ->add('lines', 'collection', ['prototype'=>true,'allow_add'=>true,'allow_delete'=>true,'type'=>'quote_line'])
+            ->add('creation', 'datepicker', ['label' => 'Date de création'])
+            ->add('discount', 'percent', ['label' => 'Remise', 'attr' => ['class' => 'input-mini']])
+            ->add('paymentRules', null, ['label' => 'Réglement', 'attr' => ['class' => 'input-xxlarge']])
+            ->add('deliveryRules', null, ['label' => 'Délai', 'attr' => ['class' => 'input-xxlarge']])
+            ->add(
+                'intro',
+                null,
+                ['label' => 'Introduction', 'attr' => ['class' => 'span12', 'placeholder' => 'Suite à ...']]
+            )
+            ->add(
+                'lines',
+                'collection',
+                ['prototype' => true, 'allow_add' => true, 'allow_delete' => true, 'type' => 'quote_line']
+            )
             ->add('vat', 'hidden', ['mapped' => false])
             ->add('vatTransmitter', 'hidden', ['mapped' => false])
         ;
@@ -43,9 +51,7 @@ class QuoteVariantType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-                'data_class' => 'JLM\CommerceBundle\Entity\QuoteVariant'
-        ]);
+        $resolver->setDefaults(['data_class' => 'JLM\CommerceBundle\Entity\QuoteVariant']);
     }
 
     /**

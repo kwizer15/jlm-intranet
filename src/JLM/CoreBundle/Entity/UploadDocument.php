@@ -15,7 +15,7 @@ class UploadDocument implements UploadDocumentInterface
      * @var string
      */
     private $path;
-    
+
     /**
      * @var UploadedFile
      */
@@ -25,20 +25,20 @@ class UploadDocument implements UploadDocumentInterface
     {
         return $this->file;
     }
-    
+
     public function setFile($file)
     {
         $this->file = $file;
-        
+
         return $this;
     }
-    
+
     /**
      * @return NULL|string
      */
     public function getAbsolutePath()
     {
-        return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
+        return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
     }
 
     /**
@@ -46,7 +46,7 @@ class UploadDocument implements UploadDocumentInterface
      */
     public function getWebPath()
     {
-        return null === $this->path ? null : $this->getUploadDir().'/'.$this->path;
+        return null === $this->path ? null : $this->getUploadDir() . '/' . $this->path;
     }
 
     /**
@@ -54,7 +54,7 @@ class UploadDocument implements UploadDocumentInterface
      */
     protected function getUploadRootDir()
     {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
 
     /**
@@ -64,14 +64,14 @@ class UploadDocument implements UploadDocumentInterface
     {
         return 'uploads/documents';
     }
-    
+
     public function preUpload()
     {
         if (null !== $this->file) {
-            $this->path = sha1(uniqid(mt_rand(), true)).'.'.$this->file->guessExtension();
+            $this->path = sha1(uniqid(mt_rand(), true)) . '.' . $this->file->guessExtension();
         }
     }
-    
+
     public function upload()
     {
         if (null === $this->file) {
@@ -79,17 +79,17 @@ class UploadDocument implements UploadDocumentInterface
         }
 
         $this->file->move($this->getUploadRootDir(), $this->path);
-    
+
         unset($this->file);
     }
-    
+
     public function removeUpload()
     {
         if ($file = $this->getAbsolutePath()) {
             unlink($file);
         }
     }
-    
+
     public function __toString()
     {
         return $this->getWebPath();

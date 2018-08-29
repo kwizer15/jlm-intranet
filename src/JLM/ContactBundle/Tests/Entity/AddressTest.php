@@ -22,15 +22,15 @@ class AddressTest extends \PHPUnit_Framework_TestCase
      * @var Address
      */
     protected $entity;
-    
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->entity = new Address;
+        $this->entity = new Address();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -42,15 +42,21 @@ class AddressTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->entity->getCity());
         $this->assertSame('', $this->entity->__toString());
     }
-    
+
     public function getStreets()
     {
         return [
-            ['1, rue Bidule Machin Truc', '1, rue Bidule Machin Truc'],
-            [153, '153'],
+            [
+                '1, rue Bidule Machin Truc',
+                '1, rue Bidule Machin Truc',
+            ],
+            [
+                153,
+                '153',
+            ],
         ];
     }
-    
+
     /**
      * @dataProvider getStreets
      */
@@ -59,14 +65,14 @@ class AddressTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->entity, $this->entity->setStreet($in));
         $this->assertSame($out, $this->entity->getStreet());
     }
-    
+
     public function getCities()
     {
         return [
             [$this->getMock('JLM\ContactBundle\Model\CityInterface')],
         ];
     }
-    
+
     /**
      * @dataProvider getCities
      */
@@ -75,23 +81,28 @@ class AddressTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->entity, $this->entity->setCity($city));
         $this->assertSame($city, $this->entity->getCity());
     }
-    
+
     public function getToStrings()
     {
-        
+
         return [
-            ['17 avenue de Montboulon', '77165', 'Saint-Soupplets', '17 avenue de Montboulon'.chr(10).'77165 - Saint-Soupplets'],
-            
+            [
+                '17 avenue de Montboulon',
+                '77165',
+                'Saint-Soupplets',
+                '17 avenue de Montboulon' . chr(10) . '77165 - Saint-Soupplets',
+            ],
+
         ];
     }
-    
+
     /**
      * @dataProvider getToStrings
      */
-    public function test__toString($street, $zip, $cityname, $out)
+    public function testToString($street, $zip, $cityname, $out)
     {
         $city = $this->getMock('JLM\ContactBundle\Model\CityInterface');
-        $city->expects($this->once())->method('__toString')->will($this->returnValue($zip.' - '.$cityname));
+        $city->expects($this->once())->method('__toString')->will($this->returnValue($zip . ' - ' . $cityname));
 
         $this->entity->setStreet($street);
         $this->entity->setCity($city);

@@ -36,7 +36,7 @@ class EquipmentController extends Controller
         return [
                 'entity' => $entity,
                 'form'   => $form->createView(),
-        ];
+               ];
     }
 
     /**
@@ -63,10 +63,10 @@ class EquipmentController extends Controller
             return $this->redirect($request->headers->get('referer'));
         }
         return [
-                'entity' => $entity,
-                'form'   => $form->createView(),
-                'previous'=> $request->headers->get('referer'),
-        ];
+                'entity'   => $entity,
+                'form'     => $form->createView(),
+                'previous' => $request->headers->get('referer'),
+               ];
     }
     
     /**
@@ -77,9 +77,9 @@ class EquipmentController extends Controller
     public function showAction(Request $request, Equipment $entity)
     {
         return [
-                'previous'=> $request->headers->get('referer'),
-                'entity' => $entity,
-        ];
+                'previous' => $request->headers->get('referer'),
+                'entity'   => $entity,
+               ];
     }
     
     /**
@@ -93,9 +93,9 @@ class EquipmentController extends Controller
         $editForm = $this->createForm(new EquipmentType(), $entity);
     
         return [
-                'entity'      => $entity,
+                'entity' => $entity,
                 'form'   => $editForm->createView(),
-        ];
+               ];
     }
     
     /**
@@ -118,9 +118,9 @@ class EquipmentController extends Controller
         }
     
         return [
-                'entity'      => $entity,
-                'form'   => $editForm->createView(),
-                'previous'=> $request->headers->get('referer'),
-        ];
+                'entity'   => $entity,
+                'form'     => $editForm->createView(),
+                'previous' => $request->headers->get('referer'),
+               ];
     }
 }

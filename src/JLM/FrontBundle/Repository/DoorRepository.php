@@ -30,12 +30,12 @@ class DoorRepository extends EntityRepository
             ->where('a.code = ?1')
             ->setParameter(1, strtoupper($code))
         ;
-        
+
         try {
             return $qb->getQuery()->getSingleResult();
         } catch (\Exception $e) {
         }
-        
+
         return null;
     }
 }

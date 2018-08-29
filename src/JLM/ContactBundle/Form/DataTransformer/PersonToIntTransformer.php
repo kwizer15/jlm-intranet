@@ -21,15 +21,15 @@ class PersonToIntTransformer extends ObjectToIntTransformer
     /**
      * {@inheritdoc}
      */
-    protected function _getClass()
+    protected function getClass()
     {
         return 'JLMContactBundle:Person';
     }
-    
+
     /**
      * {@inheritdoc}
      */
-    protected function _getErrorMessage()
+    protected function getErrorMessage()
     {
         return 'A person with id "%s" does not exist!';
     }

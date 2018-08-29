@@ -23,11 +23,11 @@ class FormPassTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        
+
         $this->container = $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder');
         $this->pass = new FormPass();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -35,7 +35,7 @@ class FormPassTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface', $this->pass);
     }
-    
+
     public function testProcess()
     {
         $this->container->expects($this->once())->method('getParameter');

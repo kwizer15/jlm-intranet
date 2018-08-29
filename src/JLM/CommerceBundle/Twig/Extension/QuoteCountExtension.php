@@ -41,26 +41,26 @@ class QuoteCountExtension extends \Twig_Extension implements \Twig_Extension_Glo
         $repo = $this->om->getRepository('JLMCommerceBundle:Quote');
         
         return [
-            'quotecount' => [
-                'all' => $repo->getCountState('uncanceled', $year),
-                'input' => $repo->getCountState(0, $year),
-                'wait' => $repo->getCountState(1, $year),
-                'send' => $repo->getCountState(3, $year),
-                'given' => $repo->getCountState(5, $year),
-            ],
-            'quotelasts' => $repo->findBy(
-                [],
-                ['number'=>'desc'],
-                5
-            )
-        ];
+                'quotecount' => [
+                                 'all'   => $repo->getCountState('uncanceled', $year),
+                                 'input' => $repo->getCountState(0, $year),
+                                 'wait'  => $repo->getCountState(1, $year),
+                                 'send'  => $repo->getCountState(3, $year),
+                                 'given' => $repo->getCountState(5, $year),
+                                ],
+                'quotelasts' => $repo->findBy(
+                    [],
+                    ['number' => 'desc'],
+                    5
+                ),
+               ];
     }
     
     public function getFilters()
     {
         return [
                 new \Twig_SimpleFilter('quote_state_label', [$this, 'stateLabelFilter'], ['is_safe' => ['all']]),
-        ];
+               ];
     }
     
     public function stateLabelFilter($quote)

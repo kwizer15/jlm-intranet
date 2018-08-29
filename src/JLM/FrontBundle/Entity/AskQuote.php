@@ -22,40 +22,42 @@ class AskQuote implements ContactInterface
      * @var string
      */
     private $firstName;
-    
+
     /**
      * @var string
      */
     private $lastName;
-    
+
     /**
      * @var string
      */
     private $phone;
-    
+
     /**
      * @var string
      */
     private $email;
-    
+
     /**
      *
      * @var string
      */
     private $quoteNumber;
-    
+
     /**
      * Set the first name
+     *
      * @param string $firstName
+     *
      * @return self
      */
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-    
+
         return $this;
     }
-    
+
     /**
      * Get the first name
      *
@@ -65,19 +67,21 @@ class AskQuote implements ContactInterface
     {
         return $this->firstName;
     }
-    
+
     /**
      * Set the last name
+     *
      * @param string $lastName
+     *
      * @return self
      */
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-    
+
         return $this;
     }
-    
+
     /**
      * Get the lest name
      *
@@ -87,19 +91,21 @@ class AskQuote implements ContactInterface
     {
         return $this->lastName;
     }
-    
+
     /**
      * Set the phone
+     *
      * @param string $phone
+     *
      * @return self
      */
     public function setPhone($phone)
     {
         $this->phone = $phone;
-    
+
         return $this;
     }
-    
+
     /**
      * Get the phone
      *
@@ -109,19 +115,21 @@ class AskQuote implements ContactInterface
     {
         return $this->phone;
     }
-    
+
     /**
      * Set the email
+     *
      * @param string $email
+     *
      * @return self
      */
     public function setEmail($email)
     {
         $this->email = $email;
-    
+
         return $this;
     }
-    
+
     /**
      * Get the email
      *
@@ -131,7 +139,7 @@ class AskQuote implements ContactInterface
     {
         return $this->email;
     }
-    
+
     /**
      * Get the quote number
      *
@@ -141,17 +149,18 @@ class AskQuote implements ContactInterface
     {
         return $this->quoteNumber;
     }
-    
+
     /**
      * Set the quote number
      *
      * @param $quoteNumber string
+     *
      * @return self
      */
     public function setQuoteNumber($quoteNumber)
     {
         $this->quoteNumber = $quoteNumber;
-        
+
         return $this;
     }
 }

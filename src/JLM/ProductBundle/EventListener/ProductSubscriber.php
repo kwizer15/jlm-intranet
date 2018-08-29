@@ -35,9 +35,7 @@ class ProductSubscriber implements EventSubscriberInterface
     
     public static function getSubscribedEvents()
     {
-        return [
-            JLMProductEvents::PRODUCT_CREATE => 'createStock',
-        ];
+        return [JLMProductEvents::PRODUCT_CREATE => 'createStock'];
     }
     
     public function createStock(ProductEvent $event)

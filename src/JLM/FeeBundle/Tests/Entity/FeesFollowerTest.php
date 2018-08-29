@@ -43,12 +43,27 @@ class FeesFollowerTest extends \PHPUnit_Framework_TestCase
     public function getGetterSetter()
     {
         return [
-            ['Activation', new \DateTime()],
-            ['Generation', new \DateTime()],
-            ['Frequence1', 0.2],
-            ['Frequence2', 0.2],
-            ['Frequence4', 0.2],
-        ];
+                [
+                 'Activation',
+                 new \DateTime(),
+                ],
+                [
+                 'Generation',
+                 new \DateTime(),
+                ],
+                [
+                 'Frequence1',
+                 0.2,
+                ],
+                [
+                 'Frequence2',
+                 0.2,
+                ],
+                [
+                 'Frequence4',
+                 0.2,
+                ],
+               ];
     }
     
     /**
@@ -65,10 +80,10 @@ class FeesFollowerTest extends \PHPUnit_Framework_TestCase
     public function getFrequences()
     {
         return [
-            [1],
-            [2],
-            [4],
-        ];
+                [1],
+                [2],
+                [4],
+               ];
     }
     
     /**

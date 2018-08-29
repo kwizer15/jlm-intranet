@@ -1,4 +1,5 @@
 <?php
+
 namespace JLM\ModelBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
@@ -11,7 +12,7 @@ class DoorToIntTransformer implements DataTransformerInterface
      * @var ObjectManager
      */
     private $om;
-    
+
     /**
      * @param ObjectManager $om
      */
@@ -19,11 +20,12 @@ class DoorToIntTransformer implements DataTransformerInterface
     {
         $this->om = $om;
     }
-    
+
     /**
      * Transforms an object (door) to a string (name).
      *
      * @param  Door|null $entity
+     *
      * @return string
      */
     public function transform($entity)
@@ -33,11 +35,12 @@ class DoorToIntTransformer implements DataTransformerInterface
         }
         return $entity->getId();
     }
-    
+
     /**
      * Transforms an int (number) to an object (door).
      *
      * @param  int $number
+     *
      * @return Door|null
      * @throws TransformationFailedException if object (door) is not found.
      */
@@ -46,19 +49,21 @@ class DoorToIntTransformer implements DataTransformerInterface
         if (!$number) {
             return null;
         }
-    
-        
-            $entity = $this->om
-                ->getRepository('JLMModelBundle:Door')
-                ->find($number)
-            ;
+
+
+        $entity = $this->om
+            ->getRepository('JLMModelBundle:Door')
+            ->find($number)
+        ;
         if (null === $entity) {
-            throw new TransformationFailedException(sprintf(
-                'A door with id "%s" does not exist!',
-                $number
-            ));
+            throw new TransformationFailedException(
+                sprintf(
+                    'A door with id "%s" does not exist!',
+                    $number
+                )
+            );
         }
-    
+
         return $entity;
     }
 }

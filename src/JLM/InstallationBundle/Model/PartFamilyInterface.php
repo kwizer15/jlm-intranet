@@ -16,7 +16,6 @@ namespace JLM\DailyBundle\Model;
  */
 interface PartFamilyInterface
 {
-
     /**
      * @return string
      */

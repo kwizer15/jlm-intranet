@@ -19,19 +19,22 @@ class WorkEndMailBuilder extends WorkMailBuilder
 
     public function buildSubject()
     {
-        $source = $this->_getSource();
+        $source = $this->getSource();
         $this->setSubject('Installation '.$this->getWork()->getInstallationCode().' : Travaux'.$source.' terminés');
     }
     
     public function buildBody()
     {
-        $this->setBody('Bonjour,'.chr(10).chr(10)
-                .'Installation : '.chr(10)
-                .$this->getWork()->getInstallationCode().chr(10)
-                .$this->getWork()->getPlace().chr(10)
-                .chr(10)
-        .'Les travaux'.$this->_getSource().' ont bien été réalisés le '.$this->getWork()->getLastDate()->format('d/m/Y').'.'.chr(10)
-        .'L\'installation est en fonction.'.chr(10)
-        .$this->_getSignature());
+        $this->setBody(
+            'Bonjour,'.chr(10).chr(10)
+            .'Installation : '.chr(10)
+            .$this->getWork()->getInstallationCode().chr(10)
+            .$this->getWork()->getPlace().chr(10)
+            .chr(10)
+            .'Les travaux'.$this->getSource().' ont bien été réalisés le '
+            .$this->getWork()->getLastDate()->format('d/m/Y').'.'.chr(10)
+            .'L\'installation est en fonction.'.chr(10)
+            .$this->getSignature()
+        );
     }
 }

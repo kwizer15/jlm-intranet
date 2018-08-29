@@ -54,7 +54,7 @@ abstract class AbstractHiddenType extends AbstractSelectType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'invalid_message' => 'The selected '.$this->getTypeName().' does not exist',
-        ]);
+                                'invalid_message' => 'The selected '.$this->getTypeName().' does not exist',
+                               ]);
     }
 }

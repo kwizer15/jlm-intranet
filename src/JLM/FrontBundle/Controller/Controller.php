@@ -25,14 +25,18 @@ class Controller extends BaseController
     {
         $service = (Kernel::MINOR_VERSION > 3) ? 'security.token_storage' : 'security.context';
         $securityTokenStorage = $this->container->get($service);
-         
-        if (false === $securityTokenStorage->isGranted('ROLE_MANAGER') && false === $securityTokenStorage->isGranted('ROLE_BUSINESS')) {
+
+        if (false === $securityTokenStorage->isGranted('ROLE_MANAGER')
+            && false === $securityTokenStorage->isGranted(
+                'ROLE_BUSINESS'
+            )) {
             throw new AccessDeniedException();
         }
-        
+
         $om = $this->get('doctrine')->getManager();
-        $repoManager = $securityTokenStorage->isGranted('ROLE_MANAGER') ? $om->getRepository('JLMModelBundle:Trustee') : $om->getRepository('JLMModelBundle:Site');
-         
+        $repoManager = $securityTokenStorage->isGranted('ROLE_MANAGER') ? $om->getRepository('JLMModelBundle:Trustee')
+            : $om->getRepository('JLMModelBundle:Site');
+
         try {
             $manager = $repoManager->getByUser($securityTokenStorage->getToken()->getUser());
         } catch (NoResultException $e) {
@@ -45,7 +49,7 @@ class Controller extends BaseController
             }
             $manager = $repoManager->find($session->get('managerId', 316)); // Pour tests
         }
-        
+
         return $manager;
     }
 }

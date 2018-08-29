@@ -36,7 +36,7 @@ class FixingReportMailBuilder extends FixingMailBuilder
         .$fixing->getCustomerActions().chr(10)
         .$fixing->getCustomerState().chr(10)
         .$fixing->getCustomerProcess().chr(10))
-        .$this->_getSignature());
+        .$this->getSignature());
     }
     
     public function buildAttachements()

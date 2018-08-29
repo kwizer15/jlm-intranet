@@ -11,12 +11,12 @@ class FixingReport extends InterventionReport
         return parent::get($entity);
     }
     
-    protected function _getTitle()
+    protected function getTitle()
     {
         return 'Rapport d\'intervention';
     }
     
-    protected function _report(Intervention $entity)
+    protected function report(Intervention $entity)
     {
         if (!$entity instanceof Fixing) {
             throw new \Exception('entity must be a Fixing');

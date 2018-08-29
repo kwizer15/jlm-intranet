@@ -30,8 +30,8 @@ class DefaultController extends Controller
             return [
                     'transmitters' => $em->getRepository('JLMTransmitterBundle:Transmitter')->search($entity),
             //      'attributions' => $em->getRepository('JLMTransmitterBundle:Attribution')->search($entity),
-                    'asks'          => $em->getRepository('JLMTransmitterBundle:Ask')->search($entity),
-            ];
+                    'asks'         => $em->getRepository('JLMTransmitterBundle:Ask')->search($entity),
+                   ];
         }
         return [];
     }

@@ -43,11 +43,11 @@ class ShiftingController extends Controller
         );
         
         return [
-                'technician'=>$technician,
-                'shiftings' => $entities,
-                'page'     => $page,
-                'nbPages'  => $nbPages,
-        ];
+                'technician' => $technician,
+                'shiftings'  => $entities,
+                'page'       => $page,
+                'nbPages'    => $nbPages,
+               ];
     }
     
     /**
@@ -60,14 +60,17 @@ class ShiftingController extends Controller
         $entity = new ShiftTechnician();
         
         $entity->setBegin(new \DateTime);
-        $form = $this->get('form.factory')->createNamed('shiftTechNew'.$shifting->getId(), new AddTechnicianType(), $entity);
+        $form = $this
+            ->get('form.factory')
+            ->createNamed('shiftTechNew'.$shifting->getId(), new AddTechnicianType(), $entity)
+        ;
                 
         return [
                 'shifting' => $shifting,
-                'entity' => $entity,
-                'form'   => $form->createView(),
-                'id' => $shifting->getId(),
-        ];
+                'entity'   => $entity,
+                'form'     => $form->createView(),
+                'id'       => $shifting->getId(),
+               ];
     }
     
     /**
@@ -81,8 +84,11 @@ class ShiftingController extends Controller
         $entity  = new ShiftTechnician();
         $entity->setShifting($shifting);
         $entity->setCreation(new \DateTime);
-        $form = $this->get('form.factory')->createNamed('shiftTechNew'.$shifting->getId(), new AddTechnicianType(), $entity);
-        $form->bind($request);
+        $form = $this
+            ->get('form.factory')
+            ->createNamed('shiftTechNew'.$shifting->getId(), new AddTechnicianType(), $entity);
+
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -97,10 +103,10 @@ class ShiftingController extends Controller
         }
     
         return [
-                'shifting'=>$shifting,
-                'entity' => $entity,
-                'form'   => $form->createView(),
-        ];
+                'shifting' => $shifting,
+                'entity'   => $entity,
+                'form'     => $form->createView(),
+               ];
     }
     
     /**
@@ -111,11 +117,14 @@ class ShiftingController extends Controller
      */
     public function editAction(ShiftTechnician $entity)
     {
-        $editForm = $this->get('form.factory')->createNamed('shiftTechEdit'.$entity->getId(), new ShiftingEditType(), $entity);
+        $editForm = $this
+            ->get('form.factory')
+            ->createNamed('shiftTechEdit' . $entity->getId(), new ShiftingEditType(), $entity)
+        ;
         return [
-                'entity'      => $entity,
+                'entity' => $entity,
                 'form'   => $editForm->createView(),
-        ];
+               ];
     }
     
     /**
@@ -139,14 +148,20 @@ class ShiftingController extends Controller
     public function updateAction(Request $request, ShiftTechnician $entity)
     {
         $em = $this->getDoctrine()->getManager();
-        $editForm = $this->get('form.factory')->createNamed('shiftTechEdit'.$entity->getId(), new ShiftingEditType(), $entity);
+        $editForm = $this
+            ->get('form.factory')
+            ->createNamed('shiftTechEdit' . $entity->getId(), new ShiftingEditType(), $entity)
+        ;
         $editForm->handleRequest($request);
     
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return $request->isXmlHttpRequest() ? new JsonResponse([]) : $this->redirect($request->headers->get('referer'));
+            return $request->isXmlHttpRequest()
+                ? new JsonResponse([])
+                : $this->redirect($request->headers->get('referer'))
+            ;
         }
         
         $errors = array_reduce($editForm->getErrors(), function ($carry, $item) {
@@ -157,9 +172,9 @@ class ShiftingController extends Controller
         return $request->isXmlHttpRequest()
             ? new JsonResponse(['errors' => $errors])
             : [
-                'entity'      => $entity,
-                'form'   => $editForm->createView(),
-            ];
+               'entity' => $entity,
+               'form'   => $editForm->createView(),
+              ];
     }
     
     /**
@@ -175,6 +190,6 @@ class ShiftingController extends Controller
         $em->remove($entity);
         $em->flush();
     
-        return $this->redirect($this->generateUrl('intervention_redirect', ['id' => $intervId, 'act'=>'show']));
+        return $this->redirect($this->generateUrl('intervention_redirect', ['id' => $intervId, 'act' => 'show']));
     }
 }
