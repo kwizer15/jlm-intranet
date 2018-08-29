@@ -16,7 +16,7 @@ use JLM\ModelBundle\Entity\SiteContact;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class SiteContactTest extends \PHPUnit_Framework_TestCase
+class SiteContactTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Country
@@ -40,7 +40,7 @@ class SiteContactTest extends \PHPUnit_Framework_TestCase
 
     public function testPerson()
     {
-        $person = $this->getMock('JLM\ContactBundle\Model\PersonInterface');
+        $person = $this->createMock('JLM\ContactBundle\Model\PersonInterface');
         $this->assertSame($this->entity, $this->entity->setPerson($person));
         $this->assertSame($person, $this->entity->getPerson());
     }

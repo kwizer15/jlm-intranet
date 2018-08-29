@@ -12,14 +12,18 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\Association;
+use JLM\ContactBundle\Model\AddressInterface;
+use JLM\ContactBundle\Model\AssociationInterface;
+use JLM\ContactBundle\Model\ContactPhoneInterface;
+use JLM\ContactBundle\Model\CorporationContactInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class AssociationTest extends \PHPUnit_Framework_TestCase
+class AssociationTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var Person
+     * @var Association
      */
     protected $entity;
 
@@ -36,7 +40,7 @@ class AssociationTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\ContactBundle\Model\AssociationInterface', $this->entity);
+        $this->assertInstanceOf(AssociationInterface::class, $this->entity);
         $this->assertNull($this->entity->getId());
         $this->assertCount(0, $this->entity->getContacts());
     }
@@ -44,18 +48,9 @@ class AssociationTest extends \PHPUnit_Framework_TestCase
     public function getAttributes()
     {
         return [
-            [
-                'Name',
-                'Foo',
-            ],
-            [
-                'Email',
-                'commerce@jlm-entreprise.fr',
-            ],
-            [
-                'Address',
-                $this->getMock('JLM\ContactBundle\Model\AddressInterface'),
-            ],
+            ['Name','Foo',],
+            [ 'Email','commerce@jlm-entreprise.fr',],
+            ['Address',$this->createMock(AddressInterface::class),],
         ];
     }
 
@@ -81,12 +76,12 @@ class AssociationTest extends \PHPUnit_Framework_TestCase
             [
                 'Phone',
                 'Phones',
-                $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface'),
+                $this->createMock( ContactPhoneInterface::class),
             ],
             [
                 'Contact',
                 'Contacts',
-                $this->getMock('JLM\ContactBundle\Model\CorporationContactInterface'),
+                $this->createMock( CorporationContactInterface::class),
             ],
         ];
     }

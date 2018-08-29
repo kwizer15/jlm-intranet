@@ -37,11 +37,13 @@ class ProductCategory implements ProductCategoryInterface
      * @var string
      */
     protected $name = '';
-    
+
     /**
      * Set text
      *
-     * @param string $text
+     * @param string $name
+     *
+     * @return ProductCategory
      */
     public function setName($name)
     {
@@ -107,6 +109,8 @@ class ProductCategory implements ProductCategoryInterface
      * Set parent
      *
      * @param ProductCategoryInterface $parent
+     *
+     * @return ProductCategory
      */
     public function setParent(ProductCategoryInterface $parent = null)
     {
@@ -174,7 +178,7 @@ class ProductCategory implements ProductCategoryInterface
     /**
      * Get children
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChildren()
     {

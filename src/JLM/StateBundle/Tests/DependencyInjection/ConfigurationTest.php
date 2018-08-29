@@ -16,7 +16,7 @@ use JLM\StateBundle\DependencyInjection\Configuration;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ConfigurationTest extends \PHPUnit_Framework_TestCase
+class ConfigurationTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

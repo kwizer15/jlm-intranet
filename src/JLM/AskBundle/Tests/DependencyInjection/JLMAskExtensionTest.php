@@ -16,7 +16,7 @@ use JLM\AskBundle\DependencyInjection\JLMAskExtension;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class JLMAskExtensionTest extends \PHPUnit_Framework_TestCase
+class JLMAskExtensionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * {@inheritdoc}
@@ -33,6 +33,6 @@ class JLMAskExtensionTest extends \PHPUnit_Framework_TestCase
     
     public function testLoad()
     {
-        $this->ext->load([], $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder'));
+        $this->ext->load([], $this->createMock('Symfony\Component\DependencyInjection\ContainerBuilder'));
     }
 }

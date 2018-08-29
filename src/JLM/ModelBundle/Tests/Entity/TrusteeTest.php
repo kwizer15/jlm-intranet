@@ -16,7 +16,7 @@ use JLM\ModelBundle\Entity\Trustee;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class TrusteeTest extends \PHPUnit_Framework_TestCase
+class TrusteeTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Country

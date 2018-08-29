@@ -13,11 +13,16 @@ namespace JLM\CommerceBundle\Tests\Entity;
 
 use JLM\CommerceBundle\Entity\Bill;
 use JLM\CommerceBundle\Entity\BillLine;
+use JLM\CommerceBundle\Model\BillInterface;
+use JLM\DailyBundle\Entity\Intervention;
+use JLM\FeeBundle\Model\FeeInterface;
+use JLM\FeeBundle\Model\FeesFollowerInterface;
+use JLM\ModelBundle\Entity\Site;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class BillTest extends \PHPUnit_Framework_TestCase
+class BillTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Bill
@@ -37,7 +42,7 @@ class BillTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\CommerceBundle\Model\BillInterface', $this->entity);
+        $this->assertInstanceOf(BillInterface::class, $this->entity);
         $this->assertNull($this->entity->getId());
         $this->assertEquals(0, $this->entity->getAmount());
     }
@@ -45,82 +50,25 @@ class BillTest extends \PHPUnit_Framework_TestCase
     public function getAttributes()
     {
         return [
-            [
-                'Prelabel',
-                'Foo',
-            ],
-            [
-                'Reference',
-                'Foo',
-            ],
-            [
-                'AccountNumber',
-                '123456',
-            ],
-            [
-                'Details',
-                'Foo',
-            ],
-            [
-                'Site',
-                'Foo',
-            ],
-            [
-                'Property',
-                'Foo',
-            ],
-            [
-                'EarlyPayment',
-                'Foo',
-            ],
-            [
-                'Penalty',
-                'Foo',
-            ],
-            [
-                'Intro',
-                'Foo',
-            ],
-            [
-                'Maturity',
-                30,
-            ],
-            [
-                'State',
-                1,
-            ],
-            [
-                'Discount',
-                0.50,
-            ],
-            [
-                'Fee',
-                $this->getMock('JLM\FeeBundle\Model\FeeInterface'),
-            ],
-            [
-                'FeesFollower',
-                $this->getMock('JLM\FeeBundle\Model\FeesFollowerInterface'),
-            ],
-            [
-                'Intervention',
-                $this->getMock('JLM\DailyBundle\Entity\Intervention'),
-            ],
-            [
-                'FirstBoost',
-                $this->getMock('DateTime'),
-            ],
-            [
-                'SecondBoost',
-                $this->getMock('DateTime'),
-            ],
-            [
-                'SecondBoostComment',
-                'Foo',
-            ],
-            [
-                'SiteObject',
-                $this->getMock('JLM\ModelBundle\Entity\Site'),
-            ],
+            ['Prelabel', 'Foo',],
+            ['Reference', 'Foo',],
+            ['AccountNumber', '123456',],
+            ['Details', 'Foo',],
+            ['Site', 'Foo',],
+            ['Property', 'Foo',],
+            ['EarlyPayment', 'Foo',],
+            ['Penalty', 'Foo',],
+            ['Intro', 'Foo',],
+            ['Maturity', 30,],
+            ['State', 1,],
+            ['Discount', 0.50,],
+            ['Fee', $this->createMock(FeeInterface::class),],
+            ['FeesFollower', $this->createMock(FeesFollowerInterface::class),],
+            ['Intervention', $this->createMock(Intervention::class),],
+            ['FirstBoost', $this->createMock(\DateTime::class),],
+            ['SecondBoost', $this->createMock(\DateTime::class),],
+            ['SecondBoostComment', 'Foo',],
+            ['SiteObject', $this->createMock(Site::class),],
         ];
     }
 

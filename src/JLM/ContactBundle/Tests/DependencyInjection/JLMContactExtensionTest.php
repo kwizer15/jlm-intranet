@@ -16,7 +16,7 @@ use JLM\ContactBundle\DependencyInjection\JLMContactExtension;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class JLMContactExtensionTest extends \PHPUnit_Framework_TestCase
+class JLMContactExtensionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * {@inheritdoc}
@@ -33,6 +33,6 @@ class JLMContactExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testLoad()
     {
-        $this->ext->load([], $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder'));
+        $this->ext->load([], $this->createMock('Symfony\Component\DependencyInjection\ContainerBuilder'));
     }
 }

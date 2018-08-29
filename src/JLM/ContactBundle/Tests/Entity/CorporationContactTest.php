@@ -16,7 +16,7 @@ use JLM\ContactBundle\Entity\CorporationContact;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class CorporationContactTest extends \PHPUnit_Framework_TestCase
+class CorporationContactTest extends \PHPUnit\Framework\TestCase
 {
     private $person;
     private $entity;
@@ -26,7 +26,7 @@ class CorporationContactTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->person = $this->getMock('JLM\ContactBundle\Model\PersonInterface');
+        $this->person = $this->createMock('JLM\ContactBundle\Model\PersonInterface');
         $this->entity = new CorporationContact();
         $this->entity->setPerson($this->person);
     }
@@ -41,7 +41,7 @@ class CorporationContactTest extends \PHPUnit_Framework_TestCase
 
     public function testCorporation()
     {
-        $corpo = $this->getMock('JLM\ContactBundle\Model\CorporationInterface');
+        $corpo = $this->createMock('JLM\ContactBundle\Model\CorporationInterface');
         $this->assertSame($this->entity, $this->entity->setCorporation($corpo));
         $this->assertSame($corpo, $this->entity->getCorporation());
     }

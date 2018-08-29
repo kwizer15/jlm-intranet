@@ -12,14 +12,18 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\Company;
+use JLM\ContactBundle\Model\AddressInterface;
+use JLM\ContactBundle\Model\CompanyInterface;
+use JLM\ContactBundle\Model\ContactPhoneInterface;
+use JLM\ContactBundle\Model\CorporationContactInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class CompanyTest extends \PHPUnit_Framework_TestCase
+class CompanyTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var Person
+     * @var Company
      */
     protected $entity;
 
@@ -36,7 +40,7 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\ContactBundle\Model\CompanyInterface', $this->entity);
+        $this->assertInstanceOf(CompanyInterface::class, $this->entity);
         $this->assertNull($this->entity->getId());
         $this->assertCount(0, $this->entity->getContacts());
     }
@@ -44,18 +48,9 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
     public function getAttributes()
     {
         return [
-            [
-                'Name',
-                'Foo',
-            ],
-            [
-                'Email',
-                'commerce@jlm-entreprise.fr',
-            ],
-            [
-                'Address',
-                $this->getMock('JLM\ContactBundle\Model\AddressInterface'),
-            ],
+            ['Name', 'Foo', ],
+            [ 'Email',  'commerce@jlm-entreprise.fr',],
+            ['Address', $this->createMock(AddressInterface::class),],
         ];
     }
 
@@ -78,16 +73,8 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
     public function getAdderRemover()
     {
         return [
-            [
-                'Phone',
-                'Phones',
-                $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface'),
-            ],
-            [
-                'Contact',
-                'Contacts',
-                $this->getMock('JLM\ContactBundle\Model\CorporationContactInterface'),
-            ],
+            ['Phone', 'Phones',$this->createMock(ContactPhoneInterface::class),],
+            ['Contact',  'Contacts',$this->createMock(CorporationContactInterface::class),],
         ];
     }
 

@@ -11,12 +11,21 @@
 
 namespace JLM\DailyBundle\Tests\Builder;
 
+use JLM\CommerceBundle\Builder\BillBuilderInterface;
+use JLM\CommerceBundle\Model\BillInterface;
+use JLM\CommerceBundle\Model\VATInterface;
+use JLM\ContactBundle\Model\AddressInterface;
+use JLM\ContractBundle\Model\ContractInterface;
 use JLM\DailyBundle\Builder\InterventionBillBuilder;
+use JLM\DailyBundle\Entity\Intervention;
+use JLM\ModelBundle\Entity\Door;
+use JLM\ModelBundle\Entity\Site;
+use JLM\ModelBundle\Entity\Trustee;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class InterventionBillBuilderTest extends \PHPUnit_Framework_TestCase
+class InterventionBillBuilderTest extends \PHPUnit\Framework\TestCase
 {
     private $builder;
     
@@ -28,22 +37,20 @@ class InterventionBillBuilderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         
-        $door = $this->getMock('JLM\ModelBundle\Entity\Door');
-        $vat = $this->getMock('JLM\CommerceBundle\Model\VATInterface');
-        $address = $this->getMock('JLM\ContactBundle\Model\AddressInterface');
-        $trustee = $this->getMock('JLM\ModelBundle\Entity\Trustee');
+        $door = $this->createMock(Door::class);
+        $vat = $this->createMock(VATInterface::class);
+        $address = $this->createMock(AddressInterface::class);
+        $trustee = $this->createMock(Trustee::class);
         $trustee->expects($this->any())->method('getBillAddress')->will($this->returnValue($address));
-        $contract = $this->getMock('JLM\ContractBundle\Model\ContractInterface');
-        $contract->expects($this->any())->method('getTrustee')->will($this->returnValue($trustee));  // @deprecated
+        $contract = $this->createMock(ContractInterface::class);
         $contract->expects($this->any())->method('getManager')->will($this->returnValue($trustee));
-        $site = $this->getMock('JLM\ModelBundle\Entity\Site');
+        $site = $this->createMock(Site::class);
         $site->expects($this->any())->method('getManager')->will($this->returnValue($trustee));
         $site->expects($this->any())->method('getVat')->will($this->returnValue($vat));
-        $door->expects($this->any())->method('getSite')->will($this->returnValue($site));  // @deprecated
         $door->expects($this->any())->method('getAdministrator')->will($this->returnValue($site));
         $door->expects($this->any())->method('getActualContract')->will($this->returnValue($contract));
         
-        $this->intervention = $this->getMock('JLM\DailyBundle\Entity\Intervention');
+        $this->intervention = $this->createMock(Intervention::class);
         $this->intervention->expects($this->any())->method('getLastDate')->will($this->returnValue(new \DateTime));
         $this->intervention->expects($this->any())->method('getReason')->will($this->returnValue([]));
         $this->intervention->expects($this->any())->method('getDoor')->will($this->returnValue($door));
@@ -55,7 +62,7 @@ class InterventionBillBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\CommerceBundle\Builder\BillBuilderInterface', $this->builder);
+        $this->assertInstanceOf(BillBuilderInterface::class, $this->builder);
         $this->builder->create();
     }
     
@@ -64,7 +71,7 @@ class InterventionBillBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function assertPostConditions()
     {
-        $this->assertInstanceOf('JLM\CommerceBundle\Model\BillInterface', $this->builder->getBill());
+        $this->assertInstanceOf(BillInterface::class, $this->builder->getBill());
     }
     
     public function testBuildLines()

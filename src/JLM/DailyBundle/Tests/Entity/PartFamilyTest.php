@@ -16,7 +16,7 @@ use JLM\DailyBundle\Entity\PartFamily;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class PartFamilyTest extends \PHPUnit_Framework_TestCase
+class PartFamilyTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Country

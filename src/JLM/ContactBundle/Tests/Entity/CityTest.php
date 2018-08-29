@@ -12,11 +12,12 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\City;
+use JLM\ContactBundle\Model\CountryInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class CityTest extends \PHPUnit_Framework_TestCase
+class CityTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var City
@@ -52,22 +53,10 @@ class CityTest extends \PHPUnit_Framework_TestCase
     public function getNames()
     {
         return [
-            [
-                'paris',
-                'Paris',
-            ],
-            [
-                'MONTPELLIER',
-                'Montpellier',
-            ],
-            [
-                'bouLOgNe-biLLancOuRt',
-                'Boulogne-Billancourt',
-            ],
-            [
-                'Paris 13 Buttes-Chaumonts',
-                'Paris 13 Buttes-Chaumonts',
-            ],
+            ['paris','Paris',],
+            ['MONTPELLIER','Montpellier',],
+            ['bouLOgNe-biLLancOuRt','Boulogne-Billancourt',],
+            ['Paris 13 Buttes-Chaumonts','Paris 13 Buttes-Chaumonts',],
         ];
     }
 
@@ -88,30 +77,12 @@ class CityTest extends \PHPUnit_Framework_TestCase
     public function getZips()
     {
         return [
-            [
-                '77280',
-                '77280',
-            ],
-            [
-                '2B280',
-                '2B280',
-            ],
-            [
-                '2a280',
-                '2A280',
-            ],
-            [
-                'dCg-Pt3',
-                'DCG-PT3',
-            ],
-            [
-                52364,
-                '52364',
-            ],
-            [
-                '?',
-                '',
-            ],
+            ['77280','77280',],
+            ['2B280','2B280',],
+            ['2a280','2A280',],
+            ['dCg-Pt3','DCG-PT3',],
+            [52364,'52364',],
+            ['?', '',],
         ];
     }
 
@@ -133,7 +104,7 @@ class CityTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [null],
-            [$this->getMock('JLM\ContactBundle\Model\CountryInterface')],
+            [$this->createMock(CountryInterface::class)],
         ];
     }
 
@@ -154,11 +125,7 @@ class CityTest extends \PHPUnit_Framework_TestCase
     public function getToStrings()
     {
         return [
-            [
-                77280,
-                'othis',
-                '77280 - Othis',
-            ],
+            [77280, 'othis', '77280 - Othis', ],
         ];
     }
 

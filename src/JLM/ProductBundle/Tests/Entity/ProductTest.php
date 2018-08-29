@@ -12,11 +12,15 @@
 namespace JLM\ProductBundle\Tests\Entity;
 
 use JLM\ProductBundle\Entity\Product;
+use JLM\ProductBundle\Model\ProductCategoryInterface;
+use JLM\ProductBundle\Model\ProductInterface;
+use JLM\ProductBundle\Model\ProductPriceInterface;
+use JLM\ProductBundle\Model\SupplierInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ProductTest extends \PHPUnit_Framework_TestCase
+class ProductTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Product
@@ -36,7 +40,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\ProductBundle\Model\ProductInterface', $this->entity);
+        $this->assertInstanceOf(ProductInterface::class, $this->entity);
         $this->assertNull($this->entity->getId());
     }
 
@@ -61,14 +65,14 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
     public function testCategory()
     {
-        $category = $this->getMock('JLM\ProductBundle\Model\ProductCategoryInterface');
+        $category = $this->createMock(ProductCategoryInterface::class);
         $this->assertSame($this->entity, $this->entity->setCategory($category));
         $this->assertSame($category, $this->entity->getCategory());
     }
 
     public function testSmallSupply()
     {
-        $category = $this->getMock('JLM\ProductBundle\Model\ProductCategoryInterface');
+        $category = $this->createMock(ProductCategoryInterface::class);
         $category->expects($this->once())->method('isSmallSupply')->will($this->returnValue(true));
         $this->entity->setCategory($category);
         $this->assertSame(true, $this->entity->isSmallSupply());
@@ -76,7 +80,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
     public function testService()
     {
-        $category = $this->getMock('JLM\ProductBundle\Model\ProductCategoryInterface');
+        $category = $this->createMock(ProductCategoryInterface::class);
         $category->expects($this->once())->method('isService')->will($this->returnValue(true));
         $this->entity->setCategory($category);
         $this->assertSame(true, $this->entity->isService());
@@ -84,7 +88,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
     public function testUnitPrices()
     {
-        $price = $this->getMock('JLM\ProductBundle\Model\ProductPriceInterface');
+        $price = $this->createMock(ProductPriceInterface::class);
         $this->assertCount(0, $this->entity->getUnitPrices());
         $this->assertFalse($this->entity->removeUnitPrice($price));
         $this->assertCount(0, $this->entity->getUnitPrices());
@@ -176,14 +180,16 @@ class ProductTest extends \PHPUnit_Framework_TestCase
      * @param array $p2
      * @param int   $qty
      * @param float $price
+     *
+     * @throws \ReflectionException
      */
     public function testMultiUnitPrice($p1, $p2, $qty, $price)
     {
-        $price1 = $this->getMock('JLM\ProductBundle\Model\ProductPriceInterface');
+        $price1 = $this->createMock(ProductPriceInterface::class);
         $price1->expects($this->any())->method('getQuantity')->will($this->returnValue($p1[0]));
         $price1->expects($this->any())->method('getUnitPrice')->will($this->returnValue($p1[1]));
 
-        $price2 = $this->getMock('JLM\ProductBundle\Model\ProductPriceInterface');
+        $price2 = $this->createMock(ProductPriceInterface::class);
         $price2->expects($this->any())->method('getQuantity')->will($this->returnValue($p2[0]));
         $price2->expects($this->any())->method('getUnitPrice')->will($this->returnValue($p2[1]));
 
@@ -270,7 +276,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
     public function testSupplier()
     {
-        $supplier = $this->getMock('JLM\ProductBundle\model\SupplierInterface');
+        $supplier = $this->createMock(SupplierInterface::class);
         $this->assertSame($this->entity, $this->entity->setSupplier($supplier));
         $this->assertSame($supplier, $this->entity->getSupplier());
     }

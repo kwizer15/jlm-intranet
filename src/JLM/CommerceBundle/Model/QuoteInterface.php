@@ -25,4 +25,9 @@ interface QuoteInterface
      * @return Door
      */
     public function getDoor();
+
+    /**
+     * @return AskInterface
+     */
+    public function getAsk();
 }

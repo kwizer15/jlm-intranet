@@ -12,11 +12,14 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\Person;
+use JLM\ContactBundle\Model\AddressInterface;
+use JLM\ContactBundle\Model\ContactPhoneInterface;
+use JLM\ContactBundle\Model\PersonInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class PersonTest extends \PHPUnit_Framework_TestCase
+class PersonTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Person
@@ -36,37 +39,19 @@ class PersonTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\ContactBundle\Model\PersonInterface', $this->entity);
+        $this->assertInstanceOf(PersonInterface::class, $this->entity);
         $this->assertNull($this->entity->getId());
     }
 
     public function getAttributes()
     {
         return [
-            [
-                'Title',
-                'M.',
-            ],
-            [
-                'Title',
-                'Mme',
-            ],
-            [
-                'FirstName',
-                'Foo',
-            ],
-            [
-                'LastName',
-                'Foo',
-            ],
-            [
-                'Email',
-                'commerce@jlm-entreprise.fr',
-            ],
-            [
-                'Address',
-                $this->getMock('JLM\ContactBundle\Model\AddressInterface'),
-            ],
+            ['Title', 'M.',],
+            ['Title', 'Mme',],
+            ['FirstName', 'Foo',],
+            ['LastName', 'Foo',],
+            ['Email', 'commerce@jlm-entreprise.fr',],
+            ['Address', $this->createMock(AddressInterface::class),],
         ];
     }
 
@@ -89,11 +74,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
     public function getAdderRemover()
     {
         return [
-            [
-                'Phone',
-                'Phones',
-                $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface'),
-            ],
+            ['Phone', 'Phones', $this->createMock(ContactPhoneInterface::class),],
         ];
     }
 
@@ -116,36 +97,11 @@ class PersonTest extends \PHPUnit_Framework_TestCase
     public function getNames()
     {
         return [
-            [
-                'M.',
-                'Emmanuel',
-                'Bernaszuk',
-                'M. Bernaszuk Emmanuel',
-            ],
-            [
-                '',
-                'Emmanuel',
-                'Bernaszuk',
-                'Bernaszuk Emmanuel',
-            ],
-            [
-                'M.',
-                '',
-                'Bernaszuk',
-                'M. Bernaszuk',
-            ],
-            [
-                'M.',
-                'Emmanuel',
-                '',
-                'M. Emmanuel',
-            ],
-            [
-                '',
-                '',
-                '',
-                '',
-            ],
+            ['M.', 'Emmanuel', 'Bernaszuk', 'M. Bernaszuk Emmanuel',],
+            ['', 'Emmanuel', 'Bernaszuk', 'Bernaszuk Emmanuel',],
+            ['M.', '', 'Bernaszuk', 'M. Bernaszuk',],
+            ['M.', 'Emmanuel', '', 'M. Emmanuel',],
+            ['', '', '', '',],
         ];
     }
 
