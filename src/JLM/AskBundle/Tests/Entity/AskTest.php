@@ -11,65 +11,75 @@
 
 namespace JLM\AskBundle\Tests\Entity;
 
+use JLM\AskBundle\Entity\Ask;
+use JLM\AskBundle\Model\AskInterface;
+use JLM\AskBundle\Model\CommunicationMeansInterface;
+use JLM\AskBundle\Model\ContactInterface;
+use JLM\AskBundle\Model\PayerInterface;
+use JLM\AskBundle\Model\SubjectInterface;
+use JLM\ContactBundle\Entity\Person;
+use JLM\ModelBundle\Entity\Site;
+use JLM\ModelBundle\Entity\Trustee;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class AskTest extends \PHPUnit_Framework_TestCase
+class AskTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Country
      */
     protected $entity;
-    
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->entity = $this->getMockForAbstractClass('JLM\AskBundle\Entity\Ask');
+        $this->entity = $this->getMockForAbstractClass(Ask::class);
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\AskBundle\Model\AskInterface', $this->entity);
+        $this->assertInstanceOf(AskInterface::class, $this->entity);
     }
-    
+
     public function getGetterSetter()
     {
-        return array(
-            array('Creation', new \DateTime),
-            array('Maturity', new \DateTime),
-            array('Ask', 'Foo'),
-            array('DontTreat', 'Foo'),
-        	array('Contact', $this->getMock('JLM\AskBundle\Model\ContactInterface')),
-            array('Payer', $this->getMock('JLM\AskBundle\Model\PayerInterface')),
-            array('Method', $this->getMock('JLM\AskBundle\Model\CommunicationMeansInterface')),
-            array('Subject', $this->getMock('JLM\AskBundle\Model\SubjectInterface')),
+        return [
+            ['Creation', new \DateTime(),],
+            ['Maturity', new \DateTime(),],
+            ['Ask', 'Foo',],
+            ['DontTreat', 'Foo',],
+            ['Contact', $this->createMock(ContactInterface::class),],
+            ['Payer', $this->createMock(PayerInterface::class),],
+            ['Method', $this->createMock(CommunicationMeansInterface::class),],
+            ['Subject', $this->createMock(SubjectInterface::class),],
             // Deprecateds
-            array('Person', $this->getMock('JLM\ContactBundle\Entity\Person')),
-            array('Trustee', $this->getMock('JLM\ModelBundle\Entity\Trustee')),
-            array('Site', $this->getMock('JLM\ModelBundle\Entity\Site')),
-        );
+            ['Person', $this->createMock(Person::class),],
+            ['Trustee', $this->createMock(Trustee::class),],
+            ['Site', $this->createMock(Site::class),],
+        ];
     }
-    
+
     /**
      * @dataProvider getGetterSetter
      */
     public function testGetterSetter($attribute, $value)
     {
-        $getter = 'get'.$attribute;
-        $setter = 'set'.$attribute;
+        $getter = 'get' . $attribute;
+        $setter = 'set' . $attribute;
         $this->assertSame($this->entity, $this->entity->$setter($value));
         $this->assertSame($value, $this->entity->$getter());
     }
-    
+
     public function testIsCreationBeforeMaturity()
     {
-        $this->entity->setCreation(new \DateTime);
-        $this->entity->setMaturity(new \DateTime);
+        $this->entity->setCreation(new \DateTime());
+        $this->entity->setMaturity(new \DateTime());
         $this->assertTrue($this->entity->isCreationBeforeMaturity());
     }
 }

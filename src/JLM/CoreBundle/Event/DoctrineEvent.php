@@ -23,7 +23,7 @@ class DoctrineEvent extends Event
      * @var mixed
      */
     private $entity;
-    
+
     /**
      * @var ObjectManager
      */
@@ -31,30 +31,33 @@ class DoctrineEvent extends Event
 
     /**
      * Constructor
+     *
      * @param FormInterface $form
-     * @param Request $request
+     * @param Request       $request
      */
     public function __construct($entity, ObjectManager $om)
     {
-    	$this->entity = $entity;
-    	$this->om = $om;
+        $this->entity = $entity;
+        $this->om = $om;
     }
-    
+
     /**
      * Get the entity
+     *
      * @return mixed
      */
     public function getEntity()
     {
-    	return $this->entity;
+        return $this->entity;
     }
-    
+
     /**
      * Get thje object manager
+     *
      * @return ObjectManager
      */
     public function getObjectManager()
     {
-    	return $this->om;
+        return $this->om;
     }
 }

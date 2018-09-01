@@ -12,15 +12,16 @@
 namespace JLM\CommerceBundle\Factory;
 
 use JLM\CommerceBundle\Builder\QuoteBuilderInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class QuoteFactory
 {
     /**
-     * 
+     *
      * @param QuoteBuilderInterface $bill
-     * 
+     *
      * @return QuoteInterface
      */
     public static function create(QuoteBuilderInterface $builder)

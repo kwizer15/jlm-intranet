@@ -38,7 +38,7 @@ class ContractController extends Controller
 
         $entities = $em->getRepository('JLMContractBundle:Contract')->findAll();
 
-        return array('entities' => $entities);
+        return ['entities' => $entities];
     }
 
     /**
@@ -49,11 +49,9 @@ class ContractController extends Controller
      */
     public function showAction(Contract $entity)
     {
-        return array(
-            'entity'      => $entity,
-        );
+        return ['entity' => $entity];
     }
-    
+
     /**
      * Displays a form to create a new Contract entity.
      *
@@ -63,19 +61,18 @@ class ContractController extends Controller
     public function newAction(Door $door)
     {
         $entity = new Contract();
-        if (!empty($door))
-        {
-        	$entity->setDoor($door);
-        	$entity->setTrustee($door->getAdministrator()->getTrustee());
+        if (!empty($door)) {
+            $entity->setDoor($door);
+            $entity->setTrustee($door->getAdministrator()->getTrustee());
         }
-  
-        $entity->setBegin(new \DateTime);
-        $form   = $this->createForm(new ContractType(), $entity);
 
-        return array(
+        $entity->setBegin(new \DateTime());
+        $form = $this->createForm(new ContractType(), $entity);
+
+        return [
             'entity' => $entity,
-            'form'   => $form->createView()
-        );
+            'form' => $form->createView(),
+        ];
     }
 
     /**
@@ -86,68 +83,70 @@ class ContractController extends Controller
      */
     public function createAction()
     {
-        $entity  = new Contract();
+        $entity = new Contract();
         $request = $this->getRequest();
-        $form    = $this->createForm(new ContractType(), $entity);
+        $form = $this->createForm(new ContractType(), $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
-            
+
             // Temporaire : se fera jour par jour
             // ***********************************
-            if ($entity->getInProgress())
-            {
-            	$fee = new Fee();
-            	$fee->addContract($entity);
-            	$fee->setTrustee($entity->getManager());
-            	$fee->setAddress($entity->getDoor()->getSite()->getAddress()->toString());
-            	$fee->setPrelabel($entity->getDoor()->getSite()->getBillingPrelabel());
-            	$fee->setVat($entity->getDoor()->getSite()->getVat());
-            	$em->persist($fee);
+            if ($entity->getInProgress()) {
+                $fee = new Fee();
+                $fee->addContract($entity);
+                $fee->setTrustee($entity->getManager());
+                $fee->setAddress($entity->getDoor()->getSite()->getAddress()->toString());
+                $fee->setPrelabel($entity->getDoor()->getSite()->getBillingPrelabel());
+                $fee->setVat($entity->getDoor()->getSite()->getVat());
+                $em->persist($fee);
             }
             //***************************************
-            
+
             $em->flush();
 
-            return $this->redirect($this->generateUrl('door_show', array('id' => $entity->getDoor()->getId())));
-            
+            return $this->redirect($this->generateUrl('door_show', ['id' => $entity->getDoor()->getId()]));
         }
 
-        return array(
+        return [
             'entity' => $entity,
-            'form'   => $form->createView()
-        );
+            'form' => $form->createView(),
+        ];
     }
 
     /**
      * Stop a contract
-     * 
+     *
      * @Template("JLMModelBundle:Contract:stop.html.twig")
      * @Secure(roles="ROLE_OFFICE")
      */
     public function stopupdateAction(Contract $entity)
     {
-    	$editForm   = $this->get('form.factory')->createNamed('contractStop'.$entity->getId(),new ContractStopType(), $entity);
+        $editForm = $this->get('form.factory')->createNamed(
+            'contractStop' . $entity->getId(),
+            new ContractStopType(),
+            $entity
+        )
+        ;
         $request = $this->getRequest();
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid())
-        {
-        	$em = $this->getDoctrine()->getManager();
+        if ($editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('door_show', array('id' => $entity->getDoor()->getId())));
+            return $this->redirect($this->generateUrl('door_show', ['id' => $entity->getDoor()->getId()]));
         }
 
-        return array(
-            'entity'      => $entity,
-            'form'   => $editForm->createView(),
-        );
+        return [
+            'entity' => $entity,
+            'form' => $editForm->createView(),
+        ];
     }
-    
+
     /**
      * Stop a contract
      *
@@ -156,26 +155,36 @@ class ContractController extends Controller
      */
     public function stopAction(Contract $entity)
     {
-    	$form = $this->get('form.factory')->createNamed('contractStop'.$entity->getId(),new ContractStopType(), $entity);
-    	return array(
-    			'entity'      => $entity,
-    			'form'   => $form->createView(),
-    	);
+        $form = $this->get('form.factory')->createNamed(
+            'contractStop' . $entity->getId(),
+            new ContractStopType(),
+            $entity
+        )
+        ;
+        return [
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ];
     }
-    
+
     /**
      * Displays a form to edit an existing Contract entity.
-     * 
+     *
      * @Template()
      * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction(Contract $entity)
     {
-        $editForm    = $this->get('form.factory')->createNamed('contractEdit'.$entity->getId(),new ContractType(), $entity);
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        );
+        $editForm = $this->get('form.factory')->createNamed(
+            'contractEdit' . $entity->getId(),
+            new ContractType(),
+            $entity
+        )
+        ;
+        return [
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+        ];
     }
 
     /**
@@ -186,21 +195,25 @@ class ContractController extends Controller
      */
     public function updateAction(Request $request, Contract $entity)
     {
-        $editForm   = $this->get('form.factory')->createNamed('contractEdit'.$entity->getId(),new ContractType(), $entity);
+        $editForm = $this->get('form.factory')->createNamed(
+            'contractEdit' . $entity->getId(),
+            new ContractType(),
+            $entity
+        )
+        ;
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid())
-        {
-        	$em = $this->getDoctrine()->getManager();
+        if ($editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('door_show', array('id' => $entity->getDoor()->getId())));
+            return $this->redirect($this->generateUrl('door_show', ['id' => $entity->getDoor()->getId()]));
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        );
+        return [
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+        ];
     }
 }

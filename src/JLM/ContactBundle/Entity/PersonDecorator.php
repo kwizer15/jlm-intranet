@@ -26,30 +26,30 @@ abstract class PersonDecorator extends ContactDecorator implements PersonInterfa
     {
         return $this->getContact();
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function setContact(ContactInterface $contact)
     {
-    	if ($contact instanceof PersonInterface)
-    	{
-    		return parent::setContact($contact);
-    	}
-    	
-    	return $this;
+        if ($contact instanceof PersonInterface) {
+            return parent::setContact($contact);
+        }
+
+        return $this;
     }
-    
+
     /**
-     * 
+     *
      * @param PersonInterface $person
+     *
      * @return \JLM\ContactBundle\Entity\PersonDecorator
      */
     public function setPerson(PersonInterface $person)
     {
-    	return $this->setContact($person); 
+        return $this->setContact($person);
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -57,7 +57,7 @@ abstract class PersonDecorator extends ContactDecorator implements PersonInterfa
     {
         return $this->getPerson()->getTitle();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -73,7 +73,7 @@ abstract class PersonDecorator extends ContactDecorator implements PersonInterfa
     {
         return $this->getPerson()->getLastName();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -81,7 +81,7 @@ abstract class PersonDecorator extends ContactDecorator implements PersonInterfa
     {
         return $this->getPerson()->getFixedPhone();
     }
-    
+
     /**
      * {@inheritdoc}
      */

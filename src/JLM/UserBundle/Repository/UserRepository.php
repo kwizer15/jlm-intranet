@@ -13,15 +13,15 @@ use JLM\ContactBundle\Model\ContactInterface;
  */
 class UserRepository extends EntityRepository
 {
-	public function getByContact(ContactInterface $contact)
-	{
-		$qb = $this->createQueryBuilder('a')
-			->select('a,b')
-			->leftJoin('a.contact','b')
-			->where('b = ?1')
-			->setParameter(1, $contact)
-		;
-		
-		return $qb->getQuery()->getSingleResult();
-	}
+    public function getByContact(ContactInterface $contact)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a,b')
+            ->leftJoin('a.contact', 'b')
+            ->where('b = ?1')
+            ->setParameter(1, $contact)
+        ;
+        
+        return $qb->getQuery()->getSingleResult();
+    }
 }

@@ -19,49 +19,49 @@ use JLM\ContactBundle\Entity\ContactDecorator;
  */
 class Supplier extends ContactDecorator implements SupplierInterface
 {
-	/**
-	 * @var string $website
-	 */
-	private $website;
-	
-	/**
-	 * Get website
-	 * @return string
-	 */
-	public function getWebsite()
-	{
-		return $this->website;
-	}
-	
-	/**
-	 * Set website
-	 * @param string $url
-	 * @return self
-	 */
-	public function setWebsite($url)
-	{
-		$this->website = $url;
-		
-		return $this;
-	}
+    /**
+     * @var string $website
+     */
+    private $website;
+    
+    /**
+     * Get website
+     * @return string
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+    
+    /**
+     * Set website
+     * @param string $url
+     * @return self
+     */
+    public function setWebsite($url)
+    {
+        $this->website = $url;
+        
+        return $this;
+    }
 
-	/**
-	 * Get shortName
-	 * @deprecated
-	 * @return string
-	 */
-	public function getShortName()
-	{
-		return $this->getName();
-	}
-	
-	/**
-	 * Set shortName
-	 * @deprecated
-	 * @param string $name
-	 */
-	public function setShortName($name)
-	{
-		return $this;
-	}
+    /**
+     * Get shortName
+     * @deprecated
+     * @return string
+     */
+    public function getShortName()
+    {
+        return $this->getName();
+    }
+    
+    /**
+     * Set shortName
+     * @deprecated
+     * @param string $name
+     */
+    public function setShortName($name)
+    {
+        return $this;
+    }
 }

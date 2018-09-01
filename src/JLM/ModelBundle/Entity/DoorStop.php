@@ -37,7 +37,7 @@ class DoorStop
      * @var string
      */
     private $reason;
-    
+
     /**
      * @var string
      */
@@ -51,7 +51,7 @@ class DoorStop
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -62,19 +62,20 @@ class DoorStop
      * Set begin
      *
      * @param \DateTime $begin
+     *
      * @return DoorStop
      */
     public function setBegin(\DateTime $begin = null)
     {
         $this->begin = $begin;
-        
+
         return $this;
     }
 
     /**
      * Get begin
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getBegin()
     {
@@ -85,19 +86,20 @@ class DoorStop
      * Set end
      *
      * @param \DateTime $end
+     *
      * @return DoorStop
      */
     public function setEnd(\DateTime $end = null)
     {
         $this->end = $end;
-        
+
         return $this;
     }
 
     /**
      * Get end
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEnd()
     {
@@ -108,19 +110,20 @@ class DoorStop
      * Set reason
      *
      * @param string $reason
+     *
      * @return DoorStop
      */
     public function setReason($reason)
     {
         $this->reason = $reason;
-    
+
         return $this;
     }
 
     /**
      * Get reason
      *
-     * @return string 
+     * @return string
      */
     public function getReason()
     {
@@ -131,19 +134,20 @@ class DoorStop
      * Set door
      *
      * @param \JLM\ModelBundle\Entity\Door $door
+     *
      * @return DoorStop
      */
     public function setDoor(\JLM\ModelBundle\Entity\Door $door = null)
     {
         $this->door = $door;
-    
+
         return $this;
     }
 
     /**
      * Get door
      *
-     * @return \JLM\ModelBundle\Entity\Door 
+     * @return \JLM\ModelBundle\Entity\Door
      */
     public function getDoor()
     {
@@ -154,19 +158,20 @@ class DoorStop
      * Set state
      *
      * @param string $state
+     *
      * @return DoorStop
      */
     public function setState($state)
     {
         $this->state = $state;
-    
+
         return $this;
     }
 
     /**
      * Get state
      *
-     * @return string 
+     * @return string
      */
     public function getState()
     {

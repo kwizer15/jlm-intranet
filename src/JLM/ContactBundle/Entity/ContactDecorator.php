@@ -22,24 +22,26 @@ abstract class ContactDecorator implements ContactInterface
 {
     /**
      * Identifier
+     *
      * @var int $id
      */
     private $id;
-    
+
     /**
      * @var ContactInterface $person
      */
     protected $contact;
-    
+
     /**
      * Get id
+     *
      * @return int
      */
     public function getId()
     {
-    	return $this->id;
+        return $this->id;
     }
-    
+
     /**
      * Get contact
      */
@@ -47,41 +49,41 @@ abstract class ContactDecorator implements ContactInterface
     {
         return $this->contact;
     }
-    
+
     /**
      * Get contact
      */
     public function setContact(ContactInterface $contact)
     {
-    	$this->contact = $contact;
-    	
-    	return $this;
+        $this->contact = $contact;
+
+        return $this;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function getAddress()
     {
-    	return $this->getContact()->getAddress();
+        return $this->getContact()->getAddress();
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function setAddress(AddressInterface $address)
     {
-    	return $this->getContact()->setAddress($address);
+        return $this->getContact()->setAddress($address);
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function getEmail()
     {
-    	return $this->getContact()->getEmail();
+        return $this->getContact()->getEmail();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -89,23 +91,23 @@ abstract class ContactDecorator implements ContactInterface
     {
         return $this->getContact()->getFax();
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function getPhones()
     {
-    	return $this->getContact()->getPhones();
+        return $this->getContact()->getPhones();
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-    	return $this->getContact()->getName();
+        return $this->getContact()->getName();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -113,20 +115,20 @@ abstract class ContactDecorator implements ContactInterface
     {
         return $this->getContact()->__toString();
     }
-    
+
     /**
-     * 
+     *
      * @param string $method
-     * @param mixed $default
+     * @param mixed  $default
+     *
      * @return mixed
      */
     private function decoratedGetMethod($method, $default)
     {
-    	if ($this->getContact() === null)
-    	{
-    		return $default;
-    	}
-    	
-    	return $this->getContact()->$method();
+        if ($this->getContact() === null) {
+            return $default;
+        }
+
+        return $this->getContact()->$method();
     }
 }

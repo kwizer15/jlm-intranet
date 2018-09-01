@@ -11,24 +11,42 @@ class WorkEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-	        ->add('door','door_hidden')
-	        ->add('place','textarea',array('label'=>'Porte','attr'=>array('class'=>'input-xlarge')))
-        	->add('reason',null,array('label'=>'Raison de l\'intervention','attr'=>array('class'=>'input-xxlarge')))
-            ->add('contactName',null,array('label'=>'Nom du contact','required'=>false))
-            ->add('contactPhones',null,array('label'=>'Téléphones','required'=>false))
-            ->add('contactEmail','email',array('label'=>'e-mail','required'=>false,'attr'=>array('class'=>'input-xlarge')))
-            ->add('priority','choice',array('label'=>'Priorité','choices'=>array(1=>'TRES URGENT',2=>'Urgent',3=>'Haute',4=>'Normal',5=>'Basse',6=>'Très basse')))
-            ->add('category',null,array('label'=>'Type de travaux'))
-            ->add('objective',null,array('label'=>'Objectif'))
+            ->add('door', 'door_hidden')
+            ->add('place', 'textarea', ['label' => 'Porte', 'attr' => ['class' => 'input-xlarge']])
+            ->add('reason', null, ['label' => 'Raison de l\'intervention', 'attr' => ['class' => 'input-xxlarge']])
+            ->add('contactName', null, ['label' => 'Nom du contact', 'required' => false])
+            ->add('contactPhones', null, ['label' => 'Téléphones', 'required' => false])
+            ->add(
+                'contactEmail',
+                'email',
+                [
+                 'label'    => 'e-mail',
+                 'required' => false,
+                 'attr'     => ['class' => 'input-xlarge'],
+                ]
+            )
+            ->add('priority', 'choice', [
+                                         'label'   => 'Priorité',
+                                         'choices' => [
+                                                       1 => 'TRES URGENT',
+                                                       2 => 'Urgent',
+                                                       3 => 'Haute',
+                                                       4 => 'Normal',
+                                                       5 => 'Basse',
+                                                       6 => 'Très basse',
+                                                      ],
+                                        ])
+            ->add('category', null, ['label' => 'Type de travaux'])
+            ->add('objective', null, ['label' => 'Objectif'])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'JLM\DailyBundle\Entity\Work',
-        	'attr' => array('class'=>  'interventionForm'),
-        ));
+        $resolver->setDefaults([
+                                'data_class' => 'JLM\DailyBundle\Entity\Work',
+                                'attr'       => ['class' => 'interventionForm'],
+                               ]);
     }
 
     public function getName()

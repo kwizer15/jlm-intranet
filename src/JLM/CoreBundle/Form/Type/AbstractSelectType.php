@@ -21,38 +21,38 @@ use Symfony\Component\Form\AbstractType;
  */
 abstract class AbstractSelectType extends AbstractType
 {
-	/**
-	 * @var ObjectManager
-	 */
-	private $om;
-	
-	/**
-	 * @param ObjectManager $om
-	 */
-	public function __construct(ObjectManager $om)
-	{
-		$this->om = $om;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getParent()
-	{
-		return 'genemu_jqueryselect2_hidden';
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
-	{
-		$transformer = $this->getTransformerClass();
-		$resolver->setDefaults(array(
-				'transformer' => new $transformer($this->om),
-		));
-	}
-	
+    /**
+     * @var ObjectManager
+     */
+    private $om;
+    
+    /**
+     * @param ObjectManager $om
+     */
+    public function __construct(ObjectManager $om)
+    {
+        $this->om = $om;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getParent()
+    {
+        return 'genemu_jqueryselect2_hidden';
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $transformer = $this->getTransformerClass();
+        $resolver->setDefaults([
+                                'transformer' => new $transformer($this->om),
+                               ]);
+    }
+    
     /**
      * {@inheritdoc}
      */

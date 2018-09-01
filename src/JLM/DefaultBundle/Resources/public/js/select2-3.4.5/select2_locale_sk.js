@@ -7,12 +7,16 @@
     "use strict";
     // use text for the numbers 2 through 4
     var smallNumbers = {
-        2: function(masc) { return (masc ? "dva" : "dve"); },
-        3: function() { return "tri"; },
-        4: function() { return "štyri"; }
+        2: function (masc) {
+            return (masc ? "dva" : "dve"); },
+        3: function () {
+            return "tri"; },
+        4: function () {
+            return "štyri"; }
     }
     $.extend($.fn.select2.defaults, {
-        formatNoMatches: function () { return "Nenašli sa žiadne položky"; },
+        formatNoMatches: function () {
+            return "Nenašli sa žiadne položky"; },
         formatInputTooShort: function (input, min) {
             var n = min - input.length;
             if (n == 1) {
@@ -42,7 +46,9 @@
                 return "Môžete zvoliť najviac "+limit+" položiek";
             }
         },
-        formatLoadMore: function (pageNumber) { return "Načítavajú sa ďalšie výsledky..."; },
-        formatSearching: function () { return "Vyhľadávanie..."; }
+        formatLoadMore: function (pageNumber) {
+            return "Načítavajú sa ďalšie výsledky..."; },
+        formatSearching: function () {
+            return "Vyhľadávanie..."; }
     });
 })(jQuery);

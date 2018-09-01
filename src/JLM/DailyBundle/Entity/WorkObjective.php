@@ -27,7 +27,7 @@ class WorkObjective extends StringModel
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {

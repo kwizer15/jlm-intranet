@@ -14,6 +14,7 @@ namespace JLM\CommerceBundle\Twig\Extension;
 use Doctrine\Common\Persistence\ObjectManager;
 use JLM\CommerceBundle\Model\QuoteInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -39,64 +40,62 @@ class QuoteCountExtension extends \Twig_Extension implements \Twig_Extension_Glo
         $year = $date->format('Y');
         $repo = $this->om->getRepository('JLMCommerceBundle:Quote');
         
-        return array(
-            'quotecount' => array(
-				'all' => $repo->getCountState('uncanceled', $year),
-				'input' => $repo->getCountState(0, $year),
-				'wait' => $repo->getCountState(1, $year),
-				'send' => $repo->getCountState(3, $year),
-				'given' => $repo->getCountState(5, $year),
-            ),
-            'quotelasts' => $repo->findBy(
-                    array(),
-                    array('number'=>'desc'),
+        return [
+                'quotecount' => [
+                                 'all'   => $repo->getCountState('uncanceled', $year),
+                                 'input' => $repo->getCountState(0, $year),
+                                 'wait'  => $repo->getCountState(1, $year),
+                                 'send'  => $repo->getCountState(3, $year),
+                                 'given' => $repo->getCountState(5, $year),
+                                ],
+                'quotelasts' => $repo->findBy(
+                    [],
+                    ['number' => 'desc'],
                     5
-            )
-        );
+                ),
+               ];
     }
     
     public function getFilters()
     {
-    	return array(
-    			new \Twig_SimpleFilter('quote_state_label', array($this, 'stateLabelFilter'), array('is_safe' => array('all'))),
-    	);
+        return [
+                new \Twig_SimpleFilter('quote_state_label', [$this, 'stateLabelFilter'], ['is_safe' => ['all']]),
+               ];
     }
     
     public function stateLabelFilter($quote)
     {
-    	$class = '';
-    	$message = '';
-    	$state = $quote->getState();
-    	switch ($state)
-    	{
-    		case 0:
-    			$message = 'in_seizure';
-    			break;
-    		case 1:
-    		case 2:
-    			$class = 'warning';
-    			$message = 'waiting';
-    			break;
-    		case 3:
-    		case 4:
-    			$class = 'info';
-    			$message = 'sended';
-    			break;
-    		case 5:
-    			$class = 'success';
-    			$message = 'given';
-    			break;
-    		default:
-    			$class = 'important';
-    			$message = 'canceled';
-    	}
-    	$out = '<span class="label';
-    	if ($class != '')
-    	{
-    		$out .= ' label-'.$class;
-    	}
-    	$out .= '">'.$this->translator->trans($message,array(),'QuoteStates').'</span>';
-    	
-    	return $out;
+        $class = '';
+        $message = '';
+        $state = $quote->getState();
+        switch ($state) {
+            case 0:
+                $message = 'in_seizure';
+                break;
+            case 1:
+            case 2:
+                $class = 'warning';
+                $message = 'waiting';
+                break;
+            case 3:
+            case 4:
+                $class = 'info';
+                $message = 'sended';
+                break;
+            case 5:
+                $class = 'success';
+                $message = 'given';
+                break;
+            default:
+                $class = 'important';
+                $message = 'canceled';
+        }
+        $out = '<span class="label';
+        if ($class != '') {
+            $out .= ' label-'.$class;
+        }
+        $out .= '">'.$this->translator->trans($message, [], 'QuoteStates').'</span>';
+        
+        return $out;
     }
 }

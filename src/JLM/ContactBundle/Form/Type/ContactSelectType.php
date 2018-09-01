@@ -20,11 +20,11 @@ class ContactSelectType extends AbstractSelectType
 {
     protected function getTransformerClass()
     {
-    	return '\JLM\ContactBundle\Form\DataTransformer\ContactToIntTransformer';
+        return '\JLM\ContactBundle\Form\DataTransformer\ContactToIntTransformer';
     }
-    
+
     protected function getTypeName()
     {
-    	return 'jlm_contact_contact';
+        return 'jlm_contact_contact';
     }
 }

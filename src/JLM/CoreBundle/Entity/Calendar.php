@@ -18,48 +18,50 @@ use JLM\CoreBundle\Model\CalendarInterface;
  */
 class Calendar implements CalendarInterface
 {
-	/**
-	 * @var \DateTime
-	 */
-	private $dt;
-	
-	/**
-	 * 
-	 * @return DateTime
-	 */
-	public function getDt()
-	{
-		return $this->getDate();
-	}
-	
-	/**
-	 * 
-	 * @param \DateTime $date
-	 * @return self
-	 */
-	public function setDt(\DateTime $date)
-	{
-		return $this->setDate($date);
-	}
-	
-	/**
-	 *
-	 * @return DateTime
-	 */
-	public function getDate()
-	{
-		return $this->dt;
-	}
-	
-	/**
-	 *
-	 * @param \DateTime $date
-	 * @return self
-	 */
-	public function setDate(\DateTime $date)
-	{
-		$this->dt = $date;
-		
-		return $this;
-	}
+    /**
+     * @var \DateTime
+     */
+    private $dt;
+
+    /**
+     *
+     * @return DateTime
+     */
+    public function getDt()
+    {
+        return $this->getDate();
+    }
+
+    /**
+     *
+     * @param \DateTime $date
+     *
+     * @return self
+     */
+    public function setDt(\DateTime $date)
+    {
+        return $this->setDate($date);
+    }
+
+    /**
+     *
+     * @return DateTime
+     */
+    public function getDate()
+    {
+        return $this->dt;
+    }
+
+    /**
+     *
+     * @param \DateTime $date
+     *
+     * @return self
+     */
+    public function setDate(\DateTime $date)
+    {
+        $this->dt = $date;
+
+        return $this;
+    }
 }

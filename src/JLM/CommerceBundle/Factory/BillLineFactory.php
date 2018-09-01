@@ -12,6 +12,7 @@
 namespace JLM\CommerceBundle\Factory;
 
 use JLM\CommerceBundle\Builder\BillLineBuilderInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

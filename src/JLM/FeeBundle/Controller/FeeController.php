@@ -17,126 +17,124 @@ use JLM\FeeBundle\Form\Type\FeeType;
  */
 class FeeController extends Controller
 {
-	/**
-	 * Lists all Contract entities.
-	 *
-	 * @Route("/", name="fee")
-	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
-	 */
-	public function indexAction()
-	{
-		$em = $this->getDoctrine()->getManager();
-		$entities = $em->getRepository('JLMFeeBundle:Fee')->findAll();
-		return array('entities' => $entities);
-	}
-	
-	/**
-	 * Finds and displays a Fee entity.
-	 *
-	 * @Route("/{id}/show", name="fee_show")
-	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
-	 */
-	public function showAction(Fee $entity)
-	{
-	
-		return array(
-				'entity'      => $entity,
-			);
-	}
-	
-	/**
-	 * Displays a form to create a new Fee entity.
-	 *
-	 * @Route("/new", name="fee_new")
-	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
-	 */
-	public function newAction()
-	{
-		$entity = new Fee();
 
-		$form   = $this->createForm(new FeeType(), $entity);
-	
-		return array(
-				'entity' => $entity,
-				'form'   => $form->createView()
-		);
-	}
-	
-	/**
-	 * Creates a new Fee entity.
-	 *
-	 * @Route("/create", name="fee_create")
-	 * @Method("post")
-	 * @Template("JLMModelBundle:Fee:new.html.twig")
-	 * @Secure(roles="ROLE_OFFICE")
-	 */
-	public function createAction()
-	{
-		$entity  = new Fee();
-		$request = $this->getRequest();
-		$form    = $this->createForm(new FeeType(), $entity);
-		$form->handleRequest($request);
-	
-		if ($form->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($entity);
-			$em->flush();
-	
-			return $this->redirect($this->generateUrl('fee_show', array('id' => $entity->getId())));
-	
-		}
-	
-		return array(
-				'entity' => $entity,
-				'form'   => $form->createView()
-		);
-	}
-	
-	/**
-	 * Displays a form to edit an existing Fee entity.
-	 *
-	 * @Route("/{id}/edit", name="fee_edit")
-	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
-	 */
-	public function editAction(Fee $entity)
-	{
-		$editForm = $this->createForm(new FeeType(), $entity);
-	
-		return array(
-				'entity'      => $entity,
-				'edit_form'   => $editForm->createView(),
-		);
-	}
-	
-	/**
-	 * Edits an existing Fee entity.
-	 *
-	 * @Route("/{id}/update", name="fee_update")
-	 * @Method("post")
-	 * @Template("JLMModelBundle:Fee:edit.html.twig")
-	 * @Secure(roles="ROLE_OFFICE")
-	 */
-	public function updateAction(Fee $entity)
-	{
-		$editForm   = $this->createForm(new FeeType(), $entity);	
-		$request = $this->getRequest();
-		$editForm->handleRequest($request);
-	
-		if ($editForm->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($entity);
-			$em->flush();
-	
-			return $this->redirect($this->generateUrl('fee_show', array('id' => $entity->getId())));
-		}
-	
-		return array(
-				'entity'      => $entity,
-				'edit_form'   => $editForm->createView(),
-		);
-	}
-}	
+    /**
+     * Lists all Contract entities.
+     *
+     * @Route("/", name="fee")
+     * @Template()
+     * @Secure(roles="ROLE_OFFICE")
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('JLMFeeBundle:Fee')->findAll();
+        return ['entities' => $entities];
+    }
+    
+    /**
+     * Finds and displays a Fee entity.
+     *
+     * @Route("/{id}/show", name="fee_show")
+     * @Template()
+     * @Secure(roles="ROLE_OFFICE")
+     */
+    public function showAction(Fee $entity)
+    {
+    
+        return ['entity' => $entity];
+    }
+    
+    /**
+     * Displays a form to create a new Fee entity.
+     *
+     * @Route("/new", name="fee_new")
+     * @Template()
+     * @Secure(roles="ROLE_OFFICE")
+     */
+    public function newAction()
+    {
+        $entity = new Fee();
+
+        $form   = $this->createForm(new FeeType(), $entity);
+    
+        return [
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
+    }
+    
+    /**
+     * Creates a new Fee entity.
+     *
+     * @Route("/create", name="fee_create")
+     * @Method("post")
+     * @Template("JLMModelBundle:Fee:new.html.twig")
+     * @Secure(roles="ROLE_OFFICE")
+     */
+    public function createAction()
+    {
+        $entity  = new Fee();
+        $request = $this->getRequest();
+        $form    = $this->createForm(new FeeType(), $entity);
+        $form->handleRequest($request);
+    
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+    
+            return $this->redirect($this->generateUrl('fee_show', ['id' => $entity->getId()]));
+        }
+    
+        return [
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
+    }
+    
+    /**
+     * Displays a form to edit an existing Fee entity.
+     *
+     * @Route("/{id}/edit", name="fee_edit")
+     * @Template()
+     * @Secure(roles="ROLE_OFFICE")
+     */
+    public function editAction(Fee $entity)
+    {
+        $editForm = $this->createForm(new FeeType(), $entity);
+    
+        return [
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
+    }
+    
+    /**
+     * Edits an existing Fee entity.
+     *
+     * @Route("/{id}/update", name="fee_update")
+     * @Method("post")
+     * @Template("JLMModelBundle:Fee:edit.html.twig")
+     * @Secure(roles="ROLE_OFFICE")
+     */
+    public function updateAction(Fee $entity)
+    {
+        $editForm   = $this->createForm(new FeeType(), $entity);
+        $request = $this->getRequest();
+        $editForm->handleRequest($request);
+    
+        if ($editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+    
+            return $this->redirect($this->generateUrl('fee_show', ['id' => $entity->getId()]));
+        }
+    
+        return [
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
+    }
+}

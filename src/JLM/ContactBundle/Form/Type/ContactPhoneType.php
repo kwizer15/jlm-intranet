@@ -28,8 +28,8 @@ class ContactPhoneType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('label',null,array('label'=>'Libélé'))
-        	->add('phone','jlm_contact_phone',array('label'=>'Numéro'))
+            ->add('label', null, ['label' => 'Libélé'])
+            ->add('phone', 'jlm_contact_phone', ['label' => 'Numéro'])
         ;
     }
 
@@ -40,15 +40,13 @@ class ContactPhoneType extends AbstractType
     {
         return 'jlm_contact_contactphone';
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-        ->setDefaults(array(
-            'data_class' => 'JLM\ContactBundle\Entity\ContactPhone',
-        ));
+            ->setDefaults(['data_class' => 'JLM\ContactBundle\Entity\ContactPhone']);
     }
 }

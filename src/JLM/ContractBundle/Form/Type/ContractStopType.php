@@ -26,7 +26,7 @@ class ContractStopType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('end','datepicker',array('label'=>'Fin du contrat','required'=>false))		
+            ->add('end', 'datepicker', ['label' => 'Fin du contrat', 'required' => false])
         ;
     }
 
@@ -43,9 +43,9 @@ class ContractStopType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'JLM\ContractBundle\Entity\Contract',
-        	'label' => 'Arrêt du contrat',
-        ));
+        $resolver->setDefaults([
+                                'data_class' => 'JLM\ContractBundle\Entity\Contract',
+                                'label'      => 'Arrêt du contrat',
+                               ]);
     }
 }

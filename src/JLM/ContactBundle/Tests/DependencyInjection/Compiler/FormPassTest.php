@@ -16,18 +16,18 @@ use JLM\ContactBundle\DependencyInjection\Compiler\FormPass;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class FormPassTest extends \PHPUnit_Framework_TestCase
+class FormPassTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        
-        $this->container = $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder');
+
+        $this->container = $this->createMock('Symfony\Component\DependencyInjection\ContainerBuilder');
         $this->pass = new FormPass();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -35,7 +35,7 @@ class FormPassTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface', $this->pass);
     }
-    
+
     public function testProcess()
     {
         $this->container->expects($this->once())->method('getParameter');

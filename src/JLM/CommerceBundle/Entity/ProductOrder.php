@@ -19,17 +19,17 @@ use JLM\ProductBundle\Model\SupplierInterface;
  */
 class ProductOrder extends ProductDecorator
 {
-//	private $supplier;
-//	
-//	public function getSupplier()
-//	{
-//		return $this->supplier;
-//	}
-//	
-//	public function setSupplier(SupplierInterface $supplier)
-//	{
-//		$this->supplier = $supplier;
-//		
-//		return $this;
-//	}	
+//  private $supplier;
+//
+//  public function getSupplier()
+//  {
+//      return $this->supplier;
+//  }
+//
+//  public function setSupplier(SupplierInterface $supplier)
+//  {
+//      $this->supplier = $supplier;
+//
+//      return $this;
+//  }
 }

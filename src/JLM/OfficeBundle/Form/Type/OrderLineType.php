@@ -8,25 +8,24 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class OrderLineType extends AbstractType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder
-		->add('position','hidden')
-		->add('reference',null,array('required'=>false,'attr'=>array('class'=>'input-small')))
-		->add('designation',null,array('attr'=>array('class'=>'input-xxlarge')))
-		->add('quantity',null,array('attr'=>array('class'=>'input-mini')))
-		;
-	}
 
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
-	{
-		$resolver->setDefaults(array(
-				'data_class' => 'JLM\OfficeBundle\Entity\OrderLine'
-		));
-	}
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+        ->add('position', 'hidden')
+        ->add('reference', null, ['required' => false, 'attr' => ['class' => 'input-small']])
+        ->add('designation', null, ['attr' => ['class' => 'input-xxlarge']])
+        ->add('quantity', null, ['attr' => ['class' => 'input-mini']])
+        ;
+    }
 
-	public function getName()
-	{
-		return 'order_line';
-	}
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(['data_class' => 'JLM\OfficeBundle\Entity\OrderLine']);
+    }
+
+    public function getName()
+    {
+        return 'order_line';
+    }
 }

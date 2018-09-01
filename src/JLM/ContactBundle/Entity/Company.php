@@ -18,5 +18,5 @@ use JLM\ContactBundle\Model\CompanyInterface;
  */
 class Company extends Corporation implements CompanyInterface
 {
-	
+
 }

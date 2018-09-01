@@ -18,41 +18,43 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 abstract class StringModel
 {
-	/**
-	 * @var string
-	 * 
-	 * @Assert\NotNull
-	 * @Assert\Type(type="string")
-	 * @Assert\NotBlank
-	 */
-	private $name = '';
-	
-	/**
-	 * Set text
-	 *
-	 * @param string $text
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
-		return $this;
-	}
+    /**
+     * @var string
+     *
+     * @Assert\NotNull
+     * @Assert\Type(type="string")
+     * @Assert\NotBlank
+     */
+    private $name = '';
 
-	/**
-	 * Get text
-	 *
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
+    /**
+     * Set text
+     *
+     * @param string $name
+     *
+     * @return StringModel
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
 
-	/**
-	 * To String
-	 */
-	public function __toString()
-	{
-		return $this->getName();
-	}
+    /**
+     * Get text
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * To String
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

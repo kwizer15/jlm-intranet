@@ -33,7 +33,7 @@ class VAT implements VATInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -60,11 +60,11 @@ class VAT implements VATInterface
     
     /**
      * To String
-     * 
+     *
      * @return string
      */
     public function __toString()
     {
-    	return str_replace('.',',',number_format($this->rate * 100,1)).' %';
+        return str_replace('.', ',', number_format($this->rate * 100, 1)).' %';
     }
 }

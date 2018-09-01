@@ -17,14 +17,15 @@ use JLM\CoreBundle\Form\Type\AbstractSelectType;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class CorporationSelectType extends AbstractSelectType
-{ 
+{
+
     protected function getTransformerClass()
     {
-    	return '\JLM\ContactBundle\Form\DataTransformer\CorporationToIntTransformer';
+        return '\JLM\ContactBundle\Form\DataTransformer\CorporationToIntTransformer';
     }
-    
+
     protected function getTypeName()
     {
-    	return 'jlm_contact_corporation';
+        return 'jlm_contact_corporation';
     }
 }

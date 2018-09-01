@@ -18,23 +18,23 @@ use JLM\ModelBundle\Entity\Door;
 
 class DoorEvent extends RequestEvent
 {
-	/**
-	 * @var BillInterface
-	 */
+    /**
+     * @var BillInterface
+     */
     private $door;
 
     /**
      * @param FormInterface $form
-     * @param Request $request
+     * @param Request       $request
      */
     public function __construct(Door $door, Request $request)
     {
-    	$this->door = $door;
-    	parent::__construct($request);
+        $this->door = $door;
+        parent::__construct($request);
     }
-    
+
     public function getDoor()
     {
-    	return $this->door;
+        return $this->door;
     }
 }

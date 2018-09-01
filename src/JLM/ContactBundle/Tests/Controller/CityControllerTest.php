@@ -22,56 +22,56 @@ class CityControllerTest extends WebTestCase
      * @var Symfony\Bundle\FrameworkBundle\Client
      */
     private $client;
-    
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
         $this->client = static::createClient();
-    } 
-    
+    }
+
     public function testGet()
     {
         $this->client->request(
             'GET',
             '/contact/city.json',
-            array('id' => 1),
-            array(),
-            array(
+            ['id' => 1],
+            [],
+            [
                 'CONTENT_TYPE' => 'application/json',
                 'HTTP_X-Requested-With' => 'XMLHttpRequest',
-            )
+            ]
         );
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
-    
+
     public function testGetBadId()
     {
         $this->client->request(
             'GET',
             '/contact/city.json',
-            array('id' => 'foo'),
-            array(),
-            array(
+            ['id' => 'foo'],
+            [],
+            [
                 'CONTENT_TYPE' => 'application/json',
                 'HTTP_X-Requested-With' => 'XMLHttpRequest',
-            )
+            ]
         );
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
-    
+
     public function testSearch()
     {
         $this->client->request(
             'GET',
             '/contact/cities.json',
-            array('q' => 'Othis'),
-            array(),
-            array(
+            ['q' => 'Othis'],
+            [],
+            [
                 'CONTENT_TYPE' => 'application/json',
                 'HTTP_X-Requested-With' => 'XMLHttpRequest',
-            )
+            ]
         );
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }

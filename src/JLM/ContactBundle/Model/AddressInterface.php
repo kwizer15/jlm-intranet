@@ -22,26 +22,25 @@ interface AddressInterface
      * @return string
      */
     public function getStreet();
-    
+
     /**
      * Get city
      *
      * @return CityInterface
      */
     public function getCity();
-    
+
     /**
      * To String
-     * 
+     *
      * @return string
      */
     public function __toString();
-    
+
     /**
      * Alternative to String
      *
      * @return string
      */
     public function toString();
-    
 }

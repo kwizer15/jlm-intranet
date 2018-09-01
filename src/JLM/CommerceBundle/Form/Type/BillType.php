@@ -26,32 +26,47 @@ class BillType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('intervention','intervention_hidden',array('required'=>false))
-        	->add('siteObject','site_hidden',array('required'=>false))
-            ->add('creation','datepicker',array('label'=>'Date de création'))
-            ->add('trustee','trustee_hidden',array('required'=>false))
-            ->add('prelabel',null,array('label'=>'Libellé de facturation','required'=>false))
-            ->add('trusteeName',null,array('label'=>'Syndic'))
-            ->add('trusteeAddress',null,array('label'=>'Adresse de facturation','attr'=>array('class'=>'input-xlarge')))
-            ->add('accountNumber',null,array('label'=>'Numéro de compte'))
-            
-            ->add('reference',null,array('label'=>'Références','attr'=>array('class'=>'input-xlarge','rows'=>'3')))
-            ->add('site',null,array('label'=>'Affaire','attr'=>array('class'=>'input-xlarge','rows'=>'3')))
-            ->add('details',null,array('label'=>'Détails','attr'=>array('class'=>'input-xlarge','rows'=>'3')))
-            
-            ->add('discount','percent',array('label'=>'Remise','attr'=>array('class'=>'input-mini')))
-            ->add('maturity',null,array('label'=>'Echéance','attr'=>array('class'=>'input-mini')))
-            ->add('property',null,array('label'=>'Clause de propriété','required'=>false,'attr'=>array('class'=>'input-xxlarge')))
-            
-            ->add('earlyPayment',null,array('label'=>'Escompte','attr'=>array('class'=>'input-xxlarge')))
-            ->add('penalty',null,array('label'=>'Penalités','attr'=>array('class'=>'input-xxlarge')))
-            
-            ->add('intro',null,array('label'=>'Introduction','required'=>false,'attr'=>array('class'=>'span12','placeholder'=>'Suite à ...')))
-            ->add('lines','collection',array('prototype'=>true,'allow_add'=>true,'allow_delete'=>true,'type'=>'jlm_commerce_bill_line'))
-            
-            ->add('vat','percent',array('precision'=>1,'label'=>'TVA applicable','attr'=>array('class'=>'input-mini')))
-            ->add('vatTransmitter','hidden')
-         ;
+            ->add('intervention', 'intervention_hidden', ['required' => false])
+            ->add('siteObject', 'site_hidden', ['required' => false])
+            ->add('creation', 'datepicker', ['label' => 'Date de création'])
+            ->add('trustee', 'trustee_hidden', ['required' => false])
+            ->add('prelabel', null, ['label' => 'Libellé de facturation', 'required' => false])
+            ->add('trusteeName', null, ['label' => 'Syndic'])
+            ->add('trusteeAddress', null, ['label' => 'Adresse de facturation', 'attr' => ['class' => 'input-xlarge']])
+            ->add('accountNumber', null, ['label' => 'Numéro de compte'])
+            ->add('reference', null, ['label' => 'Références', 'attr' => ['class' => 'input-xlarge', 'rows' => '3']])
+            ->add('site', null, ['label' => 'Affaire', 'attr' => ['class' => 'input-xlarge', 'rows' => '3']])
+            ->add('details', null, ['label' => 'Détails', 'attr' => ['class' => 'input-xlarge', 'rows' => '3']])
+            ->add('discount', 'percent', ['label' => 'Remise', 'attr' => ['class' => 'input-mini']])
+            ->add('maturity', null, ['label' => 'Echéance', 'attr' => ['class' => 'input-mini']])
+            ->add(
+                'property',
+                null,
+                ['label' => 'Clause de propriété', 'required' => false, 'attr' => ['class' => 'input-xxlarge']]
+            )
+            ->add('earlyPayment', null, ['label' => 'Escompte', 'attr' => ['class' => 'input-xxlarge']])
+            ->add('penalty', null, ['label' => 'Penalités', 'attr' => ['class' => 'input-xxlarge']])
+            ->add(
+                'intro',
+                null,
+                [
+                    'label' => 'Introduction',
+                    'required' => false,
+                    'attr' => ['class' => 'span12', 'placeholder' => 'Suite à ...'],
+                ]
+            )
+            ->add(
+                'lines',
+                'collection',
+                ['prototype' => true, 'allow_add' => true, 'allow_delete' => true, 'type' => 'jlm_commerce_bill_line']
+            )
+            ->add(
+                'vat',
+                'percent',
+                ['precision' => 1, 'label' => 'TVA applicable', 'attr' => ['class' => 'input-mini']]
+            )
+            ->add('vatTransmitter', 'hidden')
+        ;
     }
 
     /**
@@ -59,11 +74,9 @@ class BillType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-    	$resolver->setDefaults(array(
-    			'data_class' => 'JLM\CommerceBundle\Entity\Bill'
-    	));
+        $resolver->setDefaults(['data_class' => 'JLM\CommerceBundle\Entity\Bill']);
     }
-    
+
     /**
      * {@inheritdoc}
      */

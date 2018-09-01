@@ -17,21 +17,19 @@ namespace JLM\DailyBundle\Builder\Email;
 class FixingDistributedMailBuilder extends FixingMailBuilder
 {
 
-	public function buildSubject()
-	{
-		$this->setSubject('Intervention distribuée');
-	}
-	
-	public function buildBody()
-	{
-		$this->setBody('Bonjour,'.chr(10).chr(10)
-		.'Le technicien est en route'
-		.$this->_getSignature()
-		);
-	}
-	
-	public function buildAttachements()
-	{
-		
-	}
+    public function buildSubject()
+    {
+        $this->setSubject('Intervention distribuée');
+    }
+    
+    public function buildBody()
+    {
+        $this->setBody('Bonjour,'.chr(10).chr(10)
+        .'Le technicien est en route'
+        .$this->getSignature());
+    }
+    
+    public function buildAttachements()
+    {
+    }
 }

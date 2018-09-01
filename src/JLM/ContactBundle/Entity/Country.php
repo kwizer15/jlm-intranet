@@ -23,29 +23,29 @@ class Country implements CountryInterface
      * @var string
      */
     protected $code;
-    
+
     /**
      * @var string
      */
     protected $name = '';
-    
+
     /**
      * Set code
      *
      * @param string $code
+     *
      * @throws CountryException
      * @return self
      */
     public function setCode($code)
     {
-    	$code = strtoupper(substr(trim($code),0,2));
-    	if (!preg_match('#^[A-Z]{2}$#',$code))
-    	{
-    		throw new LogicException('Code pays incorrect');
-    	}
-    	$this->code = $code;
-    	
-    	return $this;
+        $code = strtoupper(substr(trim($code), 0, 2));
+        if (!preg_match('#^[A-Z]{2}$#', $code)) {
+            throw new LogicException('Code pays incorrect');
+        }
+        $this->code = $code;
+
+        return $this;
     }
 
     /**
@@ -55,30 +55,31 @@ class Country implements CountryInterface
     {
         return $this->code;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
         return $this->name;
-    } 
+    }
 
     /**
      * Set name
      *
      * @param string $name
+     *
      * @return self
      */
     public function setName($name)
     {
-        $name = str_replace(array('0','1','2','3','4','5','6','7','8','9'),'',$name);
+        $name = str_replace(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], '', $name);
         $name = ucwords(strtolower($name));
         $this->name = $name;
-        
+
         return $this;
     }
-    
+
     /**
      * To String
      */

@@ -12,6 +12,7 @@
 namespace JLM\OfficeBundle\Twig\Extension;
 
 use Doctrine\Common\Persistence\ObjectManager;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -33,12 +34,14 @@ class OrderCountExtension extends \Twig_Extension implements \Twig_Extension_Glo
     {
         $repo = $this->om->getRepository('JLMOfficeBundle:Order');
         
-        return array('ordercount' => array(
-				'todo' => $this->om->getRepository('JLMDailyBundle:Work')->getCountOrderTodo(),
-				'all' => $repo->getTotal(),
-				'input' => $repo->getCount(0),
-				'ordered' => $repo->getCount(1),
-				'ready' => $repo->getCount(2),
-		));
+        return [
+                'ordercount' => [
+                                 'todo'    => $this->om->getRepository('JLMDailyBundle:Work')->getCountOrderTodo(),
+                                 'all'     => $repo->getTotal(),
+                                 'input'   => $repo->getCount(0),
+                                 'ordered' => $repo->getCount(1),
+                                 'ready'   => $repo->getCount(2),
+                                ],
+               ];
     }
 }

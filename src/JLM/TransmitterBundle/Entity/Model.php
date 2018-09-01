@@ -15,7 +15,7 @@ class Model extends \JLM\CommerceBundle\Entity\TextModel
 {
     /**
      * @var Product
-     * 
+     *
      * @ORM\OneToOne(targetEntity="JLM\ProductBundle\Model\ProductInterface")
      */
     private $product;
@@ -36,11 +36,10 @@ class Model extends \JLM\CommerceBundle\Entity\TextModel
     /**
      * Get product
      *
-     * @return ProductInterface 
+     * @return ProductInterface
      */
     public function getProduct()
     {
         return $this->product;
     }
-    
 }

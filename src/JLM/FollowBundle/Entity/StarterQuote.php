@@ -18,66 +18,66 @@ use JLM\CommerceBundle\Model\QuoteVariantInterface;
  */
 class StarterQuote extends Starter
 {
-	/**
-	 * @var QuoteVariantInterface
-	 */
-	private $variant;
-	
-	public function __construct(QuoteVariantInterface $variant)
-	{
-		$this->setVariant($variant);
-	}
-	
-	/**
-	 * @param QuoteVariantInterface $variant
-	 * @return self
-	 */
-	public function setVariant(QuoteVariantInterface $variant)
-	{
-		$this->variant = $variant;
-		
-		return $this;
-	}
-	
-	/**
-	 * @return QuoteVariantInterface
-	 */
-	public function getVariant()
-	{
-		return $this->variant;
-	}
-	
-	protected function _getWork()
-	{
-		return $this->getVariant()->getWork();
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getName()
-	{
-		return 'Devis n°'.$this->getVariant()->getNumber();
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getBusiness()
-	{
-		return $this->getVariant()->getDoor();
-	}
-	
-	public function getAmount()
-	{
-		return $this->getVariant()->getTotalPrice();
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getType()
-	{
-		return 'quote';
-	}
+    /**
+     * @var QuoteVariantInterface
+     */
+    private $variant;
+    
+    public function __construct(QuoteVariantInterface $variant)
+    {
+        $this->setVariant($variant);
+    }
+    
+    /**
+     * @param QuoteVariantInterface $variant
+     * @return self
+     */
+    public function setVariant(QuoteVariantInterface $variant)
+    {
+        $this->variant = $variant;
+        
+        return $this;
+    }
+    
+    /**
+     * @return QuoteVariantInterface
+     */
+    public function getVariant()
+    {
+        return $this->variant;
+    }
+    
+    protected function getWorkIntervention()
+    {
+        return $this->getVariant()->getWork();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'Devis n°'.$this->getVariant()->getNumber();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getBusiness()
+    {
+        return $this->getVariant()->getDoor();
+    }
+    
+    public function getAmount()
+    {
+        return $this->getVariant()->getTotalPrice();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getType()
+    {
+        return 'quote';
+    }
 }

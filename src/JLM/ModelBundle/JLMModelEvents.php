@@ -16,5 +16,5 @@ namespace JLM\ModelBundle;
  */
 final class JLMModelEvents
 {
-	const DOOR_SENDMAIL = 'jlm_model.door_sendmail';
+    const DOOR_SENDMAIL = 'jlm_model.door_sendmail';
 }

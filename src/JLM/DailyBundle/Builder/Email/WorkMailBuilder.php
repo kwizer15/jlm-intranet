@@ -19,30 +19,28 @@ use JLM\DailyBundle\Model\WorkInterface;
  */
 abstract class WorkMailBuilder extends InterventionMailBuilder
 {
-	public function __construct(WorkInterface $work)
-	{
-		parent::__construct($work);
-	}
-	
-	public function getWork()
-	{
-		return $this->getIntervention();
-	}
-	
-	protected function _getSource()
-	{
-		$quote = $this->getWork()->getQuote();
-		if (!empty($quote))
-		{
-			return ' selon devis n°'.$quote->getNumber();
-		}
-		
-		$intervention = $this->getWork()->getIntervention();
-		if (!empty($intervention))
-		{
-			return ' selon intervention du '.$intervention->getLastDate()->format('d/m/Y');
-		}
-	
-		return null;
-	}
+    public function __construct(WorkInterface $work)
+    {
+        parent::__construct($work);
+    }
+    
+    public function getWork()
+    {
+        return $this->getIntervention();
+    }
+    
+    protected function getSource()
+    {
+        $quote = $this->getWork()->getQuote();
+        if (!empty($quote)) {
+            return ' selon devis n°'.$quote->getNumber();
+        }
+        
+        $intervention = $this->getWork()->getIntervention();
+        if (!empty($intervention)) {
+            return ' selon intervention du '.$intervention->getLastDate()->format('d/m/Y');
+        }
+    
+        return null;
+    }
 }

@@ -22,7 +22,7 @@ class DefaultControllerTest extends WebTestCase
      * @var Symfony\Bundle\FrameworkBundle\Client
      */
     private $client;
-    
+
     /**
      * {@inheritdoc}
      */
@@ -30,23 +30,45 @@ class DefaultControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->client->followRedirects();
-    } 
-    
+    }
+
     public function getUrls()
     {
-        return array(
-        	array('GET', '/state/technicians'),
-            array('GET', '/state/technicians/2013'),
-            array('GET', '/state/maintenance'),
-            array('GET', '/state/top'),
-            array('GET', '/state/contracts'),
-            array('GET', '/state/quotes/2015'),
-            array('GET', '/state/transmitters'),
-        );
+        return [
+            [
+                'GET',
+                '/state/technicians',
+            ],
+            [
+                'GET',
+                '/state/technicians/2013',
+            ],
+            [
+                'GET',
+                '/state/maintenance',
+            ],
+            [
+                'GET',
+                '/state/top',
+            ],
+            [
+                'GET',
+                '/state/contracts',
+            ],
+            [
+                'GET',
+                '/state/quotes/2015',
+            ],
+            [
+                'GET',
+                '/state/transmitters',
+            ],
+        ];
     }
-    
+
     /**
      * @dataProvider getUrls
+     *
      * @param string $method
      * @param string $url
      */
@@ -59,15 +81,16 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $this->login($crawler);
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
-    
+
     /**
      * Log the user
+     *
      * @param Crawler $crawler
      */
     private function login($crawler)
     {
         $form = $crawler->selectButton('_submit')->form();
-    
+
         // définit certaines valeurs
         $form['_username'] = 'kwizer';
         $form['_password'] = 'sslover';

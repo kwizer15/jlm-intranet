@@ -16,5 +16,5 @@ namespace JLM\ContractBundle;
  */
 final class JLMContractEvents
 {
-	const AFTER_CONTRACT_CREATE = "jlm_contract.after_contract_create";
+    const AFTER_CONTRACT_CREATE = "jlm_contract.after_contract_create";
 }

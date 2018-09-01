@@ -39,9 +39,7 @@ class SiteContactController extends Controller
 
         $entities = $em->getRepository('JLMModelBundle:SiteContact')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        return ['entities' => $entities];
     }
 
     /**
@@ -52,9 +50,7 @@ class SiteContactController extends Controller
      */
     public function showAction(SiteContact $entity)
     {
-        return array(
-            'entity'      => $entity,
-        );
+        return ['entity' => $entity];
     }
 
     /**
@@ -66,17 +62,16 @@ class SiteContactController extends Controller
     public function newAction(Site $site = null)
     {
         $entity = new SiteContact();
-        if ($site)
-        {
-        	$entity->setAdministrator($site);
+        if ($site) {
+            $entity->setAdministrator($site);
         }
         $form   = $this->createForm(new SiteContactType(), $entity);
 
-        return array(
-            'entity' => $entity,
-        	'site' => $site,
-            'form'   => $form->createView(),
-        );
+        return [
+                'entity' => $entity,
+                'site'   => $site,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -91,26 +86,24 @@ class SiteContactController extends Controller
         $form = $this->createForm(new SiteContactType(), $entity);
         $form->handleRequest($request);
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            if ($entity->getPerson()->getAddress() !== null)
-            {
-            	$em->persist($entity->getPerson()->getAddress());
+            if ($entity->getPerson()->getAddress() !== null) {
+                $em->persist($entity->getPerson()->getAddress());
             }
             //$entity->getPerson()->formatPhones();
             $em->persist($entity->getPerson());
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('sitecontact_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('sitecontact_show', ['id' => $entity->getId()]));
         }
 
-        return array(
-            'entity' => $entity,
-        	'site' => $site,
-            'form'   => $form->createView(),
-        );
+        return [
+                'entity' => $entity,
+                'site'   => $site,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -132,11 +125,11 @@ class SiteContactController extends Controller
         $editForm = $this->createForm(new SiteContactType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return [
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+               ];
     }
 
     /**
@@ -159,25 +152,23 @@ class SiteContactController extends Controller
         $editForm = $this->createForm(new SiteContactType(), $entity);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid())
-        {
-        	if ($entity->getPerson()->getAddress() !== null)
-        	{
-        		$em->persist($entity->getPerson()->getAddress());
-        	}
-        	//$entity->getPerson()->formatPhones();
-        	$em->persist($entity->getPerson());
+        if ($editForm->isValid()) {
+            if ($entity->getPerson()->getAddress() !== null) {
+                $em->persist($entity->getPerson()->getAddress());
+            }
+            //$entity->getPerson()->formatPhones();
+            $em->persist($entity->getPerson());
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('sitecontact_show', array('id' => $id)));
+            return $this->redirect($this->generateUrl('sitecontact_show', ['id' => $id]));
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return [
+                'entity'      => $entity,
+                'edit_form'   => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+               ];
     }
 
     /**
@@ -190,10 +181,9 @@ class SiteContactController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('JLMModelBundle:SiteContact')->find($id);
 
-        if ($entity !== null)
-        {
-        	$em->remove($entity);
-        	$em->flush();
+        if ($entity !== null) {
+            $em->remove($entity);
+            $em->flush();
         }
         
         return new RedirectResponse($request->headers->get('referer'));
@@ -201,7 +191,7 @@ class SiteContactController extends Controller
 
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
+        return $this->createFormBuilder(['id' => $id])
             ->add('id', 'hidden')
             ->getForm()
         ;

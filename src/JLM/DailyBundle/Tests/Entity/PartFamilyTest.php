@@ -12,10 +12,11 @@
 namespace JLM\DailyBundle\Tests\Entity;
 
 use JLM\DailyBundle\Entity\PartFamily;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class PartFamilyTest extends \PHPUnit_Framework_TestCase
+class PartFamilyTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Country
@@ -40,26 +41,29 @@ class PartFamilyTest extends \PHPUnit_Framework_TestCase
      */
     public function getNames()
     {
-        return array(
-			array('Guidage', 'Guidage'),
-		);
+        return [
+                [
+                 'Guidage',
+                 'Guidage',
+                ],
+               ];
     }
     
-	/**
-	 * @dataProvider getNames
-	 */
-	public function testName($in, $out)
-	{
-		$this->assertSame($this->entity, $this->entity->setName($in));
-		$this->assertSame($out, $this->entity->getName());
-	}
-	
-	/**
-	 * @dataProvider getNames
-	 */
-	public function testToString($in, $out)
-	{
-	    $this->assertSame($this->entity, $this->entity->setName($in));
-	    $this->assertSame($out, $this->entity->__toString());
-	}
+    /**
+     * @dataProvider getNames
+     */
+    public function testName($in, $out)
+    {
+        $this->assertSame($this->entity, $this->entity->setName($in));
+        $this->assertSame($out, $this->entity->getName());
+    }
+    
+    /**
+     * @dataProvider getNames
+     */
+    public function testToString($in, $out)
+    {
+        $this->assertSame($this->entity, $this->entity->setName($in));
+        $this->assertSame($out, $this->entity->__toString());
+    }
 }

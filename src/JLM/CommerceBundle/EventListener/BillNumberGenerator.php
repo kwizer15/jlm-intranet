@@ -19,31 +19,28 @@ use JLM\CommerceBundle\Entity\Bill;
  */
 class BillNumberGenerator
 {
-	/**
-	 * PrePersist
-	 * @param LifecycleEventArgs $args
-	 */
-	public function prePersist(LifecycleEventArgs $args)
-	{
-		$entity = $args->getEntity();
-		
-		if ($entity instanceof Bill)
-		{
-			$em = $args->getEntityManager();
-			
-			if ($entity->getNumber() === null)
-			{
-				$creation = $entity->getCreation();
-				$year = $creation->format('Y');
-				$number = $creation->format('ym');
-				$n = ($em->getRepository('JLMCommerceBundle:Bill')->getLastNumber($year) + 1);
-				for ($i = strlen($n); $i < 4 ; $i++)
-				{
-					$number.= '0';
-				}
-				$number.= $n;
-				$entity->setNumber($number);
-			}
-		}
-	}
+    /**
+     * PrePersist
+     * @param LifecycleEventArgs $args
+     */
+    public function prePersist(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        
+        if ($entity instanceof Bill) {
+            $em = $args->getEntityManager();
+            
+            if ($entity->getNumber() === null) {
+                $creation = $entity->getCreation();
+                $year = $creation->format('Y');
+                $number = $creation->format('ym');
+                $n = ($em->getRepository('JLMCommerceBundle:Bill')->getLastNumber($year) + 1);
+                for ($i = strlen($n); $i < 4; $i++) {
+                    $number.= '0';
+                }
+                $number.= $n;
+                $entity->setNumber($number);
+            }
+        }
+    }
 }

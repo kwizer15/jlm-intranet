@@ -21,38 +21,38 @@ use JLM\ModelBundle\Entity\Technician;
  */
 class Standby
 {
-	/**
-	 * Id
-	 * @var int $id
-	 */
-	private $id;
-	
-	/**
-	 * @var \DateTime $begin
-	 * @Assert\Date
-	 * @Assert\NotNull
-	 */
-	private $begin;
-	
-	/**
-	 * @var \DateTime $end
-	 * @Assert\Date
-	 * @Assert\NotNull
-	 */
-	private $end;
-	
-	/**
-	 * @var Technician $technician
-	 * @Assert\Valid
-	 * @Assert\NotNull
-	 */
-	private $technician;
-	
+    /**
+     * Id
+     * @var int $id
+     */
+    private $id;
+    
+    /**
+     * @var \DateTime $begin
+     * @Assert\Date
+     * @Assert\NotNull
+     */
+    private $begin;
+    
+    /**
+     * @var \DateTime $end
+     * @Assert\Date
+     * @Assert\NotNull
+     */
+    private $end;
+    
+    /**
+     * @var Technician $technician
+     * @Assert\Valid
+     * @Assert\NotNull
+     */
+    private $technician;
+    
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -75,7 +75,7 @@ class Standby
     /**
      * Get begin
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getBegin()
     {
@@ -98,7 +98,7 @@ class Standby
     /**
      * Get end
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEnd()
     {
@@ -121,7 +121,7 @@ class Standby
     /**
      * Get technician
      *
-     * @return \JLM\ModelBundle\Entity\Technician 
+     * @return \JLM\ModelBundle\Entity\Technician
      */
     public function getTechnician()
     {

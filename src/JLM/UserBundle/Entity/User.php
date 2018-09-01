@@ -51,8 +51,7 @@ class User extends BaseUser implements ContactInterface
      */
     public function __toString()
     {
-        if (null === $this->getContact())
-        {
+        if (null === $this->getContact()) {
             return parent::__toString();
         }
 

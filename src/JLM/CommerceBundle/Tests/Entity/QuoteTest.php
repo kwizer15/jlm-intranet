@@ -16,7 +16,7 @@ use JLM\CommerceBundle\Entity\Quote;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class QuoteTest extends \PHPUnit_Framework_TestCase
+class QuoteTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Country
@@ -36,12 +36,11 @@ class QuoteTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-
     }
     
     public function testRecipient()
     {
-        $person = $this->getMock('JLM\CommerceBundle\Model\QuoteRecipientInterface');
+        $person = $this->createMock('JLM\CommerceBundle\Model\QuoteRecipientInterface');
         $this->assertSame($this->entity, $this->entity->setRecipient($person));
         $this->assertSame($person, $this->entity->getRecipient());
     }

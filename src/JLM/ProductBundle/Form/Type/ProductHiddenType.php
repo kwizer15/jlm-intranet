@@ -22,27 +22,26 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class ProductHiddenType extends AbstractType
 {
-	/**
-	 * @var ObjectManager
-	 */
-	private $om;
-	
-	/**
-	 * @param ObjectManager $om
-	 */
-	public function __construct(ObjectManager $om)
-	{
-		$this->om = $om;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
+    /**
+     * @var ObjectManager
+     */
+    private $om;
+    
+    /**
+     * @param ObjectManager $om
+     */
+    public function __construct(ObjectManager $om)
+    {
+        $this->om = $om;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-    	$transformer = new ProductToIntTransformer($this->om);
-    	$builder->addModelTransformer($transformer);
-    	
+        $transformer = new ProductToIntTransformer($this->om);
+        $builder->addModelTransformer($transformer);
     }
 
     /**
@@ -50,7 +49,7 @@ class ProductHiddenType extends AbstractType
      */
     public function getParent()
     {
-    	return 'hidden';
+        return 'hidden';
     }
     
     /**
@@ -64,10 +63,8 @@ class ProductHiddenType extends AbstractType
     /**
      * {@inheritdoc}
      */
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'invalid_message' => 'The selected product does not exist',
-        ));
+        $resolver->setDefaults(['invalid_message' => 'The selected product does not exist']);
     }
 }

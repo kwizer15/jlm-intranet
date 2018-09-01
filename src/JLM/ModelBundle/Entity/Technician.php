@@ -19,15 +19,15 @@ use JLM\ContactBundle\Entity\PersonDecorator as BasePerson;
  */
 class Technician extends BasePerson
 {
-	/**
-	 * @var string $internalPhone
-	 * 
-	 * @Assert\Regex(pattern="/^\d{3,4}$/",message="Ce numéro ne contient pas uniquement 10 chiffres")
-	 */
-	private $internalPhone;
-	
-	public function __toString()
-	{
-		return $this->getFirstName();
-	}
+    /**
+     * @var string $internalPhone
+     *
+     * @Assert\Regex(pattern="/^\d{3,4}$/",message="Ce numéro ne contient pas uniquement 10 chiffres")
+     */
+    private $internalPhone;
+
+    public function __toString()
+    {
+        return $this->getFirstName();
+    }
 }

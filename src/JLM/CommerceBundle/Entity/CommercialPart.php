@@ -21,17 +21,17 @@ use JLM\CommerceBundle\Model\EventFollowerInterface;
  */
 abstract class CommercialPart implements CommercialPartInterface
 {
-	/**
-	 * @var datetime $creation
-	 */
-	private $creation;
-	
-	/**
-	 * Numéro du devis
-	 * @var int
-	 */
-	private $number;
-	
+    /**
+     * @var datetime $creation
+     */
+    private $creation;
+    
+    /**
+     * Numéro du devis
+     * @var int
+     */
+    private $number;
+    
     /**
      * Client
      * @var CustomerInterface $trustee
@@ -68,7 +68,7 @@ abstract class CommercialPart implements CommercialPartInterface
     
     public function __construct()
     {
-    	$this->setEventFollower(new EventFollower()); // @todo change to create
+        $this->setEventFollower(new EventFollower()); // @todo change to create
     }
     
     /**
@@ -76,17 +76,16 @@ abstract class CommercialPart implements CommercialPartInterface
      * @param EventInterface $event
      * @return bool
      */
-    public function addEvent($event, $options = array())
+    public function addEvent($event, $options = [])
     {
-    	if (!$event instanceof Event)
-    	{
-    		$name = $event;
-    		$event = new Event(); // @todo change to create
-    		$event->setName($name);
-    		$event->setOptions($options);
-    	}
-    	
-    	return $this->getEventFollower()->addEvent($event);
+        if (!$event instanceof Event) {
+            $name = $event;
+            $event = new Event(); // @todo change to create
+            $event->setName($name);
+            $event->setOptions($options);
+        }
+        
+        return $this->getEventFollower()->addEvent($event);
     }
     
     /**
@@ -96,17 +95,17 @@ abstract class CommercialPart implements CommercialPartInterface
      */
     public function removeEvent(EventInterface $event)
     {
-    	return $this->getEventFollower()->removeEvent($event);
+        return $this->getEventFollower()->removeEvent($event);
     }
     
     public function getEvents()
     {
-    	return $this->getEventFollower()->getEvents();
+        return $this->getEventFollower()->getEvents();
     }
     
     public function getLastEvent($name)
     {
-    	return $this->getEventFollower()->getLastEvent($name);
+        return $this->getEventFollower()->getLastEvent($name);
     }
     
     /**
@@ -115,12 +114,11 @@ abstract class CommercialPart implements CommercialPartInterface
      */
     public function getEventFollower()
     {
-    	if ($this->eventFollower === null)
-    	{
-    		$this->setEventFollower(new EventFollower()); // @todo change to create
-    	}
-    	
-    	return $this->eventFollower;
+        if ($this->eventFollower === null) {
+            $this->setEventFollower(new EventFollower()); // @todo change to create
+        }
+        
+        return $this->eventFollower;
     }
     
     /**
@@ -130,9 +128,9 @@ abstract class CommercialPart implements CommercialPartInterface
      */
     public function setEventFollower(EventFollowerInterface $eventFollower)
     {
-    	$this->eventFollower = $eventFollower;
+        $this->eventFollower = $eventFollower;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -151,7 +149,7 @@ abstract class CommercialPart implements CommercialPartInterface
     /**
      * Get creation
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreation()
     {
@@ -195,7 +193,7 @@ abstract class CommercialPart implements CommercialPartInterface
     /**
      * Get trusteeName
      * @deprecated Use getCustomerName()
-     * @return string 
+     * @return string
      */
     public function getTrusteeName()
     {
@@ -239,7 +237,7 @@ abstract class CommercialPart implements CommercialPartInterface
     /**
      * Get trusteeAddress
      * @deprecated Use getCustomerAddress()
-     * @return string 
+     * @return string
      */
     public function getTrusteeAddress()
     {
@@ -283,7 +281,7 @@ abstract class CommercialPart implements CommercialPartInterface
     /**
      * Get trustee
      * @deprecated Use getCustomer()
-     * @return CustomerInterface 
+     * @return CustomerInterface
      */
     public function getTrustee()
     {
@@ -321,9 +319,9 @@ abstract class CommercialPart implements CommercialPartInterface
      */
     public function setVat($vat)
     {
-    	$this->vat = $vat;
+        $this->vat = $vat;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -333,7 +331,7 @@ abstract class CommercialPart implements CommercialPartInterface
      */
     public function getVat()
     {
-    	return $this->vat;
+        return $this->vat;
     }
     
     /**
@@ -344,9 +342,9 @@ abstract class CommercialPart implements CommercialPartInterface
      */
     public function setVatTransmitter($vat)
     {
-    	$this->vatTransmitter = $vat;
+        $this->vatTransmitter = $vat;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -356,6 +354,6 @@ abstract class CommercialPart implements CommercialPartInterface
      */
     public function getVatTransmitter()
     {
-    	return $this->vatTransmitter;
+        return $this->vatTransmitter;
     }
 }

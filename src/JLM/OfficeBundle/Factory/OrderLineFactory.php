@@ -12,6 +12,7 @@
 namespace JLM\OfficeBundle\Factory;
 
 use JLM\OfficeBundle\Builder\OrderLineBuilderInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

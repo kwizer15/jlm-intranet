@@ -12,15 +12,16 @@
 namespace JLM\TransmitterBundle\Factory;
 
 use JLM\TransmitterBundle\Builder\AskBuilderInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class AskFactory
 {
     /**
-     * 
+     *
      * @param AskBuilderInterface $bill
-     * 
+     *
      * @return AskInterface
      */
     public static function create(AskBuilderInterface $builder)

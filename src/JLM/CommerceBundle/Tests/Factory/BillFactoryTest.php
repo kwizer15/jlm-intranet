@@ -12,22 +12,23 @@
 namespace JLM\CommerceBundle\Tests\Factory;
 
 use JLM\CommerceBundle\Factory\BillFactory;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class BillFactoryTest extends \PHPUnit_Framework_TestCase
+class BillFactoryTest extends \PHPUnit\Framework\TestCase
 {
     private $builder;
-    
+
     private $bill;
-    
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->builder = $this->getMock('JLM\CommerceBundle\Builder\BillBuilderInterface');
-        
+        $this->builder = $this->createMock('JLM\CommerceBundle\Builder\BillBuilderInterface');
+
         $this->bill = null;
     }
 
@@ -36,9 +37,12 @@ class BillFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function assertPreConditions()
     {
-        $this->builder->expects($this->once())->method('getBill')->will($this->returnValue($this->getMock('JLM\CommerceBundle\Model\BillInterface')));
+        $this->builder->expects($this->once())->method('getBill')->will(
+            $this->returnValue($this->createMock('JLM\CommerceBundle\Model\BillInterface'))
+        )
+        ;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -55,20 +59,20 @@ class BillFactoryTest extends \PHPUnit_Framework_TestCase
         $this->builder->expects($this->once())->method($method);
         $this->bill = BillFactory::create($this->builder);
     }
-    
+
     public function builders()
     {
-        return array(
-        	array('create'),
-            array('buildCreation'),
-            array('buildCustomer'),
-            array('buildBusiness'),
-            array('buildReference'),
-            array('buildIntro'),
-            array('buildDetails'),
-            array('buildConditions'),
-            array('buildLines'),
-            
-        );
+        return [
+            ['create'],
+            ['buildCreation'],
+            ['buildCustomer'],
+            ['buildBusiness'],
+            ['buildReference'],
+            ['buildIntro'],
+            ['buildDetails'],
+            ['buildConditions'],
+            ['buildLines'],
+
+        ];
     }
 }

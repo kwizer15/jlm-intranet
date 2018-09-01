@@ -12,49 +12,51 @@
 namespace JLM\DailyBundle\Entity;
 
 use JLM\DailyBundle\Model\PartFamilyInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class PartFamily implements PartFamilyInterface
-{   
-	/**
-	 * @var int
-	 */
-	private $id;
-	
-	/**
-	 * @var string
-	 */
-	private $name;
+{
 
-	/**
-	 * @return int
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
-	
-	public function setName($name)
-	{
-		$this->name = $name;
-		
-		return $this;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function __toString()
-	{
-		return $this->getName();
-	}
+    /**
+     * @var int
+     */
+    private $id;
+    
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    
+    public function setName($name)
+    {
+        $this->name = $name;
+        
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

@@ -28,27 +28,27 @@ class City implements CityInterface
      * @var string
      */
     protected $name = '';
-    
+
     /**
      * @var string
      */
     protected $zip = '';
-    
+
     /**
      * @var CountryInterface
      */
     protected $country;
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -56,34 +56,36 @@ class City implements CityInterface
     {
         return $this->name;
     }
-    
+
     /**
      * Set name
      *
      * @param string $name
+     *
      * @return self
      */
     public function setName($name)
     {
-    	$name = str_replace('-','- ',$name);
-    	$name = ucwords(strtolower($name));
-    	$name = str_replace('- ','-',$name);
-    	$this->name = $name;
-    	
-    	return $this;
+        $name = str_replace('-', '- ', $name);
+        $name = ucwords(strtolower($name));
+        $name = str_replace('- ', '-', $name);
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
      * Set zip
      *
      * @param string $zip
+     *
      * @return self
      */
     public function setZip($zip)
     {
-    	$zip = strtoupper($zip);
-    	$this->zip = (preg_match('#[0-9A-Z\-]#',$zip)) ? $zip : '';
-    	
+        $zip = strtoupper($zip);
+        $this->zip = (preg_match('#[0-9A-Z\-]#', $zip)) ? $zip : '';
+
         return $this;
     }
 
@@ -99,12 +101,13 @@ class City implements CityInterface
      * Set country
      *
      * @param JLM\ContactBundle\Model\CountryInterface $country
+     *
      * @return self
      */
     public function setCountry(CountryInterface $country = null)
     {
         $this->country = $country;
-        
+
         return $this;
     }
 
@@ -115,40 +118,46 @@ class City implements CityInterface
     {
         return $this->country;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function __toString()
     {
-    	$out =  '';
-    	$out = $this->getZip();
-    	$out = ($out != '') ? $out.' - ' : '';
-    	
-    	return $out.$this->getName();
+        $out = '';
+        $out = $this->getZip();
+        $out = ($out != '') ? $out . ' - ' : '';
+
+        return $out . $this->getName();
     }
-    
+
     /**
      * Alternative to string
+     *
      * @deprecated
      * @return string
      */
     public function toString()
     {
-	  	$name = $this->getName();
-	    $zip = substr($this->getZip(),0,5);
-	    $cedex = str_replace($zip,'',$this->getZip());
-	    if (substr($name,0,5) == 'Paris')
-	    {
-	    	$name = 'Paris';
-	    }
-	    $name = strtoupper($name.$cedex);
-	    $replace = array('à'=>'À','é'=>'É','è'=>'È','ê'=>'Ê','ô'=>'Ô','û'=>'Û');
-	    foreach ($replace as $before => $after)
-	    {
-	    	$name = str_replace($before,$after,$name);
-	    }
-	    
-	    return $zip.' - '.$name;
+        $name = $this->getName();
+        $zip = substr($this->getZip(), 0, 5);
+        $cedex = str_replace($zip, '', $this->getZip());
+        if (substr($name, 0, 5) == 'Paris') {
+            $name = 'Paris';
+        }
+        $name = strtoupper($name . $cedex);
+        $replace = [
+            'à' => 'À',
+            'é' => 'É',
+            'è' => 'È',
+            'ê' => 'Ê',
+            'ô' => 'Ô',
+            'û' => 'Û',
+        ];
+        foreach ($replace as $before => $after) {
+            $name = str_replace($before, $after, $name);
+        }
+
+        return $zip . ' - ' . $name;
     }
 }

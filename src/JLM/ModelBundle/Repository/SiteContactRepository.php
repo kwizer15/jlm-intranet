@@ -12,36 +12,35 @@ use Doctrine\ORM\EntityRepository;
  */
 class SiteContactRepository extends EntityRepository
 {
-	public function searchResult($query, $limit = 8)
-	{
-		
-		$qb = $this->createQueryBuilder('s')
-			   ->leftjoin('s.site','t')
-			   ->leftjoin('t.doors','d')
-			   ->where('d.id = :query')			   
-			   ->setParameter('query', $query)
-		;
+    public function searchResult($query, $limit = 8)
+    {
 
-		$res = $qb->getQuery()->getResult();
-		
-		$r2 = array();
-		foreach ($res as $r)
-		{
-			$phones = '';
-			$phones = $r->getPerson()->getMobilePhone();
-			if ($phones != '')
-				$phones .= chr(10);
-			$phones .= $r->getPerson()->getFixedPhone();
-			
-			$r2[] = array(
-				'label'=> $r->getPerson().' ('.$r->getRole().')',
-				'name' => $r->getPerson().'',
-				'phones' => $phones,
-				'email' => $r->getPerson()->getEmail().'',
-				'id'=> $r->getId()
-			);
-		}
-		return $r2;
-	}
+        $qb = $this->createQueryBuilder('s')
+            ->leftjoin('s.site', 't')
+            ->leftjoin('t.doors', 'd')
+            ->where('d.id = :query')
+            ->setParameter('query', $query)
+        ;
 
+        $res = $qb->getQuery()->getResult();
+
+        $r2 = [];
+        foreach ($res as $r) {
+            $phones = '';
+            $phones = $r->getPerson()->getMobilePhone();
+            if ($phones != '') {
+                $phones .= chr(10);
+            }
+            $phones .= $r->getPerson()->getFixedPhone();
+
+            $r2[] = [
+                'label' => $r->getPerson() . ' (' . $r->getRole() . ')',
+                'name' => $r->getPerson() . '',
+                'phones' => $phones,
+                'email' => $r->getPerson()->getEmail() . '',
+                'id' => $r->getId(),
+            ];
+        }
+        return $r2;
+    }
 }

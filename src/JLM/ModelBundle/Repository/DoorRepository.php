@@ -12,189 +12,197 @@ use JLM\DefaultBundle\Entity\SearchRepository;
  */
 class DoorRepository extends SearchRepository
 {
-	
-	public function getStopped($limit = null, $offset = null)
-	{
-		$qb = $this->createQueryBuilder('a')
-			->select('a,b,c,d,e,f,g,h,i,j')
-			->leftJoin('a.site','b')
-			->leftJoin('b.address','c')
-			->leftJoin('c.city','d')
-			->leftJoin('a.interventions','e')
-			->leftJoin('e.shiftTechnicians','f')
-			->leftJoin('a.contracts','g')
-			->leftJoin('g.trustee','h')
-			->leftJoin('a.type','i')
-			->leftJoin('a.stops','j')
-			->where('j.end is null AND j.begin is not null')
-			;
-		if ($limit !== null)
-			$qb->setMaxResults($limit);
-		if ($offset !== null)
-			$qb->setFirstResult($offset);
-		return $qb->getQuery()->getResult();
-	}
-	
-	public function getCountStopped()
-	{
-		$qb = $this->createQueryBuilder('a')
-			->select('COUNT(a)')
-			->leftJoin('a.stops','j')
-			->where('j.end is null AND j.begin is not null')
-			;
-		return $qb->getQuery()->getSingleScalarResult();
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function getSearchQb()
-	{
-		return $this->createQueryBuilder('a')
-		->leftJoin('a.site','b')
-		->leftJoin('b.address','c')
-		->leftJoin('c.city','d')
-		;
-	}
-	
-	/**
-	 * Get by code
-	 * 
-	 * @return Door
-	 */
-	public function getByCode($code)
-	{
-		$qb = $this->createQueryBuilder('a')
-			->select('a')
-			->where('a.code = ?1')
-			->setParameter(1,strtoupper($code))
-		;
-		
-		try {
-			return $qb->getQuery()->getSingleResult();
-		} catch (\Exception $e) {}
-		
-		return null;
-		 
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function getSearchParams()
-	{
-		return array('c.street','a.street','d.name','a.code');
-	}
-	
-	public function searchResult($query, $limit = 8)
-	{
-		
-		$res = $this->search($query);
-		
-		// Structure
-		// array(IdPorte,Affaire,IdSyndic,Syndic,Adresse de facturation)
-		$r2 = array();
-		foreach ($res as $r)
-		{
-			$trustee = $r->getSite()->getTrustee();
-			$reference = '';
-			if ($r->getSite()->getGroupNumber())
-				$reference .= 'Groupe : '.$r->getSite()->getGroupNumber();
-			$r2[] = array(
-						'door'          => ''.$r->getId(),
-						'label'        => ''.$r,
-						'doorCp'		=> ''.$r->toString(),
-						'vat'			=> $r->getSite()->getVat()->getRate(),
-						'trustee'       => ''.$trustee->getId(),
-						'trusteeName'   => ''.$trustee,
-						'trusteeBillingLabel'   => ''.$trustee->getBillingLabel(),
-						'trusteeAddress'=> ''.$trustee->getAddress()->toString(),
-						'trusteeBillingAddress'=> ''.$trustee->getAddressForBill()->toString(),
-						'accountNumber'=> $trustee->getAccountNumber(),
-						'doorDetails' => $r->getType().' - '.$r->getLocation(),
-						'siteCp'=> $r->getSite()->toString(),
-						'prelabel'=> $r->getBillingPrelabel(),
-						'reference'=>$reference,
-					);
-		}
-		return $r2;
-	}
-	
-	public function getTotal()
-	{
-		$qb = $this->createQueryBuilder('d')
-		->select('COUNT(d)');
-		return $qb->getQuery()->getSingleScalarResult();
-	}
-	
-	public function getCountByType($year = 2015)
-	{
-		$qb = $this->createQueryBuilder('a')
-		->select('i.name AS name, COUNT(DISTINCT a) AS nb')
-		->leftJoin('a.contracts','g')
-		->leftJoin('a.type','i')
-		->where('g IS NOT NULL')
-		->andWhere('?1 BETWEEN YEAR(g.begin) AND YEAR(g.end)')
-		->orWhere('?1 >= YEAR(g.begin) AND g.end IS NULL')
-		//->andWhere('YEAR(g.begin) <= ?1 AND (g.end IS NULL OR YEAR(g.end) >= ?1)')
-		->setParameter(1, $year)
-		->groupBy('i.name')
-		->orderBy('nb','DESC')
-		;
-		// Calculer un prorata des pertes de contrat sur la période
-		
-		return $qb->getQuery()->getResult();
-	}
-	
-	public function getCountIntervsByType($year = 2015, $type = 'fixing')
-	{
-		$types = array(
-				'fixing'=>'JLM\DailyBundle\Entity\Fixing',
-				'maintenance'=>'JLM\DailyBundle\Entity\Maintenance',
-				'work'=>'JLM\DailyBundle\Entity\Work',	
-		);
-		$qb = $this->createQueryBuilder('a')
-		->select('i.name AS name,COUNT(b) AS nb, SUM(TIME_TO_SEC(c.end) - TIME_TO_SEC(c.begin)) as time')
-		->leftJoin('a.contracts','g')
-		->leftJoin('a.type','i')
-		->leftJoin('a.interventions','b')
-		->leftJoin('b.shiftTechnicians','c')
-		->where('g IS NOT NULL')
-		->andWhere('g.end IS NULL OR (YEAR(g.begin) < ?1 AND YEAR(g.end) > ?1)')
-		->andWhere('b INSTANCE OF '.$types[$type])
-		->andWhere('YEAR(c.end) = ?1')
-		->setParameter(1, $year)
-		->groupBy('i.name')
-		->orderBy('nb','DESC')
-		;
-	
-		return $qb->getQuery()->getResult();
-	}
-	
-	public function getCountIntervsByTypeAndContract($contract = array(), $year = 2015, $type = 'fixing')
-	{
-		$types = array(
-				'fixing'=>'JLM\DailyBundle\Entity\Fixing',
-				'maintenance'=>'JLM\DailyBundle\Entity\Maintenance',
-				'work'=>'JLM\DailyBundle\Entity\Work',
-		);
-		$qb = $this->createQueryBuilder('a')
-		->select('i.name AS name,COUNT(b) AS nb, SUM(TIME_TO_SEC(c.end) - TIME_TO_SEC(c.begin)) as time')
-		->leftJoin('a.contracts','g')
-		->leftJoin('a.type','i')
-		->leftJoin('a.interventions','b')
-		->leftJoin('b.shiftTechnicians','c')
-		->where('g IS NOT NULL')
-		->andWhere('g.end IS NULL OR (YEAR(g.begin) < ?1 AND YEAR(g.end) > ?1)')
-		->andWhere('b INSTANCE OF '.$types[$type])
-		->andWhere('YEAR(c.end) = ?1')
-		->andWhere('b.contract IN (?2)')
-		->setParameter(1, $year)
-		->setParameter(2, $contract)
-		->groupBy('i.name')
-		->orderBy('nb','DESC')
-		;
-	
-		return $qb->getQuery()->getResult();
-	}
+
+    public function getStopped($limit = null, $offset = null)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a,b,c,d,e,f,g,h,i,j')
+            ->leftJoin('a.site', 'b')
+            ->leftJoin('b.address', 'c')
+            ->leftJoin('c.city', 'd')
+            ->leftJoin('a.interventions', 'e')
+            ->leftJoin('e.shiftTechnicians', 'f')
+            ->leftJoin('a.contracts', 'g')
+            ->leftJoin('g.trustee', 'h')
+            ->leftJoin('a.type', 'i')
+            ->leftJoin('a.stops', 'j')
+            ->where('j.end is null AND j.begin is not null')
+        ;
+        if ($limit !== null) {
+            $qb->setMaxResults($limit);
+        }
+        if ($offset !== null) {
+            $qb->setFirstResult($offset);
+        }
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getCountStopped()
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('COUNT(a)')
+            ->leftJoin('a.stops', 'j')
+            ->where('j.end is null AND j.begin is not null')
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getSearchQb()
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.site', 'b')
+            ->leftJoin('b.address', 'c')
+            ->leftJoin('c.city', 'd')
+            ;
+    }
+
+    /**
+     * Get by code
+     *
+     * @return Door
+     */
+    public function getByCode($code)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a')
+            ->where('a.code = ?1')
+            ->setParameter(1, strtoupper($code))
+        ;
+
+        try {
+            return $qb->getQuery()->getSingleResult();
+        } catch (\Exception $e) {
+        }
+
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getSearchParams()
+    {
+        return [
+            'c.street',
+            'a.street',
+            'd.name',
+            'a.code',
+        ];
+    }
+
+    public function searchResult($query, $limit = 8)
+    {
+
+        $res = $this->search($query);
+
+        // Structure
+        // array(IdPorte,Affaire,IdSyndic,Syndic,Adresse de facturation)
+        $r2 = [];
+        foreach ($res as $r) {
+            $trustee = $r->getSite()->getTrustee();
+            $reference = '';
+            if ($r->getSite()->getGroupNumber()) {
+                $reference .= 'Groupe : ' . $r->getSite()->getGroupNumber();
+            }
+            $r2[] = [
+                'door' => '' . $r->getId(),
+                'label' => '' . $r,
+                'doorCp' => '' . $r->toString(),
+                'vat' => $r->getSite()->getVat()->getRate(),
+                'trustee' => '' . $trustee->getId(),
+                'trusteeName' => '' . $trustee,
+                'trusteeBillingLabel' => '' . $trustee->getBillingLabel(),
+                'trusteeAddress' => '' . $trustee->getAddress()->toString(),
+                'trusteeBillingAddress' => '' . $trustee->getAddressForBill()->toString(),
+                'accountNumber' => $trustee->getAccountNumber(),
+                'doorDetails' => $r->getType() . ' - ' . $r->getLocation(),
+                'siteCp' => $r->getSite()->toString(),
+                'prelabel' => $r->getBillingPrelabel(),
+                'reference' => $reference,
+            ];
+        }
+        return $r2;
+    }
+
+    public function getTotal()
+    {
+        $qb = $this->createQueryBuilder('d')
+            ->select('COUNT(d)')
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getCountByType($year = 2015)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('i.name AS name, COUNT(DISTINCT a) AS nb')
+            ->leftJoin('a.contracts', 'g')
+            ->leftJoin('a.type', 'i')
+            ->where('g IS NOT NULL')
+            ->andWhere('?1 BETWEEN YEAR(g.begin) AND YEAR(g.end)')
+            ->orWhere('?1 >= YEAR(g.begin) AND g.end IS NULL')
+            //->andWhere('YEAR(g.begin) <= ?1 AND (g.end IS NULL OR YEAR(g.end) >= ?1)')
+            ->setParameter(1, $year)
+            ->groupBy('i.name')
+            ->orderBy('nb', 'DESC')
+        ;
+        // Calculer un prorata des pertes de contrat sur la période
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getCountIntervsByType($year = 2015, $type = 'fixing')
+    {
+        $types = [
+            'fixing' => 'JLM\DailyBundle\Entity\Fixing',
+            'maintenance' => 'JLM\DailyBundle\Entity\Maintenance',
+            'work' => 'JLM\DailyBundle\Entity\Work',
+        ];
+        $qb = $this->createQueryBuilder('a')
+            ->select('i.name AS name,COUNT(b) AS nb, SUM(TIME_TO_SEC(c.end) - TIME_TO_SEC(c.begin)) as time')
+            ->leftJoin('a.contracts', 'g')
+            ->leftJoin('a.type', 'i')
+            ->leftJoin('a.interventions', 'b')
+            ->leftJoin('b.shiftTechnicians', 'c')
+            ->where('g IS NOT NULL')
+            ->andWhere('g.end IS NULL OR (YEAR(g.begin) < ?1 AND YEAR(g.end) > ?1)')
+            ->andWhere('b INSTANCE OF ' . $types[$type])
+            ->andWhere('YEAR(c.end) = ?1')
+            ->setParameter(1, $year)
+            ->groupBy('i.name')
+            ->orderBy('nb', 'DESC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getCountIntervsByTypeAndContract($contract = [], $year = 2015, $type = 'fixing')
+    {
+        $types = [
+            'fixing' => 'JLM\DailyBundle\Entity\Fixing',
+            'maintenance' => 'JLM\DailyBundle\Entity\Maintenance',
+            'work' => 'JLM\DailyBundle\Entity\Work',
+        ];
+        $qb = $this->createQueryBuilder('a')
+            ->select('i.name AS name,COUNT(b) AS nb, SUM(TIME_TO_SEC(c.end) - TIME_TO_SEC(c.begin)) as time')
+            ->leftJoin('a.contracts', 'g')
+            ->leftJoin('a.type', 'i')
+            ->leftJoin('a.interventions', 'b')
+            ->leftJoin('b.shiftTechnicians', 'c')
+            ->where('g IS NOT NULL')
+            ->andWhere('g.end IS NULL OR (YEAR(g.begin) < ?1 AND YEAR(g.end) > ?1)')
+            ->andWhere('b INSTANCE OF ' . $types[$type])
+            ->andWhere('YEAR(c.end) = ?1')
+            ->andWhere('b.contract IN (?2)')
+            ->setParameter(1, $year)
+            ->setParameter(2, $contract)
+            ->groupBy('i.name')
+            ->orderBy('nb', 'DESC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }

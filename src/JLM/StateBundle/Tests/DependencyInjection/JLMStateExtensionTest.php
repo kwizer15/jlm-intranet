@@ -16,7 +16,7 @@ use JLM\StateBundle\DependencyInjection\JLMStateExtension;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class JLMStateExtensionTest extends \PHPUnit_Framework_TestCase
+class JLMStateExtensionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * {@inheritdoc}
@@ -25,14 +25,14 @@ class JLMStateExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $this->ext = new JLMStateExtension();
     }
-    
+
     public function assertPreConditions()
     {
         $this->assertInstanceOf('Symfony\Component\HttpKernel\DependencyInjection\Extension', $this->ext);
     }
-    
+
     public function testLoad()
     {
-        $this->ext->load(array(), $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder'));
+        $this->ext->load([], $this->createMock('Symfony\Component\DependencyInjection\ContainerBuilder'));
     }
 }

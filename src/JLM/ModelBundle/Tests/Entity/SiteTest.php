@@ -16,46 +16,45 @@ use JLM\ModelBundle\Entity\Site;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class SiteTest extends \PHPUnit_Framework_TestCase
+class SiteTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Country
      */
     protected $entity;
-    
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->entity = new Site;
+        $this->entity = new Site();
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function assertPreConditions()
     {
-         
     }
-    
+
     public function testAddress()
     {
-        $address = $this->getMock('JLM\ContactBundle\Model\AddressInterface');
+        $address = $this->createMock('JLM\ContactBundle\Model\AddressInterface');
         $this->assertSame($this->entity, $this->entity->setAddress($address));
         $this->assertSame($address, $this->entity->getAddress());
     }
-    
+
     public function testLodge()
     {
-        $address = $this->getMock('JLM\ContactBundle\Model\AddressInterface');
+        $address = $this->createMock('JLM\ContactBundle\Model\AddressInterface');
         $this->assertSame($this->entity, $this->entity->setLodge($address));
         $this->assertSame($address, $this->entity->getLodge());
     }
-    
+
     public function testAddContact()
     {
-        $person = $this->getMock('JLM\ModelBundle\Entity\SiteContact');
+        $person = $this->createMock('JLM\ModelBundle\Entity\SiteContact');
         $this->assertTrue($this->entity->addContact($person));
         $this->assertCount(1, $this->entity->getContacts());
         $this->assertTrue($this->entity->removeContact($person));

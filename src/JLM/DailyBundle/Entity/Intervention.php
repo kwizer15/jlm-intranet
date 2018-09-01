@@ -162,7 +162,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function getContract()
     {
-    	return $this->contract;
+        return $this->contract;
     }
     
     /**
@@ -171,18 +171,16 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function getDynContract()
     {
-    	$techs = $this->getShiftTechnicians();
-    	if (sizeof($techs) == 0)
-    	{
-    		return $this->getDoor()->getContract();
-    	}
-    	$firstDate = new \DateTime;
-    	foreach ($techs as $tech)
-    	{
-    		$firstDate = ($tech->getBegin() < $firstDate) ? $tech->getBegin() : $firstDate;
-    	}
-    	
-    	return $this->getDoor()->getContract($firstDate);
+        $techs = $this->getShiftTechnicians();
+        if (sizeof($techs) == 0) {
+            return $this->getDoor()->getContract();
+        }
+        $firstDate = new \DateTime;
+        foreach ($techs as $tech) {
+            $firstDate = ($tech->getBegin() < $firstDate) ? $tech->getBegin() : $firstDate;
+        }
+        
+        return $this->getDoor()->getContract($firstDate);
     }
     
     /**
@@ -192,20 +190,15 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function setContract($contract)
     {
-    	if ($contract instanceof ContractInterface)
-    	{
-    		$this->contract = $contract.'';
-    	}
-    	elseif ($contract === null)
-    	{
-    		$this->contract = 'Hors contrat';
-    	}
-    	else
-    	{
-    		$this->contract = ''.$contract;
-    	}
-    	
-    	return $this;
+        if ($contract instanceof ContractInterface) {
+            $this->contract = $contract.'';
+        } elseif ($contract === null) {
+            $this->contract = 'Hors contrat';
+        } else {
+            $this->contract = ''.$contract;
+        }
+        
+        return $this;
     }
     
     /**
@@ -214,7 +207,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function getRest()
     {
-    	return $this->rest;
+        return $this->rest;
     }
     
     /**
@@ -223,9 +216,9 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function setRest($rest = null)
     {
-    	$this->rest = $rest;
-    	
-    	return $this;
+        $this->rest = $rest;
+        
+        return $this;
     }
     
     /**
@@ -234,7 +227,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function getVoucher()
     {
-    	return $this->voucher;
+        return $this->voucher;
     }
     
     /**
@@ -243,9 +236,9 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function setVoucher($voucher)
     {
-    	$this->voucher = $voucher;
-    	
-    	return $this;
+        $this->voucher = $voucher;
+        
+        return $this;
     }
     
     /**
@@ -264,7 +257,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Get contactName
      *
-     * @return string 
+     * @return string
      */
     public function getContactName()
     {
@@ -287,7 +280,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Get contactPhones
      *
-     * @return string 
+     * @return string
      */
     public function getContactPhones()
     {
@@ -310,7 +303,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Get contactEmail
      *
-     * @return string 
+     * @return string
      */
     public function getContactEmail()
     {
@@ -334,7 +327,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Get door
      *
-     * @return JLM\DailyBundle\Entity\Door 
+     * @return JLM\DailyBundle\Entity\Door
      */
     public function getDoor()
     {
@@ -343,14 +336,14 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     
     /**
      * Get contractType
-     * 
+     *
      * @return bool
      */
     public function isCompleteContract()
     {
-    	$contract = $this->getDoor()->getActualContract();
+        $contract = $this->getDoor()->getActualContract();
 
-    	return ($contract === null) ? false : $contract->getComplete();
+        return ($contract === null) ? false : $contract->getComplete();
     }
 
     /**
@@ -360,7 +353,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function getReport()
     {
-    	return $this->report;
+        return $this->report;
     }
     
     /**
@@ -371,9 +364,9 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function setReport($report = null)
     {
-    	$this->report = $report;
-    	
-    	return $this;
+        $this->report = $report;
+        
+        return $this;
     }
     
     /**
@@ -384,9 +377,9 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function setPriority($priority)
     {
-    	$this->priority = $priority;
+        $this->priority = $priority;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -396,33 +389,33 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function getPriority()
     {
-    	return $this->priority;
+        return $this->priority;
     }
     
     
     /**
      * Set Closed
-     * 
+     *
      * @param bool $closed
      * @return Intervention
      * @deprecated
      */
     public function setClosed($closed = true)
     {
-    	$this->setClose(new \DateTime);
-    	
-       	return $this;
+        $this->setClose(new \DateTime);
+        
+        return $this;
     }
     
     /**
      * Get closed
-     * 
+     *
      * @return bool
      * @deprecated
      */
     public function getClosed()
     {
-    	return ($this->getClose() !== null);
+        return ($this->getClose() !== null);
     }
     
     /**
@@ -433,9 +426,9 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function setClose(\DateTime $close = null)
     {
-    	$this->close = ($close === null) ? new \DateTime : $close;
+        $this->close = ($close === null) ? new \DateTime : $close;
 
-    	return $this;
+        return $this;
     }
     
     /**
@@ -445,19 +438,19 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function getClose()
     {
-    	return $this->close;
+        return $this->close;
     }
     
     /**
      * Re-open
-     * 
+     *
      * @return Intervention
      */
     public function reOpen()
     {
-    	$this->close = null;
-    	
-    	return $this;
+        $this->close = null;
+        
+        return $this;
     }
     
     /**
@@ -468,9 +461,9 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function setComments($comments)
     {
-    	$this->comments = $comments;
+        $this->comments = $comments;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -480,7 +473,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function getComments()
     {
-    	return $this->comments;
+        return $this->comments;
     }
     
     /**
@@ -489,35 +482,36 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function hasTechnician()
     {
-    	return (sizeof($this->getShiftTechnicians()) > 0);
+        return (sizeof($this->getShiftTechnicians()) > 0);
     }
     
     /**
      * Get State
-     * 
+     *
      * @return integer
      */
     public function getState()
     {
     
-    	if (!$this->hasTechnician() && !$this->getClosed())
-    	{
-    		return 0;
-    	}
-    	if (!$this->hasTechnician() && $this->getClosed() && !$this->getCancel())
-    	{
-    		return -1;
-    	}
-    	if (!$this->getClosed())
-    	{
-    		return 1;
-    	}
-    	if ($this->getMustBeBilled() === null || ($this->getContactCustomer() === null && $this->getAskQuote() === null && $this->getWork() === null && $this->getRest()))
-    	{
-    		return 2;
-    	}
-    	
-    	return 3;
+        if (!$this->hasTechnician() && !$this->getClosed()) {
+            return 0;
+        }
+        if (!$this->hasTechnician() && $this->getClosed() && !$this->getCancel()) {
+            return -1;
+        }
+        if (!$this->getClosed()) {
+            return 1;
+        }
+        if ($this->getMustBeBilled() === null
+            || ($this->getContactCustomer() === null
+                && $this->getAskQuote() === null
+                && $this->getWork() === null
+                && $this->getRest())
+        ) {
+            return 2;
+        }
+        
+        return 3;
     }
     
     /**
@@ -526,7 +520,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function isBilled()
     {
-    	return !$this->mustBeBilled === ($this->bill === null);
+        return !$this->mustBeBilled === ($this->bill === null);
     }
 
     /**
@@ -545,7 +539,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Get mustBeBilled
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getMustBeBilled()
     {
@@ -561,14 +555,14 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     public function setBill(BillInterface $bill = null)
     {
         $this->bill = $bill;
-    	
+        
         return $this;
     }
 
     /**
      * Get bill
      *
-     * @return Bill 
+     * @return Bill
      */
     public function getBill()
     {
@@ -583,19 +577,19 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function setExternalBill($number = null)
     {
-    	$this->externalBill = $number;
-    	 
-    	return $this;
+        $this->externalBill = $number;
+         
+        return $this;
     }
     
     /**
      * Get externalBill
-     * 
+     *
      * @return string
      */
     public function getExternalBill()
     {
-    	return $this->externalBill;
+        return $this->externalBill;
     }
     
     /**
@@ -614,7 +608,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Get contactCustomer
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getContactCustomer()
     {
@@ -637,7 +631,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Get work
      *
-     * @return \JLM\DailyBundle\Entity\Work 
+     * @return \JLM\DailyBundle\Entity\Work
      */
     public function getWork()
     {
@@ -651,7 +645,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function hasWork()
     {
-    	return $this->work !== null;
+        return $this->work !== null;
     }
 
     /**
@@ -670,7 +664,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     /**
      * Get askQuote
      *
-     * @return \JLM\OfficeBundle\Entity\AskQuote 
+     * @return \JLM\OfficeBundle\Entity\AskQuote
      */
     public function getAskQuote()
     {
@@ -679,21 +673,25 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     
     /**
      * Has ask quote
-     * 
+     *
      * @return bool
      */
     public function hasAskQuote()
     {
-    	return $this->askQuote !== null;
+        return $this->askQuote !== null;
     }
     
     /**
      * Test pour les actions suite à reste à faire
-     * @Assert\True(message="Une action reste à faire ne peut pas exister si le champ reste à faire est vide")
+     * @Assert\IsTrue(message="Une action reste à faire ne peut pas exister si le champ reste à faire est vide")
      */
     public function isRestActionValid()
     {
-    	return !(!$this->getRest() && ($this->getAskQuote() !== null || $this->getWork() !== null || $this->getContactCustomer()));
+        return !(!$this->getRest() && (
+            $this->getAskQuote() !== null
+            || $this->getWork() !== null
+            || $this->getContactCustomer())
+        );
     }
     
     /**
@@ -701,9 +699,9 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function setCancel($cancel = false)
     {
-    	$this->cancel = (bool)$cancel;
-    	
-    	return $this;
+        $this->cancel = (bool)$cancel;
+        
+        return $this;
     }
     
     /**
@@ -711,7 +709,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function getCancel()
     {
-    	return $this->cancel;
+        return $this->cancel;
     }
     
     /**
@@ -719,7 +717,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function isCanceled()
     {
-    	return $this->getCancel();
+        return $this->getCancel();
     }
     
     /**
@@ -728,7 +726,10 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function getPlace()
     {
-    	return (null === $door = $this->getDoor()) ? parent::getPlace() : $door->getType().' - '.$door->getLocation().chr(10).$door->getAddress()->toString();
+        return (null === $door = $this->getDoor())
+            ? parent::getPlace()
+            : $door->getType().' - '.$door->getLocation().chr(10).$door->getAddress()->toString()
+        ;
     }
     
     /**
@@ -736,15 +737,14 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function cancel()
     {
-    	if ($this->getReport() !== null)
-    	{
-    		$this->setCancel(true);
-    		$this->setMustBeBilled(false);
-    		$this->setRest();
-    		$this->setClosed(new \DateTime);
-    	}
+        if ($this->getReport() !== null) {
+            $this->setCancel(true);
+            $this->setMustBeBilled(false);
+            $this->setRest();
+            $this->setClosed(new \DateTime);
+        }
 
-    	return $this;
+        return $this;
     }
     
     /**
@@ -752,49 +752,46 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function uncancel()
     {
-    	$this->setReport();
-    	$this->setCancel(false);
-    	$this->setMustBeBilled();
-    	$this->reOpen();
-    	return $this;
+        $this->setReport();
+        $this->setCancel(false);
+        $this->setMustBeBilled();
+        $this->reOpen();
+        return $this;
     }
     
     public function getAdministratorContacts()
     {
-    	return $this->_createContactFromEmail($this->getDoor()->getAdministratorEmails());
+        return $this->createContactFromEmail($this->getDoor()->getAdministratorEmails());
     }
     
     public function getManagerContacts()
     {
-    	return $this->_createContactFromEmail($this->getDoor()->getManagerEmails());
+        return $this->createContactFromEmail($this->getDoor()->getManagerEmails());
     }
     
-    private function _createContactFromEmail($emails)
+    private function createContactFromEmail($emails)
     {
-    	$c = array();
-    	if ($emails === null)
-    	{
-    		return $c;
-    	}
+        $c = [];
+        if ($emails === null) {
+            return $c;
+        }
     
-    	foreach ($emails as $email)
-    	{
-    		$temp = new Company();
-    		$temp->setEmail($email);
-    		$c[] = $temp;
-    	}
+        foreach ($emails as $email) {
+            $temp = new Company();
+            $temp->setEmail($email);
+            $c[] = $temp;
+        }
     
-    	return $c;
+        return $c;
     }
     
     public function getInstallationCode()
     {
-    	if ($this->getDoor() === null)
-    	{
-    		return null;
-    	}
+        if ($this->getDoor() === null) {
+            return null;
+        }
     
-    	return $this->getDoor()->getCode();
+        return $this->getDoor()->getCode();
     }
     
     /**
@@ -803,7 +800,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function isPublished()
     {
-    	return $this->published;
+        return $this->published;
     }
     
     /**
@@ -813,9 +810,9 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
      */
     public function setPublished($published)
     {
-    	$this->published = (bool)$published;
-    	
-    	return $this;
+        $this->published = (bool)$published;
+        
+        return $this;
     }
     
     abstract public function getCustomerDesignation();

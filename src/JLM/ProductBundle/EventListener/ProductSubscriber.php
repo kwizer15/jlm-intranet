@@ -17,33 +17,31 @@ use Doctrine\Common\Persistence\ObjectManager;
 use JLM\ProductBundle\Event\ProductEvent;
 use JLM\ProductBundle\Entity\Stock;
 
-
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class ProductSubscriber implements EventSubscriberInterface
-{	
-	/**
-	 * @var ObjectManager
-	 */
-	private $om;
-	
-	public function __construct(ObjectManager $om)
-	{
-		$this->om = $om;
-	}
-	
-	public static function getSubscribedEvents()
-	{
-		return array(
-			JLMProductEvents::PRODUCT_CREATE => 'createStock',
-		);
-	}
-	
-	public function createStock(ProductEvent $event)
-	{
-		$stock = new Stock($event->getProduct());
-		$this->om->persist($stock);
-		$this->om->flush();
-	}
+{
+   
+    /**
+     * @var ObjectManager
+     */
+    private $om;
+    
+    public function __construct(ObjectManager $om)
+    {
+        $this->om = $om;
+    }
+    
+    public static function getSubscribedEvents()
+    {
+        return [JLMProductEvents::PRODUCT_CREATE => 'createStock'];
+    }
+    
+    public function createStock(ProductEvent $event)
+    {
+        $stock = new Stock($event->getProduct());
+        $this->om->persist($stock);
+        $this->om->flush();
+    }
 }

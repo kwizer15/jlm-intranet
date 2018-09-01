@@ -16,17 +16,17 @@ namespace JLM\ProductBundle\Model;
  */
 interface PriceInterface
 {
-	/**
-	 * Get quantity
-	 *
-	 * @return integer
-	 */
-	public function getMinimumQuantity();
-	
-	/**
-	 * Get unitPrice
-	 *
-	 * @return float
-	*/
-	public function getUnitPrice();
+    /**
+     * Get quantity
+     *
+     * @return integer
+     */
+    public function getMinimumQuantity();
+    
+    /**
+     * Get unitPrice
+     *
+     * @return float
+    */
+    public function getUnitPrice();
 }

@@ -24,11 +24,9 @@ class StandbyController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('JLMDailyBundle:Standby')->findBy(array(),array('begin'=>'DESC'));
+        $entities = $em->getRepository('JLMDailyBundle:Standby')->findBy([], ['begin' => 'DESC']);
 
-        return array(
-            'entities' => $entities,
-        );
+        return ['entities' => $entities];
     }
 
     /**
@@ -40,16 +38,16 @@ class StandbyController extends Controller
     public function newAction()
     {
         $entity = new Standby();
-        $form   = $this->createForm(new StandbyType(), $entity, array(
-        		'method'=>'POST',
-        		'action'=>$this->generateUrl('standby_create'),
-        ));
-        $form->add('submit','submit',array('label'=>'Enregistrer'));
+        $form   = $this->createForm(new StandbyType(), $entity, [
+                                                                 'method' => 'POST',
+                                                                 'action' => $this->generateUrl('standby_create'),
+                                                                ]);
+        $form->add('submit', 'submit', ['label' => 'Enregistrer']);
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return [
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -60,13 +58,12 @@ class StandbyController extends Controller
      */
     public function createAction(Request $request)
     {
-    	
+        
         $entity  = new Standby();
         $form = $this->createForm(new StandbyType(), $entity);
         $form->handleRequest($request);
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -74,10 +71,10 @@ class StandbyController extends Controller
             return $this->redirect($request->headers->get('referer'));
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return [
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -89,10 +86,10 @@ class StandbyController extends Controller
     public function editAction(Standby $entity)
     {
         $form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(), new StandbyType(), $entity);
-        return array(
-            'entity'      => $entity,
-            'form'        => $form->createView(),
-        );
+        return [
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -105,7 +102,7 @@ class StandbyController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(),new StandbyType(), $entity);
+        $form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(), new StandbyType(), $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -115,10 +112,10 @@ class StandbyController extends Controller
             return $this->redirect($request->headers->get('referer'));
         }
 
-        return array(
-            'entity'      => $entity,
-            'form'        => $form->createView(),
-        );
+        return [
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -127,7 +124,7 @@ class StandbyController extends Controller
      */
     public function deleteAction(Request $request, Standby $entity)
     {
-    	$id = $entity->getId();
+        $id = $entity->getId();
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -148,7 +145,7 @@ class StandbyController extends Controller
 
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
+        return $this->createFormBuilder(['id' => $id])
             ->add('id', 'hidden')
             ->getForm()
         ;

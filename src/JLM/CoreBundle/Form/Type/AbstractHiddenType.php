@@ -19,17 +19,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 abstract class AbstractHiddenType extends AbstractSelectType
-{	
-	/**
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
+{
+   
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-    	$cl = $this->getTransformerClass();
-    	$transformer = new $cl($this->om);
-    	$builder->addModelTransformer($transformer);
-    	
+        $cl = $this->getTransformerClass();
+        $transformer = new $cl($this->om);
+        $builder->addModelTransformer($transformer);
     }
 
     /**
@@ -37,7 +37,7 @@ abstract class AbstractHiddenType extends AbstractSelectType
      */
     public function getParent()
     {
-    	return 'hidden';
+        return 'hidden';
     }
     
     /**
@@ -51,10 +51,10 @@ abstract class AbstractHiddenType extends AbstractSelectType
     /**
      * {@inheritdoc}
      */
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'invalid_message' => 'The selected '.$this->getTypeName().' does not exist',
-        ));
+        $resolver->setDefaults([
+                                'invalid_message' => 'The selected '.$this->getTypeName().' does not exist',
+                               ]);
     }
 }

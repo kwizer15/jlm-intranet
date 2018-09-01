@@ -70,7 +70,7 @@ class ShiftTechnician
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -85,9 +85,9 @@ class ShiftTechnician
      */
     public function setCreation($creation)
     {
-    	$this->creation = $creation;
+        $this->creation = $creation;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -97,7 +97,7 @@ class ShiftTechnician
      */
     public function getCreation()
     {
-    	return $this->creation;
+        return $this->creation;
     }
     
     /**
@@ -116,7 +116,7 @@ class ShiftTechnician
     /**
      * Get begin
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getBegin()
     {
@@ -139,7 +139,7 @@ class ShiftTechnician
     /**
      * Get end
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEnd()
     {
@@ -152,8 +152,7 @@ class ShiftTechnician
      */
     public function getTime()
     {
-    	return ($this->end === null) ? null : $this->end->diff($this->begin);
-    	
+        return ($this->end === null) ? null : $this->end->diff($this->begin);
     }
 
     /**
@@ -172,7 +171,7 @@ class ShiftTechnician
     /**
      * Get shifting
      *
-     * @return Shifting 
+     * @return Shifting
      */
     public function getShifting()
     {
@@ -195,7 +194,7 @@ class ShiftTechnician
     /**
      * Get technician
      *
-     * @return Technician 
+     * @return Technician
      */
     public function getTechnician()
     {
@@ -204,34 +203,34 @@ class ShiftTechnician
     
     /**
      * Get comment
-     * 
+     *
      * @return string
      */
     public function getComment()
     {
-    	return $this->comment;
+        return $this->comment;
     }
     
     /**
      * Set comment
-     * 
+     *
      * @param string $comment
      * @return self
      */
     public function setComment($comment)
     {
-    	$this->comment = $comment;
-    	
-    	return $this;
+        $this->comment = $comment;
+        
+        return $this;
     }
     
     /**
      * Time validation
-     * 
+     *
      * @return bool
      */
     public function isTimeValid()
     {
-    	return $this->end === null || $this->end > $this->begin || $this->end->format('Hi') == '0000';
+        return $this->end === null || $this->end > $this->begin || $this->end->format('Hi') == '0000';
     }
 }

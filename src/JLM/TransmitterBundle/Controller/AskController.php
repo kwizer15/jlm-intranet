@@ -37,10 +37,10 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
             throw $this->createNotFoundException('Unable to find Ask entity.');
         }
         $form   = $this->createForm(new AskDontTreatType(), $entity);
-        return array(
-            'entity'      => $entity,
-        	'form_donttreat' => $form->createView(),
-        );
+        return [
+                'entity'         => $entity,
+                'form_donttreat' => $form->createView(),
+               ];
     }
 
     /**
@@ -56,10 +56,10 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
         $entity->setCreation(new \DateTime);
         $form   = $this->createForm(new AskType(), $entity);
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return [
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -81,13 +81,13 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('transmitter_ask_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('transmitter_ask_show', ['id' => $entity->getId()]));
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return [
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -109,10 +109,10 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
 
         $editForm = $this->createForm(new AskType(), $entity);
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        );
+        return [
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
 
     /**
@@ -140,18 +140,18 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('transmitter_ask_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('transmitter_ask_edit', ['id' => $id]));
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        );
+        return [
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
     
     protected function getRepositoryName()
     {
-    	return 'JLMTransmitterBundle:Ask';
+        return 'JLMTransmitterBundle:Ask';
     }
     
     /**
@@ -164,9 +164,9 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      */
     public function indexAction($page = 1)
     {
-    	$parms = parent::indexAction($page);
-    	$parms['pageRoute'] = 'transmitter_ask_page';
-    	return $parms;
+        $parms = parent::indexAction($page);
+        $parms['pageRoute'] = 'transmitter_ask_page';
+        return $parms;
     }
     
     /**
@@ -179,9 +179,9 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      */
     public function listtreatedAction($page = 1)
     {
-    	$parms = parent::listtreatedAction($page);
-    	$parms['pageRoute'] = 'transmitter_ask_treated_page';
-    	return $parms;
+        $parms = parent::listtreatedAction($page);
+        $parms['pageRoute'] = 'transmitter_ask_treated_page';
+        return $parms;
     }
     
     /**
@@ -194,9 +194,9 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      */
     public function listuntreatedAction($page = 1)
     {
-    	$parms = parent::listuntreatedAction($page);
-    	$parms['pageRoute'] = 'transmitter_ask_untreated_page';
-    	return $parms;
+        $parms = parent::listuntreatedAction($page);
+        $parms['pageRoute'] = 'transmitter_ask_untreated_page';
+        return $parms;
     }
     
     /**
@@ -206,24 +206,22 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      * @Template()
      * @Secure(roles="ROLE_OFFICE")
      */
-	public function donttreatAction($id)
-	{
-		$request = $this->getRequest();
-		$em = $this->getDoctrine()->getManager();
-		$entity = $this->getEntity($em,$id);
-		$form = $this->createForm(new AskDontTreatType,$entity);
-		
-		if ($this->getRequest()->isMethod('POST'))
-		{
-			$form->handleRequest($this->getRequest());
-			if ($form->isValid())
-			{
-				$em->persist($entity);
-				$em->flush();
-			}
-		}
-		return $this->redirect($request->headers->get('referer'));
-	}
+    public function donttreatAction($id)
+    {
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+        $entity = $this->getEntity($em, $id);
+        $form = $this->createForm(new AskDontTreatType, $entity);
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->handleRequest($this->getRequest());
+            if ($form->isValid()) {
+                $em->persist($entity);
+                $em->flush();
+            }
+        }
+        return $this->redirect($request->headers->get('referer'));
+    }
     
     /**
      * Cancel the no-treatement ok Ask entities.
@@ -234,7 +232,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      */
     public function canceldonttreatAction($id)
     {
-    	return parent::canceldonttreatAction($id);
+        return parent::canceldonttreatAction($id);
     }
     
     /**
@@ -246,6 +244,6 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      */
     public function sidebarAction()
     {
-    	return parent::sidebarAction();
+        return parent::sidebarAction();
     }
 }

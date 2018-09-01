@@ -13,39 +13,39 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class PartFamilyType extends AbstractType
-{	
-	/**
-	 * @var ObjectManager
-	 */
-	private $om;
-	
-	/**
-	 * @param ObjectManager $om
-	 */
-	public function __construct(ObjectManager $om)
-	{
-		$this->om = $om;
-	}
-	
-	/**
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
+{
+   
+    /**
+     * @var ObjectManager
+     */
+    private $om;
+    
+    /**
+     * @param ObjectManager $om
+     */
+    public function __construct(ObjectManager $om)
+    {
+        $this->om = $om;
+    }
+    
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-    	$transformer = new ObjectToStringAutocreateTransformer($this->om, 'JLM\DailyBundle\Entity\PartFamily', 'name');
-    	$builder->addModelTransformer($transformer);
-    	
+        $transformer = new ObjectToStringAutocreateTransformer($this->om, 'JLM\DailyBundle\Entity\PartFamily', 'name');
+        $builder->addModelTransformer($transformer);
     }
     
     public function getParent()
     {
-    	return 'text';
+        return 'text';
     }
     
     public function getName()
     {
-    	return 'jlm_daily_partfamilytype';
+        return 'jlm_daily_partfamilytype';
     }
     
     /**
@@ -55,7 +55,7 @@ class PartFamilyType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-    	$resolver->setOptional(array('source'));
+        $resolver->setOptional(['source']);
     }
     
     /**
@@ -67,7 +67,7 @@ class PartFamilyType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-    	$parts = $this->om->getRepository('JLMDailyBundle:PartFamily')->findAll();
-    	$view->vars['source'] = $parts;
+        $parts = $this->om->getRepository('JLMDailyBundle:PartFamily')->findAll();
+        $view->vars['source'] = $parts;
     }
 }

@@ -11,24 +11,32 @@ class WorkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('door','door_hidden')
-        	->add('place',null,array('label'=>'Lieu','attr'=>array('class'=>'input-xlarge')))
-        	->add('quote','quotevariant_hidden',array('required'=>false))
-        	->add('reason',null,array('label'=>'Raison de l\'intervention','attr'=>array('class'=>'input-xlarge')))
-            ->add('contactName',null,array('label'=>'Nom du contact','required'=>false))
-            ->add('contactPhones',null,array('label'=>'Téléphones','required'=>false))
-            ->add('contactEmail','email',array('label'=>'e-mail','required'=>false,'attr'=>array('class'=>'input-xlarge')))
-            ->add('category',null,array('label'=>'Type de travaux'))
-            ->add('objective',null,array('label'=>'Objectif'))
+            ->add('door', 'door_hidden')
+            ->add('place', null, ['label' => 'Lieu', 'attr' => ['class' => 'input-xlarge']])
+            ->add('quote', 'quotevariant_hidden', ['required' => false])
+            ->add('reason', null, ['label' => 'Raison de l\'intervention', 'attr' => ['class' => 'input-xlarge']])
+            ->add('contactName', null, ['label' => 'Nom du contact', 'required' => false])
+            ->add('contactPhones', null, ['label' => 'Téléphones', 'required' => false])
+            ->add(
+                'contactEmail',
+                'email',
+                [
+                 'label'    => 'e-mail',
+                 'required' => false,
+                 'attr'     => ['class' => 'input-xlarge'],
+                ]
+            )
+            ->add('category', null, ['label' => 'Type de travaux'])
+            ->add('objective', null, ['label' => 'Objectif'])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'JLM\DailyBundle\Entity\Work',
-        	'attr' => array('class'=>  'interventionForm'),
-        ));
+        $resolver->setDefaults([
+                                'data_class' => 'JLM\DailyBundle\Entity\Work',
+                                'attr'       => ['class' => 'interventionForm'],
+                               ]);
     }
 
     public function getName()

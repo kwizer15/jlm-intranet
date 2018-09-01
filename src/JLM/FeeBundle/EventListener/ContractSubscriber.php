@@ -21,29 +21,26 @@ class ContractSubscriber implements EventSubscriberInterface
 {
     public function __construct(ObjectManager $om)
     {
-    	$this->om = $om;
+        $this->om = $om;
     }
 
     public static function getSubscribedEvents()
     {
-        return array(
-            JLMContractEvents::AFTER_CONTRACT_CREATE => 'feeCreate'
-        );
+        return [JLMContractEvents::AFTER_CONTRACT_CREATE => 'feeCreate'];
     }
 
     public function feeCreate(ContractEvent $event)
     {
         $entity = $event->getContract();
-        if ($entity->getInProgress())
-        {	 
-        	$fee = new Fee();
-        	$fee->addContract($entity);
-        	$fee->setTrustee($entity->getTrustee());
-        	$fee->setAddress($entity->getDoor()->getSite()->getAddress()->toString());
-        	$fee->setPrelabel($entity->getDoor()->getSite()->getBillingPrelabel());
-        	$fee->setVat($entity->getDoor()->getSite()->getVat());
-        	$this->om->persist($fee);
-        	$this->om->flush();
+        if ($entity->getInProgress()) {
+            $fee = new Fee();
+            $fee->addContract($entity);
+            $fee->setTrustee($entity->getTrustee());
+            $fee->setAddress($entity->getDoor()->getSite()->getAddress()->toString());
+            $fee->setPrelabel($entity->getDoor()->getSite()->getBillingPrelabel());
+            $fee->setVat($entity->getDoor()->getSite()->getVat());
+            $this->om->persist($fee);
+            $this->om->flush();
         }
     }
 }

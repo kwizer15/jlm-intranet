@@ -34,7 +34,7 @@ abstract class ProductDecorator implements ProductInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -42,24 +42,24 @@ abstract class ProductDecorator implements ProductInterface
     }
     
     /**
-     * 
+     *
      * @param ProductInterface $product
      * @return self
      */
     public function setProduct(ProductInterface $product)
     {
-    	$this->product = $product;
-    	
-    	return $this;
+        $this->product = $product;
+        
+        return $this;
     }
     
     /**
-     * 
+     *
      * @return ProductInterface
      */
     public function getProduct()
     {
-    	return $this->product;
+        return $this->product;
     }
 
     /**
@@ -101,7 +101,7 @@ abstract class ProductDecorator implements ProductInterface
      * Set description
      *
      * @param text $description
-     * 
+     *
      * @return self
      */
     public function setDescription($description)
@@ -114,7 +114,7 @@ abstract class ProductDecorator implements ProductInterface
      */
     public function getDescription()
     {
-    	return $this->getProduct()->getDescription();
+        return $this->getProduct()->getDescription();
     }
 
     /**
@@ -125,7 +125,7 @@ abstract class ProductDecorator implements ProductInterface
      */
     public function setReference($reference)
     {
-    	return $this->getProduct()->setReference();
+        return $this->getProduct()->setReference();
     }
 
     /**
@@ -133,7 +133,7 @@ abstract class ProductDecorator implements ProductInterface
      */
     public function getReference()
     {
-    	return $this->getProduct()->getReference();
+        return $this->getProduct()->getReference();
     }
 
     /**
@@ -144,17 +144,17 @@ abstract class ProductDecorator implements ProductInterface
      */
     public function setBarcode($barcode)
     {
-    	return $this->getProduct()->setBarcode($barcode);
+        return $this->getProduct()->setBarcode($barcode);
     }
 
     /**
      * Get barcode
      *
-     * @return string 
+     * @return string
      */
     public function getBarcode()
     {
-    	return $this->getProduct()->getBarcode();
+        return $this->getProduct()->getBarcode();
     }
     
     /**
@@ -164,7 +164,7 @@ abstract class ProductDecorator implements ProductInterface
      */
     public function setCategory(ProductCategoryInterface $category)
     {
-    	return $this->getProduct()->setCategory($category);
+        return $this->getProduct()->setCategory($category);
     }
 
     /**
@@ -172,7 +172,7 @@ abstract class ProductDecorator implements ProductInterface
      */
     public function getCategory()
     {
-    	return $this->getProduct()->getCategory();
+        return $this->getProduct()->getCategory();
     }
     
     /**
@@ -181,7 +181,7 @@ abstract class ProductDecorator implements ProductInterface
      */
     public function __toString()
     {
-    	return $this->getProduct()->__toString();
+        return $this->getProduct()->__toString();
     }
     
     /**
@@ -189,6 +189,6 @@ abstract class ProductDecorator implements ProductInterface
      */
     public function getUnitPrice($quantity = null)
     {
-    	return $this->getProduct()->getUnitPrice($quantity);
+        return $this->getProduct()->getUnitPrice($quantity);
     }
 }

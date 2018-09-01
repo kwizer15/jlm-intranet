@@ -18,36 +18,42 @@ interface BayInterface
 {
     /**
      * The address of th bay
+     *
      * @return AddressInterface
-     */    
+     */
     public function getAddress();
-    
+
     /**
      * The administrator of the bay
+     *
      * @return AdministratorInterface
      */
     public function getAdministrator();
-    
+
     /**
      * Get the bay manager
+     *
      * @return ManagerInterface
      */
     public function getManager();
-    
+
     /**
      * The location of the bay (help to find)
+     *
      * @return string
      */
     public function getLocation();
-    
+
     /**
      * The installation on the bay
+     *
      * @return InstallationInteface
      */
     public function getInstallation();
-    
+
     /**
      * Details to access
+     *
      * @return string
      */
     public function getObservations();

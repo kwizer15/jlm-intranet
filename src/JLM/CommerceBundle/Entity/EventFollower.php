@@ -16,42 +16,43 @@ use Doctrine\Common\Collections\ArrayCollection;
 use JLM\CommerceBundle\Model\EventFollowerInterface;
 
 class EventFollower implements EventFollowerInterface
-{	
-	private $id;
-	
-	private $events;
-	
-	public function __construct()
-	{
-		$this->events = new ArrayCollection();
-	}
-	
-	public function getId()
-	{
-		return $this->id;
-	}
-	
-	public function getEvents()
-	{
-		return $this->events;
-	}
-	
-	public function addEvent(EventInterface $event)
-	{
-		return $this->events->add($event);
-	}
-	
-	public function removeEvent(EventInterface $event)
-	{
-		return $this->events->removeElement($event);
-	}
-	
-	public function getLastEvent($name)
-	{
-		$closure = function($var) use ($name) {
-			return $var->getName() == $name;
-		};
-		
-		return $this->events->filter($closure)->last();
-	}
+{
+   
+    private $id;
+    
+    private $events;
+    
+    public function __construct()
+    {
+        $this->events = new ArrayCollection();
+    }
+    
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    public function getEvents()
+    {
+        return $this->events;
+    }
+    
+    public function addEvent(EventInterface $event)
+    {
+        return $this->events->add($event);
+    }
+    
+    public function removeEvent(EventInterface $event)
+    {
+        return $this->events->removeElement($event);
+    }
+    
+    public function getLastEvent($name)
+    {
+        $closure = function ($var) use ($name) {
+            return $var->getName() == $name;
+        };
+        
+        return $this->events->filter($closure)->last();
+    }
 }

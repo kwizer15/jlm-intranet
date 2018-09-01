@@ -16,5 +16,5 @@ namespace JLM\ProductBundle;
  */
 final class JLMProductEvents
 {
-	const PRODUCT_CREATE = "jlm_product.product_create";
+    const PRODUCT_CREATE = "jlm_product.product_create";
 }

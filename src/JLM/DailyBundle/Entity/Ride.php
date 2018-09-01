@@ -50,7 +50,7 @@ class Ride
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -73,7 +73,7 @@ class Ride
     /**
      * Get distance
      *
-     * @return int 
+     * @return int
      */
     public function getDistance()
     {
@@ -96,7 +96,7 @@ class Ride
     /**
      * Get duration
      *
-     * @return int 
+     * @return int
      */
     public function getDuration()
     {
@@ -119,7 +119,7 @@ class Ride
     /**
      * Get departure
      *
-     * @return Door 
+     * @return Door
      */
     public function getDeparture()
     {
@@ -142,7 +142,7 @@ class Ride
     /**
      * Get destination
      *
-     * @return \JLM\ModelBundle\Entity\Door 
+     * @return \JLM\ModelBundle\Entity\Door
      */
     public function getDestination()
     {
@@ -151,12 +151,12 @@ class Ride
     
     /**
      * Get Distance en km
-     * 
+     *
      * @return string
      */
     public function getDistanceKm()
     {
-    	return number_format($this->distance/1000,1,',',' ').' km';
+        return number_format($this->distance/1000, 1, ',', ' ').' km';
     }
     
     /**
@@ -166,6 +166,6 @@ class Ride
      */
     public function getDurationM()
     {
-    	return number_format($this->duration/60,0).'m';
+        return number_format($this->duration/60, 0).'m';
     }
 }

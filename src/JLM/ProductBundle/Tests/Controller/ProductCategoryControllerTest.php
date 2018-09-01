@@ -30,16 +30,28 @@ class ProductCategoryControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->client->followRedirects();
-    } 
+    }
     
     public function getUrls()
     {
-        return array(
-            array('GET', '/productcategory'),
-            array('GET', '/productcategory/1/show'),
-            array('GET', '/productcategory/1/edit'),
-            array('GET', '/productcategory/new'),
-        );
+        return [
+                [
+                 'GET',
+                 '/productcategory',
+                ],
+                [
+                 'GET',
+                 '/productcategory/1/show',
+                ],
+                [
+                 'GET',
+                 '/productcategory/1/edit',
+                ],
+                [
+                 'GET',
+                 '/productcategory/new',
+                ],
+               ];
     }
     
     /**

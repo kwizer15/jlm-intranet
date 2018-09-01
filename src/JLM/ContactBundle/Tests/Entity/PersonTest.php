@@ -12,75 +12,80 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\Person;
+use JLM\ContactBundle\Model\AddressInterface;
+use JLM\ContactBundle\Model\ContactPhoneInterface;
+use JLM\ContactBundle\Model\PersonInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class PersonTest extends \PHPUnit_Framework_TestCase
+class PersonTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Person
      */
     protected $entity;
-    
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->entity = new Person;
+        $this->entity = new Person();
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\ContactBundle\Model\PersonInterface', $this->entity);
+        $this->assertInstanceOf(PersonInterface::class, $this->entity);
         $this->assertNull($this->entity->getId());
     }
-	
+
     public function getAttributes()
     {
-        return array(
-            array('Title', 'M.'),
-            array('Title', 'Mme'),
-            array('FirstName', 'Foo'),
-            array('LastName', 'Foo'),
-            array('Email', 'commerce@jlm-entreprise.fr'),
-            array('Address', $this->getMock('JLM\ContactBundle\Model\AddressInterface')),
-        );
+        return [
+            ['Title', 'M.',],
+            ['Title', 'Mme',],
+            ['FirstName', 'Foo',],
+            ['LastName', 'Foo',],
+            ['Email', 'commerce@jlm-entreprise.fr',],
+            ['Address', $this->createMock(AddressInterface::class),],
+        ];
     }
-    
+
     /**
      * Test getters and setters
+     *
      * @param string $attribute
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @dataProvider getAttributes
      */
     public function testGettersSetters($attribute, $value)
     {
-        $getter = 'get'.$attribute;
-        $setter = 'set'.$attribute;
+        $getter = 'get' . $attribute;
+        $setter = 'set' . $attribute;
         $this->assertSame($this->entity, $this->entity->$setter($value));
         $this->assertSame($value, $this->entity->$getter());
     }
-    
+
     public function getAdderRemover()
     {
-        return array(
-            array('Phone', 'Phones', $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface')),
-        );
+        return [
+            ['Phone', 'Phones', $this->createMock(ContactPhoneInterface::class),],
+        ];
     }
-    
+
     /**
      * @dataProvider getAdderRemover
      */
     public function testAdderRemover($attribute, $attributes, $value)
     {
-        $getters = 'get'.$attributes;
-        $adder = 'add'.$attribute;
-        $remover = 'remove'.$attribute;
+        $getters = 'get' . $attributes;
+        $adder = 'add' . $attribute;
+        $remover = 'remove' . $attribute;
         $this->assertCount(0, $this->entity->$getters());
         $this->assertFalse($this->entity->$remover($value));
         $this->assertTrue($this->entity->$adder($value));
@@ -88,20 +93,21 @@ class PersonTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->entity->$remover($value));
         $this->assertCount(0, $this->entity->$getters());
     }
-    
+
     public function getNames()
     {
-        return array(
-        	array('M.', 'Emmanuel', 'Bernaszuk', 'M. Bernaszuk Emmanuel'),
-            array('', 'Emmanuel', 'Bernaszuk', 'Bernaszuk Emmanuel'),
-            array('M.', '', 'Bernaszuk', 'M. Bernaszuk'),
-            array('M.', 'Emmanuel', '', 'M. Emmanuel'),
-            array('', '', '', ''),
-        );
+        return [
+            ['M.', 'Emmanuel', 'Bernaszuk', 'M. Bernaszuk Emmanuel',],
+            ['', 'Emmanuel', 'Bernaszuk', 'Bernaszuk Emmanuel',],
+            ['M.', '', 'Bernaszuk', 'M. Bernaszuk',],
+            ['M.', 'Emmanuel', '', 'M. Emmanuel',],
+            ['', '', '', '',],
+        ];
     }
-    
+
     /**
      * @dataProvider getNames
+     *
      * @param string $title
      * @param string $firstName
      * @param string $lastName

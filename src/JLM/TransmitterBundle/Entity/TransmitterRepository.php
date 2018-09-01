@@ -13,96 +13,103 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class TransmitterRepository extends SearchRepository
 {
-	private $transmitters;
-	
-	private function _getQbById($id)
-	{
-		return $this->createQueryBuilder('a')
-				->select('a')
-				->leftJoin('a.userGroup','b')
-				->leftJoin('a.model','c')
-				->where('a.id = ?1')
-				->setParameter(1,$id);
-		
-	}
-	
-	public function getArrayById($id)
-	{
-		$qb = $this->_getQbById($id);
-		$results = $qb->getQuery()->getArrayResult();
-		$result = $results[0];
-		return $result;
-	}
-	
-	public function getById($id)
-	{
-		$qb = $this->_getQbById($id);
-		$results = $qb->getQuery()->getResult();
-		return $results[0];
-	}
-	
-	public function getCountByUserGroup(UserGroup $userGroup)
-	{
-		$qb = $this->createQueryBuilder('a')
-			->select('COUNT(a)')
-			->leftJoin('a.userGroup','b')
-			->where('b = ?1')
-			->setParameter(1,$userGroup);
-		return $qb->getQuery()->getSingleScalarResult();
-	}
-	
-	public function getFromSite($id)
-	{
-		$qb = $this->createQueryBuilder('a')
-		->leftJoin('a.userGroup','b')
-		->leftJoin('b.site','c')
-		->where('c.id = ?1')
-		->orderBy('a.number','asc')
-		->setParameter(1,$id);
-		return $qb;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function getSearchQb()
-	{
-		return $this->createQueryBuilder('a')
-			->select('a')
-			->leftJoin('a.model','b');
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function getSearchParams()
-	{
-		return array('a.number','a.userName','b.text');
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function getSearchOrderBy()
-	{
-		return array('a.number'=>'ASC');
-	}
-	
-	public function getStatsByMonth()
-	{
-		$rsm = new ResultSetMapping();
-		$rsm->addScalarResult('m', 'month');
-		$rsm->addScalarResult('y', 'year');
-		$rsm->addScalarResult('n', 'number');
-		$em = $this->getEntityManager();
-		$query = $em->createNativeQuery('
-    				SELECT MONTH( jlm_core_calendar.dt ) AS m , YEAR( jlm_core_calendar.dt ) AS y, COUNT( transmitters_transmitters.id ) AS n
-					FROM transmitters_transmitters
-					LEFT JOIN transmitters_attributions ON transmitters_attributions.id = transmitters_transmitters.attribution_id
-					LEFT JOIN jlm_core_calendar ON jlm_core_calendar.dt = transmitters_attributions.creation
-					GROUP BY MONTH( jlm_core_calendar.dt ),YEAR(jlm_core_calendar.dt)
-					ORDER BY y,m
+    private $transmitters;
+
+    private function getQbById($id)
+    {
+        return $this->createQueryBuilder('a')
+                ->select('a')
+                ->leftJoin('a.userGroup', 'b')
+                ->leftJoin('a.model', 'c')
+                ->where('a.id = ?1')
+                ->setParameter(1, $id);
+    }
+
+    public function getArrayById($id)
+    {
+        $qb = $this->getQbById($id);
+        $results = $qb->getQuery()->getArrayResult();
+        $result = $results[0];
+        return $result;
+    }
+
+    public function getById($id)
+    {
+        $qb = $this->getQbById($id);
+        $results = $qb->getQuery()->getResult();
+        return $results[0];
+    }
+
+    public function getCountByUserGroup(UserGroup $userGroup)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('COUNT(a)')
+            ->leftJoin('a.userGroup', 'b')
+            ->where('b = ?1')
+            ->setParameter(1, $userGroup);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getFromSite($id)
+    {
+        $qb = $this->createQueryBuilder('a')
+        ->leftJoin('a.userGroup', 'b')
+        ->leftJoin('b.site', 'c')
+        ->where('c.id = ?1')
+        ->orderBy('a.number', 'asc')
+        ->setParameter(1, $id);
+        return $qb;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getSearchQb()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a')
+            ->leftJoin('a.model', 'b');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getSearchParams()
+    {
+        return [
+                'a.number',
+                'a.userName',
+                'b.text',
+               ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getSearchOrderBy()
+    {
+        return ['a.number' => 'ASC'];
+    }
+
+    public function getStatsByMonth()
+    {
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('m', 'month');
+        $rsm->addScalarResult('y', 'year');
+        $rsm->addScalarResult('n', 'number');
+        $em = $this->getEntityManager();
+        $query = $em->createNativeQuery('
+            SELECT
+                MONTH( jlm_core_calendar.dt ) AS m ,
+                YEAR( jlm_core_calendar.dt ) AS y,
+                COUNT( transmitters_transmitters.id ) AS n
+            FROM transmitters_transmitters
+            LEFT JOIN transmitters_attributions
+                ON transmitters_attributions.id = transmitters_transmitters.attribution_id
+            LEFT JOIN jlm_core_calendar ON jlm_core_calendar.dt = transmitters_attributions.creation
+            GROUP BY MONTH( jlm_core_calendar.dt ),YEAR(jlm_core_calendar.dt)
+            ORDER BY y,m
     		', $rsm);
-		return $query->getResult();
-	}
+        return $query->getResult();
+    }
 }

@@ -12,6 +12,7 @@
 namespace JLM\TransmitterBundle\Twig\Extension;
 
 use Doctrine\Common\Persistence\ObjectManager;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -33,8 +34,8 @@ class AttributionCountExtension extends \Twig_Extension implements \Twig_Extensi
     {
 //        $repo = $this->om->getRepository('JLMTransmitterBundle:Attribution');
         
-        return array('transmitterattributioncount' => array(
-				'all' => 0,
-		));
+        return [
+                'transmitterattributioncount' => ['all' => 0],
+               ];
     }
 }

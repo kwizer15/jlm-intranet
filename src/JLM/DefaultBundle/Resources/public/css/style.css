@@ -2,11 +2,11 @@
  * Autocompletion scrollable
  */
 body {
-	padding-top: 50px;
+    padding-top: 50px;
 }
 
 .ui-autocomplete {
-	font-size:.9em;
+    font-size:.9em;
         max-height: 150px;
         overflow-y: auto;
         /* prevent horizontal scrollbar */
@@ -14,70 +14,70 @@ body {
         z-index: 15000 !important;
     }
 .ui-datepicker {
-	z-index: 15000 !important;
+    z-index: 15000 !important;
 }
 
 @media print {
-	body {
-	  width: auto!important;
-	  margin: auto!important;
-	  font-family: serif;
-	  font-size: 12pt;
-	  background-color: #fff!important;
-	  color: #000!important;
-	}
-	p, h1, h2, h3, h4, h5, h6, blockquote, ul, ol {
-	  color: #000!important;
-	  margin: auto!important;
-	  font-size: 12pt;
-	}
-	.print {
-	  display: block; /* affichage des éléments de classe print */
-	}
-	p, blockquote {
-	  orphans: 3; /* pas de ligne seule en bas */
-	  widows: 3; /* pas de ligne seule en haut */
-	}
-	blockquote, ul, ol {
-	  page-break-inside: avoid; /* pas de coupure dans ces élements */
-	}
-	h1 {
-	  page-break-before: always; /* chaque titre commence sur une nouvelle page */
-	}
-	h1, h2, h3, caption {
-	  page-break-after: avoid; /* pas de saut après ces éléments */
-	}
-	a {
-	  color: #000!important;
-	  text-decoration: underline!important;
-	}
-	a[href]:after {
-	  content: " (" attr(href) ")"; /* affichage des URL des liens */
-	}
-	
-	.nav {
-		display: none;
-	}
-	
-	#door, #trustee {
-		display: block!important;
-	}
-	
-	.span1, .span2, .span3, .span4, .span5, .span6, .span7, .span8, .span9, .span10, .span11, .span12 {
-		width: 100%!important;
-		clear:both!important;
-	}
-	
-	a[href]:after {
-	    content: none !important;
-	  }
-	.btn, .alert {
-		display: none;
-		visibily: hidden;
-	}
-	
-	.text-right, .text-center {
-		text-align: left;
-	}
-	@page { margin-top: 10mm }
+    body {
+      width: auto!important;
+      margin: auto!important;
+      font-family: serif;
+      font-size: 12pt;
+      background-color: #fff!important;
+      color: #000!important;
+    }
+    p, h1, h2, h3, h4, h5, h6, blockquote, ul, ol {
+      color: #000!important;
+      margin: auto!important;
+      font-size: 12pt;
+    }
+    .print {
+      display: block; /* affichage des éléments de classe print */
+    }
+    p, blockquote {
+      orphans: 3; /* pas de ligne seule en bas */
+      widows: 3; /* pas de ligne seule en haut */
+    }
+    blockquote, ul, ol {
+      page-break-inside: avoid; /* pas de coupure dans ces élements */
+    }
+    h1 {
+      page-break-before: always; /* chaque titre commence sur une nouvelle page */
+    }
+    h1, h2, h3, caption {
+      page-break-after: avoid; /* pas de saut après ces éléments */
+    }
+    a {
+      color: #000!important;
+      text-decoration: underline!important;
+    }
+    a[href]:after {
+      content: " (" attr(href) ")"; /* affichage des URL des liens */
+    }
+    
+    .nav {
+        display: none;
+    }
+    
+    #door, #trustee {
+        display: block!important;
+    }
+    
+    .span1, .span2, .span3, .span4, .span5, .span6, .span7, .span8, .span9, .span10, .span11, .span12 {
+        width: 100%!important;
+        clear:both!important;
+    }
+    
+    a[href]:after {
+        content: none !important;
+      }
+    .btn, .alert {
+        display: none;
+        visibily: hidden;
+    }
+    
+    .text-right, .text-center {
+        text-align: left;
+    }
+    @page { margin-top: 10mm }
 }

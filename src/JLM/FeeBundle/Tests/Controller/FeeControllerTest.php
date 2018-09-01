@@ -30,16 +30,28 @@ class FeeControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->client->followRedirects();
-    } 
+    }
     
     public function getUrls()
     {
-        return array(
-        	array('GET', '/'),
-        	array('GET', '/1/show'),
-        	array('GET', '/new'),
-        	array('GET', '/1/edit'),
-        );
+        return [
+                [
+                 'GET',
+                 '/',
+                ],
+                [
+                 'GET',
+                 '/1/show',
+                ],
+                [
+                 'GET',
+                 '/new',
+                ],
+                [
+                 'GET',
+                 '/1/edit',
+                ],
+               ];
     }
     
     /**
@@ -49,7 +61,7 @@ class FeeControllerTest extends WebTestCase
      */
     public function testUrlIsSuccessful($method, $url)
     {
-    	$prefix = '/fee/fee';
+        $prefix = '/fee/fee';
         $crawler = $this->client->request(
             $method,
             $prefix.$url

@@ -18,13 +18,13 @@ namespace JLM\DailyBundle\Entity;
  */
 class Equipment extends Shifting
 {
-	/**
-	 * Get Type
-	 * @see Shifting
-	 * @return string
-	 */
-	public function getType()
-	{
-		return 'equipment';
-	}
+    /**
+     * Get Type
+     * @see Shifting
+     * @return string
+     */
+    public function getType()
+    {
+        return 'equipment';
+    }
 }

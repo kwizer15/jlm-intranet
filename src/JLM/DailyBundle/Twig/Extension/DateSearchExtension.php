@@ -12,6 +12,7 @@
 namespace JLM\DailyBundle\Twig\Extension;
 
 use JLM\ModelBundle\Form\Type\DatepickerType;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -31,12 +32,12 @@ class DateSearchExtension extends \Twig_Extension implements \Twig_Extension_Glo
 
     public function getGlobals()
     {
-    	$entity = new \DateTime();
-    	$form = $this->formService->create(new DatepickerType(), $entity);
-        return array(
-            'date_search' => array(
-			           'form' => $form->createView(),
-               ),
-        );
+        $entity = new \DateTime();
+        $form = $this->formService->create(new DatepickerType(), $entity);
+        return [
+                'date_search' => [
+                                  'form' => $form->createView(),
+                                 ],
+               ];
     }
 }

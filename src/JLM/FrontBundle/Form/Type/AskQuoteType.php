@@ -20,37 +20,35 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class AskQuoteType extends AbstractType
 {
-	/**
-	 * 
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
+    /**
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('firstName','text', array('required' => false));
-        $builder->add('lastName','text');
-        $builder->add('phone','text');
-        $builder->add('email','text');
+        $builder->add('firstName', 'text', ['required' => false]);
+        $builder->add('lastName', 'text');
+        $builder->add('phone', 'text');
+        $builder->add('email', 'text');
         $builder->add('quoteNumber', 'hidden');
     }
 
     /**
-     * 
+     *
      * @return string
      */
     public function getName()
     {
         return 'jlm_front_askquotetype';
     }
-    
+
     /**
-     * 
+     *
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-    	$resolver->setDefaults(array(
-    			'data_class' => 'JLM\FrontBundle\Entity\AskQuote',
-    	));
+        $resolver->setDefaults(['data_class' => 'JLM\FrontBundle\Entity\AskQuote']);
     }
 }

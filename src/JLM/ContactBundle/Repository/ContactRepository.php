@@ -18,72 +18,76 @@ use Doctrine\ORM\EntityRepository;
  */
 class ContactRepository extends EntityRepository
 {
-	private function getQueryBuilder()
-	{
-		return $this->createQueryBuilder('a')
-			->select('a')
-			//->leftJoin('a.phones','b')
-			//->leftJoin('b.phone','c')
-		;
-	}
-	
-	/**
-	 *
-	 * @param string $query
-	 * @param int $limit
-	 * @return array
-	 */
-	public function getArray($query, $limit = 10)
-	{
-		return $this->getByQuery($query)->getQuery()->getArrayResult();
-	}
-	
-	public function search($query)
-	{
-		return $this->getByQuery($query)->getQuery()->getResult();
-	}
-	
-	public function getByQuery($query)
-	{
-		return $this->getQueryBuilder()
-			->where('a.name LIKE :query')
-			->orderBy('a.name','ASC')
-			->setParameter('query', '%'.$query.'%')
-		;
-	}
-	
-	public function getAll($limit = 10, $offset = 0)
-	{
-		$qb = $this->getQueryBuilder()
-			->orderBy('a.name')
-			->setFirstResult($offset)
-			->setMaxResults($limit);
-		$res = $qb->getQuery()->getResult();
-		
-		return $res;
-	}
-	
-	public function getCountAll()
-	{
-		$qb = $this->createQueryBuilder('a')
-			->select('COUNT(a)');
-		
-		return $qb->getQuery()->getSingleScalarResult();
-	}
+    private function getQueryBuilder()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a')
+            //->leftJoin('a.phones','b')
+            //->leftJoin('b.phone','c')
+            ;
+    }
 
-	/**
-	 *
-	 * @param int $id
-	 * @return array|null
-	 */
-	public function getByIdToArray($id)
-	{
-		$qb = $this->getQueryBuilder()
-			->where('a.id = :id')
-			->setParameter('id', $id)
-		;
-		$res = $qb->getQuery()->getArrayResult();
+    /**
+     *
+     * @param string $query
+     * @param int    $limit
+     *
+     * @return array
+     */
+    public function getArray($query, $limit = 10)
+    {
+        return $this->getByQuery($query)->getQuery()->getArrayResult();
+    }
 
-		return $res[0];
-	}
+    public function search($query)
+    {
+        return $this->getByQuery($query)->getQuery()->getResult();
+    }
+
+    public function getByQuery($query)
+    {
+        return $this->getQueryBuilder()
+            ->where('a.name LIKE :query')
+            ->orderBy('a.name', 'ASC')
+            ->setParameter('query', '%' . $query . '%')
+            ;
+    }
+
+    public function getAll($limit = 10, $offset = 0)
+    {
+        $qb = $this->getQueryBuilder()
+            ->orderBy('a.name')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+        ;
+        $res = $qb->getQuery()->getResult();
+
+        return $res;
+    }
+
+    public function getCountAll()
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('COUNT(a)')
+        ;
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     *
+     * @param int $id
+     *
+     * @return array|null
+     */
+    public function getByIdToArray($id)
+    {
+        $qb = $this->getQueryBuilder()
+            ->where('a.id = :id')
+            ->setParameter('id', $id)
+        ;
+        $res = $qb->getQuery()->getArrayResult();
+
+        return $res[0];
+    }
 }

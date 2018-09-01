@@ -6,14 +6,15 @@ use JLM\TransmitterBundle\Form\DataTransformer\AskToIntTransformer;
 use JLM\ModelBundle\Form\Type\AbstractHiddenType;
 
 class AttributionHiddenType extends AbstractHiddenType
-{ 
+{
+
     protected function getTransformerClass()
     {
-    	return 'JLM\TransmitterBundle\Form\DataTransformer\AttributionToIntTransformer';
+        return 'JLM\TransmitterBundle\Form\DataTransformer\AttributionToIntTransformer';
     }
     
     protected function getTypeName()
     {
-    	return 'transmitter_attribution';
+        return 'transmitter_attribution';
     }
 }

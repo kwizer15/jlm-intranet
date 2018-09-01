@@ -27,8 +27,8 @@ class SupplierType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contact','jlm_contact_corporation_select',array('label'=>'Société'))
-            ->add('website','url',array('label'=>'Site internet','required'=>false))
+            ->add('contact', 'jlm_contact_corporation_select', ['label' => 'Société'])
+            ->add('website', 'url', ['label' => 'Site internet', 'required' => false])
         ;
     }
 
@@ -46,8 +46,7 @@ class SupplierType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-    	    array(
-    			'data_class' => 'JLM\ProductBundle\Entity\Supplier',
-    	));
+            ['data_class' => 'JLM\ProductBundle\Entity\Supplier']
+        );
     }
 }

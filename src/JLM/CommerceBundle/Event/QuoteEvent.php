@@ -17,9 +17,9 @@ use JLM\CoreBundle\Event\RequestEvent;
 
 class QuoteEvent extends RequestEvent
 {
-	/**
-	 * @var BillInterface
-	 */
+    /**
+     * @var BillInterface
+     */
     private $quote;
 
     /**
@@ -28,12 +28,12 @@ class QuoteEvent extends RequestEvent
      */
     public function __construct(QuoteInterface $quote, Request $request)
     {
-    	$this->quote = $quote;
-    	parent::__construct($request);
+        $this->quote = $quote;
+        parent::__construct($request);
     }
     
     public function getQuote()
     {
-    	return $this->quote;
+        return $this->quote;
     }
 }

@@ -12,74 +12,80 @@
 namespace JLM\ContactBundle\Tests\Entity;
 
 use JLM\ContactBundle\Entity\Company;
+use JLM\ContactBundle\Model\AddressInterface;
+use JLM\ContactBundle\Model\CompanyInterface;
+use JLM\ContactBundle\Model\ContactPhoneInterface;
+use JLM\ContactBundle\Model\CorporationContactInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class CompanyTest extends \PHPUnit_Framework_TestCase
+class CompanyTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var Person
+     * @var Company
      */
     protected $entity;
-    
+
     /**
      * {@inheritdoc}
      */
     protected function setUp()
     {
-        $this->entity = new Company;
+        $this->entity = new Company();
     }
-    
+
     /**
      * {@inheritdoc}
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\ContactBundle\Model\CompanyInterface', $this->entity);
+        $this->assertInstanceOf(CompanyInterface::class, $this->entity);
         $this->assertNull($this->entity->getId());
         $this->assertCount(0, $this->entity->getContacts());
     }
 
     public function getAttributes()
     {
-        return array(
-            array('Name', 'Foo'),
-            array('Email', 'commerce@jlm-entreprise.fr'),
-            array('Address', $this->getMock('JLM\ContactBundle\Model\AddressInterface')),
-        );
+        return [
+            ['Name', 'Foo', ],
+            [ 'Email',  'commerce@jlm-entreprise.fr',],
+            ['Address', $this->createMock(AddressInterface::class),],
+        ];
     }
-    
+
     /**
      * Test getters and setters
+     *
      * @param string $attribute
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @dataProvider getAttributes
      */
     public function testGettersSetters($attribute, $value)
     {
-        $getter = 'get'.$attribute;
-        $setter = 'set'.$attribute;
+        $getter = 'get' . $attribute;
+        $setter = 'set' . $attribute;
         $this->assertSame($this->entity, $this->entity->$setter($value));
         $this->assertSame($value, $this->entity->$getter());
     }
-    
+
     public function getAdderRemover()
     {
-        return array(
-            array('Phone', 'Phones', $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface')),
-            array('Contact', 'Contacts', $this->getMock('JLM\ContactBundle\Model\CorporationContactInterface')),
-        );
+        return [
+            ['Phone', 'Phones',$this->createMock(ContactPhoneInterface::class),],
+            ['Contact',  'Contacts',$this->createMock(CorporationContactInterface::class),],
+        ];
     }
-    
+
     /**
      * @dataProvider getAdderRemover
      */
     public function testAdderRemover($attribute, $attributes, $value)
     {
-        $getters = 'get'.$attributes;
-        $adder = 'add'.$attribute;
-        $remover = 'remove'.$attribute;
+        $getters = 'get' . $attributes;
+        $adder = 'add' . $attribute;
+        $remover = 'remove' . $attribute;
         $this->assertCount(0, $this->entity->$getters());
         $this->assertFalse($this->entity->$remover($value));
         $this->assertTrue($this->entity->$adder($value));

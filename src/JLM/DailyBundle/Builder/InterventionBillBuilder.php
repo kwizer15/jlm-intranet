@@ -21,7 +21,7 @@ class InterventionBillBuilder extends DoorBillBuilderAbstract
 {
     private $intervention;
     
-    public function __construct(Intervention $intervention, $options = array())
+    public function __construct(Intervention $intervention, $options = [])
     {
         $this->intervention = $intervention;
         parent::__construct($this->intervention->getDoor(), $options);
@@ -32,7 +32,9 @@ class InterventionBillBuilder extends DoorBillBuilderAbstract
      */
     public function buildReference()
     {
-        $this->getBill()->setReference('Selon notre intervention du '.$this->intervention->getLastDate()->format('d/m/Y'));
+        $this->getBill()->setReference(
+            'Selon notre intervention du '.$this->intervention->getLastDate()->format('d/m/Y')
+        );
     }
     
     /**
@@ -40,7 +42,6 @@ class InterventionBillBuilder extends DoorBillBuilderAbstract
      */
     public function buildLines()
     {
-
     }
     
     /**

@@ -12,15 +12,16 @@
 namespace JLM\DailyBundle\Factory;
 
 use JLM\DailyBundle\Builder\WorkBuilderInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class WorkFactory
 {
     /**
-     * 
+     *
      * @param WorkBuilderInterface $bill
-     * 
+     *
      * @return WorkInterface
      */
     public static function create(WorkBuilderInterface $builder)

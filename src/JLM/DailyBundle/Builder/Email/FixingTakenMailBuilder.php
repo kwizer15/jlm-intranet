@@ -17,22 +17,28 @@ namespace JLM\DailyBundle\Builder\Email;
 class FixingTakenMailBuilder extends FixingMailBuilder
 {
 
-	public function buildSubject()
-	{
-		$this->setSubject('Intervention #'.$this->getFixing()->getId().' - Demande d\'intervention prise en compte');
-	}
-	
-	public function buildBody()
-	{
-		$this->setBody(
-			'Bonjour,'.chr(10)
-			.chr(10)
-			.'La demande d\'intervention du '.$this->getFixing()->getAskDate()->format('d/m/Y à H\hi').' pour l\'installation : '.chr(10)
-			.$this->getFixing()->getInstallationCode().chr(10)
-			.$this->getFixing()->getPlace().chr(10)
-			.chr(10)
-			.'à bien été prise en compte par nos services.'.chr(10)
-			.$this->_getSignature()
-		);
-	}
+    public function buildSubject()
+    {
+        $this->setSubject('Intervention #'.$this->getFixing()->getId().' - Demande d\'intervention prise en compte');
+    }
+    
+    public function buildBody()
+    {
+        $this->setBody(
+            'Bonjour,'.chr(10)
+            . chr(10)
+            . 'La demande d\'intervention du '
+            . $this->getFixing()->getAskDate()->format('d/m/Y à H\hi')
+            . ' pour l\'installation : '
+            . chr(10)
+            . $this->getFixing()->getInstallationCode()
+            . chr(10)
+            . $this->getFixing()->getPlace()
+            . chr(10)
+            . chr(10)
+            . 'à bien été prise en compte par nos services.'
+            . chr(10)
+            . $this->getSignature()
+        );
+    }
 }

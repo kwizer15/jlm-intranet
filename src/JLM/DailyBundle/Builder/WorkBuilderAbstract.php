@@ -12,6 +12,7 @@
 namespace JLM\DailyBundle\Builder;
 
 use JLM\DailyBundle\Entity\Work;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -54,16 +55,18 @@ abstract class WorkBuilderAbstract implements WorkBuilderInterface
     
     public function buildPriority()
     {
-    	$this->work->setPriority(3);
+        $this->work->setPriority(3);
     }
     
-    public function buildOrder() {}
+    public function buildOrder()
+    {
+    }
     
     /**
      * Constructor
      * @param array $options
      */
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
         $this->options = $options;
     }
@@ -84,8 +87,7 @@ abstract class WorkBuilderAbstract implements WorkBuilderInterface
      */
     protected function getOption($key)
     {
-        if (isset($this->options[$key]))
-        {
+        if (isset($this->options[$key])) {
             return $this->options[$key];
         }
         

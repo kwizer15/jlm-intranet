@@ -14,82 +14,86 @@ use JLM\CoreBundle\Model\Repository\PaginableInterface;
  */
 class AttributionRepository extends SearchRepository implements PaginableInterface
 {
-	public function getById($id)
-	{
-		$qb = $this->createQueryBuilder('a')
-			->select('a,b,c,d,e,f,g,h,i,j,k')
-			->leftJoin('a.ask','b')
-			->leftJoin('b.site','c')
-			->leftJoin('c.address','d')
-			->leftJoin('d.city','e')
-			->leftJoin('a.transmitters','f')
-			->leftJoin('f.userGroup','g')
-			->leftJoin('f.model','h')
-			->leftJoin('c.userGroups','i')
-			->leftJoin('f.replace','j')
-			->leftJoin('f.replacedTransmitter','k')
-			->where('a.id = ?1')
-			->setParameter(1,$id)
-		;
-		$results = $qb->getQuery()->getArrayResult();
-		$result = $results[0];
-		foreach ($result['transmitters'] as $index => $t)
-		{
-			$result['transmitters'][$index]['endGuaranteeDate'] = \DateTime::createFromFormat('my',$t['guarantee'])->add(new \DateInterval('P2Y'));
-		}
-		return $result;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function getSearchQb()
-	{
-		return $this->createQueryBuilder('a')
-		->select('a')
-		->leftJoin('a.ask','b')
-		->leftJoin('b.trustee','f')
-		->leftJoin('b.site','c')
-		->leftJoin('c.address','d')
-		->leftJoin('d.city','e');
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function getSearchParams()
-	{
-		return array('f.name','d.street','e.name');
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function getSearchOrderBy()
-	{
-		return array('a.creation'=>'DESC');
-	}
-	
-	public function getPaginable($page, $resultsByPage, array $filters = array())
-	{
-		$qb = $this->createQueryBuilder('a')
-			->select('a');
-		if (array_key_exists('sort', $filters))
-		{
-			$sortsValid = array(
-					'date'=>'a.creation',	
-			);
-			$sort = str_replace('!', '', $filters['sort']);
-			if (array_key_exists($sort, $sortsValid))
-			{
-				$qb->orderBy($sortsValid[$sort], substr($filters['sort'], 0, 1) == '!' ? 'DESC' : 'ASC');
-			}
-		}
-		$qb->setFirstResult(($page - 1) * $resultsByPage)
-		   ->setMaxResults($resultsByPage);
-		
-		$query = $qb->getQuery();
-		
-		return new Paginator($query);			
-	}
+    public function getById($id)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a,b,c,d,e,f,g,h,i,j,k')
+            ->leftJoin('a.ask', 'b')
+            ->leftJoin('b.site', 'c')
+            ->leftJoin('c.address', 'd')
+            ->leftJoin('d.city', 'e')
+            ->leftJoin('a.transmitters', 'f')
+            ->leftJoin('f.userGroup', 'g')
+            ->leftJoin('f.model', 'h')
+            ->leftJoin('c.userGroups', 'i')
+            ->leftJoin('f.replace', 'j')
+            ->leftJoin('f.replacedTransmitter', 'k')
+            ->where('a.id = ?1')
+            ->setParameter(1, $id)
+        ;
+        $results = $qb->getQuery()->getArrayResult();
+        $result = $results[0];
+        foreach ($result['transmitters'] as $index => $t) {
+            $result['transmitters'][$index]['endGuaranteeDate'] = \DateTime::createFromFormat('my', $t['guarantee'])
+                ->add(new \DateInterval('P2Y'))
+            ;
+        }
+        return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getSearchQb()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a')
+            ->leftJoin('a.ask', 'b')
+            ->leftJoin('b.trustee', 'f')
+            ->leftJoin('b.site', 'c')
+            ->leftJoin('c.address', 'd')
+            ->leftJoin('d.city', 'e')
+            ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getSearchParams()
+    {
+        return [
+            'f.name',
+            'd.street',
+            'e.name',
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getSearchOrderBy()
+    {
+        return ['a.creation' => 'DESC'];
+    }
+
+    public function getPaginable($page, $resultsByPage, array $filters = [])
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a')
+        ;
+        if (array_key_exists('sort', $filters)) {
+            $sortsValid = ['date' => 'a.creation'];
+            $sort = str_replace('!', '', $filters['sort']);
+            if (array_key_exists($sort, $sortsValid)) {
+                $qb->orderBy($sortsValid[$sort], substr($filters['sort'], 0, 1) == '!' ? 'DESC' : 'ASC');
+            }
+        }
+        $qb->setFirstResult(($page - 1) * $resultsByPage)
+            ->setMaxResults($resultsByPage)
+        ;
+
+        $query = $qb->getQuery();
+
+        return new Paginator($query);
+    }
 }

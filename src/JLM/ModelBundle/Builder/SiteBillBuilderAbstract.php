@@ -21,7 +21,7 @@ abstract class SiteBillBuilderAbstract extends TrusteeBillBuilderAbstract
 {
     protected $site;
     
-    public function __construct(Site $site, $options = array())
+    public function __construct(Site $site, $options = [])
     {
         $this->site = $site;
         parent::__construct($this->site->getManager(), $options);
@@ -33,15 +33,12 @@ abstract class SiteBillBuilderAbstract extends TrusteeBillBuilderAbstract
     public function buildBusiness()
     {
         $site = $this->site;
-        if ($site instanceof Site)
-        {
+        if ($site instanceof Site) {
             $this->getBill()->setSite($site->toString());
             $this->getBill()->setSiteObject($site);
             $this->getBill()->setPrelabel($site->getBillingPrelabel());
             $this->getBill()->setVat($site->getVat()->getRate());
-        }
-        else
-        {
+        } else {
             $this->getBill()->setSite('');
         }
     }

@@ -26,10 +26,10 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('address','jlm_contact_address',array('label'=>'Adresse', 'required'=>false))
-            ->add('phones','jlm_contact_contactphonecollection',array('label'=>'Téléphones', 'required'=>false))
-            ->add('email','email',array('label'=>'Adresse e-mail', 'required'=>false))
-//            ->add('image','jlm_core_uploaddocument',array('label'=>'Image', 'required'=>false))
+            ->add('address', 'jlm_contact_address', ['label' => 'Adresse', 'required' => false])
+            ->add('phones', 'jlm_contact_contactphonecollection', ['label' => 'Téléphones', 'required' => false])
+            ->add('email', 'email', ['label' => 'Adresse e-mail', 'required' => false])
+            //            ->add('image','jlm_core_uploaddocument',array('label'=>'Image', 'required'=>false))
         ;
     }
 
@@ -40,15 +40,13 @@ class ContactType extends AbstractType
     {
         return 'jlm_contact_contact';
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-        ->setDefaults(array(
-            'inherit_data' => true,
-        ));
+            ->setDefaults(['inherit_data' => true]);
     }
 }

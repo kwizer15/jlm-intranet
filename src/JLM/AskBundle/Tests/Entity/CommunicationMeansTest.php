@@ -16,7 +16,7 @@ use JLM\AskBundle\Entity\CommunicationMeans;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class CommunicationMeansTest extends \PHPUnit_Framework_TestCase
+class CommunicationMeansTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var CommunicationMeans
@@ -42,9 +42,12 @@ class CommunicationMeansTest extends \PHPUnit_Framework_TestCase
     
     public function getGetterSetter()
     {
-        return array(
-            array('Name', 'Foo'),
-        );
+        return [
+                [
+                 'Name',
+                 'Foo',
+                ],
+               ];
     }
     
     /**

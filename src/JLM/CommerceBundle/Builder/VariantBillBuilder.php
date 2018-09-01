@@ -23,7 +23,7 @@ class VariantBillBuilder extends DoorBillBuilderAbstract
 {
     private $variant;
     
-    public function __construct(QuoteVariantInterface $variant, $options = array())
+    public function __construct(QuoteVariantInterface $variant, $options = [])
     {
         $this->variant = $variant;
         parent::__construct($variant->getDoor(), $options);
@@ -43,8 +43,7 @@ class VariantBillBuilder extends DoorBillBuilderAbstract
     public function buildLines()
     {
         $lines = $this->variant->getLines();
-        foreach ($lines as $line)
-        {
+        foreach ($lines as $line) {
             $l = BillLineFactory::create(new VariantBillLineBuilder($line));
             $l->setBill($this->bill);
             $l->setPosition($line->getPosition());

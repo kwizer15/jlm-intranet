@@ -15,9 +15,10 @@ namespace JLM\DailyBundle\Model;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 interface PartFamilyInterface
-{   
-	/**
-	 * @return string
-	 */
-	public function getName();
+{
+
+    /**
+     * @return string
+     */
+    public function getName();
 }

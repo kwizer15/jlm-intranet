@@ -78,15 +78,15 @@ class Contract implements ContractInterface
      */
     public function __toString()
     {
-//    	if ($this->getInProgress())
-    		return ($this->isComplete() ? 'C'.($this->getOption()+1) : 'N'.($this->getOption()+3));
-//    	return 'HC';
+//      if ($this->getInProgress())
+            return ($this->isComplete() ? 'C'.($this->getOption()+1) : 'N'.($this->getOption()+3));
+//      return 'HC';
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -130,7 +130,7 @@ class Contract implements ContractInterface
     /**
      * Get complete
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getComplete()
     {
@@ -144,7 +144,7 @@ class Contract implements ContractInterface
      */
     public function isComplete()
     {
-    	return $this->getComplete();
+        return $this->getComplete();
     }
 
     /**
@@ -155,9 +155,9 @@ class Contract implements ContractInterface
      */
     public function setNormal($normal = true)
     {
-    	$this->complete = !$normal;
+        $this->complete = !$normal;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -167,7 +167,7 @@ class Contract implements ContractInterface
      */
     public function getNormal()
     {
-    	return !$this->getComplete();
+        return !$this->getComplete();
     }
     
     /**
@@ -177,7 +177,7 @@ class Contract implements ContractInterface
      */
     public function isNormal()
     {
-    	return $this->getNormal();
+        return $this->getNormal();
     }
     
     /**
@@ -196,7 +196,7 @@ class Contract implements ContractInterface
     /**
      * Get option
      *
-     * @return integer 
+     * @return integer
      */
     public function getOption()
     {
@@ -219,7 +219,7 @@ class Contract implements ContractInterface
     /**
      * Get begin
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getBegin()
     {
@@ -266,7 +266,7 @@ class Contract implements ContractInterface
     /**
      * Get end
      *
-     * @return \DateTime|null 
+     * @return \DateTime|null
      */
     public function getEnd()
     {
@@ -280,19 +280,19 @@ class Contract implements ContractInterface
      */
     public function getInProgress(\DateTime $date = null)
     {
-    	$date = ($date === null) ? new \DateTime : $date;
-    	
-    	return (($this->end > $date || $this->end === null) && ($this->begin <= $date));
+        $date = ($date === null) ? new \DateTime : $date;
+        
+        return (($this->end > $date || $this->end === null) && ($this->begin <= $date));
     }
     
     /**
      * Is in progress
-     * 
+     *
      * @return bool
      */
     public function isInProgress(\DateTime $date = null)
     {
-    	return $this->getInProgress($date);
+        return $this->getInProgress($date);
     }
     
     /**
@@ -357,9 +357,9 @@ class Contract implements ContractInterface
      */
     public function setManager(ThirdPartyInterface $manager = null)
     {
-    	$this->trustee = $manager;
+        $this->trustee = $manager;
     
-    	return $this;
+        return $this;
     }
 
     /**
@@ -375,7 +375,7 @@ class Contract implements ContractInterface
      */
     public function getManager()
     {
-    	return $this->trustee;
+        return $this->trustee;
     }
     
     /**
@@ -384,7 +384,7 @@ class Contract implements ContractInterface
      */
     public function isEndAfterBegin()
     {
-    	return $this->end === null || $this->end > $this->begin;
+        return $this->end === null || $this->end > $this->begin;
     }
     
     /**
@@ -394,6 +394,6 @@ class Contract implements ContractInterface
      */
     public function isEndWarrantyAfterBegin()
     {
-    	return $this->endWarranty === null || $this->endWarranty > $this->begin;
+        return $this->endWarranty === null || $this->endWarranty > $this->begin;
     }
 }

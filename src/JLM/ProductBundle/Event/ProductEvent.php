@@ -17,9 +17,9 @@ use Symfony\Component\EventDispatcher\Event;
 
 class ProductEvent extends Event
 {
-	/**
-	 * @var ProductInterface
-	 */
+    /**
+     * @var ProductInterface
+     */
     private $product;
 
     /**
@@ -27,11 +27,11 @@ class ProductEvent extends Event
      */
     public function __construct(ProductInterface $product)
     {
-    	$this->product = $product;
+        $this->product = $product;
     }
     
     public function getProduct()
     {
-    	return $this->product;
+        return $this->product;
     }
 }

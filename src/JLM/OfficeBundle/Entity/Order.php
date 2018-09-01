@@ -14,52 +14,52 @@ use JLM\DailyBundle\Model\WorkInterface;
  */
 class Order implements OrderInterface
 {
-	const STATE_INPUT = 0;
-	const STATE_ORDERED = 1;
-	const STATE_RECEIVED = 2;
-	
-	/**
-	 * @var int $id
-	 */
-	private $id;
-	
-	/**
-	 * @var DateTime $creation 
-	 */
-	private $creation;
-	
-	/**
-	 * @var DateTime $close
-	 */
-	private $close;
-	
-	/**
-	 * Lignes
-	 * @var ArrayCollection $lines
-	 */
-	private $lines;
-	
-	/**
-	 * Intervention source
-	 * @var Work
-	 */
-	private $work;
-	
-	/**
-	 * Temps technicien prévu (en heure)
-	 * @var int
-	 */
-	private $time;
-	
-	/**
-	 * Etat
-	 * @var int
-	 * 0 - en saisie
-	 * 1 - commandé
-	 * 2 - reçue
-	 */
-	private $state = 0;
-	
+    const STATE_INPUT = 0;
+    const STATE_ORDERED = 1;
+    const STATE_RECEIVED = 2;
+    
+    /**
+     * @var int $id
+     */
+    private $id;
+    
+    /**
+     * @var DateTime $creation
+     */
+    private $creation;
+    
+    /**
+     * @var DateTime $close
+     */
+    private $close;
+    
+    /**
+     * Lignes
+     * @var ArrayCollection $lines
+     */
+    private $lines;
+    
+    /**
+     * Intervention source
+     * @var Work
+     */
+    private $work;
+    
+    /**
+     * Temps technicien prévu (en heure)
+     * @var int
+     */
+    private $time;
+    
+    /**
+     * Etat
+     * @var int
+     * 0 - en saisie
+     * 1 - commandé
+     * 2 - reçue
+     */
+    private $state = 0;
+    
     /**
      * Constructor
      */
@@ -72,7 +72,7 @@ class Order implements OrderInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -88,7 +88,6 @@ class Order implements OrderInterface
     public function addLine(OrderLineInterface $line)
     {
         $this->lines->add($line);
-    
         return $this;
     }
 
@@ -105,7 +104,7 @@ class Order implements OrderInterface
     /**
      * Get lines
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getLines()
     {
@@ -120,9 +119,9 @@ class Order implements OrderInterface
      */
     public function setCreation($creation)
     {
-    	$this->creation = $creation;
+        $this->creation = $creation;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -132,7 +131,7 @@ class Order implements OrderInterface
      */
     public function getCreation()
     {
-    	return $this->creation;
+        return $this->creation;
     }
     
     /**
@@ -142,9 +141,9 @@ class Order implements OrderInterface
      */
     public function setTime($time)
     {
-    	$this->time = $time;
-    	
-    	return $this;
+        $this->time = $time;
+        
+        return $this;
     }
     
     /**
@@ -153,7 +152,7 @@ class Order implements OrderInterface
      */
     public function getTime()
     {
-    	return $this->time;
+        return $this->time;
     }
     
     /**
@@ -164,9 +163,9 @@ class Order implements OrderInterface
      */
     public function setClose(\DateTime $close = null)
     {
-    	$this->close = ($close === null) ? new \DateTime : $close;
+        $this->close = ($close === null) ? new \DateTime : $close;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -176,7 +175,7 @@ class Order implements OrderInterface
      */
     public function getClose()
     {
-    	return $this->close;
+        return $this->close;
     }
     
     /**
@@ -187,12 +186,11 @@ class Order implements OrderInterface
      */
     public function setState($state)
     {
-    	if ($state >= 0 && $state < 3)
-    	{
-    		$this->state = $state;
-    	}
+        if ($state >= 0 && $state < 3) {
+            $this->state = $state;
+        }
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -201,7 +199,7 @@ class Order implements OrderInterface
      */
     public function getState()
     {
-    	return $this->state;
+        return $this->state;
     }
 
     /**
@@ -213,14 +211,13 @@ class Order implements OrderInterface
     public function setWork(WorkInterface $work = null)
     {
         $this->work = $work;
-    
         return $this;
     }
 
     /**
      * Get work
      *
-     * @return \JLM\DailyBundle\Entity\Work 
+     * @return \JLM\DailyBundle\Entity\Work
      */
     public function getWork()
     {

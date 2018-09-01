@@ -34,10 +34,10 @@ class ReplacementController extends Controller
         $entity->setAttribution($attribution);
         $form   = $this->createForm(new ReplacementType($attribution->getSite()->getId()), $entity);
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return [
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -62,14 +62,14 @@ class ReplacementController extends Controller
             $old->setReplacedTransmitter($new);
             $em->persist($old);
             $em->flush();
-			
+            
             // On met à jour la page de base
-            return new JsonResponse(array());
+            return new JsonResponse([]);
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return [
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 }

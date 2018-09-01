@@ -35,82 +35,82 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * @var integer $id
      */
     private $id;
-    
+
     /**
      * @var boolean $accession
      * true = accession
      * false = social
-     * 
+     *
      * @Assert\Choice(choices={0,1})
      * @Assert\NotNull
      */
     private $accession;
-    
+
     /**
      * @var Address $address
-     * 
+     *
      * @Assert\Valid
      * @Assert\NotNull
      */
     private $address;
-    
+
     /**
      * @var string $groupnumber
-     * 
+     *
      * @Assert\Length(min=4,max=6)
      */
     private $groupNumber;
-    
+
     /**
      * @var ArrayCollection $doors
      */
     private $doors;
-    
+
     /**
      * @var ArrayCollection $contacts
      */
     private $contacts;
-    
+
     /**
      * @var ManagerInterface $trustee
-     * 
+     *
      * @Assert\Valid
      * @Assert\NotNull
      */
     private $trustee;
-    
+
     /**
      * @var VAT $vat
-     * 
+     *
      * @Assert\Valid
      * @Assert\NotNull
      */
     private $vat;
-    
+
     /**
      * @var Address $lodge
      *
      * @Assert\Valid
      */
     private $lodge;
-    
+
     /**
      * @var string $observations
      *
      * @Assert\Type(type="string")
      */
     private $observations;
-    
+
     /**
      * @var ArrayCollection
      */
     private $userGroups;
-    
+
     /**
      * @var ArrayColection
      */
     private $bills;
-    
+
     /**
      * Constructor
      */
@@ -121,11 +121,11 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
         $this->userGroups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->bills = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -136,15 +136,16 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * Set accession
      *
      * @param boolean $accession
+     *
      * @return Trustee
      */
     public function setAccession($accession)
     {
-    	$this->accession = $accession;
-    
-    	return $this;
+        $this->accession = $accession;
+
+        return $this;
     }
-    
+
     /**
      * Get accession
      *
@@ -152,20 +153,21 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      */
     public function getAccession()
     {
-    	return $this->accession;
+        return $this->accession;
     }
-    
-    
+
+
     /**
      * Set address
      *
      * @param AddressInterface $address
+     *
      * @return Site
      */
     public function setAddress(AddressInterface $address = null)
     {
         $this->address = $address;
-    
+
         return $this;
     }
 
@@ -183,15 +185,16 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * Set lodge
      *
      * @param AddresInterface $lodge
+     *
      * @return self
      */
     public function setLodge(AddressInterface $lodge = null)
     {
-    	$this->lodge = $lodge;
-    
-    	return $this;
+        $this->lodge = $lodge;
+
+        return $this;
     }
-    
+
     /**
      * Get lodge
      *
@@ -199,22 +202,23 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      */
     public function getLodge()
     {
-    	return $this->lodge;
+        return $this->lodge;
     }
-    
+
     /**
      * Set observations
      *
      * @param string $observations
+     *
      * @return self
      */
     public function setObservations($observations)
     {
-    	$this->observations = $observations;
-    
-    	return $this;
+        $this->observations = $observations;
+
+        return $this;
     }
-    
+
     /**
      * Get observations
      *
@@ -222,34 +226,38 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      */
     public function getObservations()
     {
-    	return $this->observations;
+        return $this->observations;
     }
-    
+
     /**
      * Set groupnumber
+     *
      * @param string
+     *
      * @return self
      */
     public function setGroupNumber($groupNumber)
     {
-    	$this->groupNumber = $groupNumber;
-    	
-    	return $this;
+        $this->groupNumber = $groupNumber;
+
+        return $this;
     }
-    
+
     /**
      * Get groupnumber
+     *
      * @return string
      */
     public function getGroupNumber()
     {
-    	return $this->groupNumber;
+        return $this->groupNumber;
     }
-    
+
     /**
      * Add doors
      *
      * @param Door $doors
+     *
      * @return boolean
      */
     public function addDoor(Door $doors)
@@ -261,6 +269,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * Remove doors
      *
      * @param Door $doors
+     *
      * @return boolean
      */
     public function removeDoor(Door $doors)
@@ -271,7 +280,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     /**
      * Get doors
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getDoors()
     {
@@ -280,8 +289,11 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
 
     /**
      * Add contacts
+     *
      * @deprecated
+     *
      * @param AdministratorMemberInterface $member
+     *
      * @return Site
      */
     public function addContact(AdministratorMemberInterface $member)
@@ -291,7 +303,9 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
 
     /**
      * Remove contacts
+     *
      * @deprecated
+     *
      * @param AdministratorMemberInterface $member
      */
     public function removeContact(AdministratorMemberInterface $member)
@@ -301,8 +315,9 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
 
     /**
      * Get contacts
+     *
      * @deprecated
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getContacts()
     {
@@ -311,19 +326,23 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
 
     /**
      * Set trustee
+     *
      * @deprecated
+     *
      * @param JLM\ModelBundle\Entity\Trustee $trustee
+     *
      * @return Site
      */
     public function setTrustee(ManagerInterface $manager = null)
     {
         return $this->setManager($manager);
     }
-    
+
     /**
      * Get trustee
+     *
      * @deprecated
-     * @return JLM\ModelBundle\Entity\Trustee 
+     * @return JLM\ModelBundle\Entity\Trustee
      */
     public function getTrustee()
     {
@@ -334,12 +353,13 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * Set vat
      *
      * @param VATInterface $vat
+     *
      * @return Site
      */
     public function setVat(VATInterface $vat = null)
     {
         $this->vat = $vat;
-    
+
         return $this;
     }
 
@@ -352,54 +372,53 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
         return $this->vat;
     }
-    
+
     /**
      * To String
      */
     public function __toString()
     {
-    	return $this->getName();
+        return $this->getName();
     }
-    
+
     /**
      * To String
      */
     public function toString()
     {
-        if (!$this->getAddress() instanceof AddressInterface)
-        {
+        if (!$this->getAddress() instanceof AddressInterface) {
             return '';
         }
-    	return $this->getAddress()->toString();
+        return $this->getAddress()->toString();
     }
-    
+
     /**
      * Get Billing Prelabel
+     *
      * @return string
      */
     public function getBillingPrelabel()
     {
-    	$prelabel = '';
-    	foreach ($this->getDoors() as $door)
-    	{
-    		if (!$prelabel)
-    		{
-    			return $door->getBillingPrelabel();
-    		}
-    	}
-    	return '';
+        $prelabel = '';
+        foreach ($this->getDoors() as $door) {
+            if (!$prelabel) {
+                return $door->getBillingPrelabel();
+            }
+        }
+        return '';
     }
 
     /**
      * Add userGroups
      *
      * @param \JLM\TransmitterBundle\Entity\UserGroup $userGroups
+     *
      * @return Site
      */
     public function addUserGroup(UserGroup $userGroups)
     {
         $this->userGroups[] = $userGroups;
-    
+
         return $this;
     }
 
@@ -416,7 +435,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     /**
      * Get userGroups
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUserGroups()
     {
@@ -427,12 +446,13 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      * Add bills
      *
      * @param BillInterface $bills
+     *
      * @return Site
      */
     public function addBill(BillInterface $bills)
     {
         $this->bills[] = $bills;
-    
+
         return $this;
     }
 
@@ -449,29 +469,29 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     /**
      * Get bills
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getBills()
     {
         return $this->bills;
     }
-    
+
     /**
      * Blocage des nouvelles intervs pour cause de retard de paiement
-     * 
+     *
      * @return bool
      */
     public function isBlocked()
     {
-    	$bills = $this->getBills();
-    	foreach ($bills as $bill)
-    	{
-    		if ($bill->getState() == 1 && $bill->getSecondBoost() !== null)
-    			return true;
-    	}
-    	return false;
+        $bills = $this->getBills();
+        foreach ($bills as $bill) {
+            if ($bill->getState() == 1 && $bill->getSecondBoost() !== null) {
+                return true;
+            }
+        }
+        return false;
     }
-    
+
     /**
      * Blocage des nouvelles intervs pour cause de retard de paiement
      *
@@ -479,84 +499,78 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
      */
     public function getUnpayedBills()
     {
-    	$bills = $this->getBills();
-    	$unpayed = array();
-    	foreach ($bills as $bill)
-    	{
-    		if ($bill->getState() == 1 && $bill->getSecondBoost() !== null)
-    		{
-    			$unpayed[] = $bill;
-    		}
-    	}
-    	
-    	return $unpayed;
+        $bills = $this->getBills();
+        $unpayed = [];
+        foreach ($bills as $bill) {
+            if ($bill->getState() == 1 && $bill->getSecondBoost() !== null) {
+                $unpayed[] = $bill;
+            }
+        }
+
+        return $unpayed;
     }
-    
+
     public function getManagerContacts()
     {
-    	$c = array();
-    	$doors = $this->getDoors();
-    	if ($doors === null)
-    	{
-    		return array();
-    	}
-    	foreach ($doors as $door)
-    	{
-    		$c = array_merge($c,$this->_createContactFromEmail($door->getManagerEmails()));
-    	}
-    	
-    	return $c;
+        $c = [];
+        $doors = $this->getDoors();
+        if ($doors === null) {
+            return [];
+        }
+        foreach ($doors as $door) {
+            $c = array_merge($c, $this->createContactFromEmail($door->getManagerEmails()));
+        }
+
+        return $c;
     }
-    
+
     public function getBoostContacts()
     {
-    	$c = array();
-    	$doors = $this->getDoors();
-    	if ($doors === null)
-    	{
-    		return array();
-    	}
-    	foreach ($doors as $door)
-    	{
-    		$c = array_merge($c,$this->_createContactFromEmail($door->getAccountingEmails()));
-    	}
-    	
-    	return $c;
+        $c = [];
+        $doors = $this->getDoors();
+        if ($doors === null) {
+            return [];
+        }
+        foreach ($doors as $door) {
+            $c = array_merge($c, $this->createContactFromEmail($door->getAccountingEmails()));
+        }
+
+        return $c;
     }
-    
-    private function _createContactFromEmail($emails)
+
+    private function createContactFromEmail($emails)
     {
-    	$c = array();
-    	if ($emails === null)
-    	{
-    		return $c;
-    	}
-    
-    	foreach ($emails as $email)
-    	{
-    		$temp = new Company();
-    		$temp->setEmail($email);
-    		$c[] = $temp;
-    	}
-    
-    	return $c;
+        $c = [];
+        if ($emails === null) {
+            return $c;
+        }
+
+        foreach ($emails as $email) {
+            $temp = new Company();
+            $temp->setEmail($email);
+            $c[] = $temp;
+        }
+
+        return $c;
     }
-    
-    
+
+
     // New
-    
+
     /**
      * Set the manager
+     *
      * @param ManagerInterface $manager
+     *
      * @return self
      */
     public function setManager(ManagerInterface $manager = null)
     {
         $this->trustee = $manager;
-    
+
         return $this;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -564,7 +578,7 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
         return $this->trustee;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -572,29 +586,31 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
         return $this->contacts;
     }
-    
+
     /**
      * Add contacts
      *
      * @param AdministratorMemberInterface $contacts
+     *
      * @return boolean
      */
     public function addMember(AdministratorMemberInterface $member)
     {
         return $this->contacts->add($member);
     }
-    
+
     /**
      * Remove contacts
      *
      * @param AdministratorMemberInterface $contacts
+     *
      * @return boolean
      */
     public function removeMember(AdministratorMemberInterface $member)
     {
         return $this->contacts->removeElement($member);
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -602,39 +618,36 @@ class Site implements AdministratorInterface, BusinessInterface, SubjectInterfac
     {
         return $this->getAddress()->__toString();
     }
-    
+
     /**
-     * 
+     *
      * @return number
      */
     public function getVatRate()
     {
         return $this->getVat()->getRate();
     }
-    
+
     public function getBillingLabel()
     {
         return $this->getManager()->getBillingLabel();
     }
-    
+
     /**
      * @return boolean
      * @since 1.4.0
      */
     public function hasContractWith(ManagerInterface $manager)
     {
-    	foreach ($this->doors as $door)
-    	{
-    		$contract = $door->getActualContract();
-    		if (null !== $contract)
-    		{
-	    		if ($contract->getManager() == $manager)
-	    		{
-	    			return true;
-	    		}
-    		}
-    	}
-    	
-    	return false;
+        foreach ($this->doors as $door) {
+            $contract = $door->getActualContract();
+            if (null !== $contract) {
+                if ($contract->getManager() == $manager) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

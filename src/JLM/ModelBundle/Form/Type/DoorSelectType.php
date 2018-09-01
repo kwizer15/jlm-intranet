@@ -10,44 +10,41 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class DoorSelectType extends AbstractType
 {
-	/**
-	 * @var ObjectManager
-	 */
-	private $om;
-	
-	/**
-	 * @param ObjectManager $om
-	 */
-	public function __construct(ObjectManager $om)
-	{
-		$this->om = $om;
-	}
-	
-	/**
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
+    /**
+     * @var ObjectManager
+     */
+    private $om;
+
+    /**
+     * @param ObjectManager $om
+     */
+    public function __construct(ObjectManager $om)
+    {
+        $this->om = $om;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-    	$transformer = new DoorToIntTransformer($this->om);
-    	$builder->addModelTransformer($transformer);
-    	
+        $transformer = new DoorToIntTransformer($this->om);
+        $builder->addModelTransformer($transformer);
     }
 
     public function getParent()
     {
-    	return 'text';
+        return 'text';
     }
-    
+
     public function getName()
     {
         return 'door_select';
     }
-    
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'invalid_message' => 'The selected door does not exist',
-        ));
+        $resolver->setDefaults(['invalid_message' => 'The selected door does not exist']);
     }
 }

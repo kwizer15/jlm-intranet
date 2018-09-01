@@ -18,5 +18,5 @@ use JLM\ContactBundle\Model\AssociationInterface;
  */
 class Association extends Corporation implements AssociationInterface
 {
-	
+
 }

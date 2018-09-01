@@ -24,115 +24,99 @@ use JLM\ContactBundle\Form\Type\AddressType;
  */
 class AutocompleteController extends Controller
 {
-    /**
-     * 
-     */
     public function cityAction()
     {
-    	$request = $this->get('request');
-    	$query = $request->request->get('term');
+        $request = $this->get('request');
+        $query = $request->request->get('term');
 
-    	$em = $this->getDoctrine()->getManager();
-    	$results = $em->getRepository('JLMContactBundle:City')->searchResult($query);
-    	$json = json_encode($results);
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/json');
-    	$response->setContent($json);
-    	return $response;
+        $em = $this->getDoctrine()->getManager();
+        $results = $em->getRepository('JLMContactBundle:City')->searchResult($query);
+        $json = json_encode($results);
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($json);
+        return $response;
     }
-    
-    /**
-     * 
-     */
+
     public function trusteeAction()
     {
-    	$request = $this->get('request');
-    	$query = $request->request->get('term');
-    	$em = $this->getDoctrine()->getManager();
-    	$results = $em->getRepository('JLMModelBundle:Trustee')->searchResult($query);
-    	$json = json_encode($results);
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/json');
-    	$response->setContent($json);
-    	
-    	return $response;
+        $request = $this->get('request');
+        $query = $request->request->get('term');
+        $em = $this->getDoctrine()->getManager();
+        $results = $em->getRepository('JLMModelBundle:Trustee')->searchResult($query);
+        $json = json_encode($results);
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($json);
+
+        return $response;
     }
-    
-    /**
-     * 
-     */
+
     public function siteAction()
     {
-    	$request = $this->get('request');
-    	$query = $request->request->get('term');
-    	$em = $this->getDoctrine()->getManager();
-    	$results = $em->getRepository('JLMModelBundle:Site')->searchResult($query);
-    	$json = json_encode($results);
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/json');
-    	$response->setContent($json);
-    	 
-    	return $response;
+        $request = $this->get('request');
+        $query = $request->request->get('term');
+        $em = $this->getDoctrine()->getManager();
+        $results = $em->getRepository('JLMModelBundle:Site')->searchResult($query);
+        $json = json_encode($results);
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($json);
+
+        return $response;
     }
-    
-    /**
-     * 
-     */
+
     public function contractAction()
     {
-    	$request = $this->get('request');
-    	$query = $request->request->get('term');
-    	$em = $this->getDoctrine()->getManager();
-    	$results = $em->getRepository('JLMContractBundle:Contract')->searchResult($query);
-    	$json = json_encode($results);
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/json');
-    	$response->setContent($json);
-    
-    	return $response;
+        $request = $this->get('request');
+        $query = $request->request->get('term');
+        $em = $this->getDoctrine()->getManager();
+        $results = $em->getRepository('JLMContractBundle:Contract')->searchResult($query);
+        $json = json_encode($results);
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($json);
+
+        return $response;
     }
-    
-    /**
-     * 
-     */
+
     public function indexAction(Request $request)
     {
-    	$query = $request->request->get('term');
-    	$em = $this->getDoctrine()->getManager();  	
-    	$repository = $request->request->get('repository');
-    	$action = $request->request->get('action');
-    	$action = empty($action) ? 'Result' : $action;
-    	$action = 'search'.$action;
-    	$results = $em->getRepository($repository)->$action($query);
-    	$json = json_encode($results);
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/json');
-    	$response->setContent($json); 
-    	return $response;
+        $query = $request->request->get('term');
+        $em = $this->getDoctrine()->getManager();
+        $repository = $request->request->get('repository');
+        $action = $request->request->get('action');
+        $action = empty($action) ? 'Result' : $action;
+        $action = 'search' . $action;
+        $results = $em->getRepository($repository)->$action($query);
+        $json = json_encode($results);
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($json);
+        return $response;
     }
-    
+
     /**
-     * @todo Voir si cette action est utile car pas de "Action" dans le nom de la fonction quand j'ai réécrit le routage en yml
+     * @todo Voir si cette action est utile car pas de "Action" dans le nom de la fonction quand j'ai réécrit le
+     *       routage en yml
      */
     public function doorsiteAction(Request $request)
     {
-    	$id = $request->request->get('id_site');
-    	$em = $this->getDoctrine()->getManager();
-    	$site = $em->getRepository('JLMModelBundle:Site')->find($id);
-    	$results = $em->getRepository('JLMModelBundle:Door')->findBy(array('site'=>$site));
-    	$doors = array();
-    	foreach($results as $result)
-    	{
-    		$doors[] = array(
-    				'id'=>$result->getId(),
-    				'string'=>$result->getType().' - '.$result->getLocation().' / '.$result->getStreet()
-    		);
-    	}
-    	$json = json_encode($doors);
-    	$response = new Response();
-    	$response->headers->set('Content-Type', 'application/json');
-    	$response->setContent($json);
-    	return $response;
+        $id = $request->request->get('id_site');
+        $em = $this->getDoctrine()->getManager();
+        $site = $em->getRepository('JLMModelBundle:Site')->find($id);
+        $results = $em->getRepository('JLMModelBundle:Door')->findBy(['site' => $site]);
+        $doors = [];
+        foreach ($results as $result) {
+            $doors[] = [
+                'id' => $result->getId(),
+                'string' => $result->getType() . ' - ' . $result->getLocation() . ' / ' . $result->getStreet(),
+            ];
+        }
+        $json = json_encode($doors);
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($json);
+        return $response;
     }
-
 }

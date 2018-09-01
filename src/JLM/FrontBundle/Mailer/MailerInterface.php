@@ -26,7 +26,7 @@ interface MailerInterface
      * @return void
      */
     public function sendContactEmailMessage(ContactInterface $contact);
-    
+
     /**
      * Send a confirmation to contact
      *

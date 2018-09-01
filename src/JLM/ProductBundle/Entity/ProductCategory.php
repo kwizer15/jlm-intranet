@@ -37,17 +37,19 @@ class ProductCategory implements ProductCategoryInterface
      * @var string
      */
     protected $name = '';
-    
+
     /**
      * Set text
      *
-     * @param string $text
+     * @param string $name
+     *
+     * @return ProductCategory
      */
     public function setName($name)
     {
-    	$this->name = $name;
-    	
-    	return $this;
+        $this->name = $name;
+        
+        return $this;
     }
     
     /**
@@ -57,7 +59,7 @@ class ProductCategory implements ProductCategoryInterface
      */
     public function getName()
     {
-    	return $this->name;
+        return $this->name;
     }
     
     /**
@@ -66,7 +68,7 @@ class ProductCategory implements ProductCategoryInterface
      */
     public function __toString()
     {
-    	return $this->getName();
+        return $this->getName();
     }
     
     /**
@@ -74,13 +76,13 @@ class ProductCategory implements ProductCategoryInterface
      */
     public function __construct()
     {
-    	$this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -107,6 +109,8 @@ class ProductCategory implements ProductCategoryInterface
      * Set parent
      *
      * @param ProductCategoryInterface $parent
+     *
+     * @return ProductCategory
      */
     public function setParent(ProductCategoryInterface $parent = null)
     {
@@ -118,7 +122,7 @@ class ProductCategory implements ProductCategoryInterface
     /**
      * Get parent
      *
-     * @return ProductCategoryInterface 
+     * @return ProductCategoryInterface
      */
     public function getParent()
     {
@@ -157,7 +161,7 @@ class ProductCategory implements ProductCategoryInterface
      */
     public function removeProductCategory(ProductCategoryInterface $child)
     {
-    	return $this->removeChild($child);
+        return $this->removeChild($child);
     }
 
     /**
@@ -174,11 +178,10 @@ class ProductCategory implements ProductCategoryInterface
     /**
      * Get children
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChildren()
     {
         return $this->children;
     }
-
 }

@@ -20,51 +20,48 @@ use Doctrine\Common\Persistence\ObjectManager;
  */
 class QuoteToIntTransformer implements DataTransformerInterface
 {
-	/**
-	 * @var ObjectManager
-	 */
-	private $om;
-	
-	/**
-	 * @param ObjectManager $om
-	 */
-	public function __construct(ObjectManager $om)
-	{
-		$this->om = $om;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function transform($entity)
-	{
-		if (null === $entity)
-		{
-			return "";
-		}
-		
-		return $entity->getId();
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function reverseTransform($id)
-	{
-		if (!$id)
-		{
-			return null;
-		}
-	
-		$entity = $this->om->getRepository('JLMCommerceBundle:Quote')->find($id);
-		if (null === $entity)
-		{
-			throw new TransformationFailedException(sprintf(
-					'A quote with id "%s" does not exist!',
-					$id
-			));
-		}
-	
-		return $entity;
-	}
+    /**
+     * @var ObjectManager
+     */
+    private $om;
+    
+    /**
+     * @param ObjectManager $om
+     */
+    public function __construct(ObjectManager $om)
+    {
+        $this->om = $om;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function transform($entity)
+    {
+        if (null === $entity) {
+            return "";
+        }
+        
+        return $entity->getId();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function reverseTransform($id)
+    {
+        if (!$id) {
+            return null;
+        }
+    
+        $entity = $this->om->getRepository('JLMCommerceBundle:Quote')->find($id);
+        if (null === $entity) {
+            throw new TransformationFailedException(sprintf(
+                'A quote with id "%s" does not exist!',
+                $id
+            ));
+        }
+    
+        return $entity;
+    }
 }

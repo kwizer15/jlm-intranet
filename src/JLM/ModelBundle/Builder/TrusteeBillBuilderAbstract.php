@@ -21,15 +21,15 @@ abstract class TrusteeBillBuilderAbstract extends BillBuilderAbstract
 {
     /**
      * @var Trustee
-     */   
+     */
     protected $trustee;
-    
-    public function __construct(Trustee $trustee, $options = array())
+
+    public function __construct(Trustee $trustee, $options = [])
     {
         $this->trustee = $trustee;
         parent::__construct($options);
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -38,6 +38,8 @@ abstract class TrusteeBillBuilderAbstract extends BillBuilderAbstract
         $this->bill->setTrustee($this->trustee);
         $this->bill->setTrusteeName($this->trustee->getBillLabel());
         $this->bill->setTrusteeAddress($this->trustee->getBillAddress()->toString());
-        $this->bill->setAccountNumber(($this->trustee->getAccountNumber() == null) ? '411000' : $this->trustee->getAccountNumber());
+        $this->bill->setAccountNumber(
+            ($this->trustee->getAccountNumber() == null) ? '411000' : $this->trustee->getAccountNumber()
+        );
     }
 }

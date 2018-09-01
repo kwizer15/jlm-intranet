@@ -16,7 +16,7 @@ use JLM\UserBundle\Entity\User;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class UserTest extends \PHPUnit_Framework_TestCase
+class UserTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Country
@@ -36,12 +36,12 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('FOS\UserBundle\Model\User', $this->entity); 
+        $this->assertInstanceOf('FOS\UserBundle\Model\User', $this->entity);
     }
     
     public function testGetPerson()
     {
-        $person = $this->getMock('JLM\ContactBundle\Model\ContactInterface');
+        $person = $this->createMock('JLM\ContactBundle\Model\ContactInterface');
         $this->assertSame($this->entity, $this->entity->setContact($person));
         $this->assertSame($person, $this->entity->getContact());
     }

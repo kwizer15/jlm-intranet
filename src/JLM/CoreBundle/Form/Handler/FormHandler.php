@@ -19,43 +19,42 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class FormHandler
 {
-	/**
-	 * @var Request
-	 */
-	protected $request;
-	
-	/**
-	 * @var Form
-	 */
-	protected $form;
-	
-	/**
-	 * Constructor
-	 * @param Form $form
-	 * @param Request $request
-	 */
-	public function __construct(Form $form, Request $request)
-	{
-		$this->form = $form;
-		$this->request = $request;
-	}
-	
-	/**
-	 * @return bool
-	 */
-	public function process()
-	{
-		$this->form->handleRequest($this->request);
-		if ($this->form->isValid())
-		{
-			return $this->onSuccess();
-		}
-		
-		return false;
-	}
-	
-	/**
-	 * @return bool
-	 */
-	abstract public function onSuccess(); 
+    /**
+     * @var Request
+     */
+    protected $request;
+    
+    /**
+     * @var Form
+     */
+    protected $form;
+    
+    /**
+     * Constructor
+     * @param Form $form
+     * @param Request $request
+     */
+    public function __construct(Form $form, Request $request)
+    {
+        $this->form = $form;
+        $this->request = $request;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function process()
+    {
+        $this->form->handleRequest($this->request);
+        if ($this->form->isValid()) {
+            return $this->onSuccess();
+        }
+        
+        return false;
+    }
+    
+    /**
+     * @return bool
+     */
+    abstract public function onSuccess();
 }

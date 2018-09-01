@@ -20,12 +20,13 @@ use JLM\AskBundle\Model\ContactInterface;   // @todo to remove, use a decorator 
  */
 class Person extends Contact implements PersonInterface, QuoteRecipientInterface, ContactInterface
 {
-	/**
-	 * M. Mme Mlle
-	 * @var string $title
-	 */
-	private $title;
-	
+    /**
+     * M. Mme Mlle
+     *
+     * @var string $title
+     */
+    private $title;
+
     /**
      * @var string $firstName
      */
@@ -35,17 +36,18 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
      * @var string $lastName
      */
     private $lastName;
-    
+
     /**
      * Set firstName
      *
      * @param string $firstName
+     *
      * @return self
      */
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-        
+
         return $this;
     }
 
@@ -61,12 +63,13 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
      * Set lastName
      *
      * @param string $lastName
+     *
      * @return self
      */
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-        
+
         return $this;
     }
 
@@ -77,22 +80,22 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
     {
         return $this->lastName;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-    	return trim($this->title.' '.trim($this->lastName.' '.$this->firstName));
+        return trim($this->title . ' ' . trim($this->lastName . ' ' . $this->firstName));
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function setName($name)
     {
-        parent::setName(trim($this->lastName.' '.$this->firstName));
-        
+        parent::setName(trim($this->lastName . ' ' . $this->firstName));
+
         return $this;
     }
 
@@ -100,12 +103,13 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
      * Set title
      *
      * @param string $title
+     *
      * @return self
      */
     public function setTitle($title)
     {
         $this->title = $title;
-        
+
         return $this;
     }
 
@@ -116,30 +120,29 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
     {
         return $this->title;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function getMobilePhone()
     {
-        return $this->_getPhoneNumber('Portable');
+        return $this->getPhoneNumber('Portable');
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function getFixedPhone()
     {
-        return $this->_getPhoneNumber('Principal');
+        return $this->getPhoneNumber('Principal');
     }
-    
+
     /**
-     * 
+     *
      * @return self
      */
     public function attributeName()
     {
-    	return $this->setName('');
+        return $this->setName('');
     }
-
 }

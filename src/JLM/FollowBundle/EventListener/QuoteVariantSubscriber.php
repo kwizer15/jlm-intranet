@@ -28,39 +28,37 @@ use JLM\OfficeBundle\Entity\Order;
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class QuoteVariantSubscriber implements EventSubscriberInterface
-{	
-	/**
-	 * @var ObjectManager
-	 */
-	private $om;
-	
-	/**
-	 * Constructor
-	 * @param ObjectManager $om
-	 */
-	public function __construct(ObjectManager $om)
-	{
-		$this->om = $om;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function getSubscribedEvents()
-	{
-		return array(
-			JLMCommerceEvents::QUOTEVARIANT_GIVEN => 'createThread',
-		);
-	}
-	
-	public function createThread(QuoteVariantEvent $event)
-	{		
-		$entity = $event->getQuoteVariant();
-		if ($entity->getQuote()->getDoor() !== null)
-		{
-			$thread = ThreadFactory::create($entity);
-			$this->om->persist($thread);
-			$this->om->flush();
-		}
-	}
+{
+   
+    /**
+     * @var ObjectManager
+     */
+    private $om;
+    
+    /**
+     * Constructor
+     * @param ObjectManager $om
+     */
+    public function __construct(ObjectManager $om)
+    {
+        $this->om = $om;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [JLMCommerceEvents::QUOTEVARIANT_GIVEN => 'createThread'];
+    }
+    
+    public function createThread(QuoteVariantEvent $event)
+    {
+        $entity = $event->getQuoteVariant();
+        if ($entity->getQuote()->getDoor() !== null) {
+            $thread = ThreadFactory::create($entity);
+            $this->om->persist($thread);
+            $this->om->flush();
+        }
+    }
 }

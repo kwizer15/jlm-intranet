@@ -20,12 +20,10 @@
         </testsuite>
     </testsuites>
 
-    <!--
     <php>
         <server name="KERNEL_DIR" value="/path/to/your/app/" />
         <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test"/>
     </php>
-    -->
 
     <filter>
         <whitelist>

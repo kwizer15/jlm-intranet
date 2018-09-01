@@ -20,41 +20,40 @@ use Doctrine\Common\Persistence\ObjectManager;
  */
 class DoctrineHandler extends FormHandler
 {
-	/**
-	 * @var Request
-	 */
-	protected $om;
-	
-	/**
-	 * Constructor
-	 * @param Form $form
-	 * @param Request $request
-	 * @param ObjectManager $om
-	 */
-	public function __construct(Form $form, Request $request, ObjectManager $om, $entity = null)
-	{
-		parent::__construct($form, $request);
-		$this->om = $om;
-		$this->entity = $entity;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function onSuccess()
-	{
-		switch ($this->request->getMethod())
-		{
-			case 'GET':
-				return false;
-			case 'DELETE':
-				$this->om->remove($this->entity);
-				break;
-			default:
-				$this->om->persist($this->form->getData());
-		}
-		$this->om->flush();
-		
-		return true;
-	}
+    /**
+     * @var Request
+     */
+    protected $om;
+    
+    /**
+     * Constructor
+     * @param Form $form
+     * @param Request $request
+     * @param ObjectManager $om
+     */
+    public function __construct(Form $form, Request $request, ObjectManager $om, $entity = null)
+    {
+        parent::__construct($form, $request);
+        $this->om = $om;
+        $this->entity = $entity;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function onSuccess()
+    {
+        switch ($this->request->getMethod()) {
+            case 'GET':
+                return false;
+            case 'DELETE':
+                $this->om->remove($this->entity);
+                break;
+            default:
+                $this->om->persist($this->form->getData());
+        }
+        $this->om->flush();
+        
+        return true;
+    }
 }

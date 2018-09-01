@@ -13,6 +13,7 @@ namespace JLM\CondominiumBundle\Entity;
 
 use JLM\ContactBundle\Entity\ContactDecorator;
 use JLM\CondominiumBundle\Model\ManagerInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

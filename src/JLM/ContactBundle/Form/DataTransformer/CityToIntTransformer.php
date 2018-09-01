@@ -12,6 +12,7 @@
 namespace JLM\ContactBundle\Form\DataTransformer;
 
 use JLM\CoreBundle\Form\DataTransformer\ObjectToIntTransformer;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -20,16 +21,16 @@ class CityToIntTransformer extends ObjectToIntTransformer
     /**
      * {@inheritdoc}
      */
-	protected function _getClass()
-	{
-		return 'JLMContactBundle:City';
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function _getErrorMessage()
-	{
-		return 'A city with id "%s" does not exist!';
-	}
+    protected function getClass()
+    {
+        return 'JLMContactBundle:City';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getErrorMessage()
+    {
+        return 'A city with id "%s" does not exist!';
+    }
 }

@@ -16,5 +16,5 @@ namespace JLM\DailyBundle\Model;
  */
 interface WorkInterface extends InterventionInterface
 {
-	public function getOrder();
+    public function getOrder();
 }

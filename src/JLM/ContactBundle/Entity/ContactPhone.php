@@ -24,12 +24,12 @@ class ContactPhone implements ContactPhoneInterface
      * @var int
      */
     private $id;
-    
+
     /**
      * @var string
      */
     private $label;
-    
+
     /**
      * @var PhoneInterface
      */
@@ -37,89 +37,101 @@ class ContactPhone implements ContactPhoneInterface
 
     /**
      * Get id
+     *
      * @return number
      */
     public function getId()
     {
         return $this->id;
     }
-    
+
     /**
      * Set label
+     *
      * @param string $label
+     *
      * @return self
      */
     public function setLabel($label)
     {
         $this->label = $label;
-        
+
         return $this;
     }
-    
+
     /**
      * Get label
+     *
      * @return string
      */
     public function getLabel()
     {
         return $this->label;
     }
-    
+
     /**
      * Get phone
+     *
      * @return PhoneInterface
      */
     public function getPhone()
     {
-    	return $this->phone;
+        return $this->phone;
     }
-    
+
     /**
      * Set phone
+     *
      * @param PhoneInterface $phone
+     *
      * @return self
      */
     public function setPhone(PhoneInterface $phone)
     {
-    	$this->phone = $phone;
-    	
-    	return $this;
+        $this->phone = $phone;
+
+        return $this;
     }
-    
+
     /**
      * Set number
+     *
      * @param string $number
+     *
      * @return self
      */
     public function setPhoneNumber($number)
     {
         return $this->phone->setNumber($number);
     }
-    
+
     /**
      * Get number
+     *
      * @return string
      */
     public function getPhoneNumber()
     {
         return $this->phone->getNumber();
     }
-    
+
     /**
      * Get number
+     *
      * @return string
      */
     public function getNumber()
     {
-    	return $this->phone->getNumber();
+        return $this->phone->getNumber();
     }
-    
+
     /**
      * To string
+     *
      * @return string
      */
     public function __toString()
     {
         return $this->getLabel() . ' : ' . $this->phone->getNumber();
     }
-} 
+}

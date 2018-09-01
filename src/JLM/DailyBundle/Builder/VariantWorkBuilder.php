@@ -15,6 +15,7 @@ use JLM\DailyBundle\Model\InterventionInterface;
 use JLM\CommerceBundle\Model\QuoteVariantInterface;
 use JLM\OfficeBundle\Factory\OrderFactory;
 use JLM\CommerceBundle\Builder\VariantOrderBuilder;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -22,7 +23,7 @@ class VariantWorkBuilder extends WorkBuilderAbstract
 {
     private $variant;
     
-    public function __construct(QuoteVariantInterface $variant, $options = array())
+    public function __construct(QuoteVariantInterface $variant, $options = [])
     {
         $this->variant = $variant;
         parent::__construct($options);
@@ -30,48 +31,45 @@ class VariantWorkBuilder extends WorkBuilderAbstract
     
     public function buildBusiness()
     {
-    	$door = $this->variant->getQuote()->getDoor();
-    	$this->getWork()->setDoor($door);
-    	$this->getWork()->setPlace($door.'');
-    	$this->getWork()->setContract($door->getActualContract().'');
+        $door = $this->variant->getQuote()->getDoor();
+        $this->getWork()->setDoor($door);
+        $this->getWork()->setPlace($door.'');
+        $this->getWork()->setContract($door->getActualContract().'');
     }
     
     public function buildReason()
     {
-    	$ask = $this->variant->getQuote()->getAsk();
-    	$this->getWork()->setReason(($ask !== null) ? $this->variant->getIntro() : $ask()->getAsk());
-    	
-    	if (isset($this->options['category']))
-    	{
-    		$this->getWork()->setCategory($this->options['category']);
-    	}
-    	if (isset($this->options['objective']))
-    	{
-    		$this->getWork()->setObjective($this->options['objective']);
-    	}
+        $ask = $this->variant->getQuote()->getAsk();
+        $this->getWork()->setReason(($ask !== null) ? $this->variant->getIntro() : $ask()->getAsk());
+        
+        if (isset($this->options['category'])) {
+            $this->getWork()->setCategory($this->options['category']);
+        }
+        if (isset($this->options['objective'])) {
+            $this->getWork()->setObjective($this->options['objective']);
+        }
     }
     
     public function buildContact()
     {
-    	$quote = $this->variant->getQuote();
-    	$this->getWork()->setContactName($quote->getContactCp());
-    	if ($quote->getContact())
-    	{
-    		$this->getWork()->setContactPhones(
-    				$quote->getContact()->getPerson()->getFixedPhone().chr(10)
-    				.$quote->getContact()->getPerson()->getMobilePhone()
-    		);
-    	}
+        $quote = $this->variant->getQuote();
+        $this->getWork()->setContactName($quote->getContactCp());
+        if ($quote->getContact()) {
+            $this->getWork()->setContactPhones(
+                $quote->getContact()->getPerson()->getFixedPhone().chr(10)
+                    .$quote->getContact()->getPerson()->getMobilePhone()
+            );
+        }
     }
     
     public function buildOrder()
     {
-    	$order = OrderFactory::create(new VariantOrderBuilder($this->variant));
-    	$this->getWork()->setOrder($order);
+        $order = OrderFactory::create(new VariantOrderBuilder($this->variant));
+        $this->getWork()->setOrder($order);
     }
     
     public function buildLink()
     {
-    	$this->getWork()->setQuote($this->variant);
+        $this->getWork()->setQuote($this->variant);
     }
 }

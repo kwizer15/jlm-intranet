@@ -21,32 +21,33 @@ use JLM\CoreBundle\Entity\Search;
  */
 class SearchExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
-	private $formFactory;
-	private $request;
-	
-	public function __construct(Container $container)
-	{
-		$this->formFactory = $container->get('form.factory');
-//		$this->request = $container->get('request');
-	}
-	
+    private $formFactory;
+    private $request;
+
+    public function __construct(Container $container)
+    {
+        $this->formFactory = $container->get('form.factory');
+        //      $this->request = $container->get('request');
+    }
+
     public function getName()
     {
         return 'search_extension';
     }
-    
+
     public function getGlobals()
     {
-    	$form = $this->formFactory->create('jlm_core_search');
-//    	$query = $this->request->get('jlm_core_search');
-//    	if (is_array($query) && array_key_exists('query', $query))
-//    	{
-//    		$form->get('query')->setData($query['query']);
-//    	}
-//    	
-        return array('search' => array(
-        	'form' => $form->createView()
-        	),
-        );
+        $form = $this->formFactory->create('jlm_core_search');
+        //      $query = $this->request->get('jlm_core_search');
+        //      if (is_array($query) && array_key_exists('query', $query))
+        //      {
+        //          $form->get('query')->setData($query['query']);
+        //      }
+        //
+        return [
+            'search' => [
+                'form' => $form->createView(),
+            ],
+        ];
     }
 }

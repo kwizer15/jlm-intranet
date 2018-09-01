@@ -19,9 +19,9 @@ use Symfony\Component\EventDispatcher\Event;
  */
 class InterventionEvent extends Event
 {
-	/**
-	 * @var InterventionInterface
-	 */
+    /**
+     * @var InterventionInterface
+     */
     private $intervention;
 
     /**
@@ -30,11 +30,11 @@ class InterventionEvent extends Event
      */
     public function __construct(InterventionInterface $intervention)
     {
-    	$this->intervention = $intervention;
+        $this->intervention = $intervention;
     }
     
     public function getIntervention()
     {
-    	return $this->intervention;
+        return $this->intervention;
     }
 }

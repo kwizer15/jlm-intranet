@@ -28,70 +28,70 @@ class TextModel implements TextModelInterface
      */
     private $namespace;
     
-	/**
-	 * @var string
-	 */
-	private $text;
+    /**
+     * @var string
+     */
+    private $text;
 
-	/**
-	 * Get id
-	 *
-	 * @return integer
-	 */
-	public function getId()
-	{
-	    return $this->id;
-	}
-	
-	/**
-	 * Set namespace
-	 * 
-	 * @param string $namespace
-	 * @return self
-	 */
-	public function setNamespace($namespace)
-	{
-	    $this->namespace = $namespace;
-	    
-	    return $this;
-	}
-	
-	/**
-	 * Get namespace
-	 * 
-	 * @return string
-	 */
-	public function getNamespace()
-	{
-	    return $this->namespace;
-	}
-	
-	/**
-	 * Set text
-	 *
-	 * @param string $text
-	 * @return self
-	 */
-	public function setText($text)
-	{
-		$this->text = $text;
-	}
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
+     * Set namespace
+     *
+     * @param string $namespace
+     * @return self
+     */
+    public function setNamespace($namespace)
+    {
+        $this->namespace = $namespace;
+        
+        return $this;
+    }
+    
+    /**
+     * Get namespace
+     *
+     * @return string
+     */
+    public function getNamespace()
+    {
+        return $this->namespace;
+    }
+    
+    /**
+     * Set text
+     *
+     * @param string $text
+     * @return self
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
 
-	/**
-	 * 
-	 * @return string
-	 */
-	public function getText()
-	{
-		return $this->text;
-	}
+    /**
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
 
-	/**
-	 * 
-	 * @return string
-	 */
-	public function __toString()
-	{
-		return $this->getText();
-	}
+    /**
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getText();
+    }
 }

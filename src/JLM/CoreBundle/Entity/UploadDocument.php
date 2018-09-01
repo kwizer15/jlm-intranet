@@ -6,16 +6,16 @@ use JLM\CoreBundle\Model\UploadDocumentInterface;
 
 class UploadDocument implements UploadDocumentInterface
 {
-	/**
-	 * @var int
-	 */
+    /**
+     * @var int
+     */
     private $id;
 
     /**
      * @var string
      */
     private $path;
-    
+
     /**
      * @var UploadedFile
      */
@@ -23,22 +23,22 @@ class UploadDocument implements UploadDocumentInterface
 
     public function getFile()
     {
-    	return $this->file;
+        return $this->file;
     }
-    
+
     public function setFile($file)
     {
-    	$this->file = $file;
-    	
-    	return $this;
+        $this->file = $file;
+
+        return $this;
     }
-    
+
     /**
      * @return NULL|string
      */
     public function getAbsolutePath()
     {
-        return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
+        return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
     }
 
     /**
@@ -46,7 +46,7 @@ class UploadDocument implements UploadDocumentInterface
      */
     public function getWebPath()
     {
-        return null === $this->path ? null : $this->getUploadDir().'/'.$this->path;
+        return null === $this->path ? null : $this->getUploadDir() . '/' . $this->path;
     }
 
     /**
@@ -54,7 +54,7 @@ class UploadDocument implements UploadDocumentInterface
      */
     protected function getUploadRootDir()
     {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
 
     /**
@@ -64,37 +64,34 @@ class UploadDocument implements UploadDocumentInterface
     {
         return 'uploads/documents';
     }
-    
+
     public function preUpload()
     {
-    	if (null !== $this->file) 
-    	{
-    		$this->path = sha1(uniqid(mt_rand(), true)).'.'.$this->file->guessExtension();
-    	}
+        if (null !== $this->file) {
+            $this->path = sha1(uniqid(mt_rand(), true)) . '.' . $this->file->guessExtension();
+        }
     }
-    
+
     public function upload()
     {
-    	if (null === $this->file)
-    	{
-    		return;
-    	}
+        if (null === $this->file) {
+            return;
+        }
 
-    	$this->file->move($this->getUploadRootDir(), $this->path);
-    
-    	unset($this->file);
+        $this->file->move($this->getUploadRootDir(), $this->path);
+
+        unset($this->file);
     }
-    
+
     public function removeUpload()
     {
-    	if ($file = $this->getAbsolutePath())
-    	{
-    		unlink($file);
-    	}
+        if ($file = $this->getAbsolutePath()) {
+            unlink($file);
+        }
     }
-    
+
     public function __toString()
     {
-    	return $this->getWebPath();
+        return $this->getWebPath();
     }
 }

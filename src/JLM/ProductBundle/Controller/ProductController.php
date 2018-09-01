@@ -25,28 +25,27 @@ class ProductController extends Controller
      */
     public function indexAction()
     {
-    	$request = $this->getRequest();
-    	$page = $request->get('page', 1);
-    	$limit = $request->get('limit', 15);
-    	$all = $request->get('all', 0);
+        $request = $this->getRequest();
+        $page = $request->get('page', 1);
+        $limit = $request->get('limit', 15);
+        $all = $request->get('all', 0);
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('JLMProductBundle:Product');
         $nb = $repo->getTotal(!$all);
         $nbPages = ceil($nb/$limit);
         $nbPages = ($nbPages < 1) ? 1 : $nbPages;
         $offset = ($page-1) * $limit;
-        if ($page < 1 || $page > $nbPages)
-        {
-        	throw $this->createNotFoundException('Page inexistante (page '.$page.'/'.$nbPages.')');
+        if ($page < 1 || $page > $nbPages) {
+            throw $this->createNotFoundException('Page inexistante (page '.$page.'/'.$nbPages.')');
         }
 
         $entities = $repo->getAll($limit, $offset, !$all);
 
-        return array(
-        	'entities' => $entities,
-        	'page'     => $page,
-        	'nbPages'  => $nbPages,
-        );
+        return [
+                'entities' => $entities,
+                'page'     => $page,
+                'nbPages'  => $nbPages,
+               ];
     }
 
     /**
@@ -61,11 +60,11 @@ class ProductController extends Controller
         $stock = $this->getDoctrine()->getManager()->getRepository('JLMProductBundle:Stock')->getByProduct($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
-            'entity'      => $entity,
-        	'stock'=>$stock,
-            'delete_form' => $deleteForm->createView(),
-        );
+        return [
+                'entity'      => $entity,
+                'stock'       => $stock,
+                'delete_form' => $deleteForm->createView(),
+               ];
     }
 
     /**
@@ -84,11 +83,11 @@ class ProductController extends Controller
         $entity->setUnitPrice(0);
         
         $form   = $this->createNewForm($entity);
-        	
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        );
+            
+        return [
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -104,21 +103,19 @@ class ProductController extends Controller
         $form = $this->createNewForm($entity);
         $form->handleRequest($request);
 
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
             $this->get('event_dispatcher')->dispatch(JLMProductEvents::PRODUCT_CREATE, new ProductEvent($entity));
             
-            return $this->redirect($this->generateUrl('jlm_product_product_show', array('id' => $entity->getId())));
-            
+            return $this->redirect($this->generateUrl('jlm_product_product_show', ['id' => $entity->getId()]));
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        );
+        return [
+                'entity' => $entity,
+                'form'   => $form->createView(),
+               ];
     }
 
     /**
@@ -132,10 +129,10 @@ class ProductController extends Controller
         $entity = $this->getEntity($id);
         $editForm = $this->createEditForm($entity);
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        );
+        return [
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
 
     /**
@@ -156,13 +153,13 @@ class ProductController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('jlm_product_product_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('jlm_product_product_show', ['id' => $entity->getId()]));
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        );
+        return [
+                'entity'    => $entity,
+                'edit_form' => $editForm->createView(),
+               ];
     }
 
     /**
@@ -213,9 +210,9 @@ class ProductController extends Controller
      */
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
-        	->add('id', 'hidden')
-        	->getForm()
+        return $this->createFormBuilder(['id' => $id])
+            ->add('id', 'hidden')
+            ->getForm()
         ;
     }
     

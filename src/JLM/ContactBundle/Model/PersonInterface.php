@@ -19,36 +19,35 @@ interface PersonInterface extends ContactInterface
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle();
-    
+
     /**
      * Get first name
      *
      * @return string
      */
     public function getFirstName();
-    
+
     /**
      * Get last name
      *
      * @return string
      */
     public function getLastName();
-    
+
     /**
      * Get fixedPhone
      *
-     * @return string 
+     * @return string
      */
     public function getFixedPhone();
-    
+
     /**
      * Get mobilePhone
      *
      * @return string
      */
     public function getMobilePhone();
-    
 }

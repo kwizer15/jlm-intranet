@@ -19,20 +19,20 @@ interface MailBuilderInterface
     public function getMail();
 
     public function create();
-    
+
     public function buildSubject();
-    
+
     public function buildFrom();
-    
+
     public function buildTo();
-    
+
     public function buildCc();
-    
+
     public function buildBcc();
-    
+
     public function buildBody();
-    
+
     public function buildPreAttachements();
-    
+
     public function buildAttachements();
 }

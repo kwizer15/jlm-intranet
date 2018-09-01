@@ -27,20 +27,21 @@ class RequestEvent extends Event
 
     /**
      * Constructor
-     * @param FormInterface $form
-     * @param Request $request
+     *
+     * @param Request       $request
      */
     public function __construct(Request $request)
     {
-    	$this->request = $request;
+        $this->request = $request;
     }
-    
+
     /**
      * Get request parameter
+     *
      * @return string
      */
     public function getParam($param, $default = null, $deep = false)
     {
-    	return $this->request->get($param, $default, $deep);
+        return $this->request->get($param, $default, $deep);
     }
 }

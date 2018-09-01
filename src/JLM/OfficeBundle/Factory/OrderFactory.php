@@ -12,15 +12,16 @@
 namespace JLM\OfficeBundle\Factory;
 
 use JLM\OfficeBundle\Builder\OrderBuilderInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
 class OrderFactory
 {
     /**
-     * 
+     *
      * @param BillBuilderInterface $bill
-     * 
+     *
      * @return BillInterface
      */
     public static function create(OrderBuilderInterface $builder)

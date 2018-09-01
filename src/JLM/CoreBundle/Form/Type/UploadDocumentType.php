@@ -20,30 +20,27 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class UploadDocumentType extends AbstractType
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder->add('file','file');
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('file', 'file');
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getName()
-	{
-		return 'jlm_core_uploaddocument';
-	}
-	
-	/** 
-	 * {@inheritdoc}
-	 */
-	public function setDefaultOptions(OptionsResolverInterface $resolver) {
-		$resolver->setDefaults(array(
-			'data_class' => 'JLM\CoreBundle\Entity\UploadDocument'
-		));
-
-	}
-
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'jlm_core_uploaddocument';
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(['data_class' => 'JLM\CoreBundle\Entity\UploadDocument']);
+    }
 }
