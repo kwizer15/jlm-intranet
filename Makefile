@@ -20,7 +20,7 @@ phpmetrics: metrics/$(BRANCH)
 metrics/$(BRANCH): app src web vendor
 	$(PHPMETRICS) --report-html=metrics/$(BRANCH) ./
 
-vendor: composer.lock
+vendor: composer.json
 	composer install
 
 $(PHPUNIT): vendor
