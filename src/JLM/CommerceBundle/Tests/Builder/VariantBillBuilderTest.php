@@ -50,7 +50,7 @@ class VariantBillBuilderTest extends \PHPUnit\Framework\TestCase
         $site->expects($this->any())->method('getTrustee')->will($this->returnValue($trustee));  // @deprecated
         $site->expects($this->any())->method('getManager')->will($this->returnValue($trustee));
         $site->expects($this->any())->method('getVat')->will($this->returnValue($vat));
-        $door->expects($this->any())->method('getSite')->will($this->returnValue($site));  // @deprecated
+        $door->expects($this->any())->method('getAdministrator')->will($this->returnValue($site));
         $door->expects($this->any())->method('getActualContract')->will($this->returnValue($contract));
         $ask = $this->createMock(AskQuote::class);
         $ask->expects($this->any())->method('getSite')->will($this->returnValue($site));

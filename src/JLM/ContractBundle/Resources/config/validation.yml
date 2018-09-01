@@ -1,6 +1,6 @@
 JLM\ContractBundle\Entity\Contract:
   getters:
     endAfterBegin:
-      - "True" : { message: "La date de fin doit être supérieure à la date de début" }
+      - "IsTrue" : { message: "La date de fin doit être supérieure à la date de début" }
     endWarrantyAfterBegin:
-      - "True" : { message: "La date de fin de garantie doit être supérieure à la date de début" }
+      - "IsTrue" : { message: "La date de fin de garantie doit être supérieure à la date de début" }

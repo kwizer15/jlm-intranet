@@ -42,16 +42,14 @@ class BaseManager extends ContainerAware implements ManagerInterface
 
     public function secure($role)
     {
-        $service = (Kernel::MAJOR_VERSION == 2 && Kernel::MINOR_VERSION > 3) ? 'security.token_storage'
-            : 'security.context';
-        if (false === $this->container->get($service)->isGranted($role)) {
+        if (false === $this->container->get('security.context')->isGranted($role)) {
             throw new AccessDeniedException();
         }
     }
 
     public function getUser()
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
