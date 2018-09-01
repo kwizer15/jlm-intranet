@@ -1,6 +1,8 @@
 JLM Intranet
 ============
 
+[![Build Status](https://travis-ci.org/kwizer15/hm-intranet.svg?branch=master)](https://travis-ci.org/kwizer15/hm-intranet)
+
 Pré-requis
 ----------
 
