@@ -13,6 +13,8 @@ namespace JLM\ProductBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use JLM\ProductBundle\Pdf\Stock;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -20,8 +22,10 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class StockController extends ContainerAware
+class StockController implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * Lists all Stock entities.
      *

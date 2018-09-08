@@ -2,12 +2,12 @@
 namespace JLM\TransmitterBundle\Form\Type;
 
 use JLM\TransmitterBundle\Entity\Ask;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AskDontTreatType extends \JLM\OfficeBundle\Form\Type\AskDontTreatType
 {
    
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => Ask::class]);
     }

@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use JLM\ModelBundle\Form\DataTransformer\SiteToStringTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SiteSelectType extends AbstractType
 {
@@ -39,7 +39,7 @@ class SiteSelectType extends AbstractType
         return TextareaType::class;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['invalid_message' => 'The selected site does not exist']);
     }

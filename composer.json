@@ -4,7 +4,10 @@
     "type": "project",
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
-        "psr-4": { "JLM\\": "src/JLM/" }
+        "psr-4": {
+            "JLM\\": "src/JLM/",
+            "Genemu\\": "src/Genemu/"
+        }
     },
     "require": {
         "php": ">=5.5",
@@ -22,7 +25,6 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "jms/security-extra-bundle": "dev-master",
         "friendsofsymfony/user-bundle": "2.0.*",
-        "genemu/form-bundle": "2.3.*",
         "itbz/fpdf": "1.7.1",
         "friendsofsymfony/rest-bundle": "1.3.*",
         "liuggio/excelbundle": "~2.0"

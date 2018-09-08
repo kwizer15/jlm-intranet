@@ -11,21 +11,22 @@
 
 namespace JLM\CommerceBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
 use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Event\QuoteEvent;
-use JLM\CommerceBundle\Entity\Event;
-use JLM\CommerceBundle\Entity\Quote;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Quote controller.
  *
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class QuoteController extends ContainerAware
+class QuoteController implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * Lists all Quote entities.
      */

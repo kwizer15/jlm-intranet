@@ -15,12 +15,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JLM\ContractBundle\Event\ContractEvent;
 use JLM\ContractBundle\JLMContractEvents;
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ContractController extends ContainerAware
+class ContractController implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * Lists all Contract entities.
      *

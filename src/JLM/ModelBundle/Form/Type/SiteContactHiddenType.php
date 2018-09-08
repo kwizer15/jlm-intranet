@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use JLM\ModelBundle\Form\DataTransformer\SiteContactToIntTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SiteContactHiddenType extends AbstractType
 {
@@ -39,7 +39,7 @@ class SiteContactHiddenType extends AbstractType
         return HiddenType::class;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['invalid_message' => 'The selected contact does not exist']);
     }

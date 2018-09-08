@@ -5,7 +5,12 @@ services:
       - { name: form.type, alias: jlm_user_registration }
   jlm_user.form.handler.registration:
     class: JLM\UserBundle\Form\Handler\RegistrationFormHandler
-    arguments: ["@fos_user.registration.form", "@request", "@fos_user.user_manager", "@fos_user.mailer", "@fos_user.util.token_generator"]
+    arguments:
+      - "@fos_user.registration.form"
+      - "@request"
+      - "@fos_user.user_manager"
+      - "@fos_user.mailer"
+      - "@fos_user.util.token_generator"
     scope: request
     public: false
         

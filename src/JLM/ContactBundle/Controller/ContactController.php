@@ -11,13 +11,16 @@
 
 namespace JLM\ContactBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Person controller.
  */
-class ContactController extends ContainerAware
+class ContactController implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * Edit or add a contact
      *

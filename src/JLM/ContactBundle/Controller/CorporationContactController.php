@@ -11,6 +11,8 @@
 
 namespace JLM\ContactBundle\Controller;
 
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,8 +21,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * Person controller.
  */
-class CorporationContactController extends ContainerAware
+class CorporationContactController implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
     /**
      * Edit or add a contact
      *

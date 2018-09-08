@@ -20,14 +20,18 @@ use JLM\CommerceBundle\Builder\Email\BillBoostMailBuilder;
 use JLM\CoreBundle\Factory\MailFactory;
 use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
 use JLM\CommerceBundle\Builder\Email\BillBoostBusinessMailBuilder;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
 use JLM\CommerceBundle\Excel\BillState;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class BillController extends ContainerAware
+class BillController implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * List bills
      */

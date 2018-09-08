@@ -1,7 +1,7 @@
 services:
   jlm_office.askquote_manager:
     class: JLM\CoreBundle\Manager\BaseManager
-    arguments: ["JLM\OfficeBundle\Entity\AskQuote"]
+    arguments: [JLM\OfficeBundle\Entity\AskQuote]
     calls:
       - [ setContainer, ["@service_container"]]
       - [ setServices ]

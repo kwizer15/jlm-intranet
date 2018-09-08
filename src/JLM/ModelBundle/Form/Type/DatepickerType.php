@@ -4,14 +4,14 @@ namespace JLM\ModelBundle\Form\Type;
 
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\DateType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DatepickerType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults(

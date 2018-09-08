@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use JLM\DailyBundle\Form\DataTransformer\InterventionToIntTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InterventionHiddenType extends AbstractType
 {
@@ -39,7 +39,7 @@ class InterventionHiddenType extends AbstractType
         return HiddenType::class;
     }
     
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['invalid_message' => 'The selected intervention does not exist']);
     }

@@ -6,7 +6,7 @@ use JLM\DailyBundle\Entity\PartFamily;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use JLM\CoreBundle\Form\DataTransformer\ObjectToStringAutocreateTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\FormView;
@@ -42,14 +42,15 @@ class PartFamilyType extends AbstractType
     {
         return TextType::class;
     }
-    
+
     /**
      * Ajoute l'option source
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
+        // TODO: Deprecated method to replace OptionsResolver::setOptional
         $resolver->setOptional(['source']);
     }
     
