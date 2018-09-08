@@ -2,7 +2,11 @@
 
 namespace JLM\DailyBundle\Form\Type;
 
+use JLM\DailyBundle\Entity\Maintenance;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -11,11 +15,11 @@ class MaintenanceCloseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('published', 'checkbox', ['label' => 'Publier', 'required' => false])
-            ->add('report', 'textarea', ['label' => 'Rapport', 'attr' => ['class' => 'input-xlarge']])
+            ->add('published', CheckboxType::class, ['label' => 'Publier', 'required' => false])
+            ->add('report', TextareaType::class, ['label' => 'Rapport', 'attr' => ['class' => 'input-xlarge']])
             ->add(
                 'rest',
-                'textarea',
+                TextareaType::class,
                 [
                  'label'    => 'Reste à faire',
                  'required' => false,
@@ -24,7 +28,7 @@ class MaintenanceCloseType extends AbstractType
             )
             ->add(
                 'voucher',
-                null,
+                TextType::class,
                 [
                  'label'    => 'Bon d\'intervention',
                  'required' => false,
@@ -33,7 +37,7 @@ class MaintenanceCloseType extends AbstractType
             )
             ->add(
                 'comments',
-                'textarea',
+                TextareaType::class,
                 [
                  'label'    => 'Commentaires',
                  'required' => false,
@@ -45,11 +49,6 @@ class MaintenanceCloseType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'JLM\DailyBundle\Entity\Maintenance']);
-    }
-
-    public function getName()
-    {
-        return 'jlm_dailybundle_maintenanceclosetype';
+        $resolver->setDefaults(['data_class' => Maintenance::class]);
     }
 }

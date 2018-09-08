@@ -12,6 +12,7 @@
 namespace JLM\ContactBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -26,19 +27,11 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('address', 'jlm_contact_address', ['label' => 'Adresse', 'required' => false])
-            ->add('phones', 'jlm_contact_contactphonecollection', ['label' => 'Téléphones', 'required' => false])
-            ->add('email', 'email', ['label' => 'Adresse e-mail', 'required' => false])
+            ->add('address', AddressType::class, ['label' => 'Adresse', 'required' => false])
+            ->add('phones', ContactPhoneCollectionType::class, ['label' => 'Téléphones', 'required' => false])
+            ->add('email', EmailType::class, ['label' => 'Adresse e-mail', 'required' => false])
             //            ->add('image','jlm_core_uploaddocument',array('label'=>'Image', 'required'=>false))
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_contact_contact';
     }
 
     /**

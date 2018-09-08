@@ -11,7 +11,13 @@
 
 namespace JLM\CommerceBundle\Form\Type;
 
+use JLM\CommerceBundle\Entity\QuoteVariant;
+use JLM\ModelBundle\Form\Type\DatepickerType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -26,23 +32,23 @@ class QuoteVariantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('quote', 'quote_hidden')
-            ->add('creation', 'datepicker', ['label' => 'Date de création'])
-            ->add('discount', 'percent', ['label' => 'Remise', 'attr' => ['class' => 'input-mini']])
-            ->add('paymentRules', null, ['label' => 'Réglement', 'attr' => ['class' => 'input-xxlarge']])
-            ->add('deliveryRules', null, ['label' => 'Délai', 'attr' => ['class' => 'input-xxlarge']])
+            ->add('quote', QuoteHiddenType::class)
+            ->add('creation', DatepickerType::class, ['label' => 'Date de création'])
+            ->add('discount', PercentType::class, ['label' => 'Remise', 'attr' => ['class' => 'input-mini']])
+            ->add('paymentRules', TextType::class, ['label' => 'Réglement', 'attr' => ['class' => 'input-xxlarge']])
+            ->add('deliveryRules', TextType::class, ['label' => 'Délai', 'attr' => ['class' => 'input-xxlarge']])
             ->add(
                 'intro',
-                null,
+                TextType::class,
                 ['label' => 'Introduction', 'attr' => ['class' => 'span12', 'placeholder' => 'Suite à ...']]
             )
             ->add(
                 'lines',
-                'collection',
-                ['prototype' => true, 'allow_add' => true, 'allow_delete' => true, 'type' => 'quote_line']
+                CollectionType::class,
+                ['prototype' => true, 'allow_add' => true, 'allow_delete' => true, 'type' => QuoteLineType::class]
             )
-            ->add('vat', 'hidden', ['mapped' => false])
-            ->add('vatTransmitter', 'hidden', ['mapped' => false])
+            ->add('vat', HiddenType::class, ['mapped' => false])
+            ->add('vatTransmitter', HiddenType::class, ['mapped' => false])
         ;
     }
 
@@ -51,14 +57,6 @@ class QuoteVariantType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'JLM\CommerceBundle\Entity\QuoteVariant']);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'quote_variant';
+        $resolver->setDefaults(['data_class' => QuoteVariant::class]);
     }
 }

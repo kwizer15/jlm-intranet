@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use JLM\ModelBundle\Form\DataTransformer\SiteToStringTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -35,12 +36,7 @@ class SiteSelectType extends AbstractType
 
     public function getParent()
     {
-        return 'textarea';
-    }
-
-    public function getName()
-    {
-        return 'site_select';
+        return TextareaType::class;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

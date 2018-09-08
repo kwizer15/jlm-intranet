@@ -2,6 +2,7 @@
 
 namespace JLM\ModelBundle\Form\Type;
 
+use Genemu\Bundle\FormBundle\Form\JQuery\Type\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -25,11 +26,6 @@ class DatepickerType extends AbstractType
 
     public function getParent()
     {
-        return 'genemu_jquerydate';
-    }
-
-    public function getName()
-    {
-        return 'datepicker';
+        return DateType::class;
     }
 }

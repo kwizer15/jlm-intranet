@@ -2,6 +2,7 @@
 
 namespace JLM\ModelBundle\Form\Type;
 
+use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use JLM\ModelBundle\Form\DataTransformer\TrusteeToIntTransformer;
@@ -26,11 +27,6 @@ class TrusteeSelectType extends AbstractType
     public function getParent()
     {
         return 'genemu_jqueryselect2_hidden';
-    }
-
-    public function getName()
-    {
-        return 'trustee_select';
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

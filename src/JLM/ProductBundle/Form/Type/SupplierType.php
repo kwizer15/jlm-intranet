@@ -11,7 +11,10 @@
 
 namespace JLM\ProductBundle\Form\Type;
 
+use JLM\ContactBundle\Form\Type\CorporationSelectType;
+use JLM\ProductBundle\Entity\Supplier;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use JLM\ContactBundle\Form\Type\AddressType;
@@ -27,17 +30,9 @@ class SupplierType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contact', 'jlm_contact_corporation_select', ['label' => 'Société'])
-            ->add('website', 'url', ['label' => 'Site internet', 'required' => false])
+            ->add('contact', CorporationSelectType::class, ['label' => 'Société'])
+            ->add('website', UrlType::class, ['label' => 'Site internet', 'required' => false])
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_product_supplier';
     }
     
     /**
@@ -46,7 +41,7 @@ class SupplierType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-            ['data_class' => 'JLM\ProductBundle\Entity\Supplier']
+            ['data_class' => Supplier::class]
         );
     }
 }

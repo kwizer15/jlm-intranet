@@ -2,7 +2,11 @@
 
 namespace JLM\DailyBundle\Form\Type;
 
+use JLM\DailyBundle\Entity\ShiftTechnician;
+use JLM\ModelBundle\Form\Type\DatepickerType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -11,11 +15,11 @@ class AddTechnicianType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('technician', null, ['label' => 'Technicien'])
-            ->add('begin', 'datepicker', ['label' => 'Date'])
+            ->add('technician', TextType::class, ['label' => 'Technicien'])
+            ->add('begin', DatepickerType::class, ['label' => 'Date'])
             ->add(
                 'comment',
-                'textarea',
+                TextareaType::class,
                 [
                  'label'    => 'Commentaire',
                  'required' => false,
@@ -27,11 +31,6 @@ class AddTechnicianType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'JLM\DailyBundle\Entity\ShiftTechnician']);
-    }
-
-    public function getName()
-    {
-        return 'jlm_dailybundle_addtechniciantype';
+        $resolver->setDefaults(['data_class' => ShiftTechnician::class]);
     }
 }

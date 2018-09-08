@@ -11,7 +11,9 @@
 
 namespace JLM\ContactBundle\Form\Type;
 
+use JLM\ContactBundle\Entity\Address;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -26,17 +28,9 @@ class AddressType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('street', null, ['label' => 'Adresse'])
-            ->add('city', 'jlm_contact_city_select', ['label' => 'Ville'])
+            ->add('street', TextType::class, ['label' => 'Adresse'])
+            ->add('city', CitySelectType::class, ['label' => 'Ville'])
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_contact_address';
     }
 
     /**
@@ -45,6 +39,6 @@ class AddressType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-            ->setDefaults(['data_class' => 'JLM\ContactBundle\Entity\Address']);
+            ->setDefaults(['data_class' => Address::class]);
     }
 }

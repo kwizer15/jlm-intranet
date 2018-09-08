@@ -3,6 +3,7 @@
 namespace JLM\OfficeBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -13,7 +14,7 @@ abstract class AskDontTreatType extends AbstractType
         $builder
             ->add(
                 'dontTreat',
-                null,
+                TextType::class,
                 ['label' => 'Raison du non-traitement', 'attr' => ['class' => 'input-xlarge', 'rows' => 5]]
             );
     }

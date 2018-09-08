@@ -11,7 +11,17 @@
 
 namespace JLM\CommerceBundle\Form\Type;
 
+use JLM\CommerceBundle\Entity\Quote;
+use JLM\ModelBundle\Form\Type\DatepickerType;
+use JLM\ModelBundle\Form\Type\DoorHiddenType;
+use JLM\ModelBundle\Form\Type\SiteContactHiddenType;
+use JLM\ModelBundle\Form\Type\TrusteeHiddenType;
+use JLM\OfficeBundle\Form\Type\AskQuoteHiddenType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -26,24 +36,32 @@ class QuoteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('creation', 'datepicker', ['label' => 'Date de création'])
-            ->add('trustee', 'trustee_hidden', ['required' => false])
-            ->add('trusteeName', null, ['label' => 'Syndic'])
-            ->add('trusteeAddress', null, ['label' => 'Adresse de facturation', 'attr' => ['class' => 'input-xlarge']])
-            ->add('contact', 'sitecontact_hidden', ['required' => false])
-            ->add('contactCp', null, ['label' => 'A l\'attention de'])
-            ->add('follower', 'hidden', ['required' => false])
-            ->add('followerCp', null, ['label' => 'Suivi par'])
-            ->add('door', 'door_hidden', ['required' => false])
-            ->add('doorCp', null, ['label' => 'Affaire', 'attr' => ['class' => 'input-xlarge', 'rows' => '3']])
+            ->add('creation', DatepickerType::class, ['label' => 'Date de création'])
+            ->add('trustee', TrusteeHiddenType::class, ['required' => false])
+            ->add('trusteeName', TextType::class, ['label' => 'Syndic'])
+            ->add(
+                'trusteeAddress',
+                TextType::class,
+                ['label' => 'Adresse de facturation', 'attr' => ['class' => 'input-xlarge']]
+            )
+            ->add('contact', SiteContactHiddenType::class, ['required' => false])
+            ->add('contactCp', TextType::class, ['label' => 'A l\'attention de'])
+            ->add('follower', HiddenType::class, ['required' => false])
+            ->add('followerCp', TextType::class, ['label' => 'Suivi par'])
+            ->add('door', DoorHiddenType::class, ['required' => false])
+            ->add(
+                'doorCp',
+                TextType::class,
+                ['label' => 'Affaire', 'attr' => ['class' => 'input-xlarge', 'rows' => '3']]
+            )
             ->add(
                 'vat',
-                'percent',
+                PercentType::class,
                 ['precision' => 1, 'label' => 'TVA applicable', 'attr' => ['class' => 'input-mini']]
             )
-            ->add('description', 'textarea', ['required' => false])
-            ->add('vatTransmitter', 'hidden')
-            ->add('ask', 'askquote_hidden')
+            ->add('description', TextareaType::class, ['required' => false])
+            ->add('vatTransmitter', HiddenType::class)
+            ->add('ask', AskQuoteHiddenType::class)
         ;
     }
 
@@ -52,14 +70,6 @@ class QuoteType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'JLM\CommerceBundle\Entity\Quote']);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'quote';
+        $resolver->setDefaults(['data_class' => Quote::class]);
     }
 }

@@ -2,7 +2,12 @@
 
 namespace JLM\DailyBundle\Form\Type;
 
+use JLM\CommerceBundle\Form\Type\QuoteVariantHiddenType;
+use JLM\DailyBundle\Entity\Work;
+use JLM\ModelBundle\Form\Type\DoorHiddenType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -11,36 +16,37 @@ class WorkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('door', 'door_hidden')
-            ->add('place', null, ['label' => 'Lieu', 'attr' => ['class' => 'input-xlarge']])
-            ->add('quote', 'quotevariant_hidden', ['required' => false])
-            ->add('reason', null, ['label' => 'Raison de l\'intervention', 'attr' => ['class' => 'input-xlarge']])
-            ->add('contactName', null, ['label' => 'Nom du contact', 'required' => false])
-            ->add('contactPhones', null, ['label' => 'Téléphones', 'required' => false])
+            ->add('door', DoorHiddenType::class)
+            ->add('place', TextType::class, ['label' => 'Lieu', 'attr' => ['class' => 'input-xlarge']])
+            ->add('quote', QuoteVariantHiddenType::class, ['required' => false])
+            ->add(
+                'reason',
+                TextType::class,
+                ['label' => 'Raison de l\'intervention', 'attr' => ['class' => 'input-xlarge']]
+            )
+            ->add('contactName', TextType::class, ['label' => 'Nom du contact', 'required' => false])
+            ->add('contactPhones', TextType::class, ['label' => 'Téléphones', 'required' => false])
             ->add(
                 'contactEmail',
-                'email',
+                EmailType::class,
                 [
-                 'label'    => 'e-mail',
-                 'required' => false,
-                 'attr'     => ['class' => 'input-xlarge'],
+                    'label' => 'e-mail',
+                    'required' => false,
+                    'attr' => ['class' => 'input-xlarge'],
                 ]
             )
-            ->add('category', null, ['label' => 'Type de travaux'])
-            ->add('objective', null, ['label' => 'Objectif'])
+            ->add('category', TextType::class, ['label' => 'Type de travaux'])
+            ->add('objective', TextType::class, ['label' => 'Objectif'])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-                                'data_class' => 'JLM\DailyBundle\Entity\Work',
-                                'attr'       => ['class' => 'interventionForm'],
-                               ]);
-    }
-
-    public function getName()
-    {
-        return 'jlm_dailybundle_worktype';
+        $resolver->setDefaults(
+            [
+                'data_class' => Work::class,
+                'attr' => ['class' => 'interventionForm'],
+            ]
+        );
     }
 }

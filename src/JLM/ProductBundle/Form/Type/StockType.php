@@ -2,7 +2,9 @@
 
 namespace JLM\ProductBundle\Form\Type;
 
+use JLM\ProductBundle\Entity\Stock;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -15,9 +17,9 @@ class StockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('quantity')
-            ->add('minimum')
-            ->add('maximum')
+            ->add('quantity', TextType::class)
+            ->add('minimum', TextType::class)
+            ->add('maximum', TextType::class)
             
         ;
     }
@@ -27,14 +29,6 @@ class StockType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'JLM\ProductBundle\Entity\Stock']);
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'jlm_productbundle_stock';
+        $resolver->setDefaults(['data_class' => Stock::class]);
     }
 }

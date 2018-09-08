@@ -41,3 +41,6 @@ phpunit.xml: phpunit.xml.dist
 
 phpcs.xml: phpcs.xml.dist
 	cp phpcs.xml.dist phpcs.xml
+
+server:
+	php app/console server:start

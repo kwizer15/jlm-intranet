@@ -11,6 +11,8 @@
 
 namespace JLM\ContractBundle\Form\Type;
 
+use JLM\ContractBundle\Entity\Contract;
+use JLM\ModelBundle\Form\Type\DatepickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -26,16 +28,8 @@ class ContractStopType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('end', 'datepicker', ['label' => 'Fin du contrat', 'required' => false])
+            ->add('end', DatepickerType::class, ['label' => 'Fin du contrat', 'required' => false])
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_contract_contractstop';
     }
     
     /**
@@ -44,8 +38,8 @@ class ContractStopType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-                                'data_class' => 'JLM\ContractBundle\Entity\Contract',
-                                'label'      => 'Arrêt du contrat',
-                               ]);
+            'data_class' => Contract::class,
+            'label' => 'Arrêt du contrat',
+        ]);
     }
 }

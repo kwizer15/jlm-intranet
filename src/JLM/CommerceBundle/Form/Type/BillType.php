@@ -11,7 +11,16 @@
 
 namespace JLM\CommerceBundle\Form\Type;
 
+use JLM\CommerceBundle\Entity\Bill;
+use JLM\DailyBundle\Form\Type\InterventionHiddenType;
+use JLM\ModelBundle\Form\Type\DatepickerType;
+use JLM\ModelBundle\Form\Type\SiteHiddenType;
+use JLM\ModelBundle\Form\Type\TrusteeHiddenType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -26,29 +35,41 @@ class BillType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('intervention', 'intervention_hidden', ['required' => false])
-            ->add('siteObject', 'site_hidden', ['required' => false])
-            ->add('creation', 'datepicker', ['label' => 'Date de création'])
-            ->add('trustee', 'trustee_hidden', ['required' => false])
-            ->add('prelabel', null, ['label' => 'Libellé de facturation', 'required' => false])
-            ->add('trusteeName', null, ['label' => 'Syndic'])
-            ->add('trusteeAddress', null, ['label' => 'Adresse de facturation', 'attr' => ['class' => 'input-xlarge']])
-            ->add('accountNumber', null, ['label' => 'Numéro de compte'])
-            ->add('reference', null, ['label' => 'Références', 'attr' => ['class' => 'input-xlarge', 'rows' => '3']])
-            ->add('site', null, ['label' => 'Affaire', 'attr' => ['class' => 'input-xlarge', 'rows' => '3']])
-            ->add('details', null, ['label' => 'Détails', 'attr' => ['class' => 'input-xlarge', 'rows' => '3']])
-            ->add('discount', 'percent', ['label' => 'Remise', 'attr' => ['class' => 'input-mini']])
-            ->add('maturity', null, ['label' => 'Echéance', 'attr' => ['class' => 'input-mini']])
+            ->add('intervention', InterventionHiddenType::class, ['required' => false])
+            ->add('siteObject', SiteHiddenType::class, ['required' => false])
+            ->add('creation', DatepickerType::class, ['label' => 'Date de création'])
+            ->add('trustee', TrusteeHiddenType::class, ['required' => false])
+            ->add('prelabel', TextType::class, ['label' => 'Libellé de facturation', 'required' => false])
+            ->add('trusteeName', TextType::class, ['label' => 'Syndic'])
+            ->add(
+                'trusteeAddress',
+                TextType::class,
+                ['label' => 'Adresse de facturation', 'attr' => ['class' => 'input-xlarge']]
+            )
+            ->add('accountNumber', TextType::class, ['label' => 'Numéro de compte'])
+            ->add(
+                'reference',
+                TextType::class,
+                ['label' => 'Références', 'attr' => ['class' => 'input-xlarge', 'rows' => '3']]
+            )
+            ->add('site', TextType::class, ['label' => 'Affaire', 'attr' => ['class' => 'input-xlarge', 'rows' => '3']])
+            ->add(
+                'details',
+                TextType::class,
+                ['label' => 'Détails', 'attr' => ['class' => 'input-xlarge', 'rows' => '3']]
+            )
+            ->add('discount', PercentType::class, ['label' => 'Remise', 'attr' => ['class' => 'input-mini']])
+            ->add('maturity', TextType::class, ['label' => 'Echéance', 'attr' => ['class' => 'input-mini']])
             ->add(
                 'property',
-                null,
+                TextType::class,
                 ['label' => 'Clause de propriété', 'required' => false, 'attr' => ['class' => 'input-xxlarge']]
             )
-            ->add('earlyPayment', null, ['label' => 'Escompte', 'attr' => ['class' => 'input-xxlarge']])
-            ->add('penalty', null, ['label' => 'Penalités', 'attr' => ['class' => 'input-xxlarge']])
+            ->add('earlyPayment', TextType::class, ['label' => 'Escompte', 'attr' => ['class' => 'input-xxlarge']])
+            ->add('penalty', TextType::class, ['label' => 'Penalités', 'attr' => ['class' => 'input-xxlarge']])
             ->add(
                 'intro',
-                null,
+                TextType::class,
                 [
                     'label' => 'Introduction',
                     'required' => false,
@@ -57,15 +78,15 @@ class BillType extends AbstractType
             )
             ->add(
                 'lines',
-                'collection',
-                ['prototype' => true, 'allow_add' => true, 'allow_delete' => true, 'type' => 'jlm_commerce_bill_line']
+                CollectionType::class,
+                ['prototype' => true, 'allow_add' => true, 'allow_delete' => true, 'type' => BillLineType::class]
             )
             ->add(
                 'vat',
-                'percent',
+                PercentType::class,
                 ['precision' => 1, 'label' => 'TVA applicable', 'attr' => ['class' => 'input-mini']]
             )
-            ->add('vatTransmitter', 'hidden')
+            ->add('vatTransmitter', HiddenType::class)
         ;
     }
 
@@ -74,14 +95,6 @@ class BillType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'JLM\CommerceBundle\Entity\Bill']);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_commerce_bill';
+        $resolver->setDefaults(['data_class' => Bill::class]);
     }
 }

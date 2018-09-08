@@ -3,6 +3,7 @@
 namespace JLM\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use JLM\UserBundle\Form\DataTransformer\UserToIntTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -35,12 +36,7 @@ class UserHiddenType extends AbstractType
 
     public function getParent()
     {
-        return 'hidden';
-    }
-    
-    public function getName()
-    {
-        return 'user_hidden';
+        return HiddenType::class;
     }
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)

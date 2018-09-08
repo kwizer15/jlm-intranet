@@ -11,6 +11,7 @@
 
 namespace JLM\ContactBundle\Form\Type;
 
+use JLM\ContactBundle\Form\DataTransformer\CityToIntTransformer;
 use JLM\CoreBundle\Form\Type\AbstractSelectType;
 
 /**
@@ -23,14 +24,6 @@ class CitySelectType extends AbstractSelectType
      */
     protected function getTransformerClass()
     {
-        return '\JLM\ContactBundle\Form\DataTransformer\CityToIntTransformer';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getTypeName()
-    {
-        return 'jlm_contact_city';
+        return CityToIntTransformer::class;
     }
 }

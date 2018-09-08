@@ -12,10 +12,10 @@
 namespace JLM\ContactBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use JLM\ContactBundle\Entity\ContactPhone;
-use JLM\ContactBundle\Model\ContactInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -28,18 +28,11 @@ class ContactPhoneType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', null, ['label' => 'Libélé'])
-            ->add('phone', 'jlm_contact_phone', ['label' => 'Numéro'])
+            ->add('label', TextType::class, ['label' => 'Libélé'])
+            ->add('phone', ContactPhoneType::class, ['label' => 'Numéro'])
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_contact_contactphone';
-    }
 
     /**
      * {@inheritdoc}
@@ -47,6 +40,6 @@ class ContactPhoneType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-            ->setDefaults(['data_class' => 'JLM\ContactBundle\Entity\ContactPhone']);
+            ->setDefaults(['data_class' => ContactPhone::class]);
     }
 }

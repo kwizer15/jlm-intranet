@@ -2,7 +2,11 @@
 
 namespace JLM\ModelBundle\Form\Type;
 
+use JLM\ContactBundle\Form\Type\AddressType;
+use JLM\ModelBundle\Entity\Site;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -11,17 +15,17 @@ class SiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('trustee', 'trustee_select', ['label' => 'Syndic', 'attr' => ['class' => 'input-large']])
-            ->add('address', 'jlm_contact_address', ['label' => 'Adresse'])
-            ->add('observations', null, ['label' => 'Observations', 'attr' => ['class' => 'input-xlarge']])
+            ->add('trustee', TrusteeSelectType::class, ['label' => 'Syndic', 'attr' => ['class' => 'input-large']])
+            ->add('address', AddressType::class, ['label' => 'Adresse'])
+            ->add('observations', TextType::class, ['label' => 'Observations', 'attr' => ['class' => 'input-xlarge']])
             ->add(
                 'groupNumber',
-                null,
+                TextType::class,
                 ['label' => 'Groupe (RIVP)', 'required' => false, 'attr' => ['class' => 'input-mini']]
             )
             ->add(
                 'accession',
-                'choice',
+                ChoiceType::class,
                 [
                     'label' => 'Accession/Social',
                     'choices' => ['1' => 'Accession', '0' => 'Social'],
@@ -29,18 +33,13 @@ class SiteType extends AbstractType
                     'multiple' => false,
                 ]
             )
-            ->add('vat', null, ['label' => 'TVA', 'attr' => ['class' => 'input-small']])
-            ->add('lodge', 'jlm_contact_address', ['label' => 'Loge gardien', 'required' => false])
+            ->add('vat', TextType::class, ['label' => 'TVA', 'attr' => ['class' => 'input-small']])
+            ->add('lodge', AddressType::class, ['label' => 'Loge gardien', 'required' => false])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'JLM\ModelBundle\Entity\Site']);
-    }
-
-    public function getName()
-    {
-        return 'jlm_modelbundle_sitetype';
+        $resolver->setDefaults(['data_class' => Site::class]);
     }
 }

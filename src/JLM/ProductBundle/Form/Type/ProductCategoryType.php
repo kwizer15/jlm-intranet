@@ -11,7 +11,9 @@
 
 namespace JLM\ProductBundle\Form\Type;
 
+use JLM\ProductBundle\Entity\ProductCategory;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -26,17 +28,9 @@ class ProductCategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, ['label' => 'Nom'])
-            ->add('parent', null, ['required' => false, 'label' => 'Famille parente'])
+            ->add('name', TextType::class, ['label' => 'Nom'])
+            ->add('parent', TextType::class, ['required' => false, 'label' => 'Famille parente'])
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_product_productcategory';
     }
     
     /**
@@ -45,6 +39,6 @@ class ProductCategoryType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-        ->setDefaults(['data_class' => 'JLM\ProductBundle\Entity\ProductCategory']);
+        ->setDefaults(['data_class' => ProductCategory::class]);
     }
 }

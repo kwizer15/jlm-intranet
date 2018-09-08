@@ -11,7 +11,10 @@
 
 namespace JLM\FeeBundle\Form\Type;
 
+use JLM\FeeBundle\Entity\FeesFollower;
+use JLM\ModelBundle\Form\Type\DatepickerType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -26,19 +29,11 @@ class FeesFollowerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('activation', 'datepicker', ['label' => 'Date d\'activation'])
-        ->add('frequence1', null, ['label' => 'Annuelle'])
-        ->add('frequence2', null, ['label' => 'Semestriellle'])
-        ->add('frequence4', null, ['label' => 'Trimestrielle'])
+        ->add('activation', DatepickerType::class, ['label' => 'Date d\'activation'])
+        ->add('frequence1', TextType::class, ['label' => 'Annuelle'])
+        ->add('frequence2', TextType::class, ['label' => 'Semestriellle'])
+        ->add('frequence4', TextType::class, ['label' => 'Trimestrielle'])
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'feesfollower';
     }
 
     /**
@@ -46,6 +41,6 @@ class FeesFollowerType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'JLM\FeeBundle\Entity\FeesFollower']);
+        $resolver->setDefaults(['data_class' => FeesFollower::class]);
     }
 }

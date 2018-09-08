@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -35,24 +36,17 @@ abstract class AbstractHiddenType extends AbstractType
 
     public function getParent()
     {
-        return 'hidden';
-    }
-
-    public function getName()
-    {
-        return $this->getTypeName() . '_hidden';
+        return HiddenType::class;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
             [
-                'invalid_message' => 'The selected ' . $this->getTypeName() . ' does not exist',
+                'invalid_message' => 'The selected ' . $this->getName() . ' does not exist',
             ]
         );
     }
 
     abstract protected function getTransformerClass();
-
-    abstract protected function getTypeName();
 }

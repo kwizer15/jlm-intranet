@@ -11,7 +11,9 @@
 
 namespace JLM\CoreBundle\Form\Type;
 
+use JLM\CoreBundle\Entity\UploadDocument;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -25,15 +27,7 @@ class UploadDocumentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('file', 'file');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_core_uploaddocument';
+        $builder->add('file', FileType::class);
     }
     
     /**
@@ -41,6 +35,6 @@ class UploadDocumentType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'JLM\CoreBundle\Entity\UploadDocument']);
+        $resolver->setDefaults(['data_class' => UploadDocument::class]);
     }
 }

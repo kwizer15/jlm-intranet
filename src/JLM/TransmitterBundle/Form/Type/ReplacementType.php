@@ -2,7 +2,11 @@
 
 namespace JLM\TransmitterBundle\Form\Type;
 
+use JLM\TransmitterBundle\Entity\Replacement;
+use JLM\TransmitterBundle\Entity\Transmitter;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use JLM\TransmitterBundle\Entity\TransmitterRepository;
@@ -20,22 +24,26 @@ class ReplacementType extends AbstractType
     {
         $id = $this->id;
         $builder
-            ->add('attribution', 'transmitter_attribution_hidden')
+            ->add('attribution', AttributionHiddenType::class)
             ->add(
                 'old',
-                'entity',
+                EntityType::class,
                 [
-                    'class' => 'JLM\TransmitterBundle\Entity\Transmitter',
+                    'class' => Transmitter::class,
                     'label' => 'Ancien émetteur',
                     'query_builder' => function (TransmitterRepository $er) use ($id) {
                         return $er->getFromSite($id);
                     },
                 ]
             )
-            ->add('newNumber', null, ['label' => 'Numéro du nouvel émetteur', 'attr' => ['class' => 'input-small']])
+            ->add(
+                'newNumber',
+                TextType::class,
+                ['label' => 'Numéro du nouvel émetteur', 'attr' => ['class' => 'input-small']]
+            )
             ->add(
                 'guarantee',
-                null,
+                TextType::class,
                 ['label' => 'Garantie du nouvel émetteur', 'attr' => ['class' => 'input-mini', 'placeholder' => 'MMAA']]
             )
         ;
@@ -45,14 +53,9 @@ class ReplacementType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'JLM\TransmitterBundle\Entity\Replacement',
+                'data_class' => Replacement::class,
                 'attr' => ['class' => 'transmitter_replacement'],
             ]
         );
-    }
-
-    public function getName()
-    {
-        return 'jlm_transmitterbundle_replacementtype';
     }
 }

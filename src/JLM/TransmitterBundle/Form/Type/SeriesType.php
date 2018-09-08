@@ -2,7 +2,12 @@
 
 namespace JLM\TransmitterBundle\Form\Type;
 
+use JLM\TransmitterBundle\Entity\Model;
+use JLM\TransmitterBundle\Entity\Series;
+use JLM\TransmitterBundle\Entity\UserGroup;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use JLM\TransmitterBundle\Entity\UserGroupRepository;
@@ -20,12 +25,12 @@ class SeriesType extends AbstractType
     {
         $id = $this->id;
         $builder
-            ->add('attribution', 'transmitter_attribution_hidden')
+            ->add('attribution', AttributionHiddenType::class)
             ->add(
                 'userGroup',
-                'entity',
+                EntityType::class,
                 [
-                    'class' => 'JLM\TransmitterBundle\Entity\UserGroup',
+                    'class' => UserGroup::class,
                     'label' => 'Groupe utilisateur',
                     'query_builder' => function (UserGroupRepository $er) use ($id) {
                         return $er->getFromSite($id);
@@ -35,23 +40,31 @@ class SeriesType extends AbstractType
             )
             ->add(
                 'model',
-                'entity',
+                EntityType::class,
                 [
-                    'class' => 'JLM\TransmitterBundle\Entity\Model',
+                    'class' => Model::class,
                     'label' => 'Type d\'émetteurs',
                     'empty_value' => 'Choisissez...',
                 ]
             )
             ->add(
                 'quantity',
-                null,
+                TextType::class,
                 ['label' => 'Nombre d\'émetteurs', 'attr' => ['class' => 'input-mini', 'maxlength' => 3]]
             )
-            ->add('first', null, ['label' => 'Premier numéro', 'attr' => ['class' => 'input-small', 'maxlength' => 6]])
-            ->add('last', null, ['label' => 'Dernier numéro', 'attr' => ['class' => 'input-small', 'maxlength' => 6]])
+            ->add(
+                'first',
+                TextType::class,
+                ['label' => 'Premier numéro', 'attr' => ['class' => 'input-small', 'maxlength' => 6]]
+            )
+            ->add(
+                'last',
+                TextType::class,
+                ['label' => 'Dernier numéro', 'attr' => ['class' => 'input-small', 'maxlength' => 6]]
+            )
             ->add(
                 'guarantee',
-                null,
+                TextType::class,
                 ['label' => 'Garantie', 'attr' => ['placeholder' => 'MMAA', 'class' => 'input-mini', 'maxlength' => 4]]
             )
         ;
@@ -61,14 +74,9 @@ class SeriesType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'JLM\TransmitterBundle\Entity\Series',
+                'data_class' => Series::class,
                 'attr' => ['class' => 'transmitter_series'],
             ]
         );
-    }
-
-    public function getName()
-    {
-        return 'jlm_transmitterbundle_seriestype';
     }
 }

@@ -11,7 +11,9 @@
 
 namespace JLM\ContactBundle\Form\Type;
 
+use JLM\ContactBundle\Entity\Association;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -26,17 +28,9 @@ class AssociationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, ['label' => 'Nom'])
-            ->add('contact', new ContactType(), ['data_class' => 'JLM\ContactBundle\Entity\Association'])
+            ->add('name', TextType::class, ['label' => 'Nom'])
+            ->add('contact', ContactType::class, ['data_class' => Association::class])
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_contact_association';
     }
 
     /**
@@ -47,7 +41,7 @@ class AssociationType extends AbstractType
         $resolver
             ->setDefaults(
                 [
-                    'data_class' => 'JLM\ContactBundle\Entity\Association',
+                    'data_class' => Association::class,
                     'label' => 'Association',
                 ]
             );

@@ -2,7 +2,10 @@
 
 namespace JLM\OfficeBundle\Form\Type;
 
+use JLM\OfficeBundle\Entity\OrderLine;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -12,20 +15,15 @@ class OrderLineType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('position', 'hidden')
-        ->add('reference', null, ['required' => false, 'attr' => ['class' => 'input-small']])
-        ->add('designation', null, ['attr' => ['class' => 'input-xxlarge']])
-        ->add('quantity', null, ['attr' => ['class' => 'input-mini']])
+        ->add('position', HiddenType::class)
+        ->add('reference', TextType::class, ['required' => false, 'attr' => ['class' => 'input-small']])
+        ->add('designation', TextType::class, ['attr' => ['class' => 'input-xxlarge']])
+        ->add('quantity', TextType::class, ['attr' => ['class' => 'input-mini']])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'JLM\OfficeBundle\Entity\OrderLine']);
-    }
-
-    public function getName()
-    {
-        return 'order_line';
+        $resolver->setDefaults(['data_class' => OrderLine::class]);
     }
 }

@@ -11,7 +11,14 @@
 
 namespace JLM\ContractBundle\Form\Type;
 
+use JLM\ContractBundle\Entity\Contract;
+use JLM\ModelBundle\Form\Type\DatepickerType;
+use JLM\ModelBundle\Form\Type\DoorHiddenType;
+use JLM\ModelBundle\Form\Type\TrusteeSelectType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -26,27 +33,19 @@ class ContractType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('door', 'door_hidden')
-            ->add('trustee', 'trustee_select', ['label' => 'Syndic'])
-            ->add('number', null, ['label' => 'Numéro'])
-            ->add('complete', 'choice', ['label' => 'Type', 'choices' => ['0' => 'Normal', '1' => 'Complet']])
+            ->add('door', DoorHiddenType::class)
+            ->add('trustee', TrusteeSelectType::class, ['label' => 'Syndic'])
+            ->add('number', TextType::class, ['label' => 'Numéro'])
+            ->add('complete', ChoiceType::class, ['label' => 'Type', 'choices' => ['0' => 'Normal', '1' => 'Complet']])
             ->add(
                 'option',
-                'choice',
+                ChoiceType::class,
                 ['label' => 'Option', 'choices' => ['0' => '24/24h 7/7j', '1' => '8h30-17h30 du lundi au vendredi']]
             )
-            ->add('begin', 'datepicker', ['label' => 'Début du contrat'])
-            ->add('endWarranty', 'datepicker', ['label' => 'Fin de garantie', 'required' => false])
-            ->add('fee', 'money', ['label' => 'Redevance annuelle', 'grouping' => true])
+            ->add('begin', DatepickerType::class, ['label' => 'Début du contrat'])
+            ->add('endWarranty', DatepickerType::class, ['label' => 'Fin de garantie', 'required' => false])
+            ->add('fee', MoneyType::class, ['label' => 'Redevance annuelle', 'grouping' => true])
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_contract_contract';
     }
 
     /**
@@ -56,7 +55,7 @@ class ContractType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'JLM\ContractBundle\Entity\Contract',
+                'data_class' => Contract::class,
                 'label' => 'Contrat',
             ]
         );

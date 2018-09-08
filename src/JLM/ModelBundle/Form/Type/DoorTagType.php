@@ -11,7 +11,9 @@
 
 namespace JLM\ModelBundle\Form\Type;
 
+use JLM\ModelBundle\Entity\Door;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -23,16 +25,11 @@ class DoorTagType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('code', null, ['label' => 'Code étiquette', 'attr' => ['class' => 'input-small']]);
-    }
-
-    public function getName()
-    {
-        return 'jlm_modelbundle_doortagtype';
+            ->add('code', TextType::class, ['label' => 'Code étiquette', 'attr' => ['class' => 'input-small']]);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'JLM\ModelBundle\Entity\Door']);
+        $resolver->setDefaults(['data_class' => Door::class]);
     }
 }

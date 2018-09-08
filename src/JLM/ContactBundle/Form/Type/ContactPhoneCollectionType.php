@@ -12,7 +12,6 @@
 namespace JLM\ContactBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
@@ -31,19 +30,11 @@ class ContactPhoneCollectionType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
-    {
-        return 'jlm_contact_contactphonecollection';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
             [
-                'type' => 'jlm_contact_contactphone',
+                'type' => ContactPhoneType::class,
                 'prototype' => true,
                 'allow_add' => true,
                 'allow_delete' => true,

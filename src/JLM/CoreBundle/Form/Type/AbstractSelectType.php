@@ -11,8 +11,9 @@
 
 namespace JLM\CoreBundle\Form\Type;
 
-use Symfony\Component\Form\FormBuilderInterface;
+use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -49,29 +50,20 @@ abstract class AbstractSelectType extends AbstractType
     {
         $transformer = $this->getTransformerClass();
         $resolver->setDefaults([
-                                'transformer' => new $transformer($this->om),
-                               ]);
+            'widget' => HiddenType::class,
+            'transformer' => new $transformer($this->om),
+        ]);
     }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+
+    public function getOm()
     {
-        return $this->getTypeName().'_select';
+        return $this->om;
     }
-    
+
     /**
      * Get the transformer class
      *
      * @return string
      */
     abstract protected function getTransformerClass();
-    
-    /**
-     * Get the type name
-     *
-     * @return string
-    */
-    abstract protected function getTypeName();
 }

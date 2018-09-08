@@ -42,20 +42,20 @@ class TrusteeController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('JLMModelBundle:Trustee');
         $nb = $repo->getTotal();
-        $nbPages = ceil($nb/$limit);
+        $nbPages = ceil($nb / $limit);
         $nbPages = ($nbPages < 1) ? 1 : $nbPages;
-        $offset = ($page-1) * $limit;
+        $offset = ($page - 1) * $limit;
         if ($page < 1 || $page > $nbPages) {
-            throw $this->createNotFoundException('Page insexistante (page '.$page.'/'.$nbPages.')');
+            throw $this->createNotFoundException('Page insexistante (page ' . $page . '/' . $nbPages . ')');
         }
 
         $entities = $repo->getList($limit, $offset);
 
         return [
-                'entities' => $entities,
-                'page'     => $page,
-                'nbPages'  => $nbPages,
-               ];
+            'entities' => $entities,
+            'page' => $page,
+            'nbPages' => $nbPages,
+        ];
     }
 
     /**
@@ -81,7 +81,7 @@ class TrusteeController extends Controller
         $contact = $request->get('contact');
         $em = $this->get('doctrine')->getManager();
         $entity = new Trustee();
-        $form   = $this->createForm(new TrusteeType(), $entity);
+        $form = $this->createForm(TrusteeType::class, $entity);
         if ($contact) {
             $c = $em->getRepository('JLMContactBundle:Contact')->find($contact);
             if ($c) {
@@ -90,9 +90,9 @@ class TrusteeController extends Controller
         }
 
         return [
-                'entity' => $entity,
-                'form'   => $form->createView(),
-               ];
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ];
     }
 
     /**
@@ -104,9 +104,9 @@ class TrusteeController extends Controller
     public function createAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $entity  = new Trustee();
+        $entity = new Trustee();
         $request = $this->getRequest();
-        $form    = $this->createForm(new TrusteeType(), $entity);
+        $form = $this->createForm(TrusteeType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -120,9 +120,9 @@ class TrusteeController extends Controller
             return $this->redirect($this->generateUrl('trustee_show', ['id' => $entity->getId()]));
         }
         return [
-                'entity' => $entity,
-                'form'   => $form->createView(),
-               ];
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ];
     }
 
     /**
@@ -133,14 +133,14 @@ class TrusteeController extends Controller
      */
     public function editAction(Trustee $entity)
     {
-        $editForm = $this->createForm(new TrusteeType(), $entity);
+        $editForm = $this->createForm(TrusteeType::class, $entity);
         $deleteForm = $this->createDeleteForm($entity);
 
         return [
-                'entity'      => $entity,
-                'edit_form'   => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-               ];
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ];
     }
 
     /**
@@ -153,7 +153,7 @@ class TrusteeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $editForm   = $this->createForm(new TrusteeType(), $entity);
+        $editForm = $this->createForm(TrusteeType::class, $entity);
         $deleteForm = $this->createDeleteForm($entity);
 
         $request = $this->getRequest();
@@ -172,10 +172,10 @@ class TrusteeController extends Controller
         }
 
         return [
-                'entity'      => $entity,
-                'edit_form'   => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-               ];
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ];
     }
 
     /**
@@ -204,9 +204,9 @@ class TrusteeController extends Controller
         return $this->createFormBuilder(['id' => $entity->getId()])
             ->add('id', 'hidden')
             ->getForm()
-        ;
+            ;
     }
-    
+
     /**
      * Formulaire d'ajout d'un contact au syndic.
      *
@@ -216,15 +216,15 @@ class TrusteeController extends Controller
     public function contactnewAction(Trustee $trustee)
     {
         $entity = ContactManager::create('Person');
-        $form   = $this->createForm(new PersonType(), $entity);
-        
+        $form = $this->createForm(new PersonType(), $entity);
+
         return [
-                'trustee' => $trustee,
-                'entity'  => $entity,
-                'form'    => $form->createView(),
-               ];
+            'trustee' => $trustee,
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ];
     }
-    
+
     /**
      * Creates a new Trustee entity.
      *
@@ -234,28 +234,28 @@ class TrusteeController extends Controller
     public function contactcreateAction(Trustee $trustee)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity  = ContactManager::create('Person');
+        $entity = ContactManager::create('Person');
         $request = $this->getRequest();
-        $form    = $this->createForm(new PersonType(), $entity);
+        $form = $this->createForm(new PersonType(), $entity);
         $form->handleRequest($request);
-    
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $trustee->addContact($entity);
             $em->persist($entity);
             $em->persist($trustee);
             $em->flush();
-    
+
             return $this->redirect($this->generateUrl('trustee_show', ['id' => $trustee->getId()]));
         }
-    
+
         return [
-                'trustee' => $trustee,
-                'entity'  => $entity,
-                'form'    => $form->createView(),
-               ];
+            'trustee' => $trustee,
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ];
     }
-    
+
     /**
      * City json
      *
@@ -265,14 +265,14 @@ class TrusteeController extends Controller
     {
         $term = $request->get('q');
         $page_limit = $request->get('page_limit');
-    
+
         $em = $this->getDoctrine()->getManager();
-    
+
         $entities = $em->getRepository('JLMModelBundle:Trustee')->getArray($term, $page_limit);
-        
+
         return new JsonResponse(['entities' => $entities]);
     }
-    
+
     /**
      * City json
      *
@@ -283,14 +283,15 @@ class TrusteeController extends Controller
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('JLMModelBundle:Trustee')->getByIdToArray($id);
-    
+
         return new JsonResponse($entity);
     }
-    
+
 
     /**
      *
      * @param Request $request
+     *
      * @return multitype:unknown
      * @Secure(roles="ROLE_OFFICE")
      */
@@ -298,9 +299,9 @@ class TrusteeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $list = $em->getRepository('JLMContractBundle:Contract')->getForRDV();
-         
+
         $excelBuilder = new ListManager($this->get('phpexcel'));
-        
+
         return $excelBuilder->createList($list)->getResponse();
     }
 }

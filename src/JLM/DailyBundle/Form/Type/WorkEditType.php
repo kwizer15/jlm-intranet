@@ -2,7 +2,13 @@
 
 namespace JLM\DailyBundle\Form\Type;
 
+use JLM\DailyBundle\Entity\Work;
+use JLM\ModelBundle\Form\Type\DoorHiddenType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -11,46 +17,51 @@ class WorkEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('door', 'door_hidden')
-            ->add('place', 'textarea', ['label' => 'Porte', 'attr' => ['class' => 'input-xlarge']])
-            ->add('reason', null, ['label' => 'Raison de l\'intervention', 'attr' => ['class' => 'input-xxlarge']])
-            ->add('contactName', null, ['label' => 'Nom du contact', 'required' => false])
-            ->add('contactPhones', null, ['label' => 'Téléphones', 'required' => false])
+            ->add('door', DoorHiddenType::class)
+            ->add('place', TextareaType::class, ['label' => 'Porte', 'attr' => ['class' => 'input-xlarge']])
+            ->add(
+                'reason',
+                TextType::class,
+                ['label' => 'Raison de l\'intervention', 'attr' => ['class' => 'input-xxlarge']]
+            )
+            ->add('contactName', TextType::class, ['label' => 'Nom du contact', 'required' => false])
+            ->add('contactPhones', TextType::class, ['label' => 'Téléphones', 'required' => false])
             ->add(
                 'contactEmail',
-                'email',
+                EmailType::class,
                 [
-                 'label'    => 'e-mail',
-                 'required' => false,
-                 'attr'     => ['class' => 'input-xlarge'],
+                    'label' => 'e-mail',
+                    'required' => false,
+                    'attr' => ['class' => 'input-xlarge'],
                 ]
             )
-            ->add('priority', 'choice', [
-                                         'label'   => 'Priorité',
-                                         'choices' => [
-                                                       1 => 'TRES URGENT',
-                                                       2 => 'Urgent',
-                                                       3 => 'Haute',
-                                                       4 => 'Normal',
-                                                       5 => 'Basse',
-                                                       6 => 'Très basse',
-                                                      ],
-                                        ])
-            ->add('category', null, ['label' => 'Type de travaux'])
-            ->add('objective', null, ['label' => 'Objectif'])
+            ->add(
+                'priority',
+                ChoiceType::class,
+                [
+                    'label' => 'Priorité',
+                    'choices' => [
+                        1 => 'TRES URGENT',
+                        2 => 'Urgent',
+                        3 => 'Haute',
+                        4 => 'Normal',
+                        5 => 'Basse',
+                        6 => 'Très basse',
+                    ],
+                ]
+            )
+            ->add('category', TextType::class, ['label' => 'Type de travaux'])
+            ->add('objective', TextType::class, ['label' => 'Objectif'])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-                                'data_class' => 'JLM\DailyBundle\Entity\Work',
-                                'attr'       => ['class' => 'interventionForm'],
-                               ]);
-    }
-
-    public function getName()
-    {
-        return 'jlm_dailybundle_workedittype';
+        $resolver->setDefaults(
+            [
+                'data_class' => Work::class,
+                'attr' => ['class' => 'interventionForm'],
+            ]
+        );
     }
 }

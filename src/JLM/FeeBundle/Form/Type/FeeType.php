@@ -11,7 +11,15 @@
 
 namespace JLM\FeeBundle\Form\Type;
 
+use JLM\CommerceBundle\Entity\VAT;
+use JLM\ContractBundle\Form\Type\ContractSelectType;
+use JLM\FeeBundle\Entity\Fee;
+use JLM\ModelBundle\Form\Type\TrusteeSelectType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -26,24 +34,24 @@ class FeeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('trustee', 'trustee_select', ['label' => 'Syndic', 'attr' => ['class' => 'input-xlarge']])
-        ->add('address', null, ['label' => 'Adresse', 'attr' => ['class' => 'input-xlarge']])
-        ->add('prelabel', null, ['label' => 'Libélé', 'attr' => ['class' => 'input-xlarge']])
-        ->add('frequence', 'choice', ['label' => 'Fréquence', 'choices' => [
+        ->add('trustee', TrusteeSelectType::class, ['label' => 'Syndic', 'attr' => ['class' => 'input-xlarge']])
+        ->add('address', TextType::class, ['label' => 'Adresse', 'attr' => ['class' => 'input-xlarge']])
+        ->add('prelabel', TextType::class, ['label' => 'Libélé', 'attr' => ['class' => 'input-xlarge']])
+        ->add('frequence', ChoiceType::class, ['label' => 'Fréquence', 'choices' => [
             1 => 'Annuelle',
             2 => 'Semestrielle',
             4 => 'Trimestrielle'
         ], 'attr' => ['class' => 'input-normal']])
-        ->add('vat', 'entity', [
+        ->add('vat', EntityType::class, [
             'label' => 'TVA',
-            'class' => 'JLM\CommerceBundle\Entity\VAT',
+            'class' => VAT::class,
             'attr' => ['class' => 'input-small']
         ])
-        ->add('contracts', 'collection', [
+        ->add('contracts', CollectionType::class, [
             'prototype' => true,
             'allow_add' => true,
             'allow_delete' => true,
-            'type' => 'jlm_contract_contract_select',
+            'type' => ContractSelectType::class,
             'label' => 'Contrats'
         ]);
     }
@@ -51,16 +59,8 @@ class FeeType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
-    {
-        return 'fee';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'JLM\FeeBundle\Entity\Fee']);
+        $resolver->setDefaults(['data_class' => Fee::class]);
     }
 }

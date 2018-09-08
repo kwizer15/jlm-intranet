@@ -2,7 +2,11 @@
 
 namespace JLM\TransmitterBundle\Form\Type;
 
+use JLM\TransmitterBundle\Entity\Transmitter;
+use JLM\TransmitterBundle\Entity\UserGroup;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use JLM\TransmitterBundle\Entity\UserGroupRepository;
@@ -20,12 +24,12 @@ class TransmitterType extends AbstractType
     {
         $id = $this->id;
         $builder
-            ->add('attribution', 'transmitter_attribution_hidden')
+            ->add('attribution', AttributionHiddenType::class)
             ->add(
                 'userGroup',
-                'entity',
+                EntityType::class,
                 [
-                    'class' => 'JLM\TransmitterBundle\Entity\UserGroup',
+                    'class' => UserGroup::class,
                     'label' => 'Groupe utilisateur',
                     'query_builder' => function (UserGroupRepository $er) use ($id) {
                         return $er->getFromSite($id);
@@ -33,14 +37,14 @@ class TransmitterType extends AbstractType
                     'empty_value' => 'Choisissez...',
                 ]
             )
-            ->add('model', null, ['label' => 'Type d\'émetteur', 'empty_value' => 'Choisissez...'])
-            ->add('number', null, ['label' => 'Numéro', 'attr' => ['class' => 'input-small']])
+            ->add('model', TextType::class, ['label' => 'Type d\'émetteur', 'empty_value' => 'Choisissez...'])
+            ->add('number', TextType::class, ['label' => 'Numéro', 'attr' => ['class' => 'input-small']])
             ->add(
                 'guarantee',
-                null,
+                TextType::class,
                 ['label' => 'Garantie', 'attr' => ['class' => 'input-mini', 'placeholder' => 'MMAA']]
             )
-            ->add('userName', null, ['label' => 'Utilisateur', 'required' => false])
+            ->add('userName', TextType::class, ['label' => 'Utilisateur', 'required' => false])
         ;
     }
 
@@ -48,14 +52,9 @@ class TransmitterType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'JLM\TransmitterBundle\Entity\Transmitter',
+                'data_class' => Transmitter::class,
                 'attr' => ['class' => 'transmitter'],
             ]
         );
-    }
-
-    public function getName()
-    {
-        return 'jlm_transmitterbundle_transmittertype';
     }
 }

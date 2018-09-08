@@ -12,6 +12,7 @@
 namespace JLM\CoreBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -23,14 +24,6 @@ class AttachementType extends AbstractType
      */
     public function getParent()
     {
-        return 'file';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_core_attachement';
+        return FileType::class;
     }
 }

@@ -11,7 +11,11 @@
 
 namespace JLM\CoreBundle\Form\Type;
 
+use JLM\CoreBundle\Entity\Email;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -28,9 +32,9 @@ class MailType extends AbstractType
         $builder
             ->add(
                 'from',
-                'collection',
+                CollectionType::class,
                 [
-                    'type' => 'jlm_core_email',
+                    'type' => Email::class,
                     'allow_add' => true,
                     'allow_delete' => true,
                     'prototype' => true,
@@ -39,9 +43,9 @@ class MailType extends AbstractType
             )
             ->add(
                 'to',
-                'collection',
+                CollectionType::class,
                 [
-                    'type' => 'jlm_core_email',
+                    'type' => Email::class,
                     'allow_add' => true,
                     'allow_delete' => true,
                     'prototype' => true,
@@ -50,9 +54,9 @@ class MailType extends AbstractType
             )
             ->add(
                 'cc',
-                'collection',
+                CollectionType::class,
                 [
-                    'type' => 'jlm_core_email',
+                    'type' => Email::class,
                     'allow_add' => true,
                     'allow_delete' => true,
                     'prototype' => true,
@@ -60,33 +64,14 @@ class MailType extends AbstractType
                     'required' => false,
                 ]
             )
-            ->add('subject', 'text', ['label' => 'Sujet', 'attr' => ['class' => 'input-xxlarge']])
-            ->add('body', 'textarea', ['label' => 'Message', 'attr' => ['class' => 'input-xxlarge', 'rows' => 7]])
+            ->add('subject', TextType::class, ['label' => 'Sujet', 'attr' => ['class' => 'input-xxlarge']])
+            ->add('body', TextareaType::class, ['label' => 'Message', 'attr' => ['class' => 'input-xxlarge', 'rows' => 7]])
             ->add(
                 'preAttachements',
-                'collection',
-                ['type' => 'jlm_core_preattachement', 'label' => 'Fichiers joints', 'disabled' => true]
+                CollectionType::class,
+                ['type' => PreAttachementType::class, 'label' => 'Fichiers joints', 'disabled' => true]
             )
-            // ->add(
-            //     'attachements',
-            //     'collection',
-            //     [
-            //         'type' => 'jlm_core_attachement',
-            //         'allow_add' => true,
-            //         'allow_delete' => true,
-            //         'prototype' => true,
-            //         'label' => 'Fichiers joints',
-            //     ]
-            // )
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_core_mail';
     }
 
     /**
@@ -96,7 +81,7 @@ class MailType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'JLM\CoreBundle\Entity\Email',
+                'data_class' => Email::class,
                 'csrf_protection' => false,
             ]
         );

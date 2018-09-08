@@ -11,6 +11,7 @@
 
 namespace JLM\ContactBundle\Form\Type;
 
+use JLM\ContactBundle\Form\DataTransformer\ContactToIntTransformer;
 use JLM\CoreBundle\Form\Type\AbstractSelectType;
 
 /**
@@ -20,11 +21,6 @@ class ContactSelectType extends AbstractSelectType
 {
     protected function getTransformerClass()
     {
-        return '\JLM\ContactBundle\Form\DataTransformer\ContactToIntTransformer';
-    }
-
-    protected function getTypeName()
-    {
-        return 'jlm_contact_contact';
+        return ContactToIntTransformer::class;
     }
 }

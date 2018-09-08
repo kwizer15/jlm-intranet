@@ -26,15 +26,7 @@ class ContactDecoratorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('contact', 'jlm_contact_contact_select', ['label' => 'Contact']);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_contact_contactdecorator';
+            ->add('contact', ContactSelectType::class, ['label' => 'Contact']);
     }
 
     /**

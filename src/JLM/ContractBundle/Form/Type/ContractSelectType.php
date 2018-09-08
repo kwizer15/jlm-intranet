@@ -14,6 +14,7 @@ namespace JLM\ContractBundle\Form\Type;
 use Doctrine\Common\Persistence\ObjectManager;
 use JLM\ContractBundle\Form\DataTransformer\ContractToStringTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -49,15 +50,7 @@ class ContractSelectType extends AbstractType
      */
     public function getParent()
     {
-        return 'text';
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_contract_contract_select';
+        return TextType::class;
     }
     
     /**

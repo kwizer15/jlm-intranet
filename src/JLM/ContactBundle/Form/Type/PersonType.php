@@ -11,6 +11,7 @@
 
 namespace JLM\ContactBundle\Form\Type;
 
+use JLM\ContactBundle\Entity\Person;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -33,16 +34,8 @@ class PersonType extends AbstractType
             )
             ->add('lastName', null, ['label' => 'Nom'])
             ->add('firstName', null, ['label' => 'Prénom', 'required' => false])
-            ->add('contact', 'jlm_contact_contact', ['data_class' => 'JLM\ContactBundle\Entity\Person'])
+            ->add('contact', ContactType::class, ['data_class' => Person::class])
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_contact_person';
     }
 
     /**
@@ -53,7 +46,7 @@ class PersonType extends AbstractType
         $resolver
             ->setDefaults(
                 [
-                    'data_class' => 'JLM\ContactBundle\Entity\Person',
+                    'data_class' => Person::class,
                     'label' => 'Personne',
                 ]
             );

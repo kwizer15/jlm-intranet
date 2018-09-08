@@ -12,6 +12,7 @@
 namespace JLM\ProductBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use JLM\ProductBundle\Form\DataTransformer\ProductToIntTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -49,15 +50,7 @@ class ProductHiddenType extends AbstractType
      */
     public function getParent()
     {
-        return 'hidden';
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_product_product_hidden';
+        return HiddenType::class;
     }
     
     /**

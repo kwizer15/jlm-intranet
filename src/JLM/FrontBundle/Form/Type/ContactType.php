@@ -11,7 +11,10 @@
 
 namespace JLM\FrontBundle\Form\Type;
 
+use JLM\FrontBundle\Entity\Contact;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -27,26 +30,17 @@ class ContactType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('subject', 'text');
-        $builder->add('content', 'textarea');
-        $builder->add('company', 'text', ['required' => false]);
-        $builder->add('firstName', 'text', ['required' => false]);
-        $builder->add('lastName', 'text');
-        $builder->add('address', 'text', ['required' => false]);
-        $builder->add('zip', 'text');
-        $builder->add('city', 'text');
-        $builder->add('country', 'text', ['required' => false]);
-        $builder->add('phone', 'text');
-        $builder->add('email', 'text');
-    }
-
-    /**
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'jlm_front_contacttype';
+        $builder->add('subject', TextType::class);
+        $builder->add('content', TextareaType::class);
+        $builder->add('company', TextType::class, ['required' => false]);
+        $builder->add('firstName', TextType::class, ['required' => false]);
+        $builder->add('lastName', TextType::class);
+        $builder->add('address', TextType::class, ['required' => false]);
+        $builder->add('zip', TextType::class);
+        $builder->add('city', TextType::class);
+        $builder->add('country', TextType::class, ['required' => false]);
+        $builder->add('phone', TextType::class);
+        $builder->add('email', TextType::class);
     }
 
     /**
@@ -55,6 +49,6 @@ class ContactType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'JLM\FrontBundle\Entity\Contact']);
+        $resolver->setDefaults(['data_class' => Contact::class]);
     }
 }

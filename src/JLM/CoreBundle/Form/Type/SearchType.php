@@ -11,7 +11,9 @@
 
 namespace JLM\CoreBundle\Form\Type;
 
+use JLM\CoreBundle\Entity\Search;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -28,7 +30,7 @@ class SearchType extends AbstractType
         $builder
             ->add(
                 'query',
-                'text',
+                TextType::class,
                 [
                     'required' => true,
                     'attr' => ['placeholder' => 'Recherche...', 'class' => 'search-query input-medium'],
@@ -43,18 +45,10 @@ class SearchType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'JLM\CoreBundle\Entity\Search',
+                'data_class' => Search::class,
                 'method' => 'GET',
                 'csrf_protection' => false,
             ]
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_core_search';
     }
 }

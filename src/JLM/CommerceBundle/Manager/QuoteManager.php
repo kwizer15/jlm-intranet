@@ -33,7 +33,7 @@ class QuoteManager extends Manager
                         'route'  => 'quote_create',
                         'params' => [],
                         'label'  => 'Créer',
-                        'type'   => new QuoteType(),
+                        'type'   => QuoteType::class,
                         'entity' => null,
                        ];
             case 'edit':
@@ -42,7 +42,7 @@ class QuoteManager extends Manager
                         'route'  => 'quote_update',
                         'params' => ['id' => $options['entity']->getId()],
                         'label'  => 'Modifier',
-                        'type'   => new QuoteType(),
+                        'type'   => QuoteType::class,
                         'entity' => $options['entity'],
                        ];
         }

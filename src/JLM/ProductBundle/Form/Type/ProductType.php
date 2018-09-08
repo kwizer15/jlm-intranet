@@ -11,7 +11,12 @@
 
 namespace JLM\ProductBundle\Form\Type;
 
+use JLM\ProductBundle\Entity\Product;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -26,43 +31,35 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('reference', null, ['label' => 'Référence', 'attr' => ['class' => 'input-small']])
-            ->add('category', null, ['label' => 'Famille de produit'])
-            ->add('designation', null, ['label' => 'Designation', 'attr' => ['class' => 'input-xxlarge']])
+            ->add('reference', TextType::class, ['label' => 'Référence', 'attr' => ['class' => 'input-small']])
+            ->add('category', TextType::class, ['label' => 'Famille de produit'])
+            ->add('designation', TextType::class, ['label' => 'Designation', 'attr' => ['class' => 'input-xxlarge']])
             ->add(
                 'description',
-                null,
+                TextType::class,
                 ['label' => 'Description longue', 'required' => false, 'attr' => ['class' => 'input-xxlarge']]
             )
-            ->add('supplier', null, ['label' => 'Fournisseur'])// Typeahead
-            ->add('unity', null, ['label' => 'Unité', 'attr' => ['class' => 'input-small']])
+            ->add('supplier', TextType::class, ['label' => 'Fournisseur'])// Typeahead
+            ->add('unity', TextType::class, ['label' => 'Unité', 'attr' => ['class' => 'input-small']])
             ->add(
                 'purchase',
-                'money',
+                MoneyType::class,
                 ['label' => 'Prix d\'achat HT', 'grouping' => true, 'attr' => ['class' => 'input-small']]
             )
             ->add(
                 'discountSupplier',
-                'percent',
+                PercentType::class,
                 ['type' => 'integer', 'label' => 'Remise fournisseur', 'attr' => ['class' => 'input-mini']]
             )
             ->add(
                 'expenseRatio',
-                'percent',
+                PercentType::class,
                 ['type' => 'integer', 'label' => 'Frais', 'attr' => ['class' => 'input-mini']]
             )
-            ->add('shipping', 'money', ['label' => 'Port', 'grouping' => true, 'attr' => ['class' => 'input-mini']])
-            ->add('unitPrice', 'money', ['label' => 'PVHT', 'grouping' => true, 'attr' => ['class' => 'input-mini']])
-            ->add('active', 'checkbox', ['required' => false])
+            ->add('shipping', MoneyType::class, ['label' => 'Port', 'grouping' => true, 'attr' => ['class' => 'input-mini']])
+            ->add('unitPrice', MoneyType::class, ['label' => 'PVHT', 'grouping' => true, 'attr' => ['class' => 'input-mini']])
+            ->add('active', CheckboxType::class, ['required' => false])
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_product_product';
     }
 
     /**
@@ -71,6 +68,6 @@ class ProductType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-            ->setDefaults(['data_class' => 'JLM\ProductBundle\Entity\Product']);
+            ->setDefaults(['data_class' => Product::class]);
     }
 }

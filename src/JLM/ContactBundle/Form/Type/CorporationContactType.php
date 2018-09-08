@@ -11,7 +11,9 @@
 
 namespace JLM\ContactBundle\Form\Type;
 
+use JLM\ContactBundle\Entity\CorporationContact;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -26,18 +28,10 @@ class CorporationContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('person', 'jlm_contact_person_select', ['label' => 'Contact'])
-            ->add('corporation', 'jlm_contact_corporation_select', ['label' => 'Groupement'])
-            ->add('position', null, ['label' => 'Rôle'])
+            ->add('person', PersonSelectType::class, ['label' => 'Contact'])
+            ->add('corporation', CorporationSelectType::class, ['label' => 'Groupement'])
+            ->add('position', TextType::class, ['label' => 'Rôle'])
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_contact_corporation_contact';
     }
 
     /**
@@ -48,7 +42,7 @@ class CorporationContactType extends AbstractType
         $resolver
             ->setDefaults(
                 [
-                    'data_class' => 'JLM\ContactBundle\Entity\CorporationContact',
+                    'data_class' =>   CorporationContact::class,
                     'label' => 'Contacts de groupement',
                 ]
             );

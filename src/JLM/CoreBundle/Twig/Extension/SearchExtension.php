@@ -37,7 +37,7 @@ class SearchExtension extends \Twig_Extension implements \Twig_Extension_Globals
 
     public function getGlobals()
     {
-        $form = $this->formFactory->create('jlm_core_search');
+        $form = $this->formFactory->create(SearchType::class);
         //      $query = $this->request->get('jlm_core_search');
         //      if (is_array($query) && array_key_exists('query', $query))
         //      {

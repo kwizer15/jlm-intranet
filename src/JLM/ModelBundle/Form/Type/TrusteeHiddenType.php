@@ -3,6 +3,7 @@
 namespace JLM\ModelBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use JLM\ModelBundle\Form\DataTransformer\TrusteeToIntTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -35,12 +36,7 @@ class TrusteeHiddenType extends AbstractType
 
     public function getParent()
     {
-        return 'hidden';
-    }
-
-    public function getName()
-    {
-        return 'trustee_hidden';
+        return HiddenType::class;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

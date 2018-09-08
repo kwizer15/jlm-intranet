@@ -12,6 +12,7 @@
 namespace JLM\ProductBundle\Form\Type;
 
 use JLM\CoreBundle\Form\Type\AbstractSelectType;
+use JLM\ProductBundle\Form\DataTransformer\ProductToIntTransformer;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -21,11 +22,6 @@ class ProductSelectType extends AbstractSelectType
 
     protected function getTransformerClass()
     {
-        return '\JLM\ProductBundle\Form\DataTransformer\ProductToIntTransformer';
-    }
-    
-    protected function getTypeName()
-    {
-        return 'jlm_product_product';
+        return ProductToIntTransformer::class;
     }
 }

@@ -11,7 +11,10 @@
 
 namespace JLM\FrontBundle\Form\Type;
 
+use JLM\FrontBundle\Entity\AskQuote;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -27,20 +30,11 @@ class AskQuoteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('firstName', 'text', ['required' => false]);
-        $builder->add('lastName', 'text');
-        $builder->add('phone', 'text');
-        $builder->add('email', 'text');
-        $builder->add('quoteNumber', 'hidden');
-    }
-
-    /**
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'jlm_front_askquotetype';
+        $builder->add('firstName', TextType::class, ['required' => false]);
+        $builder->add('lastName', TextType::class);
+        $builder->add('phone', TextType::class);
+        $builder->add('email', TextType::class);
+        $builder->add('quoteNumber', HiddenType::class);
     }
 
     /**
@@ -49,6 +43,6 @@ class AskQuoteType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'JLM\FrontBundle\Entity\AskQuote']);
+        $resolver->setDefaults(['data_class' => AskQuote::class]);
     }
 }

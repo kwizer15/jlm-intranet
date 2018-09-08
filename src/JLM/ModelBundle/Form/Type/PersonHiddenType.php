@@ -2,18 +2,13 @@
 
 namespace JLM\ModelBundle\Form\Type;
 
-use JLM\ModelBundle\Form\Type\AbstractHiddenType;
+use JLM\ContactBundle\Form\DataTransformer\PersonToIntTransformer;
 
 class PersonHiddenType extends AbstractHiddenType
 {
 
     protected function getTransformerClass()
     {
-        return 'JLM\ContactBundle\Form\DataTransformer\PersonToIntTransformer';
-    }
-
-    protected function getTypeName()
-    {
-        return 'person';
+        return PersonToIntTransformer::class;
     }
 }

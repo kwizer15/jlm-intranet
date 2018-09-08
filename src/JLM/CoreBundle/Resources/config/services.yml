@@ -24,27 +24,27 @@ services:
         tags:
             - { name: twig.extension }
             
-    jlm_core.type.search:
+    \JLM\CoreBundle\Form\Type\SearchType:
         class: JLM\CoreBundle\Form\Type\SearchType
         tags:
             - { name: form.type, alias: jlm_core_search }
             
-    jlm_core.type.email:
+    \JLM\CoreBundle\Form\Type\EmailType:
         class: JLM\CoreBundle\Form\Type\EmailType
         tags:
             - { name: form.type, alias: jlm_core_email }
             
-    jlm_core.type.mail:
+    \JLM\CoreBundle\Form\Type\MailType:
         class: JLM\CoreBundle\Form\Type\MailType
         tags:
             - { name: form.type, alias: jlm_core_mail }
             
-    jlm_core.type.preattachement:
+    \JLM\CoreBundle\Form\Type\PreAttachementType:
         class: JLM\CoreBundle\Form\Type\PreAttachementType
         tags:
             - { name: form.type, alias: jlm_core_preattachement }            
             
-    jlm_core.type.attachement:
+    \JLM\CoreBundle\Form\Type\AttachementType:
         class: JLM\CoreBundle\Form\Type\AttachementType
         tags:
             - { name: form.type, alias: jlm_core_attachement }

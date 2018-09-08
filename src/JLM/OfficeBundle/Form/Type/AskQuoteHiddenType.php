@@ -3,6 +3,7 @@
 namespace JLM\OfficeBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use JLM\OfficeBundle\Form\DataTransformer\AskQuoteToIntTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -35,12 +36,7 @@ class AskQuoteHiddenType extends AbstractType
 
     public function getParent()
     {
-        return 'hidden';
-    }
-    
-    public function getName()
-    {
-        return 'askquote_hidden';
+        return HiddenType::class;
     }
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)

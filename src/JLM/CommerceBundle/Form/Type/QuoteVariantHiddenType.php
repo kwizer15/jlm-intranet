@@ -12,6 +12,7 @@
 namespace JLM\CommerceBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use JLM\CommerceBundle\Form\DataTransformer\QuoteVariantToIntTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -49,15 +50,7 @@ class QuoteVariantHiddenType extends AbstractType
      */
     public function getParent()
     {
-        return 'hidden';
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'quotevariant_hidden';
+        return HiddenType::class;
     }
     
     /**

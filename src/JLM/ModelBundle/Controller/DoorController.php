@@ -143,6 +143,7 @@ class DoorController extends Controller
      */
     public function editAction(Door $entity)
     {
+        // dump($entity);
         $editForm = $this->createForm(new DoorType(), $entity);
         $deleteForm = $this->createDeleteForm($entity->getId());
 

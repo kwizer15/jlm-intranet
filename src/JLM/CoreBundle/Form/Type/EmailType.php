@@ -12,6 +12,7 @@
 namespace JLM\CoreBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType as BaseEmailType;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -23,14 +24,6 @@ class EmailType extends AbstractType
      */
     public function getParent()
     {
-        return 'email';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'jlm_core_email';
+        return BaseEmailType::class;
     }
 }

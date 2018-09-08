@@ -2,6 +2,7 @@
 
 namespace JLM\ModelBundle\Form\Type;
 
+use JLM\ModelBundle\Entity\DoorModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -15,13 +16,8 @@ class DoorModelType extends AbstractType
         ;
     }
 
-    public function getName()
-    {
-        return 'jlm_modelbundle_doormodeltype';
-    }
-
     public function getDefaultOptions(array $options)
     {
-        return ['data_class' => 'JLM\ModelBundle\Entity\DoorModel'];
+        return ['data_class' => DoorModel::class];
     }
 }

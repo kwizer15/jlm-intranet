@@ -2,7 +2,15 @@
 
 namespace JLM\ModelBundle\Form\Type;
 
+use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;
+use JLM\ModelBundle\Entity\Site;
+use JLM\ModelBundle\Entity\TransmitterType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class DoorType extends AbstractType
@@ -13,46 +21,47 @@ class DoorType extends AbstractType
             ->add(
                 'site',
                 'genemu_jqueryselect2_entity',
-                ['label' => 'Affaire', 'class' => 'JLM\ModelBundle\Entity\Site', 'attr' => ['class' => 'input-xxlarge']]
+                ['label' => 'Affaire', 'class' => Site::class, 'attr' => ['class' => 'input-xxlarge']]
             )
-            ->add('location', null, ['label' => 'Localisation'])
-            ->add('street', null, ['label' => 'Adresses d\'accès', 'required' => false])
-            ->add('billingPrelabel', null, ['label' => 'Libélé de facturation', 'required' => false])
-            ->add('model', null, ['label' => 'Modèle de porte'])
-            ->add('ceNumber', null, ['label' => 'Identification CE'])
-            ->add('type', null, ['label' => 'Type de porte'])
-            ->add('width', 'distance', ['label' => 'Largeur', 'required' => false])
-            ->add('height', 'distance', ['label' => 'Hauteur', 'required' => false])
+            ->add('location', TextType::class, ['label' => 'Localisation'])
+            ->add('street', TextType::class, ['label' => 'Adresses d\'accès', 'required' => false])
+            ->add('billingPrelabel', TextType::class, ['label' => 'Libélé de facturation', 'required' => false])
+            ->add('model', TextType::class, ['label' => 'Modèle de porte'])
+            ->add('ceNumber', TextType::class, ['label' => 'Identification CE'])
+            ->add('type', TextType::class, ['label' => 'Type de porte'])
+            ->add('width', DistanceType::class, ['label' => 'Largeur', 'required' => false])
+            ->add('height', DistanceType::class, ['label' => 'Hauteur', 'required' => false])
             ->add(
                 'transmitters',
-                null,
-                ['label' => 'Type d\'emetteurs', 'required' => false, 'attr' => ['class' => 'input-xlarge']]
+                EntityType::class,
+                [
+                    'label' => 'Type d\'emetteurs',
+                    'class' => TransmitterType::class,
+                    'multiple' => true,
+                    'required' => false,
+                    'attr' => ['class' => 'input-xlarge'],
+                ]
             )
             ->add(
                 'observations',
-                null,
+                TextType::class,
                 ['label' => 'Observations', 'required' => false, 'attr' => ['class' => 'input-large']]
             )
             ->add(
                 'latitude',
-                null,
+                NumberType::class,
                 ['label' => 'Latitude', 'required' => false, 'precision' => 7, 'attr' => ['class' => 'input-large']]
-            )// Précision
+            )
             ->add(
                 'longitude',
-                null,
+                NumberType::class,
                 ['label' => 'Latitude', 'required' => false, 'precision' => 7, 'attr' => ['class' => 'input-large']]
-            )// Précision
+            )
             ->add(
                 'googlemaps',
-                null,
+                TextType::class,
                 ['label' => 'Lien Google Maps', 'required' => false, 'attr' => ['class' => 'input-xxlarge']]
             )
         ;
-    }
-
-    public function getName()
-    {
-        return 'jlm_modelbundle_doortype';
     }
 }

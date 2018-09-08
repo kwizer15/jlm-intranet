@@ -2,7 +2,9 @@
 
 namespace JLM\ModelBundle\Form\Type;
 
+use JLM\ModelBundle\Entity\DoorStop;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class DoorStopEditType extends AbstractType
@@ -10,18 +12,13 @@ class DoorStopEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('reason', 'textarea', ['label' => 'Raison'])
-            ->add('state', 'textarea', ['label' => 'État'])
+            ->add('reason', TextareaType::class, ['label' => 'Raison'])
+            ->add('state', TextareaType::class, ['label' => 'État'])
         ;
-    }
-
-    public function getName()
-    {
-        return 'jlm_modelbundle_doorstopedittype';
     }
 
     public function getDefaultOptions(array $options)
     {
-        return ['data_class' => 'JLM\ModelBundle\Entity\DoorStop'];
+        return ['data_class' => DoorStop::class];
     }
 }

@@ -10,11 +10,6 @@ class AskHiddenType extends AbstractHiddenType
 
     protected function getTransformerClass()
     {
-        return 'JLM\TransmitterBundle\Form\DataTransformer\AskToIntTransformer';
-    }
-    
-    protected function getTypeName()
-    {
-        return 'transmitter_ask';
+        return AskToIntTransformer::class;
     }
 }
