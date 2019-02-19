@@ -259,11 +259,11 @@ abstract class Contact implements ContactInterface
      *
      * @return NULL|string
      */
-    protected function getPhoneNumber($type)
+    protected function getPhoneNumber($type): ?string
     {
         $phones = $this->getPhones();
         foreach ($phones as $phone) {
-            if ($phone->getLabel() == $type) {
+            if ($type === $phone->getLabel()) {
                 return $phone->getNumber();
             }
         }

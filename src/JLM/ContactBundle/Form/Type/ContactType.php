@@ -24,20 +24,20 @@ class ContactType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('address', AddressType::class, ['label' => 'Adresse', 'required' => false])
             ->add('phones', ContactPhoneCollectionType::class, ['label' => 'Téléphones', 'required' => false])
             ->add('email', EmailType::class, ['label' => 'Adresse e-mail', 'required' => false])
-            //            ->add('image','jlm_core_uploaddocument',array('label'=>'Image', 'required'=>false))
+//          ->add('image','jlm_core_uploaddocument',array('label'=>'Image', 'required'=>false))
         ;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults(['inherit_data' => true]);

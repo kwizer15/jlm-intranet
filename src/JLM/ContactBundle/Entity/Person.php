@@ -1,23 +1,11 @@
 <?php
 
-/*
- * This file is part of the JLMContactBundle package.
- *
- * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace JLM\ContactBundle\Entity;
 
 use JLM\ContactBundle\Model\PersonInterface;
 use JLM\CommerceBundle\Model\QuoteRecipientInterface;
-use JLM\AskBundle\Model\ContactInterface;   // @todo to remove, use a decorator into AskBundle
+use JLM\AskBundle\Model\ContactInterface;   // TODO: to remove, use a decorator into AskBundle
 
-/**
- * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- */
 class Person extends Contact implements PersonInterface, QuoteRecipientInterface, ContactInterface
 {
     /**
@@ -25,26 +13,26 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
      *
      * @var string $title
      */
-    private $title;
+    private $title = '';
 
     /**
      * @var string $firstName
      */
-    private $firstName;
+    private $firstName = '';
 
     /**
      * @var string $lastName
      */
-    private $lastName;
+    private $lastName = '';
 
     /**
      * Set firstName
      *
      * @param string $firstName
      *
-     * @return self
+     * @return Person
      */
-    public function setFirstName($firstName)
+    public function setFirstName($firstName): self
     {
         $this->firstName = $firstName;
 
@@ -54,7 +42,7 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
     /**
      * {@inheritdoc}
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -64,9 +52,9 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
      *
      * @param string $lastName
      *
-     * @return self
+     * @return Person
      */
-    public function setLastName($lastName)
+    public function setLastName($lastName): self
     {
         $this->lastName = $lastName;
 
@@ -76,7 +64,7 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
     /**
      * {@inheritdoc}
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -84,7 +72,7 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return trim($this->title . ' ' . trim($this->lastName . ' ' . $this->firstName));
     }
@@ -92,7 +80,7 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
     /**
      * {@inheritdoc}
      */
-    public function setName($name)
+    public function setName($name): self
     {
         parent::setName(trim($this->lastName . ' ' . $this->firstName));
 
@@ -104,9 +92,9 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
      *
      * @param string $title
      *
-     * @return self
+     * @return Person
      */
-    public function setTitle($title)
+    public function setTitle($title): self
     {
         $this->title = $title;
 
@@ -116,7 +104,7 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
     /**
      * {@inheritdoc}
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -124,7 +112,7 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
     /**
      * {@inheritdoc}
      */
-    public function getMobilePhone()
+    public function getMobilePhone(): ?string
     {
         return $this->getPhoneNumber('Portable');
     }
@@ -132,16 +120,16 @@ class Person extends Contact implements PersonInterface, QuoteRecipientInterface
     /**
      * {@inheritdoc}
      */
-    public function getFixedPhone()
+    public function getFixedPhone(): ?string
     {
         return $this->getPhoneNumber('Principal');
     }
 
     /**
      *
-     * @return self
+     * @return PErson
      */
-    public function attributeName()
+    public function attributeName(): self
     {
         return $this->setName('');
     }

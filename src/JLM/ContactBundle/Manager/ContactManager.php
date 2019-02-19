@@ -11,8 +11,10 @@
 
 namespace JLM\ContactBundle\Manager;
 
+use JLM\ContactBundle\Form\Type\AssociationType;
+use JLM\ContactBundle\Form\Type\CompanyType;
+use JLM\ContactBundle\Form\Type\PersonType;
 use JLM\CoreBundle\Manager\BaseManager as Manager;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -23,9 +25,9 @@ class ContactManager extends Manager
     protected function getFormType($type = null)
     {
         $objects = [
-            'person' => 'JLM\\ContactBundle\\Form\\Type\\PersonType',
-            'company' => 'JLM\\ContactBundle\\Form\\Type\\CompanyType',
-            'association' => 'JLM\\ContactBundle\\Form\\Type\\AssociationType',
+            'person' => PersonType::class,
+            'company' => CompanyType::class,
+            'association' => AssociationType::class,
         ];
         if (array_key_exists($type, $objects)) {
             return new $objects[$type]();
