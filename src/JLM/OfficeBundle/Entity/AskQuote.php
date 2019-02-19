@@ -88,8 +88,8 @@ class AskQuote extends Ask
     public function setDoor(Door $door = null)
     {
         $this->door = $door;
-        $this->site = null;
-        $this->trustee = null;
+        $this->setSite(null);
+        $this->setTrustee(null);
         
         return $this;
     }
@@ -182,14 +182,16 @@ class AskQuote extends Ask
     {
         return $this->quotes;
     }
-    
+
     /**
      * Populate from intervention
      *
      * @param Intervention $interv
+     *
      * @return void
+     * @throws \Exception
      */
-    public function populateFromIntervention(Intervention $interv)
+    public function populateFromIntervention(Intervention $interv): void
     {
         $this->setCreation(new \DateTime);
         $maturity = new \DateTime;

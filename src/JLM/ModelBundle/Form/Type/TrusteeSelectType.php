@@ -23,12 +23,12 @@ class TrusteeSelectType extends AbstractType
         $this->om = $om;
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return Select2HiddenType::class;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [

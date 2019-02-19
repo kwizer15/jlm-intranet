@@ -11,7 +11,7 @@ JLM\AskBundle\Entity\Ask:
       - NotBlank: ~
   getters:
     creationBeforeMaturity: 
-      - 'True': { message: "La date d'échéance doit être ultérieure à la date de la demande" }
+      - IsTrue: { message: "La date d'échéance doit être ultérieure à la date de la demande" }
       
 JLM\AskBundle\Entity\CommunicationMeans:
   properties:

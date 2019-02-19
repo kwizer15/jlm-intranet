@@ -2,6 +2,8 @@
 
 namespace JLM\OfficeBundle\Form\Type;
 
+use JLM\AskBundle\Entity\CommunicationMeans;
+use JLM\CoreBundle\Form\Type\UploadDocumentType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Form\Type\DatepickerType;
 use JLM\ModelBundle\Form\Type\SiteSelectType;
@@ -15,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AskQuoteType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('creation', DatepickerType::class, ['label' => 'Date de la demande'])
@@ -36,14 +38,30 @@ class AskQuoteType extends AbstractType
                     'required' => false,
                 ]
             )
-            ->add('method', TextType::class, ['label' => 'Arrivée par', 'attr' => ['class' => 'input-medium']])
-            ->add('maturity', DatepickerType::class, ['label' => 'Date d\'échéance', 'required' => false])
-            ->add('ask', TextType::class, ['label' => 'Demande', 'attr' => ['class' => 'input-xxlarge', 'rows' => 5]])
-            ->add('file', TextType::class, ['label' => 'Fichier joint'])
+            ->add('method', EntityType::class, [
+                'label' => 'Arrivée par',
+                'class' => CommunicationMeans::class,
+                'attr' => ['class' => 'input-medium']
+            ])
+            ->add('maturity', DatepickerType::class, [
+                'label' => 'Date d\'échéance',
+                'required' => false
+            ])
+            ->add('ask', TextType::class, [
+                'label' => 'Demande',
+                'attr' => [
+                    'class' => 'input-xxlarge',
+                    'rows' => 5
+                ]
+            ])
+            ->add('file', UploadDocumentType::class, [
+                'label' => 'Fichier joint',
+                'required' => false
+            ])
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [

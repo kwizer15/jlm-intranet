@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class AskQuoteDontTreatType extends AskDontTreatType
 {
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => AskQuote::class]);
     }

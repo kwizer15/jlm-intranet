@@ -12,9 +12,11 @@
 namespace JLM\CommerceBundle\Form\Type;
 
 use JLM\CommerceBundle\Entity\Quote;
+use JLM\ContactBundle\Form\Type\AddressType;
 use JLM\ModelBundle\Form\Type\DatepickerType;
 use JLM\ModelBundle\Form\Type\DoorHiddenType;
 use JLM\ModelBundle\Form\Type\SiteContactHiddenType;
+use JLM\ModelBundle\Form\Type\SiteContactType;
 use JLM\ModelBundle\Form\Type\TrusteeHiddenType;
 use JLM\OfficeBundle\Form\Type\AskQuoteHiddenType;
 use Symfony\Component\Form\AbstractType;
@@ -33,7 +35,7 @@ class QuoteType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('creation', DatepickerType::class, ['label' => 'Date de création'])
@@ -41,13 +43,13 @@ class QuoteType extends AbstractType
             ->add('trusteeName', TextType::class, ['label' => 'Syndic'])
             ->add(
                 'trusteeAddress',
-                TextType::class,
+                TextareaType::class,
                 ['label' => 'Adresse de facturation', 'attr' => ['class' => 'input-xlarge']]
             )
             ->add('contact', SiteContactHiddenType::class, ['required' => false])
-            ->add('contactCp', TextType::class, ['label' => 'A l\'attention de'])
+            ->add('contactCp', null, ['label' => 'A l\'attention de'])
             ->add('follower', HiddenType::class, ['required' => false])
-            ->add('followerCp', TextType::class, ['label' => 'Suivi par'])
+            ->add('followerCp', null, ['label' => 'Suivi par'])
             ->add('door', DoorHiddenType::class, ['required' => false])
             ->add(
                 'doorCp',
@@ -68,7 +70,7 @@ class QuoteType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => Quote::class]);
     }
