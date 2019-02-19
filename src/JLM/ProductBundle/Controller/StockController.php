@@ -11,10 +11,8 @@
 
 namespace JLM\ProductBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JLM\ProductBundle\Pdf\Stock;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -22,9 +20,8 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class StockController implements ContainerAwareInterface
+class StockController extends Controller
 {
-    use ContainerAwareTrait;
 
     /**
      * Lists all Stock entities.
@@ -33,7 +30,7 @@ class StockController implements ContainerAwareInterface
     public function indexAction()
     {
         $manager = $this->container->get('jlm_product.stock_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         return $manager->renderResponse(
             'JLMProductBundle:Stock:index.html.twig',
@@ -48,7 +45,7 @@ class StockController implements ContainerAwareInterface
     public function editAction($id)
     {
         $manager = $this->container->get('jlm_product.stock_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $form = $manager->createForm('edit', ['entity' => $entity]);
         if ($manager->getHandler($form)->process()) {
@@ -73,7 +70,7 @@ class StockController implements ContainerAwareInterface
     public function inventoryAction()
     {
         $manager = $this->container->get('jlm_product.stock_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getRepository()->getAll(500);
         $form = $manager->createForm('inventory', ['entity' => $entity]);
 
@@ -95,7 +92,7 @@ class StockController implements ContainerAwareInterface
     public function printAction()
     {
         $manager = $this->container->get('jlm_product.stock_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $stocks = $manager->getRepository()->getAll(500);
         $response = new Response();
         $response->headers->set('Content-Type', 'application/pdf');

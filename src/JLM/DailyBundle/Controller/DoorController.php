@@ -6,11 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Door;
 use JLM\ModelBundle\Entity\DoorStop;
-use JLM\DailyBundle\Entity\Fixing;
-use JLM\DailyBundle\Form\Type\FixingType;
 use JLM\ModelBundle\Form\Type\DoorStopEditType;
 
 /**
@@ -22,10 +19,11 @@ class DoorController extends Controller
      * Finds and displays a Door entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(Door $door)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         
         $codeForm = $this->createCodeForm($door);
@@ -55,10 +53,11 @@ class DoorController extends Controller
      * Displays Doors stopped
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function stoppedAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         $doors = $em->getRepository('JLMModelBundle:Door')->getStopped();
         $stopForms = [];
@@ -81,10 +80,11 @@ class DoorController extends Controller
      * Displays Doors stopped
      *
      * @Template("JLMDailyBundle:Door:stopped.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function stopupdateAction(Request $request, DoorStop $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $form = $this->get('form.factory')->createNamed(
             'doorStopEdit'.$entity->getId(),
             new DoorStopEditType(),
@@ -102,12 +102,12 @@ class DoorController extends Controller
     
     /**
      * Displays Doors stopped
-   *
-  * @Template()
-  * @Secure(roles="ROLE_OFFICE")
+     *
+     * @Template()
      */
     public function printstoppedAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $em = $this->getDoctrine()->getManager();
         $doors = $em->getRepository('JLMModelBundle:Door')->getStopped();
@@ -125,10 +125,11 @@ class DoorController extends Controller
      * Stop door
      *
      * @Template("JLMDailyBundle:Door:show.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function stopAction(Door $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         if ($entity->getLastStop() === null) {
             $stop = new DoorStop;
@@ -146,10 +147,11 @@ class DoorController extends Controller
      * Unstop door
      *
      * @Template("JLMDailyBundle:Door:show.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function unstopAction(Door $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         $stop = $entity->getLastStop();
         if ($stop === null) {

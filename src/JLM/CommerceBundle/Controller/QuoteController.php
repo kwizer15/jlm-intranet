@@ -15,6 +15,7 @@ use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Event\QuoteEvent;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
@@ -23,17 +24,15 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
  *
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class QuoteController implements ContainerAwareInterface
+class QuoteController extends Controller
 {
-    use ContainerAwareTrait;
-
     /**
      * Lists all Quote entities.
      */
     public function indexAction()
     {
         $manager = $this->container->get('jlm_commerce.quote_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $states = [
             'all' => 'All',
             'in_seizure' => 'InSeizure',
@@ -65,7 +64,7 @@ class QuoteController implements ContainerAwareInterface
     public function showAction($id)
     {
         $manager = $this->container->get('jlm_commerce.quote_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         return $manager->renderResponse(
             'JLMCommerceBundle:Quote:show.html.twig',
@@ -79,7 +78,7 @@ class QuoteController implements ContainerAwareInterface
     public function newAction()
     {
         $manager = $this->container->get('jlm_commerce.quote_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $form = $manager->createForm('new');
 
         if ($manager->getHandler($form)->process()) {
@@ -103,7 +102,7 @@ class QuoteController implements ContainerAwareInterface
     public function editAction($id)
     {
         $manager = $this->container->get('jlm_commerce.quote_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $manager->assertState($entity, [0]);
         $form = $manager->createForm('edit', ['entity' => $entity]);
@@ -127,7 +126,7 @@ class QuoteController implements ContainerAwareInterface
     public function searchAction()
     {
         $manager = $this->container->get('jlm_commerce.quote_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         return $manager->renderSearch('JLMCommerceBundle:Quote:search.html.twig');
     }
@@ -138,7 +137,7 @@ class QuoteController implements ContainerAwareInterface
     public function printAction($id)
     {
         $manager = $this->container->get('jlm_commerce.quote_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $filename = $entity->getNumber() . '.pdf';
 
@@ -155,7 +154,7 @@ class QuoteController implements ContainerAwareInterface
     public function jacketAction($id)
     {
         $manager = $this->container->get('jlm_commerce.quote_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $filename = $entity->getNumber() . '-jacket.pdf';
 
@@ -168,7 +167,7 @@ class QuoteController implements ContainerAwareInterface
     public function mailAction($id)
     {
         $manager = $this->container->get('jlm_commerce.quote_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $manager->assertState($entity, [1, 2, 3, 4, 5]);
         $mail = new Mail();
@@ -205,7 +204,7 @@ class QuoteController implements ContainerAwareInterface
     public function sendmailAction($id)
     {
         $manager = $this->container->get('jlm_commerce.quote_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $manager->assertState($entity, [1, 2, 3, 4, 5]);
         $request = $manager->getRequest();

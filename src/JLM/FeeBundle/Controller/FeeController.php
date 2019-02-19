@@ -5,10 +5,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\FeeBundle\Entity\Fee;
 use JLM\FeeBundle\Form\Type\FeeType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Contract controller.
@@ -23,10 +22,11 @@ class FeeController extends Controller
      *
      * @Route("/", name="fee")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('JLMFeeBundle:Fee')->findAll();
         return ['entities' => $entities];
@@ -37,11 +37,11 @@ class FeeController extends Controller
      *
      * @Route("/{id}/show", name="fee_show")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(Fee $entity)
     {
-    
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         return ['entity' => $entity];
     }
     
@@ -50,13 +50,14 @@ class FeeController extends Controller
      *
      * @Route("/new", name="fee_new")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new Fee();
 
-        $form   = $this->createForm(new FeeType(), $entity);
+        $form   = $this->createForm(FeeType::class, $entity);
     
         return [
                 'entity' => $entity,
@@ -70,13 +71,13 @@ class FeeController extends Controller
      * @Route("/create", name="fee_create")
      * @Method("post")
      * @Template("JLMModelBundle:Fee:new.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity  = new Fee();
-        $request = $this->getRequest();
-        $form    = $this->createForm(new FeeType(), $entity);
+        $form    = $this->createForm(FeeType::class, $entity);
         $form->handleRequest($request);
     
         if ($form->isValid()) {
@@ -98,30 +99,35 @@ class FeeController extends Controller
      *
      * @Route("/{id}/edit", name="fee_edit")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction(Fee $entity)
     {
-        $editForm = $this->createForm(new FeeType(), $entity);
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
+        $editForm = $this->createForm(FeeType::class, $entity);
     
         return [
                 'entity'    => $entity,
                 'edit_form' => $editForm->createView(),
                ];
     }
-    
+
     /**
      * Edits an existing Fee entity.
      *
      * @Route("/{id}/update", name="fee_update")
      * @Method("post")
      * @Template("JLMModelBundle:Fee:edit.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
+     * @param Request $request
+     * @param Fee     $entity
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function updateAction(Fee $entity)
+    public function updateAction(Request $request, Fee $entity)
     {
-        $editForm   = $this->createForm(new FeeType(), $entity);
-        $request = $this->getRequest();
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
+        $editForm   = $this->createForm(FeeType::class, $entity);
         $editForm->handleRequest($request);
     
         if ($editForm->isValid()) {

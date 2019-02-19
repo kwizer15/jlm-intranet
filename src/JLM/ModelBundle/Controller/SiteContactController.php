@@ -13,10 +13,7 @@ namespace JLM\ModelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\SiteContact;
 use JLM\ModelBundle\Form\Type\SiteContactType;
@@ -31,10 +28,11 @@ class SiteContactController extends Controller
      * Lists all SiteContact entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('JLMModelBundle:SiteContact')->findAll();
@@ -46,10 +44,11 @@ class SiteContactController extends Controller
      * Finds and displays a SiteContact entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(SiteContact $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         return ['entity' => $entity];
     }
 
@@ -57,10 +56,11 @@ class SiteContactController extends Controller
      * Displays a form to create a new SiteContact entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction(Site $site = null)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new SiteContact();
         if ($site) {
             $entity->setAdministrator($site);
@@ -78,10 +78,11 @@ class SiteContactController extends Controller
      * Creates a new SiteContact entity.
      *
      * @Template("JLMModelBundle:SiteContact:new.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request, Site $site = null)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity  = new SiteContact();
         $form = $this->createForm(new SiteContactType(), $entity);
         $form->handleRequest($request);
@@ -110,10 +111,11 @@ class SiteContactController extends Controller
      * Displays a form to edit an existing SiteContact entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('JLMModelBundle:SiteContact')->find($id);
@@ -136,10 +138,11 @@ class SiteContactController extends Controller
      * Edits an existing SiteContact entity.
      *
      * @Template("JLMModelBundle:SiteContact:edit.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('JLMModelBundle:SiteContact')->find($id);
@@ -173,11 +176,11 @@ class SiteContactController extends Controller
 
     /**
      * Deletes a SiteContact entity.
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('JLMModelBundle:SiteContact')->find($id);
 

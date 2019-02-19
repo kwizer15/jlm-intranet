@@ -106,15 +106,7 @@ class DateType extends AbstractType
      */
     public function getParent()
     {
-        return 'date';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'genemu_jquerydate';
+        return BaseDateType::class;
     }
 
     /**
@@ -173,5 +165,10 @@ class DateType extends AbstractType
         }
 
         return str_replace(array_keys($exits), array_values($exits), $pattern);
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'genemu_jquerydate';
     }
 }

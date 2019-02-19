@@ -4,9 +4,7 @@ namespace JLM\TransmitterBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\TransmitterBundle\Entity\Series;
@@ -26,19 +24,19 @@ class SeriesController extends Controller
      *
      * @Route("/new/{id}", name="transmitter_series_new")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction(Attribution $attribution)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = new Series();
         $entity->setAttribution($attribution);
-        $form   = $this->createForm(new SeriesType($attribution->getSite()->getId()), $entity);
+        $form = $this->createForm(new SeriesType($attribution->getSite()->getId()), $entity);
         $form->add('submit', 'submit', ['label' => 'Enregistrer']);
-        
+
         return [
-                'entity' => $entity,
-                'form'   => $form->createView(),
-               ];
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ];
     }
 
     /**
@@ -47,11 +45,12 @@ class SeriesController extends Controller
      * @Route("/create/{id}", name="transmitter_series_create")
      * @Method("POST")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request, Attribution $attribution)
     {
-        $entity  = new Series();
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
+        $entity = new Series();
         $form = $this->createForm(new SeriesType($attribution->getSite()->getId()), $entity);
         $form->add('submit', 'submit', ['label' => 'Enregistrer']);
         $form->handleRequest($request);
@@ -63,14 +62,14 @@ class SeriesController extends Controller
                 $em->persist($transmitter);
             }
             $em->flush();
-            
+
             // On met à jour la page de base
             return new JsonResponse([]);
         }
 
         return [
-                'entity' => $entity,
-                'form'   => $form->createView(),
-               ];
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ];
     }
 }

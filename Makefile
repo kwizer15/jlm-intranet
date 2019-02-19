@@ -27,7 +27,7 @@ $(PHPUNIT): vendor
 
 $(PHPCS): vendor
 
-test: $(PHPUNIT) phpunit.xml ## Lance les tests
+test: $(PHPUNIT) phpunit.xml cc ## Lance les tests
 	$(PHP) $(PHPUNIT)
 
 cs: $(PHPCS) phpcs.xml ## Lance le codesniffer
@@ -42,5 +42,9 @@ phpunit.xml: phpunit.xml.dist
 phpcs.xml: phpcs.xml.dist
 	cp phpcs.xml.dist phpcs.xml
 
-server:
+server: cc
 	php app/console server:start
+
+cc:
+	app/console cache:clear --no-warmup
+	app/console cache:warmup

@@ -11,25 +11,24 @@
 
 namespace JLM\ContactBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Person controller.
  */
-class ContactController implements ContainerAwareInterface
+class ContactController extends Controller
 {
-    use ContainerAwareTrait;
-
     /**
      * Edit or add a contact
      *
      * @param int|string $id The entity identifier or typeof new entity
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction($id)
     {
         $manager = $this->container->get('jlm_contact.contact_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         if (in_array($id, ['person', 'company', 'association'])) {
             $type = $id;
             $id = null;
@@ -57,7 +56,7 @@ class ContactController implements ContainerAwareInterface
     public function listAction()
     {
         $manager = $this->container->get('jlm_contact.contact_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $request = $manager->getRequest();
         $ajax = $manager->getRequest()->isXmlHttpRequest();
         $repo = $manager->getRepository();
@@ -75,7 +74,7 @@ class ContactController implements ContainerAwareInterface
     public function showAction($id)
     {
         $manager = $this->container->get('jlm_contact.contact_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
 
         return $manager->getRequest()->isXmlHttpRequest()
@@ -89,7 +88,7 @@ class ContactController implements ContainerAwareInterface
     public function unactiveAction($id)
     {
         $manager = $this->container->get('jlm_contact.contact_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $entity->setActive(false);
 

@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\TransmitterBundle\Entity\Attribution;
 use JLM\TransmitterBundle\Entity\Ask;
 use JLM\TransmitterBundle\Form\Type\AttributionType;
@@ -33,7 +32,7 @@ class AttributionController extends Controller
         $manager = $this->container->get(
             'jlm_core.mail_manager'
         ); //TODO: rewrite services as yaml and include a manager service
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         return $manager->paginator('JLMTransmitterBundle:Attribution', $request, ['sort' => '!date']);
     }
@@ -43,10 +42,11 @@ class AttributionController extends Controller
      *
      * @Route("/{id}/show", name="transmitter_attribution_show")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(Attribution $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         return ['entity' => $entity];
     }
 
@@ -55,14 +55,15 @@ class AttributionController extends Controller
      *
      * @Route("/new/{id}", name="transmitter_attribution_new")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction(Ask $ask)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new Attribution();
         $entity->setCreation(new \DateTime());
         $entity->setAsk($ask);
-        $form = $this->createForm(new AttributionType(), $entity);
+        $form = $this->createForm(AttributionType::class, $entity);
 
         return [
             'entity' => $entity,
@@ -76,12 +77,13 @@ class AttributionController extends Controller
      * @Route("/create", name="transmitter_attribution_create")
      * @Method("POST")
      * @Template("JLMTransmitterBundle:Attribution:new.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new Attribution();
-        $form = $this->createForm(new AttributionType(), $entity);
+        $form = $this->createForm(AttributionType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -103,11 +105,12 @@ class AttributionController extends Controller
      *
      * @Route("/{id}/edit", name="transmitter_attribution_edit")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction(Attribution $entity)
     {
-        $editForm = $this->createForm(new AttributionType(), $entity);
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
+        $editForm = $this->createForm(AttributionType::class, $entity);
 
         return [
             'entity' => $entity,
@@ -121,13 +124,14 @@ class AttributionController extends Controller
      * @Route("/{id}/update", name="transmitter_attribution_update")
      * @Method("POST")
      * @Template("JLMTransmitterBundle:Attribution:edit.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, Attribution $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
-        $editForm = $this->createForm(new AttributionType(), $entity);
+        $editForm = $this->createForm(AttributionType::class, $entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -147,10 +151,11 @@ class AttributionController extends Controller
      * Imprime la liste d'attribution
      *
      * @Route("/{id}/printlist", name="transmitter_attribution_printlist")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function printlistAction(Attribution $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         // Retrier les bips par Groupe puis par numéro
         $transmitters = $entity->getTransmitters();
         $resort = [];
@@ -161,12 +166,9 @@ class AttributionController extends Controller
             }
             $resort[$index][] = $transmitter;
         }
-        $final = [];
-        foreach ($resort as $list) {
-            $final = array_merge($final, $list);
-        }
-        unset($resort);
 
+        $final = array_merge(...$resort);
+        unset($resort);
 
         $response = new Response();
         $response->headers->set('Content-Type', 'application/pdf');
@@ -189,10 +191,11 @@ class AttributionController extends Controller
      * Imprime le courrier
      *
      * @Route("/{id}/printcourrier", name="transmitter_attribution_printcourrier")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function printcourrierAction(Attribution $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $response = new Response();
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set(
@@ -213,10 +216,11 @@ class AttributionController extends Controller
      * Generate bill
      *
      * @Route("/{id}/bill", name="transmitter_attribution_bill")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function billAction(Attribution $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         if ($entity->getBill() !== null) {

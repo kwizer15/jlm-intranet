@@ -21,7 +21,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $manager = $this->container->get('jlm_core.mail_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         
         return $manager->paginator(
             'JLMFollowBundle:Thread',

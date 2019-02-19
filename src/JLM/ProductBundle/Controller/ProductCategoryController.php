@@ -4,7 +4,6 @@ namespace JLM\ProductBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ProductBundle\Entity\ProductCategory;
 use JLM\ProductBundle\Form\Type\ProductCategoryType;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,10 +17,11 @@ class ProductCategoryController extends Controller
      * Lists all ProductCategory entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('JLMProductBundle:ProductCategory')->findAll();
@@ -33,10 +33,11 @@ class ProductCategoryController extends Controller
      * Finds and displays a ProductCategory entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = $this->getEntity($id);
 
         $deleteForm = $this->createDeleteForm($id);
@@ -51,10 +52,11 @@ class ProductCategoryController extends Controller
      * Displays a form to create a new ProductCategory entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new ProductCategory();
         $form   = $this->createNewForm($entity);
 
@@ -68,10 +70,11 @@ class ProductCategoryController extends Controller
      * Creates a new ProductCategory entity.
      *
      * @Template("JLMProductBundle:ProductCategory:new.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity  = new ProductCategory();
         $form    = $this->createNewForm($entity);
         $form->handleRequest($request);
@@ -94,10 +97,11 @@ class ProductCategoryController extends Controller
      * Displays a form to edit an existing ProductCategory entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = $this->getEntity($id);
 
         $editForm = $this->createEditForm($entity);
@@ -114,10 +118,11 @@ class ProductCategoryController extends Controller
      * Edits an existing ProductCategory entity.
      *
      * @Template("JLMProductBundle:ProductCategory:edit.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = $this->getEntity($id);
 
         $editForm   = $this->createEditForm($entity);
@@ -142,11 +147,11 @@ class ProductCategoryController extends Controller
 
     /**
      * Deletes a ProductCategory entity.
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 

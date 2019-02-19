@@ -5,7 +5,6 @@ namespace JLM\TransmitterBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -26,10 +25,11 @@ class UserGroupController extends Controller
      *
      * @Route("/new/{id}", name="transmitter_usergroup_new")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction(Site $site)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new UserGroup();
         $entity->setSite($site);
         $form   = $this->createForm(new UserGroupType(), $entity);
@@ -46,10 +46,11 @@ class UserGroupController extends Controller
      * @Route("/create", name="transmitter_usergroup_create")
      * @Method("POST")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity  = new UserGroup();
         $form = $this->createForm(new UserGroupType(), $entity);
         $form->handleRequest($request);
@@ -73,10 +74,11 @@ class UserGroupController extends Controller
      *
      * @Route("/{id}/edit", name="transmitter_usergroup_edit")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('JLMTransmitterBundle:UserGroup')->find($id);
@@ -99,10 +101,11 @@ class UserGroupController extends Controller
      * @Route("/{id}/update", name="transmitter_usergroup_update")
      * @Method("POST")
      * @Template("JLMTransmitterBundle:UserGroup:edit.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('JLMTransmitterBundle:UserGroup')->find($id);
@@ -132,10 +135,11 @@ class UserGroupController extends Controller
      * Deletes a UserGroup entity.
      *
      * @Route("/{id}/delete", name="transmitter_usergroup_delete")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('JLMTransmitterBundle:UserGroup')->find($id);
@@ -155,10 +159,11 @@ class UserGroupController extends Controller
      *
      * @Route("/{id}/defaultmodelid", name="transmitter_usergroup_defaultmodelid")
      * @Method("POST")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function defaultmodelidAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('JLMTransmitterBundle:UserGroup')->find($id);
         if (!$entity) {

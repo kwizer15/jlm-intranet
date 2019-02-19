@@ -3,17 +3,12 @@
 namespace JLM\DailyBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Maintenance;
 use JLM\DailyBundle\Entity\Ride;
 use JLM\DailyBundle\Entity\ShiftTechnician;
 use JLM\DailyBundle\Form\Type\AddTechnicianType;
 use JLM\DailyBundle\Form\Type\MaintenanceCloseType;
-use JLM\DailyBundle\Form\Type\ExternalBillType;
-use JLM\DailyBundle\Form\Type\InterventionCancelType;
-use JLM\DailyBundle\Form\Type\ShiftingEditType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\CoreBundle\Factory\MailFactory;
 use JLM\ModelBundle\JLMModelEvents;
@@ -21,6 +16,10 @@ use JLM\ModelBundle\Event\DoorEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use JLM\CoreBundle\Form\Type\MailType;
 use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
+use JLM\DailyBundle\Builder\Email\MaintenancePlannedMailBuilder;
+use JLM\DailyBundle\Builder\Email\MaintenanceOnSiteMailBuilder;
+use JLM\DailyBundle\Builder\Email\MaintenanceEndMailBuilder;
+use JLM\DailyBundle\Builder\Email\MaintenanceReportMailBuilder;
 
 /**
  * Maintenance controller.
@@ -33,7 +32,7 @@ class MaintenanceController extends AbstractInterventionController
     public function listAction()
     {
         $manager = $this->container->get('jlm_daily.maintenance_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $request = $manager->getRequest();
         $repo = $manager->getRepository();
 
@@ -53,10 +52,11 @@ class MaintenanceController extends AbstractInterventionController
      * Finds and displays a Maintenance entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(Maintenance $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         return $this->show($entity);
     }
 
@@ -64,11 +64,12 @@ class MaintenanceController extends AbstractInterventionController
      * Close an existing Fixing entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function closeAction(Maintenance $entity)
     {
-        $form = $this->createForm(new MaintenanceCloseType(), $entity);
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
+        $form = $this->createForm(MaintenanceCloseType::class, $entity);
 
         return [
             'entity' => $entity,
@@ -80,13 +81,14 @@ class MaintenanceController extends AbstractInterventionController
      * Close an existing Maintenance entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function closeupdateAction(Request $request, Maintenance $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm(new MaintenanceCloseType(), $entity);
+        $form = $this->createForm(MaintenanceCloseType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -107,23 +109,28 @@ class MaintenanceController extends AbstractInterventionController
      * Finds and displays a InterventionPlanned entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
+     * @param Request     $request
+     * @param Maintenance $entity
+     * @param             $step
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function emailAction(Maintenance $entity, $step)
+    public function emailAction(Request $request, Maintenance $entity, $step)
     {
-        $request = $this->getRequest();
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $steps = [
-            'planned' => 'JLM\DailyBundle\Builder\Email\MaintenancePlannedMailBuilder',
-            'onsite' => 'JLM\DailyBundle\Builder\Email\MaintenanceOnSiteMailBuilder',
-            'end' => 'JLM\DailyBundle\Builder\Email\MaintenanceEndMailBuilder',
-            'report' => 'JLM\DailyBundle\Builder\Email\MaintenanceReportMailBuilder',
+            'planned' => MaintenancePlannedMailBuilder::class,
+            'onsite' => MaintenanceOnSiteMailBuilder::class,
+            'end' => MaintenanceEndMailBuilder::class,
+            'report' => MaintenanceReportMailBuilder::class,
         ];
-        $class = (array_key_exists($step, $steps)) ? $steps[$step] : null;
+        $class = array_key_exists($step, $steps) ? $steps[$step] : null;
         if (null === $class) {
             throw new NotFoundHttpException('Page inexistante');
         }
         $mail = MailFactory::create(new $class($entity));
-        $editForm = $this->createForm(new MailType(), $mail);
+        $editForm = $this->createForm(MailType::class, $mail);
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
@@ -203,10 +210,11 @@ class MaintenanceController extends AbstractInterventionController
      * Cherche les entretiens les plus proche d'une adresse
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function neighborAction(Door $door)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         // Choper les entretiens à faire

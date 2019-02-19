@@ -12,16 +12,15 @@
 namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\Door;
 use JLM\ContractBundle\Entity\Contract;
 use JLM\ModelBundle\Form\Type\DoorType;
 use JLM\ContractBundle\Form\Type\ContractType;
 use JLM\ContractBundle\Form\Type\ContractStopType;
-use JLM\CoreBundle\Event\DoctrineEvent;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -32,10 +31,11 @@ class DoorController extends Controller
      * Lists all Door entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('JLMModelBundle:Door')->findAll();
@@ -47,10 +47,11 @@ class DoorController extends Controller
      * Finds and displays a Door entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(Door $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $contracts = $em->getRepository('JLMContractBundle:Contract')->findByDoor($entity, ['begin' => 'DESC']);
@@ -92,10 +93,11 @@ class DoorController extends Controller
      * Displays a form to create a new Door entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction(Site $site = null)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new Door();
         if ($site) {
             $entity->setAdministrator($site);
@@ -114,10 +116,11 @@ class DoorController extends Controller
      * Creates a new Door entity.
      *
      * @Template("JLMModelBundle:Door:new.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new Door();
         $form = $this->createForm(new DoorType(), $entity);
         $form->handleRequest($request);
@@ -139,12 +142,12 @@ class DoorController extends Controller
      * Displays a form to edit an existing Door entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction(Door $entity)
     {
-        // dump($entity);
-        $editForm = $this->createForm(new DoorType(), $entity);
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
+        $editForm = $this->createForm(DoorType::class, $entity);
         $deleteForm = $this->createDeleteForm($entity->getId());
 
         return [
@@ -159,10 +162,11 @@ class DoorController extends Controller
      * Edits an existing Door entity.
      *
      * @Template("JLMModelBundle:Door:edit.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, Door $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $editForm = $this->createForm(new DoorType(), $entity);
@@ -185,11 +189,10 @@ class DoorController extends Controller
 
     /**
      * Edits an existing Door entity.
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateCodeAction(Request $request, Door $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $codeForm = $this->createCodeForm($entity);
         $codeForm->handleRequest($request);
@@ -224,11 +227,11 @@ class DoorController extends Controller
 
     /**
      * Deletes a Door entity.
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction(Door $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $form = $this->createDeleteForm($entity->getId());
         $request = $this->getRequest();
         $form->handleRequest($request);
@@ -245,7 +248,7 @@ class DoorController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(['id' => $id])
-            ->add('id', 'hidden')
+            ->add('id', HiddenType::class)
             ->getForm()
             ;
     }
@@ -254,10 +257,11 @@ class DoorController extends Controller
      * Lists all Door entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function geocodeAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('JLMModelBundle:Door')->findBy(['latitude' => null]);
@@ -281,10 +285,11 @@ class DoorController extends Controller
      * Maps Door entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function mapAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $latMin = $lonMin = 40000;
         $latMax = $lonMax = -40000;
         $em = $this->getDoctrine()->getManager();

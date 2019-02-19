@@ -4,8 +4,6 @@ namespace JLM\TransmitterBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -26,10 +24,11 @@ class TransmitterController extends Controller
      *
      * @Route("/new/{id}", name="transmitter_new")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction(Attribution $attribution)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new Transmitter();
         $entity->setAttribution($attribution);
         $form = $this->createForm(new TransmitterType($attribution->getSite()->getId()), $entity);
@@ -46,10 +45,11 @@ class TransmitterController extends Controller
      * @Route("/create/{id}", name="transmitter_create")
      * @Method("POST")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request, Attribution $attribution)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new Transmitter();
         $form = $this->createForm(new TransmitterType($attribution->getSite()->getId()), $entity);
         $form->handleRequest($request);
@@ -74,10 +74,11 @@ class TransmitterController extends Controller
      *
      * @Route("/{id}/edit", name="transmitter_edit")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('JLMTransmitterBundle:Transmitter')->getById($id);
@@ -105,10 +106,11 @@ class TransmitterController extends Controller
      * @Route("/{id}/update", name="transmitter_update")
      * @Method("POST")
      * @Template("JLMTransmitterBundle:Transmitter:create.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('JLMTransmitterBundle:Transmitter')->find($id);
@@ -143,10 +145,11 @@ class TransmitterController extends Controller
      * Unactive Transmitter entity.
      *
      * @Route("/{id}/unactive", name="transmitter_unactive")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function unactiveAction(Transmitter $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity->setIsActive(false);
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
@@ -159,10 +162,11 @@ class TransmitterController extends Controller
      * Reactive Transmitter entity.
      *
      * @Route("/{id}/reactive", name="transmitter_reactive")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function reactiveAction(Transmitter $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity->setIsActive(true);
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);

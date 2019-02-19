@@ -2,6 +2,7 @@
 
 namespace JLM\ModelBundle\Form\Type;
 
+use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2EntityType;
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;
 use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Entity\TransmitterType;
@@ -20,7 +21,7 @@ class DoorType extends AbstractType
         $builder
             ->add(
                 'site',
-                'genemu_jqueryselect2_entity',
+                Select2EntityType::class,
                 ['label' => 'Affaire', 'class' => Site::class, 'attr' => ['class' => 'input-xxlarge']]
             )
             ->add('location', TextType::class, ['label' => 'Localisation'])
@@ -29,8 +30,8 @@ class DoorType extends AbstractType
             ->add('model', TextType::class, ['label' => 'Modèle de porte'])
             ->add('ceNumber', TextType::class, ['label' => 'Identification CE'])
             ->add('type', TextType::class, ['label' => 'Type de porte'])
-            ->add('width', DistanceType::class, ['label' => 'Largeur', 'required' => false])
-            ->add('height', DistanceType::class, ['label' => 'Hauteur', 'required' => false])
+            // ->add('width', DistanceType::class, ['label' => 'Largeur', 'required' => false])
+            // ->add('height', DistanceType::class, ['label' => 'Hauteur', 'required' => false])
             ->add(
                 'transmitters',
                 EntityType::class,

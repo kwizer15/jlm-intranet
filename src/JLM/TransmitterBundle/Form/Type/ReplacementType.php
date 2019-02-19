@@ -13,16 +13,8 @@ use JLM\TransmitterBundle\Entity\TransmitterRepository;
 
 class ReplacementType extends AbstractType
 {
-    private $id;
-
-    public function __construct($id)
-    {
-        $this->id = $id;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $id = $this->id;
         $builder
             ->add('attribution', AttributionHiddenType::class)
             ->add(
@@ -31,8 +23,8 @@ class ReplacementType extends AbstractType
                 [
                     'class' => Transmitter::class,
                     'label' => 'Ancien émetteur',
-                    'query_builder' => function (TransmitterRepository $er) use ($id) {
-                        return $er->getFromSite($id);
+                    'query_builder' => function (TransmitterRepository $er) use ($options) {
+                        return $er->getFromSite($options['siteId']);
                     },
                 ]
             )
@@ -55,6 +47,7 @@ class ReplacementType extends AbstractType
             [
                 'data_class' => Replacement::class,
                 'attr' => ['class' => 'transmitter_replacement'],
+                'siteId' => null,
             ]
         );
     }

@@ -5,10 +5,8 @@ namespace JLM\OfficeBundle\Controller;
 use JLM\DefaultBundle\Controller\PaginableController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\OfficeBundle\Form\Type\AskQuoteType;
 use JLM\OfficeBundle\Form\Type\AskQuoteDontTreatType;
@@ -28,7 +26,7 @@ class AskquoteController extends PaginableController
     public function indexAction()
     {
         $manager = $this->container->get('jlm_office.askquote_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $request = $manager->getRequest();
         $states = [
                    'all'       => 'All',
@@ -50,11 +48,12 @@ class AskquoteController extends PaginableController
     /**
      * @Route("/{id}/show", name="askquote_show")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(AskQuote $entity)
     {
-        $form = $this->createForm(new AskQuoteDontTreatType, $entity);
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
+        $form = $this->createForm(AskQuoteDontTreatType::class, $entity);
         return [
                 'entity'         => $entity,
                 'form_donttreat' => $form->createView(),
@@ -64,13 +63,14 @@ class AskquoteController extends PaginableController
     /**
      * @Route("/new", name="askquote_new")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $askquote = new AskQuote;
         $askquote->setCreation(new \DateTime);
-        $form = $this->createForm(new AskQuoteType, $askquote);
+        $form = $this->createForm(AskQuoteType::class, $askquote);
         return [
                 'form'   => $form->createView(),
                 'entity' => $askquote,
@@ -80,14 +80,15 @@ class AskquoteController extends PaginableController
     /**
      * @Route("/create", name="askquote_create")
      * @Template("JLMOfficeBundle:Askquote:new.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new AskQuote;
         $form = $this->createForm(new AskQuoteType, $entity);
         
-        if ($this->getRequest()->isMethod('POST')) {
+        if ($request->isMethod('POST')) {
             $form->handleRequest($this->getRequest());
             if ($form->isValid()) {
                 if ($entity->getMaturity() === null) {
@@ -106,13 +107,14 @@ class AskquoteController extends PaginableController
     
     /**
      * @Route("/{id}/donttreat", name="askquote_donttreat")
-     * @Secure(roles="ROLE_OFFICE")
      */
-    public function donttreatAction(AskQuote $entity)
+    public function donttreatAction(Request $request, AskQuote $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $form = $this->createForm(new AskQuoteDontTreatType, $entity);
         
-        if ($this->getRequest()->isMethod('POST')) {
+        if ($request->isMethod('POST')) {
             $form->handleRequest($this->getRequest());
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
@@ -125,10 +127,11 @@ class AskquoteController extends PaginableController
     
     /**
      * @Route("/{id}/canceldonttreat", name="askquote_canceldonttreat")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function canceldonttreatAction(AskQuote $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity->setDontTreat();
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
@@ -140,10 +143,11 @@ class AskquoteController extends PaginableController
      * Imprimer la liste des demande de devis non-traités
      *
      * @Route("/printlist", name="askquote_printlist")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function printlistAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('JLMOfficeBundle:AskQuote')->getUntreated(1000);
         $response = new Response();
@@ -163,7 +167,7 @@ class AskquoteController extends PaginableController
     public function searchAction(Request $request)
     {
         $manager = $this->container->get('jlm_office.askquote_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $formData = $manager->getRequest()->get('jlm_core_search');
         $params = [];
         if (is_array($formData) && array_key_exists('query', $formData)) {

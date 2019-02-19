@@ -13,7 +13,6 @@ namespace JLM\ModelBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\TransmitterType;
 use JLM\ModelBundle\Form\Type\TransmitterTypeType;
 
@@ -26,10 +25,11 @@ class TransmitterTypeController extends Controller
      * Lists all TransmitterType entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('JLMModelBundle:TransmitterType')->findAll();
@@ -41,10 +41,11 @@ class TransmitterTypeController extends Controller
      * Displays a form to create a new TransmitterType entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new TransmitterType();
         $form   = $this->createForm(new TransmitterTypeType(), $entity);
 
@@ -58,10 +59,11 @@ class TransmitterTypeController extends Controller
      * Creates a new TransmitterType entity.
      *
      * @Template("JLMModelBundle:TransmitterType:new.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity  = new TransmitterType();
         $request = $this->getRequest();
         $form    = $this->createForm(new TransmitterTypeType(), $entity);
@@ -85,10 +87,11 @@ class TransmitterTypeController extends Controller
      * Displays a form to edit an existing TransmitterType entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction(TransmitterType $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $editForm = $this->createForm(new TransmitterTypeType(), $entity);
         return [
                 'entity'    => $entity,
@@ -100,10 +103,11 @@ class TransmitterTypeController extends Controller
      * Edits an existing TransmitterType entity.
      *
      * @Template("JLMModelBundle:TransmitterType:edit.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(TransmitterType $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         $editForm   = $this->createForm(new TransmitterTypeType(), $entity);
         $request = $this->getRequest();

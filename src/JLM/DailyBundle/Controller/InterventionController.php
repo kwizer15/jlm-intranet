@@ -5,20 +5,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Intervention;
-use JLM\DailyBundle\Entity\Work;
 use JLM\DailyBundle\Entity\Shifting;
 use JLM\DailyBundle\Form\Type\ExternalBillType;
 use JLM\DailyBundle\Form\Type\InterventionCancelType;
 use JLM\DailyBundle\JLMDailyEvents;
 use JLM\DailyBundle\Event\InterventionEvent;
-use JLM\DailyBundle\Factory\WorkFactory;
-use JLM\DailyBundle\Builder\InterventionWorkBuilder;
-
-use JLM\ModelBundle\Form\Type\DatepickerType;
-use JLM\ModelBundle\Entity\Door;
-use JLM\CommerceBundle\Entity\Bill;
 use JLM\OfficeBundle\Entity\AskQuote;
 
 /**
@@ -31,10 +23,11 @@ class InterventionController extends Controller
      * Finds and displays a Intervention entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('JLMDailyBundle:Intervention')
                        ->getPrioritary();
@@ -45,10 +38,11 @@ class InterventionController extends Controller
     /**
      * Bill intervention
      *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function tobillAction(Intervention $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity->setMustBeBilled(true);
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
@@ -65,11 +59,11 @@ class InterventionController extends Controller
 
     /**
      * Don't Bill intervention
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function dontbillAction(Intervention $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity->setMustBeBilled(false);
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
@@ -87,10 +81,11 @@ class InterventionController extends Controller
     /**
      * Cancel Bill action
      *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function cancelbillAction(Intervention $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         if ($entity->getMustBeBilled()) {
             if ($entity->getBill() !== null) {
@@ -119,10 +114,11 @@ class InterventionController extends Controller
 
     /**
      * Crée une demande de devis
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function toquoteAction(Intervention $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $ask = new AskQuote;
         $ask->populateFromIntervention($entity);
         $em = $this->getDoctrine()->getManager();
@@ -142,10 +138,11 @@ class InterventionController extends Controller
 
     /**
      * Supprime une demande de devis
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function cancelquoteAction(Intervention $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         if (($ask = $entity->getAskQuote()) !== null) {
             $ask->setIntervention();
             $entity->setAskQuote();
@@ -166,10 +163,11 @@ class InterventionController extends Controller
 
     /**
      * Active contacter client
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function tocontactAction(Intervention $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity->setContactCustomer(false);
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
@@ -186,10 +184,11 @@ class InterventionController extends Controller
 
     /**
      * Supprime une demande de devis
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function cancelcontactAction(Intervention $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity->setContactCustomer(null);
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
@@ -206,10 +205,11 @@ class InterventionController extends Controller
 
     /**
      * Créer un ligne travaux
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function toworkAction(Intervention $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $this->get('event_dispatcher')->dispatch(
             JLMDailyEvents::INTERVENTION_SCHEDULEWORK,
             new InterventionEvent($entity)
@@ -226,10 +226,11 @@ class InterventionController extends Controller
 
     /**
      * Supprime une ligne travaux
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function cancelworkAction(Intervention $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $this
             ->get('event_dispatcher')
             ->dispatch(JLMDailyEvents::INTERVENTION_UNSCHEDULEWORK, new InterventionEvent($entity))
@@ -246,10 +247,11 @@ class InterventionController extends Controller
 
     /**
      * Annule l'intervention
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function cancelAction(Request $request, Intervention $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $form = $this->createForm(new InterventionCancelType(), $entity);
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -270,10 +272,11 @@ class InterventionController extends Controller
 
     /**
      * Désannule l'intervention
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function uncancelAction(Request $request, Intervention $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity->uncancel();
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
@@ -290,10 +293,11 @@ class InterventionController extends Controller
 
     /**
      * Numéro de facture
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function externalbillAction(Request $request, Intervention $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         //$form = $this->createForm(new ExternalBillType(), $entity);
         $form = $this
             ->get('form.factory')
@@ -314,10 +318,11 @@ class InterventionController extends Controller
      * Liste des interventions par date(s)
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function todayAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $today = new \DateTime;
         $todaystring =  $today->format('Y-m-d');
         $em = $this->getDoctrine()->getManager();
@@ -362,10 +367,11 @@ class InterventionController extends Controller
      * Liste des interventions par date(s)
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function reportAction($date1 = null, $date2 = null)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $now = new \DateTime;
         $today = \DateTime::createFromFormat('YmdHis', $now->format('Ymd').'000000');
         $d1 = ($date1 === null) ? $today : \DateTime::createFromFormat('YmdHis', $date1.'000000');
@@ -397,10 +403,11 @@ class InterventionController extends Controller
     /**
      * Liste des interventions par date(s)
      *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function reportdateAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $date = \DateTime::createFromFormat('d/m/Y', $request->get('datepicker'));
 
         return $this->redirect($this->generateUrl('intervention_listdate1', ['date1' => $date->format('Ymd')]));
@@ -411,10 +418,11 @@ class InterventionController extends Controller
      * Supprimer une intervention
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction(Shifting $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         foreach ($entity->getShiftTechnicians() as $tech) {
             $em->remove($tech);
@@ -428,11 +436,12 @@ class InterventionController extends Controller
     /**
      * Finds and displays a Intervention entity.
      *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function redirectAction(Intervention $entity, $act)
     {
-        if (!in_array($act, ['show', 'edit', 'close'])) {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
+        if (!\in_array($act, ['show', 'edit', 'close'], true)) {
             throw $this->createNotFoundException('Page inexistante');
         }
 
@@ -441,11 +450,11 @@ class InterventionController extends Controller
 
     /**
      * Imprime les intervs de la prochaine journée
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function printdayAction($date1)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $now = new \DateTime;
         $today = \DateTime::createFromFormat('YmdHis', $now->format('Ymd').'000000');
         $d1 = \DateTime::createFromFormat('YmdHis', $date1.'000000');
@@ -472,11 +481,11 @@ class InterventionController extends Controller
 
     /**
      * Imprime les intervs de la prochaine journée
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function printtomorrowAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $now = new \DateTime;
         $em = $this->getDoctrine()->getManager();
 
@@ -510,11 +519,11 @@ class InterventionController extends Controller
 
     /**
      * Imprime les intervs d'une intallation
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function printdoorAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         $door = $em->getRepository('JLMModelBundle:Door')->find($id);
         $shifts = [];
@@ -541,11 +550,11 @@ class InterventionController extends Controller
 
     /**
      * Export CSV intervs porte
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function doorcsvAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         $door = $em->getRepository('JLMModelBundle:Door')->find($id);
         $shifts = [];
@@ -565,11 +574,11 @@ class InterventionController extends Controller
 
     /**
      * Export CSV intervs porte
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function doorxlsAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         $door = $em->getRepository('JLMModelBundle:Door')->find($id);
 
@@ -650,14 +659,14 @@ class InterventionController extends Controller
 
     /**
      * Export CSV intervs porte
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
-    public function doorsxlsAction()
+    public function doorsxlsAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
-        $page = $this->getRequest()->get('page', 1);
-        $limit = $this->getRequest()->get('limit', 500);
+        $page = $request->get('page', 1);
+        $limit = $request->get('limit', 500);
         $intervs = $em
             ->getRepository('JLMDailyBundle:Intervention')
             ->findBy([], ['id' => 'ASC'], $limit, ($page - 1) * $limit)

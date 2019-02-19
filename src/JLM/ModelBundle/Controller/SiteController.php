@@ -14,8 +14,6 @@ namespace JLM\ModelBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Entity\Site;
 use JLM\ModelBundle\Form\Type\SiteType;
 
@@ -28,10 +26,11 @@ class SiteController extends Controller
      * Lists all Site entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('JLMModelBundle:Site')->findAll();
@@ -43,10 +42,11 @@ class SiteController extends Controller
      * Finds and displays a Site entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('JLMModelBundle:Site')->find($id);
@@ -67,10 +67,11 @@ class SiteController extends Controller
      * Displays a form to create a new Site entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $trustee = $this->getRequest()->get('trustee', null);
         $entity = new Site();
         $form   = $this->createForm(new SiteType(), $entity);
@@ -87,10 +88,11 @@ class SiteController extends Controller
      * Creates a new Site entity.
      *
      * @Template("JLMModelBundle:Site:new.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity  = new Site();
         $form = $this->createForm(new SiteType(), $entity);
         $form->handleRequest($request);
@@ -114,10 +116,11 @@ class SiteController extends Controller
      * Displays a form to edit an existing Site entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction(Site $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $editForm = $this->createForm(new SiteType(), $entity);
         return [
                 'entity'    => $entity,
@@ -129,10 +132,11 @@ class SiteController extends Controller
      * Edits an existing Site entity.
      *
      * @Template("JLMModelBundle:Site:edit.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, Site $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         $editForm = $this->createForm(new SiteType(), $entity);
         $editForm->handleRequest($request);
@@ -152,11 +156,11 @@ class SiteController extends Controller
 
     /**
      * Deletes a Site entity.
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 

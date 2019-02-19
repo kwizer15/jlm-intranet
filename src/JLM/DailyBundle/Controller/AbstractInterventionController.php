@@ -1,19 +1,9 @@
 <?php
 namespace JLM\DailyBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Intervention;
-use JLM\DailyBundle\Entity\ShiftTechnician;
-use JLM\DailyBundle\Form\Type\AddTechnicianType;
-use JLM\DailyBundle\Form\Type\ShiftingEditType;
 use JLM\DailyBundle\Form\Type\ExternalBillType;
 use JLM\DailyBundle\Form\Type\InterventionCancelType;
-use JLM\ModelBundle\Entity\Door;
 use JLM\DefaultBundle\Controller\PaginableController;
 
 /**
@@ -32,7 +22,7 @@ abstract class AbstractInterventionController extends PaginableController
             ->get('form.factory')
             ->createNamed('externalBill'.$entity->getId(), new ExternalBillType(), $entity)
         ;
-        $form_cancel = $this->createForm(new InterventionCancelType(), $entity);
+        $form_cancel = $this->createForm(InterventionCancelType::class, $entity);
         $em = $this->getDoctrine()->getManager();
         
         return [

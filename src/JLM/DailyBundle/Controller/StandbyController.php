@@ -5,7 +5,6 @@ namespace JLM\DailyBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Standby;
 use JLM\DailyBundle\Form\Type\StandbyType;
 
@@ -18,10 +17,11 @@ class StandbyController extends Controller
      * Lists all Standby entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('JLMDailyBundle:Standby')->findBy([], ['begin' => 'DESC']);
@@ -33,10 +33,11 @@ class StandbyController extends Controller
      * Displays a form to create a new Standby entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new Standby();
         $form   = $this->createForm(new StandbyType(), $entity, [
                                                                  'method' => 'POST',
@@ -54,11 +55,11 @@ class StandbyController extends Controller
      * Creates a new Standby entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request)
     {
-        
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity  = new Standby();
         $form = $this->createForm(new StandbyType(), $entity);
         $form->handleRequest($request);
@@ -81,10 +82,10 @@ class StandbyController extends Controller
      * Displays a form to edit an existing Standby entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction(Standby $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(), new StandbyType(), $entity);
         return [
                 'entity' => $entity,
@@ -96,10 +97,11 @@ class StandbyController extends Controller
      * Edits an existing Standby entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, Standby $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(), new StandbyType(), $entity);
@@ -120,10 +122,11 @@ class StandbyController extends Controller
 
     /**
      * Deletes a Standby entity.
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction(Request $request, Standby $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $id = $entity->getId();
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);

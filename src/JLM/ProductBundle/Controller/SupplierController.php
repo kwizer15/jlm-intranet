@@ -13,7 +13,6 @@ namespace JLM\ProductBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ProductBundle\Entity\Supplier;
 use JLM\ProductBundle\Form\Type\SupplierType;
 
@@ -28,10 +27,11 @@ class SupplierController extends Controller
      * Lists all Supplier entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction($page = 1)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $limit = 15;
         $em = $this->getDoctrine()->getManager();
         $nb = $em->getRepository('JLMProductBundle:Supplier')->getTotal();
@@ -55,10 +55,11 @@ class SupplierController extends Controller
      * Finds and displays a Supplier entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(Supplier $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
         $products = $em->getRepository('JLMProductBundle:Product')->findBy(
             ['supplier' => $entity],
@@ -75,10 +76,11 @@ class SupplierController extends Controller
      * Displays a form to create a new Supplier entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new Supplier();
         $form   = $this->createNewForm($entity);
 
@@ -92,10 +94,11 @@ class SupplierController extends Controller
      * Creates a new Supplier entity.
      *
      * @Template("JLMProductBundle:Supplier:new.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity  = new Supplier();
         $request = $this->getRequest();
         $form    = $this->createNewForm($entity);
@@ -119,10 +122,11 @@ class SupplierController extends Controller
      * Displays a form to edit an existing Supplier entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = $entity = $this->getEntity($id);
 
         $editForm = $this->createEditForm($entity);
@@ -139,10 +143,11 @@ class SupplierController extends Controller
      * Edits an existing Supplier entity.
      *
      * @Template("JLMProductBundle:Supplier:edit.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = $this->getEntity($id);
 
         $editForm   = $this->createEditForm($entity);
@@ -170,11 +175,11 @@ class SupplierController extends Controller
 
     /**
      * Deletes a Supplier entity.
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $form = $this->createDeleteForm($id);
         $request = $this->getRequest();
 

@@ -34,7 +34,7 @@ class CorporationContactController implements ContainerAwareInterface
     public function editAction($id = 0)
     {
         $manager = $this->container->get('jlm_contact.corporationcontact_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $router = $manager->getRouter();
         $entity = $manager->getEntity($id);
         $formName = ($id) ? 'edit' : 'new';
@@ -76,7 +76,7 @@ class CorporationContactController implements ContainerAwareInterface
     public function deleteAction($id)
     {
         $manager = $this->container->get('jlm_contact.corporationcontact_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $form = $manager->createForm('delete', ['entity' => $entity]);
         $process = $manager->getHandler($form, $entity)->process('DELETE');

@@ -44,6 +44,7 @@ class BaseManager implements ContainerAwareInterface, ManagerInterface
 
     protected $router;
 
+    /** @deprecated use symfony method */
     public function secure($role)
     {
         if (false === $this->container->get('security.context')->isGranted($role)) {

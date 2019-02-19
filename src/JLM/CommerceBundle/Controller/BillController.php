@@ -11,6 +11,8 @@
 
 namespace JLM\CommerceBundle\Controller;
 
+use JLM\CoreBundle\Form\Type\MailType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Event\BillEvent;
@@ -28,17 +30,15 @@ use JLM\CommerceBundle\Excel\BillState;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class BillController implements ContainerAwareInterface
+class BillController extends Controller
 {
-    use ContainerAwareTrait;
-
     /**
      * List bills
      */
     public function indexAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $manager = $this->container->get('jlm_commerce.bill_manager');
-        $manager->secure('ROLE_OFFICE');
 
         return $manager->renderResponse(
             'JLMCommerceBundle:Bill:index.html.twig',
@@ -56,7 +56,7 @@ class BillController implements ContainerAwareInterface
     public function showAction($id)
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         return $manager->renderResponse(
             'JLMCommerceBundle:Bill:show.html.twig',
@@ -70,7 +70,7 @@ class BillController implements ContainerAwareInterface
     public function newAction()
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $form = $manager->createForm('new');
         if ($manager->getHandler($form)->process()) {
             $entity = $form->getData();
@@ -93,7 +93,7 @@ class BillController implements ContainerAwareInterface
     public function editAction($id)
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $manager->assertState($entity, [0]);
         $editForm = $manager->createForm('edit', ['entity' => $entity]);
@@ -130,7 +130,7 @@ class BillController implements ContainerAwareInterface
     private function printer($id, $duplicate = false)
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
-        //$manager->secure('ROLE_OFFICE');
+        // $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $filename = $entity->getNumber();
         if ($duplicate) {
@@ -151,7 +151,7 @@ class BillController implements ContainerAwareInterface
     public function printlistAction()
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         return $manager->renderPdf(
             'factures-a-faire',
@@ -174,7 +174,7 @@ class BillController implements ContainerAwareInterface
     public function sendAction($id)
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         if ($entity->getState() != 1) {
             $entity->setState(1);
@@ -213,7 +213,7 @@ class BillController implements ContainerAwareInterface
     private function stateChange($id, $newState)
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         switch ($newState) {
             case 1:
@@ -249,7 +249,7 @@ class BillController implements ContainerAwareInterface
     public function todoAction()
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $om = $manager->getObjectManager();
         $list = $om->getRepository('JLMDailyBundle:Intervention')->getToBilled();
         $forms_externalBill = [];
@@ -276,7 +276,7 @@ class BillController implements ContainerAwareInterface
     public function toboostAction()
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         return $manager->renderResponse(
             'JLMCommerceBundle:Bill:toboost.html.twig',
@@ -291,13 +291,13 @@ class BillController implements ContainerAwareInterface
     {
         // @todo Passer par un service de formPopulate et créer un controller unique dans CoreBundle
         $manager = $this->container->get('jlm_commerce.bill_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $request = $manager->getRequest();
         $site = $entity->getSiteObject();
         $builder = ($site === null) ? new BillBoostMailBuilder($entity) : new BillBoostBusinessMailBuilder($site);
         $mail = MailFactory::create($builder);
-        $editForm = $this->container->get('form.factory')->create(new \JLM\CoreBundle\Form\Type\MailType(), $mail);
+        $editForm = $this->container->get('form.factory')->create(new MailType(), $mail);
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $this->container->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
@@ -325,7 +325,7 @@ class BillController implements ContainerAwareInterface
     public function printboostAction($id)
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
 
         return $manager->renderPdf(
@@ -341,7 +341,7 @@ class BillController implements ContainerAwareInterface
     public function boostokAction($id)
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $date = new \DateTime();
         if ($entity->getFirstBoost() === null) {
@@ -362,7 +362,7 @@ class BillController implements ContainerAwareInterface
     public function searchAction()
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $formData = $manager->getRequest()->get('jlm_core_search');
         $params = [];
         if (is_array($formData) && array_key_exists('query', $formData)) {
@@ -395,7 +395,7 @@ class BillController implements ContainerAwareInterface
     public function stateExcelAction(Request $request)
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $list = $manager->getRepository()->getStateBill($request->get('fee', 11));
 
         $excelBuilder = new BillState($this->container->get('phpexcel'));

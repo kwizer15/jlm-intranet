@@ -3,8 +3,6 @@
 namespace JLM\TransmitterBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -25,10 +23,11 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      *
      * @Route("/{id}/show", name="transmitter_ask_show")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('JLMTransmitterBundle:Ask')->find($id);
@@ -48,10 +47,11 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      *
      * @Route("/new", name="transmitter_ask_new")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new Ask();
         $entity->setCreation(new \DateTime);
         $form   = $this->createForm(new AskType(), $entity);
@@ -68,10 +68,11 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      * @Route("/create", name="transmitter_ask_create")
      * @Method("POST")
      * @Template("JLMTransmitterBundle:Ask:new.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity  = new Ask();
         $form = $this->createForm(new AskType(), $entity);
         $form->handleRequest($request);
@@ -95,10 +96,11 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      *
      * @Route("/{id}/edit", name="transmitter_ask_edit")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('JLMTransmitterBundle:Ask')->find($id);
@@ -121,10 +123,11 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      * @Route("/{id}/update", name="transmitter_ask_update")
      * @Method("POST")
      * @Template("JLMTransmitterBundle:Ask:edit.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('JLMTransmitterBundle:Ask')->find($id);
@@ -160,10 +163,11 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      * @Route("/page/{page}", name="transmitter_ask_page")
      * @Route("/", name="transmitter_ask")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction($page = 1)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $parms = parent::indexAction($page);
         $parms['pageRoute'] = 'transmitter_ask_page';
         return $parms;
@@ -175,10 +179,11 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      * @Route("/treated", name="transmitter_ask_treated")
      * @Route("/treated/page/{page}", name="transmitter_ask_treated_page")
      * @Template("JLMTransmitterBundle:Ask:index.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function listtreatedAction($page = 1)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $parms = parent::listtreatedAction($page);
         $parms['pageRoute'] = 'transmitter_ask_treated_page';
         return $parms;
@@ -190,10 +195,11 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      * @Route("/untreated", name="transmitter_ask_untreated")
      * @Route("/untreated/page/{page}", name="transmitter_ask_untreated_page")
      * @Template("JLMTransmitterBundle:Ask:index.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function listuntreatedAction($page = 1)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $parms = parent::listuntreatedAction($page);
         $parms['pageRoute'] = 'transmitter_ask_untreated_page';
         return $parms;
@@ -204,10 +210,11 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      *
      * @Route("/donttreat/{id}", name="transmitter_ask_donttreat")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function donttreatAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
         $entity = $this->getEntity($em, $id);
@@ -228,10 +235,11 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      *
      * @Route("/canceldonttreat/{id}", name="transmitter_ask_canceldonttreat")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function canceldonttreatAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         return parent::canceldonttreatAction($id);
     }
     
@@ -240,10 +248,11 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
      *
      * @Route("/sidebar", name="transmitter_ask_sidebar")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function sidebarAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         return parent::sidebarAction();
     }
 }

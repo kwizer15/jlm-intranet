@@ -11,25 +11,15 @@
 
 namespace JLM\CommerceBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
-use JLM\CommerceBundle\Entity\Quote;
 use JLM\CommerceBundle\Entity\QuoteVariant;
-use JLM\CommerceBundle\Form\Type\QuoteVariantType;
-use JLM\CommerceBundle\Entity\QuoteLine;
-use JLM\OfficeBundle\Entity\Order;
-use JLM\DailyBundle\Entity\Work;
-use JLM\CommerceBundle\Event\QuoteEvent;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Event\QuoteVariantEvent;
 use JLM\CoreBundle\Factory\MailFactory;
 use JLM\CommerceBundle\Builder\Email\QuoteVariantConfirmGivenMailBuilder;
-use JLM\ModelBundle\JLMModelEvents;
 use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
 
 /**
@@ -46,7 +36,7 @@ class QuoteVariantController extends Controller
     public function newAction()
     {
         $manager = $this->container->get('jlm_commerce.quotevariant_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $form = $manager->createForm('new');
         if ($manager->getHandler($form)->process()) {
             return $manager->redirect('quote_show', ['id' => $form->get('quote')->getData()->getId()]);
@@ -68,7 +58,7 @@ class QuoteVariantController extends Controller
     public function editAction($id)
     {
         $manager = $this->container->get('jlm_commerce.quotevariant_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $manager->assertState($entity, [QuoteVariant::STATE_INSEIZURE]);
         $form = $manager->createForm('edit', ['entity' => $entity]);
@@ -99,7 +89,7 @@ class QuoteVariantController extends Controller
     private function changeState($id, $state, $event = null)
     {
         $manager = $this->container->get('jlm_commerce.quotevariant_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         if ($entity->setState($state)) {
             if ($event !== null) {
@@ -171,11 +161,11 @@ class QuoteVariantController extends Controller
     {
         // @todo Passer par un service de formPopulate et créer un controller unique dans CoreBundle
         $manager = $this->container->get('jlm_commerce.quotevariant_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $request = $manager->getRequest();
         $mail = MailFactory::create(new QuoteVariantConfirmGivenMailBuilder($entity));
-        $editForm = $this->createForm(new \JLM\CoreBundle\Form\Type\MailType(), $mail);
+        $editForm = $this->createForm(\JLM\CoreBundle\Form\Type\MailType::class, $mail);
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
@@ -199,7 +189,7 @@ class QuoteVariantController extends Controller
     public function mailAction($id)
     {
         $manager = $this->container->get('jlm_commerce.quotevariant_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $manager->assertState(
             $entity,
@@ -233,7 +223,7 @@ class QuoteVariantController extends Controller
                 }
             }
         }
-        $form = $this->createForm(new MailType(), $mail);
+        $form = $this->createForm(MailType::class, $mail);
 
         return [
             'entity' => $entity,
@@ -247,7 +237,7 @@ class QuoteVariantController extends Controller
     public function sendmailAction($id)
     {
         $manager = $this->container->get('jlm_commerce.quotevariant_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $request = $manager->getRequest();
         $entity = $manager->getEntity($id);
         if ($entity->getState() < QuoteVariant::STATE_READY) {
@@ -256,7 +246,7 @@ class QuoteVariantController extends Controller
 
         // Message
         $mail = new Mail();
-        $form = $this->createForm(new MailType(), $mail);
+        $form = $this->createForm(MailType::class, $mail);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -295,7 +285,7 @@ class QuoteVariantController extends Controller
     public function printAction($id)
     {
         $manager = $this->container->get('jlm_commerce.quotevariant_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
 
         return $manager->renderPdf(
@@ -311,7 +301,7 @@ class QuoteVariantController extends Controller
     public function printcodingAction($id)
     {
         $manager = $this->container->get('jlm_commerce.quotevariant_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         if ($entity->getState() == QuoteVariant::STATE_CANCELED) {
             return $manager->redirect('quote_show', ['id' => $entity->getQuote()->getId()]);
@@ -327,7 +317,7 @@ class QuoteVariantController extends Controller
     public function boostAction()
     {
         $manager = $this->container->get('jlm_commerce.quotevariant_manager');
-        $manager->secure('ROLE_OFFICE');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $quotes = $manager->getRepository()->getToBoost();
         usort(
