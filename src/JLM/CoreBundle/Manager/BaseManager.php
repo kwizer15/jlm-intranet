@@ -11,6 +11,7 @@
 
 namespace JLM\CoreBundle\Manager;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use JLM\CoreBundle\Form\Handler\DoctrineHandler;
 use JLM\CoreBundle\Repository\SearchRepositoryInterface;
 use FOS\UserBundle\Model\UserInterface;
@@ -21,6 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\EventDispatcher\Event;
@@ -36,21 +38,25 @@ class BaseManager implements ContainerAwareInterface, ManagerInterface
 {
     use ContainerAwareTrait;
 
+    /**
+     * @var string
+     */
     protected $class;
 
+    /**
+     * @var Request
+     */
     protected $request;
 
+    /**
+     * @var ObjectManager
+     */
     protected $om;
 
+    /**
+     * @var RouterInterface
+     */
     protected $router;
-
-    /** @deprecated use symfony method */
-    public function secure($role)
-    {
-        if (false === $this->container->get('security.context')->isGranted($role)) {
-            throw new AccessDeniedException();
-        }
-    }
 
     public function getUser()
     {
@@ -86,7 +92,7 @@ class BaseManager implements ContainerAwareInterface, ManagerInterface
         $this->class = $class;
     }
 
-    public function setServices()
+    public function setServices(): void
     {
         $this->om = $this->container->get('doctrine')->getManager();
         $this->request = $this->container->get('request');
@@ -121,7 +127,7 @@ class BaseManager implements ContainerAwareInterface, ManagerInterface
     {
         $param = $this->getFormParam($name, $options);
         if ($param !== null) {
-            // @todo Temporaire, mauvaise gestion des methodes en prod
+            // TODO: Temporaire, mauvaise gestion des methodes en prod
             if ($param['method'] !== 'GET') {
                 $param['method'] = 'POST';
             }
@@ -132,8 +138,7 @@ class BaseManager implements ContainerAwareInterface, ManagerInterface
                     'action' => $this->router->generate($param['route'], $param['params']),
                     'method' => $param['method'],
                 ]
-            )
-            ;
+            );
             $form->add('submit', 'submit', ['label' => $param['label']]);
 
             return $this->populateForm($form);

@@ -3,16 +3,13 @@
 namespace JLM\OfficeBundle\Entity;
 
 use JLM\AskBundle\Entity\Ask;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use JLM\AskBundle\Model\CommunicationMeansInterface;
+use JLM\AskBundle\Model\PayerInterface;
+use JLM\AskBundle\Model\SubjectInterface;
 use JLM\ModelBundle\Entity\Door;
 use JLM\CommerceBundle\Model\QuoteInterface;
 use JLM\DailyBundle\Entity\Intervention;
 
-/**
- * Demande de devis
- * JLM\OfficeBundle\Entity\AskQuote
- */
 class AskQuote extends Ask
 {
     /**
@@ -22,35 +19,44 @@ class AskQuote extends Ask
     
     /**
      * Suite à intervention
+     *
      * @var Intervention
      */
     private $intervention;
     
     /**
      * Intallation
+     *
      * @var Door
      */
     private $door;
     
     /**
      * Devis
+     *
      * @var QuoteInterface[]
      */
     private $quotes;
-    
+
+    public function __construct()
+    {
+        $this->quotes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * Get Id
-     * @return int
+     *
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
-    
+
     /**
-     * Dossier de stockage des documents uploadés
+     * @return string
      */
-    protected function getUploadDir()
+    protected function getUploadDir(): string
     {
         return 'uploads/documents/askquote';
     }
@@ -58,13 +64,14 @@ class AskQuote extends Ask
     /**
      * Set intervention
      *
-     * @param \JLM\DailyBundle\Entity\Intervention $intervention
+     * @param \JLM\DailyBundle\Entity\Intervention|null $intervention
+     *
      * @return AskQuote
      */
-    public function setIntervention(Intervention $intervention = null)
+    public function setIntervention(?Intervention $intervention = null): self
     {
         $this->intervention = $intervention;
-        $this->setDoor(null);
+        $this->setDoor();
         
         return $this;
     }
@@ -72,9 +79,9 @@ class AskQuote extends Ask
     /**
      * Get intervention
      *
-     * @return \JLM\DailyBundle\Entity\Intervention
+     * @return Intervention|null
      */
-    public function getIntervention()
+    public function getIntervention(): Intervention
     {
         return $this->intervention;
     }
@@ -82,23 +89,23 @@ class AskQuote extends Ask
     /**
      * Set door
      *
-     * @param \JLM\ModelBundle\Entity\Door $door
+     * @param Door|null $door
+     *
      * @return AskQuote
      */
-    public function setDoor(Door $door = null)
+    public function setDoor(?Door $door = null): self
     {
         $this->door = $door;
-        $this->setSite(null);
-        $this->setTrustee(null);
+        $this->setSubject();
+        $this->setPayer();
         
         return $this;
     }
 
     /**
-     * Get door
-     *
+     * @return Door
      */
-    public function getDoor()
+    public function getDoor(): Door
     {
         if ($this->getIntervention() !== null) {
             return $this->getIntervention()->getDoor();
@@ -106,58 +113,53 @@ class AskQuote extends Ask
         
         return $this->door;
     }
-    
+
     /**
-     * Get Site
+     * @return SubjectInterface
      */
-    public function getSite()
+    public function getSite(): SubjectInterface
     {
         if ($this->getDoor() !== null) {
             return $this->getDoor()->getSite();
         }
         
-        return parent::getSubject();
+        return $this->getSubject();
     }
-    
+
     /**
-     * Get Trustee
+     * @return PayerInterface
      */
-    public function getTrustee()
+    public function getTrustee(): PayerInterface
     {
         if ($this->getDoor() !== null) {
             return $this->getDoor()->getTrustee();
         }
-        return parent::getPayer();
+
+        return $this->getPayer();
     }
-    
+
     /**
-     * Get method
+     * @return CommunicationMeansInterface
      */
-    public function getMethod()
+    public function getMethod(): CommunicationMeansInterface
     {
         if ($this->getIntervention() !== null) {
             return null;
         }
+
         return parent::getMethod();
-    }
-    
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->quotes = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
      * Add quotes
      *
-     * @param QuoteInterface $quotes
+     * @param QuoteInterface $quote
+     *
      * @return bool
      */
-    public function addQuote(QuoteInterface $quotes)
+    public function addQuote(QuoteInterface $quote): bool
     {
-        $this->quotes[] = $quotes;
+        $this->quotes[] = $quote;
     
         return true;
     }
@@ -165,20 +167,21 @@ class AskQuote extends Ask
     /**
      * Remove quotes
      *
-     * @param QuoteInterface $quotes
+     * @param QuoteInterface $quote
+     *
      * @return bool
      */
-    public function removeQuote(QuoteInterface $quotes)
+    public function removeQuote(QuoteInterface $quote): bool
     {
-        return $this->quotes->removeElement($quotes);
+        return $this->quotes->removeElement($quote);
     }
 
     /**
      * Get quotes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return QuoteInterface[]
      */
-    public function getQuotes()
+    public function getQuotes(): iterable
     {
         return $this->quotes;
     }
@@ -186,18 +189,19 @@ class AskQuote extends Ask
     /**
      * Populate from intervention
      *
-     * @param Intervention $interv
+     * @param Intervention $intervention
      *
      * @return void
+     *
      * @throws \Exception
      */
-    public function populateFromIntervention(Intervention $interv): void
+    public function populateFromIntervention(Intervention $intervention): void
     {
         $this->setCreation(new \DateTime);
         $maturity = new \DateTime;
         $maturity->add(new \DateInterval('P15D'));
         $this->setMaturity($maturity);
-        $this->setIntervention($interv);
-        $this->setAsk($interv->getRest());
+        $this->setIntervention($intervention);
+        $this->setAsk($intervention->getRest());
     }
 }

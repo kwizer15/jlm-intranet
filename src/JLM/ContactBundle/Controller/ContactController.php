@@ -1,21 +1,13 @@
 <?php
 
-/*
- * This file is part of the JLMContactBundle package.
- *
- * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace JLM\ContactBundle\Controller;
 
+use JLM\ContactBundle\Form\Type\AssociationType;
+use JLM\ContactBundle\Form\Type\CompanyType;
+use JLM\ContactBundle\Form\Type\PersonType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Person controller.
- */
 class ContactController extends Controller
 {
     /**
@@ -23,34 +15,38 @@ class ContactController extends Controller
      *
      * @param int|string $id The entity identifier or typeof new entity
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function editAction($id)
+    public function editAction($id): Response
     {
+        $formTypeMap = [
+            'person' => PersonType::class,
+            'company' => CompanyType::class,
+            'association' => AssociationType::class
+        ];
         $manager = $this->container->get('jlm_contact.contact_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        if (in_array($id, ['person', 'company', 'association'])) {
-            $type = $id;
-            $id = null;
+        if (array_key_exists($id, $formTypeMap)) {
+            $formType = $id;
             $formName = 'new';
             $entity = null;
         } else {
             $entity = $manager->getEntity($id);
             $formName = 'edit';
-            $type = $entity->getType();
+            $formType = $entity->getType();
         }
-        $form = $manager->createForm($formName, ['type' => $type, 'entity' => $entity]);
+        $form = $manager->createForm($formName, ['type' => $formType, 'entity' => $entity]);
         $process = $manager->getHandler($form, $entity)->process();
 
-        return $manager->getRequest()->isXmlHttpRequest()
-            ? ($process
+        if ($manager->getRequest()->isXmlHttpRequest()) {
+            return $process
                 ? $manager->renderJson(['ok' => true])
-                : $manager->renderResponse(
-                    'JLMContactBundle:Contact:modal_new.html.twig',
-                    ['form' => $form->createView()]
-                ))
-            : ($process ? $manager->redirect('jlm_contact_contact_show', ['id' => $form->getData()->getId()])
-                : $manager->renderResponse('JLMContactBundle:Contact:new.html.twig', ['form' => $form->createView()]));
+                : $manager->renderResponse('JLMContactBundle:Contact:modal_new.html.twig', ['form' => $form->createView()]);
+        }
+
+        return $process
+            ? $manager->redirect('jlm_contact_contact_show', ['id' => $form->getData()->getId()])
+            : $manager->renderResponse('JLMContactBundle:Contact:new.html.twig', ['form' => $form->createView()]);
     }
 
     public function listAction()

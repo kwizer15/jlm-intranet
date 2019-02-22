@@ -29,8 +29,9 @@ class ContactManager extends Manager
             'company' => CompanyType::class,
             'association' => AssociationType::class,
         ];
+
         if (array_key_exists($type, $objects)) {
-            return new $objects[$type]();
+            return $objects[$type];
         }
 
         return null;

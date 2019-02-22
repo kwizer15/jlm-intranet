@@ -1,17 +1,7 @@
 <?php
 
-/*
- * This file is part of the JLMAskBundle package.
- *
- * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace JLM\AskBundle\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use JLM\ModelBundle\Entity\UploadDocument;
 use JLM\AskBundle\Model\PayerInterface;
 use JLM\AskBundle\Model\SubjectInterface;
@@ -19,55 +9,60 @@ use JLM\AskBundle\Model\AskInterface;
 use JLM\AskBundle\Model\CommunicationMeansInterface;
 use JLM\AskBundle\Model\ContactInterface;
 
-/**
- * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- */
 abstract class Ask extends UploadDocument implements AskInterface
 {
     /**
      * Syndic
+     *
      * @var PayerInterface
      */
     private $trustee;
     
     /**
      * Affaire
+     *
      * @var SubjectInterface
      */
     private $site;
     
     /**
      * Méthode de la demande
+     *
      * @var CommunicationMeansInterface
      */
     private $method;
     
     /**
      * Date de la demande
+     *
      * @var \DateTime
      */
     private $creation;
     
     /**
      * Date d'échéance
+     *
      * @var \DateTime
      */
     private $maturity;
     
     /**
      * Contact
+     *
      * @var ContactInterface
      */
     private $person;
 
     /**
      * Ne pas traiter
+     *
      * @var string
      */
     private $dontTreat;
 
     /**
      * Résumé de la demande
+     *
      * @var string
      */
     private $ask;
@@ -76,9 +71,10 @@ abstract class Ask extends UploadDocument implements AskInterface
      * Set creation
      *
      * @param \DateTime $creation
-     * @return self
+     *
+     * @return Ask
      */
-    public function setCreation($creation)
+    public function setCreation($creation): self
     {
         $this->creation = $creation;
     
@@ -90,7 +86,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      *
      * @return \DateTime
      */
-    public function getCreation()
+    public function getCreation(): \DateTime
     {
         return $this->creation;
     }
@@ -99,9 +95,10 @@ abstract class Ask extends UploadDocument implements AskInterface
      * Set maturity
      *
      * @param \DateTime $maturity
-     * @return self
+     *
+     * @return Ask
      */
-    public function setMaturity($maturity)
+    public function setMaturity($maturity): self
     {
         $this->maturity = $maturity;
     
@@ -113,7 +110,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      *
      * @return \DateTime
      */
-    public function getMaturity()
+    public function getMaturity(): \DateTime
     {
         return $this->maturity;
     }
@@ -122,10 +119,12 @@ abstract class Ask extends UploadDocument implements AskInterface
      * Set trustee
      *
      * @param PayerInterface $trustee
-     * @return self
+     *
+     * @return Ask
+     *
      * @deprecated Use setPayer($payer)
      */
-    public function setTrustee(PayerInterface $trustee = null)
+    public function setTrustee(PayerInterface $trustee = null): self
     {
         return $this->setPayer($trustee);
     }
@@ -134,9 +133,10 @@ abstract class Ask extends UploadDocument implements AskInterface
      * Get trustee
      *
      * @return PayerInterface
+     *
      * @deprecated Use getPayer()
      */
-    public function getTrustee()
+    public function getTrustee(): PayerInterface
     {
         return $this->getPayer();
     }
@@ -145,9 +145,10 @@ abstract class Ask extends UploadDocument implements AskInterface
      * Set payer
      *
      * @param PayerInterface $payer
-     * @return self
+     *
+     * @return Ask
      */
-    public function setPayer(PayerInterface $payer = null)
+    public function setPayer(PayerInterface $payer = null): self
     {
         $this->trustee = $payer;
     
@@ -159,7 +160,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      *
      * @return PayerInterface
      */
-    public function getPayer()
+    public function getPayer(): PayerInterface
     {
         return $this->trustee;
     }
@@ -168,10 +169,12 @@ abstract class Ask extends UploadDocument implements AskInterface
      * Set site
      *
      * @param SubjectInterface $site
-     * @return self
+     *
+     * @return Ask
+     *
      * @deprecated Use setSubject($subject)
      */
-    public function setSite(SubjectInterface $site = null)
+    public function setSite(SubjectInterface $site = null): self
     {
         return $this->setSubject($site);
     }
@@ -180,9 +183,10 @@ abstract class Ask extends UploadDocument implements AskInterface
      * Get site
      *
      * @return SubjectInterface
+     *
      * @deprecated Use getSubject()
      */
-    public function getSite()
+    public function getSite(): SubjectInterface
     {
         return $this->getSubject();
     }
@@ -190,10 +194,11 @@ abstract class Ask extends UploadDocument implements AskInterface
     /**
      * Set subject
      *
-     * @param SubjectInterface $site
-     * @return self
+     * @param SubjectInterface $subject
+     *
+     * @return Ask
      */
-    public function setSubject(SubjectInterface $subject = null)
+    public function setSubject(SubjectInterface $subject = null): self
     {
         $this->site = $subject;
     
@@ -205,7 +210,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      *
      * @return SubjectInterface
      */
-    public function getSubject()
+    public function getSubject(): SubjectInterface
     {
         return $this->site;
     }
@@ -213,10 +218,11 @@ abstract class Ask extends UploadDocument implements AskInterface
     /**
      * Set method
      *
-     * @param CommunicationMeans $method
-     * @return self
+     * @param CommunicationMeansInterface $method
+     *
+     * @return Ask
      */
-    public function setMethod(CommunicationMeansInterface $method = null)
+    public function setMethod(CommunicationMeansInterface $method = null): self
     {
         $this->method = $method;
     
@@ -226,9 +232,9 @@ abstract class Ask extends UploadDocument implements AskInterface
     /**
      * Get method
      *
-     * @return CommunicationMeans
+     * @return CommunicationMeansInterface
      */
-    public function getMethod()
+    public function getMethod(): CommunicationMeansInterface
     {
         return $this->method;
     }
@@ -237,10 +243,12 @@ abstract class Ask extends UploadDocument implements AskInterface
      * Set person
      *
      * @param ContactInterface $person
-     * @return self
+     *
+     * @return Ask
+     *
      * @deprecated Use setContact($contact)
      */
-    public function setPerson(ContactInterface $person = null)
+    public function setPerson(ContactInterface $person = null): self
     {
         return $this->setContact($person);
     }
@@ -248,10 +256,11 @@ abstract class Ask extends UploadDocument implements AskInterface
     /**
      * Get person
      *
-     * @return ContactInterface
+     * @return ContactInterface|null
+     *
      * @deprecated Use getContact()
      */
-    public function getPerson()
+    public function getPerson(): ?ContactInterface
     {
         return $this->getContact();
     }
@@ -259,10 +268,11 @@ abstract class Ask extends UploadDocument implements AskInterface
     /**
      * Set person
      *
-     * @param ContactInterface $person
-     * @return self
+     * @param ContactInterface $contact
+     *
+     * @return Ask
      */
-    public function setContact(ContactInterface $contact = null)
+    public function setContact(ContactInterface $contact = null): self
     {
         $this->person = $contact;
     
@@ -272,9 +282,9 @@ abstract class Ask extends UploadDocument implements AskInterface
     /**
      * Get person
      *
-     * @return ContactInterface
+     * @return ContactInterface|null
      */
-    public function getContact()
+    public function getContact(): ?ContactInterface
     {
         return $this->person;
     }
@@ -282,16 +292,20 @@ abstract class Ask extends UploadDocument implements AskInterface
     /**
      * Vérifie si l'échéance est correct
      */
-    public function isCreationBeforeMaturity()
+    public function isCreationBeforeMaturity(): bool
     {
         return $this->creation <= $this->maturity || $this->maturity === null;
     }
-    
+
     /**
      * Get dontTreat
-     * @return string|null
+     *
+     * @param string|null $dontTreat
+     *
+     * @return Ask
+     * FIXME: Remove null
      */
-    public function setDontTreat($dontTreat = null)
+    public function setDontTreat(?string $dontTreat = null): self
     {
         $this->dontTreat = $dontTreat;
         
@@ -300,9 +314,10 @@ abstract class Ask extends UploadDocument implements AskInterface
     
     /**
      * Get dontTreat
+     *
      * @return string|null
      */
-    public function getDontTreat()
+    public function getDontTreat(): ?string
     {
         return $this->dontTreat;
     }
@@ -311,9 +326,10 @@ abstract class Ask extends UploadDocument implements AskInterface
      * Set ask
      *
      * @param string $ask
-     * @return self
+     *
+     * @return Ask
      */
-    public function setAsk($ask)
+    public function setAsk($ask): self
     {
         $this->ask = $ask;
     
@@ -325,7 +341,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      *
      * @return string
      */
-    public function getAsk()
+    public function getAsk(): string
     {
         return $this->ask;
     }
