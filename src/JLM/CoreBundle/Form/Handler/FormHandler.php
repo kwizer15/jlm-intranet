@@ -12,6 +12,7 @@
 namespace JLM\CoreBundle\Form\Handler;
 
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,10 +32,10 @@ abstract class FormHandler
     
     /**
      * Constructor
-     * @param Form $form
+     * @param FormInterface $form
      * @param Request $request
      */
-    public function __construct(Form $form, Request $request)
+    public function __construct(FormInterface $form, Request $request)
     {
         $this->form = $form;
         $this->request = $request;
@@ -43,7 +44,7 @@ abstract class FormHandler
     /**
      * @return bool
      */
-    public function process()
+    public function process(): bool
     {
         $this->form->handleRequest($this->request);
         if ($this->form->isValid()) {
@@ -56,5 +57,5 @@ abstract class FormHandler
     /**
      * @return bool
      */
-    abstract public function onSuccess();
+    abstract public function onSuccess(): bool;
 }

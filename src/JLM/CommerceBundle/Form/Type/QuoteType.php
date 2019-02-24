@@ -43,7 +43,7 @@ class QuoteType extends AbstractType
             ->add('trusteeName', TextType::class, ['label' => 'Syndic'])
             ->add(
                 'trusteeAddress',
-                TextareaType::class,
+                null,
                 ['label' => 'Adresse de facturation', 'attr' => ['class' => 'input-xlarge']]
             )
             ->add('contact', SiteContactHiddenType::class, ['required' => false])
@@ -53,13 +53,13 @@ class QuoteType extends AbstractType
             ->add('door', DoorHiddenType::class, ['required' => false])
             ->add(
                 'doorCp',
-                TextType::class,
+                null,
                 ['label' => 'Affaire', 'attr' => ['class' => 'input-xlarge', 'rows' => '3']]
             )
             ->add(
                 'vat',
                 PercentType::class,
-                ['precision' => 1, 'label' => 'TVA applicable', 'attr' => ['class' => 'input-mini']]
+                ['scale' => 1, 'label' => 'TVA applicable', 'attr' => ['class' => 'input-mini']]
             )
             ->add('description', TextareaType::class, ['required' => false])
             ->add('vatTransmitter', HiddenType::class)

@@ -11,14 +11,15 @@
 
 namespace JLM\ModelBundle\Controller;
 
+use JLM\ContactBundle\Entity\Person;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Form\Type\TrusteeType;
 use JLM\ContactBundle\Form\Type\PersonType;
-use JLM\ContactBundle\Manager\ContactManager;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -201,7 +202,7 @@ class TrusteeController extends Controller
     private function createDeleteForm(Trustee $entity)
     {
         return $this->createFormBuilder(['id' => $entity->getId()])
-            ->add('id', 'hidden')
+            ->add('id', HiddenType::class)
             ->getForm()
             ;
     }
@@ -215,8 +216,8 @@ class TrusteeController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $entity = ContactManager::create('Person');
-        $form = $this->createForm(new PersonType(), $entity);
+        $entity = new Person();
+        $form = $this->createForm(PersonType::class, $entity);
 
         return [
             'trustee' => $trustee,
@@ -229,14 +230,17 @@ class TrusteeController extends Controller
      * Creates a new Trustee entity.
      *
      * @Template("JLMModelBundle:Trustee:contactnew.html.twig")
+     * @param Request $request
+     * @param Trustee $trustee
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function contactcreateAction(Trustee $trustee)
+    public function contactcreateAction(Request $request, Trustee $trustee)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $entity = ContactManager::create('Person');
-        $request = $this->getRequest();
-        $form = $this->createForm(new PersonType(), $entity);
+        $entity = new Person();
+        $form = $this->createForm(PersonType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

@@ -2,6 +2,8 @@
 
 namespace JLM\DailyBundle\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -39,11 +41,11 @@ class StandbyController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity = new Standby();
-        $form   = $this->createForm(new StandbyType(), $entity, [
+        $form   = $this->createForm(StandbyType::class, $entity, [
                                                                  'method' => 'POST',
                                                                  'action' => $this->generateUrl('standby_create'),
                                                                 ]);
-        $form->add('submit', 'submit', ['label' => 'Enregistrer']);
+        $form->add('submit', SubmitType::class, ['label' => 'Enregistrer']);
 
         return [
                 'entity' => $entity,
@@ -61,7 +63,7 @@ class StandbyController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity  = new Standby();
-        $form = $this->createForm(new StandbyType(), $entity);
+        $form = $this->createForm(StandbyType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -86,7 +88,7 @@ class StandbyController extends Controller
     public function editAction(Standby $entity)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(), new StandbyType(), $entity);
+        $form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(), StandbyType::class, $entity);
         return [
                 'entity' => $entity,
                 'form'   => $form->createView(),
@@ -104,7 +106,7 @@ class StandbyController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(), new StandbyType(), $entity);
+        $form = $this->get('form.factory')->createNamed('shiftTechNew'.$entity->getId(), StandbyType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -149,7 +151,7 @@ class StandbyController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(['id' => $id])
-            ->add('id', 'hidden')
+            ->add('id', HiddenType::class)
             ->getForm()
         ;
     }

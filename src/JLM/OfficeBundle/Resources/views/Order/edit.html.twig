@@ -6,7 +6,7 @@
 <div class="span6 well">{{ entity.work.place | nl2br }}</div>
 <div class="span6">Créée le {{ entity.creation|date('d/m/Y') }}</div>
 </div>
-<form action="{{ path('order_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
+<form action="{{ path('order_update', { 'id': entity.id }) }}" method="post" class="form-horizontal">
     <fieldset>
     {{ form_widget(edit_form) }}
 	<div class="form-actions">

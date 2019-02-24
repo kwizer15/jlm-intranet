@@ -58,12 +58,12 @@ class FixingController extends AbstractInterventionController
             'end' => FixingEndMailBuilder::class,
             'report' => FixingReportMailBuilder::class,
         ];
-        $class = (array_key_exists($step, $steps)) ? $steps[$step] : null;
+        $class = $steps[$step] ?? null;
         if (null === $class) {
             throw new NotFoundHttpException('Page inexistante');
         }
         $mail = MailFactory::create(new $class($entity));
-        $editForm = $this->createForm(new MailType(), $mail);
+        $editForm = $this->createForm(MailType::class, $mail);
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));
@@ -112,7 +112,7 @@ class FixingController extends AbstractInterventionController
         $entity = new Fixing();
         $entity->setDoor($door);
         $entity->setAskDate(new \DateTime());
-        $form = $this->get('form.factory')->createNamed('fixingNew' . $door->getId(), new FixingType(), $entity);
+        $form = $this->get('form.factory')->createNamed('fixingNew' . $door->getId(), FixingType::class, $entity);
         return [
             'door' => $door,
             'entity' => $entity,
@@ -135,7 +135,7 @@ class FixingController extends AbstractInterventionController
         $entity->setContract($door->getActualContract());
         $entity->setPlace($door . '');
         $entity->setPriority(2);
-        $form = $this->get('form.factory')->createNamed('fixingNew' . $door->getId(), new FixingType(), $entity);
+        $form = $this->get('form.factory')->createNamed('fixingNew' . $door->getId(), FixingType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -164,7 +164,7 @@ class FixingController extends AbstractInterventionController
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $editForm = $this->createForm(new FixingEditType(), $entity);
+        $editForm = $this->createForm(FixingEditType::class, $entity);
 
         return [
             'entity' => $entity,
@@ -181,7 +181,7 @@ class FixingController extends AbstractInterventionController
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $editForm = $this->createForm(new FixingEditType(), $entity);
+        $editForm = $this->createForm(FixingEditType::class, $entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -206,7 +206,7 @@ class FixingController extends AbstractInterventionController
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $form = $this->createForm(new FixingCloseType(), $entity);
+        $form = $this->createForm(FixingCloseType::class, $entity);
 
         return [
             'entity' => $entity,
@@ -223,7 +223,7 @@ class FixingController extends AbstractInterventionController
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $form = $this->createForm(new FixingCloseType(), $entity);
+        $form = $this->createForm(FixingCloseType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

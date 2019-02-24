@@ -34,17 +34,17 @@ jlm_contact_contact:
     methods: [GET]
 
 jlm_contact_contact_new:
-    path: /{id}/new
-    defaults: { _controller: "JLMContactBundle:Contact:edit" }
+    path: /{type}/new
+    defaults: { _controller: "JLMContactBundle:Contact:add" }
     requirements:
-      id: person|company|association
+        type: person|company|association
     methods: [GET]
 
 jlm_contact_contact_create:
-    path: /{id}
-    defaults: { _controller: "JLMContactBundle:Contact:edit" }
+    path: /{type}
+    defaults: { _controller: "JLMContactBundle:Contact:add" }
     requirements:
-      id: person|company|association
+      type: person|company|association
     methods: [POST]
 
 jlm_contact_contact_edit:

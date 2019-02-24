@@ -23,8 +23,10 @@ use JLM\CommerceBundle\Entity\Bill;
  */
 class BillManager extends Manager
 {
-
-    protected function getFormParam($name, $options = [])
+    /**
+     * {@inheritdoc}
+     */
+    protected function getFormParam(string $name, array $options = []): array
     {
         switch ($name) {
             case 'new':
@@ -33,7 +35,7 @@ class BillManager extends Manager
                     'route' => 'bill_create',
                     'params' => [],
                     'label' => 'Créer',
-                    'type' => BillType::class,
+                    'entry_type' => BillType::class,
                     'entity' => null,
                 ];
             case 'edit':
@@ -42,7 +44,7 @@ class BillManager extends Manager
                     'route' => 'bill_update',
                     'params' => ['id' => $options['entity']->getId()],
                     'label' => 'Modifier',
-                    'type' => BillType::class,
+                    'entry_type' => BillType::class,
                     'entity' => $options['entity'],
                 ];
         }

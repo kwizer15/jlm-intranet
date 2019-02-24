@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class RegistrationType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('contact', ContactSelectType::class, ['label' => 'Contact', 'attr' => ['class' => 'input-large']])
@@ -19,12 +19,13 @@ class RegistrationType extends AbstractType
                 'roles',
                 CollectionType::class,
                 [
-                    'type' => ChoiceType::class,
+                    'entry_type' => ChoiceType::class,
                     'options' => [
-                        'choices' => [
+                        'choices' => array_flip([
                             'ROLE_MANAGER' => 'Syndic',
                             'ROLE_BUSINESS' => 'Copro',
-                        ],
+                        ]),
+                        'choices_as_values' => true,
                         'required' => true,
                         'empty_value' => 'Choisir le role',
                         'empty_data' => null,
@@ -34,7 +35,7 @@ class RegistrationType extends AbstractType
         ;
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return RegistrationFormType::class;
     }

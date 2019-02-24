@@ -34,7 +34,7 @@ class MailType extends AbstractType
                 'from',
                 CollectionType::class,
                 [
-                    'type' => Email::class,
+                    'entry_type' => Email::class,
                     'allow_add' => true,
                     'allow_delete' => true,
                     'prototype' => true,
@@ -45,7 +45,7 @@ class MailType extends AbstractType
                 'to',
                 CollectionType::class,
                 [
-                    'type' => Email::class,
+                    'entry_type' => Email::class,
                     'allow_add' => true,
                     'allow_delete' => true,
                     'prototype' => true,
@@ -56,7 +56,7 @@ class MailType extends AbstractType
                 'cc',
                 CollectionType::class,
                 [
-                    'type' => Email::class,
+                    'entry_type' => Email::class,
                     'allow_add' => true,
                     'allow_delete' => true,
                     'prototype' => true,
@@ -69,7 +69,7 @@ class MailType extends AbstractType
             ->add(
                 'preAttachements',
                 CollectionType::class,
-                ['type' => PreAttachementType::class, 'label' => 'Fichiers joints', 'disabled' => true]
+                ['entry_type' => PreAttachementType::class, 'label' => 'Fichiers joints', 'disabled' => true]
             )
         ;
     }

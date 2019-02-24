@@ -68,7 +68,7 @@ class ContractController extends Controller
         }
 
         $entity->setBegin(new \DateTime());
-        $form = $this->createForm(new ContractType(), $entity);
+        $form = $this->createForm(ContractType::class, $entity);
 
         return [
             'entity' => $entity,
@@ -81,13 +81,12 @@ class ContractController extends Controller
      *
      * @Template("JLMModelBundle:Contract:new.html.twig")
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity = new Contract();
-        $request = $this->getRequest();
-        $form = $this->createForm(new ContractType(), $entity);
+        $form = $this->createForm(ContractType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

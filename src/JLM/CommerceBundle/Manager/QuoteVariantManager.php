@@ -28,7 +28,10 @@ use Symfony\Component\Security\Acl\Exception\Exception;
 class QuoteVariantManager extends Manager
 {
 
-    protected function getFormParam($name, $options = [])
+    /**
+     * {@inheritdoc}
+     */
+    protected function getFormParam(string $name, array $options = []): array
     {
         switch ($name) {
             case 'new':
@@ -37,7 +40,7 @@ class QuoteVariantManager extends Manager
                     'route' => 'variant_create',
                     'params' => [],
                     'label' => 'Créer',
-                    'type' => QuoteVariantType::class,
+                    'entry_type' => QuoteVariantType::class,
                     'entity' => null,
                 ];
             case 'edit':
@@ -46,7 +49,7 @@ class QuoteVariantManager extends Manager
                     'route' => 'variant_update',
                     'params' => ['id' => $options['entity']->getId()],
                     'label' => 'Modifier',
-                    'type' => QuoteVariantType::class,
+                    'entry_type' => QuoteVariantType::class,
                     'entity' => $options['entity'],
                 ];
         }

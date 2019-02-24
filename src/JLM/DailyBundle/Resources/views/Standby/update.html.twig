@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Editer une astreinte</h1>
-<form action="{{ path('standby_update',{'id':entity.id}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form action="{{ path('standby_update',{'id':entity.id}) }}" method="post" class="form-horizontal">
 	<fieldset>
 		{{ form_widget(form) }}
 	    <div class="form-actions">

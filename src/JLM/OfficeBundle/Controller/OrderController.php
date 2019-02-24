@@ -85,7 +85,7 @@ class OrderController extends Controller
 
         $entity = new Order();
         $entity->setWork($work);
-        $form  = $this->createForm(new OrderType(), $entity);
+        $form  = $this->createForm(OrderType::class, $entity);
         return [
                 'entity' => $entity,
                 'form'   => $form->createView(),
@@ -104,7 +104,7 @@ class OrderController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity  = new Order();
-        $form    = $this->createForm(new OrderType(), $entity);
+        $form    = $this->createForm(OrderType::class, $entity);
         $form->handleRequest($request);
     
         if ($form->isValid()) {
@@ -140,7 +140,7 @@ class OrderController extends Controller
         if ($entity->getState() > 2) {
             return $this->redirect($this->generateUrl('order_show', ['id' => $entity->getId()]));
         }
-        $editForm = $this->createForm(new OrderType(), $entity);
+        $editForm = $this->createForm(OrderType::class, $entity);
         return [
                 'entity'    => $entity,
                 'edit_form' => $editForm->createView(),
@@ -163,7 +163,7 @@ class OrderController extends Controller
             return $this->redirect($this->generateUrl('order_show', ['id' => $entity->getId()]));
         }
     
-        $editForm = $this->createForm(new OrderType(), $entity);
+        $editForm = $this->createForm(OrderType::class, $entity);
         $editForm->handleRequest($request);
     
         if ($editForm->isValid()) {
@@ -272,7 +272,7 @@ class OrderController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity = new Search;
-        $form = $this->createForm(new SearchType(), $entity);
+        $form = $this->createForm(SearchType::class, $entity);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();

@@ -23,8 +23,11 @@ use JLM\ModelBundle\Form\Type\MailType;
  */
 class QuoteManager extends Manager
 {
-   
-    protected function getFormParam($name, $options = [])
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getFormParam(string $name, array $options = []): array
     {
         switch ($name) {
             case 'new':
@@ -74,12 +77,5 @@ class QuoteManager extends Manager
         }
 
         return parent::populateForm($form);
-    }
-    
-    public function assertState($quote, $states = [])
-    {
-        if (!in_array($quote->getState(), $states)) {
-            return $this->redirect('quote_show', ['id' => $quote->getId()]);
-        }
     }
 }

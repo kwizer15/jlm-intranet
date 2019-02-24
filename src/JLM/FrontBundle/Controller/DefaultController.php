@@ -11,6 +11,8 @@
 
 namespace JLM\FrontBundle\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
@@ -29,7 +31,7 @@ class DefaultController extends Controller
                 'method' => 'POST',
             ]
         );
-        $form->add('submit', 'submit');
+        $form->add('submit', SubmitType::class);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

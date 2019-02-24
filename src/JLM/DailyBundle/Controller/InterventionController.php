@@ -252,7 +252,7 @@ class InterventionController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $form = $this->createForm(new InterventionCancelType(), $entity);
+        $form = $this->createForm(InterventionCancelType::class, $entity);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $entity->cancel();
@@ -298,10 +298,9 @@ class InterventionController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        //$form = $this->createForm(new ExternalBillType(), $entity);
         $form = $this
             ->get('form.factory')
-            ->createNamed('externalBill'.$entity->getId(), new ExternalBillType(), $entity)
+            ->createNamed('externalBill'.$entity->getId(), ExternalBillType::class, $entity)
         ;
         $form->handleRequest($request);
         if ($form->isValid()) {

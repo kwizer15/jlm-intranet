@@ -28,9 +28,10 @@ class SiteType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'Accession/Social',
-                    'choices' => ['1' => 'Accession', '0' => 'Social'],
+                    'choices' => array_flip(['1' => 'Accession', '0' => 'Social']),
                     'expanded' => true,
                     'multiple' => false,
+                    'choices_as_values' => true,
                 ]
             )
             ->add('vat', TextType::class, ['label' => 'TVA', 'attr' => ['class' => 'input-small']])

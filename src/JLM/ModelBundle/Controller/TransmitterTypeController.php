@@ -47,7 +47,7 @@ class TransmitterTypeController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity = new TransmitterType();
-        $form   = $this->createForm(new TransmitterTypeType(), $entity);
+        $form   = $this->createForm(TransmitterTypeType::class, $entity);
 
         return [
                 'entity' => $entity,
@@ -66,7 +66,7 @@ class TransmitterTypeController extends Controller
 
         $entity  = new TransmitterType();
         $request = $this->getRequest();
-        $form    = $this->createForm(new TransmitterTypeType(), $entity);
+        $form    = $this->createForm(TransmitterTypeType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -92,7 +92,7 @@ class TransmitterTypeController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $editForm = $this->createForm(new TransmitterTypeType(), $entity);
+        $editForm = $this->createForm(TransmitterTypeType::class, $entity);
         return [
                 'entity'    => $entity,
                 'edit_form' => $editForm->createView(),
@@ -109,7 +109,7 @@ class TransmitterTypeController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $em = $this->getDoctrine()->getManager();
-        $editForm   = $this->createForm(new TransmitterTypeType(), $entity);
+        $editForm   = $this->createForm(TransmitterTypeType::class, $entity);
         $request = $this->getRequest();
 
         $editForm->handleRequest($request);

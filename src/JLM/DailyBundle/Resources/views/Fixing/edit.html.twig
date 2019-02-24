@@ -3,7 +3,7 @@
 
 {% block content %}
 <h1>Editer panne</h1>
-<form action="{{ path('fixing_update', {'id':entity.id}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form action="{{ path('fixing_update', {'id':entity.id}) }}" method="post" class="form-horizontal">
 <fieldset>
 {{ form_widget(form) }}
     <div class="form-actions">

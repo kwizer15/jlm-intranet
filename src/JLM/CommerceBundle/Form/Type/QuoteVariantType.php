@@ -45,7 +45,7 @@ class QuoteVariantType extends AbstractType
             ->add(
                 'lines',
                 CollectionType::class,
-                ['prototype' => true, 'allow_add' => true, 'allow_delete' => true, 'type' => QuoteLineType::class]
+                ['prototype' => true, 'allow_add' => true, 'allow_delete' => true, 'entry_type' => QuoteLineType::class]
             )
             ->add('vat', HiddenType::class, ['mapped' => false])
             ->add('vatTransmitter', HiddenType::class, ['mapped' => false])

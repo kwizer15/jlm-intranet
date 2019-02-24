@@ -81,7 +81,7 @@ class AskQuote extends Ask
      *
      * @return Intervention|null
      */
-    public function getIntervention(): Intervention
+    public function getIntervention(): ?Intervention
     {
         return $this->intervention;
     }
@@ -139,9 +139,9 @@ class AskQuote extends Ask
     }
 
     /**
-     * @return CommunicationMeansInterface
+     * @return CommunicationMeansInterface|null
      */
-    public function getMethod(): CommunicationMeansInterface
+    public function getMethod(): ?CommunicationMeansInterface
     {
         if ($this->getIntervention() !== null) {
             return null;

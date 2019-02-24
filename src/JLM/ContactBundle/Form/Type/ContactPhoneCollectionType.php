@@ -35,7 +35,7 @@ class ContactPhoneCollectionType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'type' => ContactPhoneType::class,
+                'entry_type' => ContactPhoneType::class,
                 'prototype' => true,
                 'allow_add' => true,
                 'allow_delete' => true,

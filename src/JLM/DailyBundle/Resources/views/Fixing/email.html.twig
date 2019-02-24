@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Envoyer un e-mail</h1>
-<form action="{{ path('fixing_email',{'id': entity.id,'step':step}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form action="{{ path('fixing_email',{'id': entity.id,'step':step}) }}" method="post" class="form-horizontal">
     <fieldset>
     {{ form_widget(form) }}
     {#}<div class="control-group">

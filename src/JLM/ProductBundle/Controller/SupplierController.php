@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\ProductBundle\Entity\Supplier;
 use JLM\ProductBundle\Form\Type\SupplierType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
  * Supplier controller.
@@ -204,7 +205,7 @@ class SupplierController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(['id' => $id])
-            ->add('id', 'hidden')
+            ->add('id', HiddenType::class)
             ->getForm()
         ;
     }
@@ -233,7 +234,7 @@ class SupplierController extends Controller
      */
     private function createNewForm(Supplier $entity)
     {
-        return $this->createForm(new SupplierType(), $entity);
+        return $this->createForm(SupplierType::class, $entity);
     }
     
     /**
@@ -243,6 +244,6 @@ class SupplierController extends Controller
      */
     private function createEditForm(Supplier $entity)
     {
-        return $this->createForm(new SupplierType(), $entity);
+        return $this->createForm(SupplierType::class, $entity);
     }
 }

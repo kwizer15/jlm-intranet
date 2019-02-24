@@ -1,4 +1,4 @@
-<form action="{{ path('shifting_update',{'id':entity.id}) }}" method="post" {{ form_enctype(form) }} class="hide">
+<form action="{{ path('shifting_update',{'id':entity.id}) }}" method="post" class="hide">
 <tr>
 	<td>{{ entity.technician }}</td>	
 	<td>{{ form_widget(form.begin) }}</td>

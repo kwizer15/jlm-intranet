@@ -2,7 +2,7 @@
 {% form_theme form with 'JLMModelBundle:Form:fee.html.twig' %}
 {% block content %}
 <h1>Nouvelle redevance</h1>
-<form action="{{ path('fee_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form action="{{ path('fee_create') }}" method="post" class="form-horizontal">
 	{{ form_widget(form) }}
     <div class="form-actions">
 	   <a href="{{ path('fee') }}" class="btn">{{ 'arrow-left'|icon }} Retour à la liste</a>

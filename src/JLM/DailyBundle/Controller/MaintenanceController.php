@@ -2,6 +2,8 @@
 
 namespace JLM\DailyBundle\Controller;
 
+use JLM\CoreBundle\Service\Pagination;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\DailyBundle\Entity\Maintenance;
@@ -28,24 +30,31 @@ class MaintenanceController extends AbstractInterventionController
 {
     /**
      * Finds and displays a InterventionPlanned entity.
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $manager = $this->container->get('jlm_daily.maintenance_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $request = $manager->getRequest();
-        $repo = $manager->getRepository();
+        $repository = $this->container->get('doctrine')->getRepository(Maintenance::class);
 
-        return $manager->isAjax()
-            ? $manager->renderJson(
-                [
-                    'entities' => $repo->getArray($request->get('q', ''), $request->get('page_limit', 10)),
-                ]
-            )
-            : $manager->renderResponse(
-                'JLMDailyBundle:Maintenance:list.html.twig',
-                $manager->pagination('getCountOpened', 'getOpened', 'maintenance_list', [])
-            );
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse([
+                'entities' => $repository->getArray(
+                    $request->get('q', ''),
+                    $request->get('page_limit', 10)
+                ),
+            ]);
+        }
+
+        $paginator = new Pagination($this->getRequest(), $repository);
+        $pagination = $paginator->paginate('getCountOpened', 'getOpened', 'maintenance_list', []);
+
+        $templating = $this->container->get('templating');
+
+        return $templating->renderResponse('JLMDailyBundle:Maintenance:list.html.twig', $pagination);
     }
 
     /**

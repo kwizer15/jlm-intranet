@@ -8,6 +8,7 @@ use JLM\CommerceBundle\Entity\Quote;
 use Doctrine\Common\Persistence\ObjectManager;
 use JLM\CoreBundle\Event\FormPopulatingEvent;
 use JLM\CoreBundle\Event\RequestEvent;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class QuoteSubscriber implements EventSubscriberInterface
 {
@@ -29,7 +30,7 @@ class QuoteSubscriber implements EventSubscriberInterface
         if (null !== $ask = $this->getAsk($event)) {
             $entity = Quote::createFromAskQuote($ask);
             $event->getForm()->setData($entity);
-            $event->getForm()->add('ask', 'hidden', ['data' => $ask->getId(), 'mapped' => false]);
+            $event->getForm()->add('ask', HiddenType::class, ['data' => $ask->getId(), 'mapped' => false]);
         }
     }
 

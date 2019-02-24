@@ -15,7 +15,7 @@ class InventoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('stocks', CollectionType::class, ['type' => StockType::class])
+            ->add('stocks', CollectionType::class, ['entry_type' => StockType::class])
             
         ;
     }

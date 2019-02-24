@@ -232,9 +232,9 @@ abstract class Ask extends UploadDocument implements AskInterface
     /**
      * Get method
      *
-     * @return CommunicationMeansInterface
+     * @return CommunicationMeansInterface|null
      */
-    public function getMethod(): CommunicationMeansInterface
+    public function getMethod(): ?CommunicationMeansInterface
     {
         return $this->method;
     }

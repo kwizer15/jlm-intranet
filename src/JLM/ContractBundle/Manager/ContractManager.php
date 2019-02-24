@@ -24,7 +24,7 @@ class ContractManager extends Manager
     /**
      * {@inheritdoc}
      */
-    protected function getFormParam($name, $options = [])
+    protected function getFormParam(string $name, array $options = []): array
     {
         switch ($name) {
             case 'new':

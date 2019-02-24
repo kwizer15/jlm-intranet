@@ -75,7 +75,7 @@ class WorkController extends AbstractInterventionController
         $entity = new Work();
         $entity->setDoor($door);
         $entity->setPlace($door . '');
-        $form = $this->createForm(new WorkType(), $entity);
+        $form = $this->createForm(WorkType::class, $entity);
 
         return [
             'entity' => $entity,
@@ -93,7 +93,7 @@ class WorkController extends AbstractInterventionController
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity = new Work();
-        $form = $this->createForm(new WorkType(), $entity);
+        $form = $this->createForm(WorkType::class, $entity);
 
         return [
             'entity' => $entity,
@@ -139,7 +139,7 @@ class WorkController extends AbstractInterventionController
             }
             $entity->setContactPhones($phones);
         }
-        $form = $this->createForm(new WorkType(), $entity);
+        $form = $this->createForm(WorkType::class, $entity);
 
         return [
             'entity' => $entity,
@@ -158,7 +158,7 @@ class WorkController extends AbstractInterventionController
 
         $entity = new Work();
 
-        $form = $this->createForm(new WorkType(), $entity);
+        $form = $this->createForm(WorkType::class, $entity);
         $entity->setCreation(new \DateTime());
         $entity->setPriority(4);
         $form->handleRequest($request);
@@ -188,7 +188,7 @@ class WorkController extends AbstractInterventionController
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $editForm = $this->createForm(new WorkEditType(), $entity);
+        $editForm = $this->createForm(WorkEditType::class, $entity);
 
         return [
             'entity' => $entity,
@@ -207,7 +207,7 @@ class WorkController extends AbstractInterventionController
 
         $em = $this->getDoctrine()->getManager();
 
-        $editForm = $this->createForm(new WorkEditType(), $entity);
+        $editForm = $this->createForm(WorkEditType::class, $entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -231,7 +231,7 @@ class WorkController extends AbstractInterventionController
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $form = $this->createForm(new WorkCloseType(), $entity);
+        $form = $this->createForm(WorkCloseType::class, $entity);
 
         return [
             'entity' => $entity,
@@ -248,7 +248,7 @@ class WorkController extends AbstractInterventionController
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $form = $this->createForm(new WorkCloseType(), $entity);
+        $form = $this->createForm(WorkCloseType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -294,7 +294,7 @@ class WorkController extends AbstractInterventionController
             throw new NotFoundHttpException('Page inexistante');
         }
         $mail = MailFactory::create(new $class($entity));
-        $editForm = $this->createForm(new MailType(), $mail);
+        $editForm = $this->createForm(MailType::class, $mail);
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $this->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));

@@ -14,6 +14,7 @@ namespace JLM\ProductBundle\Form\Type;
 use JLM\ProductBundle\Entity\Product;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -49,12 +50,12 @@ class ProductType extends AbstractType
             ->add(
                 'discountSupplier',
                 PercentType::class,
-                ['type' => 'integer', 'label' => 'Remise fournisseur', 'attr' => ['class' => 'input-mini']]
+                ['entry_type' => IntegerType::class, 'label' => 'Remise fournisseur', 'attr' => ['class' => 'input-mini']]
             )
             ->add(
                 'expenseRatio',
                 PercentType::class,
-                ['type' => 'integer', 'label' => 'Frais', 'attr' => ['class' => 'input-mini']]
+                ['entry_type' => IntegerType::class, 'label' => 'Frais', 'attr' => ['class' => 'input-mini']]
             )
             ->add('shipping', MoneyType::class, ['label' => 'Port', 'grouping' => true, 'attr' => ['class' => 'input-mini']])
             ->add('unitPrice', MoneyType::class, ['label' => 'PVHT', 'grouping' => true, 'attr' => ['class' => 'input-mini']])

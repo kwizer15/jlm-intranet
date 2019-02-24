@@ -256,7 +256,7 @@ class BillController extends Controller
         foreach ($list as $interv) {
             $forms_externalBill[] = $manager->getFormFactory()->createNamed(
                 'externalBill' . $interv->getId(),
-                new ExternalBillType(),
+                ExternalBillType::class,
                 $interv
             )->createView()
             ;
@@ -297,7 +297,7 @@ class BillController extends Controller
         $site = $entity->getSiteObject();
         $builder = ($site === null) ? new BillBoostMailBuilder($entity) : new BillBoostBusinessMailBuilder($site);
         $mail = MailFactory::create($builder);
-        $editForm = $this->container->get('form.factory')->create(new MailType(), $mail);
+        $editForm = $this->container->get('form.factory')->create(MailType::class, $mail);
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $this->container->get('mailer')->send(MailFactory::create(new MailSwiftMailBuilder($editForm->getData())));

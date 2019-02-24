@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Redevances du {{ entity.activation | date('d/m/Y') }}</h1>
-<form action="{{ path('fees_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
+<form action="{{ path('fees_update', { 'id': entity.id }) }}" method="post" class="form-horizontal">
     <fieldset>
     {{ form_widget(edit_form) }}
 	<div class="form-actions">

@@ -35,7 +35,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Ask entity.');
         }
-        $form   = $this->createForm(new AskDontTreatType(), $entity);
+        $form   = $this->createForm(AskDontTreatType::class, $entity);
         return [
                 'entity'         => $entity,
                 'form_donttreat' => $form->createView(),
@@ -54,7 +54,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
 
         $entity = new Ask();
         $entity->setCreation(new \DateTime);
-        $form   = $this->createForm(new AskType(), $entity);
+        $form   = $this->createForm(AskType::class, $entity);
 
         return [
                 'entity' => $entity,
@@ -74,7 +74,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity  = new Ask();
-        $form = $this->createForm(new AskType(), $entity);
+        $form = $this->createForm(AskType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -109,7 +109,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
             throw $this->createNotFoundException('Unable to find Ask entity.');
         }
 
-        $editForm = $this->createForm(new AskType(), $entity);
+        $editForm = $this->createForm(AskType::class, $entity);
 
         return [
                 'entity'    => $entity,
@@ -136,7 +136,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
             throw $this->createNotFoundException('Unable to find Ask entity.');
         }
 
-        $editForm = $this->createForm(new AskType(), $entity);
+        $editForm = $this->createForm(AskType::class, $entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -204,23 +204,26 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
         $parms['pageRoute'] = 'transmitter_ask_untreated_page';
         return $parms;
     }
-    
+
     /**
      * Note an Ask entities as Don't treated.
      *
      * @Route("/donttreat/{id}", name="transmitter_ask_donttreat")
      * @Template()
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function donttreatAction($id)
+    public function donttreatAction(Request $request, $id)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
         $entity = $this->getEntity($em, $id);
-        $form = $this->createForm(new AskDontTreatType, $entity);
+        $form = $this->createForm(AskDontTreatType::class, $entity);
         
-        if ($this->getRequest()->isMethod('POST')) {
+        if ($request->isMethod('POST')) {
             $form->handleRequest($this->getRequest());
             if ($form->isValid()) {
                 $em->persist($entity);

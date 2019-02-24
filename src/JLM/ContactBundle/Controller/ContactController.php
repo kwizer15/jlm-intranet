@@ -2,98 +2,161 @@
 
 namespace JLM\ContactBundle\Controller;
 
+use JLM\ContactBundle\Entity\Association;
+use JLM\ContactBundle\Entity\Company;
+use JLM\ContactBundle\Entity\Contact;
+use JLM\ContactBundle\Entity\Person;
 use JLM\ContactBundle\Form\Type\AssociationType;
 use JLM\ContactBundle\Form\Type\CompanyType;
 use JLM\ContactBundle\Form\Type\PersonType;
+use JLM\CoreBundle\Form\Handler\DoctrineHandler;
+use JLM\CoreBundle\Service\Pagination;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ContactController extends Controller
 {
     /**
-     * Edit or add a contact
-     *
-     * @param int|string $id The entity identifier or typeof new entity
+     * @param Request $request
+     * @param string $type
      *
      * @return Response
      */
-    public function editAction($id): Response
+    public function addAction(Request $request, string $type): Response
     {
+        $formFactory = $this->container->get('form.factory');
+        $router = $this->container->get('router');
+        $templating = $this->container->get('templating');
+        $doctrine = $this->container->get('doctrine.orm.entity_manager');
+
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $formTypeMap = [
             'person' => PersonType::class,
             'company' => CompanyType::class,
             'association' => AssociationType::class
         ];
-        $manager = $this->container->get('jlm_contact.contact_manager');
-        $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        if (array_key_exists($id, $formTypeMap)) {
-            $formType = $id;
-            $formName = 'new';
-            $entity = null;
-        } else {
-            $entity = $manager->getEntity($id);
-            $formName = 'edit';
-            $formType = $entity->getType();
-        }
-        $form = $manager->createForm($formName, ['type' => $formType, 'entity' => $entity]);
-        $process = $manager->getHandler($form, $entity)->process();
 
-        if ($manager->getRequest()->isXmlHttpRequest()) {
-            return $process
-                ? $manager->renderJson(['ok' => true])
-                : $manager->renderResponse('JLMContactBundle:Contact:modal_new.html.twig', ['form' => $form->createView()]);
+        $form = $formFactory->create($formTypeMap[$type], null, [
+            'method' => 'POST',
+            'action' => $router->generate('jlm_contact_contact_create', ['type' => $type]),
+            'label' => 'Créer',
+        ]);
+
+        $handler = new DoctrineHandler($form, $request, $doctrine);
+        $process = $handler->process();
+        $ajax = $request->isXmlHttpRequest();
+
+        if (!$process) {
+            $view = $ajax ? 'JLMContactBundle:Contact:modal_new.html.twig' : 'JLMContactBundle:Contact:new.html.twig';
+
+            return $templating->renderResponse($view, ['form' => $form->createView()]);
         }
 
-        return $process
-            ? $manager->redirect('jlm_contact_contact_show', ['id' => $form->getData()->getId()])
-            : $manager->renderResponse('JLMContactBundle:Contact:new.html.twig', ['form' => $form->createView()]);
+        return $ajax
+            ? new JsonResponse(['ok' => true])
+            : new RedirectResponse($router->generate('jlm_contact_contact_show', ['id' => $form->getData()->getId()]))
+        ;
     }
 
-    public function listAction()
+    /**
+     * @param Request $request
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function editAction(Request $request, $id): Response
     {
-        $manager = $this->container->get('jlm_contact.contact_manager');
-        $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $request = $manager->getRequest();
-        $ajax = $manager->getRequest()->isXmlHttpRequest();
-        $repo = $manager->getRepository();
+        $formFactory = $this->container->get('form.factory');
+        $doctrine = $this->container->get('doctrine.orm.entity_manager');
+        $repository = $doctrine->getRepository(Contact::class);
+        $router = $this->container->get('router');
+        $templating = $this->container->get('templating');
 
-        return $ajax || $request->get('format') == 'json'
-            ? $manager->renderJson(
-                ['contacts' => $repo->getArray($request->get('q', ''), $request->get('page_limit', 10))]
-            )
-            : $manager->renderResponse(
-                'JLMContactBundle:Contact:list.html.twig',
-                $manager->pagination('getCountAll', 'getAll', 'jlm_contact_contact', [])
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
+        $entity = $repository->get($id);
+
+        $formTypeMap = [
+            Person::class => PersonType::class,
+            Company::class => CompanyType::class,
+            Association::class => AssociationType::class
+        ];
+
+        $form = $formFactory->create($formTypeMap[\get_class($entity)], $entity, [
+            'method' => 'POST',
+            'action' => $router->generate('jlm_contact_contact_update', ['id' => $entity->getId()]),
+            'label' => 'Modifier',
+        ]);
+
+        $handler = new DoctrineHandler($form, $request, $doctrine, $entity);
+        $process = $handler->process();
+        $ajax = $request->isXmlHttpRequest();
+
+        if (!$process) {
+            $view = $ajax ? 'JLMContactBundle:Contact:modal_new.html.twig' : 'JLMContactBundle:Contact:new.html.twig';
+
+            return $templating->renderResponse($view, ['form' => $form->createView()]);
+        }
+
+        return $ajax
+            ? new JsonResponse(['ok' => true])
+            : new RedirectResponse($router->generate('jlm_contact_contact_show', ['id' => $form->getData()->getId()]))
+        ;
+    }
+
+    public function listAction(Request $request)
+    {
+        $templating = $this->container->get('templating');
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+        $ajax = $request->isXmlHttpRequest();
+        $repository = $this->get('doctrine')->getRepository(Contact::class);
+
+        if ($ajax || $request->get('format') === 'json') {
+            return new JsonResponse(
+                ['contacts' => $repository->getArray($request->get('q', ''), $request->get('page_limit', 10))]
             );
+        }
+
+        $paginator = new Pagination($this->getRequest(), $this->getRepository());
+        $pagination = $paginator->paginate('getCountAll', 'getAll', 'jlm_contact_contact', []);
+
+        return $templating->renderResponse('JLMContactBundle:Contact:list.html.twig', $pagination);
     }
 
-    public function showAction($id)
+    public function showAction(Request $request, $id)
     {
-        $manager = $this->container->get('jlm_contact.contact_manager');
+        $templating = $this->container->get('templating');
+        $repository = $this->get('doctrine')->getRepository(Contact::class);
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $entity = $manager->getEntity($id);
+        $entity = $repository->get($id);
 
-        return $manager->getRequest()->isXmlHttpRequest()
-            ? $manager->renderJson($manager->getRepository()->getByIdToArray($id))
-            : $manager->renderResponse(
+        return $request->isXmlHttpRequest()
+            ? new JsonResponse($repository->getByIdToArray($id))
+            : $templating->renderResponse(
                 'JLMContactBundle:Contact:show_' . $entity->getType() . '.html.twig',
                 ['entity' => $entity]
             );
     }
 
-    public function unactiveAction($id)
+    public function unactiveAction(Request $request, $id): RedirectResponse
     {
-        $manager = $this->container->get('jlm_contact.contact_manager');
+        $objectManager = $this->get('doctrine');
+        $repository = $objectManager->getRepository(Contact::class);
+        $session = $this->container->get('session');
+
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $entity = $manager->getEntity($id);
+        $entity = $repository->get($id);
         $entity->setActive(false);
 
-        $em = $manager->getObjectManager();
-        $em->persist($entity);
-        $em->flush();
+        $objectManager->persist($entity);
+        $objectManager->flush();
 
-        $manager->getSession()->setFlash('notice', 'Contact ' . $entity->getName() . ' désactivé');
+        $session->getFlashBag()->add('notice', 'Contact ' . $entity->getName() . ' désactivé');
 
-        return $manager->redirectReferer();
+        return new RedirectResponse($request->headers->get('referer'));
     }
 }

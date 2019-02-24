@@ -15,10 +15,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 use JLM\CoreBundle\Form\Handler\DoctrineHandler;
 use JLM\CoreBundle\Repository\SearchRepositoryInterface;
 use FOS\UserBundle\Model\UserInterface;
+use JLM\CoreBundle\Service\Pagination;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,9 +27,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use JLM\CoreBundle\Model\Repository\PaginableInterface;
 
 /**
@@ -77,9 +76,15 @@ class BaseManager implements ContainerAwareInterface, ManagerInterface
         return $this->getRepository()->find($id);
     }
 
-    protected function getFormParam($name, $options = [])
+    /**
+     * @param string $name
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function getFormParam(string $name, array $options = []): array
     {
-        return null;
+        return [];
     }
 
     protected function getFormType($type = null)
@@ -109,11 +114,6 @@ class BaseManager implements ContainerAwareInterface, ManagerInterface
         return $this->container->get('templating')->renderResponse($view, $parameters, $response);
     }
 
-    public function renderView($view, array $parameters = [])
-    {
-        return $this->container->get('templating')->render($view, $parameters);
-    }
-
     protected function setterFromRequest($param, $repoName)
     {
         if ($id = $this->request->get($param)) {
@@ -139,7 +139,7 @@ class BaseManager implements ContainerAwareInterface, ManagerInterface
                     'method' => $param['method'],
                 ]
             );
-            $form->add('submit', 'submit', ['label' => $param['label']]);
+            $form->add('submit', SubmitType::class, ['label' => $param['label']]);
 
             return $this->populateForm($form);
         }
@@ -230,42 +230,18 @@ class BaseManager implements ContainerAwareInterface, ManagerInterface
 
     /**
      * Pagination
+     *
+     * @param string $functionCount
+     * @param string $functionDatas
+     * @param null $route
+     * @param array $params
+     *
+     * @return array
      */
-    public function pagination($functionCount = 'getCountAll', $functionDatas = 'getAll', $route = null, $params = [])
+    public function pagination($functionCount = 'getCountAll', $functionDatas = 'getAll', $route = null, $params = []): array
     {
-        $request = $this->getRequest();
-        $page = $request->get('page', 1);
-        $limit = $request->get('limit', 10);
-        $params = ($limit != 10) ? array_merge($params, ['limit' => $limit]) : $params;
-        $repo = $this->getRepository();
-        if (!method_exists($repo, $functionCount)) {
-            throw $this->createNotFoundException(
-                'Page inexistante (La méthode ' . get_class($repo) . '#' . $functionCount . ' n\'existe pas)'
-            );
-        }
-        if (!method_exists($repo, $functionDatas)) {
-            throw $this->createNotFoundException(
-                'Page inexistante (La méthode ' . get_class($repo) . '#' . $functionDatas . ' n\'existe pas)'
-            );
-        }
-        $nb = $repo->$functionCount();
-        $nbPages = ceil($nb / $limit);
-        $nbPages = ($nbPages < 1) ? 1 : $nbPages;
-        $offset = ($page - 1) * $limit;
-        if ($page < 1 || $page > $nbPages) {
-            throw $this->createNotFoundException('Page inexistante (page ' . $page . '/' . $nbPages . ')');
-        }
-
-        return [
-            'entities' => $repo->$functionDatas($limit, $offset),
-            'pagination' => [
-                'total' => $nbPages,
-                'current' => $page,
-                'limit' => $limit,
-                'route' => $route,
-                'params' => $params,
-            ],
-        ];
+        $paginator = new Pagination($this->getRequest(), $this->getRepository());
+        return $paginator->paginate($functionCount, $functionDatas, $route, $params);
     }
 
     public function renderSearch($template)

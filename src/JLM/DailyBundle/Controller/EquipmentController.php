@@ -31,7 +31,7 @@ class EquipmentController extends Controller
         $shifting->setPlace('Saint-Soupplets (Bureau)');
         $shifting->setReason('Récupération matériel');
         $entity->setShifting($shifting);
-        $form = $this->createForm(new RecuperationEquipmentType(), $entity);
+        $form = $this->createForm(RecuperationEquipmentType::class, $entity);
         return [
             'entity' => $entity,
             'form' => $form->createView(),
@@ -49,7 +49,7 @@ class EquipmentController extends Controller
 
         $entity = new ShiftTechnician();
         $entity->setCreation(new \DateTime());
-        $form = $this->createForm(new RecuperationEquipmentType(), $entity);
+        $form = $this->createForm(RecuperationEquipmentType::class, $entity);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -92,7 +92,7 @@ class EquipmentController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $editForm = $this->createForm(new EquipmentType(), $entity);
+        $editForm = $this->createForm(EquipmentType::class, $entity);
 
         return [
             'entity' => $entity,
@@ -111,7 +111,7 @@ class EquipmentController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $editForm = $this->createForm(new EquipmentType(), $entity);
+        $editForm = $this->createForm(EquipmentType::class, $entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {

@@ -11,6 +11,7 @@
 
 namespace JLM\ModelBundle\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -67,14 +68,17 @@ class SiteController extends Controller
      * Displays a form to create a new Site entity.
      *
      * @Template()
+     * @param Request $request
+     *
+     * @return array
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $trustee = $this->getRequest()->get('trustee', null);
+        $trustee = $request->get('trustee', null);
         $entity = new Site();
-        $form   = $this->createForm(new SiteType(), $entity);
+        $form   = $this->createForm(SiteType::class, $entity);
         $em = $this->get('doctrine')->getManager();
         $form->get('trustee')->setData($em->getRepository('JLMModelBundle:Trustee')->find($trustee));
 
@@ -94,7 +98,7 @@ class SiteController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity  = new Site();
-        $form = $this->createForm(new SiteType(), $entity);
+        $form = $this->createForm(SiteType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -121,7 +125,8 @@ class SiteController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $editForm = $this->createForm(new SiteType(), $entity);
+        $editForm = $this->createForm(SiteType::class, $entity);
+
         return [
                 'entity'    => $entity,
                 'edit_form' => $editForm->createView(),
@@ -138,7 +143,7 @@ class SiteController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $em = $this->getDoctrine()->getManager();
-        $editForm = $this->createForm(new SiteType(), $entity);
+        $editForm = $this->createForm(SiteType::class, $entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -182,7 +187,7 @@ class SiteController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(['id' => $id])
-            ->add('id', 'hidden')
+            ->add('id', HiddenType::class)
             ->getForm()
         ;
     }

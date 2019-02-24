@@ -26,7 +26,8 @@ class PersonType extends AbstractType
                         'M.' => 'M.',
                         'Mme' => 'Mme',
                         'Mlle' => 'Mlle'
-                    ]
+                    ],
+                    'choices_as_values' => true,
                 ]
             )
             ->add('lastName', TextType::class, ['label' => 'Nom'])

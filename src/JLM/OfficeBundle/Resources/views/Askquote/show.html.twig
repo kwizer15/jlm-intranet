@@ -27,7 +27,7 @@
 	{% if not entity.quotes|length and entity.dontTreat is null %}
 	<a href="#modalDontTreat" data-toggle="modal" class="btn btn-danger">{{ 'remove'|icon(true) }} Ne pas traiter</a>
 	{# Modal #}
-	<form id="modalDontTreat" action="{{ path('askquote_donttreat',{'id':entity.id}) }}" method="post" {{ form_enctype(form_donttreat) }} class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalDontTreatLabel" aria-hidden="true">
+	<form id="modalDontTreat" action="{{ path('askquote_donttreat',{'id':entity.id}) }}" method="post" class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalDontTreatLabel" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3 id="modalDontTreatLabel">Ne pas traiter la demande</h3>

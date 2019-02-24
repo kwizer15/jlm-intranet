@@ -13,6 +13,7 @@ namespace JLM\ContactBundle\Manager;
 
 use JLM\CoreBundle\Manager\BaseManager as Manager;
 use JLM\ContactBundle\Form\Type\CorporationContactType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -23,7 +24,7 @@ class CorporationContactManager extends Manager
     /**
      * {@inheritdoc}
      */
-    protected function getFormParam($name, $options = [])
+    protected function getFormParam(string $name, array $options = []): array
     {
         switch ($name) {
             case 'new':
@@ -32,7 +33,7 @@ class CorporationContactManager extends Manager
                     'route' => 'jlm_contact_corporationcontact_create',
                     'params' => [],
                     'label' => 'Créer',
-                    'type' => new CorporationContactType(),
+                    'entry_type' => new CorporationContactType(),
                     'entity' => null,
                 ];
             case 'edit':
@@ -41,7 +42,7 @@ class CorporationContactManager extends Manager
                     'route' => 'jlm_contact_corporationcontact_update',
                     'params' => ['id' => $options['entity']->getId()],
                     'label' => 'Modifier',
-                    'type' => new CorporationContactType(),
+                    'entry_type' => new CorporationContactType(),
                     'entity' => $options['entity'],
                 ];
             case 'delete':
@@ -50,7 +51,7 @@ class CorporationContactManager extends Manager
                     'route' => 'jlm_contact_corporationcontact_delete',
                     'params' => ['id' => $options['entity']->getId()],
                     'label' => 'Supprimer',
-                    'type' => 'form',
+                    'entry_type' => FormType::class,
                     'entity' => $options['entity'],
                 ];
         }

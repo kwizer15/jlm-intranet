@@ -79,12 +79,12 @@ class BillType extends AbstractType
             ->add(
                 'lines',
                 CollectionType::class,
-                ['prototype' => true, 'allow_add' => true, 'allow_delete' => true, 'type' => BillLineType::class]
+                ['prototype' => true, 'allow_add' => true, 'allow_delete' => true, 'entry_type' => BillLineType::class]
             )
             ->add(
                 'vat',
                 PercentType::class,
-                ['precision' => 1, 'label' => 'TVA applicable', 'attr' => ['class' => 'input-mini']]
+                ['scale' => 1, 'label' => 'TVA applicable', 'attr' => ['class' => 'input-mini']]
             )
             ->add('vatTransmitter', HiddenType::class)
         ;

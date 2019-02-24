@@ -2,7 +2,9 @@
 
 namespace JLM\OfficeBundle\Controller;
 
+use JLM\CoreBundle\Service\Pagination;
 use JLM\DefaultBundle\Controller\PaginableController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -12,6 +14,7 @@ use JLM\OfficeBundle\Form\Type\AskQuoteType;
 use JLM\OfficeBundle\Form\Type\AskQuoteDontTreatType;
 use JLM\DefaultBundle\Entity\Search;
 use JLM\DefaultBundle\Form\Type\SearchType;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * AskQuote controller.
@@ -22,12 +25,16 @@ class AskquoteController extends PaginableController
 {
     /**
      * @Route("/", name="askquote")
+     * @param Request $request
+     *
+     * @return Response
      */
-    public function indexAction()
+    public function indexAction(Request $request): Response
     {
-        $manager = $this->container->get('jlm_office.askquote_manager');
+        $repository = $this->container->get('doctrine')->getRepository(AskQuote::class);
+        $templating = $this->container->get('templating');
+
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $request = $manager->getRequest();
         $states = [
                    'all'       => 'All',
                    'treated'   => 'Treated',
@@ -38,10 +45,12 @@ class AskquoteController extends PaginableController
         $method = $states[$state];
         $functionCount = 'getCount'.$method;
         $functionDatas = 'get'.$method;
-    
-        return $manager->renderResponse(
-            'JLMOfficeBundle:Askquote:index.html.twig',
-            $manager->pagination($functionCount, $functionDatas, 'askquote', ['state' => $state])
+
+        $paginator = new Pagination($request, $repository);
+        $pagination = $paginator->paginate($functionCount, $functionDatas, 'askquote', ['state' => $state]);
+
+        return $templating->renderResponse(
+            'JLMOfficeBundle:Askquote:index.html.twig', $pagination
         );
     }
     
@@ -76,17 +85,22 @@ class AskquoteController extends PaginableController
                 'entity' => $askquote,
                ];
     }
-    
+
     /**
      * @Route("/create", name="askquote_create")
      * @Template("JLMOfficeBundle:Askquote:new.html.twig")
+     *
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
+     * @throws \Exception
      */
     public function createAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity = new AskQuote;
-        $form = $this->createForm(new AskQuoteType, $entity);
+        $form = $this->createForm(AskQuoteType::class, $entity);
         
         if ($request->isMethod('POST')) {
             $form->handleRequest($this->getRequest());
@@ -104,25 +118,34 @@ class AskquoteController extends PaginableController
         
         return ['form' => $form->createView()];
     }
-    
+
     /**
      * @Route("/{id}/donttreat", name="askquote_donttreat")
+     *
+     * @param Request $request
+     * @param AskQuote $entity
+     *
+     * @return RedirectResponse
      */
-    public function donttreatAction(Request $request, AskQuote $entity)
+    public function donttreatAction(Request $request, AskQuote $entity): RedirectResponse
     {
+        $router = $this->container->get('router');
+        $formFactory = $this->container->get('form.factory');
+
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $form = $this->createForm(new AskQuoteDontTreatType, $entity);
+        $form = $formFactory->create(AskQuoteDontTreatType::class, $entity);
         
         if ($request->isMethod('POST')) {
-            $form->handleRequest($this->getRequest());
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();
             }
         }
-        return $this->redirect($this->generateUrl('askquote_show', ['id' => $entity->getId()]));
+
+        return new RedirectResponse($router->generate('askquote_show', ['id' => $entity->getId()]));
     }
     
     /**
@@ -130,13 +153,16 @@ class AskquoteController extends PaginableController
      */
     public function canceldonttreatAction(AskQuote $entity)
     {
+        $router = $this->container->get('router');
+
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity->setDontTreat();
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
         $em->flush();
-        return $this->redirect($this->generateUrl('askquote_show', ['id' => $entity->getId()]));
+
+        return new RedirectResponse($router->generate('askquote_show', ['id' => $entity->getId()]));
     }
     
     /**
@@ -154,26 +180,37 @@ class AskquoteController extends PaginableController
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', 'inline; filename=devis-a-faire.pdf');
         $response->setContent($this->render('JLMOfficeBundle:Askquote:printlist.pdf.php', ['entities' => $entities]));
-    
-        //   return array('entity'=>$entity);
+
         return $response;
     }
-    
+
     /**
      * Resultats de la barre de recherche.
      *
      * @Route("/search", name="askquote_search")
+     *
+     * @param Request $request
+     *
+     * @return Response
      */
-    public function searchAction(Request $request)
+    public function searchAction(Request $request): Response
     {
-        $manager = $this->container->get('jlm_office.askquote_manager');
+        $doctrine = $this->container->get('doctrine');
+        $templating = $this->container->get('templating');
+        $authorizationChecker = $this->container->get('security.authorization_checker');
+        $repository = $doctrine->getRepository(AskQuote::class);
+
+        if (!$authorizationChecker->isGranted('ROLE_OFFICE')) {
+            throw new AccessDeniedException();
+        }
+
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $formData = $manager->getRequest()->get('jlm_core_search');
+        $formData = $request->get('jlm_core_search');
         $params = [];
         if (is_array($formData) && array_key_exists('query', $formData)) {
-            $params = ['entities' => $manager->getRepository()->search($formData['query'])];
+            $params = ['entities' => $repository->search($formData['query'])];
         }
         
-        return $manager->renderResponse('JLMOfficeBundle:Askquote:index.html.twig', $params);
+        return $templating->renderResponse('JLMOfficeBundle:Askquote:index.html.twig', $params);
     }
 }

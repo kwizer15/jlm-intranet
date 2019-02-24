@@ -62,7 +62,7 @@ class ShiftingController extends Controller
         $entity->setBegin(new \DateTime);
         $form = $this
             ->get('form.factory')
-            ->createNamed('shiftTechNew'.$shifting->getId(), new AddTechnicianType(), $entity)
+            ->createNamed('shiftTechNew'.$shifting->getId(), AddTechnicianType::class, $entity)
         ;
                 
         return [
@@ -87,7 +87,7 @@ class ShiftingController extends Controller
         $entity->setCreation(new \DateTime);
         $form = $this
             ->get('form.factory')
-            ->createNamed('shiftTechNew'.$shifting->getId(), new AddTechnicianType(), $entity);
+            ->createNamed('shiftTechNew'.$shifting->getId(), AddTechnicianType::class, $entity);
 
         $form->handleRequest($request);
 
@@ -121,7 +121,7 @@ class ShiftingController extends Controller
 
         $editForm = $this
             ->get('form.factory')
-            ->createNamed('shiftTechEdit' . $entity->getId(), new ShiftingEditType(), $entity)
+            ->createNamed('shiftTechEdit' . $entity->getId(), ShiftingEditType::class, $entity)
         ;
         return [
                 'entity' => $entity,
@@ -154,7 +154,7 @@ class ShiftingController extends Controller
         $em = $this->getDoctrine()->getManager();
         $editForm = $this
             ->get('form.factory')
-            ->createNamed('shiftTechEdit' . $entity->getId(), new ShiftingEditType(), $entity)
+            ->createNamed('shiftTechEdit' . $entity->getId(), ShiftingEditType::class, $entity)
         ;
         $editForm->handleRequest($request);
     

@@ -12,6 +12,7 @@
 namespace Genemu\Bundle\FormBundle\Form\JQuery\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
@@ -64,7 +65,7 @@ class FileType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars = array_replace($view->vars, array(
-            'type' => 'hidden',
+            'entry_type' => HiddenType::class,
             'value' => $form->getViewData(),
             'multiple' => $options['multiple'],
             'configs' => $options['configs'],

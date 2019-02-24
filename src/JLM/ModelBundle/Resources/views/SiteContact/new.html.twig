@@ -1,7 +1,7 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
 {% block content %}
 <h1>Nouveau contact</h1>
-<form action="{{ path('sitecontact_create_id', {'id': site.id }) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form action="{{ path('sitecontact_create_id', {'id': site.id }) }}" method="post" class="form-horizontal">
 <fieldset>
 {{ form_widget(form) }}
     <div class="form-actions">

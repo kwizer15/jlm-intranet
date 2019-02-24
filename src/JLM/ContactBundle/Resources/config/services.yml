@@ -1,6 +1,6 @@
 parameters:
     jlm_contact.model.contact.class: JLM\ContactBundle\Entity\Contact
-    jlm_contact.manager.contact.class: JLM\ContactBundle\Manager\ContactManager
+    jlm_contact.manager.contact.class: JLM\CoreBundle\Manager\BaseManager
     jlm_contact.model.corporationcontact.class: JLM\ContactBundle\Entity\CorporationContact
     jlm_contact.manager.corporationcontact.class: JLM\ContactBundle\Manager\CorporationContactManager
     jlm_contact.model.city.class: JLM\ContactBundle\Entity\City

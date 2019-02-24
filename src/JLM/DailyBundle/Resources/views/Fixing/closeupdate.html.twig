@@ -5,7 +5,7 @@
 <h1>Cloturer un dépannage</h1>
 <h4>{{ entity.place |nl2br }}</h4>
 <div>{{ entity.reason  |nl2br}}</div>
-<form action="{{ path('fixing_closeupdate', {'id':entity.id}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form action="{{ path('fixing_closeupdate', {'id':entity.id}) }}" method="post" class="form-horizontal">
 <fieldset>
 {{ form_widget(form) }}
     <div class="form-actions">

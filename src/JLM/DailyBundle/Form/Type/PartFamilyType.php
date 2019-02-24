@@ -51,7 +51,7 @@ class PartFamilyType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         // TODO: Deprecated method to replace OptionsResolver::setOptional
-        $resolver->setOptional(['source']);
+        $resolver->setDefined(['source']);
     }
     
     /**

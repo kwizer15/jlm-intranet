@@ -13,16 +13,9 @@ use JLM\TransmitterBundle\Entity\UserGroupRepository;
 
 class TransmitterType extends AbstractType
 {
-    private $id;
-
-    public function __construct($id)
-    {
-        $this->id = $id;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $id = $this->id;
+        $id = $options['siteId'];
         $builder
             ->add('attribution', AttributionHiddenType::class)
             ->add(
@@ -54,6 +47,7 @@ class TransmitterType extends AbstractType
             [
                 'data_class' => Transmitter::class,
                 'attr' => ['class' => 'transmitter'],
+                'siteId' => null
             ]
         );
     }

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\ProductBundle\Entity\ProductCategory;
 use JLM\ProductBundle\Form\Type\ProductCategoryType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -186,12 +187,12 @@ class ProductCategoryController extends Controller
     /**
      * Get the delete form
      * @param int $id
-     * @return \Symfony\Component\Form\Form
+     * @return Form
      */
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(['id' => $id])
-        ->add('id', 'hidden')
+        ->add('id', HiddenType::class)
         ->getForm()
         ;
     }
@@ -203,7 +204,7 @@ class ProductCategoryController extends Controller
      */
     private function createEditForm(ProductCategory $entity)
     {
-        return $this->createForm(new ProductCategoryType(), $entity);
+        return $this->createForm(ProductCategoryType::class, $entity);
     }
     
     /**
@@ -213,6 +214,6 @@ class ProductCategoryController extends Controller
      */
     private function createNewForm(ProductCategory $entity)
     {
-        return $this->createForm(new ProductCategoryType(), $entity);
+        return $this->createForm(ProductCategoryType::class, $entity);
     }
 }

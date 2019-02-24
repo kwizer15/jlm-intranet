@@ -6,7 +6,7 @@
 {% if entity.quote %}
 <h4>Devis {{ entity.quote.number }}</h4>
 {% endif %}
-<form action="{{ path('work_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form action="{{ path('work_create') }}" method="post" class="form-horizontal">
 <fieldset>
 {{ form_widget(form) }}
     <div class="form-actions">

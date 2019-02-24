@@ -26,7 +26,7 @@ class DefaultController extends Controller
         return $manager->paginator(
             'JLMFollowBundle:Thread',
             $request,
-            ['type' => null, 'sort' => '!date', 'state' => null]
+            ['entry_type' => null, 'sort' => '!date', 'state' => null]
         );
     }
     

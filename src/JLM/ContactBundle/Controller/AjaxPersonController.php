@@ -1,21 +1,11 @@
 <?php
 
-/*
- * This file is part of the JLMContactBundle package.
- *
- * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace JLM\ContactBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JLM\ContactBundle\Manager\ContactManager;
 use JLM\ContactBundle\Form\Type\PersonType;
 use JLM\ContactBundle\Entity\Person;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -62,8 +52,8 @@ class AjaxPersonController extends Controller
     public function createajaxAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $entity = ContactManager::create('Person');
-        $form = $this->createForm(new PersonType(), $entity);
+        $entity = new Person();
+        $form = $this->createForm(PersonType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the JLMContractBundle package.
- *
- * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace JLM\ContractBundle\Form\Type;
 
 use JLM\ContractBundle\Entity\Contract;
@@ -22,25 +13,33 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- */
 class ContractType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('door', DoorHiddenType::class)
             ->add('trustee', TrusteeSelectType::class, ['label' => 'Syndic'])
             ->add('number', TextType::class, ['label' => 'Numéro'])
-            ->add('complete', ChoiceType::class, ['label' => 'Type', 'choices' => ['0' => 'Normal', '1' => 'Complet']])
+            ->add('complete', ChoiceType::class, [
+                'label' => 'Type',
+                'choices' => array_flip([
+                    '0' => 'Normal', '1' => 'Complet'
+                ]),
+                'choices_as_values' => true,
+            ])
             ->add(
-                'option',
-                ChoiceType::class,
-                ['label' => 'Option', 'choices' => ['0' => '24/24h 7/7j', '1' => '8h30-17h30 du lundi au vendredi']]
+                'option', ChoiceType::class, [
+                    'label' => 'Option',
+                    'choices' => array_flip([
+                        '0' => '24/24h 7/7j',
+                        '1' => '8h30-17h30 du lundi au vendredi'
+                    ]),
+                    'choices_as_values' => true,
+                ]
             )
             ->add('begin', DatepickerType::class, ['label' => 'Début du contrat'])
             ->add('endWarranty', DatepickerType::class, ['label' => 'Fin de garantie', 'required' => false])
@@ -51,7 +50,7 @@ class ContractType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [

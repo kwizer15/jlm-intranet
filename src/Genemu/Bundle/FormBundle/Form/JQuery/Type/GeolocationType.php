@@ -12,6 +12,7 @@
 namespace Genemu\Bundle\FormBundle\Form\JQuery\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
@@ -31,7 +32,7 @@ class GeolocationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('address', 'text');
+        $builder->add('address', TextType::class);
 
         foreach (array('latitude', 'longitude', 'locality', 'country') as $field) {
             $option = $options[$field];

@@ -4,7 +4,7 @@
 {% block content %}
 <h1>Nouvelle panne</h1>
 <h4>{{ door|nl2br }}</h4>
-<form action="{{ path('fixing_create', {'id':door.id}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form action="{{ path('fixing_create', {'id':door.id}) }}" method="post" class="form-horizontal">
 <fieldset>
 {{ form_widget(form) }}
     <div class="form-actions">

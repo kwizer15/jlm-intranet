@@ -51,12 +51,12 @@ class DoorType extends AbstractType
             ->add(
                 'latitude',
                 NumberType::class,
-                ['label' => 'Latitude', 'required' => false, 'precision' => 7, 'attr' => ['class' => 'input-large']]
+                ['label' => 'Latitude', 'required' => false, 'scale' => 7, 'attr' => ['class' => 'input-large']]
             )
             ->add(
                 'longitude',
                 NumberType::class,
-                ['label' => 'Latitude', 'required' => false, 'precision' => 7, 'attr' => ['class' => 'input-large']]
+                ['label' => 'Latitude', 'required' => false, 'scale' => 7, 'attr' => ['class' => 'input-large']]
             )
             ->add(
                 'googlemaps',

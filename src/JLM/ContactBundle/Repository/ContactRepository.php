@@ -12,6 +12,7 @@
 namespace JLM\ContactBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use JLM\ContactBundle\Entity\Contact;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -89,5 +90,10 @@ class ContactRepository extends EntityRepository
         $res = $qb->getQuery()->getArrayResult();
 
         return $res[0];
+    }
+
+    public function get($id): ?Contact
+    {
+        return $this->find($id);
     }
 }

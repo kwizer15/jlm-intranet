@@ -61,7 +61,7 @@ class DoorController extends Controller
         $contractNew->setDoor($entity);
         $contractNew->setTrustee($entity->getAdministrator()->getTrustee());
         $contractNew->setBegin(new \DateTime());
-        $form_contractNew = $this->createForm(new ContractType(), $contractNew);
+        $form_contractNew = $this->createForm(ContractType::class, $contractNew);
 
         // Formulaires d'edition des contrat
         $form_contractEdits = $form_contractStops = [];
@@ -103,7 +103,7 @@ class DoorController extends Controller
             $entity->setAdministrator($site);
             $entity->setStreet($site->getAddress()->getStreet());
         }
-        $form = $this->createForm(new DoorType(), $entity);
+        $form = $this->createForm(DoorType::class, $entity);
 
         return [
             'site' => $site,
@@ -122,7 +122,7 @@ class DoorController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity = new Door();
-        $form = $this->createForm(new DoorType(), $entity);
+        $form = $this->createForm(DoorType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -169,7 +169,7 @@ class DoorController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $editForm = $this->createForm(new DoorType(), $entity);
+        $editForm = $this->createForm(DoorType::class, $entity);
         $deleteForm = $this->createDeleteForm($entity->getId());
         $editForm->handleRequest($request);
 

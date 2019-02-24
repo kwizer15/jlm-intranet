@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the GenemuFormBundle package.
- *
- * (c) Olivier Chauvel <olivier@generation-multiple.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Genemu\Bundle\FormBundle\Form\JQuery\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -18,18 +9,12 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * RatingType
- *
- * @author Olivier Chauvel <olivier@generation-multiple.com>
- * @author Tom Adam <tomadam@instantiate.co.uk>
- */
 class RatingType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->setAttribute('configs', $options['configs']);
     }
@@ -48,7 +33,7 @@ class RatingType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'number' => 5,
@@ -59,8 +44,9 @@ class RatingType extends AbstractType
                 for ($i=1; $i<=$options['number']; $i++) {
                     $choices[$i] = null;
                 }
-                return $choices;
-            }
+                return array_flip($choices);
+            },
+            'choices_as_values' => true,
         ));
 
         $resolver->setNormalizer('expanded', function (Options $options, $value) {
@@ -80,7 +66,7 @@ class RatingType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix(): string
     {
         return 'genemu_jqueryrating';
     }

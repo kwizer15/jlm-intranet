@@ -1,37 +1,36 @@
 <?php
 
-/*
- * This file is part of the JLMCommerceBundle package.
- *
- * (c) Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace JLM\CommerceBundle\Controller;
 
+use JLM\CommerceBundle\Entity\Quote;
+use JLM\CommerceBundle\Form\Type\QuoteType;
+use JLM\CoreBundle\Event\FormPopulatingEvent;
+use JLM\CoreBundle\Repository\SearchRepositoryInterface;
+use JLM\CoreBundle\Service\Pagination;
 use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Event\QuoteEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Quote controller.
- *
- * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- */
 class QuoteController extends Controller
 {
     /**
      * Lists all Quote entities.
+     *
+     * @param Request $request
+     *
+     * @return Response
      */
-    public function indexAction()
+    public function indexAction(Request $request): Response
     {
-        $manager = $this->container->get('jlm_commerce.quote_manager');
+        $templating = $this->container->get('templating');
+        $repository = $this->container->get('doctrine')->getRepository(Quote::class);
+
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $states = [
             'all' => 'All',
@@ -41,20 +40,23 @@ class QuoteController extends Controller
             'given' => 'Given',
             'canceled' => 'Canceled',
         ];
-        $state = $manager->getRequest()->get('state');
+        $state = $request->get('state');
         $state = (!array_key_exists($state, $states)) ? 'all' : $state;
         $views = [
             'index' => 'Liste',
             'follow' => 'Suivi',
         ];
-        $view = $manager->getRequest()->get('view');
+        $view = $request->get('view');
         $view = (!array_key_exists($view, $views)) ? 'index' : $view;
 
         $method = $states[$state];
 
-        return $manager->renderResponse(
+        $paginator = new Pagination($request, $repository);
+        $pagination = $paginator->paginate('getCount' . $method, 'get' . $method, 'quote', ['state' => $state, 'view' => $view]);
+
+        return $templating->renderResponse(
             'JLMCommerceBundle:Quote:' . $view . '.html.twig',
-            $manager->pagination('getCount' . $method, 'get' . $method, 'quote', ['state' => $state, 'view' => $view])
+            $pagination
         );
     }
 
@@ -63,32 +65,74 @@ class QuoteController extends Controller
      */
     public function showAction($id)
     {
-        $manager = $this->container->get('jlm_commerce.quote_manager');
+        $templating = $this->container->get('templating');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        return $manager->renderResponse(
+        $repository = $this->get('doctrine')->getRepository(Quote::class);
+
+        $entity = $repository->find($id);
+
+        return $templating->renderResponse(
             'JLMCommerceBundle:Quote:show.html.twig',
-            ['entity' => $manager->getEntity($id)]
+            ['entity' => $entity]
         );
     }
 
     /**
      * Nouveau devis
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
-        $manager = $this->container->get('jlm_commerce.quote_manager');
+        $entityManager = $this->container->get('doctrine.orm.entity_manager');
+        $vatRepository = $entityManager->getRepository('JLMCommerceBundle:VAT');
+        $router = $this->container->get('router');
+        $templating = $this->container->get('templating');
+        $formFactory = $this->container->get('form.factory');
+        $eventDispatcher = $this->container->get('event_dispatcher');
+        $tokenStorage = $this->container->get('security.token_storage');
+
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $form = $manager->createForm('new');
 
-        if ($manager->getHandler($form)->process()) {
-            $entity = $form->getData();
-            $manager->dispatch(JLMCommerceEvents::QUOTE_AFTER_PERSIST, new QuoteEvent($entity, $manager->getRequest()));
+        $form = $formFactory->create(QuoteType::class, null, [
+            'method' => 'POST',
+            'action'  => $router->generate('quote_create'),
+        ]);
+        $form->add('submit', SubmitType::class, ['label' => 'Modifier']);
 
-            return $manager->redirect('quote_show', ['id' => $form->getData()->getId()]);
+        $eventDispatcher->dispatch(JLMCommerceEvents::QUOTE_FORM_POPULATE, new FormPopulatingEvent($form, $request));
+
+        $vat = $vatRepository->find(1)->getRate();
+        $params = [
+            'creation'       => new \DateTime(),
+            'vat'            => $vat,
+            'vatTransmitter' => $vat,
+            'followerCp'     => $tokenStorage->getToken()->getUser()->getContact()->getName(),
+        ];
+        foreach ($params as $key => $value) {
+            $param = $form->get($key)->getData();
+            if (empty($param)) {
+                $form->get($key)->setData($value);
+            }
         }
 
-        return $manager->renderResponse(
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entity = $form->getData();
+            $entityManager->persist($entity);
+            $entityManager->flush();
+            $eventDispatcher->dispatch(JLMCommerceEvents::QUOTE_AFTER_PERSIST, new QuoteEvent($entity, $request));
+
+            return new RedirectResponse($router->generate('quote_show', ['id' => $entity->getId()]));
+        }
+
+        return $templating->renderResponse(
             'JLMCommerceBundle:Quote:new.html.twig',
             [
                 'form' => $form->createView(),
@@ -98,20 +142,41 @@ class QuoteController extends Controller
 
     /**
      * Displays a form to edit an existing Quote entity.
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id): Response
     {
-        $manager = $this->container->get('jlm_commerce.quote_manager');
+        $entityManager = $this->container->get('doctrine.orm.entity_manager');
+        $repository = $entityManager->getRepository(Quote::class);
+        $router = $this->container->get('router');
+        $templating = $this->container->get('templating');
+        $formFactory = $this->container->get('form.factory');
+
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $entity = $manager->getEntity($id);
-        $manager->assertState($entity, [0]);
-        $form = $manager->createForm('edit', ['entity' => $entity]);
-        if ($manager->getHandler($form)->process()) {
-            //          var_dump($form->getData()->getEvents()[2]); exit;
-            return $manager->redirect('quote_show', ['id' => $form->getData()->getId()]);
+        $entity = $repository->find($id);
+        $this->assertState($entity, [0]);
+        $form = $formFactory->create(QuoteType::class, $entity, [
+            'method' => 'POST',
+            'action'  => $router->generate('quote_update', ['id' => $entity->getId()]),
+        ]);
+        $form->add('submit', SubmitType::class, ['label' => 'Modifier']);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($entity);
+            $entityManager->flush();
+
+            return new RedirectResponse($router->generate('quote_show', ['id' => $form->getData()->getId()]));
         }
 
-        return $manager->renderResponse(
+        return $templating->renderResponse(
             'JLMCommerceBundle:Quote:edit.html.twig',
             [
                 'entity' => $entity,
@@ -122,13 +187,34 @@ class QuoteController extends Controller
 
     /**
      * Resultats de la barre de recherche.
+     *
+     * @param Request $request
+     *
+     * @return
      */
-    public function searchAction()
+    public function searchAction(Request $request)
     {
-        $manager = $this->container->get('jlm_commerce.quote_manager');
+        $templating = $this->container->get('templating');
+        $entityManager = $this->container->get('doctrine.orm.entity_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        return $manager->renderSearch('JLMCommerceBundle:Quote:search.html.twig');
+        $template = 'JLMCommerceBundle:Quote:search.html.twig';
+        $formData = $request->get('jlm_core_search');
+
+        if (\is_array($formData) && array_key_exists('query', $formData)) {
+            $repository = $entityManager->getRepository(Quote::class);
+            if ($repository instanceof SearchRepositoryInterface) {
+                return $templating->renderResponse(
+                    $template,
+                    [
+                        'results' => $repository->search($formData['query']),
+                        'query' => $formData['query'],
+                    ]
+                );
+            }
+        }
+
+        return $templating->renderResponse($template, ['results' => [], 'query' => '']);
     }
 
     /**
@@ -166,16 +252,17 @@ class QuoteController extends Controller
      */
     public function mailAction($id)
     {
+        $templating = $this->container->get('templating');
         $manager = $this->container->get('jlm_commerce.quote_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
-        $manager->assertState($entity, [1, 2, 3, 4, 5]);
+        $this->assertState($entity, [1, 2, 3, 4, 5]);
         $mail = new Mail();
         $mail->setSubject('Devis n°' . $entity->getNumber());
         $mail->setFrom('commerce@jlm-entreprise.fr');
-        $mail->setBody($manager->renderView('JLMCommerceBundle:Quote:email.txt.twig', ['entity' => $entity]));
+        $mail->setBody($templating->renderView('JLMCommerceBundle:Quote:email.txt.twig', ['entity' => $entity]));
         $mail->setSignature(
-            $manager->renderView(
+            $templating->renderView(
                 'JLMCommerceBundle:QuoteVariant:emailsignature.txt.twig',
                 ['name' => $entity->getFollowerCp()]
             )
@@ -187,7 +274,7 @@ class QuoteController extends Controller
                 }
             }
         }
-        $form = $manager->getFormFactory()->create(new MailType(), $mail);
+        $form = $manager->getFormFactory()->create(MailType::class, $mail);
 
         return $manager->renderResponse(
             'JLMCommerceBundle:Quote:mail.html.twig',
@@ -200,17 +287,21 @@ class QuoteController extends Controller
 
     /**
      * Send by mail a QuoteVariant entity.
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function sendmailAction($id)
+    public function sendmailAction(Request $request, $id)
     {
         $manager = $this->container->get('jlm_commerce.quote_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
-        $manager->assertState($entity, [1, 2, 3, 4, 5]);
-        $request = $manager->getRequest();
+        $this->assertState($entity, [1, 2, 3, 4, 5]);
         // Message
         $mail = new Mail();
-        $form = $manager->getFormFactory()->create(new MailType(), $mail);
+        $form = $manager->getFormFactory()->create(MailType::class, $mail);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -258,5 +349,13 @@ class QuoteController extends Controller
         }
 
         return $manager->redirect('quote_show', ['id' => $entity->getId()]);
+    }
+
+    private function assertState($quote, $states = [])
+    {
+        $router = $this->container->get('router');
+        if (!\in_array($quote->getState(), $states, true)) {
+            return new RedirectResponse($router->generate('quote_show', ['id' => $quote->getId()]));
+        }
     }
 }

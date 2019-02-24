@@ -32,7 +32,7 @@ class UserGroupController extends Controller
 
         $entity = new UserGroup();
         $entity->setSite($site);
-        $form   = $this->createForm(new UserGroupType(), $entity);
+        $form   = $this->createForm(UserGroupType::class, $entity);
 
         return [
                 'entity' => $entity,
@@ -52,7 +52,7 @@ class UserGroupController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity  = new UserGroup();
-        $form = $this->createForm(new UserGroupType(), $entity);
+        $form = $this->createForm(UserGroupType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -86,7 +86,7 @@ class UserGroupController extends Controller
             throw $this->createNotFoundException('Unable to find UserGroup entity.');
         }
         $hasTransmitter = $em->getRepository('JLMTransmitterBundle:Transmitter')->getCountByUserGroup($entity) > 0;
-        $editForm = $this->get('form.factory')->createNamed('userGroupEdit'.$id, new UserGroupType(), $entity);
+        $editForm = $this->get('form.factory')->createNamed('userGroupEdit'.$id, UserGroupType::class, $entity);
 
         return [
                 'entity'         => $entity,
@@ -114,7 +114,7 @@ class UserGroupController extends Controller
             throw $this->createNotFoundException('Unable to find UserGroup entity.');
         }
         $hasTransmitter = $em->getRepository('JLMTransmitterBundle:Transmitter')->getCountByUserGroup($entity) > 0;
-        $editForm = $this->get('form.factory')->createNamed('userGroupEdit'.$id, new UserGroupType(), $entity);
+        $editForm = $this->get('form.factory')->createNamed('userGroupEdit'.$id, UserGroupType::class, $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {

@@ -40,14 +40,15 @@ class WorkEditType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'Priorité',
-                    'choices' => [
+                    'choices' => array_flip([
                         1 => 'TRES URGENT',
                         2 => 'Urgent',
                         3 => 'Haute',
                         4 => 'Normal',
                         5 => 'Basse',
                         6 => 'Très basse',
-                    ],
+                    ]),
+                    'choices_as_values' => true,
                 ]
             )
             ->add('category', TextType::class, ['label' => 'Type de travaux'])

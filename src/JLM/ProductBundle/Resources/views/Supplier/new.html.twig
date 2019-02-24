@@ -1,7 +1,7 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
 {% block content %}
 <h1>Nouveau fournisseur</h1>
-<form action="{{ path('supplier_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form action="{{ path('supplier_create') }}" method="post" class="form-horizontal">
 <fieldset>
     {{ form_widget(form) }}
     <div class="form-actions">

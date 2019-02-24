@@ -40,12 +40,12 @@ class QuoteLineType extends AbstractType
             ->add('showDescription', HiddenType::class)
             ->add('quantity', TextType::class, ['attr' => ['class' => 'input-mini']])
             ->add('purchasePrice', MoneyType::class, ['grouping' => true, 'attr' => ['class' => 'input-mini']])
-            ->add('discountSupplier', PercentType::class, ['precision' => 0, 'attr' => ['class' => 'input-mini']])
-            ->add('expenseRatio', PercentType::class, ['precision' => 0, 'attr' => ['class' => 'input-mini']])
+            ->add('discountSupplier', PercentType::class, ['scale' => 0, 'attr' => ['class' => 'input-mini']])
+            ->add('expenseRatio', PercentType::class, ['scale' => 0, 'attr' => ['class' => 'input-mini']])
             ->add('shipping', MoneyType::class, ['grouping' => true, 'attr' => ['class' => 'input-mini']])
             ->add('unitPrice', MoneyType::class, ['grouping' => true, 'attr' => ['class' => 'input-mini']])
-            ->add('discount', PercentType::class, ['precision' => 0, 'attr' => ['class' => 'input-mini']])
-            ->add('vat', PercentType::class, ['precision' => 1, 'attr' => ['class' => 'input-mini']])
+            ->add('discount', PercentType::class, ['scale' => 0, 'attr' => ['class' => 'input-mini']])
+            ->add('vat', PercentType::class, ['scale' => 1, 'attr' => ['class' => 'input-mini']])
             ->add('isTransmitter', HiddenType::class)
         ;
     }

@@ -2,6 +2,7 @@
 
 namespace JLM\TransmitterBundle\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -30,8 +31,10 @@ class SeriesController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = new Series();
         $entity->setAttribution($attribution);
-        $form = $this->createForm(new SeriesType($attribution->getSite()->getId()), $entity);
-        $form->add('submit', 'submit', ['label' => 'Enregistrer']);
+        $form = $this->createForm(SeriesType::class, $entity, [
+            'siteId' => $attribution->getSite()->getId(),
+        ]);
+        $form->add('submit', SubmitType::class, ['label' => 'Enregistrer']);
 
         return [
             'entity' => $entity,
@@ -51,8 +54,10 @@ class SeriesController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity = new Series();
-        $form = $this->createForm(new SeriesType($attribution->getSite()->getId()), $entity);
-        $form->add('submit', 'submit', ['label' => 'Enregistrer']);
+        $form = $this->createForm(SeriesType::class, $entity, [
+            'siteId' => $attribution->getSite()->getId(),
+        ]);
+        $form->add('submit', SubmitType::class, ['label' => 'Enregistrer']);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

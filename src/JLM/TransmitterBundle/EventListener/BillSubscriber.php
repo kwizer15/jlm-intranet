@@ -10,6 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use JLM\TransmitterBundle\Builder\AttributionBillBuilder;
 use JLM\CoreBundle\Event\FormPopulatingEvent;
 use JLM\CoreBundle\Event\RequestEvent;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class BillSubscriber implements EventSubscriberInterface
 {
@@ -43,7 +44,7 @@ class BillSubscriber implements EventSubscriberInterface
                 )
             );
             $event->getForm()->setData($entity);
-            $event->getForm()->add('attribution', 'hidden', ['data' => $attribution->getId(), 'mapped' => false]);
+            $event->getForm()->add('attribution', HiddenType::class, ['data' => $attribution->getId(), 'mapped' => false]);
         }
     }
 

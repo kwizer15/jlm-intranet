@@ -31,7 +31,9 @@ class TransmitterController extends Controller
 
         $entity = new Transmitter();
         $entity->setAttribution($attribution);
-        $form = $this->createForm(new TransmitterType($attribution->getSite()->getId()), $entity);
+        $form = $this->createForm(TransmitterType::class, $entity, [
+            'siteId' => $attribution->getSite()->getId(),
+        ]);
 
         return [
             'entity' => $entity,
@@ -51,7 +53,9 @@ class TransmitterController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity = new Transmitter();
-        $form = $this->createForm(new TransmitterType($attribution->getSite()->getId()), $entity);
+        $form = $this->createForm(TransmitterType::class, $entity, [
+            'siteId' => $attribution->getSite()->getId(),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -88,11 +92,11 @@ class TransmitterController extends Controller
         }
         $editForm = $this->get('form.factory')->createNamed(
             'transmitterEdit' . $id,
-            new TransmitterType($entity->getAttribution()->getSite()->getId()),
-            $entity
-        )
-        ;
-        //$editForm = $this->createForm(new TransmitterType($entity->getAttribution()->getSite()->getId()), $entity);
+            TransmitterType::class,
+            $entity, [
+                'siteId' => $entity->getAttribution()->getSite()->getId(),
+            ]
+        );
 
         return [
             'entity' => $entity,
@@ -121,11 +125,13 @@ class TransmitterController extends Controller
 
         $editForm = $this->get('form.factory')->createNamed(
             'transmitterEdit' . $id,
-            new TransmitterType($entity->getAttribution()->getSite()->getId()),
-            $entity
-        )
-        ;
-        //$editForm = $this->createForm(new TransmitterType($entity->getAttribution()->getSite()->getId()), $entity);
+            TransmitterType::class,
+            $entity,
+            [
+                'siteId' => $entity->getAttribution()->getSite()->getId(),
+            ]
+        );
+
         $editForm->bind($request);
 
         if ($editForm->isValid()) {

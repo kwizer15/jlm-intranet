@@ -4,7 +4,7 @@
 {% block content %}
 <h1>Ajout d'un technicien sur une intervention</h1>
 <h4>{{ shifting.place | nl2br }}</h4>
-<form action="{{ path('shifting_create',{'id':shifting.id}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form action="{{ path('shifting_create',{'id':shifting.id}) }}" method="post" class="form-horizontal">
 <fieldset>
 {{ form_widget(form) }}
     <div class="form-actions">

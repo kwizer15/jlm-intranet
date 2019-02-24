@@ -20,7 +20,8 @@ use JLM\CoreBundle\Event\FormPopulatingEvent;
 use JLM\CoreBundle\Event\RequestEvent;
 use JLM\DailyBundle\Builder\WorkBillBuilder;
 use JLM\DailyBundle\Builder\InterventionBillBuilder;
-use JLM\DailyBundle\Entity\Work;    // @todo Change to WorkInterface
+use JLM\DailyBundle\Entity\Work;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;    // @todo Change to WorkInterface
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -56,7 +57,7 @@ class BillSubscriber implements EventSubscriberInterface
             $builder = ($builder === null) ? new InterventionBillBuilder($interv) : $builder;
             $entity = BillFactory::create($builder);
             $event->getForm()->setData($entity);
-            $event->getForm()->add('intervention', 'hidden', ['data' => $interv->getId(), 'mapped' => false]);
+            $event->getForm()->add('intervention', HiddenType::class, ['data' => $interv->getId(), 'mapped' => false]);
         }
     }
     

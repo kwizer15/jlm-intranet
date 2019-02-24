@@ -3,6 +3,7 @@
 namespace JLM\ProductBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\ProductBundle\Entity\Product;
@@ -216,7 +217,7 @@ class ProductController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(['id' => $id])
-            ->add('id', 'hidden')
+            ->add('id', HiddenType::class)
             ->getForm()
         ;
     }
@@ -228,7 +229,7 @@ class ProductController extends Controller
      */
     private function createEditForm(Product $entity)
     {
-        return $this->createForm(new ProductType(), $entity);
+        return $this->createForm(ProductType::class, $entity);
     }
     
     /**
@@ -238,6 +239,6 @@ class ProductController extends Controller
      */
     private function createNewForm(Product $entity)
     {
-        return $this->createForm(new ProductType(), $entity);
+        return $this->createForm(ProductType::class, $entity);
     }
 }

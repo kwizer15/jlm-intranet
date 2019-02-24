@@ -1,7 +1,7 @@
 {% extends "JLMModelBundle::layout.html.twig" %}
 {% block content %}
 <h1>Nouveau contact de syndic</h1>
-<form action="{{ path('trustee_contact_create',{'id':trustee.id}) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form action="{{ path('trustee_contact_create',{'id':trustee.id}) }}" method="post" class="form-horizontal">
     <fieldset>
     {{ form_widget(form) }}
 	<div class="form-actions">

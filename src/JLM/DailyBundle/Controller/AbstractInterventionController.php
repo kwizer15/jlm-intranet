@@ -20,7 +20,7 @@ abstract class AbstractInterventionController extends PaginableController
     {
         $form_externalbill = $this
             ->get('form.factory')
-            ->createNamed('externalBill'.$entity->getId(), new ExternalBillType(), $entity)
+            ->createNamed('externalBill'.$entity->getId(), ExternalBillType::class, $entity)
         ;
         $form_cancel = $this->createForm(InterventionCancelType::class, $entity);
         $em = $this->getDoctrine()->getManager();

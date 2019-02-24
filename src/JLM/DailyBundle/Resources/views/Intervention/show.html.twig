@@ -216,7 +216,7 @@
 			 		 	{# Modal #}
 			 	{% if entity.mustBeBilled and entity.bill is null and entity.externalBill is null %}
 		
-							<form id="modalExternalBill" action="{{ path('intervention_externalbill',{'id':entity.id}) }}" method="post" {{ form_enctype(form_externalbill) }} class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalExternalBillLabel" aria-hidden="true">
+							<form id="modalExternalBill" action="{{ path('intervention_externalbill',{'id':entity.id}) }}" method="post" class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalExternalBillLabel" aria-hidden="true">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 									<h3 id="modalExternalBillLabel">Numéro de facture externe</h3>

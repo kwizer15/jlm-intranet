@@ -12,6 +12,7 @@
 namespace JLM\CoreBundle\Form\Handler;
 
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -24,14 +25,18 @@ class DoctrineHandler extends FormHandler
      * @var Request
      */
     protected $om;
-    
+
+    private $entity;
+
     /**
      * Constructor
-     * @param Form $form
+     *
+     * @param FormInterface $form
      * @param Request $request
      * @param ObjectManager $om
+     * @param null $entity
      */
-    public function __construct(Form $form, Request $request, ObjectManager $om, $entity = null)
+    public function __construct(FormInterface $form, Request $request, ObjectManager $om, $entity = null)
     {
         parent::__construct($form, $request);
         $this->om = $om;
@@ -41,7 +46,7 @@ class DoctrineHandler extends FormHandler
     /**
      * {@inheritdoc}
      */
-    public function onSuccess()
+    public function onSuccess(): bool
     {
         switch ($this->request->getMethod()) {
             case 'GET':

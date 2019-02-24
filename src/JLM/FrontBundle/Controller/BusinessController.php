@@ -11,6 +11,7 @@
 
 namespace JLM\FrontBundle\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -130,7 +131,7 @@ class BusinessController extends Controller
                 'method' => 'POST',
             ]
         );
-        $form->add('submit', 'submit');
+        $form->add('submit', SubmitType::class);
 
         return $form;
     }

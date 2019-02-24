@@ -37,11 +37,15 @@ class FeeType extends AbstractType
         ->add('trustee', TrusteeSelectType::class, ['label' => 'Syndic', 'attr' => ['class' => 'input-xlarge']])
         ->add('address', TextType::class, ['label' => 'Adresse', 'attr' => ['class' => 'input-xlarge']])
         ->add('prelabel', TextType::class, ['label' => 'Libélé', 'attr' => ['class' => 'input-xlarge']])
-        ->add('frequence', ChoiceType::class, ['label' => 'Fréquence', 'choices' => [
-            1 => 'Annuelle',
-            2 => 'Semestrielle',
-            4 => 'Trimestrielle'
-        ], 'attr' => ['class' => 'input-normal']])
+        ->add('frequence', ChoiceType::class, [
+            'label' => 'Fréquence',
+            'choices_as_values' => true,
+            'choices' => array_flip([
+                1 => 'Annuelle',
+                2 => 'Semestrielle',
+                4 => 'Trimestrielle'
+            ]),
+            'attr' => ['class' => 'input-normal']])
         ->add('vat', EntityType::class, [
             'label' => 'TVA',
             'class' => VAT::class,
@@ -51,7 +55,7 @@ class FeeType extends AbstractType
             'prototype' => true,
             'allow_add' => true,
             'allow_delete' => true,
-            'type' => ContractSelectType::class,
+            'entry_type' => ContractSelectType::class,
             'label' => 'Contrats'
         ]);
     }

@@ -4,7 +4,7 @@
 {% if  form_errors(form) %}
 <div class="alert"><strong>Erreurs</strong> : {{ form_errors(form) }}</div>
 {% endif %}
-<form action="{{ path('site_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form action="{{ path('site_create') }}" method="post" class="form-horizontal">
 <fieldset>
 {{ form_widget(form) }}
     <div class="form-actions">

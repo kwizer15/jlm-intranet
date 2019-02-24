@@ -65,7 +65,7 @@ class SiteContactController extends Controller
         if ($site) {
             $entity->setAdministrator($site);
         }
-        $form   = $this->createForm(new SiteContactType(), $entity);
+        $form   = $this->createForm(SiteContactType::class, $entity);
 
         return [
                 'entity' => $entity,
@@ -84,7 +84,7 @@ class SiteContactController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity  = new SiteContact();
-        $form = $this->createForm(new SiteContactType(), $entity);
+        $form = $this->createForm(SiteContactType::class, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -124,7 +124,7 @@ class SiteContactController extends Controller
             throw $this->createNotFoundException('Unable to find SiteContact entity.');
         }
 
-        $editForm = $this->createForm(new SiteContactType(), $entity);
+        $editForm = $this->createForm(SiteContactType::class, $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return [
@@ -152,7 +152,7 @@ class SiteContactController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new SiteContactType(), $entity);
+        $editForm = $this->createForm(SiteContactType::class, $entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -195,7 +195,7 @@ class SiteContactController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(['id' => $id])
-            ->add('id', 'hidden')
+            ->add('id', HiddenType::class)
             ->getForm()
         ;
     }
