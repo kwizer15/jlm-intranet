@@ -58,7 +58,7 @@ class AjaxModelChoiceList extends ModelChoiceList
     /**
      * {@inheritdoc}
      */
-    public function getChoices()
+    public function getChoices(): array
     {
         $choices = parent::getChoices();
 

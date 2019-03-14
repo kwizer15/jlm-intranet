@@ -11,6 +11,7 @@
 
 namespace Genemu\Bundle\FormBundle\Form\JQuery\Type;
 
+use Doctrine\DBAL\Types\IntegerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -26,12 +27,12 @@ class SliderType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['configs'] = $options;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'min' => 0,
@@ -52,13 +53,13 @@ class SliderType extends AbstractType
      */
     public function getParent()
     {
-        return 'integer';
+        return IntegerType::class;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix(): string
     {
         return 'genemu_jqueryslider';
     }

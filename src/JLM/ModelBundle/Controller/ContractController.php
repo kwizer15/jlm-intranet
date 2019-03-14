@@ -122,7 +122,7 @@ class ContractController extends Controller
      *
      * @Template("JLMModelBundle:Contract:stop.html.twig")
      */
-    public function stopupdateAction(Contract $entity)
+    public function stopupdateAction(Request $request, Contract $entity)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
@@ -130,9 +130,7 @@ class ContractController extends Controller
             'contractStop' . $entity->getId(),
             new ContractStopType(),
             $entity
-        )
-        ;
-        $request = $this->getRequest();
+        );
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {

@@ -30,13 +30,16 @@ class AjaxPersonController extends Controller
      * Displays a form to create a new Person entity.
      *
      * @Template()
+     * @param Request $request
+     *
+     * @return array
      */
-    public function newajaxAction()
+    public function newajaxAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $manager = $this->container->get('jlm_contact.contact_manager');
         $entity = $manager->getEntity('person');
-        $form = $manager->createForm('POST', $entity);
+        $form = $manager->createForm('POST', $request, $entity);
 
 
         return [

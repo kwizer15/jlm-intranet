@@ -11,6 +11,7 @@
 
 namespace Genemu\Bundle\FormBundle\Gd;
 
+use Genemu\Bundle\FormBundle\Gd\File\Image;
 use Symfony\Component\HttpFoundation\File\File;
 
 use Genemu\Bundle\FormBundle\Gd\Filter\Filter;

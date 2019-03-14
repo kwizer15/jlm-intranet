@@ -9,6 +9,7 @@ use JLM\ContactBundle\Entity\Person;
 use JLM\ContactBundle\Form\Type\AssociationType;
 use JLM\ContactBundle\Form\Type\CompanyType;
 use JLM\ContactBundle\Form\Type\PersonType;
+use JLM\ContactBundle\Repository\ContactRepository;
 use JLM\CoreBundle\Form\Handler\DoctrineHandler;
 use JLM\CoreBundle\Service\Pagination;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -72,6 +73,7 @@ class ContactController extends Controller
     {
         $formFactory = $this->container->get('form.factory');
         $doctrine = $this->container->get('doctrine.orm.entity_manager');
+        /** @var ContactRepository $repository */
         $repository = $doctrine->getRepository(Contact::class);
         $router = $this->container->get('router');
         $templating = $this->container->get('templating');
@@ -113,6 +115,7 @@ class ContactController extends Controller
         $templating = $this->container->get('templating');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $ajax = $request->isXmlHttpRequest();
+        /** @var ContactRepository $repository */
         $repository = $this->get('doctrine')->getRepository(Contact::class);
 
         if ($ajax || $request->get('format') === 'json') {
@@ -121,8 +124,8 @@ class ContactController extends Controller
             );
         }
 
-        $paginator = new Pagination($this->getRequest(), $this->getRepository());
-        $pagination = $paginator->paginate('getCountAll', 'getAll', 'jlm_contact_contact', []);
+        $paginator = new Pagination($request, $repository);
+        $pagination = $paginator->paginate('getCountAll', 'getAll', 'jlm_contact_contact');
 
         return $templating->renderResponse('JLMContactBundle:Contact:list.html.twig', $pagination);
     }
@@ -130,6 +133,7 @@ class ContactController extends Controller
     public function showAction(Request $request, $id)
     {
         $templating = $this->container->get('templating');
+        /** @var ContactRepository $repository */
         $repository = $this->get('doctrine')->getRepository(Contact::class);
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $repository->get($id);
@@ -145,6 +149,7 @@ class ContactController extends Controller
     public function unactiveAction(Request $request, $id): RedirectResponse
     {
         $objectManager = $this->get('doctrine');
+        /** @var ContactRepository $repository */
         $repository = $objectManager->getRepository(Contact::class);
         $session = $this->container->get('session');
 

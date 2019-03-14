@@ -17,6 +17,7 @@ use JLM\ContractBundle\JLMContractEvents;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -52,12 +53,12 @@ class ContractController extends Controller
     /**
      * Creates a new Contract entity.
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
         $manager = $this->container->get('jlm_contract.contract_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $form = $manager->createForm('new');
-        $ajax = $manager->isAjax();
+        $form = $manager->createForm('new', $request);
+        $ajax = $request->isXmlHttpRequest();
         if ($manager->getHandler($form)->process('POST')) {
             $event = new ContractEvent($form->getData());
             $manager->dispatch(JLMContractEvents::AFTER_CONTRACT_CREATE, $event);
@@ -82,21 +83,21 @@ class ContractController extends Controller
     /**
      * Edits an existing Contract entity.
      */
-    public function editAction($id, $formName)
+    public function editAction(Request $request, $id, $formName)
     {
         $manager = $this->container->get('jlm_contract.contract_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
-        $ajax = $manager->getRequest()->isXmlHttpRequest();
-        $form = $manager->createForm($formName, ['entity' => $entity]);
+        $ajax = $request->isXmlHttpRequest();
+        $form = $manager->createForm($formName, $request, ['entity' => $entity]);
         if ($manager->getHandler($form)->process()) {
             $event = new ContractEvent($form->getData());
             //          $manager->dispatch(JLMContractEvents::AFTER_CONTRACT_PERSIST, $event);
 
-            return ($ajax) ? $manager->renderJson([])
+            return $ajax ? $manager->renderJson([])
                 : $manager->redirect($this->generateUrl('door_show', ['id' => $entity->getDoor()->getId()]));
         }
-        $template = ($ajax) ? 'JLMContractBundle:Contract:modal_edit.html.twig'
+        $template = $ajax ? 'JLMContractBundle:Contract:modal_edit.html.twig'
             : 'JLMContractBundle:Contract:edit.html.twig';
 
         return $manager->renderResponse(

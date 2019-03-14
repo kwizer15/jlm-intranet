@@ -12,6 +12,7 @@
 namespace Genemu\Bundle\FormBundle\Form\JQuery\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
@@ -30,7 +31,7 @@ class GeolocationType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('address', TextType::class);
 
@@ -54,53 +55,46 @@ class GeolocationType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $view->vars = array_replace($view->vars, array(
-            'configs'   => array(),
-            'elements'  => array(),
+        $view->vars = array_replace($view->vars, [
+            'configs'   => [],
+            'elements'  => [],
             'map' => $options['map']
-        ));
+        ]
+        );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'map' => false,
-            'latitude' => array(
+            'latitude' => [
                 'enabled' => false,
                 'hidden' => false,
-            ),
-            'longitude' => array(
+            ],
+            'longitude' => [
                 'enabled' => false,
                 'hidden' => false,
-            ),
-            'locality' => array(
+            ],
+            'locality' => [
                 'enabled' => false,
                 'hidden' => false,
-            ),
-            'country' => array(
+            ],
+            'country' => [
                 'enabled' => false,
                 'hidden' => false,
-            ),
-        ));
+            ],
+        ]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getParent()
-    {
-        return 'form';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getBlockPrefix(): string
     {
         return 'genemu_jquerygeolocation';
     }

@@ -100,6 +100,11 @@ abstract class ContactDecorator implements ContactInterface
         return $this->getContact()->getPhones();
     }
 
+    public function getPhone()
+    {
+        return $this->getPhones()[0] ?? null;
+    }
+
     /**
      * {@inheritdoc}
      */

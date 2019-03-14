@@ -28,15 +28,18 @@ class WorkController extends AbstractInterventionController
 {
     /**
      * List the works
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
         $manager = $this->container->get('jlm_daily.work_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $request = $manager->getRequest();
         $repo = $manager->getRepository();
 
-        return $manager->isAjax()
+        return $request->isXmlHttpRequest()
             ? $manager->renderJson(
                 [
                     'entities' => $repo->getArray(
@@ -47,7 +50,7 @@ class WorkController extends AbstractInterventionController
             )
             : $manager->renderResponse(
                 'JLMDailyBundle:Work:list.html.twig',
-                $manager->pagination('getCountOpened', 'getOpened', 'work_list', [])
+                $manager->pagination($request, 'getCountOpened', 'getOpened', 'work_list', [])
             );
     }
 

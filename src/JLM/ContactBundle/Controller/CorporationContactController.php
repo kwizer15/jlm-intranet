@@ -15,6 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -31,15 +32,15 @@ class CorporationContactController implements ContainerAwareInterface
      *
      * @return Response
      */
-    public function editAction($id = 0)
+    public function editAction(Request $request, $id = 0)
     {
         $manager = $this->container->get('jlm_contact.corporationcontact_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $router = $manager->getRouter();
         $entity = $manager->getEntity($id);
         $formName = ($id) ? 'edit' : 'new';
-        $form = $manager->createForm($formName, ['entity' => $entity]);
-        $ajax = $manager->getRequest()->isXmlHttpRequest();
+        $form = $manager->createForm($formName, $request, ['entity' => $entity]);
+        $ajax = $request->isXmlHttpRequest();
         if ($manager->getHandler($form)->process()) {
             $entity = $form->getData();
             if ($ajax) {
@@ -59,7 +60,7 @@ class CorporationContactController implements ContainerAwareInterface
                 );
             }
         } else {
-            $template = ($ajax) ? 'modal_new.html.twig' : 'new.html.twig';
+            $template = $ajax ? 'modal_new.html.twig' : 'new.html.twig';
             $response = $manager->renderResponse(
                 'JLMContactBundle:CorporationContact:' . $template,
                 ['form' => $form->createView()]
@@ -72,21 +73,25 @@ class CorporationContactController implements ContainerAwareInterface
     /**
      * Remove a CorporationContact
      *
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse|Response
      */
-    public function deleteAction($id)
+    public function deleteAction(Request $request, $id)
     {
         $manager = $this->container->get('jlm_contact.corporationcontact_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
-        $form = $manager->createForm('delete', ['entity' => $entity]);
+        $form = $manager->createForm('delete', $request, ['entity' => $entity]);
         $process = $manager->getHandler($form, $entity)->process('DELETE');
         if ($process) {
             //          $manager->getSession()->setFlash('notice', $entity->getName().' a bien été supprimé');
 
             return new JsonResponse(['delete' => true]);
         }
-        $ajax = $manager->getRequest()->isXmlHttpRequest();
-        $template = ($ajax) ? 'modal_delete.html.twig' : 'delete.html.twig';
+        $ajax = $request->isXmlHttpRequest();
+        $template = $ajax ? 'modal_delete.html.twig' : 'delete.html.twig';
 
         return $manager->renderResponse(
             'JLMContactBundle:CorporationContact:' . $template,

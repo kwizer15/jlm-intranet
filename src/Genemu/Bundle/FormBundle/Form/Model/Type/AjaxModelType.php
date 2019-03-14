@@ -28,7 +28,7 @@ class AjaxModelType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'template'          => 'choice',
@@ -56,8 +56,6 @@ class AjaxModelType extends AbstractType
                 return null;
             }
         ));
-
-        return $options;
     }
 
     /**
@@ -71,7 +69,7 @@ class AjaxModelType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix(): string
     {
         return 'genemu_ajaxmodel';
     }

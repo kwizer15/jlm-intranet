@@ -98,12 +98,11 @@ class TrusteeController extends Controller
      *
      * @Template("JLMModelBundle:Trustee:new.html.twig")
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity = new Trustee();
-        $request = $this->getRequest();
         $form = $this->createForm(TrusteeType::class, $entity);
         $form->handleRequest($request);
 
@@ -147,7 +146,7 @@ class TrusteeController extends Controller
      *
      * @Template("JLMModelBundle:Trustee:edit.html.twig")
      */
-    public function updateAction(Trustee $entity)
+    public function updateAction(Request $request, Trustee $entity)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
@@ -155,8 +154,6 @@ class TrusteeController extends Controller
 
         $editForm = $this->createForm(TrusteeType::class, $entity);
         $deleteForm = $this->createDeleteForm($entity);
-
-        $request = $this->getRequest();
 
         $editForm->handleRequest($request);
 
@@ -181,12 +178,11 @@ class TrusteeController extends Controller
     /**
      * Deletes a Trustee entity.
      */
-    public function deleteAction(Trustee $entity)
+    public function deleteAction(Request $request, Trustee $entity)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $form = $this->createDeleteForm($entity);
-        $request = $this->getRequest();
 
         $form->handleRequest($request);
 

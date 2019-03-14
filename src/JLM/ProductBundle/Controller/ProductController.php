@@ -2,6 +2,7 @@
 
 namespace JLM\ProductBundle\Controller;
 
+use JLM\ProductBundle\Entity\Stock;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,11 +22,10 @@ class ProductController extends Controller
      *
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $request = $this->getRequest();
         $page = $request->get('page', 1);
         $limit = $request->get('limit', 15);
         $all = $request->get('all', 0);
@@ -171,12 +171,11 @@ class ProductController extends Controller
      * Deletes a Product entity.
      *
      */
-    public function deleteAction($id)
+    public function deleteAction(Request $request, $id)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
 
         $form->handleRequest($request);
 

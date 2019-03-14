@@ -13,6 +13,7 @@ namespace JLM\FrontBundle\Controller;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Doctrine\ORM\NoResultException;
@@ -30,11 +31,10 @@ class BusinessController extends Controller
     {
     }
 
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $request = $this->get('request');
         $om = $this->get('doctrine')->getManager();
-        $manager = $this->getConnectedManager();
+        $manager = $this->getConnectedManager($request);
         $repoSite = $om->getRepository('JLMModelBundle:Site');
         if ($manager instanceof Trustee) {
             $sites = $repoSite->getByManager($manager);
@@ -107,9 +107,8 @@ class BusinessController extends Controller
         );
     }
 
-    public function askquoteAction()
+    public function askquoteAction(Request $request)
     {
-        $request = $this->getRequest();
         $form = $this->createAskQuoteForm();
         $form->handleRequest($request);
 

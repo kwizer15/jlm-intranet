@@ -28,6 +28,9 @@ use Genemu\Bundle\FormBundle\Gd\Filter\Opacity;
  */
 class Image extends File
 {
+    /**
+     * @var null
+     */
     protected $gd = null;
 
     /**
@@ -38,7 +41,7 @@ class Image extends File
         parent::__construct($path, $checkPath);
 
         if (false === strpos($this->getMimeType(), 'image')) {
-            throw new \Exception(sprintf('Is not an image file. (%s)', $this->getMimeType()));
+            throw new \RuntimeException(sprintf('Is not an image file. (%s)', $this->getMimeType()));
         }
     }
 
@@ -46,8 +49,10 @@ class Image extends File
      * Check format image
      *
      * @param string $format
+     *
+     * @return string
      */
-    public function checkFormat($format)
+    public function checkFormat($format): string
     {
         $function = 'imagecreatefrom'.$format;
 
@@ -62,10 +67,13 @@ class Image extends File
      * Create thumbnail image
      *
      * @param string $name
-     * @param int    $width
-     * @param int    $height
+     * @param int $width
+     * @param int $height
+     * @param int $quality
+     *
+     * @throws \Exception
      */
-    public function createThumbnail($name, $width, $height, $quality = 90)
+    public function createThumbnail($name, $width, $height, $quality = 90): void
     {
         $ext = $this->guessExtension();
 
@@ -80,8 +88,10 @@ class Image extends File
 
     /**
      * Search thumbnails
+     *
+     * @throws \Exception
      */
-    public function searchThumbnails()
+    public function searchThumbnails(): void
     {
         $thumbnails = array();
 
@@ -111,8 +121,10 @@ class Image extends File
      * @param string $name
      *
      * @return Image|null
+     *
+     * @throws \Exception
      */
-    public function getThumbnail($name)
+    public function getThumbnail($name): ?Image
     {
         if (!$this->hasThumbnail($name)) {
             $this->searchThumbnails();
@@ -125,8 +137,10 @@ class Image extends File
      * Get thumbnails
      *
      * @return array
+     *
+     * @throws \Exception
      */
-    public function getThumbnails()
+    public function getThumbnails(): array
     {
         if (!$this->getGd()->getThumbnails()) {
             $this->searchThumbnails();
@@ -140,9 +154,11 @@ class Image extends File
      *
      * @param string $name
      *
-     * @return boolean
+     * @return bool
+     *
+     * @throws \Exception
      */
-    public function hasThumbnail($name)
+    public function hasThumbnail($name): bool
     {
         if (!$this->getGd()->getThumbnails()) {
             $this->searchThumbnails();
@@ -158,8 +174,10 @@ class Image extends File
      * @param int $y
      * @param int $w
      * @param int $h
+     *
+     * @throws \Exception
      */
-    public function addFilterCrop($x, $y, $w, $h)
+    public function addFilterCrop($x, $y, $w, $h): void
     {
         $this->getGd()->addFilter(new Crop($x, $y, $w, $h));
     }
@@ -168,16 +186,20 @@ class Image extends File
      * Add filter rotate to image
      *
      * @param int $rotate
+     *
+     * @throws \Exception
      */
-    public function addFilterRotate($rotate = 90)
+    public function addFilterRotate($rotate = 90): void
     {
         $this->getGd()->addFilter(new Rotate($rotate));
     }
 
     /**
      * Add filter negative to image
+     *
+     * @throws \Exception
      */
-    public function addFilterNegative()
+    public function addFilterNegative(): void
     {
         $this->getGd()->addFilter(new Negate());
     }
@@ -186,8 +208,10 @@ class Image extends File
      * Add filter sepia to image
      *
      * @param string $color
+     *
+     * @throws \Exception
      */
-    public function addFilterSepia($color)
+    public function addFilterSepia($color): void
     {
         $this->getGd()->addFilters(array(
             new GrayScale(),
@@ -197,24 +221,30 @@ class Image extends File
 
     /**
      * Add filter gray scale to image
+     *
+     * @throws \Exception
      */
-    public function addFilterBw()
+    public function addFilterBw(): void
     {
         $this->getGd()->addFilter(new GrayScale());
     }
 
     /**
      * Add filter blur to image
+     *
+     * @throws \Exception
      */
-    public function addFilterBlur()
+    public function addFilterBlur(): void
     {
         $this->getGd()->addFilter(new Blur());
     }
 
     /**
      * Add filter opacity to image
+     *
+     * @throws \Exception
      */
-    public function addFilterOpacity($opacity)
+    public function addFilterOpacity($opacity): void
     {
         $this->getGd()->addFilter(new Opacity($opacity));
     }
@@ -223,10 +253,12 @@ class Image extends File
      * Get gd manipulator
      *
      * @return \Genemu\Bundle\FormBundle\Gd\Gd
+     *
+     * @throws \Exception
      */
-    public function getGd()
+    public function getGd(): Gd
     {
-        if (is_null($this->gd)) {
+        if (null === $this->gd) {
             $format = $this->checkFormat($this->guessExtension());
             $generate = 'imagecreatefrom' . $format;
 
@@ -241,8 +273,10 @@ class Image extends File
      * Get width
      *
      * @return int
+     *
+     * @throws \Exception
      */
-    public function getWidth()
+    public function getWidth(): int
     {
         return $this->getGd()->getWidth();
     }
@@ -251,8 +285,10 @@ class Image extends File
      * Get height
      *
      * @return int
+     *
+     * @throws \Exception
      */
-    public function getHeight()
+    public function getHeight(): int
     {
         return $this->getGd()->getHeight();
     }
@@ -261,8 +297,10 @@ class Image extends File
      * Get base64 image
      *
      * @return string
+     *
+     * @throws \Exception
      */
-    public function getBase64()
+    public function getBase64(): string
     {
         return $this->getGd()->getBase64($this->guessExtension());
     }
@@ -271,8 +309,10 @@ class Image extends File
      * Save image file
      *
      * @param int $quality
+     *
+     * @throws \Exception
      */
-    public function save($quality = 90)
+    public function save(int $quality = 90): void
     {
         $this->getGd()->save($this->getPathname(), $this->guessExtension(), $quality);
     }

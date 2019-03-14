@@ -66,15 +66,19 @@ class BillController extends Controller
 
     /**
      * Displays a form to create a new Bill entity.
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $form = $manager->createForm('new');
+        $form = $manager->createForm('new', $request);
         if ($manager->getHandler($form)->process()) {
             $entity = $form->getData();
-            $manager->dispatch(JLMCommerceEvents::BILL_AFTER_PERSIST, new BillEvent($entity, $manager->getRequest()));
+            $manager->dispatch(JLMCommerceEvents::BILL_AFTER_PERSIST, new BillEvent($entity, $request));
 
             return $manager->redirect('bill_show', ['id' => $form->getData()->getId()]);
         }
@@ -89,14 +93,19 @@ class BillController extends Controller
 
     /**
      * Displays a form to edit an existing Bill entity.
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $manager->assertState($entity, [0]);
-        $editForm = $manager->createForm('edit', ['entity' => $entity]);
+        $editForm = $manager->createForm('edit', $request, ['entity' => $entity]);
 
         if ($manager->getHandler($editForm, $entity)->process()) {
             return $manager->redirect('bill_show', ['id' => $entity->getId()]);
@@ -286,14 +295,18 @@ class BillController extends Controller
 
     /**
      * Email de relance facture
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function boostemailAction($id)
+    public function boostemailAction(Request $request, $id)
     {
         // @todo Passer par un service de formPopulate et créer un controller unique dans CoreBundle
         $manager = $this->container->get('jlm_commerce.bill_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
-        $request = $manager->getRequest();
         $site = $entity->getSiteObject();
         $builder = ($site === null) ? new BillBoostMailBuilder($entity) : new BillBoostBusinessMailBuilder($site);
         $mail = MailFactory::create($builder);
@@ -359,11 +372,11 @@ class BillController extends Controller
     /**
      * Search
      */
-    public function searchAction()
+    public function searchAction(Request $request)
     {
         $manager = $this->container->get('jlm_commerce.bill_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $formData = $manager->getRequest()->get('jlm_core_search');
+        $formData = $request->get('jlm_core_search');
         $params = [];
         if (is_array($formData) && array_key_exists('query', $formData)) {
             $params = ['results' => $manager->getRepository()->search($formData['query'])];

@@ -25,6 +25,9 @@ use Symfony\Component\Form\Extension\Core\Type\DateType as BaseDateType;
  */
 class DateType extends AbstractType
 {
+    /**
+     * @var array
+     */
     private $options;
 
     /**
@@ -40,7 +43,7 @@ class DateType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $configs = $options['configs'];
         $years = $options['years'];
@@ -76,7 +79,7 @@ class DateType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $configs = $this->options;
 
@@ -112,11 +115,11 @@ class DateType extends AbstractType
     /**
      * Create pattern Date Javascript
      *
-     * @param IntlDateFormatter $formatter
+     * @param \IntlDateFormatter $formatter
      *
      * @return string pattern date of Javascript
      */
-    protected function getJavascriptPattern(\IntlDateFormatter $formatter)
+    protected function getJavascriptPattern(\IntlDateFormatter $formatter): string
     {
         $pattern = $formatter->getPattern();
         $patterns = preg_split('([\\\/.:_;,\s-\ ]{1})', $pattern);
@@ -167,7 +170,7 @@ class DateType extends AbstractType
         return str_replace(array_keys($exits), array_values($exits), $pattern);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'genemu_jquerydate';
     }

@@ -30,7 +30,7 @@ class Select2EntityType extends AbstractType
 {
     private $configs;
 
-    public function __construct(array $configs = array())
+    public function __construct(array $configs = [])
     {
         $this->configs = $configs;
     }
@@ -38,7 +38,7 @@ class Select2EntityType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['configs'] = $options['configs'];
 
@@ -54,7 +54,7 @@ class Select2EntityType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $defaults = $this->configs;
         $resolver
@@ -72,12 +72,12 @@ class Select2EntityType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): string
     {
         return EntityType::class;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'genemu_jqueryselect2_entity';
     }

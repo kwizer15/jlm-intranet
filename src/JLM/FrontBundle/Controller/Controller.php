@@ -12,6 +12,7 @@
 namespace JLM\FrontBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Doctrine\ORM\NoResultException;
@@ -21,7 +22,7 @@ use Doctrine\ORM\NoResultException;
  */
 class Controller extends BaseController
 {
-    protected function getConnectedManager()
+    protected function getConnectedManager(Request $request)
     {
         $service = (Kernel::MINOR_VERSION > 3) ? 'security.token_storage' : 'security.context';
         $securityTokenStorage = $this->container->get($service);
@@ -43,8 +44,8 @@ class Controller extends BaseController
             if (false === $securityTokenStorage->isGranted('ROLE_ADMIN')) {
                 throw new AccessDeniedException('Pas de contact lié à ce compte');
             }
-            $session = $this->getRequest()->getSession();
-            if ($managerId = $this->getRequest()->get('managerId')) {
+            $session = $request->getSession();
+            if ($managerId = $request->get('managerId')) {
                 $session->set('managerId', $managerId);
             }
             $manager = $repoManager->find($session->get('managerId', 316)); // Pour tests

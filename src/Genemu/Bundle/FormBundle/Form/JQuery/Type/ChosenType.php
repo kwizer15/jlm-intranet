@@ -25,8 +25,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ChosenType extends AbstractType
 {
+    /**
+     * @var string
+     */
     private $widget;
 
+    /**
+     * @param string $widget
+     */
     public function __construct($widget)
     {
         $this->widget = $widget;
@@ -35,7 +41,7 @@ class ChosenType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['no_results_text'] = $options['no_results_text'];
         $view->vars['allow_single_deselect'] = $options['allow_single_deselect'];
@@ -53,7 +59,7 @@ class ChosenType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults(array(
@@ -71,7 +77,7 @@ class ChosenType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): string
     {
         return $this->widget;
     }
@@ -79,7 +85,7 @@ class ChosenType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix(): string
     {
         return 'genemu_jquerychosen_' . $this->widget;
     }

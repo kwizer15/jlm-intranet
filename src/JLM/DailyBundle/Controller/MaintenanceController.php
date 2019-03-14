@@ -49,7 +49,7 @@ class MaintenanceController extends AbstractInterventionController
             ]);
         }
 
-        $paginator = new Pagination($this->getRequest(), $repository);
+        $paginator = new Pagination($request, $repository);
         $pagination = $paginator->paginate('getCountOpened', 'getOpened', 'maintenance_list', []);
 
         $templating = $this->container->get('templating');

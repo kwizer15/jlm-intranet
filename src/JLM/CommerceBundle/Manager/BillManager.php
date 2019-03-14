@@ -17,6 +17,7 @@ use JLM\CommerceBundle\Entity\BillLine;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CoreBundle\Event\FormPopulatingEvent;
 use JLM\CommerceBundle\Entity\Bill;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -35,7 +36,7 @@ class BillManager extends Manager
                     'route' => 'bill_create',
                     'params' => [],
                     'label' => 'Créer',
-                    'entry_type' => BillType::class,
+                    'type' => BillType::class,
                     'entity' => null,
                 ];
             case 'edit':
@@ -44,7 +45,7 @@ class BillManager extends Manager
                     'route' => 'bill_update',
                     'params' => ['id' => $options['entity']->getId()],
                     'label' => 'Modifier',
-                    'entry_type' => BillType::class,
+                    'type' => BillType::class,
                     'entity' => $options['entity'],
                 ];
         }
@@ -55,10 +56,10 @@ class BillManager extends Manager
     /**
      * {@inheritdoc}
      */
-    public function populateForm($form)
+    public function populateForm($form, Request $request)
     {
         // Appel des évenements de remplissage du formulaire
-        $this->dispatch(JLMCommerceEvents::BILL_FORM_POPULATE, new FormPopulatingEvent($form, $this->getRequest()));
+        $this->dispatch(JLMCommerceEvents::BILL_FORM_POPULATE, new FormPopulatingEvent($form, $request));
 
         // On complète avec ce qui reste vide
         $vat = $this->om->getRepository('JLMCommerceBundle:VAT')->find(1)->getRate();
@@ -85,7 +86,7 @@ class BillManager extends Manager
             $form->get('lines')->setData([new BillLine()]);
         }
 
-        return parent::populateForm($form);
+        return parent::populateForm($form, $request);
     }
 
     public function assertState(Bill $bill, $states = [])

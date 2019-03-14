@@ -103,7 +103,7 @@ class AskquoteController extends PaginableController
         $form = $this->createForm(AskQuoteType::class, $entity);
         
         if ($request->isMethod('POST')) {
-            $form->handleRequest($this->getRequest());
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 if ($entity->getMaturity() === null) {
                     $matu = clone $entity->getCreation();

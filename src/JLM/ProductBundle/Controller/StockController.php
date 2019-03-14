@@ -13,6 +13,7 @@ namespace JLM\ProductBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JLM\ProductBundle\Pdf\Stock;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -27,36 +28,40 @@ class StockController extends Controller
      * Lists all Stock entities.
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $manager = $this->container->get('jlm_product.stock_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         return $manager->renderResponse(
             'JLMProductBundle:Stock:index.html.twig',
-            $manager->pagination('getCount', 'getAll', 'jlm_product_stock')
+            $manager->pagination($request, 'getCount', 'getAll', 'jlm_product_stock')
         );
     }
 
     /**
      * Displays a form to edit an existing Stock entity.
      *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
         $manager = $this->container->get('jlm_product.stock_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
-        $form = $manager->createForm('edit', ['entity' => $entity]);
+        $form = $manager->createForm('edit', $request, ['entity' => $entity]);
         if ($manager->getHandler($form)->process()) {
-            return $manager->isAjax()
+            return $request->isXmlHttpRequest()
                 ? $manager->renderJson([])
                 : $manager->redirect(
                     'jlm_product_stock_edit',
                     ['id' => $id]
                 );
         }
-        $template = $manager->isAjax() ? 'modal_edit.html.twig' : 'edit.html.twig';
+        $template = $request->isXmlHttpRequest() ? 'modal_edit.html.twig' : 'edit.html.twig';
 
         return $manager->renderResponse(
             'JLMProductBundle:Stock:' . $template,
@@ -67,12 +72,12 @@ class StockController extends Controller
         );
     }
 
-    public function inventoryAction()
+    public function inventoryAction(Request $request)
     {
         $manager = $this->container->get('jlm_product.stock_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getRepository()->getAll(500);
-        $form = $manager->createForm('inventory', ['entity' => $entity]);
+        $form = $manager->createForm('inventory', $request, ['entity' => $entity]);
 
         if ($manager->getHandler($form)->process()) {
             return $manager->redirect('jlm_product_stock_inventory');

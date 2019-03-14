@@ -3,6 +3,7 @@
 namespace JLM\OfficeBundle\Controller;
 
 use JLM\DefaultBundle\Controller\PaginableController;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Ask controller.
@@ -25,7 +26,7 @@ abstract class AskController extends PaginableController
         return $this->pagination($this->getRepositoryName(), 'Untreated', $page, 10);
     }
 
-    public function canceldonttreatAction($id)
+    public function canceldonttreatAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         
@@ -33,7 +34,7 @@ abstract class AskController extends PaginableController
         $entity->setDontTreat();
         $em->persist($entity);
         $em->flush();
-        return $this->redirect($this->getRequest()->headers->get('referer'));
+        return $this->redirect($request->headers->get('referer'));
     }
     
     /**

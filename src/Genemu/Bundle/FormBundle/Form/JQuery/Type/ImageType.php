@@ -36,7 +36,7 @@ class ImageType extends AbstractType
      * @param array  $thumbnails
      * @param array  $filters
      */
-    public function __construct($selected, array $thumbnails, array $filters)
+    public function __construct(string $selected, array $thumbnails, array $filters)
     {
         $this->selected = $selected;
         $this->thumbnails = $thumbnails;
@@ -45,8 +45,10 @@ class ImageType extends AbstractType
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Exception
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $configs = $options['configs'];
         $data = $form->getViewData();
@@ -82,7 +84,7 @@ class ImageType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'configs' => array(
@@ -95,15 +97,15 @@ class ImageType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): string
     {
-        return 'genemu_jqueryfile';
+        return FileType::class;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix(): string
     {
         return 'genemu_jqueryimage';
     }

@@ -15,6 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -25,11 +26,14 @@ class CityController implements ContainerAwareInterface
 
     /**
      * City json
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function searchAction()
+    public function searchAction(Request $request)
     {
         $manager = $this->container->get('jlm_contact.city_manager');
-        $request = $manager->getRequest();
         $term = $request->get('q');
         $page_limit = $request->get('page_limit');
         $cities = $manager->getRepository()->getArray($term, $page_limit);
@@ -39,11 +43,15 @@ class CityController implements ContainerAwareInterface
 
     /**
      * City json
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function jsonAction()
+    public function jsonAction(Request $request)
     {
         $manager = $this->container->get('jlm_contact.city_manager');
-        $id = $manager->getRequest()->get('id');
+        $id = $request->get('id');
         $city = $manager->getRepository()->getByIdToArray($id);
 
         return $manager->renderJson($city);

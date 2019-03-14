@@ -30,7 +30,14 @@ use Genemu\Bundle\FormBundle\Form\JQuery\DataTransformer\FileToValueTransformer;
  */
 class FileType extends AbstractType
 {
+    /**
+     * @var array
+     */
     private $options;
+
+    /**
+     * @var string
+     */
     private $rootDir;
 
     /**
@@ -39,7 +46,7 @@ class FileType extends AbstractType
      * @param array  $options
      * @param string $rootDir
      */
-    public function __construct(array $options, $rootDir)
+    public function __construct(array $options, string $rootDir)
     {
         $this->options = $options;
         $this->rootDir = $rootDir;
@@ -48,7 +55,7 @@ class FileType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $configs = $options['configs'];
 
@@ -62,7 +69,7 @@ class FileType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars = array_replace($view->vars, array(
             'entry_type' => HiddenType::class,
@@ -75,7 +82,7 @@ class FileType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $configs = $this->options;
 
@@ -100,15 +107,15 @@ class FileType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): string
     {
-        return 'file';
+        return \Symfony\Component\Form\Extension\Core\Type\FileType::class;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix(): string
     {
         return 'genemu_jqueryfile';
     }

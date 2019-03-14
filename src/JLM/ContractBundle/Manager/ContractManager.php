@@ -14,6 +14,7 @@ namespace JLM\ContractBundle\Manager;
 use JLM\CoreBundle\Manager\BaseManager as Manager;
 use JLM\ContractBundle\Form\Type\ContractType;
 use JLM\ContractBundle\Form\Type\ContractStopType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -77,7 +78,7 @@ class ContractManager extends Manager
     /**
      * {@inheritdoc}
      */
-    public function populateForm($form)
+    public function populateForm($form, Request $request)
     {
         if ($form->getName() == 'jlm_contract_contract') {
             $door = $this->setterFromRequest('door', 'JLMModelBundle:Door');
@@ -91,7 +92,7 @@ class ContractManager extends Manager
             }
         }
         
-        return parent::populateForm($form);
+        return parent::populateForm($form, $request);
     }
     
     public function getEditUrl($id)

@@ -224,7 +224,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
         $form = $this->createForm(AskDontTreatType::class, $entity);
         
         if ($request->isMethod('POST')) {
-            $form->handleRequest($this->getRequest());
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->persist($entity);
                 $em->flush();
@@ -232,14 +232,19 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
         }
         return $this->redirect($request->headers->get('referer'));
     }
-    
+
     /**
      * Cancel the no-treatement ok Ask entities.
      *
      * @Route("/canceldonttreat/{id}", name="transmitter_ask_canceldonttreat")
      * @Template()
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function canceldonttreatAction($id)
+    public function canceldonttreatAction(Request $request, $id)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 

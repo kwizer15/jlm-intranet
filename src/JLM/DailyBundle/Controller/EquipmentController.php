@@ -56,7 +56,7 @@ class EquipmentController extends Controller
             $em->persist($entity->getShifting()->setCreation(new \DateTime()));
             $em->persist($entity);
             $em->flush();
-            if ($this->getRequest()->isXmlHttpRequest()) {
+            if ($request->isXmlHttpRequest()) {
                 return new JsonResponse([]);
             }
 

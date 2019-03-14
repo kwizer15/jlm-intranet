@@ -31,7 +31,7 @@ class Select2Type extends AbstractType
     
     private $configs;
 
-    public function __construct($widget, array $configs = array())
+    public function __construct($widget, array $configs = [])
     {
         $this->widget = $widget;
         $this->configs = $configs;
@@ -40,7 +40,7 @@ class Select2Type extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ('hidden' === $this->widget && !empty($options['configs']['multiple'])) {
             $builder->addViewTransformer(new ArrayToStringTransformer());
@@ -52,7 +52,7 @@ class Select2Type extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['configs'] = $options['configs'];
 
@@ -68,7 +68,7 @@ class Select2Type extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $defaults = $this->configs;
         $resolver
@@ -86,7 +86,7 @@ class Select2Type extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): string
     {
         return $this->widget;
     }

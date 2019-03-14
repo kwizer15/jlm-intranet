@@ -189,6 +189,11 @@ class DoorController extends Controller
 
     /**
      * Edits an existing Door entity.
+     *
+     * @param Request $request
+     * @param Door $entity
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateCodeAction(Request $request, Door $entity)
     {
@@ -202,13 +207,13 @@ class DoorController extends Controller
             $code = $entity->getCode();
             $doublon = $em->getRepository('JLMModelBundle:Door')->findByCode($code);
             if (sizeof($doublon) > 0) {
-                return $this->redirect($this->getRequest()->headers->get('referer'));
+                return $this->redirect($request->headers->get('referer'));
             }
             $em->persist($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->getRequest()->headers->get('referer'));
+        return $this->redirect($request->headers->get('referer'));
     }
 
     private function createCodeForm(Door $door)
@@ -227,13 +232,17 @@ class DoorController extends Controller
 
     /**
      * Deletes a Door entity.
+     *
+     * @param Request $request
+     * @param Door $entity
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Door $entity)
+    public function deleteAction(Request $request, Door $entity)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $form = $this->createDeleteForm($entity->getId());
-        $request = $this->getRequest();
         $form->handleRequest($request);
 
         if ($form->isValid()) {

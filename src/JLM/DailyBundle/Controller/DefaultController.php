@@ -8,14 +8,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\ModelBundle\Form\Type\DatepickerType;
 use JLM\DailyBundle\Entity\Fixing;
 use JLM\DailyBundle\Form\Type\FixingType;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
     /**
      * Search
      * @Template()
+     *
+     * @param Request $request
+     *
+     * @return array
+     * @throws \Exception
      */
-    public function searchAction(Request $request)
+    public function searchAction(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
@@ -51,12 +57,15 @@ class DefaultController extends Controller
         }
         return [];
     }
-    
+
     /**
      * Search
+     *
      * @deprecated
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function searchgetAction(Request $request)
+    public function searchgetAction(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 

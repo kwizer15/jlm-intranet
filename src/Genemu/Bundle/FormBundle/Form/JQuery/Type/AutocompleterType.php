@@ -26,9 +26,15 @@ use Genemu\Bundle\FormBundle\Form\Core\DataTransformer\ChoiceToJsonTransformer;
  */
 class AutocompleterType extends AbstractType
 {
+    /**
+     * @var string
+     */
     private $widget;
 
-    public function __construct($widget)
+    /**
+     * @param $widget
+     */
+    public function __construct(string $widget)
     {
         $this->widget = $widget;
     }
@@ -36,7 +42,7 @@ class AutocompleterType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addViewTransformer(new ChoiceToJsonTransformer(
             $options['choice_list'],
@@ -49,7 +55,7 @@ class AutocompleterType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $datas = json_decode($form->getViewData(), true);
         $value = '';
@@ -82,7 +88,7 @@ class AutocompleterType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $widget = $this->widget;
 
@@ -116,9 +122,9 @@ class AutocompleterType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): string
     {
-        if (in_array($this->widget, array('entity', 'document', 'model'), true)) {
+        if (\in_array($this->widget, array('entity', 'document', 'model'), true)) {
             return 'genemu_ajax' . $this->widget;
         }
 
@@ -128,7 +134,7 @@ class AutocompleterType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix(): string
     {
         return 'genemu_jqueryautocompleter_' . $this->widget;
     }

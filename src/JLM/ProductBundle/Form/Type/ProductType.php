@@ -50,12 +50,12 @@ class ProductType extends AbstractType
             ->add(
                 'discountSupplier',
                 PercentType::class,
-                ['entry_type' => IntegerType::class, 'label' => 'Remise fournisseur', 'attr' => ['class' => 'input-mini']]
+                ['type' => 'integer', 'label' => 'Remise fournisseur', 'attr' => ['class' => 'input-mini']]
             )
             ->add(
                 'expenseRatio',
                 PercentType::class,
-                ['entry_type' => IntegerType::class, 'label' => 'Frais', 'attr' => ['class' => 'input-mini']]
+                ['type' => 'integer', 'label' => 'Frais', 'attr' => ['class' => 'input-mini']]
             )
             ->add('shipping', MoneyType::class, ['label' => 'Port', 'grouping' => true, 'attr' => ['class' => 'input-mini']])
             ->add('unitPrice', MoneyType::class, ['label' => 'PVHT', 'grouping' => true, 'attr' => ['class' => 'input-mini']])

@@ -12,6 +12,7 @@
 namespace JLM\FrontBundle\Controller;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -19,10 +20,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class DefaultController extends Controller
 {
 
-    public function contactAction()
+    public function contactAction(Request $request)
     {
-        $request = $this->getRequest();
-
         $form = $this->createForm(
             'jlm_front_contacttype',
             null,

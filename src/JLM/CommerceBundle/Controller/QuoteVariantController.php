@@ -21,6 +21,7 @@ use JLM\CommerceBundle\Event\QuoteVariantEvent;
 use JLM\CoreBundle\Factory\MailFactory;
 use JLM\CommerceBundle\Builder\Email\QuoteVariantConfirmGivenMailBuilder;
 use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * QuoteVariant controller.
@@ -32,12 +33,16 @@ class QuoteVariantController extends Controller
 
     /**
      * Displays a form to create a new Variant entity.
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
         $manager = $this->container->get('jlm_commerce.quotevariant_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $form = $manager->createForm('new');
+        $form = $manager->createForm('new', $request);
         if ($manager->getHandler($form)->process()) {
             return $manager->redirect('quote_show', ['id' => $form->get('quote')->getData()->getId()]);
         }
@@ -54,14 +59,19 @@ class QuoteVariantController extends Controller
 
     /**
      * Displays a form to edit an existing QuoteVariant entity.
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
         $manager = $this->container->get('jlm_commerce.quotevariant_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         $manager->assertState($entity, [QuoteVariant::STATE_INSEIZURE]);
-        $form = $manager->createForm('edit', ['entity' => $entity]);
+        $form = $manager->createForm('edit', $request, ['entity' => $entity]);
         if ($manager->getHandler($form)->process()) {
             return $manager->redirect('quote_show', ['id' => $entity->getQuote()->getId()]);
         }
@@ -80,20 +90,21 @@ class QuoteVariantController extends Controller
      * Change entity state and return the redirect show quote response
      * Can send a QuoteVariantEvent if the event name is defined
      *
-     * @param int    $id
-     * @param int    $state
+     * @param Request $request
+     * @param int $id
+     * @param int $state
      * @param string $event
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    private function changeState($id, $state, $event = null)
+    private function changeState(Request $request, $id, $state, $event = null)
     {
         $manager = $this->container->get('jlm_commerce.quotevariant_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
         if ($entity->setState($state)) {
             if ($event !== null) {
-                $manager->dispatch($event, new QuoteVariantEvent($entity, $this->getRequest()));
+                $manager->dispatch($event, new QuoteVariantEvent($entity, $request));
             }
             $em = $manager->getObjectManager();
             $em->persist($entity);
@@ -105,50 +116,60 @@ class QuoteVariantController extends Controller
 
     /**
      * Note QuoteVariant as ready to send.
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function readyAction($id)
+    public function readyAction(Request $request, $id)
     {
-        return $this->changeState($id, QuoteVariant::STATE_READY, JLMCommerceEvents::QUOTEVARIANT_READY);
+        return $this->changeState($request, $id, QuoteVariant::STATE_READY, JLMCommerceEvents::QUOTEVARIANT_READY);
     }
 
     /**
      * Note QuoteVariant as not ready.
      */
-    public function unvalidAction($id)
+    public function unvalidAction(Request $request, $id)
     {
-        return $this->changeState($id, QuoteVariant::STATE_INSEIZURE, JLMCommerceEvents::QUOTEVARIANT_INSEIZURE);
+        return $this->changeState($request, $id, QuoteVariant::STATE_INSEIZURE, JLMCommerceEvents::QUOTEVARIANT_INSEIZURE);
     }
 
     /**
      * Note QuoteVariant as faxed.
      */
-    public function faxAction($id)
+    public function faxAction(Request $request, $id)
     {
-        return $this->changeState($id, QuoteVariant::STATE_SENDED, JLMCommerceEvents::QUOTEVARIANT_SENDED);
+        return $this->changeState($request, $id, QuoteVariant::STATE_SENDED, JLMCommerceEvents::QUOTEVARIANT_SENDED);
     }
 
     /**
      * Note QuoteVariant as canceled.
      */
-    public function cancelAction($id)
+    public function cancelAction(Request $request, $id)
     {
-        return $this->changeState($id, QuoteVariant::STATE_CANCELED, JLMCommerceEvents::QUOTEVARIANT_CANCELED);
+        return $this->changeState($request, $id, QuoteVariant::STATE_CANCELED, JLMCommerceEvents::QUOTEVARIANT_CANCELED);
     }
 
     /**
      * Note QuoteVariant as receipt.
      */
-    public function receiptAction($id)
+    public function receiptAction(Request $request, $id)
     {
-        return $this->changeState($id, QuoteVariant::STATE_RECEIPT, JLMCommerceEvents::QUOTEVARIANT_RECEIPT);
+        return $this->changeState($request, $id, QuoteVariant::STATE_RECEIPT, JLMCommerceEvents::QUOTEVARIANT_RECEIPT);
     }
 
     /**
      * Accord du devis / Création de l'intervention
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function givenAction($id)
+    public function givenAction(Request $request, $id)
     {
-        $this->changeState($id, QuoteVariant::STATE_GIVEN, JLMCommerceEvents::QUOTEVARIANT_GIVEN);
+        $this->changeState($request, $id, QuoteVariant::STATE_GIVEN, JLMCommerceEvents::QUOTEVARIANT_GIVEN);
         $manager = $this->container->get('jlm_commerce.quotevariant_manager');
 
         return $manager->redirect('variant_email', ['id' => $id]);
@@ -157,13 +178,12 @@ class QuoteVariantController extends Controller
     /**
      * Email de confirmation d'accord de devis
      */
-    public function emailAction($id)
+    public function emailAction(Request $request, $id)
     {
         // @todo Passer par un service de formPopulate et créer un controller unique dans CoreBundle
         $manager = $this->container->get('jlm_commerce.quotevariant_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
-        $request = $manager->getRequest();
         $mail = MailFactory::create(new QuoteVariantConfirmGivenMailBuilder($entity));
         $editForm = $this->createForm(\JLM\CoreBundle\Form\Type\MailType::class, $mail);
         $editForm->handleRequest($request);
@@ -233,12 +253,16 @@ class QuoteVariantController extends Controller
 
     /**
      * Send by mail a QuoteVariant entity.
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function sendmailAction($id)
+    public function sendmailAction(Request $request, $id)
     {
         $manager = $this->container->get('jlm_commerce.quotevariant_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
-        $request = $manager->getRequest();
         $entity = $manager->getEntity($id);
         if ($entity->getState() < QuoteVariant::STATE_READY) {
             return $manager->redirect('quote_show', ['id' => $entity->getQuote()->getId()]);

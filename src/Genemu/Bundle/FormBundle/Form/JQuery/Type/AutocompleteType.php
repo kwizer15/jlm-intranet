@@ -25,11 +25,21 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  */
 class AutocompleteType extends AbstractType
 {
+    /**
+     * @var string
+     */
     private $type;
+
+    /**
+     * @var ManagerRegistry|null
+     */
     private $registry;
 
-
-    public function __construct($type, ManagerRegistry $registry = null)
+    /**
+     * @param string $type
+     * @param ManagerRegistry|null $registry
+     */
+    public function __construct(string $type, ?ManagerRegistry $registry = null)
     {
         $this->type = $type;
         $this->registry = $registry;
@@ -38,7 +48,7 @@ class AutocompleteType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars = array_replace($view->vars, array(
             'configs' => $options['configs'],
@@ -58,7 +68,7 @@ class AutocompleteType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $type = $this->type;
         $registry = $this->registry;
@@ -74,7 +84,7 @@ class AutocompleteType extends AbstractType
         ));
 
         $resolver->setNormalizer('em', function (Options $options, $manager) use ($registry, $type) {
-                if (!in_array($type, array('entity', 'document'))) {
+                if (!in_array($type, ['entity', 'document'])) {
                     return null;
                 }
                 if (null !== $options['document_manager'] && $manager) {
@@ -127,7 +137,7 @@ class AutocompleteType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): string
     {
         return 'text';
     }
@@ -135,7 +145,7 @@ class AutocompleteType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix(): string
     {
         return 'genemu_jqueryautocomplete_' . $this->type;
     }

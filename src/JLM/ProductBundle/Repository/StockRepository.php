@@ -55,6 +55,6 @@ class StockRepository extends EntityRepository
             ->setParameter(1, $product)
         ;
         
-        return $qb->getQuery()->getSingleResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 }

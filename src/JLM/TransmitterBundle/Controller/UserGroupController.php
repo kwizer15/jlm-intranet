@@ -136,11 +136,10 @@ class UserGroupController extends Controller
      *
      * @Route("/{id}/delete", name="transmitter_usergroup_delete")
      */
-    public function deleteAction($id)
+    public function deleteAction(Request $request, $id)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('JLMTransmitterBundle:UserGroup')->find($id);
         if (!$entity) {

@@ -110,7 +110,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      *
      * @return \DateTime
      */
-    public function getMaturity(): \DateTime
+    public function getMaturity(): ?\DateTime
     {
         return $this->maturity;
     }
@@ -136,7 +136,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      *
      * @deprecated Use getPayer()
      */
-    public function getTrustee(): PayerInterface
+    public function getTrustee(): ?PayerInterface
     {
         return $this->getPayer();
     }
@@ -160,7 +160,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      *
      * @return PayerInterface
      */
-    public function getPayer(): PayerInterface
+    public function getPayer(): ?PayerInterface
     {
         return $this->trustee;
     }
@@ -186,7 +186,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      *
      * @deprecated Use getSubject()
      */
-    public function getSite(): SubjectInterface
+    public function getSite(): ?SubjectInterface
     {
         return $this->getSubject();
     }
@@ -210,7 +210,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      *
      * @return SubjectInterface
      */
-    public function getSubject(): SubjectInterface
+    public function getSubject(): ?SubjectInterface
     {
         return $this->site;
     }
@@ -341,7 +341,7 @@ abstract class Ask extends UploadDocument implements AskInterface
      *
      * @return string
      */
-    public function getAsk(): string
+    public function getAsk(): ?string
     {
         return $this->ask;
     }

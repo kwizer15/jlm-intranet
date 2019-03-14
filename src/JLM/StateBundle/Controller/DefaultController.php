@@ -5,6 +5,7 @@ namespace JLM\StateBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Default controller.
@@ -194,11 +195,11 @@ class DefaultController extends Controller
      * @Route("/sells", name="state_sells")
      * @Template()
      */
-    public function sellsAction()
+    public function sellsAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $year = $this->getRequest()->get('year', null);
+        $year = $request->get('year', null);
         $em = $this->getDoctrine()->getManager();
         $stats = $em->getRepository('JLMCommerceBundle:Bill')->getSells($year);
         $total = 0;

@@ -16,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\ProductBundle\Entity\Supplier;
 use JLM\ProductBundle\Form\Type\SupplierType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Supplier controller.
@@ -95,13 +96,15 @@ class SupplierController extends Controller
      * Creates a new Supplier entity.
      *
      * @Template("JLMProductBundle:Supplier:new.html.twig")
+     * @param Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $entity  = new Supplier();
-        $request = $this->getRequest();
         $form    = $this->createNewForm($entity);
         $form->handleRequest($request);
 
@@ -144,8 +147,12 @@ class SupplierController extends Controller
      * Edits an existing Supplier entity.
      *
      * @Template("JLMProductBundle:Supplier:edit.html.twig")
+     * @param Request $request
+     * @param $id
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function updateAction($id)
+    public function updateAction(Request $request, $id)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
@@ -153,8 +160,6 @@ class SupplierController extends Controller
 
         $editForm   = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
 
         $editForm->handleRequest($request);
 
@@ -176,13 +181,17 @@ class SupplierController extends Controller
 
     /**
      * Deletes a Supplier entity.
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id)
+    public function deleteAction(Request $request, $id)
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
 
         $form->handleRequest($request);
 

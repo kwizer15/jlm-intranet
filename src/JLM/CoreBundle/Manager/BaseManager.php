@@ -123,7 +123,7 @@ class BaseManager implements ContainerAwareInterface, ManagerInterface
         return null;
     }
 
-    public function createForm($name, $options = [])
+    public function createForm($name, Request $request, $options = [])
     {
         $param = $this->getFormParam($name, $options);
         if ($param !== null) {
@@ -141,13 +141,13 @@ class BaseManager implements ContainerAwareInterface, ManagerInterface
             );
             $form->add('submit', SubmitType::class, ['label' => $param['label']]);
 
-            return $this->populateForm($form);
+            return $this->populateForm($form, $request);
         }
 
         throw new LogicException('HTTP request method must be POST, PUT or DELETE only');
     }
 
-    public function populateForm($form)
+    public function populateForm($form, Request $request)
     {
         return $form;
     }
@@ -198,16 +198,6 @@ class BaseManager implements ContainerAwareInterface, ManagerInterface
         return $this->container->get('mailer');
     }
 
-    public function getRequest()
-    {
-        return $this->request;
-    }
-
-    public function isAjax()
-    {
-        return $this->request->isXmlHttpRequest();
-    }
-
     public function getRouter()
     {
         return $this->router;
@@ -231,6 +221,7 @@ class BaseManager implements ContainerAwareInterface, ManagerInterface
     /**
      * Pagination
      *
+     * @param Request $request
      * @param string $functionCount
      * @param string $functionDatas
      * @param null $route
@@ -238,30 +229,10 @@ class BaseManager implements ContainerAwareInterface, ManagerInterface
      *
      * @return array
      */
-    public function pagination($functionCount = 'getCountAll', $functionDatas = 'getAll', $route = null, $params = []): array
+    public function pagination(Request $request, $functionCount = 'getCountAll', $functionDatas = 'getAll', $route = null, $params = []): array
     {
-        $paginator = new Pagination($this->getRequest(), $this->getRepository());
+        $paginator = new Pagination($request, $this->getRepository());
         return $paginator->paginate($functionCount, $functionDatas, $route, $params);
-    }
-
-    public function renderSearch($template)
-    {
-        $formData = $this->getRequest()->get('jlm_core_search');
-
-        if (is_array($formData) && array_key_exists('query', $formData)) {
-            $repo = $this->getRepository();
-            if ($repo instanceof SearchRepositoryInterface) {
-                return $this->renderResponse(
-                    $template,
-                    [
-                        'results' => $this->getRepository()->search($formData['query']),
-                        'query' => $formData['query'],
-                    ]
-                );
-            }
-        }
-
-        return $this->renderResponse($template, ['results' => [], 'query' => '']);
     }
 
     public function paginator($entityClass, Request $request, array $defaultParams = [])

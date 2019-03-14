@@ -20,6 +20,7 @@ use JLM\CommerceBundle\Entity\QuoteLine;
 use JLM\CommerceBundle\Entity\Quote;
 use Symfony\Component\Form\Exception\LogicException;
 use JLM\CommerceBundle\Model\QuoteVariantInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Acl\Exception\Exception;
 
 /**
@@ -40,7 +41,7 @@ class QuoteVariantManager extends Manager
                     'route' => 'variant_create',
                     'params' => [],
                     'label' => 'Créer',
-                    'entry_type' => QuoteVariantType::class,
+                    'type' => QuoteVariantType::class,
                     'entity' => null,
                 ];
             case 'edit':
@@ -49,7 +50,7 @@ class QuoteVariantManager extends Manager
                     'route' => 'variant_update',
                     'params' => ['id' => $options['entity']->getId()],
                     'label' => 'Modifier',
-                    'entry_type' => QuoteVariantType::class,
+                    'type' => QuoteVariantType::class,
                     'entity' => $options['entity'],
                 ];
         }
@@ -60,12 +61,12 @@ class QuoteVariantManager extends Manager
     /**
      * {@inheritdoc}
      */
-    public function populateForm($form)
+    public function populateForm($form, Request $request)
     {
         // Appel des évenements de remplissage du formulaire
         $this->dispatch(
             JLMCommerceEvents::QUOTEVARIANT_FORM_POPULATE,
-            new FormPopulatingEvent($form, $this->getRequest())
+            new FormPopulatingEvent($form, $request)
         );
         $quote = $form->get('quote')->getData();
         if (!$quote instanceof Quote) {
@@ -94,7 +95,7 @@ class QuoteVariantManager extends Manager
             $form->get('lines')->setData([$l]);
         }
 
-        return parent::populateForm($form);
+        return parent::populateForm($form, $request);
     }
 
     public function assertState(QuoteVariantInterface $variant, $states = [])

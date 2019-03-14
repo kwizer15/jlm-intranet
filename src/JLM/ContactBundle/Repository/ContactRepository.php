@@ -92,7 +92,7 @@ class ContactRepository extends EntityRepository
         return $res[0];
     }
 
-    public function get($id): ?Contact
+    public function get($id): Contact
     {
         return $this->find($id);
     }
