@@ -62,6 +62,7 @@
         "squizlabs/php_codesniffer": "^3.3",
         "amphp/phpunit-util": "^1.0",
         "amphp/amp": "^2.0",
-        "symfony/var-dumper": "^2.8"
+        "symfony/var-dumper": "^2.8",
+        "symfony/phpunit-bridge": "^4.2"
     }
 }

@@ -11,6 +11,7 @@
 
 namespace JLM\ModelBundle\Controller;
 
+use JLM\ContractBundle\Form\Type\ContractStopType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -128,7 +129,7 @@ class ContractController extends Controller
 
         $editForm = $this->get('form.factory')->createNamed(
             'contractStop' . $entity->getId(),
-            new ContractStopType(),
+            ContractStopType::class,
             $entity
         );
         $editForm->handleRequest($request);
@@ -158,7 +159,7 @@ class ContractController extends Controller
 
         $form = $this->get('form.factory')->createNamed(
             'contractStop' . $entity->getId(),
-            new ContractStopType(),
+            ContractStopType::class,
             $entity
         )
         ;
@@ -179,7 +180,7 @@ class ContractController extends Controller
 
         $editForm = $this->get('form.factory')->createNamed(
             'contractEdit' . $entity->getId(),
-            new ContractType(),
+            ContractType::class,
             $entity
         )
         ;
@@ -200,7 +201,7 @@ class ContractController extends Controller
 
         $editForm = $this->get('form.factory')->createNamed(
             'contractEdit' . $entity->getId(),
-            new ContractType(),
+            ContractType::class,
             $entity
         )
         ;

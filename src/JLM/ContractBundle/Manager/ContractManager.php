@@ -34,7 +34,7 @@ class ContractManager extends Manager
                         'route'  => 'jlm_contract_contract_create',
                         'params' => [],
                         'label'  => 'Créer',
-                        'type'   => new ContractType(),
+                        'type'   => ContractType::class,
                         'entity' => null,
                        ];
             case 'edit':
@@ -46,7 +46,7 @@ class ContractManager extends Manager
                                      'formName' => 'edit',
                                     ],
                         'label'  => 'Modifier',
-                        'type'   => new ContractType(),
+                        'type'   => ContractType::class,
                         'entity' => $options['entity'],
                        ];
             case 'delete':
@@ -67,7 +67,7 @@ class ContractManager extends Manager
                                      'formName' => 'stop',
                                     ],
                         'label'  => 'Arrêter',
-                        'type'   => new ContractStopType(),
+                        'type'   => ContractStopType::class,
                         'entity' => $options['entity'],
                        ];
         }

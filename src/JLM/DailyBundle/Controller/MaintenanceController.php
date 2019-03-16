@@ -260,7 +260,7 @@ class MaintenanceController extends AbstractInterventionController
             $shift->setBegin(new \DateTime());
             $forms[] = $this->get('form.factory')->createNamed(
                 'shiftTechNew' . $entity->getDestination()->getNextMaintenance()->getId(),
-                new AddTechnicianType(),
+                AddTechnicianType::class,
                 $shift
             )->createView()
             ;

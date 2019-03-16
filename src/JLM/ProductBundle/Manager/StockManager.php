@@ -22,7 +22,7 @@ class StockManager extends Manager
                         'route'  => 'jlm_product_stock_update',
                         'params' => ['id' => $options['entity']->getId()],
                         'label'  => 'Modifier',
-                        'type'   => new StockType(),
+                        'type'   => StockType::class,
                         'entity' => $options['entity'],
                        ];
             case 'inventory':
@@ -31,7 +31,7 @@ class StockManager extends Manager
                         'route'  => 'jlm_product_stock_inventory',
                         'params' => [],
                         'label'  => 'Valider',
-                        'type'   => new InventoryType(),
+                        'type'   => InventoryType::class,
                         'entity' => $options['entity'],
                        ];
         }

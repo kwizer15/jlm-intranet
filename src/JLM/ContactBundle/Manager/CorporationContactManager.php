@@ -34,7 +34,7 @@ class CorporationContactManager extends Manager
                     'route' => 'jlm_contact_corporationcontact_create',
                     'params' => [],
                     'label' => 'Créer',
-                    'type' => new CorporationContactType(),
+                    'type' => CorporationContactType::class,
                     'entity' => null,
                 ];
             case 'edit':
@@ -43,7 +43,7 @@ class CorporationContactManager extends Manager
                     'route' => 'jlm_contact_corporationcontact_update',
                     'params' => ['id' => $options['entity']->getId()],
                     'label' => 'Modifier',
-                    'type' => new CorporationContactType(),
+                    'type' => CorporationContactType::class,
                     'entity' => $options['entity'],
                 ];
             case 'delete':

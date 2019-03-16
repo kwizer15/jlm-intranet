@@ -97,6 +97,7 @@ structure.sql
 dbfinal.sql
 out.txt
 csv2php.php
+db_backup.sql
 
 /jlm(2).sql.gz
 

@@ -44,7 +44,7 @@ class DefaultController extends Controller
                 $form->setAskDate(new \DateTime);
                 $fixingForms[] = $this->get('form.factory')->createNamed(
                     'fixingNew'.$door->getId(),
-                    new FixingType(),
+                    FixingType::class,
                     $form
                 )->createView();
             }

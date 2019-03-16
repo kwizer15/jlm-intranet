@@ -68,13 +68,13 @@ class DoorController extends Controller
         foreach ($contracts as $contract) {
             $form_contractEdits[] = $this->get('form.factory')->createNamed(
                 'contractEdit' . $contract->getId(),
-                new ContractType(),
+                ContractType::class,
                 $contract
             )->createView()
             ;
             $form_contractStops[] = $this->get('form.factory')->createNamed(
                 'contractStop' . $contract->getId(),
-                new ContractStopType(),
+                ContractStopType::class,
                 $contract
             )->createView()
             ;

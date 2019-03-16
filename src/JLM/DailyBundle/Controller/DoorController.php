@@ -65,7 +65,7 @@ class DoorController extends Controller
         foreach ($doors as $door) {
             $stopForms[] = $this->get('form.factory')->createNamed(
                 'doorStopEdit'.$door->getLastStop()->getId(),
-                new DoorStopEditType(),
+                DoorStopEditType::class,
                 $door->getLastStop()
             )->createView();
         }
@@ -87,7 +87,7 @@ class DoorController extends Controller
 
         $form = $this->get('form.factory')->createNamed(
             'doorStopEdit'.$entity->getId(),
-            new DoorStopEditType(),
+            DoorStopEditType::class,
             $entity
         );
         $form->handleRequest($request);
