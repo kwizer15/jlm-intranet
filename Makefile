@@ -43,8 +43,12 @@ phpcs.xml: phpcs.xml.dist
 	cp phpcs.xml.dist phpcs.xml
 
 server:
-	php -S localhost:8000 -t web
+	php -S localhost:8000 -t public
 
-cc:
+cache-clear:
 	app/console cache:clear --no-warmup
 	app/console cache:warmup
+
+assets:
+	app/console assets:install
+	app/console assetic:dump
