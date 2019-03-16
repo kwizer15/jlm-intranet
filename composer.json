@@ -5,8 +5,9 @@
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
         "psr-4": {
-            "JLM\\": "src/JLM/",
-            "Genemu\\": "src/Genemu/"
+            "HM\\": "src/",
+            "JLM\\": "src_legacy/JLM/",
+            "Genemu\\": "src_legacy/Genemu/"
         }
     },
     "require": {
