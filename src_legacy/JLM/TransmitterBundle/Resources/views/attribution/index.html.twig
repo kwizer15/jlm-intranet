@@ -1,0 +1,40 @@
+{% extends "@JLMTransmitter/attribution/layout.html.twig" %}
+
+{% block content %}
+<h1>Attributions d'émetteurs</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Affaire</th>
+            <th>Nb de bips</th>
+            <th>Contact</th>
+            <th>Particulier</th>
+            <th>Facturation</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}</td>
+            <td><a href="{{ path('transmitter_attribution_show', { 'id': entity.id }) }}">{{ entity.ask.site.address|default('') |nl2br }}</a></td>
+            <td>{{ entity.transmitters|length }}</td>
+            <td>{{ entity.contact }}</td>
+            <td>{% if entity.individual %}{{ 'ok'|icon }}{% endif %}</td>
+            <td>
+            	{% if entity.bill %}
+            	{% include '@JLMCommerce/bill/statelabel.html.twig' with {'state': entity.bill.state} %}
+            	<br><a href="{{ path('bill_show', { 'id': entity.bill.id }) }}">{{ entity.bill.number }}</a>
+            	{% else %}
+            	Non facturé
+            	{% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% include 'JLMCoreBundle::pagination.html.twig' %}
+{% endblock %}
+
+{% block pagination %}{% endblock %}

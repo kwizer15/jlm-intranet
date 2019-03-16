@@ -17,7 +17,7 @@ help:
 
 phpmetrics: metrics/$(BRANCH)
 
-metrics/$(BRANCH): app src web vendor
+metrics/$(BRANCH): app src public vendor
 	$(PHPMETRICS) --report-html=metrics/$(BRANCH) ./
 
 vendor: composer.json
@@ -27,7 +27,7 @@ $(PHPUNIT): vendor
 
 $(PHPCS): vendor
 
-test: $(PHPUNIT) phpunit.xml ## Lance les tests
+test: $(PHPUNIT) phpunit.xml cache-clear ## Lance les tests
 	$(PHP) $(PHPUNIT)
 
 cs: $(PHPCS) phpcs.xml ## Lance le codesniffer
@@ -41,3 +41,14 @@ phpunit.xml: phpunit.xml.dist
 
 phpcs.xml: phpcs.xml.dist
 	cp phpcs.xml.dist phpcs.xml
+
+server:
+	php -S localhost:8000 -t public
+
+cache-clear:
+	app/console cache:clear --no-warmup
+	app/console cache:warmup
+
+assets:
+	app/console assets:install
+	app/console assetic:dump

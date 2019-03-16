@@ -1,9 +1,0 @@
-{# JLMDailyBundle:Fixing:list.html.twig #}
-{% extends "JLMDailyBundle::layout.html.twig" %}
-
-{% block content %}
-<h1>Travaux <small>({{ entities|length }})</small></h1>
-{% include "JLMDailyBundle:Intervention:list.html.twig" with {'entities' : entities} %}
-
-
-{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "@JLMCommerce/quote/layout.html.twig" %}
+
+{% block content %}
+<h1>Devis <small>{{ entity.number }}</small></h1>
+{{ form(edit_form) }}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+    {% javascripts
+    	'@JLMCommerceBundle/Resources/public/js/quote.js'
+        filter='yui_js' %}
+    	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+<script>
+$("body").quote({
+	 autoSource:'{{ path('autocomplete') }}'
+});
+</script>
+{% endblock %}

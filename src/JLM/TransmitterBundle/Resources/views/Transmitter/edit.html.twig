@@ -1,7 +1,0 @@
-{% set id = 'modalEditTransmitter' ~ entity.id %}
-{% set action = path('transmitter_update', { 'id': entity.id }) %}
-{% set title = 'Émetteur n°' ~ entity.number %}
-{% extends 'JLMDefaultBundle:Helpers:modalform.html.twig' %}
-{% block body %}
-	{% include 'JLMTransmitterBundle:Transmitter:create.html.twig' %}
-{% endblock %}

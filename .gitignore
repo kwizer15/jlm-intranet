@@ -52,15 +52,12 @@ local.properties
 
 # Managed by Composer
 /app/bootstrap.php.cache
-/app-front/bootstrap.php.cache
 /bin/
 /vendor/
 
 # Assets and user uploads
-/web/bundles/
-/web/uploads/
-/web-front/bundles/
-/web-front/uploads/
+/public/bundles/*
+/public/uploads/*
 
 # PHPUnit
 /app/phpunit.xml
@@ -80,23 +77,18 @@ report/*
 
 # Symfony directories
 components/*
-web/assetic/*
-web/css/*
-web/fonts/*
-web/images/*
-web/js/*
-
-web-front/assetic/*
-web-front/css/*
-web-front/fonts/*
-web-front/images/*
-web-front/js/*
+public/assetic/*
+public/css/*
+public/fonts/*
+public/images/*
+public/js/*
 
 # SQL
 structure.sql
 dbfinal.sql
 out.txt
 csv2php.php
+db_backup.sql
 
 /jlm(2).sql.gz
 

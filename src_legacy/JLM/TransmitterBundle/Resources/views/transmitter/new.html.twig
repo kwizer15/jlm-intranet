@@ -1,0 +1,7 @@
+{% set id = 'modalNewTransmitter' %}
+{% set action = path('transmitter_create',{'id':entity.attribution.id}) %}
+{% set title = 'Nouvel émetteur' %}
+{% extends '@JLMDefault/helpers/modalform.html.twig' %}
+{% block body %}
+	{% include '@JLMTransmitter/transmitter/create.html.twig' %}
+{% endblock %}

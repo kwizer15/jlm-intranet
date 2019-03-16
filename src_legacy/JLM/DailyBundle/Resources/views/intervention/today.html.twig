@@ -1,0 +1,21 @@
+{# @JLMDaily/intervention/report.html.twig #}
+{% extends "@JLMDaily/layout.html.twig" %}
+
+{% block title %}Aujourd'hui | {{ parent() }}{% endblock %}
+
+{% block content %}
+<h1>Aujourd'hui</h1>
+<h2><small>En cours</small></h2>
+{% include "@JLMDaily/intervention/list.html.twig" with {'entities' : inprogress} %}
+<h2><small>Dépannages à donner</small></h2>
+{% include "@JLMDaily/intervention/list.html.twig" with {'entities' : fixing} %}
+<h2><small>Autres déplacements</small></h2>
+{% include "@JLMDaily/intervention/list.html.twig" with {'entities' : equipment} %}
+<h2><small>À cloturer</small></h2>
+{% include "@JLMDaily/intervention/list.html.twig" with {'entities' : notclosed} %}
+<h2><small>Terminé aujourd'hui</small></h2>
+{% include "@JLMDaily/intervention/list.html.twig" with {'entities' : closed} %}
+<h2><small>Prévus plus tard</small></h2>
+{% include "@JLMDaily/intervention/list.html.twig" with {'entities' : ago} %}
+
+{% endblock %}

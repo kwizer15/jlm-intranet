@@ -1,0 +1,13 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+{% block content %}
+<h1>Edition d'un contact</h1>
+<form action="{{ path('sitecontact_update', { 'id': entity.id }) }}" method="post" class="form-horizontal">
+    <fieldset>
+    {{ form_widget(edit_form) }}
+    <div class="form-actions">
+{#	   <a href="{{ path('site_show',{'id':entity.site.id}) }}" class="btn">{{ 'arrow-left'|icon }} Retour à la fiche site</a>#}
+	   <button type="submit" class="btn btn-primary">{{ 'pencil'|icon(true) }} Enregistrer les modifications</button>
+	</div>
+</fieldset>
+</form>
+{% endblock %}

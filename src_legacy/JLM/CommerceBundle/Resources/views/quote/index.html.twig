@@ -1,0 +1,41 @@
+{% extends "@JLMCommerce/quote/layout.html.twig" %}
+
+{% block content %}
+<h1>Liste des devis</h1>
+
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Affaire</th>
+            <th>Installation</th>
+            <th>Syndic</th>
+            <th>Var.</th>
+			<th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>
+            	<a href="{{ path('quote_show', { 'id': entity.id }) }}">{{ entity.number }}</a><br>
+            	{{ entity|quote_state_label }}
+            </td>
+            <td>{% if entity.creation %}{{ entity.creation|date('d/m/Y') }}{% endif %}</td>
+            <td>
+            {% if entity.door %}<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.street | nl2br }}
+            {% else %}{{ entity.doorCp | nl2br}}
+            {% endif %}
+            </td>
+            <td>{% if entity.door %}{{ entity.door.type }}<br>{{ entity.door.location }}{% endif %}</td>
+            <td>{{ entity.trusteeName }}</td>
+            <td>{{ entity.variants|length }}</td>
+            <td>
+                <a href="{{ path('quote_show', { 'id': entity.id }) }}" class="btn">{{ 'eye-open'|icon }}</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

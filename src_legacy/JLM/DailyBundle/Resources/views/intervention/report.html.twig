@@ -1,0 +1,20 @@
+{# @JLMDaily/intervention/report.html.twig #}
+{% extends "JLMDailyBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Interventions <small>({{ entities|length }})</small></h1>
+<h3>du {{ d1 | localizeddate('full', 'none') }}{% if d2 %} au {{ d2 | localizeddate('full', 'none') }}{% endif %}</h3>
+{% if standby %}<div class="alert"><h4>Astreinte : {{ standby }}</h4></div>{% endif %}
+<div class="pagination pagination-centered">
+<ul>
+{% for day in days %}
+<li{% if day == d1 %} class="active"{% endif %}><a href="{{ path('intervention_listdate1',{'date1':day|date('Ymd')}) }}">{{ day | localizeddate('full', 'none') }}</a></li>
+{% endfor %}
+{# <li><input type="text"></li> #}
+</ul>
+</div>
+{% include "@JLMDaily/intervention/list.html.twig" with {'entities' : entities} %}
+<div class="form-actions">
+<a href="{{ path('intervention_printday', {'date1' : d1 | date('Ymd')}) }}" class="btn btn-info">{{ 'print'|icon(true) }} Imprimer</a>
+</div>
+{% endblock %}

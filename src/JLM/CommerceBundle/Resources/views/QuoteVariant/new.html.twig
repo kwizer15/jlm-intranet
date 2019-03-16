@@ -1,7 +1,0 @@
-{% extends "JLMCommerceBundle:Quote:layout.html.twig" %}
-
-{% block content %}
-<h1>Nouvelle variante <small>{{ quote.number }}</small></h1>
-{% include 'JLMCommerceBundle:Quote:showheader.html.twig' with {'quote': quote} %}
-{{ form(form) }}
-{% endblock %}

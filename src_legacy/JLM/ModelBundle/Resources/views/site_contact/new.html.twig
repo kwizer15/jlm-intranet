@@ -1,0 +1,79 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+{% block content %}
+<h1>Nouveau contact</h1>
+<form action="{{ path('sitecontact_create_id', {'id': site.id }) }}" method="post" class="form-horizontal">
+<fieldset>
+{{ form_widget(form) }}
+    <div class="form-actions">
+	   <a href="{{ path('site_show',{'id' : site.id }) }}" class="btn">{{ 'arrow-left'|icon }} Retour à la liste</a>
+	   <button type="submit" class="btn btn-primary">{{ 'plus-sign'|icon(true) }} Créer</button>
+	</div>
+</fieldset>
+</form>
+{% endblock %}
+
+{% block javascripts_script %}
+{{ parent() }}
+$("#jlm_modelbundle_sitecontacttype_person_selector")
+.autocomplete({
+	source: function(request,response){
+		request.repository = 'JLMContactBundle:Person';
+		return $.post(
+				this.element.attr('data-source'),
+				request,
+				function( data ) { 
+					data.push({ 'id':'-1', 'label':'+ Ajouter un contact' });
+					console.log(data);
+					response( data );
+				},
+				'json'
+		);
+	},
+	select: function (event, ui)
+	{
+		// Ajouter un contact
+		if (ui.item.id == -1)
+		{
+			if ($("#modalNewPerson").length == 0)
+			{	
+				// On charge et affiche la modal
+				$.ajax({
+			        url: '{{ path('jlm_contact_ajax_person_new') }}', 
+			        type: 'get',
+			        success: function(html) {
+			        	$("footer").after(html);
+			        	$("#modalNewPerson").on('submit',function(){
+			        		$.ajax({
+			        	        url: $(this).attr('action'), 
+			        	        type: $(this).attr('method'), 
+			        	        data: $(this).serialize(),
+			        	        success: function(html) {
+			        	        	$("#modalNewPerson .modal-body").html(html);
+				        	        if ($("#modalNewPerson .modal-body .id").html() > 0)
+				        	        {
+				        	        	$("#jlm_modelbundle_sitecontacttype_person").val($("#modalNewPerson .modal-body .id").html());
+						        	    $("#jlm_modelbundle_sitecontacttype_person_selector").val($("#modalNewPerson .modal-body .name").html());
+						        	    $("#modalNewPerson").modal('hide').remove();
+				        	        }
+			        	        }
+			        	    });
+			        		return false;
+			        	}).modal('show');
+			        }
+			    });
+			}
+			else
+			{
+				// On affiche juste (déjà chargée)
+				$("#modalNewPerson").modal('show');
+			}
+		}
+		else
+		{
+			$("#jlm_modelbundle_sitecontacttype_person").val(ui.item.id);
+			$(this).val(ui.item.label);
+		}
+		return false;
+	}
+});
+{% endblock %}

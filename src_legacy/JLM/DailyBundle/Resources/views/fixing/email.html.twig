@@ -1,0 +1,21 @@
+{% extends "JLMDailyBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Envoyer un e-mail</h1>
+<form action="{{ path('fixing_email',{'id': entity.id,'step':step}) }}" method="post" class="form-horizontal">
+    <fieldset>
+    {{ form_widget(form) }}
+    {#}<div class="control-group">
+		<label class="control-label required">Pièce jointe</label>
+		<div class="controls">
+			<div class="input-prepend">
+				<span class="add-on">{{ 'file'|icon }}</span>
+			</div>
+		</div>
+	</div>{#}
+	<div class="form-actions">
+	   <button type="submit" class="btn btn-primary">{{ 'share-alt'|icon(true) }} Envoyer</button>
+	</div>
+</fieldset>
+</form>
+{% endblock %}

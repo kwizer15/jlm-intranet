@@ -1,0 +1,13 @@
+<form id="modalEditStandby{{ entity.id }}" action="{{ path('standby_update',{'id':entity.id}) }}" method="post" class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalEditStandby{{ entity.id }}Label" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="modalEditStandby{{ entity.id }}Label">Editer une astreinte</h3>
+	</div>
+	<div class="modal-body">
+		{{ form_widget(form) }}
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+		<button type="submit" class="btn btn-primary">{{ 'pencil'|icon(true) }} Enregistrer</button>
+	</div>
+</form>

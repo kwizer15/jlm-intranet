@@ -1,0 +1,51 @@
+{# @JLMDaily/fixing/show.html.twig #}
+{% extends "@JLMDaily/intervention/show.html.twig" %}
+
+{% block officeaction %}
+	{% if entity.due.id == 1 or entity.due.id == 2%}
+		{% if entity.done.id == 1 or entity.done.id == 2 %}
+			{% if not entity.completeContract %}
+				{% set preferbill = 1 %}
+			{% endif %}
+		{% endif %}
+	{% endif %}
+	{{ parent() }}
+{% endblock %}
+
+{% block reference %}
+{% if entity.askMethod %}{{ entity.askMethod }} : {% endif %}
+{% if entity.askDate %}le {{ entity.askDate|date('d/m/Y') }}{% endif %}
+{% endblock %}
+
+{% block report %}
+<a href="{{ path('fixing_printreport',{'id':entity.id}) }}" class="btn btn-mini">Imprimer</a>
+	 <small>{{ entity.partFamily }} - {{ entity.due }} - {{ entity.done }}</small>
+	 <h5>Constat</h5>
+	 {{ entity.observation | nl2br }}
+	 <h5>Action menée</h5>
+	 {{ parent() }}
+{% endblock %}
+
+{% block edit_button %}
+<a href="{{ path('fixing_edit', { 'id': entity.id }) }}" class="btn btn-small btn-warning">{{ 'pencil'|icon(true) }} Editer</a>
+<div class="btn-group">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        E-mails client
+        <span class="caret"></span>
+      </a>
+          <ul class="dropdown-menu">
+      	    <li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'taken'}) }}">Prise en compte</a></li>
+      		{#}<li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'distributed'}) }}">Technicien en route</a></li>{#}
+            <li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'onsite'}) }}">Technicien sur site</a></li>
+            {% if entity.closed %}
+            <li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'end'}) }}">Fin de l'intervention</a></li>
+            <li><a tabindex="-1" href="{{ path('fixing_email',{'id':entity.id,'step':'report'}) }}">Rapport d'intervention</a></li>
+            {% endif %}
+         </ul>
+    </div>
+{% endblock %}
+
+{% block close_button %}
+	<a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-small btn-primary">{{ 'ok'|icon(true) }} {% if not entity.closed %}Cloturer{% else %}Editer{% endif %}</a>
+	{{ render(controller('JLMDailyBundle:Fixing:close',{'id':entity.id})) }}
+{% endblock %}

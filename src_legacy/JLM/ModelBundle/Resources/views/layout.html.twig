@@ -1,0 +1,36 @@
+{% extends "::layout.html.twig" %}
+
+    {% block sidebar %}
+    	<li>{{ form(search.form, { 'action': path('model_search') }) }}
+	    </li>
+	    <li class="nav-header">Contacts</li>
+		<li><a href="{{ path('jlm_contact_contact') }}">{{ 'list'|icon }} Liste contacts</a></li>
+		<li>
+	      <div class="dropdown">
+		    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+		      {{ 'plus-sign'|icon }} Ajouter un contact
+		      <span class="caret"></span>
+		    </a>
+		      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+		        <li><a tabindex="-1" href="{{ path('jlm_contact_contact_new', {'type': 'person'}) }}">Personne</a></li>
+		        <li><a tabindex="-1" href="{{ path('jlm_contact_contact_new', {'type': 'company'}) }}">Société</a></li>
+		        <li><a tabindex="-1" href="{{ path('jlm_contact_contact_new', {'type': 'association'}) }}">Association</a></li>
+		      </ul>
+		  </div>
+		</li>
+		<li class="nav-header">Syndics</li>
+		<li><a href="{{ path('trustee') }}">{{ 'list'|icon }} Liste syndics</a></li>
+        <li><a href="{{ path('trustee_new') }}">{{ 'plus-sign'|icon }} Nouveau syndic</a></li>
+        <li class="nav-header">Fournisseurs</li>
+        <li><a href="{{ path('supplier') }}">{{ 'list'|icon }} Liste fournisseurs</a></li>
+        <li><a href="{{ path('supplier_new') }}">{{ 'plus-sign'|icon }} Nouveau fournisseur</a></li>
+        <li class="nav-header">Familles produit</li>
+        <li><a href="{{ path('jlm_product_productcategory') }}">{{ 'list'|icon }} Liste familles</a></li>
+        <li><a href="{{ path('jlm_product_productcategory_new') }}">{{ 'plus-sign'|icon }} Nouvelle famille</a></li>
+        <li class="nav-header">Produits</li>   
+        <li><a href="{{ path('jlm_product_product') }}">{{ 'list'|icon }} Liste produits</a></li>
+        <li><a href="{{ path('jlm_product_product_new') }}">{{ 'plus-sign'|icon }} Nouveau produit</a></li>
+        <li><a href="{{ path('jlm_product_stock_print') }}">{{ 'print'|icon }} Imprimer stock</a></li>
+        <li class="nav-header">Types d'émetteurs</li>   
+        <li><a href="{{ path('transmittertype') }}">{{ 'list'|icon }} Liste types d'émetteurs</a></li>
+    {% endblock %}

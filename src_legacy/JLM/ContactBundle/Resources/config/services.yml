@@ -1,0 +1,89 @@
+parameters:
+    jlm_contact.model.contact.class: JLM\ContactBundle\Entity\Contact
+    jlm_contact.manager.contact.class: JLM\CoreBundle\Manager\BaseManager
+    jlm_contact.model.corporationcontact.class: JLM\ContactBundle\Entity\CorporationContact
+    jlm_contact.manager.corporationcontact.class: JLM\ContactBundle\Manager\CorporationContactManager
+    jlm_contact.model.city.class: JLM\ContactBundle\Entity\City
+    jlm_contact.manager.city.class: JLM\CoreBundle\Manager\BaseManager
+
+services:
+    jlm_contact.contact_manager:
+        class: "%jlm_contact.manager.contact.class%"
+        arguments: ["%jlm_contact.model.contact.class%"]
+        calls:
+            - [ setContainer, ["@service_container"]]
+            - [ setServices ]
+
+    jlm_contact.corporationcontact_manager:
+        class: "%jlm_contact.manager.corporationcontact.class%"
+        arguments: ["%jlm_contact.model.corporationcontact.class%"]
+        calls:
+            - [ setContainer, ["@service_container"]]
+            - [ setServices ]
+
+    jlm_contact.city_manager:
+        class: "%jlm_contact.manager.city.class%"
+        arguments: ["%jlm_contact.model.city.class%"]
+        calls:
+            - [ setContainer, ["@service_container"]]
+            - [ setServices ]
+
+    jlm_contact.type.city_select:
+        class: JLM\ContactBundle\Form\Type\CitySelectType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: jlm_contact_city_select }
+        
+    jlm_contact.type.contact_select:
+        class: JLM\ContactBundle\Form\Type\ContactSelectType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: jlm_contact_contact_select }
+        
+    jlm_contact.type.address:
+        class: JLM\ContactBundle\Form\Type\AddressType
+        tags:
+            - { name: form.type, alias: jlm_contact_address }
+    
+    jlm_contact.type.contact:
+        class: JLM\ContactBundle\Form\Type\ContactType
+        tags:
+            - { name: form.type, alias: jlm_contact_contact }
+    
+    jlm_contact.type.phone:
+        class: JLM\ContactBundle\Form\Type\PhoneType
+        tags:
+            - { name: form.type, alias: jlm_contact_phone }
+            
+    jlm_contact.type.contactphone:
+        class: JLM\ContactBundle\Form\Type\ContactPhoneType
+        tags:
+            - { name: form.type, alias: jlm_contact_contactphone }        
+        
+    jlm_contact.type.contactphonecollection:
+        class: JLM\ContactBundle\Form\Type\ContactPhoneCollectionType
+        tags:
+            - { name: form.type, alias: jlm_contact_contactphonecollection }  
+        
+    jlm_contact.type.person_select:
+        class: JLM\ContactBundle\Form\Type\PersonSelectType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: jlm_contact_person_select }
+            
+    jlm_contact.type.corporation_select:
+        class: JLM\ContactBundle\Form\Type\CorporationSelectType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: jlm_contact_corporation_select }
+            
+    jlm_contact.type.contactdecorator:
+        class: JLM\ContactBundle\Form\Type\ContactDecoratorType
+        tags:
+            - { name: form.type, alias: jlm_contact_contactdecorator }
+           
+    jlm_contact.type.corporation_contact:
+        class: JLM\ContactBundle\Form\Type\CorporationContactType
+        tags:
+            - { name: form.type, alias: jlm_contact_corporation_contact }
+            

@@ -1,7 +1,0 @@
-{% set id = 'modalDoorStopEdit' ~ entity.id %}
-{% set action = path('daily_door_stopupdate',{'id':entity.id}) %}
-{% set title = 'Edition porte à l\'arrêt' %}
-{% extends 'JLMDefaultBundle:Helpers:modalform.html.twig' %}
-{% block body %}
-	{% include 'JLMModelBundle:DoorStop:update.html.twig' %}
-{% endblock %}

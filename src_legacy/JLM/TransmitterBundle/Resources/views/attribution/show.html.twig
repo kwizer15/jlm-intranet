@@ -1,0 +1,65 @@
+{% extends "@JLMTransmitter/ask/layout.html.twig" %}
+
+{% block content %}
+<h1>Attribution d'émetteurs</h1>
+<div class="row-fluid">
+<div class="span6">
+<dl class="dl-horizontal">
+	<dt>Date</dt>
+	<dd>{{ entity.creation|date('d/m/Y') }}</dd>
+	<dt>Contact</dt>
+    <dd>{{ entity.contact }}{% if entity.individual %} (particulier){% endif %}</dd>
+    <dt>Affaire</dt>
+    <dd>{{ entity.ask.site.address.street | nl2br }}</dd>
+    <dd><strong>{{ entity.ask.site.address.city.name | upper }}</strong> <small>{{ entity.ask.site.address.city.zip }}</small></dd>
+    <dd><a href="{{ path('transmitter_site_printlist',{'id':entity.ask.site.id}) }}" class="btn btn-info btn-mini">{{ 'print'|icon(true) }} Imprimer la liste complète</a>
+    <dt>Demande</dt>
+    <dd>{{ entity.ask.ask | nl2br }}</dd>
+</dl>
+</div>
+<div class="span6">
+<h4>Groupes utilisateurs</h4>
+<ul>
+	{% for userGroup in entity.ask.site.userGroups %}
+		{% include '@JLMTransmitter/user_group/list_li.html.twig' with {'userGroup':userGroup} %}
+	{% endfor %}
+	</ul>
+	<a href="{{ path('transmitter_usergroup_new', {'id': entity.ask.site.id}) }}"  role="button" class="btn btn-success btn-small usergroup-new">{{ 'plus-sign'|icon(true) }} Ajouter un groupe utilisateur</a>
+</div>
+</div>
+<div class="form-actions">
+	<a href="{{ path('transmitter_attribution_edit', { 'id': entity.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }} Editer</a>
+	<a href="{{ path('transmitter_new', { 'id': entity.id }) }}" role="button" class="btn btn-success transmitter-new">{{ 'plus-sign'|icon(true) }} Ajouter un émetteur</a>
+	<a href="{{ path('transmitter_series_new', { 'id': entity.id }) }}" role="button" class="btn btn-success series-new">{{ 'plus-sign'|icon(true) }} Ajouter une suite d'émetteurs</a>
+	<a href="{{ path('transmitter_replacement_new', { 'id': entity.id }) }}" role="button" class="btn btn-primary replacement-new">{{ 'refresh'|icon(true) }} Remplacement d'émetteurs</a>
+	<a href="{{ path('transmitter_attribution_printlist', { 'id': entity.id }) }}" role="button" class="btn btn-info">{{ 'print'|icon(true) }} Imprimer la liste</a>
+	<a href="{{ path('transmitter_attribution_printcourrier', { 'id': entity.id }) }}" role="button" class="btn btn-info">{{ 'print'|icon(true) }} Imprimer le courrier</a>
+	{% if entity.bill %}
+	<a href="{{ path('bill_print', {'id': entity.bill.id}) }}" role="button" class="btn btn-primary">{{ 'print'|icon(true) }} Facture</a>
+	{% else %}
+	<a href="{{ path('bill_new', { 'attribution': entity.id }) }}" role="button" class="btn btn-primary">{{ 'print'|icon(true) }} Facturer</a>
+	{% endif %}
+</div>
+{% if entity.transmitters|length > 0 %}
+<h3></h3>
+	{% include '@JLMTransmitter/transmitter/table_row.html.twig' with {'transmitters':entity.transmitters} %}
+{% else %}
+<h3>Pas d'émetteur attribué</h3>
+{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('bundles/jlmtransmitter/js/transmitter.js') }}"></script>
+<script src="{{ asset('bundles/jlmtransmitter/js/transmitter_series.js') }}"></script>
+{% endblock %}
+
+{% block javascripts_script %}
+{{ parent() }}
+$("a").tooltip();
+$(".transmitter-new").formModal({closure: function(){location.reload();}});
+$(".transmitter-edit").formModal({closure: function(){location.reload();}});
+$(".usergroup-new, .usergroup-edit").formModal({closure: function(){location.reload();}});
+$(".series-new").formModal({closure: function(){location.reload();}});
+$(".replacement-new").formModal({closure: function(){location.reload();}});
+{% endblock %}

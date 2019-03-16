@@ -1,0 +1,7 @@
+{% extends "@JLMCommerce/quote/layout.html.twig" %}
+
+{% block content %}
+<h1>Devis <small>{{ entity.number }}</small></h1>
+{% include '@JLMCommerce/quote/showheader.html.twig' with {'quote': entity.quote} %}
+{{ form(form) }}
+{% endblock %}

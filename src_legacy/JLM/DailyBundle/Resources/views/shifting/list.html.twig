@@ -1,0 +1,35 @@
+{# @JLMDaily/shifting/list.html.twig #}
+{% extends "JLMDailyBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Déplacements de {{ technician }}</h1>
+<table class="table table-stripped">
+	<thead>
+		<tr>
+			<th>Type/Date</th>
+			<th>Lieu</th>
+			<th>Raison</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for shifting in shiftings %}
+		<tr>
+			<td>{% include "@JLMDaily/intervention/labeltype.html.twig" with {'type' : shifting.shifting.type} %}<br>{{ shifting.begin | date('d/m/Y')}}</td>
+			<td>{{ shifting.shifting.place | nl2br}}</td>
+			<td>{{ shifting.shifting.reason | nl2br}}</td>
+			<td><a href="{{ path('shifting_edit',{'id':shifting.id}) }}" data-toggle="modal" role="button" class="btn btn-warning shifting-edit">{{ 'wrench'|icon(true) }}</a></td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+<div class="pagination pagination-centered">
+	<ul>
+	    <li{% if page == 1 %} class="disabled"{% endif %}><a href="{{ path('shifting_list_page',{ 'id':technician.id ,'page' : page-1 }) }}">«</a></li>
+		{% for p in range(1,nbPages) %}
+		<li{% if p == page %} class="active"{% endif %}><a href="{{ path('shifting_list_page',{ 'id':technician.id , 'page' : p }) }}">{{ p }}</a></li>
+		{% endfor %}
+		<li{% if page == nbPages %} class="disabled"{% endif %}><a href="{{ path('shifting_list_page',{ 'id':technician.id , 'page' : page+1 }) }}">»</a></li>
+	</ul>
+</div>
+{% endblock %}

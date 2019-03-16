@@ -1,0 +1,127 @@
+{% extends "@JLMCommerce/quote/layout.html.twig" %}
+
+{% form_theme form _self %}
+
+{% block _jlm_core_mail_from_widget %}
+{% spaceless %}
+    {% if prototype is defined %}
+        {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
+    {% endif %}
+    {% set attr = attr|merge({'class':(attr.class|default('') ~ ' unstyled')|trim}) %}
+    <ul {{ block('widget_container_attributes') }}>
+		{{ block('form_rows') }}
+    </ul>
+	{{ form_rest(form) }}
+{% endspaceless %}
+{% endblock %}
+
+{% block _jlm_core_mail_to_widget %}
+{% spaceless %}
+    {% if prototype is defined %}
+        {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
+    {% endif %}
+{% set attr = attr|merge({'class':(attr.class|default('') ~ ' unstyled')|trim}) %}
+    <ul {{ block('widget_container_attributes') }}>
+		{{ block('form_rows') }}
+    </ul>
+	{{ form_rest(form) }}
+{% endspaceless %}
+{% endblock %}
+
+{% block _jlm_core_mail_cc_widget %}
+{% spaceless %}
+    {% if prototype is defined %}
+        {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
+    {% endif %}
+{% set attr = attr|merge({'class':(attr.class|default('') ~ ' unstyled')|trim}) %}
+    <ul {{ block('widget_container_attributes') }}>
+		{{ block('form_rows') }}
+    </ul>
+	{{ form_rest(form) }}
+{% endspaceless %}
+{% endblock %}
+
+{% block email_row %}
+<li>{{ form_widget(form) }}</li>
+{% endblock %}
+
+{% block _jlm_core_mail_from_javascript %}
+<script>
+var collectionHolderFrom = $('#{{ id }}');
+var $addFromLink = $('<button class="btn btn-success btn-small">{{ 'plus-sign'|icon(true) }}</button>');
+var $newLinkLiFrom = $('<li></li>').append($addFromLink);
+jQuery(document).ready(function() {
+	collectionHolderFrom.find('li').append('<button class="btn btn-danger btn-small">{{ 'minus-sign'|icon(true) }}</button>');
+	collectionHolderFrom.find('.btn-danger').on('click', function(e) {
+		e.preventDefault();
+		$(this).parent().remove();
+	});
+    collectionHolderFrom.append($newLinkLiFrom);
+    $addFromLink.on('click', function(e) {
+        e.preventDefault();
+        addForm(collectionHolderFrom, $newLinkLiFrom);
+    });
+});
+</script>
+{% endblock %}
+
+{% block _jlm_core_mail_to_javascript %}
+<script>
+var collectionHolderTo = $('#{{ id }}');
+var $addLinkTo = $('<button class="btn btn-success btn-small">{{ 'plus-sign'|icon(true) }}</button>');
+var $newLinkLiTo = $('<li></li>').append($addLinkTo);
+jQuery(document).ready(function() {
+	collectionHolderTo.find('li').append('<button class="btn btn-danger btn-small">{{ 'minus-sign'|icon(true) }}</button>');
+	collectionHolderTo.find('.btn-danger').on('click', function(e) {
+		e.preventDefault();
+		$(this).parent().remove();
+	});
+    collectionHolderTo.append($newLinkLiTo);
+    $addLinkTo.on('click', function(e) {
+        e.preventDefault();
+        addForm(collectionHolderTo, $newLinkLiTo);
+    });
+});
+</script>
+{% endblock %}
+
+{% block _jlm_core_mail_cc_javascript %}
+<script>
+var collectionHolderCc = $('#{{ id }}');
+var $addLinkCc = $('<button class="btn btn-success btn-small">{{ 'plus-sign'|icon(true) }}</button>');
+var $newLinkLiCc = $('<li></li>').append($addLinkCc);
+jQuery(document).ready(function() {
+	collectionHolderCc.find('li').append('<button class="btn btn-danger btn-small">{{ 'minus-sign'|icon(true) }}</button>');
+	collectionHolderCc.find('.btn-danger').on('click', function(e) {
+		e.preventDefault();
+		$(this).parent().remove();
+	});
+    collectionHolderCc.append($newLinkLiCc);
+    $addLinkCc.on('click', function(e) {
+        e.preventDefault();
+        addForm(collectionHolderCc, $newLinkLiCc);
+    });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<h1>Envoyer un e-mail</h1>
+{{ form(form) }}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+function addForm(collectionHolder, $newLinkLi) {
+    var prototype = collectionHolder.attr('data-prototype');
+    var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
+    var $newFormLi = $(newForm).append('<button class="btn btn-danger btn-small">{{ 'minus-sign'|icon(true) }}</button>');
+    $newFormLi.find('button').on('click', function(e) {
+    	e.preventDefault();
+    	$(this).parent().remove();
+    });
+    $newLinkLi.before($newFormLi);
+}
+</script>
+{% endblock %}

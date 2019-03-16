@@ -1,0 +1,45 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+
+{% block content %}
+	<h1>Résultats de la recherche pour "{{ query }}"</h1>
+	{% if doors|length == 0 
+	   and sites|length == 0   
+	   and trustees|length == 0
+	   and suppliers|length == 0
+	 and products|length  == 0 %}
+	  {# and productcategories|length == 0 #}
+	    
+		<h2><small>Aucun résultat</small></h2>
+	{% endif %}
+	
+	
+	{% if sites|length %}
+		<h2><small>Affaires</small></h2>
+		{% include '@JLMModel/site/search.html.twig' with {'sites': sites } %}
+	{% endif %}
+	
+	{% if trustees|length %}
+		<h2><small>Syndics</small></h2>
+		{% include '@JLMModel/trustee/search.html.twig' with {'trustees': trustees } %}
+	{% endif %}
+	
+	{% if doors|length %}
+		<h2><small>Portes</small></h2>
+		{% include '@JLMModel/door/search.html.twig' with {'doors': doors } %}
+	{% endif %}
+	
+	{% if suppliers|length %}
+		<h2><small>Fournisseurs</small></h2>
+		{% include '@JLMProduct/supplier/search.html.twig' with {'suppliers': suppliers } %}
+	{% endif %}
+	
+	{% if products|length %}
+		<h2><small>Produits</small></h2>
+		{% include '@JLMProduct/product/search.html.twig' with {'products': products } %}
+	{% endif %}
+	
+	{% if contacts|length %}
+		<h2><small>Contacts</small></h2>
+		{% include '@JLMContact/contact/search.html.twig' with {'entities': contacts } %}
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{# JLMDailyBundle::layout.html.twig #}
+{% extends "::layout.html.twig" %}
+
+{% block title %}Journal de bord | {{ parent() }}{% endblock %}
+
+    {% block sidebar %}
+    	<li><h4>Journal de bord</h4></li>
+    	<li>{{ form(search.form, {'action': path('daily_search')}) }}</li>
+	    <li class="nav-header">Techniciens</li>
+	    <li><a href="{{ path('shifting_list', {'id':6}) }}">{{ 'user'|icon }} Cyrille</a></li>
+	    <li><a href="{{ path('shifting_list', {'id':5}) }}">{{ 'user'|icon }} Christophe</a></li>
+	    <li><a href="{{ path('shifting_list', {'id':4}) }}">{{ 'user'|icon }} Oscar</a></li>
+	    <li class="nav-header">Ajouter</li>
+	    <li><a class="shift-new" href="{{ path('equipment_new') }}">{{ 'plus-sign'|icon }} Récupération matériel</a></li>
+	    <li><a class="standby-new" href="{{ path('standby_new') }}">{{ 'plus-sign'|icon }} Astreinte</a></li>
+		<li><a href="{{ path('standby') }}">{{ 'list'|icon }} Liste des astreintes</a>
+	    <li class="nav-header">Interventions</li>
+		{% include '@JLMDaily/default/datesearch.html.twig' with {'form':date_search.form} %}
+		{% include '@JLMDaily/default/sidebar.html.twig' %}
+		<li class="nav-header">Imprimer</li>
+		<li><a href="{{ path('intervention_printtomorrow') }}">{{ 'print'|icon }} Demain</a></li>
+	{% endblock sidebar %}
+
+{% block javascripts %}
+{{ parent() }}
+{{ form_javascript(date_search.form) }}
+<script src="{{ asset("bundles/jlmdaily/js/intervention.js") }}"></script>
+<script>
+$(".interventionForm").intervention({
+	 autoSource:'{{ path('autocomplete') }}'
+});
+$(".standby-new, .shift-new, .fixing-new, .shifting-edit, .shifting-new").formModal({closure: function(){location.reload();}});
+</script>
+{% endblock %}
+
+
+{% block javascripts_script %}
+{{ parent() }}
+$('[data-toggle=tooltip]').tooltip({'placement':'right'});
+{% endblock %}

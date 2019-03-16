@@ -1,0 +1,27 @@
+{% extends "@JLMOffice/askquote/layout.html.twig" %}
+
+{% block content %}
+<h1>Nouvelle demande de devis</h1>
+{% if form_errors(form) %}
+<div class="alert">{{ form_errors(form) }}</div>
+{% endif %}
+<form action="{{ path('askquote_create') }}" method="post" class="form-horizontal">
+	<filedset>
+    {{ form_widget(form) }}
+	    <div class="form-actions">
+	    	<button type="submit" class="btn btn-primary">Enregistrer</button>
+	    </div>
+    </filedset>
+</form>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset("bundles/jlmoffice/js/askquote.js") }}"></script>
+<script>
+$("body").askquote({
+	 autoSource:'{{ path('autocomplete') }}',
+	 autoSourceDoor:'{{ path('autocomplete_doorsite') }}'
+});
+</script>
+{% endblock %}

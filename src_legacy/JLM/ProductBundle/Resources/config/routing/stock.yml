@@ -1,0 +1,26 @@
+jlm_product_stock:
+    path:     /
+    defaults: { _controller: "JLMProductBundle:Stock:index" }
+
+jlm_product_stock_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "JLMProductBundle:Stock:edit" }
+
+jlm_product_stock_update:
+    path:     /{id}/update
+    defaults: { _controller: "JLMProductBundle:Stock:edit" }
+    methods:
+        - POST
+        - PUT
+
+jlm_product_stock_inventory:
+    path:     /inventory
+    defaults: { _controller: "JLMProductBundle:Stock:inventory" }
+    methods:
+        - GET
+    
+jlm_product_stock_print:
+    path:     /print
+    defaults: { _controller: "JLMProductBundle:Stock:print" }
+    methods:
+        - GET

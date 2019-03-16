@@ -1,0 +1,13 @@
+{% extends "@JLMTransmitter/attribution/layout.html.twig" %}
+
+{% block content %}
+	<h1>Résultats de la recherche</h1>
+	{% if asks|length %}
+		<h1><small>Demandes</small></h1>
+		{% include '@JLMTransmitter/ask/list_table.html.twig' with {'entities':asks} %}
+	{% endif %}
+	{% if transmitters|length %}
+		<h1><small>Emetteurs</small></h1>
+		{% include '@JLMTransmitter/transmitter/search.html.twig' with {'transmitters':transmitters} %}
+	{% endif %}
+{% endblock %}

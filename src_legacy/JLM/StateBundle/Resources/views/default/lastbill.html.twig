@@ -1,0 +1,6 @@
+{% extends "@JLMCommerce/bill/layout.html.twig" %}
+{% block content %}
+<h1>{{ title }}</h1>
+<h2>Chiffre d'affaire : {{ caht }} € HT ( {{ caati }} € TTC )</h2>
+{% include '@JLMCommerce/bill/list.html.twig' with {'entities':entities} %}
+{% endblock %}

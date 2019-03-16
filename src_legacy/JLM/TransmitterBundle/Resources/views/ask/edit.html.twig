@@ -1,0 +1,16 @@
+<h1>Ask edit</h1>
+
+<form action="{{ path('transmitter_ask_update', { 'id': entity.id }) }}" method="post">
+    {{ form_widget(edit_form) }}
+    <p>
+        <button type="submit">Edit</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('transmitter_ask') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>

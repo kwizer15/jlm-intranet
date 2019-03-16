@@ -1,0 +1,28 @@
+{# @JLMDaily/maintenance/show.html.twig #}
+{% extends "@JLMDaily/intervention/show.html.twig" %}
+
+{% block officeaction %}
+	{% set preferbill = -1 %}
+	{{ parent() }}
+{% endblock %}
+
+{% block close_button %}
+	<a href="#modalClose{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-primary">{{ 'ok'|icon(true) }} {% if not entity.closed %}Cloturer{% else %}Editer cloture{% endif %}</a>
+	{{ render(controller('@JLMDaily/maintenance/close',{'id':entity.id})) }}
+{% endblock %}
+
+
+{% block edit_button %}
+<div class="btn-group">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        E-mails client
+        <span class="caret"></span>
+      </a>
+          <ul class="dropdown-menu">
+      		<li><a tabindex="-1" href="{{ path('maintenance_email',{'id':entity.id,'step':'planned'}) }}">Visite plannifiée</a></li>
+            <li><a tabindex="-1" href="{{ path('maintenance_email',{'id':entity.id,'step':'onsite'}) }}">Technicien sur site</a></li>
+            <li><a tabindex="-1" href="{{ path('maintenance_email',{'id':entity.id,'step':'end'}) }}">Fin de la visite</a></li>
+            <li><a tabindex="-1" href="{{ path('maintenance_email',{'id':entity.id,'step':'report'}) }}">Rapport de la visite</a></li>
+         </ul>
+    </div>
+{% endblock %}
