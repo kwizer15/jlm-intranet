@@ -3,6 +3,16 @@ services:
     class: JLM\UserBundle\Form\Type\RegistrationType
     tags:
       - { name: form.type, alias: jlm_user_registration }
+  jlm_user.form.handler.registration:
+    class: JLM\UserBundle\Form\Handler\RegistrationFormHandler
+    arguments:
+      - "@fos_user.registration.form"
+      - "@request"
+      - "@fos_user.user_manager"
+      - "@fos_user.mailer"
+      - "@fos_user.util.token_generator"
+    shared: false
+    public: false
         
   jlm_user.mailer.twig_swift:
     class: JLM\UserBundle\Mailer\TwigSwiftMailer

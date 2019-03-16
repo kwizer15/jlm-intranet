@@ -42,8 +42,8 @@ phpunit.xml: phpunit.xml.dist
 phpcs.xml: phpcs.xml.dist
 	cp phpcs.xml.dist phpcs.xml
 
-server: cc
-	php app/console server:start
+server:
+	php -S localhost:8000 -t web
 
 cc:
 	app/console cache:clear --no-warmup

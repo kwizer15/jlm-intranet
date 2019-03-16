@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * ReCaptchaValidator
@@ -31,14 +32,14 @@ class ReCaptchaValidator implements EventSubscriberInterface
     private $options;
 
     /**
-     * @param Request      $request
+     * @param RequestStack      $requestStack
      * @param string       $privateKey
      * @param array        $options    Validation options
      */
-    public function __construct(Request $request, $privateKey, array $options = array())
+    public function __construct(RequestStack $requestStack, $privateKey, array $options = array())
     {
         $this->options = $options;
-        $this->request = $request;
+        $this->request = $requestStack->getCurrentRequest();
 
         if (empty($options['code'])) {
             if (empty($privateKey)) {
