@@ -4,7 +4,7 @@ namespace JLM\TransmitterBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\ModelBundle\Entity\Site;
 
@@ -16,7 +16,7 @@ use JLM\ModelBundle\Entity\Site;
 class SiteController extends Controller
 {
     /**
-     * @Route("/{id}/show",name="transmitter_site_show")
+     * @Route(path="/{id}/show",name="transmitter_site_show")
      * @Template()
      */
     public function showAction(Site $entity)
@@ -27,7 +27,7 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route("/{id}/printlist",name="transmitter_site_printlist")
+     * @Route(path="/{id}/printlist",name="transmitter_site_printlist")
      */
     public function printlistAction(Site $entity)
     {
@@ -59,7 +59,7 @@ class SiteController extends Controller
         $response->headers->set('Content-Disposition', 'inline; filename=liste-' . $entity->getId() . '.pdf');
         $response->setContent(
             $this->render(
-                'JLMTransmitterBundle:Site:printlist.pdf.php',
+                '@JLMTransmitter/site/printlist.pdf.php',
                 [
                     'entity' => $entity,
                     'transmitters' => $final,

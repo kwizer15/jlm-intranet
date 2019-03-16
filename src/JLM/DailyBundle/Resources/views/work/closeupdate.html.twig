@@ -1,0 +1,17 @@
+{# @JLMDaily/fixing/close.html.twig #}
+{% extends "JLMDailyBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Cloturer les travaux</h1>
+<h4>{{ entity.place |nl2br }}</h4>
+<div>{{ entity.reason  |nl2br}}</div>
+<form action="{{ path('work_closeupdate', {'id':entity.id}) }}" method="post" class="form-horizontal">
+<fieldset>
+{{ form_widget(form) }}
+    <div class="form-actions">
+	   <a href="{{ path('work_list') }}" class="btn">{{ 'arrow-left'|icon }} Retour à la liste</a>
+	   <button type="submit" class="btn btn-primary">{{ 'pencil'|icon(true) }} Enregistrer les modifications</button>
+	</div>
+	</fieldset>
+</form>
+{% endblock %}

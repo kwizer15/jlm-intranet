@@ -2,6 +2,7 @@
 namespace JLM\FeeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JLM\ContractBundle\Entity\Contract;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use JLM\CommerceBundle\Model\VATInterface;
@@ -356,8 +357,9 @@ class Fee implements FeeInterface
     public function getGroup()
     {
         $group = '';
+        /** @var Contract $contract */
         foreach ($this->contracts as $contract) {
-            $group .= $contract->getDoor()->getSite()->getGroupNumber();
+            $group .= $contract->getDoor()->getAdministrator()->getGroupNumber();
             if ($group != '') {
                 $group .= ' ';
             }

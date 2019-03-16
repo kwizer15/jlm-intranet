@@ -1,0 +1,9 @@
+{% extends "JLMOfficeBundle::layout.html.twig" %}
+
+{% block sidebar %}
+	<li><h4>Fiches travaux</h4></li>
+	<li>{{ form(search.form, {'action': path('order_search')}) }}</li>
+	<li class="divider"></li>
+	<li class="nav-header">Etats</li>
+    {% include '@JLMOffice/order/sidebar.html.twig' %}
+{% endblock sidebar %}

@@ -15,8 +15,8 @@
 	    <li><a class="standby-new" href="{{ path('standby_new') }}">{{ 'plus-sign'|icon }} Astreinte</a></li>
 		<li><a href="{{ path('standby') }}">{{ 'list'|icon }} Liste des astreintes</a>
 	    <li class="nav-header">Interventions</li>
-		{% include 'JLMDailyBundle:Default:datesearch.html.twig' with {'form':date_search.form} %}
-		{% include 'JLMDailyBundle:Default:sidebar.html.twig' %}
+		{% include '@JLMDaily/default/datesearch.html.twig' with {'form':date_search.form} %}
+		{% include '@JLMDaily/default/sidebar.html.twig' %}
 		<li class="nav-header">Imprimer</li>
 		<li><a href="{{ path('intervention_printtomorrow') }}">{{ 'print'|icon }} Demain</a></li>
 	{% endblock sidebar %}

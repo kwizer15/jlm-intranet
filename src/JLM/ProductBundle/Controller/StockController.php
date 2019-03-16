@@ -34,7 +34,7 @@ class StockController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         return $manager->renderResponse(
-            'JLMProductBundle:Stock:index.html.twig',
+            '@JLMProduct/stock/index.html.twig',
             $manager->pagination($request, 'getCount', 'getAll', 'jlm_product_stock')
         );
     }
@@ -64,7 +64,7 @@ class StockController extends Controller
         $template = $request->isXmlHttpRequest() ? 'modal_edit.html.twig' : 'edit.html.twig';
 
         return $manager->renderResponse(
-            'JLMProductBundle:Stock:' . $template,
+            '@JLMProduct/stock/' . $template,
             [
                 'entity' => $entity,
                 'form' => $form->createView(),
@@ -84,7 +84,7 @@ class StockController extends Controller
         }
 
         return $manager->renderResponse(
-            'JLMProductBundle:Stock:inventory.html.twig',
+            '@JLMProduct/stock/inventory.html.twig',
             [
                 'form' => $form->createView(),
             ]

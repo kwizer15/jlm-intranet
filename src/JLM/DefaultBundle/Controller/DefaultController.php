@@ -3,17 +3,17 @@
 namespace JLM\DefaultBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
     /**
-     * @Route("/",name="default")
+     * @Route(path="/",name="default")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(): array
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
@@ -51,7 +51,6 @@ class DefaultController extends Controller
         }
         $repo = $em->getRepository('JLMDailyBundle:Maintenance');
         $maintenanceTotal = $repo->getCountTotal(false);
-        $evolutionBaseDay = $maintenanceTotal / 182;
         $date1 = \DateTime::createFromFormat('Y-m-d H:i:s', '2013-01-01 00:00:00');
         $now = new \DateTime;
         $evolutionBase = [];
@@ -61,7 +60,6 @@ class DefaultController extends Controller
         }
         // Nombre de contrats en cours
         $repocon = $em->getRepository('JLMContractBundle:Contract');
-    //  $now = new \DateTime('2015-12-31');
         $contracts_numbers = $repocon
             ->createQueryBuilder('a')
             ->select('COUNT(DISTINCT a.number)')
@@ -115,7 +113,7 @@ class DefaultController extends Controller
     
     /**
      * @Route("/robot.txt")
-     * @Template("JLMDefaultBundle:Default:robot.txt.twig")
+     * @Template("@JLMDefault/default/robot.txt.twig")
      */
     public function robotAction()
     {

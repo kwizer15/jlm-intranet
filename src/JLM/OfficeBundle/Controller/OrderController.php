@@ -97,7 +97,7 @@ class OrderController extends Controller
      *
      * @Route("/create", name="order_create")
      * @Method("post")
-     * @Template("JLMOfficeBundle:Order:new.html.twig")
+     * @Template("@JLMOffice/order/new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -152,7 +152,7 @@ class OrderController extends Controller
      *
      * @Route("/{id}/update", name="order_update")
      * @Method("post")
-     * @Template("JLMOfficeBundle:Order:edit.html.twig")
+     * @Template("@JLMOffice/order/edit.html.twig")
      */
     public function updateAction(Request $request, Order $entity)
     {
@@ -195,7 +195,7 @@ class OrderController extends Controller
         $response = new Response();
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', 'inline; filename='.$entity->getId().'.pdf');
-        $response->setContent($this->render('JLMOfficeBundle:Order:print.pdf.php', ['entity' => [$entity]]));
+        $response->setContent($this->render('@JLMOffice/order/print.pdf.php', ['entity' => [$entity]]));
     
         //   return array('entity'=>$entity);
         return $response;

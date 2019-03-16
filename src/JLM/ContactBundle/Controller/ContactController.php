@@ -52,7 +52,7 @@ class ContactController extends Controller
         $ajax = $request->isXmlHttpRequest();
 
         if (!$process) {
-            $view = $ajax ? 'JLMContactBundle:Contact:modal_new.html.twig' : 'JLMContactBundle:Contact:new.html.twig';
+            $view = $ajax ? '@JLMContact/contact/modal_new.html.twig' : '@JLMContact/contact/new.html.twig';
 
             return $templating->renderResponse($view, ['form' => $form->createView()]);
         }
@@ -99,7 +99,7 @@ class ContactController extends Controller
         $ajax = $request->isXmlHttpRequest();
 
         if (!$process) {
-            $view = $ajax ? 'JLMContactBundle:Contact:modal_new.html.twig' : 'JLMContactBundle:Contact:new.html.twig';
+            $view = $ajax ? '@JLMContact/contact/modal_new.html.twig' : '@JLMContact/contact/new.html.twig';
 
             return $templating->renderResponse($view, ['form' => $form->createView()]);
         }
@@ -127,7 +127,7 @@ class ContactController extends Controller
         $paginator = new Pagination($request, $repository);
         $pagination = $paginator->paginate('getCountAll', 'getAll', 'jlm_contact_contact');
 
-        return $templating->renderResponse('JLMContactBundle:Contact:list.html.twig', $pagination);
+        return $templating->renderResponse('@JLMContact/contact/list.html.twig', $pagination);
     }
 
     public function showAction(Request $request, $id)
@@ -141,7 +141,7 @@ class ContactController extends Controller
         return $request->isXmlHttpRequest()
             ? new JsonResponse($repository->getByIdToArray($id))
             : $templating->renderResponse(
-                'JLMContactBundle:Contact:show_' . $entity->getType() . '.html.twig',
+                '@JLMContact/contact/show_' . $entity->getType() . '.html.twig',
                 ['entity' => $entity]
             );
     }

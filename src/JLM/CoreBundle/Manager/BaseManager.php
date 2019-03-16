@@ -100,7 +100,7 @@ class BaseManager implements ContainerAwareInterface, ManagerInterface
     public function setServices(): void
     {
         $this->om = $this->container->get('doctrine')->getManager();
-        $this->request = $this->container->get('request');
+        $this->request = $this->container->get('request_stack')->getCurrentRequest();
         $this->router = $this->container->get('router');
     }
 

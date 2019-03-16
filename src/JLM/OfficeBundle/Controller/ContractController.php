@@ -28,7 +28,7 @@ class ContractController extends Controller
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', 'inline; filename=' . $entity->getNumber() . '.pdf');
         $response->setContent(
-            $this->render('JLMOfficeBundle:Contract:bill.pdf.php', ['entities' => [$entity], 'number' => $number])
+            $this->render('@JLMOffice/contract/bill.pdf.php', ['entities' => [$entity], 'number' => $number])
         );
 
         //   return array('entity'=>$entity);
@@ -53,7 +53,7 @@ class ContractController extends Controller
             'Content-Disposition',
             'inline; filename=redevances-' . $today->format('Y-m-d') . '.pdf'
         );
-        $response->setContent($this->render('JLMOfficeBundle:Contract:bill.pdf.php', ['entities' => $entities]));
+        $response->setContent($this->render('@JLMOffice/contract/bill.pdf.php', ['entities' => $entities]));
 
         //   return array('entity'=>$entity);
         return $response;

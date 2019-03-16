@@ -175,7 +175,7 @@ class FixingController extends AbstractInterventionController
     /**
      * Edits an existing Fixing entity.
      *
-     * @Template("JLMDailyBundle:Fixing:edit.html.twig")
+     * @Template("@JLMDaily/fixing/edit.html.twig")
      */
     public function updateAction(Request $request, Fixing $entity)
     {
@@ -265,7 +265,7 @@ class FixingController extends AbstractInterventionController
         $response->headers->set('Content-Disposition', 'inline; filename=report-' . $entity->getId() . '.pdf');
         $response->setContent(
             $this->render(
-                'JLMDailyBundle:Fixing:printreport.pdf.php',
+                '@JLMDaily/fixing/printreport.pdf.php',
                 ['entity' => $entity]
             )
         );

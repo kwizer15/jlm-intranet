@@ -48,7 +48,7 @@ class QuoteVariantController extends Controller
         }
 
         return $manager->renderResponse(
-            'JLMCommerceBundle:QuoteVariant:new.html.twig',
+            '@JLMCommerce/quote_variant/new.html.twig',
             [
                 'quote' => $form->get('quote')->getData(),
                 'entity' => $form->getData(),
@@ -77,7 +77,7 @@ class QuoteVariantController extends Controller
         }
 
         return $manager->renderResponse(
-            'JLMCommerceBundle:QuoteVariant:edit.html.twig',
+            '@JLMCommerce/quote_variant/edit.html.twig',
             [
                 'quote' => $form->get('quote')->getData(),
                 'entity' => $entity,
@@ -194,7 +194,7 @@ class QuoteVariantController extends Controller
         }
 
         return $manager->renderResponse(
-            'JLMCommerceBundle:QuoteVariant:email.html.twig',
+            '@JLMCommerce/quote_variant/email.html.twig',
             [
                 'entity' => $entity,
                 'form' => $editForm->createView(),
@@ -226,13 +226,13 @@ class QuoteVariantController extends Controller
         $mail->setFrom('commerce@jlm-entreprise.fr');
         $mail->setBody(
             $this->renderView(
-                'JLMCommerceBundle:QuoteVariant:email.txt.twig',
+                '@JLMCommerce/quote_variant/email.txt.twig',
                 ['intro' => $entity->getIntro(), 'door' => $entity->getQuote()->getDoorCp()]
             )
         );
         $mail->setSignature(
             $this->renderView(
-                'JLMCommerceBundle:QuoteVariant:emailsignature.txt.twig',
+                '@JLMCommerce/quote_variant/emailsignature.txt.twig',
                 ['name' => $entity->getQuote()->getFollowerCp()]
             )
         );
@@ -280,7 +280,7 @@ class QuoteVariantController extends Controller
             $message->setReadReceiptTo('commerce@jlm-entreprise.fr');
             $message->attach(
                 \Swift_Attachment::newInstance(
-                    $this->render('JLMCommerceBundle:Quote:quote.pdf.php', ['entities' => [$entity]]),
+                    $this->render('@JLMCommerce/quote/quote.pdf.php', ['entities' => [$entity]]),
                     $entity->getNumber() . '.pdf',
                     'application/pdf'
                 )
@@ -314,7 +314,7 @@ class QuoteVariantController extends Controller
 
         return $manager->renderPdf(
             $entity->getNumber(),
-            'JLMCommerceBundle:Quote:quote.pdf.php',
+            '@JLMCommerce/quote/quote.pdf.php',
             ['entities' => [$entity]]
         );
     }
@@ -333,7 +333,7 @@ class QuoteVariantController extends Controller
 
         return $manager->renderPdf(
             'chiffrage-' . $entity->getNumber(),
-            'JLMCommerceBundle:QuoteVariant:coding.pdf.php',
+            '@JLMCommerce/quote_variant/coding.pdf.php',
             ['entity' => $entity]
         );
     }
@@ -357,6 +357,6 @@ class QuoteVariantController extends Controller
             }
         );
 
-        return $manager->renderResponse('JLMCommerceBundle:QuoteVariant:boost.html.twig', ['quotes' => $quotes]);
+        return $manager->renderResponse('@JLMCommerce/quote_variant/boost.html.twig', ['quotes' => $quotes]);
     }
 }

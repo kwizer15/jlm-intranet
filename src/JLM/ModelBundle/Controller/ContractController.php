@@ -80,7 +80,7 @@ class ContractController extends Controller
     /**
      * Creates a new Contract entity.
      *
-     * @Template("JLMModelBundle:Contract:new.html.twig")
+     * @Template("@JLMModel/contract/new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -121,7 +121,7 @@ class ContractController extends Controller
     /**
      * Stop a contract
      *
-     * @Template("JLMModelBundle:Contract:stop.html.twig")
+     * @Template("@JLMModel/contract/stop.html.twig")
      */
     public function stopupdateAction(Request $request, Contract $entity)
     {
@@ -193,7 +193,7 @@ class ContractController extends Controller
     /**
      * Edits an existing Contract entity.
      *
-     * @Template("JLMModelBundle:Contract:edit.old.html.twig")
+     * @Template("@JLMModel/contract/edit.old.html.twig")
      */
     public function updateAction(Request $request, Contract $entity)
     {

@@ -41,7 +41,7 @@ class BillController extends Controller
         $manager = $this->container->get('jlm_commerce.bill_manager');
 
         return $manager->renderResponse(
-            'JLMCommerceBundle:Bill:index.html.twig',
+            '@JLMCommerce/bill/index.html.twig',
             $manager->paginator(
                 'JLMCommerceBundle:Bill',
                 $request,
@@ -59,7 +59,7 @@ class BillController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         return $manager->renderResponse(
-            'JLMCommerceBundle:Bill:show.html.twig',
+            '@JLMCommerce/bill/show.html.twig',
             ['entity' => $manager->getEntity($id)]
         );
     }
@@ -84,7 +84,7 @@ class BillController extends Controller
         }
 
         return $manager->renderResponse(
-            'JLMCommerceBundle:Bill:new.html.twig',
+            '@JLMCommerce/bill/new.html.twig',
             [
                 'form' => $form->createView(),
             ]
@@ -112,7 +112,7 @@ class BillController extends Controller
         }
 
         return $manager->renderResponse(
-            'JLMCommerceBundle:Bill:edit.html.twig',
+            '@JLMCommerce/bill/edit.html.twig',
             [
                 'entity' => $entity,
                 'edit_form' => $editForm->createView(),
@@ -149,7 +149,7 @@ class BillController extends Controller
 
         return $manager->renderPdf(
             $filename,
-            'JLMCommerceBundle:Bill:print.pdf.php',
+            '@JLMCommerce/bill/print.pdf.php',
             ['entities' => [$entity], 'duplicate' => $duplicate]
         );
     }
@@ -164,7 +164,7 @@ class BillController extends Controller
 
         return $manager->renderPdf(
             'factures-a-faire',
-            'JLMCommerceBundle:Bill:printlist.pdf.php',
+            '@JLMCommerce/bill/printlist.pdf.php',
             ['entities' => $manager->getObjectManager()->getRepository('JLMDailyBundle:Intervention')->getToBilled()]
         );
     }
@@ -271,7 +271,7 @@ class BillController extends Controller
             ;
         }
         return $manager->renderResponse(
-            'JLMCommerceBundle:Bill:todo.html.twig',
+            '@JLMCommerce/bill/todo.html.twig',
             [
                 'entities' => $list,
                 'forms_externalbill' => $forms_externalBill,
@@ -288,7 +288,7 @@ class BillController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         return $manager->renderResponse(
-            'JLMCommerceBundle:Bill:toboost.html.twig',
+            '@JLMCommerce/bill/toboost.html.twig',
             ['entities' => $manager->getRepository()->getToBoost()]
         );
     }
@@ -324,7 +324,7 @@ class BillController extends Controller
         }
 
         return $manager->renderResponse(
-            'JLMCommerceBundle:Bill:boostemail.html.twig',
+            '@JLMCommerce/bill/boostemail.html.twig',
             [
                 'entity' => $entity,
                 'form' => $editForm->createView(),
@@ -343,7 +343,7 @@ class BillController extends Controller
 
         return $manager->renderPdf(
             $entity->getNumber(),
-            'JLMCommerceBundle:Bill:printboost.pdf.php',
+            '@JLMCommerce/bill/printboost.pdf.php',
             ['entities' => [$entity]]
         );
     }
@@ -382,7 +382,7 @@ class BillController extends Controller
             $params = ['results' => $manager->getRepository()->search($formData['query'])];
         }
 
-        return $manager->renderResponse('JLMCommerceBundle:Bill:search.html.twig', $params);
+        return $manager->renderResponse('@JLMCommerce/bill/search.html.twig', $params);
     }
 
     public function updateAction()

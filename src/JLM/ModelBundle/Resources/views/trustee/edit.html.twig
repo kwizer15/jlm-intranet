@@ -1,0 +1,13 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+{% form_theme edit_form '@JLMModel/form/trustee.html.twig' %}
+{% block content %}
+<h1>Edition d'un syndic</h1>
+<form action="{{ path('trustee_update', { 'id': entity.id }) }}" method="post" class="form-horizontal">
+    {{ form_widget(edit_form) }}
+    <div class="form-actions">
+	   <a href="{{ path('trustee') }}" class="btn">{{ 'arrow-left'|icon }} Retour à la liste</a>
+	   <button type="submit" class="btn btn-primary">{{ 'pencil'|icon(true) }} Enregistrer les modifications</button>
+	</div>
+</form>
+{% endblock %}
+

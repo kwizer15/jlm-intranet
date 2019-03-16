@@ -29,7 +29,7 @@ class FormPass implements CompilerPassInterface
         $resources = $container->getParameter('twig.form.resources');
 
         foreach (['askQuoteType'] as $template) {
-            $resources[] = 'JLMFrontBundle:Form:' . $template . '.html.twig';
+            $resources[] = '@JLMFront/form/' . $template . '.html.twig';
         }
 
         $container->setParameter('twig.form.resources', $resources);

@@ -5,8 +5,7 @@ namespace JLM\TransmitterBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\TransmitterBundle\Entity\Attribution;
 use JLM\TransmitterBundle\Entity\Ask;
@@ -17,14 +16,14 @@ use JLM\TransmitterBundle\Builder\AttributionBillBuilder;
 /**
  * Attribution controller.
  *
- * @Route("/attribution")
+ * @Route(path="/attribution")
  */
 class AttributionController extends Controller
 {
     /**
      * Lists all Attribution entities.
      *
-     * @Route("/", name="transmitter_attribution")
+     * @Route(path="/", name="transmitter_attribution")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -40,7 +39,7 @@ class AttributionController extends Controller
     /**
      * Finds and displays a Attribution entity.
      *
-     * @Route("/{id}/show", name="transmitter_attribution_show")
+     * @Route(path="/{id}/show", name="transmitter_attribution_show")
      * @Template()
      */
     public function showAction(Attribution $entity)
@@ -53,7 +52,7 @@ class AttributionController extends Controller
     /**
      * Displays a form to create a new Attribution entity.
      *
-     * @Route("/new/{id}", name="transmitter_attribution_new")
+     * @Route(path="/new/{id}", name="transmitter_attribution_new")
      * @Template()
      */
     public function newAction(Ask $ask)
@@ -74,9 +73,8 @@ class AttributionController extends Controller
     /**
      * Creates a new Attribution entity.
      *
-     * @Route("/create", name="transmitter_attribution_create")
-     * @Method("POST")
-     * @Template("JLMTransmitterBundle:Attribution:new.html.twig")
+     * @Route(path="/create", name="transmitter_attribution_create",methods={"POST"})
+     * @Template("@JLMTransmitter/attribution/new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -103,7 +101,7 @@ class AttributionController extends Controller
     /**
      * Displays a form to edit an existing Attribution entity.
      *
-     * @Route("/{id}/edit", name="transmitter_attribution_edit")
+     * @Route(path="/{id}/edit", name="transmitter_attribution_edit")
      * @Template()
      */
     public function editAction(Attribution $entity)
@@ -121,9 +119,8 @@ class AttributionController extends Controller
     /**
      * Edits an existing Attribution entity.
      *
-     * @Route("/{id}/update", name="transmitter_attribution_update")
-     * @Method("POST")
-     * @Template("JLMTransmitterBundle:Attribution:edit.html.twig")
+     * @Route(path="/{id}/update", name="transmitter_attribution_update",methods={"POST"})
+     * @Template("@JLMTransmitter/attribution/edit.html.twig")
      */
     public function updateAction(Request $request, Attribution $entity)
     {
@@ -150,7 +147,7 @@ class AttributionController extends Controller
     /**
      * Imprime la liste d'attribution
      *
-     * @Route("/{id}/printlist", name="transmitter_attribution_printlist")
+     * @Route(path="/{id}/printlist", name="transmitter_attribution_printlist")
      */
     public function printlistAction(Attribution $entity)
     {
@@ -175,7 +172,7 @@ class AttributionController extends Controller
         $response->headers->set('Content-Disposition', 'inline; filename=attribution-' . $entity->getId() . '.pdf');
         $response->setContent(
             $this->render(
-                'JLMTransmitterBundle:Attribution:printlist.pdf.php',
+                '@JLMTransmitter/attribution/printlist.pdf.php',
                 [
                     'entity' => $entity,
                     'transmitters' => $final,
@@ -190,7 +187,7 @@ class AttributionController extends Controller
     /**
      * Imprime le courrier
      *
-     * @Route("/{id}/printcourrier", name="transmitter_attribution_printcourrier")
+     * @Route(path="/{id}/printcourrier", name="transmitter_attribution_printcourrier")
      */
     public function printcourrierAction(Attribution $entity)
     {
@@ -204,7 +201,7 @@ class AttributionController extends Controller
         );
         $response->setContent(
             $this->render(
-                'JLMTransmitterBundle:Attribution:printcourrier.pdf.php',
+                '@JLMTransmitter/attribution/printcourrier.pdf.php',
                 ['entity' => $entity]
             )
         );
@@ -215,7 +212,7 @@ class AttributionController extends Controller
     /**
      * Generate bill
      *
-     * @Route("/{id}/bill", name="transmitter_attribution_bill")
+     * @Route(path="/{id}/bill", name="transmitter_attribution_bill")
      */
     public function billAction(Attribution $entity)
     {

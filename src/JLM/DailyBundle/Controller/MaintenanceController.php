@@ -54,7 +54,7 @@ class MaintenanceController extends AbstractInterventionController
 
         $templating = $this->container->get('templating');
 
-        return $templating->renderResponse('JLMDailyBundle:Maintenance:list.html.twig', $pagination);
+        return $templating->renderResponse('@JLMDaily/maintenance/list.html.twig', $pagination);
     }
 
     /**

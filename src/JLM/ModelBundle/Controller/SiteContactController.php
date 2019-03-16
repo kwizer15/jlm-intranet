@@ -78,7 +78,7 @@ class SiteContactController extends Controller
     /**
      * Creates a new SiteContact entity.
      *
-     * @Template("JLMModelBundle:SiteContact:new.html.twig")
+     * @Template("@JLMModel/site_contact/new.html.twig")
      */
     public function createAction(Request $request, Site $site = null)
     {
@@ -138,7 +138,7 @@ class SiteContactController extends Controller
     /**
      * Edits an existing SiteContact entity.
      *
-     * @Template("JLMModelBundle:SiteContact:edit.html.twig")
+     * @Template("@JLMModel/site_contact/edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {

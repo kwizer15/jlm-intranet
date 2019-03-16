@@ -467,7 +467,7 @@ class InterventionController extends Controller
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', 'inline; filename='.$d1->format('Y-m-d').'.pdf');
         $response->setContent($this->render(
-            'JLMDailyBundle:Intervention:printday.pdf.php',
+            '@JLMDaily/intervention/printday.pdf.php',
             [
              'date'     => $d1,
              'entities' => array_merge($equipment, $intervs),
@@ -506,7 +506,7 @@ class InterventionController extends Controller
             'inline; filename='.$tomorrow->format('Y-m-d').'.pdf'
         );
         $response->setContent($this->render(
-            'JLMDailyBundle:Intervention:printtomorrow.pdf.php',
+            '@JLMDaily/intervention/printtomorrow.pdf.php',
             [
              'date'     => $tomorrow,
              'entities' => array_merge($equipment, $intervs, $fixing),
@@ -537,7 +537,7 @@ class InterventionController extends Controller
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', 'inline; filename='.$door->getId().'.pdf');
         $response->setContent($this->render(
-            'JLMDailyBundle:Intervention:printdoor.pdf.php',
+            '@JLMDaily/intervention/printdoor.pdf.php',
             [
              'door'     => $door,
              'entities' => $shifts,
@@ -566,7 +566,7 @@ class InterventionController extends Controller
         $response = new Response();
         $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
         $response->headers->set('Content-Disposition', 'inline; filename='.$door->getId().'.csv');
-        $response->setContent($this->render('JLMDailyBundle:Intervention:door.csv.twig', ['entity' => $door]));
+        $response->setContent($this->render('@JLMDaily/intervention/door.csv.twig', ['entity' => $door]));
 
         return $response;
     }

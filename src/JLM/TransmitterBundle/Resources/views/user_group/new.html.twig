@@ -1,0 +1,8 @@
+{% set id = 'modalNewUserGroup' %}
+{% set action = path('transmitter_usergroup_create') %}
+{% set title = 'Nouveau groupe utilisateur' %}
+{% extends '@JLMDefault/helpers/modalform.html.twig' %}
+{% block body %}
+	{% include '@JLMTransmitter/user_group/create.html.twig' %}
+{% endblock %}
+

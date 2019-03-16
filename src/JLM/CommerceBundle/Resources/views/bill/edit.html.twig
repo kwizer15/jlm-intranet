@@ -1,0 +1,23 @@
+{% extends "@JLMCommerce/bill/layout.html.twig" %}
+{% block content %}
+<h1>Facture <small>{{ entity.number }}</small></h1>
+{% if form_errors(edit_form) %}
+<div class="alert">{{ form_errors(edit_form) }}</div>
+{% endif %}
+{{ form(edit_form) }}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+    {% javascripts
+    	'@JLMCommerceBundle/Resources/public/js/bill.js'
+        filter='yui_js' %}
+    	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+<script>
+$("body").bill({
+	 autoSource:'{{ path('autocomplete') }}',
+	 lineCount:{{ edit_form.lines | length }},
+});
+</script>
+{% endblock %}

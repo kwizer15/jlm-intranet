@@ -5,8 +5,7 @@ namespace JLM\FeeBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\FeeBundle\Entity\FeesFollower;
 use JLM\CommerceBundle\Factory\BillFactory;
@@ -16,14 +15,14 @@ use JLM\FeeBundle\Form\Type\FeesFollowerType;
 /**
  * Fees controller.
  *
- * @Route("/fees")
+ * @Route(path="/fees")
  */
 class FeesFollowerController extends Controller
 {
     /**
      * Lists all Fees entities.
      *
-     * @Route("/", name="fees")
+     * @Route(path="/", name="fees")
      * @Template()
      */
     public function indexAction()
@@ -44,7 +43,7 @@ class FeesFollowerController extends Controller
     /**
      * Edit a FeesFollower entities.
      *
-     * @Route("/{id}/edit", name="fees_edit")
+     * @Route(path="/{id}/edit", name="fees_edit")
      * @Template()
      */
     public function editAction(FeesFollower $entity)
@@ -62,9 +61,8 @@ class FeesFollowerController extends Controller
     /**
      * Edits an existing FeesFollower entity.
      *
-     * @Route("/{id}/update", name="fees_update")
-     * @Method("post")
-     * @Template("JLMOfficeBundle:Fees:edit.html.twig")
+     * @Route(path="/{id}/update", name="fees_update", methods={"POST"})
+     * @Template("@JLMOffice/fees/edit.html.twig")
      */
     public function updateAction(Request $request, FeesFollower $entity)
     {
@@ -90,7 +88,7 @@ class FeesFollowerController extends Controller
     /**
      * Edits an existing FeesFollower entity.
      *
-     * @Route("/{id}/generate", name="fees_generate")
+     * @Route(path="/{id}/generate", name="fees_generate")
      */
     public function generateAction(FeesFollower $entity)
     {
@@ -164,7 +162,7 @@ class FeesFollowerController extends Controller
 
     /**
      * Print bills
-     * @Route("/{id}/print", name="fees_print")
+     * @Route(path="/{id}/print", name="fees_print")
      */
     public function printAction(FeesFollower $follower)
     {
@@ -179,7 +177,7 @@ class FeesFollowerController extends Controller
             'inline; filename=redevances-' . $follower->getActivation()->format('m-Y') . '.pdf'
         );
         $response->setContent(
-            $this->render('JLMCommerceBundle:Bill:print.pdf.php', ['entities' => $entities, 'duplicate' => false])
+            $this->render('@JLMCommerce/bill/print.pdf.php', ['entities' => $entities, 'duplicate' => false])
         );
 
         return $response;

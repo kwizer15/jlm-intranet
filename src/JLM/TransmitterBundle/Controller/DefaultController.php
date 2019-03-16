@@ -4,16 +4,15 @@ namespace JLM\TransmitterBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Routing\Annotation\Route;
 use JLM\CoreBundle\Entity\Search;
 
 class DefaultController extends Controller
 {
     /**
-     * @Route("/search",name="transmitter_search")
-     * @Method("get")
+     * @Route(path="/search",name="transmitter_search", methods={"GET"})
+     *
      * @Template()
      */
     public function searchAction(Request $request)

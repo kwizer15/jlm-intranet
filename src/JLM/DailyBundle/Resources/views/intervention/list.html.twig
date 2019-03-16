@@ -1,0 +1,126 @@
+{# @JLMDaily/intervention/list.html.twig #}
+{% if entities|length == 0 %}
+<p>Aucune intervention</p>
+{% else %}
+<table class="table table-stripped">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th>Syndic</th>
+			<th>Affaire</th>
+			<th>Installation</th>
+			<th>Interlocuteur</th>
+			<th>Info</th>
+			<th>Techniciens</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for entity in entities %}
+		{% if entity.type != 'equipment' %}
+		<tr{% if entity.state %} class="{% if entity.state == 1 %}warning{% elseif entity.state == 2 %}info{% elseif entity.state == 3 %}success{% else %}error{% endif %}"{% endif %}>
+			<td>
+				{% include "@JLMDaily/intervention/labeltype.html.twig" with {'type' : entity.type} %}<br>
+				<small>
+				{% if entity.firstDate %}
+					{% if entity.lastDate != entity.firstDate %}du {{ entity.firstDate | localizeddate('full', 'none') }}
+			        <br>au {{ entity.lastDate | localizeddate('full', 'none') }}
+					{% else %}{{ entity.firstDate | localizeddate('full', 'none') }}
+					{% endif %}
+				{% else %}
+					{{ entity.creation | localizeddate('full', 'none') }}
+				{% endif %}
+				</small>
+			</td>
+			<td>
+				<small>{% if entity.door.actualContract %}{{ entity.door.actualContract.trustee }}{% else %}{{ entity.door.site.trustee }}{% endif %}</small>
+			</td>
+			<td>
+			{% if entity.door %}
+					{% if entity.door.blocked %}<span class="label label-important">Facture en retard</span><br>{% endif %}{% endif %}
+				<a href="{{ path('intervention_redirect',{'id':entity.id, 'act':'show'}) }}">
+				{% if entity.door %}
+					<strong>{{ entity.door.site.address.city.name | upper }}</strong> <small>{{ entity.door.site.address.city.zip }}</small><br>{{ entity.door.site.address.street | nl2br }}
+				{% else %}
+					{{ entity.place | nl2br }}
+				{% endif %}
+				</a>
+			</td>
+			<td>
+			{% if entity.door %}
+				<span data-toggle="tooltip" title="
+			{%- if entity.dynContract is null -%}Facturable
+			{%- elseif entity.dynContract == 'C1' -%}Complet / 24/24h 7/7j / Tout compris hors vandalisme
+			{%- elseif entity.dynContract == 'C2' -%}Complet / lundi au vendredi 8h30-17h30 / Tout compris hors vandalisme
+			{%- elseif entity.dynContract == 'N3' -%}Complet / 24/24h 7/7j / Tout facturable
+			{%- elseif entity.dynContract == 'N4' -%}Complet / lundi au vendredi 8h30-17h30 / Tout facturable
+			{%- endif -%}
+			" class="label label-{% if entity.dynContract is null %}warning">HC{% else %}inverse">{{ entity.dynContract }}{% endif %}</span>
+				{% if entity.door.stopped %}<span class="label label-important">Mise à l'arrêt</span>{% endif %}
+				{% if entity.door.waitMaintenance %}<span class="label">{% if entity.door.numberWaitMaintenance == 1 %}1er{% else %}2ème{% endif %} entretien à faire</span>{% endif %}
+				<br><strong>{{ entity.door.type }} - {{ entity.door.location }}</strong><br>{{ entity.door.street|nl2br }}{% endif %}
+			</td>
+			<td>{{ entity.contactName }}<br>{{ entity.contactPhones | nl2br }}</td>
+			<td>
+			{% if entity.type == 'work' %}
+	 	{% if entity.quote %}Selon devis n°{{ entity.quote.number }}<br>{% endif %}{% endif %}{{ entity.reason | nl2br }}</td>
+			<td>
+			{% if entity.canceled %}
+			<span class="label label-important">Annulée</span><br>
+			{% endif %}
+			{% if entity.shiftTechnicians|length %}
+				{% if entity.shiftTechnicians|length < 4%}
+					{% for shift in entity.shiftTechnicians %}
+						<a class="shifting-edit" href="{{ path('shifting_edit',{'id':shift.id}) }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a><br>
+					{% endfor %}
+				{% else %}
+					<div class="btn-group">
+					    <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+					    	{{ entity.shiftTechnicians|length }} déplacements
+					    	<span class="caret"></span>
+					    </a>
+					    <ul class="dropdown-menu">
+					    {% for shift in entity.shiftTechnicians %}
+					    	<li><a class="shifting-edit" href="{{ path('shifting_edit',{'id':shift.id}) }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a></li>
+						{% endfor %}
+					    </ul>
+					 </div>
+				{% endif %}
+			{% else %}
+				<a href="{{ path('shifting_new',{'id':entity.id}) }}" role="button" data-toggle="modal" class="btn btn-small shifting-new">{{ 'plus-sign'|icon }} Ajouter</a>
+			{% endif %}
+			</td>
+		</tr>
+		{% else %}
+		<tr class="success">
+			<td>{% include "@JLMDaily/intervention/labeltype.html.twig" with {'type' : entity.type} %}<br>
+				<small>
+		{% if entity.firstDate %}
+			{% if entity.lastDate != entity.firstDate %}du {{ entity.firstDate | localizeddate('full', 'none') }}
+			                                        <br>au {{ entity.lastDate | localizeddate('full', 'none') }}
+			{% else %}{{ entity.firstDate | localizeddate('full', 'none') }}
+			{% endif %}
+		{% else %}
+			{{ entity.creation | localizeddate('full', 'none') }}
+			{% endif %}
+				</small></td>
+				<td></td>
+				<td><a href="{{ path('equipment_show',{ 'id' : entity.id }) }}">{{ entity.place }}</a></td>
+				<td></td>
+				<td></td>
+				<td><small>{{ entity.reason | nl2br }}</small></td>
+				<td>
+				{% if entity.shiftTechnicians|length %}
+					{% for shift in entity.shiftTechnicians %}
+						<a class="shifting-edit" href="{{ path('shifting_edit',{'id':shift.id}) }}" data-toggle="modal"><small>{{ shift.begin | date('d/m')}} <strong>{{ shift.technician }}</strong>{% if shift.end %} {{ shift.time.format('%hh%I') }}{% endif %}</small></a><br>
+					{% endfor %}
+				{% else %}
+					<a href="{{ path('shifting_new',{'id':entity.id}) }}" role="button" data-toggle="modal" class="btn shifting-new">{{ 'plus-sign'|icon }} Ajouter</a>
+				{% endif %}
+			</td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	</tbody>
+</table>
+{% endif %}

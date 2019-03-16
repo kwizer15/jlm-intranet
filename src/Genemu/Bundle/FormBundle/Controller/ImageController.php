@@ -15,6 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Genemu\Bundle\FormBundle\Gd\File\Image;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ImageController
@@ -25,9 +26,8 @@ class ImageController implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
-    public function changeAction()
+    public function changeAction(Request $request)
     {
-        $request = $this->container->get('request');
         $rootDir = rtrim($this->container->getParameter('genemu.form.file.root_dir'), '/\\') . DIRECTORY_SEPARATOR;
         $folder = rtrim($this->container->getParameter('genemu.form.file.folder'), '/\\');
 

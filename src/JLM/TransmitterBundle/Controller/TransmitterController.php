@@ -4,8 +4,7 @@ namespace JLM\TransmitterBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\TransmitterBundle\Entity\Transmitter;
 use JLM\TransmitterBundle\Entity\Attribution;
@@ -22,7 +21,7 @@ class TransmitterController extends Controller
     /**
      * Displays a form to create a new Transmitter entity.
      *
-     * @Route("/new/{id}", name="transmitter_new")
+     * @Route(path="/new/{id}", name="transmitter_new")
      * @Template()
      */
     public function newAction(Attribution $attribution)
@@ -44,8 +43,7 @@ class TransmitterController extends Controller
     /**
      * Creates a new Transmitter entity.
      *
-     * @Route("/create/{id}", name="transmitter_create")
-     * @Method("POST")
+     * @Route(path="/create/{id}", name="transmitter_create", methods={"POST"})
      * @Template()
      */
     public function createAction(Request $request, Attribution $attribution)
@@ -76,7 +74,7 @@ class TransmitterController extends Controller
     /**
      * Displays a form to edit an existing Transmitter entity.
      *
-     * @Route("/{id}/edit", name="transmitter_edit")
+     * @Route(path="/{id}/edit", name="transmitter_edit")
      * @Template()
      */
     public function editAction($id)
@@ -107,9 +105,8 @@ class TransmitterController extends Controller
     /**
      * Edits an existing Transmitter entity.
      *
-     * @Route("/{id}/update", name="transmitter_update")
-     * @Method("POST")
-     * @Template("JLMTransmitterBundle:Transmitter:create.html.twig")
+     * @Route(path="/{id}/update", name="transmitter_update",methods={"POST"})
+     * @Template("@JLMTransmitter/transmitter/create.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -150,7 +147,7 @@ class TransmitterController extends Controller
     /**
      * Unactive Transmitter entity.
      *
-     * @Route("/{id}/unactive", name="transmitter_unactive")
+     * @Route(path="/{id}/unactive", name="transmitter_unactive")
      */
     public function unactiveAction(Transmitter $entity)
     {
@@ -167,7 +164,7 @@ class TransmitterController extends Controller
     /**
      * Reactive Transmitter entity.
      *
-     * @Route("/{id}/reactive", name="transmitter_reactive")
+     * @Route(path="/{id}/reactive", name="transmitter_reactive")
      */
     public function reactiveAction(Transmitter $entity)
     {

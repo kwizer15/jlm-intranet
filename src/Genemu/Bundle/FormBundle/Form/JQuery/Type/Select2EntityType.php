@@ -45,7 +45,7 @@ class Select2EntityType extends AbstractType
         // Adds a custom block prefix
         array_splice(
             $view->vars['block_prefixes'],
-            array_search($this->getName(), $view->vars['block_prefixes'], true),
+            array_search($this->getBlockPrefix(), $view->vars['block_prefixes'], true),
             0,
             'genemu_jqueryselect2'
         );

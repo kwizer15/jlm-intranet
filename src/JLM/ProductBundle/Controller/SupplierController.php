@@ -95,7 +95,7 @@ class SupplierController extends Controller
     /**
      * Creates a new Supplier entity.
      *
-     * @Template("JLMProductBundle:Supplier:new.html.twig")
+     * @Template("@JLMProduct/supplier/new.html.twig")
      * @param Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -146,7 +146,7 @@ class SupplierController extends Controller
     /**
      * Edits an existing Supplier entity.
      *
-     * @Template("JLMProductBundle:Supplier:edit.html.twig")
+     * @Template("@JLMProduct/supplier/edit.html.twig")
      * @param Request $request
      * @param $id
      *

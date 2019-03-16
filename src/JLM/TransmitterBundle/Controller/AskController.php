@@ -3,8 +3,7 @@
 namespace JLM\TransmitterBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\TransmitterBundle\Entity\Ask;
 use JLM\TransmitterBundle\Form\Type\AskType;
@@ -21,7 +20,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
     /**
      * Finds and displays a Ask entity.
      *
-     * @Route("/{id}/show", name="transmitter_ask_show")
+     * @Route(path="/{id}/show", name="transmitter_ask_show")
      * @Template()
      */
     public function showAction($id)
@@ -45,7 +44,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
     /**
      * Displays a form to create a new Ask entity.
      *
-     * @Route("/new", name="transmitter_ask_new")
+     * @Route(path="/new", name="transmitter_ask_new")
      * @Template()
      */
     public function newAction()
@@ -65,9 +64,8 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
     /**
      * Creates a new Ask entity.
      *
-     * @Route("/create", name="transmitter_ask_create")
-     * @Method("POST")
-     * @Template("JLMTransmitterBundle:Ask:new.html.twig")
+     * @Route(path="/create", name="transmitter_ask_create",methods={"POST"})
+     * @Template("@JLMTransmitter/ask/new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -94,7 +92,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
     /**
      * Displays a form to edit an existing Ask entity.
      *
-     * @Route("/{id}/edit", name="transmitter_ask_edit")
+     * @Route(path="/{id}/edit", name="transmitter_ask_edit")
      * @Template()
      */
     public function editAction($id)
@@ -120,9 +118,8 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
     /**
      * Edits an existing Ask entity.
      *
-     * @Route("/{id}/update", name="transmitter_ask_update")
-     * @Method("POST")
-     * @Template("JLMTransmitterBundle:Ask:edit.html.twig")
+     * @Route(path="/{id}/update", name="transmitter_ask_update",methods={"POST"})
+     * @Template("@JLMTransmitter/ask/edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -160,8 +157,8 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
     /**
      * Lists all Ask entities.
      *
-     * @Route("/page/{page}", name="transmitter_ask_page")
-     * @Route("/", name="transmitter_ask")
+     * @Route(path="/page/{page}", name="transmitter_ask_page")
+     * @Route(path="/", name="transmitter_ask")
      * @Template()
      */
     public function indexAction($page = 1)
@@ -176,9 +173,9 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
     /**
      * Lists all treated Ask entities.
      *
-     * @Route("/treated", name="transmitter_ask_treated")
-     * @Route("/treated/page/{page}", name="transmitter_ask_treated_page")
-     * @Template("JLMTransmitterBundle:Ask:index.html.twig")
+     * @Route(path="/treated", name="transmitter_ask_treated")
+     * @Route(path="/treated/page/{page}", name="transmitter_ask_treated_page")
+     * @Template("@JLMTransmitter/ask/index.html.twig")
      */
     public function listtreatedAction($page = 1)
     {
@@ -192,9 +189,9 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
     /**
      * Lists all untreated Ask entities.
      *
-     * @Route("/untreated", name="transmitter_ask_untreated")
-     * @Route("/untreated/page/{page}", name="transmitter_ask_untreated_page")
-     * @Template("JLMTransmitterBundle:Ask:index.html.twig")
+     * @Route(path="/untreated", name="transmitter_ask_untreated")
+     * @Route(path="/untreated/page/{page}", name="transmitter_ask_untreated_page")
+     * @Template("@JLMTransmitter/ask/index.html.twig")
      */
     public function listuntreatedAction($page = 1)
     {
@@ -236,7 +233,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
     /**
      * Cancel the no-treatement ok Ask entities.
      *
-     * @Route("/canceldonttreat/{id}", name="transmitter_ask_canceldonttreat")
+     * @Route(path="/canceldonttreat/{id}", name="transmitter_ask_canceldonttreat")
      * @Template()
      *
      * @param Request $request
@@ -254,7 +251,7 @@ class AskController extends \JLM\OfficeBundle\Controller\AskController
     /**
      * Display Sidebar
      *
-     * @Route("/sidebar", name="transmitter_ask_sidebar")
+     * @Route(path="/sidebar", name="transmitter_ask_sidebar")
      * @Template()
      */
     public function sidebarAction()

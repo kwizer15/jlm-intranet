@@ -12,7 +12,7 @@ class RegistrationController extends BaseController
 {
     public function registerAction(Request $request)
     {
-        $service = (Kernel::MAJOR_VERSION == 2 && Kernel::MINOR_VERSION > 3)
+        $service = (Kernel::MAJOR_VERSION === 2 && Kernel::MINOR_VERSION > 3)
             ? 'security.token_storage'
             : 'security.context'
         ;

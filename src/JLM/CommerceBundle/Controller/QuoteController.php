@@ -55,7 +55,7 @@ class QuoteController extends Controller
         $pagination = $paginator->paginate('getCount' . $method, 'get' . $method, 'quote', ['state' => $state, 'view' => $view]);
 
         return $templating->renderResponse(
-            'JLMCommerceBundle:Quote:' . $view . '.html.twig',
+            '@JLMCommerce/quote/' . $view . '.html.twig',
             $pagination
         );
     }
@@ -73,7 +73,7 @@ class QuoteController extends Controller
         $entity = $repository->find($id);
 
         return $templating->renderResponse(
-            'JLMCommerceBundle:Quote:show.html.twig',
+            '@JLMCommerce/quote/show.html.twig',
             ['entity' => $entity]
         );
     }
@@ -133,7 +133,7 @@ class QuoteController extends Controller
         }
 
         return $templating->renderResponse(
-            'JLMCommerceBundle:Quote:new.html.twig',
+            '@JLMCommerce/quote/new.html.twig',
             [
                 'form' => $form->createView(),
             ]
@@ -177,7 +177,7 @@ class QuoteController extends Controller
         }
 
         return $templating->renderResponse(
-            'JLMCommerceBundle:Quote:edit.html.twig',
+            '@JLMCommerce/quote/edit.html.twig',
             [
                 'entity' => $entity,
                 'edit_form' => $form->createView(),
@@ -198,7 +198,7 @@ class QuoteController extends Controller
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
-        $template = 'JLMCommerceBundle:Quote:search.html.twig';
+        $template = '@JLMCommerce/quote/search.html.twig';
         $formData = $request->get('jlm_core_search');
 
         if (\is_array($formData) && array_key_exists('query', $formData)) {
@@ -229,7 +229,7 @@ class QuoteController extends Controller
 
         return $manager->renderPdf(
             $filename,
-            'JLMCommerceBundle:Quote:quote.pdf.php',
+            '@JLMCommerce/quote/quote.pdf.php',
             ['entities' => [$entity->getVariants()]]
         );
     }
@@ -244,7 +244,7 @@ class QuoteController extends Controller
         $entity = $manager->getEntity($id);
         $filename = $entity->getNumber() . '-jacket.pdf';
 
-        return $manager->renderPdf($filename, 'JLMCommerceBundle:Quote:jacket.pdf.php', ['entity' => $entity]);
+        return $manager->renderPdf($filename, '@JLMCommerce/quote/jacket.pdf.php', ['entity' => $entity]);
     }
 
     /**
@@ -260,10 +260,10 @@ class QuoteController extends Controller
         $mail = new Mail();
         $mail->setSubject('Devis n°' . $entity->getNumber());
         $mail->setFrom('commerce@jlm-entreprise.fr');
-        $mail->setBody($templating->renderView('JLMCommerceBundle:Quote:email.txt.twig', ['entity' => $entity]));
+        $mail->setBody($templating->renderView('@JLMCommerce/quote/email.txt.twig', ['entity' => $entity]));
         $mail->setSignature(
             $templating->renderView(
-                'JLMCommerceBundle:QuoteVariant:emailsignature.txt.twig',
+                '@JLMCommerce/quote_variant/emailsignature.txt.twig',
                 ['name' => $entity->getFollowerCp()]
             )
         );
@@ -277,7 +277,7 @@ class QuoteController extends Controller
         $form = $manager->getFormFactory()->create(MailType::class, $mail);
 
         return $manager->renderResponse(
-            'JLMCommerceBundle:Quote:mail.html.twig',
+            '@JLMCommerce/quote/mail.html.twig',
             [
                 'entity' => $entity,
                 'form' => $form->createView(),
@@ -320,7 +320,7 @@ class QuoteController extends Controller
                     $message->attach(
                         \Swift_Attachment::newInstance(
                             $manager->renderResponse(
-                                'JLMCommerceBundle:Quote:quote.pdf.php',
+                                '@JLMCommerce/quote/quote.pdf.php',
                                 ['entities' => [$variant]]
                             ),
                             $variant->getNumber() . '.pdf',

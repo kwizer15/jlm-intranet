@@ -70,7 +70,7 @@ class FeeController extends Controller
      *
      * @Route("/create", name="fee_create")
      * @Method("post")
-     * @Template("JLMModelBundle:Fee:new.html.twig")
+     * @Template("@JLMModel/fee/new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -117,7 +117,7 @@ class FeeController extends Controller
      *
      * @Route("/{id}/update", name="fee_update")
      * @Method("post")
-     * @Template("JLMModelBundle:Fee:edit.html.twig")
+     * @Template("@JLMModel/fee/edit.html.twig")
      * @param Request $request
      * @param Fee     $entity
      *

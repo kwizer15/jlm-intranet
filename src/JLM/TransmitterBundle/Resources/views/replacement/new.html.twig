@@ -1,0 +1,7 @@
+{% set id = 'modalNewTransmitterReplacement' %}
+{% set action = path('transmitter_replacement_create',{'id':entity.attribution.id}) %}
+{% set title = 'Nouveau remplacement d\'émetteur' %}
+{% extends '@JLMDefault/helpers/modalform.html.twig' %}
+{% block body %}
+	{% include '@JLMTransmitter/replacement/create.html.twig' %}
+{% endblock %}

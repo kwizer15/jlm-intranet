@@ -51,12 +51,12 @@
 		        					<ul class="dropdown-menu">
 		        						<li><a href="{{ path('askquote_new') }}">{{ 'plus-sign'|icon }} Nouvelle demande de devis</a></li>
 		        						<li class="divider"></li>
-		        						{% include 'JLMOfficeBundle:Askquote:sidebar.html.twig' %}
+		        						{% include '@JLMOffice/askquote/sidebar.html.twig' %}
 		        					</ul>
 		        				</li>
 		        				<li><a href="{{ path('variant_boost') }}">Relances</a></li>
 		        				<li class="divider"></li>
-		        			{% include 'JLMCommerceBundle:Quote:sidebar.html.twig' %}
+		        			{% include '@JLMCommerce/quote/sidebar.html.twig' %}
 		        			</ul>
 		        		</li>
 		        		<li class="dropdown-submenu">
@@ -64,7 +64,7 @@
 		        			<ul class="dropdown-menu">
 		        			{#	<li><a href="{{ path('order_new') }}">{{ 'plus-sign'|icon }} Nouvelle fiche</a></li>
 								<li class="divider"></li> #}
-								{% include 'JLMOfficeBundle:Order:sidebar.html.twig' %} 
+								{% include '@JLMOffice/order/sidebar.html.twig' %}
 		        			</ul>
 		        		</li>
                         <li class="dropdown-submenu">
@@ -72,7 +72,7 @@
 		        			<ul class="dropdown-menu">
 				        		<li><a href="{{ path('bill_new') }}">{{ 'plus-sign'|icon }} Nouvelle facture</a></li>
 				        		<li class="divider"></li>
-				        		{% include 'JLMCommerceBundle:Bill:sidebar.html.twig' %}
+				        		{% include '@JLMCommerce/bill/sidebar.html.twig' %}
 		        			</ul>
 		        		</li>
                         <li class="dropdown-submenu">

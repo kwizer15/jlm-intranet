@@ -14,7 +14,7 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 remember_me: true
             remember_me:
-                secret: %secret%
+                secret: "%secret%"
             logout:       true
             anonymous:    true
 

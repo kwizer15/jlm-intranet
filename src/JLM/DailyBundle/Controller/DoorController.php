@@ -2,6 +2,7 @@
 
 namespace JLM\DailyBundle\Controller;
 
+use JLM\ModelBundle\Form\Type\DoorTagType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -38,7 +39,7 @@ class DoorController extends Controller
     private function createCodeForm(Door $door)
     {
         $form = $this->createForm(
-            new \JLM\ModelBundle\Form\Type\DoorTagType(),
+            DoorTagType::class,
             $door,
             [
              'action' => $this->generateUrl('model_door_update_code', ['id' => $door->getId()]),
@@ -79,7 +80,7 @@ class DoorController extends Controller
     /**
      * Displays Doors stopped
      *
-     * @Template("JLMDailyBundle:Door:stopped.html.twig")
+     * @Template("@JLMDaily/door/stopped.html.twig")
      */
     public function stopupdateAction(Request $request, DoorStop $entity)
     {
@@ -115,7 +116,7 @@ class DoorController extends Controller
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', 'inline; filename=portes-arret.pdf');
         $response->setContent($this->render(
-            'JLMDailyBundle:Door:printstopped.pdf.php',
+            '@JLMDaily/door/printstopped.pdf.php',
             ['entities' => $doors]
         ));
         return $response;
@@ -124,7 +125,7 @@ class DoorController extends Controller
     /**
      * Stop door
      *
-     * @Template("JLMDailyBundle:Door:show.html.twig")
+     * @Template("@JLMDaily/door/show.html.twig")
      */
     public function stopAction(Door $entity)
     {
@@ -146,7 +147,7 @@ class DoorController extends Controller
     /**
      * Unstop door
      *
-     * @Template("JLMDailyBundle:Door:show.html.twig")
+     * @Template("@JLMDaily/door/show.html.twig")
      */
     public function unstopAction(Door $entity)
     {

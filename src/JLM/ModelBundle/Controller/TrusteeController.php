@@ -96,7 +96,7 @@ class TrusteeController extends Controller
     /**
      * Creates a new Trustee entity.
      *
-     * @Template("JLMModelBundle:Trustee:new.html.twig")
+     * @Template("@JLMModel/trustee/new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -144,7 +144,7 @@ class TrusteeController extends Controller
     /**
      * Edits an existing Trustee entity.
      *
-     * @Template("JLMModelBundle:Trustee:edit.html.twig")
+     * @Template("@JLMModel/trustee/edit.html.twig")
      */
     public function updateAction(Request $request, Trustee $entity)
     {
@@ -225,7 +225,7 @@ class TrusteeController extends Controller
     /**
      * Creates a new Trustee entity.
      *
-     * @Template("JLMModelBundle:Trustee:contactnew.html.twig")
+     * @Template("@JLMModel/trustee/contactnew.html.twig")
      * @param Request $request
      * @param Trustee $trustee
      *

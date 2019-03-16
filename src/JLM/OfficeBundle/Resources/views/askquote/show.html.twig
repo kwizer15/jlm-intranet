@@ -1,0 +1,65 @@
+{% extends "@JLMOffice/askquote/layout.html.twig" %}
+
+{% block content %}
+<h1>Demande de devis</h1>
+<div class="row-fluid">
+    <div class="span5">
+    	<strong>Demande du {{ entity.creation | date('d/m/Y') }} par {{ entity.method }}
+    	<br>Échéance le : {{ entity.maturity | date('d/m/Y') }}
+        <br><br>{% if entity.door %}{{ entity.door | nl2br }}{% else %}{{ entity.site | nl2br }}{% endif %}</strong>
+    </div>
+    <div class="span5 offset2 well">
+    	<strong>{{ entity.trustee }}</strong>
+        <br>{{ entity.trustee.address | nl2br  }}
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span12 well">
+		<h4>Objet :</h4>
+		<p>{{ entity.ask | nl2br}}</p>
+	</div>
+</div>
+<div class="form-actions">
+	{% if entity.webPath %}<a href="/{{ entity.webPath }}" class="btn btn-info">{{ 'file'|icon(true) }} Fichier joint</a>
+	{% else %}<a href="#" class="btn btn-info disabled">{{ 'file'|icon(true) }} Pas de fichier joint</a>
+	{% endif %}
+	<a href="{{ path('quote_new',{'ask':entity.id}) }}" class="btn btn-success">{{ 'plus-sign'|icon(true) }} Nouveau devis</a>
+	{% if not entity.quotes|length and entity.dontTreat is null %}
+	<a href="#modalDontTreat" data-toggle="modal" class="btn btn-danger">{{ 'remove'|icon(true) }} Ne pas traiter</a>
+	{# Modal #}
+	<form id="modalDontTreat" action="{{ path('askquote_donttreat',{'id':entity.id}) }}" method="post" class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalDontTreatLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="modalDontTreatLabel">Ne pas traiter la demande</h3>
+		</div>
+		<div class="modal-body">
+			{{ form_widget(form_donttreat) }}
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+			<button type="submit" class="btn btn-primary">{{ 'pencil'|icon(true) }} Enregistrer</button>
+		</div>
+	</form>
+	
+	{% elseif entity.dontTreat is not null %}
+	<a href="{{ path('askquote_canceldonttreat',{'id':entity.id}) }}" class="btn btn-danger active">{{ 'remove'|icon(true) }} Ne pas traiter</a>
+	{% else %}
+	<a href="#" class="btn btn-danger disabled">{{ 'remove'|icon(true) }} Ne pas traiter</a>
+	{% endif %}
+</div>
+{% if entity.quotes|length %}
+<h4>Devis</h4>
+<ul>
+	{% for quote in entity.quotes %}
+	<li><a href="{{ path('quote_show',{'id':quote.id}) }}">Devis n°{{ quote.number }}</a>
+	{% include '@JLMCommerce/quote/statelabel.html.twig' with {'state': quote.state} %}
+	</li>
+	{% endfor %}
+</ul>
+{% else %}
+<h4>Non traité</h4>
+{% if entity.dontTreat %}
+<p>{{ entity.dontTreat | nl2br }}</p>
+{% endif %}
+{% endif %}
+{% endblock %}

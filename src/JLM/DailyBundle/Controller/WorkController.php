@@ -49,7 +49,7 @@ class WorkController extends AbstractInterventionController
                 ]
             )
             : $manager->renderResponse(
-                'JLMDailyBundle:Work:list.html.twig',
+                '@JLMDaily/work/list.html.twig',
                 $manager->pagination($request, 'getCountOpened', 'getOpened', 'work_list', [])
             );
     }
@@ -69,7 +69,7 @@ class WorkController extends AbstractInterventionController
     /**
      * Displays a form to create a new Work entity.
      *
-     * @Template("JLMDailyBundle:Work:new.html.twig")
+     * @Template("@JLMDaily/work/new.html.twig")
      */
     public function newdoorAction(Door $door)
     {
@@ -107,7 +107,7 @@ class WorkController extends AbstractInterventionController
     /**
      * Displays a form to create a new Work entity.
      *
-     * @Template("JLMDailyBundle:Work:new.html.twig")
+     * @Template("@JLMDaily/work/new.html.twig")
      */
     public function newquoteAction(QuoteVariant $quote)
     {
@@ -153,7 +153,7 @@ class WorkController extends AbstractInterventionController
     /**
      * Creates a new Work entity.
      *
-     * @Template("JLMDailyBundle:Work:new.html.twig")
+     * @Template("@JLMDaily/work/new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -202,7 +202,7 @@ class WorkController extends AbstractInterventionController
     /**
      * Edits an existing Work entity.
      *
-     * @Template("JLMDailyBundle:Work:edit.html.twig")
+     * @Template("@JLMDaily/work/edit.html.twig")
      */
     public function updateAction(Request $request, Work $entity)
     {

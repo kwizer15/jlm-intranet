@@ -93,7 +93,7 @@ class BusinessController extends Controller
         }
 
         return $this->render(
-            'JLMFrontBundle:Business:list.html.twig',
+            '@JLMFront/business/list.html.twig',
             [
                 'manager' => $manager,
                 'businesses' => $sites,

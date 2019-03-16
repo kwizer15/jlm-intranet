@@ -1,0 +1,15 @@
+{# @JLMDaily/maintenance/close.html.twig #}
+
+<form id="modalClose{{ entity.id }}" action="{{ path('maintenance_closeupdate',{'id':entity.id}) }}" method="post" class="form-horizontal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalClose{{ entity.id }}Label" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="modalClose{{ entity.id }}Label">Cloture de l'entretien</h3>
+	</div>
+	<div class="modal-body">
+		{{ form_widget(form) }}
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+		<button type="submit" class="btn btn-primary">{{ 'pencil'|icon(true) }} Enregistrer</button>
+	</div>
+</form>

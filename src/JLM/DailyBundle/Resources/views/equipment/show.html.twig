@@ -1,0 +1,60 @@
+{# @JLMDaily/fixing/show.html.twig #}
+{% extends "JLMDailyBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Matériel</h1>
+<h2><small>Lieu</small></h2>
+<p>{{ entity.place }}</p>
+<h2><small>Raison</small></h2>
+<p>{{ entity.reason }}</p>
+<h2><small>Techniciens</small></h2>
+{% if entity.shiftTechnicians|length > 0 %}
+<table class="table table-stripped">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th>Technicien</th>
+			<th>Heures</th>
+			<th>Temps</th>
+			<th>Commentaire</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for shift in entity.shiftTechnicians %}
+		<tr>
+			<td>{{ shift.begin | date('d/m/Y') }}</td>
+			<td>{{ shift.technician }}</td>
+			<td>{% if shift.begin | date('H:i') != '00:00' %}de {{ shift.begin | date('H:i') }}{% endif %}{% if shift.end %} à {{ shift.end | date('H:i') }}{% endif %}</td>
+			<td>{% if shift.end %}{{ shift.time.format('%hh%I') }}{% endif %}</td>
+			<td>{{ shift.comment | nl2br}}</td>
+			<td>
+				<a href="#modalEditTech{{ shift.id }}" data-toggle="modal" role="button" class="btn btn-warning">{{ 'wrench'|icon(true) }}</a>
+				{{ render(controller('@JLMDaily/shifting/edit',{'id':shift.id})) }}
+				</td>
+		</tr>
+	</tbody>
+		{% endfor %}
+	<tfoot>
+		<tr>
+			<th></th>
+			<th>Total</th>
+			<th></th>
+			<th>{{ entity.totalTime.format('%hh%I') }}</th>
+			<th></th>
+			<th></th>
+		</tr>
+	</tfoot>
+</table>
+{% else %}
+<p>Aucun</p>
+{% endif %}
+
+<div class="form-actions">
+    <a href="{{ previous }}" class="btn">{{ 'arrow-left'|icon }} Retour à la liste</a>
+	<a href="#modalEdit{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-warning">{{ 'pencil'|icon(true) }} Editer</a>
+	{{ render(controller('@JLMDaily/equipment/edit',{'id':entity.id})) }}
+	<a href="#modalDelete{{ entity.id }}" role="button" data-toggle="modal" class="btn btn-danger">{{ 'remove'|icon(true) }} Supprimer</a>
+	{% include '@JLMDaily/intervention/delete.html.twig' with {'id':entity.id} %}
+</div>
+{% endblock %}

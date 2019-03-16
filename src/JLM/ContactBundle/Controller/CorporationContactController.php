@@ -62,7 +62,7 @@ class CorporationContactController implements ContainerAwareInterface
         } else {
             $template = $ajax ? 'modal_new.html.twig' : 'new.html.twig';
             $response = $manager->renderResponse(
-                'JLMContactBundle:CorporationContact:' . $template,
+                '@JLMContact/corporation_contact/' . $template,
                 ['form' => $form->createView()]
             );
         }
@@ -94,7 +94,7 @@ class CorporationContactController implements ContainerAwareInterface
         $template = $ajax ? 'modal_delete.html.twig' : 'delete.html.twig';
 
         return $manager->renderResponse(
-            'JLMContactBundle:CorporationContact:' . $template,
+            '@JLMContact/corporation_contact/' . $template,
             ['form' => $form->createView()]
         );
     }

@@ -27,23 +27,23 @@ abstract class AbstractHiddenType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $cl = $this->getTransformerClass();
         $transformer = new $cl($this->om);
         $builder->addModelTransformer($transformer);
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return HiddenType::class;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
-                'invalid_message' => 'The selected ' . $this->getName() . ' does not exist',
+                'invalid_message' => 'The selected ' . static::class . ' does not exist',
             ]
         );
     }

@@ -38,11 +38,11 @@ class DefaultController extends Controller
             $mailer->sendContactEmailMessage($form->getData());
             $mailer->sendConfirmContactEmailMessage($form->getData());
 
-            return $this->render('JLMFrontBundle:Default:contact_confirm.html.twig');
+            return $this->render('@JLMFront/default/contact_confirm.html.twig');
         }
 
         return $this->render(
-            'JLMFrontBundle:Default:contact.html.twig',
+            '@JLMFront/default/contact.html.twig',
             [
                 'form' => $form->createView(),
             ]
@@ -58,6 +58,6 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Cette installation n\'existe pas');
         }
 
-        return $this->render('JLMFrontBundle:Default:installation.html.twig', ['door' => $entity]);
+        return $this->render('@JLMFront/default/installation.html.twig', ['door' => $entity]);
     }
 }

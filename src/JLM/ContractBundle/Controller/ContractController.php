@@ -35,7 +35,7 @@ class ContractController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entities = $manager->getRepository()->findAll();
 
-        return $manager->renderResponse('JLMContractBundle:Contract:index.html.twig', ['entities' => $entities]);
+        return $manager->renderResponse('@JLMContract/contract/index.html.twig', ['entities' => $entities]);
     }
 
     /**
@@ -47,7 +47,7 @@ class ContractController extends Controller
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $entity = $manager->getEntity($id);
 
-        return $manager->renderResponse('JLMContractBundle:Contract:show.html.twig', ['entity' => $entity]);
+        return $manager->renderResponse('@JLMContract/contract/show.html.twig', ['entity' => $entity]);
     }
 
     /**
@@ -69,8 +69,8 @@ class ContractController extends Controller
         }
 
         $template = $ajax
-            ? 'JLMContractBundle:Contract:modal_new.html.twig'
-            : 'JLMContractBundle:Contract:new.html.twig';
+            ? '@JLMContract/contract/modal_new.html.twig'
+            : '@JLMContract/contract/new.html.twig';
 
         return $manager->renderResponse(
             $template,
@@ -97,8 +97,8 @@ class ContractController extends Controller
             return $ajax ? $manager->renderJson([])
                 : $manager->redirect($this->generateUrl('door_show', ['id' => $entity->getDoor()->getId()]));
         }
-        $template = $ajax ? 'JLMContractBundle:Contract:modal_edit.html.twig'
-            : 'JLMContractBundle:Contract:edit.html.twig';
+        $template = $ajax ? '@JLMContract/contract/modal_edit.html.twig'
+            : '@JLMContract/contract/edit.html.twig';
 
         return $manager->renderResponse(
             $template,

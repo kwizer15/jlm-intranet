@@ -59,7 +59,7 @@ class TransmitterTypeController extends Controller
     /**
      * Creates a new TransmitterType entity.
      *
-     * @Template("JLMModelBundle:TransmitterType:new.html.twig")
+     * @Template("@JLMModel/transmitter_type/new.html.twig")
      * @param Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -105,7 +105,7 @@ class TransmitterTypeController extends Controller
     /**
      * Edits an existing TransmitterType entity.
      *
-     * @Template("JLMModelBundle:TransmitterType:edit.html.twig")
+     * @Template("@JLMModel/transmitter_type/edit.html.twig")
      * @param Request $request
      * @param TransmitterType $entity
      *

@@ -246,7 +246,7 @@ class DefaultController extends Controller
         $entities = $manager->getRepository()->get45Sended();
 
         return $manager->renderResponse(
-            'JLMStateBundle:Default:lastbill.html.twig',
+            '@JLMState/default/lastbill.html.twig',
             [
                 'entities' => $entities,
                 'caht' => array_reduce(
@@ -279,7 +279,7 @@ class DefaultController extends Controller
         $entities = $manager->getRepository()->getSendedMore45();
 
         return $manager->renderResponse(
-            'JLMStateBundle:Default:lastbill.html.twig',
+            '@JLMState/default/lastbill.html.twig',
             [
                 'entities' => $entities,
                 'caht' => array_reduce(

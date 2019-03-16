@@ -91,7 +91,7 @@ class SiteController extends Controller
     /**
      * Creates a new Site entity.
      *
-     * @Template("JLMModelBundle:Site:new.html.twig")
+     * @Template("@JLMModel/site/new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -136,7 +136,7 @@ class SiteController extends Controller
     /**
      * Edits an existing Site entity.
      *
-     * @Template("JLMModelBundle:Site:edit.html.twig")
+     * @Template("@JLMModel/site/edit.html.twig")
      */
     public function updateAction(Request $request, Site $entity)
     {

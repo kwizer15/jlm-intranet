@@ -1,0 +1,16 @@
+{% extends "@JLMTransmitter/ask/layout.html.twig" %}
+
+{% block content %}
+<h1>Edition d'attribution d'émetteurs</h1>
+{% if form_errors(edit_form) %}
+<div class="alert">{{ form_errors(edit_form) }}</div>
+{% endif %}
+<form action="{{ path('transmitter_attribution_update', { 'id': entity.id }) }}" method="post" class="form-horizontal">
+	<filedset>
+    {{ form_widget(edit_form) }}
+	    <div class="form-actions">
+	    	<button type="submit" class="btn btn-primary">Enregistrer</button>
+	    </div>
+    </filedset>
+</form>
+{% endblock %}

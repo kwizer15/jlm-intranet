@@ -5,8 +5,7 @@ namespace JLM\TransmitterBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\TransmitterBundle\Entity\UserGroup;
 use JLM\TransmitterBundle\Form\Type\UserGroupType;
@@ -16,14 +15,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * UserGroup controller.
  *
- * @Route("/usergroup")
+ * @Route(path="/usergroup")
  */
 class UserGroupController extends Controller
 {
     /**
      * Displays a form to create a new UserGroup entity.
      *
-     * @Route("/new/{id}", name="transmitter_usergroup_new")
+     * @Route(path="/new/{id}", name="transmitter_usergroup_new")
      * @Template()
      */
     public function newAction(Site $site)
@@ -43,8 +42,7 @@ class UserGroupController extends Controller
     /**
      * Creates a new UserGroup entity.
      *
-     * @Route("/create", name="transmitter_usergroup_create")
-     * @Method("POST")
+     * @Route(path="/create", name="transmitter_usergroup_create",methods={"POST"})
      * @Template()
      */
     public function createAction(Request $request)
@@ -72,7 +70,7 @@ class UserGroupController extends Controller
     /**
      * Displays a form to edit an existing UserGroup entity.
      *
-     * @Route("/{id}/edit", name="transmitter_usergroup_edit")
+     * @Route(path="/{id}/edit", name="transmitter_usergroup_edit")
      * @Template()
      */
     public function editAction($id)
@@ -98,9 +96,8 @@ class UserGroupController extends Controller
     /**
      * Edits an existing UserGroup entity.
      *
-     * @Route("/{id}/update", name="transmitter_usergroup_update")
-     * @Method("POST")
-     * @Template("JLMTransmitterBundle:UserGroup:edit.html.twig")
+     * @Route(path="/{id}/update", name="transmitter_usergroup_update",methods={"POST"})
+     * @Template("@JLMTransmitter/usergroup/edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -134,7 +131,7 @@ class UserGroupController extends Controller
     /**
      * Deletes a UserGroup entity.
      *
-     * @Route("/{id}/delete", name="transmitter_usergroup_delete")
+     * @Route(path="/{id}/delete", name="transmitter_usergroup_delete")
      */
     public function deleteAction(Request $request, $id)
     {
@@ -156,8 +153,7 @@ class UserGroupController extends Controller
     /**
      * Get Model ID UserGroup entity.
      *
-     * @Route("/{id}/defaultmodelid", name="transmitter_usergroup_defaultmodelid")
-     * @Method("POST")
+     * @Route(path="/{id}/defaultmodelid", name="transmitter_usergroup_defaultmodelid",methods={"POST"})
      */
     public function defaultmodelidAction($id)
     {

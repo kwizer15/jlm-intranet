@@ -1,0 +1,13 @@
+{% extends "@JLMCommerce/bill/layout.html.twig" %}
+
+{% block content %}
+<h1>Envoyer un e-mail</h1>
+<form action="{{ path('jlm_commerce_bill_boostemail',{'id': entity.id}) }}" method="post" class="form-horizontal">
+    <fieldset>
+      {{ form_widget(form) }}
+    </fieldset>
+    <div class="form-actions">
+	   <button type="submit" class="btn btn-primary">{{ 'share-alt'|icon(true) }} Envoyer</button>
+	</div>
+</form>
+{% endblock %}

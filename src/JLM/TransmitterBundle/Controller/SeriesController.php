@@ -5,8 +5,7 @@ namespace JLM\TransmitterBundle\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\TransmitterBundle\Entity\Series;
 use JLM\TransmitterBundle\Entity\Attribution;
@@ -23,7 +22,7 @@ class SeriesController extends Controller
     /**
      * Displays a form to create a new Series entity.
      *
-     * @Route("/new/{id}", name="transmitter_series_new")
+     * @Route(path="/new/{id}", name="transmitter_series_new")
      * @Template()
      */
     public function newAction(Attribution $attribution)
@@ -45,8 +44,7 @@ class SeriesController extends Controller
     /**
      * Creates a new Series entity.
      *
-     * @Route("/create/{id}", name="transmitter_series_create")
-     * @Method("POST")
+     * @Route(path="/create/{id}", name="transmitter_series_create",methods={"POST"})
      * @Template()
      */
     public function createAction(Request $request, Attribution $attribution)

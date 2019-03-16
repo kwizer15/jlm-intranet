@@ -70,7 +70,7 @@ class ProductCategoryController extends Controller
     /**
      * Creates a new ProductCategory entity.
      *
-     * @Template("JLMProductBundle:ProductCategory:new.html.twig")
+     * @Template("@JLMProduct/product_category/new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -118,7 +118,7 @@ class ProductCategoryController extends Controller
     /**
      * Edits an existing ProductCategory entity.
      *
-     * @Template("JLMProductBundle:ProductCategory:edit.html.twig")
+     * @Template("@JLMProduct:product_category:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {

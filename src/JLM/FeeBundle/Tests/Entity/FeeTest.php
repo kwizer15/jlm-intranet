@@ -15,6 +15,8 @@ use JLM\CommerceBundle\Model\VATInterface;
 use JLM\ContractBundle\Model\ContractInterface;
 use JLM\FeeBundle\Entity\Fee;
 use JLM\ModelBundle\Entity\Trustee;
+use JLM\ModelBundle\Entity\Site;
+use JLM\ModelBundle\Entity\Door;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -199,11 +201,11 @@ class FeeTest extends \PHPUnit\Framework\TestCase
     public function testGetGroup()
     {
         $number = '12345';
-        $site = $this->createMock('JLM\ModelBundle\Entity\Site');
+        $site = $this->createMock(Site::class);
         $site->expects($this->once())->method('getGroupNumber')->will($this->returnValue($number));
-        $door = $this->createMock('JLM\ModelBundle\Entity\Door');
-        $door->expects($this->once())->method('getSite')->will($this->returnValue($site));
-        $contract = $this->createMock('JLM\ContractBundle\Model\ContractInterface');
+        $door = $this->createMock(Door::class);
+        $door->expects($this->once())->method('getAdminitrator')->will($this->returnValue($site));
+        $contract = $this->createMock(ContractInterface::class);
         $contract->expects($this->once())->method('getDoor')->will($this->returnValue($door));
         $this->entity->addContract($contract);
         $this->assertSame($number, $this->entity->getGroup());

@@ -1,0 +1,87 @@
+{% extends "JLMModelBundle::layout.html.twig" %}
+
+{% block content %}
+<h1>Fiche installation</h1>
+{% if entity.stopped %}
+<div class="alert alert-danger"><h4>Porte à l'arrêt</h4></div>
+{% endif %}
+
+{% if entity.width and entity.height %}{{ entity.width }}x{{ entity.height }}mm</small>{% endif %}</h1>
+<div class="row-fluid">
+	<div class="span6">
+		
+		<h4><span class="text-info">{{ entity.type }} - {{ entity.location }}</span>
+		<br>{{ entity.street|nl2br }}
+		<br>{{ entity.site.address.city}}</h4>
+				<dl>
+		<dt>Modèle</dt>
+		<dd>{{ entity.modelName }}</dd>
+		<dt>Marquage CE</dt>
+		<dd>{{ entity.ceNumber }}</dd>
+		</dl>
+		<hr>
+		{% if entity.transmitters|length > 0 %}
+		<h5>Types d'emetteurs
+		{% if entity.observations %}
+		<br><small>{{ entity.observations }}</small>
+		{% endif %}</h5>
+		<ul>
+		{% for transmitter in entity.transmitters %}
+			<li><a href="{{ path('jlm_product_product_show',{'id':transmitter.id}) }}">{{ transmitter }}</a></li>
+		{% endfor %}
+		</ul>
+		{% else %}
+		<h5>Aucun emetteur</h5s>
+		{% endif %}
+
+	</div>
+	<div class="span6 well">
+	Coordonnées GPS : {{ entity.latitude }} / {{ entity.longitude }}<br>
+	{% if entity.googlemaps%}
+	{#}<iframe  src="{{ entity.mapsUrl }}"></iframe>
+	<iframe src="https://www.google.com/maps/embed?pb=!1m0!3m2!1sfr!2sfr!4v1469619531987!6m8!1m7!1sUD80EW2zQNlFfCF6F0bAGQ!2m2!1d48.87641794942784!2d2.315714129699205!3f104.23!4f0!5f0.7820865974627469" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+	<iframe src="https://www.google.com/maps/embed?pb=!1m0!3m2!1sfr!2sfr!4v1469619531987!6m8!1m7!1sUD80EW2zQNlFfCF6F0bAGQ!2m2!1d48.87641794942784!2d2.315714129699205!3f104.23!4f0!5f0.7820865974627469" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>	
+	             https://www.google.com/maps/embed?pb=!1m0!3m2!1sfr!2sfr!4v1469614639363!6m8!1m7!1sUD80EW2zQNlFfCF6F0bAGQ!2m2!1d48.87641794942784!2d2.315714129699205!3f104.23!4f0!5f0.7820865974627469
+	https://www.google.fr/maps/place/68+rue+de+miromesnil+75008+paris/@48.8764179,2.3157141,3a,75y,104.23h,90t/data=!3m7!1e1!3m4!1sUD80EW2zQNlFfCF6F0bAGQ!2e0!7i13312!8i6656!4b1!4m2!3m1!1s0x0:0xfa3a875c9f94e21c!6m1!1e1
+	{#}<iframe src="{{ entity.mapsUrl }}" width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="border:0" allowfullscreen></iframe>
+		
+	{% else %}
+	Pas de photo
+	{% endif %}
+	</div>
+</div>
+
+<div class="form-actions">
+	<a href="{{ path('site_show', { 'id': entity.site.id }) }}" class="btn">{{ 'arrow-left'|icon }} Retour à la fiche affaire</a>
+	<a href="{{ path('door_edit', { 'id': entity.id }) }}" class="btn btn-warning">{{ 'pencil'|icon(true) }} Editer</a>	
+</div>
+<h2><small>Contrats</small></h2>
+{% include '@JLMContract/contract/list.html.twig' with { 'contracts':contracts } %}
+<div class="form-actions">
+	<a id="contract-new" href="{{ path('jlm_contract_contract_new', {'door':entity.id}) }}" class="btn btn-success" role="button">{{ 'plus-sign'|icon(true) }} Ajouter un contrat</a>
+</div>
+{% endblock %}
+
+{% block modals%}
+{% for key,contract in contracts %}
+	{# include '@JLMContract/contract/edit.html.twig' with {'entity':contract,'edit_form':form_contractEdits[key] } #}
+	{# include '@JLMContract/contract/stop.html.twig' with {'entity':contract,'form':form_contractStops[key] } #}
+{% endfor %}
+{% endblock modals%}
+
+{% block javascripts %}
+{{ parent() }}
+{{ form_javascript(form_contractNew) }}
+{% for form in form_contractEdits %}
+{{ form_javascript(form) }}
+{% endfor %}
+{# for form in form_contractStops %}
+{{ form_javascript(form) }}
+{% endfor #}
+{% endblock %}
+
+{% block javascripts_script %}
+{{ parent() }}
+$("#contract-new").formModal();
+$(".contract-edit").formModal();
+{% endblock %}

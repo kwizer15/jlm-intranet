@@ -11,6 +11,7 @@
 
 namespace JLM\ModelBundle\Controller;
 
+use JLM\ModelBundle\Form\Type\DoorTagType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
@@ -115,7 +116,7 @@ class DoorController extends Controller
     /**
      * Creates a new Door entity.
      *
-     * @Template("JLMModelBundle:Door:new.html.twig")
+     * @Template("@JLMModel/door/new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -161,7 +162,7 @@ class DoorController extends Controller
     /**
      * Edits an existing Door entity.
      *
-     * @Template("JLMModelBundle:Door:edit.html.twig")
+     * @Template("@JLMModel/door/edit.html.twig")
      */
     public function updateAction(Request $request, Door $entity)
     {
@@ -219,7 +220,7 @@ class DoorController extends Controller
     private function createCodeForm(Door $door)
     {
         $form = $this->createForm(
-            new \JLM\ModelBundle\Form\Type\DoorTagType(),
+            DoorTagType::class,
             $door,
             [
                 'action' => $this->generateUrl('model_door_update_code', ['id' => $door->getId()]),

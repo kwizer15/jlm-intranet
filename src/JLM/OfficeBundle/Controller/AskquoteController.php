@@ -7,7 +7,7 @@ use JLM\DefaultBundle\Controller\PaginableController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\OfficeBundle\Form\Type\AskQuoteType;
@@ -19,12 +19,12 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * AskQuote controller.
  *
- * @Route("/quote/ask")
+ * @Route(path="/quote/ask")
  */
 class AskquoteController extends PaginableController
 {
     /**
-     * @Route("/", name="askquote")
+     * @Route(path="/", name="askquote")
      * @param Request $request
      *
      * @return Response
@@ -50,12 +50,12 @@ class AskquoteController extends PaginableController
         $pagination = $paginator->paginate($functionCount, $functionDatas, 'askquote', ['state' => $state]);
 
         return $templating->renderResponse(
-            'JLMOfficeBundle:Askquote:index.html.twig', $pagination
+            '@JLMOffice/askquote/index.html.twig', $pagination
         );
     }
     
     /**
-     * @Route("/{id}/show", name="askquote_show")
+     * @Route(path="/{id}/show", name="askquote_show")
      * @Template()
      */
     public function showAction(AskQuote $entity)
@@ -70,7 +70,7 @@ class AskquoteController extends PaginableController
     }
     
     /**
-     * @Route("/new", name="askquote_new")
+     * @Route(path="/new", name="askquote_new")
      * @Template()
      */
     public function newAction()
@@ -87,8 +87,8 @@ class AskquoteController extends PaginableController
     }
 
     /**
-     * @Route("/create", name="askquote_create")
-     * @Template("JLMOfficeBundle:Askquote:new.html.twig")
+     * @Route(path="/create", name="askquote_create")
+     * @Template("@JLMOffice/askquote/new.html.twig")
      *
      * @param Request $request
      *
@@ -120,7 +120,7 @@ class AskquoteController extends PaginableController
     }
 
     /**
-     * @Route("/{id}/donttreat", name="askquote_donttreat")
+     * @Route(path="/{id}/donttreat", name="askquote_donttreat")
      *
      * @param Request $request
      * @param AskQuote $entity
@@ -149,7 +149,7 @@ class AskquoteController extends PaginableController
     }
     
     /**
-     * @Route("/{id}/canceldonttreat", name="askquote_canceldonttreat")
+     * @Route(path="/{id}/canceldonttreat", name="askquote_canceldonttreat")
      */
     public function canceldonttreatAction(AskQuote $entity)
     {
@@ -168,7 +168,7 @@ class AskquoteController extends PaginableController
     /**
      * Imprimer la liste des demande de devis non-traités
      *
-     * @Route("/printlist", name="askquote_printlist")
+     * @Route(path="/printlist", name="askquote_printlist")
      */
     public function printlistAction()
     {
@@ -179,7 +179,7 @@ class AskquoteController extends PaginableController
         $response = new Response();
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', 'inline; filename=devis-a-faire.pdf');
-        $response->setContent($this->render('JLMOfficeBundle:Askquote:printlist.pdf.php', ['entities' => $entities]));
+        $response->setContent($this->render('@JLMOffice/askquote/printlist.pdf.php', ['entities' => $entities]));
 
         return $response;
     }
@@ -187,7 +187,7 @@ class AskquoteController extends PaginableController
     /**
      * Resultats de la barre de recherche.
      *
-     * @Route("/search", name="askquote_search")
+     * @Route(path="/search", name="askquote_search")
      *
      * @param Request $request
      *
@@ -207,10 +207,10 @@ class AskquoteController extends PaginableController
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
         $formData = $request->get('jlm_core_search');
         $params = [];
-        if (is_array($formData) && array_key_exists('query', $formData)) {
+        if (\is_array($formData) && array_key_exists('query', $formData)) {
             $params = ['entities' => $repository->search($formData['query'])];
         }
         
-        return $templating->renderResponse('JLMOfficeBundle:Askquote:index.html.twig', $params);
+        return $templating->renderResponse('@JLMOffice/askquote/index.html.twig', $params);
     }
 }
