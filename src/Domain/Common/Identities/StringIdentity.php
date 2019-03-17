@@ -24,7 +24,7 @@ class StringIdentity implements Identity
      */
     public static function fromString(string $id): Identity
     {
-        return new self($id);
+        return new static($id);
     }
 
     /**

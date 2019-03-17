@@ -57,7 +57,7 @@ abstract class DecimalValueType
      */
     final public static function fromString(string $value): DecimalValueType
     {
-        return self::fromFormat($value);
+        return static::fromFormat($value);
     }
 
     /**

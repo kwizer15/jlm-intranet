@@ -2,95 +2,56 @@
 
 namespace HM\Domain\Facturation\Entity;
 
-use HM\Domain\Common\Entity\AggregateRoot;
-use HM\Domain\Common\Identities\Identity;
+use HM\Domain\Common\Entity\AbstractAggregateRoot;
 use HM\Domain\Facturation\Event\FactureCreee;
-use HM\Domain\Facturation\Identities\ClientId;
 use HM\Domain\Facturation\Identities\NumeroFacture;
-use HM\Domain\Facturation\ValueType\AdressePostale;
+use HM\Domain\Facturation\Projection\FactureProjection;
 use HM\Domain\Facturation\ValueType\Date;
-use HM\Domain\Facturation\ValueType\Echeance;
-use HM\Domain\Facturation\ValueType\Nom;
-use HM\Domain\Facturation\ValueType\NumeroCompteClient;
+use HM\Domain\Facturation\ValueType\Destinataire;
 use HM\Domain\Facturation\ValueType\Reference;
+use HM\Domain\Facturation\ValueType\ReglesPaiment;
+use HM\Domain\Facturation\ValueType\TVA;
 
-class Facture implements AggregateRoot
+class Facture extends AbstractAggregateRoot
 {
-    /**
-     * @var Identity
-     */
-    private $numeroFacture;
-
-    /**
-     * @var ClientId
-     */
-    private $clientId;
+    protected const PROJECTION_CLASS = FactureProjection::class;
 
     /**
      * @param NumeroFacture $numeroFacture
      * @param Date $date
-     * @param ClientId $clientId
-     * @param Nom $clientNom
-     * @param NumeroCompteClient $numeroCompteClient
-     * @param AdressePostale $adresseDeFacturation
-     */
-    public function __construct(
-        NumeroFacture $numeroFacture,
-        Date $date,
-        ClientId $clientId,
-        Nom $clientNom,
-        NumeroCompteClient $numeroCompteClient,
-        AdressePostale $adresseDeFacturation
-    ) {
-        $this->numeroFacture = $numeroFacture;
-        $this->clientId = $clientId;
-    }
-
-    /**
-     * @return Identity
-     */
-    public function id(): Identity
-    {
-        return $this->numeroFacture;
-    }
-
-    /**
-     * @param NumeroFacture $numeroFacture
-     * @param Date $date
-     * @param ClientId $clientId
-     *
-     * @param Nom $clientNom
-     * @param NumeroCompteClient $numeroCompteClient
-     * @param AdressePostale $adresseDeFacturation
-     *
+     * @param Destinataire $destinataire
      * @param Reference $reference
-     *
-     * @param Echeance $echeance
+     * @param ReglesPaiment $reglesPaiment
+     * @param TVA $tvaApplicable
      *
      * @return Facture
      */
-    public function creerFacture(
+    public static function creerFacture(
         NumeroFacture $numeroFacture,
         Date $date,
-        ClientId $clientId,
-        Nom $clientNom,
-        NumeroCompteClient $numeroCompteClient,
-        AdressePostale $adresseDeFacturation,
+        Destinataire $destinataire,
         Reference $reference,
-        Echeance $echeance
+        ReglesPaiment $reglesPaiment,
+        TVA $tvaApplicable
     ): Facture {
+        $adresseDeFacturation = $destinataire->getAdresseDeFacturation();
+
         $event = new FactureCreee(
             $numeroFacture->toString(),
-            $date->toDateTimeImmutable(),
-            $clientId->toString(),
-            $clientNom->toString(),
-            $numeroCompteClient->toString(),
+            $date->toString(),
+            $destinataire->getClientId()->toString(),
+            $destinataire->getClientNom()->toString(),
+            $destinataire->getNumeroCompteClient()->toString(),
             $adresseDeFacturation->getRue(),
             $adresseDeFacturation->getCodePostal(),
             $adresseDeFacturation->getVille(),
             $reference->toString(),
-            $echeance->toInt(),
-
+            $reglesPaiment->getEcheance()->toInt(),
+            $reglesPaiment->getEscompte()->toString(),
+            $reglesPaiment->getPenaliteRetard()->toString(),
+            $tvaApplicable->toString()
         );
+
+        return (new self($numeroFacture))->apply($event);
     }
 }

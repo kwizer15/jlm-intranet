@@ -56,4 +56,28 @@ class Client implements Entity
     {
         return $this->id;
     }
+
+    /**
+     * @return Nom
+     */
+    public function getNom(): Nom
+    {
+        return $this->nom;
+    }
+
+    /**
+     * @return NumeroCompteClient
+     */
+    public function getNumeroCompteClient(): NumeroCompteClient
+    {
+        return $this->numeroCompteClient;
+    }
+
+    /**
+     * @return AdressePostale
+     */
+    public function getAdresseFacturation(): AdressePostale
+    {
+        return $this->adresseFacturation;
+    }
 }
