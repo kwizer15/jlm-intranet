@@ -18,7 +18,7 @@ help:
 phpmetrics: metrics/$(BRANCH)
 
 metrics/$(BRANCH): app src public vendor
-	$(PHPMETRICS) --report-html=metrics/$(BRANCH) ./
+	$(PHPMETRICS) --report-html=metrics/$(BRANCH) ./src
 
 vendor: composer.json
 	composer install

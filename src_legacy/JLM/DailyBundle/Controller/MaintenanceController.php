@@ -90,6 +90,11 @@ class MaintenanceController extends AbstractInterventionController
      * Close an existing Maintenance entity.
      *
      * @Template()
+     * @param Request $request
+     * @param Maintenance $entity
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
      */
     public function closeupdateAction(Request $request, Maintenance $entity)
     {
@@ -168,7 +173,7 @@ class MaintenanceController extends AbstractInterventionController
         $date = new \DateTime();
         $date->sub(new \DateInterval('P6M'));
         $em = $this->getDoctrine()->getManager();
-        $doors = $em->getRepository('JLMModelBundle:Door')->findAll();
+        $doors = $em->getRepository(Door::class)->findAll();
         $count = 0;
         $removed = 0;
         foreach ($doors as $door) {
@@ -227,9 +232,9 @@ class MaintenanceController extends AbstractInterventionController
         $em = $this->getDoctrine()->getManager();
 
         // Choper les entretiens à faire
-        $repo = $em->getRepository('JLMDailyBundle:Maintenance');
+        $repo = $em->getRepository(Maintenance::class);
         $maints = $repo->getOpened();
-        $repo = $em->getRepository('JLMDailyBundle:Ride');
+        $repo = $em->getRepository(Ride::class);
         $baseUrl = 'http://maps.googleapis.com/maps/api/distancematrix/json?sensor=false&language=fr-FR&origins='
             . $door->getCoordinates()
             . '&destinations=';
@@ -239,7 +244,7 @@ class MaintenanceController extends AbstractInterventionController
                 $url = $baseUrl . $dest->getCoordinates();
                 $string = file_get_contents($url);
                 $json = json_decode($string);
-                if ($json->status == 'OK'
+                if ($json->status === 'OK'
                     && isset($json->rows[0]->elements[0]->duration->value)
                     && isset($json->rows[0]->elements[0]->duration->value)
                 ) {

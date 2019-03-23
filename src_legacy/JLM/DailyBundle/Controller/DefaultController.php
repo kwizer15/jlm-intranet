@@ -2,6 +2,10 @@
 
 namespace JLM\DailyBundle\Controller;
 
+use JLM\DailyBundle\Entity\Intervention;
+use JLM\DailyBundle\Entity\Maintenance;
+use JLM\DailyBundle\Entity\Work;
+use JLM\ModelBundle\Entity\Door;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -29,7 +33,7 @@ class DefaultController extends Controller
          
         if (is_array($formData) && array_key_exists('query', $formData)) {
             $em = $this->getDoctrine()->getManager();
-            $doors = $em->getRepository('JLMModelBundle:Door')->search($formData['query']);
+            $doors = $em->getRepository(Door::class)->search($formData['query']);
 
             /*
              * Voir aussi
@@ -83,11 +87,11 @@ class DefaultController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         return [
-                'today'       => $em->getRepository('JLMDailyBundle:Intervention')->getCountToday(),
-                'stopped'     => $em->getRepository('JLMModelBundle:Door')->getCountStopped(),
-                'fixing'      => $em->getRepository('JLMDailyBundle:Fixing')->getCountOpened(),
-                'work'        => $em->getRepository('JLMDailyBundle:Work')->getCountOpened(),
-                'maintenance' => $em->getRepository('JLMDailyBundle:Maintenance')->getCountOpened(),
+                'today'       => $em->getRepository(Intervention::class)->getCountToday(),
+                'stopped'     => $em->getRepository(Door::class)->getCountStopped(),
+                'fixing'      => $em->getRepository(Fixing::class)->getCountOpened(),
+                'work'        => $em->getRepository(Work::class)->getCountOpened(),
+                'maintenance' => $em->getRepository(Maintenance::class)->getCountOpened(),
                ];
     }
     
