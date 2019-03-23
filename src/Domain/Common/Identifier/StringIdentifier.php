@@ -1,8 +1,10 @@
 <?php
 
-namespace HM\Domain\Common\Identities;
+declare(strict_types=1);
 
-class StringIdentity implements Identity
+namespace HM\Domain\Common\Identifier;
+
+class StringIdentifier implements Identifier
 {
     /**
      * @var string
@@ -20,9 +22,9 @@ class StringIdentity implements Identity
     /**
      * @param string $id
      *
-     * @return Identity
+     * @return Identifier
      */
-    public static function fromString(string $id): Identity
+    public static function fromString(string $id): Identifier
     {
         return new static($id);
     }

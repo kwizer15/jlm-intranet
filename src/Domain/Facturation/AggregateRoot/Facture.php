@@ -1,20 +1,22 @@
 <?php
 
-namespace HM\Domain\Facturation\Entity;
+declare(strict_types=1);
 
-use HM\Domain\Common\Entity\AbstractAggregateRoot;
+namespace HM\Domain\Facturation\AggregateRoot;
+
+use HM\Domain\Common\EventSourcing\EventSourcedAggregateRoot;
+use HM\Domain\Common\Identifier\Identifier;
 use HM\Domain\Facturation\Event\FactureCreee;
 use HM\Domain\Facturation\Identities\NumeroFacture;
-use HM\Domain\Facturation\Projection\FactureProjection;
 use HM\Domain\Facturation\ValueType\Date;
 use HM\Domain\Facturation\ValueType\Destinataire;
 use HM\Domain\Facturation\ValueType\Reference;
 use HM\Domain\Facturation\ValueType\ReglesPaiment;
 use HM\Domain\Facturation\ValueType\TVA;
 
-class Facture extends AbstractAggregateRoot
+class Facture extends EventSourcedAggregateRoot
 {
-    protected const PROJECTION_CLASS = FactureProjection::class;
+    private $numeroFacture;
 
     /**
      * @param NumeroFacture $numeroFacture
@@ -52,6 +54,22 @@ class Facture extends AbstractAggregateRoot
             $tvaApplicable->toString()
         );
 
-        return (new self($numeroFacture))->apply($event);
+        return (new self())->apply($event);
+    }
+
+    /**
+     * @param FactureCreee $event
+     */
+    public function whenFactureCreee(FactureCreee $event): void
+    {
+        $this->numeroFacture = $event->getNumeroFacture();
+    }
+
+    /**
+     * @return Identifier
+     */
+    public function getAggregateRootId(): Identifier
+    {
+        return $this->numeroFacture;
     }
 }

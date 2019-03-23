@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HM\Domain\Facturation\Factory;
 
 use HM\Domain\Facturation\Identities\ClientId;

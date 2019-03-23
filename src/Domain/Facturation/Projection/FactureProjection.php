@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HM\Domain\Facturation\Projection;
 
 use HM\Domain\Common\Projection\AbstractProjection;

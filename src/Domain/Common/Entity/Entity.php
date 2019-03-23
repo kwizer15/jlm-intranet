@@ -1,8 +1,8 @@
 <?php
 
-namespace HM\Domain\Common\Entity;
+declare(strict_types=1);
 
-use HM\Domain\Common\Identities\Identity;
+namespace HM\Domain\Common\Entity;
 
 interface Entity
 {

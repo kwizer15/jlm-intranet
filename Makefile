@@ -27,7 +27,7 @@ $(PHPUNIT): vendor
 
 $(PHPCS): vendor
 
-test: $(PHPUNIT) phpunit.xml cache-clear ## Lance les tests
+test: $(PHPUNIT) phpunit.xml ## Lance les tests
 	$(PHP) $(PHPUNIT)
 
 cs: $(PHPCS) phpcs.xml ## Lance le codesniffer

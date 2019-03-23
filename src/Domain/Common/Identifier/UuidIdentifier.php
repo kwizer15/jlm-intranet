@@ -1,11 +1,13 @@
 <?php
 
-namespace HM\Domain\Common\Identities;
+declare(strict_types=1);
+
+namespace HM\Domain\Common\Identifier;
 
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-class UuidIdentity implements Identity
+class UuidIdentifier implements Identifier
 {
     /**
      * @var 
@@ -18,11 +20,11 @@ class UuidIdentity implements Identity
     }
 
     /**
-     * @return UuidIdentity
+     * @return UuidIdentifier
      *
      * @throws \Exception
      */
-    public static function generate(): UuidIdentity
+    public static function generate(): UuidIdentifier
     {
         return new self(Uuid::uuid4());
     }
@@ -30,9 +32,9 @@ class UuidIdentity implements Identity
     /**
      * @param string $id
      *
-     * @return Identity
+     * @return Identifier
      */
-    public static function fromString(string $id): Identity
+    public static function fromString(string $id): Identifier
     {
         return new self(Uuid::fromString($id));
     }

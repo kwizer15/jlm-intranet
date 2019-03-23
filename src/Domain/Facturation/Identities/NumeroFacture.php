@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HM\Domain\Facturation\Identities;
 
-use HM\Domain\Common\Identities\StringIdentity;
+use HM\Domain\Common\Identifier\StringIdentifier;
 use HM\Domain\Facturation\ValueType\Date;
 
-class NumeroFacture extends StringIdentity
+class NumeroFacture extends StringIdentifier
 {
     public static function fromDateEtNombre(Date $aujourdHui, int $nombre): NumeroFacture
     {

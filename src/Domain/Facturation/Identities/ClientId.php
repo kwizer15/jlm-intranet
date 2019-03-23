@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HM\Domain\Facturation\Identities;
 
-use HM\Domain\Common\Identities\UuidIdentity;
+use HM\Domain\Common\Identifier\UuidIdentifier;
 
-class ClientId extends UuidIdentity
+class ClientId extends UuidIdentifier
 {
 
 }

@@ -10,6 +10,11 @@
             "Genemu\\": "src_legacy/Genemu/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\HM\\": "tests/"
+        }
+    },
     "require": {
         "php": ">=7.2",
         "symfony/symfony": "^3.0",
@@ -24,7 +29,8 @@
         "friendsofsymfony/user-bundle": "2.0.*",
         "itbz/fpdf": "1.7.1",
         "liuggio/excelbundle": "~2.0",
-        "ramsey/uuid": "^3.8"
+        "ramsey/uuid": "^3.8",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "scripts": {
         "post-install-cmd": [

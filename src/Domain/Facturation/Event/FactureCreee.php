@@ -1,59 +1,73 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HM\Domain\Facturation\Event;
 
-use HM\Domain\Common\Event\Event;
+use HM\Domain\Common\DomainEvent\DomainEvent;
 
-class FactureCreee implements Event
+class FactureCreee implements DomainEvent
 {
     /**
      * @var string
      */
     private $numeroFacture;
+
     /**
      * @var string
      */
     private $date;
+
     /**
      * @var string
      */
     private $clientId;
+
     /**
      * @var string
      */
     private $clientNom;
+
     /**
      * @var string
      */
     private $clientNumeroCompte;
+
     /**
      * @var string
      */
     private $adresseFacturationRue;
+
     /**
      * @var string
      */
     private $adresseCodePostal;
+
     /**
      * @var string
      */
     private $adresseVille;
+
     /**
      * @var string
      */
     private $reference;
+
     /**
      * @var string
      */
     private $echeance;
+
     /**
      * @var string
      */
     private $escompte;
+
     /**
      * @var string
      */
     private $penaliteRetard;
+
     /**
      * @var string
      */

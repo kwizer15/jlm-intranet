@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HM\Domain\Facturation\Entity;
 
 use HM\Domain\Common\Entity\Entity;
-use HM\Domain\Common\Identities\Identity;
+use HM\Domain\Common\Identifier\Identifier;
 use HM\Domain\Facturation\Identities\ClientId;
 use HM\Domain\Facturation\ValueType\AdressePostale;
 use HM\Domain\Facturation\ValueType\Nom;
@@ -50,9 +52,9 @@ class Client implements Entity
     }
 
     /**
-     * @return Identity
+     * @return Identifier
      */
-    public function id(): Identity
+    public function id(): Identifier
     {
         return $this->id;
     }

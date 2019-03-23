@@ -1,18 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HM\Domain\Facturation\ValueType;
 
 use HM\Domain\Common\ValueType\ValueType;
 
 final class Date implements ValueType
 {
-    private const DEFAULT_FORMAT = 'Y-m-d';
+    private const STRING_FORMAT = 'Y-m-d';
 
     /**
      * @var \DateTimeInterface
      */
     private $date;
 
+    /**
+     * @return Date
+     *
+     * @throws \Exception
+     */
     public static function aujourdHui(): Date
     {
         return new self(new \DateTimeImmutable());
@@ -23,7 +30,7 @@ final class Date implements ValueType
      *
      * @return Date
      */
-    public function fromDateTime(\DateTimeInterface $date): Date
+    public static function fromDateTime(\DateTimeInterface $date): Date
     {
         return new self($date);
     }
@@ -37,6 +44,38 @@ final class Date implements ValueType
     }
 
     /**
+     * @return string
+     */
+    public function toString(): string
+    {
+        return $this->date->format(self::STRING_FORMAT);
+    }
+
+    /**
+     * @return int
+     */
+    public function getAnnee(): int
+    {
+        return (int) $this->date->format('Y');
+    }
+
+    /**
+     * @return string
+     */
+    public function getAnneeCourte(): string
+    {
+        return $this->date->format('y');
+    }
+
+    /**
+     * @return string
+     */
+    public function getNumeroMois(): string
+    {
+        return $this->date->format('m');
+    }
+
+    /**
      * @param \DateTimeInterface $date
      */
     private function __construct(\DateTimeInterface $date)
@@ -45,28 +84,5 @@ final class Date implements ValueType
             $date = \DateTimeImmutable::createFromMutable($date);
         }
         $this->date = $date;
-    }
-
-    /**
-     * @return string
-     */
-    public function toString(): string
-    {
-        return $this->date->format(self::DEFAULT_FORMAT);
-    }
-
-    public function getAnnee(): int
-    {
-        return (int) $this->date->format('Y');
-    }
-
-    public function getAnneeCourte(): string
-    {
-        return $this->date->format('y');
-    }
-
-    public function getNumeroMois(): string
-    {
-        return $this->date->format('m');
     }
 }

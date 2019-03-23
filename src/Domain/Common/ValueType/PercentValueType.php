@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HM\Domain\Common\ValueType;
 
 abstract class PercentValueType extends DecimalValueType

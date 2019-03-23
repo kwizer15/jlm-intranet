@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HM\Domain\Facturation\Factory;
 
-use HM\Domain\Facturation\Entity\Facture;
+use HM\Domain\Facturation\AggregateRoot\Facture;
 use HM\Domain\Facturation\Identities\ClientId;
 use HM\Domain\Facturation\Identities\NumeroFacture;
 use HM\Domain\Facturation\Repository\FactureRepository;
@@ -40,14 +42,15 @@ class FactureFactory
      *
      * @param Reference $reference
      *
+     * @param Date $date
+     *
      * @return Facture
      */
-    public function creerFacture(ClientId $clientId, Reference $reference): Facture
+    public function creerFacture(ClientId $clientId, Reference $reference, Date $date): Facture
     {
-        $aujourdHui = Date::aujourdHui();
-        $anneeCourante = $aujourdHui->getAnnee();
+        $anneeCourante = $date->getAnnee();
         $nombreFacture = $this->factureRepository->getNombrePourLAnnee($anneeCourante);
-        $numeroFacture = NumeroFacture::fromDateEtNombre($aujourdHui, $nombreFacture + 1);
+        $numeroFacture = NumeroFacture::fromDateEtNombre($date, $nombreFacture + 1);
         $destinataire = $this->destinataireFactory->createFromClientId($clientId);
         $reglesPaiment = ReglesPaiment::withRegles(
             Echeance::fromJours(30),
@@ -58,7 +61,7 @@ class FactureFactory
 
         return Facture::creerFacture(
             $numeroFacture,
-            $aujourdHui,
+            $date,
             $destinataire,
             $reference,
             $reglesPaiment,
