@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HM\Facturation\Application\Command;
 
-use HM\Common\Application\Command;
+use HM\Common\Application\Command\Command;
 
 class CreerFactureCommand implements Command
 {

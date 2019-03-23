@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HM\Common\Application;
+namespace HM\Common\Application\Command;
 
 interface CommandResponse
 {

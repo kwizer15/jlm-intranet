@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace HM\Facturation\Application\Command;
 
-use HM\Common\Application\Command;
-use HM\Common\Application\CommandHandler;
+use HM\Common\Application\Command\Command;
+use HM\Common\Application\Command\CommandHandler;
+use HM\Common\Application\Command\CommandResponse;
+use HM\Common\Application\Command\EventStreamCommandResponse;
 use HM\Common\Domain\Event\EventStream;
 use HM\Facturation\Domain\Factory\FactureFactory;
 use HM\Facturation\Domain\Identifier\ClientId;
@@ -26,6 +28,7 @@ class CreerFactureCommandHandler implements CommandHandler
 
     /**
      * @param FactureFactory $factureFactory
+     * @param FactureRepository $factureRepository
      */
     public function __construct(FactureFactory $factureFactory, FactureRepository $factureRepository)
     {
@@ -36,9 +39,9 @@ class CreerFactureCommandHandler implements CommandHandler
     /**
      * @param Command $command
      *
-     * @return EventStream
+     * @return CommandResponse
      */
-    public function handle(Command $command): EventStream
+    public function handle(Command $command): CommandResponse
     {
         /** @var CreerFactureCommand $command */
         $facture = $this->factureFactory->creerFacture(
@@ -49,14 +52,6 @@ class CreerFactureCommandHandler implements CommandHandler
 
         $this->factureRepository->add($facture);
 
-        return $facture->getUncommitedEvents();
-    }
-
-    /**
-     * @return string
-     */
-    public static function listenTo(): string
-    {
-        return CreerFactureCommand::class;
+        return EventStreamCommandResponse::withEventStream($facture->getUncommitedEvents());
     }
 }
