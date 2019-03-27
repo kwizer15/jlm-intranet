@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace HM\Facturation\Domain\Event;
 
-use HM\Common\Domain\Event;
+use HM\Common\Domain\Event\Event;
 
-class FactureCreee implements DomainEvent
+final class FactureCreee implements Event
 {
     /**
      * @var string
@@ -73,6 +73,11 @@ class FactureCreee implements DomainEvent
      */
     private $tva;
 
+    /**
+     * @var bool
+     */
+    private $referenceTravaux;
+
     public function __construct(
         string $numeroFacture,
         string $date,
@@ -83,6 +88,7 @@ class FactureCreee implements DomainEvent
         string $adresseCodePostal,
         string $adresseVille,
         string $reference,
+        bool $referenceTravaux,
         string $echeance,
         string $escompte,
         string $penaliteRetard,
@@ -97,6 +103,7 @@ class FactureCreee implements DomainEvent
         $this->adresseCodePostal = $adresseCodePostal;
         $this->adresseVille = $adresseVille;
         $this->reference = $reference;
+        $this->referenceTravaux = $referenceTravaux;
         $this->echeance = $echeance;
         $this->escompte = $escompte;
         $this->penaliteRetard = $penaliteRetard;
@@ -173,6 +180,14 @@ class FactureCreee implements DomainEvent
     public function getReference(): string
     {
         return $this->reference;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReferenceTravaux(): bool
+    {
+        return $this->referenceTravaux;
     }
 
     /**

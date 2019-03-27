@@ -23,6 +23,11 @@ abstract class EventSourcedAggregateRoot implements AggregateRoot
     private $playHead = -1;
 
     /**
+     * @var iterable
+     */
+    private $childEntities = [];
+
+    /**
      * @return EventStream
      */
     final public function getUncommitedEvents(): EventStream
@@ -38,9 +43,9 @@ abstract class EventSourcedAggregateRoot implements AggregateRoot
      *
      * @return AggregateRoot
      */
-    final protected function apply(Event $event): AggregateRoot
+    final public function apply(Event $event): AggregateRoot
     {
-        $this->handle($event);
+        $this->handleRecursively($event);
 
         ++$this->playHead;
         $this->uncommitedEvents[] = EventMessage::recordNow(
@@ -54,11 +59,68 @@ abstract class EventSourcedAggregateRoot implements AggregateRoot
     }
 
     /**
+     * @param EventStream $stream
+     *
+     * @return EventSourcedAggregateRoot
+     */
+    final public static function reconstitute(EventStream $stream): EventSourcedAggregateRoot
+    {
+        $aggregate = new static();
+
+        /** @var EventMessage $message */
+        foreach ($stream as $message) {
+            ++$aggregate->playHead;
+            if ($aggregate->playHead !== $message->getPlayHead()) {
+                throw new \Exception();
+            }
+            $aggregate->handleRecursively($message->getPayload());
+        }
+
+        return $aggregate;
+    }
+
+    /**
      * @return int
      */
     final public function getPlayHead(): int
     {
         return $this->playHead;
+    }
+
+    /**
+     * @return EventSourcedEntity[]
+     */
+    protected function getChildEntities(): iterable
+    {
+        return $this->childEntities;
+    }
+
+    final protected function __construct()
+    {
+    }
+
+    /**
+     * @param EventSourcedEntity $entity
+     */
+    final protected function addChildEntity(EventSourcedEntity $entity): void
+    {
+        $this->childEntities = $entity;
+    }
+
+    /**
+     * @param Event $event
+     */
+    final protected function handleRecursively(Event $event): void
+    {
+        $this->handle($event);
+
+        foreach ($this->getChildEntities() as $entity) {
+            if (!$entity instanceof EventSourcedEntity) {
+                throw new NotEventSourcedEntityRegisteredException();
+            }
+            $entity->registerAggregateRoot($this);
+            $entity->handleRecursively($event);
+        }
     }
 
     /**

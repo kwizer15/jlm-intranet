@@ -9,11 +9,11 @@ use HM\Common\Application\Command\CommandHandler;
 use HM\Common\Application\Command\CommandResponse;
 use HM\Common\Application\Command\EventStreamCommandResponse;
 use HM\Common\Domain\Event\EventStream;
-use HM\Facturation\Domain\Factory\FactureFactory;
-use HM\Facturation\Domain\Identifier\ClientId;
-use HM\Facturation\Domain\Repository\FactureRepository;
-use HM\Facturation\Domain\ValueType\Date;
-use HM\Facturation\Domain\ValueType\Reference;
+use HM\Facturation\Domain\FactureFactory;
+use HM\Facturation\Domain\ClientView\ClientId;
+use HM\Facturation\Domain\FactureRepository;
+use HM\Facturation\Domain\Facture\Date;
+use HM\Facturation\Domain\Facture\Reference;
 
 class CreerFactureCommandHandler implements CommandHandler
 {
