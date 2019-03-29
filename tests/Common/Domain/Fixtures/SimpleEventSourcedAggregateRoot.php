@@ -69,4 +69,12 @@ class SimpleEventSourcedAggregateRoot extends EventSourcedAggregateRoot
     {
         return $this->id;
     }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

@@ -27,7 +27,7 @@ class UuidIdentifier implements Identifier
      */
     public static function generate(): UuidIdentifier
     {
-        return new self(Uuid::uuid4());
+        return new static(Uuid::uuid4());
     }
 
     /**
@@ -37,7 +37,7 @@ class UuidIdentifier implements Identifier
      */
     public static function fromString(string $id): Identifier
     {
-        return new self(Uuid::fromString($id));
+        return new static(Uuid::fromString($id));
     }
 
     /**

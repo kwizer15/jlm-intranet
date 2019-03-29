@@ -62,6 +62,8 @@ abstract class EventSourcedAggregateRoot implements AggregateRoot
      * @param EventStream $stream
      *
      * @return EventSourcedAggregateRoot
+     *
+     * @throws \Exception
      */
     final public static function reconstitute(EventStream $stream): EventSourcedAggregateRoot
     {
@@ -116,7 +118,9 @@ abstract class EventSourcedAggregateRoot implements AggregateRoot
 
         foreach ($this->getChildEntities() as $entity) {
             if (!$entity instanceof EventSourcedEntity) {
-                throw new NotEventSourcedEntityRegisteredException();
+                throw new NotEventSourcedEntityRegisteredException(
+                    \get_class($entity).' must extends '.EventSourcedEntity::class
+                );
             }
             $entity->registerAggregateRoot($this);
             $entity->handleRecursively($event);

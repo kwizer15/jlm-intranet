@@ -37,8 +37,9 @@ abstract class PercentValueType extends DecimalValueType
         $exploded = explode($decimalPoint, $value);
         $precision = strlen(end($exploded)) - 1;
         $value = str_replace(['%', $thousandsSeparator, $decimalPoint], '', $value);
+        $value /= (10 ** $precision);
 
-        return self::fromFloat($value, $precision);
+        return self::fromFloat((float) $value, $precision);
     }
 
     /**

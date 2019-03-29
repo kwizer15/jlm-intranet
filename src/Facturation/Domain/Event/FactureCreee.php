@@ -73,11 +73,6 @@ final class FactureCreee implements Event
      */
     private $tva;
 
-    /**
-     * @var bool
-     */
-    private $referenceTravaux;
-
     public function __construct(
         string $numeroFacture,
         string $date,
@@ -88,8 +83,7 @@ final class FactureCreee implements Event
         string $adresseCodePostal,
         string $adresseVille,
         string $reference,
-        bool $referenceTravaux,
-        string $echeance,
+        int $echeance,
         string $escompte,
         string $penaliteRetard,
         string $tva
@@ -103,7 +97,6 @@ final class FactureCreee implements Event
         $this->adresseCodePostal = $adresseCodePostal;
         $this->adresseVille = $adresseVille;
         $this->reference = $reference;
-        $this->referenceTravaux = $referenceTravaux;
         $this->echeance = $echeance;
         $this->escompte = $escompte;
         $this->penaliteRetard = $penaliteRetard;
@@ -183,17 +176,9 @@ final class FactureCreee implements Event
     }
 
     /**
-     * @return bool
+     * @return int
      */
-    public function isReferenceTravaux(): bool
-    {
-        return $this->referenceTravaux;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEcheance(): string
+    public function getEcheance(): int
     {
         return $this->echeance;
     }

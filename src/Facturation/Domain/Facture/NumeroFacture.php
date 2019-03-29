@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace HM\Facturation\Domain\Facture;
 
+use HM\Common\Domain\AggregateRoot\AggregateRootId;
 use HM\Common\Domain\Identifier\StringIdentifier;
-use HM\Facturation\Domain\Facture\Date;
 
-final class NumeroFacture extends StringIdentifier
+final class NumeroFacture extends StringIdentifier implements AggregateRootId
 {
     public static function fromDateEtNombre(Date $aujourdHui, int $nombre): NumeroFacture
     {

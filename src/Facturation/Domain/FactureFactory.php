@@ -40,9 +40,7 @@ class FactureFactory
 
     /**
      * @param ClientId $clientId
-     *
      * @param Reference $reference
-     *
      * @param Date $date
      *
      * @return Facture
@@ -51,7 +49,7 @@ class FactureFactory
     {
         $anneeCourante = $date->getAnnee();
         $nombreFacture = $this->factureRepository->getNombrePourLAnnee($anneeCourante);
-        $numeroFacture = NumeroFacture::fromDateEtNombre($date, $nombreFacture + 1);
+        $numeroFacture = NumeroFacture::fromDateEtNombre($date, $nombreFacture);
         $destinataire = $this->destinataireFactory->createFromClientId($clientId);
         $reglesPaiment = ReglesPaiement::withRegles(
             Echeance::fromJours(30),

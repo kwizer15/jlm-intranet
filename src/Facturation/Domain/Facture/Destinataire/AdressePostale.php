@@ -31,7 +31,7 @@ final class AdressePostale implements ValueType
      *
      * @return AdressePostale
      */
-    public function fromStrings(string $rue, string $codePostal, string $ville): AdressePostale
+    public static function fromStrings(string $rue, string $codePostal, string $ville): AdressePostale
     {
         return new self($rue, $codePostal, $ville);
     }
@@ -84,7 +84,7 @@ final class AdressePostale implements ValueType
             throw new DomainException(sprintf('%s est un nom de ville incorrect.', $rue));
         }
 
-        if (preg_match('/^(2[AB1-9]|[0-13-8]\d|9([1-5]|7))\d{3}$/', $codePostal)) {
+        if (!preg_match('/^(2[AB1-9]|[0-13-8]\d|9([1-5]|7))\d{3}$/', $codePostal)) {
             throw new DomainException(sprintf('%s est un code postal invalide', $codePostal));
         }
 

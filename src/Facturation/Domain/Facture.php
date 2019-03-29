@@ -6,10 +6,12 @@ namespace HM\Facturation\Domain;
 
 use HM\Common\Domain\AggregateRoot\AggregateRootId;
 use HM\Common\Domain\EventSourcing\EventSourcedAggregateRoot;
+use HM\Facturation\Domain\Event\LigneAjoutee;
 use HM\Facturation\Domain\Facture\Destinataire;
 use HM\Facturation\Domain\Facture\Ligne;
 use HM\Facturation\Domain\Facture\Ligne\Description;
 use HM\Facturation\Domain\Facture\Ligne\Designation;
+use HM\Facturation\Domain\Facture\Ligne\LigneId;
 use HM\Facturation\Domain\Facture\Ligne\Prix;
 use HM\Facturation\Domain\Facture\Ligne\Quantite;
 use HM\Facturation\Domain\Facture\Ligne\ReferenceProduit;
@@ -28,14 +30,17 @@ class Facture extends EventSourcedAggregateRoot
     private $numeroFacture;
 
     /**
-     * @var bool
+     * @var int
      */
-    private $referenceTravaux;
+    private $compteurLignes;
 
     /**
-     * @var Ligne[]
+     * @return AggregateRootId
      */
-    private $lignes = [];
+    public function getAggregateRootId(): AggregateRootId
+    {
+        return $this->numeroFacture;
+    }
 
     /**
      * @param NumeroFacture $numeroFacture
@@ -67,7 +72,6 @@ class Facture extends EventSourcedAggregateRoot
             $adresseDeFacturation->getCodePostal(),
             $adresseDeFacturation->getVille(),
             $reference->toString(),
-            $reference->isTravaux(),
             $reglesPaiment->getEcheance()->toInt(),
             $reglesPaiment->getEscompte()->toString(),
             $reglesPaiment->getPenaliteRetard()->toString(),
@@ -90,15 +94,17 @@ class Facture extends EventSourcedAggregateRoot
             : TVA::normale()
         ;
 
-        $this->lignes[] = Ligne::creerLigne(
+        $this->addChildEntity(Ligne::creerLigne(
             $this->numeroFacture,
+            LigneId::generate(),
+            $this->compteurLignes,
             $referenceProduit,
             $designation,
             $description,
             $prixUnitaire,
             $quantite,
             $tva
-        );
+        ));
 
         return $this;
     }
@@ -106,22 +112,16 @@ class Facture extends EventSourcedAggregateRoot
     /**
      * @param FactureCreee $event
      */
-    final protected function whenFactureCreee(FactureCreee $event): void
+    protected function whenFactureCreee(FactureCreee $event): void
     {
         $this->numeroFacture = NumeroFacture::fromString($event->getNumeroFacture());
-        $this->referenceTravaux = $event->isReferenceTravaux();
     }
 
     /**
-     * @return AggregateRootId
+     * @param LigneAjoutee $event
      */
-    public function getAggregateRootId(): AggregateRootId
+    protected function whenLigneAjoutee(LigneAjoutee $event): void
     {
-        return $this->numeroFacture;
-    }
-
-    public function getChildEntities(): iterable
-    {
-        return $this->lignes;
+        $this->compteurLignes++;
     }
 }

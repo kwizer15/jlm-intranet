@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace HM\Facturation\Domain;
 
 use HM\Facturation\Domain\ClientView\ClientId;
-use HM\Facturation\Domain\ClientViewRepository;
 use HM\Facturation\Domain\Facture\Destinataire;
 
 class DestinataireFactory

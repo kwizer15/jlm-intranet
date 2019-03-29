@@ -39,7 +39,7 @@ class ClientView implements AggregateRoot
      * @param NumeroCompte $numeroCompteClient
      * @param AdressePostale $adresseFacturation
      */
-    private function __construct(
+    public function __construct(
         ClientId $id,
         Nom $nom,
         NumeroCompte $numeroCompteClient,

@@ -8,6 +8,7 @@ use HM\Common\Domain\EventSourcing\EventSourcedEntity;
 use HM\Facturation\Domain\Event\LigneAjoutee;
 use HM\Facturation\Domain\Facture\Ligne\Description;
 use HM\Facturation\Domain\Facture\Ligne\Designation;
+use HM\Facturation\Domain\Facture\Ligne\LigneId;
 use HM\Facturation\Domain\Facture\Ligne\Prix;
 use HM\Facturation\Domain\Facture\Ligne\Quantite;
 use HM\Facturation\Domain\Facture\Ligne\ReferenceProduit;
@@ -16,6 +17,8 @@ final class Ligne extends EventSourcedEntity
 {
     public static function creerLigne(
         NumeroFacture $numeroFacture,
+        LigneId $id,
+        int $position,
         ReferenceProduit $reference,
         Designation $designation,
         Description $description,
@@ -25,6 +28,8 @@ final class Ligne extends EventSourcedEntity
     ): Ligne {
         $event = new LigneAjoutee(
             $numeroFacture->toString(),
+            $id->toString(),
+            $position,
             $reference->toString(),
             $designation->toString(),
             $description->toString(),
