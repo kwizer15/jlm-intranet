@@ -36,6 +36,16 @@ final class Date implements ValueType
     }
 
     /**
+     * @param string $date
+     *
+     * @return Date
+     */
+    public static function fromString(string $date): Date
+    {
+        return new self(\DateTimeImmutable::createFromFormat(self::STRING_FORMAT, $date));
+    }
+
+    /**
      * @return \DateTimeImmutable
      */
     public function toDateTimeImmutable(): \DateTimeImmutable

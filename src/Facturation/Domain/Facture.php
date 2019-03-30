@@ -7,6 +7,7 @@ namespace HM\Facturation\Domain;
 use HM\Common\Domain\AggregateRoot\AggregateRootId;
 use HM\Common\Domain\EventSourcing\EventSourcedAggregateRoot;
 use HM\Facturation\Domain\Event\LigneAjoutee;
+use HM\Facturation\Domain\Event\LigneRetiree;
 use HM\Facturation\Domain\Facture\Destinataire;
 use HM\Facturation\Domain\Facture\Ligne;
 use HM\Facturation\Domain\Facture\Ligne\Description;
@@ -15,7 +16,7 @@ use HM\Facturation\Domain\Facture\Ligne\LigneId;
 use HM\Facturation\Domain\Facture\Ligne\Prix;
 use HM\Facturation\Domain\Facture\Ligne\Quantite;
 use HM\Facturation\Domain\Facture\Ligne\ReferenceProduit;
-use HM\Facturation\Domain\Event\FactureCreee;
+use HM\Facturation\Domain\Event\FactureEtablie;
 use HM\Facturation\Domain\Facture\NumeroFacture;
 use HM\Facturation\Domain\Facture\Date;
 use HM\Facturation\Domain\Facture\Reference;
@@ -52,7 +53,7 @@ class Facture extends EventSourcedAggregateRoot
      *
      * @return Facture
      */
-    public static function creerFacture(
+    public static function etablirFacture(
         NumeroFacture $numeroFacture,
         Date $date,
         Destinataire $destinataire,
@@ -62,7 +63,7 @@ class Facture extends EventSourcedAggregateRoot
     ): Facture {
         $adresseDeFacturation = $destinataire->getAdresseDeFacturation();
 
-        $event = new FactureCreee(
+        $event = new FactureEtablie(
             $numeroFacture->toString(),
             $date->toString(),
             $destinataire->getClientId()->toString(),
@@ -95,7 +96,6 @@ class Facture extends EventSourcedAggregateRoot
         ;
 
         $this->addChildEntity(Ligne::creerLigne(
-            $this->numeroFacture,
             LigneId::generate(),
             $this->compteurLignes,
             $referenceProduit,
@@ -109,10 +109,18 @@ class Facture extends EventSourcedAggregateRoot
         return $this;
     }
 
-    /**
-     * @param FactureCreee $event
+    public function retirerLigne(LigneId $ligneId): Facture
+    {
+        $event = new LigneRetiree($ligneId->toString());
+        $this->apply($event);
+
+        return $this;
+    }
+
+        /**
+     * @param FactureEtablie $event
      */
-    protected function whenFactureCreee(FactureCreee $event): void
+    protected function whenFactureCreee(FactureEtablie $event): void
     {
         $this->numeroFacture = NumeroFacture::fromString($event->getNumeroFacture());
     }

@@ -9,7 +9,8 @@ use HM\Facturation\Domain\ClientView;
 use HM\Facturation\Domain\ClientView\ClientId;
 use HM\Facturation\Domain\ClientViewRepository;
 use HM\Facturation\Domain\DestinataireFactory;
-use HM\Facturation\Domain\Event\FactureCreee;
+use HM\Facturation\Domain\Event\FactureEtablie;
+use HM\Facturation\Domain\Facture;
 use HM\Facturation\Domain\Facture\Date;
 use HM\Facturation\Domain\Facture\Destinataire\AdressePostale;
 use HM\Facturation\Domain\Facture\Destinataire\Nom;
@@ -51,9 +52,9 @@ class FactureTest extends TestCase
 
         $this->assertEquals(0, $message->getPlayHead());
 
-        /** @var FactureCreee $event */
+        /** @var FactureEtablie $event */
         $event = $message->getPayload();
-        $this->assertInstanceOf(FactureCreee::class, $event);
+        $this->assertInstanceOf(FactureEtablie::class, $event);
         $this->assertEquals('19020026', $event->getNumeroFacture());
         $this->assertEquals('2019-02-10', $event->getDate());
         $this->assertEquals('John Doe', $event->getClientNom());
@@ -62,5 +63,10 @@ class FactureTest extends TestCase
         $this->assertEquals('12345', $event->getAdresseCodePostal());
         $this->assertEquals('Neverland', $event->getAdresseVille());
         $this->assertEquals('Devis', $event->getReference());
+    }
+
+    public function testAjouteLigne(): void
+    {
+        $eventStream = FactureFixture::withId('created');
     }
 }

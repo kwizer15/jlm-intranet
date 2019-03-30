@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HM\Common\Domain\EventSourcing;
 
 use HM\Common\Domain\AggregateRoot\AggregateRoot;
+use HM\Common\Domain\AggregateRoot\AggregateRootId;
 use HM\Common\Domain\Event\Event;
 use HM\Common\Domain\Event\EventMessage;
 use HM\Common\Domain\Event\EventStream;
@@ -59,13 +60,14 @@ abstract class EventSourcedAggregateRoot implements AggregateRoot
     }
 
     /**
+     * @param AggregateRootId $id
      * @param EventStream $stream
      *
      * @return EventSourcedAggregateRoot
      *
      * @throws \Exception
      */
-    final public static function reconstitute(EventStream $stream): EventSourcedAggregateRoot
+    final public static function reconstitute(AggregateRootId $id, EventStream $stream): EventSourcedAggregateRoot
     {
         $aggregate = new static();
 

@@ -58,7 +58,7 @@ class FactureFactory
         );
         $tvaApplicable = TVA::fromString('20.0%');
 
-        return Facture::creerFacture(
+        return Facture::etablirFacture(
             $numeroFacture,
             $date,
             $destinataire,

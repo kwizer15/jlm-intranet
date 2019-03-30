@@ -9,42 +9,44 @@ final class LigneAjoutee
     /**
      * @var string
      */
-    private $numeroFacture;
-    /**
-     * @var string
-     */
     private $reference;
+
     /**
      * @var string
      */
     private $designation;
+
     /**
      * @var string
      */
     private $description;
+
     /**
      * @var float
      */
     private $prixUnitaire;
+
     /**
      * @var float
      */
     private $quantite;
+
     /**
      * @var string
      */
     private $tva;
+
     /**
      * @var string
      */
     private $ligneId;
+
     /**
      * @var int
      */
     private $position;
 
     /**
-     * @param string $numeroFacture
      * @param string $ligneId
      * @param int $position
      * @param string $reference
@@ -55,7 +57,6 @@ final class LigneAjoutee
      * @param string $tva
      */
     public function __construct(
-        string $numeroFacture,
         string $ligneId,
         int $position,
         string $reference,
@@ -65,7 +66,6 @@ final class LigneAjoutee
         float $quantite,
         string $tva
     ) {
-        $this->numeroFacture = $numeroFacture;
         $this->reference = $reference;
         $this->designation = $designation;
         $this->description = $description;
@@ -74,14 +74,6 @@ final class LigneAjoutee
         $this->tva = $tva;
         $this->ligneId = $ligneId;
         $this->position = $position;
-    }
-
-    /**
-     * @return string
-     */
-    public function getNumeroFacture(): string
-    {
-        return $this->numeroFacture;
     }
 
     /**

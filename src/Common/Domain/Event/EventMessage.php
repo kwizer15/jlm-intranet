@@ -24,6 +24,11 @@ class EventMessage
     private $metadata;
 
     /**
+     * @var string
+     */
+    private $type;
+
+    /**
      * @var Event
      */
     private $event;
@@ -33,6 +38,13 @@ class EventMessage
      */
     private $recordedOn;
 
+    /**
+     * @param string $aggregateRootId
+     * @param int $playHead
+     * @param Metadata $metadata
+     * @param Event $event
+     * @param DateTime $recordedOn
+     */
     public function __construct(
         string $aggregateRootId,
         int $playHead,
@@ -44,6 +56,7 @@ class EventMessage
         $this->aggregateRootId = $aggregateRootId;
         $this->playHead = $playHead;
         $this->metadata = $metadata;
+        $this->type = \get_class($event);
         $this->event = $event;
         $this->recordedOn = $recordedOn;
     }
@@ -89,9 +102,17 @@ class EventMessage
         return $this->metadata;
     }
 
+    /**
+     * @return string
+     */
     public function getType(): string
     {
-        return $this->event::NAME;
+        return $this->type;
+    }
+
+    public function isType(string $type): bool
+    {
+        return $type === $this->type;
     }
 
     /**

@@ -6,7 +6,7 @@ namespace HM\Facturation\Domain\Event;
 
 use HM\Common\Domain\Event\Event;
 
-final class FactureCreee implements Event
+final class FactureEtablie implements Event
 {
     /**
      * @var string

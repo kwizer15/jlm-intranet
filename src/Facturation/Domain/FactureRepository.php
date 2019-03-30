@@ -25,9 +25,9 @@ interface FactureRepository extends Repository
     public function add(Facture $facture): void;
 
     /**
-     * @param NumeroFacture $fromString
+     * @param NumeroFacture $numeroFacture
      *
      * @return Facture
      */
-    public function get(NumeroFacture $fromString): Facture;
+    public function get(NumeroFacture $numeroFacture): Facture;
 }

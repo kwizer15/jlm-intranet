@@ -16,7 +16,6 @@ use HM\Facturation\Domain\Facture\Ligne\ReferenceProduit;
 final class Ligne extends EventSourcedEntity
 {
     public static function creerLigne(
-        NumeroFacture $numeroFacture,
         LigneId $id,
         int $position,
         ReferenceProduit $reference,
@@ -27,7 +26,6 @@ final class Ligne extends EventSourcedEntity
         TVA $tva
     ): Ligne {
         $event = new LigneAjoutee(
-            $numeroFacture->toString(),
             $id->toString(),
             $position,
             $reference->toString(),
