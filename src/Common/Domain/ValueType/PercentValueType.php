@@ -9,17 +9,9 @@ abstract class PercentValueType extends DecimalValueType
     /**
      * @return float
      */
-    final public function toPercent(): float
+    final public function toCoefficient(): float
     {
-        return parent::toFloat();
-    }
-
-    /**
-     * @return float
-     */
-    final public function toFloat(): float
-    {
-        return $this->toPercent() / 100;
+        return $this->toFloat() / 100;
     }
 
     /**
@@ -36,8 +28,7 @@ abstract class PercentValueType extends DecimalValueType
     ): DecimalValueType {
         $exploded = explode($decimalPoint, $value);
         $precision = strlen(end($exploded)) - 1;
-        $value = str_replace(['%', $thousandsSeparator, $decimalPoint], '', $value);
-        $value /= (10 ** $precision);
+        $value = str_replace(['%', $thousandsSeparator], '', $value);
 
         return self::fromFloat((float) $value, $precision);
     }

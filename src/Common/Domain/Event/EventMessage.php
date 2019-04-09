@@ -14,6 +14,11 @@ class EventMessage
     private $aggregateRootId;
 
     /**
+     * @var string
+     */
+    private $aggregateType;
+
+    /**
      * @var int
      */
     private $playHead;
@@ -40,6 +45,7 @@ class EventMessage
 
     /**
      * @param string $aggregateRootId
+     * @param string $aggregateType
      * @param int $playHead
      * @param Metadata $metadata
      * @param Event $event
@@ -47,6 +53,7 @@ class EventMessage
      */
     public function __construct(
         string $aggregateRootId,
+        string $aggregateType,
         int $playHead,
         Metadata $metadata,
         Event $event,
@@ -54,15 +61,17 @@ class EventMessage
     )
     {
         $this->aggregateRootId = $aggregateRootId;
+        $this->aggregateType = $this->normalize($aggregateType);
         $this->playHead = $playHead;
         $this->metadata = $metadata;
-        $this->type = \get_class($event);
+        $this->type = $this->normalize(\get_class($event));
         $this->event = $event;
         $this->recordedOn = $recordedOn;
     }
 
     /**
      * @param AggregateRootId $aggregateRootId
+     * @param string $aggregateType
      * @param int $playHead
      * @param Metadata $metadata
      * @param Event $event
@@ -71,19 +80,28 @@ class EventMessage
      */
     public static function recordNow(
         AggregateRootId $aggregateRootId,
+        string $aggregateType,
         int $playHead,
         Metadata $metadata,
         Event $event
     ): EventMessage {
-        return new self($aggregateRootId->toString(), $playHead, $metadata, $event, DateTime::now());
+        return new self($aggregateRootId->toString(), $aggregateType, $playHead, $metadata, $event, DateTime::now());
     }
 
     /**
-     * @return AggregateRootId
+     * @return string
      */
-    public function getAggregateRootId(): AggregateRootId
+    public function getAggregateRootId(): string
     {
         return $this->aggregateRootId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAggregateType(): string
+    {
+        return $this->aggregateType;
     }
 
     /**
@@ -110,6 +128,11 @@ class EventMessage
         return $this->type;
     }
 
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
     public function isType(string $type): bool
     {
         return $type === $this->type;
@@ -129,5 +152,15 @@ class EventMessage
     public function getRecordedOn(): DateTime
     {
         return $this->recordedOn;
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return string
+     */
+    private function normalize(string $className): string
+    {
+        return $className;
     }
 }

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace HM\Facturation\Domain\Event;
 
-final class LigneAjoutee
+use HM\Common\Domain\Event\Event;
+
+final class LigneAjoutee implements Event
 {
     /**
      * @var string
@@ -62,7 +64,7 @@ final class LigneAjoutee
         string $reference,
         string $designation,
         string $description,
-        float $prixUnitaire,
+        string $prixUnitaire,
         float $quantite,
         string $tva
     ) {
@@ -117,9 +119,9 @@ final class LigneAjoutee
     }
 
     /**
-     * @return float
+     * @return string
      */
-    public function getPrixUnitaire(): float
+    public function getPrixUnitaire(): string
     {
         return $this->prixUnitaire;
     }

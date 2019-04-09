@@ -13,6 +13,16 @@ use HM\Common\Domain\Event\Metadata;
 class ReflectionSerializer implements Serializer
 {
     /**
+     * @var array
+     */
+    private $lastSerializedCache;
+
+    /**
+     * @var EventMessage
+     */
+    private $lastDeserializedCache;
+
+    /**
      * @param EventMessage $message
      *
      * @return array
@@ -21,7 +31,13 @@ class ReflectionSerializer implements Serializer
      */
     public function serialize(EventMessage $message): array
     {
-        return $this->serializeRecursively($message);
+        if ($message === $this->lastDeserializedCache) {
+            return $this->lastSerializedCache;
+        }
+        $this->lastDeserializedCache = $message;
+        $this->lastSerializedCache = $this->serializeRecursively($message);
+
+        return $this->lastSerializedCache;
     }
 
     /**
@@ -33,13 +49,21 @@ class ReflectionSerializer implements Serializer
      */
     public function deserialize(array $serializedMessage): EventMessage
     {
-        return new EventMessage(
+        if ($serializedMessage === $this->lastSerializedCache) {
+            return $this->lastDeserializedCache;
+        }
+
+        $this->lastSerializedCache = $serializedMessage;
+        $this->lastDeserializedCache = new EventMessage(
             $serializedMessage['aggregateRootId'],
+            $serializedMessage['aggregateType'],
             $serializedMessage['playHead'],
             new Metadata($serializedMessage['metadata']),
             $this->deserializeEvent($serializedMessage['type'], $serializedMessage['event']),
-            DateTime::fromString($serializedMessage['date'])
+            DateTime::fromString($serializedMessage['recordedOn'])
         );
+
+        return $this->lastDeserializedCache;
     }
 
     /**
@@ -72,7 +96,7 @@ class ReflectionSerializer implements Serializer
         foreach ($properties as $property) {
             $property->setAccessible(true);
             $propertyName = $property->getName();
-            $serialized[$propertyName] = $this->serializeRecursively($property->getValue());
+            $serialized[$propertyName] = $this->serializeRecursively($property->getValue($message));
             $property->setAccessible(false);
         }
 

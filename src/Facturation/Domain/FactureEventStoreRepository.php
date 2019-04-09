@@ -12,8 +12,6 @@ use HM\Facturation\Domain\Facture\NumeroFacture;
 
 class FactureEventStoreRepository implements FactureRepository
 {
-    private const FACTURE_TYPE = 'facture';
-
     /**
      * @var EventStore
      */
@@ -34,7 +32,7 @@ class FactureEventStoreRepository implements FactureRepository
      */
     public function getNombrePourLAnnee(int $annee): int
     {
-        $eventStream = $this->eventStore->load(self::FACTURE_ID);
+        $eventStream = $this->eventStore->load(Facture::class);
         $count = 0;
         /** @var EventMessage $eventMessage */
         foreach ($eventStream as $eventMessage) {
@@ -66,10 +64,13 @@ class FactureEventStoreRepository implements FactureRepository
      *
      * @return Facture
      *
+     * @throws \DomainException
      * @throws \Exception
      */
     public function get(NumeroFacture $numeroFacture): Facture
     {
-        return Facture::reconstitute($this->eventStore->load(Facture::class, $numeroFacture->toString()));
+        $eventStream = $this->eventStore->load(Facture::class, $numeroFacture->toString());
+
+        return Facture::reconstitute($eventStream);
     }
 }

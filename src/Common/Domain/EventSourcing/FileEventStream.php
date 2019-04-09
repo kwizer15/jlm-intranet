@@ -46,7 +46,8 @@ class FileEventStream extends \FilterIterator implements EventStream
         string $aggregateId = null,
         string $maxPlayHead = null
     ) {
-        parent::__construct(new \SplFileObject($filename, 'r'));
+        $file = new \SplFileObject($filename, 'r');
+        parent::__construct($file);
         $this->serializer = $serializer;
         $this->aggregateType = $aggregateType;
         $this->aggregateId = $aggregateId;
@@ -58,7 +59,12 @@ class FileEventStream extends \FilterIterator implements EventStream
      */
     public function current(): EventMessage
     {
-        return $this->serializer->deserialize(parent::current());
+        return $this->serializer->deserialize(json_decode(parent::current(), true));
+    }
+
+    public function valid(): bool
+    {
+        return !empty(parent::current());
     }
 
     /**
@@ -66,16 +72,20 @@ class FileEventStream extends \FilterIterator implements EventStream
      */
     public function accept(): bool
     {
-        $current = $this->current();
-        if (null !== $this->aggregateType && $this->aggregateType !== $current->getAggregateType()) {
+        $current = json_decode(parent::current(), true);
+        if (empty($current)) {
             return false;
         }
 
-        if (null !== $this->aggregateId && $this->aggregateId !== $current->getAggregateRootId()) {
+        if (null !== $this->aggregateType && $this->aggregateType !== $current['aggregateType']) {
             return false;
         }
 
-        if (null !== $this->maxPlayHead && $this->maxPlayHead > $current->getPlayHead()) {
+        if (null !== $this->aggregateId && $this->aggregateId !== $current['aggregateRootId']) {
+            return false;
+        }
+
+        if (null !== $this->maxPlayHead && $this->maxPlayHead > $current['playHead']) {
             return false;
         }
 

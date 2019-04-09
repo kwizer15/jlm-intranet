@@ -46,12 +46,19 @@ class FileEventStore implements EventStore
 
     /**
      * @param EventStream $stream
+     *
+     * @throws \Exception
      */
     public function append(EventStream $stream): void
     {
-        $file = new \SplFileObject($this->filename, 'w');
-        foreach ($stream as $eventMessage) {
-            $file->fwrite(json_encode($this->serializer->serialize($eventMessage));
+        $file = new \SplFileObject($this->filename, 'a');
+        if (!$file->flock(LOCK_EX)) {
+            throw new \Exception('File unlockable.');
         }
+        foreach ($stream as $eventMessage) {
+            $file->fwrite(json_encode($this->serializer->serialize($eventMessage)).PHP_EOL);
+        }
+        $file->fflush();
+        $file->flock(LOCK_UN);
     }
 }

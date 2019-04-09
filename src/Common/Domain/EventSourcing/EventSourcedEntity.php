@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace HM\Common\Domain\EventSourcing;
 
+use HM\Common\Domain\Entity\Entity;
 use HM\Common\Domain\Event\Event;
 
-abstract class EventSourcedEntity
+abstract class EventSourcedEntity implements Entity
 {
     /**
      * @var EventSourcedAggregateRoot
      */
     private $aggregateRoot;
 
-    /**
-     * @var EventSourcedEntity[]
-     */
-    private $childEntities = [];
+    final public function __construct()
+    {
+    }
 
     /**
      * @param EventSourcedAggregateRoot $aggregateRoot
@@ -45,10 +45,6 @@ abstract class EventSourcedEntity
         }
     }
 
-    final protected function __construct()
-    {
-    }
-
     /**
      * @param Event $event
      *
@@ -62,19 +58,11 @@ abstract class EventSourcedEntity
     }
 
     /**
-     * @param EventSourcedEntity $entity
-     */
-    final protected function addChildEntity(EventSourcedEntity $entity): void
-    {
-        $this->childEntities[] = $entity;
-    }
-
-    /**
      * @return EventSourcedEntity[]
      */
-    final protected function getChildEntities(): iterable
+    protected function getChildEntities(): iterable
     {
-        return $this->childEntities;
+        return [];
     }
 
     /**

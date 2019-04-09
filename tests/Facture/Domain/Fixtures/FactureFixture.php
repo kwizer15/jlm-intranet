@@ -10,12 +10,13 @@ use HM\Facturation\Domain\Facture;
 use HM\Facturation\Domain\Facture\NumeroFacture;
 use HM\Facturation\Domain\FactureEventStoreRepository;
 
-class FactureFixtures
+class FactureFixture
 {
     public static function withId(string $id): Facture
     {
-        $eventStore = new FileEventStore('factures.es', new ReflectionSerializer());
+        $eventStore = new FileEventStore(__DIR__.'/factures.eventsource', new ReflectionSerializer());
         $repository = new FactureEventStoreRepository($eventStore);
+        
         return $repository->get(NumeroFacture::fromString($id));
     }
 }

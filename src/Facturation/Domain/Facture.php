@@ -6,7 +6,9 @@ namespace HM\Facturation\Domain;
 
 use HM\Common\Domain\AggregateRoot\AggregateRootId;
 use HM\Common\Domain\EventSourcing\EventSourcedAggregateRoot;
+use HM\Common\Domain\EventSourcing\EventSourcedEntity;
 use HM\Facturation\Domain\Event\LigneAjoutee;
+use HM\Facturation\Domain\Event\LigneRepositionnee;
 use HM\Facturation\Domain\Event\LigneRetiree;
 use HM\Facturation\Domain\Facture\Destinataire;
 use HM\Facturation\Domain\Facture\Ligne;
@@ -31,9 +33,14 @@ class Facture extends EventSourcedAggregateRoot
     private $numeroFacture;
 
     /**
-     * @var int
+     * @var bool
      */
-    private $compteurLignes;
+    private $hasMainDOeuvre = false;
+
+    /**
+     * @var Ligne[]
+     */
+    private $lignes = [];
 
     /**
      * @return AggregateRootId
@@ -41,6 +48,14 @@ class Facture extends EventSourcedAggregateRoot
     public function getAggregateRootId(): AggregateRootId
     {
         return $this->numeroFacture;
+    }
+
+    /**
+     * @return EventSourcedEntity[]
+     */
+    protected function getChildEntities(): iterable
+    {
+        return $this->lignes;
     }
 
     /**
@@ -82,6 +97,17 @@ class Facture extends EventSourcedAggregateRoot
         return (new self())->apply($event);
     }
 
+    /**
+     * @param ReferenceProduit $referenceProduit
+     * @param Designation $designation
+     * @param Description $description
+     * @param Prix $prixUnitaire
+     * @param Quantite $quantite
+     * @param bool $petiteFourniture
+     *
+     * @return Facture
+     * @throws \Exception
+     */
     public function ajouterLigne(
         ReferenceProduit $referenceProduit,
         Designation $designation,
@@ -90,37 +116,66 @@ class Facture extends EventSourcedAggregateRoot
         Quantite $quantite,
         bool $petiteFourniture
     ): Facture {
-        $tva = $this->referenceTravaux && !$petiteFourniture
+        $tva = $this->hasMainDOeuvre && !$petiteFourniture
             ? TVA::reduite()
             : TVA::normale()
         ;
 
-        $this->addChildEntity(Ligne::creerLigne(
-            LigneId::generate(),
-            $this->compteurLignes,
-            $referenceProduit,
-            $designation,
-            $description,
-            $prixUnitaire,
-            $quantite,
-            $tva
+        $this->apply(new LigneAjoutee(
+            LigneId::generate()->toString(),
+            \count($this->lignes),
+            $referenceProduit->toString(),
+            $designation->toString(),
+            $description->toString(),
+            $prixUnitaire->toString(),
+            $quantite->toFloat(),
+            $tva->toString()
         ));
 
         return $this;
     }
 
+    /**
+     * @param LigneId $ligneId
+     *
+     * @return Facture
+     */
     public function retirerLigne(LigneId $ligneId): Facture
     {
-        $event = new LigneRetiree($ligneId->toString());
-        $this->apply($event);
+        $stringLigneId = $ligneId->toString();
+
+        $reordonne = false;
+        foreach ($this->lignes as $position => $ligne) {
+            $id = $ligne->getEntityId()->toString();
+            if ($reordonne) {
+                $this->apply(new LigneRepositionnee($id, $position, $position - 1));
+            }
+            if ($id === $stringLigneId) {
+                $reordonne = true;
+                $this->apply(new LigneRetiree($id, $position));
+            }
+        }
 
         return $this;
     }
 
-        /**
+    /**
+     * @param LigneId $ligneId
+     * @param Designation $designation
+     *
+     * @return Facture
+     */
+    public function renommeProduit(LigneId $ligneId, Designation $designation):  Facture
+    {
+        $this->lignes[$ligneId]->renommeProduit($designation);
+
+        return $this;
+    }
+
+    /**
      * @param FactureEtablie $event
      */
-    protected function whenFactureCreee(FactureEtablie $event): void
+    protected function whenFactureEtablie(FactureEtablie $event): void
     {
         $this->numeroFacture = NumeroFacture::fromString($event->getNumeroFacture());
     }
@@ -130,6 +185,23 @@ class Facture extends EventSourcedAggregateRoot
      */
     protected function whenLigneAjoutee(LigneAjoutee $event): void
     {
-        $this->compteurLignes++;
+        $this->lignes[$event->getPosition()] = new Ligne();
+    }
+
+    /**
+     * @param LigneRetiree $event
+     */
+    protected function whenLigneRetiree(LigneRetiree $event): void
+    {
+        unset($this->lignes[$event->getAnciennePosition()]);
+    }
+
+    /**
+     * @param LigneRepositionnee $event
+     */
+    protected function whenLigneRepositionnee(LigneRepositionnee $event): void
+    {
+        unset($this->lignes[$event->getAnciennePosition()]);
+        $this->lignes[$event->getNouvellePosition()] = $event->getLigneId();
     }
 }

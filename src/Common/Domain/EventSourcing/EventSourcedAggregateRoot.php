@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace HM\Common\Domain\EventSourcing;
 
 use HM\Common\Domain\AggregateRoot\AggregateRoot;
-use HM\Common\Domain\AggregateRoot\AggregateRootId;
 use HM\Common\Domain\Event\Event;
 use HM\Common\Domain\Event\EventMessage;
 use HM\Common\Domain\Event\EventStream;
@@ -23,10 +22,9 @@ abstract class EventSourcedAggregateRoot implements AggregateRoot
      */
     private $playHead = -1;
 
-    /**
-     * @var iterable
-     */
-    private $childEntities = [];
+    final protected function __construct()
+    {
+    }
 
     /**
      * @return EventStream
@@ -51,6 +49,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRoot
         ++$this->playHead;
         $this->uncommitedEvents[] = EventMessage::recordNow(
             $this->getAggregateRootId(),
+            static::class,
             $this->playHead,
             new Metadata([]),
             $event
@@ -60,24 +59,34 @@ abstract class EventSourcedAggregateRoot implements AggregateRoot
     }
 
     /**
-     * @param AggregateRootId $id
      * @param EventStream $stream
      *
      * @return EventSourcedAggregateRoot
      *
      * @throws \Exception
      */
-    final public static function reconstitute(AggregateRootId $id, EventStream $stream): EventSourcedAggregateRoot
+    final public static function reconstitute(EventStream $stream): EventSourcedAggregateRoot
     {
         $aggregate = new static();
+        $empty = true;
 
         /** @var EventMessage $message */
         foreach ($stream as $message) {
+            if (!$empty
+                && $aggregate->getAggregateRootId()->toString() !== $message->getAggregateRootId()) {
+                throw new \Exception('Bad aggregate root id.');
+            }
             ++$aggregate->playHead;
             if ($aggregate->playHead !== $message->getPlayHead()) {
-                throw new \Exception();
+                // TODO: Mettre l'évenement en mémoire pour le rejouer plus tard.
+                throw new \Exception('Bad playHead');
             }
             $aggregate->handleRecursively($message->getPayload());
+            $empty = false;
+        }
+
+        if ($empty) {
+            throw new \DomainException('Cette facture n\'existe pas.');
         }
 
         return $aggregate;
@@ -96,19 +105,7 @@ abstract class EventSourcedAggregateRoot implements AggregateRoot
      */
     protected function getChildEntities(): iterable
     {
-        return $this->childEntities;
-    }
-
-    final protected function __construct()
-    {
-    }
-
-    /**
-     * @param EventSourcedEntity $entity
-     */
-    final protected function addChildEntity(EventSourcedEntity $entity): void
-    {
-        $this->childEntities = $entity;
+        return [];
     }
 
     /**

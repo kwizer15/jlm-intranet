@@ -76,9 +76,9 @@ abstract class DecimalValueType
     ): DecimalValueType {
         $exploded = explode($decimalPoint, $value);
         $precision = strlen(end($exploded));
-        $value = str_replace([$thousandsSeparator, $decimalPoint], '', $value);
+        $value = str_replace($thousandsSeparator, '', $value);
 
-        return new static($value, $precision);
+        return new static((float) $value, $precision);
     }
 
     /**

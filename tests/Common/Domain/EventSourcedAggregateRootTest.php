@@ -39,9 +39,9 @@ class EventSourcedAggregateRootTest extends TestCase
     public function testReconstitute(): void
     {
         $eventStream = new InMemoryEventStream(
-            new EventMessage('me', 0, new Metadata([]),  new SimpleIamCreated('me', 'myName'), DateTime::now()),
-            new EventMessage('me', 1, new Metadata([]),  new SimpleNameChanged('myName', 'myNewName'), DateTime::now()),
-            new EventMessage('me', 2, new Metadata([]),  new SimpleNameChanged('myNewName', 'ItsMe'), DateTime::now())
+            new EventMessage('me', SimpleEventSourcedAggregateRoot::class, 0, new Metadata([]),  new SimpleIamCreated('me', 'myName'), DateTime::now()),
+            new EventMessage('me', SimpleEventSourcedAggregateRoot::class, 1, new Metadata([]),  new SimpleNameChanged('myName', 'myNewName'), DateTime::now()),
+            new EventMessage('me', SimpleEventSourcedAggregateRoot::class, 2, new Metadata([]),  new SimpleNameChanged('myNewName', 'ItsMe'), DateTime::now())
         );
 
         /** @var SimpleEventSourcedAggregateRoot $aggregate */
@@ -53,9 +53,9 @@ class EventSourcedAggregateRootTest extends TestCase
     public function testBadPlayHeadReconstitute(): void
     {
         $eventStream = new InMemoryEventStream(
-            new EventMessage('me', 0, new Metadata([]),  new SimpleIamCreated('me', 'myName'), DateTime::now()),
-            new EventMessage('me', 1, new Metadata([]),  new SimpleNameChanged('myName', 'myNewName'), DateTime::now()),
-            new EventMessage('me', 1, new Metadata([]),  new SimpleNameChanged('myName', 'ItsMe'), DateTime::now())
+            new EventMessage('me', SimpleEventSourcedAggregateRoot::class, 0, new Metadata([]),  new SimpleIamCreated('me', 'myName'), DateTime::now()),
+            new EventMessage('me', SimpleEventSourcedAggregateRoot::class, 1, new Metadata([]),  new SimpleNameChanged('myName', 'myNewName'), DateTime::now()),
+            new EventMessage('me', SimpleEventSourcedAggregateRoot::class, 1, new Metadata([]),  new SimpleNameChanged('myName', 'ItsMe'), DateTime::now())
         );
 
         $this->expectException(\Exception::class);

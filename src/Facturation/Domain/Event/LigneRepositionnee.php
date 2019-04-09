@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HM\Facturation\Domain\Event;
 
-class LigneRetiree
+class LigneRepositionnee
 {
     /**
      * @var string
@@ -12,18 +12,20 @@ class LigneRetiree
     private $ligneId;
 
     /**
-     * @var
+     * @var int
      */
     private $anciennePosition;
 
     /**
-     * @param string $ligneId
-     * @param int $anciennePosition
+     * @var int
      */
-    public function __construct(string $ligneId, int $anciennePosition)
+    private $nouvellePosition;
+
+    public function __construct(string $ligneId, int $anciennePosition, int $nouvellePosition)
     {
         $this->ligneId = $ligneId;
         $this->anciennePosition = $anciennePosition;
+        $this->nouvellePosition = $nouvellePosition;
     }
 
     /**
@@ -40,5 +42,13 @@ class LigneRetiree
     public function getAnciennePosition(): int
     {
         return $this->anciennePosition;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNouvellePosition(): int
+    {
+        return $this->nouvellePosition;
     }
 }
