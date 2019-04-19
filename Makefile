@@ -28,7 +28,7 @@ $(PHPUNIT): vendor
 $(PHPCS): vendor
 
 test: $(PHPUNIT) phpunit.xml ## Lance les tests
-	$(PHP) $(PHPUNIT)
+	$(PHP) $(PHPUNIT) --coverage-html=reports/
 
 cs: $(PHPCS) phpcs.xml ## Lance le codesniffer
 	$(PHP) $(PHPCS)
