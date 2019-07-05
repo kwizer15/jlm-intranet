@@ -239,7 +239,7 @@ class Series
 	/**
 	 * Vérifie la date de garantie
 	 * @return bool
-	 * @Assert\True(message="La date de début de garantie doit se situer AVANT ou PENDANT le mois en cours")
+	 * @Assert\IsTrue(message="La date de début de garantie doit se situer AVANT ou PENDANT le mois en cours")
 	 */
 	public function isGuaranteeValid()
 	{

@@ -1,97 +1,23 @@
-*.pydevproject
-.metadata
-.gradle
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.settings/
-.loadpath
-
-# External tool builders
-.externalToolBuilders/
-
-# Locally stored "Eclipse launch configurations"
-*.launch
-
-# CDT-specific
-.cproject
-
-# PDT-specific
-.buildpath
-
-# sbteclipse plugin
-.target
-
-# TeXlipse plugin
-.texlipse
-
-
-.project
-# Cache and logs
+/.env.local
+/bin
 /app/cache/*
 /app/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 
-/app-front/cache/*
-/app-front/logs/*
-!app-front/cache/.gitkeep
-!app-front/logs/.gitkeep
-
-# Parameters
 /app/config/parameters.yml
 /app/config/parameters.ini
-/app-front/config/parameters.yml
-/app-front/config/parameters.ini
 
-# Managed by Composer
 /app/bootstrap.php.cache
-/app-front/bootstrap.php.cache
-/bin/
 /vendor/
 
-# Assets and user uploads
-/web/bundles/
-/web/uploads/
-/web-front/bundles/
-/web-front/uploads/
-
-# PHPUnit
-/app/phpunit.xml
-/app-front/phpunit.xml
-
-# Composer PHAR
-/composer.phar
-
-# Apache
-apache.conf
-
-# Perso
-log/*
-report/*
-
 # Symfony directories
-components/*
-web/assetic/*
-web/css/*
-web/fonts/*
-web/images/*
-web/js/*
+web/assetic
+web/css
+web/fonts
+web/images
+web/js
+web/css
+web/bundles
 
-web-front/assetic/*
-web-front/css/*
-web-front/fonts/*
-web-front/images/*
-web-front/js/*
-
-# SQL
-structure.sql
-dbfinal.sql
-out.txt
-csv2php.php
-
-/jlm(2).sql.gz
+/app/phpunit.xml

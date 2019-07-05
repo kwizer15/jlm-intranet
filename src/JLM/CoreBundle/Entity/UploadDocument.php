@@ -54,7 +54,7 @@ class UploadDocument implements UploadDocumentInterface
      */
     protected function getUploadRootDir()
     {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return dirname(__DIR__, 4).'/web/'.$this->getUploadDir();
     }
 
     /**

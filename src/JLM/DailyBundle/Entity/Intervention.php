@@ -689,7 +689,7 @@ abstract class Intervention extends Shifting implements InterventionInterface, B
     
     /**
      * Test pour les actions suite à reste à faire
-     * @Assert\True(message="Une action reste à faire ne peut pas exister si le champ reste à faire est vide")
+     * @Assert\IsTrue(message="Une action reste à faire ne peut pas exister si le champ reste à faire est vide")
      */
     public function isRestActionValid()
     {
