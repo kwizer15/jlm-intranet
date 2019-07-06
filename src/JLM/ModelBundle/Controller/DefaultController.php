@@ -14,9 +14,6 @@ namespace JLM\ModelBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\CoreBundle\Entity\Search;
-use JLM\CoreBundle\Form\Type\SearchType;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
@@ -26,11 +23,12 @@ class DefaultController extends Controller
     /**
      * Resultats de la barre de recherche.
      *
-     * @Secure(roles="ROLE_OFFICE")
      * @Template()
      */
     public function searchAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$formData = $request->get('jlm_core_search');
 
     	if (is_array($formData) && array_key_exists('query', $formData))

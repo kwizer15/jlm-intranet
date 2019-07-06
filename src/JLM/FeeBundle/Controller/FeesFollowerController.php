@@ -7,12 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\FeeBundle\Entity\Fee;
 use JLM\FeeBundle\Entity\FeesFollower;
-use JLM\CommerceBundle\Entity\Bill;
-use JLM\CommerceBundle\Entity\BillLine;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use JLM\CommerceBundle\Factory\BillFactory;
 use JLM\FeeBundle\Builder\FeeBillBuilder;
 use JLM\FeeBundle\Form\Type\FeesFollowerType;
@@ -29,10 +24,11 @@ class FeesFollowerController extends Controller
 	 *
 	 * @Route("/", name="fees")
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function indexAction()
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$em = $this->getDoctrine()->getManager();
 	
 		$entities = $em->getRepository('JLMFeeBundle:FeesFollower')->findBy(
@@ -50,10 +46,11 @@ class FeesFollowerController extends Controller
 	 *
 	 * @Route("/{id}/edit", name="fees_edit")
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function editAction(FeesFollower $entity)
-	{	
+	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$editForm = $this->createForm(new FeesFollowerType(), $entity);
 		
 		return array(
@@ -68,10 +65,11 @@ class FeesFollowerController extends Controller
 	 * @Route("/{id}/update", name="fees_update")
 	 * @Method("post")
 	 * @Template("JLMOfficeBundle:Fees:edit.html.twig")
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function updateAction(Request $request,FeesFollower $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$editForm = $this->createForm(new FeesFollowerType(), $entity);
 		$editForm->handleRequest($request);
 	
@@ -94,10 +92,11 @@ class FeesFollowerController extends Controller
 	 * Edits an existing FeesFollower entity.
 	 *
 	 * @Route("/{id}/generate", name="fees_generate")
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function generateAction(FeesFollower $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$em = $this->getDoctrine()->getManager();
 
 		$fees = $em->getRepository('JLMFeeBundle:Fee')
@@ -165,10 +164,11 @@ class FeesFollowerController extends Controller
 	/**
 	 * Print bills
 	 * @Route("/{id}/print", name="fees_print")
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function printAction(FeesFollower $follower)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$em = $this->getDoctrine()->getManager();
 		$entities = $em->getRepository('JLMCommerceBundle:Bill')->getFees($follower);
 		$response = new Response();

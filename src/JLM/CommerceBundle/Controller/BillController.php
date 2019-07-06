@@ -11,17 +11,16 @@
 
 namespace JLM\CommerceBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
-use JLM\CommerceBundle\JLMCommerceEvents;
-use JLM\CommerceBundle\Event\BillEvent;
-use JLM\DailyBundle\Form\Type\ExternalBillType;
-use JLM\CoreBundle\Entity\Search;
 use JLM\CommerceBundle\Builder\Email\BillBoostMailBuilder;
+use JLM\CommerceBundle\Builder\Email\BillBoostBusinessMailBuilder;
+use JLM\CommerceBundle\Event\BillEvent;
+use JLM\CommerceBundle\Excel\BillState;
+use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CoreBundle\Factory\MailFactory;
 use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
-use JLM\CommerceBundle\Builder\Email\BillBoostBusinessMailBuilder;
+use JLM\DailyBundle\Form\Type\ExternalBillType;
+use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Request;
-use JLM\CommerceBundle\Excel\BillState;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */

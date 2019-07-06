@@ -5,8 +5,6 @@ namespace JLM\StateBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Default controller.
@@ -17,10 +15,11 @@ class DefaultController extends Controller
      * @Route("/technicians/", name="state_technicians")
      * @Route("/technicians/{year}", name="state_technicians_year")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function techniciansAction($year = null)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		// Initialisation des tableaux
 		$date = new \DateTime;
 		$year = ($year === null) ? $date->format('Y') : $year;
@@ -91,10 +90,11 @@ class DefaultController extends Controller
     /**
      * @Route("/maintenance", name="state_maintenance")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function maintenanceAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$em =$this->getDoctrine()->getManager();
     	$repo = $em->getRepository('JLMDailyBundle:Maintenance');
     	$maintenanceTotal = $repo->getCountTotal(false);
@@ -119,10 +119,11 @@ class DefaultController extends Controller
     /**
      * @Route("/top", name="state_top")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function topAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$em = $this->getDoctrine()->getManager();
     	$repo = $em->getRepository('JLMDailyBundle:Fixing');
     	$date = new \DateTime();
@@ -133,10 +134,11 @@ class DefaultController extends Controller
     /**
      * @Route("/contracts", name="state_contracts")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function contractsAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$em = $this->getDoctrine()->getManager();
     	$results = $em->getRepository('JLMContractBundle:Contract')->getStatsByMonth();
 	   	$stats = array();
@@ -154,10 +156,11 @@ class DefaultController extends Controller
     /**
      * @Route("/quote", name="state_quote")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function quoteAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$em = $this->getDoctrine()->getManager();
     	$repo = $em->getRepository('JLMCommerceBundle:QuoteVariant');
     	$add = function($carry, $item){ return $carry + $item->getTotalPrice(); };
@@ -171,10 +174,11 @@ class DefaultController extends Controller
     /**
      * @Route("/transmitters", name="state_transmitters")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function transmittersAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$em = $this->getDoctrine()->getManager();
     	$stats = $em->getRepository('JLMTransmitterBundle:Transmitter')->getStatsByMonth();
     	$datas = [];
@@ -197,10 +201,11 @@ class DefaultController extends Controller
     /**
      * @Route("/sells", name="state_sells")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function sellsAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$year = $this->getRequest()->get('year',null);
     	$em = $this->getDoctrine()->getManager();
     	$stats = $em->getRepository('JLMCommerceBundle:Bill')->getSells($year);
@@ -217,10 +222,11 @@ class DefaultController extends Controller
     /**
      * @Route("/daybill", name="state_daybill")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function daybillAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$datas = $this->getDoctrine()->getManager()->getRepository('JLMCommerceBundle:Bill')->getTurnover('month');
     	$stats = [];
     	foreach ($datas as $data)
@@ -276,10 +282,11 @@ class DefaultController extends Controller
     /**
      * @Route("/doortypes/{year}", name="state_doortypes")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function doortypesAction($year = null)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$date = new \DateTime();
     	$maxyear = $date->format('Y');
     	$year = ($year === null) ? $maxyear : $year;
@@ -359,10 +366,11 @@ class DefaultController extends Controller
     /**
      * @Route("/quotes/{year}", name="state_quotes")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function quotesAction($year = null)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$date = new \DateTime();
     	$maxyear = $date->format('Y');
     	$year = ($year === null) ? $maxyear : $year;

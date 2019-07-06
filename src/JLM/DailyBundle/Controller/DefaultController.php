@@ -5,21 +5,20 @@ namespace JLM\DailyBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Form\Type\DatepickerType;
 use JLM\DailyBundle\Entity\Fixing;
 use JLM\DailyBundle\Form\Type\FixingType;
-use JLM\CoreBundle\Entity\Search;
 
 class DefaultController extends Controller
 {
 	/**
 	 * Search
-     * @Secure(roles="ROLE_OFFICE")
 	 * @Template()
 	 */
 	public function searchAction(Request $request)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$formData = $request->get('jlm_core_search');
     	 
     	if (is_array($formData) && array_key_exists('query', $formData))
@@ -53,22 +52,24 @@ class DefaultController extends Controller
 	
 	/**
 	 * Search
-	 * @Secure(roles="ROLE_OFFICE")
 	 * @deprecated
 	 */
 	public function searchgetAction(Request $request)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		return $this->redirect($this->generateUrl('intervention_today'));
 	}
 	
 	/**
 	 * Sidebar
-     * @Secure(roles="ROLE_OFFICE")
 	 * @Template()
 	 * @deprecated Use the TwigExtension
 	 */
 	public function sidebarAction()
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$em = $this->getDoctrine()->getManager();
 		return array(
 		    'today' => $em->getRepository('JLMDailyBundle:Intervention')->getCountToday(),
@@ -81,11 +82,12 @@ class DefaultController extends Controller
 	
 	/**
 	 * Search by date form
-	 * @Secure(roles="ROLE_OFFICE")
 	 * @Template()
 	 */
 	public function datesearchAction()
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$entity = new \DateTime();
 		$form   = $this->createForm(new DatepickerType(), $entity);
 		return array(

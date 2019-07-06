@@ -5,12 +5,10 @@ namespace JLM\DailyBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\ShiftTechnician;
 use JLM\DailyBundle\Entity\Equipment;
 use JLM\DailyBundle\Form\Type\EquipmentType;
 use JLM\DailyBundle\Form\Type\RecuperationEquipmentType;
-use JLM\DailyBundle\Form\Type\RecuperationEquipmentEditType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 
@@ -23,10 +21,11 @@ class EquipmentController extends Controller
 	 * Displays a form to create a new InterventionPlanned entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function newAction()
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$entity = new ShiftTechnician();
 		$entity->setBegin(new \DateTime);
 		$shifting = new Equipment();
@@ -44,10 +43,11 @@ class EquipmentController extends Controller
 	 * Creates a new ShiftTechnician entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function createAction(Request $request)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$entity  = new ShiftTechnician();
 		$entity->setCreation(new \DateTime);
 		$form = $this->createForm(new RecuperationEquipmentType(), $entity);
@@ -74,11 +74,12 @@ class EquipmentController extends Controller
 	
 	/**
 	 * Show
-	 * @Secure(roles="ROLE_OFFICE")
 	 * @Template()
 	 */
 	public function showAction(Request $request, Equipment $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		return array(
 				'previous'=> $request->headers->get('referer'),
 				'entity' => $entity,
@@ -89,10 +90,11 @@ class EquipmentController extends Controller
 	 * Edit a form to edit an existing Equipment entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function editAction(Equipment $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$editForm = $this->createForm(new EquipmentType(), $entity);
 	
 		return array(
@@ -105,10 +107,11 @@ class EquipmentController extends Controller
 	 * Edits an existing Equipment entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function updateAction(Request $request, Equipment $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$em = $this->getDoctrine()->getManager();
 	
 		$editForm = $this->createForm(new EquipmentType(), $entity);

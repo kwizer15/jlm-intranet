@@ -5,7 +5,6 @@ namespace JLM\FeeBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JLM\FeeBundle\Entity\FeesFollower;
 use JLM\FeeBundle\Entity\Fee;
 
 /**

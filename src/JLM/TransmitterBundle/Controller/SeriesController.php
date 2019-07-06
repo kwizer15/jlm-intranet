@@ -4,9 +4,7 @@ namespace JLM\TransmitterBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\TransmitterBundle\Entity\Series;
@@ -15,8 +13,6 @@ use JLM\TransmitterBundle\Form\Type\SeriesType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * Series controller.
- *
  * @Route("/series")
  */
 class SeriesController extends Controller
@@ -26,10 +22,11 @@ class SeriesController extends Controller
      *
      * @Route("/new/{id}", name="transmitter_series_new")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction(Attribution $attribution)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new Series();
         $entity->setAttribution($attribution);
         $form   = $this->createForm(new SeriesType($attribution->getSite()->getId()), $entity);
@@ -47,10 +44,11 @@ class SeriesController extends Controller
      * @Route("/create/{id}", name="transmitter_series_create")
      * @Method("POST")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request, Attribution $attribution)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity  = new Series();
         $form = $this->createForm(new SeriesType($attribution->getSite()->getId()), $entity);
         $form->add('submit','submit',array('label'=>'Enregistrer'));

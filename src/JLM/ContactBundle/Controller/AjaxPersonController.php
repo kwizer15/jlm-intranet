@@ -14,8 +14,6 @@ namespace JLM\ContactBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ContactBundle\Manager\ContactManager;
 use JLM\ContactBundle\Form\Type\PersonType;
 use JLM\ContactBundle\Entity\Person;
@@ -28,44 +26,41 @@ class AjaxPersonController extends Controller
 {
     /**
      * Finds and displays a Person entity.
-     *
-     * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function showajaxAction(Person $entity)
     {
-        return array(
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
+        return $this->render('JLMContactBundle:AjaxPerson:showajax.html.twig', array(
             'entity'      => $entity,
-        );
+        ));
     }
 
     /**
      * Displays a form to create a new Person entity.
-     *
-     * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newajaxAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$manager = $this->container->get('jlm_contact.contact_manager');
     	$entity = $manager->getEntity('person');
         $form = $manager->createForm('POST',$entity);
         
 
-        return array(
+        return $this->render('JLMContactBundle:AjaxPerson:newajax.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
-        );
+        ));
     }
 
     /**
      * Creates a new Person entity.
-     * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createajaxAction(Request $request)
     {
-    	$em = $this->getDoctrine()->getManager();
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity  = ContactManager::create('Person');
         $form    = $this->createForm(new PersonType(), $entity);
         $form->handleRequest($request);
@@ -84,10 +79,10 @@ class AjaxPersonController extends Controller
             
         }
         
-        return array(
+        return $this->render('JLMContactBundle:AjaxPerson:createajax.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
-        );
+        ));
     }
     
     /**

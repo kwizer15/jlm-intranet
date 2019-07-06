@@ -11,14 +11,10 @@
 
 namespace JLM\ContactBundle\Controller;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-/**
- * Person controller.
- */
 class CorporationContactController extends ContainerAware
 {
 	/**

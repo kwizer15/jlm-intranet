@@ -2,18 +2,13 @@
 
 namespace JLM\TransmitterBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Site;
 
 /**
- * Site controller.
- *
  * @Route("/site")
  */
 class SiteController extends Controller
@@ -21,19 +16,21 @@ class SiteController extends Controller
     /**
      * @Route("/{id}/show",name="transmitter_site_show")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(Site $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         return array('entity'=>$entity);
     }
     
     /**
      * @Route("/{id}/printlist",name="transmitter_site_printlist")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function printlistAction(Site $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$em = $this->getDoctrine()->getManager();
    
     	// Retrier les bips par Groupe puis par numéro

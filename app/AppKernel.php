@@ -16,8 +16,6 @@ class AppKernel extends BaseKernel
             new \Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-        	new \JMS\AopBundle\JMSAopBundle(),
-        	new \JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
         	new \FOS\UserBundle\FOSUserBundle(),
         	new \Genemu\Bundle\FormBundle\GenemuFormBundle(),
         	new \Liuggio\ExcelBundle\LiuggioExcelBundle(),

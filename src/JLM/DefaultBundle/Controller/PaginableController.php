@@ -2,7 +2,6 @@
 namespace JLM\DefaultBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use JLM\DefaultBundle\Entity\PaginableRepository;
 
 abstract class PaginableController extends Controller
 {

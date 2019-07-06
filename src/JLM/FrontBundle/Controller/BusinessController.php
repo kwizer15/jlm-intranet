@@ -12,16 +12,10 @@
 namespace JLM\FrontBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Doctrine\ORM\NoResultException;
 use JLM\DailyBundle\Entity\Maintenance;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Entity\Site;
 
-/**
- * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- */
 class BusinessController extends Controller
 {   
 	public function tabAction()

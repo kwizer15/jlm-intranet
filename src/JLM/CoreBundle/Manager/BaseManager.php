@@ -22,13 +22,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use JLM\CoreBundle\Model\Repository\PaginableInterface;
-/**
- * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- */
+
 class BaseManager extends ContainerAware implements ManagerInterface
 {
 	protected $class;
@@ -41,8 +37,7 @@ class BaseManager extends ContainerAware implements ManagerInterface
 
 	public function secure($role)
 	{
-		$service = (Kernel::MAJOR_VERSION == 2 && Kernel::MINOR_VERSION > 3) ? 'security.authorization_checker' : 'security.context';
-		if (false === $this->container->get($service)->isGranted($role))
+		if (false === $this->container->get('security.authorization_checker')->isGranted($role))
 		{
 			throw new AccessDeniedException();
 		}

@@ -4,10 +4,8 @@ namespace JLM\DailyBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Technician;
 use JLM\DailyBundle\Entity\Shifting;
-use JLM\DailyBundle\Entity\Intervention;
 use JLM\DailyBundle\Entity\ShiftTechnician;
 use JLM\DailyBundle\Form\Type\AddTechnicianType;
 use JLM\DailyBundle\Form\Type\ShiftingEditType;
@@ -20,11 +18,12 @@ class ShiftingController extends Controller
 {
 	/**
 	 * List
-	 * @Secure(roles="ROLE_OFFICE")
 	 * @Template()
 	 */
 	public function listAction(Technician $technician, $page = 1)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$limit = 10;
 		$em = $this->getDoctrine()->getManager();
 			
@@ -49,11 +48,12 @@ class ShiftingController extends Controller
 	
 	/**
 	 * Ajoute un technicien sur une intervention
-	 * @Secure(roles="ROLE_OFFICE")
 	 * @Template()
 	 */
 	public function newAction(Shifting $shifting)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$entity = new ShiftTechnician();
 		
 		$entity->setBegin(new \DateTime);
@@ -71,10 +71,11 @@ class ShiftingController extends Controller
 	 * Creates a new ShiftTechnician entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function createAction(Request $request, Shifting $shifting)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$entity  = new ShiftTechnician();
 		$entity->setShifting($shifting);
 		$entity->setCreation(new \DateTime);
@@ -105,10 +106,11 @@ class ShiftingController extends Controller
 	 * Displays a form to edit an existing ShiftTechnician entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function editAction(ShiftTechnician $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$editForm = $this->get('form.factory')->createNamed('shiftTechEdit'.$entity->getId(),new ShiftingEditType(), $entity);
 		return array(
 				'entity'      => $entity,
@@ -120,11 +122,12 @@ class ShiftingController extends Controller
 	 * Displays a form to edit an existing ShiftTechnician entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 * @deprecated Modal system
 	 */
 	public function edittableAction(ShiftTechnician $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		return $this->editAction($entity);
 	}
 	
@@ -132,10 +135,11 @@ class ShiftingController extends Controller
 	 * Edits an existing InterventionPlanned entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function updateAction(Request $request, ShiftTechnician $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$em = $this->getDoctrine()->getManager();
 		$editForm = $this->get('form.factory')->createNamed('shiftTechEdit'.$entity->getId(), new ShiftingEditType(), $entity);
 		$editForm->handleRequest($request);
@@ -165,10 +169,11 @@ class ShiftingController extends Controller
 	 * Delete an existing ShiftTechnician entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function deleteAction(ShiftTechnician $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$intervId = $entity->getShifting()->getId();
 		$em = $this->getDoctrine()->getManager();
 		$em->remove($entity);

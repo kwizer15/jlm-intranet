@@ -14,11 +14,7 @@ namespace JLM\ModelBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Trustee;
 use JLM\ModelBundle\Form\Type\TrusteeType;
 use JLM\ContactBundle\Form\Type\PersonType;
@@ -34,10 +30,11 @@ class TrusteeController extends Controller
      * Lists all Trustee entities.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction($page = 1)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $limit = 15;
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('JLMModelBundle:Trustee');
@@ -63,10 +60,11 @@ class TrusteeController extends Controller
      * Finds and displays a Trustee entity.
      * 
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function showAction(Trustee $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         return array(
             'entity'      => $entity,
         );
@@ -76,10 +74,11 @@ class TrusteeController extends Controller
      * Displays a form to create a new Trustee entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$request = $this->getRequest();
     	$contact = $request->get('contact');
     	$em = $this->get('doctrine')->getManager();
@@ -104,10 +103,11 @@ class TrusteeController extends Controller
      * Creates a new Trustee entity.
      *
      * @Template("JLMModelBundle:Trustee:new.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$em = $this->getDoctrine()->getManager();
         $entity  = new Trustee();
         $request = $this->getRequest();
@@ -137,10 +137,11 @@ class TrusteeController extends Controller
      * Displays a form to edit an existing Trustee entity.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function editAction(Trustee $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $editForm = $this->createForm(new TrusteeType(), $entity);
         $deleteForm = $this->createDeleteForm($entity);
 
@@ -155,10 +156,11 @@ class TrusteeController extends Controller
      * Edits an existing Trustee entity.
      *
      * @Template("JLMModelBundle:Trustee:edit.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function updateAction(Trustee $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $em = $this->getDoctrine()->getManager();
 
         $editForm   = $this->createForm(new TrusteeType(), $entity);
@@ -189,11 +191,11 @@ class TrusteeController extends Controller
 
     /**
      * Deletes a Trustee entity.
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function deleteAction(Trustee $entity)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $form = $this->createDeleteForm($entity);
         $request = $this->getRequest();
 
@@ -221,10 +223,11 @@ class TrusteeController extends Controller
      * Formulaire d'ajout d'un contact au syndic.
      *
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function contactnewAction(Trustee $trustee)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$entity = ContactManager::create('Person');
     	$form   = $this->createForm(new PersonType(), $entity);
     	
@@ -239,10 +242,11 @@ class TrusteeController extends Controller
      * Creates a new Trustee entity.
      *
      * @Template("JLMModelBundle:Trustee:contactnew.html.twig")
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function contactcreateAction(Trustee $trustee)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$em = $this->getDoctrine()->getManager();
     	$entity  = ContactManager::create('Person');
     	$request = $this->getRequest();
@@ -270,11 +274,11 @@ class TrusteeController extends Controller
     
     /**
      * City json
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function searchAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $term = $request->get('q');
         $page_limit = $request->get('page_limit');
     
@@ -287,11 +291,11 @@ class TrusteeController extends Controller
     
     /**
      * City json
-     *
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function jsonAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('JLMModelBundle:Trustee')->getByIdToArray($id);
@@ -304,10 +308,11 @@ class TrusteeController extends Controller
      *
      * @param Request $request
      * @return multitype:unknown
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function listExcelAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$em = $this->getDoctrine()->getManager();
     	$list = $em->getRepository('JLMContractBundle:Contract')->getForRDV();
     	 

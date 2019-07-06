@@ -3,12 +3,6 @@
 namespace JLM\OfficeBundle\Controller;
 
 use JLM\DefaultBundle\Controller\PaginableController;
-use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\OfficeBundle\Form\Type\AskDontTreatType;
 
 /**
  * Ask controller.

@@ -8,24 +8,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use JLM\OfficeBundle\Entity\Order;
-use JLM\OfficeBundle\Entity\OrderLine;
 use JLM\OfficeBundle\Form\Type\OrderType;
-use JLM\CommerceBundle\Entity\QuoteVariant;
-use JLM\ModelBundle\Entity\Door;
 use JLM\OfficeBundle\Entity\Task;
 use JLM\DailyBundle\Entity\Work;
 use JLM\DefaultBundle\Entity\Search;
 use JLM\DefaultBundle\Form\Type\SearchType;
-use JLM\OfficeBundle\Factory\OrderFactory;
 
 
 
 /**
- * Order controller.
- *
  * @Route("/order")
  */
 class OrderController extends Controller
@@ -37,10 +29,11 @@ class OrderController extends Controller
 	 * @Route("/page/{page}", name="order_page")
 	 * @Route("/page/{page}/state/{state}", name="order_state")
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function indexAction($page = 1, $state = null)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$limit = 10;
 		$em = $this->getDoctrine()->getManager();
 			
@@ -72,10 +65,11 @@ class OrderController extends Controller
 	 *
 	 * @Route("/{id}/show", name="order_show")
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function showAction(Order $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		return array('entity'=> $entity);
 	}
 	
@@ -84,10 +78,11 @@ class OrderController extends Controller
 	 *
 	 * @Route("/new/{id}", name="order_new")
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function newAction(Work $work)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$entity = new Order();
 		$entity->setWork($work);
 		$form  = $this->createForm(new OrderType(), $entity);
@@ -103,10 +98,11 @@ class OrderController extends Controller
 	 * @Route("/create", name="order_create")
 	 * @Method("post")
 	 * @Template("JLMOfficeBundle:Order:new.html.twig")
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function createAction(Request $request)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$entity  = new Order();
 		$form    = $this->createForm(new OrderType(), $entity);
 		$form->handleRequest($request);
@@ -138,10 +134,11 @@ class OrderController extends Controller
 	 *
 	 * @Route("/{id}/edit", name="order_edit")
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function editAction(Order $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		if ($entity->getState() > 2)
 			return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
 		$editForm = $this->createForm(new OrderType(), $entity);
@@ -157,11 +154,11 @@ class OrderController extends Controller
 	 * @Route("/{id}/update", name="order_update")
 	 * @Method("post")
 	 * @Template("JLMOfficeBundle:Order:edit.html.twig")
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function updateAction(Request $request, Order $entity)
 	{
-		 
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		// Si la commande est déjà validé, on empèche quelconque modification
 		if ($entity->getState() > 2)
 			return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
@@ -192,10 +189,11 @@ class OrderController extends Controller
 	 * Imprimer la fiche travaux
 	 *
 	 * @Route("/{id}/print", name="order_print")
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function printAction(Order $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/pdf');
 		$response->headers->set('Content-Disposition', 'inline; filename='.$entity->getId().'.pdf');
@@ -209,10 +207,11 @@ class OrderController extends Controller
 	 * En préparation
 	 * 
 	 * @Route("/{id}/ordered", name="order_ordered")
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function orderedAction(Order $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		if ($entity->getState() > 0)
 			return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
 		
@@ -228,10 +227,11 @@ class OrderController extends Controller
 	 * En préparation
 	 *
 	 * @Route("/{id}/ready", name="order_ready")
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function readyAction(Order $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		if ($entity->getState() != 1)
 			return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
 	
@@ -249,10 +249,11 @@ class OrderController extends Controller
 	/**
 	 * @Route("/todo", name="order_todo")
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function todoAction()
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$em = $this->getDoctrine()->getManager();
 		$list = $em->getRepository('JLMDailyBundle:Work')->getOrderTodo();
 		return array('entities'=>$list);
@@ -263,11 +264,12 @@ class OrderController extends Controller
 	 *
 	 * @Route("/search", name="order_search")
 	 * @Method("post")
-	 * @Secure(roles="ROLE_OFFICE")
 	 * @Template()
 	 */
 	public function searchAction(Request $request)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$entity = new Search;
 		$form = $this->createForm(new SearchType(), $entity);
 		$form->handleRequest($request);

@@ -20,12 +20,9 @@ if ((('dev' === $appEnv) && isset($_SERVER['HTTP_CLIENT_IP']))
     exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
 }
 
-$loader = require_once dirname(__DIR__).'/app/bootstrap.php.cache';
-
 if ($appEnv) {
     Debug::enable();
 }
-
 
 require_once dirname(__DIR__).'/app/AppKernel.php';
 

@@ -11,7 +11,6 @@
 
 namespace JLM\ContractBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JLM\ContractBundle\Event\ContractEvent;
 use JLM\ContractBundle\JLMContractEvents;
 use Symfony\Component\DependencyInjection\ContainerAware;

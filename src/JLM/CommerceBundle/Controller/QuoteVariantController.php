@@ -11,32 +11,17 @@
 
 namespace JLM\CommerceBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\ModelBundle\Entity\Mail;
 use JLM\ModelBundle\Form\Type\MailType;
-use JLM\CommerceBundle\Entity\Quote;
 use JLM\CommerceBundle\Entity\QuoteVariant;
-use JLM\CommerceBundle\Form\Type\QuoteVariantType;
-use JLM\CommerceBundle\Entity\QuoteLine;
-use JLM\OfficeBundle\Entity\Order;
-use JLM\DailyBundle\Entity\Work;
-use JLM\CommerceBundle\Event\QuoteEvent;
 use JLM\CommerceBundle\JLMCommerceEvents;
 use JLM\CommerceBundle\Event\QuoteVariantEvent;
 use JLM\CoreBundle\Factory\MailFactory;
 use JLM\CommerceBundle\Builder\Email\QuoteVariantConfirmGivenMailBuilder;
-use JLM\ModelBundle\JLMModelEvents;
 use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
 
-/**
- * QuoteVariant controller.
- *
- * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
- */
 class QuoteVariantController extends Controller
 {		
 	/**

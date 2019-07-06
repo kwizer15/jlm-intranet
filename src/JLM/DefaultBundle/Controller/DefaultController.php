@@ -6,18 +6,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use JLM\ModelBundle\Entity\Door;
 
 class DefaultController extends Controller
 {
     /**
      * @Route("/",name="default")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function indexAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	// Stats Techs
     $em =$this->getDoctrine()->getManager();
     	$stats = $em->getRepository('JLMDailyBundle:ShiftTechnician')->getStatsByYear();
@@ -109,11 +108,11 @@ class DefaultController extends Controller
 	/**
 	 * @Route("/info")
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function infoAction()
 	{
-	
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		phpinfo();exit;
 	
 		return array();
@@ -122,10 +121,11 @@ class DefaultController extends Controller
 	/**
 	 * @Route("/robot.txt")
 	 * @Template("JLMDefaultBundle:Default:robot.txt.twig")
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function robotAction()
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		return array();
 	}
 	

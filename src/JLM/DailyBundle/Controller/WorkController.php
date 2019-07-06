@@ -3,18 +3,11 @@
 namespace JLM\DailyBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use JLM\DailyBundle\Entity\Work;
 use JLM\DailyBundle\Form\Type\WorkType;
 use JLM\DailyBundle\Form\Type\WorkEditType;
 use JLM\DailyBundle\Form\Type\WorkCloseType;
-use JLM\DailyBundle\Entity\ShiftTechnician;
-use JLM\DailyBundle\Form\Type\AddTechnicianType;
-use JLM\DailyBundle\Form\Type\ShiftingEditType;
-use JLM\DailyBundle\Form\Type\ExternalBillType;
-use JLM\DailyBundle\Form\Type\InterventionCancelType;
 use JLM\ModelBundle\Entity\Door;
 use JLM\CommerceBundle\Entity\QuoteVariant;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -24,10 +17,6 @@ use JLM\CoreBundle\Builder\MailSwiftMailBuilder;
 use JLM\ModelBundle\JLMModelEvents;
 use JLM\ModelBundle\Event\DoorEvent;
 
-/**
- * Work controller.
- *
- */
 class WorkController extends AbstractInterventionController
 {
 	/**
@@ -48,10 +37,11 @@ class WorkController extends AbstractInterventionController
 	 * Finds and displays a Work entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function showAction(Work $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		return $this->show($entity);
 	}
 	
@@ -59,10 +49,11 @@ class WorkController extends AbstractInterventionController
 	 * Displays a form to create a new Work entity.
 	 *
 	 * @Template("JLMDailyBundle:Work:new.html.twig")
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function newdoorAction(Door $door)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$entity = new Work();
 		$entity->setDoor($door);
 		$entity->setPlace($door.'');
@@ -78,10 +69,11 @@ class WorkController extends AbstractInterventionController
 	 * Displays a form to create a new Work entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function newAction()
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$entity = new Work();
 		$form   = $this->createForm(new WorkType(), $entity);
 	
@@ -95,10 +87,11 @@ class WorkController extends AbstractInterventionController
 	 * Displays a form to create a new Work entity.
 	 *
 	 * @Template("JLMDailyBundle:Work:new.html.twig")
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function newquoteAction(QuoteVariant $quote)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$entity = new Work();
 		$entity->setQuote($quote);
 		$door = $quote->getQuote()->getDoor();
@@ -147,10 +140,11 @@ class WorkController extends AbstractInterventionController
 	 * Creates a new Work entity.
 	 *
 	 * @Template("JLMDailyBundle:Work:new.html.twig")
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function createAction(Request $request)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$entity  = new Work();
 		
 		$form = $this->createForm(new WorkType(), $entity);
@@ -179,10 +173,11 @@ class WorkController extends AbstractInterventionController
 	 * Displays a form to edit an existing Work entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function editAction(Work $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$editForm = $this->createForm(new WorkEditType(), $entity);
 	
 		return array(
@@ -195,10 +190,11 @@ class WorkController extends AbstractInterventionController
 	 * Edits an existing Work entity.
 	 *
 	 * @Template("JLMDailyBundle:Work:edit.html.twig")
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function updateAction(Request $request, Work $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$em = $this->getDoctrine()->getManager();
 			
 		$editForm = $this->createForm(new WorkEditType(), $entity);
@@ -221,10 +217,11 @@ class WorkController extends AbstractInterventionController
 	 * Close an existing Work entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function closeAction(Work $entity)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$form = $this->createForm(new WorkCloseType(), $entity);
 	
 		return array(
@@ -237,10 +234,11 @@ class WorkController extends AbstractInterventionController
 	 * Close an existing Work entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function closeupdateAction(Request $request, Work $entity)
-	{	
+	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$form = $this->createForm(new WorkCloseType(), $entity);
 		$form->handleRequest($request);
 	
@@ -275,10 +273,11 @@ class WorkController extends AbstractInterventionController
 	 * Finds and displays a InterventionPlanned entity.
 	 *
 	 * @Template()
-	 * @Secure(roles="ROLE_OFFICE")
 	 */
 	public function emailAction(Work $entity, $step)
 	{
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
 		$request = $this->getRequest();
 		$steps = array(
 				'planned' => 'JLM\DailyBundle\Builder\Email\WorkPlannedMailBuilder',

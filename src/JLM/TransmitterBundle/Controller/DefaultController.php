@@ -4,7 +4,6 @@ namespace JLM\TransmitterBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -16,10 +15,11 @@ class DefaultController extends Controller
      * @Route("/search",name="transmitter_search")
      * @Method("get")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function searchAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
     	$formData = $request->get('jlm_core_search');
     	 
     	if (is_array($formData) && array_key_exists('query', $formData))

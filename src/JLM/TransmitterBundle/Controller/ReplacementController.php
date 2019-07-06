@@ -4,8 +4,6 @@ namespace JLM\TransmitterBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -15,8 +13,6 @@ use JLM\TransmitterBundle\Form\Type\ReplacementType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * Replacement controller.
- *
  * @Route("/replacement")
  */
 class ReplacementController extends Controller
@@ -26,10 +22,11 @@ class ReplacementController extends Controller
      *
      * @Route("/new/{id}", name="transmitter_replacement_new")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function newAction(Attribution $attribution)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity = new Replacement();
         $entity->setAttribution($attribution);
         $form   = $this->createForm(new ReplacementType($attribution->getSite()->getId()), $entity);
@@ -46,10 +43,11 @@ class ReplacementController extends Controller
      * @Route("/create/{id}", name="transmitter_replacement_create")
      * @Method("POST")
      * @Template()
-     * @Secure(roles="ROLE_OFFICE")
      */
     public function createAction(Request $request, Attribution $attribution)
     {
+        $this->denyAccessUnlessGranted('ROLE_OFFICE');
+
         $entity  = new Replacement();
         $form = $this->createForm(new ReplacementType($attribution->getSite()->getId()), $entity);
         $form->handleRequest($request);
