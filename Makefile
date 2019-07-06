@@ -15,7 +15,7 @@ DATABASE_HOST?=localhost
 DATABASE_PORT?=3306
 DATABASE_USERNAME?=hmintranet
 DATABASE_PASSWORD?=hmintranet
-DATABASE_NAME=hmintranet
+DATABASE_NAME?=hmintranet
 
 .PHONY: help server assets cache-clear cache-delete database-init database-data install
 
@@ -49,6 +49,9 @@ database-init: ## Initialise la base de donnée et l'utilisateur lié (nécessit
 db_backup.sql: db_backup.sql.gz
 	gzip -d $<
 
+database-migrate:
+	$(PHP) bin/phinx migrate
+
 database-data: db_backup.sql
 	$(MYSQL) \
 	    --user=$(DATABASE_USERNAME) \
@@ -67,4 +70,3 @@ composer.lock: composer.json
 
 vendor: composer.json
 	$(PHP) $(COMPOSER) install
-
