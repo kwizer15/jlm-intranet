@@ -11,6 +11,7 @@
 
 namespace JLM\ModelBundle\Controller;
 
+use JLM\ModelBundle\Repository\TrusteeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -271,22 +272,26 @@ class TrusteeController extends Controller
     			'form'   => $form->createView()
     	);
     }
-    
+
     /**
-     * City json
+     * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function searchAction(Request $request)
+    public function searchAction(Request $request): JsonResponse
     {
         $this->denyAccessUnlessGranted('ROLE_OFFICE');
 
         $term = $request->get('q');
-        $page_limit = $request->get('page_limit');
+        $pageLimit = $request->get('page_limit');
     
         $em = $this->getDoctrine()->getManager();
-    
-        $entities = $em->getRepository('JLMModelBundle:Trustee')->getArray($term, $page_limit);
+
+        /** @var TrusteeRepository $repository */
+        $repository = $em->getRepository(Trustee::class);
+        $entities = $repository->getArray($term, $pageLimit);
         
-        return new JsonResponse(array('entities' => $entities));
+        return new JsonResponse(['entities' => $entities]);
     }
     
     /**

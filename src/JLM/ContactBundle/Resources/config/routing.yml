@@ -1,10 +1,10 @@
 jlm_contact_rest_city_search:
-    path:   /cities.json
+    path:   /citiesjson
     defaults:  { _controller: "JLMContactBundle:City:search" }
     methods: [GET]
     
 jlm_contact_rest_city_get:
-    path:   /city.json
+    path:   /cityjson
     defaults:  { _controller: "JLMContactBundle:City:json" }
     methods: [GET]
     
@@ -73,22 +73,22 @@ jlm_contact_contact_test:
     methods: [GET]
     
 jlm_contact_rest_person_search:
-    path:   /ajax/persons.json
+    path:   /ajax/personsjson
     defaults:  { _controller: "JLMContactBundle:AjaxPerson:search" }
     methods: [GET]
     
 jlm_contact_rest_person_get:
-    path:   /ajax/person.json
+    path:   /ajax/personjson
     defaults:  { _controller: "JLMContactBundle:AjaxPerson:json" }
     methods: [GET]
     
 jlm_contact_rest_corporation_search:
-    path:   /ajax/corporations.json
+    path:   /ajax/corporationsjson
     defaults:  { _controller: "JLMContactBundle:AjaxCorporation:search" }
     methods: [GET]
     
 jlm_contact_rest_corporation_get:
-    path:   /ajax/corporation.json
+    path:   /ajax/corporationjson
     defaults:  { _controller: "JLMContactBundle:AjaxCorporation:json" }
     methods: [GET]
     

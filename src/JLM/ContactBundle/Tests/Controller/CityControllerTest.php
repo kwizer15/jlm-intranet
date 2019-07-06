@@ -35,7 +35,7 @@ class CityControllerTest extends WebTestCase
     {
         $this->client->request(
             'GET',
-            '/contact/city.json',
+            '/contact/cityjson',
             array('id' => 1),
             array(),
             array(
@@ -50,7 +50,7 @@ class CityControllerTest extends WebTestCase
     {
         $this->client->request(
             'GET',
-            '/contact/city.json',
+            '/contact/cityjson',
             array('id' => 'foo'),
             array(),
             array(
@@ -65,7 +65,7 @@ class CityControllerTest extends WebTestCase
     {
         $this->client->request(
             'GET',
-            '/contact/cities.json',
+            '/contact/citiesjson',
             array('q' => 'Othis'),
             array(),
             array(

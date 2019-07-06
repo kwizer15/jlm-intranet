@@ -59,13 +59,13 @@ trustee_contact_create:
   methods: [POST]
   
 jlm_model_trusteesearch_json:
-  path: /trustees.json
+  path: /trusteesjson
   defaults:
     _controller: "JLMModelBundle:Trustee:search"
   methods: [GET]
   
 jlm_model_trustee_json:
-  path: /trustee.json
+  path: /trusteejson
   defaults:
     _controller: "JLMModelBundle:Trustee:json"
   methods: [GET]
