@@ -7,7 +7,8 @@ PHP?=php
 HOST?=localhost
 PORT?=8000
 
-CONSOLE=app/console
+CONSOLE=$(PHP) app/console
+COMPOSER?=composer
 
 MYSQL?=mysql
 DATABASE_HOST?=localhost
@@ -59,7 +60,7 @@ database-data: db_backup.sql
 	$(CONSOLE) doctrine:schema:update --force
 
 composer.lock: composer.json
-	composer install
+	$(PHP) $(COMPOSER) install
 
 vendor: composer.json
-	composer install
+	$(PHP) $(COMPOSER) install

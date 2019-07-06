@@ -3,15 +3,13 @@ namespace JLM\FeeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\FeeBundle\Entity\Fee;
 use JLM\FeeBundle\Form\Type\FeeType;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Contract controller.
- *
- * @Route("/fee")
+ * @Route("/")
  */
 class FeeController extends Controller
 {

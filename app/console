@@ -18,6 +18,7 @@ $dotenv = new Dotenv();
 $dotenv->loadEnv(dirname(__DIR__).'/.env');
 $appEnv = getenv('APP_ENV');
 
+require_once __DIR__.'/bootstrap.php.cache';
 require_once __DIR__.'/AppKernel.php';
 
 $input = new ArgvInput();

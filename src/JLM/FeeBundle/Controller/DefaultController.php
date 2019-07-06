@@ -3,25 +3,25 @@
 namespace JLM\FeeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\FeeBundle\Entity\Fee;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/feedefault")
+ * Route("/feedefault")
  */
 class DefaultController extends Controller
 {   
     /**
+     * TODO: faire une commande
+     *
      * Action temporaire
      * 
      * Création à la volée des redevances
      * 
      * Route("/autocreate")
-     * @Template()
+     * Template()
      * @deprecated
      */
-    public function autocreatefeeAction()
+    public function autocreatefee()
     {
     	$em = $this->getDoctrine()->getManager();
     	
