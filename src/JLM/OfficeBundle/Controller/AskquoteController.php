@@ -5,7 +5,7 @@ namespace JLM\OfficeBundle\Controller;
 use JLM\DefaultBundle\Controller\PaginableController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\OfficeBundle\Entity\AskQuote;
 use JLM\OfficeBundle\Form\Type\AskQuoteType;

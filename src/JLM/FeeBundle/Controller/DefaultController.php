@@ -3,13 +3,11 @@
 namespace JLM\FeeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JLM\FeeBundle\Entity\Fee;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Contract controller.
- *
  * @Route("/feedefault")
  */
 class DefaultController extends Controller
