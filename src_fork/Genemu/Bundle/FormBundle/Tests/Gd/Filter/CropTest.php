@@ -16,7 +16,7 @@ use Genemu\Bundle\FormBundle\Gd\Filter\Crop;
 /**
  * @author Olivier Chauvel <olivier@generation-multiple.com>
  */
-class CropTest extends \PHPUnit_Framework_TestCase
+class CropTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

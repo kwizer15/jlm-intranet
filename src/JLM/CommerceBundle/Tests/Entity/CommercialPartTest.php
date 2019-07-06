@@ -14,7 +14,7 @@ namespace JLM\CommerceBundle\Tests\Entity;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class CommercialPartTest extends \PHPUnit_Framework_TestCase
+class CommercialPartTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @var Mock CommercialPart
@@ -40,15 +40,15 @@ class CommercialPartTest extends \PHPUnit_Framework_TestCase
 	public function getAttributes()
 	{
 	    return array(
-	    	array('Creation', $this->getMock('DateTime')),
+	    	array('Creation', $this->createMock('DateTime')),
 	        array('Number', '123456'),
-	        array('Customer', $this->getMock('JLM\CommerceBundle\Model\CustomerInterface')),
+	        array('Customer', $this->createMock('JLM\CommerceBundle\Model\CustomerInterface')),
 	        array('CustomerName', 'Foo'),
 	        array('CustomerAddress', 'Bar'),
 	        array('Vat', 19.6),
 	        
 	        // Deprecated
-	        array('Trustee',  $this->getMock('JLM\CommerceBundle\Model\CustomerInterface')),
+	        array('Trustee',  $this->createMock('JLM\CommerceBundle\Model\CustomerInterface')),
 	        array('TrusteeName', 'Foo'),
 	        array('TrusteeAddress', 'Bar'),
 	        array('VatTransmitter', 19.6),

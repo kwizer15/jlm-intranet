@@ -16,7 +16,7 @@ use JLM\FeeBundle\Entity\Fee;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class FeeTest extends \PHPUnit_Framework_TestCase
+class FeeTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Fee
@@ -47,8 +47,8 @@ class FeeTest extends \PHPUnit_Framework_TestCase
             array('Address', 'Foo'),
             array('Prelabel', 'Foo'),
             array('Frequence', 1),
-            array('Vat', $this->getMock('JLM\CommerceBundle\Model\VATInterface')),
-            array('Trustee', $this->getMock('JLM\ModelBundle\Entity\Trustee')),
+            array('Vat', $this->createMock('JLM\CommerceBundle\Model\VATInterface')),
+            array('Trustee', $this->createMock('JLM\ModelBundle\Entity\Trustee')),
         );
     }
     
@@ -84,7 +84,7 @@ class FeeTest extends \PHPUnit_Framework_TestCase
     public function getAdderRemover()
     {
         return array(
-            array('Contract', 'Contracts', $this->getMock('JLM\ContractBundle\Model\ContractInterface')),
+            array('Contract', 'Contracts', $this->createMock('JLM\ContractBundle\Model\ContractInterface')),
         );
     }
     
@@ -106,8 +106,8 @@ class FeeTest extends \PHPUnit_Framework_TestCase
 
     public function testGetContractNumbers()
     {
-        $c1 = $this->getMock('JLM\ContractBundle\Model\ContractInterface');
-        $c2 = $this->getMock('JLM\ContractBundle\Model\ContractInterface');
+        $c1 = $this->createMock('JLM\ContractBundle\Model\ContractInterface');
+        $c2 = $this->createMock('JLM\ContractBundle\Model\ContractInterface');
         $c1->expects($this->once())->method('getNumber')->will($this->returnValue('12345'));
         $c2->expects($this->once())->method('getNumber')->will($this->returnValue('6789'));
         $this->entity->addContract($c1);
@@ -117,10 +117,10 @@ class FeeTest extends \PHPUnit_Framework_TestCase
     
     public function testGetDoorDescription()
     {
-    	$door = $this->getMock('JLM\ModelBundle\Entity\Door');
+    	$door = $this->createMock('JLM\ModelBundle\Entity\Door');
     	$door->expects($this->once())->method('getType')->will($this->returnValue('Porte basculante'));
     	$door->expects($this->once())->method('getLocation')->will($this->returnValue('Facade'));
-    	$contract = $this->getMock('JLM\ContractBundle\Model\ContractInterface');
+    	$contract = $this->createMock('JLM\ContractBundle\Model\ContractInterface');
     	$contract->expects($this->once())->method('getDoor')->will($this->returnValue($door));
     	$this->entity->addContract($contract);
     	$this->assertSame(array('Porte basculante / Facade'),$this->entity->getDoorDescription());
@@ -128,8 +128,8 @@ class FeeTest extends \PHPUnit_Framework_TestCase
     
     public function testGetYearAmount()
     {
-    	$c1 = $this->getMock('JLM\ContractBundle\Model\ContractInterface');
-    	$c2 = $this->getMock('JLM\ContractBundle\Model\ContractInterface');
+    	$c1 = $this->createMock('JLM\ContractBundle\Model\ContractInterface');
+    	$c2 = $this->createMock('JLM\ContractBundle\Model\ContractInterface');
     	$c1->expects($this->once())->method('getFee')->will($this->returnValue(100.0));
     	$c2->expects($this->once())->method('getFee')->will($this->returnValue(200.0));
     	$this->entity->addContract($c1);
@@ -139,8 +139,8 @@ class FeeTest extends \PHPUnit_Framework_TestCase
     
     public function testGetAmount()
     {
-    	$c1 = $this->getMock('JLM\ContractBundle\Model\ContractInterface');
-    	$c2 = $this->getMock('JLM\ContractBundle\Model\ContractInterface');
+    	$c1 = $this->createMock('JLM\ContractBundle\Model\ContractInterface');
+    	$c2 = $this->createMock('JLM\ContractBundle\Model\ContractInterface');
     	$c1->expects($this->once())->method('getFee')->will($this->returnValue(100.0));
     	$c2->expects($this->once())->method('getFee')->will($this->returnValue(200.0));
     	$this->entity->addContract($c1);
@@ -151,8 +151,8 @@ class FeeTest extends \PHPUnit_Framework_TestCase
     
     public function testGetBillingAddressReturnAddress()
     {
-    	$address = $this->getMock('JLM\ContactBundle\Model\AddressInterface');
-    	$trustee = $this->getMock('JLM\ModelBundle\Entity\Trustee');
+    	$address = $this->createMock('JLM\ContactBundle\Model\AddressInterface');
+    	$trustee = $this->createMock('JLM\ModelBundle\Entity\Trustee');
     	$trustee->expects($this->any())->method('getAddress')->will($this->returnValue($address));
     	$this->entity->setTrustee($trustee);
     	$this->assertSame($address, $this->entity->getBillingAddress());
@@ -160,23 +160,23 @@ class FeeTest extends \PHPUnit_Framework_TestCase
     
     public function testGetBillingAddressReturnAddressWithBillingExist()
     {
-    	$address = $this->getMock('JLM\ContactBundle\Model\AddressInterface');
-    	$trustee = $this->getMock('JLM\ModelBundle\Entity\Trustee');
+    	$address = $this->createMock('JLM\ContactBundle\Model\AddressInterface');
+    	$trustee = $this->createMock('JLM\ModelBundle\Entity\Trustee');
     	$trustee->expects($this->any())->method('getAddress')->will($this->returnValue($address));
     	$this->entity->setTrustee($trustee);
-    	$billingAddress = $this->getMock('JLM\ContactBundle\Model\AddressInterface');
+    	$billingAddress = $this->createMock('JLM\ContactBundle\Model\AddressInterface');
     	$trustee->expects($this->once())->method('getBillingAddress')->will($this->returnValue($billingAddress));
     	$this->assertSame($address, $this->entity->getBillingAddress());
     }
     
     public function testGetBillingAddressReturnBilling()
     {
-    	$address = $this->getMock('JLM\ContactBundle\Model\AddressInterface');
-    	$trustee = $this->getMock('JLM\ModelBundle\Entity\Trustee');
+    	$address = $this->createMock('JLM\ContactBundle\Model\AddressInterface');
+    	$trustee = $this->createMock('JLM\ModelBundle\Entity\Trustee');
     	$trustee->expects($this->any())->method('getAddress')->will($this->returnValue($address));
     	$this->entity->setTrustee($trustee);
-    	$billingAddress = $this->getMock('JLM\ContactBundle\Model\AddressInterface');
-    	$city = $this->getMock('JLM\ContactBundle\Model\CityInterface');
+    	$billingAddress = $this->createMock('JLM\ContactBundle\Model\AddressInterface');
+    	$city = $this->createMock('JLM\ContactBundle\Model\CityInterface');
     	$billingAddress->expects($this->once())->method('getCity')->will($this->returnValue($city));
     	$billingAddress->expects($this->once())->method('getStreet')->will($this->returnValue('Foo'));
     	$trustee->expects($this->once())->method('getBillingAddress')->will($this->returnValue($billingAddress));
@@ -186,11 +186,11 @@ class FeeTest extends \PHPUnit_Framework_TestCase
     public function testGetGroup()
     {
     	$number = '12345';
-    	$site = $this->getMock('JLM\ModelBundle\Entity\Site');
+    	$site = $this->createMock('JLM\ModelBundle\Entity\Site');
     	$site->expects($this->once())->method('getGroupNumber')->will($this->returnValue($number));
-    	$door = $this->getMock('JLM\ModelBundle\Entity\Door');
+    	$door = $this->createMock('JLM\ModelBundle\Entity\Door');
     	$door->expects($this->once())->method('getSite')->will($this->returnValue($site));
-    	$contract = $this->getMock('JLM\ContractBundle\Model\ContractInterface');
+    	$contract = $this->createMock('JLM\ContractBundle\Model\ContractInterface');
     	$contract->expects($this->once())->method('getDoor')->will($this->returnValue($door));
     	$this->entity->addContract($contract);
     	$this->assertSame($number, $this->entity->getGroup());

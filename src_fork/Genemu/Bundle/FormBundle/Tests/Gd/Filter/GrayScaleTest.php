@@ -16,7 +16,7 @@ use Genemu\Bundle\FormBundle\Gd\Filter\GrayScale;
 /**
  * @author Olivier Chauvel <olivier@generation-multiple.com>
  */
-class GrayScaleTest extends \PHPUnit_Framework_TestCase
+class GrayScaleTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

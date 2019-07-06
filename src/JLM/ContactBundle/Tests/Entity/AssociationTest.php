@@ -16,7 +16,7 @@ use JLM\ContactBundle\Entity\Association;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class AssociationTest extends \PHPUnit_Framework_TestCase
+class AssociationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Person
@@ -46,7 +46,7 @@ class AssociationTest extends \PHPUnit_Framework_TestCase
         return array(
             array('Name', 'Foo'),
             array('Email', 'commerce@jlm-entreprise.fr'),
-            array('Address', $this->getMock('JLM\ContactBundle\Model\AddressInterface')),
+            array('Address', $this->createMock('JLM\ContactBundle\Model\AddressInterface')),
         );
     }
     
@@ -67,8 +67,8 @@ class AssociationTest extends \PHPUnit_Framework_TestCase
     public function getAdderRemover()
     {
         return array(
-            array('Phone', 'Phones', $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface')),
-            array('Contact', 'Contacts', $this->getMock('JLM\ContactBundle\Model\CorporationContactInterface')),
+            array('Phone', 'Phones', $this->createMock('JLM\ContactBundle\Model\ContactPhoneInterface')),
+            array('Contact', 'Contacts', $this->createMock('JLM\ContactBundle\Model\CorporationContactInterface')),
         );
     }
     

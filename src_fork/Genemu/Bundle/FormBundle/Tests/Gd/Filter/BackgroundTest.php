@@ -16,7 +16,7 @@ use Genemu\Bundle\FormBundle\Gd\Filter\Background;
 /**
  * @author Olivier Chauvel <olivier@generation-multiple.com>
  */
-class BackgroundTest extends \PHPUnit_Framework_TestCase
+class BackgroundTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

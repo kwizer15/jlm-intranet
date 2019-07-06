@@ -16,7 +16,7 @@ use Genemu\Bundle\FormBundle\Gd\Filter\Strip;
 /**
  * @author Olivier Chauvel <olivier@generation-multiple.com>
  */
-class StripTest extends \PHPUnit_Framework_TestCase
+class StripTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

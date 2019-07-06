@@ -16,7 +16,7 @@ use JLM\CondominiumBundle\Entity\Manager;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ManagerTest extends \PHPUnit_Framework_TestCase
+class ManagerTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Person
@@ -28,7 +28,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->contact = $this->getMock('JLM\ContactBundle\Model\ContactInterface');
+        $this->contact = $this->createMock('JLM\ContactBundle\Model\ContactInterface');
         $this->entity = new Manager();
         $this->entity->setContact($this->contact);
     }

@@ -15,7 +15,7 @@ use JLM\CommerceBundle\Factory\BillFactory;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class BillFactoryTest extends \PHPUnit_Framework_TestCase
+class BillFactoryTest extends \PHPUnit\Framework\TestCase
 {
     private $builder;
     
@@ -26,7 +26,7 @@ class BillFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->builder = $this->getMock('JLM\CommerceBundle\Builder\BillBuilderInterface');
+        $this->builder = $this->createMock('JLM\CommerceBundle\Builder\BillBuilderInterface');
         
         $this->bill = null;
     }
@@ -36,7 +36,7 @@ class BillFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function assertPreConditions()
     {
-        $this->builder->expects($this->once())->method('getBill')->will($this->returnValue($this->getMock('JLM\CommerceBundle\Model\BillInterface')));
+        $this->builder->expects($this->once())->method('getBill')->will($this->returnValue($this->createMock('JLM\CommerceBundle\Model\BillInterface')));
     }
     
     /**

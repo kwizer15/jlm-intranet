@@ -16,7 +16,7 @@ use Genemu\Bundle\FormBundle\Gd\Filter\Rotate;
 /**
  * @author Olivier Chauvel <olivier@generation-multiple.com>
  */
-class RotateTest extends \PHPUnit_Framework_TestCase
+class RotateTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

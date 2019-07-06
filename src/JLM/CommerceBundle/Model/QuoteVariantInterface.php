@@ -68,4 +68,6 @@ interface QuoteVariantInterface
 	 * @return QuoteLineInterface[]
 	 */
 	public function	getLinesByType($type);
+
+	public function getQuote();
 }

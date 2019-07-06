@@ -23,7 +23,7 @@ use Doctrine\Common\Cache\ArrayCache;
 /**
  * @author Olivier Chauvel <olivier@generation-multiple.com>
  */
-abstract class DoctrineMongoTestCase extends \PHPUnit_Framework_TestCase
+abstract class DoctrineMongoTestCase extends \PHPUnit\Framework\TestCase
 {
     protected function setUp()
     {

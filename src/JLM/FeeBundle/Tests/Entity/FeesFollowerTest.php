@@ -16,7 +16,7 @@ use JLM\FeeBundle\Entity\FeesFollower;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class FeesFollowerTest extends \PHPUnit_Framework_TestCase
+class FeesFollowerTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Fee

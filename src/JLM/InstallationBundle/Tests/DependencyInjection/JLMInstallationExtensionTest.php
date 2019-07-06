@@ -16,7 +16,7 @@ use JLM\InstallationBundle\DependencyInjection\JLMInstallationExtension;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class JLMInstallationExtensionTest extends \PHPUnit_Framework_TestCase
+class JLMInstallationExtensionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * {@inheritdoc}
@@ -33,6 +33,6 @@ class JLMInstallationExtensionTest extends \PHPUnit_Framework_TestCase
     
     public function testLoad()
     {
-        $this->ext->load(array(), $this->getMock('Symfony\Component\DependencyInjection\ContainerBuilder'));
+        $this->ext->load(array(), $this->createMock('Symfony\Component\DependencyInjection\ContainerBuilder'));
     }
 }

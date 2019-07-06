@@ -19,6 +19,7 @@ use Genemu\Bundle\FormBundle\Tests\Form\Type\TypeTestCase;
 use Genemu\Bundle\FormBundle\Tests\Form\Extension\DoctrineOrmExtensionTest;
 use Genemu\Bundle\FormBundle\Tests\DoctrineOrmTestCase;
 use Genemu\Bundle\FormBundle\Tests\Fixtures\Entity\SingleIdentEntity;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 abstract class AbstractAutocompleteTypeTestCase extends TypeTestCase
 {
@@ -119,7 +120,7 @@ abstract class AbstractAutocompleteTypeTestCase extends TypeTestCase
 
     protected function createRegistryMock($name, $em)
     {
-        $registry = $this->getMock('Doctrine\Common\Persistence\ManagerRegistry');
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry->expects($this->any())
             ->method('getManager')
             ->with($this->equalTo($name))

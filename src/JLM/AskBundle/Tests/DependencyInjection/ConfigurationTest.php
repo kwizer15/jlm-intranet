@@ -12,12 +12,19 @@
 namespace JLM\AskBundle\Tests\DependencyInjection;
 
 use JLM\AskBundle\DependencyInjection\Configuration;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ConfigurationTest extends \PHPUnit_Framework_TestCase
+class ConfigurationTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @var Configuration
+     */
+    private $conf;
+
     public function setUp()
     {
         $this->conf = new Configuration();
@@ -25,11 +32,11 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     
     public function assertPreCondition()
     {
-        $this->assertInstanceOf('Symfony\Component\Config\Definition\ConfigurationInterface', $this->conf);
+        $this->assertInstanceOf(ConfigurationInterface::class, $this->conf);
     }
     
     public function testGetConfigTreeBuilder()
     {
-        $this->assertInstanceOf('Symfony\Component\Config\Definition\Builder\TreeBuilder', $this->conf->getConfigTreeBuilder());
+        $this->assertInstanceOf(TreeBuilder::class, $this->conf->getConfigTreeBuilder());
     }
 }

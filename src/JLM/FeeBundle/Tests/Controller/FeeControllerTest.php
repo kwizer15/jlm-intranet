@@ -49,7 +49,7 @@ class FeeControllerTest extends WebTestCase
      */
     public function testUrlIsSuccessful($method, $url)
     {
-    	$prefix = '/fee/fee';
+    	$prefix = '/fee';
         $crawler = $this->client->request(
             $method,
             $prefix.$url

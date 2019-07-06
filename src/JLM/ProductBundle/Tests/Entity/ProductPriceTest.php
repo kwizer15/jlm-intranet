@@ -16,7 +16,7 @@ use JLM\ProductBundle\Entity\ProductPrice;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ProductPriceTest extends \PHPUnit_Framework_TestCase
+class ProductPriceTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Product
@@ -42,7 +42,7 @@ class ProductPriceTest extends \PHPUnit_Framework_TestCase
     
     public function testProduct()
     {
-        $product = $this->getMock('JLM\ProductBundle\Model\ProductInterface');
+        $product = $this->createMock('JLM\ProductBundle\Model\ProductInterface');
         $this->assertSame($this->entity, $this->entity->setProduct($product));
         $this->assertSame($product, $this->entity->getProduct());
     }

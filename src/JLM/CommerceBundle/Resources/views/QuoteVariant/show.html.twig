@@ -34,8 +34,8 @@
             </td>
             <td>{{ line.quantity }}</td>
             <td class="col-coding">{{ line.purchasePrice|number_format(2,',',' ') }} €</th>
-   			<td class="col-coding">{{ line.discountSupplier*100|number_format(0,',',' ') }} %</th>
-    		<td class="col-coding">{{ line.expenseRatio*100|number_format(0,',',' ') }} %</th>
+   			<td class="col-coding">{{ (line.discountSupplier*100)|number_format(0,',',' ') }} %</th>
+    		<td class="col-coding">{{ (line.expenseRatio*100)|number_format(0,',',' ') }} %</th>
     		<td class="col-coding">{{ line.shipping|number_format(2,',',' ') }} €</th>
             <td class="col-quote">{{ line.unitPrice|number_format(2,',',' ') }} €</td>
             <td class="col-quote">{{ (line.discount*100)|number_format(0,',',' ') }} %</td>
@@ -60,7 +60,7 @@
     	<tbody>
     		<tr>
     			<th>Remise</th>
-    			<td>{{ variant.discount*100|number_format(2,',',' ') }} %</td>
+    			<td>{{ (variant.discount*100)|number_format(2,',',' ') }} %</td>
     		</tr>
     		<tr class="info">
     			<th>Total H.T.</th>

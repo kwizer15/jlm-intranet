@@ -21,7 +21,7 @@ use Doctrine\Common\Cache\ArrayCache;
 /**
  * @author Olivier Chauvel <olivier@generation-multiple.com>
  */
-abstract class DoctrineOrmTestCase extends \PHPUnit_Framework_TestCase
+abstract class DoctrineOrmTestCase extends \PHPUnit\Framework\TestCase
 {
     protected function setUp()
     {

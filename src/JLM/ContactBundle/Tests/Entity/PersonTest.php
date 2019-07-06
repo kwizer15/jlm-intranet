@@ -16,7 +16,7 @@ use JLM\ContactBundle\Entity\Person;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class PersonTest extends \PHPUnit_Framework_TestCase
+class PersonTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Person
@@ -48,7 +48,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
             array('FirstName', 'Foo'),
             array('LastName', 'Foo'),
             array('Email', 'commerce@jlm-entreprise.fr'),
-            array('Address', $this->getMock('JLM\ContactBundle\Model\AddressInterface')),
+            array('Address', $this->createMock('JLM\ContactBundle\Model\AddressInterface')),
         );
     }
     
@@ -69,7 +69,7 @@ class PersonTest extends \PHPUnit_Framework_TestCase
     public function getAdderRemover()
     {
         return array(
-            array('Phone', 'Phones', $this->getMock('JLM\ContactBundle\Model\ContactPhoneInterface')),
+            array('Phone', 'Phones', $this->createMock('JLM\ContactBundle\Model\ContactPhoneInterface')),
         );
     }
     

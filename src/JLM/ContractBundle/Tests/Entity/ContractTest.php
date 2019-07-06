@@ -15,7 +15,7 @@ use JLM\ContractBundle\Entity\Contract;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ContractTest extends \PHPUnit_Framework_TestCase
+class ContractTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @var Country
@@ -47,7 +47,7 @@ class ContractTest extends \PHPUnit_Framework_TestCase
 	
 	public function testTrustee()
 	{
-		$trustee = $this->getMock('JLM\ModelBundle\Entity\Trustee');
+		$trustee = $this->createMock('JLM\ModelBundle\Entity\Trustee');
 		$this->assertSame($this->entity, $this->entity->setTrustee($trustee));
 		$this->assertSame($trustee, $this->entity->getTrustee());
 	}
@@ -78,28 +78,28 @@ class ContractTest extends \PHPUnit_Framework_TestCase
 	
 	public function testDoor()
 	{
-		$door = $this->getMock('JLM\ModelBundle\Entity\Door');
+		$door = $this->createMock('JLM\ModelBundle\Entity\Door');
 		$this->assertSame($this->entity, $this->entity->setDoor($door));
 		$this->assertSame($door, $this->entity->getDoor());
 	}
 	
 	public function testBegin()
 	{
-		$date = $this->getMock('DateTime');
+		$date = $this->createMock('DateTime');
 		$this->assertSame($this->entity, $this->entity->setBegin($date));
 		$this->assertSame($date, $this->entity->getBegin());
 	}
 	
 	public function testEndWarranty()
 	{
-		$date = $this->getMock('DateTime');
+		$date = $this->createMock('DateTime');
 		$this->assertSame($this->entity, $this->entity->setEndWarranty($date));
 		$this->assertSame($date, $this->entity->getEndWarranty());
 	}
 	
 	public function testEnd()
 	{
-		$date = $this->getMock('DateTime');
+		$date = $this->createMock('DateTime');
 		$this->assertSame($this->entity, $this->entity->setEnd($date));
 		$this->assertSame($date, $this->entity->getEnd());
 	}

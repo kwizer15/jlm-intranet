@@ -16,7 +16,7 @@ use JLM\CommerceBundle\Entity\BillLine;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class BillTest extends \PHPUnit_Framework_TestCase
+class BillTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @var Bill
@@ -56,13 +56,13 @@ class BillTest extends \PHPUnit_Framework_TestCase
 	        array('Maturity', 30),
 	        array('State', 1),
 	        array('Discount', 0.50),
-	        array('Fee', $this->getMock('JLM\FeeBundle\Model\FeeInterface')),
-	        array('FeesFollower', $this->getMock('JLM\FeeBundle\Model\FeesFollowerInterface')),
-	        array('Intervention', $this->getMock('JLM\DailyBundle\Entity\Intervention')),
-	        array('FirstBoost', $this->getMock('DateTime')),
-	        array('SecondBoost', $this->getMock('DateTime')),
+	        array('Fee', $this->createMock('JLM\FeeBundle\Model\FeeInterface')),
+	        array('FeesFollower', $this->createMock('JLM\FeeBundle\Model\FeesFollowerInterface')),
+	        array('Intervention', $this->createMock('JLM\DailyBundle\Entity\Intervention')),
+	        array('FirstBoost', $this->createMock('DateTime')),
+	        array('SecondBoost', $this->createMock('DateTime')),
 	        array('SecondBoostComment', 'Foo'),
-	        array('SiteObject', $this->getMock('JLM\ModelBundle\Entity\Site')),
+	        array('SiteObject', $this->createMock('JLM\ModelBundle\Entity\Site')),
 	    );
 	}
 	

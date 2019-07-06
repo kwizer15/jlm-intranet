@@ -18,7 +18,7 @@ use Genemu\Bundle\FormBundle\Gd\Filter\Text;
 /**
  * @author Olivier Chauvel <olivier@generation-multiple.com>
  */
-class TextTest extends \PHPUnit_Framework_TestCase
+class TextTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

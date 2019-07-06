@@ -16,7 +16,7 @@ use JLM\ModelBundle\Entity\Door;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class DoorTest extends \PHPUnit_Framework_TestCase
+class DoorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Country
@@ -41,14 +41,14 @@ class DoorTest extends \PHPUnit_Framework_TestCase
     
     public function testAdministrator()
     {
-        $admin = $this->getMock('JLM\CondominiumBundle\Model\AdministratorInterface');
+        $admin = $this->createMock('JLM\CondominiumBundle\Model\AdministratorInterface');
         $this->assertSame($this->entity, $this->entity->setAdministrator($admin));
         $this->assertSame($admin, $this->entity->getAdministrator());
     }
     
     public function testParts()
     {
-    	$product = $this->getMock('JLM\ProductBundle\Model\ProductInterface');
+    	$product = $this->createMock('JLM\ProductBundle\Model\ProductInterface');
     	$this->assertCount(0, $this->entity->getParts());
     	$this->assertTrue($this->entity->addPart($product));
     	$this->assertCount(1, $this->entity->getParts());

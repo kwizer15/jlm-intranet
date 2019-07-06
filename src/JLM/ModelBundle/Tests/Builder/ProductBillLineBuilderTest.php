@@ -16,7 +16,7 @@ use JLM\ModelBundle\Builder\ProductBillLineBuilder;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ProductBillLineBuilderTest extends \PHPUnit_Framework_TestCase
+class ProductBillLineBuilderTest extends \PHPUnit\Framework\TestCase
 {
     private $builder;
     
@@ -31,7 +31,7 @@ class ProductBillLineBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->product = $this->getMock('JLM\ProductBundle\Model\ProductInterface');
+        $this->product = $this->createMock('JLM\ProductBundle\Model\ProductInterface');
         
         $this->product->expects($this->any())->method('isSmallSupply')->will($this->returnValue(true));
         $this->vat = 0.2;

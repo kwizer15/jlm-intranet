@@ -14,7 +14,7 @@ namespace JLM\CommerceBundle\Tests\Builder;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class BillLineBuilderAbstractTest extends \PHPUnit_Framework_TestCase
+class BillLineBuilderAbstractTest extends \PHPUnit\Framework\TestCase
 {
     private $builder;
     

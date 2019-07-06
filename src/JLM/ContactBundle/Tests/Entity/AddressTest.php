@@ -16,7 +16,7 @@ use JLM\ContactBundle\Entity\Address;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class AddressTest extends \PHPUnit_Framework_TestCase
+class AddressTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Address
@@ -63,7 +63,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 	public function getCities()
 	{
 	    return array(
-	        array($this->getMock('JLM\ContactBundle\Model\CityInterface')),
+	        array($this->createMock('JLM\ContactBundle\Model\CityInterface')),
 	    );
 	}
 	
@@ -90,7 +90,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test__toString($street, $zip, $cityname, $out)
 	{
-		$city = $this->getMock('JLM\ContactBundle\Model\CityInterface');
+		$city = $this->createMock('JLM\ContactBundle\Model\CityInterface');
 		$city->expects($this->once())->method('__toString')->will($this->returnValue($zip.' - '.$cityname));
 
 		$this->entity->setStreet($street);

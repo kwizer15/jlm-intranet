@@ -11,12 +11,15 @@
 
 namespace JLM\ProductBundle\Tests\Entity;
 
+use JLM\ProductBundle\Entity\Product;
 use JLM\ProductBundle\Entity\ProductCategory;
+use PHPUnit\Framework\TestCase;
+use JLM\ProductBundle\Model\ProductCategoryInterface;
 
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class ProductCategoryTest extends \PHPUnit_Framework_TestCase
+class ProductCategoryTest extends TestCase
 {
     /**
      * @var Product
@@ -36,20 +39,20 @@ class ProductCategoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\ProductBundle\Model\ProductCategoryInterface', $this->entity);
+        $this->assertInstanceOf(ProductCategoryInterface::class, $this->entity);
         $this->assertNull($this->entity->getId());
     }
     
     public function testParent()
     {
-        $parent = $this->getMock('JLM\ProductBundle\Model\ProductCategoryInterface');
+        $parent = $this->createMock(ProductCategoryInterface::class);
         $this->assertSame($this->entity, $this->entity->setParent($parent));
         $this->assertSame($parent, $this->entity->getParent());
     }
     
     public function testChildren()
     {
-        $child = $this->getMock('JLM\ProductBundle\Model\ProductCategoryInterface');
+        $child = $this->createMock(ProductCategoryInterface::class);
         $this->assertCount(0, $this->entity->getChildren());
         $this->assertTrue($this->entity->addChild($child));
         $this->assertCount(1, $this->entity->getChildren());
@@ -61,40 +64,6 @@ class ProductCategoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame($this->entity, $this->entity->setName('Foo'));
         $this->assertSame('Foo', $this->entity->getName());
-        $this->assertSame('Foo', $this->entity->__toString());
-    }
-    
-    public function testSmallSupply()
-    {
-        $entity = $this->getMockForAbstractClass('JLM\ProductBundle\Entity\ProductCategory');
-        $entity->expects($this->any())->method('getId');
-        $entity->isSmallSupply();
-    }
-
-    public function testService()
-    {
-        $entity = $this->getMockForAbstractClass('JLM\ProductBundle\Entity\ProductCategory');
-        $entity->expects($this->any())->method('getId');
-        $entity->isService();
-    }
-    
-    /**
-     * @deprecated
-     */
-    public function testAddProductCategory()
-    {
-        $entity = $this->getMockForAbstractClass('JLM\ProductBundle\Entity\ProductCategory');
-        $entity->expects($this->any())->method('addChild');
-        $this->assertTrue($entity->addProductCategory($this->entity));
-    }
-    
-    /**
-     * @deprecated
-     */
-    public function testRemoveProductCategory()
-    {
-        $entity = $this->getMockForAbstractClass('JLM\ProductBundle\Entity\ProductCategory');
-        $entity->expects($this->any())->method('removeChild');
-        $this->assertFalse($entity->removeProductCategory($this->entity));
+        $this->assertSame('Foo', (string) $this->entity);
     }
 }

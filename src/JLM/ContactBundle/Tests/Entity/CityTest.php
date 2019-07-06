@@ -16,7 +16,7 @@ use JLM\ContactBundle\Entity\City;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class CityTest extends \PHPUnit_Framework_TestCase
+class CityTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var City
@@ -103,7 +103,7 @@ class CityTest extends \PHPUnit_Framework_TestCase
 	{
 	    return array(
 	    	array(null),
-	        array($this->getMock('JLM\ContactBundle\Model\CountryInterface')),
+	        array($this->createMock('JLM\ContactBundle\Model\CountryInterface')),
 	    );
 	}
 	

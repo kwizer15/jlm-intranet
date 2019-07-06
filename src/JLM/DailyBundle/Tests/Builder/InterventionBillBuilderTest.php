@@ -12,13 +12,29 @@
 namespace JLM\DailyBundle\Tests\Builder;
 
 use JLM\DailyBundle\Builder\InterventionBillBuilder;
+use JLM\ModelBundle\Entity\Door;
+use JLM\CommerceBundle\Model\VATInterface;
+use JLM\ContactBundle\Model\AddressInterface;
+use JLM\ModelBundle\Entity\Trustee;
+use JLM\ContractBundle\Model\ContractInterface;
+use JLM\ModelBundle\Entity\Site;
+use JLM\DailyBundle\Entity\Intervention;
+use JLM\CommerceBundle\Builder\BillBuilderInterface;
+use JLM\CommerceBundle\Model\BillInterface;
+
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class InterventionBillBuilderTest extends \PHPUnit_Framework_TestCase
+class InterventionBillBuilderTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @var InterventionBillBuilder
+     */
     private $builder;
-    
+
+    /**
+     * @var Intervention
+     */
     private $intervention;
     
     /**
@@ -26,26 +42,23 @@ class InterventionBillBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        $door = $this->createMock(Door::class);
+        $vat = $this->createMock(VATInterface::class);
+        $address = $this->createMock(AddressInterface::class);
+        $trustee = $this->createMock(Trustee::class);
+        $trustee->method('getBillAddress')->willReturn($address);
+        $contract = $this->createMock(ContractInterface::class);
+        $contract->method('getManager')->willReturn($trustee);
+        $site = $this->createMock(Site::class);
+        $site->method('getManager')->willReturn($trustee);
+        $site->method('getVat')->willReturn($vat);
+        $door->method('getAdministrator')->willReturn($site);
+        $door->method('getActualContract')->willReturn($contract);
         
-        $door = $this->getMock('JLM\ModelBundle\Entity\Door');
-        $vat = $this->getMock('JLM\CommerceBundle\Model\VATInterface');
-        $address = $this->getMock('JLM\ContactBundle\Model\AddressInterface');
-        $trustee = $this->getMock('JLM\ModelBundle\Entity\Trustee');
-        $trustee->expects($this->any())->method('getBillAddress')->will($this->returnValue($address));
-        $contract = $this->getMock('JLM\ContractBundle\Model\ContractInterface');
-        $contract->expects($this->any())->method('getTrustee')->will($this->returnValue($trustee));  // @deprecated
-        $contract->expects($this->any())->method('getManager')->will($this->returnValue($trustee));
-        $site = $this->getMock('JLM\ModelBundle\Entity\Site');
-        $site->expects($this->any())->method('getManager')->will($this->returnValue($trustee));
-        $site->expects($this->any())->method('getVat')->will($this->returnValue($vat));
-        $door->expects($this->any())->method('getSite')->will($this->returnValue($site));  // @deprecated
-        $door->expects($this->any())->method('getAdministrator')->will($this->returnValue($site));
-        $door->expects($this->any())->method('getActualContract')->will($this->returnValue($contract));
-        
-        $this->intervention = $this->getMock('JLM\DailyBundle\Entity\Intervention');
-        $this->intervention->expects($this->any())->method('getLastDate')->will($this->returnValue(new \DateTime));
-        $this->intervention->expects($this->any())->method('getReason')->will($this->returnValue(array()));
-        $this->intervention->expects($this->any())->method('getDoor')->will($this->returnValue($door));
+        $this->intervention = $this->createMock(Intervention::class);
+        $this->intervention->method('getLastDate')->willReturn(new \DateTime);
+        $this->intervention->method('getReason')->willReturn([]);
+        $this->intervention->method('getDoor')->willReturn($door);
         $this->builder = new InterventionBillBuilder($this->intervention);
     }
     
@@ -54,7 +67,7 @@ class InterventionBillBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertPreConditions()
     {
-        $this->assertInstanceOf('JLM\CommerceBundle\Builder\BillBuilderInterface', $this->builder);
+        $this->assertInstanceOf(BillBuilderInterface::class, $this->builder);
         $this->builder->create();
     }
     
@@ -63,7 +76,7 @@ class InterventionBillBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function assertPostConditions()
     {
-        $this->assertInstanceOf('JLM\CommerceBundle\Model\BillInterface', $this->builder->getBill());
+        $this->assertInstanceOf(BillInterface::class, $this->builder->getBill());
     }
     
     public function testBuildLines()

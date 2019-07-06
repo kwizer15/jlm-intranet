@@ -12,6 +12,7 @@
 namespace JLM\DailyBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use JLM\ModelBundle\Entity\Door;
 
 /**
@@ -163,20 +164,19 @@ class InterventionRepository extends EntityRepository
 	public function getToBilled($limit = null, $offset = null)
 	{
 		$qb = $this->createQueryBuilder('i')
-		->select('i,s,d,a,b,c,e,f,g')
-		->leftJoin('i.shiftTechnicians','s')
-		->leftJoin('i.door','d')
-		->leftJoin('d.site','a')
-		->leftJoin('a.address','b')
-		->leftJoin('b.city','c')
-		->leftJoin('i.askQuote','e')
-		->leftJoin('i.bill','f')
-		->leftJoin('i.work','g')
-		->where('i.mustBeBilled = ?1')
-		->andWhere('f is null')
-		->andWhere('i.externalBill is null')
-		->addOrderBy('i.close','asc')
-		->setParameter(1,1)
+            ->select('i,s,d,a,b,c,e,g')
+            ->leftJoin('i.shiftTechnicians','s')
+            ->leftJoin('i.door','d')
+            ->leftJoin('d.site','a')
+            ->leftJoin('a.address','b')
+            ->leftJoin('b.city','c')
+            ->leftJoin('i.askQuote','e')
+            ->leftJoin('i.work','g')
+            ->where('i.mustBeBilled = ?1')
+            ->andWhere('i.bill is null')
+            ->andWhere('i.externalBill is null')
+            ->addOrderBy('i.close','asc')
+            ->setParameter(1,1)
 		;
 		if ($offset)
 			$qb->setFirstResult( $offset );
@@ -212,7 +212,6 @@ class InterventionRepository extends EntityRepository
 		->leftJoin('i.bill','f')
 		->leftJoin('i.work','g')
 		->where('i.contactCustomer = ?1')
-		->andWhere('i.contactCustomer is not null')
 		->addOrderBy('i.close','asc')
 		->setParameter(1,0)
 		;
@@ -228,7 +227,6 @@ class InterventionRepository extends EntityRepository
 		$qb = $this->createQueryBuilder('i')
 		->select('COUNT(i)')
 		->where('i.contactCustomer = ?1')
-		->andWhere('i.contactCustomer is not null')
 		->addOrderBy('i.close','asc')
 		->setParameter(1,0)
 		;

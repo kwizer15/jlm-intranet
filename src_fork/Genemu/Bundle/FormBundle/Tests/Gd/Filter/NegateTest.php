@@ -16,7 +16,7 @@ use Genemu\Bundle\FormBundle\Gd\Filter\Negate;
 /**
  * @author Olivier Chauvel <olivier@generation-multiple.com>
  */
-class NegateTest extends \PHPUnit_Framework_TestCase
+class NegateTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

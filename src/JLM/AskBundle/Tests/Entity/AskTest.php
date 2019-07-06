@@ -14,7 +14,7 @@ namespace JLM\AskBundle\Tests\Entity;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class AskTest extends \PHPUnit_Framework_TestCase
+class AskTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Country
@@ -44,14 +44,14 @@ class AskTest extends \PHPUnit_Framework_TestCase
             array('Maturity', new \DateTime),
             array('Ask', 'Foo'),
             array('DontTreat', 'Foo'),
-        	array('Contact', $this->getMock('JLM\AskBundle\Model\ContactInterface')),
-            array('Payer', $this->getMock('JLM\AskBundle\Model\PayerInterface')),
-            array('Method', $this->getMock('JLM\AskBundle\Model\CommunicationMeansInterface')),
-            array('Subject', $this->getMock('JLM\AskBundle\Model\SubjectInterface')),
+        	array('Contact', $this->createMock('JLM\AskBundle\Model\ContactInterface')),
+            array('Payer', $this->createMock('JLM\AskBundle\Model\PayerInterface')),
+            array('Method', $this->createMock('JLM\AskBundle\Model\CommunicationMeansInterface')),
+            array('Subject', $this->createMock('JLM\AskBundle\Model\SubjectInterface')),
             // Deprecateds
-            array('Person', $this->getMock('JLM\ContactBundle\Entity\Person')),
-            array('Trustee', $this->getMock('JLM\ModelBundle\Entity\Trustee')),
-            array('Site', $this->getMock('JLM\ModelBundle\Entity\Site')),
+            array('Person', $this->createMock('JLM\ContactBundle\Entity\Person')),
+            array('Trustee', $this->createMock('JLM\ModelBundle\Entity\Trustee')),
+            array('Site', $this->createMock('JLM\ModelBundle\Entity\Site')),
         );
     }
     

@@ -14,7 +14,7 @@ namespace JLM\CommerceBundle\Tests\Entity;
 /**
  * @author Emmanuel Bernaszuk <emmanuel.bernaszuk@kw12er.com>
  */
-class CommercialPartLineProductTest extends \PHPUnit_Framework_TestCase
+class CommercialPartLineProductTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @var Mock CommercialPartLineProduct
@@ -41,7 +41,7 @@ class CommercialPartLineProductTest extends \PHPUnit_Framework_TestCase
 	{
 	    return array(
 	    	array('Position', 1),
-	        array('Product', $this->getMock('JLM\ProductBundle\Model\ProductInterface')),
+	        array('Product', $this->createMock('JLM\ProductBundle\Model\ProductInterface')),
 	        array('Reference', 'Foo'),
 	        array('Designation', 'Foo'),
 	        array('Description', 'Bar'),

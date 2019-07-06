@@ -59,8 +59,12 @@ database-data: db_backup.sql
 	 gzip -9 $<
 	$(CONSOLE) doctrine:schema:update --force
 
+test:
+	$(PHP) bin/phpunit
+
 composer.lock: composer.json
 	$(PHP) $(COMPOSER) install
 
 vendor: composer.json
 	$(PHP) $(COMPOSER) install
+
